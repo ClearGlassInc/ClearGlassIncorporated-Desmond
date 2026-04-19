@@ -1,0 +1,51 @@
+name: Marketing Bot
+
+on:
+  workflow_dispatch:
+    inputs:
+      pillar:
+        description: "Optional content pillar override"
+        required: false
+        type: string
+      publish_facebook:
+        description: "Publish to Facebook if secrets are configured"
+        required: false
+        default: true
+        type: boolean
+  schedule:
+    - cron: '15 13 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  marketing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run marketing bot
+        env:
+          FACEBOOK_ENABLED: ${{ github.event.inputs.publish_facebook || 'true' }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FORCE_PILLAR: ${{ github.event.inputs.pillar || '' }}
+        run: python bots/marketing_bot.py
+
+      - name: Commit generated marketing output
+        run: |
+          if [[ -n "$(git status --porcelain marketing/output)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add marketing/output
+            git commit -m "Marketing bot: update generated content"
+            git push
+          else
+            echo "No marketing output changes to commit."
+          fi

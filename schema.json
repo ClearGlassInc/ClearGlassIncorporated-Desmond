@@ -2,14 +2,23 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Organization",
+      "name": "ClearGlass Inc",
+      "url": "https://clearglassinc.io",
+      "logo": "https://clearglassinc.io/logo.png",
+      "email": "Desmondotieno@icloud.com",
+      "telephone": "+1-289-707-0269",
+      "foundingDate": "2024",
+      "founder": {"@type": "Person", "name": "Desmond Otieno Odhiambo"},
+      "sameAs": ["https://github.com/ClearGlassInc"]
+    },
+    {
       "@type": "LocalBusiness",
       "name": "ClearGlass Inc",
-      "url": "https://clearglassinc.github.io",
+      "url": "https://clearglassinc.io",
       "telephone": "+1-289-707-0269",
       "email": "Desmondotieno@icloud.com",
       "description": "Ontario premier B2B cybersecurity and AI risk intelligence firm. Burlington, Ontario.",
-      "foundingDate": "2024",
-      "founder": {"@type": "Person", "name": "Desmond Otieno Odhiambo"},
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Burlington",
@@ -21,15 +30,16 @@
         "latitude": 43.3255,
         "longitude": -79.7990
       },
-      "areaServed": "Ontario",
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-        "opens": "09:00",
-        "closes": "18:00"
-      },
-      "sameAs": [
-        "https://github.com/ClearGlassInc"
+      "areaServed": "Ontario"
+    },
+    {
+      "@type": "WebSite",
+      "name": "ClearGlass Inc.",
+      "url": "https://clearglassinc.io",
+      "hasPart": [
+        {"@type": "WebPage", "name": "Home", "url": "https://clearglassinc.io/"},
+        {"@type": "WebPage", "name": "Artemis VI", "url": "https://clearglassinc.io/artemis.html"},
+        {"@type": "WebPage", "name": "Guardian", "url": "https://clearglassinc.io/guardian.html"}
       ]
     }
   ]

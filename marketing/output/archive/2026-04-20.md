@@ -1,0 +1,24 @@
+# ClearGlass Marketing Bot Output
+
+- Run (UTC): 2026-04-20T21:00:17+00:00
+- Content pillar: guardian
+- Facebook status: Skipped publish; secrets missing or publish disabled
+
+## Core message
+Guardian sharpens operational control.
+
+## Strategic angle
+Focus on executive-grade hardening, AI-assisted defense, and a clean deployment path anchored to the Guardian download page.
+
+## Primary CTA
+Push qualified traffic to Guardian for product review and download intent.
+
+## Route map
+- Home: https://clearglassinc.github.io/
+- Artemis VI: https://clearglassinc.github.io/artemis.html
+- Guardian: https://clearglassinc.github.io/guardian.html
+
+## Operator notes
+- Keep copy premium, direct, and brand-consistent.
+- Do not claim platform capabilities that are not visible on the public site.
+- Preserve GitHub Pages URLs until a verified custom domain is live.

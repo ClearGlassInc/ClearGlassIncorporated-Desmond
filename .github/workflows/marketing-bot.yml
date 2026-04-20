@@ -21,31 +21,52 @@ permissions:
 jobs:
   marketing:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
+      - name: Install dependencies when present
+        run: |
+          python -m pip install --upgrade pip
+          if [[ -f requirements.txt ]]; then
+            pip install -r requirements.txt
+          else
+            echo "No requirements.txt found; continuing with stdlib-only bot."
+          fi
+
+      - name: Ensure marketing output path exists
+        run: mkdir -p marketing/output marketing/output/archive
+
       - name: Run marketing bot
         env:
-          FACEBOOK_ENABLED: ${{ github.event.inputs.publish_facebook || 'true' }}
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           FORCE_PILLAR: ${{ github.event.inputs.pillar || '' }}
-        run: python bots/marketing_bot.py
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.publish_facebook }}" == "false" ]]; then
+            export FACEBOOK_ENABLED=false
+          else
+            export FACEBOOK_ENABLED=true
+          fi
+
+          python bots/marketing_bot.py
 
       - name: Commit generated marketing output
         run: |
-          if [[ -n "$(git status --porcelain marketing/output)" ]]; then
+          if [[ -n "$(git status --porcelain -- marketing/output)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add marketing/output
             git commit -m "Marketing bot: update generated content"
-            git push
+            git push origin HEAD:${{ github.ref_name }}
           else
             echo "No marketing output changes to commit."
           fi

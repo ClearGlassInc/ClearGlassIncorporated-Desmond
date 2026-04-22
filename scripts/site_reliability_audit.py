@@ -6,6 +6,7 @@ Checks:
 - Missing core documentation files
 - Workflow hygiene (permissions + trigger existence)
 - Sitemap URL sanity
+- GitHub Pages custom domain readiness (CNAME + canonical domain usage)
 """
 
 from __future__ import annotations
@@ -17,6 +18,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+EXPECTED_DOMAIN = "clearglassinc.io"
 
 
 class LinkParser(HTMLParser):
@@ -138,6 +140,45 @@ def check_sitemap() -> list[AuditIssue]:
     return issues
 
 
+def check_pages_domain() -> list[AuditIssue]:
+    issues: list[AuditIssue] = []
+
+    index_file = REPO_ROOT / "index.html"
+    if not index_file.exists():
+        issues.append(AuditIssue("ERROR", "Missing index.html at repository root"))
+
+    cname_file = REPO_ROOT / "CNAME"
+    if not cname_file.exists():
+        issues.append(AuditIssue("ERROR", "Missing CNAME file for GitHub Pages custom domain"))
+    else:
+        cname_value = cname_file.read_text(encoding="utf-8", errors="ignore").strip()
+        if cname_value != EXPECTED_DOMAIN:
+            issues.append(
+                AuditIssue(
+                    "ERROR",
+                    f"CNAME value mismatch: expected '{EXPECTED_DOMAIN}' but found '{cname_value or '(empty)'}'",
+                )
+            )
+
+    searchable_files = (
+        sorted(REPO_ROOT.glob("*.html"))
+        + sorted(REPO_ROOT.glob("*.xml"))
+        + sorted(REPO_ROOT.glob("*.json"))
+        + sorted((REPO_ROOT / "legal").glob("*.html"))
+    )
+    for file_path in searchable_files:
+        text = file_path.read_text(encoding="utf-8", errors="ignore")
+        if "clearglassinc.github.io" in text:
+            issues.append(
+                AuditIssue(
+                    "WARN",
+                    f"Legacy GitHub Pages domain reference found in {file_path.relative_to(REPO_ROOT)}",
+                )
+            )
+
+    return issues
+
+
 def print_report(issues: list[AuditIssue]) -> int:
     errors = [issue for issue in issues if issue.level == "ERROR"]
     warns = [issue for issue in issues if issue.level == "WARN"]
@@ -163,6 +204,7 @@ def main() -> int:
     all_issues.extend(check_required_docs())
     all_issues.extend(check_workflows())
     all_issues.extend(check_sitemap())
+    all_issues.extend(check_pages_domain())
     return print_report(all_issues)
 
 

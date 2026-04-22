@@ -18,7 +18,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_DOMAIN = "clearglassinc.io"
+EXPECTED_DOMAIN = "clearglassinc.github.io"
 
 
 class LinkParser(HTMLParser):
@@ -148,17 +148,17 @@ def check_pages_domain() -> list[AuditIssue]:
         issues.append(AuditIssue("ERROR", "Missing index.html at repository root"))
 
     cname_file = REPO_ROOT / "CNAME"
-    if not cname_file.exists():
-        issues.append(AuditIssue("ERROR", "Missing CNAME file for GitHub Pages custom domain"))
-    else:
+    if cname_file.exists():
         cname_value = cname_file.read_text(encoding="utf-8", errors="ignore").strip()
-        if cname_value != EXPECTED_DOMAIN:
-            issues.append(
-                AuditIssue(
-                    "ERROR",
-                    f"CNAME value mismatch: expected '{EXPECTED_DOMAIN}' but found '{cname_value or '(empty)'}'",
-                )
+        issues.append(
+            AuditIssue(
+                "WARN",
+                (
+                    "CNAME file present while repository is configured for default GitHub Pages domain "
+                    f"('{EXPECTED_DOMAIN}'). Current CNAME value: '{cname_value or '(empty)'}'"
+                ),
             )
+        )
 
     searchable_files = (
         sorted(REPO_ROOT.glob("*.html"))
@@ -168,11 +168,11 @@ def check_pages_domain() -> list[AuditIssue]:
     )
     for file_path in searchable_files:
         text = file_path.read_text(encoding="utf-8", errors="ignore")
-        if "clearglassinc.github.io" in text:
+        if "clearglassinc.io" in text:
             issues.append(
                 AuditIssue(
                     "WARN",
-                    f"Legacy GitHub Pages domain reference found in {file_path.relative_to(REPO_ROOT)}",
+                    f"Legacy custom-domain reference found in {file_path.relative_to(REPO_ROOT)}",
                 )
             )
 

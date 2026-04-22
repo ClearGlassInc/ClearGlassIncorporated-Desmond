@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+"""Repository reliability audit for ClearGlassInc.github.io.
+
+Checks:
+- Broken local links (href/src in html files)
+- Missing core documentation files
+- Workflow hygiene (permissions + trigger existence)
+- Sitemap URL sanity
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from html.parser import HTMLParser
+from pathlib import Path
+import sys
+import xml.etree.ElementTree as ET
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+class LinkParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.references: list[tuple[str, int]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = dict(attrs)
+        if tag in {"a", "link"} and attr_map.get("href"):
+            self.references.append((attr_map["href"], self.getpos()[0]))
+        elif tag in {"img", "script", "source"} and attr_map.get("src"):
+            self.references.append((attr_map["src"], self.getpos()[0]))
+
+
+@dataclass
+class AuditIssue:
+    level: str
+    message: str
+
+
+def is_local_ref(ref: str) -> bool:
+    prefixes = ("http://", "https://", "mailto:", "tel:", "#", "javascript:", "data:")
+    return not ref.startswith(prefixes)
+
+
+def check_links() -> list[AuditIssue]:
+    issues: list[AuditIssue] = []
+    html_files = sorted(REPO_ROOT.rglob("*.html"))
+
+    for html_file in html_files:
+        parser = LinkParser()
+        parser.feed(html_file.read_text(encoding="utf-8", errors="ignore"))
+        for ref, line_number in parser.references:
+            if not is_local_ref(ref):
+                continue
+
+            local_ref = ref.split("#", 1)[0].split("?", 1)[0]
+            if not local_ref:
+                continue
+
+            if local_ref.startswith("/"):
+                target = (REPO_ROOT / local_ref.lstrip("/")).resolve()
+            else:
+                target = (html_file.parent / local_ref).resolve()
+
+            if not str(target).startswith(str(REPO_ROOT.resolve())):
+                issues.append(AuditIssue("ERROR", f"Invalid path outside repository in {html_file.relative_to(REPO_ROOT)}:{line_number} -> {ref}"))
+                continue
+
+            if not target.exists():
+                issues.append(
+                    AuditIssue(
+                        "ERROR",
+                        f"Broken local reference {html_file.relative_to(REPO_ROOT)}:{line_number} -> {ref}",
+                    )
+                )
+
+    return issues
+
+
+def check_required_docs() -> list[AuditIssue]:
+    issues: list[AuditIssue] = []
+    required_files = [
+        "README.md",
+        "SECURITY.md",
+        "legal/privacy.html",
+        "legal/terms.html",
+    ]
+
+    for rel_path in required_files:
+        if not (REPO_ROOT / rel_path).exists():
+            issues.append(AuditIssue("ERROR", f"Missing required file: {rel_path}"))
+
+    return issues
+
+
+def check_workflows() -> list[AuditIssue]:
+    issues: list[AuditIssue] = []
+    workflow_dir = REPO_ROOT / ".github" / "workflows"
+    workflow_files = sorted(workflow_dir.glob("*.yml")) + sorted(workflow_dir.glob("*.yaml"))
+
+    if not workflow_files:
+        return [AuditIssue("ERROR", "No GitHub Actions workflows found in .github/workflows")]
+
+    for wf in workflow_files:
+        text = wf.read_text(encoding="utf-8", errors="ignore")
+
+        if "on:" not in text:
+            issues.append(AuditIssue("ERROR", f"Workflow missing triggers: {wf.relative_to(REPO_ROOT)}"))
+
+        if "permissions:" not in text:
+            issues.append(AuditIssue("WARN", f"Workflow missing explicit permissions: {wf.relative_to(REPO_ROOT)}"))
+
+    return issues
+
+
+def check_sitemap() -> list[AuditIssue]:
+    issues: list[AuditIssue] = []
+    sitemap = REPO_ROOT / "sitemap.xml"
+    if not sitemap.exists():
+        return [AuditIssue("WARN", "No sitemap.xml found")]
+
+    try:
+        tree = ET.parse(sitemap)
+        root = tree.getroot()
+    except ET.ParseError as exc:
+        return [AuditIssue("ERROR", f"Invalid sitemap.xml: {exc}")]
+
+    namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    urls = root.findall("sm:url/sm:loc", namespace)
+    if not urls:
+        issues.append(AuditIssue("WARN", "sitemap.xml has no <loc> entries"))
+
+    for loc in urls:
+        if loc.text and " " in loc.text:
+            issues.append(AuditIssue("ERROR", f"Invalid URL in sitemap (contains whitespace): {loc.text}"))
+
+    return issues
+
+
+def print_report(issues: list[AuditIssue]) -> int:
+    errors = [issue for issue in issues if issue.level == "ERROR"]
+    warns = [issue for issue in issues if issue.level == "WARN"]
+
+    print("== ClearGlassInc Site Reliability Audit ==")
+    print(f"Repository: {REPO_ROOT}")
+    print(f"Errors: {len(errors)} | Warnings: {len(warns)}")
+    print()
+
+    for issue in errors + warns:
+        icon = "❌" if issue.level == "ERROR" else "⚠️"
+        print(f"{icon} {issue.level}: {issue.message}")
+
+    if not issues:
+        print("✅ No issues detected.")
+
+    return 1 if errors else 0
+
+
+def main() -> int:
+    all_issues: list[AuditIssue] = []
+    all_issues.extend(check_links())
+    all_issues.extend(check_required_docs())
+    all_issues.extend(check_workflows())
+    all_issues.extend(check_sitemap())
+    return print_report(all_issues)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

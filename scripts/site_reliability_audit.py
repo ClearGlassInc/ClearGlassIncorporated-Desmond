@@ -14,7 +14,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path
+import re
 import sys
+from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -166,15 +168,21 @@ def check_pages_domain() -> list[AuditIssue]:
         + sorted(REPO_ROOT.glob("*.json"))
         + sorted((REPO_ROOT / "legal").glob("*.html"))
     )
+    legacy_domain = "clearglassinc.io"
+    url_pattern = re.compile(r"https?://[^\s\"'<>]+", re.IGNORECASE)
+
     for file_path in searchable_files:
         text = file_path.read_text(encoding="utf-8", errors="ignore")
-        if "clearglassinc.io" in text:
-            issues.append(
-                AuditIssue(
-                    "WARN",
-                    f"Legacy custom-domain reference found in {file_path.relative_to(REPO_ROOT)}",
+        for raw_url in url_pattern.findall(text):
+            host = urlparse(raw_url).hostname
+            if host and (host == legacy_domain or host.endswith(f".{legacy_domain}")):
+                issues.append(
+                    AuditIssue(
+                        "WARN",
+                        f"Legacy custom-domain reference found in {file_path.relative_to(REPO_ROOT)}",
+                    )
                 )
-            )
+                break
 
     return issues
 

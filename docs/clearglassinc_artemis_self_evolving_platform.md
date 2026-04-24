@@ -687,3 +687,133 @@ Approved actions execute through signed gateway. Outcome marked `preventive_succ
 - If KPI regression appears, automatic rollback to prior manifest.
 
 This yields continuous learning with explicit human authority, full auditability, and mission-safe optimization.
+
+---
+
+## Disclaimer and Disclosure Pack (for content, code, posts, pages, and operator communications)
+
+> **Important:** The following language is implementation guidance, not legal advice. For mission-specific, jurisdiction-specific, export-control, surveillance, or coalition-sharing contexts, legal review is recommended before production use.
+
+### 1) System-wide baseline disclaimer
+
+- **Recommended text (long-form):**
+  - "ClearGlassInc Artemis provides decision-support outputs derived from available data and configured models. Outputs may contain uncertainty, incomplete context, or model error, and must be validated by authorized personnel before operational use."
+- **Short-form variation:**
+  - "AI-assisted output; human validation required before action."
+- **Placement:** global UI footer, every generated intelligence product header, API response metadata (`disclaimer_version`).
+- **Why needed:** reduces overreliance risk and clarifies human accountability for mission decisions.
+
+### 2) High-risk advisory disclaimers
+
+#### Financial / legal / medical / security-adjacent analysis
+- **Recommended text (long-form):**
+  - "This material is for operational analysis support and does not constitute financial, legal, medical, or professional advice. Consult qualified professionals and applicable command/legal authorities before relying on this information."
+- **Short-form variation:**
+  - "Not financial/legal/medical advice."
+- **Placement:** analysis report preamble, copilot response banner when sensitive domains detected.
+- **Why needed:** prevents mischaracterization of AI output as regulated professional advice.
+
+#### Operational recommendation disclaimer
+- **Recommended text (long-form):**
+  - "Recommended actions are generated from probabilistic models and policy-constrained workflows. Final execution decisions require authorized human approval under mission rules of engagement and policy."
+- **Short-form variation:**
+  - "Recommendations are non-binding; approval required."
+- **Placement:** action package cards, approval queue, execution API docs.
+- **Why needed:** clarifies non-autonomous authority boundaries.
+
+### 3) Accuracy, assumptions, and limitation disclosures
+
+- **Recommended text (long-form):**
+  - "Assessments are based on available sources at generation time and may change as new data arrives. Confidence scores indicate estimated reliability, not certainty."
+- **Short-form variation:**
+  - "Confidence is probabilistic, not certainty."
+- **Placement:** near confidence indicators and timeline views.
+- **Why needed:** aligns operator interpretation with model/statistical uncertainty.
+
+### 4) Confidentiality, privacy, and data-handling disclaimer
+
+- **Recommended text (long-form):**
+  - "This content may include sensitive or compartmented information. Access, sharing, and retention are restricted by need-to-know, classification, coalition, and applicable privacy/security policies."
+- **Short-form variation:**
+  - "Handle per classification and need-to-know rules."
+- **Placement:** page headers for case views, export dialogs, downloadable intel products.
+- **Why needed:** reduces accidental disclosure and reinforces handling obligations.
+
+### 5) Copyright, ownership, and third-party material
+
+- **Recommended text (long-form):**
+  - "Source materials may include third-party data subject to licensing and attribution requirements. Verify rights and attribution obligations before redistribution or external publication."
+- **Short-form variation:**
+  - "Verify license/attribution before sharing."
+- **Placement:** publishing workflows, report export wizard, external sharing controls.
+- **Why needed:** mitigates IP infringement and improper reuse risk.
+
+### 6) AI-generated content disclosure
+
+- **Recommended text (long-form):**
+  - "This section was generated with AI assistance and reviewed by an authorized operator."
+- **Short-form variation:**
+  - "AI-assisted, human-reviewed."
+- **Placement:** generated summaries, briefs, external communications where policy requires transparency.
+- **Why needed:** satisfies transparency expectations and downstream trust requirements.
+
+### 7) Endorsement / affiliation / sponsorship disclaimer
+
+- **Recommended text (long-form):**
+  - "References to external organizations, platforms, datasets, or products do not imply endorsement, sponsorship, or affiliation unless explicitly stated in writing."
+- **Short-form variation:**
+  - "No implied endorsement or affiliation."
+- **Placement:** architecture documents, presentations, public-facing pages.
+- **Why needed:** avoids false implication of partnerships or approvals.
+
+### 8) Legal review escalation flags (strong recommendation)
+
+Trigger mandatory counsel review when any of the following are present:
+
+- cross-border data transfers or coalition releasability edge cases,
+- surveillance-sensitive workflows or biometrics/person-tracking expansions,
+- automated recommendations affecting liberty, sanctions, or critical infrastructure,
+- novel retention/sharing terms for personally identifiable or classified data,
+- jurisdiction-specific AI disclosure mandates.
+
+### 9) Implementation hook (Python) for disclaimer injection
+
+```python
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class DisclaimerBundle:
+    long_text: str
+    short_text: str
+    placement: str
+    reason: str
+
+DISCLAIMER_REGISTRY = {
+    "baseline": DisclaimerBundle(
+        long_text=(
+            "ClearGlassInc Artemis provides decision-support outputs derived from "
+            "available data and configured models. Outputs may contain uncertainty "
+            "or error and must be validated by authorized personnel before use."
+        ),
+        short_text="AI-assisted output; human validation required.",
+        placement="global_footer,report_header,api_metadata",
+        reason="Human accountability and liability risk control",
+    ),
+    "operational_action": DisclaimerBundle(
+        long_text=(
+            "Recommendations are probabilistic and non-binding. Operationally "
+            "significant actions require authorized human approval."
+        ),
+        short_text="Non-binding recommendation; approval required.",
+        placement="approval_queue,action_card,runbook",
+        reason="Prevents unsafe autonomous interpretation",
+    ),
+}
+
+
+def resolve_disclaimers(content_tags: set[str]) -> list[DisclaimerBundle]:
+    selected = [DISCLAIMER_REGISTRY["baseline"]]
+    if "actionable" in content_tags:
+        selected.append(DISCLAIMER_REGISTRY["operational_action"])
+    return selected
+```

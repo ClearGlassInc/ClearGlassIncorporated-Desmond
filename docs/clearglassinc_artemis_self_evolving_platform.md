@@ -817,3 +817,423 @@ def resolve_disclaimers(content_tags: set[str]) -> list[DisclaimerBundle]:
         selected.append(DISCLAIMER_REGISTRY["operational_action"])
     return selected
 ```
+
+---
+
+## Full-Stack Implementation (Expanded Production Blueprint)
+
+### Frontend (TypeScript + React + Mission UX)
+
+- **Mission Cockpit**: live map, timeline, caseboard, evidence tree, approval queue.
+- **Operator Copilot Panel**: prompt context viewer, cited evidence snippets, confidence bars, and policy reason codes.
+- **Commander View**: mission impact simulation cards, branch comparison, and urgency-sorted response options.
+- **Trust UX**: every AI answer includes provenance chips (`source`, `lineage`, `policy`, `model version`, `prompt version`).
+
+```tsx
+// web/src/features/copilot/CopilotResponseCard.tsx
+import React from "react";
+
+type Citation = { source: string; confidence: number; lineageId: string };
+type CopilotResponse = {
+  answer: string;
+  confidence: number;
+  modelVersion: string;
+  promptVersion: string;
+  citations: Citation[];
+  policyTraceId: string;
+};
+
+export function CopilotResponseCard({ data }: { data: CopilotResponse }) {
+  return (
+    <article className="card">
+      <header>
+        <h3>AI Recommendation</h3>
+        <small>Model {data.modelVersion} · Prompt {data.promptVersion}</small>
+      </header>
+      <p>{data.answer}</p>
+      <ul>
+        {data.citations.map((c) => (
+          <li key={c.lineageId}>
+            {c.source} · conf {Math.round(c.confidence * 100)}% · lineage {c.lineageId}
+          </li>
+        ))}
+      </ul>
+      <footer>Policy trace: {data.policyTraceId}</footer>
+    </article>
+  );
+}
+```
+
+### API Gateway + Backend Services (Python)
+
+- **Gateway**: FastAPI + Envoy, mTLS, OIDC token verification, ABAC context extraction.
+- **Core services**:
+  - `ingestion-service`
+  - `ontology-service`
+  - `agent-orchestrator-service`
+  - `approval-service`
+  - `eval-service`
+  - `improvement-service`
+  - `audit-ledger-service`
+
+```python
+# services/api_gateway/main.py
+from fastapi import FastAPI, Depends, HTTPException, Request
+from pydantic import BaseModel
+
+app = FastAPI(title="ClearGlassInc Artemis Gateway")
+
+class MissionContext(BaseModel):
+    mission_id: str
+    coalition_scope: list[str]
+    compartments: list[str]
+    clearance: str
+
+
+def get_mission_context(req: Request) -> MissionContext:
+    # Decode signed JWT + extract ABAC claims
+    claims = req.state.claims
+    return MissionContext(
+        mission_id=claims["mission_id"],
+        coalition_scope=claims.get("coalition_scope", []),
+        compartments=claims.get("compartments", []),
+        clearance=claims["clearance"],
+    )
+
+
+class TriageRequest(BaseModel):
+    alert_id: str
+    objective: str
+
+
+@app.post("/v1/triage")
+def triage_alert(payload: TriageRequest, ctx: MissionContext = Depends(get_mission_context)):
+    if ctx.clearance not in {"S", "TS"}:
+        raise HTTPException(status_code=403, detail="insufficient_clearance")
+    # Fan-out to orchestrator through event bus
+    return {"status": "accepted", "alert_id": payload.alert_id, "mission_id": ctx.mission_id}
+```
+
+### Event Bus / Streaming Layer
+
+- Use Kafka topics by mission and security boundary:
+  - `alerts.raw.v1`
+  - `alerts.enriched.v1`
+  - `cases.actions.v1`
+  - `agent.toolcalls.v1`
+  - `eval.signals.v1`
+  - `improvement.proposals.v1`
+- Contract-first schemas with backward-compatible evolution.
+
+```python
+# services/streaming/handlers.py
+from dataclasses import dataclass
+
+@dataclass
+class AlertRawEvent:
+    alert_id: str
+    event_time: str
+    source: str
+    payload: dict
+
+
+def handle_alert_raw(event: AlertRawEvent) -> dict:
+    enriched = {
+        "alert_id": event.alert_id,
+        "entities": extract_entities(event.payload),
+        "confidence": score_confidence(event.payload),
+        "source": event.source,
+        "event_time": event.event_time,
+    }
+    publish("alerts.enriched.v1", enriched)
+    return enriched
+```
+
+### Data Lakehouse + Search / Retrieval
+
+- **Lakehouse zones**: `raw` -> `validated` -> `curated` -> `serving`.
+- **Hybrid retrieval**:
+  - lexical index (BM25)
+  - vector index (semantic)
+  - ontology graph neighborhood expansion
+- **Retrieval guardrail**: never retrieve beyond mission + coalition + compartment tags.
+
+```sql
+-- warehouse/sql/secure_retrieval.sql
+SELECT d.doc_id, d.title, d.snippet
+FROM serving_documents d
+JOIN entitlement_index e ON e.doc_id = d.doc_id
+WHERE e.user_id = :user_id
+  AND e.mission_id = :mission_id
+  AND e.compartment <@ :allowed_compartments
+ORDER BY d.rank_score DESC
+LIMIT 25;
+```
+
+### Model Router / Inference Layer
+
+```python
+# services/ai/router.py
+from dataclasses import dataclass
+
+@dataclass
+class RouteContext:
+    mission_criticality: str
+    latency_budget_ms: int
+    tool_required: bool
+    classification: str
+
+
+def route_model(ctx: RouteContext) -> str:
+    if ctx.classification in {"S", "TS"} and ctx.tool_required:
+        return "onprem-secure-reasoner-v5"
+    if ctx.latency_budget_ms < 700:
+        return "low-latency-analyst-v2"
+    if ctx.mission_criticality == "critical":
+        return "high-reliability-ops-v4"
+    return "balanced-general-v3"
+```
+
+### AuthN/AuthZ + Policy Enforcement (Policy-as-Code)
+
+```rego
+# policy/mission_access.rego
+package clearglassinc.artemis.access
+
+default allow = false
+
+allow {
+  input.user.clearance_rank >= input.resource.classification_rank
+  input.resource.mission_id == input.user.mission_id
+  input.resource.coalition_scope[_] == input.user.coalition_scope[_]
+  not blocked_compartment
+}
+
+blocked_compartment {
+  some c
+  input.resource.compartments[c]
+  not input.user.allowed_compartments[c]
+}
+```
+
+### Monitoring / Logging / Tracing / Eval Dashboards
+
+- OpenTelemetry traces stitched across ingestion -> agents -> approvals -> execution.
+- SLO dashboard per mission:
+  - p95 triage latency
+  - recommendation precision
+  - human override rate
+  - false positive/negative drift
+  - trust score trend
+
+```python
+# services/observability/metrics.py
+from prometheus_client import Counter, Histogram
+
+TRIAGE_LATENCY = Histogram("artemis_triage_latency_ms", "Triage latency", buckets=(50,100,250,500,750,1000,2000))
+OVERRIDE_RATE = Counter("artemis_override_events_total", "Operator overrides", ["mission_id", "reason"])
+```
+
+---
+
+## Self-Improvement Loop (Deep Technical Design)
+
+### 1) Signals collected for learning
+
+- Query logs, tool call traces, grounding context, answer quality labels.
+- Operator corrections (`entity merge/split`, `confidence adjustment`, `case reassignment`).
+- Approval outcomes (`approved`, `rejected`, `approved_with_constraints`).
+- Mission KPIs (`time-to-resolution`, `false alarm rate`, `operational impact`).
+
+### 2) Change proposal pipeline
+
+```text
+Signals -> Normalization -> Eval Set Builder -> Candidate Generator
+       -> Offline Replay -> Safety/Policy Checks -> Review Board
+       -> Apollo Canary (1-5%) -> Mission A/B -> Promote or Rollback
+```
+
+### 3) Versioning and rollback model
+
+- All mutable AI artifacts are versioned:
+  - `prompt_bundle@semver`
+  - `workflow_graph@semver`
+  - `router_policy@semver`
+  - `heuristic_pack@semver`
+- Any regression beyond threshold triggers automatic rollback via Apollo.
+
+```python
+# services/improvement/guardrails.py
+REGRESSION_THRESHOLDS = {
+    "precision_drop_max": 0.03,
+    "recall_drop_max": 0.04,
+    "latency_increase_max": 0.20,
+    "override_increase_max": 0.10,
+}
+
+
+def should_rollback(baseline: dict, candidate: dict) -> bool:
+    if baseline["precision"] - candidate["precision"] > REGRESSION_THRESHOLDS["precision_drop_max"]:
+        return True
+    if baseline["recall"] - candidate["recall"] > REGRESSION_THRESHOLDS["recall_drop_max"]:
+        return True
+    if (candidate["p95_latency_ms"] - baseline["p95_latency_ms"]) / baseline["p95_latency_ms"] > REGRESSION_THRESHOLDS["latency_increase_max"]:
+        return True
+    if (candidate["override_rate"] - baseline["override_rate"]) > REGRESSION_THRESHOLDS["override_increase_max"]:
+        return True
+    return False
+```
+
+### 4) Human approval gates
+
+- **Gate A (Technical)**: platform engineers verify metrics, reliability, and reproducibility.
+- **Gate B (Operational)**: mission leadership validates behavioral alignment and risk.
+- **Gate C (Governance)**: compliance + legal + security approve policy impact.
+
+No gate pass = no production behavior change.
+
+### 5) Drift detection
+
+```python
+# services/eval/drift.py
+from scipy.stats import ks_2samp
+
+def detect_distribution_shift(reference_scores: list[float], current_scores: list[float]) -> float:
+    stat, p_val = ks_2samp(reference_scores, current_scores)
+    return p_val  # p < 0.01 indicates significant shift
+```
+
+---
+
+## Security and Governance (Mission-Grade Controls)
+
+- **Need-to-know by default** with deny-by-default policy posture.
+- **Entity-level ACLs** in ontology object wrappers.
+- **Row/column masking** for structured datasets; dynamic tokenization for PII.
+- **Coalition-aware boundaries** via releasability tags and compartment isolation.
+- **Zero-trust runtime**: signed workloads, attestations, short-lived credentials.
+- **Immutable provenance**: append-only audit ledger (hash-chained event log).
+- **Model governance**: approved model registry + runtime allow-list.
+- **Prompt governance**: cryptographically signed prompt bundles and policy lint checks.
+
+```python
+# services/audit/ledger.py
+import hashlib
+import json
+
+
+def hash_event(prev_hash: str, event: dict) -> str:
+    blob = json.dumps({"prev_hash": prev_hash, "event": event}, sort_keys=True).encode("utf-8")
+    return hashlib.sha256(blob).hexdigest()
+```
+
+---
+
+## Scenario Walkthrough (Live Event -> Recommendation -> Learning)
+
+### Scene: Cross-domain anomaly during coalition maritime operation
+
+1. **Event ingress**: ISR feed reports unusual vessel maneuver near restricted corridor.
+2. **Triage agent** scores event high-risk due to pattern match + temporal anomaly.
+3. **Enrichment agent** joins AIS history, weather state, prior case links, and coalition advisories.
+4. **Correlation agent** flags a weakly-linked organization and raises confidence after corroboration.
+5. **Recommendation agent** drafts three options (observe, interdict, reroute) with risk/impact matrix.
+6. **Policy gate** blocks automatic action execution and routes to commander approval queue.
+7. **Commander** approves “reroute + monitor” with added geographic constraints.
+8. **Execution service** submits signed action package and logs full provenance.
+9. **Outcome scoring**: mission disruption avoided; no collateral incidents.
+10. **Learning loop**:
+    - Operator rationale labeled as positive supervisory signal.
+    - Eval harness replay shows candidate prompt variant improves recommendation precision by +2.4%.
+    - Review board approves canary rollout.
+    - Apollo deploys 5% wave, then 50%, then full promotion after stable SLOs.
+
+Result: **ClearGlassInc Artemis gets better and better** through controlled, audited, human-authorized adaptation—without unsafe autonomous goal changes.
+
+---
+
+## Code Examples (Workflow State Machine + Tool-Using Agent)
+
+```python
+# services/workflows/action_package_fsm.py
+from enum import Enum
+from dataclasses import dataclass
+
+class ActionState(str, Enum):
+    DRAFT = "draft"
+    PENDING_APPROVAL = "pending_approval"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    EXECUTED = "executed"
+
+@dataclass
+class ActionPackage:
+    action_package_id: str
+    state: ActionState
+    risk_tier: str
+
+
+def transition(pkg: ActionPackage, event: str) -> ActionPackage:
+    allowed = {
+        ActionState.DRAFT: {"submit": ActionState.PENDING_APPROVAL},
+        ActionState.PENDING_APPROVAL: {"approve": ActionState.APPROVED, "reject": ActionState.REJECTED},
+        ActionState.APPROVED: {"execute": ActionState.EXECUTED},
+    }
+    if event not in allowed.get(pkg.state, {}):
+        raise ValueError(f"invalid transition {pkg.state} -> {event}")
+    pkg.state = allowed[pkg.state][event]
+    return pkg
+```
+
+```python
+# services/agents/recommendation_agent.py
+from typing import Any
+
+
+def recommendation_agent_step(alert_id: str, mission_id: str) -> dict[str, Any]:
+    alert = tool_call("Ontology.get_alert", {"alert_id": alert_id, "mission_id": mission_id})
+    context = tool_call("Retrieval.search", {"alert_id": alert_id, "mission_id": mission_id, "k": 20})
+    draft = tool_call("LLM.generate_recommendation", {
+        "mission_id": mission_id,
+        "alert": alert,
+        "context": context,
+        "policy_mode": "strict",
+    })
+    package = tool_call("ActionPackage.create", {
+        "mission_id": mission_id,
+        "alert_id": alert_id,
+        "recommendation": draft["text"],
+        "risk_tier": draft["risk_tier"],
+    })
+    return package
+```
+
+```sql
+-- warehouse/sql/eval_dataset_builder.sql
+INSERT INTO eval_dataset_recommendation_quality (
+  sample_id,
+  mission_id,
+  prompt_version,
+  workflow_version,
+  model_version,
+  approved,
+  operator_override,
+  outcome_success,
+  created_at
+)
+SELECT
+  gen_random_uuid(),
+  a.mission_id,
+  a.prompt_version,
+  a.workflow_version,
+  a.model_version,
+  ap.approval_state = 'approved' AS approved,
+  ap.was_overridden,
+  o.success,
+  now()
+FROM action_packages ap
+JOIN ai_runs a ON a.run_id = ap.ai_run_id
+JOIN mission_outcomes o ON o.action_package_id = ap.action_package_id;
+```
+
+This expanded blueprint preserves the original architecture while adding deeper implementation detail, stronger trust controls, and a clearer conversion of operator behavior into safe, auditable platform improvement.

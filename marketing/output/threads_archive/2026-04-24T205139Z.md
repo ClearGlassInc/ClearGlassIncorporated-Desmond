@@ -1,0 +1,72 @@
+# ClearGlassInc Artemis Threads Pack
+
+## Thread 1
+
+- App: ClearGlassInc Artemis
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+
+1. I almost missed the one message that could've changed my week. 😵‍💫
+2. I had 17 tabs open, 42 unread pings, and zero idea what actually mattered. 📉
+3. Then I ran my day through ClearGlassInc Artemis. It flagged one convo as high-stakes in 8 seconds.
+4. That single reply turned into a signed deal before lunch. Relief hit hard. ⚡
+5. Be honest: how often does noise hide your biggest opportunity? 👇
+
+## Thread 2
+
+- App: ClearGlassInc Artemis
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+
+1. I looked productive. I was actually drowning. 🫠
+2. Color-coded calendar. Fancy to-do app. Still ended each day feeling behind and guilty.
+3. What changed? Artemis showed me where my time leaked, not where it looked busy.
+4. Two weeks later: fewer tasks, better output, calmer brain. That's the part no one tells you. 🧠
+5. Are you optimizing for busy… or for peace + results?
+
+## Thread 3
+
+- App: ClearGlassInc Artemis
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+
+1. The worst part of burnout? You don't notice it until you snap. 🔥
+2. I stopped sleeping well. Started forgetting small promises. Confidence dropped quietly.
+3. Artemis started surfacing promise-risk moments before they became trust damage.
+4. Catching those early gave me my reputation back. And honestly, myself back too. 🙏
+5. Who's felt their credibility slip from tiny misses, not big failures?
+
+## Thread 4
+
+- App: ClearGlassInc Artemis
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+
+1. My team said we need clarity. I heard you're failing us. 😶
+2. We kept re-explaining priorities in every standup. Same confusion, new day.
+3. We built a shared Artemis mission board: one truth, live updates, zero guessing.
+4. Meetings got shorter. Tension dropped. Momentum came back fast. 🚀
+5. Team leads: what creates more drag for you—unclear priorities or unclear ownership?
+
+## Thread 5
+
+- App: ClearGlassInc Artemis
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+
+1. I used to panic every Sunday night. No plan felt real. 😬
+2. I'd write goals, then spend Monday reacting to everyone else's emergencies.
+3. Now Artemis prebuilds my week by impact, urgency, and energy level.
+4. I still work hard. I just don't feel hunted anymore. That shift is everything. 💎
+5. Sunday check: are you starting tomorrow with intention or survival mode?
+

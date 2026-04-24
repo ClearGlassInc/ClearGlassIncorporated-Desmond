@@ -14,9 +14,9 @@ Position ClearGlass as the premium public-facing brand for transparent intellige
 Direct decision-makers to the homepage and founder contact path.
 
 ## Route map
-- Home: https://clearglassinc.io/
-- Artemis VI: https://clearglassinc.io/artemis.html
-- Guardian: https://clearglassinc.io/guardian.html
+- Home: https://clearglassinc.github.io/index.html
+- Artemis VI: https://clearglassinc.github.io/artemis.html
+- Guardian: https://clearglassinc.github.io/guardian.html
 
 ## Operator notes
 - Keep copy premium, direct, and brand-consistent.

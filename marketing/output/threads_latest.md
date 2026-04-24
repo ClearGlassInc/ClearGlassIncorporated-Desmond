@@ -3,10 +3,10 @@
 ## Thread 1
 
 - App: ClearGlassInc Artemis
-- Category: AI-driven productivity
-- Audience: founders, operators, and high-output teams
-- Emotional benefit: deep control under high-stakes chaos
-- Pain points: task overload with real-world consequences, context switching fatigue in multi-stakeholder environments, forgetting high-impact follow-ups that cost momentum
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
 
 1. I almost missed the one message that could've changed my week. 😵‍💫
 2. I had 17 tabs open, 42 unread pings, and zero idea what actually mattered. 📉
@@ -17,10 +17,10 @@
 ## Thread 2
 
 - App: ClearGlassInc Artemis
-- Category: AI-driven productivity
-- Audience: founders, operators, and high-output teams
-- Emotional benefit: deep control under high-stakes chaos
-- Pain points: task overload with real-world consequences, context switching fatigue in multi-stakeholder environments, forgetting high-impact follow-ups that cost momentum
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
 
 1. I looked productive. I was actually drowning. 🫠
 2. Color-coded calendar. Fancy to-do app. Still ended each day feeling behind and guilty.
@@ -31,10 +31,10 @@
 ## Thread 3
 
 - App: ClearGlassInc Artemis
-- Category: AI-driven productivity
-- Audience: founders, operators, and high-output teams
-- Emotional benefit: deep control under high-stakes chaos
-- Pain points: task overload with real-world consequences, context switching fatigue in multi-stakeholder environments, forgetting high-impact follow-ups that cost momentum
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
 
 1. The worst part of burnout? You don't notice it until you snap. 🔥
 2. I stopped sleeping well. Started forgetting small promises. Confidence dropped quietly.
@@ -45,12 +45,12 @@
 ## Thread 4
 
 - App: ClearGlassInc Artemis
-- Category: AI-driven productivity
-- Audience: founders, operators, and high-output teams
-- Emotional benefit: deep control under high-stakes chaos
-- Pain points: task overload with real-world consequences, context switching fatigue in multi-stakeholder environments, forgetting high-impact follow-ups that cost momentum
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
 
-1. My team said 'we need clarity.' I heard 'you're failing us.' 😶
+1. My team said we need clarity. I heard you're failing us. 😶
 2. We kept re-explaining priorities in every standup. Same confusion, new day.
 3. We built a shared Artemis mission board: one truth, live updates, zero guessing.
 4. Meetings got shorter. Tension dropped. Momentum came back fast. 🚀
@@ -59,10 +59,10 @@
 ## Thread 5
 
 - App: ClearGlassInc Artemis
-- Category: AI-driven productivity
-- Audience: founders, operators, and high-output teams
-- Emotional benefit: deep control under high-stakes chaos
-- Pain points: task overload with real-world consequences, context switching fatigue in multi-stakeholder environments, forgetting high-impact follow-ups that cost momentum
+- Category: productivity
+- Audience: young professionals and founders
+- Emotional benefit: feeling in control under pressure
+- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
 
 1. I used to panic every Sunday night. No plan felt real. 😬
 2. I'd write goals, then spend Monday reacting to everyone else's emergencies.

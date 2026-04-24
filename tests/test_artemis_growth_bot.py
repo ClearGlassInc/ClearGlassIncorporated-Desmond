@@ -19,7 +19,6 @@ class ArtemisGrowthBotTests(unittest.TestCase):
             original_site = artemis_growth_bot.SITE_PAGE
             original_json = artemis_growth_bot.THREADS_JSON
             original_md = artemis_growth_bot.THREADS_MD
-            original_js = artemis_growth_bot.THREADS_JS
 
             try:
                 artemis_growth_bot.ROOT = root
@@ -28,7 +27,6 @@ class ArtemisGrowthBotTests(unittest.TestCase):
                 artemis_growth_bot.SITE_PAGE = site_page
                 artemis_growth_bot.THREADS_JSON = output_dir / "threads_latest.json"
                 artemis_growth_bot.THREADS_MD = output_dir / "threads_latest.md"
-                artemis_growth_bot.THREADS_JS = output_dir / "threads_data.js"
 
                 run = artemis_growth_bot.write_outputs("ClearGlassInc Artemis")
 
@@ -36,7 +34,6 @@ class ArtemisGrowthBotTests(unittest.TestCase):
                 self.assertTrue(site_page.exists())
                 self.assertTrue((output_dir / "threads_latest.md").exists())
                 self.assertTrue((output_dir / "threads_latest.json").exists())
-                self.assertTrue((output_dir / "threads_data.js").exists())
                 archive_files = list(archive_dir.glob("*.md"))
                 self.assertEqual(len(archive_files), 1)
             finally:
@@ -46,7 +43,6 @@ class ArtemisGrowthBotTests(unittest.TestCase):
                 artemis_growth_bot.SITE_PAGE = original_site
                 artemis_growth_bot.THREADS_JSON = original_json
                 artemis_growth_bot.THREADS_MD = original_md
-                artemis_growth_bot.THREADS_JS = original_js
 
 
 if __name__ == "__main__":

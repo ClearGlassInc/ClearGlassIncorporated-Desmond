@@ -32,6 +32,10 @@ jobs:
             --exclude '.github' \
             --exclude 'docs' \
             --exclude 'scripts' \
+            --exclude 'bots' \
+            --exclude 'tests' \
+            --exclude 'investors' \
+            --exclude 'marketing' \
             ./ _site/
 
       - name: Upload Pages artifact

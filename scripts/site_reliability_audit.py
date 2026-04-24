@@ -43,7 +43,7 @@ class AuditIssue:
 
 
 def is_local_ref(ref: str) -> bool:
-    prefixes = ("http://", "https://", "mailto:", "tel:", "#", "javascript:", "data:")
+    prefixes = ("http://", "https://", "//", "mailto:", "tel:", "#", "javascript:", "data:")
     return not ref.startswith(prefixes)
 
 

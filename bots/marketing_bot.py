@@ -125,7 +125,8 @@ def write_outputs(status: MarketingStatus) -> None:
 
     latest_md = OUTPUT_DIR / "latest.md"
     latest_json = OUTPUT_DIR / "latest.json"
-    archive_md = ARCHIVE_DIR / f"{status.run_utc[:10]}.md"
+    archive_stamp = status.run_utc.replace("+00:00", "Z").replace(":", "")
+    archive_md = ARCHIVE_DIR / f"{archive_stamp}.md"
 
     latest_md.write_text(markdown, encoding="utf-8")
     latest_json.write_text(json_payload, encoding="utf-8")

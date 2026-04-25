@@ -1,8 +1,15 @@
 window.ART_THREADS_DATA = {
   "version": "2026.q2",
   "run": {
-    "run_utc": "2026-04-25T10:15:12+00:00",
-    "context": {
+    "run_utc": "2026-04-24T21:46:39+00:00",
+    "app_name": "ClearGlassInc Artemis",
+    "total_threads": 5,
+    "output_dir": "marketing/output",
+    "site_page": "threads.html"
+  },
+  "threads": [
+    {
+      "thread_number": 1,
       "app_name": "ClearGlassInc Artemis",
       "app_category": "AI-driven productivity",
       "audience": "founders, operators, and high-output teams",
@@ -11,110 +18,138 @@ window.ART_THREADS_DATA = {
         "task overload with real-world consequences",
         "context switching fatigue in multi-stakeholder environments",
         "forgetting high-impact follow-ups that cost momentum"
-      ]
-    },
-    "total_threads": 5,
-    "output_dir": "marketing/output",
-    "site_page": "threads.html"
-  },
-  "threads": [
-    {
-      "thread_number": 1,
+      ],
       "tweets": [
         {
-          "text": "I almost dropped a key message this week, and it shook me. \ud83d\ude35\u200d\ud83d\udcab"
+          "text": "I almost missed the one message that could've changed my week. \ud83d\ude35\u200d\ud83d\udcab"
         },
         {
-          "text": "I was buried in task overload with real-world consequences and my brain went numb at the worst moment."
+          "text": "I had 17 tabs open, 42 unread pings, and zero idea what actually mattered. \ud83d\udcc9"
         },
         {
-          "text": "We ran everything through ClearGlassInc Artemis, and one high-stakes thread surfaced instantly."
+          "text": "Then I ran my day through ClearGlassInc Artemis. It flagged one convo as high-stakes in 8 seconds."
         },
         {
-          "text": "That single reply flipped panic into relief. Real deep control under high-stakes chaos. \u26a1"
+          "text": "That single reply turned into a signed deal before lunch. Relief hit hard. \u26a1"
         },
         {
-          "text": "founders, operators, and high-output teams: when did noise almost cost you something important?"
+          "text": "Be honest: how often does noise hide your biggest opportunity? \ud83d\udc47"
         }
       ]
     },
     {
       "thread_number": 2,
+      "app_name": "ClearGlassInc Artemis",
+      "app_category": "AI-driven productivity",
+      "audience": "founders, operators, and high-output teams",
+      "emotional_benefit": "deep control under high-stakes chaos",
+      "pain_points": [
+        "task overload with real-world consequences",
+        "context switching fatigue in multi-stakeholder environments",
+        "forgetting high-impact follow-ups that cost momentum"
+      ],
       "tweets": [
         {
-          "text": "I looked organized from the outside. Inside? Complete chaos. \ud83e\udee0"
+          "text": "I looked productive. I was actually drowning. \ud83e\udee0"
         },
         {
-          "text": "I kept bouncing through context switching fatigue in multi-stakeholder environments, pretending the stress was normal."
+          "text": "Color-coded calendar. Fancy to-do app. Still ended each day feeling behind and guilty."
         },
         {
-          "text": "After using ClearGlassInc Artemis, I finally saw what was signal vs. distraction."
+          "text": "What changed? Artemis showed me where my time leaked, not where it looked busy."
         },
         {
-          "text": "I finished the day with energy left, not guilt. That felt new. \ud83e\udde0"
+          "text": "Two weeks later: fewer tasks, better output, calmer brain. That's the part no one tells you. \ud83e\udde0"
         },
         {
-          "text": "Do you optimize for looking busy, or actually feeling in control?"
+          "text": "Are you optimizing for busy\u2026 or for peace + results?"
         }
       ]
     },
     {
       "thread_number": 3,
+      "app_name": "ClearGlassInc Artemis",
+      "app_category": "AI-driven productivity",
+      "audience": "founders, operators, and high-output teams",
+      "emotional_benefit": "deep control under high-stakes chaos",
+      "pain_points": [
+        "task overload with real-world consequences",
+        "context switching fatigue in multi-stakeholder environments",
+        "forgetting high-impact follow-ups that cost momentum"
+      ],
       "tweets": [
         {
-          "text": "The scariest part of burnout is how quietly it sneaks in. \ud83d\udd25"
+          "text": "The worst part of burnout? You don't notice it until you snap. \ud83d\udd25"
         },
         {
-          "text": "For me, it started with forgetting high-impact follow-ups that cost momentum and tiny broken promises."
+          "text": "I stopped sleeping well. Started forgetting small promises. Confidence dropped quietly."
         },
         {
-          "text": "ClearGlassInc Artemis started flagging risk moments before they turned into trust damage."
+          "text": "Artemis started surfacing promise-risk moments before they became trust damage."
         },
         {
-          "text": "I stopped apologizing for avoidable misses. Confidence came back. \ud83d\ude4f"
+          "text": "Catching those early gave me my reputation back. And honestly, myself back too. \ud83d\ude4f"
         },
         {
-          "text": "Who else has had small misses hit harder than one big failure?"
+          "text": "Who's felt their credibility slip from tiny misses, not big failures?"
         }
       ]
     },
     {
       "thread_number": 4,
+      "app_name": "ClearGlassInc Artemis",
+      "app_category": "AI-driven productivity",
+      "audience": "founders, operators, and high-output teams",
+      "emotional_benefit": "deep control under high-stakes chaos",
+      "pain_points": [
+        "task overload with real-world consequences",
+        "context switching fatigue in multi-stakeholder environments",
+        "forgetting high-impact follow-ups that cost momentum"
+      ],
       "tweets": [
         {
-          "text": "My team said, \u2018we need clarity.\u2019 I heard, \u2018you\u2019re dropping the ball.\u2019 \ud83d\ude36"
+          "text": "My team said 'we need clarity.' I heard 'you're failing us.' \ud83d\ude36"
         },
         {
-          "text": "We were stuck in task overload with real-world consequences and re-explaining priorities every day."
+          "text": "We kept re-explaining priorities in every standup. Same confusion, new day."
         },
         {
-          "text": "Then we shared one live board in ClearGlassInc Artemis. Same truth, same priorities."
+          "text": "We built a shared Artemis mission board: one truth, live updates, zero guessing."
         },
         {
-          "text": "Tension dropped fast. Execution got boring again (in a good way). \ud83d\ude80"
+          "text": "Meetings got shorter. Tension dropped. Momentum came back fast. \ud83d\ude80"
         },
         {
-          "text": "Leads: what hurts more right now, unclear priorities or unclear ownership?"
+          "text": "Team leads: what creates more drag for you\u2014unclear priorities or unclear ownership?"
         }
       ]
     },
     {
       "thread_number": 5,
+      "app_name": "ClearGlassInc Artemis",
+      "app_category": "AI-driven productivity",
+      "audience": "founders, operators, and high-output teams",
+      "emotional_benefit": "deep control under high-stakes chaos",
+      "pain_points": [
+        "task overload with real-world consequences",
+        "context switching fatigue in multi-stakeholder environments",
+        "forgetting high-impact follow-ups that cost momentum"
+      ],
       "tweets": [
         {
-          "text": "Sunday nights used to feel like a countdown clock. \ud83d\ude2c"
+          "text": "I used to panic every Sunday night. No plan felt real. \ud83d\ude2c"
         },
         {
-          "text": "I\u2019d plan hard, then Monday disappeared into context switching fatigue in multi-stakeholder environments."
+          "text": "I'd write goals, then spend Monday reacting to everyone else's emergencies."
         },
         {
-          "text": "Now ClearGlassInc Artemis prebuilds my week around impact, urgency, and headspace."
+          "text": "Now Artemis prebuilds my week by impact, urgency, and energy level."
         },
         {
-          "text": "I still work hard, but I don\u2019t feel hunted. deep control under high-stakes chaos. \ud83d\udc8e"
+          "text": "I still work hard. I just don't feel hunted anymore. That shift is everything. \ud83d\udc8e"
         },
         {
-          "text": "Tomorrow check-in: starting with intention or pure survival mode?"
+          "text": "Sunday check: are you starting tomorrow with intention or survival mode?"
         }
       ]
     }

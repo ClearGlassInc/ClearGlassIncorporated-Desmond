@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>CLEARGLASS INC · ARTEMIS IV · TACTICAL INTELLIGENCE CORE</title>
+  <meta name="description" content="ClearGlassInc Artemis IV tactical intelligence core: live threat operations, mission workflows, and operator-centric command shell.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://clearglassinc.github.io/artemis-iv.html">
+  <style>
+    :root {
+      --bg: #05070c;
+      --panel: #0c1322;
+      --panel-hi: #111d33;
+      --line: rgba(56, 189, 248, .22);
+      --txt: #dbeafe;
+      --muted: #8ea6c6;
+      --cyan: #38bdf8;
+      --violet: #a78bfa;
+      --green: #34d399;
+      --red: #f87171;
+      --mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+      --sans: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      color: var(--txt);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(56,189,248,.14), transparent 34%),
+        radial-gradient(circle at 85% 85%, rgba(167,139,250,.12), transparent 38%),
+        var(--bg);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .scanlines { position: fixed; inset: 0; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(255,255,255,.03) 0, rgba(255,255,255,.03) 1px, transparent 2px, transparent 5px); opacity: .08; z-index: 1; }
+    .particle-field { position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(rgba(56,189,248,.3) 1px, transparent 1px); background-size: 48px 48px; opacity: .08; z-index: 0; }
+    .cursor-dot, .cursor-ring { display: none; }
+
+    #boot, #gate { display: none; }
+
+    #shell {
+      position: relative;
+      z-index: 2;
+      width: min(1320px, 96vw);
+      margin: 18px auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(10, 16, 28, .78);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 40px rgba(56,189,248,.12);
+      overflow: hidden;
+    }
+    #nav-strip {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      padding: 12px;
+      background: #0a1020;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-icon {
+      text-align: center;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      background: rgba(56,189,248,.04);
+    }
+    .nav-icon.active {
+      border-color: var(--cyan);
+      box-shadow: inset 0 0 20px rgba(56,189,248,.16);
+    }
+    #cmd-header, #status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: .8rem;
+    }
+    #status-bar { border-top: 1px solid var(--line); border-bottom: 0; color: var(--muted); }
+    .header-title { font-weight: 700; letter-spacing: .08em; }
+    .header-badge { border: 1px solid var(--cyan); color: var(--cyan); border-radius: 999px; padding: 3px 10px; }
+
+    #tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .tab {
+      font-family: var(--mono);
+      font-size: .75rem;
+      letter-spacing: .08em;
+      color: var(--muted);
+      border: 1px solid rgba(142,166,198,.3);
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+    .tab.active { color: var(--txt); border-color: var(--cyan); }
+
+    #content-main { padding: 16px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .kpi-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .kpi-card.critical { border-color: rgba(248,113,113,.45); }
+    .kpi-card.live { border-color: rgba(52,211,153,.45); }
+    .kpi-label { font-family: var(--mono); color: var(--muted); font-size: .72rem; letter-spacing: .08em; }
+    .kpi-value { font-size: 1.4rem; font-weight: 700; margin: 6px 0 4px; }
+    .kpi-value.critical { color: var(--red); }
+    .kpi-value.success { color: var(--green); }
+
+    .intel-feed, .script-container {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .feed-title, .script-title { color: var(--cyan); font-family: var(--mono); font-size: .76rem; letter-spacing: .08em; margin-bottom: 8px; }
+    canvas { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #07101f; }
+
+    .script-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .script-actions { display: flex; gap: 8px; }
+    .code-block { max-height: 300px; overflow: auto; white-space: pre-wrap; font-family: var(--mono); font-size: .74rem; color: #b8d3f7; }
+
+    .mission-entries, .ai-response {
+      min-height: 100px;
+      background: #070f1d;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .api-input, .ai-prompt, .console-input, .gate-input {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(142,166,198,.35);
+      background: #091325;
+      color: var(--txt);
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      font-family: var(--mono);
+    }
+    .console-input { resize: vertical; min-height: 44px; }
+
+    #console-panel {
+      border-top: 1px solid var(--line);
+      padding: 12px 16px;
+      background: #080f1d;
+    }
+    .console-buttons, .gate-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .cmd-btn, .action-btn, .btn-primary, .btn-secondary {
+      border: 1px solid var(--line);
+      color: var(--txt);
+      background: var(--panel-hi);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-family: var(--mono);
+      font-size: .72rem;
+      cursor: pointer;
+    }
+    .btn-primary { border-color: var(--cyan); }
+    .btn-secondary { border-color: var(--violet); }
+
+    #intel-sidebar { display: none; }
+    @media (min-width: 1080px) {
+      #shell { display: grid; grid-template-columns: 1fr 300px; }
+      #nav-strip, #cmd-header, #tabs, #content-main, #console-panel, #status-bar { grid-column: 1; }
+      #intel-sidebar {
+        display: block;
+        grid-column: 2;
+        grid-row: 1 / span 6;
+        border-left: 1px solid var(--line);
+        padding: 14px;
+        background: #081020;
+      }
+      .sb-section { font-family: var(--mono); font-size: .75rem; color: var(--cyan); letter-spacing: .08em; margin: 8px 0; }
+      #threatActorList, #liveFeedStatus { color: var(--muted); font-family: var(--mono); font-size: .72rem; line-height: 1.7; }
+    }
+  </style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="particle-field"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- BOOT SEQUENCE -->
+<div id="boot">
+  <div class="boot-hex">◈</div>
+  <div class="boot-title">ARTEMIS IV</div>
+  <div class="boot-subtitle">CLEARGLASS INC · QUANTUM INTELLIGENCE MESH</div>
+  <div class="boot-bar"><div class="boot-fill" id="bootFill"></div></div>
+  <div id="bootLog" class="boot-log">INITIALIZING SECURE ENCLAVE</div>
+</div>
+
+<!-- GATE AUTHENTICATION -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-hex">◈</div>
+    <div class="gate-title">ARTEMIS IV GATE</div>
+    <div class="gate-live-badge">
+      <div class="live-indicator"></div>
+      7 LIVE STRATEGIC FEEDS · GUARDIAN MODULE READY
+    </div>
+    <input class="gate-input" id="apiKeyInput" type="password" placeholder="Claude API key (optional)">
+    <div class="gate-buttons">
+      <button id="launchKeyless" class="btn-primary">LAUNCH KEYLESS</button>
+      <button id="launchWithKey" class="btn-secondary">USE KEY</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN SHELL -->
+<div id="shell">
+  <div id="nav-strip">
+    <div class="nav-icon active" data-tab="dashboard">⬡</div>
+    <div class="nav-icon" data-tab="threat">🎯</div>
+    <div class="nav-icon" data-tab="intel">◈</div>
+    <div class="nav-icon" data-tab="quantum">⚛</div>
+    <div class="nav-icon" data-tab="guardian">🛡️</div>
+    <div class="nav-icon" data-tab="mission">📡</div>
+    <div class="nav-icon" data-tab="nexus">⚙</div>
+  </div>
+
+  <div id="intel-sidebar">
+    <div class="sb-section">ACTIVE THREAT ACTORS</div>
+    <div id="threatActorList"></div>
+    <div class="sb-section">LIVE INTELLIGENCE FEEDS</div>
+    <div id="liveFeedStatus"></div>
+  </div>
+
+  <div id="cmd-header">
+    <div class="header-title" id="currentPanelLabel">DASHBOARD</div>
+    <div class="header-badge" id="aiModeBadge">KEYLESS</div>
+    <div class="feed-indicator">
+      <span>📡 NVD</span> <span>🌍 GDELT</span> <span>✈ ADS-B</span> <span>🌊 USGS</span>
+    </div>
+  </div>
+
+  <div id="tabs">
+    <div class="tab active" data-tab="dashboard">DASHBOARD</div>
+    <div class="tab" data-tab="threat">THREAT MATRIX</div>
+    <div class="tab" data-tab="intel">INTEL FUSION</div>
+    <div class="tab" data-tab="quantum">QUANTUM SHIELD</div>
+    <div class="tab" data-tab="guardian">GUARDIAN</div>
+    <div class="tab" data-tab="mission">MISSION LOG</div>
+    <div class="tab" data-tab="nexus">NEXUS OPS</div>
+  </div>
+
+  <div id="content-main">
+    <div class="panel active" id="panel-dashboard">
+      <div class="kpi-grid">
+        <div class="kpi-card critical"><div class="kpi-label">PIPELINE VALUE</div><div class="kpi-value" id="pipelineVal">$2.14M</div><div>7 active deals</div></div>
+        <div class="kpi-card"><div class="kpi-label">FY2026 TARGET</div><div class="kpi-value" id="targetPct">63%</div><div>$630K / $1M</div></div>
+        <div class="kpi-card live"><div class="kpi-label">CRITICAL CVES (7d)</div><div class="kpi-value" id="cveCount">—</div><div id="cveFirst"></div></div>
+        <div class="kpi-card"><div class="kpi-label">THREAT LEVEL</div><div class="kpi-value critical">ELEVATED</div><div>APT41 · FIN7</div></div>
+      </div>
+      <div class="intel-feed"><div class="feed-title">◈ GEOPOLITICAL PULSE (GDELT)</div><div id="gdeltFeed">Loading strategic intelligence...</div></div>
+      <canvas id="threatMapCanvas" width="800" height="280"></canvas>
+    </div>
+
+    <div class="panel" id="panel-threat">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">APT GROUPS TRACKED</div><div class="kpi-value">12</div></div>
+        <div class="kpi-card"><div class="kpi-label">IOCS (LAST 30D)</div><div class="kpi-value">2,847</div></div>
+        <div class="kpi-card critical"><div class="kpi-label">CRITICAL VULNS</div><div class="kpi-value" id="threatCveCount">—</div></div>
+      </div>
+      <div id="aptList" class="apt-list"></div>
+    </div>
+
+    <div class="panel" id="panel-intel">
+      <div class="intel-feed"><div>📡 ALL-SOURCE INTELLIGENCE FEED</div><div id="fusionFeed">Fusion core active. Aggregating SIGINT/OSINT/HUMINT.</div></div>
+      <div class="intel-feed"><div>🌍 GEOSPATIAL EVENTS</div><div id="geospatialEvents">Monitoring Canadian critical infrastructure.</div></div>
+    </div>
+
+    <div class="panel" id="panel-quantum">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">QKD ENTANGLEMENT</div><div class="kpi-value">99.2%</div></div>
+        <div class="kpi-card"><div class="kpi-label">FHE ROUNDS</div><div class="kpi-value">KYBER-1024</div></div>
+        <div class="kpi-card"><div class="kpi-label">BREACH PROB.</div><div class="kpi-value success">&lt;0.02%</div></div>
+      </div>
+      <canvas id="quantumCanvas" width="800" height="220"></canvas>
+    </div>
+
+    <div class="panel" id="panel-guardian">
+      <div class="script-container">
+        <div class="script-header">
+          <span class="script-title">CLEARGLASS GUARDIAN · ULTIMATE EDITION</span>
+          <div class="script-actions">
+            <button id="copyGuardianScript" class="action-btn">📋 Copy</button>
+            <button id="downloadGuardianScript" class="action-btn">⬇️ Download .ps1</button>
+          </div>
+        </div>
+        <pre id="guardianScriptContent" class="code-block">Loading Guardian script...</pre>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-mission">
+      <div id="missionEntries" class="mission-entries"></div>
+      <div><button class="cmd-btn" id="clearLogBtn">CLEAR LOG</button></div>
+    </div>
+
+    <div class="panel" id="panel-nexus">
+      <div class="intel-feed"><div>⚙️ CLAUDE API INTEGRATION (OPTIONAL)</div><input type="password" id="nexusApiKey" class="api-input" placeholder="sk-ant-..."></div>
+      <div class="intel-feed">
+        <div>🧠 STRATEGIC AI CONSOLE</div>
+        <textarea id="aiPrompt" class="ai-prompt" rows="2" placeholder="Query intelligence: 'Burlington NEXUS close strategy'"></textarea>
+        <button id="execAiCmd" class="cmd-btn">EXECUTE</button>
+        <div id="aiResponse" class="ai-response"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="console-panel">
+    <textarea id="consoleInput" class="console-input" rows="1" placeholder="ARTEMIS>  Type intelligence query (sales, threat, CVE map)..."></textarea>
+    <div class="console-buttons" id="quickActions">
+      <button class="cmd-btn" data-query="Map active CVEs to Ontario municipalities sales pitch">CVE → SALES</button>
+      <button class="cmd-btn" data-query="Burlington closing strategy: 7 days left, IBM threat, 10 LinkedIn viewers">BURLINGTON CLOSE</button>
+      <button class="cmd-btn" data-query="Halton Police AEGIS $180K 90% probability: draft SMS to Chief">HALTON SMS</button>
+      <button class="cmd-btn" data-query="Bill C-26 compliance urgency for municipal CIO">C-26 BRIEF</button>
+    </div>
+  </div>
+
+  <div id="status-bar">
+    <span>◈ ARTEMIS IV · TACTICAL CORE</span>
+    <span id="liveFeedCount">0/7 FEEDS ACTIVE</span>
+    <span id="clock">--:--:--</span>
+  </div>
+</div>
+
+<script>
+  const tabs = [...document.querySelectorAll('.tab')];
+  const icons = [...document.querySelectorAll('.nav-icon')];
+  const panels = [...document.querySelectorAll('.panel')];
+  const label = document.getElementById('currentPanelLabel');
+  const clock = document.getElementById('clock');
+  const threatActorList = document.getElementById('threatActorList');
+  const liveFeedStatus = document.getElementById('liveFeedStatus');
+  const missionEntries = document.getElementById('missionEntries');
+  const aiResponse = document.getElementById('aiResponse');
+
+  const demoThreatActors = ['APT41 (ELEVATED)', 'FIN7 (ACTIVE)', 'Lazarus (MONITOR)', 'TA505 (LOW)'];
+  threatActorList.innerHTML = demoThreatActors.map(x => `• ${x}`).join('<br>');
+  liveFeedStatus.innerHTML = ['NVD: ONLINE', 'GDELT: ONLINE', 'ADS-B: ONLINE', 'USGS: ONLINE', 'WHOIS: DEGRADED'].join('<br>');
+
+  function activate(tab) {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    icons.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    panels.forEach(p => p.classList.toggle('active', p.id === `panel-${tab}`));
+    label.textContent = (tab || '').toUpperCase();
+  }
+
+  [...tabs, ...icons].forEach(el => el.addEventListener('click', () => activate(el.dataset.tab)));
+
+  function tick() {
+    const d = new Date();
+    clock.textContent = d.toLocaleTimeString();
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  document.getElementById('clearLogBtn')?.addEventListener('click', () => missionEntries.textContent = 'Mission log cleared.');
+  document.getElementById('execAiCmd')?.addEventListener('click', () => {
+    const prompt = document.getElementById('aiPrompt').value.trim();
+    aiResponse.textContent = prompt
+      ? `AI response (simulated): Prioritize municipal critical infrastructure outreach, then map CVE clusters to procurement urgency.`
+      : 'Provide a prompt to execute tactical analysis.';
+  });
+
+  document.getElementById('copyGuardianScript')?.addEventListener('click', async () => {
+    const content = document.getElementById('guardianScriptContent').textContent;
+    await navigator.clipboard.writeText(content);
+  });
+
+  document.getElementById('downloadGuardianScript')?.addEventListener('click', () => {
+    window.location.href = 'downloads/CLEARGLASS_GUARDIAN_v5.0.ps1';
+  });
+
+  document.getElementById('guardianScriptContent').textContent = `# Guardian bootstrap\nWrite-Host "Guardian Ultimate Edition"\nWrite-Host "Mode: Tactical"`;
+
+  const quickActions = document.getElementById('quickActions');
+  quickActions?.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-query]');
+    if (!btn) return;
+    document.getElementById('consoleInput').value = btn.dataset.query;
+    missionEntries.innerHTML = `<strong>Queued:</strong> ${btn.dataset.query}`;
+  });
+</script>
+</body>
+</html>

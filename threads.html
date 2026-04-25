@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClearGlassInc Artemis · Threads Prompt Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+:root { --bg:#070b13; --panel:#111827; --line:#334155; --txt:#f8fafc; --muted:#cbd5e1; --acc:#38bdf8; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter',system-ui,sans-serif; background:radial-gradient(circle at 10% 10%, #152640, var(--bg)); color:var(--txt); }
+.topbar { position:sticky; top:0; background:rgba(7,11,19,.84); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+.container { width:min(1040px,92vw); margin:0 auto; }
+.topbar .container { display:flex; justify-content:space-between; padding:14px 0; }
+.topbar a { color:var(--muted); text-decoration:none; }
+.panel { margin:20px 0; background:rgba(17,24,39,.92); border:1px solid var(--line); border-radius:16px; padding:18px; }
+.pill { margin-top:10px; color:var(--muted); font-size:.92rem; }
+.form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+label { display:grid; gap:6px; color:var(--muted); font-size:.9rem; }
+input { padding:10px; border-radius:10px; border:1px solid var(--line); background:#0b1220; color:var(--txt); }
+.actions { grid-column:1/-1; display:flex; gap:10px; flex-wrap:wrap; }
+button { border:1px solid var(--line); background:#0f172a; color:var(--txt); border-radius:10px; padding:10px 12px; cursor:pointer; }
+button:hover { border-color:var(--acc); }
+.thread-grid { display:grid; gap:12px; }
+.thread-card { border:1px solid var(--line); border-radius:14px; background:#0f172a; padding:14px; }
+.thread-card h3 { margin:0 0 10px; }
+.thread-card ul { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+.tweet-index { color:var(--acc); margin-right:6px; font-weight:700; }
+.reveal { opacity:0; transform:translateY(16px); transition:all .5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+@media (max-width: 760px) { .form-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <strong>ClearGlassInc Artemis · Threads Engine</strong>
+      <a href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel reveal">
+      <h1>2026 Threads Prompt Generator</h1>
+      <p>Build 5 emotion-first Threads with one click. Designed for reply-heavy, conversational engagement.</p>
+      <div id="runMeta" class="pill">Loading run metadata…</div>
+    </section>
+
+    <section class="panel reveal">
+      <h2>App Inputs</h2>
+      <form id="contextForm" class="form-grid">
+        <label>App name<input id="appName" required /></label>
+        <label>Category<input id="appCategory" required /></label>
+        <label>Audience<input id="audience" required /></label>
+        <label>Emotional benefit<input id="benefit" required /></label>
+        <label>Pain point 1<input id="pain1" required /></label>
+        <label>Pain point 2<input id="pain2" required /></label>
+        <label>Pain point 3<input id="pain3" required /></label>
+        <div class="actions">
+          <button type="submit">Generate 5 Threads</button>
+          <button id="copyAllBtn" type="button">Copy all</button>
+          <button id="downloadBtn" type="button">Download JSON</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel reveal">
+      <h2>Generated Threads</h2>
+      <div id="threadGrid" class="thread-grid"></div>
+    </section>
+  </main>
+
+  <script src="marketing/output/threads_data.js"></script>
+  <script>
+(() => {
+  const data = window.ART_THREADS_DATA || {};
+  const runMeta = document.getElementById('runMeta');
+  const form = document.getElementById('contextForm');
+  const grid = document.getElementById('threadGrid');
+  const copyAllBtn = document.getElementById('copyAllBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  const defaults = {
+    app_name: data?.run?.context?.app_name || 'ClearGlassInc Artemis',
+    app_category: data?.run?.context?.app_category || 'AI-driven productivity',
+    audience: data?.run?.context?.audience || 'founders, operators, and high-output teams',
+    emotional_benefit: data?.run?.context?.emotional_benefit || 'deep control under high-stakes chaos',
+    pain_points: data?.run?.context?.pain_points || [
+      'task overload with real-world consequences',
+      'context switching fatigue in multi-stakeholder environments',
+      'forgetting high-impact follow-ups that cost momentum'
+    ]
+  };
+
+  const hooks = [
+    'I almost dropped a key message this week, and it shook me. 😵‍💫',
+    'I looked organized from the outside. Inside? Complete chaos. 🫠',
+    'The scariest part of burnout is how quietly it sneaks in. 🔥',
+    'My team said, “we need clarity.” I heard, “you’re dropping the ball.” 😶',
+    'Sunday nights used to feel like a countdown clock. 😬'
+  ];
+
+  function buildThreads(ctx) {
+    const [p1, p2, p3] = ctx.pain_points;
+    const app = ctx.app_name;
+    const aud = ctx.audience;
+    const benefit = ctx.emotional_benefit;
+    return [
+      [hooks[0], `I was buried in ${p1} and my brain went numb at the worst moment.`, `We ran everything through ${app}, and one high-stakes thread surfaced instantly.`, `That single reply flipped panic into relief. Real ${benefit}. ⚡`, `${aud}: when did noise almost cost you something important?`],
+      [hooks[1], `I kept bouncing through ${p2}, pretending the stress was normal.`, `After using ${app}, I finally saw what was signal vs. distraction.`, 'I finished the day with energy left, not guilt. That felt new. 🧠', 'Do you optimize for looking busy, or actually feeling in control?'],
+      [hooks[2], `For me, it started with ${p3} and tiny broken promises.`, `${app} started flagging risk moments before they turned into trust damage.`, 'I stopped apologizing for avoidable misses. Confidence came back. 🙏', 'Who else has had small misses hit harder than one big failure?'],
+      [hooks[3], `We were stuck in ${p1} and re-explaining priorities every day.`, `Then we shared one live board in ${app}. Same truth, same priorities.`, 'Tension dropped fast. Execution got boring again (in a good way). 🚀', 'Leads: what hurts more right now, unclear priorities or unclear ownership?'],
+      [hooks[4], `I’d plan hard, then Monday disappeared into ${p2}.`, `${app} prebuilds my week around impact, urgency, and headspace.`, `I still work hard, but I don’t feel hunted. ${benefit}. 💎`, 'Tomorrow check-in: starting with intention or pure survival mode?']
+    ];
+  }
+
+  function renderThreads(threads) {
+    grid.innerHTML = threads.map((thread, idx) => `
+      <article class="thread-card">
+        <h3>Thread ${idx + 1}</h3>
+        <ul>${thread.map((tweet, i) => `<li><span class="tweet-index">${i + 1}.</span>${tweet}</li>`).join('')}</ul>
+      </article>
+    `).join('');
+  }
+
+  function currentContext() {
+    return {
+      app_name: document.getElementById('appName').value.trim(),
+      app_category: document.getElementById('appCategory').value.trim(),
+      audience: document.getElementById('audience').value.trim(),
+      emotional_benefit: document.getElementById('benefit').value.trim(),
+      pain_points: [
+        document.getElementById('pain1').value.trim(),
+        document.getElementById('pain2').value.trim(),
+        document.getElementById('pain3').value.trim()
+      ]
+    };
+  }
+
+  function fillDefaults() {
+    document.getElementById('appName').value = defaults.app_name;
+    document.getElementById('appCategory').value = defaults.app_category;
+    document.getElementById('audience').value = defaults.audience;
+    document.getElementById('benefit').value = defaults.emotional_benefit;
+    document.getElementById('pain1').value = defaults.pain_points[0];
+    document.getElementById('pain2').value = defaults.pain_points[1];
+    document.getElementById('pain3').value = defaults.pain_points[2];
+  }
+
+  function copyAll() {
+    const threads = buildThreads(currentContext());
+    const text = threads.map((thread, idx) => `Thread ${idx + 1}\n` + thread.map((t, i) => `${i + 1}. ${t}`).join('\n')).join('\n\n');
+    navigator.clipboard.writeText(text).then(() => {
+      copyAllBtn.textContent = 'Copied ✓';
+      setTimeout(() => (copyAllBtn.textContent = 'Copy all'), 1000);
+    });
+  }
+
+  function downloadJson() {
+    const payload = { context: currentContext(), threads: buildThreads(currentContext()) };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'threads-generator-output.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    renderThreads(buildThreads(currentContext()));
+  });
+  copyAllBtn.addEventListener('click', copyAll);
+  downloadBtn.addEventListener('click', downloadJson);
+
+  fillDefaults();
+  renderThreads(buildThreads(defaults));
+  runMeta.textContent = data?.run?.run_utc
+    ? `Latest bot run: ${data.run.run_utc} UTC`
+    : 'Local generator mode';
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach((node) => observer.observe(node));
+})();
+</script>
+</body>
+</html>

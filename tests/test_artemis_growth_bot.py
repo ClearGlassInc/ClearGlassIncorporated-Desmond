@@ -1,0 +1,64 @@
+import tempfile
+import unittest
+from pathlib import Path
+
+from bots import artemis_growth_bot
+
+
+class ArtemisGrowthBotTests(unittest.TestCase):
+    def test_write_outputs_creates_site_and_archive(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            output_dir = root / "marketing" / "output"
+            archive_dir = output_dir / "threads_archive"
+            site_page = root / "threads.html"
+
+            original_root = artemis_growth_bot.ROOT
+            original_output = artemis_growth_bot.OUTPUT_DIR
+            original_archive = artemis_growth_bot.THREADS_ARCHIVE_DIR
+            original_site = artemis_growth_bot.SITE_PAGE
+            original_json = artemis_growth_bot.THREADS_JSON
+            original_md = artemis_growth_bot.THREADS_MD
+            original_js = artemis_growth_bot.THREADS_JS
+
+            try:
+                artemis_growth_bot.ROOT = root
+                artemis_growth_bot.OUTPUT_DIR = output_dir
+                artemis_growth_bot.THREADS_ARCHIVE_DIR = archive_dir
+                artemis_growth_bot.SITE_PAGE = site_page
+                artemis_growth_bot.THREADS_JSON = output_dir / "threads_latest.json"
+                artemis_growth_bot.THREADS_MD = output_dir / "threads_latest.md"
+                artemis_growth_bot.THREADS_JS = output_dir / "threads_data.js"
+
+                run = artemis_growth_bot.write_outputs(
+                    artemis_growth_bot.AppContext(
+                        app_name="ClearGlassInc Artemis",
+                        app_category="AI-driven productivity",
+                        audience="founders",
+                        emotional_benefit="control",
+                        pain_points=["overload", "context-switching", "forgotten follow-ups"],
+                    )
+                )
+
+                self.assertEqual(run.total_threads, 5)
+                self.assertTrue(site_page.exists())
+                self.assertTrue((output_dir / "threads_latest.md").exists())
+                self.assertTrue((output_dir / "threads_latest.json").exists())
+                self.assertTrue((output_dir / "threads_data.js").exists())
+                site_html = site_page.read_text(encoding="utf-8")
+                self.assertIn("contextForm", site_html)
+                self.assertIn("Generate 5 Threads", site_html)
+                archive_files = list(archive_dir.glob("*.md"))
+                self.assertEqual(len(archive_files), 1)
+            finally:
+                artemis_growth_bot.ROOT = original_root
+                artemis_growth_bot.OUTPUT_DIR = original_output
+                artemis_growth_bot.THREADS_ARCHIVE_DIR = original_archive
+                artemis_growth_bot.SITE_PAGE = original_site
+                artemis_growth_bot.THREADS_JSON = original_json
+                artemis_growth_bot.THREADS_MD = original_md
+                artemis_growth_bot.THREADS_JS = original_js
+
+
+if __name__ == "__main__":
+    unittest.main()

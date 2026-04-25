@@ -79,7 +79,7 @@ def build_threads(app_name: str = "ClearGlassInc Artemis") -> list[ThreadBundle]
             tweets=[
                 Tweet("The worst part of burnout? You don't notice it until you snap. 🔥"),
                 Tweet("I stopped sleeping well. Started forgetting small promises. Confidence dropped quietly."),
-                Tweet("Artemis started surfacing ""promise-risk"" moments before they became trust damage."),
+                Tweet('Artemis started surfacing "promise-risk" moments before they became trust damage.'),
                 Tweet("Catching those early gave me my reputation back. And honestly, myself back too. 🙏"),
                 Tweet("Who's felt their credibility slip from tiny misses, not big failures?"),
             ],

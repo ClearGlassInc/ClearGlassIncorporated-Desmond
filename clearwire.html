@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEGOFORGE - Futuristic Cybersecurity Terminal</title>
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background: #0d1117;
+            color: #c9d1d9;
+            overflow: hidden;
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 4rem;
+            color: #8b5cf6;
+            text-shadow: 0px 0px 10px #9333ea, 0px 0px 20px #9333ea;
+        }
+
+        /* Logs and Features */
+        .logs {
+            background: rgba(28, 31, 38, 0.8);
+            border: 1px solid #8b5cf6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            max-width: 80%;
+            overflow-y: auto;
+            height: 300px;
+        }
+
+        .logs p {
+            margin: 0;
+            color: #a5b4fc;
+            font-size: 1rem;
+        }
+
+        .command-menu {
+            margin-top: 20px;
+        }
+
+        .command {
+            background: #1E293B;
+            color: #c9d1d9;
+            border: 1px solid #3B82F6;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .command:hover {
+            background: #3B82F6;
+            color: #0d1117;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>STEGOFORGE</h1>
+        <div class="logs">
+            <p>Initializing STEGOFORGE Terminal...</p>
+            <p>Loading Cryptographic Modules...</p>
+            <p>AI-Driven Forensic Modules Enabled...</p>
+            <p>System Ready for Commands.</p>
+        </div>
+        <div class="command-menu">
+            <button class="command">Encode</button>
+            <button class="command">Decode</button>
+            <button class="command">Detect</button>
+            <button class="command">Scan</button>
+            <button class="command">Encrypt</button>
+            <button class="command">Diff</button>
+        </div>
+    </div>
+</body>
+</html>

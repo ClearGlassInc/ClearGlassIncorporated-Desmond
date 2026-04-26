@@ -150,6 +150,7 @@ def render_site_page(threads: list[ThreadBundle]) -> str:
   <meta charset=\"UTF-8\" />
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
   <title>ClearGlassInc Artemis Threads Kit</title>
+  <link rel=\"stylesheet\" href=\"/assets/css/glass.css\">
   <style>
     body {{ font-family: Inter, system-ui, sans-serif; margin: 0; background: #080b12; color: #f3f5f9; }}
     nav.site-nav {{ position: sticky; top: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem,4vw,3rem); height: 64px; background: rgba(8,11,18,.88); backdrop-filter: blur(24px); border-bottom: 1px solid #1e2d40; }}

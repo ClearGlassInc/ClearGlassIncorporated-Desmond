@@ -1,0 +1,605 @@
+/* ============================================================
+   ClearGlass Inc. — White Glass Design System
+   Palette · Pure white · Clear glass · Premium minimalism
+   Linked after each page's own <style> block so overrides win.
+   ============================================================ */
+
+/* ────────────────────────────────────────────────────────────
+   1. DESIGN TOKENS — CSS variable overrides (all pages)
+   ──────────────────────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --bg:            #f7f8fa;
+  --white:         #f7f8fa;
+  --off:           #eff1f4;
+  --black:         #f7f8fa;   /* artemis.html body bg */
+  --deep:          #eff1f4;
+  --surface:       #ffffff;
+
+  /* Glass panels */
+  --glass:         rgba(255,255,255,.78);
+  --glass-strong:  rgba(255,255,255,.94);
+  --glass-border:  rgba(0,0,0,.07);
+  --panel:         rgba(255,255,255,.80);
+  --panel2:        rgba(255,255,255,.96);
+
+  /* Borders & shadows */
+  --border:        rgba(0,0,0,.07);
+  --border-hi:     rgba(0,0,0,.14);
+  --line:          rgba(0,0,0,.07);
+  --shadow:        0 8px 40px rgba(0,0,0,.06);
+  --glow-blue:     0 4px 28px rgba(0,0,0,.07);
+
+  /* Text */
+  --text:          #0c0e12;
+  --text-2:        #374151;
+  --text-3:        #6b7280;
+  --text-4:        #9ca3af;
+  --muted:         #6b7280;
+  --soft:          #9ca3af;
+
+  /* Artemis text (dark-page variables → dark text on light bg) */
+  --dim:           rgba(12,14,18,.62);
+  --dimmer:        rgba(12,14,18,.38);
+
+  /* Dark chrome (buttons, accents) */
+  --dark:          #0c0e12;
+  --dark-2:        #1c1f26;
+  --dark-3:        #2c2f38;
+  --acc:           #0c0e12;
+  --acc2:          #374151;
+
+  /* Replace neon prisms with monochrome */
+  --prism-1:  #0c0e12;
+  --prism-2:  #374151;
+  --prism-3:  #6b7280;
+  --prism-4:  #374151;
+  --prism-5:  #6b7280;
+  --prism-6:  #9ca3af;
+  --blue:     #0c0e12;
+  --violet:   #374151;
+  --pink:     #6b7280;
+  --gold:     #374151;
+  --green:    #374151;
+
+  /* Replace rainbow crystal with platinum shimmer */
+  --crystal: linear-gradient(135deg,#e6e8ec 0%,#f4f5f7 40%,#ffffff 70%,#e8eaee 100%);
+}
+
+/* ────────────────────────────────────────────────────────────
+   2. BASE
+   ──────────────────────────────────────────────────────────── */
+html { background: #f7f8fa; }
+
+body {
+  background: linear-gradient(180deg,#ffffff 0%,#f4f5f8 100%) !important;
+  color: #0c0e12 !important;
+}
+
+/* Strip artemis.html's dark radial-gradient body::before */
+body::before {
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 0%, rgba(0,0,0,.018) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 90%, rgba(0,0,0,.012) 0%, transparent 60%) !important;
+}
+
+/* Hide animated cursor glow */
+.cursor-glow { display: none !important; }
+
+/* ────────────────────────────────────────────────────────────
+   3. NAVIGATION
+   ──────────────────────────────────────────────────────────── */
+
+/* index + artemis fixed nav */
+.nav {
+  background: rgba(255,255,255,.86) !important;
+  border-bottom: 1px solid rgba(0,0,0,.07) !important;
+  box-shadow: 0 1px 16px rgba(0,0,0,.05) !important;
+}
+.nav.scrolled {
+  background: rgba(255,255,255,.96) !important;
+  box-shadow: 0 2px 24px rgba(0,0,0,.07) !important;
+}
+
+/* Nav brand text */
+.nav-brand, .nav-title { color: #0c0e12 !important; }
+.nav-title em { color: rgba(12,14,18,.38) !important; }
+
+/* Nav logo mark */
+.nav-logo {
+  background: linear-gradient(145deg,#f0f2f5,#ffffff) !important;
+  color: #0c0e12 !important;
+  border: 1px solid rgba(0,0,0,.1) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06) !important;
+}
+
+/* Nav badge */
+.nav-badge {
+  color: rgba(12,14,18,.48) !important;
+  border-color: rgba(0,0,0,.12) !important;
+  background: rgba(0,0,0,.03) !important;
+}
+
+/* Nav links */
+.nav-links a { color: rgba(12,14,18,.58) !important; }
+.nav-links a:hover {
+  color: #0c0e12 !important;
+  background: rgba(0,0,0,.04) !important;
+}
+.nav-links .cta {
+  background: #0c0e12 !important;
+  color: #ffffff !important;
+}
+.nav-links .cta:hover {
+  background: #1c1f26 !important;
+  color: #ffffff !important;
+}
+
+/* guardian.html scrolled nav (glass2 panel) */
+.navwrap .glass2.nav {
+  background: rgba(255,255,255,.92) !important;
+}
+
+/* threads.html sticky nav */
+nav.site-nav {
+  background: rgba(255,255,255,.88) !important;
+  border-bottom: 1px solid rgba(0,0,0,.07) !important;
+  box-shadow: 0 1px 12px rgba(0,0,0,.04) !important;
+}
+nav.site-nav .brand { color: #0c0e12 !important; }
+nav.site-nav .links a { color: rgba(12,14,18,.52) !important; }
+nav.site-nav .links a:hover {
+  color: #0c0e12 !important;
+  background: rgba(0,0,0,.04) !important;
+}
+nav.site-nav .links a.active {
+  color: #0c0e12 !important;
+  font-weight: 800;
+}
+
+/* guardian top brand mark */
+.mark {
+  background: linear-gradient(145deg,#ffffff,#eff1f4) !important;
+  border: 1px solid rgba(0,0,0,.09) !important;
+}
+.brand { color: #0c0e12 !important; }
+.links a { color: rgba(12,14,18,.58) !important; }
+.links a:hover {
+  background: rgba(0,0,0,.04) !important;
+  color: #0c0e12 !important;
+}
+.links .cta {
+  background: #0c0e12 !important;
+  color: #ffffff !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   4. HERO (artemis.html)
+   ──────────────────────────────────────────────────────────── */
+/* Remove neon scan line and dot grid */
+.hero-scan { display: none !important; }
+.hero-grid { display: none !important; }
+
+/* Remove index.html prism glow + animated lines */
+.hero-prism { display: none !important; }
+.hero-lines { display: none !important; }
+
+/* Eyebrow */
+.hero-eyebrow { color: rgba(12,14,18,.40) !important; }
+.hero-eyebrow::before,
+.hero-eyebrow::after { background: rgba(12,14,18,.12) !important; }
+
+/* Headlines */
+.hero h1 { color: #0c0e12 !important; }
+.hero h1 .cx,
+.hero h1 .crystal-text {
+  background: linear-gradient(135deg,#0c0e12 0%,#374151 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Sub text */
+.hero-sub  { color: rgba(12,14,18,.56) !important; }
+.hero-year { color: rgba(12,14,18,.38) !important; }
+
+/* Confirm badge */
+.hero-confirm {
+  color: #374151 !important;
+  border-color: rgba(0,0,0,.1) !important;
+  background: rgba(255,255,255,.72) !important;
+}
+
+/* Scroll indicator */
+.hero-scroll span { color: rgba(12,14,18,.38) !important; }
+.scroll-line {
+  background: linear-gradient(180deg,rgba(12,14,18,.22),transparent) !important;
+}
+
+/* guardian.html hero panel */
+.hero .panel h1 { color: #0c0e12 !important; }
+.lead { color: rgba(12,14,18,.60) !important; }
+.eyebrow { color: rgba(12,14,18,.42) !important; }
+
+/* ────────────────────────────────────────────────────────────
+   5. GLASS SURFACES
+   ──────────────────────────────────────────────────────────── */
+.glass, .glass2 {
+  background: rgba(255,255,255,.82) !important;
+  border: 1px solid rgba(0,0,0,.07) !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,.06) !important;
+}
+
+.glass-card {
+  background: rgba(255,255,255,.80) !important;
+  border: 1px solid rgba(0,0,0,.07) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,.05) !important;
+}
+.glass-card:hover {
+  border-color: rgba(0,0,0,.13) !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,.08) !important;
+}
+.glass-card::before {
+  background: linear-gradient(90deg,transparent,rgba(0,0,0,.04),transparent) !important;
+}
+
+/* guardian pipeline and spec cards */
+.stage {
+  background: rgba(255,255,255,.97) !important;
+  border-color: rgba(0,0,0,.07) !important;
+}
+.spec {
+  background: rgba(255,255,255,.97) !important;
+  border-color: rgba(0,0,0,.07) !important;
+}
+
+/* guardian hero stats */
+.hs {
+  background: rgba(255,255,255,.82) !important;
+  border-color: rgba(0,0,0,.07) !important;
+}
+.hs strong { color: #0c0e12 !important; }
+.hs span   { color: rgba(12,14,18,.58) !important; }
+
+/* guardian approval panel */
+.approval {
+  border-color: rgba(0,0,0,.10) !important;
+  background: linear-gradient(145deg,rgba(0,0,0,.025),rgba(0,0,0,.015)) !important;
+  color: #374151 !important;
+}
+
+/* guardian foot */
+.foot {
+  background: rgba(255,255,255,.78) !important;
+  border: 1px solid rgba(0,0,0,.07) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,.05) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   6. SECTION DIVIDERS & LABELS
+   ──────────────────────────────────────────────────────────── */
+.sect-border  { border-top-color: rgba(0,0,0,.07) !important; }
+.mission-strip {
+  border-top-color:    rgba(0,0,0,.07) !important;
+  border-bottom-color: rgba(0,0,0,.07) !important;
+}
+.tl-item { border-top-color: rgba(0,0,0,.07) !important; }
+.tl-year  { color: rgba(12,14,18,.2) !important; }
+
+.sh-tag         { color: rgba(12,14,18,.40) !important; }
+.sh-tag::before { background: rgba(12,14,18,.18) !important; }
+.sh h2   { color: #0c0e12 !important; }
+.sh p    { color: rgba(12,14,18,.58) !important; }
+.sh-dark h2 { color: #0c0e12 !important; }
+.sh-dark p  { color: rgba(12,14,18,.58) !important; }
+
+.tag { color: rgba(12,14,18,.42) !important; }
+.head h2 { color: #0c0e12 !important; }
+.head p  { color: rgba(12,14,18,.58) !important; }
+
+.mission-label { color: rgba(12,14,18,.38) !important; }
+.mission-text  { color: rgba(12,14,18,.68) !important; }
+.mission-text strong { color: #0c0e12 !important; }
+
+/* ────────────────────────────────────────────────────────────
+   7. DARK TECHNOLOGY SECTION (index.html .sect-dark)
+   ──────────────────────────────────────────────────────────── */
+.sect-dark {
+  background: #eef0f4 !important;
+  color: #0c0e12 !important;
+}
+.tech-card {
+  background: rgba(255,255,255,.84) !important;
+  border: 1px solid rgba(0,0,0,.08) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,.04) !important;
+}
+.tech-card:hover {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,.13) !important;
+  box-shadow: 0 6px 32px rgba(0,0,0,.07) !important;
+  transform: translateY(-4px) !important;
+}
+.tech-card h3   { color: #0c0e12 !important; }
+.tech-card p    { color: rgba(12,14,18,.58) !important; }
+.tc-icon        { background: rgba(0,0,0,.05) !important; }
+.tc-tags span {
+  background:   rgba(0,0,0,.05) !important;
+  color:        rgba(12,14,18,.52) !important;
+  border-color: rgba(0,0,0,.08) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   8. BUTTONS
+   ──────────────────────────────────────────────────────────── */
+/* index.html dark button (already correct—just ensure hover) */
+.btn-dark {
+  background: #0c0e12 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,.10) !important;
+}
+.btn-dark:hover {
+  background: #1c1f26 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Glass button */
+.btn-glass {
+  background: rgba(255,255,255,.72) !important;
+  border: 1px solid rgba(0,0,0,.10) !important;
+  color: #0c0e12 !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05) !important;
+}
+.btn-glass:hover {
+  background: rgba(255,255,255,.96) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.08) !important;
+}
+
+/* Crystal CTA → solid black (was neon rainbow) */
+.btn-crystal {
+  background: #0c0e12 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.12) !important;
+  animation: none !important;
+}
+.btn-crystal:hover {
+  background: #1c1f26 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Artemis ghost button */
+.btn-ghost {
+  border-color: rgba(0,0,0,.12) !important;
+  color: #0c0e12 !important;
+  background: rgba(255,255,255,.62) !important;
+}
+.btn-ghost:hover {
+  border-color: rgba(0,0,0,.22) !important;
+  background: rgba(255,255,255,.94) !important;
+}
+
+/* guardian light button */
+.btn-light {
+  background: rgba(255,255,255,.72) !important;
+  border: 1px solid rgba(0,0,0,.10) !important;
+  color: #0c0e12 !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   9. VALUE CARDS (index.html)
+   ──────────────────────────────────────────────────────────── */
+.value-card { background: #eff1f4 !important; }
+.value-card:hover { background: #ffffff !important; }
+.value-card::after {
+  background: linear-gradient(90deg,rgba(0,0,0,.1),rgba(0,0,0,.04),rgba(0,0,0,.1)) !important;
+}
+.value-card .vc-num { color: rgba(12,14,18,.38) !important; }
+
+/* ────────────────────────────────────────────────────────────
+   10. PRODUCT CARDS (index.html)
+   ──────────────────────────────────────────────────────────── */
+.product-card.hero-product {
+  background: linear-gradient(145deg,rgba(240,242,246,.6),rgba(255,255,255,.95)) !important;
+}
+.pc-era { color: rgba(12,14,18,.42) !important; }
+.pc-feat .ck {
+  background: rgba(0,0,0,.06) !important;
+  color: #374151 !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   11. MANIFESTO
+   ──────────────────────────────────────────────────────────── */
+/* index.html blockquote */
+.manifesto blockquote { color: #0c0e12 !important; }
+.manifesto cite { color: rgba(12,14,18,.38) !important; }
+.manifesto-bg {
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 40%,rgba(0,0,0,.015),transparent),
+    radial-gradient(ellipse 50% 40% at 70% 60%,rgba(0,0,0,.01),transparent) !important;
+}
+
+/* artemis.html manifesto */
+.manifesto-wrap { color: rgba(12,14,18,.70) !important; }
+.manifesto-wrap strong { color: #0c0e12 !important; }
+.manifesto-wrap .accent,
+.manifesto-drop {
+  background: linear-gradient(135deg,#0c0e12,#374151) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   12. USE-CASE CARDS (artemis.html)
+   ──────────────────────────────────────────────────────────── */
+.uc-card {
+  background: rgba(255,255,255,.80) !important;
+  border: 1px solid rgba(0,0,0,.07) !important;
+}
+.uc-card:hover {
+  border-color: rgba(0,0,0,.14) !important;
+  box-shadow: 0 8px 36px rgba(0,0,0,.07) !important;
+}
+.uc-card h3 { color: #0c0e12 !important; }
+.uc-card p  { color: rgba(12,14,18,.60) !important; }
+
+.uc-enterprise::after { background: linear-gradient(90deg,#0c0e12,#374151) !important; }
+.uc-healthcare::after  { background: linear-gradient(90deg,#374151,#6b7280) !important; }
+.uc-consumer::after    { background: linear-gradient(90deg,#6b7280,#374151) !important; }
+
+.uc-num {
+  background: rgba(0,0,0,.05) !important;
+  color: #374151 !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   13. PROMPT BLOCK (artemis.html)
+   ──────────────────────────────────────────────────────────── */
+.prompt-wrap {
+  background: rgba(255,255,255,.84) !important;
+  border: 1px solid rgba(0,0,0,.09) !important;
+  color: rgba(12,14,18,.70) !important;
+}
+.prompt-wrap::before {
+  color: #374151 !important;
+  background: #f4f5f8 !important;
+}
+.prompt-copy {
+  color: #374151 !important;
+  border-color: rgba(0,0,0,.12) !important;
+  background: rgba(0,0,0,.04) !important;
+}
+.prompt-copy:hover { background: rgba(0,0,0,.08) !important; }
+
+/* ────────────────────────────────────────────────────────────
+   14. GANTT / ROADMAP TABLE (artemis.html)
+   ──────────────────────────────────────────────────────────── */
+.gantt-table th {
+  color: rgba(12,14,18,.42) !important;
+  border-bottom-color: rgba(0,0,0,.08) !important;
+}
+.gantt-table td {
+  color: rgba(12,14,18,.76) !important;
+  border-bottom-color: rgba(0,0,0,.04) !important;
+}
+.gantt-table tr:hover td { background: rgba(0,0,0,.015) !important; }
+
+/* Phase pills — monochrome */
+.ph-1,.ph-2,.ph-3,.ph-4,.ph-5 {
+  background:   rgba(0,0,0,.05) !important;
+  color:        #374151 !important;
+  border-color: rgba(0,0,0,.09) !important;
+}
+.time-badge { color: rgba(12,14,18,.46) !important; }
+.metric {
+  color: #374151 !important;
+  border-color: rgba(0,0,0,.10) !important;
+  background: rgba(0,0,0,.03) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   15. LINK CARDS (artemis.html)
+   ──────────────────────────────────────────────────────────── */
+.link-card {
+  background: rgba(255,255,255,.82) !important;
+  border-color: rgba(0,0,0,.07) !important;
+}
+.link-card h3 { color: #0c0e12 !important; }
+.link-card p  { color: rgba(12,14,18,.56) !important; }
+
+/* ────────────────────────────────────────────────────────────
+   16. GUARDIAN CARDS & FLOW
+   ──────────────────────────────────────────────────────────── */
+.card {
+  background: rgba(255,255,255,.88) !important;
+  border: 1px solid rgba(0,0,0,.07) !important;
+}
+.card h3 { color: #0c0e12 !important; }
+.card p  { color: rgba(12,14,18,.60) !important; }
+.num     { color: rgba(12,14,18,.38) !important; }
+
+.flow { background: rgba(255,255,255,.72) !important; border: 1px solid rgba(0,0,0,.07) !important; }
+.flow strong { color: #0c0e12 !important; }
+.flow span   { color: rgba(12,14,18,.58) !important; }
+.arrow       { color: rgba(12,14,18,.28) !important; }
+
+/* ops container */
+.ops { background: rgba(255,255,255,.72) !important; border: 1px solid rgba(0,0,0,.07) !important; }
+.stage b    { color: #0c0e12 !important; }
+.stage span { color: rgba(12,14,18,.58) !important; }
+.spec strong { color: #0c0e12 !important; }
+.spec span   { color: rgba(12,14,18,.58) !important; }
+
+/* ────────────────────────────────────────────────────────────
+   17. THREADS PAGE
+   ──────────────────────────────────────────────────────────── */
+.thread-card {
+  background: rgba(255,255,255,.88) !important;
+  border: 1px solid rgba(0,0,0,.07) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,.04) !important;
+}
+.thread-card h2 { color: #0c0e12 !important; }
+.meta           { color: rgba(12,14,18,.45) !important; }
+.thread-card li { color: rgba(12,14,18,.76) !important; }
+.tweet-index    { color: #374151 !important; }
+main h1         { color: #0c0e12 !important; }
+.sub            { color: rgba(12,14,18,.55) !important; }
+
+/* ────────────────────────────────────────────────────────────
+   18. FOUNDER & CREDENTIALS (index.html)
+   ──────────────────────────────────────────────────────────── */
+.founder-role { color: rgba(12,14,18,.48) !important; }
+
+/* ────────────────────────────────────────────────────────────
+   19. CTA SECTION (index.html)
+   ──────────────────────────────────────────────────────────── */
+.cta-sect::before {
+  background: radial-gradient(ellipse 60% 50% at 50% 50%,rgba(0,0,0,.015),transparent) !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   20. FOOTER (all pages)
+   ──────────────────────────────────────────────────────────── */
+.footer     { border-top-color: rgba(0,0,0,.07) !important; }
+.footer-div { background:       rgba(0,0,0,.07) !important; }
+.foot-div   { background:       rgba(0,0,0,.07) !important; }
+
+.footer-logo, .footer-mark {
+  background: linear-gradient(145deg,#f0f2f5,#ffffff) !important;
+  border: 1px solid rgba(0,0,0,.09) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06) !important;
+}
+
+.footer-brand-name  { color: #0c0e12 !important; }
+.footer-brand-sub,
+.foot-brand-sub     { color: rgba(12,14,18,.40) !important; }
+.foot-brand-name    { color: #0c0e12 !important; }
+
+.footer-col-head    { color: rgba(12,14,18,.42) !important; }
+.footer-col a       { color: rgba(12,14,18,.50) !important; }
+.footer-col a:hover { color: #0c0e12 !important; }
+
+.footer-copy,
+.foot-copy          { color: rgba(12,14,18,.42) !important; }
+
+.footer-util a,
+.flinks a           { color: rgba(12,14,18,.50) !important; }
+.footer-util a:hover,
+.flinks a:hover     { color: #0c0e12 !important; }
+
+.footer-cookie a,
+.foot-cookie a      { color: rgba(12,14,18,.40) !important; }
+.footer-cookie a:hover,
+.foot-cookie a:hover { color: #0c0e12 !important; border-bottom-color: rgba(12,14,18,.25) !important; }
+.footer-cookie-sep,
+.foot-cookie-sep    { color: rgba(12,14,18,.22) !important; }
+
+.footer-tagline {
+  color: rgba(12,14,18,.36) !important;
+  border-top-color: rgba(0,0,0,.07) !important;
+}
+
+/* guardian foot bottom */
+.foot-bottom { border-color: rgba(0,0,0,.07) !important; }
+.foot-cookie { border-top-color: rgba(0,0,0,.07) !important; }

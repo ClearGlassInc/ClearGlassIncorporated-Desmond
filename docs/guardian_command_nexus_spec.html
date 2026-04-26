@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClearGlassInc Artemis — Guardian Nexus Interface</title>
+  <meta name="description" content="ClearGlassInc Artemis cybersecurity and financial intelligence command interface." />
+  <link rel="stylesheet" href="guardian_command_nexus_spec.css" />
+</head>
+<body>
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+
+  <header class="hero glass" id="top">
+    <div class="hero__content">
+      <p class="eyebrow">ClearGlassInc Artemis</p>
+      <h1>Guardian Command Nexus</h1>
+      <p class="hero__lead">
+        Coalition-aware cybersecurity and financial intelligence operations at machine speed.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#operations">Investigate</a>
+        <a class="btn btn-secondary" href="#policy">Secure Access</a>
+      </div>
+    </div>
+    <div class="hero__stats">
+      <article class="metric glass scroll-reveal">
+        <h2>Threat Flow</h2>
+        <p class="metric__value">2,847</p>
+        <p class="metric__meta">signals/min · latency 84ms</p>
+      </article>
+      <article class="metric glass scroll-reveal">
+        <h2>Case Fusion</h2>
+        <p class="metric__value">96.2%</p>
+        <p class="metric__meta">entity correlation precision</p>
+      </article>
+    </div>
+  </header>
+
+  <main class="bento" id="operations">
+    <section class="card glass span-2 scroll-reveal">
+      <h3>Live Operations Grid</h3>
+      <p>Unified incident timelines connecting cyber telemetry, transaction anomalies, and entity lineage.</p>
+      <ul>
+        <li>Adaptive alert triage</li>
+        <li>Cross-domain graph pivoting</li>
+        <li>Mission outcome scoring</li>
+      </ul>
+    </section>
+
+    <section class="card glass scroll-reveal">
+      <h3>AI Copilot</h3>
+      <p>Context-aware recommendations with deterministic approval gates and audit-first execution.</p>
+      <div class="line-accent"></div>
+    </section>
+
+    <section class="card glass scroll-reveal">
+      <h3>Financial Intelligence</h3>
+      <p>Detect suspicious flows using temporal graph analytics and confidence-weighted model routing.</p>
+      <div class="line-accent"></div>
+    </section>
+
+    <section class="card glass span-2 scroll-reveal" id="policy">
+      <h3>Policy & Governance Fabric</h3>
+      <p>Need-to-know enforcement with row, column, and entity-level controls across coalition boundaries.</p>
+      <div class="pill-row">
+        <span class="pill">Zero Trust</span>
+        <span class="pill">Immutable Provenance</span>
+        <span class="pill">Prompt Governance</span>
+      </div>
+    </section>
+
+    <section class="card glass scroll-reveal">
+      <h3>Apollo Runtime</h3>
+      <p>Canary deployment, controlled promotion, and rollback for model, prompt, and workflow bundles.</p>
+    </section>
+
+    <section class="card glass scroll-reveal">
+      <h3>Operator Trust</h3>
+      <p>Measure precision, recall, latency, and approval confidence to prioritize trustworthy automation.</p>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById('particle-field');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      const particles = [];
+      const particleCount = 50;
+      let pointerX = 0;
+      let pointerY = 0;
+
+      function resize() {
+        canvas.width = Math.floor(window.innerWidth * DPR);
+        canvas.height = Math.floor(window.innerHeight * DPR);
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+      }
+
+      function seedParticles() {
+        particles.length = 0;
+        for (let i = 0; i < particleCount; i += 1) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.18,
+            vy: (Math.random() - 0.5) * 0.18,
+            r: Math.random() * 1.8 + 0.6
+          });
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'rgba(18, 29, 45, 0.35)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (const p of particles) {
+          const dx = (pointerX * DPR - p.x) * 0.00001;
+          const dy = (pointerY * DPR - p.y) * 0.00001;
+          p.vx += dx;
+          p.vy += dy;
+          p.vx *= 0.995;
+          p.vy *= 0.995;
+
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.y > canvas.height) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * DPR, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(88, 166, 255, 0.42)';
+          ctx.fill();
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16 });
+
+      document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+
+      window.addEventListener('pointermove', (event) => {
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        resize();
+        seedParticles();
+      }, { passive: true });
+
+      resize();
+      seedParticles();
+      animate();
+    })();
+  </script>
+</body>
+</html>

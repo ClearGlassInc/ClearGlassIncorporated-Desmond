@@ -5,30 +5,227 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ClearGlassInc Artemis Threads Kit</title>
   <style>
-    body { font-family: Inter, system-ui, sans-serif; margin: 0; background: #080b12; color: #f3f5f9; }
-    nav.site-nav { position: sticky; top: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem,4vw,3rem); height: 64px; background: rgba(8,11,18,.88); backdrop-filter: blur(24px); border-bottom: 1px solid #1e2d40; }
-    nav.site-nav .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #f3f5f9; font-weight: 700; font-size: 15px; }
-    nav.site-nav .brand span { font-size: 11px; letter-spacing: .12em; color: #64748b; font-weight: 500; }
-    nav.site-nav .links { display: flex; gap: 4px; flex-wrap: wrap; }
-    nav.site-nav .links a { text-decoration: none; color: rgba(243,245,249,.7); font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 999px; transition: color .2s, background .2s; }
-    nav.site-nav .links a:hover { color: #fff; background: rgba(255,255,255,.06); }
-    nav.site-nav .links a.active { color: #38bdf8; }
-    main { max-width: 980px; margin: 0 auto; padding: 48px 20px 64px; }
-    h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; }
-    .sub { color: #cbd5e1; margin-bottom: 36px; line-height: 1.6; }
-    .grid { display: grid; gap: 16px; }
-    .thread-card { border: 1px solid #243043; border-radius: 16px; padding: 20px; background: #101827; }
-    .thread-card h2 { margin: 0 0 8px; }
-    .meta { font-size: .92rem; color: #93c5fd; margin-bottom: 14px; }
-    ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 10px; }
-    li { line-height: 1.55; color: #e5e7eb; }
-    .tweet-index { color: #38bdf8; font-weight: 700; margin-right: 6px; }
-    a { color: #93c5fd; }
+    :root {
+      --bg-start: #060b1a;
+      --bg-mid: #0a1226;
+      --bg-end: #03060f;
+      --surface: rgba(17, 25, 40, 0.56);
+      --surface-strong: rgba(20, 31, 51, 0.75);
+      --border: rgba(143, 178, 255, 0.22);
+      --text: #f3f6ff;
+      --muted: #a9b8d6;
+      --accent: #67d2ff;
+      --accent-soft: rgba(103, 210, 255, 0.15);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      margin: 0;
+      color: var(--text);
+      min-height: 100vh;
+      background: radial-gradient(90rem 45rem at 80% -20%, rgba(71, 132, 255, 0.18), transparent 65%),
+        radial-gradient(56rem 32rem at -10% 10%, rgba(88, 216, 255, 0.16), transparent 60%),
+        linear-gradient(145deg, var(--bg-start), var(--bg-mid) 44%, var(--bg-end));
+      background-size: 120% 120%;
+      animation: drift 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift {
+      from { background-position: 0% 10%; }
+      to { background-position: 100% 90%; }
+    }
+
+    nav.site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+      height: 64px;
+      background: rgba(4, 9, 19, 0.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(164, 188, 255, 0.2);
+    }
+
+    nav.site-nav .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #f3f5f9;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    nav.site-nav .links { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    nav.site-nav .links a {
+      text-decoration: none;
+      color: rgba(243, 245, 249, 0.74);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 12px;
+      border-radius: 999px;
+      transition: color .22s, background .22s;
+    }
+
+    nav.site-nav .links a:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+    nav.site-nav .links a.active { color: var(--accent); background: var(--accent-soft); }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 54px clamp(1rem, 3vw, 2rem) 78px;
+    }
+
+    .hero,
+    .thread-card {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+      backdrop-filter: blur(16px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 40px rgba(0, 6, 18, 0.46);
+      animation: rise .7s ease both;
+    }
+
+    .hero {
+      padding: clamp(1.3rem, 3.5vw, 2.2rem);
+      margin-bottom: 18px;
+      background: linear-gradient(160deg, rgba(21, 33, 58, 0.82), rgba(8, 14, 28, 0.66));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -50px -80px auto;
+      width: min(320px, 40vw);
+      height: min(320px, 40vw);
+      background: radial-gradient(circle, rgba(103, 210, 255, 0.2), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(103, 210, 255, 0.12);
+      border: 1px solid rgba(103, 210, 255, 0.32);
+      color: #b7ebff;
+      font-size: .76rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      line-height: 1;
+      margin: 0;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+
+    .sub {
+      max-width: 62ch;
+      color: var(--muted);
+      margin: 14px 0 0;
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      line-height: 1.55;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .thread-card {
+      padding: 18px;
+      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(165deg, var(--surface-strong), var(--surface));
+    }
+
+    .thread-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(138, 203, 255, 0.58);
+      box-shadow: 0 22px 48px rgba(3, 12, 31, 0.62), 0 0 0 1px rgba(114, 201, 255, 0.22);
+    }
+
+    .featured { grid-column: span 12; }
+    .stack { grid-column: span 6; }
+
+    .tag {
+      display: inline-block;
+      font-size: .72rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: #d4f2ff;
+      background: rgba(103, 210, 255, 0.14);
+      border: 1px solid rgba(103, 210, 255, 0.35);
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+    }
+
+    .thread-card h2 {
+      margin: 0 0 6px;
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      letter-spacing: -0.02em;
+    }
+
+    .meta {
+      font-size: .88rem;
+      color: #8fc7ff;
+      margin-bottom: 14px;
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .meta .dot { opacity: .54; }
+
+    ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 9px; }
+    li { line-height: 1.5; color: #edf2ff; }
+    .tweet-index { color: #58daff; font-weight: 700; margin-right: 6px; }
+
+    .back-link {
+      margin-top: 26px;
+      display: inline-flex;
+      color: #b6dfff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(148, 205, 255, 0.25);
+      padding-bottom: 2px;
+      transition: color .2s, border-color .2s;
+    }
+
+    .back-link:hover { color: #e4f6ff; border-color: rgba(186, 225, 255, 0.75); }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 860px) {
+      .stack { grid-column: span 12; }
+      h1 { max-width: 12ch; }
+    }
   </style>
 </head>
 <body>
   <nav class="site-nav">
-    <a href="index.html" class="brand">ClearGlass <em style="font-style:normal;font-weight:300;color:rgba(243,245,249,.45)">Inc.</em></a>
+    <a href="index.html" class="brand">ClearGlass <em style="font-style:normal;font-weight:300;color:rgba(83,101,123,.72)">Inc.</em></a>
     <div class="links">
       <a href="index.html">Home</a>
       <a href="artemis.html">Artemis VI</a>
@@ -36,13 +233,19 @@
       <a href="threads.html" class="active">Threads Kit</a>
     </div>
   </nav>
+
   <main>
-    <h1>ClearGlassInc Artemis Threads Kit</h1>
-    <p class="sub">Five copy-ready, emotionally driven Threads sequences generated by the Artemis Growth Bot. Use, remix, and post as needed.</p>
-    <div class="grid">
-      <article class="thread-card">
-        <h2>Thread 1</h2>
-        <p class="meta">ClearGlassInc Artemis · productivity · feeling in control under pressure</p>
+    <section class="hero">
+      <span class="eyebrow">Artemis Growth Ops · 2026 Kit</span>
+      <h1>ClearGlassInc Artemis Threads Kit</h1>
+      <p class="sub">Five high-conviction Threads sequences, designed for momentum. Drop in as-is or remix with your own mission context.</p>
+    </section>
+
+    <section class="bento-grid">
+      <article class="thread-card featured">
+        <span class="tag">Featured Thread</span>
+        <h2>Thread 1 · Signal Through Noise</h2>
+        <p class="meta"><span>ClearGlassInc Artemis</span><span class="dot">•</span><span>productivity</span><span class="dot">•</span><span>high-stakes clarity</span></p>
         <ul><li><span class="tweet-index">1.</span> I almost missed the one message that could've changed my week. 😵‍💫</li>
 <li><span class="tweet-index">2.</span> I had 17 tabs open, 42 unread pings, and zero idea what actually mattered. 📉</li>
 <li><span class="tweet-index">3.</span> Then I ran my day through ClearGlassInc Artemis. It flagged one convo as high-stakes in 8 seconds.</li>
@@ -50,9 +253,10 @@
 <li><span class="tweet-index">5.</span> Be honest: how often does noise hide your biggest opportunity? 👇</li></ul>
       </article>
 
-      <article class="thread-card">
-        <h2>Thread 2</h2>
-        <p class="meta">ClearGlassInc Artemis · productivity · feeling in control under pressure</p>
+      <article class="thread-card stack">
+        <span class="tag">Thread 2</span>
+        <h2>Busy vs. Outcome</h2>
+        <p class="meta"><span>ClearGlassInc Artemis</span><span class="dot">•</span><span>workflow reset</span></p>
         <ul><li><span class="tweet-index">1.</span> I looked productive. I was actually drowning. 🫠</li>
 <li><span class="tweet-index">2.</span> Color-coded calendar. Fancy to-do app. Still ended each day feeling behind and guilty.</li>
 <li><span class="tweet-index">3.</span> What changed? Artemis showed me where my time leaked, not where it looked busy.</li>
@@ -60,9 +264,10 @@
 <li><span class="tweet-index">5.</span> Are you optimizing for busy… or for peace + results?</li></ul>
       </article>
 
-      <article class="thread-card">
-        <h2>Thread 3</h2>
-        <p class="meta">ClearGlassInc Artemis · productivity · feeling in control under pressure</p>
+      <article class="thread-card stack">
+        <span class="tag">Thread 3</span>
+        <h2>Burnout Early Warning</h2>
+        <p class="meta"><span>ClearGlassInc Artemis</span><span class="dot">•</span><span>trust protection</span></p>
         <ul><li><span class="tweet-index">1.</span> The worst part of burnout? You don't notice it until you snap. 🔥</li>
 <li><span class="tweet-index">2.</span> I stopped sleeping well. Started forgetting small promises. Confidence dropped quietly.</li>
 <li><span class="tweet-index">3.</span> Artemis started surfacing &#8220;promise-risk&#8221; moments before they became trust damage.</li>
@@ -70,9 +275,10 @@
 <li><span class="tweet-index">5.</span> Who's felt their credibility slip from tiny misses, not big failures?</li></ul>
       </article>
 
-      <article class="thread-card">
-        <h2>Thread 4</h2>
-        <p class="meta">ClearGlassInc Artemis · productivity · feeling in control under pressure</p>
+      <article class="thread-card stack">
+        <span class="tag">Thread 4</span>
+        <h2>Team Clarity Engine</h2>
+        <p class="meta"><span>ClearGlassInc Artemis</span><span class="dot">•</span><span>leadership systems</span></p>
         <ul><li><span class="tweet-index">1.</span> My team said we need clarity. I heard you're failing us. 😶</li>
 <li><span class="tweet-index">2.</span> We kept re-explaining priorities in every standup. Same confusion, new day.</li>
 <li><span class="tweet-index">3.</span> We built a shared Artemis mission board: one truth, live updates, zero guessing.</li>
@@ -80,18 +286,19 @@
 <li><span class="tweet-index">5.</span> Team leads: what creates more drag for you—unclear priorities or unclear ownership?</li></ul>
       </article>
 
-      <article class="thread-card">
-        <h2>Thread 5</h2>
-        <p class="meta">ClearGlassInc Artemis · productivity · feeling in control under pressure</p>
+      <article class="thread-card stack">
+        <span class="tag">Thread 5</span>
+        <h2>Sunday Planning Shift</h2>
+        <p class="meta"><span>ClearGlassInc Artemis</span><span class="dot">•</span><span>weekly control</span></p>
         <ul><li><span class="tweet-index">1.</span> I used to panic every Sunday night. No plan felt real. 😬</li>
 <li><span class="tweet-index">2.</span> I'd write goals, then spend Monday reacting to everyone else's emergencies.</li>
 <li><span class="tweet-index">3.</span> Now Artemis prebuilds my week by impact, urgency, and energy level.</li>
 <li><span class="tweet-index">4.</span> I still work hard. I just don't feel hunted anymore. That shift is everything. 💎</li>
 <li><span class="tweet-index">5.</span> Sunday check: are you starting tomorrow with intention or survival mode?</li></ul>
       </article>
+    </section>
 
-    </div>
-    <p style="margin-top:28px;"><a href="index.html">← Back to homepage</a></p>
+    <a class="back-link" href="index.html">← Back to homepage</a>
   </main>
 </body>
 </html>

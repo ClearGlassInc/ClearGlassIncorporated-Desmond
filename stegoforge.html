@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>STEGOFORGE // ClearGlassInc Artemis Intelligence Interface</title>
+  <meta name="description" content="STEGOFORGE by ClearGlassInc Artemis — glassmorphism cyber + financial intelligence operations interface with responsive bento layout and performance-optimized animations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#06090f;
+      --bg-2:#0a111d;
+      --glass:rgba(14,24,38,.48);
+      --glass-strong:rgba(12,22,36,.68);
+      --border:rgba(130,167,210,.2);
+      --line:rgba(68,180,255,.6);
+      --text:#e6f2ff;
+      --muted:#9db2cc;
+      --accent:#41b8ff;
+      --accent-2:#6b7bff;
+      --ok:#5ef7b4;
+      --warn:#ffd86b;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      background:
+        radial-gradient(1200px 700px at 10% -10%, rgba(65,184,255,.18), transparent 55%),
+        radial-gradient(900px 500px at 85% -10%, rgba(107,123,255,.16), transparent 58%),
+        linear-gradient(170deg,var(--bg) 0%,var(--bg-2) 100%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    .page{position:relative;min-height:100%}
+
+    /* Hero particle field (CSS + tiny JS offset only; transform-based for GPU acceleration) */
+    .hero{
+      position:relative;
+      min-height:56vh;
+      border-bottom:1px solid rgba(130,167,210,.16);
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;inset:-20%;
+      background:
+        radial-gradient(2px 2px at 10% 20%, rgba(126,222,255,.7), transparent 60%),
+        radial-gradient(2px 2px at 80% 30%, rgba(140,171,255,.7), transparent 60%),
+        radial-gradient(1.8px 1.8px at 40% 75%, rgba(126,222,255,.55), transparent 60%),
+        radial-gradient(1.6px 1.6px at 70% 60%, rgba(140,171,255,.45), transparent 60%),
+        radial-gradient(1.8px 1.8px at 25% 50%, rgba(126,222,255,.6), transparent 60%);
+      background-size:220px 220px, 260px 260px, 190px 190px, 240px 240px, 300px 300px;
+      opacity:.8;
+      transform:translate3d(var(--mx,0px),var(--my,0px),0);
+      will-change:transform;
+      animation:drift 18s linear infinite;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(180deg,transparent 0%, rgba(6,9,15,.7) 76%, var(--bg-2) 100%);
+      z-index:-1;
+    }
+    @keyframes drift{0%{transform:translate3d(var(--mx,0px),var(--my,0px),0)}50%{transform:translate3d(calc(var(--mx,0px) - 18px),calc(var(--my,0px) + 12px),0)}100%{transform:translate3d(var(--mx,0px),var(--my,0px),0)}}
+
+    .hero-inner{
+      width:min(1200px,94vw);
+      margin:0 auto;
+      padding:72px 0 52px;
+      position:relative;
+      z-index:1;
+    }
+    .topline{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:28px}
+    .brand{font-family:Orbitron,sans-serif;font-size:clamp(2rem,6vw,4.2rem);letter-spacing:.14em;font-weight:800;color:#cde7ff;text-shadow:0 0 22px rgba(65,184,255,.38)}
+    .classification{font-size:.78rem;font-weight:600;color:var(--muted);letter-spacing:.16em;text-transform:uppercase}
+    .hero-copy{max-width:760px;color:#d3e5f8;line-height:1.68}
+    .hero-copy strong{color:#f1f8ff}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .cta{border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(10px);color:var(--text);padding:11px 18px;border-radius:12px;text-decoration:none;font-weight:700;font-size:.93rem;transition:transform .26s ease, box-shadow .26s ease, border-color .26s ease}
+    .cta.primary{border-color:rgba(65,184,255,.5);box-shadow:0 0 0 1px rgba(65,184,255,.1) inset,0 0 28px rgba(65,184,255,.15)}
+    .cta:hover{transform:translate3d(0,-2px,0) scale(1.02);box-shadow:0 0 26px rgba(65,184,255,.28);border-color:rgba(65,184,255,.66)}
+
+    .wrap{width:min(1200px,94vw);margin:0 auto;padding:28px 0 70px}
+
+    .bento{
+      display:grid;
+      grid-template-columns:repeat(12,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .card{
+      background:linear-gradient(165deg,var(--glass),var(--glass-strong));
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      backdrop-filter:blur(12px);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+      position:relative;
+      overflow:hidden;
+      transform:translate3d(0,16px,0);
+      opacity:0;
+      transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .5s ease,box-shadow .3s ease,border-color .3s ease;
+      will-change:transform,opacity;
+    }
+    .card::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);opacity:.8}
+    .card.reveal{opacity:1;transform:translate3d(0,0,0)}
+    .card:hover{transform:translate3d(0,-3px,0) scale(1.012);box-shadow:0 14px 40px rgba(26,116,187,.24);border-color:rgba(65,184,255,.45)}
+
+    .span-8{grid-column:span 8}
+    .span-4{grid-column:span 4}
+    .span-6{grid-column:span 6}
+    .span-3{grid-column:span 3}
+    .span-12{grid-column:span 12}
+
+    .kicker{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    .title{font-family:Orbitron,sans-serif;font-size:1.04rem;letter-spacing:.06em;margin-bottom:10px;color:#d9eeff}
+    .small{font-size:.9rem;color:var(--muted);line-height:1.56}
+
+    .logs{max-height:210px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;line-height:1.55;color:#cae4ff;padding-right:6px}
+    .logs p{white-space:nowrap;margin-bottom:4px}
+    .logs .ok{color:var(--ok)}
+    .logs .warn{color:var(--warn)}
+
+    .menu{display:grid;grid-template-columns:repeat(3,minmax(100px,1fr));gap:8px;margin-top:10px}
+    .menu button{border:1px solid rgba(130,167,210,.28);background:rgba(9,16,26,.62);color:#d7ebff;border-radius:10px;padding:10px;font-weight:700;font-size:.86rem;letter-spacing:.06em;cursor:pointer;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+    .menu button:hover{transform:translate3d(0,-2px,0);border-color:rgba(65,184,255,.52);box-shadow:0 0 20px rgba(65,184,255,.22)}
+
+    .metrics{display:grid;grid-template-columns:repeat(2,minmax(100px,1fr));gap:8px}
+    .metric{padding:10px;border-radius:10px;border:1px solid rgba(130,167,210,.24);background:rgba(8,15,24,.62)}
+    .metric strong{display:block;font-size:1.05rem;color:#ebf7ff}
+    .metric span{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+
+    .neon-line{height:78px;border-radius:12px;border:1px solid rgba(130,167,210,.28);background:linear-gradient(90deg,rgba(65,184,255,.14),rgba(107,123,255,.24),rgba(65,184,255,.14));position:relative;overflow:hidden}
+    .neon-line::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(235,248,255,.13),rgba(235,248,255,.13) 2px,transparent 2px,transparent 28px);animation:trace 3.2s linear infinite;transform:translate3d(0,0,0)}
+    @keyframes trace{from{transform:translate3d(-28px,0,0)}to{transform:translate3d(0,0,0)}}
+
+    .footer-note{margin-top:14px;text-align:center;color:#87a3c4;font-size:.84rem}
+
+    @media (max-width:980px){
+      .span-8,.span-6,.span-4,.span-3{grid-column:span 12}
+      .hero{min-height:50vh}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition:none!important}
+      .card{transform:none;opacity:1}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <div class="topline">
+          <h1 class="brand">STEGOFORGE</h1>
+          <div class="classification">ClearGlassInc Artemis · Cybersecurity + Financial Intelligence</div>
+        </div>
+        <p class="hero-copy">
+          Mission-grade intelligence surface combining threat detection, transaction anomaly forensics, and encrypted investigative workflows.
+          Designed with a glassmorphism command aesthetic, strict visual hierarchy, and low-latency interaction cues to pull analyst attention to priority actions.
+        </p>
+        <div class="cta-row">
+          <a href="#operations" class="cta primary">Investigate</a>
+          <a href="#operations" class="cta">Secure Access</a>
+        </div>
+      </div>
+    </section>
+
+    <main class="wrap" id="operations">
+      <section class="bento">
+        <article class="card span-8 reveal-item">
+          <div class="kicker">Realtime system bus</div>
+          <h2 class="title">Initialization + Forensic Activity Stream</h2>
+          <div class="logs" id="logs">
+            <p>[BOOT] Mesh gateway online · trust chain verified</p>
+            <p>[STEGO] Carrier-map profile synchronized with evidence vault</p>
+            <p>[CRYPTO] AES-256-GCM module hot path initialized</p>
+            <p>[FININT] Transaction anomaly graph built for case ARC-7741</p>
+            <p class="ok">[OK] Chain-of-custody append confirmed</p>
+            <p class="warn">[WARN] Covert-channel noise anomaly above baseline</p>
+          </div>
+          <div class="menu" aria-label="Command menu">
+            <button>ENCODE</button><button>DECODE</button><button>DETECT</button>
+            <button>SCAN</button><button>ENCRYPT</button><button>DIFF</button>
+          </div>
+        </article>
+
+        <article class="card span-4 reveal-item">
+          <div class="kicker">Behavioral hierarchy</div>
+          <h2 class="title">Primary Action Pressure</h2>
+          <p class="small">Priority CTA modules receive stronger contrast and glow ramps to direct attention without overwhelming core investigative surfaces.</p>
+          <div class="metrics" style="margin-top:12px">
+            <div class="metric"><strong>42ms</strong><span>UI Response</span></div>
+            <div class="metric"><strong>99.96%</strong><span>Uptime</span></div>
+            <div class="metric"><strong>2.3s</strong><span>Case Enrichment</span></div>
+            <div class="metric"><strong>87%</strong><span>Analyst Trust</span></div>
+          </div>
+        </article>
+
+        <article class="card span-3 reveal-item">
+          <div class="kicker">Crypto</div>
+          <h2 class="title">AES-256-GCM</h2>
+          <p class="small">Authenticated encryption with rolling nonces and policy-scoped key lineage.</p>
+        </article>
+        <article class="card span-3 reveal-item">
+          <div class="kicker">Steganography</div>
+          <h2 class="title">Adaptive Encoding</h2>
+          <p class="small">Carrier-aware payload shaping with deniable extraction profiles.</p>
+        </article>
+        <article class="card span-3 reveal-item">
+          <div class="kicker">Network</div>
+          <h2 class="title">Covert Channels</h2>
+          <p class="small">Low-signature transport blending with active anti-detection checks.</p>
+        </article>
+        <article class="card span-3 reveal-item">
+          <div class="kicker">Forensics</div>
+          <h2 class="title">Invisibility Tools</h2>
+          <p class="small">Immutable provenance, anti-tamper controls, and evidence drift detection.</p>
+        </article>
+
+        <article class="card span-6 reveal-item">
+          <div class="kicker">Visual consistency</div>
+          <h2 class="title">Monochrome Authority + Neon Discipline</h2>
+          <p class="small">Strict charcoal/blue palette with electric-blue accents preserves institutional credibility while enabling rapid visual parsing in high-pressure operational workflows.</p>
+        </article>
+
+        <article class="card span-6 reveal-item">
+          <div class="kicker">Performance envelope</div>
+          <h2 class="title">60FPS-first Animation Strategy</h2>
+          <p class="small">All interactions are transform/opacity-driven and IntersectionObserver-triggered, reducing layout thrash and preserving smooth performance on desktop and mobile.</p>
+          <div class="neon-line" aria-hidden="true" style="margin-top:12px"></div>
+        </article>
+
+        <article class="card span-12 reveal-item">
+          <div class="kicker">Operational summary</div>
+          <h2 class="title">Cyber + Financial Intelligence Console</h2>
+          <p class="small">STEGOFORGE unifies cybersecurity telemetry, transaction intelligence, and encrypted investigation pipelines in a single responsive command plane purpose-built for ClearGlassInc Artemis.</p>
+        </article>
+      </section>
+
+      <p class="footer-note">Glassmorphism interface · Bento-grid intelligence modules · hardware-accelerated motion system.</p>
+    </main>
+  </div>
+
+  <script>
+    // Hero particle field parallax (small transform offsets only)
+    const hero = document.getElementById('hero');
+    let targetX = 0;
+    let targetY = 0;
+    let rafId;
+
+    function applyParallax(){
+      hero.style.setProperty('--mx', `${targetX}px`);
+      hero.style.setProperty('--my', `${targetY}px`);
+      rafId = null;
+    }
+
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      targetX = x * 10;
+      targetY = y * 8;
+      if (!rafId) rafId = requestAnimationFrame(applyParallax);
+    }, { passive: true });
+
+    hero.addEventListener('mouseleave', () => {
+      targetX = 0;
+      targetY = 0;
+      if (!rafId) rafId = requestAnimationFrame(applyParallax);
+    });
+
+    // Scroll reveal (opacity + transform only)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal-item').forEach((el) => observer.observe(el));
+
+    // Low-cost live log appender
+    const logPane = document.getElementById('logs');
+    const events = [
+      '[LIVE] Case confidence uplifted after multi-source correlation',
+      '[LIVE] FININT outlier linked to sanctioned shell entity graph',
+      '[LIVE] Agent recommendation queued for operator approval',
+      '[LIVE] Post-quantum key rotation completed on secure channel',
+      '[LIVE] Evidence fingerprint validated against immutable ledger'
+    ];
+
+    setInterval(() => {
+      const p = document.createElement('p');
+      p.textContent = events[Math.floor(Math.random() * events.length)];
+      logPane.appendChild(p);
+      if (logPane.children.length > 16) {
+        logPane.removeChild(logPane.firstElementChild);
+      }
+      logPane.scrollTop = logPane.scrollHeight;
+    }, 1800);
+  </script>
+</body>
+</html>

@@ -36,6 +36,8 @@ jobs:
             --exclude 'tests' \
             --exclude 'investors' \
             --exclude 'marketing' \
+            --exclude 'operations' \
+            --exclude 'prompts' \
             ./ _site/
 
       - name: Upload Pages artifact

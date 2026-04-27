@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClearGlassInc Artemis — Command Surface</title>
+  <meta name="description" content="ClearGlassInc Artemis command surface and operations blueprint." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepStart: '#030305',
+            deepEnd: '#0f111a',
+            tealCritical: '#14b8a6',
+            slateSoft: '#93a4bc'
+          },
+          boxShadow: {
+            focusglow: '0 0 0 1px rgba(20,184,166,0.35), 0 10px 30px rgba(20,184,166,0.18)'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-deepStart to-deepEnd text-slate-100 antialiased">
+  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <header class="mb-8 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl md:p-10">
+      <p class="mb-4 text-xs uppercase tracking-[0.22em] text-slateSoft">ClearGlassInc Artemis</p>
+      <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">
+        Command Surface for Cybersecurity and Financial Intelligence
+      </h1>
+      <p class="mt-5 max-w-3xl text-base leading-7 text-slateSoft sm:text-lg">
+        A stable, mission-grade interface for live investigations, secure financial anomaly tracking,
+        and cross-domain operator workflows.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#blueprint" class="rounded-xl border border-tealCritical/60 bg-tealCritical/20 px-5 py-3 text-sm font-semibold text-teal-200 transition-transform duration-200 hover:scale-[1.02] hover:shadow-focusglow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tealCritical/60">
+          Investigate
+        </a>
+        <a href="#blueprint" class="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-200 transition-transform duration-200 hover:scale-[1.02] hover:shadow-focusglow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tealCritical/60">
+          Secure Access
+        </a>
+      </div>
+    </header>
+
+    <section id="blueprint" class="space-y-5">
+      <div class="flex items-end justify-between">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">Operations Blueprint</h2>
+        <p class="text-sm text-slateSoft">Modular command modules · adaptive mission state</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-6 auto-rows-[minmax(140px,auto)]">
+        <article class="group md:col-span-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-focusglow">
+          <h3 class="text-lg font-semibold text-white">Unified Event Correlation</h3>
+          <p class="mt-2 text-sm leading-6 text-slateSoft">
+            Fuse network telemetry, transaction vectors, and entity timelines into a single operational context.
+          </p>
+          <ul class="mt-4 grid gap-2 text-sm text-slate-300 sm:grid-cols-2">
+            <li class="rounded-lg border border-white/10 bg-black/20 px-3 py-2">Temporal graph pivots</li>
+            <li class="rounded-lg border border-white/10 bg-black/20 px-3 py-2">Case lineage confidence</li>
+            <li class="rounded-lg border border-white/10 bg-black/20 px-3 py-2">Alert deduplication logic</li>
+            <li class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-teal-200">Security critical pathing</li>
+          </ul>
+        </article>
+
+        <article class="group md:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-focusglow">
+          <h3 class="text-lg font-semibold text-white">Command Health</h3>
+          <p class="mt-2 text-sm text-slateSoft">Latency: 89ms · Integrity: Green · Audit stream: Locked</p>
+          <div class="mt-5 h-1.5 rounded-full bg-white/10">
+            <div class="h-1.5 w-11/12 rounded-full bg-tealCritical"></div>
+          </div>
+        </article>
+
+        <article class="group md:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-focusglow">
+          <h3 class="text-lg font-semibold text-white">Analyst Copilot</h3>
+          <p class="mt-2 text-sm text-slateSoft">Structured brief generation with human-in-the-loop action controls.</p>
+        </article>
+
+        <article class="group md:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-focusglow">
+          <h3 class="text-lg font-semibold text-white">Financial Risk Lens</h3>
+          <p class="mt-2 text-sm text-slateSoft">Behavioral movement baselines and deviations for mission-level funding traces.</p>
+        </article>
+
+        <article class="group md:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-focusglow">
+          <h3 class="text-lg font-semibold text-white">Policy Assurance</h3>
+          <p class="mt-2 text-sm text-slateSoft">Need-to-know segmentation, coalition scope checks, and immutable audit provenance.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

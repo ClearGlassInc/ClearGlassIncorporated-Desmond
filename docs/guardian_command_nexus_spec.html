@@ -1,116 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ClearGlassInc Artemis — Command Surface</title>
-  <meta name="description" content="ClearGlassInc Artemis cyber-infrastructure command surface." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            surfaceStart: '#030305',
-            surfaceEnd: '#0f111a',
-            tealCritical: '#14b8a6',
-            textSoft: '#9aa8bc'
-          },
-          boxShadow: {
-            focusglow: '0 0 0 1px rgba(20,184,166,0.35), 0 12px 36px rgba(20,184,166,0.2)'
-          }
-        }
-      }
-    };
-  </script>
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CLEARGLASS Guardian Command Nexus Specification</title>
+  <link rel="stylesheet" href="guardian_command_nexus_spec.css" />
   <style>
-    .glass-card {
-      border-radius: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+    code { white-space: pre-wrap; }
+    span.smallcaps { font-variant: small-caps; }
+    div.columns { display: flex; gap: min(4vw, 1.5em); }
+    div.column { flex: auto; overflow-x: auto; }
+    div.hanging-indent { margin-left: 1.5em; text-indent: -1.5em; }
+    ul.task-list[class] { list-style: none; }
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
     }
-
-    .adaptive-hover {
-      transition: transform 200ms ease-out, box-shadow 200ms ease-out;
-      will-change: transform;
-    }
-
-    .adaptive-hover:hover,
-    .adaptive-hover:focus-within {
-      transform: translateY(-2px) scale(1.01);
-    }
+    .display.math { display: block; text-align: center; margin: 0.5rem auto; }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-surfaceStart to-surfaceEnd text-slate-100 antialiased">
-  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <header class="glass-card mb-8 p-7 md:p-10">
-      <p class="mb-4 text-xs font-medium uppercase tracking-[0.24em] text-textSoft">ClearGlassInc Artemis</p>
-      <h1 class="max-w-4xl text-balance text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-        Command Surface
-      </h1>
-      <p class="mt-4 max-w-3xl text-base leading-7 text-textSoft sm:text-lg">
-        A resilient control layer for cybersecurity operations and financial intelligence workflows,
-        designed for fast decisions under audited, mission-grade constraints.
-      </p>
-
-      <div class="mt-7 flex flex-wrap gap-3">
-        <a href="#operations-blueprint" class="adaptive-hover rounded-xl border border-tealCritical/70 bg-tealCritical/20 px-5 py-3 text-sm font-semibold text-teal-200 hover:shadow-focusglow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tealCritical/60">
-          Investigate
-        </a>
-        <a href="#operations-blueprint" class="adaptive-hover rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-100 hover:shadow-focusglow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tealCritical/60">
-          Secure Access
-        </a>
-      </div>
-    </header>
-
-    <section id="operations-blueprint" aria-labelledby="operations-blueprint-title">
-      <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
-        <h2 id="operations-blueprint-title" class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-          Operations Blueprint
-        </h2>
-        <p class="text-sm text-textSoft">Bento modules tuned for stability, clarity, and controlled automation</p>
-      </div>
-
-      <div class="grid auto-rows-[minmax(150px,auto)] gap-4 md:grid-cols-6">
-        <article class="glass-card adaptive-hover md:col-span-4 p-6 hover:shadow-focusglow">
-          <h3 class="text-lg font-semibold text-white">Unified Event Correlation</h3>
-          <p class="mt-2 text-sm leading-6 text-textSoft">
-            Merge telemetry, transaction anomalies, and entity traces into one continuously updated mission context.
-          </p>
-          <div class="mt-4 grid gap-2 sm:grid-cols-2">
-            <span class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-slate-200">Temporal case graphing</span>
-            <span class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-slate-200">Cross-source confidence scoring</span>
-            <span class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-slate-200">Outcome-linked investigation threads</span>
-            <span class="rounded-lg border border-tealCritical/40 bg-tealCritical/10 px-3 py-2 text-sm text-teal-100">Security-critical signal elevation</span>
-          </div>
-        </article>
-
-        <article class="glass-card adaptive-hover md:col-span-2 p-6 hover:shadow-focusglow">
-          <h3 class="text-lg font-semibold text-white">Command Health</h3>
-          <p class="mt-2 text-sm text-textSoft">Latency 82ms · Integrity verified · Policy checks active</p>
-          <div class="mt-4 h-2 rounded-full bg-white/10">
-            <div class="h-2 w-[91%] rounded-full bg-tealCritical"></div>
-          </div>
-        </article>
-
-        <article class="glass-card adaptive-hover md:col-span-2 p-6 hover:shadow-focusglow">
-          <h3 class="text-lg font-semibold text-white">Analyst Copilot</h3>
-          <p class="mt-2 text-sm text-textSoft">Drafts explainable summaries and queues actions for human approval.</p>
-        </article>
-
-        <article class="glass-card adaptive-hover md:col-span-2 p-6 hover:shadow-focusglow">
-          <h3 class="text-lg font-semibold text-white">Financial Risk Lens</h3>
-          <p class="mt-2 text-sm text-textSoft">Highlights non-obvious funding movements across entities and timelines.</p>
-        </article>
-
-        <article class="glass-card adaptive-hover md:col-span-2 p-6 hover:shadow-focusglow">
-          <h3 class="text-lg font-semibold text-white">Policy Assurance</h3>
-          <p class="mt-2 text-sm text-textSoft">Need-to-know controls, coalition segmentation, and immutable audit provenance.</p>
-        </article>
-      </div>
-    </section>
-  </div>
+<body>
+<header id="title-block-header">
+<h1 class="title">CLEARGLASS Guardian Command Nexus Specification</h1>
+</header>
+<h1 id="spec1-clearglass-guardian-command-nexus">SPEC‑1: CLEARGLASS Guardian Command Nexus</h1>
+<h2 id="purpose-and-scope">1. Purpose and Scope</h2>
+<p>The <strong>Guardian Command Nexus</strong> is the central command‑and‑control dashboard for CLEARGLASSINC’s GUARDIAN suite. It is a single‑page web application that provides operators with real‑time oversight of security workflows, simulated environments and system health. Its cyberpunk aesthetic hides a sophisticated architecture that orchestrates reactive state management, simulations, audit logging and AI‑driven command routing.</p>
+<p>The purpose of this specification is to clearly define the initial production version, inform refactoring of the existing prototype, and provide a base for future extension. In scope are the modules already present in the current HTML artifact—shell kernel, reactive state fabric, simulation grid, audit ledger, operator routing and AI command orchestration—as well as their integration points. Out of scope are detailed implementation of third‑party integrations (e.g. PowerShell modules) or platform‑specific deployment scripts; these may be defined in later specs.</p>
+<h2 id="system-overview">2. System Overview</h2>
+<p>The Command Nexus is architected as a client‑side SPA built with modern JavaScript (ES6+) and an application framework (assumed to be React or Vue given the prototype’s reactive state fabric). The application bootstraps a <strong>shell kernel</strong> that coordinates all subsystems and exposes a command bus to the UI. A <strong>state fabric</strong> holds canonical application state and broadcasts changes via events. A <strong>simulation grid</strong> synthesises sensor and environmental data at a configurable cadence to drive dashboards and AI reasoning. An <strong>audit ledger</strong> records all operator actions and system events with severity levels and metadata. <strong>AI command orchestration</strong> parses natural‑language intents from operators or connected systems and translates them into structured actions. <strong>Operator routing</strong> provides navigation between views (Dashboard, Pipeline, Surveillance, Tasks, AI Console, System) and orchestrates hotkeys and quick actions. The <strong>visual layer</strong> comprises responsive panels, charts and terminal components consistent with the cyberpunk console aesthetic.</p>
+<p>The HTML front end communicates with back‑end services via internal APIs. For the initial version these may be mocked or stubbed; the specification assumes eventual REST or GraphQL endpoints for persistence (audit log export, state snapshots), AI inference and external data feeds. External systems (e.g. network scanners, SOC tools) will integrate through defined interfaces but are not implemented in this revision.</p>
+<h2 id="core-requirements">3. Core Requirements</h2>
+<h3 id="functional-requirements">3.1 Functional Requirements</h3>
+<ul>
+<li><strong>Dashboard view:</strong> Display high‑level metrics from the simulation grid and real operations. Operators can interact with widgets to drill down into pipeline tasks, surveillance feeds and incident timelines.</li>
+<li><strong>Pipeline view:</strong> Visualise and manage workflows such as network scans, security automation or predictive analysis. Tasks move through stages with status indicators.</li>
+<li><strong>Surveillance view:</strong> Present live or simulated sensor feeds (e.g. CCTV, network traffic). Operators can control playback and adjust filters.</li>
+<li><strong>Tasks view:</strong> List assigned tasks, alerts and incidents with sorting and filtering. Operators can acknowledge, snooze or transfer tasks.</li>
+<li><strong>AI console:</strong> Accept natural‑language commands, display parsed intents and proposed actions, and allow operators to confirm execution. Provide a transcript of AI conversations.</li>
+<li><strong>System view:</strong> Show system health (CPU, memory, network) and log messages. Allow administrators to start/stop subsystems.</li>
+<li><strong>Audit logging:</strong> Record all operator actions (navigation, confirmations, command executions), AI actions, and system events with timestamp, severity and context.</li>
+<li><strong>State persistence:</strong> Persist state fabric snapshots and audit ledger entries to local storage or back‑end services. Support schema versioning to handle migrations.</li>
+<li><strong>Simulation controls:</strong> Provide settings to adjust simulation cadence, toggle stochastic/deterministic mode and seed values.</li>
+</ul>
+<h3 id="nonfunctional-requirements">3.2 Non‑Functional Requirements</h3>
+<ul>
+<li><strong>Performance:</strong> The dashboard should render initial content within 2 seconds on modern browsers and maintain 60 fps during interaction. Simulation updates should not block UI rendering.</li>
+<li><strong>Reliability:</strong> The shell kernel must recover gracefully from subsystem failures. Unhandled exceptions should be captured by the audit ledger and displayed in the System view.</li>
+<li><strong>Usability:</strong> The interface shall support keyboard navigation and screen‑reader labels. Hotkeys must not conflict with browser shortcuts.</li>
+<li><strong>Maintainability:</strong> Code should be modularised by subsystem with typed interfaces. Event names and payload shapes should be centralised. Tests should cover reducers, command parsing and critical UI flows.</li>
+<li><strong>Extensibility:</strong> New views and AI intents should be pluggable without changing core modules. The spec defines clear extension points for PowerShell integration and SOC workflows.</li>
+</ul>
+<h2 id="implementation-priority">Implementation Priority</h2>
+<ol type="1">
+<li><strong>Core Framework and State Fabric:</strong> Establish the shell kernel, event bus, reducers, selectors and routing. Implement domain models and ensure persistence with schema versioning.</li>
+<li><strong>Simulation Grid and Dashboard:</strong> Build the simulation scheduler and sensor models, and render dashboard widgets. Provide controls for cadence and mode.</li>
+<li><strong>AI Command Orchestration:</strong> Implement the rule‑based parser, console UI and command execution flow with confirmation dialogues.</li>
+</ol>
+<p><em>Note:</em> This document is intentionally scoped from the provided specification content and preserved as a standalone, styled artifact for ClearGlassInc Artemis documentation.</p>
 </body>
 </html>

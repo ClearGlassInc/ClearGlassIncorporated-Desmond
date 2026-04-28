@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClearGlassInc Artemis — Self-Evolving Intelligence Platform Blueprint</title>
+  <meta name="description" content="Production architecture blueprint for ClearGlassInc Artemis across Gotham, Foundry, AIP, and Apollo." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surfaceStart: '#030305',
+            surfaceEnd: '#0f111a',
+            tealCritical: '#14b8a6',
+            textSoft: '#9aa8bc'
+          },
+          boxShadow: {
+            focusglow: '0 0 0 1px rgba(20,184,166,0.35), 0 14px 34px rgba(20,184,166,0.20)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .glass-card {
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .adaptive-hover {
+      transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+      will-change: transform;
+    }
+    .adaptive-hover:hover,
+    .adaptive-hover:focus-within {
+      transform: translateY(-2px) scale(1.01);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-surfaceStart to-surfaceEnd text-slate-100 antialiased">
+  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <header class="glass-card mb-8 p-7 md:p-10">
+      <p class="mb-4 text-xs font-medium uppercase tracking-[0.24em] text-textSoft">ClearGlassInc Artemis · Mission Architecture</p>
+      <h1 class="max-w-5xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">Command Surface + Self-Evolving Intelligence Platform</h1>
+      <p class="mt-4 max-w-4xl text-base leading-7 text-textSoft sm:text-lg">
+        End-to-end production blueprint for secure, coalition-aware, low-latency operations across Palantir Gotham,
+        Foundry, AIP, and Apollo with governed self-improvement loops.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="#system-architecture" class="adaptive-hover rounded-xl border border-tealCritical/70 bg-tealCritical/20 px-5 py-3 text-sm font-semibold text-teal-200 hover:shadow-focusglow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tealCritical/60">Command Surface</a>
+        <a href="#code-examples" class="adaptive-hover rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-100 hover:shadow-focusglow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tealCritical/60">Python-First Code</a>
+      </div>
+    </header>
+
+    <main class="space-y-6">
+      <section id="system-architecture" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">1) System Architecture</h2>
+        <p class="mt-2 text-textSoft">Mission profile: secure, coalition-aware, low-latency intelligence operations with hard human-approval gates.</p>
+        <div class="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <article class="glass-card adaptive-hover p-4 hover:shadow-focusglow"><h3 class="font-semibold text-white">Gotham</h3><p class="mt-2 text-sm text-textSoft">Operational intelligence, case workflows, investigation graph.</p></article>
+          <article class="glass-card adaptive-hover p-4 hover:shadow-focusglow"><h3 class="font-semibold text-white">Foundry</h3><p class="mt-2 text-sm text-textSoft">Pipelines, ontology, governed data products, lineage.</p></article>
+          <article class="glass-card adaptive-hover p-4 hover:shadow-focusglow"><h3 class="font-semibold text-white">AIP</h3><p class="mt-2 text-sm text-textSoft">Copilots, multi-agent runtime, model router, eval harness.</p></article>
+          <article class="glass-card adaptive-hover p-4 hover:shadow-focusglow"><h3 class="font-semibold text-white">Apollo</h3><p class="mt-2 text-sm text-textSoft">Ring deployments, policy-driven promotion, rollback controls.</p></article>
+        </div>
+        <pre class="mt-5 overflow-x-auto rounded-xl border border-white/10 bg-black/30 p-4 text-xs text-slate-300">[ Web UI / Analyst Workbench / Commander Console ]
+        |
+        v
+[ API Gateway + BFF ]
+        |
+        v
+[ Domain Services ] -- [ Policy Decision Point (PDP) ]
+        |                         |
+        v                         v
+[ Event Bus ]  &lt;-----------> [ Policy Enforcement Points (PEP) ]
+        |
+        v
+[ Foundry Pipelines + Ontology + Data Products ]
+        |
+        v
+[ AIP Agent Orchestrator + Model Router + Evals ]
+        |
+        v
+[ Gotham Operational Apps / Cases / Entity Graph ]
+        |
+        v
+[ Observability + Audit + Drift + Governance ]
+        |
+        v
+[ Apollo Deployment Control Plane ]</pre>
+      </section>
+
+      <section id="data-ontology" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">2) Data and Ontology</h2>
+        <div class="mt-4 grid gap-4 md:grid-cols-3">
+          <article class="glass-card p-4"><h3 class="font-semibold">Entity Types</h3><p class="mt-2 text-sm text-textSoft">Person, Organization, Account, Device, IP, Location, Vessel, Transaction, Communication, Case, Incident, Mission, Artifact, Alert, PolicyDecision, ModelVersion, PromptVersion.</p></article>
+          <article class="glass-card p-4"><h3 class="font-semibold">Relationship Types</h3><p class="mt-2 text-sm text-textSoft">OWNS, USES, TRANSACTS_WITH, LOCATED_AT, ASSOCIATED_WITH, MENTIONED_IN, TRIGGERED, INVESTIGATED_IN, LINKED_TO_CASE.</p></article>
+          <article class="glass-card p-4"><h3 class="font-semibold">Mandatory Metadata</h3><p class="mt-2 text-sm text-textSoft">confidence_score, source_system, lineage_ref, classification_label, compartment_tags, valid_time, system_time, provenance_hash.</p></article>
+        </div>
+        <p class="mt-4 text-sm text-textSoft">Permission model uses ABAC + ReBAC + mission context (deny-by-default), and ontology slices constrain AI prompt context to policy-approved data only.</p>
+      </section>
+
+      <section id="ai-agent-design" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">3) AI and Agent Design</h2>
+        <div class="mt-4 grid auto-rows-[minmax(140px,auto)] gap-4 md:grid-cols-6">
+          <article class="glass-card md:col-span-3 p-4"><h3 class="font-semibold">Analyst Copilot</h3><p class="mt-2 text-sm text-textSoft">Query ontology, explain links/confidence, draft intelligence notes, queue follow-up tasks.</p></article>
+          <article class="glass-card md:col-span-3 p-4"><h3 class="font-semibold">Commander Copilot</h3><p class="mt-2 text-sm text-textSoft">Operational summary, response packages, risk forecast, approval orchestration.</p></article>
+          <article class="glass-card md:col-span-6 p-4"><h3 class="font-semibold">Workflow</h3><p class="mt-2 text-sm text-textSoft">Event → Triage → Enrichment → Correlation → Risk Scoring → Recommendation → Human Approval Gate → Action Execution → Outcome Capture.</p></article>
+        </div>
+      </section>
+
+      <section id="self-improvement" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">4) Self-Improvement Loop (Safe + Audited)</h2>
+        <ol class="mt-4 list-decimal space-y-2 pl-5 text-sm text-textSoft">
+          <li>Capture signals: operator edits, ratings, alert outcomes, mission success, latency/cost, human override frequency.</li>
+          <li>Generate eval datasets and benchmark prompt/model/workflow candidates.</li>
+          <li>Run policy checks to prevent forbidden behavior expansion.</li>
+          <li>Require governance approval for prompt/workflow/router changes (Gate C).</li>
+          <li>Apollo canary rollout (ring1), drift monitoring, and automatic rollback on regression thresholds.</li>
+        </ol>
+        <p class="mt-3 text-sm text-teal-200">Immutable IDs: prompt_version, workflow_version, router_policy_version, model_snapshot.</p>
+      </section>
+
+      <section id="fullstack" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">5) Full-Stack Implementation</h2>
+        <div class="mt-4 grid gap-4 md:grid-cols-2">
+          <article class="glass-card p-4"><h3 class="font-semibold">Frontend</h3><p class="mt-2 text-sm text-textSoft">Next.js + TypeScript + SSE/WebSockets. Routes: /missions/:id, /cases/:id, /approvals, /copilot, /evals.</p></article>
+          <article class="glass-card p-4"><h3 class="font-semibold">Gateway + BFF</h3><p class="mt-2 text-sm text-textSoft">OIDC/JWT, request scoping headers, policy pre-check, response redaction by classification.</p></article>
+          <article class="glass-card p-4"><h3 class="font-semibold">Services</h3><p class="mt-2 text-sm text-textSoft">FastAPI microservices for ingest, entity resolution, threat scoring, case orchestration, agent runtime, policy, eval, and feedback learning.</p></article>
+          <article class="glass-card p-4"><h3 class="font-semibold">Eventing + Data</h3><p class="mt-2 text-sm text-textSoft">Kafka/Pulsar topics, Foundry Bronze/Silver/Gold, OpenSearch + vector retrieval, ontology sync to Gotham.</p></article>
+        </div>
+      </section>
+
+      <section id="security-governance" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">6) Security and Governance</h2>
+        <ul class="mt-4 list-disc space-y-2 pl-5 text-sm text-textSoft">
+          <li>Zero trust enforcement on every request (mTLS + short-lived credentials + OPA/Rego PDP).</li>
+          <li>Fine-grained row/column/entity/edge-level policy enforcement with coalition boundary controls.</li>
+          <li>Immutable provenance via append-only audit logs, signed artifacts, and end-to-end correlation IDs.</li>
+          <li>AI governance for prompt/model/workflow change control with board approval and rollback safety.</li>
+        </ul>
+      </section>
+
+      <section id="code-examples" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">7) Code Examples (Python-First)</h2>
+        <div class="space-y-4 mt-4">
+          <article class="glass-card p-4">
+            <h3 class="font-semibold">7.1 Ingest Service (FastAPI + Kafka)</h3>
+            <pre class="mt-2 overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-3 text-xs text-slate-300">from fastapi import FastAPI
+from pydantic import BaseModel, Field
+from aiokafka import AIOKafkaProducer
+import json, uuid, time
+
+app = FastAPI(title="ClearGlassInc Artemis Ingest Service")
+
+class RawEvent(BaseModel):
+    source: str
+    event_type: str
+    payload: dict
+    classification: str = Field(default="CUI")
+    mission_id: str
+    coalition: str</pre>
+          </article>
+
+          <article class="glass-card p-4">
+            <h3 class="font-semibold">7.2 Policy Client + Rego</h3>
+            <pre class="mt-2 overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-3 text-xs text-slate-300">class PolicyClient:
+    async def authorize(self, subject, action, resource, context) -> bool:
+        payload = {"input": {"subject": subject, "action": action,
+                             "resource": resource, "context": context}}
+        ...
+
+# rego
+# default allow = false
+# allow { input.action == "approve_action"; input.subject.role == "commander" }</pre>
+          </article>
+
+          <article class="glass-card p-4">
+            <h3 class="font-semibold">7.3 Agent Workflow State Machine</h3>
+            <pre class="mt-2 overflow-x-auto rounded-lg border border-white/10 bg-black/30 p-3 text-xs text-slate-300">Event -> TRIAGE -> ENRICH -> CORRELATE -> RECOMMEND -> APPROVAL -> EXECUTE
+Hard gates: policy authorize + human approve before EXECUTE.</pre>
+          </article>
+        </div>
+      </section>
+
+      <section id="scenario" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">8) Scenario Walkthrough</h2>
+        <div class="mt-4 space-y-2 text-sm text-textSoft">
+          <p><span class="text-teal-200 font-semibold">T0</span> suspicious cross-border transaction + anomalous login enters <code>intel.raw.events</code>.</p>
+          <p><span class="text-teal-200 font-semibold">T+3s</span> triage classifies high severity (sanction linkage probability 0.78).</p>
+          <p><span class="text-teal-200 font-semibold">T+8s</span> enrichment/correlation links event to an open Gotham investigation case.</p>
+          <p><span class="text-teal-200 font-semibold">T+16s</span> policy checks pass draft scope; commander approval required for external action.</p>
+          <p><span class="text-teal-200 font-semibold">T+20s</span> action package executes with full provenance and audit correlation IDs.</p>
+          <p><span class="text-teal-200 font-semibold">T+1 day</span> evaluated candidate improves precision (+4.2%) with no latency regression, then Apollo canary rollout begins.</p>
+        </div>
+      </section>
+
+      <section id="build-plan" class="glass-card p-6 md:p-8">
+        <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">9) Practical Build Plan</h2>
+        <div class="mt-4 grid gap-4 md:grid-cols-3">
+          <article class="glass-card p-4"><h3 class="font-semibold">Phase 1 (0–8 weeks)</h3><p class="mt-2 text-sm text-textSoft">Ingestion, ontology baseline, case integration, analyst copilot MVP. Human-in-the-loop only.</p></article>
+          <article class="glass-card p-4"><h3 class="font-semibold">Phase 2 (8–16 weeks)</h3><p class="mt-2 text-sm text-textSoft">Multi-agent orchestration, approval workflows, eval harness, prompt/workflow registry.</p></article>
+          <article class="glass-card p-4"><h3 class="font-semibold">Phase 3 (16–28 weeks)</h3><p class="mt-2 text-sm text-textSoft">Advanced routing, drift detection, coalition hardening, governed continuous self-improvement.</p></article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

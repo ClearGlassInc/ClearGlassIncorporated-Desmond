@@ -12,8 +12,9 @@ RUNNER_TOKEN="${RUNNER_TOKEN:-}"          # from Settings > Actions > Runners > 
 RUNNER_NAME="${RUNNER_NAME:-clearglass-runner-1}"
 RUNNER_USER="github-runner"
 RUNNER_DIR="/opt/actions-runner"
-RUNNER_VERSION="2.315.0"                 # update to latest as needed
+RUNNER_VERSION="2.317.0"                 # update to latest as needed
 SITE_DIR="/var/www/clearglass"
+RELEASES_DIR="/var/www/clearglass-releases"
 DOMAIN="${DOMAIN:-}"                     # optional: set to your domain for HTTPS
 ###############################################################################
 
@@ -130,8 +131,8 @@ systemctl enable "$(systemctl list-units --type=service | grep actions.runner | 
 # 7. nginx — serve the static site
 ###############################################################################
 info "Configuring nginx to serve the site..."
-mkdir -p "$SITE_DIR"
-chown -R www-data:www-data "$SITE_DIR"
+mkdir -p "$SITE_DIR" "$RELEASES_DIR" "$SITE_DIR/current"
+chown -R www-data:www-data "$SITE_DIR" "$RELEASES_DIR"
 usermod -aG www-data "$RUNNER_USER"   # runner can write to site dir
 
 cat > /etc/nginx/sites-available/clearglass <<NGINX
@@ -140,7 +141,7 @@ server {
     listen [::]:80;
     server_name ${DOMAIN:-_};
 
-    root $SITE_DIR;
+    root $SITE_DIR/current;
     index index.html;
 
     location / {
@@ -189,13 +190,13 @@ info "Configuring UFW firewall..."
 ufw --force reset
 ufw default deny incoming
 ufw default allow outgoing
-ufw allow ssh
+ufw deny 22/tcp
 ufw allow 80/tcp
 ufw allow 443/tcp
 ufw --force enable
 
 ###############################################################################
-# 10. fail2ban (brute-force protection for SSH)
+# 10. fail2ban service bootstrap (no SSH exposure assumed)
 ###############################################################################
 systemctl enable --now fail2ban
 

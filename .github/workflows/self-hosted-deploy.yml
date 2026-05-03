@@ -1,8 +1,5 @@
 name: Deploy to Self-Hosted Server
 
-# Deploys the static site to /var/www/clearglass on your own VM,
-# served by nginx — completely free (you own the server).
-
 on:
   push:
     branches: ["main"]
@@ -18,15 +15,21 @@ concurrency:
 jobs:
   deploy:
     name: Build & deploy site
-    runs-on: [self-hosted, linux, clearglass]
+    runs-on: [self-hosted, linux, x64, clearglass]
+    timeout-minutes: 20
+
+    env:
+      SITE_DIR: /var/www/clearglass
+      RELEASES_DIR: /var/www/clearglass-releases
+      HEALTHCHECK_URL: http://127.0.0.1/
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ── Build: copy public assets to _site ──────────────────────────────
       - name: Build static site
         run: |
+          set -euo pipefail
           rm -rf _site
           mkdir -p _site
           rsync -av --delete \
@@ -44,30 +47,40 @@ jobs:
             --exclude 'node_modules' \
             --exclude '_site' \
             ./ _site/
+          test -f _site/index.html
 
-      # ── Deploy: rsync into nginx webroot ────────────────────────────────
-      - name: Deploy to webroot
+      - name: Deploy with rollback-safe symlink swap
         run: |
-          SITE_DIR="/var/www/clearglass"
+          set -euo pipefail
+          TS="$(date -u +%Y%m%dT%H%M%SZ)"
+          NEW_RELEASE="$RELEASES_DIR/$TS"
+          sudo mkdir -p "$RELEASES_DIR"
+          sudo mkdir -p "$NEW_RELEASE"
+          sudo rsync -av --delete --checksum _site/ "$NEW_RELEASE/"
+          sudo chown -R www-data:www-data "$NEW_RELEASE"
+          sudo chmod -R 755 "$NEW_RELEASE"
+
+          PREV_TARGET=""
+          if [ -L "$SITE_DIR/current" ]; then
+            PREV_TARGET="$(readlink -f "$SITE_DIR/current")"
+          fi
+
           sudo mkdir -p "$SITE_DIR"
-          sudo rsync -av --delete --checksum \
-            --exclude '.git' \
-            _site/ "$SITE_DIR/"
-          sudo chown -R www-data:www-data "$SITE_DIR"
-          sudo chmod -R 755 "$SITE_DIR"
+          sudo ln -sfn "$NEW_RELEASE" "$SITE_DIR/current"
+          sudo systemctl reload nginx
 
-      # ── Reload nginx ─────────────────────────────────────────────────────
-      - name: Reload nginx
-        run: sudo systemctl reload nginx
-
-      # ── Smoke test ───────────────────────────────────────────────────────
-      - name: Smoke test local site
-        run: |
-          sleep 1
-          HTTP_CODE=$(curl -o /dev/null -s -w "%{http_code}" http://localhost/)
-          if [[ "$HTTP_CODE" == "200" ]]; then
-            echo "Site live — HTTP $HTTP_CODE"
-          else
-            echo "WARNING: HTTP $HTTP_CODE from localhost — check nginx"
+          CODE=$(curl -o /dev/null -sS -w "%{http_code}" "$HEALTHCHECK_URL")
+          if [ "$CODE" != "200" ]; then
+            echo "Health check failed with HTTP $CODE"
+            if [ -n "$PREV_TARGET" ]; then
+              echo "Rolling back to $PREV_TARGET"
+              sudo ln -sfn "$PREV_TARGET" "$SITE_DIR/current"
+              sudo systemctl reload nginx
+            fi
             exit 1
           fi
+
+      - name: Prune old releases
+        run: |
+          set -euo pipefail
+          sudo bash -lc 'ls -1dt /var/www/clearglass-releases/* 2>/dev/null | tail -n +6 | xargs -r rm -rf'

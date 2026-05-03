@@ -1,0 +1,73 @@
+name: Deploy to Self-Hosted Server
+
+# Deploys the static site to /var/www/clearglass on your own VM,
+# served by nginx — completely free (you own the server).
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: self-hosted-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build & deploy site
+    runs-on: [self-hosted, linux, clearglass]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── Build: copy public assets to _site ──────────────────────────────
+      - name: Build static site
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          rsync -av --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'runner' \
+            --exclude 'docs' \
+            --exclude 'scripts' \
+            --exclude 'bots' \
+            --exclude 'tests' \
+            --exclude 'investors' \
+            --exclude 'marketing' \
+            --exclude 'operations' \
+            --exclude 'prompts' \
+            --exclude 'node_modules' \
+            --exclude '_site' \
+            ./ _site/
+
+      # ── Deploy: rsync into nginx webroot ────────────────────────────────
+      - name: Deploy to webroot
+        run: |
+          SITE_DIR="/var/www/clearglass"
+          sudo mkdir -p "$SITE_DIR"
+          sudo rsync -av --delete --checksum \
+            --exclude '.git' \
+            _site/ "$SITE_DIR/"
+          sudo chown -R www-data:www-data "$SITE_DIR"
+          sudo chmod -R 755 "$SITE_DIR"
+
+      # ── Reload nginx ─────────────────────────────────────────────────────
+      - name: Reload nginx
+        run: sudo systemctl reload nginx
+
+      # ── Smoke test ───────────────────────────────────────────────────────
+      - name: Smoke test local site
+        run: |
+          sleep 1
+          HTTP_CODE=$(curl -o /dev/null -s -w "%{http_code}" http://localhost/)
+          if [[ "$HTTP_CODE" == "200" ]]; then
+            echo "Site live — HTTP $HTTP_CODE"
+          else
+            echo "WARNING: HTTP $HTTP_CODE from localhost — check nginx"
+            exit 1
+          fi

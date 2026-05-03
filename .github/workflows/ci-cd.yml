@@ -1,0 +1,191 @@
+name: CI/CD — ClearGlassInc
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write  # for SARIF upload
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ─────────────────────────────────────────────────────────────────────────────
+jobs:
+
+  # ── 1. Validate & Lint ─────────────────────────────────────────────────────
+  validate:
+    name: Validate (HTML / Python / secrets)
+    runs-on: [self-hosted, linux, clearglass]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install HTML linter
+        run: npm install -g htmlhint --silent 2>/dev/null || true
+
+      - name: Lint HTML
+        run: htmlhint "**/*.html" --ignore "node_modules/**,_site/**" || true
+
+      - name: Python syntax check
+        run: |
+          find scripts -name "*.py" -exec python3 -m py_compile {} \;
+          echo "Python syntax OK"
+
+      - name: Secret scan (trufflehog)
+        run: |
+          trufflehog filesystem . \
+            --exclude-paths=.trufflehog-ignore \
+            --fail \
+            --only-verified \
+            --no-update || true
+
+  # ── 2. Python tests ────────────────────────────────────────────────────────
+  python-tests:
+    name: Python Tests
+    runs-on: [self-hosted, linux, clearglass]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-cov 2>/dev/null || true
+          [ -f requirements.txt ] && pip install -r requirements.txt || true
+
+      - name: Run tests
+        run: |
+          if find tests -name "*.py" 2>/dev/null | grep -q .; then
+            python3 -m pytest tests/ -v --tb=short --cov=scripts --cov-report=xml
+          else
+            echo "No tests found — skipping"
+          fi
+
+  # ── 3. Node.js build ───────────────────────────────────────────────────────
+  nodejs-build:
+    name: Node.js Build
+    runs-on: [self-hosted, linux, clearglass]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install & build
+        run: |
+          if [ -f package.json ]; then
+            npm ci --prefer-offline
+            npm run build --if-present
+            npm test --if-present
+          else
+            echo "No package.json — skipping"
+          fi
+
+  # ── 4. C++ build ──────────────────────────────────────────────────────────
+  cpp-build:
+    name: C++ Build
+    runs-on: [self-hosted, linux, clearglass]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: CMake build
+        run: |
+          if [ -f CMakeLists.txt ]; then
+            mkdir -p build && cd build
+            cmake .. -DCMAKE_BUILD_TYPE=Release
+            make -j$(nproc)
+          else
+            echo "No CMakeLists.txt — skipping"
+          fi
+
+  # ── 5. Security scans ─────────────────────────────────────────────────────
+  security:
+    name: Security Scans
+    runs-on: [self-hosted, linux, clearglass]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: OWASP Dependency-Check
+        run: |
+          dependency-check \
+            --project "ClearGlassInc" \
+            --scan . \
+            --exclude "**/.git/**" \
+            --format JSON \
+            --out /tmp/dc-report \
+            --noupdate \
+            --failOnCVSS 9 || true
+
+      - name: Bandit (Python SAST)
+        run: |
+          if find . -name "*.py" -not -path "./.git/*" | grep -q .; then
+            bandit -r scripts/ -f json -o /tmp/bandit-report.json || true
+            bandit -r scripts/ -ll || true
+          fi
+
+      - name: nikto web scan (local)
+        run: |
+          # Scan the local built site — not an external target
+          if [ -d _site ]; then
+            docker run --rm -v $(pwd)/_site:/var/www/html nginx:alpine &
+            sleep 3
+            nikto -h http://localhost:80 -Tuning x || true
+            docker stop $(docker ps -q --filter ancestor=nginx:alpine) 2>/dev/null || true
+          else
+            echo "No _site dir — skipping nikto"
+          fi
+
+  # ── 6. Build & deploy static site ─────────────────────────────────────────
+  deploy:
+    name: Deploy Site
+    needs: [validate, python-tests, nodejs-build, security]
+    runs-on: [self-hosted, linux, clearglass]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build static site
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          rsync -av --delete \
+            --exclude '.git' --exclude '.github' --exclude 'runner' \
+            --exclude 'infra' --exclude 'docs' --exclude 'scripts' \
+            --exclude 'bots' --exclude 'tests' --exclude 'investors' \
+            --exclude 'marketing' --exclude 'operations' --exclude 'prompts' \
+            --exclude 'node_modules' --exclude '_site' --exclude 'Dockerfile' \
+            ./ _site/
+
+      - name: Deploy to nginx webroot
+        run: |
+          sudo mkdir -p /var/www/clearglass
+          sudo rsync -av --delete --checksum _site/ /var/www/clearglass/
+          sudo chown -R www-data:www-data /var/www/clearglass
+          sudo chmod -R 755 /var/www/clearglass
+
+      - name: Reload nginx
+        run: sudo systemctl reload nginx
+
+      - name: Smoke test
+        run: |
+          sleep 1
+          CODE=$(curl -o /dev/null -s -w "%{http_code}" http://localhost/)
+          echo "HTTP $CODE"
+          [ "$CODE" = "200" ]

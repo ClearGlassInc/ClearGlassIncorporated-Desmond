@@ -78,6 +78,48 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 @media(max-width:900px){.values-grid,.connect-grid,.products-grid,.founder-grid{grid-template-columns:1fr}.product-card.hero-product{grid-template-columns:1fr}.tl-item{grid-template-columns:80px 1fr;gap:20px}.mission-inner{grid-template-columns:1fr;gap:16px}}
 @media(max-width:768px){.nav-links{display:none}.nav-toggle{display:block}.cursor-glow{display:none}.hero-profile{width:min(72vw,250px);margin-bottom:22px}.hero-domain-line{padding:12px 14px;border-radius:18px}.footer-top{gap:28px}.footer-cols{gap:20px}.footer-col{min-width:90px}.footer-bottom{flex-direction:column;align-items:flex-start}.footer-util{gap:12px}}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}.rv.vis{opacity:1;transform:translateY(0)}
+/* ── FUTURISTIC LOADING SCREEN ───────────────────────────────────── */
+#cg-loader{position:fixed;inset:0;z-index:9999;background:#04040a;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s ease,transform .9s cubic-bezier(.76,0,.24,1)}
+#cg-loader.cg-exit{opacity:0;transform:translateY(-100%);pointer-events:none}
+#cg-loader::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.09) 2px,rgba(0,0,0,.09) 4px);pointer-events:none;z-index:1}
+#cg-loader::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(160,0,0,.05),transparent 70%);animation:cgCorePulse 4s ease-in-out infinite;pointer-events:none;z-index:1}
+@keyframes cgCorePulse{0%,100%{opacity:.6}50%{opacity:1}}
+.cg-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(180,0,0,.12) 20%,rgba(180,0,0,.32) 50%,rgba(180,0,0,.12) 80%,transparent 100%);animation:cgScanMove 5s linear infinite;z-index:2;pointer-events:none}
+@keyframes cgScanMove{from{top:-1px}to{top:100%}}
+.cg-corner{position:absolute;width:36px;height:36px}
+.cg-corner--tl{top:24px;left:24px;border-top:1px solid rgba(160,0,0,.55);border-left:1px solid rgba(160,0,0,.55)}
+.cg-corner--tr{top:24px;right:24px;border-top:1px solid rgba(160,0,0,.55);border-right:1px solid rgba(160,0,0,.55)}
+.cg-corner--bl{bottom:24px;left:24px;border-bottom:1px solid rgba(160,0,0,.55);border-left:1px solid rgba(160,0,0,.55)}
+.cg-corner--br{bottom:24px;right:24px;border-bottom:1px solid rgba(160,0,0,.55);border-right:1px solid rgba(160,0,0,.55)}
+.cg-grid-v{position:absolute;top:0;width:1px;height:100%;background:rgba(160,0,0,.035);pointer-events:none;z-index:1}
+.cg-grid-h{position:absolute;left:0;height:1px;width:100%;background:rgba(160,0,0,.035);pointer-events:none;z-index:1}
+.cg-loader-inner{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center}
+.cg-hex-wrap{position:relative;width:112px;height:112px;margin-bottom:36px}
+.cg-hex-ring{width:112px;height:112px;animation:cgRingSpin 22s linear infinite;filter:drop-shadow(0 0 10px rgba(160,0,0,.7)) drop-shadow(0 0 28px rgba(160,0,0,.28))}
+@keyframes cgRingSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.cg-hex-inner{width:72px;height:72px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:cgRingSpin 22s linear infinite reverse;filter:drop-shadow(0 0 6px rgba(160,0,0,.5))}
+.cg-hex-monogram{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;color:#c00;letter-spacing:.06em;text-shadow:0 0 18px rgba(200,0,0,.85),0 0 38px rgba(200,0,0,.35);animation:cgFlicker 9s ease-in-out infinite}
+@keyframes cgFlicker{0%,94%,100%{opacity:1}95%{opacity:.65}96.5%{opacity:1}97.5%{opacity:.8}98.5%{opacity:1}}
+.cg-company{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.38em;color:rgba(255,255,255,.82);text-transform:uppercase;margin-bottom:5px}
+.cg-tagline{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:400;letter-spacing:.28em;color:rgba(170,0,0,.8);text-transform:uppercase;margin-bottom:44px}
+.cg-prog-wrap{width:260px;margin-bottom:18px}
+.cg-prog-meta{display:flex;justify-content:space-between;margin-bottom:7px}
+.cg-prog-label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;color:rgba(255,255,255,.28)}
+.cg-prog-pct{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;color:rgba(180,0,0,.85)}
+.cg-prog-track{width:100%;height:1px;background:rgba(255,255,255,.07);position:relative}
+.cg-prog-fill{height:100%;width:0%;background:linear-gradient(90deg,#700,#c00,#f33);box-shadow:0 0 7px rgba(200,0,0,.9),0 0 18px rgba(200,0,0,.38);transition:width .12s linear;position:relative}
+.cg-prog-fill::after{content:'';position:absolute;right:-1px;top:-3px;width:3px;height:7px;background:#f44;box-shadow:0 0 5px #f44}
+.cg-log{width:260px;min-height:70px;margin-top:6px}
+.cg-log-line{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(255,255,255,.25);line-height:2;opacity:0;transform:translateY(5px);transition:opacity .35s ease,transform .35s ease}
+.cg-log-line.cg-vis{opacity:1;transform:translateY(0)}
+.cg-log-line .cg-ok{color:rgba(170,0,0,.75);margin-right:8px}
+.cg-status-row{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:20px;z-index:3}
+.cg-status-item{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.14em;color:rgba(255,255,255,.18)}
+.cg-status-dot{width:4px;height:4px;border-radius:50%;background:rgba(160,0,0,.55);animation:cgDotBeat 2.2s ease-in-out infinite}
+.cg-status-item:nth-child(2) .cg-status-dot{animation-delay:.45s}
+.cg-status-item:nth-child(3) .cg-status-dot{animation-delay:.9s}
+@keyframes cgDotBeat{0%,100%{opacity:.35;box-shadow:none}50%{opacity:1;box-shadow:0 0 5px rgba(200,0,0,.8)}}
+/* ─────────────────────────────────────────────────────────────────── */
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","logo":"https://clearglassinc.github.io/logo.png","foundingDate":"2024","sameAs":["https://github.com/ClearGlassInc"]},{"@type":"WebSite","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io","hasPart":[{"@type":"WebPage","name":"Home","url":"https://clearglassinc.github.io/"},{"@type":"WebPage","name":"Artemis VI","url":"https://clearglassinc.github.io/artemis.html"},{"@type":"WebPage","name":"Guardian","url":"https://clearglassinc.github.io/guardian.html"}]}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","telephone":"+1-289-707-0269","address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"}}</script>
@@ -85,6 +127,62 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 <meta name="msvalidate.01" content="38EA88557DC6D3E51F03FCBF30E42E7F">
 </head>
 <body>
+<!-- ── FUTURISTIC LOADING SCREEN ─────────────────────────────────── -->
+<div id="cg-loader" aria-hidden="true" role="presentation">
+  <div class="cg-scan"></div>
+  <div class="cg-corner cg-corner--tl"></div>
+  <div class="cg-corner cg-corner--tr"></div>
+  <div class="cg-corner cg-corner--bl"></div>
+  <div class="cg-corner cg-corner--br"></div>
+  <div class="cg-grid-v" style="left:25%"></div>
+  <div class="cg-grid-v" style="left:50%"></div>
+  <div class="cg-grid-v" style="left:75%"></div>
+  <div class="cg-grid-h" style="top:33%"></div>
+  <div class="cg-grid-h" style="top:66%"></div>
+  <div class="cg-loader-inner">
+    <div class="cg-hex-wrap">
+      <!-- outer rotating hexagon ring -->
+      <svg class="cg-hex-ring" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="56,4 104,30 104,82 56,108 8,82 8,30" stroke="rgba(160,0,0,0.65)" stroke-width="1" fill="none"/>
+        <line x1="56" y1="4" x2="56" y2="13" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="56" y1="99" x2="56" y2="108" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="8" y1="30" x2="16" y2="34.6" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="96" y1="77.4" x2="104" y2="82" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="8" y1="82" x2="16" y2="77.4" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="96" y1="34.6" x2="104" y2="30" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <circle cx="56" cy="56" r="40" stroke="rgba(160,0,0,0.18)" stroke-width="0.5" stroke-dasharray="3 7"/>
+      </svg>
+      <!-- inner counter-rotating hexagon -->
+      <svg class="cg-hex-inner" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="36,3 67,21 67,51 36,69 5,51 5,21" stroke="rgba(160,0,0,0.35)" stroke-width="0.75" fill="rgba(160,0,0,0.03)" stroke-dasharray="5 4"/>
+      </svg>
+      <!-- static CG monogram -->
+      <div class="cg-hex-monogram">CG</div>
+    </div>
+    <div class="cg-company">ClearGlass Inc.</div>
+    <div class="cg-tagline">Clarity Is Power</div>
+    <div class="cg-prog-wrap">
+      <div class="cg-prog-meta">
+        <span class="cg-prog-label">SYSTEM INITIALIZATION</span>
+        <span class="cg-prog-pct" id="cgPct">0%</span>
+      </div>
+      <div class="cg-prog-track"><div class="cg-prog-fill" id="cgFill"></div></div>
+    </div>
+    <div class="cg-log" id="cgLog">
+      <div class="cg-log-line" id="cgL0"><span class="cg-ok">►</span>ARTEMIS INTELLIGENCE CORE v6.2 — LOADING</div>
+      <div class="cg-log-line" id="cgL1"><span class="cg-ok">►</span>ZERO-TRUST AUTHENTICATION — VERIFIED</div>
+      <div class="cg-log-line" id="cgL2"><span class="cg-ok">►</span>QUANTUM ENCRYPTION LAYER — ACTIVE</div>
+      <div class="cg-log-line" id="cgL3"><span class="cg-ok">►</span>GUARDIAN THREAT ENGINE — ONLINE</div>
+      <div class="cg-log-line" id="cgL4"><span class="cg-ok">►</span>SECURE SESSION ESTABLISHED</div>
+    </div>
+  </div>
+  <div class="cg-status-row">
+    <div class="cg-status-item"><div class="cg-status-dot"></div>NODE-A ONLINE</div>
+    <div class="cg-status-item"><div class="cg-status-dot"></div>ENCRYPTED</div>
+    <div class="cg-status-item"><div class="cg-status-dot"></div>CLEARANCE: ALPHA</div>
+  </div>
+</div>
+<!-- ─────────────────────────────────────────────────────────────── -->
 <div class="cursor-glow" id="cursorGlow"></div>
 <nav class="nav" id="navbar">
   <a href="index.html" class="nav-brand"><div class="nav-mark"><img src="logo.png" alt="ClearGlass logo"></div><div class="nav-name">ClearGlass <em>2040</em></div></a>
@@ -196,6 +294,23 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 </footer>
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
+/* ── LOADING SCREEN CONTROLLER ───────────────────────────── */
+(function(){
+  var loader=document.getElementById('cg-loader');
+  var fill=document.getElementById('cgFill');
+  var pct=document.getElementById('cgPct');
+  var lines=['cgL0','cgL1','cgL2','cgL3','cgL4'].map(function(id){return document.getElementById(id)});
+  var milestones=[[10,0,350],[32,1,850],[56,2,1450],[78,3,2050],[100,4,2650]];
+  var current=0,target=0,rafId=null;
+  function tick(){
+    if(current<target){current=Math.min(current+1.1,target);fill.style.width=current+'%';pct.textContent=Math.round(current)+'%'}
+    if(current<100){rafId=requestAnimationFrame(tick)}
+    else{setTimeout(function(){loader.classList.add('cg-exit');setTimeout(function(){loader.remove()},950)},350)}
+  }
+  milestones.forEach(function(m){
+    setTimeout(function(){target=m[0];lines[m[1]].classList.add('cg-vis');if(!rafId)rafId=requestAnimationFrame(tick)},m[2])
+  });
+})();
 var nb=document.getElementById('navbar');window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>40)});
 var toggle=document.getElementById('navToggle');var mobMenu=document.getElementById('mobileMenu');toggle.addEventListener('click',function(){mobMenu.classList.toggle('open')});function closeMob(){mobMenu.classList.remove('open')}
 var glow=document.getElementById('cursorGlow');if(window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'})}

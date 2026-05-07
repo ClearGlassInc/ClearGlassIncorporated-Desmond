@@ -1,0 +1,108 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Detect package manager
+        id: detect
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            echo "manager=pnpm" >> "$GITHUB_OUTPUT"
+            echo "cache=pnpm" >> "$GITHUB_OUTPUT"
+          elif [ -f yarn.lock ]; then
+            echo "manager=yarn" >> "$GITHUB_OUTPUT"
+            echo "cache=yarn" >> "$GITHUB_OUTPUT"
+          elif [ -f package-lock.json ]; then
+            echo "manager=npm" >> "$GITHUB_OUTPUT"
+            echo "cache=npm" >> "$GITHUB_OUTPUT"
+          else
+            echo "manager=none" >> "$GITHUB_OUTPUT"
+            echo "cache=" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Setup Node.js
+        if: steps.detect.outputs.manager != 'none'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: ${{ steps.detect.outputs.cache }}
+      - name: Setup pnpm
+        if: steps.detect.outputs.manager == 'pnpm'
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install dependencies with npm
+        if: steps.detect.outputs.manager == 'npm'
+        run: npm ci
+      - name: Install dependencies with yarn
+        if: steps.detect.outputs.manager == 'yarn'
+        run: yarn install --frozen-lockfile
+      - name: Install dependencies with pnpm
+        if: steps.detect.outputs.manager == 'pnpm'
+        run: pnpm install --frozen-lockfile
+      - name: Build with npm
+        if: steps.detect.outputs.manager == 'npm'
+        run: npm run build
+      - name: Build with yarn
+        if: steps.detect.outputs.manager == 'yarn'
+        run: yarn build
+      - name: Build with pnpm
+        if: steps.detect.outputs.manager == 'pnpm'
+        run: pnpm build
+      - name: Static HTML fallback
+        if: steps.detect.outputs.manager == 'none'
+        run: |
+          mkdir -p dist
+          cp -r ./* dist/ || true
+          rm -rf dist/.git dist/.github
+      - name: Add .nojekyll
+        run: |
+          if [ -d dist ]; then touch dist/.nojekyll; fi
+          if [ -d build ]; then touch build/.nojekyll; fi
+          if [ -d out ]; then touch out/.nojekyll; fi
+      - name: Select Pages artifact folder
+        id: artifact
+        run: |
+          if [ -d dist ]; then
+            echo "path=dist" >> "$GITHUB_OUTPUT"
+          elif [ -d out ]; then
+            echo "path=out" >> "$GITHUB_OUTPUT"
+          elif [ -d build ]; then
+            echo "path=build" >> "$GITHUB_OUTPUT"
+          elif [ -d _site ]; then
+            echo "path=_site" >> "$GITHUB_OUTPUT"
+          else
+            echo "No deployable output folder found."
+            exit 1
+          fi
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ steps.artifact.outputs.path }}
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

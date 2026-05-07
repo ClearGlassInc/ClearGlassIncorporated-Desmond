@@ -25,3 +25,14 @@ Thumbs.db
 
 # Site build output
 _site/
+
+# Test artifacts
+.pytest_cache/
+*.cover
+htmlcov/
+
+# JS dependencies
+node_modules/
+
+# Archives (build artifacts should not be committed)
+*.zip

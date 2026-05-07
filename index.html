@@ -78,6 +78,48 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 @media(max-width:900px){.values-grid,.connect-grid,.products-grid,.founder-grid{grid-template-columns:1fr}.product-card.hero-product{grid-template-columns:1fr}.tl-item{grid-template-columns:80px 1fr;gap:20px}.mission-inner{grid-template-columns:1fr;gap:16px}}
 @media(max-width:768px){.nav-links{display:none}.nav-toggle{display:block}.cursor-glow{display:none}.hero-profile{width:min(72vw,250px);margin-bottom:22px}.hero-domain-line{padding:12px 14px;border-radius:18px}.footer-top{gap:28px}.footer-cols{gap:20px}.footer-col{min-width:90px}.footer-bottom{flex-direction:column;align-items:flex-start}.footer-util{gap:12px}}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}.rv.vis{opacity:1;transform:translateY(0)}
+/* ── FUTURISTIC LOADING SCREEN ───────────────────────────────────── */
+#cg-loader{position:fixed;inset:0;z-index:9999;background:#04040a;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s ease,transform .9s cubic-bezier(.76,0,.24,1)}
+#cg-loader.cg-exit{opacity:0;transform:translateY(-100%);pointer-events:none}
+#cg-loader::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.09) 2px,rgba(0,0,0,.09) 4px);pointer-events:none;z-index:1}
+#cg-loader::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(160,0,0,.05),transparent 70%);animation:cgCorePulse 4s ease-in-out infinite;pointer-events:none;z-index:1}
+@keyframes cgCorePulse{0%,100%{opacity:.6}50%{opacity:1}}
+.cg-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(180,0,0,.12) 20%,rgba(180,0,0,.32) 50%,rgba(180,0,0,.12) 80%,transparent 100%);animation:cgScanMove 5s linear infinite;z-index:2;pointer-events:none}
+@keyframes cgScanMove{from{top:-1px}to{top:100%}}
+.cg-corner{position:absolute;width:36px;height:36px}
+.cg-corner--tl{top:24px;left:24px;border-top:1px solid rgba(160,0,0,.55);border-left:1px solid rgba(160,0,0,.55)}
+.cg-corner--tr{top:24px;right:24px;border-top:1px solid rgba(160,0,0,.55);border-right:1px solid rgba(160,0,0,.55)}
+.cg-corner--bl{bottom:24px;left:24px;border-bottom:1px solid rgba(160,0,0,.55);border-left:1px solid rgba(160,0,0,.55)}
+.cg-corner--br{bottom:24px;right:24px;border-bottom:1px solid rgba(160,0,0,.55);border-right:1px solid rgba(160,0,0,.55)}
+.cg-grid-v{position:absolute;top:0;width:1px;height:100%;background:rgba(160,0,0,.035);pointer-events:none;z-index:1}
+.cg-grid-h{position:absolute;left:0;height:1px;width:100%;background:rgba(160,0,0,.035);pointer-events:none;z-index:1}
+.cg-loader-inner{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center}
+.cg-hex-wrap{position:relative;width:112px;height:112px;margin-bottom:36px}
+.cg-hex-ring{width:112px;height:112px;animation:cgRingSpin 22s linear infinite;filter:drop-shadow(0 0 10px rgba(160,0,0,.7)) drop-shadow(0 0 28px rgba(160,0,0,.28))}
+@keyframes cgRingSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.cg-hex-inner{width:72px;height:72px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:cgRingSpin 22s linear infinite reverse;filter:drop-shadow(0 0 6px rgba(160,0,0,.5))}
+.cg-hex-monogram{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;color:#c00;letter-spacing:.06em;text-shadow:0 0 18px rgba(200,0,0,.85),0 0 38px rgba(200,0,0,.35);animation:cgFlicker 9s ease-in-out infinite}
+@keyframes cgFlicker{0%,94%,100%{opacity:1}95%{opacity:.65}96.5%{opacity:1}97.5%{opacity:.8}98.5%{opacity:1}}
+.cg-company{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.38em;color:rgba(255,255,255,.82);text-transform:uppercase;margin-bottom:5px}
+.cg-tagline{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:400;letter-spacing:.28em;color:rgba(170,0,0,.8);text-transform:uppercase;margin-bottom:44px}
+.cg-prog-wrap{width:260px;margin-bottom:18px}
+.cg-prog-meta{display:flex;justify-content:space-between;margin-bottom:7px}
+.cg-prog-label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;color:rgba(255,255,255,.28)}
+.cg-prog-pct{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;color:rgba(180,0,0,.85)}
+.cg-prog-track{width:100%;height:1px;background:rgba(255,255,255,.07);position:relative}
+.cg-prog-fill{height:100%;width:0%;background:linear-gradient(90deg,#700,#c00,#f33);box-shadow:0 0 7px rgba(200,0,0,.9),0 0 18px rgba(200,0,0,.38);transition:width .12s linear;position:relative}
+.cg-prog-fill::after{content:'';position:absolute;right:-1px;top:-3px;width:3px;height:7px;background:#f44;box-shadow:0 0 5px #f44}
+.cg-log{width:260px;min-height:70px;margin-top:6px}
+.cg-log-line{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.06em;color:rgba(255,255,255,.25);line-height:2;opacity:0;transform:translateY(5px);transition:opacity .35s ease,transform .35s ease}
+.cg-log-line.cg-vis{opacity:1;transform:translateY(0)}
+.cg-log-line .cg-ok{color:rgba(170,0,0,.75);margin-right:8px}
+.cg-status-row{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:20px;z-index:3}
+.cg-status-item{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.14em;color:rgba(255,255,255,.18)}
+.cg-status-dot{width:4px;height:4px;border-radius:50%;background:rgba(160,0,0,.55);animation:cgDotBeat 2.2s ease-in-out infinite}
+.cg-status-item:nth-child(2) .cg-status-dot{animation-delay:.45s}
+.cg-status-item:nth-child(3) .cg-status-dot{animation-delay:.9s}
+@keyframes cgDotBeat{0%,100%{opacity:.35;box-shadow:none}50%{opacity:1;box-shadow:0 0 5px rgba(200,0,0,.8)}}
+/* ─────────────────────────────────────────────────────────────────── */
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","logo":"https://clearglassinc.github.io/logo.png","foundingDate":"2024","sameAs":["https://github.com/ClearGlassInc"]},{"@type":"WebSite","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io","hasPart":[{"@type":"WebPage","name":"Home","url":"https://clearglassinc.github.io/"},{"@type":"WebPage","name":"Artemis VI","url":"https://clearglassinc.github.io/artemis.html"},{"@type":"WebPage","name":"Guardian","url":"https://clearglassinc.github.io/guardian.html"}]}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","telephone":"+1-289-707-0269","address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"}}</script>
@@ -85,6 +127,62 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 <meta name="msvalidate.01" content="38EA88557DC6D3E51F03FCBF30E42E7F">
 </head>
 <body>
+<!-- ── FUTURISTIC LOADING SCREEN ─────────────────────────────────── -->
+<div id="cg-loader" aria-hidden="true" role="presentation">
+  <div class="cg-scan"></div>
+  <div class="cg-corner cg-corner--tl"></div>
+  <div class="cg-corner cg-corner--tr"></div>
+  <div class="cg-corner cg-corner--bl"></div>
+  <div class="cg-corner cg-corner--br"></div>
+  <div class="cg-grid-v" style="left:25%"></div>
+  <div class="cg-grid-v" style="left:50%"></div>
+  <div class="cg-grid-v" style="left:75%"></div>
+  <div class="cg-grid-h" style="top:33%"></div>
+  <div class="cg-grid-h" style="top:66%"></div>
+  <div class="cg-loader-inner">
+    <div class="cg-hex-wrap">
+      <!-- outer rotating hexagon ring -->
+      <svg class="cg-hex-ring" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="56,4 104,30 104,82 56,108 8,82 8,30" stroke="rgba(160,0,0,0.65)" stroke-width="1" fill="none"/>
+        <line x1="56" y1="4" x2="56" y2="13" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="56" y1="99" x2="56" y2="108" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="8" y1="30" x2="16" y2="34.6" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="96" y1="77.4" x2="104" y2="82" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="8" y1="82" x2="16" y2="77.4" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <line x1="96" y1="34.6" x2="104" y2="30" stroke="rgba(160,0,0,0.95)" stroke-width="1.5"/>
+        <circle cx="56" cy="56" r="40" stroke="rgba(160,0,0,0.18)" stroke-width="0.5" stroke-dasharray="3 7"/>
+      </svg>
+      <!-- inner counter-rotating hexagon -->
+      <svg class="cg-hex-inner" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="36,3 67,21 67,51 36,69 5,51 5,21" stroke="rgba(160,0,0,0.35)" stroke-width="0.75" fill="rgba(160,0,0,0.03)" stroke-dasharray="5 4"/>
+      </svg>
+      <!-- static CG monogram -->
+      <div class="cg-hex-monogram">CG</div>
+    </div>
+    <div class="cg-company">ClearGlass Inc.</div>
+    <div class="cg-tagline">Clarity Is Power</div>
+    <div class="cg-prog-wrap">
+      <div class="cg-prog-meta">
+        <span class="cg-prog-label">SYSTEM INITIALIZATION</span>
+        <span class="cg-prog-pct" id="cgPct">0%</span>
+      </div>
+      <div class="cg-prog-track"><div class="cg-prog-fill" id="cgFill"></div></div>
+    </div>
+    <div class="cg-log" id="cgLog">
+      <div class="cg-log-line" id="cgL0"><span class="cg-ok">►</span>ARTEMIS INTELLIGENCE CORE v6.2 — LOADING</div>
+      <div class="cg-log-line" id="cgL1"><span class="cg-ok">►</span>ZERO-TRUST AUTHENTICATION — VERIFIED</div>
+      <div class="cg-log-line" id="cgL2"><span class="cg-ok">►</span>QUANTUM ENCRYPTION LAYER — ACTIVE</div>
+      <div class="cg-log-line" id="cgL3"><span class="cg-ok">►</span>GUARDIAN THREAT ENGINE — ONLINE</div>
+      <div class="cg-log-line" id="cgL4"><span class="cg-ok">►</span>SECURE SESSION ESTABLISHED</div>
+    </div>
+  </div>
+  <div class="cg-status-row">
+    <div class="cg-status-item"><div class="cg-status-dot"></div>NODE-A ONLINE</div>
+    <div class="cg-status-item"><div class="cg-status-dot"></div>ENCRYPTED</div>
+    <div class="cg-status-item"><div class="cg-status-dot"></div>CLEARANCE: ALPHA</div>
+  </div>
+</div>
+<!-- ─────────────────────────────────────────────────────────────── -->
 <div class="cursor-glow" id="cursorGlow"></div>
 <nav class="nav" id="navbar">
   <a href="index.html" class="nav-brand"><div class="nav-mark"><img src="logo.png" alt="ClearGlass logo"></div><div class="nav-name">ClearGlass <em>2040</em></div></a>
@@ -99,6 +197,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
     <a href="threads.html">Threads Kit</a>
     <a href="smb.html">SMB Suite</a>
     <a href="revenue-engine.html">Revenue Engine</a>
+    <a href="tax.html">ClearTax AI</a>
     <a href="#contact" class="nav-cta">Enter the Grid</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
@@ -114,13 +213,13 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   <a href="threads.html">Threads Kit</a>
   <a href="smb.html">SMB Suite</a>
   <a href="revenue-engine.html">Revenue Engine</a>
+  <a href="tax.html">ClearTax AI</a>
   <a href="#contact" onclick="closeMob()">Contact</a>
 </div>
 <section class="hero" id="hero">
   <div class="hero-prism"></div>
   <div class="hero-lines"><div class="hero-line" style="top:25%;width:60%;left:20%;animation-delay:0s"></div><div class="hero-line" style="top:50%;width:45%;left:30%;animation-delay:4s"></div><div class="hero-line" style="top:75%;width:55%;left:15%;animation-delay:8s"></div></div>
   <img src="20260203_224147843_iOS.png" alt="ClearGlass Ontario" style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;box-shadow:0 20px 70px rgba(0,0,0,.12);margin-bottom:42px;position:relative;z-index:1;">
-  <img src="assets/images/desmond-cg-profile-picture.jpg" alt="Desmond ClearGlassInc profile picture" class="hero-profile">
   <div class="hero-year">CLEARGLASS INC. · ESTABLISHED 2024 · VISION 2040</div>
   <h1><strong>Clarity</strong> is <span class="crystal-text">power.</span></h1>
   <p class="hero-sub">Quantum intelligence. Ethical transparency. Zero-trust verification. ClearGlass builds the infrastructure that lets organizations see clearly, secure completely, and act with decisive advantage.</p>
@@ -134,7 +233,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 <section class="sect sect-dark" id="technology"><div class="container"><div class="sh sh-dark rv"><div class="sh-tag">TECHNOLOGY STACK</div><h2>The architecture behind <strong>absolute clarity</strong></h2><p>Quantum-augmented AI, decentralized identity, and zero-trust networks fused into a unified intelligence fabric.</p></div><div class="tech-grid"><div class="tech-card rv"><div class="tc-icon">⚛</div><h3>Quantum Intelligence Core</h3><p>Post-quantum cryptography and quantum-augmented ML for high-speed threat processing.</p><div class="tc-tags"><span>LATTICE CRYPTO</span><span>QML</span><span>256-QUBIT</span></div></div><div class="tech-card rv"><div class="tc-icon">🧠</div><h3>Predictive AI Engine</h3><p>Behavioral prediction and anomaly detection across infrastructure and identity systems.</p><div class="tc-tags"><span>NEURAL MESH</span><span>GNN</span><span>REAL-TIME</span></div></div><div class="tech-card rv"><div class="tc-icon">🔒</div><h3>Zero-Trust Fabric</h3><p>Every packet authenticated. Every session verified. Lateral movement cut off by design.</p><div class="tc-tags"><span>MICROSEG</span><span>mTLS</span><span>SPIFFE</span></div></div></div></div></section>
 <section class="sect" id="products"><div class="container"><div class="sh sh-center rv"><div class="sh-tag" style="justify-content:center">PLATFORMS</div><h2>Connected <strong>platforms</strong></h2><p>Four pages. One flow. Visitors can now move cleanly across Home, Artemis VI, Artemis IV Core, and Guardian.</p></div><div class="products-grid"><div class="product-card hero-product rv"><div><div class="pc-era">FLAGSHIP · CONNECTED</div><h3>CLEARGLASSINC<br>ARTEMIS IV / VI</h3><p class="pd">The ClearGlass intelligence stack now routes from the main site into the Artemis VI product experience, rather than dead-ending on a utility page.</p><div class="pc-feats"><div class="pc-feat"><span class="ck">✓</span> Homepage → Artemis VI</div><div class="pc-feat"><span class="ck">✓</span> Artemis VI → Guardian</div><div class="pc-feat"><span class="ck">✓</span> Guardian → Home</div></div><div style="margin-top:22px"><a href="artemis.html" class="btn btn-dark">Launch Artemis VI</a></div></div><div class="pc-visual"><div class="pc-dots"><span class="pc-dot" style="background:#f43f5e"></span><span class="pc-dot" style="background:#fbbf24"></span><span class="pc-dot" style="background:#34d399"></span></div><div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px"><span style="font-family:var(--serif);font-size:22px;font-weight:600;color:var(--text)">SITE FLOW</span><span style="font-size:10px;letter-spacing:.1em;color:var(--text-4)">HOME · ARTEMIS · GUARDIAN</span></div></div></div><div class="product-card rv"><div class="pc-era">TACTICAL PAGE</div><h3>Artemis IV Core</h3><p class="pd">High-intensity command shell for tactical intelligence workflows, threat matrix navigation, and mission logging.</p><div class="pc-feats"><div class="pc-feat"><span class="ck">✓</span> Dashboard + threat matrix tabs</div><div class="pc-feat"><span class="ck">✓</span> Console quick-action commands</div></div><div style="margin-top:22px"><a href="artemis-iv.html" class="btn btn-glass">Open Artemis IV Core</a></div></div><div class="product-card rv"><div class="pc-era">LIVE PAGE</div><h3>Guardian</h3><p class="pd">Enterprise security product page with consistent header, footer, and cross-page navigation.</p><div class="pc-feats"><div class="pc-feat"><span class="ck">✓</span> Linked from nav</div><div class="pc-feat"><span class="ck">✓</span> Linked from Artemis</div></div><div style="margin-top:22px"><a href="guardian.html" class="btn btn-glass">Open Guardian</a></div></div><div class="product-card rv"><div class="pc-era">FLAGSHIP PAGE</div><h3>Artemis VI</h3><p class="pd">Roadmap and flagship product page integrated into the site architecture as a proper destination.</p><div class="pc-feats"><div class="pc-feat"><span class="ck">✓</span> Full top navigation</div><div class="pc-feat"><span class="ck">✓</span> Return path to Home</div></div><div style="margin-top:22px"><a href="artemis.html" class="btn btn-glass">Open Artemis VI</a></div></div><div class="product-card rv" style="grid-column:1/-1;background:linear-gradient(145deg,rgba(16,185,129,.05),rgba(14,165,233,.04),rgba(250,251,252,.9))"><div class="pc-era" style="color:#10b981">CANADIAN SMB SUITE · 6 MODULES</div><h3>ClearGlass Financial Intelligence</h3><p class="pd">A complete financial intelligence platform built for Canadian small and medium businesses — six integrated modules replacing the 3–5 disconnected tools draining your team's time and causing 82% of business failures.</p><div class="pc-feats" style="grid-template-columns:1fr 1fr 1fr;gap:8px"><div class="pc-feat"><span class="ck" style="background:rgba(16,185,129,.1);color:#10b981">✓</span> ClearDash™ — Unified Dashboard</div><div class="pc-feat"><span class="ck" style="background:rgba(139,92,246,.1);color:#8b5cf6">✓</span> ClearCast™ — 90-Day Forecasting</div><div class="pc-feat"><span class="ck" style="background:rgba(16,185,129,.1);color:#10b981">✓</span> ClearScore™ — Health Score</div><div class="pc-feat"><span class="ck" style="background:rgba(139,92,246,.1);color:#8b5cf6">✓</span> ClearInsights™ — AI Summaries</div><div class="pc-feat"><span class="ck" style="background:rgba(244,63,94,.1);color:#f43f5e">✓</span> ClearAlert™ — Anomaly Alerts</div><div class="pc-feat"><span class="ck" style="background:rgba(20,184,166,.1);color:#14b8a6">✓</span> ClearLink™ — Bank Integrations</div></div><div style="margin-top:22px"><a href="smb.html" class="btn btn-dark">Explore SMB Suite →</a></div></div></div></div></section>
 <section class="sect" id="timeline"><div class="container"><div class="sh rv"><div class="sh-tag">EVOLUTION</div><h2>From Burlington to the <strong>quantum frontier</strong></h2></div><div class="timeline"><div class="tl-item rv"><div class="tl-year">2024</div><div class="tl-content"><h3>ClearGlass Founded</h3><p>Initial dashboards and cybersecurity assessment tools deployed.</p></div></div><div class="tl-item rv"><div class="tl-year">2025</div><div class="tl-content"><h3>NEXUS & ARTEMIS Launch</h3><p>Unified command dashboards moved from concept to operational products.</p></div></div><div class="tl-item rv"><div class="tl-year">2040</div><div class="tl-content"><h3>Global Intelligence Fabric</h3><p>Quantum intelligence, predictive AI, and zero-trust verification unified under one glass.</p></div></div></div></div></section>
-<section class="sect" id="founder"><div class="container"><div class="sh rv"><div class="sh-tag">LEADERSHIP</div><h2>Founder credentials built for <strong>trust and execution</strong></h2><p>A direct executive profile for collaborators, recruiters, investors, and strategic partners evaluating leadership, credibility, and long-horizon capability.</p></div><div class="founder-grid"><article class="founder-card rv"><div class="founder-kicker">Founder Profile</div><h3 class="founder-name">Desmond Otieno</h3><div class="founder-role">Founder & Chairman</div><div class="founder-copy"><p><strong>Desmond Otieno</strong> is the <strong>Founder & Chairman</strong> of ClearGlass, leading the company’s long-range vision across cybersecurity, intelligent systems, and advanced digital infrastructure.</p><p>His work is centered on building high-trust platforms that combine strategic clarity, disciplined execution, and forward-looking technical design. He operates with an executive mindset shaped by product development, systems thinking, and real-world deployment.</p><p>At ClearGlass, his focus is simple: develop modern, credible systems that help organizations operate with stronger resilience, sharper decision advantage, and greater confidence in the infrastructure they depend on.</p></div><div class="founder-actions"><a href="mailto:Desmondotieno@icloud.com" class="btn btn-dark">Email Desmond →</a><a href="#contact" class="btn btn-glass">Start a Conversation</a></div></article><aside class="credentials-card rv"><div class="founder-kicker">Founder Credentials</div><h3>Executive, innovative, and future-facing.</h3><div class="credentials-list"><div class="credential-item"><div class="credential-label">Role</div><div class="credential-value">Founder & Chairman, ClearGlass</div></div><div class="credential-item"><div class="credential-label">Education</div><div class="credential-value">University of Pennsylvania — Associate's Degree, Artificial Intelligence <span class="credential-sub">Oct 2022 — Jun 2025</span></div></div><div class="credential-item"><div class="credential-label">Certificate</div><div class="credential-value">Macquarie University — Cyber Security: Essentials for Forensics <span class="credential-sub">Oct 2025 — Oct 2025 · Grade: 94.68%</span></div></div><div class="credential-item"><div class="credential-label">License & Certification</div><div class="credential-value">Coursera — Introduction to Agile Development and Scrum <span class="credential-sub">Issued Apr 2026</span></div></div><div class="credential-item"><div class="credential-label">Professional Designations</div><div class="credential-value">Registered Trademark Agent, Canada | USPTO Patent Agent</div></div><div class="credential-item"><div class="credential-label">Accuracy Note</div><div class="credential-value">Trademark Agent licensed by CPATA | Patent Agent registered with the USPTO.</div></div><div class="credential-item"><div class="credential-label">Focus</div><div class="credential-value">Cybersecurity, intelligent systems, digital infrastructure, and strategic product leadership.</div></div><div class="credential-item"><div class="credential-label">Operating Style</div><div class="credential-value">Precision-led, systems-oriented, execution-focused, and built for durable long-term value creation.</div></div><div class="credential-item"><div class="credential-label">Contact</div><div class="credential-value"><a href="mailto:Desmondotieno@icloud.com">Desmondotieno@icloud.com</a></div></div></div></aside></div></div></section>
+<section class="sect" id="founder"><div class="container"><div class="sh rv"><div class="sh-tag">LEADERSHIP</div><h2>Founder credentials built for <strong>trust and execution</strong></h2><p>A direct executive profile for collaborators, recruiters, investors, and strategic partners evaluating leadership, credibility, and long-horizon capability.</p></div><div class="founder-grid"><article class="founder-card rv"><img src="assets/images/desmond-cg-profile-picture.jpg" alt="Desmond ClearGlassInc profile picture" class="hero-profile"><div class="founder-kicker">Founder Profile</div><h3 class="founder-name">Desmond Otieno</h3><div class="founder-role">Founder & Chairman</div><div class="founder-copy"><p><strong>Desmond Otieno</strong> is the <strong>Founder & Chairman</strong> of ClearGlass, leading the company’s long-range vision across cybersecurity, intelligent systems, and advanced digital infrastructure.</p><p>His work is centered on building high-trust platforms that combine strategic clarity, disciplined execution, and forward-looking technical design. He operates with an executive mindset shaped by product development, systems thinking, and real-world deployment.</p><p>At ClearGlass, his focus is simple: develop modern, credible systems that help organizations operate with stronger resilience, sharper decision advantage, and greater confidence in the infrastructure they depend on.</p></div><div class="founder-actions"><a href="mailto:Desmondotieno@icloud.com" class="btn btn-dark">Email Desmond →</a><a href="#contact" class="btn btn-glass">Start a Conversation</a></div></article><aside class="credentials-card rv"><div class="founder-kicker">Founder Credentials</div><h3>Executive, innovative, and future-facing.</h3><div class="credentials-list"><div class="credential-item"><div class="credential-label">Role</div><div class="credential-value">Founder & Chairman, ClearGlass</div></div><div class="credential-item"><div class="credential-label">Education</div><div class="credential-value">University of Pennsylvania — Associate's Degree, Artificial Intelligence <span class="credential-sub">Oct 2022 — Jun 2025</span></div></div><div class="credential-item"><div class="credential-label">Certificate</div><div class="credential-value">Macquarie University — Cyber Security: Essentials for Forensics <span class="credential-sub">Oct 2025 — Oct 2025 · Grade: 94.68%</span></div></div><div class="credential-item"><div class="credential-label">License & Certification</div><div class="credential-value">Coursera — Introduction to Agile Development and Scrum <span class="credential-sub">Issued Apr 2026</span></div></div><div class="credential-item"><div class="credential-label">Professional Designations</div><div class="credential-value">Registered Trademark Agent, Canada | USPTO Patent Agent</div></div><div class="credential-item"><div class="credential-label">Accuracy Note</div><div class="credential-value">Trademark Agent licensed by CPATA | Patent Agent registered with the USPTO.</div></div><div class="credential-item"><div class="credential-label">Focus</div><div class="credential-value">Cybersecurity, intelligent systems, digital infrastructure, and strategic product leadership.</div></div><div class="credential-item"><div class="credential-label">Operating Style</div><div class="credential-value">Precision-led, systems-oriented, execution-focused, and built for durable long-term value creation.</div></div><div class="credential-item"><div class="credential-label">Contact</div><div class="credential-value"><a href="mailto:Desmondotieno@icloud.com">Desmondotieno@icloud.com</a></div></div></div></aside></div></div></section>
 <section class="cta-sect" id="contact"><div class="container"><h2 class="rv"><strong>See</strong> what others cannot.</h2><p class="rv">Connect directly with Desmond Otieno for strategic conversations, collaboration opportunities, investor discussions, or product briefings from the official GitHub Pages home of ClearGlass at clearglassinc.github.io.</p><div class="cta-actions rv"><a href="mailto:Desmondotieno@icloud.com" class="btn btn-crystal">Email Desmond →</a><a href="guardian.html" class="btn btn-glass">Open Guardian</a></div></div></section>
 <footer class="footer" role="contentinfo">
   <div class="container">
@@ -200,6 +299,23 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 </footer>
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
+/* ── LOADING SCREEN CONTROLLER ───────────────────────────── */
+(function(){
+  var loader=document.getElementById('cg-loader');
+  var fill=document.getElementById('cgFill');
+  var pct=document.getElementById('cgPct');
+  var lines=['cgL0','cgL1','cgL2','cgL3','cgL4'].map(function(id){return document.getElementById(id)});
+  var milestones=[[10,0,350],[32,1,850],[56,2,1450],[78,3,2050],[100,4,2650]];
+  var current=0,target=0,rafId=null;
+  function tick(){
+    if(current<target){current=Math.min(current+1.1,target);fill.style.width=current+'%';pct.textContent=Math.round(current)+'%'}
+    if(current<100){rafId=requestAnimationFrame(tick)}
+    else{setTimeout(function(){loader.classList.add('cg-exit');setTimeout(function(){loader.remove()},950)},350)}
+  }
+  milestones.forEach(function(m){
+    setTimeout(function(){target=m[0];lines[m[1]].classList.add('cg-vis');if(!rafId)rafId=requestAnimationFrame(tick)},m[2])
+  });
+})();
 var nb=document.getElementById('navbar');window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>40)});
 var toggle=document.getElementById('navToggle');var mobMenu=document.getElementById('mobileMenu');toggle.addEventListener('click',function(){mobMenu.classList.toggle('open')});function closeMob(){mobMenu.classList.remove('open')}
 var glow=document.getElementById('cursorGlow');if(window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'})}

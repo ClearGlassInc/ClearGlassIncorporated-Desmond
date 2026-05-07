@@ -3,16 +3,31 @@ name: Site Reliability Audit
 on:
   push:
     branches: ["main"]
+    paths:
+      - "scripts/site_reliability_audit.py"
+      - ".github/workflows/site-reliability.yml"
+      - "infra/**"
+      - "runner/**"
   pull_request:
     branches: ["main"]
+    paths:
+      - "scripts/site_reliability_audit.py"
+      - ".github/workflows/site-reliability.yml"
+      - "infra/**"
+      - "runner/**"
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4

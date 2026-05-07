@@ -1,8 +1,6 @@
-name: Deploy to Self-Hosted Server
+name: Deploy to Self-Hosted Server (Manual Fallback)
 
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:

@@ -41,5 +41,23 @@ Long-form blueprints, platform designs, and corporate documentation supporting t
 - `guardian_command_nexus_spec.html`
 - `guardian_command_nexus_spec.css`
 
+## Finance automation
+
+The operations finance bot (`bots/operations_finance_bot.py`) is the primary production-grade financial model in this repository. It computes inventory cost, customer retention value, and management fee structure on a weekly schedule and on-demand.
+
+**Key outputs (written to `operations/output/`):**
+
+| File | Description |
+|---|---|
+| `latest.md` | Human-readable finance report for the most recent run |
+| `latest.json` | Machine-readable payload for downstream dashboards or integrations |
+| `archive/<timestamp>.md` | Immutable historical run record |
+
+**Trigger on demand** via GitHub Actions → Operations Finance Bot → Run workflow. All 15 financial parameters are configurable as workflow dispatch inputs, including unit cost, churn rate, labor cost, margin target, and fee preference. Unset inputs fall back to production defaults defined in the bot.
+
+**Extending the model:** See `CONTRIBUTING.md` → "Finance automation" for the full step-by-step process for adding metrics, inputs, and tests.
+
+**Test coverage:** `tests/test_operations_finance_bot.py` validates financial invariants including linear cost scaling, fee floor enforcement, formatter precision, zero-churn boundary conditions, and full JSON output integrity.
+
 ## Usage
 These documents are written to be copied directly into GitHub Pages, governance repositories, or client-facing documentation portals. When a topic has multiple iterations, the most recent dated file takes precedence; earlier versions are retained for traceability.

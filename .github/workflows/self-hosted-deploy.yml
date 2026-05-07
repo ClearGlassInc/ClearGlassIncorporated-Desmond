@@ -3,6 +3,17 @@ name: Deploy to Self-Hosted Server
 on:
   push:
     branches: ["main"]
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
+      - "**/*.md"
+      - ".gitignore"
+      - ".github/**"
+      - "tests/**"
+      - "bots/**"
+      - "scripts/**"
+      - "infra/**"
+      - "prompts/**"
   workflow_dispatch:
 
 permissions:

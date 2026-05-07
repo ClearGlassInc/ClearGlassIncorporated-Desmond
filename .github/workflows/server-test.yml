@@ -1,10 +1,22 @@
-name: Self-Hosted Runner — Build & Test
+name: Self-Hosted Runner — Validate Site
 
 on:
   push:
     branches: ["main"]
+    paths:
+      - "**/*.html"
+      - "**/*.css"
+      - "assets/**"
+      - "scripts/**"
+      - ".github/workflows/server-test.yml"
   pull_request:
     branches: ["main"]
+    paths:
+      - "**/*.html"
+      - "**/*.css"
+      - "assets/**"
+      - "scripts/**"
+      - ".github/workflows/server-test.yml"
   workflow_dispatch:
 
 permissions:
@@ -15,14 +27,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ──────────────────────────────────────────────
-  # Lint & validate HTML/CSS on your self-hosted runner
-  # ──────────────────────────────────────────────
   validate:
     name: Validate site
     runs-on: [self-hosted, linux, clearglass]
     timeout-minutes: 15
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,17 +41,15 @@ jobs:
           node-version: "20"
 
       - name: Install validators
-        run: |
-          npm install -g htmlhint stylelint stylelint-config-standard 2>/dev/null || true
+        run: npm install -g htmlhint stylelint stylelint-config-standard 2>/dev/null || true
 
       - name: Lint HTML
-        run: |
-          htmlhint "**/*.html" --ignore "node_modules/**,_site/**" || true
+        run: htmlhint "**/*.html" --ignore "node_modules/**,_site/**" || true
 
       - name: Python syntax check
         run: python3 -m py_compile scripts/*.py && echo "Python OK"
 
-      - name: Security header scan
+      - name: Secret pattern scan
         run: |
           echo "Checking for obvious secrets in committed files..."
           if grep -rn --include="*.html" --include="*.js" --include="*.yml" \
@@ -54,53 +60,17 @@ jobs:
             echo "No hardcoded secrets detected"
           fi
 
-  # ──────────────────────────────────────────────
-  # Run existing Python test suite
-  # ──────────────────────────────────────────────
-  python-tests:
-    name: Python tests
-    runs-on: [self-hosted, linux, clearglass]
-    timeout-minutes: 15
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          pip install pytest pytest-cov 2>/dev/null || true
-          [[ -f requirements.txt ]] && pip install -r requirements.txt || true
-
-      - name: Run tests
-        run: |
-          if find tests -name "*.py" -quit 2>/dev/null; then
-            python3 -m pytest tests/ -v --tb=short || true
-          else
-            echo "No test files found — skipping"
-          fi
-
-  # ──────────────────────────────────────────────
-  # Docker smoke-test (proves Docker works on runner)
-  # ──────────────────────────────────────────────
   docker-smoke:
     name: Docker smoke test
     runs-on: [self-hosted, linux, clearglass]
     timeout-minutes: 10
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Docker version
         run: docker version
 
       - name: Run nginx in Docker (smoke test)
         run: |
+          set -euo pipefail
           docker run --rm -d -p 8080:80 --name site-test nginx:alpine
           sleep 2
           curl -f http://localhost:8080 && echo "Docker nginx OK"

@@ -3,16 +3,35 @@ name: Site Reliability Audit
 on:
   push:
     branches: ["main"]
+    paths:
+      - "scripts/site_reliability_audit.py"
+      - "**/*.html"
+      - "**/*.css"
+      - "**/*.js"
+      - "**/*.json"
+      - ".github/workflows/site-reliability.yml"
   pull_request:
     branches: ["main"]
+    paths:
+      - "scripts/site_reliability_audit.py"
+      - "**/*.html"
+      - "**/*.css"
+      - "**/*.js"
+      - "**/*.json"
+      - ".github/workflows/site-reliability.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,6 +40,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Run repository reliability audit
         run: python scripts/site_reliability_audit.py

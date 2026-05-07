@@ -3,6 +3,19 @@ name: Deploy static site to GitHub Pages
 on:
   push:
     branches: ["main"]
+    paths:
+      - "**/*.html"
+      - "**/*.css"
+      - "**/*.js"
+      - "**/*.json"
+      - "**/*.xml"
+      - "**/*.txt"
+      - "assets/**"
+      - "images/**"
+      - "scripts/**"
+      - "_config.yml"
+      - "_config.yaml"
+      - ".github/workflows/pages-deploy.yml"
   workflow_dispatch:
 
 permissions:
@@ -11,12 +24,13 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,19 +40,9 @@ jobs:
 
       - name: Build artifact
         run: |
+          set -euo pipefail
           mkdir -p _site
-          rsync -av --delete \
-            --exclude '.git' \
-            --exclude '.github' \
-            --exclude 'docs' \
-            --exclude 'scripts' \
-            --exclude 'bots' \
-            --exclude 'tests' \
-            --exclude 'investors' \
-            --exclude 'marketing' \
-            --exclude 'operations' \
-            --exclude 'prompts' \
-            ./ _site/
+          rsync -av --delete             --exclude '.git'             --exclude '.github'             --exclude 'docs'             --exclude 'scripts'             --exclude 'bots'             --exclude 'tests'             --exclude 'investors'             --exclude 'marketing'             --exclude 'operations'             --exclude 'prompts'             ./ _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -46,10 +50,12 @@ jobs:
           path: _site
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Deploy to GitHub Pages

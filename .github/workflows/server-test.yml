@@ -10,6 +10,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # ──────────────────────────────────────────────
   # Lint & validate HTML/CSS on your self-hosted runner
@@ -17,6 +21,7 @@ jobs:
   validate:
     name: Validate site
     runs-on: [self-hosted, linux, clearglass]
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -55,6 +60,7 @@ jobs:
   python-tests:
     name: Python tests
     runs-on: [self-hosted, linux, clearglass]
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -84,6 +90,7 @@ jobs:
   docker-smoke:
     name: Docker smoke test
     runs-on: [self-hosted, linux, clearglass]
+    timeout-minutes: 15
 
     steps:
       - name: Checkout

@@ -1,20 +1,78 @@
 # ClearGlassInc Artemis
 
-ClearGlassInc Artemis is the public website and documentation repository for enterprise cybersecurity services, secure software architecture, and governance-first intelligence operations.
+Public website, governance documentation, and supporting automation for ClearGlassInc Artemis — enterprise cybersecurity, secure software architecture, and intelligence operations.
 
-## What this repository contains
-- Corporate website content and GitHub Pages assets
-- Legal, trust, and policy documentation
-- Security governance materials and disclosure guidance
-- Technical blueprints for AI-assisted intelligence systems
+The site is published via GitHub Pages from the `main` branch.
 
-## Corporate documentation set
-- Enterprise corporate layer: `docs/clearglassinc_artemis_enterprise_corporate_layer.md`
-- Palantir full-stack blueprint: `docs/clearglassinc_artemis_palantir_aip_blueprint.md`
-- Existing platform references in `docs/` and `investors/`
+## Repository structure
 
-## Security and trust
-See `SECURITY.md` for vulnerability reporting, response SLAs, and disclosure process.
+| Path | Purpose |
+| --- | --- |
+| `index.html`, `*.html` | Top-level pages of the public site (`/`, product pages, legal hub). |
+| `assets/` | Site images and static media. |
+| `legal/` | Legal pages and policy templates (privacy, terms, NDAs, IP assignment). |
+| `investors/` | Investor-facing pages and briefing material. |
+| `docs/` | Long-form blueprints, platform designs, and corporate documentation. See `docs/README.md`. |
+| `bots/` | Python automation modules used by scheduled workflows. |
+| `scripts/` | Operational scripts (site integrity, reliability audits, intel automation). |
+| `tests/` | `pytest` suite covering `bots/` and `scripts/`. |
+| `prompts/` | System and agent prompts referenced by the bots. |
+| `infra/` | Terraform configuration for supporting infrastructure. |
+| `runner/` | Self-hosted GitHub Actions runner setup notes. |
+| `.github/workflows/` | CI: Pages build, CodeQL, site integrity/reliability, Python tests, scheduled bots. |
+| `SECURITY.md` | Vulnerability reporting and disclosure policy. |
+| `sitemap.xml`, `robots.txt`, `schema.json` | SEO and discovery metadata. |
+| `.nojekyll` | Disables Jekyll processing on GitHub Pages; the site is served as static HTML. |
+
+## Local development
+
+The site is plain static HTML. No build step is required to preview it.
+
+```bash
+python3 -m http.server 8000
+# open http://localhost:8000
+```
+
+A Jekyll build is exercised in CI (`.github/workflows/jekyll-docker.yml`) as a structural check; it is not used to produce the deployed artifact.
+
+## Python tooling
+
+The bots and scripts target Python 3.11. Tests run on every push and pull request that touches Python sources.
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt   # if present
+pip install pytest
+python -m pytest tests/ -v
+```
+
+## Continuous integration
+
+Workflows in `.github/workflows/` cover:
+
+- `pages-deploy.yml` — publish the site to GitHub Pages.
+- `jekyll-docker.yml` — Jekyll build smoke test on HTML changes.
+- `python-tests.yml` — `pytest` against `bots/` and `scripts/`.
+- `codeql.yml` — CodeQL static analysis.
+- `site-integrity.yml`, `site-reliability.yml`, `server-test.yml` — site health checks.
+- `clearglassinc-coo-bot.yml`, `github-ceo-bot.yml`, `marketing-bot.yml`, `operations-finance-bot.yml` — scheduled automation.
+- `self-hosted-deploy.yml` — self-hosted runner deployment path.
+
+## Documentation
+
+The canonical index of long-form documentation lives in `docs/README.md`. Notable entry points:
+
+- Corporate and governance: `docs/clearglassinc_artemis_enterprise_corporate_layer.md`
+- Platform architecture: `docs/clearglassinc_artemis_palantir_aip_blueprint.md`
+- Self-evolving platform spec: `docs/clearglassinc_artemis_self_evolving_platform.md`
+- Executive profile: `docs/desmond_otieno_odhiambo_executive_profile.md`
+
+Top-level `*.md` blueprints (e.g. `ARTEMIS_INTELLIGENCE_PLATFORM_BLUEPRINT.md`, `CLEARGLASSINC_ARTEMIS_PRODUCTION_ARCHITECTURE.md`) are historical snapshots kept for reference.
+
+## Security
+
+Report vulnerabilities privately to **security@clearglassinc.com**. Scope, response SLAs, and safe-harbor terms are defined in `SECURITY.md`.
 
 ## Leadership
-ClearGlassInc Artemis was founded by **Desmond Otieno Odhiambo**.
+
+Founded by **Desmond Otieno Odhiambo**. See `docs/desmond_otieno_odhiambo_executive_profile.md`.

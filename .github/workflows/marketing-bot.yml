@@ -18,21 +18,25 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   marketing:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
+          cache: pip
+          cache-dependency-path: requirements*.txt
       - name: Install dependencies when present
         run: |
           python -m pip install --upgrade pip
@@ -41,10 +45,8 @@ jobs:
           else
             echo "No requirements.txt found; continuing with stdlib-only bot."
           fi
-
       - name: Ensure marketing output path exists
         run: mkdir -p marketing/output marketing/output/archive
-
       - name: Run marketing bot
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
@@ -56,16 +58,14 @@ jobs:
           else
             export FACEBOOK_ENABLED=true
           fi
-
           python bots/marketing_bot.py
-
       - name: Commit generated marketing output
         run: |
           if [[ -n "$(git status --porcelain -- marketing/output)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add marketing/output
-            git commit -m "Marketing bot: update generated content"
+            git commit -m "Marketing bot: update generated content [skip ci]"
             git push origin HEAD:${{ github.ref_name }}
           else
             echo "No marketing output changes to commit."

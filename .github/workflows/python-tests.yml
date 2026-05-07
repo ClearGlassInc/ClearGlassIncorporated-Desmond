@@ -3,16 +3,35 @@ name: Python Tests
 on:
   push:
     branches: ["main"]
+    paths:
+      - "**/*.py"
+      - "requirements*.txt"
+      - "pyproject.toml"
+      - "setup.cfg"
+      - "setup.py"
+      - "tests/**"
   pull_request:
     branches: ["main"]
+    paths:
+      - "**/*.py"
+      - "requirements*.txt"
+      - "pyproject.toml"
+      - "setup.cfg"
+      - "setup.py"
+      - "tests/**"
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,9 +40,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            requirements*.txt
 
       - name: Install test dependencies
-        run: pip install pytest
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          if ls requirements*.txt >/dev/null 2>&1; then pip install -r requirements.txt; fi
 
       - name: Run tests
         run: python -m pytest tests/ -v

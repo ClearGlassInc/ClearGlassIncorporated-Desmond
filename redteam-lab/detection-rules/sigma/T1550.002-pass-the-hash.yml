@@ -1,0 +1,86 @@
+title: PtH Lateral Movement — NTLM Network Logon from Unusual Source
+id: cg-sigma-lm-001
+status: stable
+description: >
+  Detects NTLM Type 3 (network) logon events that indicate pass-the-hash
+  lateral movement based on source/destination patterns and authentication
+  package. Filters service accounts and computer accounts to reduce false
+  positives while maintaining sensitivity to human-account lateral movement.
+references:
+  - https://attack.mitre.org/techniques/T1550/002/
+  - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624
+author: "ClearGlass Detection Forge"
+date: 2026/01/15
+modified: 2026/05/01
+tags:
+  - attack.lateral_movement
+  - attack.t1550.002
+  - clearforge.generated
+  - clearforge.scenario.CG-LM-001
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_logon:
+    EventID: 4624
+    LogonType: 3
+    AuthenticationPackageName: "NTLM"
+  filter_computer_accounts:
+    SubjectUserName|endswith: "$"
+  filter_anonymous:
+    SubjectUserName: "ANONYMOUS LOGON"
+  filter_local_loopback:
+    IpAddress|startswith:
+      - "127."
+      - "::1"
+  filter_null_ip:
+    IpAddress:
+      - "-"
+      - ""
+  condition: selection_logon and not 1 of filter_*
+fields:
+  - SubjectUserName
+  - SubjectDomainName
+  - IpAddress
+  - IpPort
+  - WorkstationName
+  - LogonProcessName
+falsepositives:
+  - Legacy applications using NTLM for network share access
+  - Scheduled tasks configured with explicit network credentials
+  - Backup solutions accessing file shares via NTLM
+  - Print spooler connections
+level: medium
+---
+# Companion rule — sequential logons (higher confidence)
+title: PtH Pattern — Sequential NTLM Logons Within Time Window
+id: cg-sigma-lm-002
+status: stable
+description: >
+  Detects multiple NTLM Type 3 logon events from the same source to
+  different destinations within a 5-minute window — characteristic of
+  automated lateral movement via pass-the-hash.
+references:
+  - https://attack.mitre.org/techniques/T1550/002/
+author: "ClearGlass Detection Forge"
+date: 2026/01/15
+tags:
+  - attack.lateral_movement
+  - attack.t1550.002
+  - clearforge.generated
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4624
+    LogonType: 3
+    AuthenticationPackageName: "NTLM"
+  filter_machine_accounts:
+    SubjectUserName|endswith: "$"
+  condition: selection | count(TargetUserName) by IpAddress > 3 and not filter_machine_accounts
+  timeframe: 5m
+level: high
+falsepositives:
+  - Automated provisioning systems
+  - IT admin tools performing bulk operations

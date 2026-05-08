@@ -1,0 +1,152 @@
+id: CG-LM-001
+technique: T1550.002
+tactic: TA0008
+name: "Pass-the-Hash Behavioral Emulation"
+version: "1.2"
+status: stable
+author: "ClearGlass Detection Forge"
+created: "2026-01-15"
+updated: "2026-05-01"
+
+description: >
+  Generates NTLM authentication event sequences and SMB access patterns
+  consistent with PtH lateral movement using synthetic credentials in an
+  isolated lab network segment. No real credential material is captured,
+  transmitted, or used. Validates detection of Logon Type 3 anomalies,
+  NTLM authentication from unexpected sources, and sequential lateral
+  access patterns.
+
+safe_emulation: true
+destructive: false
+live_malware: false
+credential_capture: false
+authorization_required: true
+
+targets:
+  platforms:
+    - windows
+  minimum_requirements:
+    - Domain-joined Windows target (Windows Server 2019+ or Windows 10+)
+    - SMB accessible from emulation host
+    - Sysmon deployed on target
+    - Windows Security Event Log forwarding to SIEM
+  tested_on:
+    - Windows Server 2022 · Sysmon 15
+    - Windows 10 22H2 · Sysmon 15
+
+telemetry:
+  log_sources:
+    - name: "Windows Security Event Log"
+      channel: "Security"
+    - name: "Sysmon"
+      channel: "Microsoft-Windows-Sysmon/Operational"
+    - name: "Network Flow"
+      protocol: SMB
+      port: 445
+  key_events:
+    - event_id: 4624
+      provider: "Microsoft-Windows-Security-Auditing"
+      description: "Successful logon — Type 3 (Network) with NTLM"
+      fields:
+        LogonType: 3
+        AuthenticationPackageName: NTLM
+        IpAddress: "[emulation_source]"
+    - event_id: 4648
+      provider: "Microsoft-Windows-Security-Auditing"
+      description: "Logon using explicit credentials (lateral movement indicator)"
+    - event_id: 4672
+      provider: "Microsoft-Windows-Security-Auditing"
+      description: "Special privileges assigned to new logon"
+    - event_id: 3
+      provider: "Microsoft-Windows-Sysmon"
+      description: "Network connection to TCP/445 (SMB)"
+
+expected_detections:
+  - rule_id: CG-SIGMA-LM-001
+    rule_file: "detection-rules/sigma/lateral-movement/T1550.002-ptx.yml"
+    description: "NTLM lateral movement — Type 3 logon from unusual source"
+    siem_platforms:
+      - Splunk
+      - Microsoft Sentinel
+      - Elastic SIEM
+      - QRadar
+    confidence: HIGH
+    typical_alert_time_seconds: 45
+  - rule_id: CG-SIGMA-LM-002
+    description: "Sequential Type 3 logons within 5-minute window"
+    confidence: MEDIUM
+
+compliance_coverage:
+  - framework: PCI_DSS_4
+    version: "4.0"
+    controls:
+      - id: "10.2.5"
+        description: "Log all invalid logical access attempts"
+      - id: "10.3.1"
+        description: "Protect audit logs from destruction and modifications"
+      - id: "11.4.1"
+        description: "A penetration testing methodology is defined"
+  - framework: SOC2_CC
+    controls:
+      - id: "CC6.1"
+        description: "Logical and physical access controls"
+      - id: "CC7.2"
+        description: "System monitoring — anomalies and events"
+  - framework: ISO_27001_2022
+    controls:
+      - id: "A.8.16"
+        description: "Monitoring activities"
+      - id: "A.8.15"
+        description: "Logging"
+  - framework: NIST_CSF_2
+    functions:
+      - id: "DE.CM-01"
+        description: "Networks and network services are monitored"
+      - id: "DE.AE-02"
+        description: "Anomalies and events are analyzed"
+
+references:
+  - url: "https://attack.mitre.org/techniques/T1550/002/"
+    description: "MITRE ATT&CK T1550.002"
+  - url: "https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/"
+    description: "Microsoft Privileged Access documentation"
+
+execution:
+  estimated_duration_minutes: 15
+  phases:
+    - phase: preflight
+      description: "Validate environment, telemetry pipeline, and ATT token"
+      automated: true
+      checks:
+        - "ATT token validity and scope"
+        - "Target reachability (TCP/445)"
+        - "SIEM pipeline connectivity"
+        - "Sysmon event forwarding"
+    - phase: baseline
+      description: "Capture 60-second normal authentication baseline"
+      automated: true
+      duration_seconds: 60
+    - phase: execute
+      description: "Emit synthetic NTLM Type 3 authentication sequence"
+      automated: true
+      actions:
+        - "Generate Logon Type 3 events with NTLM authentication package"
+        - "Emit SMB network connection telemetry to TCP/445"
+        - "Generate Event ID 4624, 4648, 4672 artifact sequence"
+      note: "Synthetic only — no real NTLM handshake, no real credential material"
+    - phase: validate
+      description: "Wait for SIEM alert correlation (120-second window)"
+      automated: true
+      duration_seconds: 120
+      outcomes:
+        - DETECT
+        - MISS
+        - PARTIAL
+    - phase: report
+      description: "Log result with full artifact bundle"
+      automated: true
+      outputs:
+        - "Detection result (DETECT/MISS/PARTIAL)"
+        - "Raw event telemetry"
+        - "Expected vs actual alert comparison"
+        - "Generated Sigma rule (if MISS or PARTIAL)"

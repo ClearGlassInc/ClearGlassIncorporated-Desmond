@@ -1,0 +1,158 @@
+name: Validate Scenarios & Detection Rules
+
+on:
+  push:
+    paths:
+      - 'redteam-lab/scenarios/**'
+      - 'redteam-lab/detection-rules/**'
+      - 'redteam-lab/mappings/**'
+  pull_request:
+    paths:
+      - 'redteam-lab/scenarios/**'
+      - 'redteam-lab/detection-rules/**'
+      - 'redteam-lab/mappings/**'
+
+jobs:
+  validate-scenario-schema:
+    name: Validate Scenario YAML Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml jsonschema cerberus
+
+      - name: Validate scenario YAML files
+        run: |
+          python redteam-lab/scripts/validate_scenarios.py \
+            --schema redteam-lab/schemas/scenario.schema.json \
+            --directory redteam-lab/scenarios/
+        id: scenario-validation
+
+      - name: Check required fields
+        run: |
+          python -c "
+          import yaml, sys, os, glob
+          required = ['id','technique','tactic','name','safe_emulation',
+                      'destructive','live_malware','credential_capture',
+                      'authorization_required','telemetry','expected_detections',
+                      'compliance_coverage']
+          errors = []
+          for f in glob.glob('redteam-lab/scenarios/**/*.yml', recursive=True):
+            with open(f) as fh:
+              data = yaml.safe_load(fh)
+            for field in required:
+              if field not in data:
+                errors.append(f'{f}: missing required field \"{field}\"')
+          if errors:
+            print('VALIDATION ERRORS:')
+            for e in errors: print(f'  {e}')
+            sys.exit(1)
+          print(f'All scenarios valid ({len(list(glob.glob(\"redteam-lab/scenarios/**/*.yml\", recursive=True)))} checked)')
+          "
+
+      - name: Verify safety flags
+        run: |
+          python -c "
+          import yaml, sys, glob
+          unsafe = []
+          for f in glob.glob('redteam-lab/scenarios/**/*.yml', recursive=True):
+            with open(f) as fh:
+              data = yaml.safe_load(fh)
+            if data.get('live_malware') == True:
+              unsafe.append(f'{f}: live_malware=True NOT ALLOWED')
+            if data.get('credential_capture') == True:
+              unsafe.append(f'{f}: credential_capture=True NOT ALLOWED')
+            if data.get('destructive') == True:
+              unsafe.append(f'{f}: destructive=True NOT ALLOWED')
+            if not data.get('authorization_required'):
+              unsafe.append(f'{f}: authorization_required must be True')
+          if unsafe:
+            print('SAFETY VIOLATIONS — BLOCKING MERGE:')
+            for e in unsafe: print(f'  {e}')
+            sys.exit(1)
+          print('Safety validation passed — no unsafe scenarios detected')
+          "
+
+  validate-sigma-rules:
+    name: Validate Sigma Detection Rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install sigma-cli
+        run: pip install sigma-cli
+
+      - name: Validate Sigma rule syntax
+        run: |
+          find redteam-lab/detection-rules/sigma -name '*.yml' | while read f; do
+            sigma check "$f" && echo "OK: $f" || { echo "FAIL: $f"; exit 1; }
+          done
+
+  validate-att-coverage:
+    name: Validate ATT&CK Technique Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pyyaml requests
+
+      - name: Check technique IDs exist in ATT&CK
+        run: |
+          python -c "
+          import yaml, glob, re, sys
+          pattern = re.compile(r'^T\d{4}(\.\d{3})?$')
+          invalid = []
+          for f in glob.glob('redteam-lab/scenarios/**/*.yml', recursive=True):
+            with open(f) as fh:
+              data = yaml.safe_load(fh)
+            tid = data.get('technique', '')
+            if not pattern.match(str(tid)):
+              invalid.append(f'{f}: invalid technique ID \"{tid}\"')
+          if invalid:
+            for e in invalid: print(e)
+            sys.exit(1)
+          print('All technique IDs match ATT&CK format')
+          "
+
+  check-compliance-mappings:
+    name: Verify Compliance Mappings Present
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check all scenarios have compliance coverage
+        run: |
+          python -c "
+          import yaml, glob, sys
+          missing = []
+          required_frameworks = {'PCI_DSS_4', 'SOC2_CC', 'ISO_27001_2022', 'NIST_CSF_2'}
+          for f in glob.glob('redteam-lab/scenarios/**/*.yml', recursive=True):
+            with open(f) as fh:
+              data = yaml.safe_load(fh)
+            frameworks = {c.get('framework') for c in data.get('compliance_coverage', [])}
+            if not frameworks:
+              missing.append(f'{f}: no compliance_coverage defined')
+          if missing:
+            print('WARNING: Scenarios without compliance mappings:')
+            for m in missing: print(f'  {m}')
+          else:
+            print('All scenarios have compliance mappings')
+          "

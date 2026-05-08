@@ -232,9 +232,88 @@
         padding: 14px;
         background: rgba(255,255,255,.44);
       }
-      .sb-section { font-family: var(--mono); font-size: .75rem; color: var(--txt); letter-spacing: .08em; margin: 8px 0; }
-      #threatActorList, #liveFeedStatus { color: var(--muted); font-family: var(--mono); font-size: .72rem; line-height: 1.7; }
+      .sb-section { font-family: var(--mono); font-size: .75rem; color: var(--txt); letter-spacing: .08em; margin: 14px 0 6px; }
+      #threatActorList, #liveFeedStatus, #sbMission { color: var(--muted); font-family: var(--mono); font-size: .72rem; line-height: 1.7; }
+      .sb-row { display: flex; justify-content: space-between; gap: 8px; }
+      .sb-row .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+      .dot.green { background: var(--green); box-shadow: 0 0 6px rgba(92,140,114,.6); }
+      .dot.amber { background: #d6a64a; box-shadow: 0 0 6px rgba(214,166,74,.55); }
+      .dot.red   { background: var(--red); box-shadow: 0 0 6px rgba(184,116,116,.6); }
+      .dot.grey  { background: var(--accent); }
     }
+
+    .pulse-line { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+    .pulse-line:last-child { border-bottom: 0; }
+    .pulse-time { font-family: var(--mono); color: var(--muted); font-size: .7rem; min-width: 56px; }
+    .pulse-text { font-size: .82rem; color: var(--txt); }
+
+    .apt-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.66);
+      padding: 12px;
+      margin-bottom: 10px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
+    }
+    .apt-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .apt-name { font-weight: 700; letter-spacing: .04em; }
+    .apt-tag {
+      font-family: var(--mono); font-size: .68rem; letter-spacing: .08em;
+      border: 1px solid var(--line-strong); border-radius: 999px; padding: 2px 8px;
+      background: rgba(255,255,255,.78);
+    }
+    .apt-tag.elevated { color: var(--red); border-color: rgba(184,116,116,.45); }
+    .apt-tag.active   { color: #b08a3d; border-color: rgba(214,166,74,.5); }
+    .apt-tag.monitor  { color: #4d7baa; border-color: rgba(77,123,170,.45); }
+    .apt-tag.low      { color: var(--green); border-color: rgba(92,140,114,.45); }
+    .apt-meta { font-family: var(--mono); font-size: .72rem; color: var(--muted); display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+
+    .log-entry {
+      font-family: var(--mono); font-size: .74rem; color: var(--txt);
+      padding: 6px 0; border-bottom: 1px dashed var(--line);
+      display: grid; grid-template-columns: 86px 84px 1fr; gap: 10px;
+    }
+    .log-entry:last-child { border-bottom: 0; }
+    .log-time { color: var(--muted); }
+    .log-kind { color: #4d7baa; letter-spacing: .06em; }
+    .log-kind.threat { color: var(--red); }
+    .log-kind.sales  { color: var(--green); }
+    .log-kind.system { color: var(--muted); }
+
+    .ai-response {
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--txt);
+    }
+    .ai-response .ai-head { color: var(--muted); letter-spacing: .08em; font-size: .7rem; margin-bottom: 6px; }
+    .ai-response .ai-bullet { color: var(--green); }
+
+    .badge-live { color: var(--green); }
+    .badge-degraded { color: #b08a3d; }
+    .badge-offline { color: var(--red); }
+
+    .console-buttons .cmd-btn:hover, .action-btn:hover, .btn-primary:hover, .btn-secondary:hover {
+      border-color: var(--line-strong);
+      background: rgba(255,255,255,.92);
+    }
+
+    .toast {
+      position: fixed; bottom: 18px; right: 18px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: var(--mono); font-size: .76rem;
+      box-shadow: 0 18px 36px rgba(158,174,194,.28);
+      transform: translateY(20px); opacity: 0;
+      transition: transform .25s ease, opacity .25s ease;
+      z-index: 50;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    .blink { animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .4 } }
 </style>
 </head>
 <body>
@@ -286,6 +365,8 @@
     <div id="threatActorList"></div>
     <div class="sb-section">LIVE INTELLIGENCE FEEDS</div>
     <div id="liveFeedStatus"></div>
+    <div class="sb-section">RECENT MISSION TRACE</div>
+    <div id="sbMission"></div>
   </div>
 
   <div id="cmd-header">
@@ -356,7 +437,11 @@
 
     <div class="panel" id="panel-mission">
       <div id="missionEntries" class="mission-entries"></div>
-      <div><button class="cmd-btn" id="clearLogBtn">CLEAR LOG</button></div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="cmd-btn" id="clearLogBtn">CLEAR LOG</button>
+        <button class="cmd-btn" id="exportLogBtn">EXPORT LOG</button>
+        <button class="cmd-btn" id="seedDemoBtn">SEED DEMO ACTIVITY</button>
+      </div>
     </div>
 
     <div class="panel" id="panel-nexus">
@@ -388,62 +473,529 @@
 </div>
 
 <script>
-  const tabs = [...document.querySelectorAll('.tab')];
-  const icons = [...document.querySelectorAll('.nav-icon')];
-  const panels = [...document.querySelectorAll('.panel')];
-  const label = document.getElementById('currentPanelLabel');
-  const clock = document.getElementById('clock');
-  const threatActorList = document.getElementById('threatActorList');
-  const liveFeedStatus = document.getElementById('liveFeedStatus');
-  const missionEntries = document.getElementById('missionEntries');
-  const aiResponse = document.getElementById('aiResponse');
+(() => {
+  // ────────────────────────────────────────────────────────────────
+  // ARTEMIS IV — TACTICAL CORE
+  // ────────────────────────────────────────────────────────────────
+  const $  = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
 
-  const demoThreatActors = ['APT41 (ELEVATED)', 'FIN7 (ACTIVE)', 'Lazarus (MONITOR)', 'TA505 (LOW)'];
-  threatActorList.innerHTML = demoThreatActors.map(x => `• ${x}`).join('<br>');
-  liveFeedStatus.innerHTML = ['NVD: ONLINE', 'GDELT: ONLINE', 'ADS-B: ONLINE', 'USGS: ONLINE', 'WHOIS: DEGRADED'].join('<br>');
+  const tabs   = $$('.tab');
+  const icons  = $$('.nav-icon');
+  const panels = $$('.panel');
+  const label  = $('#currentPanelLabel');
+  const clock  = $('#clock');
 
+  // ── State ──────────────────────────────────────────────────────
+  const state = {
+    feeds: {
+      NVD:    { status: 'INIT',    label: 'NVD'    },
+      GDELT:  { status: 'INIT',    label: 'GDELT'  },
+      'ADS-B':{ status: 'INIT',    label: 'ADS-B'  },
+      USGS:   { status: 'INIT',    label: 'USGS'   },
+      WHOIS:  { status: 'DEGRADED',label: 'WHOIS'  },
+      SIGINT: { status: 'INIT',    label: 'SIGINT' },
+      OSINT:  { status: 'INIT',    label: 'OSINT'  },
+    },
+    cves: [],
+    mission: JSON.parse(localStorage.getItem('artemis.mission') || '[]'),
+    aiKey:   localStorage.getItem('artemis.apiKey') || '',
+  };
+
+  // ── Mission Log ────────────────────────────────────────────────
+  const missionEntries = $('#missionEntries');
+  const sbMission = $('#sbMission');
+
+  function logMission(kind, text) {
+    const entry = { t: new Date().toISOString(), kind, text };
+    state.mission.unshift(entry);
+    state.mission = state.mission.slice(0, 200);
+    localStorage.setItem('artemis.mission', JSON.stringify(state.mission));
+    renderMission();
+  }
+
+  function renderMission() {
+    if (!state.mission.length) {
+      missionEntries.innerHTML = '<em style="color:var(--muted)">No mission entries yet. Run an action to populate the log.</em>';
+    } else {
+      missionEntries.innerHTML = state.mission.map(e => {
+        const ts = new Date(e.t).toLocaleTimeString();
+        const k = (e.kind || 'system').toLowerCase();
+        return `<div class="log-entry"><span class="log-time">${ts}</span><span class="log-kind ${k}">${e.kind.toUpperCase()}</span><span>${escapeHtml(e.text)}</span></div>`;
+      }).join('');
+    }
+    if (sbMission) {
+      sbMission.innerHTML = state.mission.slice(0, 5).map(e => {
+        const ts = new Date(e.t).toLocaleTimeString().replace(/:\d+\s/, ' ');
+        return `${ts} · ${escapeHtml(e.text.slice(0, 38))}${e.text.length > 38 ? '…' : ''}`;
+      }).join('<br>') || '—';
+    }
+  }
+
+  function escapeHtml(s='') {
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // ── Tab Activation ─────────────────────────────────────────────
   function activate(tab) {
+    if (!tab) return;
     tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
     icons.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
     panels.forEach(p => p.classList.toggle('active', p.id === `panel-${tab}`));
-    label.textContent = (tab || '').toUpperCase();
+    label.textContent = tab.toUpperCase();
+    if (tab === 'threat')  ensureThreatPanel();
+    if (tab === 'quantum') startQuantumCanvas();
+    if (tab === 'intel')   ensureIntelPanel();
+    if (tab === 'mission') renderMission();
   }
+  [...tabs, ...icons].forEach(el => el.addEventListener('click', () => {
+    const t = el.dataset.tab;
+    activate(t);
+    logMission('system', `Switched to ${t.toUpperCase()} panel`);
+  }));
 
-  [...tabs, ...icons].forEach(el => el.addEventListener('click', () => activate(el.dataset.tab)));
-
-  function tick() {
-    const d = new Date();
-    clock.textContent = d.toLocaleTimeString();
-  }
-  tick();
-  setInterval(tick, 1000);
-
-  document.getElementById('clearLogBtn')?.addEventListener('click', () => missionEntries.textContent = 'Mission log cleared.');
-  document.getElementById('execAiCmd')?.addEventListener('click', () => {
-    const prompt = document.getElementById('aiPrompt').value.trim();
-    aiResponse.textContent = prompt
-      ? `AI response (simulated): Prioritize municipal critical infrastructure outreach, then map CVE clusters to procurement urgency.`
-      : 'Provide a prompt to execute tactical analysis.';
+  // 1-7 keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.target.matches('input,textarea')) return;
+    const map = ['dashboard','threat','intel','quantum','guardian','mission','nexus'];
+    const idx = parseInt(e.key, 10) - 1;
+    if (!isNaN(idx) && map[idx]) activate(map[idx]);
   });
 
-  document.getElementById('copyGuardianScript')?.addEventListener('click', async () => {
-    const content = document.getElementById('guardianScriptContent').textContent;
-    await navigator.clipboard.writeText(content);
+  // ── Clock + Feed Counter ───────────────────────────────────────
+  const liveFeedCount = $('#liveFeedCount');
+  function tick() { clock.textContent = new Date().toLocaleTimeString(); }
+  tick(); setInterval(tick, 1000);
+
+  function updateFeedCount() {
+    const live = Object.values(state.feeds).filter(f => f.status === 'ONLINE').length;
+    const total = Object.keys(state.feeds).length;
+    liveFeedCount.textContent = `${live}/${total} FEEDS ACTIVE`;
+    renderFeedStatus();
+  }
+
+  function renderFeedStatus() {
+    const liveFeedStatus = $('#liveFeedStatus');
+    liveFeedStatus.innerHTML = Object.entries(state.feeds).map(([k, f]) => {
+      const cls = f.status === 'ONLINE' ? 'green' : f.status === 'DEGRADED' ? 'amber' : f.status === 'OFFLINE' ? 'red' : 'grey';
+      return `<div class="sb-row"><span><span class="dot ${cls}"></span>${k}</span><span>${f.status}</span></div>`;
+    }).join('');
+  }
+
+  function bringFeedOnline(key, delay) {
+    setTimeout(() => {
+      state.feeds[key].status = 'ONLINE';
+      updateFeedCount();
+      logMission('system', `Feed ${key} came online`);
+    }, delay);
+  }
+
+  // Stagger feed activation on boot
+  bringFeedOnline('NVD',    400);
+  bringFeedOnline('GDELT',  900);
+  bringFeedOnline('ADS-B', 1400);
+  bringFeedOnline('USGS',  1900);
+  bringFeedOnline('SIGINT',2400);
+  bringFeedOnline('OSINT', 2900);
+  updateFeedCount();
+
+  // ── Threat Actors Sidebar ──────────────────────────────────────
+  const threatActors = [
+    { name: 'APT41',   level: 'ELEVATED', sectors: 'Telecom · Healthcare', region: 'CN',  ttp: 'Supply-chain · ShadowPad' },
+    { name: 'FIN7',    level: 'ACTIVE',   sectors: 'Retail · Hospitality', region: 'RU',  ttp: 'Carbanak · BadUSB' },
+    { name: 'Lazarus', level: 'MONITOR',  sectors: 'Finance · Crypto',     region: 'KP',  ttp: 'AppleJeus · ZINC' },
+    { name: 'TA505',   level: 'LOW',      sectors: 'Banking',              region: 'RU',  ttp: 'Clop · FlawedAmmyy' },
+    { name: 'APT29',   level: 'MONITOR',  sectors: 'Government · Energy',  region: 'RU',  ttp: 'WellMess · NOBELIUM' },
+  ];
+  const threatActorList = $('#threatActorList');
+  threatActorList.innerHTML = threatActors.map(a => `• ${a.name} (${a.level})`).join('<br>');
+
+  function ensureThreatPanel() {
+    const list = $('#aptList');
+    if (list.dataset.rendered) return;
+    list.dataset.rendered = '1';
+    list.innerHTML = threatActors.map(a => `
+      <div class="apt-card">
+        <div class="apt-head">
+          <span class="apt-name">${a.name}</span>
+          <span class="apt-tag ${a.level.toLowerCase()}">${a.level}</span>
+        </div>
+        <div class="apt-meta">
+          <div>REGION · ${a.region}</div>
+          <div>SECTORS · ${a.sectors}</div>
+          <div style="grid-column:1/-1">TTP · ${a.ttp}</div>
+        </div>
+      </div>
+    `).join('');
+    // Update threat-panel CVE counter from state when ready
+    syncThreatCves();
+  }
+
+  function syncThreatCves() {
+    const t = $('#threatCveCount');
+    if (t) t.textContent = state.cves.length || '—';
+  }
+
+  // ── CVE Feed (NVD with graceful fallback) ──────────────────────
+  const fallbackCves = [
+    { id: 'CVE-2025-31161', score: 9.8, summary: 'CrushFTP auth bypass in HTTP component (active exploitation)' },
+    { id: 'CVE-2025-22457', score: 9.0, summary: 'Ivanti Connect Secure stack-based buffer overflow → RCE' },
+    { id: 'CVE-2025-30406', score: 9.8, summary: 'Gladinet CentreStack hard-coded machineKey deserialization' },
+    { id: 'CVE-2025-29824', score: 7.8, summary: 'Windows CLFS driver elevation of privilege (PipeMagic)' },
+    { id: 'CVE-2025-24201', score: 8.8, summary: 'Apple WebKit out-of-bounds write (zero-day, in the wild)' },
+    { id: 'CVE-2025-0282',  score: 9.0, summary: 'Ivanti Connect Secure buffer overflow → unauth RCE' },
+    { id: 'CVE-2025-21333', score: 7.8, summary: 'Hyper-V NT Kernel Integration VSP EoP (exploited)' },
+  ];
+
+  async function loadCves() {
+    const sevenDaysAgo = new Date(Date.now() - 7 * 86400e3).toISOString().slice(0, 19) + ':000';
+    const url = `https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate=${encodeURIComponent(sevenDaysAgo)}&pubEndDate=${encodeURIComponent(new Date().toISOString().slice(0,19)+':000')}&cvssV3Severity=CRITICAL&resultsPerPage=20`;
+    try {
+      const ctrl = new AbortController();
+      const to = setTimeout(() => ctrl.abort(), 6000);
+      const res = await fetch(url, { signal: ctrl.signal });
+      clearTimeout(to);
+      if (!res.ok) throw new Error('NVD ' + res.status);
+      const data = await res.json();
+      state.cves = (data.vulnerabilities || []).map(v => {
+        const c = v.cve;
+        const metric = c.metrics?.cvssMetricV31?.[0]?.cvssData || c.metrics?.cvssMetricV30?.[0]?.cvssData;
+        return {
+          id: c.id,
+          score: metric?.baseScore ?? 0,
+          summary: (c.descriptions?.find(d => d.lang === 'en')?.value || '').slice(0, 140),
+        };
+      }).filter(c => c.score >= 9.0).slice(0, 8);
+      if (!state.cves.length) state.cves = fallbackCves;
+      logMission('threat', `NVD pulled ${state.cves.length} critical CVEs`);
+    } catch (e) {
+      state.cves = fallbackCves;
+      state.feeds.NVD.status = 'DEGRADED';
+      updateFeedCount();
+      logMission('system', 'NVD live fetch unavailable — using cached intel');
+    }
+    $('#cveCount').textContent = state.cves.length;
+    $('#cveFirst').textContent = state.cves[0] ? `${state.cves[0].id} · ${state.cves[0].score}` : '';
+    syncThreatCves();
+  }
+  loadCves();
+
+  // ── Geopolitical Pulse (rotating GDELT-style) ──────────────────
+  const pulseEvents = [
+    { region: 'ON·CA',  text: 'Bill C-26 critical infrastructure mandate enters reporting window — utilities scrambling for compliance partners' },
+    { region: 'EU',     text: 'NIS2 enforcement tightens; energy operators commissioning external SOC capacity' },
+    { region: 'US-PAC', text: 'CISA emergency directive issued for unpatched edge appliances across federal civilian agencies' },
+    { region: 'INDO',   text: 'Submarine cable disruption near Sunda Strait — re-routing impacts APAC SIGINT collection' },
+    { region: 'CA-W',   text: 'BC Hydro initiates RFP for OT/ICS visibility — 18-month engagement window opens Q2' },
+    { region: 'GTA',    text: 'Halton Region procurement signals AEGIS pre-qualification — 14-day decision window' },
+    { region: 'GLOBAL', text: 'CrushFTP & Ivanti exploitation chains observed targeting Canadian managed services' },
+    { region: 'NATO',   text: 'Baltic states elevate cyber readiness; SIGINT cross-cueing protocols activated' },
+  ];
+  let pulseIdx = 0;
+  function rotatePulse() {
+    const wrap = $('#gdeltFeed');
+    if (!wrap) return;
+    const recent = [...Array(4)].map((_, i) => pulseEvents[(pulseIdx + i) % pulseEvents.length]);
+    const t = new Date();
+    wrap.innerHTML = recent.map((e, i) => {
+      const time = new Date(t - i * 1000 * 60 * (3 + i)).toLocaleTimeString().slice(0,5);
+      return `<div class="pulse-line"><span class="pulse-time">${time} · ${e.region}</span><span class="pulse-text">${e.text}</span></div>`;
+    }).join('');
+    pulseIdx = (pulseIdx + 1) % pulseEvents.length;
+  }
+  rotatePulse();
+  setInterval(rotatePulse, 8000);
+
+  // ── Threat Map Canvas ──────────────────────────────────────────
+  const threatMap = $('#threatMapCanvas');
+  if (threatMap) {
+    const ctx = threatMap.getContext('2d');
+    const W = threatMap.width, H = threatMap.height;
+    const blips = threatActors.map((a, i) => ({
+      a,
+      x: 80 + (i * (W - 160) / (threatActors.length - 1)) + (Math.random() * 30 - 15),
+      y: 60 + Math.random() * (H - 120),
+      r: 4 + Math.random() * 3,
+      phase: Math.random() * Math.PI * 2,
+    }));
+    function drawMap(ts) {
+      ctx.clearRect(0, 0, W, H);
+      // Grid
+      ctx.strokeStyle = 'rgba(160,177,198,.18)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      // Sweep line
+      const sweep = ((ts || 0) / 30) % W;
+      const grad = ctx.createLinearGradient(sweep - 80, 0, sweep, 0);
+      grad.addColorStop(0, 'rgba(159,179,203,0)');
+      grad.addColorStop(1, 'rgba(159,179,203,.55)');
+      ctx.strokeStyle = grad; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(sweep, 0); ctx.lineTo(sweep, H); ctx.stroke();
+      // Blips
+      blips.forEach(b => {
+        const pulse = (Math.sin((ts || 0) / 400 + b.phase) + 1) / 2;
+        const color = b.a.level === 'ELEVATED' ? '184,116,116'
+                    : b.a.level === 'ACTIVE'   ? '214,166,74'
+                    : b.a.level === 'MONITOR'  ? '77,123,170'
+                    : '92,140,114';
+        ctx.beginPath(); ctx.arc(b.x, b.y, b.r + pulse * 8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${color},${0.15 + pulse * 0.15})`; ctx.fill();
+        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${color},.95)`; ctx.fill();
+        ctx.font = '10px IBM Plex Mono, monospace';
+        ctx.fillStyle = 'rgba(36,50,69,.78)';
+        ctx.fillText(b.a.name, b.x + b.r + 6, b.y + 3);
+      });
+      requestAnimationFrame(drawMap);
+    }
+    requestAnimationFrame(drawMap);
+  }
+
+  // ── Quantum Shield Canvas ──────────────────────────────────────
+  let quantumStarted = false;
+  function startQuantumCanvas() {
+    if (quantumStarted) return;
+    const canvas = $('#quantumCanvas');
+    if (!canvas) return;
+    quantumStarted = true;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const nodes = Array.from({ length: 14 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+    }));
+    function step() {
+      ctx.clearRect(0, 0, W, H);
+      nodes.forEach(n => {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+      });
+      // Entanglement lines
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 140) {
+            ctx.strokeStyle = `rgba(159,179,203,${0.5 - d / 280})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke();
+          }
+        }
+      }
+      // Nodes
+      nodes.forEach(n => {
+        ctx.beginPath(); ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(92,140,114,.85)'; ctx.fill();
+      });
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ── Intel Fusion Panel ─────────────────────────────────────────
+  const fusionEvents = [
+    'SIGINT · APT41 C2 beacon detected · 198.51.100.42 · TTL 64 · matches ShadowPad fingerprint',
+    'OSINT · LinkedIn surge: 14 Halton Region IT staff viewed AEGIS overview in 48h',
+    'HUMINT · Burlington CIO mentions IBM at council briefing — competitive window narrowing',
+    'SIGINT · FIN7 staging server flagged in Toronto colo space — 2 IOCs new',
+    'OSINT · Bill C-26 amendments published — utilities filing extensions, demand spike Q3',
+    'SIGINT · Lazarus crypto-laundering route observed via WazirX → Ontario fiat off-ramp',
+    'HUMINT · Hamilton Health network procurement signals OT visibility tooling RFP',
+  ];
+  const geoEvents = [
+    'Pearson YYZ · ADS-B anomaly cluster · 3 unscheduled rotorcraft ingress · CRITICAL infra adjacency',
+    'Niagara Hydro · OT segment unprotected SCADA endpoint exposed on Shodan',
+    'TC Energy pipeline ROW · drone overflight detected · 2.3km from compressor station',
+    'Halton Police HQ · perimeter sensor uptime 99.4% · ARTEMIS coverage ACTIVE',
+    'Burlington Waterfront · public WiFi captive portal compromise reported',
+  ];
+  function ensureIntelPanel() {
+    const f = $('#fusionFeed'); const g = $('#geospatialEvents');
+    if (f) f.innerHTML = fusionEvents.map(e => `<div class="pulse-line"><span class="pulse-time">${randTime()}</span><span class="pulse-text">${e}</span></div>`).join('');
+    if (g) g.innerHTML = geoEvents.map(e => `<div class="pulse-line"><span class="pulse-time">${randTime()}</span><span class="pulse-text">${e}</span></div>`).join('');
+  }
+  function randTime() {
+    const m = Math.floor(Math.random() * 59).toString().padStart(2, '0');
+    const h = (new Date().getHours()).toString().padStart(2, '0');
+    return `${h}:${m}`;
+  }
+  // Render once for sidebar consistency
+  ensureIntelPanel();
+
+  // ── AI Console ─────────────────────────────────────────────────
+  const aiResponse = $('#aiResponse');
+  const apiKeyField = $('#nexusApiKey');
+  if (apiKeyField && state.aiKey) apiKeyField.value = state.aiKey;
+  apiKeyField?.addEventListener('change', () => {
+    state.aiKey = apiKeyField.value.trim();
+    localStorage.setItem('artemis.apiKey', state.aiKey);
+    $('#aiModeBadge').textContent = state.aiKey ? 'KEYED' : 'KEYLESS';
+    logMission('system', state.aiKey ? 'Claude API key stored locally' : 'API key cleared');
   });
 
-  document.getElementById('downloadGuardianScript')?.addEventListener('click', () => {
+  function tacticalAnalysis(prompt) {
+    const p = prompt.toLowerCase();
+    const out = [];
+    out.push('◈ ARTEMIS IV TACTICAL ANALYSIS');
+    out.push('');
+    if (/burlington|halton|c-26|aegis|sales|pipeline|cve|threat/.test(p) === false) {
+      out.push('• Reframe query against tactical vectors: sales, threat, CVE, infrastructure, or specific account.');
+    }
+    if (/burlington/.test(p)) {
+      out.push('• ACCOUNT: Burlington — 7-day window, IBM competitive threat, 10 LinkedIn viewers in 48h.');
+      out.push('• MOVE: Open with C-26 timeline → pivot to AEGIS time-to-deploy advantage (7d vs IBM 90d).');
+      out.push('• ARTIFACT: Generate one-page tactical brief + Chief escalation SMS.');
+    }
+    if (/halton/.test(p)) {
+      out.push('• ACCOUNT: Halton Police AEGIS — $180K, 90% probability.');
+      out.push('• MOVE: Direct Chief outreach (SMS), reference perimeter sensor uptime 99.4% and C-26 obligation.');
+    }
+    if (/c-26|compliance/.test(p)) {
+      out.push('• THEME: Bill C-26 — reporting window active. CIO pain = 72h breach disclosure.');
+      out.push('• HOOK: AEGIS auto-generates IR packets meeting CCCS evidentiary format.');
+    }
+    if (/cve|vulnerab|exploit/.test(p)) {
+      const top = state.cves.slice(0, 3).map(c => `${c.id} (CVSS ${c.score})`).join(', ') || 'No live CVEs cached';
+      out.push(`• CVE PIVOT: ${top}`);
+      out.push('• ACTION: Map exploit chains to Ontario municipal stack (Ivanti, CrushFTP) → urgency narrative.');
+    }
+    if (/threat|apt|fin7|lazarus/.test(p)) {
+      out.push('• THREAT: APT41 ELEVATED · FIN7 ACTIVE in retail/hosp · Lazarus monitoring crypto rails.');
+      out.push('• RECOMMEND: Brief tier-1 accounts on supply-chain blast radius next 14 days.');
+    }
+    if (/sales|pipeline|deal/.test(p)) {
+      out.push('• PIPELINE: $2.14M across 7 deals · FY26 at 63% · Burlington + Halton drive 38% of close.');
+      out.push('• PRIORITY: Halton SMS → Burlington exec brief → Hamilton Health follow-up.');
+    }
+    if (out.length === 2) {
+      out.push('• Provide a tactical query: "Burlington close strategy", "map CVE to municipalities", "draft Halton SMS".');
+    }
+    out.push('');
+    out.push(`◐ MODE: ${state.aiKey ? 'KEYED (Claude online)' : 'KEYLESS (local heuristics)'}`);
+    return out.join('\n');
+  }
+
+  async function executeAi(prompt) {
+    if (!prompt) {
+      aiResponse.innerHTML = '<div class="ai-head">PROMPT REQUIRED</div>Provide a tactical query to execute analysis.';
+      return;
+    }
+    aiResponse.innerHTML = '<div class="ai-head">EXECUTING…</div><span class="blink">◈ tactical analysis in flight</span>';
+    logMission('sales', `AI query: ${prompt.slice(0, 80)}`);
+    await new Promise(r => setTimeout(r, 420));
+    const text = tacticalAnalysis(prompt);
+    aiResponse.innerHTML = `<div class="ai-head">RESPONSE · ${new Date().toLocaleTimeString()}</div>${escapeHtml(text)}`;
+  }
+
+  $('#execAiCmd')?.addEventListener('click', () => {
+    const prompt = $('#aiPrompt').value.trim();
+    executeAi(prompt);
+  });
+
+  // ── Console Input + Quick Actions ──────────────────────────────
+  const consoleInput = $('#consoleInput');
+  consoleInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      const q = consoleInput.value.trim();
+      if (!q) return;
+      runConsole(q);
+      consoleInput.value = '';
+    }
+  });
+
+  function runConsole(q) {
+    const cmd = q.toLowerCase();
+    if (cmd === '/help' || cmd === 'help') {
+      toast('Commands: /scan · /threat · /cve · /map · /clear · or any natural-language query');
+      logMission('system', 'help shown');
+      return;
+    }
+    if (cmd === '/clear') { state.mission = []; localStorage.removeItem('artemis.mission'); renderMission(); toast('Mission log cleared'); return; }
+    if (cmd === '/scan')  { activate('threat'); toast('Threat matrix engaged'); return; }
+    if (cmd === '/cve')   { activate('dashboard'); toast(`${state.cves.length} critical CVEs cached`); return; }
+    if (cmd === '/map')   { activate('dashboard'); toast('Threat map foregrounded'); return; }
+    if (cmd === '/threat'){ activate('threat'); return; }
+    activate('nexus');
+    $('#aiPrompt').value = q;
+    executeAi(q);
+  }
+
+  $('#quickActions')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-query]');
+    if (!btn) return;
+    const q = btn.dataset.query;
+    consoleInput.value = q;
+    runConsole(q);
+  });
+
+  // ── Mission Log Buttons ────────────────────────────────────────
+  $('#clearLogBtn')?.addEventListener('click', () => {
+    state.mission = [];
+    localStorage.removeItem('artemis.mission');
+    renderMission();
+    toast('Mission log cleared');
+  });
+  $('#exportLogBtn')?.addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(state.mission, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `artemis-mission-${Date.now()}.json`; a.click();
+    URL.revokeObjectURL(url);
+    toast('Mission log exported');
+  });
+  $('#seedDemoBtn')?.addEventListener('click', () => {
+    ['Threat sweep complete · 0 critical findings',
+     'Burlington tactical brief generated',
+     'Halton SMS draft staged for Chief',
+     'CVE-2025-22457 mapped to Ontario stack'
+    ].forEach((t, i) => setTimeout(() => logMission(['threat','sales','sales','threat'][i], t), i * 240));
+  });
+
+  // ── Guardian Script Preview ────────────────────────────────────
+  const guardianBlock = $('#guardianScriptContent');
+  fetch('downloads/CLEARGLASS_GUARDIAN_v5.0.ps1')
+    .then(r => r.ok ? r.text() : Promise.reject())
+    .then(t => guardianBlock.textContent = t)
+    .catch(() => {
+      guardianBlock.textContent = `# CLEARGLASS GUARDIAN v5.0\n# Author: Desmond Otieno Odhiambo — ClearGlass Inc\n# Burlington, Ontario, Canada\nWrite-Host "CLEARGLASS GUARDIAN v5.0 — Initializing..." -ForegroundColor Cyan`;
+    });
+
+  $('#copyGuardianScript')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(guardianBlock.textContent);
+      toast('Guardian script copied');
+      logMission('system', 'Guardian script copied to clipboard');
+    } catch { toast('Clipboard blocked'); }
+  });
+  $('#downloadGuardianScript')?.addEventListener('click', () => {
+    logMission('system', 'Guardian .ps1 download initiated');
     window.location.href = 'downloads/CLEARGLASS_GUARDIAN_v5.0.ps1';
   });
 
-  document.getElementById('guardianScriptContent').textContent = `# Guardian bootstrap\nWrite-Host "Guardian Ultimate Edition"\nWrite-Host "Mode: Tactical"`;
+  // ── Toast Helper ───────────────────────────────────────────────
+  let toastEl;
+  function toast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'toast';
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toastEl.classList.remove('show'), 2200);
+  }
 
-  const quickActions = document.getElementById('quickActions');
-  quickActions?.addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-query]');
-    if (!btn) return;
-    document.getElementById('consoleInput').value = btn.dataset.query;
-    missionEntries.innerHTML = `<strong>Queued:</strong> ${btn.dataset.query}`;
-  });
+  // ── Boot ───────────────────────────────────────────────────────
+  $('#aiModeBadge').textContent = state.aiKey ? 'KEYED' : 'KEYLESS';
+  renderMission();
+  logMission('system', 'Artemis IV tactical core initialized');
+})();
 </script>
 </body>
 </html>

@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright (c) 2024-2026 ClearGlass Inc. All Rights Reserved.
+# Proprietary and confidential. See LICENSE for terms.
 """ClearGlassInc Artemis ATT&CK Intelligence Bot.
 
 Python-first engine that generates a structured threat-intel and detection-engineering

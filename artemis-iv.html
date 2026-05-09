@@ -314,6 +314,9 @@
 
     .blink { animation: pulse 1.6s ease-in-out infinite; }
     @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .4 } }
+
+    .map-wrap{position:relative}
+    .map-tooltip{position:absolute;pointer-events:none;background:rgba(255,255,255,.96);border:1px solid var(--line-strong);border-radius:10px;padding:8px 10px;font-family:var(--mono);font-size:.68rem;max-width:260px;display:none;z-index:5}
 </style>
 </head>
 <body>
@@ -395,8 +398,8 @@
         <div class="kpi-card live"><div class="kpi-label">CRITICAL CVES (7d)</div><div class="kpi-value" id="cveCount">—</div><div id="cveFirst"></div></div>
         <div class="kpi-card"><div class="kpi-label">THREAT LEVEL</div><div class="kpi-value critical">ELEVATED</div><div>APT41 · FIN7</div></div>
       </div>
-      <div class="intel-feed"><div class="feed-title">◈ GEOPOLITICAL PULSE (GDELT)</div><div id="gdeltFeed">Loading strategic intelligence...</div></div>
-      <canvas id="threatMapCanvas" width="800" height="280"></canvas>
+      <div class="intel-feed"><div class="feed-title">◈ GEOPOLITICAL PULSE (GDELT)</div><div class="kpi-label" style="margin-bottom:6px;">SYNTHETIC DEMO INTELLIGENCE — NOT LIVE FACT REPORTING</div><div id="gdeltFeed">Loading strategic intelligence...</div></div>
+      <div class="map-wrap"><canvas id="threatMapCanvas" width="800" height="280" aria-label="Interactive threat matrix"></canvas><div id="mapTooltip" class="map-tooltip" role="status" aria-live="polite"></div></div>
     </div>
 
     <div class="panel" id="panel-threat">
@@ -471,6 +474,7 @@
     <span id="clock">--:--:--</span>
   </div>
 </div>
+<script src="assets/artemis-iv-data.js"></script>
 
 <script>
 (() => {
@@ -501,6 +505,13 @@
     mission: JSON.parse(localStorage.getItem('artemis.mission') || '[]'),
     aiKey:   localStorage.getItem('artemis.apiKey') || '',
   };
+
+  const staticData = window.ARTEMIS_IV_DATA || null;
+  if (staticData?.executiveMetrics) {
+    $('#pipelineVal').textContent = staticData.executiveMetrics.pipelineValue;
+    $('#targetPct').textContent = `${staticData.executiveMetrics.targetPercent}%`;
+  }
+
 
   // ── Mission Log ────────────────────────────────────────────────
   const missionEntries = $('#missionEntries');
@@ -600,7 +611,7 @@
   updateFeedCount();
 
   // ── Threat Actors Sidebar ──────────────────────────────────────
-  const threatActors = [
+  const threatActors = (window.ARTEMIS_IV_DATA && window.ARTEMIS_IV_DATA.threatActors) || [
     { name: 'APT41',   level: 'ELEVATED', sectors: 'Telecom · Healthcare', region: 'CN',  ttp: 'Supply-chain · ShadowPad' },
     { name: 'FIN7',    level: 'ACTIVE',   sectors: 'Retail · Hospitality', region: 'RU',  ttp: 'Carbanak · BadUSB' },
     { name: 'Lazarus', level: 'MONITOR',  sectors: 'Finance · Crypto',     region: 'KP',  ttp: 'AppleJeus · ZINC' },
@@ -718,6 +729,20 @@
       r: 4 + Math.random() * 3,
       phase: Math.random() * Math.PI * 2,
     }));
+
+    const tooltip = $('#mapTooltip');
+    threatMap.addEventListener('mousemove', (ev) => {
+      const rect = threatMap.getBoundingClientRect();
+      const x = (ev.clientX - rect.left) * (W / rect.width);
+      const y = (ev.clientY - rect.top) * (H / rect.height);
+      const hit = blips.find(b => Math.hypot(b.x - x, b.y - y) < 14);
+      if (!hit) { tooltip.style.display = 'none'; return; }
+      tooltip.style.display = 'block';
+      tooltip.style.left = `${ev.offsetX + 14}px`;
+      tooltip.style.top = `${ev.offsetY + 12}px`;
+      tooltip.innerHTML = `<strong>${hit.a.name}</strong><br>Severity: ${hit.a.severity || hit.a.level}<br>Industries: ${hit.a.industries || hit.a.sectors}<br>Action: ${hit.a.recommendation || 'Prioritize executive briefing and rapid hardening.'}`;
+    });
+    threatMap.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
     function drawMap(ts) {
       ctx.clearRect(0, 0, W, H);
       // Grid

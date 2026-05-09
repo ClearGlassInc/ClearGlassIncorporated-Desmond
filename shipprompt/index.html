@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ShipPrompt — 72-Hour MLOps Deployment & Prompt-Ops Sprint</title>
+<meta name="description" content="A 72-hour done-for-you sprint that turns tangled LLM deployment scripts and scattered prompts into a single audited, version-controlled, prompt-controlled deployment system. Audits from $4,500." />
+<meta name="robots" content="index,follow" />
+<meta property="og:title" content="ShipPrompt — Ship LLM Models & Prompts Like Real Software" />
+<meta property="og:description" content="48-hour audit. 72-hour sprint. Your model deploys, prompt registry, eval harness, and rollback path — done by Friday." />
+<meta property="og:type" content="website" />
+<style>
+  :root {
+    --bg: #07090d;
+    --fg: #e7ecf3;
+    --muted: #8a93a3;
+    --accent: #5cf2c4;
+    --accent-2: #6aa8ff;
+    --card: #0e1218;
+    --border: #1c2230;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 28px 0; border-bottom: 1px solid var(--border); }
+  header .row { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-weight: 700; letter-spacing: -0.02em; font-size: 18px; }
+  .logo span { color: var(--accent); }
+  nav a { margin-left: 24px; color: var(--muted); font-size: 14px; }
+  nav a:hover { color: var(--fg); text-decoration: none; }
+
+  .hero { padding: 80px 0 64px; }
+  .eyebrow { color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
+  h1 { font-size: clamp(36px, 5vw, 60px); line-height: 1.05; letter-spacing: -0.025em;
+    margin: 16px 0 20px; font-weight: 700; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { font-size: 19px; color: var(--muted); max-width: 680px; }
+  .cta-row { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 14px 22px; border-radius: 10px;
+    font-weight: 600; font-size: 15px; transition: transform .08s ease; }
+  .btn:hover { transform: translateY(-1px); text-decoration: none; }
+  .btn-primary { background: var(--accent); color: #001b14; }
+  .btn-secondary { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+  .badge { display: inline-block; padding: 4px 10px; border: 1px solid var(--border);
+    border-radius: 999px; font-size: 12px; color: var(--muted); margin-right: 8px; }
+
+  section { padding: 64px 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 30px; letter-spacing: -0.02em; margin: 0 0 12px; }
+  h2 + p.sub { color: var(--muted); margin: 0 0 32px; max-width: 720px; }
+
+  .pain { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .pain .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .pain .card strong { display: block; margin-bottom: 6px; }
+  .pain .card span { color: var(--muted); font-size: 14px; }
+
+  .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .tier { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 28px; display: flex; flex-direction: column; }
+  .tier h3 { margin: 0 0 6px; font-size: 20px; }
+  .tier .price { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 6px 0 4px; }
+  .tier .price small { color: var(--muted); font-size: 14px; font-weight: 400; }
+  .tier ul { list-style: none; padding: 0; margin: 16px 0 24px; }
+  .tier li { padding: 6px 0; color: var(--muted); font-size: 14px; }
+  .tier li::before { content: "→ "; color: var(--accent); }
+  .tier.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .tier .btn { margin-top: auto; text-align: center; }
+
+  .checklist { columns: 2; column-gap: 36px; }
+  @media (max-width: 720px) { .checklist { columns: 1; } }
+  .checklist h4 { margin: 18px 0 6px; font-size: 14px; color: var(--accent-2);
+    text-transform: uppercase; letter-spacing: 0.08em; break-after: avoid; }
+  .checklist ol { padding-left: 20px; margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+  .checklist li { padding: 3px 0; }
+
+  .faq details { border-top: 1px solid var(--border); padding: 16px 0; }
+  .faq summary { cursor: pointer; font-weight: 600; }
+  .faq p { color: var(--muted); margin: 10px 0 0; }
+
+  footer { padding: 40px 0; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); }
+  footer a { color: var(--muted); }
+  .kbd { font-family: ui-monospace, "SF Mono", Menlo, monospace; background: #0a0d12;
+    border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+  .ribbon { background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #001b14; text-align: center; padding: 8px; font-size: 13px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  Limited to 4 sprints / month · Next slot opens this week · Audit slots: 48-hour turnaround
+</div>
+
+<header>
+  <div class="wrap row">
+    <div class="logo">Ship<span>Prompt</span></div>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#checklist">The 40-point audit</a>
+      <a href="#book" class="btn btn-secondary" style="padding: 8px 14px; font-size: 13px;">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">MLOps · Prompt-Ops · Done by Friday</div>
+    <h1>Ship your LLM models &amp; prompts <em>like real software.</em></h1>
+    <p class="lede">
+      Your team has 1–3 LLM features in production. Deployment is a bash script one person owns.
+      Prompts live in 4 places. Compliance is asking for version history nobody can produce.
+      In 72 hours we turn that into a single audited, version-controlled, prompt-controlled
+      deployment system — with rollback, eval-on-PR, and cost attribution baked in.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#book">Book the $4,500 audit →</a>
+      <a class="btn btn-secondary" href="#checklist">See the 40-point checklist</a>
+    </div>
+    <div style="margin-top: 28px;">
+      <span class="badge">Series A–C AI startups</span>
+      <span class="badge">15–80 engineers</span>
+      <span class="badge">SOC 2 / EU AI Act ready</span>
+    </div>
+  </div>
+</section>
+
+<section id="pain">
+  <div class="wrap">
+    <h2>If three of these are true, you need ShipPrompt.</h2>
+    <p class="sub">We've seen this pattern in every Series A AI startup we've audited.</p>
+    <div class="pain">
+      <div class="card"><strong>Deployment is one person's bash script.</strong><span>Nobody else can ship a model on a Friday night without that person on Slack.</span></div>
+      <div class="card"><strong>Prompts live in 4 places.</strong><span>Code, Notion, a Google Doc, and Slack DMs. Nobody knows which one is canonical.</span></div>
+      <div class="card"><strong>No rollback.</strong><span>The last prompt change tanked quality and the only fix was "remember what it said yesterday."</span></div>
+      <div class="card"><strong>No eval-on-PR.</strong><span>Quality regressions ship to prod and you find out from a customer.</span></div>
+      <div class="card"><strong>Compliance can't sign off.</strong><span>SOC 2, ISO, and EU AI Act all require model + prompt lineage. You don't have it.</span></div>
+      <div class="card"><strong>You're spending $20k+/mo on inference.</strong><span>And you can't tell which prompt version cost what, or which one is worth keeping.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How a 72-hour ShipPrompt sprint works.</h2>
+    <p class="sub">No 6-week procurement. No "platform engineer" hiring loop. We embed, ship, and document.</p>
+    <ol style="font-size: 16px; line-height: 1.9; padding-left: 22px;">
+      <li><strong>Hour 0–4 · Kickoff.</strong> Read access to your repo and infra. We map every model + prompt + deploy path on a single diagram.</li>
+      <li><strong>Hour 4–24 · Instrument.</strong> The <span class="kbd">shipprompt</span> CLI lands in your repo. Every prompt gets ID + version + signature. Every model gets a deploy hook.</li>
+      <li><strong>Day 2 · CI/CD &amp; eval.</strong> GitHub Actions workflow: build → eval → deploy → smoke test → tag. Rollback in one command.</li>
+      <li><strong>Day 3 · Hardening &amp; handoff.</strong> Secret scan, prompt-injection tests, OpenTelemetry hooks, runbook, 60-minute training session. Your team owns it from day 4.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Pricing.</h2>
+    <p class="sub">Three tiers. The audit is the entry point. Most teams convert within the audit call.</p>
+    <div class="tiers">
+      <div class="tier">
+        <h3>Audit</h3>
+        <div class="price">$4,500 <small>/ 48 hours</small></div>
+        <ul>
+          <li>40-point MLOps + Prompt-Ops scan</li>
+          <li>Risk &amp; remediation report (PDF)</li>
+          <li>Loom walkthrough</li>
+          <li>30/60/90 plan with dollar-impact</li>
+          <li>Credited 100% toward Sprint</li>
+        </ul>
+        <a class="btn btn-secondary" href="#book">Book audit →</a>
+      </div>
+      <div class="tier featured">
+        <h3>Sprint</h3>
+        <div class="price">$14,500 <small>/ 72 hours</small></div>
+        <ul>
+          <li>Full implementation, hands-on-keyboard</li>
+          <li>Prompt registry · CI/CD · eval harness · rollback</li>
+          <li>Secret &amp; prompt-injection hardening</li>
+          <li>OpenTelemetry cost + latency attribution</li>
+          <li>Runbook + 60-min team training</li>
+        </ul>
+        <a class="btn btn-primary" href="#book">Book sprint →</a>
+      </div>
+      <div class="tier">
+        <h3>Sprint + Retainer</h3>
+        <div class="price">$14,500 <small>+ $3,500 / mo</small></div>
+        <ul>
+          <li>Everything in Sprint</li>
+          <li>90-day on-call Slack channel</li>
+          <li>Monthly drift review + re-audit</li>
+          <li>Quarterly compliance evidence pack</li>
+          <li>Priority on new model launches</li>
+        </ul>
+        <a class="btn btn-secondary" href="#book">Book retainer →</a>
+      </div>
+    </div>
+    <p style="color: var(--muted); font-size: 14px; margin-top: 24px;">
+      Add-ons: <strong>Prompt-Injection Red Team</strong> (+$5,000) ·
+      <strong>SOC 2 / EU AI Act readiness mapping</strong> (+$6,000) ·
+      <strong>½-day team training</strong> (+$3,500) ·
+      <strong>Enterprise tier</strong> ($28,000) for regulated or 80+ engineer orgs.
+    </p>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="wrap">
+    <h2>The 40-point ShipPrompt audit.</h2>
+    <p class="sub">This is exactly what we run against your repo. The full checklist with scoring is the audit deliverable.</p>
+    <div class="checklist">
+      <h4>Deployment automation</h4>
+      <ol>
+        <li>Single-command deploy</li>
+        <li>One-command rollback</li>
+        <li>Idempotent infra-as-code</li>
+        <li>Pinned model + framework versions</li>
+        <li>Reproducible build from clean checkout</li>
+      </ol>
+      <h4>Prompt registry &amp; versioning</h4>
+      <ol>
+        <li>Prompts stored in Git, not Notion</li>
+        <li>Stable prompt IDs &amp; semantic versions</li>
+        <li>Signed prompt artifacts</li>
+        <li>Diff-able prompt history</li>
+        <li>Prompt → model binding manifest</li>
+      </ol>
+      <h4>CI/CD &amp; eval gates</h4>
+      <ol>
+        <li>Eval suite runs on every PR</li>
+        <li>Quality regression blocks merge</li>
+        <li>Canary &amp; staged rollout</li>
+        <li>Auto-tagging of deploys</li>
+        <li>Required reviewers for prompt PRs</li>
+      </ol>
+      <h4>Observability</h4>
+      <ol>
+        <li>Per-prompt latency + cost metrics</li>
+        <li>Per-model token attribution</li>
+        <li>Trace IDs across model calls</li>
+        <li>Prompt-version tag on every log line</li>
+        <li>SLO + alerting wired</li>
+      </ol>
+      <h4>Security &amp; secrets</h4>
+      <ol>
+        <li>No keys in git history (gitleaks gate)</li>
+        <li>Provider keys scoped + rotated</li>
+        <li>Egress policy on inference workers</li>
+        <li>Prompt-injection test corpus</li>
+        <li>Output filtering / PII guard</li>
+      </ol>
+      <h4>Compliance &amp; audit trail</h4>
+      <ol>
+        <li>Model lineage record</li>
+        <li>Prompt change attribution (who/when/why)</li>
+        <li>Approval workflow for prod prompt changes</li>
+        <li>Retention &amp; deletion policy</li>
+        <li>SOC 2 / EU AI Act evidence export</li>
+      </ol>
+      <h4>Cost controls</h4>
+      <ol>
+        <li>Monthly inference budget &amp; alerts</li>
+        <li>Per-feature cost dashboard</li>
+        <li>Caching layer for deterministic prompts</li>
+        <li>Model-tier routing (cheap → premium)</li>
+        <li>Idle worker shutdown</li>
+      </ol>
+      <h4>Reliability &amp; runbook</h4>
+      <ol>
+        <li>Documented rollback procedure</li>
+        <li>On-call rotation</li>
+        <li>Incident postmortem template</li>
+        <li>Disaster recovery test in last 90 days</li>
+        <li>Vendor-failover plan (OpenAI ↔ Anthropic ↔ self-host)</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="who">
+  <div class="wrap">
+    <h2>Who's behind ShipPrompt.</h2>
+    <p class="sub" style="max-width: 760px;">
+      ShipPrompt is operated by ClearGlass Inc. We combine MLOps, AI automation, and adversarial security
+      engineering — the same stack that powers our Artemis platform. Low-level performance work in
+      C++, large-scale Python &amp; Node.js automation, prompt-injection red-teaming, and investigations-grade
+      audit trails. Most teams hire three people for this. You hire us for 72 hours.
+    </p>
+  </div>
+</section>
+
+<section id="faq" class="faq">
+  <div class="wrap">
+    <h2>FAQ.</h2>
+    <details>
+      <summary>Why not just hire an MLOps engineer?</summary>
+      <p>You should — eventually. A senior MLOps hire is ~4 months and ~$220k loaded. A 72-hour ShipPrompt sprint is a rounding error and gives the eventual hire a clean foundation to own from day one.</p>
+    </details>
+    <details>
+      <summary>What stack do you support?</summary>
+      <p>Python (the default), Node.js / TypeScript, and Go services. Any model provider: OpenAI, Anthropic, Bedrock, Vertex, self-hosted. Any cloud: AWS, GCP, Azure. Any CI: GitHub Actions (preferred), GitLab, Buildkite, CircleCI.</p>
+    </details>
+    <details>
+      <summary>Will you sign an NDA?</summary>
+      <p>Yes. Our default engagement is under mutual NDA. We can also operate read-only against a sanitized fork if needed.</p>
+    </details>
+    <details>
+      <summary>What if 72 hours isn't enough?</summary>
+      <p>The Sprint scope is fixed: prompt registry, CI/CD, eval harness, rollback, hardening, runbook. If your environment needs more (multi-region, on-prem GPU, regulated workloads), we quote the Enterprise tier at $28,000 with a 5–7 day window.</p>
+    </details>
+    <details>
+      <summary>Do we keep the code?</summary>
+      <p>You own everything. The <span class="kbd">shipprompt</span> CLI is MIT-licensed open source. Every artifact lives in your repo from day one.</p>
+    </details>
+    <details>
+      <summary>Can the audit be credited to the sprint?</summary>
+      <p>Yes — 100% of the $4,500 audit fee is credited if you book the Sprint within 14 days.</p>
+    </details>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <h2>Book a slot.</h2>
+    <p class="sub">Two ways to start. Audits begin within 48 hours of payment.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="mailto:hello@clearglassinc.com?subject=ShipPrompt%20Audit%20%E2%80%94%20%244%2C500&body=Company%3A%0ARepo%20access%3A%0APrimary%20pain%3A%0APreferred%20start%20date%3A">Email to book the audit ($4,500)</a>
+      <a class="btn btn-secondary" href="mailto:hello@clearglassinc.com?subject=ShipPrompt%20Sprint%20%E2%80%94%20%2414%2C500">Book the sprint ($14,500)</a>
+    </div>
+    <p style="color: var(--muted); font-size: 13px; margin-top: 18px;">
+      Prefer a call? <a href="mailto:hello@clearglassinc.com?subject=ShipPrompt%20discovery%20call">Request a 20-minute discovery call.</a>
+      All engagements include mutual NDA and a clear statement of work.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    ShipPrompt is operated by ClearGlass Inc. ·
+    <a href="/">clearglassinc.com</a> ·
+    <a href="mailto:hello@clearglassinc.com">hello@clearglassinc.com</a>
+  </div>
+</footer>
+
+</body>
+</html>

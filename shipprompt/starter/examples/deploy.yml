@@ -1,0 +1,125 @@
+# Example GitHub Actions workflow installed by a ShipPrompt sprint.
+# Copy to .github/workflows/shipprompt-deploy.yml in the client repo.
+#
+# Pipeline: validate → diff → eval → manifest → deploy → smoke → tag.
+# Rollback is a single re-run of the `rollback` job with `env` input.
+
+name: ShipPrompt · Deploy
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "prompts/**"
+      - "deploy/**"
+      - "evals/**"
+      - "src/**"
+      - ".github/workflows/shipprompt-deploy.yml"
+  workflow_dispatch:
+    inputs:
+      env:
+        description: "Target environment"
+        required: true
+        default: "staging"
+        type: choice
+        options: [staging, prod]
+      mode:
+        description: "Mode"
+        required: true
+        default: "deploy"
+        type: choice
+        options: [deploy, rollback]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: shipprompt-${{ inputs.env || 'staging' }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate registry
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install pyyaml
+      - run: python shipprompt/starter/cli/shipprompt.py validate
+      - name: Diff prompts vs main
+        if: github.event_name == 'pull_request'
+        run: python shipprompt/starter/cli/shipprompt.py diff origin/main
+
+  eval:
+    name: Eval gate
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install pyyaml
+      - name: Run regression suite
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python shipprompt/starter/cli/shipprompt.py eval --suite regression
+
+  deploy:
+    name: Deploy manifest
+    needs: eval
+    if: inputs.mode != 'rollback'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: ${{ inputs.env || 'staging' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install pyyaml
+      - name: Build & write signed manifest
+        run: python shipprompt/starter/cli/shipprompt.py deploy --env "${{ inputs.env || 'staging' }}"
+      - name: Commit manifest
+        run: |
+          git config user.name "shipprompt[bot]"
+          git config user.email "shipprompt-bot@users.noreply.github.com"
+          git add deploy/manifests
+          git diff --cached --quiet || git commit -m "shipprompt: deploy ${{ inputs.env || 'staging' }} [skip ci]"
+          git push
+      - name: Smoke test
+        run: |
+          # Replace with real prod smoke. Fails fast → triggers rollback.
+          test -f "deploy/manifests/${{ inputs.env || 'staging' }}/current.json"
+
+  rollback:
+    name: Rollback manifest
+    if: inputs.mode == 'rollback'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: ${{ inputs.env }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - run: python shipprompt/starter/cli/shipprompt.py rollback --env "${{ inputs.env }}"
+      - name: Commit rollback
+        run: |
+          git config user.name "shipprompt[bot]"
+          git config user.email "shipprompt-bot@users.noreply.github.com"
+          git add deploy/manifests
+          git diff --cached --quiet || git commit -m "shipprompt: rollback ${{ inputs.env }} [skip ci]"
+          git push

@@ -1,0 +1,45 @@
+# ShipPrompt prompt registry — single source of truth.
+#
+# Every prompt that ships to production MUST appear here with a stable id,
+# semantic version, and a path to its body file. The `shipprompt` CLI
+# content-addresses each body and refuses to deploy if the registry and
+# body file disagree.
+#
+# Versioning rules:
+#   - id: stable, never reused.
+#   - version: semver-ish (MAJOR.MINOR.PATCH). Bump MAJOR for behavior change.
+#   - Once published to prod, a (id, version) pair is IMMUTABLE.
+#     To change the body, bump the version. Do not edit in place.
+#
+# Models reference the snapshot you actually pin in production. No `latest`.
+
+prompts:
+  - id: support.triage.classify
+    version: "1.2.0"
+    path: prompts/support/triage.classify.v1.2.0.txt
+    model: claude-sonnet-4-6
+    description: >
+      Classifies inbound support tickets into one of: billing, technical,
+      account, abuse, other. Used by the triage worker.
+
+  - id: support.triage.classify
+    version: "1.3.0-rc.1"
+    path: prompts/support/triage.classify.v1.3.0-rc.1.txt
+    model: claude-sonnet-4-6
+    description: >
+      Adds explicit handling of partial-refund requests. Behind a feature flag.
+
+  - id: docs.summarize
+    version: "2.0.0"
+    path: prompts/docs/summarize.v2.0.0.txt
+    model: claude-haiku-4-5-20251001
+    description: >
+      Cheap-tier doc summarizer. Routes to Sonnet only on confidence < 0.7.
+
+  - id: redteam.injection.canary
+    version: "1.0.0"
+    path: prompts/redteam/injection.canary.v1.0.0.txt
+    model: claude-haiku-4-5-20251001
+    description: >
+      Canary prompt run against every deploy to detect prompt-injection
+      regressions. Emits a known token; absence pages on-call.

@@ -1,13 +1,27 @@
-name: Deploy static site to GitHub Pages
+name: Deploy GitHub Pages
 
+# Authoritative GitHub Pages deployment workflow.
+# Repo Pages source MUST be set to "GitHub Actions" (Settings → Pages) so the
+# legacy "pages-build-deployment" classic workflow does NOT also run.
 on:
   push:
     branches: ["main"]
     paths-ignore:
-      - "README.md"
-      - "docs/**"
       - "**/*.md"
+      - "docs/**"
+      - "scripts/**"
+      - "bots/**"
+      - "tests/**"
+      - "investors/**"
+      - "marketing/**"
+      - "operations/**"
+      - "prompts/**"
+      - "infra/**"
+      - "runner/**"
+      - ".github/**"
       - ".gitignore"
+      - "pyproject.toml"
+      - "requirements*.txt"
   workflow_dispatch:
 
 permissions:
@@ -16,11 +30,12 @@ permissions:
   id-token: write
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
+    name: Build site artifact
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -30,8 +45,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Build artifact
+      - name: Assemble static site
         run: |
+          set -euo pipefail
           mkdir -p _site
           rsync -av --delete \
             --exclude '.git' \
@@ -44,7 +60,12 @@ jobs:
             --exclude 'marketing' \
             --exclude 'operations' \
             --exclude 'prompts' \
+            --exclude 'infra' \
+            --exclude 'runner' \
+            --exclude '_site' \
+            --exclude 'node_modules' \
             ./ _site/
+          test -f _site/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -52,12 +73,13 @@ jobs:
           path: _site
 
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

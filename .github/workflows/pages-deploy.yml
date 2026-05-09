@@ -6,6 +6,19 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: ["main"]
+    paths:
+      - "**/*.html"
+      - "**/*.css"
+      - "**/*.js"
+      - "**/*.json"
+      - "**/*.xml"
+      - "**/*.txt"
+      - "assets/**"
+      - "images/**"
+      - "scripts/**"
+      - "_config.yml"
+      - "_config.yaml"
+      - ".github/workflows/pages-deploy.yml"
     paths-ignore:
       - "**/*.md"
       - "docs/**"
@@ -30,6 +43,8 @@ permissions:
   id-token: write
 
 concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
   group: pages
   cancel-in-progress: false
 
@@ -49,6 +64,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
+          rsync -av --delete             --exclude '.git'             --exclude '.github'             --exclude 'docs'             --exclude 'scripts'             --exclude 'bots'             --exclude 'tests'             --exclude 'investors'             --exclude 'marketing'             --exclude 'operations'             --exclude 'prompts'             ./ _site/
           rsync -av --delete \
             --exclude '.git' \
             --exclude '.github' \
@@ -73,6 +89,13 @@ jobs:
           path: _site
 
   deploy:
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     timeout-minutes: 10

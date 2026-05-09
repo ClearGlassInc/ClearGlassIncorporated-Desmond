@@ -84,6 +84,21 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 @media(max-width:980px){.nav-links{display:none}.nav-toggle{display:block}}
 @media(max-width:768px){.nav{top:10px;width:calc(100% - 1.25rem);height:68px;padding:0 .9rem}.cursor-glow{display:none}.hero-profile{width:min(72vw,250px);margin-bottom:22px}.hero-domain-line{padding:12px 14px;border-radius:18px}.footer-top{gap:28px}.footer-cols{gap:20px}.footer-col{min-width:90px}.footer-bottom{flex-direction:column;align-items:flex-start}.footer-util{gap:12px}}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}.rv.vis{opacity:1;transform:translateY(0)}
+/* ── CLEARGLASS PREMIUM LOADER ───────────────────────────────────── */
+#cg-loader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#030508;color:#fff;transition:opacity .9s ease,visibility .9s ease}
+#cg-loader.cg-exit{opacity:0;visibility:hidden;pointer-events:none}
+#cg-loader .ambient-glow{position:absolute;width:52vw;height:52vw;max-width:760px;max-height:760px;background:radial-gradient(circle,rgba(0,240,255,.08) 0%,rgba(0,0,0,0) 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:cgPulse 8s infinite alternate ease-in-out;z-index:0}
+@keyframes cgPulse{0%{transform:translate(-50%,-50%) scale(1);opacity:.45}100%{transform:translate(-50%,-50%) scale(1.16);opacity:.95}}
+.cg-loader-inner{position:relative;z-index:1;width:min(92vw,520px);padding:52px 42px;border-radius:22px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08);text-align:center}
+.cg-company{font-size:2rem;font-weight:300;letter-spacing:4px;margin-bottom:8px;background:linear-gradient(to right,#fff,#a3aab8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cg-tagline{font-size:.82rem;text-transform:uppercase;letter-spacing:3px;color:#8892b0;margin-bottom:36px}
+.cg-log{font-family:var(--mono);font-size:.82rem;letter-spacing:.06em;color:#8892b0;min-height:20px;margin-bottom:16px;transition:opacity .25s ease}
+.cg-log-line{display:none}.cg-log-line.cg-vis{display:block}
+.cg-prog-meta{display:flex;justify-content:flex-end;font-family:var(--mono);font-size:.68rem;color:#8ea0bf;margin-bottom:8px}
+.cg-prog-track{width:100%;height:2px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.cg-prog-fill{height:100%;width:0;background:#00f0ff;box-shadow:0 0 12px rgba(0,240,255,.7);transition:width .25s ease}
+@media(max-width:640px){.cg-loader-inner{padding:42px 24px}.cg-company{font-size:1.7rem;letter-spacing:3px}}
+@media (prefers-reduced-motion: reduce){#cg-loader .ambient-glow,.cg-prog-fill,.cg-log{animation:none;transition:none}}
 /* ── CLEARGLASS PREMIUM LOADER — white edition ───────────────────── */
 #cg-loader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:linear-gradient(160deg,#f8faff 0%,#eef5fe 50%,#e6f0fd 100%);color:#0a1628;transition:opacity .7s ease,visibility .7s ease}
 #cg-loader.cg-exit{opacity:0;visibility:hidden;pointer-events:none}
@@ -158,6 +173,21 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 <meta name="msvalidate.01" content="38EA88557DC6D3E51F03FCBF30E42E7F">
 </head>
 <body>
+<!-- ── CLEARGLASS PREMIUM LOADER ─────────────────────────────────── -->
+<div id="cg-loader" aria-hidden="true" role="presentation">
+  <div class="ambient-glow"></div>
+  <div class="cg-loader-inner" id="loaderPanel">
+    <div class="cg-company">ClearGlassInc</div>
+    <div class="cg-tagline">Clarity Is Power</div>
+    <div class="cg-log" id="cgLog">
+      <div class="cg-log-line cg-vis" id="cgL0">Initializing interface</div>
+      <div class="cg-log-line" id="cgL1">Loading secure modules</div>
+      <div class="cg-log-line" id="cgL2">Calibrating visual system</div>
+      <div class="cg-log-line" id="cgL3">Establishing connection</div>
+      <div class="cg-log-line" id="cgL4">Entering ClearGlass</div>
+    </div>
+    <div class="cg-prog-meta"><span id="cgPct">0%</span></div>
+    <div class="cg-prog-track"><div class="cg-prog-fill" id="cgFill"></div></div>
 <!-- ── CLEARGLASS PREMIUM LOADER — white edition ─────────────────── -->
 <div id="cg-loader" role="status" aria-label="ClearGlass Inc. loading">
   <div class="cg-loader-inner">
@@ -325,9 +355,21 @@ document.getElementById('year').textContent=new Date().getFullYear();
 (function(){
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var loader=document.getElementById('cg-loader');
+  var panel=document.getElementById('loaderPanel');
   var fill=document.getElementById('cgFill');
   var pct=document.getElementById('cgPct');
   var lines=['cgL0','cgL1','cgL2','cgL3','cgL4'].map(function(id){return document.getElementById(id)});
+  if(!loader||!fill||!pct||!panel){return}
+  function showLine(i){lines.forEach(function(line,idx){if(line)line.classList.toggle('cg-vis',idx===i)})}
+  if(reduce){fill.style.width='100%';pct.textContent='100%';showLine(lines.length-1);setTimeout(function(){loader.remove()},180);return}
+  var step=0;var total=lines.length;var duration=820;
+  var iv=setInterval(function(){
+    showLine(step);
+    var progress=Math.round(((step+1)/total)*100);
+    fill.style.width=progress+'%';pct.textContent=progress+'%';
+    step++;
+    if(step>=total){clearInterval(iv);setTimeout(function(){loader.classList.add('cg-exit');setTimeout(function(){loader.remove()},920)},460)}
+  },duration);
   if(!loader||!fill||!pct){return}
   if(reduce){
     fill.style.width='100%';pct.textContent='100%';lines.forEach(function(line){if(line)line.classList.add('cg-vis')});

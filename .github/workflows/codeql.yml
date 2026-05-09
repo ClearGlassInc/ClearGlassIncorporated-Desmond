@@ -7,6 +7,42 @@ on:
     branches: ["main"]
   schedule:
     - cron: "22 3 * * 1"
+# CodeQL only analyzes the languages in the matrix below (python and
+# javascript-typescript). Triggering on HTML/YAML edits wastes minutes.
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "**/*.py"
+      - "**/*.js"
+      - "**/*.mjs"
+      - "**/*.cjs"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.jsx"
+      - "requirements*.txt"
+      - "pyproject.toml"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/codeql.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "**/*.py"
+      - "**/*.js"
+      - "**/*.mjs"
+      - "**/*.cjs"
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.jsx"
+      - "requirements*.txt"
+      - "pyproject.toml"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/codeql.yml"
+  schedule:
+    - cron: '15 3 * * 1'
+  workflow_dispatch:
 
 permissions:
   actions: read
@@ -27,6 +63,11 @@ jobs:
       fail-fast: false
       matrix:
         language: ["javascript-typescript", "python"]
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['python', 'javascript-typescript']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -41,3 +82,9 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
+          queries: security-and-quality
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

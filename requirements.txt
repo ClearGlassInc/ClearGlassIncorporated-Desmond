@@ -1,0 +1,5 @@
+# Test tooling
+pytest>=7.4,<10
+
+# Type stubs used during static analysis (optional, no runtime impact)
+# Add runtime dependencies here as the bot layer grows

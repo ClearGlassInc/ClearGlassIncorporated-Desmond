@@ -4,15 +4,63 @@ on:
   workflow_dispatch:
     inputs:
       product_type:
-        description: "Product or service type"
+        description: "Product or service type label"
         required: false
         type: string
       units_sold_per_month:
-        description: "Units sold each month"
+        description: "Units sold per month (integer)"
+        required: false
+        type: string
+      unit_purchase_cost:
+        description: "Unit purchase cost in USD (e.g., 62.50)"
+        required: false
+        type: string
+      shipping_handling_per_unit:
+        description: "Shipping + handling per unit in USD (e.g., 7.80)"
+        required: false
+        type: string
+      storage_cost_per_month:
+        description: "Monthly storage cost in USD (e.g., 2800)"
+        required: false
+        type: string
+      shrinkage_rate:
+        description: "Inventory shrinkage rate as decimal (e.g., 0.025)"
+        required: false
+        type: string
+      reorder_threshold_units:
+        description: "Reorder trigger threshold in units (integer)"
+        required: false
+        type: string
+      customer_count:
+        description: "Total active customer count (integer)"
+        required: false
+        type: string
+      monthly_churn_rate:
+        description: "Monthly churn rate as decimal (e.g., 0.038)"
+        required: false
+        type: string
+      labor_cost_per_hour:
+        description: "Fully loaded labor cost per hour in USD (e.g., 95)"
+        required: false
+        type: string
+      account_mgmt_hours_per_month:
+        description: "Account management hours per month (e.g., 18)"
         required: false
         type: string
       target_profit_margin:
-        description: "Target margin decimal (e.g., 0.35)"
+        description: "Target profit margin as decimal (e.g., 0.35)"
+        required: false
+        type: string
+      service_revenue_per_account:
+        description: "Annual service revenue per account in USD (e.g., 4200)"
+        required: false
+        type: string
+      overhead_rate:
+        description: "Overhead rate as decimal (e.g., 0.18)"
+        required: false
+        type: string
+      fee_preference:
+        description: "Fee model preference: flat | percentage | hybrid"
         required: false
         type: string
   schedule:
@@ -21,38 +69,56 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   operations-finance:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [[ -f requirements.txt ]]; then pip install -r requirements.txt; fi
       - name: Ensure output path exists
         run: mkdir -p operations/output operations/output/archive
-
       - name: Run operations finance bot
         env:
-          PRODUCT_TYPE: ${{ github.event.inputs.product_type || '' }}
-          UNITS_SOLD_PER_MONTH: ${{ github.event.inputs.units_sold_per_month || '' }}
-          TARGET_PROFIT_MARGIN: ${{ github.event.inputs.target_profit_margin || '' }}
+          PRODUCT_TYPE:                  ${{ github.event.inputs.product_type || '' }}
+          UNITS_SOLD_PER_MONTH:          ${{ github.event.inputs.units_sold_per_month || '' }}
+          UNIT_PURCHASE_COST:            ${{ github.event.inputs.unit_purchase_cost || '' }}
+          SHIPPING_HANDLING_PER_UNIT:    ${{ github.event.inputs.shipping_handling_per_unit || '' }}
+          STORAGE_COST_PER_MONTH:        ${{ github.event.inputs.storage_cost_per_month || '' }}
+          SHRINKAGE_RATE:                ${{ github.event.inputs.shrinkage_rate || '' }}
+          REORDER_THRESHOLD_UNITS:       ${{ github.event.inputs.reorder_threshold_units || '' }}
+          CUSTOMER_COUNT:                ${{ github.event.inputs.customer_count || '' }}
+          MONTHLY_CHURN_RATE:            ${{ github.event.inputs.monthly_churn_rate || '' }}
+          LABOR_COST_PER_HOUR:           ${{ github.event.inputs.labor_cost_per_hour || '' }}
+          ACCOUNT_MGMT_HOURS_PER_MONTH:  ${{ github.event.inputs.account_mgmt_hours_per_month || '' }}
+          TARGET_PROFIT_MARGIN:          ${{ github.event.inputs.target_profit_margin || '' }}
+          SERVICE_REVENUE_PER_ACCOUNT:   ${{ github.event.inputs.service_revenue_per_account || '' }}
+          OVERHEAD_RATE:                 ${{ github.event.inputs.overhead_rate || '' }}
+          FEE_PREFERENCE:                ${{ github.event.inputs.fee_preference || '' }}
         run: python bots/operations_finance_bot.py
-
       - name: Commit generated operations output
         run: |
           if [[ -n "$(git status --porcelain -- operations/output)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add operations/output
-            git commit -m "Operations bot: update generated finance model"
+            git commit -m "Operations bot: update generated finance model [skip ci]"
             git push origin HEAD:${{ github.ref_name }}
           else
             echo "No operations output changes to commit."

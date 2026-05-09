@@ -36,3 +36,54 @@ node_modules/
 
 # Archives (build artifacts should not be committed)
 *.zip
+
+# ── IP PROTECTION: secrets & credentials ────────────────────────────────────
+# Never commit API keys, tokens, or credentials.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+secrets/
+secret/
+credentials/
+credentials.json
+service-account*.json
+*_secret*
+*_credentials*
+*-credentials*
+*-secret*
+config/local.*
+config/secrets.*
+
+# ── IP PROTECTION: private prompt variants ───────────────────────────────────
+# Prompts in /prompts/ are already versioned publicly. Any local drafts or
+# unreleased prompt engineering files should be staged here and kept private.
+prompts/private/
+prompts/draft/
+prompts/*.local.md
+prompts/*.secret.md
+
+# ── IP PROTECTION: local LLM / model weights ─────────────────────────────────
+*.gguf
+*.bin
+*.safetensors
+*.ggml
+models/
+
+# ── IP PROTECTION: internal reports & exports ────────────────────────────────
+# Bot output may contain client PII or strategic intelligence.
+marketing/output/private/
+operations/output/private/
+reports/
+exports/
+
+# ── IP PROTECTION: Terraform state (contains infra secrets) ──────────────────
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl

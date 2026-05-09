@@ -19,6 +19,17 @@ on:
       - "**/*.js"
       - "**/*.json"
       - ".github/workflows/site-integrity.yml"
+      - "**/*.html"
+      - "assets/**"
+      - "scripts/site_integrity.py"
+      - "schema.json"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "**/*.html"
+      - "assets/**"
+      - "scripts/site_integrity.py"
+      - "schema.json"
   workflow_dispatch:
 
 permissions:

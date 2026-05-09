@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClearGlass · Elegant Hover Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0c12, #05070a);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+        }
+
+        .clearglass-nav {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-trigger {
+            background: rgba(20, 25, 35, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 10px 28px;
+            border-radius: 100px;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            color: #e8edf5;
+            border: 1px solid rgba(100, 180, 255, 0.2);
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .nav-trigger:hover {
+            border-color: rgba(100, 180, 255, 0.5);
+            background: rgba(25, 32, 45, 0.9);
+            transform: scale(1.02);
+        }
+
+        .nav-trigger::after {
+            content: "▼";
+            font-size: 0.7rem;
+            opacity: 0.6;
+            transition: transform 0.2s;
+        }
+
+        .clearglass-nav:hover .nav-trigger::after {
+            transform: rotate(180deg);
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            width: 680px;
+            background: rgba(13, 17, 23, 0.98);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(70, 130, 200, 0.2);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(100, 180, 255, 0.1);
+            padding: 20px 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .clearglass-nav:hover .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .menu-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .section-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #5f8bff;
+            border-left: 2px solid #5f8bff;
+            padding-left: 10px;
+            margin-bottom: 0;
+        }
+
+        .menu-link {
+            color: #b4c4e0;
+            font-size: 0.85rem;
+            font-weight: 450;
+            padding: 6px 0 6px 12px;
+            border-radius: 8px;
+            transition: all 0.15s;
+            cursor: default;
+            position: relative;
+            display: block;
+        }
+
+        .menu-link:hover {
+            color: white;
+            background: rgba(80, 140, 240, 0.12);
+            transform: translateX(4px);
+        }
+
+        .dropdown-footer {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(80, 140, 240, 0.15);
+            font-size: 0.7rem;
+            color: #6a7f9f;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 760px) {
+            .nav-dropdown {
+                width: 320px;
+                left: 0;
+                transform: translateX(0) translateY(-8px);
+            }
+
+            .clearglass-nav:hover .nav-dropdown {
+                transform: translateX(0) translateY(0);
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="clearglass-nav">
+        <div class="nav-trigger">
+            ClearGlass <span style="opacity:0.7;">▲</span> 2040
+        </div>
+
+        <div class="nav-dropdown">
+            <div class="menu-grid">
+                <div class="menu-section">
+                    <div class="section-title">Vision</div>
+                    <div class="menu-link">Artemis VI</div>
+                    <div class="menu-link">Artemis IV Core</div>
+                    <div class="menu-link">Guardian</div>
+                </div>
+
+                <div class="menu-section">
+                    <div class="section-title">Technology</div>
+                    <div class="menu-link">Threads Kit</div>
+                    <div class="menu-link">SMB Suite</div>
+                    <div class="menu-link">Revenue Engine</div>
+                </div>
+
+                <div class="menu-section">
+                    <div class="section-title">Products</div>
+                    <div class="menu-link">ClearTax AI</div>
+                    <div class="menu-link">Enter the Grid</div>
+                    <div class="menu-link">Founder</div>
+                </div>
+
+                <div class="menu-section">
+                    <div class="section-title">Core</div>
+                    <div class="menu-link">Vision</div>
+                    <div class="menu-link">Technology</div>
+                    <div class="menu-link">Products</div>
+                </div>
+            </div>
+            <div class="dropdown-footer">
+                ClearGlass — closed alpha · enter the grid
+            </div>
+        </div>
+    </div>
+</body>
+</html>

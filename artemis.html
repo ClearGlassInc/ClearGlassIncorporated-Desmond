@@ -3,235 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClearGlassInc | System Start</title>
+  <title>ClearGlassInc Artemis | Intelligence at Mission Speed</title>
+  <meta name="description" content="ClearGlassInc Artemis delivers secure intelligence operations with productized workflows, licensing options, crypto/Web3 integrations, and direct mission support." />
   <style>
     :root {
-      --bg-0: #ffffff;
-      --bg-1: #f8fbff;
-      --bg-2: #f2f7ff;
-      --ink-0: #0f172a;
-      --ink-1: #1e293b;
-      --muted: #475569;
-      --accent: #58b8ff;
-      --accent-soft: rgba(88, 184, 255, 0.2);
-      --panel: rgba(255, 255, 255, 0.72);
-      --panel-fallback: #ffffff;
-      --border: rgba(88, 184, 255, 0.28);
-      --shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+      --bg: #060d1b;
+      --bg-soft: #0d1830;
+      --card: #101f3f;
+      --text: #e7eeff;
+      --muted: #a9b6d8;
+      --line: rgba(124, 156, 255, 0.25);
+      --accent: #57a5ff;
+      --accent-2: #7ce3cf;
     }
-
     * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      height: 100%;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-      color: var(--ink-0);
-      background: linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 55%, var(--bg-2) 100%);
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, #081127 42%, var(--bg-soft) 100%);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-x: hidden;
     }
-
-    .loader-overlay {
-      position: fixed;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      padding: 1.25rem;
-      z-index: 9999;
-      transition: opacity 350ms ease, visibility 350ms ease;
+    .page {
+      width: min(1080px, 100% - 2rem);
+      margin: 0 auto;
+      padding: 1rem 0 3rem;
     }
-
-    .loader-overlay.is-hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .panel {
-      width: min(92vw, 460px);
-      border-radius: 20px;
-      background: var(--panel-fallback);
-      border: 1px solid rgba(255,255,255,0.65);
-      box-shadow: var(--shadow), 0 0 0 1px var(--border);
-      padding: 1.5rem 1.2rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) {
-      .panel {
-        background: var(--panel);
-        -webkit-backdrop-filter: blur(8px) saturate(1.1);
-        backdrop-filter: blur(8px) saturate(1.1);
-      }
-    }
-
-    .panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 20%, rgba(88,184,255,0.08) 50%, transparent 80%);
-      pointer-events: none;
-    }
-
-    .wordmark {
-      letter-spacing: 0.2rem;
-      font-weight: 800;
-      color: var(--ink-1);
-      text-transform: uppercase;
-      font-size: clamp(1rem, 2.8vw, 1.25rem);
-    }
-
-    .tagline {
-      margin-top: 0.5rem;
-      color: var(--ink-0);
-      font-weight: 700;
-      font-size: 0.86rem;
-      letter-spacing: 0.08rem;
-      text-transform: uppercase;
-    }
-
-    .pulse-ring {
-      width: 64px;
-      height: 64px;
-      margin: 1.2rem auto;
-      border-radius: 999px;
-      border: 1.5px solid var(--accent-soft);
-      display: grid;
-      place-items: center;
-      animation: pulse 1.8s ease-in-out infinite;
-    }
-
-    .pulse-ring::after {
-      content: "";
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(88,184,255,0.95), rgba(88,184,255,0.28));
-      box-shadow: 0 0 18px rgba(88,184,255,0.35);
-    }
-
-    .track {
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.08);
-      overflow: hidden;
-      margin: 0.7rem auto 0.85rem;
-    }
-
-    .fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #89d2ff 0%, #58b8ff 100%);
-      transition: width 260ms linear;
-      box-shadow: 0 0 12px rgba(88,184,255,0.4);
-    }
-
-    .status {
-      margin-top: 0.55rem;
-      font-size: 0.82rem;
-      color: var(--muted);
-      min-height: 1.2rem;
-    }
-
-    main {
-      min-height: 100%;
-      display: grid;
-      place-items: center;
-      opacity: 0;
-      transition: opacity 350ms ease;
-      padding: 2rem;
-    }
-
-    main.is-visible { opacity: 1; }
-
     .hero {
-      max-width: 720px;
+      min-height: 80vh;
+      display: grid;
+      align-content: center;
+      justify-items: center;
       text-align: center;
+      gap: 1rem;
+      padding: 2.5rem 0 1rem;
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      .loader-overlay, .fill, main { transition: none; }
-      .pulse-ring { animation: none; }
+    .eyebrow { color: var(--accent-2); letter-spacing: .12em; font-size: .77rem; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(2rem, 9vw, 4.2rem); line-height: 1.1; }
+    .lead { max-width: 62ch; margin: 0 auto; color: var(--muted); font-size: clamp(1rem, 3.8vw, 1.2rem); }
+    .cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      text-decoration: none; color: #061026; background: linear-gradient(135deg, var(--accent), #8bb7ff);
+      font-weight: 700; padding: .85rem 1.3rem; border-radius: 999px;
+      border: 0; margin-top: .8rem;
     }
+    .grid { display: grid; gap: .9rem; margin-top: 2rem; }
+    .card {
+      background: linear-gradient(165deg, rgba(16,31,63,.95), rgba(12,25,52,.95));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+    .card h2 { margin: 0 0 .45rem; font-size: 1.2rem; }
+    .card p { margin: 0; color: var(--muted); }
+    .contact a { color: var(--accent-2); text-decoration: none; }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.04); opacity: 0.92; }
+    @media (min-width: 760px) {
+      .page { width: min(1120px, 100% - 3rem); padding-top: 1.25rem; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+      .card.product { grid-column: 1 / -1; }
     }
   </style>
 </head>
 <body>
-  <div id="loader" class="loader-overlay" role="status" aria-busy="true" aria-live="polite" aria-atomic="true">
-    <section class="panel" aria-label="ClearGlassInc secure initialization panel">
-      <div class="wordmark">ClearGlassInc</div>
-      <div class="tagline">Clarity Is Power</div>
-      <div class="pulse-ring" aria-hidden="true"></div>
-
-      <div class="track" aria-hidden="true">
-        <div id="fill" class="fill"></div>
-      </div>
-      <p id="status" class="status">Initializing interface…</p>
+  <main class="page">
+    <section class="hero" aria-labelledby="artemis-title">
+      <p class="eyebrow">ClearGlassInc Artemis</p>
+      <h1 id="artemis-title">Mission-ready intelligence operations without the noise.</h1>
+      <p class="lead">ClearGlassInc Artemis fuses operations data, analyst workflows, and AI-assisted reasoning into one secure command surface so teams can triage faster, decide with confidence, and act at machine speed.</p>
+      <a class="cta" href="mailto:Desmondotieno@icloud.com">Book an Artemis Briefing →</a>
     </section>
-  </div>
 
-  <main id="content" aria-hidden="true">
-    <section class="hero">
-      <h1>ClearGlassInc Artemis</h1>
-      <p>Homepage content loads here. Replace this with your real landing content.</p>
+    <section class="grid" aria-label="Artemis details">
+      <article class="card product">
+        <h2>Product</h2>
+        <p>Artemis unifies alert triage, entity correlation, mission timelines, and action packaging in a mobile-safe interface that stays fast under real operational load.</p>
+      </article>
+      <article class="card">
+        <h2>Licensing</h2>
+        <p>Flexible licensing for pilot teams, enterprise SOC programs, and coalition deployments, with onboarding playbooks and support SLAs aligned to mission tempo.</p>
+      </article>
+      <article class="card">
+        <h2>Crypto / Web3</h2>
+        <p>Native support for wallet-linked identity proofs, on-chain event enrichment, and verifiable audit evidence for high-trust collaboration across distributed networks.</p>
+      </article>
+      <article class="card contact">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:Desmondotieno@icloud.com">Desmondotieno@icloud.com</a><br/>Site: <a href="https://clearglassinc.github.io/">clearglassinc.github.io</a></p>
+      </article>
     </section>
   </main>
-
-  <script>
-    (() => {
-      const statusLines = [
-        'Initializing interface…',
-        'Loading secure modules…',
-        'Calibrating visual system…',
-        'Entering ClearGlass…'
-      ];
-
-      const loader = document.getElementById('loader');
-      const fill = document.getElementById('fill');
-      const status = document.getElementById('status');
-      const content = document.getElementById('content');
-
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const totalDuration = reducedMotion ? 750 : 1550;
-      const start = performance.now();
-      let index = 0;
-
-      function tick(now) {
-        const elapsed = now - start;
-        const p = Math.min(1, elapsed / totalDuration);
-        fill.style.width = `${Math.round(p * 100)}%`;
-
-        const nextIndex = Math.min(statusLines.length - 1, Math.floor(p * statusLines.length));
-        if (nextIndex !== index) {
-          index = nextIndex;
-          status.textContent = statusLines[index];
-        }
-
-        if (p < 1) return requestAnimationFrame(tick);
-
-        loader.setAttribute('aria-busy', 'false');
-        content.setAttribute('aria-hidden', 'false');
-        content.classList.add('is-visible');
-        loader.classList.add('is-hidden');
-      }
-
-      const fallbackTimeout = setTimeout(() => requestAnimationFrame(tick), 120);
-      window.addEventListener('load', () => {
-        clearTimeout(fallbackTimeout);
-        requestAnimationFrame(tick);
-      }, { once: true });
-    })();
-  </script>
-
-  <!--
-  Integration notes:
-  1) Inline overlay mode (recommended): copy only .loader-overlay markup into index.html, keep your existing <main> content.
-  2) Standalone mode: keep this file as loader.html and redirect to index.html after load in JS if desired.
-  3) For GitHub Pages, this file is static and requires no build tooling.
-  -->
 </body>
 </html>

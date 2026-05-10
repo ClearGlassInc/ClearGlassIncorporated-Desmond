@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#071019" />
+  <title>ClearGlass Inc. — Transparent Intelligence</title>
+  <style>
+    :root{
+      --bg:#060b12;
+      --bg2:#09131c;
+      --card: rgba(10, 18, 28, .62);
+      --card-strong: rgba(10, 18, 28, .78);
+      --line: rgba(255,255,255,.11);
+      --line-strong: rgba(124,245,255,.18);
+      --text:#edf4ff;
+      --muted: rgba(237,244,255,.68);
+      --muted2: rgba(237,244,255,.48);
+      --accent:#58e6e0;
+      --accent2:#7cf5ff;
+      --shadow: 0 24px 80px rgba(0,0,0,.48);
+      --radius: 28px;
+      --radius-sm: 20px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(88,230,224,.14), transparent 50%),
+        radial-gradient(900px 700px at 85% 20%, rgba(124,245,255,.10), transparent 42%),
+        radial-gradient(900px 800px at 50% 110%, rgba(98,140,255,.08), transparent 48%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .noise:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.06;
+      mix-blend-mode:soft-light;
+      background-image:
+        linear-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.9) 1px, transparent 1px);
+      background-size: 3px 3px, 3px 3px;
+      z-index:0;
+    }
+
+    .bg-orb{position:fixed;border-radius:999px;filter: blur(40px);opacity:.35;pointer-events:none;z-index:0;animation: drift 16s ease-in-out infinite alternate;}
+    .orb-1{width:240px;height:240px;left:-90px;top:10%;background:rgba(88,230,224,.18)}
+    .orb-2{width:320px;height:320px;right:-140px;top:18%;background:rgba(124,245,255,.10);animation-duration:22s}
+    .orb-3{width:260px;height:260px;left:20%;bottom:-90px;background:rgba(102,120,255,.10);animation-duration:18s}
+    @keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(18px,-20px,0) scale(1.08)}}
+    main{position:relative;z-index:1;width:min(var(--max), calc(100% - 28px));margin:0 auto;padding: 18px 0 38px;}
+    .shell{display:grid;gap:18px;}
+    .glass{position:relative;overflow:hidden;border:1px solid var(--line);background: var(--card);backdrop-filter: blur(18px) saturate(150%);-webkit-backdrop-filter: blur(18px) saturate(150%);border-radius: var(--radius);box-shadow: var(--shadow);transform: translateY(18px);opacity:0;transition: transform .9s cubic-bezier(.2,.8,.2,1), opacity .9s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease;}
+    .glass.in{transform: translateY(0);opacity:1;}
+    .glass:hover{border-color: var(--line-strong);box-shadow: 0 26px 90px rgba(0,0,0,.56);}
+    .glass::before{content:"";position:absolute;inset:0;background: linear-gradient(135deg, rgba(255,255,255,.08), transparent 32%, transparent 68%, rgba(124,245,255,.05));pointer-events:none;}
+    .topbar{padding:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;min-height: 96px;}
+    .brand{display:flex;align-items:center;gap:14px;min-width:0;}
+    .mark{width:52px;height:52px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(88,230,224,.05));display:grid;place-items:center;font-weight:700;letter-spacing:.14em;color:var(--text);box-shadow: inset 0 1px 0 rgba(255,255,255,.07);}
+    .brand h1{margin:0;font-size:1.08rem;line-height:1.1;letter-spacing:-.02em;}
+    .brand p{margin:.35rem 0 0;font-size:.78rem;letter-spacing:.32em;color:var(--muted2);text-transform:uppercase;}
+    .iconbtn{width:48px;height:48px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background: rgba(255,255,255,.04);color:var(--text);display:grid;place-items:center;}
+    .navgrid{padding:18px;display:grid;gap:14px;}.navrow{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;}
+    .navlinks{display:flex;flex-wrap:wrap;gap:10px 22px;color:var(--muted);font-size:1.04rem;}.navlinks span{position:relative;padding:10px 0;}
+    .download{appearance:none;border:none;border-radius:999px;padding:14px 24px;font-weight:700;font-size:1rem;background: linear-gradient(135deg, var(--accent), var(--accent2));color:#041017;box-shadow: 0 12px 30px rgba(88,230,224,.25);}
+    .hero{padding:22px 20px 20px;min-height: 760px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;}
+    .eyebrow{margin:0 0 18px;color:var(--muted2);letter-spacing:.42em;text-transform:uppercase;font-size:.77rem;}
+    .hero h2{margin:0;font-size: clamp(3.1rem, 10vw, 6.5rem);line-height:.94;letter-spacing:-.06em;max-width: 10ch;text-wrap: balance;}
+    .hero p{margin:16px 0 0;max-width: 30ch;color:var(--muted);font-size:1rem;line-height:1.65;}
+    .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;align-items:center;}
+    .primary,.secondary{border-radius:999px;padding:16px 22px;min-width:154px}
+    .primary{border:none;font-weight:800;color:#031218;background:linear-gradient(135deg, #8bfff8, #53d7ff)}
+    .secondary{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.03);color:var(--text);font-weight:700}
+    .module{margin-top:18px;display:grid;gap:16px;}.statlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+    .stat{padding:16px;border-radius:22px;background: var(--card-strong);border:1px solid rgba(255,255,255,.09);}
+    .stat .k{display:block;color:var(--muted2);font-size:.76rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:10px;}
+    .stat .v{display:block;font-size:1.02rem;line-height:1.45;color:var(--text);}
+    .footer{padding:16px 18px 18px;display:flex;justify-content:space-between;gap:14px;align-items:center;color:var(--muted2);font-size:.84rem;}
+    .pill{border:1px solid rgba(124,245,255,.14);background: rgba(124,245,255,.06);padding:10px 14px;border-radius:999px;color:var(--text);letter-spacing:.08em;}
+    @media (min-width: 860px){main{padding:28px 0 44px}.shell{grid-template-columns:1.05fr .95fr;grid-template-areas:"top top" "hero side" "footer footer"}.topbar{grid-area:top}.hero{grid-area:hero;min-height:740px;padding:30px}.side{grid-area:side;display:grid;align-content:start;gap:18px}.footer{grid-area:footer}.navgrid{padding:24px}.statlist{grid-template-columns:1fr}}
+    @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}.glass{opacity:1;transform:none}.bg-orb{display:none}}
+  </style>
+</head>
+<body class="noise">
+  <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
+  <main><div class="shell">
+      <section class="glass topbar reveal"><div class="brand"><div class="mark">CG</div><div><h1>ClearGlass Inc.</h1><p>Transparent Intelligence</p></div></div><button class="iconbtn" aria-label="Open menu">☰</button></section>
+      <section class="glass hero reveal"><div><p class="eyebrow">ClearGlass Artemis · Mission Command Layer</p><h2>Command Surface for stable, mission-grade intelligence operations.</h2><p>A premium control experience for advanced teams who need clarity, precision, and confidence in every operation.</p><div class="cta"><button class="primary">Get Access</button><button class="secondary">View Blueprint</button></div></div><div class="module"><div class="statlist"><div class="stat"><span class="k">Mode</span><span class="v">High-trust command interface</span></div><div class="stat"><span class="k">Signal</span><span class="v">Transparent intelligence operations</span></div><div class="stat"><span class="k">Core</span><span class="v">AI-native workflow architecture</span></div><div class="stat"><span class="k">Focus</span><span class="v">Cybersecurity, automation, control</span></div></div></div></section>
+      <aside class="side"><section class="glass navgrid reveal"><div class="navrow"><div class="navlinks" aria-label="Primary navigation"><span>Home</span><span>Artemis VI</span><span>Command Surface</span><span>Operations Blueprint</span></div><button class="download">Download</button></div></section><section class="glass navgrid reveal"><p class="eyebrow">System posture</p><div class="statlist"><div class="stat"><span class="k">Layer</span><span class="v">Elegant glass depth</span></div><div class="stat"><span class="k">Motion</span><span class="v">Subtle cinematic reveal</span></div><div class="stat"><span class="k">Accent</span><span class="v">Cyan-luminous precision</span></div><div class="stat"><span class="k">Experience</span><span class="v">Mobile-first and responsive</span></div></div></section></aside>
+      <footer class="glass footer reveal"><span>ClearGlass Inc. — operating with transparent intelligence</span><span class="pill">Elite UI</span></footer>
+  </div></main>
+  <script>
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('in'), i * 90);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

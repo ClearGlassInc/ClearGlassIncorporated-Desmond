@@ -1,293 +1,183 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClearGlass Guardian | ClearGlassInc Artemis Command Interface</title>
-  <meta name="description" content="ClearGlass Guardian is a premium intelligence command interface for secure, AI-native operations." />
-  <meta name="theme-color" content="#04070d" />
-  <link rel="canonical" href="https://clearglassinc.github.io/guardian.html" />
-
-  <meta property="og:title" content="ClearGlass Guardian | ClearGlassInc Artemis Command Interface" />
-  <meta property="og:description" content="Elite intelligence dashboard aesthetics with enterprise-grade execution controls." />
-  <meta property="og:url" content="https://clearglassinc.github.io/guardian.html" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ClearGlass Guardian | ClearGlassInc Artemis Command Interface" />
-  <meta name="twitter:description" content="A cinematic, audited control layer for founders, operators, and security teams." />
-  <meta name="twitter:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEGIS-7 Sentinel Ultra | Advanced Security Dashboard</title>
   <style>
     :root {
-      --bg-0: #04070d;
-      --bg-1: #070b14;
-      --bg-2: #0d1623;
-      --glass: rgba(16, 25, 39, 0.54);
-      --glass-strong: rgba(14, 22, 35, 0.72);
-      --line: rgba(155, 212, 225, 0.22);
-      --text-primary: #edf4ff;
-      --text-muted: #9eb0c7;
-      --accent: #4ec8d0;
-      --accent-soft: rgba(78, 200, 208, 0.32);
-      --radius: 22px;
-      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --bg: #050816;
+      --panel: rgba(10, 18, 40, 0.85);
+      --line: rgba(120, 180, 255, 0.18);
+      --text: #e8f2ff;
+      --muted: #9bb2d1;
+      --cyan: #5ee7ff;
+      --blue: #4d7cff;
+      --green: #57f287;
+      --yellow: #ffd166;
+      --red: #ff5c7a;
+      --shadow: 0 0 30px rgba(77, 124, 255, 0.4);
     }
-
-    * { box-sizing: border-box; }
-
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
-      color: var(--text-primary);
-      background:
-        radial-gradient(78rem 42rem at 92% -8%, rgba(78, 200, 208, 0.1), transparent 56%),
-        radial-gradient(60rem 36rem at 8% 14%, rgba(129, 151, 255, 0.11), transparent 52%),
-        linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 38%, var(--bg-2) 100%);
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.035) 0.6px, transparent 0.6px);
-      background-size: 3px 3px;
-      opacity: 0.35;
-      mix-blend-mode: soft-light;
-      z-index: 1;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: -30% -20%;
-      background: conic-gradient(from 20deg at 50% 50%, rgba(78, 200, 208, 0.12), transparent 28%, rgba(124, 110, 241, 0.08), transparent 68%, rgba(78, 200, 208, 0.1));
-      filter: blur(70px);
-      opacity: 0.45;
-      z-index: 0;
-      animation: drift 24s linear infinite alternate;
-    }
-
-    @keyframes drift {
-      from { transform: translate3d(-2%, -1%, 0) rotate(0deg); }
-      to { transform: translate3d(2%, 2%, 0) rotate(6deg); }
-    }
-
-    .shell {
-      position: relative;
-      z-index: 2;
-      width: min(1180px, calc(100% - 2rem));
-      margin: 1.1rem auto 3rem;
-    }
-
-    .glass {
-      background: linear-gradient(155deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01) 48%), var(--glass);
-      border: 1px solid var(--line);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 18px 42px rgba(0, 8, 20, 0.45);
-      backdrop-filter: blur(22px) saturate(135%);
-      -webkit-backdrop-filter: blur(22px) saturate(135%);
-      border-radius: var(--radius);
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.9rem 1rem;
-    }
-
-    .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: inherit; }
-    .logo {
-      width: 2.35rem; height: 2.35rem; border-radius: 0.85rem;
-      display: grid; place-items: center; font-size: 0.67rem; letter-spacing: .24em; font-weight: 700;
-      border: 1px solid rgba(255,255,255,.25); background: rgba(6, 12, 20, .72);
-    }
-    .eyebrow { text-transform: uppercase; letter-spacing: .2em; color: var(--text-muted); font-size: .65rem; margin: 0; }
-    .brand-name { margin: .15rem 0 0; font-size: .95rem; font-weight: 600; }
-
-    .nav-links { display: flex; gap: .35rem; flex-wrap: wrap; }
-    .nav-links a {
-      text-decoration: none; color: #d0d9ea; font-size: .84rem; letter-spacing: .03em;
-      padding: .54rem .82rem; border-radius: 999px; border: 1px solid transparent;
-      transition: .35s var(--ease);
-    }
-    .nav-links a:hover { border-color: var(--line); background: rgba(255,255,255,.04); color: #fff; }
-
-    .cta-pill {
-      background: linear-gradient(145deg, #72dce3, #35abb7);
-      color: #032026 !important;
-      font-weight: 700;
-      box-shadow: 0 8px 26px rgba(78, 200, 208, 0.35);
-    }
-
-    .hero {
-      margin-top: .95rem;
-      padding: clamp(1.4rem, 3.5vw, 2.6rem);
-      background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)), var(--glass-strong);
-      position: relative;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
       overflow: hidden;
+      height: 100vh;
     }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 32rem; height: 32rem;
-      right: -24%; top: -45%;
-      background: radial-gradient(circle at center, rgba(78, 200, 208, 0.28), rgba(78, 200, 208, 0) 64%);
-      filter: blur(14px);
+    header {
+      background: rgba(10,18,40,0.95);
+      border-bottom: 1px solid var(--cyan);
+      padding: 12px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
     }
-
-    h1 {
-      font-family: Manrope, Inter, sans-serif;
-      font-size: clamp(2rem, 6vw, 4.9rem);
-      line-height: .94;
-      letter-spacing: -.04em;
-      max-width: 14ch;
-      margin: .65rem 0 0;
+    .logo { font-size: 22px; font-weight: 900; letter-spacing: 3px; color: var(--cyan); text-shadow: 0 0 15px var(--cyan); }
+    .status {
+      display: flex;
+      gap: 20px;
+      align-items: center;
     }
-
-    .hero-copy {
-      margin-top: 1.15rem;
-      max-width: 64ch;
-      color: #c4d4e6;
-      font-size: clamp(.99rem, 1.7vw, 1.16rem);
-      line-height: 1.75;
-    }
-
-    .hero-actions { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.5rem; }
-    .btn {
-      text-decoration: none;
-      border-radius: 12px;
-      padding: .83rem 1.1rem;
-      font-weight: 600;
-      font-size: .92rem;
-      border: 1px solid var(--line);
-      transition: transform .32s var(--ease), box-shadow .34s var(--ease), background .34s var(--ease);
-    }
-    .btn.primary { background: linear-gradient(150deg, #74dce3, #33a8b4); color: #042028; border-color: transparent; }
-    .btn.secondary { color: #c9d8ea; background: rgba(255,255,255,.02); }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(78, 200, 208, 0.28); }
-
-    .grid {
-      margin-top: 1rem;
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); animation: pulse 2s infinite; }
+    main {
       display: grid;
-      gap: .8rem;
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: 280px 1fr 280px;
+      height: calc(100vh - 60px);
+      padding: 20px;
+      gap: 20px;
     }
-
-    .card {
-      padding: 1rem;
-      border-radius: 18px;
-      background: linear-gradient(140deg, rgba(255,255,255,.03), rgba(255,255,255,.005)), var(--glass);
+    .sidebar, .right-panel {
+      background: var(--panel);
+      border-radius: 12px;
       border: 1px solid var(--line);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 10px 28px rgba(3, 7, 16, 0.38);
-      transition: transform .36s var(--ease), border-color .36s var(--ease), box-shadow .36s var(--ease);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      overflow-y: auto;
     }
-    .card:hover { transform: translateY(-4px); border-color: rgba(78, 200, 208, 0.42); box-shadow: 0 14px 36px rgba(78, 200, 208, .14); }
-
-    .label { font-size: .69rem; letter-spacing: .18em; color: var(--text-muted); text-transform: uppercase; margin: 0 0 .45rem; }
-    .stat { font-family: Manrope, Inter, sans-serif; font-size: clamp(1.4rem, 3vw, 2.2rem); margin: .18rem 0 .35rem; letter-spacing: -.03em; }
-    .muted { color: #b7c7db; line-height: 1.55; font-size: .92rem; margin: 0; }
-
-    .span-4 { grid-column: span 4; }
-    .span-6 { grid-column: span 6; }
-    .span-8 { grid-column: span 8; }
-
-    .module-title { margin: 0 0 .35rem; font-family: Manrope, Inter, sans-serif; font-size: 1.3rem; letter-spacing: -.02em; }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px) scale(.992);
-      filter: blur(6px);
-      animation: reveal .85s var(--ease) forwards;
+    .center {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
     }
-    .d1 { animation-delay: .08s; } .d2 { animation-delay: .16s; } .d3 { animation-delay: .24s; } .d4 { animation-delay: .32s; } .d5 { animation-delay: .4s; }
-
-    @keyframes reveal {
-      to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    .card {
+      background: var(--panel);
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
     }
-
-    @media (max-width: 900px) {
-      .span-4, .span-6, .span-8 { grid-column: 1 / -1; }
-      .topbar { align-items: flex-start; flex-direction: column; }
-      .nav-links { width: 100%; }
-      .nav-links a { flex: 1 1 auto; text-align: center; min-height: 44px; display: grid; place-items: center; }
-      .hero-actions .btn { min-height: 44px; display: inline-grid; place-items: center; }
+    .card h2 { font-size: 14px; color: var(--cyan); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .threat {
+      font-size: 48px;
+      font-weight: 900;
+      text-align: center;
+      color: var(--red);
+      text-shadow: 0 0 20px var(--red);
     }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .alert { padding: 10px; border-left: 4px solid var(--red); background: rgba(255,92,122,0.1); margin-bottom: 8px; font-size: 13px; }
+    .live { animation: flicker 1.5s infinite alternate; }
+    @keyframes pulse { 0%{opacity:0.4} 100%{opacity:1} }
+    @keyframes flicker { 0%{opacity:1} 100%{opacity:0.6} }
+    canvas { width:100%; height:240px; }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header class="glass topbar reveal d1">
-      <a href="index.html" class="brand" aria-label="ClearGlass home">
-        <div class="logo">CG</div>
-        <div>
-          <p class="eyebrow">ClearGlassInc Artemis</p>
-          <p class="brand-name">Guardian Command Interface</p>
+  <header>
+    <div class="logo">AEGIS-7<span style="color:#57f287">SENTINEL</span></div>
+    <div class="status">
+      <span>SECURE</span><span class="dot"></span>
+      <span>QUANTUM SHIELD ACTIVE</span>
+      <span id="time" style="font-size:13px; color:var(--muted);"></span>
+    </div>
+  </header>
+  <main>
+    <!-- LEFT -->
+    <div class="sidebar">
+      <h2>System Nodes</h2>
+      <div class="grid">
+        <div class="card"><div style="color:var(--green);font-size:28px">142</div><div style="font-size:11px;color:var(--muted)">ONLINE</div></div>
+        <div class="card"><div style="color:var(--yellow);font-size:28px">7</div><div style="font-size:11px;color:var(--muted)">COMPROMISED</div></div>
+      </div>
+      <h2 style="margin-top:30px">Network Topology</h2>
+      <canvas id="net"></canvas>
+    </div>
+
+    <!-- CENTER -->
+    <div class="center">
+      <div class="card" style="text-align:center">
+        <h2>Global Threat Level</h2>
+        <div id="threat" class="threat">CRITICAL</div>
+        <div style="color:var(--red);font-size:13px;margin-top:8px">89% • 3.2s AGO</div>
+      </div>
+
+      <div class="card">
+        <h2>Live Sentinel Feed</h2>
+        <div id="feed" style="height:240px;overflow-y:auto;font-size:13px;line-height:1.5;color:var(--muted)"></div>
+      </div>
+
+      <div class="card">
+        <h2>AI Prediction</h2>
+        <div style="display:flex;justify-content:space-between;align-items:end">
+          <div style="font-size:42px;color:var(--cyan)">92%</div>
+          <div style="text-align:right">Next breach prevented in<br><span style="color:var(--green)">17s</span></div>
         </div>
-      </a>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="#mission">Mission Layer</a>
-        <a href="#modules">System Modules</a>
-        <a href="downloads/CLEARGLASS_GUARDIAN_v5.0.ps1" class="cta-pill">Deploy Package</a>
-      </nav>
-    </header>
+      </div>
+    </div>
 
-    <main>
-      <section id="mission" class="hero glass reveal d2">
-        <p class="eyebrow">Enterprise-grade intelligence surface</p>
-        <h1>Precision intelligence operations at machine speed, with human authority intact.</h1>
-        <p class="hero-copy">
-          ClearGlass Guardian is engineered for founders, operators, and security teams that require AI-native awareness without sacrificing policy, provenance, or execution discipline.
-          Every insight, recommendation, and action route is designed as part of one coherent control architecture.
-        </p>
-        <div class="hero-actions">
-          <a class="btn primary" href="downloads/CLEARGLASS_GUARDIAN_v5.0.ps1">Launch Guardian Runtime</a>
-          <a class="btn secondary" href="artemis.html">View Artemis Stack</a>
-        </div>
-      </section>
+    <!-- RIGHT -->
+    <div class="right-panel">
+      <h2>Active Alerts <span class="live" style="color:var(--red);font-size:11px">LIVE</span></h2>
+      <div id="alerts"></div>
+      <h2 style="margin-top:30px">Uptime</h2>
+      <div style="font-size:52px;color:var(--green);font-weight:900">99.997%</div>
+      <div style="font-size:11px;color:var(--muted)">14d 7h 42m</div>
+    </div>
+  </main>
 
-      <section id="modules" class="grid">
-        <article class="card span-4 reveal d2">
-          <p class="label">Live triage latency</p>
-          <p class="stat">Sub-2s</p>
-          <p class="muted">Fast-path analysis pipelines preserve operational tempo during active mission windows.</p>
-        </article>
-        <article class="card span-4 reveal d3">
-          <p class="label">Execution controls</p>
-          <p class="stat" style="color: var(--accent);">100% approval gate</p>
-          <p class="muted">All operationally significant actions require authenticated, policy-scoped human authorization.</p>
-        </article>
-        <article class="card span-4 reveal d4">
-          <p class="label">Provenance integrity</p>
-          <p class="stat">Immutable lineage</p>
-          <p class="muted">Model versioning, prompt hash, source traces, and decision context remain audit-ready.</p>
-        </article>
+  <script>
+    // Time
+    setInterval(()=>{ document.getElementById('time').textContent = new Date().toLocaleTimeString('en-US',{hour12:false}) },1000);
 
-        <article class="card span-8 reveal d3">
-          <p class="label">Mission architecture</p>
-          <h2 class="module-title">Coordinated modules, one command language</h2>
-          <p class="muted">Ingest, correlate, recommend, and execute modules share identical spacing, borders, and interaction rhythm so operators can move instantly between workflows without cognitive friction.</p>
-        </article>
+    // Fake feed
+    const feed = document.getElementById('feed');
+    const messages = ["Quantum anomaly detected → neutralized","DDoS vector blocked at edge node","Zero-day signature matched","Orbital relay secure","Biometric ghosting scan clean"];
+    setInterval(()=>{ feed.innerHTML += `<div style="margin-bottom:4px">› ${messages[Math.floor(Math.random()*messages.length)]}</div>`; feed.scrollTop=9999; },1200);
 
-        <article class="card span-4 reveal d5">
-          <p class="label">Call to action</p>
-          <h2 class="module-title">Ready for coalition-scale operations?</h2>
-          <p class="muted" style="margin-bottom: .9rem;">Activate the ClearGlass Guardian package and align your teams on an AI-augmented, governance-first command interface.</p>
-          <a class="btn primary" href="downloads/CLEARGLASS_GUARDIAN_v5.0.ps1">Download Guardian</a>
-        </article>
-      </section>
-    </main>
-  </div>
+    // Fake alerts
+    const alertsHTML = `
+      <div class="alert">Intrusion attempt from 185.44.12.91 → blocked</div>
+      <div class="alert">Ransomware signature detected in sector 4</div>
+      <div class="alert" style="border-color:#ffd166;color:#ffd166">Encrypted beacon from shadow node</div>
+    `;
+    document.getElementById('alerts').innerHTML = alertsHTML;
+
+    // Network canvas
+    const c = document.getElementById('net');
+    const ctx = c.getContext('2d');
+    c.width=260; c.height=240;
+    function drawNet(){
+      ctx.clearRect(0,0,c.width,c.height);
+      ctx.strokeStyle = 'rgba(94,231,255,0.3)';
+      for(let i=0;i<18;i++){
+        ctx.beginPath();
+        ctx.moveTo(Math.random()*c.width, Math.random()*c.height);
+        ctx.lineTo(Math.random()*c.width, Math.random()*c.height);
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#5ee7ff';
+      for(let i=0;i<12;i++) ctx.fillRect(Math.random()*c.width, Math.random()*c.height, 3, 3);
+    }
+    setInterval(drawNet,800);
+    drawNet();
+
+    // Threat pulse
+    let t=89;
+    setInterval(()=>{ t=t===89?92:89; document.getElementById('threat').textContent = t===89?'CRITICAL':'EXTREME'; },2500);
+  </script>
 </body>
 </html>

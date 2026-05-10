@@ -691,31 +691,53 @@
   }
   loadCves();
 
-  // ── Geopolitical Pulse (rotating GDELT-style) ──────────────────
-  const pulseEvents = [
-    { region: 'ON·CA',  text: 'Bill C-26 critical infrastructure mandate enters reporting window — utilities scrambling for compliance partners' },
-    { region: 'EU',     text: 'NIS2 enforcement tightens; energy operators commissioning external SOC capacity' },
-    { region: 'US-PAC', text: 'CISA emergency directive issued for unpatched edge appliances across federal civilian agencies' },
-    { region: 'INDO',   text: 'Submarine cable disruption near Sunda Strait — re-routing impacts APAC SIGINT collection' },
-    { region: 'CA-W',   text: 'BC Hydro initiates RFP for OT/ICS visibility — 18-month engagement window opens Q2' },
-    { region: 'GTA',    text: 'Halton Region procurement signals AEGIS pre-qualification — 14-day decision window' },
-    { region: 'GLOBAL', text: 'CrushFTP & Ivanti exploitation chains observed targeting Canadian managed services' },
-    { region: 'NATO',   text: 'Baltic states elevate cyber readiness; SIGINT cross-cueing protocols activated' },
+  // ── Geopolitical Pulse (synthetic real-time GDELT simulator) ───
+  // Synthetic demo intelligence only (no live fact reporting).
+  const pulseTemplates = [
+    { region: 'ON·CA', actor: 'Utility regulator', text: 'Critical-infrastructure filing window opens; compliance advisory traffic increases', impact: 'MED', conf: [0.72, 0.87] },
+    { region: 'EU', actor: 'Energy consortium', text: 'NIS2 readiness sprint triggers external SOC procurement enquiries', impact: 'MED', conf: [0.70, 0.84] },
+    { region: 'US-PAC', actor: 'Federal cyber ops', text: 'Edge-appliance hardening directive expands remediation ticket volume', impact: 'HIGH', conf: [0.79, 0.93] },
+    { region: 'INDO', actor: 'Maritime comms node', text: 'Undersea cable disruption drives alternate route utilization and collection delays', impact: 'HIGH', conf: [0.76, 0.92] },
+    { region: 'CA-W', actor: 'Provincial utility', text: 'OT/ICS visibility RFP process accelerates partner qualification activity', impact: 'MED', conf: [0.69, 0.85] },
+    { region: 'GTA', actor: 'Municipal procurement', text: 'Pre-qualification notices indicate short decision-cycle for resilience integrators', impact: 'MED', conf: [0.67, 0.82] },
+    { region: 'GLOBAL', actor: 'Threat intel exchange', text: 'Exploit-chain chatter references managed-service access pathways', impact: 'HIGH', conf: [0.74, 0.90] },
+    { region: 'NATO', actor: 'Regional cyber command', text: 'Cross-cueing drills raise alert-state for coalition network defense teams', impact: 'HIGH', conf: [0.78, 0.91] },
   ];
-  let pulseIdx = 0;
-  function rotatePulse() {
+
+  const syntheticPulseState = { seq: 0, events: [] };
+  function randomBetween(min, max) { return min + Math.random() * (max - min); }
+  function emitSyntheticPulseEvent() {
+    const tpl = pulseTemplates[syntheticPulseState.seq % pulseTemplates.length];
+    const confidence = randomBetween(tpl.conf[0], tpl.conf[1]);
+    const latencyMs = Math.round(randomBetween(150, 1200));
+    const event = {
+      id: `SIM-${Date.now().toString(36)}-${syntheticPulseState.seq}`,
+      ts: new Date(),
+      region: tpl.region,
+      actor: tpl.actor,
+      impact: tpl.impact,
+      confidence,
+      latencyMs,
+      text: `${tpl.text} (${tpl.actor}; impact ${tpl.impact}; conf ${(confidence * 100).toFixed(1)}%)`,
+    };
+    syntheticPulseState.events.unshift(event);
+    syntheticPulseState.events = syntheticPulseState.events.slice(0, 8);
+    syntheticPulseState.seq += 1;
+  }
+
+  function renderSyntheticPulse() {
     const wrap = $('#gdeltFeed');
     if (!wrap) return;
-    const recent = [...Array(4)].map((_, i) => pulseEvents[(pulseIdx + i) % pulseEvents.length]);
-    const t = new Date();
-    wrap.innerHTML = recent.map((e, i) => {
-      const time = new Date(t - i * 1000 * 60 * (3 + i)).toLocaleTimeString().slice(0,5);
-      return `<div class="pulse-line"><span class="pulse-time">${time} · ${e.region}</span><span class="pulse-text">${e.text}</span></div>`;
+    if (!syntheticPulseState.events.length) emitSyntheticPulseEvent();
+    wrap.innerHTML = syntheticPulseState.events.slice(0, 4).map((e) => {
+      const hhmm = e.ts.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+      return `<div class="pulse-line"><span class="pulse-time">${hhmm} · ${e.region}</span><span class="pulse-text">${e.text}</span></div>`;
     }).join('');
-    pulseIdx = (pulseIdx + 1) % pulseEvents.length;
   }
-  rotatePulse();
-  setInterval(rotatePulse, 8000);
+
+  emitSyntheticPulseEvent();
+  renderSyntheticPulse();
+  setInterval(() => { emitSyntheticPulseEvent(); renderSyntheticPulse(); }, 5000);
 
   // ── Threat Map Canvas ──────────────────────────────────────────
   const threatMap = $('#threatMapCanvas');

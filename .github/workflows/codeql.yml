@@ -53,7 +53,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["python", "javascript-typescript"]
+        language: ["javascript-typescript", "python"]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -70,3 +71,4 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{ matrix.language }}"
+          queries: security-and-quality

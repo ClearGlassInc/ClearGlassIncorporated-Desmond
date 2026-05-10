@@ -21,6 +21,13 @@
     * { box-sizing: border-box; }
     html, body { height: 100%; margin:0; }
     body {
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       background:
         radial-gradient(circle at top, rgba(94,231,255,0.14), transparent 30%),
@@ -29,6 +36,8 @@
       font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
       overflow-x: hidden;
     }
+    }
+
     .grid {
       position: fixed;
       inset: 0;
@@ -42,6 +51,12 @@
       opacity: 0.45;
     }
     @keyframes drift { from { transform: translateY(0); } to { transform: translateY(42px); } }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(42px); }
+    }
+
     .scanline {
       position: fixed;
       inset: 0;
@@ -51,12 +66,14 @@
       pointer-events: none;
       mix-blend-mode: screen;
     }
+
     @keyframes scan {
       0%, 100% { transform: translateY(-20vh); opacity: 0; }
       25% { opacity: 0.9; }
       50% { transform: translateY(40vh); opacity: 0.75; }
       75% { opacity: 0.2; }
     }
+
     .wrap {
       position: relative;
       z-index: 1;
@@ -65,6 +82,7 @@
       display: grid;
       place-items: center;
     }
+
     .dashboard {
       width: min(1200px, 100%);
       border: 1px solid var(--line);
@@ -87,6 +105,24 @@
       45% { transform: translateX(100%); }
       100% { transform: translateX(100%); }
     }
+      position: relative;
+    }
+
+    .dashboard::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(94,231,255,0.08), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 8s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      45% { transform: translateX(100%); }
+      100% { transform: translateX(100%); }
+    }
+
     .topbar {
       display: flex;
       justify-content: space-between;
@@ -96,11 +132,13 @@
       border-bottom: 1px solid var(--line);
       background: rgba(255,255,255,0.02);
     }
+
     .brand {
       display: flex;
       align-items: center;
       gap: 14px;
     }
+
     .orb {
       width: 16px;
       height: 16px;
@@ -130,12 +168,39 @@
       border: 1px solid rgba(87,242,135,0.25);
       font-size: 0.9rem;
     }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.75; }
+      50% { transform: scale(1.25); opacity: 1; }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(87,242,135,0.12);
+      color: var(--green);
+      border: 1px solid rgba(87,242,135,0.25);
+      font-size: 0.9rem;
+    }
+
     .content {
       padding: 24px;
       display: grid;
       grid-template-columns: 1.3fr 1fr;
       gap: 22px;
     }
+
     .panel {
       border: 1px solid var(--line);
       border-radius: 20px;
@@ -144,6 +209,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .panel h2 {
       margin: 0 0 10px;
       font-size: 1rem;
@@ -152,12 +218,16 @@
       color: var(--cyan);
     }
     .muted { color: var(--muted); line-height: 1.7; }
+
+    .muted { color: var(--muted); line-height: 1.7; }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
       margin-top: 18px;
     }
+
     .card {
       border-radius: 16px;
       padding: 16px;
@@ -166,25 +236,30 @@
       transition: transform 0.3s ease, border-color 0.3s ease;
       animation: float 6s ease-in-out infinite;
     }
+
     .card:hover {
       transform: translateY(-4px);
       border-color: rgba(94,231,255,0.35);
     }
+
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-6px); }
     }
+
     .value {
       font-size: 2rem;
       font-weight: 700;
       margin: 6px 0;
     }
+
     .label {
       color: var(--muted);
       font-size: 0.9rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
+
     .bar {
       height: 10px;
       border-radius: 999px;
@@ -192,6 +267,7 @@
       overflow: hidden;
       margin-top: 10px;
     }
+
     .bar > span {
       display: block;
       height: 100%;
@@ -201,11 +277,18 @@
       animation: fill 1.6s ease forwards;
     }
     @keyframes fill { from { width: 0; } to { width: var(--w); } }
+
+    @keyframes fill {
+      from { width: 0; }
+      to { width: var(--w); }
+    }
+
     .timeline {
       display: grid;
       gap: 14px;
       margin-top: 16px;
     }
+
     .event {
       display: flex;
       gap: 14px;
@@ -216,10 +299,12 @@
       border: 1px solid rgba(255,255,255,0.05);
       animation: slideUp 0.7s ease both;
     }
+
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     .dot {
       width: 12px;
       height: 12px;
@@ -230,6 +315,12 @@
       flex: 0 0 auto;
     }
     .event strong { display: block; margin-bottom: 4px; }
+
+    .event strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
     .terminal {
       margin-top: 16px;
       border-radius: 16px;
@@ -241,6 +332,7 @@
       position: relative;
       min-height: 180px;
     }
+
     .terminal::after {
       content: "";
       display: inline-block;
@@ -252,11 +344,17 @@
       vertical-align: -3px;
     }
     @keyframes blink { 50% { opacity: 0; } }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
     .footer {
       padding: 0 24px 24px;
       color: var(--muted);
       font-size: 0.92rem;
     }
+
     @media (max-width: 900px) {
       .content { grid-template-columns: 1fr; }
       .metrics { grid-template-columns: 1fr; }
@@ -351,6 +449,77 @@
       <div class="footer">
         Tip: replace the placeholder metrics and event items with real API data for a fully dynamic dashboard.
       </div>
+
+      <div class="content">
+        <section class="panel">
+          <h2>Mission Overview</h2>
+          <p class="muted">
+            High-fidelity security dashboard with animated telemetry, layered glassmorphism, and live-style motion design.
+            Use this as a premium hero page, internal tool shell, or cyber-themed landing interface.
+          </p>
+
+          <div class="metrics">
+            <div class="card">
+              <div class="label">Devices</div>
+              <div class="value">128</div>
+              <div class="bar"><span style="--w: 82%;"></span></div>
+            </div>
+            <div class="card">
+              <div class="label">Risk Score</div>
+              <div class="value">17%</div>
+              <div class="bar"><span style="--w: 17%; background: linear-gradient(90deg, var(--green), var(--yellow));"></span></div>
+            </div>
+            <div class="card">
+              <div class="label">Critical Findings</div>
+              <div class="value">03</div>
+              <div class="bar"><span style="--w: 36%; background: linear-gradient(90deg, var(--yellow), var(--red));"></span></div>
+            </div>
+            <div class="card">
+              <div class="label">CIS Pass</div>
+              <div class="value">94%</div>
+              <div class="bar"><span style="--w: 94%;"></span></div>
+            </div>
+          </div>
+
+          <div class="terminal" id="terminal">
+            Boot sequence initialized...<br>
+            Loading telemetry pipeline...<br>
+            Rendering secure UI layers...<br>
+            Finalizing dashboard.
+          </div>
+        </section>
+
+        <aside class="panel">
+          <h2>Live Events</h2>
+          <div class="timeline">
+            <div class="event">
+              <div class="dot"></div>
+              <div>
+                <strong>Recon complete</strong>
+                <div class="muted">Asset discovery finished across active subnet.</div>
+              </div>
+            </div>
+            <div class="event">
+              <div class="dot" style="background: var(--cyan);"></div>
+              <div>
+                <strong>Vulnerability review</strong>
+                <div class="muted">Ports mapped to known service risk profiles.</div>
+              </div>
+            </div>
+            <div class="event">
+              <div class="dot" style="background: var(--red);"></div>
+              <div>
+                <strong>Alert triage</strong>
+                <div class="muted">High-priority items queued for analyst review.</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="footer">
+        Tip: replace the placeholder metrics and event items with real API data for a fully dynamic dashboard.
+      </div>
     </section>
   </main>
 
@@ -363,6 +532,7 @@
     ];
     const terminal = document.getElementById("terminal");
     let i = 0;
+
     setInterval(() => {
       terminal.innerHTML = terminal.innerHTML.replace(/<br>$/, "");
       terminal.innerHTML += `<br>${lines[i % lines.length]}`;

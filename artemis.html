@@ -1,130 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>ClearGlass Inc. · Artemis VI · Quantum-Neural Smart Glass</title>
-<meta name="description" content="Artemis VI by ClearGlass Inc. — quantum-neural smart glass platform fusing SPD switching, on-glass AI computation, BCI-ready interfaces, and digital twin manufacturing. View the 12-month implementation roadmap."/>
-<meta name="robots" content="index,follow"/>
-<meta name="theme-color" content="#02040a"/>
-<link rel="canonical" href="https://clearglassinc.github.io/artemis.html"/>
-<meta property="og:title" content="ClearGlass Inc. · Artemis VI · Quantum-Neural Smart Glass"/>
-<meta property="og:description" content="Explore Artemis VI, the ClearGlass flagship platform for smart glass intelligence, implementation roadmap, and future-facing systems design."/>
-<meta property="og:url" content="https://clearglassinc.github.io/artemis.html"/>
-<meta property="og:site_name" content="ClearGlass Inc."/>
-<meta property="og:type" content="website"/>
-<meta property="og:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="ClearGlass Inc. · Artemis VI · Quantum-Neural Smart Glass"/>
-<meta name="twitter:description" content="Explore Artemis VI, the ClearGlass flagship platform for smart glass intelligence, implementation roadmap, and future-facing systems design."/>
-<meta name="twitter:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-<style>
-:root{--black:#02040a;--deep:#060d1c;--surface:#0b1628;--panel:rgba(255,255,255,.03);--border:rgba(56,189,248,.1);--border-hi:rgba(56,189,248,.25);--blue:#38bdf8;--violet:#a78bfa;--pink:#f472b6;--gold:#fbbf24;--green:#34d399;--white:#f0f6ff;--dim:rgba(240,246,255,.55);--dimmer:rgba(240,246,255,.28);--crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 30%,#f472b6 60%,#fbbf24 80%,#34d399 100%);--serif:'Cormorant Garamond',Georgia,serif;--sans:'Urbanist',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace;--glow-blue:0 0 40px rgba(56,189,248,.15)}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;scroll-padding-top:88px}body{font-family:var(--sans);background:var(--black);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(56,189,248,.04) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 90% 80%,rgba(167,139,250,.05) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 50% 50%,rgba(244,114,182,.02) 0%,transparent 70%)}
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,4rem);background:rgba(2,4,10,.84);backdrop-filter:blur(30px);border-bottom:1px solid var(--border)}.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}.nav-logo{width:38px;height:38px;border-radius:10px;background:var(--crystal);display:grid;place-items:center;font-family:var(--sans);font-size:13px;font-weight:800;color:#fff;box-shadow:var(--glow-blue)}.nav-title{font-family:var(--serif);font-size:1.18rem;font-weight:600;color:var(--white)}.nav-title em{font-style:italic;font-weight:300;color:rgba(240,246,255,.5)}.nav-badge{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.12em;color:var(--blue);border:1px solid rgba(56,189,248,.3);padding:3px 10px;border-radius:999px;background:rgba(56,189,248,.05)}.nav-links{display:flex;align-items:center;gap:8px}.nav-links a{text-decoration:none;color:rgba(240,246,255,.72);font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;transition:all .25s}.nav-links a:hover{color:#fff;background:rgba(255,255,255,.05)}.nav-links .cta{background:var(--blue);color:#03111a}.nav-links .cta:hover{background:#67cdfb;color:#03111a}.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 80px;position:relative}.hero-scan{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),var(--violet),var(--pink),transparent);animation:scanLine 6s ease-in-out infinite;opacity:.6}@keyframes scanLine{0%{top:0;opacity:0}10%{opacity:.6}90%{opacity:.2}100%{top:100%;opacity:0}}.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(56,189,248,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}.hero-eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.25em;color:var(--blue);margin-bottom:28px;display:flex;align-items:center;gap:12px;animation:fadeUp 1s ease both}.hero-eyebrow::before,.hero-eyebrow::after{content:'';flex:1;max-width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--blue))}.hero-eyebrow::after{background:linear-gradient(90deg,var(--blue),transparent)}.hero h1{font-family:var(--serif);font-size:clamp(3rem,8vw,6.8rem);font-weight:300;line-height:1;letter-spacing:-.03em;max-width:980px;animation:fadeUp 1s ease .15s both}.hero h1 .cx{background:var(--crystal);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}.hero-sub{font-size:clamp(.98rem,1.5vw,1.15rem);color:var(--dim);max-width:700px;margin-top:24px;line-height:1.8;animation:fadeUp 1s ease .3s both}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:34px;animation:fadeUp 1s ease .42s both}.hero-confirm{margin-top:30px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--green);border:1px solid rgba(52,211,153,.2);padding:8px 20px;border-radius:999px;background:rgba(52,211,153,.04);animation:fadeUp 1s ease .48s both;max-width:900px;line-height:1.6}@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;font-size:14px;font-weight:700;text-decoration:none;transition:all .3s}.btn-dark{background:#fff;color:#06101d}.btn-dark:hover{transform:translateY(-2px)}.btn-ghost{border:1px solid rgba(255,255,255,.14);color:#fff;background:rgba(255,255,255,.03)}.btn-ghost:hover{border-color:rgba(255,255,255,.28)}
-.container{width:min(1200px,94vw);margin:0 auto;padding:0 clamp(1rem,3vw,2rem);position:relative;z-index:1}.sect{padding:clamp(80px,10vw,130px) 0}.sect-border{border-top:1px solid var(--border)}.sh{margin-bottom:clamp(40px,5vw,64px)}.sh-tag{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:16px}.sh-tag::before{content:'//';color:rgba(56,189,248,.4)}.sh h2{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.5rem);font-weight:300;line-height:1.1;letter-spacing:-.02em;color:var(--white)}.sh h2 strong{font-weight:600}.sh p{color:var(--dim);font-size:1rem;line-height:1.75;max-width:620px;margin-top:14px}
-.glass-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:20px;backdrop-filter:blur(20px);padding:clamp(28px,4vw,48px);position:relative;overflow:hidden;transition:border-color .35s,box-shadow .35s}.glass-card:hover{border-color:var(--border-hi);box-shadow:var(--glow-blue)}.glass-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(56,189,248,.3),transparent)}
-.manifesto-wrap{max-width:860px;margin:0 auto;font-family:var(--serif);font-size:clamp(1.05rem,1.6vw,1.25rem);font-weight:300;line-height:1.9;color:rgba(240,246,255,.78)}.manifesto-wrap p{margin-bottom:1.35em}.manifesto-wrap strong{font-weight:500;color:var(--white)}.manifesto-wrap .accent{background:var(--crystal);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}.manifesto-drop{float:left;font-family:var(--serif);font-size:5rem;font-weight:600;line-height:.8;padding-right:14px;padding-top:10px;background:var(--crystal);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.use-case-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}.uc-card{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:20px;padding:36px 32px;position:relative;overflow:hidden;transition:all .35s}.uc-card:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:var(--glow-blue)}.uc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform .5s}.uc-card:hover::after{transform:scaleX(1)}.uc-enterprise::after{background:linear-gradient(90deg,var(--blue),var(--violet))}.uc-healthcare::after{background:linear-gradient(90deg,var(--green),var(--blue))}.uc-consumer::after{background:linear-gradient(90deg,var(--violet),var(--pink))}.uc-sector{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.2em;margin-bottom:18px;display:flex;align-items:center;gap:8px}.uc-num{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:700}.uc-enterprise .uc-num{background:rgba(56,189,248,.1);color:var(--blue)}.uc-healthcare .uc-num{background:rgba(52,211,153,.1);color:var(--green)}.uc-consumer .uc-num{background:rgba(167,139,250,.1);color:var(--violet)}.uc-card h3{font-family:var(--serif);font-size:1.8rem;font-weight:500;margin-bottom:16px;letter-spacing:-.01em;color:var(--white)}.uc-card p{font-size:14px;line-height:1.8;color:var(--dim)}.uc-card p+p{margin-top:12px}
-.prompt-wrap{font-family:var(--mono);font-size:13px;line-height:1.9;color:rgba(240,246,255,.75);background:rgba(56,189,248,.03);border:1px solid rgba(56,189,248,.12);border-radius:14px;padding:36px 40px;position:relative}.prompt-wrap::before{content:'FLAGSHIP PRODUCT PROMPT';position:absolute;top:-10px;left:28px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.2em;color:var(--blue);background:var(--black);padding:0 8px}.prompt-copy{position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:10px;font-weight:600;color:var(--blue);border:1px solid rgba(56,189,248,.25);padding:5px 14px;border-radius:6px;cursor:pointer;background:rgba(56,189,248,.06);transition:all .25s;letter-spacing:.08em}.prompt-copy:hover{background:rgba(56,189,248,.12);border-color:var(--blue)}
-.gantt-table{width:100%;border-collapse:collapse}.gantt-table th{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.2em;color:var(--blue);padding:12px 18px;border-bottom:1px solid var(--border);text-align:left;text-transform:uppercase}.gantt-table td{padding:20px 18px;border-bottom:1px solid rgba(56,189,248,.05);font-size:13px;line-height:1.6;color:rgba(240,246,255,.82);vertical-align:top}.gantt-table tr:last-child td{border-bottom:none}.gantt-table tr:hover td{background:rgba(56,189,248,.02)}.phase-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;white-space:nowrap}.ph-1{background:rgba(56,189,248,.1);color:var(--blue);border:1px solid rgba(56,189,248,.2)}.ph-2{background:rgba(167,139,250,.1);color:var(--violet);border:1px solid rgba(167,139,250,.2)}.ph-3{background:rgba(244,114,182,.1);color:var(--pink);border:1px solid rgba(244,114,182,.2)}.ph-4{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.2)}.ph-5{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}.gantt-dot{width:7px;height:7px;border-radius:50%;display:inline-block}.time-badge{font-family:var(--mono);font-size:11px;color:var(--dim);display:inline-block;white-space:nowrap}.metric{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--green);border:1px solid rgba(52,211,153,.2);padding:2px 8px;border-radius:4px;background:rgba(52,211,153,.04);margin:2px 2px 0 0}
-.link-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.link-card{border:1px solid var(--border);background:rgba(255,255,255,.02);border-radius:18px;padding:28px}.link-card h3{font-family:var(--serif);font-size:2rem;font-weight:500;margin-bottom:10px}.link-card p{color:var(--dim);font-size:14px;line-height:1.8;margin-bottom:16px}
-.footer{border-top:1px solid var(--border);padding:52px 0 36px}.footer-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:40px}.footer-brand-block{display:flex;flex-direction:column;gap:10px;max-width:200px}.footer-logo{width:34px;height:34px;border-radius:10px;background:var(--crystal);display:grid;place-items:center;font-family:var(--sans);font-size:11px;font-weight:800;color:#fff}.footer-brand-name{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--white);letter-spacing:-.01em;display:block;margin-top:4px}.footer-brand-sub{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dimmer);display:block}.footer-cols{display:flex;gap:36px;flex-wrap:wrap}.footer-col{display:flex;flex-direction:column;gap:10px;min-width:110px}.footer-col-head{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:4px}.footer-col a{color:var(--dimmer);text-decoration:none;font-size:13px;line-height:1.4;transition:color .25s}.footer-col a:hover{color:var(--white)}.footer-div{height:1px;background:var(--border);margin:0 0 22px}.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:14px}.footer-copy{font-family:var(--mono);font-size:11px;color:var(--dimmer);letter-spacing:.04em}.footer-util{display:flex;gap:18px;flex-wrap:wrap}.footer-util a{color:var(--dimmer);text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.04em;transition:color .25s}.footer-util a:hover{color:var(--white)}.footer-cookie{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:24px;padding-top:12px;border-top:1px solid var(--border)}.footer-cookie a{font-family:var(--mono);font-size:10px;color:rgba(240,246,255,.35);text-decoration:none;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}.footer-cookie a:hover{color:var(--white);border-bottom-color:rgba(240,246,255,.3)}.footer-cookie-sep{color:rgba(240,246,255,.2);font-family:var(--mono);font-size:10px}.footer-tagline{text-align:center;padding-top:20px;border-top:1px solid var(--border);font-family:var(--serif);font-size:1rem;font-style:italic;font-weight:300;color:var(--dimmer)}
-.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.rv.vis{opacity:1;transform:none}
-@media(max-width:900px){.nav{height:auto;align-items:flex-start;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}.nav-links{display:flex;flex-wrap:wrap;width:100%}.nav-badge{margin-left:auto}.link-grid{grid-template-columns:1fr}.use-case-grid{grid-template-columns:1fr}}@media(max-width:768px){.gantt-table td:nth-child(4),.gantt-table th:nth-child(4){display:none}.footer-top{flex-direction:column;gap:24px}.footer-cols{gap:20px}.footer-bottom{flex-direction:column;align-items:flex-start}.footer-util{gap:12px}}@media(max-width:600px){.nav-badge{width:100%;text-align:center}.hero h1{font-size:2.8rem}.gantt-table td:nth-child(3),.gantt-table th:nth-child(3){display:none}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClearGlassInc Artemis | Defensive Adversary Simulation</title>
+  <meta name="description" content="ClearGlassInc Artemis is an authorization-only defensive adversary simulation and security validation platform for elite security teams." />
+  <style>
+    :root {
+      --bg: #04070d;
+      --panel: #0c1320;
+      --border: #1f2c43;
+      --text: #eef3ff;
+      --muted: #9db0cf;
+      --accent: #4ea3ff;
+      --accent-2: #89c3ff;
+      --success: #72d3a3;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #0c1a32 0%, var(--bg) 45%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container { width: min(1120px, 92vw); margin: 0 auto; }
+    header { border-bottom: 1px solid var(--border); backdrop-filter: blur(6px); }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; }
+    .brand { font-weight: 700; letter-spacing: .04em; }
+    .badge { color: var(--accent-2); font-size: .85rem; border: 1px solid var(--border); padding: 6px 10px; border-radius: 999px; }
+    .hero { padding: 88px 0 64px; text-align: left; }
+    h1 { font-size: clamp(2.2rem, 6vw, 4rem); margin-bottom: 10px; }
+    .sub { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--accent-2); margin-bottom: 18px; font-weight: 500; }
+    .support { color: var(--muted); max-width: 760px; font-size: 1.05rem; }
+    .actions { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { padding: 12px 18px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1px solid var(--border); }
+    .btn-primary { background: linear-gradient(90deg, var(--accent), #256de8); color: #fff; border: none; }
+    .btn-secondary { color: var(--text); background: rgba(255,255,255,.02); }
+    section { padding: 54px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 14px; }
+    .lead { color: var(--muted); max-width: 880px; }
+    .grid { margin-top: 26px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .card h3 { margin-bottom: 10px; color: var(--accent-2); }
+    .card p { color: var(--muted); }
+    .trust { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 20px; }
+    .trust div { padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; background: rgba(114,211,163,.06); color: var(--success); font-weight: 600; }
+    .cta-final { text-align: center; padding-bottom: 80px; }
+    .cta-final p { color: var(--muted); margin-top: 12px; }
+  </style>
 </head>
 <body>
-<nav class="nav">
-  <a href="index.html" class="nav-brand"><div class="nav-logo">CG</div><div class="nav-title">ClearGlass <em>Inc.</em></div></a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="#manifesto">Manifesto</a>
-    <a href="#usecases">Use Cases</a>
-    <a href="#roadmap">Roadmap</a>
-    <a href="guardian.html">Guardian</a>
-    <a href="stegoforge.html">STEGOFORGE</a>
-    <a href="index.html#contact" class="cta">Book Briefing</a>
-  </div>
-  <div class="nav-badge">ARTEMIS VI · 2030–2035</div>
-</nav>
-<section class="hero">
-  <div class="hero-scan"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-eyebrow">CLEARGLASS INC. · CHIEF FUTURIST OFFICE · FLAGSHIP PLATFORM</div>
-  <h1><strong>Quantum</strong>-Neural<br><span class="cx">Smart Glass</span></h1>
-  <p class="hero-sub">The ClearGlass flagship. Where SPD-smart glass intelligence, on-glass edge computation, non-invasive BCI, and AI-driven digital twin manufacturing converge into a single deployable transparent surface — the last display you will ever need.</p>
-  <div class="hero-actions"><a href="#roadmap" class="btn btn-dark">View Roadmap</a><a href="guardian.html" class="btn btn-ghost">Open Guardian</a><a href="index.html" class="btn btn-ghost">Return Home</a></div>
-  <div class="hero-confirm">✓ Artemis VI is live. This is the official ClearGlass flagship platform page — part of the integrated site path: Home → Artemis VI → Guardian.</div>
-</section>
-<section class="sect sect-border" id="manifesto"><div class="container"><div class="sh rv"><div class="sh-tag">SECTION 01</div><h2>Visionary Company <strong>Manifesto</strong></h2></div><div class="glass-card rv"><div class="manifesto-wrap"><p><span class="manifesto-drop">W</span>e are building the last surface you will ever need. Not a screen. Not a wall. Not a window. A <strong>sovereign intelligence layer</strong> — one that learns, protects, and responds at the speed of thought. ClearGlass Inc. was founded on a conviction that <span class="accent">transparency is not a feature. It is a foundation.</span></p><p>Artemis VI is the culmination of that conviction. By fusing <strong>smart glass switching</strong>, <strong>post-quantum-ready computation</strong>, <strong>non-invasive neural control</strong>, and <strong>digital twin manufacturing</strong>, ClearGlass turns architectural glass into an intelligence surface.</p><p>We do not build passive products. We build <span class="accent">the infrastructure of clarity</span> — for enterprise, healthcare, and the future consumer environment.</p></div></div></div></section>
-<section class="sect sect-border" id="usecases"><div class="container"><div class="sh rv"><div class="sh-tag">SECTION 02</div><h2>Three Use Case <strong>Scenarios</strong></h2><p>Artemis VI deployed across enterprise, healthcare, and consumer environments.</p></div><div class="use-case-grid"><section class="uc-card uc-enterprise rv"><div class="uc-sector"><div class="uc-num">01</div>ENTERPRISE — MUNICIPAL SECURITY OPS</div><h3>The Invisible Command Centre</h3><p>Floor-to-ceiling Artemis VI glass replaces conventional display walls. Real-time threat overlays surface only when required — preserving spatial transparency while converting the entire room into a live intelligence environment.</p><p>Security analysts move from static dashboards to spatially-aware, context-driven visual command. Faster decisions. Fewer blind spots. Zero screen clutter.</p></section><section class="uc-card uc-healthcare rv"><div class="uc-sector"><div class="uc-num">02</div>HEALTHCARE — SURGICAL THEATRE</div><h3>The Sterile Intelligence Surface</h3><p>Critical imaging, vitals, and procedure guidance render as transparent overlays inside the surgeon’s direct line of sight — without breaking sterile field or shifting focus away from the patient.</p><p>Hands-free BCI control makes Artemis VI materially stronger than any legacy display system in a clinical environment. Precision when it matters most.</p></section><section class="uc-card uc-consumer rv"><div class="uc-sector"><div class="uc-num">03</div>CONSUMER — SMART HOME</div><h3>The Living Glass</h3><p>Residential Artemis VI installations act as intelligent surfaces — adjusting tint on demand, rendering contextual information, and enforcing privacy without introducing any screen-based clutter to the home environment.</p><p>The space itself becomes responsive. Not merely connected, but intelligently aware — reacting to presence, preference, and context in real time.</p></section></div></div></section>
-<section class="sect sect-border" id="prompt"><div class="container"><div class="sh rv"><div class="sh-tag">SECTION 03</div><h2>Flagship Product <strong>Image Prompt</strong></h2><p>Reusable visual prompt for future renders and product imagery.</p></div><div class="rv" style="position:relative"><div class="prompt-wrap"><button class="prompt-copy" onclick="copyPrompt(this)">COPY PROMPT</button><p id="promptText">Photorealistic product visualization of the ClearGlass Artemis VI Quantum-Neural Smart Glass panel in a darkened architectural interior at twilight, ultra-high resolution, floor-to-ceiling glass wall, Burlington skyline visible through the surface, semi-transparent holographic threat overlay, minimalist neural interface peripheral, brushed titanium edge processing unit, cinematic realism, no AI artefacts, photographic truth.</p></div></div></div></section>
-<section class="sect sect-border" id="roadmap"><div class="container"><div class="sh rv"><div class="sh-tag">SECTION 04</div><h2>12-Month Implementation <strong>Roadmap</strong></h2><p>A disciplined, five-phase execution path from foundation to first paid revenue — structured for accountability, investor review, and milestone-driven delivery.</p></div><div class="glass-card rv" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="gantt-table"><thead><tr><th>PHASE</th><th>TIMELINE</th><th>MILESTONES</th><th>DELIVERABLES</th><th>SUCCESS METRICS</th></tr></thead><tbody><tr><td><span class="phase-pill ph-1"><span class="gantt-dot" style="background:#38bdf8"></span>PHASE 01 — FOUNDATION</span></td><td><span class="time-badge">APR 2026<br>MAY 2026</span></td><td>Technology validation, supplier review, partnership architecture, and funding preparation.</td><td>IP architecture, partner outreach, funding package.</td><td><span class="metric">3 signed LOIs</span><span class="metric">IP doc complete</span></td></tr><tr><td><span class="phase-pill ph-2"><span class="gantt-dot" style="background:#a78bfa"></span>PHASE 02 — PROTOTYPE</span></td><td><span class="time-badge">JUN 2026<br>AUG 2026</span></td><td>Alpha glass panel, overlay engine integration, neural interface prototype.</td><td>Functional alpha panel, internal demo, telemetry dashboard.</td><td><span class="metric">&lt;1s switch</span><span class="metric">5 feeds live</span></td></tr><tr><td><span class="phase-pill ph-3"><span class="gantt-dot" style="background:#f472b6"></span>PHASE 03 — VALIDATION</span></td><td><span class="time-badge">SEP 2026<br>OCT 2026</span></td><td>Municipal pilot, compliance audit, user testing, encryption stress test.</td><td>Pilot installation, audit report, user study.</td><td><span class="metric">Audit passed</span><span class="metric">BCI ≥80%</span></td></tr><tr><td><span class="phase-pill ph-4"><span class="gantt-dot" style="background:#fbbf24"></span>PHASE 04 — SCALE</span></td><td><span class="time-badge">NOV 2026<br>JAN 2027</span></td><td>Beta units, healthcare pilot, residential pilot, patent filing, GTM model.</td><td>5 beta units, pilot agreements, licensing package.</td><td><span class="metric">2 patents filed</span><span class="metric">1 healthcare LOI</span></td></tr><tr><td><span class="phase-pill ph-5"><span class="gantt-dot" style="background:#34d399"></span>PHASE 05 — REVENUE</span></td><td><span class="time-badge">FEB 2027<br>MAR 2027</span></td><td>First paid contract, MRR activation, seed fundraising, next roadmap lock.</td><td>Enterprise contract, pitch deck, 2027 roadmap.</td><td><span class="metric">MRR ≥ CAD $4K</span><span class="metric">1 paid contract</span></td></tr></tbody></table></div></div></div></section>
-<section class="sect sect-border"><div class="container"><div class="sh rv"><div class="sh-tag">SECTION 05</div><h2>Explore the <strong>full platform</strong></h2><p>Artemis VI is one part of a connected intelligence architecture. Move between the ClearGlass brand home, the Artemis VI platform, and Guardian's enterprise security surface.</p></div><div class="link-grid"><div class="link-card rv"><h3>Home</h3><p>The ClearGlass brand home — vision, technology stack, founder profile, and the entry point for strategic conversations.</p><a href="index.html" class="btn btn-ghost">Go Home</a></div><div class="link-card rv"><h3>Guardian</h3><p>The enterprise security platform. AI-assisted hardening, zero-trust policy enforcement, and a deployable PowerShell download.</p><a href="guardian.html" class="btn btn-ghost">Open Guardian</a></div><div class="link-card rv"><h3>STEGOFORGE</h3><p>Futuristic cyber-forensics command terminal with steganography, AES-256-GCM encryption, covert channels, and live AI-driven operations telemetry.</p><a href="stegoforge.html" class="btn btn-ghost">Launch Console</a></div></div></div></section>
-<footer class="footer" role="contentinfo">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand-block">
-        <div class="footer-logo">CG</div>
-        <span class="footer-brand-name">ClearGlass</span>
-        <span class="footer-brand-sub">See Through Everything</span>
+  <header>
+    <div class="container nav">
+      <div class="brand">ClearGlassInc Artemis</div>
+      <div class="badge">Authorization-Only Platform</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" style="border-top:none;">
+      <h1>ClearGlassInc Artemis</h1>
+      <p class="sub">Defensive adversary simulation and security validation for elite security teams.</p>
+      <p class="support">Validate detections. Train analysts. Prove resilience. Present results with executive clarity.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#final-cta">Request a Demo</a>
+        <a class="btn btn-secondary" href="#platform">Explore the Platform</a>
       </div>
-      <nav class="footer-cols" aria-label="Footer navigation">
-        <div class="footer-col">
-          <div class="footer-col-head">Artemis</div>
-          <a href="#manifesto">Manifesto</a>
-          <a href="#usecases">Use Cases</a>
-          <a href="#roadmap">Roadmap</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-head">Company</div>
-          <a href="index.html">Home</a>
-          <a href="guardian.html">Guardian</a>
-          <a href="index.html#contact">Contact</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-head">Legal</div>
-          <a href="legal/terms.html">Terms</a>
-          <a href="legal/privacy.html">Privacy</a>
-          <a href="legal/">Security</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-head">Community</div>
-          <a href="https://github.com/ClearGlassInc" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://www.githubstatus.com" target="_blank" rel="noopener noreferrer">Status</a>
-        </div>
-      </nav>
-    </div>
-    <div class="footer-div"></div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© <span id="yr"></span> ClearGlass Inc. All rights reserved. Burlington, Ontario, Canada</span>
-      <div class="footer-util">
-        <a href="legal/terms.html">Terms</a>
-        <a href="legal/privacy.html">Privacy</a>
-        <a href="legal/">Security</a>
-        <a href="https://www.githubstatus.com" target="_blank" rel="noopener noreferrer">Status</a>
-        <a href="https://github.com/ClearGlassInc" target="_blank" rel="noopener noreferrer">Community</a>
-        <a href="https://github.com/ClearGlassInc/ClearGlassInc.github.io" target="_blank" rel="noopener noreferrer">Docs</a>
-        <a href="index.html#contact">Contact</a>
+    </section>
+
+    <section id="platform">
+      <h2>Security validation with operational discipline.</h2>
+      <p class="lead">Artemis is built for organizations that need more than alerts and dashboards. It helps teams simulate realistic threats in controlled environments, map outcomes to detections, and convert technical findings into board-ready evidence.</p>
+      <p class="lead" style="margin-top:12px;">Artemis helps security teams see where defenses hold, where they fail, and what to fix next. Built for authorized environments, it supports validation workflows, telemetry review, detection engineering, and executive reporting.</p>
+    </section>
+
+    <section>
+      <h2>Core Capabilities</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Adversary Simulation</h3>
+          <p>Run controlled scenarios that mirror modern attack paths without crossing into unsafe territory. Artemis helps defenders validate assumptions before real incidents force the lesson.</p>
+        </article>
+        <article class="card">
+          <h3>Detection Engineering</h3>
+          <p>Capture the signals that matter, identify blind spots, and export findings into a workflow your security team can actually use—with clarity, evidence, and repeatability.</p>
+        </article>
+        <article class="card">
+          <h3>Analyst Training</h3>
+          <p>Use structured simulations to help analysts sharpen judgment under pressure. Operational, disciplined, and built for real security teams.</p>
+        </article>
+        <article class="card">
+          <h3>Executive Reporting</h3>
+          <p>Transform technical exercises into concise reporting leadership can act on. Artemis supports both the SOC and the boardroom.</p>
+        </article>
       </div>
-    </div>
-    <div class="footer-cookie">
-      <a href="legal/privacy.html">Manage cookies</a>
-      <span class="footer-cookie-sep">·</span>
-      <a href="legal/privacy.html">Do not share my personal information</a>
-    </div>
-    <div class="footer-tagline">"The truth is transparent. The truth is dangerous."</div>
-  </div>
-</footer>
-<script>
-document.getElementById('yr').textContent=new Date().getFullYear();
-var rvEls=document.querySelectorAll('.rv');var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08,rootMargin:'0px 0px -20px 0px'});rvEls.forEach(function(el){obs.observe(el);});
-function copyPrompt(btn){var text=document.getElementById('promptText').innerText.trim();navigator.clipboard.writeText(text).then(function(){btn.textContent='✓ COPIED';btn.style.color='#34d399';btn.style.borderColor='rgba(52,211,153,0.4)';setTimeout(function(){btn.textContent='COPY PROMPT';btn.style.color='';btn.style.borderColor='';},2500);});}
-</script>
+    </section>
+
+    <section>
+      <h2>Built for trust</h2>
+      <div class="trust">
+        <div>Built for authorized use</div>
+        <div>Designed for enterprise security teams</div>
+        <div>Focused on validation, not chaos</div>
+        <div>Engineered for repeatability and reporting</div>
+      </div>
+    </section>
+
+    <section id="final-cta" class="cta-final">
+      <h2>Ready to validate your defenses with precision?</h2>
+      <div class="actions" style="justify-content:center;">
+        <a class="btn btn-primary" href="index.html#contact">Schedule a Strategy Call</a>
+      </div>
+      <p>See how Artemis fits into your detection engineering, purple-team, and executive reporting workflows.</p>
+    </section>
+  </main>
 </body>
 </html>

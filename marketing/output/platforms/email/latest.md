@@ -1,14 +1,14 @@
-Subject: Artemis: when your security stack becomes an intelligence surface
-Preview: Stop triaging alerts. Start acting on signal.
+Subject: Guardian: the difference between compliant and secure
+Preview: Most organizations discover their hardening gaps during incidents.
 
-The average enterprise SOC team spends 40% of its time managing the security stack — not acting on the intelligence it produces.
+There is a critical distinction between compliance and security that most enterprise teams understand but most enterprise tools ignore.
 
-This is the structural flaw that Artemis was designed to address.
+Compliance is a point-in-time snapshot. Security is a continuous operational posture.
 
-Artemis doesn't layer on top of your existing stack. It replaces the signal architecture. Connect your telemetry sources, normalize the data, apply continuous threat modeling, and surface a prioritized operational picture for your security leadership.
+Guardian was built to enforce the latter. It applies AI-assisted hardening across your attack surface — continuously, prioritized by risk-adjusted impact. Not by what looks best in the next audit, but by what actually reduces your exposure to active threats.
 
-The practical outcome: your team shifts from reactive triage to proactive posture management.
+Deployment runs in hours. Audit-ready output is produced at every stage. Zero-trust posture enforcement operates at the infrastructure layer.
 
-→ Review the Artemis platform: https://clearglassinc.github.io/artemis.html
+→ Download Guardian: https://clearglassinc.github.io/guardian.html
 
 — The ClearGlass Team

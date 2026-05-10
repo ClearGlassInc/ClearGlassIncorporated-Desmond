@@ -1,5 +1,5 @@
-1. What's a digital-twin security operation? Short version:
-2. Instead of querying your environment reactively, Artemis builds a living model of it.
-3. System state, active vectors, exposure drift — updated continuously, not at report time.
-4. Detection latency: hours, not days. Reporting: operational reality, not lagging metrics.
-5. → clearglassinc.github.io/artemis.html
+1. Most organizations discover their hardening gaps during incidents. Guardian changes that:
+2. Zero-trust posture enforcement. AI-driven threat surface reduction. Deployment in hours.
+3. The gap between 'we passed the audit' and 'we're actually secure' is where breaches live.
+4. Guardian operates in that gap.
+5. → clearglassinc.github.io/guardian.html

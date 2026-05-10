@@ -1,16 +1,13 @@
-# The architecture behind Artemis: why digital-twin operations change the game.
+# The difference between a secure organization and a compliant one.
 
-Artemis is not a SIEM replacement. It is a different category of system.
+Compliance is a point-in-time snapshot. Security is a continuous operational posture.
 
-At its core, Artemis builds a living digital twin of your operational environment — one that reflects actual system state, active threat vectors, and exposure drift in real time.
+Most enterprise security teams know this distinction. Most enterprise tools still reward compliance paperwork over operational resilience.
 
-Your security picture is never a snapshot. It is a continuous, self-updating map of your exposure.
+Guardian was designed to close that gap. It hardens your environment against the actual threat surface — not the hypothetical one that passed last quarter's audit — and it does so continuously, with AI-assisted prioritization that tells your team exactly where the highest-impact hardening actions are.
 
-Three things this changes immediately:
-1. Detection latency drops from days to hours.
-2. Incident response becomes coordinatable, not reactive.
-3. Executive reporting reflects operational reality, not lagging indicators.
+The result is not a compliance certificate. It is a measurably stronger posture with documentation that satisfies both operational review and audit requirements.
 
-This is enterprise-grade intelligence infrastructure. Built for organizations that cannot afford to be wrong.
+This is the security investment that pays for itself before the next incident.
 
-→ https://clearglassinc.github.io/artemis.html
+→ https://clearglassinc.github.io/guardian.html

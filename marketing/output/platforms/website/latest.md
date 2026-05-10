@@ -1,2 +1,2 @@
-[artemis-headline]
-A living digital twin of your operational environment. Artemis surfaces exposure drift, active vectors, and prioritized response actions — continuously, not at report time.
+[guardian-headline]
+Close the gap between compliant and secure. Guardian enforces zero-trust posture at the infrastructure layer and produces audit-ready output at every stage.

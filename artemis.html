@@ -1,26 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Artemis VI | ClearGlass</title>
-  <meta name="description" content="Artemis VI page is currently unavailable. Access active ClearGlass platform pages.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClearGlassInc Artemis | Active Intelligence Grid</title>
+  <meta name="description" content="ClearGlassInc Artemis active intelligence platform: live operational feed, ontology graph, policy-gated actions, and self-improvement telemetry." />
   <style>
-    body{font-family:Inter,Arial,sans-serif;background:#070d1b;color:#eaf0ff;margin:0;display:grid;min-height:100vh;place-items:center;padding:24px}
-    main{max-width:760px;background:#111a33;border:1px solid #2b3e70;border-radius:16px;padding:32px;box-shadow:0 18px 50px rgba(0,0,0,.35)}
-    h1{margin-top:0} a{color:#9dc2ff} .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #3f5f9f;text-decoration:none}
+    :root {
+      --bg: #0a0f18;
+      --panel: #111a28;
+      --border: #26364f;
+      --text: #e4ecf8;
+      --muted: #95a8c4;
+      --accent: #5ed3ff;
+      --good: #5de2a5;
+      --warn: #ffbe5d;
+      --bad: #ff6d7a;
+      --shadow: 0 14px 32px rgba(0, 0, 0, 0.36);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top right, #122642 0%, var(--bg) 44%);
+      color: var(--text);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+      background: rgba(10, 15, 24, 0.82);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand { font-size: 1.02rem; font-weight: 700; letter-spacing: 0.04em; }
+    .status {
+      font-size: 0.82rem;
+      color: var(--good);
+      border: 1px solid #2b644b;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(48, 110, 85, 0.2);
+    }
+
+    main {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #111a28 0%, #0d1622 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      min-height: 120px;
+    }
+
+    h2 { margin: 0 0 8px; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 10px; }
+    .kpi { background: #0b131f; border: 1px solid #20314a; border-radius: 10px; padding: 11px; }
+    .kpi b { display: block; font-size: 1.25rem; margin-top: 6px; }
+    .small { font-size: 0.82rem; color: var(--muted); }
+
+    #live-feed { max-height: 350px; overflow: auto; }
+    .feed-item { border-bottom: 1px dashed #2a3a52; padding: 9px 0; }
+    .feed-item:last-child { border-bottom: 0; }
+
+    .btn-row, .action-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      border: 1px solid #295481;
+      background: #11253b;
+      color: var(--text);
+      padding: 8px 11px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { filter: brightness(1.12); }
+    button.primary { background: #0f3f63; border-color: #2d79ad; }
+    button.approve { background: #124933; border-color: #2f8c65; }
+    button.reject { background: #5b1f2b; border-color: #8f3e4d; }
+
+    .grid-8 { grid-column: span 8; }
+    .grid-4 { grid-column: span 4; }
+    .grid-6 { grid-column: span 6; }
+    .grid-12 { grid-column: span 12; }
+
+    .log {
+      background: #08101a;
+      border: 1px solid #1f3148;
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 130px;
+      max-height: 190px;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    .badge { border: 1px solid #344d6f; border-radius: 999px; padding: 3px 8px; font-size: 0.74rem; }
+    .bar { height: 9px; background: #0a131f; border-radius: 99px; overflow: hidden; border: 1px solid #1f324b; }
+    .bar > span { display: block; height: 100%; background: linear-gradient(90deg, #58d0ff, #78f0b1); }
+
+    textarea, input {
+      width: 100%;
+      background: #09121d;
+      color: var(--text);
+      border: 1px solid #29405f;
+      border-radius: 9px;
+      padding: 9px;
+      font-size: 0.9rem;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    th, td { padding: 8px 6px; border-bottom: 1px solid #223651; text-align: left; }
+
+    .policy-ok { color: var(--good); }
+    .policy-block { color: var(--bad); }
+
+    @media (max-width: 980px) {
+      .grid-8, .grid-6, .grid-4 { grid-column: span 12; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
+  <header>
+    <div class="brand">ClearGlassInc Artemis • Active Intelligence Grid</div>
+    <div class="status" id="runtimeStatus">Runtime: Connected • Policy-Guarded</div>
+  </header>
+
   <main>
-    <h1>Artemis VI content is currently unavailable</h1>
-    <p>This link has been preserved to avoid broken references. Please continue from one of the active pages.</p>
-    <div class="actions">
-      <a class="btn" href="index.html">Return to Home</a>
-      <a class="btn" href="tax.html">Open Tax Services</a>
-      <a class="btn" href="revenue-engine.html">Open Revenue Engine</a>
-    </div>
+    <section class="card grid-12">
+      <h2>Mission Pulse</h2>
+      <div class="kpi-grid" id="kpis"></div>
+    </section>
+
+    <section class="card grid-8">
+      <h2>Live Intelligence Feed</h2>
+      <div id="live-feed"></div>
+      <div class="btn-row" style="margin-top:10px;">
+        <button class="primary" id="injectEventBtn">Inject High-Priority Event</button>
+        <button id="tickBtn">Run Agentic Triage Tick</button>
+      </div>
+    </section>
+
+    <section class="card grid-4">
+      <h2>Operational Approval Gate</h2>
+      <div id="actionProposal" class="small">No action proposal pending.</div>
+      <div class="action-row" style="margin-top:9px;">
+        <button class="approve" id="approveBtn">Approve Action</button>
+        <button class="reject" id="rejectBtn">Reject Action</button>
+      </div>
+      <div style="margin-top:10px;" class="small">Current Policy Verdict: <span id="policyVerdict" class="policy-ok">ALLOW</span></div>
+      <div class="log" style="margin-top:10px;" id="approvalLog"></div>
+    </section>
+
+    <section class="card grid-6">
+      <h2>Agentic Workflow State Machine</h2>
+      <table>
+        <thead><tr><th>Agent</th><th>State</th><th>Latency</th><th>Confidence</th></tr></thead>
+        <tbody id="agentsTable"></tbody>
+      </table>
+    </section>
+
+    <section class="card grid-6">
+      <h2>Self-Improvement Loop</h2>
+      <div class="small">Prompt policy version: <b id="promptVersion">v1.0.0</b> <span class="badge" id="changeMode">manual-approval</span></div>
+      <p class="small" style="margin-top:8px;">Precision</p><div class="bar"><span id="precisionBar" style="width:72%"></span></div>
+      <p class="small">Recall</p><div class="bar"><span id="recallBar" style="width:64%"></span></div>
+      <p class="small">Operator Trust</p><div class="bar"><span id="trustBar" style="width:78%"></span></div>
+      <div class="btn-row" style="margin-top:10px;">
+        <button id="proposeUpgradeBtn">Propose Prompt Upgrade</button>
+        <button id="runEvalBtn">Run Eval Harness</button>
+      </div>
+      <div class="log" style="margin-top:10px;" id="selfImproveLog"></div>
+    </section>
+
+    <section class="card grid-12">
+      <h2>Operator Workbench</h2>
+      <div class="small">Enter command for triage/enrichment/recommendation (simulated API call with auditable trace).</div>
+      <textarea id="queryInput" rows="3" placeholder="Example: Correlate new C2 traffic with FIN7 infrastructure and produce action package"></textarea>
+      <div class="btn-row" style="margin-top:10px;">
+        <button class="primary" id="runQueryBtn">Execute Query</button>
+      </div>
+      <div class="log" style="margin-top:10px;" id="queryLog"></div>
+    </section>
   </main>
+
+  <script>
+    const state = {
+      feed: [],
+      casesOpen: 4,
+      approvals: 0,
+      rejects: 0,
+      eventsIngested: 21,
+      actionsQueued: 0,
+      promptVersion: 'v1.0.0',
+      metrics: { precision: 72, recall: 64, trust: 78 },
+      agents: [
+        { name: 'TriageAgent', state: 'idle', latency: 0, confidence: 0.0 },
+        { name: 'EnrichmentAgent', state: 'idle', latency: 0, confidence: 0.0 },
+        { name: 'CorrelationAgent', state: 'idle', latency: 0, confidence: 0.0 },
+        { name: 'RecommendationAgent', state: 'idle', latency: 0, confidence: 0.0 }
+      ],
+      proposal: null
+    };
+
+    const seeds = [
+      'SIGINT: New beaconing pattern mapped to known FIN7 infra cluster.',
+      'OSINT: Emerging policy signal indicates cyber reporting mandate deadline shift.',
+      'SOC: Privileged login anomaly from segmented enclave; geo mismatch detected.',
+      'Threat Intel: Exploit chatter references CVE chain for edge gateway devices.'
+    ];
+
+    function log(el, msg) {
+      el.textContent = `[${new Date().toISOString()}] ${msg}\n` + el.textContent;
+    }
+
+    function renderKPIs() {
+      document.getElementById('kpis').innerHTML = [
+        ['Events Ingested', state.eventsIngested],
+        ['Open Cases', state.casesOpen],
+        ['Queued Actions', state.actionsQueued],
+        ['Approved Actions', state.approvals],
+        ['Rejected Actions', state.rejects],
+        ['Prompt Version', state.promptVersion],
+        ['Policy Mode', 'Human-Gated'],
+        ['Runtime', 'Nominal']
+      ].map(([k, v]) => `<div class="kpi"><span class="small">${k}</span><b>${v}</b></div>`).join('');
+    }
+
+    function renderFeed() {
+      const root = document.getElementById('live-feed');
+      root.innerHTML = state.feed.slice(0, 9).map(item => `
+        <div class="feed-item">
+          <div class="small">${item.time} • <span class="badge">${item.source}</span></div>
+          <div>${item.text}</div>
+        </div>`).join('');
+    }
+
+    function renderAgents() {
+      document.getElementById('agentsTable').innerHTML = state.agents.map(agent => `
+      <tr>
+        <td>${agent.name}</td>
+        <td>${agent.state}</td>
+        <td>${agent.latency}ms</td>
+        <td>${(agent.confidence * 100).toFixed(1)}%</td>
+      </tr>`).join('');
+    }
+
+    function pushFeed(text, source = 'gotham-stream') {
+      state.feed.unshift({ text, source, time: new Date().toLocaleTimeString() });
+      state.eventsIngested += 1;
+      renderFeed();
+      renderKPIs();
+    }
+
+    function triageTick() {
+      const start = performance.now();
+      state.agents.forEach((a, i) => {
+        a.state = ['triaging', 'enriching', 'correlating', 'recommending'][i];
+        a.latency = Math.floor(110 + Math.random() * 430);
+        a.confidence = 0.65 + Math.random() * 0.31;
+      });
+      renderAgents();
+
+      const highest = state.agents.reduce((p, c) => (c.confidence > p.confidence ? c : p));
+      const policyAllow = highest.confidence > 0.73;
+      state.proposal = {
+        text: `Open mission response package based on ${highest.name} confidence ${(highest.confidence * 100).toFixed(1)}%.`,
+        allowed: policyAllow
+      };
+      state.actionsQueued = 1;
+      document.getElementById('actionProposal').textContent = state.proposal.text;
+      document.getElementById('policyVerdict').textContent = policyAllow ? 'ALLOW' : 'REQUIRES ESCALATION';
+      document.getElementById('policyVerdict').className = policyAllow ? 'policy-ok' : 'policy-block';
+      log(document.getElementById('approvalLog'), `Policy check completed in ${(performance.now() - start).toFixed(1)}ms. Verdict=${policyAllow ? 'ALLOW' : 'ESCALATE'}`);
+      renderKPIs();
+    }
+
+    function executeQuery() {
+      const query = document.getElementById('queryInput').value.trim();
+      if (!query) return;
+      const logEl = document.getElementById('queryLog');
+      log(logEl, `POST /api/v1/mission/query payload={"query":"${query}"}`);
+      log(logEl, 'Toolchain: ontology_lookup -> evidence_correlator -> policy_guard -> recommendation_synthesizer');
+      log(logEl, 'Result: action package draft generated. Awaiting operator approval.');
+      document.getElementById('queryInput').value = '';
+    }
+
+    function runEval() {
+      const el = document.getElementById('selfImproveLog');
+      const win = Math.random() > 0.38;
+      const delta = win ? 2 : -1;
+      state.metrics.precision = Math.max(55, Math.min(95, state.metrics.precision + delta));
+      state.metrics.recall = Math.max(50, Math.min(93, state.metrics.recall + (win ? 1 : 0)));
+      state.metrics.trust = Math.max(50, Math.min(98, state.metrics.trust + (win ? 1 : -1)));
+      document.getElementById('precisionBar').style.width = `${state.metrics.precision}%`;
+      document.getElementById('recallBar').style.width = `${state.metrics.recall}%`;
+      document.getElementById('trustBar').style.width = `${state.metrics.trust}%`;
+      log(el, `Eval batch completed. Gate score=${win ? 'PASS' : 'FAIL'}. Metrics -> precision:${state.metrics.precision} recall:${state.metrics.recall} trust:${state.metrics.trust}`);
+    }
+
+    document.getElementById('injectEventBtn').onclick = () => pushFeed(seeds[Math.floor(Math.random() * seeds.length)], 'foundry-ingest');
+    document.getElementById('tickBtn').onclick = triageTick;
+    document.getElementById('runQueryBtn').onclick = executeQuery;
+    document.getElementById('runEvalBtn').onclick = runEval;
+    document.getElementById('proposeUpgradeBtn').onclick = () => {
+      const el = document.getElementById('selfImproveLog');
+      const next = `v1.0.${Math.floor(Math.random() * 9) + 1}`;
+      log(el, `Upgrade proposal created: ${state.promptVersion} -> ${next}. Reason: improved contradiction handling in intel summaries.`);
+      log(el, 'Status: pending human approval in Apollo release channel.');
+    };
+
+    document.getElementById('approveBtn').onclick = () => {
+      if (!state.proposal) return;
+      state.approvals += 1;
+      state.actionsQueued = 0;
+      state.casesOpen += 1;
+      log(document.getElementById('approvalLog'), `Operator APPROVED: ${state.proposal.text}`);
+      state.proposal = null;
+      document.getElementById('actionProposal').textContent = 'No action proposal pending.';
+      renderKPIs();
+    };
+
+    document.getElementById('rejectBtn').onclick = () => {
+      if (!state.proposal) return;
+      state.rejects += 1;
+      state.actionsQueued = 0;
+      state.metrics.trust = Math.min(99, state.metrics.trust + 1);
+      document.getElementById('trustBar').style.width = `${state.metrics.trust}%`;
+      log(document.getElementById('approvalLog'), `Operator REJECTED: ${state.proposal.text}. Captured as feedback for next eval.`);
+      state.proposal = null;
+      document.getElementById('actionProposal').textContent = 'No action proposal pending.';
+      renderKPIs();
+    };
+
+    // boot
+    seeds.forEach((s, idx) => pushFeed(s, idx % 2 ? 'gotham' : 'foundry'));
+    renderAgents();
+    renderKPIs();
+    log(document.getElementById('selfImproveLog'), 'Self-improvement loop active. Human approval required for prompt/workflow changes.');
+
+    setInterval(() => {
+      if (Math.random() > 0.55) pushFeed(seeds[Math.floor(Math.random() * seeds.length)], 'coalition-stream');
+      if (Math.random() > 0.7) triageTick();
+    }, 9000);
+  </script>
 </body>
 </html>

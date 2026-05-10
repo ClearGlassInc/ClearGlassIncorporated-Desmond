@@ -1,3 +1,5 @@
+# Copyright (c) 2024-2026 ClearGlass Inc. All Rights Reserved.
+# Proprietary and confidential. See LICENSE for terms.
 #!/usr/bin/env python3
 """Control-plane helpers for the ClearGlassInc marketing command layer workflow."""
 

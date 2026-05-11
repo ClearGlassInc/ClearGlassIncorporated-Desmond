@@ -1,5 +1,5 @@
-1. Most organizations discover their hardening gaps during incidents. Guardian changes that:
-2. Zero-trust posture enforcement. AI-driven threat surface reduction. Deployment in hours.
-3. The gap between 'we passed the audit' and 'we're actually secure' is where breaches live.
-4. Guardian operates in that gap.
-5. → clearglassinc.github.io/guardian.html
+1. Three years building security infrastructure. Here's what actually earns enterprise trust:
+2. Not the feature list. Not the compliance certifications.
+3. Operational clarity — showing a CISO their actual environment, not a template dashboard.
+4. When the picture is clean and accurate, they stop evaluating and start deploying.
+5. → clearglassinc.github.io

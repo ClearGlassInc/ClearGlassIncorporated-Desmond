@@ -1,2 +1,2 @@
-[guardian-headline]
-Close the gap between compliant and secure. Guardian enforces zero-trust posture at the infrastructure layer and produces audit-ready output at every stage.
+[founder-note]
+ClearGlass Inc was built to give security teams the intelligence architecture they need to make decisions under pressure — not just more alerts.

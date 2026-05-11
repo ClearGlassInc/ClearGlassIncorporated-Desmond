@@ -1,13 +1,15 @@
-# The difference between a secure organization and a compliant one.
+# What I've learned building security infrastructure for organizations at the edge of acceptable risk.
 
-Compliance is a point-in-time snapshot. Security is a continuous operational posture.
+Three years building ClearGlass Inc has taught me more about enterprise security decision-making than any certification program.
 
-Most enterprise security teams know this distinction. Most enterprise tools still reward compliance paperwork over operational resilience.
+The CISO who needs to defend a budget to a board that doesn't understand threat modeling. The security team that's been alert-fatigued so long that high-severity events get triaged like noise. The founder who knows their product is secure but can't articulate it to investors.
 
-Guardian was designed to close that gap. It hardens your environment against the actual threat surface — not the hypothetical one that passed last quarter's audit — and it does so continuously, with AI-assisted prioritization that tells your team exactly where the highest-impact hardening actions are.
+These are real operational problems. Not technical ones.
 
-The result is not a compliance certificate. It is a measurably stronger posture with documentation that satisfies both operational review and audit requirements.
+The technology is usually available. What's missing is the intelligence architecture — the system that translates raw security telemetry into decisions that executives can act on.
 
-This is the security investment that pays for itself before the next incident.
+That's what we build at ClearGlass. Not security tools. Security intelligence.
 
-→ https://clearglassinc.github.io/guardian.html
+The distinction matters because tools require operators. Intelligence enables decisions.
+
+→ https://clearglassinc.github.io/

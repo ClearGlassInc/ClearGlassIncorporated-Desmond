@@ -128,6 +128,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 @media(max-width:900px){.funnel-wrap,.bot-inner,.lanes-grid{grid-template-columns:1fr}}
 @media(max-width:768px){.nav-links{display:none}.nav-toggle{display:block}.cursor-glow{display:none}.footer-top{gap:28px}.footer-cols{gap:20px}.footer-col{min-width:90px}.footer-bottom{flex-direction:column;align-items:flex-start}.footer-util{gap:12px}}
 </style>
+    <link rel="stylesheet" href="global.css">
 </head>
 <body>
 <div class="cursor-glow" id="cursorGlow"></div>
@@ -517,5 +518,6 @@ var toggle=document.getElementById('navToggle');var mobMenu=document.getElementB
 var glow=document.getElementById('cursorGlow');if(window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';});};
 var rvEls=document.querySelectorAll('.rv');var rvObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)entry.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});rvEls.forEach(function(el){rvObs.observe(el)});
 </script>
+    <script src="site-router.js"></script>
 </body>
 </html>

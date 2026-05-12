@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -11,25 +12,939 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <style>
-:root{--void:#040206;--black:#08050A;--depth:#0E0810;--lift:#150B14;--lift2:#1C1019;--crimson:#FF1B3D;--crimson-2:#FF4060;--crimson-deep:#B30E2A;--crimson-glow:rgba(255,27,61,.45);--crimson-soft:rgba(255,27,61,.12);--crimson-line:rgba(255,27,61,.22);--crimson-dim:rgba(255,27,61,.06);--bone:#F5E8DD;--ash:rgba(245,232,221,.55);--ash-d:rgba(245,232,221,.32);--dim:rgba(180,160,170,.18);--amber:#F59E0B;--green:#10B981;--D:'Syne',sans-serif;--M:'IBM Plex Mono',monospace;--max:1300px;--ease:cubic-bezier(.16,1,.3,1);--spring:cubic-bezier(.34,1.56,.64,1)}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--D);color:var(--bone);background:var(--void);overflow-x:hidden}::selection{background:rgba(255,27,61,.3);color:#fff}a{color:inherit;text-decoration:none}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");opacity:.6;mix-blend-mode:overlay}
-.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}.scanlines::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,27,61,.018) 3px,rgba(255,27,61,.018) 4px);animation:scanDrift 14s linear infinite}.scanlines::after{content:'';position:absolute;top:-60%;left:0;right:0;height:50%;background:linear-gradient(180deg,transparent,rgba(255,27,61,.025),transparent);animation:scanSweep 9s ease-in-out infinite}@keyframes scanDrift{to{background-position:0 80px}}@keyframes scanSweep{0%,100%{top:-60%}50%{top:120%}}
-.shell{position:relative;z-index:2;width:min(calc(100% - 48px),var(--max));margin:0 auto}.nav-wrap{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;width:min(calc(100% - 28px),980px)}.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 18px;border-radius:100px;background:rgba(8,5,10,.78);backdrop-filter:blur(28px) saturate(1.8);border:1px solid var(--crimson-line)}.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}.nav-pulse{width:7px;height:7px;border-radius:50%;background:var(--crimson)}.nav-tag{margin-left:6px;padding:3px 9px;border-radius:100px;font-family:var(--M);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson-2);border:1px solid var(--crimson-line);background:var(--crimson-soft)}.nav-back,.nav-cta{padding:9px 18px;border-radius:100px;font-family:var(--M);font-size:10px;letter-spacing:.16em;text-transform:uppercase}.nav-back{border:1px solid rgba(255,255,255,.08)}.nav-cta{background:linear-gradient(135deg,var(--crimson),var(--crimson-deep));font-weight:700;color:#fff}
-.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;position:relative}.hero-in{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1.1fr;gap:54px;align-items:center}.h-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--crimson-soft);border:1px solid var(--crimson-line);border-radius:100px;font-family:var(--M);font-size:10px;letter-spacing:.2em;color:var(--crimson-2);text-transform:uppercase;margin-bottom:24px}h1.h-head{font-size:clamp(58px,9vw,118px);font-weight:800;line-height:.86;letter-spacing:-.05em;margin-bottom:14px}.h-grad{background:linear-gradient(135deg,var(--crimson-2),var(--crimson),var(--crimson-deep));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.h-version{font-family:var(--M);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,27,61,.7);margin:18px 0 26px}.h-body{font-size:17px;line-height:1.7;color:var(--ash);max-width:540px;margin-bottom:36px}.h-actions{display:flex;gap:14px;flex-wrap:wrap}.btn-p,.btn-g{display:inline-flex;align-items:center;gap:11px;padding:16px 30px;border-radius:100px}.btn-p{background:linear-gradient(135deg,var(--crimson),var(--crimson-deep));color:#fff;font-weight:700}.btn-g{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
-.spec-panel{background:rgba(14,8,16,.78);border:1px solid var(--crimson-line);border-radius:22px;overflow:hidden}.spec-hdr{padding:16px 22px;border-bottom:1px solid var(--crimson-line);display:flex;align-items:center;justify-content:space-between;background:var(--crimson-dim)}.spec-title{font-family:var(--M);font-size:9px;letter-spacing:.28em;color:var(--crimson-2);text-transform:uppercase}.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--crimson-line)}.spec-cell{padding:16px 20px;background:rgba(14,8,16,.95)}.sc-k{font-family:var(--M);font-size:8px;letter-spacing:.22em;color:var(--ash-d);text-transform:uppercase;margin-bottom:6px}.sc-v{font-family:var(--M);font-size:13px;color:var(--bone)}
-.sec{padding:110px 0}.sec-kicker{display:block;font-family:var(--M);font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--crimson-2);margin-bottom:16px}.sec-h2{font-size:clamp(40px,5.5vw,72px);font-weight:800;letter-spacing:-.04em;line-height:.92;color:var(--bone);margin-bottom:20px}.sec-h2 span{background:linear-gradient(135deg,var(--crimson-2),var(--crimson-deep));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.sec-p{font-size:17px;line-height:1.7;color:var(--ash);max-width:620px}.mod-grid,.tier-grid,.comp-grid{display:grid;gap:1px;background:var(--crimson-line);border:1px solid var(--crimson-line)}.mod-grid,.tier-grid{grid-template-columns:repeat(3,1fr);margin-top:54px}.mod,.tier,.comp-item{padding:30px;background:rgba(8,5,10,.92)}.mod-h3{font-size:22px;margin:10px 0 12px}.mod-p{font-size:13.5px;line-height:1.7;color:var(--ash)}
-.cta{padding:110px 0}.cta-in{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;padding:44px;border:1px solid var(--crimson-line);border-radius:24px;background:rgba(8,5,10,.78)}.contact-box{padding:24px;border:1px solid var(--crimson-line)}footer{border-top:1px solid var(--crimson-dim);padding:34px 0}.ft-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;font-family:var(--M);font-size:9px;letter-spacing:.18em;color:var(--ash-d);text-transform:uppercase}
-@media(max-width:1100px){.hero-in,.cta-in{grid-template-columns:1fr}.mod-grid,.tier-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:768px){.mod-grid,.tier-grid,.comp-grid,.spec-grid{grid-template-columns:1fr}.nav-tag{display:none}.sec{padding:80px 0}}
+/* ════════════════════════════════════════════════════
+   CLEARGLASS GUARDIAN — COMMAND INTERFACE EDITION
+   Crimson neon · Operational-grade · Classified-feel
+════════════════════════════════════════════════════ */
+:root{
+  --void:#040206;
+  --black:#08050A;
+  --depth:#0E0810;
+  --lift:#150B14;
+  --lift2:#1C1019;
+
+--crimson:#FF1B3D;
+--crimson-2:#FF4060;
+--crimson-deep:#B30E2A;
+--crimson-glow:rgba(255,27,61,0.45);
+--crimson-soft:rgba(255,27,61,0.12);
+--crimson-line:rgba(255,27,61,0.22);
+--crimson-dim:rgba(255,27,61,0.06);
+
+--bone:#F5E8DD;
+--ash:rgba(245,232,221,0.55);
+--ash-d:rgba(245,232,221,0.32);
+--dim:rgba(180,160,170,0.18);
+
+--amber:#F59E0B;
+--green:#10B981;
+
+--D:'Syne',sans-serif;
+--M:'IBM Plex Mono',monospace;
+--max:1300px;
+--ease:cubic-bezier(0.16,1,0.3,1);
+--spring:cubic-bezier(0.34,1.56,0.64,1);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+font-family:var(--D);color:var(--bone);
+background:var(--void);
+overflow-x:hidden;cursor:default;
+}
+::selection{background:rgba(255,27,61,0.3);color:#fff;}
+a{color:inherit;text-decoration:none;}
+
+/* ── ATMOSPHERIC LAYERS ── */
+body::before{
+content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+opacity:0.6;mix-blend-mode:overlay;
+}
+
+.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.scanlines::before{
+content:'';position:absolute;inset:0;
+background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,27,61,0.018) 3px,rgba(255,27,61,0.018) 4px);
+animation:scanDrift 14s linear infinite;
+}
+.scanlines::after{
+content:'';position:absolute;top:-60%;left:0;right:0;height:50%;
+background:linear-gradient(180deg,transparent,rgba(255,27,61,0.025),transparent);
+animation:scanSweep 9s ease-in-out infinite;
+}
+@keyframes scanDrift{to{background-position:0 80px}}
+@keyframes scanSweep{0%,100%{top:-60%}50%{top:120%}}
+
+.shell{position:relative;z-index:2;width:min(calc(100% - 48px),var(--max));margin:0 auto;}
+
+/* ════════════════════════════════
+NAV
+════════════════════════════════ */
+.nav-wrap{
+position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;
+width:min(calc(100% - 28px),980px);
+}
+.nav-inner{
+display:flex;align-items:center;justify-content:space-between;gap:16px;
+padding:11px 18px;border-radius:100px;
+background:rgba(8,5,10,0.78);
+backdrop-filter:blur(28px) saturate(1.8);
+border:1px solid var(--crimson-line);
+box-shadow:0 0 0 1px var(--crimson-dim),0 8px 40px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,27,61,0.04);
+transition:all .4s var(--ease);position:relative;overflow:hidden;
+}
+.nav-inner::before{
+content:'';position:absolute;top:0;left:-100%;width:100%;height:1px;
+background:linear-gradient(90deg,transparent,var(--crimson),transparent);
+animation:navShimmer 5s ease-in-out infinite;
+}
+@keyframes navShimmer{0%,100%{left:-100%}50%{left:100%}}
+.nav-inner.scrolled{background:rgba(8,5,10,0.92);border-color:rgba(255,27,61,0.35);}
+
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-0.03em;color:var(--bone);}
+.nav-pulse{
+width:7px;height:7px;border-radius:50%;background:var(--crimson);flex-shrink:0;
+box-shadow:0 0 10px var(--crimson-glow),0 0 20px rgba(255,27,61,0.15);
+animation:navPulse 2.5s ease-in-out infinite;
+}
+@keyframes navPulse{0%,100%{box-shadow:0 0 10px var(--crimson-glow)}50%{box-shadow:0 0 22px var(--crimson-glow),0 0 44px rgba(255,27,61,0.18)}}
+.nav-tag{
+margin-left:6px;padding:3px 9px;border-radius:100px;
+font-family:var(--M);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;
+color:var(--crimson-2);border:1px solid var(--crimson-line);
+background:var(--crimson-soft);
+}
+
+.nav-back{
+display:flex;align-items:center;gap:8px;
+padding:8px 16px;border-radius:100px;
+font-family:var(--M);font-size:10px;letter-spacing:0.18em;
+text-transform:uppercase;color:var(--ash);
+border:1px solid rgba(255,255,255,0.06);
+background:rgba(255,255,255,0.02);
+transition:all .25s;
+}
+.nav-back:hover{border-color:var(--crimson-line);color:var(--crimson-2);background:var(--crimson-soft);}
+
+.nav-cta{
+padding:9px 22px;border-radius:100px;
+background:linear-gradient(135deg,var(--crimson),var(--crimson-deep));
+color:#fff;font-weight:700;font-size:13px;
+box-shadow:0 0 22px var(--crimson-soft),0 4px 14px rgba(0,0,0,0.4);
+transition:all .3s var(--spring);position:relative;overflow:hidden;
+}
+.nav-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.18),transparent);border-radius:inherit;}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 0 36px var(--crimson-glow),0 8px 22px rgba(0,0,0,0.3);}
+
+/* ════════════════════════════════
+HERO
+════════════════════════════════ */
+.hero{
+min-height:100vh;display:flex;align-items:center;
+padding:120px 0 80px;position:relative;overflow:hidden;
+}
+.hero::before{
+content:'';position:absolute;inset:0;pointer-events:none;
+background:
+linear-gradient(rgba(255,27,61,0.025) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,27,61,0.025) 1px,transparent 1px);
+background-size:64px 64px;
+mask-image:radial-gradient(ellipse 80% 60% at 30% 50%,black,transparent);
+}
+.hero-orb{
+position:absolute;border-radius:50%;pointer-events:none;filter:blur(90px);
+animation:orbDrift 12s ease-in-out infinite;
+}
+.hero-orb.o1{
+width:700px;height:700px;top:-150px;right:-150px;
+background:radial-gradient(circle,rgba(255,27,61,0.18) 0%,transparent 70%);
+}
+.hero-orb.o2{
+width:500px;height:500px;bottom:-100px;left:-100px;
+background:radial-gradient(circle,rgba(179,14,42,0.12) 0%,transparent 70%);
+animation-delay:-5s;
+}
+@keyframes orbDrift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(28px,-22px) scale(1.06)}66%{transform:translate(-18px,28px) scale(0.94)}}
+
+.hero-in{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:center;}
+
+/* TOP BAR INSIDE HERO */
+.cmd-bar{
+position:absolute;top:90px;left:0;right:0;z-index:3;
+display:flex;justify-content:space-between;
+font-family:var(--M);font-size:9px;letter-spacing:0.28em;
+color:var(--ash-d);text-transform:uppercase;padding:0 4px;
+}
+.cmd-bar-l{display:flex;align-items:center;gap:14px;}
+.cmd-pill{
+padding:4px 10px;border:1px solid var(--crimson-line);
+background:var(--crimson-soft);color:var(--crimson-2);
+font-size:8px;letter-spacing:0.26em;
+}
+.cmd-class{display:flex;align-items:center;gap:8px;color:var(--crimson-2);}
+.cmd-class::before{
+content:'';width:5px;height:5px;background:var(--crimson);
+box-shadow:0 0 8px var(--crimson-glow);
+animation:opPulse 1.4s ease-in-out infinite;
+}
+@keyframes opPulse{0%,100%{opacity:1}50%{opacity:0.35}}
+
+.h-badge{
+display:inline-flex;align-items:center;gap:8px;padding:6px 14px;
+background:var(--crimson-soft);border:1px solid var(--crimson-line);
+border-radius:100px;font-family:var(--M);font-size:10px;letter-spacing:0.2em;
+color:var(--crimson-2);text-transform:uppercase;margin-bottom:28px;
+opacity:0;animation:fadeUp .7s var(--ease) .2s forwards;
+}
+.h-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--crimson);box-shadow:0 0 8px var(--crimson-glow);animation:opPulse 1.4s ease-in-out infinite;}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes lineUp{to{opacity:1;transform:translateY(0)}}
+
+h1.h-head{font-size:clamp(60px,9vw,118px);font-weight:800;line-height:0.86;letter-spacing:-0.05em;color:var(--bone);margin-bottom:14px;overflow:hidden;}
+.h-line{display:block;opacity:0;transform:translateY(60px);animation:lineUp .8s var(--ease) forwards;}
+.h-line:nth-child(1){animation-delay:.4s;}
+.h-line:nth-child(2){animation-delay:.55s;}
+.h-line:nth-child(3){animation-delay:.7s;}
+.h-grad{
+background:linear-gradient(135deg,var(--crimson-2) 0%,var(--crimson) 50%,var(--crimson-deep) 100%);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+background-size:200%;animation:gradFlow 5s ease-in-out infinite;
+}
+@keyframes gradFlow{0%,100%{background-position:0%}50%{background-position:100%}}
+
+.h-version{
+font-family:var(--M);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;
+color:rgba(255,27,61,0.7);margin:20px 0 28px;
+display:flex;align-items:center;gap:12px;
+opacity:0;animation:fadeUp .6s var(--ease) .9s forwards;
+}
+.h-version::after{content:'';flex:1;max-width:120px;height:1px;background:linear-gradient(90deg,var(--crimson-line),transparent);}
+
+.h-body{font-size:17px;line-height:1.78;color:var(--ash);max-width:500px;margin-bottom:42px;
+opacity:0;animation:fadeUp .7s var(--ease) 1.05s forwards;}
+.h-body strong{color:var(--bone);font-weight:600;}
+
+.h-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+opacity:0;animation:fadeUp .7s var(--ease) 1.2s forwards;}
+
+/* BUTTONS */
+.btn-p{
+display:inline-flex;align-items:center;gap:11px;padding:17px 36px;border-radius:100px;
+background:linear-gradient(135deg,var(--crimson),var(--crimson-deep));
+color:#fff;font-weight:700;font-size:15px;position:relative;overflow:hidden;
+box-shadow:0 0 44px rgba(255,27,61,0.32),0 8px 32px rgba(0,0,0,0.5);
+transition:all .4s var(--spring);
+}
+.btn-p::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.17),transparent);border-radius:inherit;}
+.btn-p:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 64px rgba(255,27,61,0.46),0 16px 40px rgba(0,0,0,0.5);}
+.btn-p .arr{transition:transform .35s var(--spring);}
+.btn-p:hover .arr{transform:translateX(5px);}
+
+.btn-g{
+display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:100px;
+border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);
+backdrop-filter:blur(14px);color:var(--bone);font-size:15px;font-weight:500;
+transition:all .3s;
+}
+.btn-g:hover{border-color:var(--crimson-line);background:var(--crimson-soft);color:var(--crimson-2);}
+
+.btn-amber{
+display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:100px;
+border:1px solid rgba(245,158,11,0.4);background:rgba(245,158,11,0.06);
+font-family:var(--M);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+color:var(--amber);transition:all .25s;
+}
+.btn-amber:hover{background:rgba(245,158,11,0.12);}
+
+/* ── SPEC PANEL ── */
+.spec-panel{
+position:relative;
+background:rgba(14,8,16,0.78);
+backdrop-filter:blur(32px) saturate(1.8);
+border:1px solid var(--crimson-line);border-radius:22px;
+box-shadow:0 40px 90px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,27,61,0.06),0 0 0 1px var(--crimson-dim);
+overflow:hidden;
+opacity:0;transform:translateX(24px);animation:fadeLeft .9s var(--ease) .7s forwards;
+}
+@keyframes fadeLeft{to{opacity:1;transform:translateX(0)}}
+.spec-panel::before{
+content:'';position:absolute;top:0;left:0;right:0;height:1px;
+background:linear-gradient(90deg,transparent,var(--crimson),var(--crimson-deep),transparent);
+animation:panelShimmer 4s ease-in-out infinite;
+}
+@keyframes panelShimmer{0%,100%{opacity:0.6}50%{opacity:1}}
+
+/* Corner brackets */
+.bracket{position:absolute;width:24px;height:24px;border:1px solid var(--crimson);pointer-events:none;z-index:3;}
+.br-tl{top:8px;left:8px;border-right:none;border-bottom:none;}
+.br-tr{top:8px;right:8px;border-left:none;border-bottom:none;}
+.br-bl{bottom:8px;left:8px;border-right:none;border-top:none;}
+.br-br{bottom:8px;right:8px;border-left:none;border-top:none;}
+
+.spec-hdr{
+padding:16px 22px;border-bottom:1px solid var(--crimson-line);
+display:flex;align-items:center;justify-content:space-between;
+background:var(--crimson-dim);
+}
+.spec-title{
+font-family:var(--M);font-size:9px;letter-spacing:0.28em;
+color:var(--crimson-2);text-transform:uppercase;
+}
+.spec-status{
+display:flex;align-items:center;gap:7px;
+font-family:var(--M);font-size:8px;letter-spacing:0.18em;
+color:var(--green);text-transform:uppercase;
+}
+.s-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.9);animation:opPulse 2s ease-in-out infinite;}
+
+.spec-grid{
+display:grid;grid-template-columns:1fr 1fr;gap:1px;
+background:var(--crimson-line);
+}
+.spec-cell{padding:16px 20px;background:rgba(14,8,16,0.95);}
+.sc-k{font-family:var(--M);font-size:8px;letter-spacing:0.22em;color:var(--ash-d);text-transform:uppercase;margin-bottom:6px;}
+.sc-v{font-family:var(--M);font-size:13px;font-weight:500;color:var(--bone);}
+.sc-v.crimson{color:var(--crimson-2);}
+.sc-v.amber{color:var(--amber);}
+.sc-v.green{color:var(--green);}
+
+.spec-bar-wrap{padding:16px 22px;border-top:1px solid var(--crimson-line);}
+.sb-lbl{display:flex;justify-content:space-between;font-family:var(--M);font-size:8px;letter-spacing:0.2em;color:var(--ash-d);margin-bottom:6px;text-transform:uppercase;}
+.sb-track{height:3px;background:rgba(255,27,61,0.08);border-radius:100px;overflow:hidden;}
+.sb-fill{height:100%;width:94.7%;border-radius:inherit;
+background:linear-gradient(90deg,var(--crimson-deep),var(--crimson),var(--crimson-2));
+box-shadow:0 0 10px var(--crimson-glow);position:relative;overflow:hidden;
+animation:barGrow 1.8s var(--ease) 1.4s both;}
+.sb-fill::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,0.45),transparent);
+animation:barSheen 2.5s ease-in-out 2s infinite;}
+@keyframes barGrow{from{width:0}to{width:94.7%}}
+@keyframes barSheen{0%,100%{left:-100%}100%{left:250%}}
+
+/* ════════════════════════════════
+SECTION HELPERS
+════════════════════════════════ */
+.sec{padding:130px 0;position:relative;z-index:2;}
+.sec-kicker{display:block;font-family:var(--M);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--crimson-2);margin-bottom:16px;}
+.sec-h2{font-size:clamp(40px,5.5vw,72px);font-weight:800;letter-spacing:-0.04em;line-height:0.92;color:var(--bone);margin-bottom:20px;}
+.sec-h2 span{background:linear-gradient(135deg,var(--crimson-2),var(--crimson-deep));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.sec-p{font-size:17px;line-height:1.78;color:var(--ash);max-width:580px;}
+
+.line-sep{height:1px;background:linear-gradient(90deg,transparent,var(--crimson-line),transparent);}
+
+.rv{opacity:0;transform:translateY(28px);transition:opacity .85s var(--ease),transform .85s var(--ease);}
+.rv.on{opacity:1;transform:none;}
+.rv-l{opacity:0;transform:translateX(-28px);transition:opacity .85s var(--ease),transform .85s var(--ease);}
+.rv-l.on{opacity:1;transform:none;}
+.rv-r{opacity:0;transform:translateX(28px);transition:opacity .85s var(--ease),transform .85s var(--ease);}
+.rv-r.on{opacity:1;transform:none;}
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}
+.d4{transition-delay:.32s;}.d5{transition-delay:.40s;}.d6{transition-delay:.48s;}
+
+/* ════════════════════════════════
+MODULES GRID
+════════════════════════════════ */
+.mod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--crimson-line);border:1px solid var(--crimson-line);margin-top:64px;}
+.mod{
+padding:36px 32px;background:rgba(8,5,10,0.92);
+position:relative;overflow:hidden;transition:background .3s;
+}
+.mod:hover{background:rgba(255,27,61,0.04);}
+.mod::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+background:linear-gradient(90deg,transparent,var(--crimson),transparent);
+transform:scaleX(0);transform-origin:center;transition:transform .4s var(--spring);}
+.mod:hover::after{transform:scaleX(1);}
+
+.mod-n{font-family:var(--M);font-size:9px;letter-spacing:0.22em;color:var(--ash-d);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:8px;}
+.mod-n::before{content:'';width:24px;height:1px;background:var(--crimson-line);}
+
+.mod-ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;background:var(--crimson-soft);border:1px solid var(--crimson-line);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);transition:box-shadow .3s;}
+.mod:hover .mod-ic{box-shadow:0 0 22px rgba(255,27,61,0.15),inset 0 1px 0 rgba(255,255,255,0.06);}
+
+.mod-h3{font-family:var(--D);font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--bone);margin-bottom:12px;}
+.mod-p{font-size:13.5px;line-height:1.78;color:var(--ash);margin-bottom:18px;}
+.mod-spec{font-family:var(--M);font-size:9px;letter-spacing:0.1em;color:var(--crimson-2);border-top:1px solid var(--crimson-dim);padding-top:14px;}
+
+/* ════════════════════════════════
+ARCHITECTURE
+════════════════════════════════ */
+.arch-in{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:start;}
+
+.tags{display:flex;flex-wrap:wrap;gap:7px;}
+.tg{
+font-family:var(--M);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;
+color:var(--crimson-2);border:1px solid var(--crimson-line);
+padding:4px 10px;border-radius:100px;background:var(--crimson-soft);
+}
+
+.arch-diagram{
+background:rgba(8,5,10,0.85);
+backdrop-filter:blur(20px);
+border:1px solid var(--crimson-line);border-radius:18px;
+overflow:hidden;position:relative;
+box-shadow:0 24px 60px rgba(0,0,0,0.5);
+}
+.arch-diagram::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+background:linear-gradient(90deg,transparent,var(--crimson),transparent);}
+.arch-hdr{padding:14px 20px;border-bottom:1px solid var(--crimson-line);font-family:var(--M);font-size:9px;letter-spacing:0.25em;color:var(--crimson-2);text-transform:uppercase;background:var(--crimson-dim);}
+.arch-body{padding:24px;}
+
+.arch-layer{
+display:flex;align-items:center;gap:14px;padding:14px 18px;
+background:rgba(255,255,255,0.018);border:1px solid rgba(255,255,255,0.04);
+border-radius:10px;margin-bottom:8px;position:relative;overflow:hidden;
+transition:all .25s;
+}
+.arch-layer:hover{background:var(--crimson-soft);border-color:var(--crimson-line);}
+.arch-layer::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--crimson);}
+.arch-layer.l2::before{background:var(--amber);}
+.arch-layer.l3::before{background:var(--crimson-deep);}
+.al-n{font-family:var(--M);font-size:9px;letter-spacing:0.18em;color:var(--ash-d);min-width:28px;}
+.al-name{font-family:var(--M);font-size:10px;letter-spacing:0.06em;color:var(--bone);flex:1;}
+.al-tech{font-family:var(--M);font-size:8px;letter-spacing:0.08em;color:var(--ash-d);}
+
+.arch-conn{width:1px;height:14px;background:linear-gradient(180deg,var(--crimson),rgba(255,27,61,0.1));margin:0 auto 8px;}
+
+/* COMPLIANCE */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--crimson-line);border:1px solid var(--crimson-line);}
+.comp-item{padding:18px 20px;background:rgba(8,5,10,0.92);display:flex;align-items:center;gap:13px;transition:background .2s;}
+.comp-item:hover{background:rgba(255,27,61,0.04);}
+.comp-ic{font-size:20px;flex-shrink:0;}
+.comp-nm{font-family:var(--D);font-size:18px;font-weight:700;letter-spacing:-0.02em;color:var(--bone);}
+.comp-ds{font-family:var(--M);font-size:9px;letter-spacing:0.06em;color:var(--ash-d);margin-top:3px;}
+.comp-bdg{margin-left:auto;font-family:var(--M);font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);border:1px solid rgba(16,185,129,0.25);padding:3px 9px;border-radius:100px;background:rgba(16,185,129,0.05);}
+
+/* ════════════════════════════════
+TIERS
+════════════════════════════════ */
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--crimson-line);border:1px solid var(--crimson-line);margin-top:60px;}
+.tier{padding:38px 32px;background:rgba(8,5,10,0.95);position:relative;overflow:hidden;}
+.tier.featured{background:rgba(255,27,61,0.05);}
+.tier.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--crimson),transparent);}
+
+.tier-bdg{font-family:var(--M);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:16px;display:inline-block;}
+.tier-bdg.std{color:var(--ash-d);}
+.tier-bdg.pro{color:var(--crimson-2);border:1px solid var(--crimson-line);padding:3px 10px;background:var(--crimson-soft);}
+.tier-bdg.ent{color:var(--amber);border:1px solid rgba(245,158,11,0.3);padding:3px 10px;background:rgba(245,158,11,0.06);}
+
+.tier-nm{font-family:var(--D);font-size:34px;font-weight:800;letter-spacing:-0.03em;color:var(--bone);margin-bottom:8px;}
+.tier-pr{font-family:var(--M);font-size:11px;letter-spacing:0.12em;color:var(--ash);margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--crimson-dim);}
+.tier-feat{display:flex;flex-direction:column;gap:10px;}
+.tf{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ash);}
+.tf .ck{color:var(--crimson-2);font-size:11px;flex-shrink:0;margin-top:2px;}
+.tf .cx{color:var(--dim);font-size:11px;flex-shrink:0;margin-top:2px;}
+.tf.off{color:rgba(180,160,170,0.3);}
+.tier-cta{margin-top:30px;}
+
+/* ════════════════════════════════
+CTA
+════════════════════════════════ */
+.cta{padding:130px 0 110px;position:relative;z-index:2;overflow:hidden;}
+.cta-rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;}
+.cta-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid;animation:ringPulse 4s ease-in-out infinite;}
+.cta-ring.r1{width:500px;height:500px;border-color:rgba(255,27,61,0.10);}
+.cta-ring.r2{width:750px;height:750px;border-color:rgba(255,27,61,0.06);animation-delay:-1.3s;}
+.cta-ring.r3{width:1000px;height:1000px;border-color:rgba(255,27,61,0.04);animation-delay:-2.6s;}
+@keyframes ringPulse{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)}50%{opacity:0.5;transform:translate(-50%,-50%) scale(1.04)}}
+
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;
+background:radial-gradient(ellipse,rgba(255,27,61,0.10) 0%,rgba(179,14,42,0.05) 40%,transparent 70%);
+pointer-events:none;filter:blur(20px);}
+
+.cta-in{position:relative;z-index:1;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center;
+padding:48px;border:1px solid var(--crimson-line);border-radius:24px;
+background:rgba(8,5,10,0.78);backdrop-filter:blur(20px);overflow:hidden;}
+.cta-in::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+background:linear-gradient(90deg,transparent,var(--crimson),var(--crimson-deep),transparent);}
+
+.cta-h2{font-size:clamp(40px,5vw,68px);font-weight:800;letter-spacing:-0.04em;line-height:0.9;color:var(--bone);margin-bottom:18px;}
+.cta-h2 .g{background:linear-gradient(135deg,var(--crimson-2),var(--crimson-deep));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cta-p{font-size:16px;line-height:1.75;color:var(--ash);max-width:520px;margin-bottom:30px;}
+
+.contact-box{padding:24px;border:1px solid var(--crimson-line);background:rgba(0,0,0,0.4);}
+.cb-hdr{font-family:var(--M);font-size:8px;letter-spacing:0.28em;color:var(--ash-d);text-transform:uppercase;margin-bottom:14px;}
+.cb-big{font-family:var(--D);font-size:52px;font-weight:800;color:var(--crimson-2);line-height:1;letter-spacing:-0.02em;text-shadow:0 0 24px var(--crimson-glow);}
+.cb-sub{font-family:var(--M);font-size:9px;letter-spacing:0.18em;color:var(--ash-d);text-transform:uppercase;margin-top:8px;}
+.cb-divider{height:1px;background:var(--crimson-dim);margin:20px 0;}
+.cb-line{font-family:var(--M);font-size:11px;color:var(--ash);line-height:2;}
+.cb-line .acc{color:var(--crimson-2);}
+
+/* ════════════════════════════════
+FOOTER
+════════════════════════════════ */
+footer{border-top:1px solid var(--crimson-dim);padding:36px 0;position:relative;z-index:2;}
+.ft-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;
+font-family:var(--M);font-size:9px;letter-spacing:0.18em;color:var(--ash-d);text-transform:uppercase;}
+.ft-brand{color:var(--crimson-2);font-weight:500;}
+.ft-lg{display:flex;gap:20px;}
+.ft-lg a{color:var(--ash-d);transition:color .2s;}
+.ft-lg a:hover{color:var(--crimson-2);}
+
+/* ════════════════════════════════
+RESPONSIVE
+════════════════════════════════ */
+@media(max-width:1100px){
+.hero-in,.arch-in,.cta-in{grid-template-columns:1fr;}
+.mod-grid,.tier-grid{grid-template-columns:repeat(2,1fr);}
+.cmd-bar{font-size:8px;letter-spacing:0.18em;}
+}
+@media(max-width:768px){
+.mod-grid,.tier-grid,.comp-grid{grid-template-columns:1fr;}
+.nav-back span{display:none;}
+h1.h-head{font-size:64px;}
+.sec{padding:80px 0;}
+.cta-in{padding:28px;}
+.cmd-bar{display:none;}
+}
+@media(max-width:480px){
+.nav-tag{display:none;}
+.spec-grid{grid-template-columns:1fr;}
+}
+
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important;}
+}
 </style>
+
 </head>
 <body>
+
 <div class="scanlines"></div>
-<div class="nav-wrap"><div class="nav-inner" id="navI"><a class="nav-logo" href="index.html"><div class="nav-pulse"></div>ClearGlass <span class="nav-tag">GUARDIAN v5.0</span></a><div style="display:flex;gap:12px;align-items:center"><a href="index.html" class="nav-back">← Main Site</a><a href="#contact" class="nav-cta">Request Demo</a></div></div></div>
-<section class="hero" id="top"><div class="shell"><div class="hero-in"><div><div class="h-badge">◈ ClearGlass Inc · Flagship Platform</div><h1 class="h-head"><span>CLEAR</span><br><span>GLASS</span><br><span class="h-grad">GUARDIAN</span></h1><p class="h-version">Platform Version 5.0 · 2026 · Operational</p><p class="h-body">Ontario's most advanced AI-powered cybersecurity platform. <strong>Neural threat detection</strong>, zero trust architecture, post-quantum cryptography, and full compliance automation — unified into one intelligence console.</p><div class="h-actions"><a href="#contact" class="btn-p">Request Demo →</a><a href="#modules" class="btn-g">Explore Platform</a></div></div><div class="spec-panel"><div class="spec-hdr"><span class="spec-title">◈ Platform Specifications</span><div>Production Ready</div></div><div class="spec-grid"><div class="spec-cell"><div class="sc-k">Platform Version</div><div class="sc-v">GUARDIAN v5.0</div></div><div class="spec-cell"><div class="sc-k">Neural Engine</div><div class="sc-v">AI-v47 · 2033</div></div><div class="spec-cell"><div class="sc-k">Detection Accuracy</div><div class="sc-v">98.4%</div></div><div class="spec-cell"><div class="sc-k">Detect Latency</div><div class="sc-v">&lt;4ms</div></div></div></div></div></div></section>
-<section class="sec" id="modules"><div class="shell"><span class="sec-kicker">◈ Core Modules</span><h2 class="sec-h2">What <span>GUARDIAN</span> Contains</h2><p class="sec-p">Eight battle-tested intelligence modules unified under a single pane of glass.</p><div class="mod-grid"><div class="mod"><div class="mod-h3">Neural Threat Engine</div><p class="mod-p">Proprietary ML models trained on Canadian threat telemetry with sub-4ms detection.</p></div><div class="mod"><div class="mod-h3">Predictive Intel</div><p class="mod-p">72-hour threat forecasting correlating signals from 140+ intelligence sources.</p></div><div class="mod"><div class="mod-h3">Zero Trust Engine</div><p class="mod-p">Full ZTNA implementation with continuous identity verification and micro-segmentation.</p></div></div></div></section>
-<section class="cta" id="contact"><div class="shell"><div class="cta-in"><div><span class="sec-kicker">◈ Deploy GUARDIAN</span><h2 class="sec-h2">Protect Your <span>Ontario</span> Organization.</h2><p class="sec-p">Book a confidential GUARDIAN demonstration with Desmond Otieno directly.</p><div style="display:flex;gap:14px;flex-wrap:wrap"><a href="mailto:Desmondotieno@icloud.com?subject=GUARDIAN%20Demo%20Request" class="btn-p">Request GUARDIAN Demo →</a><a href="tel:+12897070269" class="btn-g">📞 289-707-0269</a></div></div><div class="contact-box"><div style="font-family:var(--M);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash-d)">Direct Contact</div><p style="margin-top:10px;line-height:1.8">Desmond Otieno<br>Founder &amp; Chairman<br>Desmondotieno@icloud.com<br>289-707-0269</p></div></div></div></section>
-<footer><div class="shell"><div class="ft-in"><div><span style="color:var(--crimson-2)">ClearGlass Inc</span> · GUARDIAN v5.0 · Burlington, Ontario · © <span id="yr"></span></div><div><a href="index.html">Main Site</a> · <a href="mailto:Desmondotieno@icloud.com">Contact</a> · <a href="SECURITY.md">Security</a></div></div></div></footer>
-<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+
+<!-- NAV -->
+
+<div class="nav-wrap">
+  <div class="nav-inner" id="navI">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-pulse"></div>
+      ClearGlass
+      <span class="nav-tag">GUARDIAN v5.0</span>
+    </a>
+    <div style="display:flex;gap:12px;align-items:center">
+      <a href="index.html" class="nav-back">← <span>Main Site</span></a>
+      <a href="#contact" class="nav-cta">Request Demo</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+
+<section class="hero" id="top">
+  <div class="hero-orb o1"></div>
+  <div class="hero-orb o2"></div>
+
+  <div class="shell">
+    <div class="cmd-bar">
+      <div class="cmd-bar-l">
+        <span class="cmd-pill">CG//SI//NF</span>
+        <span class="cmd-class">CLASSIFIED · COMMAND INTERFACE</span>
+      </div>
+      <div style="display:flex;gap:18px">
+        <span>SESSION · <span style="color:var(--bone)" id="sessId">CG-04A2-7E11</span></span>
+        <span>UTC · <span style="color:var(--bone)" id="utcT">00:00:00</span></span>
+      </div>
+    </div>
+
+<div class="hero-in">
+  <div>
+    <div class="h-badge">◈ ClearGlass Inc · Flagship Platform</div>
+    <h1 class="h-head">
+      <span class="h-line">CLEAR</span>
+      <span class="h-line">GLASS</span>
+      <span class="h-line h-grad">GUARDIAN</span>
+    </h1>
+    <p class="h-version">Platform Version 5.0 · 2026 · Operational</p>
+    <p class="h-body">Ontario's most advanced AI-powered cybersecurity platform. <strong>Neural threat detection</strong>, zero trust architecture, post-quantum cryptography, and full compliance automation — unified into one intelligence console.</p>
+    <div class="h-actions">
+      <a href="#contact" class="btn-p">Request Demo <span class="arr">→</span></a>
+      <a href="#modules" class="btn-g">Explore Platform</a>
+    </div>
+  </div>
+
+  <div class="spec-panel">
+    <div class="bracket br-tl"></div>
+    <div class="bracket br-tr"></div>
+    <div class="bracket br-bl"></div>
+    <div class="bracket br-br"></div>
+
+    <div class="spec-hdr">
+      <span class="spec-title">◈ Platform Specifications</span>
+      <div class="spec-status"><div class="s-dot"></div>Production Ready</div>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-cell"><div class="sc-k">Platform Version</div><div class="sc-v crimson">GUARDIAN v5.0</div></div>
+      <div class="spec-cell"><div class="sc-k">Neural Engine</div><div class="sc-v crimson">AI-v47 · 2033</div></div>
+      <div class="spec-cell"><div class="sc-k">Detection Accuracy</div><div class="sc-v green">98.4%</div></div>
+      <div class="spec-cell"><div class="sc-k">Detect Latency</div><div class="sc-v crimson">&lt;4ms</div></div>
+      <div class="spec-cell"><div class="sc-k">Intel Sources</div><div class="sc-v">140+</div></div>
+      <div class="spec-cell"><div class="sc-k">Availability</div><div class="sc-v green">99.99% SLA</div></div>
+      <div class="spec-cell"><div class="sc-k">Post-Quantum</div><div class="sc-v crimson">NIST PQC</div></div>
+      <div class="spec-cell"><div class="sc-k">Compliance</div><div class="sc-v">PIPEDA · ISO 27001</div></div>
+      <div class="spec-cell"><div class="sc-k">Deployment</div><div class="sc-v">Cloud / On-Prem / Hybrid</div></div>
+      <div class="spec-cell"><div class="sc-k">IR SLA</div><div class="sc-v amber">&lt;4hr Critical</div></div>
+    </div>
+    <div class="spec-bar-wrap">
+      <div class="sb-lbl"><span>Threat Coverage</span><span style="color:var(--crimson-2)">94.7%</span></div>
+      <div class="sb-track"><div class="sb-fill"></div></div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<div class="line-sep shell"></div>
+
+<!-- MODULES -->
+
+<section class="sec" id="modules">
+  <div class="shell">
+    <div class="rv">
+      <span class="sec-kicker">◈ Core Modules</span>
+      <h2 class="sec-h2">What <span>GUARDIAN</span><br>Contains</h2>
+      <p class="sec-p">Eight battle-tested intelligence modules unified under a single pane of glass. Each built specifically for Ontario's threat landscape.</p>
+    </div>
+
+<div class="mod-grid">
+  <div class="mod rv d1">
+    <div class="mod-n">01 / 08</div>
+    <div class="mod-ic">🧬</div>
+    <div class="mod-h3">Neural Threat Engine</div>
+    <p class="mod-p">Proprietary ML models trained on Canadian threat telemetry. Continuous adversarial retraining. Sub-4ms detection across 47 attack categories with confidence scoring.</p>
+    <div class="mod-spec">Model AI-v47 · 98.4% accuracy · &lt;4ms latency</div>
+  </div>
+  <div class="mod rv d2">
+    <div class="mod-n">02 / 08</div>
+    <div class="mod-ic">🔮</div>
+    <div class="mod-h3">Predictive Intel</div>
+    <p class="mod-p">72-hour threat forecasting engine correlating signals from 140+ intelligence sources. APT actor profiling and pre-attack indicator identification for Ontario targets.</p>
+    <div class="mod-spec">140+ sources · 72hr horizon · Five Eyes adjacent</div>
+  </div>
+  <div class="mod rv d3">
+    <div class="mod-n">03 / 08</div>
+    <div class="mod-ic">🔐</div>
+    <div class="mod-h3">Zero Trust Engine</div>
+    <p class="mod-p">Full ZTNA implementation per NIST SP 800-207. Continuous identity verification, micro-segmentation, and least-privilege enforcement across cloud and on-prem.</p>
+    <div class="mod-spec">NIST 800-207 · Micro-seg · Continuous auth</div>
+  </div>
+  <div class="mod rv d1">
+    <div class="mod-n">04 / 08</div>
+    <div class="mod-ic">⚛</div>
+    <div class="mod-h3">Post-Quantum Crypto</div>
+    <p class="mod-p">CRYSTALS-Kyber-1024 key encapsulation, CRYSTALS-Dilithium-5 signatures, FALCON-1024 for compact signing. Full NIST FIPS 203/204/206 compliance.</p>
+    <div class="mod-spec">Kyber-1024 · Dilithium-5 · FIPS 203/204/206</div>
+  </div>
+  <div class="mod rv d2">
+    <div class="mod-n">05 / 08</div>
+    <div class="mod-ic">📡</div>
+    <div class="mod-h3">SIGINT Platform</div>
+    <p class="mod-p">Open source and signal intelligence fusion. Dark web monitoring, threat actor tracking, adversary infrastructure mapping, and real-time IOC correlation.</p>
+    <div class="mod-spec">OSINT · Dark web · APT tracking · IOC feeds</div>
+  </div>
+  <div class="mod rv d3">
+    <div class="mod-n">06 / 08</div>
+    <div class="mod-ic">⚡</div>
+    <div class="mod-h3">Incident Response</div>
+    <p class="mod-p">AI-accelerated IR playbooks with automated containment, forensic evidence preservation, and ransomware isolation. 4-hour critical SLA for Ontario.</p>
+    <div class="mod-spec">4hr SLA · Auto-containment · Chain-of-custody</div>
+  </div>
+  <div class="mod rv d1">
+    <div class="mod-n">07 / 08</div>
+    <div class="mod-ic">📋</div>
+    <div class="mod-h3">Compliance Engine</div>
+    <p class="mod-p">Continuous automated compliance monitoring with evidence collection for PIPEDA, MFIPPA, ISO 27001, SOC 2, and Criminal Code 342.1. Audit-ready on demand.</p>
+    <div class="mod-spec">PIPEDA · MFIPPA · ISO 27001 · SOC 2 · CC 342.1</div>
+  </div>
+  <div class="mod rv d2">
+    <div class="mod-n">08 / 08</div>
+    <div class="mod-ic">👁</div>
+    <div class="mod-h3">Unified Console</div>
+    <p class="mod-p">Single-pane-of-glass command interface for all eight modules. Real-time dashboards, executive reporting, API integration, and SIEM/SOAR connectivity.</p>
+    <div class="mod-spec">REST API · SIEM integration · Executive reports</div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<div class="line-sep shell"></div>
+
+<!-- ARCHITECTURE -->
+
+<section class="sec">
+  <div class="shell">
+    <div class="arch-in">
+      <div class="rv-l">
+        <span class="sec-kicker">◈ Architecture</span>
+        <h2 class="sec-h2">Platform<br><span>Stack</span></h2>
+        <p class="sec-p" style="margin-bottom:36px">Eight-layer security architecture designed for Ontario's enterprise and municipal threat landscape. Each layer hardened independently with defence-in-depth principles.</p>
+
+    <div class="tags" style="margin-bottom:32px">
+      <span class="tg">Air-gap capable</span>
+      <span class="tg">Multi-tenant</span>
+      <span class="tg">Cloud / On-Prem</span>
+      <span class="tg">FIPS 203/204/206</span>
+      <span class="tg">FedRAMP-aligned</span>
+      <span class="tg">Canadian data residency</span>
+    </div>
+
+    <span class="sec-kicker" style="margin-bottom:16px">Compliance Coverage</span>
+    <div class="comp-grid">
+      <div class="comp-item">
+        <span class="comp-ic">🇨🇦</span>
+        <div><div class="comp-nm">PIPEDA</div><div class="comp-ds">Canadian privacy law</div></div>
+        <span class="comp-bdg">Automated</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-ic">🏛</span>
+        <div><div class="comp-nm">MFIPPA</div><div class="comp-ds">Municipal FOI · Ontario</div></div>
+        <span class="comp-bdg">Covered</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-ic">🔐</span>
+        <div><div class="comp-nm">ISO 27001</div><div class="comp-ds">Information security mgmt</div></div>
+        <span class="comp-bdg">Automated</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-ic">🧾</span>
+        <div><div class="comp-nm">SOC 2 II</div><div class="comp-ds">Service org audit ready</div></div>
+        <span class="comp-bdg">Ready</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-ic">⚖</span>
+        <div><div class="comp-nm">CC 342.1</div><div class="comp-ds">Unauthorized computer use</div></div>
+        <span class="comp-bdg">Logged</span>
+      </div>
+      <div class="comp-item">
+        <span class="comp-ic">📐</span>
+        <div><div class="comp-nm">NIST CSF 2.0</div><div class="comp-ds">Cybersecurity framework</div></div>
+        <span class="comp-bdg">Full</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="rv-r">
+    <div class="arch-diagram">
+      <div class="arch-hdr">◈ GUARDIAN Platform · 8-Layer Architecture</div>
+      <div class="arch-body">
+        <div class="arch-layer"><span class="al-n">L8</span><span class="al-name">Unified Console &amp; API Gateway</span><span class="al-tech">REST · WS · SIEM</span></div>
+        <div class="arch-conn"></div>
+        <div class="arch-layer l2"><span class="al-n">L7</span><span class="al-name">Compliance &amp; Audit Engine</span><span class="al-tech">PIPEDA · ISO 27001</span></div>
+        <div class="arch-conn"></div>
+        <div class="arch-layer"><span class="al-n">L6</span><span class="al-name">Incident Response &amp; SOAR</span><span class="al-tech">Playbooks · Forensics</span></div>
+        <div class="arch-conn"></div>
+        <div class="arch-layer l3"><span class="al-n">L5</span><span class="al-name">SIGINT &amp; Threat Intelligence</span><span class="al-tech">OSINT · Dark web · IOC</span></div>
+        <div class="arch-conn"></div>
+        <div class="arch-layer l2"><span class="al-n">L4</span><span class="al-name">Zero Trust Policy Engine</span><span class="al-tech">NIST 800-207 · IAM</span></div>
+        <div class="arch-conn"></div>
+        <div class="arch-layer"><span class="al-n">L3</span><span class="al-name">Neural Threat Detection</span><span class="al-tech">AI-v47 · 98.4% · &lt;4ms</span></div>
+        <div class="arch-conn"></div>
+        <div class="arch-layer l3"><span class="al-n">L2</span><span class="al-name">Post-Quantum Cryptography</span><span class="al-tech">Kyber · Dilithium · FALCON</span></div>
+        <div class="arch-conn"></div>
+        <div class="arch-layer l2"><span class="al-n">L1</span><span class="al-name">Secure Hardware Root of Trust</span><span class="al-tech">HSM · TPM 2.0 · Enclave</span></div>
+
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--crimson-dim)">
+          <div style="font-family:var(--M);font-size:8px;letter-spacing:0.22em;color:var(--ash-d);text-transform:uppercase;margin-bottom:10px">Deployment Models</div>
+          <div class="tags">
+            <span class="tg">AWS · Azure · GCP</span>
+            <span class="tg">On-Premises</span>
+            <span class="tg">Air-Gapped</span>
+            <span class="tg">Hybrid</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<div class="line-sep shell"></div>
+
+<!-- TIERS -->
+
+<section class="sec">
+  <div class="shell">
+    <div class="rv">
+      <span class="sec-kicker">◈ Service Tiers</span>
+      <h2 class="sec-h2">GUARDIAN<br><span>Plans</span></h2>
+      <p class="sec-p">Tailored for Ontario organizations of every scale — from municipal governments to enterprise. All pricing confidential and proposal-based.</p>
+    </div>
+
+<div class="tier-grid">
+  <div class="tier rv d1">
+    <span class="tier-bdg std">Standard</span>
+    <div class="tier-nm">Sentinel</div>
+    <div class="tier-pr">Ideal for SMBs &amp; regional organizations</div>
+    <div class="tier-feat">
+      <div class="tf"><span class="ck">✓</span><span>Neural Threat Engine</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Zero Trust policy enforcement</span></div>
+      <div class="tf"><span class="ck">✓</span><span>PIPEDA compliance automation</span></div>
+      <div class="tf"><span class="ck">✓</span><span>24/7 monitoring · 8hr IR SLA</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Monthly executive reports</span></div>
+      <div class="tf off"><span class="cx">—</span><span>Post-quantum cryptography</span></div>
+      <div class="tf off"><span class="cx">—</span><span>SIGINT platform</span></div>
+      <div class="tf off"><span class="cx">—</span><span>Dedicated analyst</span></div>
+    </div>
+    <div class="tier-cta"><a href="#contact" class="btn-g" style="width:100%;justify-content:center;font-size:11px;letter-spacing:0.18em;text-transform:uppercase">Get Proposal</a></div>
+  </div>
+
+  <div class="tier featured rv d2">
+    <span class="tier-bdg pro">◈ Recommended</span>
+    <div class="tier-nm">Guardian</div>
+    <div class="tier-pr">Full platform for enterprise &amp; municipalities</div>
+    <div class="tier-feat">
+      <div class="tf"><span class="ck">✓</span><span>All Sentinel features</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Post-quantum cryptography suite</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Full SIGINT intelligence platform</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Predictive threat intelligence</span></div>
+      <div class="tf"><span class="ck">✓</span><span>4hr critical IR SLA</span></div>
+      <div class="tf"><span class="ck">✓</span><span>ISO 27001 + SOC 2 + MFIPPA</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Weekly threat briefings</span></div>
+      <div class="tf off"><span class="cx">—</span><span>Dedicated analyst team</span></div>
+    </div>
+    <div class="tier-cta"><a href="#contact" class="btn-p" style="width:100%;justify-content:center;font-size:12px;padding:14px 24px">Request Demo →</a></div>
+  </div>
+
+  <div class="tier rv d3">
+    <span class="tier-bdg ent">Enterprise</span>
+    <div class="tier-nm">Sovereign</div>
+    <div class="tier-pr">Full-spectrum for critical infrastructure</div>
+    <div class="tier-feat">
+      <div class="tf"><span class="ck">✓</span><span>All Guardian features</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Dedicated ClearGlass analyst team</span></div>
+      <div class="tf"><span class="ck">✓</span><span>On-premises / air-gap deployment</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Custom threat actor profiling</span></div>
+      <div class="tf"><span class="ck">✓</span><span>1hr critical IR SLA</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Full Criminal Code 342.1 coverage</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Executive briefing · monthly</span></div>
+      <div class="tf"><span class="ck">✓</span><span>Source code escrow + audit rights</span></div>
+    </div>
+    <div class="tier-cta"><a href="#contact" class="btn-amber" style="width:100%;justify-content:center">Contact Founder</a></div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+
+<section class="cta" id="contact">
+  <div class="cta-rings">
+    <div class="cta-ring r1"></div>
+    <div class="cta-ring r2"></div>
+    <div class="cta-ring r3"></div>
+  </div>
+  <div class="cta-glow"></div>
+
+  <div class="shell">
+    <div class="cta-in rv">
+      <div>
+        <span class="sec-kicker">◈ Deploy GUARDIAN</span>
+        <h2 class="cta-h2">Protect Your<br><span class="g">Ontario</span><br>Organization.</h2>
+        <p class="cta-p">Book a confidential GUARDIAN demonstration with Desmond Otieno directly. We'll assess your threat landscape, map your compliance gaps, and propose a deployment that fits your budget and risk appetite.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="mailto:Desmondotieno@icloud.com?subject=GUARDIAN%20Demo%20Request" class="btn-p">Request GUARDIAN Demo <span class="arr">→</span></a>
+          <a href="tel:+12897070269" class="btn-g">📞 289-707-0269</a>
+        </div>
+      </div>
+
+  <div class="contact-box">
+    <div class="cb-hdr">Response Time</div>
+    <div class="cb-big">&lt;24h</div>
+    <div class="cb-sub">Guaranteed · Burlington ON</div>
+    <div class="cb-divider"></div>
+    <div class="cb-hdr">Direct Contact</div>
+    <div class="cb-line">
+      Desmond Otieno<br>
+      Founder &amp; Chairman<br>
+      <span class="acc">Desmondotieno@icloud.com</span><br>
+      <span class="acc">289-707-0269</span>
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="shell">
+    <div class="ft-in">
+      <div>
+        <span class="ft-brand">ClearGlass Inc</span>
+        <span style="margin:0 12px;color:var(--crimson-line)">·</span>
+        <span>GUARDIAN v5.0</span>
+        <span style="margin:0 12px;color:var(--crimson-line)">·</span>
+        <span>Burlington, Ontario</span>
+        <span style="margin:0 12px;color:var(--crimson-line)">·</span>
+        <span>© <span id="yr"></span></span>
+      </div>
+      <div class="ft-lg">
+        <a href="index.html">Main Site</a>
+        <a href="mailto:Desmondotieno@icloud.com">Contact</a>
+        <a href="SECURITY.md">Security</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Scroll reveals ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);} });
+}, {threshold:0.1, rootMargin:'0px 0px -48px 0px'});
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el => obs.observe(el));
+
+// ── Nav scroll state ──
+const nav = document.getElementById('navI');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+}, {passive:true});
+
+// ── Session ID ──
+(() => {
+  const hex = '0123456789ABCDEF';
+  const part = n => Array.from({length:n}, () => hex[Math.floor(Math.random()*16)]).join('');
+  const el = document.getElementById('sessId');
+  if(el) el.textContent = `CG-${part(4)}-${part(4)}`;
+})();
+
+// ── UTC clock ──
+function tick(){
+  const d = new Date();
+  const t = `${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
+  const el = document.getElementById('utcT');
+  if(el) el.textContent = t;
+}
+tick(); setInterval(tick, 1000);
+
+// ── Year ──
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ── Smooth scroll ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+
+// ── Magnetic CTA buttons ──
+document.querySelectorAll('.btn-p,.nav-cta').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    const dx = (e.clientX-r.left-r.width/2)*0.15;
+    const dy = (e.clientY-r.top-r.height/2)*0.15;
+    btn.style.transform = `translate(${dx}px,${dy}px) translateY(-2px) scale(1.02)`;
+  });
+  btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+});
+</script>
+
 </body>
 </html>

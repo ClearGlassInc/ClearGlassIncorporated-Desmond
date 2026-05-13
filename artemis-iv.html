@@ -1038,6 +1038,16 @@
     toast._t = setTimeout(() => toastEl.classList.remove('show'), 2200);
   }
 
+  // ── CRUCIX Markets (defensive no-op until grid + data are mounted) ──
+  function renderCXMarkets() {
+    try {
+      var g = document.getElementById('cxMarketsGrid');
+      if (!g) return;
+      if (typeof CX === 'undefined' || !CX.marketData || !Object.keys(CX.marketData).length) return;
+    } catch (e) {}
+  }
+  window.renderCXMarkets = renderCXMarkets;
+
   // ── Boot ───────────────────────────────────────────────────────
   $('#aiModeBadge').textContent = state.aiKey ? 'KEYED' : 'KEYLESS';
   renderMission();

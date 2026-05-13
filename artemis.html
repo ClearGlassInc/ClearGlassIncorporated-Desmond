@@ -507,9 +507,19 @@ function fetchPower(){
 
 async function fetchCrypto(){
   try{
+    let coins=[];
     const r=await fetch('https://api.coincap.io/v2/assets?ids=bitcoin,ethereum,solana,cardano,ripple&limit=5');
-    const d=await r.json();
-    const coins=(d.data||[]).map(a=>({sym:a.symbol,name:a.name,usd:parseFloat(a.priceUsd)||0,chg:parseFloat(a.changePercent24Hr)||0}));
+    if(r.ok){
+      const d=await r.json();
+      coins=(d.data||[]).map(a=>({sym:a.symbol,name:a.name,usd:parseFloat(a.priceUsd)||0,chg:parseFloat(a.changePercent24Hr)||0}));
+    }
+    if(!coins.length){
+      const fr=await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano,ripple&price_change_percentage=24h');
+      if(!fr.ok) throw new Error('crypto feeds unavailable');
+      const fd=await fr.json();
+      coins=(fd||[]).map(a=>({sym:(a.symbol||'').toUpperCase(),name:a.name,usd:parseFloat(a.current_price)||0,chg:parseFloat(a.price_change_percentage_24h)||0}));
+    }
+    if(!coins.length) throw new Error('crypto feeds unavailable');
     const btc=coins.find(c=>c.sym==='BTC')||{usd:0,chg:0};
     S.cr={btc:btc.usd,btcChg:btc.chg,coins};
     $('cr-content').innerHTML=coins.map(c=>{
@@ -527,9 +537,19 @@ async function fetchCrypto(){
 
 async function fetchFX(){
   try{
+    let rates={};
     const r=await fetch('https://api.frankfurter.app/latest?from=USD&to=CAD,EUR,GBP,JPY,CHF,AUD');
-    const d=await r.json();
-    const rates=d.rates||{};
+    if(r.ok){
+      const d=await r.json();
+      rates=d.rates||{};
+    }
+    if(!Object.keys(rates).length){
+      const fr=await fetch('https://open.er-api.com/v6/latest/USD');
+      if(!fr.ok) throw new Error('fx feeds unavailable');
+      const fd=await fr.json();
+      rates=fd?.rates||{};
+    }
+    if(!Object.keys(rates).length) throw new Error('fx feeds unavailable');
     S.fx=rates;
     const pairs=[['USD/CAD','CAD'],['USD/EUR','EUR'],['USD/GBP','GBP'],['USD/JPY','JPY'],['USD/CHF','CHF'],['USD/AUD','AUD']];
     $('fx-content').innerHTML=pairs.filter(p=>rates[p[1]]).map(p=>`

@@ -1039,12 +1039,11 @@
   }
 
   // ── CRUCIX Markets (defensive no-op until grid + data are mounted) ──
-  function renderCXMarkets() {
-    try {
-      var g = document.getElementById('cxMarketsGrid');
-      if (!g) return;
-      if (typeof CX === 'undefined' || !CX.marketData || !Object.keys(CX.marketData).length) return;
-    } catch (e) {}
+  function renderCXMarkets(){
+    try{
+      var g=document.getElementById('cxMarketsGrid');if(!g)return;
+      if(!CX.marketData||!Object.keys(CX.marketData).length)return;
+    }catch(e){}
   }
   window.renderCXMarkets = renderCXMarkets;
 

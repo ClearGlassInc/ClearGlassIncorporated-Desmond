@@ -1,13 +1,13 @@
-# Clarity is not a feature. It is a force multiplier.
+# Artemis turns your security stack into a coherent intelligence surface.
 
-In cybersecurity the organizations that survive are not the ones with the most tools. They are the ones with the clearest picture.
+Most enterprise security deployments share the same structural flaw: they produce volume, not intelligence.
 
-ClearGlass Inc was built around one principle: transparent intelligence creates irreversible advantage. Our platform surfaces what matters, strips what does not, and delivers a clean operational signal to the people responsible for acting on it.
+Dozens of tools. Thousands of alerts. Zero coherent signal.
 
-This is not a positioning statement. It is the architectural philosophy behind every product we ship.
+Artemis — ClearGlass Inc's flagship platform — was engineered to solve this at the architectural level. Not by adding another integration layer. By replacing the signal architecture entirely.
 
-When your security posture is legible to the executives who own it, you respond faster, report cleaner, and hold ground under pressure.
+Artemis connects your existing telemetry sources, normalizes the signal, applies continuous threat modeling, and surfaces a prioritized operational picture for your security leadership.
 
-Clarity is power. We build the lens.
+The result: your team acts on what matters — instead of triaging what doesn't.
 
-→ https://clearglassinc.github.io/
+→ https://clearglassinc.github.io/artemis.html

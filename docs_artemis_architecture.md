@@ -372,4 +372,117 @@ async def approve_action(action_id: str, user: UserCtx) -> dict:
 8. **Self-upgrade proposal**: LearningAgent proposes prompt v3.18 improving triage precision by 2.6% in offline replay.
 9. **Governed release**: Human review approves; Apollo canary deploys to Ring0. No regressions after 24h, then global promote.
 
-This is how **ClearGlassInc Artemis** improves continuously at machine speed, while keeping operational authority, policy, and accountability firmly human-governed.
+8. **Audit and Provenance**  
+   Every step (data read, model route, prompt/workflow versions, approval decision, deployment promotion) is immutably logged and queryable for after-action review.
+
+---
+
+## Artemis IV Core Backend Kickstart (Python-first precision implementation)
+
+### Recommended first build slice: Real-time GDELT ingestion pipeline
+
+```python
+# services/gdelt_ingest/app.py
+import asyncio
+import json
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from typing import Any
+
+import httpx
+from aiokafka import AIOKafkaProducer
+from fastapi import FastAPI
+
+GDELT_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
+
+@dataclass
+class GdeltConfig:
+    query: str = "(cyber OR malware OR ransomware)"
+    mode: str = "ArtList"
+    format: str = "json"
+    max_records: int = 100
+
+app = FastAPI(title="Artemis IV GDELT Ingest")
+producer: AIOKafkaProducer | None = None
+
+@app.on_event("startup")
+async def startup() -> None:
+    global producer
+    producer = AIOKafkaProducer(bootstrap_servers="redpanda:9092")
+    await producer.start()
+
+@app.on_event("shutdown")
+async def shutdown() -> None:
+    if producer:
+        await producer.stop()
+
+async def fetch_gdelt(cfg: GdeltConfig) -> list[dict[str, Any]]:
+    params = {
+        "query": cfg.query,
+        "mode": cfg.mode,
+        "format": cfg.format,
+        "maxrecords": cfg.max_records,
+    }
+    async with httpx.AsyncClient(timeout=20) as client:
+        resp = await client.get(GDELT_URL, params=params)
+        resp.raise_for_status()
+        return resp.json().get("articles", [])
+
+@app.post("/v1/ingest/gdelt/poll")
+async def poll_once() -> dict[str, Any]:
+    assert producer is not None
+    records = await fetch_gdelt(GdeltConfig())
+    sent = 0
+    for r in records:
+        event = {
+            "source": "gdelt",
+            "event_time": r.get("seendate") or datetime.now(timezone.utc).isoformat(),
+            "title": r.get("title"),
+            "url": r.get("url"),
+            "domain": r.get("domain"),
+            "lang": r.get("language"),
+            "lineage": {"pipeline": "gdelt_ingest_v1", "emitted_at": datetime.now(timezone.utc).isoformat()},
+        }
+        await producer.send_and_wait("intel.raw", json.dumps(event).encode("utf-8"))
+        sent += 1
+    return {"status": "ok", "sent": sent}
+
+
+async def scheduler() -> None:
+    while True:
+        try:
+            await poll_once()
+        except Exception as exc:  # logged/observed via OTEL in production
+            print(f"gdelt-poll-error: {exc}")
+        await asyncio.sleep(30)
+```
+
+### Python policy guard before any operational action
+
+```python
+# services/policy/guard.py
+from dataclasses import dataclass
+
+@dataclass
+class Subject:
+    user_id: str
+    role: str
+    clearance: str
+    compartments: list[str]
+
+@dataclass
+class Action:
+    name: str
+    sensitivity: str
+    mission_compartment: str
+
+
+def authorize(subject: Subject, action: Action) -> tuple[bool, str]:
+    if action.sensitivity == "operational" and subject.role not in {"commander", "ops_lead"}:
+        return False, "role_block"
+    if subject.clearance not in {"SECRET", "TS"}:
+        return False, "clearance_block"
+    if action.mission_compartment not in subject.compartments:
+        return False, "compartment_block"
+    return True, "allow"
+```

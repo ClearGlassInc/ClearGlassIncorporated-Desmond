@@ -74,8 +74,6 @@ jobs:
     name: Docker smoke test
     runs-on: [self-hosted, linux, clearglass]
     timeout-minutes: 15
-
-    timeout-minutes: 10
     steps:
       - name: Docker version
         run: docker version

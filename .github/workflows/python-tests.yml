@@ -43,7 +43,6 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
-          cache: pip
           cache-dependency-path: |
             requirements*.txt
 
@@ -52,7 +51,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest
           if [[ -f requirements.txt ]]; then pip install -r requirements.txt; fi
-          if ls requirements*.txt >/dev/null 2>&1; then pip install -r requirements.txt; fi
 
       - name: Run tests
         run: python -m pytest tests/ -v

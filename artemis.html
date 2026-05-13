@@ -490,7 +490,7 @@ body::after{
   <div class="ci"><span class="ck">THREAT</span><span class="cv" id="c-threat">--/100</span></div>
   <button class="cb" onclick="ARTEMIS.refreshAll()">⟳ REFRESH</button>
   <button class="cb" onclick="ARTEMIS.exportSitrep()">⬇ SITREP</button>
-  <button class="cb solid" onclick="ARTEMIS.toggleAria()">◈ ARIA</button>
+  <button class="cb solid" onclick="ARTEMIS.toggleAria()">◈ ASSISTANT</button>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -558,7 +558,7 @@ body::after{
 
 <!-- § 3 — ORBITAL · MARINE · POWER -->
 <section>
-  <div class="sh"><span class="sh-t">ORBITAL · MARINE · POWER GRID</span><span class="sh-c">ISS · OCEANS · IESO</span></div>
+  <div class="sh"><span class="sh-t">ORBITAL · MARINE · POWER GRID</span><span class="sh-c">ARTEMIS WIDE-AREA TELEMETRY</span></div>
   <div class="g3">
     <div class="win">
       <div class="wb"><span class="wt">ISS ORBITAL TRACKER</span><span class="bdg bcy" id="iss-badge">LOADING</span></div>
@@ -643,7 +643,7 @@ body::after{
 
 <!-- § 6 — CAMERA SURVEILLANCE -->
 <section>
-  <div class="sh"><span class="sh-t">CAMERA SURVEILLANCE</span><span class="sh-c">MTO COMPASS — QEW · SKYWAY · HWY 403</span></div>
+  <div class="sh"><span class="sh-t">CAMERA SURVEILLANCE</span><span class="sh-c">ARTEMIS TRAFFIC GRID — QEW · SKYWAY · HWY 403</span></div>
   <div class="win">
     <div class="wb"><span class="wt">LIVE TRAFFIC CAMERAS</span><span class="bdg bgn" id="cam-badge">LOADING</span></div>
     <div class="wbody">
@@ -674,7 +674,7 @@ body::after{
 <!-- ARIA ASSISTANT -->
 <div id="aria">
   <div class="aria-hdr">
-    <div><div class="aria-nm">ARIA</div><div class="aria-tg">ADAPTIVE REAL-TIME INTELLIGENCE ASSISTANT</div></div>
+    <div><div class="aria-nm">ARTEMIS</div><div class="aria-tg">CLEARGLASSINC INTELLIGENCE ASSISTANT</div></div>
     <button class="aria-x" onclick="ARTEMIS.toggleAria()">✕</button>
   </div>
   <div class="aria-cmds">
@@ -692,10 +692,10 @@ body::after{
     <button class="apc" onclick="ARTEMIS.ariaCmd('help')">HELP</button>
   </div>
   <div class="aria-msgs" id="aria-msgs">
-    <div class="amsg a">ARIA ONLINE — ARTEMIS IV FULLY ARMED AND OPERATIONAL. SEARCH ANY LOCATION IN THE HEADER. HOW MAY I ASSIST?</div>
+    <div class="amsg a">ARTEMIS ONLINE — CLEARGLASSINC INTELLIGENCE PLATFORM FULLY ARMED AND OPERATIONAL. SEARCH ANY LOCATION IN THE HEADER. HOW MAY I ASSIST?</div>
   </div>
   <div class="aria-inp-row">
-    <input id="aria-inp" type="text" placeholder="QUERY ARIA…" autocomplete="off">
+    <input id="aria-inp" type="text" placeholder="QUERY ARTEMIS…" autocomplete="off">
     <button id="aria-tx">TX</button>
   </div>
 </div>
@@ -704,7 +704,7 @@ body::after{
 <div class="fabs">
   <button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲ TOP</button>
   <button class="fab" onclick="document.getElementById('loc-search').focus()">⌕ SEARCH</button>
-  <button class="fab solid" onclick="ARTEMIS.toggleAria()">◈ ARIA</button>
+  <button class="fab solid" onclick="ARTEMIS.toggleAria()">◈ ASSISTANT</button>
 </div>
 
 <script>
@@ -2080,7 +2080,7 @@ const ARTEMIS = (() => {
       fx: () => `FX RATES (USD BASE)\n\n${Object.entries(STATE.fx).slice(0, 8).map(([k, v]) => `USD/${k}: ${v.toFixed(v >= 10 ? 2 : 4)}`).join('\n')}\n\nSOURCE: FRANKFURTER.APP`,
       threat: () => `THREAT ASSESSMENT\n\nINDEX: ${STATE.threat}/100\nLEVEL: ${STATE.threat >= 70 ? 'CRITICAL' : STATE.threat >= 50 ? 'ELEVATED' : STATE.threat >= 30 ? 'GUARDED' : 'NORMAL'}\nFEEDS ACTIVE: ${STATE.feedsOk}/13\nLOCATION: ${STATE.loc.label}\nTIMESTAMP: ${new Date().toLocaleString()}`,
       brief: () => `SITUATION REPORT\n\nDATE: ${new Date().toLocaleDateString()}\nTIME: ${new Date().toLocaleTimeString()}\nLOCATION: ${STATE.loc.label}\n\nThreat index: ${STATE.threat}/100\nWeather: ${Math.round(STATE.wx.temp || 0)}°C ${fmt.wxName(STATE.wx.code || 0)}\nAQI: ${Math.round(STATE.aq.aqi || 0)} (${fmt.aqiLabel(STATE.aq.aqi)})\nSeismic: ${STATE.eq.total} events, max M${STATE.eq.max.toFixed(1)}\nKp: ${STATE.sw.kp.toFixed(1)}\nISS: ${STATE.iss.dist.toLocaleString()} km away\n\nARTEMIS IV READY FOR FURTHER QUERY.`,
-      help: () => `ARIA COMMAND LIST\n\nWEATHER · AIR · SEISMIC · SPACE\nISS · MARINE · POWER · CRYPTO\nFX · THREAT · BRIEF · HELP\n\nOr type any natural query.\nTry: "what's the weather in nairobi"`,
+      help: () => `ARTEMIS COMMAND LIST\n\nWEATHER · AIR · SEISMIC · SPACE\nISS · MARINE · POWER · CRYPTO\nFX · THREAT · BRIEF · HELP\n\nOr type any natural query.\nTry: "what's the weather in nairobi"`,
     },
 
     open() { $('aria').classList.add('on'); },

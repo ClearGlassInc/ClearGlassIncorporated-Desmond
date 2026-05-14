@@ -4,8 +4,6 @@ on:
     branches: [ main ]
   pull_request:
   workflow_dispatch:
-  schedule:
-    - cron: "0 9 * * *"
   workflow_call:
 
 permissions:
@@ -13,17 +11,46 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Assemble static site
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          rsync -av --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'docs' \
+            --exclude 'scripts' \
+            --exclude 'bots' \
+            --exclude 'tests' \
+            --exclude 'investors' \
+            --exclude 'marketing' \
+            --exclude 'operations' \
+            --exclude 'prompts' \
+            --exclude 'infra' \
+            --exclude 'runner' \
+            --exclude '_site' \
+            --exclude 'node_modules' \
+            ./ _site/
+          test -f _site/index.html
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
-      - uses: actions/deploy-pages@v4
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
       - name: Failure alert
         if: failure()
         run: echo "Workflow failed. Check GitHub Actions logs immediately."

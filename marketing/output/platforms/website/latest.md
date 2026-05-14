@@ -1,2 +1,2 @@
-[artemis-headline]
-Artemis transforms your security telemetry into a coherent intelligence surface — continuous threat modeling, real-time exposure mapping, executive-grade reporting.
+[guardian-headline]
+Guardian applies AI-assisted hardening across your attack surface — continuously, prioritized by risk-adjusted impact, deployable in hours.

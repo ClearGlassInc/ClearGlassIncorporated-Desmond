@@ -1,5 +1,5 @@
-1. Most SIEM deployments are expensive noise generators. Here's what Artemis does differently:
-2. Artemis doesn't add another integration layer. It replaces the signal architecture.
-3. Connect telemetry → normalize → model threats continuously → surface a prioritized operational picture.
-4. Your analysts act on signal. Not on alert volume.
-5. → clearglassinc.github.io/artemis.html
+1. Compliance is a snapshot. Security is a posture. Here's the difference that matters:
+2. Most tools optimize for audit paperwork. Guardian optimizes for your actual threat surface.
+3. AI-assisted hardening prioritized by risk-adjusted impact — continuously, not quarterly.
+4. You get a stronger posture and the documentation to prove it.
+5. → clearglassinc.github.io/guardian.html

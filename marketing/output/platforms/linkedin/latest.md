@@ -1,13 +1,15 @@
-# Artemis turns your security stack into a coherent intelligence surface.
+# Guardian: executive-grade hardening for organizations that cannot afford operational risk.
 
-Most enterprise security deployments share the same structural flaw: they produce volume, not intelligence.
+Security hardening is not the same as compliance.
 
-Dozens of tools. Thousands of alerts. Zero coherent signal.
+Organizations that conflate the two discover the difference during an incident.
 
-Artemis — ClearGlass Inc's flagship platform — was engineered to solve this at the architectural level. Not by adding another integration layer. By replacing the signal architecture entirely.
+Guardian — ClearGlass Inc's operational security platform — was built for the gap between compliance checkboxes and operational resilience. It applies AI-assisted defense across your attack surface, prioritizes hardening actions by risk-adjusted impact, and integrates a clean deployment path that does not require a six-month implementation engagement.
 
-Artemis connects your existing telemetry sources, normalizes the signal, applies continuous threat modeling, and surfaces a prioritized operational picture for your security leadership.
+What you get:
+→ Zero-trust posture enforcement at the infrastructure layer
+→ AI-driven threat surface reduction — continuous, not periodic
+→ Deployment in hours, not quarters
+→ Audit-ready output at every stage
 
-The result: your team acts on what matters — instead of triaging what doesn't.
-
-→ https://clearglassinc.github.io/artemis.html
+→ https://clearglassinc.github.io/guardian.html

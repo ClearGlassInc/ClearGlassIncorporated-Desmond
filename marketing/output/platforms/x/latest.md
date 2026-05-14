@@ -1,1 +1,1 @@
-Artemis doesn't add another dashboard. It replaces the signal architecture. Your analysts act on intelligence — not volume. https://clearglassinc.github.io/artemis.html
+Compliance is a snapshot. Security is a posture. Guardian closes the gap — AI-assisted hardening, continuous, not periodic. https://clearglassinc.github.io/guardian.html

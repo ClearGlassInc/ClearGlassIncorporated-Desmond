@@ -377,6 +377,14 @@ body::after{
   #aria{width:calc(100vw - 28px)}
 }
 
+/* NEWS TABS */
+.ntabs{display:flex;border-bottom:1px solid var(--bdr2);margin-bottom:6px;overflow-x:auto}
+.ntab{font-size:6px;letter-spacing:2px;color:var(--al);padding:5px 10px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:transparent;border-top:none;border-left:none;border-right:none;font-family:'IBM Plex Mono',monospace;white-space:nowrap;flex-shrink:0}
+.ntab.on{color:var(--am);border-bottom-color:var(--am)}
+.ntab:hover:not(.on){color:var(--wt2)}
+.npane{display:none;max-height:280px}
+.npane.on{display:block}
+
 /* BOOT */
 #boot{position:fixed;inset:0;background:var(--bg);z-index:9500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s}
 #boot.out{opacity:0;pointer-events:none}
@@ -469,6 +477,11 @@ body::after{
   <div class="sf"><span class="sfd" id="sf-cr"></span>CRYPTO</div>
   <div class="sf"><span class="sfd" id="sf-fx"></span>FX</div>
   <div class="sf"><span class="sfd" id="sf-sun"></span>SOLAR</div>
+  <div class="sf"><span class="sfd" id="sf-dw"></span>CYBER</div>
+  <div class="sf"><span class="sfd" id="sf-net"></span>NET</div>
+  <div class="sf"><span class="sfd" id="sf-news"></span>NEWS</div>
+  <div class="sf"><span class="sfd" id="sf-dis"></span>DISASTER</div>
+  <div class="sf"><span class="sfd" id="sf-alr"></span>ALERTS</div>
   <div class="sf"><span class="sfd" id="sf-cam"></span>CAM</div>
   <span id="sbar-msg">SYSTEM INITIALIZING — LOADING ALL INTELLIGENCE FEEDS…</span>
   <span id="sbar-right">--:-- UTC</span>
@@ -641,21 +654,84 @@ body::after{
   </div>
 </section>
 
-<!-- § 6 — CAMERA SURVEILLANCE -->
+<!-- § 6 — CYBER & NETWORK INTELLIGENCE -->
 <section>
-  <div class="sh"><span class="sh-t">CAMERA SURVEILLANCE</span><span class="sh-c">ARTEMIS TRAFFIC GRID — QEW · SKYWAY · HWY 403</span></div>
+  <div class="sh"><span class="sh-t">CYBER &amp; NETWORK INTELLIGENCE</span><span class="sh-c">DARK WEB PULSE · ENDPOINT LATENCY</span></div>
+  <div class="g2">
+    <div class="win">
+      <div class="wb"><span class="wt">CYBER THREAT PULSE</span><span class="bdg brd" id="dw-badge">LOADING</span></div>
+      <div class="wbody" id="dw-content"><div class="ph"><div class="ph-i">🛡</div><div class="ph-t">CONNECTING THREAT INTEL FEEDS</div></div></div>
+    </div>
+    <div class="win">
+      <div class="wb"><span class="wt">NETWORK LATENCY GRID</span><span class="bdg bbl" id="net-badge">LOADING</span></div>
+      <div class="wbody" id="net-content"><div class="ph"><div class="ph-i">🌐</div><div class="ph-t">MEASURING ENDPOINTS</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- § 7 — NEWS & ALERTS -->
+<section>
+  <div class="sh"><span class="sh-t">NEWS &amp; ALERTS</span><span class="sh-c">RSS · DISASTER · WEATHER WARNINGS</span></div>
+  <div class="g3">
+    <div class="win">
+      <div class="wb"><span class="wt">NEWS INTELLIGENCE</span><span class="bdg bam" id="news-badge">LOADING</span></div>
+      <div class="wbody" style="padding:6px 10px">
+        <div class="ntabs">
+          <button class="ntab on" onclick="ARTEMIS.newsTab('cbc',this)">CBC CA</button>
+          <button class="ntab" onclick="ARTEMIS.newsTab('env',this)">EC RSS</button>
+          <button class="ntab" onclick="ARTEMIS.newsTab('world',this)">WORLD</button>
+          <button class="ntab" onclick="ARTEMIS.newsTab('tech',this)">TECH</button>
+          <button class="ntab" onclick="ARTEMIS.newsTab('sec',this)">SECURITY</button>
+        </div>
+        <div class="npane on win-scroll" id="news-cbc"><div class="ph"><div class="ph-t">LOADING…</div></div></div>
+        <div class="npane win-scroll" id="news-env"><div class="ph"><div class="ph-t">LOADING…</div></div></div>
+        <div class="npane win-scroll" id="news-world"><div class="ph"><div class="ph-t">LOADING…</div></div></div>
+        <div class="npane win-scroll" id="news-tech"><div class="ph"><div class="ph-t">LOADING…</div></div></div>
+        <div class="npane win-scroll" id="news-sec"><div class="ph"><div class="ph-t">LOADING…</div></div></div>
+      </div>
+    </div>
+    <div class="win">
+      <div class="wb"><span class="wt">⚠ GLOBAL DISASTER ALERTS</span><span class="bdg brd" id="dis-badge">LOADING</span></div>
+      <div class="wbody-scroll" id="dis-content"><div class="ph"><div class="ph-i">🌍</div><div class="ph-t">FETCHING DISASTER FEED</div></div></div>
+    </div>
+    <div class="win">
+      <div class="wb"><span class="wt">REGIONAL WEATHER WARNINGS</span><span class="bdg bor" id="alr-badge">LOADING</span></div>
+      <div class="wbody-scroll" id="alr-content"><div class="ph"><div class="ph-i">⚡</div><div class="ph-t">FETCHING WARNINGS</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- § 8 — EVENTS & RECOMMENDATIONS -->
+<section>
+  <div class="sh"><span class="sh-t">EVENTS &amp; RECOMMENDATIONS</span><span class="sh-c">AUTO-COMPUTED FROM ACTIVE FEEDS</span></div>
+  <div class="g2">
+    <div class="win">
+      <div class="wb"><span class="wt">ACTIVE EVENTS</span><span class="bdg bor" id="ev-badge">0 EVENTS</span></div>
+      <div class="wbody-scroll" id="ev-content"><div class="ph"><div class="ph-t">SCANNING FOR EVENTS…</div></div></div>
+    </div>
+    <div class="win">
+      <div class="wb"><span class="wt">RECOMMENDED ACTIONS</span><span class="bdg bgn" id="rec-badge">COMPUTING</span></div>
+      <div class="wbody-scroll" id="rec-content"><div class="ph"><div class="ph-t">GENERATING…</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- § 9 — CAMERA SURVEILLANCE -->
+<section>
+  <div class="sh"><span class="sh-t">CAMERA SURVEILLANCE</span><span class="sh-c">ARTEMIS TRAFFIC GRID — QEW · SKYWAY · HWY 403 · 45 FEEDS</span></div>
   <div class="win">
     <div class="wb"><span class="wt">LIVE TRAFFIC CAMERAS</span><span class="bdg bgn" id="cam-badge">LOADING</span></div>
     <div class="wbody">
       <div class="cam-ctrl">
         <span class="cfl">ROUTE</span>
-        <button class="cfbtn on" onclick="ARTEMIS.camFilter('all',this)">ALL</button>
-        <button class="cfbtn" onclick="ARTEMIS.camFilter('QEW',this)">QEW</button>
-        <button class="cfbtn" onclick="ARTEMIS.camFilter('SKYWAY',this)">SKYWAY</button>
-        <button class="cfbtn" onclick="ARTEMIS.camFilter('403',this)">HWY 403</button>
+        <button class="cfbtn on" onclick="ARTEMIS.camFilter('all',this)">ALL (45)</button>
+        <button class="cfbtn" onclick="ARTEMIS.camFilter('QEW',this)">QEW (32)</button>
+        <button class="cfbtn" onclick="ARTEMIS.camFilter('SKYWAY',this)">SKYWAY (3)</button>
+        <button class="cfbtn" onclick="ARTEMIS.camFilter('403',this)">HWY 403 (10)</button>
         <span class="cfl" style="margin-left:8px">GRID</span>
         <button class="cfbtn" onclick="ARTEMIS.camGrid(3,this)">3×</button>
         <button class="cfbtn on" onclick="ARTEMIS.camGrid(4,this)">4×</button>
+        <button class="cfbtn" onclick="ARTEMIS.camGrid(5,this)">5×</button>
         <button class="cfbtn" onclick="ARTEMIS.camRefresh()" style="margin-left:auto">⟳ REFRESH</button>
       </div>
       <div class="cam-grid cl4" id="cam-grid"></div>
@@ -664,6 +740,33 @@ body::after{
 </section>
 
 </div><!-- /main -->
+
+<!-- CAMERA FULLSCREEN VIEWER -->
+<div id="cam-fs" style="position:fixed;inset:0;background:rgba(4,2,0,.97);z-index:8000;display:none;flex-direction:column">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid var(--bdr);background:rgba(255,176,0,.02)">
+    <div style="display:flex;align-items:center;gap:14px">
+      <span id="fs-id" style="font-size:8px;letter-spacing:3px;color:var(--al)">--</span>
+      <span id="fs-name" style="font-size:13px;letter-spacing:2px;color:var(--am)">--</span>
+      <span id="fs-road" style="font-size:7px;letter-spacing:2px;color:var(--al);padding:3px 7px;border:1px solid rgba(255,176,0,.16);border-radius:2px">--</span>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="cfbtn" onclick="ARTEMIS.fsPrev()">◄ PREV</button>
+      <button class="cfbtn" onclick="ARTEMIS.fsNext()">NEXT ►</button>
+      <button class="cfbtn" onclick="ARTEMIS.fsRefresh()">⟳ REFRESH</button>
+      <button class="cfbtn" style="background:rgba(255,51,68,.07);color:var(--rd);border-color:rgba(255,51,68,.25)" onclick="ARTEMIS.fsClose()">✕ CLOSE</button>
+    </div>
+  </div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 260px;overflow:hidden">
+    <div style="position:relative;overflow:hidden;background:#000">
+      <img id="fs-img" style="width:100%;height:100%;object-fit:contain;filter:sepia(.06)" alt="Camera Feed">
+    </div>
+    <div style="border-left:1px solid var(--bdr2);overflow-y:auto;background:rgba(0,0,0,.3);padding:12px" id="fs-info"></div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 18px;border-top:1px solid var(--bdr2);background:rgba(255,176,0,.01)">
+    <span id="fs-ts" style="font-size:6px;letter-spacing:2px;color:var(--al)">--</span>
+    <span style="font-size:6px;letter-spacing:2px;color:var(--al)">AUTO-REFRESH 30s · ← → NAV · ESC CLOSE · R REFRESH</span>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <div class="wm">
@@ -730,34 +833,51 @@ const ARTEMIS = (() => {
     geoCacheKey: 'artemis_recent_locations',
     geoMaxRecent: 8,
     cameraDB: [
-      { id:12490, name:'QEW @ Evans Ave',         road:'QEW',    km:1.2  },
-      { id:12500, name:'QEW @ Browns Line',       road:'QEW',    km:5.8  },
-      { id:12542, name:'QEW @ Cawthra Rd',        road:'QEW',    km:12.3 },
-      { id:12543, name:'QEW @ Dixie Rd',          road:'QEW',    km:14.6 },
-      { id:12564, name:'QEW @ Mississauga Rd',    road:'QEW',    km:21.2 },
-      { id:12566, name:'QEW @ Winston Churchill', road:'QEW',    km:24.5 },
-      { id:12570, name:'QEW @ Burloak Dr',        road:'QEW',    km:30.1 },
-      { id:12571, name:'QEW @ Appleby Line',      road:'QEW',    km:31.7 },
-      { id:12572, name:'QEW @ Walkers Line',      road:'QEW',    km:33.4 },
-      { id:12573, name:'QEW @ Brant St',          road:'QEW',    km:36.2 },
-      { id:12590, name:'QEW @ Guelph Line',       road:'QEW',    km:39.8 },
-      { id:12591, name:'QEW @ Waterdown Rd',      road:'QEW',    km:42.1 },
-      { id:12642, name:'QEW W Oakville',          road:'QEW',    km:23.6 },
-      { id:12643, name:'QEW E Oakville',          road:'QEW',    km:20.4 },
-      { id:12646, name:'QEW Burlington N',        road:'QEW',    km:37.1 },
-      { id:12647, name:'QEW Burlington S',        road:'QEW',    km:37.8 },
-      { id:12648, name:'QEW @ Fairview St',       road:'QEW',    km:40.3 },
-      { id:12649, name:'QEW @ Dundas St',         road:'QEW',    km:43.5 },
-      { id:12567, name:'SKYWAY W Approach',       road:'SKYWAY', km:0.5  },
-      { id:12568, name:'SKYWAY Bridge Deck',      road:'SKYWAY', km:1.0  },
-      { id:12569, name:'SKYWAY E Approach',       road:'SKYWAY', km:1.5  },
-      { id:12574, name:'403 @ Hwy 6',             road:'403',    km:55.2 },
-      { id:12575, name:'403 @ Brant St',          road:'403',    km:57.1 },
-      { id:12576, name:'403 @ Garden Ave',        road:'403',    km:58.4 },
-      { id:12577, name:'403 @ Fairview St',       road:'403',    km:59.8 },
-      { id:12578, name:'403 @ Plains Rd',         road:'403',    km:61.3 },
-      { id:12579, name:'403 @ QEW Jct',           road:'403',    km:62.7 },
-      { id:12581, name:'403 @ Waterdown Rd',      road:'403',    km:63.5 },
+      { id:12490, name:'QEW @ Evans Ave',         road:'QEW',    km:1.2,  dir:'E' },
+      { id:12500, name:'QEW @ Browns Line',       road:'QEW',    km:5.8,  dir:'W' },
+      { id:12542, name:'QEW @ Cawthra Rd',        road:'QEW',    km:12.3, dir:'E' },
+      { id:12543, name:'QEW @ Dixie Rd',          road:'QEW',    km:14.6, dir:'W' },
+      { id:12564, name:'QEW @ Mississauga Rd',    road:'QEW',    km:21.2, dir:'E' },
+      { id:12565, name:'QEW @ Erin Mills Pkwy',   road:'QEW',    km:22.8, dir:'W' },
+      { id:12566, name:'QEW @ Winston Churchill', road:'QEW',    km:24.5, dir:'E' },
+      { id:12570, name:'QEW @ Burloak Dr',        road:'QEW',    km:30.1, dir:'E' },
+      { id:12571, name:'QEW @ Appleby Line',      road:'QEW',    km:31.7, dir:'W' },
+      { id:12572, name:'QEW @ Walkers Line',      road:'QEW',    km:33.4, dir:'E' },
+      { id:12573, name:'QEW @ Brant St',          road:'QEW',    km:36.2, dir:'W' },
+      { id:12590, name:'QEW @ Guelph Line',       road:'QEW',    km:39.8, dir:'E' },
+      { id:12591, name:'QEW @ Waterdown Rd',      road:'QEW',    km:42.1, dir:'W' },
+      { id:12630, name:'QEW @ Hwy 403 Jct',       road:'QEW',    km:38.5, dir:'E' },
+      { id:12639, name:'QEW @ Bronte Rd',         road:'QEW',    km:26.3, dir:'W' },
+      { id:12640, name:'QEW @ Third Line',        road:'QEW',    km:27.8, dir:'E' },
+      { id:12641, name:'QEW @ Trafalgar Rd',      road:'QEW',    km:29.2, dir:'W' },
+      { id:12642, name:'QEW W Oakville',          road:'QEW',    km:23.6, dir:'W' },
+      { id:12643, name:'QEW E Oakville',          road:'QEW',    km:20.4, dir:'E' },
+      { id:12646, name:'QEW Burlington N',        road:'QEW',    km:37.1, dir:'N' },
+      { id:12647, name:'QEW Burlington S',        road:'QEW',    km:37.8, dir:'S' },
+      { id:12648, name:'QEW @ Fairview St',       road:'QEW',    km:40.3, dir:'E' },
+      { id:12649, name:'QEW @ Dundas St',         road:'QEW',    km:43.5, dir:'W' },
+      { id:12650, name:'QEW @ Aldershot',         road:'QEW',    km:45.0, dir:'E' },
+      { id:12657, name:'QEW @ Lakeshore Blvd W',  road:'QEW',    km:7.4,  dir:'W' },
+      { id:12658, name:'QEW @ Lake Shore E',      road:'QEW',    km:8.9,  dir:'E' },
+      { id:12659, name:'QEW @ Islington Ave',     road:'QEW',    km:9.8,  dir:'W' },
+      { id:12660, name:'QEW @ The East Mall',     road:'QEW',    km:10.7, dir:'E' },
+      { id:12662, name:'QEW @ Hurontario St',     road:'QEW',    km:16.2, dir:'E' },
+      { id:12663, name:'QEW @ Mavis Rd',          road:'QEW',    km:17.5, dir:'W' },
+      { id:12664, name:'QEW @ Creditview Rd',     road:'QEW',    km:19.1, dir:'E' },
+      { id:12665, name:'QEW @ Hwy 10',            road:'QEW',    km:20.8, dir:'W' },
+      { id:12567, name:'SKYWAY W Approach',       road:'SKYWAY', km:0.5,  dir:'W' },
+      { id:12568, name:'SKYWAY Bridge Deck',      road:'SKYWAY', km:1.0,  dir:'N' },
+      { id:12569, name:'SKYWAY E Approach',       road:'SKYWAY', km:1.5,  dir:'E' },
+      { id:12574, name:'403 @ Hwy 6',             road:'403',    km:55.2, dir:'E' },
+      { id:12575, name:'403 @ Brant St',          road:'403',    km:57.1, dir:'W' },
+      { id:12576, name:'403 @ Garden Ave',        road:'403',    km:58.4, dir:'E' },
+      { id:12577, name:'403 @ Fairview St',       road:'403',    km:59.8, dir:'W' },
+      { id:12578, name:'403 @ Plains Rd',         road:'403',    km:61.3, dir:'E' },
+      { id:12579, name:'403 @ QEW Jct',           road:'403',    km:62.7, dir:'W' },
+      { id:12581, name:'403 @ Waterdown Rd',      road:'403',    km:63.5, dir:'E' },
+      { id:12585, name:'403 @ Hwy 407 N',         road:'403',    km:67.2, dir:'N' },
+      { id:12586, name:'403 @ Hwy 407 S',         road:'403',    km:67.8, dir:'S' },
+      { id:12631, name:'403 @ Hwy 6 N Bypass',    road:'403',    km:54.4, dir:'N' },
     ],
     bootFeeds: [
       { id:'loc',  label:'GEOLOCATION & MAPPING' },
@@ -772,6 +892,11 @@ const ARTEMIS = (() => {
       { id:'pwr',  label:'ONTARIO POWER GRID' },
       { id:'cr',   label:'CRYPTO MARKETS' },
       { id:'fx',   label:'FOREIGN EXCHANGE' },
+      { id:'dw',   label:'CYBER THREAT PULSE' },
+      { id:'net',  label:'NETWORK LATENCY' },
+      { id:'news', label:'NEWS INTELLIGENCE' },
+      { id:'dis',  label:'DISASTER ALERTS' },
+      { id:'alr',  label:'WEATHER WARNINGS' },
       { id:'cam',  label:'TRAFFIC CAMERAS' },
       { id:'thr',  label:'THREAT ASSESSMENT' },
     ],
@@ -803,7 +928,15 @@ const ARTEMIS = (() => {
     cr: { coins: [] },
     fx: {},
     cam: { online: 0, error: 0, loading: 0 },
+    dw: { pulse: 0, totalUrls: 0, onlineCount: 0, feodoCount: 0, items: [] },
+    net: { online: 0, total: 0, avg: 0, endpoints: [] },
+    news: { items: {}, total: 0, loaded: 0 },
+    dis: { items: [], count: 0 },
+    alr: { items: [], count: 0 },
     threat: 0,
+    threatHistory: [],
+    events: [],
+    recs: [],
     feedsOk: 0,
     refreshTimer: null,
     issTimer: null,
@@ -811,6 +944,7 @@ const ARTEMIS = (() => {
     bootDone: false,
     activeCamFilter: 'all',
     camGridCols: 4,
+    fsCamIdx: 0,
   };
 
   // ---------------------------------------------------------
@@ -1782,11 +1916,256 @@ const ARTEMIS = (() => {
       }
     },
 
+    // -------- DARK WEB / CYBER PULSE (abuse.ch) --------
+    async dw() {
+      setSf('sf-dw','o');
+      try {
+        const [uhRes, ftRes] = await Promise.allSettled([
+          fetch('https://urlhaus-api.abuse.ch/v1/urls/recent/limit/20/', {
+            method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}
+          }),
+          fetch('https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.json')
+        ]);
+        let urls = [], feodoCount = 0, feodoIPs = [];
+        if (uhRes.status==='fulfilled' && uhRes.value.ok) {
+          const d = await uhRes.value.json();
+          urls = (d.urls||[]).slice(0,12);
+        }
+        if (ftRes.status==='fulfilled' && ftRes.value.ok) {
+          const d = await ftRes.value.json();
+          feodoCount = (d||[]).length;
+          feodoIPs = (d||[]).slice(0,5).map(e=>e.ip_address||e.ip||'').filter(Boolean);
+        }
+        const onlineCount = urls.filter(u=>u.url_status==='online').length;
+        const pulse = Math.min(100, Math.round(onlineCount*5 + feodoCount/12));
+        STATE.dw = { pulse, totalUrls: urls.length, onlineCount, feodoCount, items: urls };
+
+        const rows = urls.slice(0,8).map(u=>{
+          const host = u.host || (u.url||'').match(/https?:\/\/([^/]+)/)?.[1] || 'unknown';
+          const status = u.url_status||'unknown';
+          const sc = status==='online'?'var(--rd)':status==='offline'?'var(--al)':'var(--or)';
+          const tag = (u.tags||[])[0]||'malware';
+          return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:7px;border-bottom:1px solid var(--bdr3)">
+            <span style="color:${sc};font-size:7px">●</span>
+            <span style="color:var(--wt3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${host}</span>
+            <span style="color:var(--am);font-size:6px;letter-spacing:1px;text-transform:uppercase">${tag.slice(0,10)}</span>
+          </div>`;
+        }).join('');
+
+        $('dw-content').innerHTML = `
+          <div style="display:flex;gap:12px;margin-bottom:8px">
+            <div style="text-align:center;flex:0 0 100px;padding:8px;background:rgba(255,51,68,.04);border:1px solid rgba(255,51,68,.18);border-radius:3px">
+              <div style="font-size:24px;font-weight:700;color:${pulse>70?'var(--rd)':pulse>40?'var(--or)':'var(--am)'};line-height:1">${pulse}</div>
+              <div style="font-size:5px;letter-spacing:2px;color:var(--al);margin-top:3px">PULSE / 100</div>
+              <div style="font-size:5.5px;color:var(--wt4);margin-top:5px">${onlineCount} LIVE URLs</div>
+              <div style="font-size:5.5px;color:var(--wt4)">${feodoCount} C2 IPs</div>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:6px;color:var(--am);letter-spacing:2px;margin-bottom:5px">URLHAUS · RECENT MALWARE URLS</div>
+              ${rows || '<div style="font-size:7px;color:var(--al)">NO RECENT URLs</div>'}
+            </div>
+          </div>
+          <div class="er"><span class="ek">FEODO C2 IPs</span><span class="ev r">${feodoCount}</span></div>
+          ${feodoIPs.length?`<div style="font-size:6px;color:var(--wt4);margin-top:3px;letter-spacing:.5px">${feodoIPs.slice(0,3).join(' · ')}</div>`:''}
+          <div style="font-size:5px;color:var(--al);margin-top:6px;letter-spacing:1px">SOURCE: abuse.ch URLhaus + Feodo Tracker</div>`;
+        $('dw-badge').textContent = `PULSE ${pulse}/100`;
+        $('dw-badge').className = `bdg ${pulse>70?'brd':pulse>40?'bor':'bam'}`;
+        setSf('sf-dw', pulse>70?'r':pulse>40?'o':'g');
+        setBoot('dw','OK');
+        STATE.feedsOk++;
+      } catch (e) {
+        $('dw-badge').textContent = 'OFFLINE';
+        $('dw-badge').className = 'bdg brd';
+        $('dw-content').innerHTML = `<div class="ph"><div class="ph-t">CYBER THREAT FEED UNAVAILABLE</div></div>`;
+        setSf('sf-dw','r'); setBoot('dw','ERR');
+      }
+    },
+
+    // -------- NETWORK LATENCY GRID --------
+    async net() {
+      setSf('sf-net','o');
+      const endpoints = [
+        { name:'Open-Meteo',   url:'https://api.open-meteo.com/v1/elevation?latitude=0&longitude=0' },
+        { name:'USGS',         url:'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_hour.geojson' },
+        { name:'Frankfurter',  url:'https://api.frankfurter.app/latest?from=USD&to=CAD' },
+        { name:'CoinCap',      url:'https://api.coincap.io/v2/assets/bitcoin' },
+        { name:'Open-Notify',  url:'https://api.open-notify.org/iss-now.json' },
+        { name:'NOAA SWPC',    url:'https://services.swpc.noaa.gov/products/summary/10cm-flux.json' },
+        { name:'Nominatim',    url:'https://nominatim.openstreetmap.org/status' },
+        { name:'abuse.ch',     url:'https://feodotracker.abuse.ch/downloads/ipblocklist_aggressive.json' },
+      ];
+      const results = await Promise.all(endpoints.map(async ep => {
+        const t0 = performance.now();
+        try {
+          const ctrl = new AbortController();
+          const tid = setTimeout(()=>ctrl.abort(), 8000);
+          const r = await fetch(ep.url, { cache:'no-store', signal:ctrl.signal });
+          clearTimeout(tid);
+          return { ...ep, rtt: Math.round(performance.now()-t0), online: r.ok };
+        } catch (e) {
+          return { ...ep, rtt: Math.round(performance.now()-t0), online: false };
+        }
+      }));
+      const online = results.filter(r=>r.online).length;
+      const avg = online ? Math.round(results.filter(r=>r.online).reduce((s,r)=>s+r.rtt,0)/online) : 0;
+      STATE.net = { online, total: results.length, avg, endpoints: results };
+
+      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const connInfo = conn ? `${(conn.effectiveType||'?').toUpperCase()} · ${conn.downlink||'?'}Mbps · RTT ${conn.rtt||'?'}ms` : 'connection api unavailable';
+
+      $('net-content').innerHTML = `
+        <div style="display:flex;justify-content:space-between;margin-bottom:7px;font-size:7px;color:var(--wt3)">
+          <span><span style="color:var(--gn)">●</span> ${online}/${results.length} ONLINE</span>
+          <span>AVG <span style="color:var(--am)">${avg}ms</span></span>
+        </div>
+        <div style="font-size:5.5px;color:var(--al);letter-spacing:1px;margin-bottom:5px">BROWSER: ${connInfo}</div>
+        ${results.map(r => {
+          const col = !r.online?'var(--rd)':r.rtt<100?'var(--gn)':r.rtt<300?'var(--am)':'var(--or)';
+          const pct = !r.online ? 100 : Math.min(100, r.rtt/5);
+          return `<div style="display:flex;align-items:center;gap:6px;padding:2.5px 0;border-bottom:1px solid var(--bdr3);font-size:7px">
+            <span style="width:5px;height:5px;border-radius:50%;background:${col};flex-shrink:0"></span>
+            <span style="color:var(--wt3);min-width:88px">${r.name}</span>
+            <div style="flex:1;height:3px;background:rgba(255,255,255,.04);border-radius:2px;overflow:hidden">
+              <div style="width:${pct}%;height:100%;background:${col};transition:width .5s"></div>
+            </div>
+            <span style="color:${col};min-width:48px;text-align:right;font-variant-numeric:tabular-nums">${r.online?r.rtt+'ms':'TIMEOUT'}</span>
+          </div>`;
+        }).join('')}
+        <div style="font-size:5px;color:var(--al);margin-top:6px;letter-spacing:1px">performance.now() round-trip · all live OSINT endpoints</div>`;
+      $('net-badge').textContent = `${online}/${results.length} LIVE`;
+      $('net-badge').className = `bdg ${online>=6?'bgn':online>=4?'bor':'brd'}`;
+      setSf('sf-net', online>=6?'g':online>=4?'o':'r');
+      setBoot('net','OK');
+      STATE.feedsOk++;
+    },
+
+    // -------- NEWS INTELLIGENCE (RSS via rss2json) --------
+    async news() {
+      setSf('sf-news','o');
+      const FEEDS = {
+        cbc:   'https://www.cbc.ca/cmlink/rss-canada',
+        env:   'https://www.weather.gc.ca/rss/warning/on_e.xml',
+        world: 'https://feeds.bbci.co.uk/news/world/rss.xml',
+        tech:  'https://feeds.arstechnica.com/arstechnica/technology-lab',
+        sec:   'https://feeds.feedburner.com/TheHackersNews',
+      };
+      const PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
+      const results = {};
+      let loaded = 0, total = 0;
+      await Promise.allSettled(Object.entries(FEEDS).map(async ([k,url]) => {
+        try {
+          const r = await fetch(PROXY + encodeURIComponent(url) + '&count=8');
+          const d = await r.json();
+          if (d.status === 'ok' && d.items) {
+            results[k] = d.items;
+            loaded++;
+            total += d.items.length;
+          }
+        } catch (e) { results[k] = []; }
+      }));
+      STATE.news = { items: results, total, loaded };
+      Object.entries(results).forEach(([k, items]) => {
+        const el = $('news-' + k); if (!el) return;
+        if (!items || !items.length) { el.innerHTML = `<div class="ph"><div class="ph-t">FEED UNAVAILABLE</div></div>`; return; }
+        el.innerHTML = items.slice(0,6).map(item => {
+          const date = item.pubDate ? new Date(item.pubDate).toLocaleString('en-CA', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) : '';
+          const desc = (item.description||'').replace(/<[^>]+>/g,'').slice(0,140).trim();
+          return `<div style="padding:5px 0;border-bottom:1px solid var(--bdr3)">
+            <div style="font-size:7px;color:var(--wt);font-weight:500;line-height:1.4;cursor:pointer" onclick="window.open('${(item.link||'#').replace(/'/g,'\\\'')}','_blank')">${(item.title||'').replace(/</g,'&lt;')}</div>
+            ${desc?`<div style="font-size:6.5px;color:var(--wt3);line-height:1.5;margin-top:2px">${desc.replace(/</g,'&lt;')}…</div>`:''}
+            <div style="font-size:5.5px;color:var(--al);letter-spacing:1px;margin-top:2px">${date}</div>
+          </div>`;
+        }).join('');
+      });
+      $('news-badge').textContent = `${total} ARTICLES`;
+      $('news-badge').className = 'bdg bam';
+      setSf('sf-news', loaded>0?'g':'r');
+      setBoot('news','OK');
+      STATE.feedsOk++;
+    },
+
+    // -------- DISASTER ALERTS (GDACS) --------
+    async disasters() {
+      setSf('sf-dis','o');
+      try {
+        const url = 'https://www.gdacs.org/xml/rss.xml';
+        const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=10`);
+        const d = await r.json();
+        const items = (d.items||[]).map(item => {
+          const title = item.title || '';
+          return {
+            title,
+            date: item.pubDate || '',
+            link: item.link || '',
+            desc: (item.description||'').replace(/<[^>]+>/g,'').slice(0,120).trim(),
+            sev: /\bRED\b/i.test(title) ? 'HIGH' : /\bORANGE\b/i.test(title) ? 'MED' : 'LOW',
+          };
+        });
+        STATE.dis = { items, count: items.length };
+        const sevCol = { HIGH:'var(--rd)', MED:'var(--or)', LOW:'var(--am)' };
+        $('dis-content').innerHTML = items.length
+          ? items.map(i => `<div style="padding:5px 0;border-bottom:1px solid var(--bdr3)">
+              <div style="display:flex;align-items:center;gap:7px;margin-bottom:2px">
+                <span style="font-size:6px;font-weight:700;color:${sevCol[i.sev]};min-width:34px;letter-spacing:1px">${i.sev}</span>
+                <span style="font-size:7px;color:var(--wt);flex:1">${i.title.slice(0,70)}</span>
+              </div>
+              ${i.desc ? `<div style="font-size:6px;color:var(--wt4);line-height:1.5;padding-left:41px">${i.desc}…</div>` : ''}
+            </div>`).join('')
+          : `<div class="ph"><div class="ph-t">NO ACTIVE DISASTERS</div></div>`;
+        $('dis-badge').textContent = `${items.length} EVENTS`;
+        $('dis-badge').className = `bdg ${items.find(i=>i.sev==='HIGH') ? 'brd' : items.length ? 'bor' : 'bgn'}`;
+        setSf('sf-dis', items.length ? 'o' : 'g');
+        setBoot('dis','OK');
+        STATE.feedsOk++;
+      } catch (e) {
+        $('dis-badge').textContent = 'OFFLINE';
+        $('dis-badge').className = 'bdg brd';
+        $('dis-content').innerHTML = `<div class="ph"><div class="ph-t">GDACS FEED UNAVAILABLE</div></div>`;
+        setSf('sf-dis','r'); setBoot('dis','ERR');
+      }
+    },
+
+    // -------- REGIONAL WEATHER WARNINGS (Environment Canada) --------
+    async alerts() {
+      setSf('sf-alr','o');
+      try {
+        const url = 'https://weather.gc.ca/rss/warning/on_e.xml';
+        const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=15`);
+        const d = await r.json();
+        const items = (d.items||[]).filter(i => i.title && !/no watch|no warning/i.test(i.title)).map(i => ({
+          title: i.title,
+          type: /WARNING/i.test(i.title) ? 'WARNING' : /WATCH/i.test(i.title) ? 'WATCH' : 'ADVISORY',
+          date: i.pubDate || '',
+        }));
+        STATE.alr = { items, count: items.length };
+        $('alr-content').innerHTML = items.length
+          ? items.map(i => {
+              const col = i.type==='WARNING'?'var(--rd)':i.type==='WATCH'?'var(--or)':'var(--am)';
+              return `<div style="padding:5px 0;border-bottom:1px solid var(--bdr3);display:flex;gap:7px;align-items:flex-start">
+                <span style="font-size:6px;color:${col};font-weight:700;letter-spacing:1px;min-width:54px">${i.type}</span>
+                <span style="font-size:7px;color:var(--wt2);flex:1;line-height:1.5">${i.title.slice(0,80)}</span>
+              </div>`;
+            }).join('')
+          : `<div class="ph"><div class="ph-t" style="color:var(--gn)">✓ NO ACTIVE WARNINGS</div></div>`;
+        $('alr-badge').textContent = items.length ? `${items.length} ACTIVE` : 'CLEAR';
+        $('alr-badge').className = `bdg ${items.find(i=>i.type==='WARNING')?'brd':items.length?'bor':'bgn'}`;
+        setSf('sf-alr', items.length ? 'o' : 'g');
+        setBoot('alr','OK');
+        STATE.feedsOk++;
+      } catch (e) {
+        $('alr-badge').textContent = 'OFFLINE';
+        $('alr-badge').className = 'bdg brd';
+        $('alr-content').innerHTML = `<div class="ph"><div class="ph-t">EC FEED UNAVAILABLE</div></div>`;
+        setSf('sf-alr','r'); setBoot('alr','ERR');
+      }
+    },
+
     // -------- REFRESH ALL --------
     async refreshAll() {
       await Promise.allSettled([
         this.wx(), this.sun(), this.air(), this.eq(), this.sw(),
         this.iss(), this.marine(), this.cr(), this.fx(),
+        this.dw(), this.net(), this.news(), this.disasters(), this.alerts(),
       ]);
       this.pwr();
       threat.compute();
@@ -1795,7 +2174,7 @@ const ARTEMIS = (() => {
     // Re-fetch location-dependent feeds when user picks a new location
     async refreshLocationDependent() {
       await Promise.allSettled([
-        this.wx(), this.sun(), this.air(), this.marine(), this.iss(),
+        this.wx(), this.sun(), this.air(), this.marine(), this.iss(), this.alerts(),
       ]);
       threat.compute();
     },
@@ -1838,7 +2217,7 @@ const ARTEMIS = (() => {
         ? CONFIG.cameraDB
         : CONFIG.cameraDB.filter(c => c.road === STATE.activeCamFilter);
       g.innerHTML = cams.map((c, i) => `
-        <div class="cc" style="animation-delay:${i * 0.04}s" data-id="${c.id}">
+        <div class="cc" style="animation-delay:${i * 0.04}s" data-id="${c.id}" onclick="ARTEMIS.fsOpen(${CONFIG.cameraDB.indexOf(c)})">
           <div class="cc-hd">
             <span>ON${c.id}</span>
             <span style="color:var(--am)">${c.road}</span>
@@ -1911,6 +2290,67 @@ const ARTEMIS = (() => {
   };
 
   // =========================================================
+  //    CAMERA FULLSCREEN VIEWER
+  // =========================================================
+  const viewer = {
+    timer: null,
+    open(idx) {
+      const c = CONFIG.cameraDB[idx];
+      if (!c) return;
+      STATE.fsCamIdx = idx;
+      const fs = $('cam-fs');
+      fs.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      this.load(c);
+      if (this.timer) clearInterval(this.timer);
+      this.timer = setInterval(() => this.refresh(), 30000);
+    },
+    close() {
+      $('cam-fs').style.display = 'none';
+      document.body.style.overflow = '';
+      if (this.timer) { clearInterval(this.timer); this.timer = null; }
+    },
+    prev() { this.open((STATE.fsCamIdx - 1 + CONFIG.cameraDB.length) % CONFIG.cameraDB.length); },
+    next() { this.open((STATE.fsCamIdx + 1) % CONFIG.cameraDB.length); },
+    refresh() {
+      const c = CONFIG.cameraDB[STATE.fsCamIdx];
+      if (c) this.load(c);
+    },
+    load(c) {
+      $('fs-id').textContent = `ON${c.id}`;
+      $('fs-name').textContent = c.name;
+      $('fs-road').textContent = `${c.road} · KM ${c.km}${c.dir ? ' · ' + c.dir : ''}`;
+      $('fs-ts').textContent = `LAST UPDATE: ${new Date().toLocaleTimeString()}`;
+      const img = $('fs-img');
+      img.src = `https://www.navbug.com/traffic-camshots/ON${c.id}.jpg?t=${Date.now()}`;
+      img.onerror = () => { img.src = ''; img.alt = 'FEED UNAVAILABLE'; };
+      $('fs-info').innerHTML = `
+        <div style="font-size:7px;letter-spacing:3px;color:var(--am);margin-bottom:8px">CAMERA DETAIL</div>
+        <div class="er"><span class="ek">CAMERA ID</span><span class="ev a">ON${c.id}</span></div>
+        <div class="er"><span class="ek">ROUTE</span><span class="ev a">${c.road}</span></div>
+        <div class="er"><span class="ek">MARKER</span><span class="ev">KM ${c.km}</span></div>
+        <div class="er"><span class="ek">DIRECTION</span><span class="ev">${c.dir || '--'}</span></div>
+        <div class="er"><span class="ek">STATUS</span><span class="ev g">LIVE</span></div>
+        <div class="er"><span class="ek">SOURCE</span><span class="ev">navbug.com</span></div>
+        <div style="margin-top:14px;padding-top:8px;border-top:1px solid var(--bdr2);font-size:6px;letter-spacing:2px;color:var(--al);line-height:1.8">
+          ← / →  NAVIGATE<br>
+          R      REFRESH<br>
+          ESC    CLOSE
+        </div>`;
+    },
+  };
+
+  // =========================================================
+  //    NEWS TAB SWITCHER
+  // =========================================================
+  function newsTab(key, btn) {
+    document.querySelectorAll('.npane').forEach(p => p.classList.remove('on'));
+    document.querySelectorAll('.ntab').forEach(t => t.classList.remove('on'));
+    const pane = $('news-' + key); if (pane) pane.classList.add('on');
+    if (btn) btn.classList.add('on');
+  }
+
+  // =========================================================
   // 6 ──  THREAT ASSESSMENT ENGINE
   // =========================================================
   const threat = {
@@ -1954,8 +2394,29 @@ const ARTEMIS = (() => {
       const uv = STATE.wx?.uv || 0;
       if (uv > 9) { score += 5; flags.push({ s:'MED', t:`EXTREME UV INDEX ${uv.toFixed(1)}` }); }
 
+      // Cyber threat pulse (0-20)
+      const pulse = STATE.dw?.pulse || 0;
+      if (pulse > 80)      { score += 20; flags.push({ s:'HIGH', t:`CYBER PULSE ${pulse}/100 — ELEVATED IOC ACTIVITY` }); }
+      else if (pulse > 60) { score += 12; flags.push({ s:'MED',  t:`CYBER PULSE ${pulse}/100 — Active threat signals` }); }
+      else if (pulse > 40) { score += 5;  }
+
+      // Disaster alerts (0-15)
+      const highDis = (STATE.dis?.items||[]).filter(i=>i.sev==='HIGH').length;
+      if (highDis > 0)     { score += 10 + highDis*2; flags.push({ s:'HIGH', t:`${highDis} HIGH-SEVERITY GLOBAL DISASTER${highDis>1?'S':''} ACTIVE` }); }
+
+      // Regional weather warnings (0-12)
+      const warns = (STATE.alr?.items||[]).filter(i=>i.type==='WARNING').length;
+      if (warns > 0)       { score += Math.min(12, warns*4); flags.push({ s:'MED', t:`${warns} ACTIVE WEATHER WARNING${warns>1?'S':''} (Ontario)` }); }
+
+      // Network health (0-8)
+      if (STATE.net?.total && STATE.net.online < STATE.net.total*0.5) {
+        score += 8; flags.push({ s:'MED', t:`NETWORK DEGRADED — ${STATE.net.online}/${STATE.net.total} endpoints` });
+      }
+
       score = Math.min(100, Math.max(5, score));
       STATE.threat = score;
+      STATE.threatHistory.push({ t: Date.now(), v: score });
+      if (STATE.threatHistory.length > 288) STATE.threatHistory.shift();
 
       // Update gauge
       const arc = $('gauge-arc');
@@ -1985,6 +2446,55 @@ const ARTEMIS = (() => {
             <span class="fl-sev ${f.s === 'HIGH' ? 'r' : f.s === 'MED' ? 'o' : 'g'}">${f.s}</span>
             <span class="fl-txt">${f.t}</span>
           </div>`).join('');
+      }
+
+      // Events panel — flag list with timestamps
+      const eventsEl = $('ev-content');
+      const eventsBadge = $('ev-badge');
+      const evTs = new Date().toLocaleTimeString();
+      STATE.events = flags.map(f => ({ ...f, time: evTs }));
+      if (eventsEl) {
+        eventsEl.innerHTML = STATE.events.length
+          ? STATE.events.map(e => `<div class="fl-row">
+              <span class="fl-sev ${e.s==='HIGH'?'r':e.s==='MED'?'o':'g'}">${e.s}</span>
+              <div style="flex:1">
+                <div class="fl-txt">${e.t}</div>
+                <div style="font-size:5.5px;color:var(--al);letter-spacing:1px;margin-top:2px">${e.time}</div>
+              </div>
+            </div>`).join('')
+          : `<div class="ph"><div class="ph-t" style="color:var(--gn)">✓ NO ACTIVE EVENTS</div></div>`;
+      }
+      if (eventsBadge) {
+        eventsBadge.textContent = `${STATE.events.length} EVENT${STATE.events.length===1?'':'S'}`;
+        eventsBadge.className = `bdg ${STATE.events.filter(e=>e.s==='HIGH').length?'brd':STATE.events.length?'bor':'bgn'}`;
+      }
+
+      // Recommendations
+      const recs = [];
+      if (score >= 70)        recs.push({ p:'CRIT', t:'INITIATE EMERGENCY RESPONSE — Alert all teams immediately' });
+      else if (score >= 50)   recs.push({ p:'HIGH', t:'Activate elevated monitoring protocol; brief field teams' });
+      else if (score >= 30)   recs.push({ p:'MED',  t:'Maintain heightened awareness; verify critical systems' });
+      else                    recs.push({ p:'LOW',  t:'Normal operations — routine monitoring' });
+      if (maxMag >= 5)        recs.push({ p:'HIGH', t:'Seismic protocol — verify structural integrity of critical assets' });
+      if (kp >= 5)            recs.push({ p:'MED',  t:'Geomagnetic storm active — verify GPS/GNSS and HF radio paths' });
+      if (pulse >= 60)        recs.push({ p:'MED',  t:'Cyber pulse elevated — review IOC feeds and firewall logs' });
+      if (highDis > 0)        recs.push({ p:'HIGH', t:'Global disaster active — check supply-chain exposure and travel routes' });
+      if (warns > 0)          recs.push({ p:'MED',  t:'Regional weather warning in effect — brief on-call staff' });
+      if (wx.precip > 5)      recs.push({ p:'MED',  t:`Active precipitation ${wx.precip.toFixed(1)} mm/h — issue road advisory` });
+      if (wx.wind > 60)       recs.push({ p:'MED',  t:`Wind ${Math.round(wx.wind)} km/h — secure outdoor structures` });
+      if (STATE.net?.online < (STATE.net?.total||1)*0.5) recs.push({ p:'MED', t:'Network endpoints degraded — investigate connectivity' });
+      STATE.recs = recs;
+      const recEl = $('rec-content');
+      const recBadge = $('rec-badge');
+      if (recEl) {
+        recEl.innerHTML = recs.map(r => `<div class="fl-row">
+          <span class="fl-sev ${r.p==='CRIT'||r.p==='HIGH'?'r':r.p==='MED'?'o':'g'}">${r.p}</span>
+          <span class="fl-txt">${r.t}</span>
+        </div>`).join('');
+      }
+      if (recBadge) {
+        recBadge.textContent = `${recs.length} ACTION${recs.length===1?'':'S'}`;
+        recBadge.className = 'bdg bgn';
       }
 
       // SITREP
@@ -2255,19 +2765,24 @@ const ARTEMIS = (() => {
     geoInit();
 
     // Stagger feed loads
-    setTimeout(() => feeds.wx(),     800);
-    setTimeout(() => feeds.sun(),    1400);
-    setTimeout(() => feeds.air(),    2000);
-    setTimeout(() => feeds.eq(),     2600);
-    setTimeout(() => feeds.sw(),     3200);
-    setTimeout(() => feeds.iss(),    3800);
-    setTimeout(() => feeds.marine(), 4400);
-    setTimeout(() => feeds.pwr(),    5000);
-    setTimeout(() => feeds.cr(),     5600);
-    setTimeout(() => feeds.fx(),     6200);
-    setTimeout(() => cameras.render(), 6800);
-    setTimeout(() => threat.compute(), 8000);
-    setTimeout(() => { STATE.bootDone = true; }, 9000);
+    setTimeout(() => feeds.wx(),         800);
+    setTimeout(() => feeds.sun(),       1400);
+    setTimeout(() => feeds.air(),       2000);
+    setTimeout(() => feeds.eq(),        2600);
+    setTimeout(() => feeds.sw(),        3200);
+    setTimeout(() => feeds.iss(),       3800);
+    setTimeout(() => feeds.marine(),    4400);
+    setTimeout(() => feeds.pwr(),       5000);
+    setTimeout(() => feeds.cr(),        5600);
+    setTimeout(() => feeds.fx(),        6200);
+    setTimeout(() => feeds.dw(),        6800);
+    setTimeout(() => feeds.net(),       7400);
+    setTimeout(() => feeds.news(),      8000);
+    setTimeout(() => feeds.disasters(), 8600);
+    setTimeout(() => feeds.alerts(),    9200);
+    setTimeout(() => cameras.render(),  9800);
+    setTimeout(() => threat.compute(), 11000);
+    setTimeout(() => { STATE.bootDone = true; }, 12000);
 
     // ARIA input wiring
     $('aria-tx').addEventListener('click', () => aria.send());
@@ -2279,6 +2794,13 @@ const ARTEMIS = (() => {
 
     // Keyboard shortcuts
     document.addEventListener('keydown', e => {
+      const fsOpen = $('cam-fs')?.style.display === 'flex';
+      if (fsOpen) {
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); viewer.prev(); return; }
+        if (e.key === 'ArrowRight') { e.preventDefault(); viewer.next(); return; }
+        if (e.key === 'Escape')     { e.preventDefault(); viewer.close(); return; }
+        if (e.key === 'r' || e.key === 'R') { e.preventDefault(); viewer.refresh(); return; }
+      }
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if (e.key === '/' || e.key === 's' || e.key === 'S') { e.preventDefault(); $('loc-search').focus(); }
       else if (e.key === 'a' || e.key === 'A') aria.toggle();
@@ -2303,7 +2825,14 @@ const ARTEMIS = (() => {
     camFilter: (r, btn) => cameras.filter(r, btn),
     camGrid: (n, btn) => cameras.setGrid(n, btn),
     camRefresh: () => cameras.refresh(),
+    fsOpen: (idx) => viewer.open(idx),
+    fsClose: () => viewer.close(),
+    fsPrev: () => viewer.prev(),
+    fsNext: () => viewer.next(),
+    fsRefresh: () => viewer.refresh(),
+    newsTab,
     state: STATE,
+    config: CONFIG,
   };
 })();
 

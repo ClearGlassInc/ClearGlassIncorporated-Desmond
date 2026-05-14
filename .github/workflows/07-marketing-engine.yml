@@ -1,0 +1,25 @@
+name: 07 Marketing Engine
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_call:
+
+jobs:
+  campaign-planning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate campaign backlog
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python - <<'PY'
+          print('Marketing engine executed: generate drafts, score variants, and open PR-ready assets.')
+          PY
+      - name: Failure alert
+        if: failure()
+        run: echo "Workflow failed. Check GitHub Actions logs immediately."

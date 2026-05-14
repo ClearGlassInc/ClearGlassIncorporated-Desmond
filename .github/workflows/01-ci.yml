@@ -1,0 +1,29 @@
+name: 01 CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_call:
+
+jobs:
+  python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Run tests
+        run: |
+          if [ -d tests ]; then python -m pytest -q; else echo "No tests directory found; skipping."; fi
+      - name: Failure alert
+        if: failure()
+        run: echo "Workflow failed. Check GitHub Actions logs immediately."

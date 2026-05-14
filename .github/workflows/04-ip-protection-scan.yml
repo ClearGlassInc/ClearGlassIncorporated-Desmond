@@ -1,0 +1,22 @@
+name: 04 IP Protection Scan
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_call:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan for accidental key leaks and sensitive terms
+        run: |
+          set -e
+          rg -n --hidden --glob "!.git" "(AKIA[0-9A-Z]{16}|BEGIN RSA PRIVATE KEY|OPENAI_API_KEY|STRIPE_SECRET_KEY|COINBASE_API_KEY)" . && exit 1 || echo "No obvious sensitive patterns found."
+      - name: Failure alert
+        if: failure()
+        run: echo "Workflow failed. Check GitHub Actions logs immediately."

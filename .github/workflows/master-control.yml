@@ -1,0 +1,25 @@
+name: Master Control
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+jobs:
+  ci:
+    uses: ./.github/workflows/01-ci.yml
+  security:
+    uses: ./.github/workflows/02-security-codeql.yml
+  dependencies:
+    uses: ./.github/workflows/03-dependency-scan.yml
+  ip_scan:
+    uses: ./.github/workflows/04-ip-protection-scan.yml
+  pages:
+    uses: ./.github/workflows/05-pages-deploy.yml
+  self_hosted:
+    uses: ./.github/workflows/06-self-hosted-deploy.yml
+  marketing:
+    uses: ./.github/workflows/07-marketing-engine.yml
+  operations:
+    uses: ./.github/workflows/08-operations-finance-bot.yml
+  daily_summary:
+    uses: ./.github/workflows/09-daily-ops-summary.yml

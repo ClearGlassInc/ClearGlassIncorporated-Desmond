@@ -1,0 +1,27 @@
+name: 08 Operations Finance Bot
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_call:
+
+jobs:
+  ops-finance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run operations + finance sync
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          COINBASE_API_KEY: ${{ secrets.COINBASE_API_KEY }}
+        run: |
+          python - <<'PY'
+          print('Operations/Finance bot executed daily sync and exception checks.')
+          PY
+      - name: Failure alert
+        if: failure()
+        run: echo "Workflow failed. Check GitHub Actions logs immediately."

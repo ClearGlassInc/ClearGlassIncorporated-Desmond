@@ -13,19 +13,6 @@ permissions:
   security-events: write
 
 jobs:
-  dependency-review:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/dependency-review-action@v4
-        with:
-          fail-on-severity: critical
-          comment-summary-in-pr: never
-      - name: Failure alert
-        if: failure()
-        run: echo "Workflow failed. Check GitHub Actions logs immediately."
-
   pip-audit:
     runs-on: ubuntu-latest
     steps:

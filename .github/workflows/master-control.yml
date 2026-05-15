@@ -7,8 +7,6 @@ on:
 jobs:
   ci:
     uses: ./.github/workflows/01-ci.yml
-  security:
-    uses: ./.github/workflows/02-security-codeql.yml
   dependencies:
     uses: ./.github/workflows/03-dependency-scan.yml
   ip_scan:

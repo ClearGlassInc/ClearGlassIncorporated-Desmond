@@ -1,1 +1,1 @@
-Compliance is a snapshot. Security is a posture. Guardian closes the gap — AI-assisted hardening, continuous, not periodic. https://clearglassinc.github.io/guardian.html
+The hardest part of building a security company: convincing orgs the risk is real before the incident that makes it obvious. clearglassinc.github.io

@@ -1,15 +1,15 @@
-# Guardian: executive-grade hardening for organizations that cannot afford operational risk.
+# What I've learned building security infrastructure for organizations at the edge of acceptable risk.
 
-Security hardening is not the same as compliance.
+Three years building ClearGlass Inc has taught me more about enterprise security decision-making than any certification program.
 
-Organizations that conflate the two discover the difference during an incident.
+The CISO who needs to defend a budget to a board that doesn't understand threat modeling. The security team that's been alert-fatigued so long that high-severity events get triaged like noise. The founder who knows their product is secure but can't articulate it to investors.
 
-Guardian — ClearGlass Inc's operational security platform — was built for the gap between compliance checkboxes and operational resilience. It applies AI-assisted defense across your attack surface, prioritizes hardening actions by risk-adjusted impact, and integrates a clean deployment path that does not require a six-month implementation engagement.
+These are real operational problems. Not technical ones.
 
-What you get:
-→ Zero-trust posture enforcement at the infrastructure layer
-→ AI-driven threat surface reduction — continuous, not periodic
-→ Deployment in hours, not quarters
-→ Audit-ready output at every stage
+The technology is usually available. What's missing is the intelligence architecture — the system that translates raw security telemetry into decisions that executives can act on.
 
-→ https://clearglassinc.github.io/guardian.html
+That's what we build at ClearGlass. Not security tools. Security intelligence.
+
+The distinction matters because tools require operators. Intelligence enables decisions.
+
+→ https://clearglassinc.github.io/

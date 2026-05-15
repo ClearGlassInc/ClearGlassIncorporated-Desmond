@@ -1,5 +1,5 @@
-1. Compliance is a snapshot. Security is a posture. Here's the difference that matters:
-2. Most tools optimize for audit paperwork. Guardian optimizes for your actual threat surface.
-3. AI-assisted hardening prioritized by risk-adjusted impact — continuously, not quarterly.
-4. You get a stronger posture and the documentation to prove it.
-5. → clearglassinc.github.io/guardian.html
+1. Three years building security infrastructure. Here's what actually earns enterprise trust:
+2. Not the feature list. Not the compliance certifications.
+3. Operational clarity — showing a CISO their actual environment, not a template dashboard.
+4. When the picture is clean and accurate, they stop evaluating and start deploying.
+5. → clearglassinc.github.io

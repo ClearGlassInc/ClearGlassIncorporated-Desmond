@@ -1,2 +1,2 @@
-[guardian-headline]
-Guardian applies AI-assisted hardening across your attack surface — continuously, prioritized by risk-adjusted impact, deployable in hours.
+[founder-note]
+ClearGlass Inc was built to give security teams the intelligence architecture they need to make decisions under pressure — not just more alerts.

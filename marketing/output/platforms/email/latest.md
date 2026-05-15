@@ -1,14 +1,17 @@
-Subject: Guardian: the difference between compliant and secure
-Preview: Most organizations discover their hardening gaps during incidents.
+Subject: From the founder: what I've learned building security intelligence infrastructure
+Preview: The hardest part is not the technology.
 
-There is a critical distinction between compliance and security that most enterprise teams understand but most enterprise tools ignore.
+Three years building ClearGlass Inc has given me a clear view of where enterprise security decision-making breaks down.
 
-Compliance is a point-in-time snapshot. Security is a continuous operational posture.
+It's rarely the technical layer. The threats are real and well-understood. Detection capabilities exist. Response playbooks are written.
 
-Guardian was built to enforce the latter. It applies AI-assisted hardening across your attack surface — continuously, prioritized by risk-adjusted impact. Not by what looks best in the next audit, but by what actually reduces your exposure to active threats.
+What's missing, consistently, is the intelligence architecture — the system that translates security telemetry into decisions that executives can actually act on.
 
-Deployment runs in hours. Audit-ready output is produced at every stage. Zero-trust posture enforcement operates at the infrastructure layer.
+A CISO operating under audit pressure doesn't need another alert. They need a clean signal that tells them what to do and how to document the decision.
 
-→ Download Guardian: https://clearglassinc.github.io/guardian.html
+That's the product I set out to build. And it's what drives every architectural decision we make at ClearGlass.
 
-— The ClearGlass Team
+→ https://clearglassinc.github.io/
+
+Desmond Otieno Odhiambo
+Founder, ClearGlass Inc

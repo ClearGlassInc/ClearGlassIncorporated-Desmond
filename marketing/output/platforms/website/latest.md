@@ -1,2 +1,2 @@
-[founder-note]
-ClearGlass Inc was built to give security teams the intelligence architecture they need to make decisions under pressure — not just more alerts.
+[brand-statement]
+Clarity is power. ClearGlass Inc builds the intelligence layer for organizations operating at the edge of acceptable risk.

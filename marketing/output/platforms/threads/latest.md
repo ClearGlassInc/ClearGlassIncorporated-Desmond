@@ -1,5 +1,5 @@
-1. Three years building security infrastructure. Here's what actually earns enterprise trust:
-2. Not the feature list. Not the compliance certifications.
-3. Operational clarity — showing a CISO their actual environment, not a template dashboard.
-4. When the picture is clean and accurate, they stop evaluating and start deploying.
+1. Clarity is not a feature. It's a strategic posture.
+2. Most security tools add complexity and call it capability. ClearGlass removes complexity to reveal what's real.
+3. The organizations that survive breaches aren't the ones with the most alerts — they're the ones who acted on the right signal.
+4. That's what we build at ClearGlass: the lens, not the noise.
 5. → clearglassinc.github.io

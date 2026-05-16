@@ -1,17 +1,12 @@
-Subject: From the founder: what I've learned building security intelligence infrastructure
-Preview: The hardest part is not the technology.
+Subject: Why clarity is ClearGlass Inc's primary product
+Preview: The organizations that survive aren't the ones with the most tools.
 
-Three years building ClearGlass Inc has given me a clear view of where enterprise security decision-making breaks down.
+In cybersecurity the difference between survival and compromise often comes down to one factor: how fast you can see what's real.
 
-It's rarely the technical layer. The threats are real and well-understood. Detection capabilities exist. Response playbooks are written.
+ClearGlass Inc was founded on the belief that transparent intelligence is the ultimate competitive advantage. Not more dashboards. Not more alerts. Clarity.
 
-What's missing, consistently, is the intelligence architecture — the system that translates security telemetry into decisions that executives can actually act on.
+Our products — Artemis and Guardian — are built from a single principle: surface what matters, strip what doesn't, deliver a clean signal to the people responsible for acting on it.
 
-A CISO operating under audit pressure doesn't need another alert. They need a clean signal that tells them what to do and how to document the decision.
+If you're evaluating your security posture this quarter, start here: https://clearglassinc.github.io/
 
-That's the product I set out to build. And it's what drives every architectural decision we make at ClearGlass.
-
-→ https://clearglassinc.github.io/
-
-Desmond Otieno Odhiambo
-Founder, ClearGlass Inc
+— The ClearGlass Team

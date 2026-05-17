@@ -1,2 +1,2 @@
-[brand-statement]
-Clarity is power. ClearGlass Inc builds the intelligence layer for organizations operating at the edge of acceptable risk.
+[artemis-headline]
+Artemis transforms your security telemetry into a coherent intelligence surface — continuous threat modeling, real-time exposure mapping, executive-grade reporting.

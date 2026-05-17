@@ -1,5 +1,5 @@
-1. Clarity is not a feature. It's a strategic posture.
-2. Most security tools add complexity and call it capability. ClearGlass removes complexity to reveal what's real.
-3. The organizations that survive breaches aren't the ones with the most alerts — they're the ones who acted on the right signal.
-4. That's what we build at ClearGlass: the lens, not the noise.
-5. → clearglassinc.github.io
+1. Most SIEM deployments are expensive noise generators. Here's what Artemis does differently:
+2. Artemis doesn't add another integration layer. It replaces the signal architecture.
+3. Connect telemetry → normalize → model threats continuously → surface a prioritized operational picture.
+4. Your analysts act on signal. Not on alert volume.
+5. → clearglassinc.github.io/artemis.html

@@ -1,12 +1,14 @@
-Subject: Why clarity is ClearGlass Inc's primary product
-Preview: The organizations that survive aren't the ones with the most tools.
+Subject: Artemis: when your security stack becomes an intelligence surface
+Preview: Stop triaging alerts. Start acting on signal.
 
-In cybersecurity the difference between survival and compromise often comes down to one factor: how fast you can see what's real.
+The average enterprise SOC team spends 40% of its time managing the security stack — not acting on the intelligence it produces.
 
-ClearGlass Inc was founded on the belief that transparent intelligence is the ultimate competitive advantage. Not more dashboards. Not more alerts. Clarity.
+This is the structural flaw that Artemis was designed to address.
 
-Our products — Artemis and Guardian — are built from a single principle: surface what matters, strip what doesn't, deliver a clean signal to the people responsible for acting on it.
+Artemis doesn't layer on top of your existing stack. It replaces the signal architecture. Connect your telemetry sources, normalize the data, apply continuous threat modeling, and surface a prioritized operational picture for your security leadership.
 
-If you're evaluating your security posture this quarter, start here: https://clearglassinc.github.io/
+The practical outcome: your team shifts from reactive triage to proactive posture management.
+
+→ Review the Artemis platform: https://clearglassinc.github.io/artemis.html
 
 — The ClearGlass Team

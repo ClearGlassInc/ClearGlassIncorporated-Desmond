@@ -1,0 +1,10 @@
+name: Daily Summary
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  daily_summary:
+    uses: ./.github/workflows/09-daily-ops-summary.yml
+    secrets: inherit

@@ -1,0 +1,10 @@
+name: Self Hosted
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  self_hosted:
+    uses: ./.github/workflows/06-self-hosted-deploy.yml
+    secrets: inherit

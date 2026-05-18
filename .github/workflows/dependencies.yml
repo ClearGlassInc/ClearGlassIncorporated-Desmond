@@ -1,0 +1,10 @@
+name: Dependencies
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  dependencies:
+    uses: ./.github/workflows/03-dependency-scan.yml
+    secrets: inherit

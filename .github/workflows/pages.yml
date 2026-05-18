@@ -1,0 +1,10 @@
+name: Pages
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  pages:
+    uses: ./.github/workflows/05-pages-deploy.yml
+    secrets: inherit

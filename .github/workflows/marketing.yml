@@ -1,0 +1,11 @@
+name: Marketing
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  marketing:
+  run:
+    uses: ./.github/workflows/07-marketing-engine.yml
+    secrets: inherit

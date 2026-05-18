@@ -1,0 +1,11 @@
+name: Operations
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  operations:
+  run:
+    uses: ./.github/workflows/08-operations-finance-bot.yml
+    secrets: inherit

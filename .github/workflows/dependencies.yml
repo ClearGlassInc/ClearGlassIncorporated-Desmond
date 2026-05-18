@@ -1,0 +1,9 @@
+name: Dependencies
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  run:
+    uses: ./.github/workflows/03-dependency-scan.yml

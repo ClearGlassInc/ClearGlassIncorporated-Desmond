@@ -1,0 +1,9 @@
+name: Marketing
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  run:
+    uses: ./.github/workflows/07-marketing-engine.yml

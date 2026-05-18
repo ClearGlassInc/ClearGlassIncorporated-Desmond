@@ -54,8 +54,8 @@ jobs:
 
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as f:
               f.write('status<<EOF\n')
-              f.write('ops-finance complete\n')
-              f.write('EOF\n')
+              f.write('ops-finance complete')
+              f.write('\nEOF\n')
           EOF
 
       - name: Create ops summary issue

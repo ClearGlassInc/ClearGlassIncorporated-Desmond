@@ -1,13 +1,13 @@
-# Artemis turns your security stack into a coherent intelligence surface.
+# The difference between a secure organization and a compliant one.
 
-Most enterprise security deployments share the same structural flaw: they produce volume, not intelligence.
+Compliance is a point-in-time snapshot. Security is a continuous operational posture.
 
-Dozens of tools. Thousands of alerts. Zero coherent signal.
+Most enterprise security teams know this distinction. Most enterprise tools still reward compliance paperwork over operational resilience.
 
-Artemis — ClearGlass Inc's flagship platform — was engineered to solve this at the architectural level. Not by adding another integration layer. By replacing the signal architecture entirely.
+Guardian was designed to close that gap. It hardens your environment against the actual threat surface — not the hypothetical one that passed last quarter's audit — and it does so continuously, with AI-assisted prioritization that tells your team exactly where the highest-impact hardening actions are.
 
-Artemis connects your existing telemetry sources, normalizes the signal, applies continuous threat modeling, and surfaces a prioritized operational picture for your security leadership.
+The result is not a compliance certificate. It is a measurably stronger posture with documentation that satisfies both operational review and audit requirements.
 
-The result: your team acts on what matters — instead of triaging what doesn't.
+This is the security investment that pays for itself before the next incident.
 
-→ https://clearglassinc.github.io/artemis.html
+→ https://clearglassinc.github.io/guardian.html

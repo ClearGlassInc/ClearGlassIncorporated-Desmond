@@ -1,1 +1,1 @@
-Artemis doesn't add another dashboard. It replaces the signal architecture. Your analysts act on intelligence — not volume. https://clearglassinc.github.io/artemis.html
+The gap between 'we passed the audit' and 'we're actually secure' is where breaches happen. Guardian operates in that gap. https://clearglassinc.github.io/guardian.html

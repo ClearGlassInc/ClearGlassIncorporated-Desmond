@@ -1,0 +1,10 @@
+name: IP Scan
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  run:
+    uses: ./.github/workflows/04-ip-protection-scan.yml
+    secrets: inherit

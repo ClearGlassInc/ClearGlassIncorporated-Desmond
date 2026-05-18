@@ -5,5 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  ip_scan:
   run:
     uses: ./.github/workflows/04-ip-protection-scan.yml
+    secrets: inherit

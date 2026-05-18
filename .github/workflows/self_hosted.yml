@@ -5,5 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  self_hosted:
   run:
     uses: ./.github/workflows/06-self-hosted-deploy.yml
+    secrets: inherit

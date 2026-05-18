@@ -1,23 +1,39 @@
 name: Master Control
+
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: '0 6 * * *'     # Runs daily at 6:00 AM UTC
+  workflow_dispatch:         # Manual trigger preserved
 
 jobs:
   ci:
     uses: ./.github/workflows/01-ci.yml
-  dependencies:
-    uses: ./.github/workflows/03-dependency-scan.yml
-  ip_scan:
-    uses: ./.github/workflows/04-ip-protection-scan.yml
-  pages:
-    uses: ./.github/workflows/05-pages-deploy.yml
-  self_hosted:
-    uses: ./.github/workflows/06-self-hosted-deploy.yml
-  marketing:
-    uses: ./.github/workflows/07-marketing-engine.yml
-  operations:
-    uses: ./.github/workflows/08-operations-finance-bot.yml
+    secrets: inherit
+
   daily_summary:
     uses: ./.github/workflows/09-daily-ops-summary.yml
+    secrets: inherit
+
+  dependencies:
+    uses: ./.github/workflows/03-dependency-scan.yml
+    secrets: inherit
+
+  ip_scan:
+    uses: ./.github/workflows/04-ip-protection-scan.yml
+    secrets: inherit
+
+  marketing:
+    uses: ./.github/workflows/07-marketing-engine.yml
+    secrets: inherit
+
+  operations:
+    uses: ./.github/workflows/08-operations-finance-bot.yml
+    secrets: inherit
+
+  self_hosted:
+    uses: ./.github/workflows/06-self-hosted-deploy.yml
+    secrets: inherit
+
+  pages:
+    uses: ./.github/workflows/05-pages-deploy.yml
+    secrets: inherit

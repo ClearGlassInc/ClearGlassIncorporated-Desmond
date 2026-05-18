@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /assets/private/
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
 
 Sitemap: https://clearglassinc.github.io/sitemap.xml

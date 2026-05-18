@@ -6,5 +6,6 @@ on:
 
 jobs:
   daily_summary:
+  run:
     uses: ./.github/workflows/09-daily-ops-summary.yml
     secrets: inherit

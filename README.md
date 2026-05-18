@@ -1,3 +1,36 @@
+# ClearGlassInc
+
+ClearGlassInc is building digital infrastructure for product licensing, AI-assisted operations, and crypto-aligned business systems.
+
+## Live Demo
+[Visit the ClearGlassInc site](https://clearglassinc.github.io)
+
+## What This Project Does
+- Organizes ClearGlassInc digital assets
+- Publishes public-facing business and product pages
+- Supports licensing, brand presence, and future monetization systems
+
+## Current Focus
+- GitHub Pages deployment
+- Artemis self-evolution system
+- Business automation infrastructure
+- Public visibility and traffic growth
+
+## Quick Links
+- [Website](https://clearglassinc.github.io)
+- [Issues](https://github.com/ClearGlassInc/ClearGlassInc.github.io/issues)
+- [Pull Requests](https://github.com/ClearGlassInc/ClearGlassInc.github.io/pulls)
+- [Roadmap](https://clearglassinc.github.io/roadmap.html)
+- [Contact](https://clearglassinc.github.io/contact.html)
+
+## Star the Repository
+
+If this project aligns with your interest in AI operations, licensing, or crypto infrastructure, star the repo and follow development.
+
+![GitHub last commit](https://img.shields.io/github/last-commit/ClearGlassInc/ClearGlassInc.github.io)
+![GitHub repo size](https://img.shields.io/github/repo-size/ClearGlassInc/ClearGlassInc.github.io)
+![GitHub issues](https://img.shields.io/github/issues/ClearGlassInc/ClearGlassInc.github.io)
+
 # ClearGlassInc Artemis
 
 Public website, governance documentation, and supporting automation for ClearGlassInc Artemis — enterprise cybersecurity, secure software architecture, and intelligence operations.

@@ -8,33 +8,33 @@ on:
 jobs:
 
   ci:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/ci.yml@main
+    uses: ./.github/workflows/01-ci.yml
     secrets: inherit
 
   daily_summary:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/daily_summary.yml@main
+    uses: ./.github/workflows/09-daily-ops-summary.yml
     secrets: inherit
 
   dependencies:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/dependencies.yml@main
+    uses: ./.github/workflows/03-dependency-scan.yml
     secrets: inherit
 
   ip_scan:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/ip_scan.yml@main
+    uses: ./.github/workflows/04-ip-protection-scan.yml
     secrets: inherit
 
   marketing:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/marketing.yml@main
+    uses: ./.github/workflows/07-marketing-engine.yml
     secrets: inherit
 
   operations:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/operations.yml@main
+    uses: ./.github/workflows/08-operations-finance-bot.yml
     secrets: inherit
 
   self_hosted:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/self_hosted.yml@main
+    uses: ./.github/workflows/06-self-hosted-deploy.yml
     secrets: inherit
 
   pages:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/pages.yml@main
+    uses: ./.github/workflows/05-pages-deploy.yml
     secrets: inherit

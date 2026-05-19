@@ -11,8 +11,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "artemis-production"
-  cancel-in-progress: true
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:

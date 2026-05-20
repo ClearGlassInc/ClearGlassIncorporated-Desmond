@@ -2,28 +2,85 @@ name: 01 CI
 
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
   pull_request:
+    branches: ["main"]
   workflow_dispatch:
   schedule:
     - cron: "0 9 * * *"
   workflow_call:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: website-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  python-tests:
+  validate-site:
+    name: validate-site
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.11'
-      - name: Install dependencies
+          python-version: "3.11"
+
+      - name: Validate required site files
+        shell: bash
         run: |
+          set -euo pipefail
+          test -f index.html
+          test -f 404.html
+          test -f sitemap.xml
+          test -f robots.txt
+
+      - name: Install Python dependencies when present
+        shell: bash
+        run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Run tests
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "No requirements.txt found; skipping dependency installation."
+          fi
+
+      - name: Run Python tests when present
+        shell: bash
         run: |
-          if [ -d tests ]; then python -m pytest -q; else echo "No tests directory found; skipping."; fi
-      - name: Failure alert
-        if: failure()
-        run: echo "Workflow failed. Check GitHub Actions logs immediately."
+          set -euo pipefail
+          if [ -d tests ]; then
+            python -m pytest -q
+          else
+            echo "No tests directory found; skipping Python tests."
+          fi
+
+      - name: Validate HTML parsing
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import sys
+
+          class Parser(HTMLParser):
+              pass
+
+          failed = False
+          for path in Path('.').rglob('*.html'):
+              if '.git' in path.parts:
+                  continue
+              try:
+                  Parser().feed(path.read_text(encoding='utf-8'))
+                  print(f'OK {path}')
+              except Exception as exc:
+                  failed = True
+                  print(f'ERROR {path}: {exc}')
+          sys.exit(1 if failed else 0)
+          PY

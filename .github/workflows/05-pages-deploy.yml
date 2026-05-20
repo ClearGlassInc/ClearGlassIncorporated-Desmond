@@ -1,8 +1,6 @@
 name: Deploy ClearGlass Pages
 
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
   workflow_call:
 
@@ -12,32 +10,52 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: clearglass-pages
+  cancel-in-progress: true
 
 jobs:
   build:
+    name: build-static-site
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
-      - name: Setup Pages
+      - name: Validate required site files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f index.html
+          test -f 404.html
+          test -f sitemap.xml
+          test -f robots.txt
+
+      - name: Prepare GitHub Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+          find . -mindepth 1 -maxdepth 1 \
+            ! -name '.git' \
+            ! -name '.github' \
+            ! -name '_site' \
+            ! -name 'node_modules' \
+            ! -name '.gitignore' \
+            -exec cp -R {} _site/ \;
+          touch _site/.nojekyll
+          test -f _site/index.html
+
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
-
-  report-build-status:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Report success
-        run: echo "Build artifact uploaded successfully."
+          path: _site
 
   deploy:
+    name: deploy-github-pages
     needs: build
     environment:
       name: github-pages

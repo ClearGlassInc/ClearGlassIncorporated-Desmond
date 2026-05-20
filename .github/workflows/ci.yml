@@ -1,11 +1,18 @@
 name: CI
 
 on:
-  workflow_call:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
 
 jobs:
   ci:
-  run:
+    name: call-primary-ci
     uses: ./.github/workflows/01-ci.yml
     secrets: inherit

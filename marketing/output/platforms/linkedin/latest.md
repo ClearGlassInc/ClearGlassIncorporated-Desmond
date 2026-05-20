@@ -1,13 +1,13 @@
-# The difference between a secure organization and a compliant one.
+# The premium brand in security does not shout. It demonstrates.
 
-Compliance is a point-in-time snapshot. Security is a continuous operational posture.
+Every enterprise security vendor claims sophistication. Most deliver complexity dressed as intelligence.
 
-Most enterprise security teams know this distinction. Most enterprise tools still reward compliance paperwork over operational resilience.
+ClearGlass Inc operates differently. We do not compete on feature count. We compete on operational clarity.
 
-Guardian was designed to close that gap. It hardens your environment against the actual threat surface — not the hypothetical one that passed last quarter's audit — and it does so continuously, with AI-assisted prioritization that tells your team exactly where the highest-impact hardening actions are.
+Our products — Artemis and Guardian — are designed for the decision-maker who needs signal, not noise; outcomes, not activity metrics.
 
-The result is not a compliance certificate. It is a measurably stronger posture with documentation that satisfies both operational review and audit requirements.
+We built this company for CISOs, CTOs, and founders who understand that security is not a cost center. It is the infrastructure of trust.
 
-This is the security investment that pays for itself before the next incident.
+If your team spends more time managing the security stack than acting on its intelligence, something is wrong with the stack. We fix that.
 
-→ https://clearglassinc.github.io/guardian.html
+→ https://clearglassinc.github.io/

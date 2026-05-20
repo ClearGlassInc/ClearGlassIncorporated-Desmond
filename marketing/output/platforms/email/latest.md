@@ -1,14 +1,12 @@
-Subject: Guardian: the difference between compliant and secure
-Preview: Most organizations discover their hardening gaps during incidents.
+Subject: Why clarity is ClearGlass Inc's primary product
+Preview: The organizations that survive aren't the ones with the most tools.
 
-There is a critical distinction between compliance and security that most enterprise teams understand but most enterprise tools ignore.
+In cybersecurity the difference between survival and compromise often comes down to one factor: how fast you can see what's real.
 
-Compliance is a point-in-time snapshot. Security is a continuous operational posture.
+ClearGlass Inc was founded on the belief that transparent intelligence is the ultimate competitive advantage. Not more dashboards. Not more alerts. Clarity.
 
-Guardian was built to enforce the latter. It applies AI-assisted hardening across your attack surface — continuously, prioritized by risk-adjusted impact. Not by what looks best in the next audit, but by what actually reduces your exposure to active threats.
+Our products — Artemis and Guardian — are built from a single principle: surface what matters, strip what doesn't, deliver a clean signal to the people responsible for acting on it.
 
-Deployment runs in hours. Audit-ready output is produced at every stage. Zero-trust posture enforcement operates at the infrastructure layer.
-
-→ Download Guardian: https://clearglassinc.github.io/guardian.html
+If you're evaluating your security posture this quarter, start here: https://clearglassinc.github.io/
 
 — The ClearGlass Team

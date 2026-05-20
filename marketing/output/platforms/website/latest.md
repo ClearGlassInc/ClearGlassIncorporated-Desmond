@@ -1,2 +1,2 @@
-[guardian-headline]
-Close the gap between compliant and secure. Guardian enforces zero-trust posture at the infrastructure layer and produces audit-ready output at every stage.
+[brand-statement]
+Transparent intelligence. Disciplined execution. Long-horizon infrastructure built for organizations that cannot afford to be wrong.

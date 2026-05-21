@@ -1,4 +1,4 @@
-# ClearGlassInc Artemis
+# ClearGlassInc.
 
 Public website, governance documentation, and supporting automation for ClearGlassInc Artemis — enterprise cybersecurity, secure software architecture, and intelligence operations.
 

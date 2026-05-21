@@ -1,11 +1,11 @@
 name: Pages
 
 on:
-  workflow_call:
   workflow_dispatch:
 
 jobs:
   pages:
-  run:
-    uses: ./.github/workflows/05-pages-deploy.yml
-    secrets: inherit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pages wrapper disabled
+        run: echo "Pages wrapper disabled until reusable deployment workflow is repaired."

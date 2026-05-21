@@ -2,6 +2,18 @@ name: Master Control
 
 on:
   workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/master-control.yml"
+      - ".github/workflows/01-ci.yml"
+      - ".github/workflows/03-dependency-scan.yml"
+      - ".github/workflows/04-ip-protection-scan.yml"
+      - ".github/workflows/05-pages-deploy.yml"
+      - ".github/workflows/06-self-hosted-deploy.yml"
+      - ".github/workflows/07-marketing-engine.yml"
+      - ".github/workflows/08-operations-finance-bot.yml"
+      - ".github/workflows/09-daily-ops-summary.yml"
   schedule:
     - cron: "0 6 * * *"
 
@@ -13,8 +25,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  control-plane:
+    name: Control-plane validation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Confirm master control has runnable jobs
+        run: |
+          echo "Master Control started on ${GITHUB_REF}."
+          echo "Event: ${GITHUB_EVENT_NAME}"
+          echo "Run ID: ${GITHUB_RUN_ID}"
+
   ci:
     name: CI validation
+    needs: control-plane
     uses: ./.github/workflows/01-ci.yml
     permissions:
       contents: read
@@ -22,16 +47,16 @@ jobs:
 
   daily-summary:
     name: Daily operations summary
-    uses: ./.github/workflows/09-daily-ops-summary.yml
     needs: ci
+    uses: ./.github/workflows/09-daily-ops-summary.yml
     permissions:
       contents: read
     secrets: inherit
 
   dependencies:
     name: Dependency scan
-    uses: ./.github/workflows/03-dependency-scan.yml
     needs: ci
+    uses: ./.github/workflows/03-dependency-scan.yml
     permissions:
       contents: read
       security-events: write
@@ -39,43 +64,43 @@ jobs:
 
   ip-scan:
     name: IP protection scan
-    uses: ./.github/workflows/04-ip-protection-scan.yml
     needs: ci
+    uses: ./.github/workflows/04-ip-protection-scan.yml
     permissions:
       contents: read
     secrets: inherit
 
   marketing:
     name: Marketing engine
-    uses: ./.github/workflows/07-marketing-engine.yml
     needs: ci
+    uses: ./.github/workflows/07-marketing-engine.yml
     permissions:
       contents: read
     secrets: inherit
 
   operations:
     name: Operations finance bot
-    uses: ./.github/workflows/08-operations-finance-bot.yml
     needs: ci
+    uses: ./.github/workflows/08-operations-finance-bot.yml
     permissions:
       contents: read
     secrets: inherit
 
   self-hosted:
     name: Self-hosted deploy check
-    uses: ./.github/workflows/06-self-hosted-deploy.yml
     needs: ci
+    uses: ./.github/workflows/06-self-hosted-deploy.yml
     permissions:
       contents: read
     secrets: inherit
 
   pages:
     name: GitHub Pages deploy
-    uses: ./.github/workflows/05-pages-deploy.yml
     needs:
       - ci
       - dependencies
       - ip-scan
+    uses: ./.github/workflows/05-pages-deploy.yml
     permissions:
       contents: read
       pages: write

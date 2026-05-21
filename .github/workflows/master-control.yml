@@ -1,69 +1,83 @@
 name: Master Control
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'     # Runs daily at 6:00 AM UTC
-  workflow_dispatch:         # Manual trigger preserved
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: master-control-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-
   ci:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/ci.yml@main
-    secrets: inherit
-
-  daily_summary:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/daily_summary.yml@main
-    secrets: inherit
-
-  dependencies:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/dependencies.yml@main
-    secrets: inherit
-
-  ip_scan:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/ip_scan.yml@main
-    secrets: inherit
-
-  marketing:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/marketing.yml@main
-    secrets: inherit
-
-  operations:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/operations.yml@main
-    secrets: inherit
-
-  self_hosted:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/self_hosted.yml@main
-    secrets: inherit
-
-  pages:
-    uses: ClearGlassInc/ClearGlassInc.github.io/.github/workflows/pages.yml@main
+    name: CI validation
     uses: ./.github/workflows/01-ci.yml
+    permissions:
+      contents: read
     secrets: inherit
 
-  daily_summary:
+  daily-summary:
+    name: Daily operations summary
     uses: ./.github/workflows/09-daily-ops-summary.yml
+    needs: ci
+    permissions:
+      contents: read
     secrets: inherit
 
   dependencies:
+    name: Dependency scan
     uses: ./.github/workflows/03-dependency-scan.yml
+    needs: ci
+    permissions:
+      contents: read
+      security-events: write
     secrets: inherit
 
-  ip_scan:
+  ip-scan:
+    name: IP protection scan
     uses: ./.github/workflows/04-ip-protection-scan.yml
+    needs: ci
+    permissions:
+      contents: read
     secrets: inherit
 
   marketing:
+    name: Marketing engine
     uses: ./.github/workflows/07-marketing-engine.yml
+    needs: ci
+    permissions:
+      contents: read
     secrets: inherit
 
   operations:
+    name: Operations finance bot
     uses: ./.github/workflows/08-operations-finance-bot.yml
+    needs: ci
+    permissions:
+      contents: read
     secrets: inherit
 
-  self_hosted:
+  self-hosted:
+    name: Self-hosted deploy check
     uses: ./.github/workflows/06-self-hosted-deploy.yml
+    needs: ci
+    permissions:
+      contents: read
     secrets: inherit
 
   pages:
+    name: GitHub Pages deploy
     uses: ./.github/workflows/05-pages-deploy.yml
+    needs:
+      - ci
+      - dependencies
+      - ip-scan
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     secrets: inherit

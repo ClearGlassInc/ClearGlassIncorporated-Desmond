@@ -2,7 +2,7 @@ name: 01 CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "workflow-repair-agent"]
   pull_request:
     branches: ["main"]
   workflow_dispatch:
@@ -44,6 +44,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
+          pip install pytest pytest-cov
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           else

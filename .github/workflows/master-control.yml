@@ -14,6 +14,11 @@ on:
       - ".github/workflows/07-marketing-engine.yml"
       - ".github/workflows/08-operations-finance-bot.yml"
       - ".github/workflows/09-daily-ops-summary.yml"
+      - "requirements*.txt"
+      - "pyproject.toml"
+      - "tests/**"
+      - "bots/**"
+      - "artemis/**"
   schedule:
     - cron: "0 6 * * *"
 

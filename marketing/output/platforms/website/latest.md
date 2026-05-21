@@ -1,2 +1,2 @@
-[brand-statement]
-Transparent intelligence. Disciplined execution. Long-horizon infrastructure built for organizations that cannot afford to be wrong.
+[artemis-headline]
+A living digital twin of your operational environment. Artemis surfaces exposure drift, active vectors, and prioritized response actions — continuously, not at report time.

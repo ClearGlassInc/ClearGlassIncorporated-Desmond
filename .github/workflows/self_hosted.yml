@@ -1,11 +1,11 @@
 name: Self Hosted
 
 on:
-  workflow_call:
   workflow_dispatch:
 
 jobs:
   self_hosted:
-  run:
-    uses: ./.github/workflows/06-self-hosted-deploy.yml
-    secrets: inherit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Self hosted wrapper disabled
+        run: echo "Self hosted wrapper disabled until reusable deployment workflow is repaired."

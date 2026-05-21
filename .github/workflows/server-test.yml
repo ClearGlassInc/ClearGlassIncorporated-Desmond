@@ -39,16 +39,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - name: Install validators
         run: npm install -g htmlhint stylelint stylelint-config-standard
+
       - name: Lint HTML
         run: htmlhint "**/*.html" --ignore "node_modules/**,_site/**"
+
       - name: Python syntax check
-        run: python3 -m py_compile scripts/*.py
+        run: |
+          if compgen -G "scripts/*.py" > /dev/null; then
+            python3 -m py_compile scripts/*.py
+          else
+            echo "No Python scripts found; skipping syntax check."
+          fi
 
   python-tests:
     name: Python tests
@@ -58,27 +67,40 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           pip install pytest pytest-cov
-          [[ -f requirements.txt ]] && pip install -r requirements.txt || true
+          if [[ -f requirements.txt ]]; then
+            pip install -r requirements.txt
+          fi
+
       - name: Run tests
-        run: python3 -m pytest tests/ -v --tb=short
+        run: |
+          if [[ -d tests ]] && find tests -type f -name "test_*.py" -print -quit | grep -q .; then
+            python3 -m pytest tests/ -v --tb=short
+          else
+            echo "No pytest tests found; skipping."
+          fi
 
   docker-smoke:
     name: Docker smoke test
     runs-on: [self-hosted, linux, clearglass]
     timeout-minutes: 15
+
     steps:
       - name: Docker version
         run: docker version
+
       - name: Run nginx in Docker (smoke test)
         run: |
+          docker rm -f site-test 2>/dev/null || true
           docker run --rm -d -p 8080:80 --name site-test nginx:alpine
           sleep 2
           curl -f http://localhost:8080

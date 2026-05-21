@@ -1,1 +1,11 @@
+name: Daily Summary
 
+on:
+  workflow_dispatch:
+
+jobs:
+  summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm daily summary workflow
+        run: echo "Daily summary workflow active"

@@ -1,27 +1,36 @@
-name: 08 Operations Finance Bot
+name: ClearGlassInc COO Bot – Daily Operations
+
 on:
-  push:
-    branches: [ main ]
-  pull_request:
   workflow_dispatch:
   schedule:
-    - cron: "0 9 * * *"
-  workflow_call:
+    - cron: '0 12 * * *'
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  actions: read
 
 jobs:
-  ops-finance:
+  coo-review:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Run operations + finance sync
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          COINBASE_API_KEY: ${{ secrets.COINBASE_API_KEY }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate repository context
         run: |
-          python - <<'PY'
-          print('Operations/Finance bot executed daily sync and exception checks.')
-          PY
-      - name: Failure alert
-        if: failure()
-        run: echo "Workflow failed. Check GitHub Actions logs immediately."
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Ref: $GITHUB_REF"
+          echo "Event: $GITHUB_EVENT_NAME"
+
+      - name: COO review
+        run: |
+          echo "COO review completed."

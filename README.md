@@ -24,10 +24,6 @@ The site is published via GitHub Pages from the `main` branch.
 | `sitemap.xml`, `robots.txt`, `schema.json` | SEO and discovery metadata. |
 | `.nojekyll` | Disables Jekyll processing on GitHub Pages; the site is served as static HTML. |
 
-## Local development
-
-The site is plain static HTML. No build step is required to preview it.
-
 ```bash
 python3 -m http.server 8000
 # open http://localhost:8000
@@ -71,8 +67,8 @@ Top-level `*.md` blueprints (e.g. `ARTEMIS_INTELLIGENCE_PLATFORM_BLUEPRINT.md`, 
 
 ## Security
 
-Report vulnerabilities privately to **security@clearglassinc.com**. Scope, response SLAs, and safe-harbor terms are defined in `SECURITY.md`.
+Report vulnerabilities privately to **clearglass369@gmail.com**. Scope, response SLAs, and safe-harbor terms are defined in `SECURITY.md`.
 
 ## Leadership
 
-Founded by **Desmond Otieno Odhiambo**. See `docs/desmond_otieno_odhiambo_executive_profile.md`.
+Founder & Chairman **Desmond Otieno Odhiambo**. See `docs/Desmond_Otieno_Odhiambo_executive_profile.md`.

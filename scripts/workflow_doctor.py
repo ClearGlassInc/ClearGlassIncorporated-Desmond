@@ -76,7 +76,7 @@ def patch_action_versions(text: str) -> tuple[str, list[str]]:
     for action, version in STABLE_ACTIONS.items():
         pattern = re.compile(rf"uses:\s*{re.escape(action)}@v\d+", re.IGNORECASE)
         new_text, count = pattern.subn(f"uses: {action}@{version}", text)
-        if count:
+        if count and new_text != text:
             changes.append(f"pinned {action} to {version}")
             text = new_text
     return text, changes
@@ -121,9 +121,6 @@ def fix_reusable_jobs(data: dict[str, Any]) -> list[str]:
             if key not in ALLOWED_REUSABLE_JOB_KEYS:
                 job.pop(key, None)
                 changes.append(f"removed invalid reusable-job key {job_name}.{key}")
-        if "permissions" in job:
-            job.pop("permissions", None)
-            changes.append(f"removed reusable-job permissions from {job_name}")
     return changes
 
 
@@ -186,8 +183,10 @@ def main() -> int:
         assert data is not None
         parsed[path] = data
         all_called |= local_called_workflows(data)
-        if action_changes:
+        if action_changes and args.fix:
             findings.extend(f"FIX {path}: {c}" for c in action_changes)
+        elif action_changes:
+            findings.extend(f"NEEDS_FIX {path}: {c}" for c in action_changes)
 
     for path, data in parsed.items():
         changes: list[str] = []
@@ -198,7 +197,8 @@ def main() -> int:
         if rel in all_called:
             changes += ensure_workflow_call(path, data)
         if changes:
-            findings.extend(f"FIX {path}: {c}" for c in changes)
+            prefix = "FIX" if args.fix else "NEEDS_FIX"
+            findings.extend(f"{prefix} {path}: {c}" for c in changes)
             if args.fix:
                 path.write_text(dump_yaml(data), encoding="utf-8")
 
@@ -206,9 +206,10 @@ def main() -> int:
         print(item)
 
     errors = [f for f in findings if f.startswith("ERROR")]
+    needs_fix = [f for f in findings if f.startswith("NEEDS_FIX")]
     if errors:
         return 1
-    if findings and not args.fix:
+    if needs_fix:
         print("Workflow doctor found repairable issues. Run with --fix.")
         return 1
     print("Workflow doctor clean." if not findings else "Workflow doctor repairs complete.")

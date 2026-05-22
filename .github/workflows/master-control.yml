@@ -1,17 +1,26 @@
 name: Master Control
-# run-trigger: 2026-05-21T17:35Z
+# run-trigger: 2026-05-22T06:31Z
 
 on:
   workflow_dispatch:
-    inputs:
-      run_all:
-        description: "Run all master-control jobs"
-        required: false
-        default: "true"
-        type: choice
-        options:
-          - "true"
   push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/master-control.yml"
+      - ".github/workflows/01-ci.yml"
+      - ".github/workflows/03-dependency-scan.yml"
+      - ".github/workflows/04-ip-protection-scan.yml"
+      - ".github/workflows/05-pages-deploy.yml"
+      - ".github/workflows/06-self-hosted-deploy.yml"
+      - ".github/workflows/07-marketing-engine.yml"
+      - ".github/workflows/08-operations-finance-bot.yml"
+      - ".github/workflows/09-daily-ops-summary.yml"
+      - "requirements*.txt"
+      - "pyproject.toml"
+      - "tests/**"
+      - "bots/**"
+      - "artemis/**"
+  pull_request:
     branches: ["main"]
     paths:
       - ".github/workflows/master-control.yml"
@@ -35,14 +44,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: master-control-${{ github.ref }}
+  group: master-control-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   control-plane:
     name: Control-plane validation
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.run_all == 'true' }}
     permissions:
       contents: read
     steps:

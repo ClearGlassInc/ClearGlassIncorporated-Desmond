@@ -33,7 +33,7 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOWS = ROOT / ".github" / "workflows"
 
 STABLE_ACTIONS = {
-    "actions/checkout": "v4",
+    "actions/checkout": "v5",
     "actions/setup-python": "v5",
     "actions/setup-node": "v4",
     "actions/upload-artifact": "v4",

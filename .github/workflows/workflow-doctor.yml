@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   audit-workflows:
@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -35,5 +37,21 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pyyaml
 
-      - name: Run workflow doctor audit
+      - name: Run workflow doctor repair
+        run: python scripts/workflow_doctor.py --fix
+
+      - name: Commit workflow doctor repairs
+        if: github.event_name != 'pull_request'
+        run: |
+          if git status --porcelain -- .github/workflows scripts/workflow_doctor.py | grep -q .; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .github/workflows scripts/workflow_doctor.py
+            git commit -m "Workflow doctor: apply automatic repairs [skip ci]"
+            git push
+          else
+            echo "No workflow repairs needed."
+          fi
+
+      - name: Verify clean workflow audit
         run: python scripts/workflow_doctor.py

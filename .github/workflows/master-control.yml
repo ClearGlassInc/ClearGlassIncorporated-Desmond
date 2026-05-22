@@ -43,6 +43,9 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
+  security-events: write
 
 concurrency:
   group: master-control-${{ github.workflow }}-${{ github.ref }}
@@ -65,57 +68,42 @@ jobs:
     name: CI validation
     needs: control-plane
     uses: ./.github/workflows/01-ci.yml
-    permissions:
-      contents: read
     secrets: inherit
 
   daily-summary:
     name: Daily operations summary
     needs: ci
     uses: ./.github/workflows/09-daily-ops-summary.yml
-    permissions:
-      contents: read
     secrets: inherit
 
   dependencies:
     name: Dependency scan
     needs: ci
     uses: ./.github/workflows/03-dependency-scan.yml
-    permissions:
-      contents: read
-      security-events: write
     secrets: inherit
 
   ip-scan:
     name: IP protection scan
     needs: ci
     uses: ./.github/workflows/04-ip-protection-scan.yml
-    permissions:
-      contents: read
     secrets: inherit
 
   marketing:
     name: Marketing engine
     needs: ci
     uses: ./.github/workflows/07-marketing-engine.yml
-    permissions:
-      contents: read
     secrets: inherit
 
   operations:
     name: Operations finance bot
     needs: ci
     uses: ./.github/workflows/08-operations-finance-bot.yml
-    permissions:
-      contents: read
     secrets: inherit
 
   self-hosted:
     name: Self-hosted deploy check
     needs: ci
     uses: ./.github/workflows/06-self-hosted-deploy.yml
-    permissions:
-      contents: read
     secrets: inherit
 
   pages:
@@ -125,8 +113,4 @@ jobs:
       - dependencies
       - ip-scan
     uses: ./.github/workflows/05-pages-deploy.yml
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     secrets: inherit

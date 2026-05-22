@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClearGlass Advanced Operator Button System</title>
+  <meta name="description" content="DARPA-inspired ClearGlass button system demo: tactical HUD controls, glassmorphism, neon border motion, ripple feedback, and accessible focus states.">
+  <link rel="stylesheet" href="assets/css/cg-darpa-buttons.css">
+</head>
+<body class="cg-command-surface">
+  <main class="cg-shell">
+    <section class="cg-hero-panel" aria-labelledby="page-title">
+      <p class="cg-eyebrow">ClearGlass Interface Lab</p>
+      <h1 class="cg-title" id="page-title">Advanced operator controls for a <span>next-gen command surface.</span></h1>
+      <p class="cg-lede">A reusable, lightweight button system built for GitHub Pages: luminous border physics, glassmorphism, scan-line depth, click impact, keyboard accessibility, and reduced-motion support.</p>
+      <div class="cg-button-grid" aria-label="Featured command buttons">
+        <a class="cg-btn cg-btn--primary cg-btn--pulse" href="guardian.html"><span class="cg-btn__icon">⟡</span>Open Guardian</a>
+        <a class="cg-btn cg-btn--command" href="artemis-iv.html"><span class="cg-btn__icon">⌁</span>Launch Artemis<span class="cg-btn__kbd">CMD</span></a>
+        <a class="cg-btn cg-btn--ghost" href="index.html"><span class="cg-btn__icon">←</span>Return Home</a>
+      </div>
+    </section>
+
+    <section class="cg-demo-panel" aria-labelledby="demo-title">
+      <div class="cg-section-head">
+        <div>
+          <p class="cg-eyebrow">Button Matrix</p>
+          <h2 id="demo-title">Reusable tactical variants</h2>
+        </div>
+        <p>Hover, focus with keyboard, press, and test the loading state.</p>
+      </div>
+
+      <div class="cg-demo-row">
+        <button class="cg-btn cg-btn--primary" type="button"><span class="cg-btn__icon">◆</span>Primary</button>
+        <button class="cg-btn cg-btn--secondary" type="button"><span class="cg-btn__icon">◇</span>Secondary</button>
+        <button class="cg-btn cg-btn--success" type="button"><span class="cg-btn__icon">✓</span>Success</button>
+        <button class="cg-btn cg-btn--danger" type="button"><span class="cg-btn__icon">!</span>Danger</button>
+        <button class="cg-btn cg-btn--ghost" type="button"><span class="cg-btn__icon">○</span>Ghost</button>
+        <button class="cg-btn cg-btn--command" type="button"><span class="cg-btn__icon">⌬</span>Command<span class="cg-btn__kbd">AI</span></button>
+      </div>
+
+      <div class="cg-demo-row">
+        <button class="cg-btn cg-btn--primary cg-btn--pulse" type="button"><span class="cg-btn__icon">◈</span>Ambient Pulse</button>
+        <button class="cg-btn cg-btn--secondary" data-cg-loading-demo type="button"><span class="cg-btn__icon">↻</span>Loading Demo</button>
+        <button class="cg-btn cg-btn--ghost is-active" type="button"><span class="cg-btn__icon">●</span>Active State</button>
+        <button class="cg-btn cg-btn--secondary" disabled type="button"><span class="cg-btn__icon">×</span>Disabled</button>
+      </div>
+    </section>
+
+    <section class="cg-notes-panel" aria-labelledby="notes-title">
+      <div class="cg-section-head">
+        <div>
+          <p class="cg-eyebrow">Implementation Notes</p>
+          <h2 id="notes-title">Customize fast without breaking the system</h2>
+        </div>
+      </div>
+
+      <div class="cg-note-grid">
+        <article class="cg-note-card">
+          <h3>Colors</h3>
+          <p>Override <code>--cg-accent</code>, <code>--cg-accent-2</code>, and <code>--cg-accent-3</code> on any button variant for cyan, blue, violet, green, or red command states.</p>
+        </article>
+        <article class="cg-note-card">
+          <h3>Speed</h3>
+          <p>Adjust <code>--cg-speed</code>, <code>--cg-pulse-speed</code>, and <code>--cg-sweep-speed</code> globally in <code>:root</code> to tune motion from quiet enterprise to high-energy operator mode.</p>
+        </article>
+        <article class="cg-note-card">
+          <h3>Usage</h3>
+          <p>Add <code>class="cg-btn cg-btn--primary"</code> to links or buttons. Use <code>cg-btn--command</code> for high-priority control actions.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <script src="assets/js/cg-darpa-buttons.js"></script>
+</body>
+</html>

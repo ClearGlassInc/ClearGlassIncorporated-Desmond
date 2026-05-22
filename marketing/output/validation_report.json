@@ -1,0 +1,39 @@
+{
+  "run_utc": "2026-05-22T14:11:56+00:00",
+  "pillar": "guardian",
+  "content_hash": "73445ff312d9",
+  "overall_passed": true,
+  "platform_results": [
+    {
+      "platform": "linkedin",
+      "passed": true,
+      "char_count": 887,
+      "failures": []
+    },
+    {
+      "platform": "threads",
+      "passed": true,
+      "char_count": 339,
+      "failures": []
+    },
+    {
+      "platform": "x",
+      "passed": true,
+      "char_count": 168,
+      "failures": []
+    },
+    {
+      "platform": "email",
+      "passed": true,
+      "char_count": 770,
+      "failures": []
+    },
+    {
+      "platform": "website",
+      "passed": true,
+      "char_count": 156,
+      "failures": []
+    }
+  ],
+  "global_failures": []
+}

@@ -1,1 +1,1 @@
-Digital-twin security ops: your environment, modeled continuously. Exposure drift surfaced before it becomes a breach. That's Artemis. https://clearglassinc.github.io/artemis.html
+The gap between 'we passed the audit' and 'we're actually secure' is where breaches happen. Guardian operates in that gap. https://clearglassinc.github.io/guardian.html

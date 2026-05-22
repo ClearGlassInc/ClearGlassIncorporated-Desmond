@@ -1,0 +1,39 @@
+name: Workflow Doctor
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/**"
+      - "scripts/workflow_doctor.py"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/**"
+      - "scripts/workflow_doctor.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-workflows:
+    name: Audit GitHub Actions workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install validator dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml
+
+      - name: Run workflow doctor audit
+        run: python scripts/workflow_doctor.py

@@ -80,6 +80,26 @@ jobs:
           FORCE_PILLAR: ${{ inputs.pillar || '' }}
         run: python bots/content_engine.py
 
+      - name: Verify generated content bundle
+        run: |
+          test -f marketing/output/latest.json
+          test -f marketing/output/latest.md
+          find marketing/output/platforms -type f | grep -q .
+
+      - name: Upload content bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-bundle
+          path: |
+            marketing/output/latest.json
+            marketing/output/latest.md
+            marketing/output/archive/
+            marketing/output/platforms/
+            marketing/output/metrics/
+            marketing/output/reports/
+          if-no-files-found: error
+          retention-days: 7
+
   # ── Stage 2: Validate ───────────────────────────────────────────────────────
   validate:
     name: "2 · Validate quality"
@@ -112,20 +132,12 @@ jobs:
         with:
           name: content-bundle
           path: marketing/output
-        continue-on-error: true
 
-      # Re-generate locally if artifact download missed (e.g. first run)
-      - name: Regenerate if bundle missing
-        env:
-          FORCE_PILLAR: ${{ needs.generate.outputs.pillar }}
+      - name: Verify downloaded content bundle
         run: |
-          if [[ ! -f marketing/output/latest.json ]]; then
-            mkdir -p marketing/output/archive marketing/output/metrics \
-              marketing/output/platforms/linkedin marketing/output/platforms/threads \
-              marketing/output/platforms/x marketing/output/platforms/email \
-              marketing/output/platforms/website marketing/output/reports
-            python bots/content_engine.py
-          fi
+          test -f marketing/output/latest.json
+          test -f marketing/output/latest.md
+          find marketing/output/platforms -type f | grep -q .
 
       - name: Run content validator
         id: validator
@@ -140,6 +152,7 @@ jobs:
             marketing/output/latest.md
             marketing/output/platforms/
             marketing/output/validation_report.json
+          if-no-files-found: error
           retention-days: 7
 
   # ── Stage 3: Route — create GitHub issue ────────────────────────────────────
@@ -198,19 +211,11 @@ jobs:
         with:
           name: validated-bundle
           path: marketing/output
-        continue-on-error: true
 
-      - name: Rebuild bundle if missing
-        env:
-          FORCE_PILLAR: ${{ needs.generate.outputs.pillar }}
+      - name: Verify validated bundle
         run: |
-          if [[ ! -f marketing/output/latest.md ]]; then
-            mkdir -p marketing/output/archive marketing/output/metrics \
-              marketing/output/platforms/linkedin marketing/output/platforms/threads \
-              marketing/output/platforms/x marketing/output/platforms/email \
-              marketing/output/platforms/website marketing/output/reports
-            python bots/content_engine.py
-          fi
+          test -f marketing/output/latest.md
+          test -f marketing/output/validation_report.json
 
       - name: Create content issue
         id: create_issue
@@ -252,25 +257,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+      - name: Download validated bundle
+        uses: actions/download-artifact@v4
         with:
-          python-version: '3.11'
-
-      - name: Regenerate outputs for commit
-        env:
-          FORCE_PILLAR: ${{ needs.generate.outputs.pillar }}
-        run: |
-          mkdir -p \
-            marketing/output/archive \
-            marketing/output/platforms/linkedin \
-            marketing/output/platforms/threads \
-            marketing/output/platforms/x \
-            marketing/output/platforms/email \
-            marketing/output/platforms/website \
-            marketing/output/metrics \
-            marketing/output/reports
-          python bots/content_engine.py
+          name: validated-bundle
+          path: marketing/output
 
       - name: Commit generated content
         run: |

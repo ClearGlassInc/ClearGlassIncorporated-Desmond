@@ -3,6 +3,14 @@ name: Master Control
 
 on:
   workflow_dispatch:
+    inputs:
+      run_all:
+        description: "Run all master-control jobs"
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
   push:
     branches: ["main"]
     paths:
@@ -34,6 +42,7 @@ jobs:
   control-plane:
     name: Control-plane validation
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.run_all == 'true' }}
     permissions:
       contents: read
     steps:

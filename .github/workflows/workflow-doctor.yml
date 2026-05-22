@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -43,10 +43,10 @@ jobs:
       - name: Commit workflow doctor repairs
         if: github.event_name != 'pull_request'
         run: |
-          if git status --porcelain -- .github/workflows scripts/workflow_doctor.py | grep -q .; then
+          if git status --porcelain -- scripts/workflow_doctor.py | grep -q .; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add .github/workflows scripts/workflow_doctor.py
+            git add scripts/workflow_doctor.py
             git commit -m "Workflow doctor: apply automatic repairs [skip ci]"
             git push
           else

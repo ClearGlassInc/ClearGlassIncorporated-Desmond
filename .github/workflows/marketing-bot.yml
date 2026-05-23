@@ -255,7 +255,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Download validated bundle
         uses: actions/download-artifact@v4
@@ -265,12 +265,30 @@ jobs:
 
       - name: Commit generated content
         run: |
+          BRANCH="${{ github.ref_name }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           if git status --porcelain -- marketing/output | grep -q .; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add marketing/output
             git commit -m "Content engine: ${{ needs.generate.outputs.pillar }} pillar · ${{ needs.generate.outputs.content_hash }} [skip ci]"
-            git push origin HEAD:${{ github.ref_name }}
+
+            for attempt in 1 2 3; do
+              git fetch origin "$BRANCH"
+              git rebase "origin/$BRANCH"
+
+              if git push origin "HEAD:$BRANCH"; then
+                echo "Pushed generated content."
+                exit 0
+              fi
+
+              echo "Push failed on attempt $attempt. Retrying after refetch/rebase..."
+              sleep 3
+            done
+
+            echo "Push failed after 3 attempts."
+            exit 1
           else
             echo "No output changes to commit."
           fi

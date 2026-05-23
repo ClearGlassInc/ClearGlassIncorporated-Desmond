@@ -1,0 +1,144 @@
+name: Deploy ClearGlass Agent Live
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Deployment target: fly or render"
+        required: true
+        default: "fly"
+        type: choice
+        options:
+          - fly
+          - render
+  push:
+    branches:
+      - main
+    paths:
+      - 'services/clearglass_agent_service/**'
+      - 'fly.toml'
+      - 'render.yaml'
+      - '.github/workflows/deploy-clearglass-agent-live.yml'
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: clearglass-agent-live-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    name: Preflight secrets and service
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      deploy_fly: ${{ steps.route.outputs.deploy_fly }}
+      deploy_render: ${{ steps.route.outputs.deploy_render }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set deployment route
+        id: route
+        run: |
+          TARGET="${{ github.event.inputs.target || 'fly' }}"
+          if [[ "$TARGET" == "fly" ]]; then
+            echo "deploy_fly=true" >> "$GITHUB_OUTPUT"
+            echo "deploy_render=false" >> "$GITHUB_OUTPUT"
+          elif [[ "$TARGET" == "render" ]]; then
+            echo "deploy_fly=false" >> "$GITHUB_OUTPUT"
+            echo "deploy_render=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Unsupported target: $TARGET"
+            exit 1
+          fi
+
+      - name: Validate Python application import
+        env:
+          CLEARGLASS_AGENT_API_KEYS: preflight-test-key
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r services/clearglass_agent_service/requirements.txt
+          python - <<'PY'
+          from services.clearglass_agent_service.main import app
+          print(f"Validated: {app.title}")
+          PY
+
+  deploy_fly:
+    name: Deploy to Fly.io
+    runs-on: ubuntu-latest
+    needs: preflight
+    if: needs.preflight.outputs.deploy_fly == 'true'
+    timeout-minutes: 20
+    environment:
+      name: production-fly
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Validate required Fly secrets
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLEARGLASS_AGENT_API_KEYS: ${{ secrets.CLEARGLASS_AGENT_API_KEYS }}
+        run: |
+          test -n "$FLY_API_TOKEN" || (echo "Missing GitHub secret: FLY_API_TOKEN" && exit 1)
+          test -n "$CLEARGLASS_AGENT_API_KEYS" || (echo "Missing GitHub secret: CLEARGLASS_AGENT_API_KEYS" && exit 1)
+
+      - name: Ensure Fly app exists
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl apps list | grep -q '^clearglass-agent-service' || flyctl apps create clearglass-agent-service --org personal
+
+      - name: Set Fly runtime secrets
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLEARGLASS_AGENT_API_KEYS: ${{ secrets.CLEARGLASS_AGENT_API_KEYS }}
+        run: |
+          flyctl secrets set \
+            CLEARGLASS_AGENT_API_KEYS="$CLEARGLASS_AGENT_API_KEYS" \
+            CLEARGLASS_ALLOWED_ORGS="ClearGlassInc" \
+            CLEARGLASS_ALLOWED_ORIGINS="https://clearglassinc.github.io" \
+            CLEARGLASS_AGENT_VERSION="0.1.0" \
+            --app clearglass-agent-service
+
+      - name: Deploy Fly service
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy --config fly.toml --remote-only --app clearglass-agent-service
+
+      - name: Smoke test health endpoint
+        run: |
+          sleep 10
+          curl --fail --retry 8 --retry-delay 5 https://clearglass-agent-service.fly.dev/health
+
+  deploy_render:
+    name: Deploy to Render
+    runs-on: ubuntu-latest
+    needs: preflight
+    if: needs.preflight.outputs.deploy_render == 'true'
+    timeout-minutes: 10
+    environment:
+      name: production-render
+    steps:
+      - name: Validate Render deploy hook
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          test -n "$RENDER_DEPLOY_HOOK_URL" || (echo "Missing GitHub secret: RENDER_DEPLOY_HOOK_URL" && exit 1)
+
+      - name: Trigger Render deploy hook
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          curl --fail --request POST "$RENDER_DEPLOY_HOOK_URL"
+
+      - name: Deployment summary
+        run: |
+          echo "Render deploy hook triggered." >> "$GITHUB_STEP_SUMMARY"

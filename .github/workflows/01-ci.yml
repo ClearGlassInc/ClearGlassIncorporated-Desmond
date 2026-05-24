@@ -1,4 +1,4 @@
-name: 01 CI
+name: CI
 
 on:
   push:
@@ -6,16 +6,10 @@ on:
   pull_request:
     branches: ["main"]
   workflow_dispatch:
-  schedule:
-    - cron: "0 9 * * *"
   workflow_call:
 
 permissions:
   contents: read
-
-concurrency:
-  group: website-ci-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   validate-site:
@@ -24,10 +18,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v5
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -46,7 +40,7 @@ jobs:
           done
           exit "$missing"
 
-      - name: Install Python dependencies when present
+      - name: Install Python dependencies
         shell: bash
         run: |
           set -euo pipefail
@@ -59,14 +53,14 @@ jobs:
             python -m pip install -e ".[test]"
           fi
 
-      - name: Run Python tests when present
+      - name: Run Python tests
         shell: bash
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
           set -euo pipefail
           if [ -d tests ] && find tests -type f -name "test_*.py" -print -quit | grep -q .; then
-            python -m pytest tests -q
+            python -m pytest tests -q --tb=short
           else
             echo "No pytest tests found; skipping Python tests."
           fi

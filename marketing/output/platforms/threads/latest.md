@@ -1,5 +1,5 @@
-1. Most organizations discover their hardening gaps during incidents. Guardian changes that:
-2. Zero-trust posture enforcement. AI-driven threat surface reduction. Deployment in hours.
-3. The gap between 'we passed the audit' and 'we're actually secure' is where breaches live.
-4. Guardian operates in that gap.
-5. → clearglassinc.github.io/guardian.html
+1. Premium brands in security don't sell software. They sell trust.
+2. ClearGlass was built for operators who need to act — not analyze dashboards for 40 minutes.
+3. Every product we ship passes one test: does it make the right decision obvious?
+4. If it doesn't, it doesn't ship.
+5. → clearglassinc.github.io

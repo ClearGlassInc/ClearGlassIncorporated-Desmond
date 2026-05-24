@@ -1,4 +1,4 @@
-name: ClearGlassInc COO Bot – Daily Operations
+name: ClearGlassInc COO Bot - Daily Operations
 
 on:
   workflow_call:
@@ -14,9 +14,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
-  actions: read
 
 jobs:
   coo-review:
@@ -24,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Validate repository context
         run: |

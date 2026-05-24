@@ -12,12 +12,9 @@ jobs:
   summarize:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build daily ops summary
         run: |
           python - <<'PY'
           print('Daily ops summary generated for CEO/COO command layers.')
           PY
-      - name: Failure alert
-        if: failure()
-        run: echo "Workflow failed. Check GitHub Actions logs immediately."

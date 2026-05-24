@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -54,12 +54,15 @@ jobs:
           python -m pip install pytest pytest-cov
           if [ -f requirements.txt ]; then
             python -m pip install -r requirements.txt
-          else
-            echo "No requirements.txt found; installed test tooling only."
+          fi
+          if [ -f pyproject.toml ]; then
+            python -m pip install -e ".[test]"
           fi
 
       - name: Run Python tests when present
         shell: bash
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           set -euo pipefail
           if [ -d tests ] && find tests -type f -name "test_*.py" -print -quit | grep -q .; then

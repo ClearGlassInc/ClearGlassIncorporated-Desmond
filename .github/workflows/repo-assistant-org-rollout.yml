@@ -11,6 +11,9 @@ jobs:
     permissions:
       contents: read
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Sync workflow into all org repositories
         env:
           ORG_NAME: ${{ github.repository_owner }}

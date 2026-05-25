@@ -1,0 +1,15 @@
+name: Checkout Probe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Confirm workspace
+        run: ls -la .github/workflows

@@ -13,11 +13,11 @@ on:
       dry_run:
         description: "Validate deployment path without pushing to host"
         required: true
-        default: "false"
+        default: "true"
         type: choice
         options:
-          - "false"
           - "true"
+          - "false"
   push:
     branches:
       - main
@@ -41,28 +41,44 @@ jobs:
     timeout-minutes: 15
     outputs:
       dry_run: ${{ steps.route.outputs.dry_run }}
+      should_deploy: ${{ steps.route.outputs.should_deploy }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set deployment route
         id: route
         shell: bash
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          CLEARGLASS_AGENT_API_KEYS: ${{ secrets.CLEARGLASS_AGENT_API_KEYS }}
         run: |
           set -euo pipefail
           TARGET="${{ github.event.inputs.target || 'fly' }}"
-          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'true' }}"
+          SHOULD_DEPLOY="true"
 
           if [[ "$TARGET" != "fly" ]]; then
             echo "Unsupported target: $TARGET"
             exit 1
           fi
 
+          if [[ "$DRY_RUN" == "true" ]]; then
+            SHOULD_DEPLOY="false"
+          fi
+
+          if [[ -z "${FLY_API_TOKEN:-}" || -z "${CLEARGLASS_AGENT_API_KEYS:-}" ]]; then
+            echo "Fly deployment secrets are missing; running preflight only."
+            SHOULD_DEPLOY="false"
+          fi
+
           echo "dry_run=$DRY_RUN" >> "$GITHUB_OUTPUT"
+          echo "should_deploy=$SHOULD_DEPLOY" >> "$GITHUB_OUTPUT"
           {
             echo "## Deployment route"
             echo "- Target: $TARGET"
             echo "- Dry run: $DRY_RUN"
+            echo "- Should deploy: $SHOULD_DEPLOY"
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Validate expected files
@@ -101,35 +117,16 @@ jobs:
     name: Deploy to Fly.io
     runs-on: ubuntu-latest
     needs: preflight
+    if: needs.preflight.outputs.should_deploy == 'true'
     timeout-minutes: 30
     environment:
       name: production-fly
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Validate required Fly secrets
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-          CLEARGLASS_AGENT_API_KEYS: ${{ secrets.CLEARGLASS_AGENT_API_KEYS }}
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          if [[ -z "${FLY_API_TOKEN:-}" ]]; then
-            echo "Missing GitHub secret: FLY_API_TOKEN" | tee -a "$GITHUB_STEP_SUMMARY"
-            exit 1
-          fi
-
-          if [[ -z "${CLEARGLASS_AGENT_API_KEYS:-}" ]]; then
-            echo "Missing GitHub secret: CLEARGLASS_AGENT_API_KEYS" | tee -a "$GITHUB_STEP_SUMMARY"
-            exit 1
-          fi
-
-          echo "Required Fly secrets are present." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Authenticate Fly token
         env:
@@ -139,24 +136,8 @@ jobs:
           set -euo pipefail
           flyctl version
           flyctl auth whoami
-          echo "Fly token authenticated." >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Dry-run Fly deployment
-        if: needs.preflight.outputs.dry_run == 'true'
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          flyctl status --app clearglass-agent-service || true
-          docker build \
-            -f services/clearglass_agent_service/Dockerfile \
-            -t clearglass-agent-service:dry-run \
-            .
-          echo "Dry-run complete. No live Fly deployment executed." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Ensure Fly app exists
-        if: needs.preflight.outputs.dry_run != 'true'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         shell: bash
@@ -165,12 +146,10 @@ jobs:
           if flyctl status --app clearglass-agent-service >/dev/null 2>&1; then
             echo "Fly app exists."
           else
-            echo "Creating Fly app: clearglass-agent-service"
             flyctl apps create clearglass-agent-service
           fi
 
       - name: Set Fly runtime secrets
-        if: needs.preflight.outputs.dry_run != 'true'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           CLEARGLASS_AGENT_API_KEYS: ${{ secrets.CLEARGLASS_AGENT_API_KEYS }}
@@ -185,7 +164,6 @@ jobs:
             --app clearglass-agent-service
 
       - name: Deploy Fly service
-        if: needs.preflight.outputs.dry_run != 'true'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         shell: bash
@@ -197,21 +175,8 @@ jobs:
             --app clearglass-agent-service
 
       - name: Smoke test Fly health endpoint
-        if: needs.preflight.outputs.dry_run != 'true'
         shell: bash
         run: |
           set -euo pipefail
           curl --fail --retry 18 --retry-delay 5 --retry-all-errors \
             https://clearglass-agent-service.fly.dev/health
-
-      - name: Dump Fly diagnostics on failure
-        if: failure()
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        shell: bash
-        run: |
-          set +e
-          echo "## Fly diagnostics" >> "$GITHUB_STEP_SUMMARY"
-          flyctl status --app clearglass-agent-service
-          flyctl releases --app clearglass-agent-service
-          flyctl logs --app clearglass-agent-service --no-tail

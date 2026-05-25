@@ -237,7 +237,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         </a>
         <a href="guardian.html" role="menuitem">
           <div class="nav-dd-icon">💼</div>
-          <div class="nav-dd-meta"><span class="nav-dd-label">SMB Suite</span><span class="nav-dd-sub">FINANCIAL INTELLIGENCE</span></div>
+          <div class="nav-dd-meta"><span class="nav-dd-label">Guardian</span><span class="nav-dd-sub">FINANCIAL INTELLIGENCE</span></div>
         </a>
       </div>
     </div>
@@ -254,7 +254,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   <div class="mob-sep"></div>
   <div class="mob-label">Products</div>
   <a href="artemis-iv.html">Artemis IV Core <span style="color:var(--text-4);font-size:12px;font-weight:400">→</span></a>
-  <a href="guardian.html">SMB Suite <span style="color:var(--text-4);font-size:12px;font-weight:400">→</span></a>
+  <a href="guardian.html">Guardian <span style="color:var(--text-4);font-size:12px;font-weight:400">→</span></a>
   <div class="mob-sep"></div>
   <a href="#founder" onclick="closeMob()">Founder</a>
   <a href="#contact" onclick="closeMob()" style="background:var(--dark);color:#fff!important;margin-top:4px;justify-content:center">Contact →</a>
@@ -334,7 +334,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
           <a href="artemis.html">Artemis VI</a>
           <a href="artemis-iv.html">Artemis IV Core</a>
           <a href="guardian.html">Guardian</a>
-          <a href="guardian.html">SMB Suite</a>
+          <a href="guardian.html">Guardian</a>
           <a href="revenue-engine.html">Revenue Engine</a>
           <a href="downloads/CLEARGLASS_GUARDIAN_v5.0.ps1">Download</a>
         </div>
@@ -442,7 +442,7 @@ var kb=[
   {k:['guardian','security'],a:'Guardian is the security-focused platform for monitoring and protective workflows. Open: guardian.html'}
 ];
 function appendMsg(text,who){var d=document.createElement('div');d.className='chat-msg '+who;d.textContent=text;chatLog.appendChild(d);chatLog.scrollTop=chatLog.scrollHeight;}
-function botReply(q){var t=q.toLowerCase();for(var i=0;i<kb.length;i++){if(kb[i].k.some(function(key){return t.includes(key)}))return kb[i].a;}return 'I can help with products, onboarding, operations pages, and contact routing. Try asking about Artemis, SMB Suite, or Guardian.';}
+function botReply(q){var t=q.toLowerCase();for(var i=0;i<kb.length;i++){if(kb[i].k.some(function(key){return t.includes(key)}))return kb[i].a;}return 'I can help with products, onboarding, operations pages, and contact routing. Try asking about Artemis, Guardian, or Guardian.';}
 function setOpen(isOpen){panel.classList.toggle('open',isOpen);launcher.setAttribute('aria-expanded',String(isOpen));if(isOpen)chatInput.focus();}
 if(launcher&&panel){launcher.addEventListener('click',function(){setOpen(!panel.classList.contains('open'));});closeBtn.addEventListener('click',function(){setOpen(false);});chatForm.addEventListener('submit',function(e){e.preventDefault();var q=chatInput.value.trim();if(!q)return;appendMsg(q,'user');chatInput.value='';setTimeout(function(){appendMsg(botReply(q),'bot');},220);});}
 

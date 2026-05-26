@@ -1,1 +1,1 @@
-Clarity is not a feature. It's a force multiplier. ClearGlass Inc builds the lens. https://clearglassinc.github.io/
+Most security tools add complexity. ClearGlass strips it. Signal over noise — every time. https://clearglassinc.github.io/

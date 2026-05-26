@@ -1,2 +1,2 @@
 [brand-statement]
-Clarity is power. ClearGlass Inc builds the intelligence layer for organizations operating at the edge of acceptable risk.
+Transparent intelligence. Disciplined execution. Long-horizon infrastructure built for organizations that cannot afford to be wrong.

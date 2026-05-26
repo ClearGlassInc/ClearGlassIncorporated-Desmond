@@ -506,10 +506,30 @@ h1.h-head{font-size:64px;}
 @media(prefers-reduced-motion:reduce){
 *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important;}
 }
+
+/* Guardian-only loading overlay */
+#guardian-loader{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:radial-gradient(circle at 25% 20%,rgba(255,27,61,.16),rgba(4,2,6,.96) 45%,#040206 100%);transition:opacity .7s var(--ease),visibility .7s var(--ease);}
+#guardian-loader.g-exit{opacity:0;visibility:hidden;pointer-events:none;}
+.guardian-loader-card{width:min(560px,92vw);padding:24px;border-radius:18px;background:rgba(8,5,10,.72);border:1px solid var(--crimson-line);box-shadow:0 20px 80px rgba(0,0,0,.55);backdrop-filter:blur(14px);}
+.guardian-loader-title{font-family:var(--D);font-weight:800;font-size:clamp(28px,6vw,42px);letter-spacing:-.03em;color:var(--bone);}
+.guardian-loader-sub{margin-top:6px;color:var(--ash);font-family:var(--M);font-size:11px;letter-spacing:.2em;text-transform:uppercase;}
+.guardian-loader-rail{margin-top:18px;height:2px;background:rgba(255,27,61,.14);position:relative;overflow:hidden;}
+.guardian-loader-fill{height:100%;width:0;background:linear-gradient(90deg,var(--crimson-deep),var(--crimson),var(--crimson-2));box-shadow:0 0 18px var(--crimson-glow);transition:width .2s linear;}
+.guardian-loader-meta{margin-top:10px;display:flex;justify-content:space-between;font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash-d);}
 </style>
 
 </head>
 <body>
+
+<div id="guardian-loader" aria-hidden="true" role="presentation">
+  <div class="guardian-loader-card">
+    <div class="guardian-loader-title">ClearGlass Guardian</div>
+    <div class="guardian-loader-sub" id="guardianLoaderMsg">Initializing secure interface</div>
+    <div class="guardian-loader-rail"><div class="guardian-loader-fill" id="guardianLoaderFill"></div></div>
+    <div class="guardian-loader-meta"><span>Boot Sequence</span><span id="guardianLoaderPct">000%</span></div>
+  </div>
+</div>
+
 
 <div class="scanlines"></div>
 
@@ -845,7 +865,7 @@ h1.h-head{font-size:64px;}
       <div>
         <span class="sec-kicker">◈ Deploy GUARDIAN</span>
         <h2 class="cta-h2">Protect Your<br><span class="g">Ontario</span><br>Organization.</h2>
-        <p class="cta-p">Book a confidential GUARDIAN demonstration with Desmond Otieno directly. We'll assess your threat landscape, map your compliance gaps, and propose a deployment that fits your budget and risk appetite.</p>
+        <p class="cta-p">Book a confidential GUARDIAN demonstration with Desmond Otieno Odhiambo directly. We'll assess your threat landscape, map your compliance gaps, and propose a deployment that fits your budget and risk appetite.</p>
         <div style="display:flex;gap:14px;flex-wrap:wrap">
           <a href="mailto:Desmondotieno@icloud.com?subject=GUARDIAN%20Demo%20Request" class="btn-p">Request GUARDIAN Demo <span class="arr">→</span></a>
           <a href="tel:+12897070269" class="btn-g">📞 289-707-0269</a>
@@ -859,7 +879,7 @@ h1.h-head{font-size:64px;}
     <div class="cb-divider"></div>
     <div class="cb-hdr">Direct Contact</div>
     <div class="cb-line">
-      Desmond Otieno<br>
+      Desmond Otieno Odhiambo<br>
       Founder &amp; Chairman<br>
       <span class="acc">Desmondotieno@icloud.com</span><br>
       <span class="acc">289-707-0269</span>
@@ -944,6 +964,31 @@ document.querySelectorAll('.btn-p,.nav-cta').forEach(btn => {
   });
   btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
 });
+
+
+(function guardianOnlyLoader(){
+  if (window.location.pathname && !window.location.pathname.endsWith('/guardian.html')) return;
+  const loader=document.getElementById('guardian-loader');
+  const fill=document.getElementById('guardianLoaderFill');
+  const pct=document.getElementById('guardianLoaderPct');
+  const msg=document.getElementById('guardianLoaderMsg');
+  if(!loader||!fill||!pct||!msg) return;
+  const stages=['Establishing secure channel','Validating threat telemetry','Loading command surface','Finalizing mission controls'];
+  let i=0,progress=0;
+  const t=setInterval(()=>{
+    progress=Math.min(100,progress+Math.floor(Math.random()*17)+9);
+    fill.style.width=progress+'%';
+    pct.textContent=String(progress).padStart(3,'0')+'%';
+    msg.textContent=stages[Math.min(i,stages.length-1)];
+    if(progress>=((i+1)*25) && i<stages.length-1) i++;
+    if(progress>=100){
+      clearInterval(t);
+      loader.classList.add('g-exit');
+      setTimeout(()=>loader.remove(),720);
+    }
+  },180);
+})();
+
 </script>
 
 </body>

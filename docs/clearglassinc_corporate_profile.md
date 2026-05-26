@@ -1,10 +1,10 @@
-# ClearGlass Inc. Corporate Profile
+# ClearGlassInc Corporate Profile
 
 **Brand Palette:** Navy `#0B1F3A`, Teal `#00A7A0`  
 **Tagline:** **CLEARGLASS: See Through Everything**
 
 ## Company at a Glance
-- **Legal Name:** ClearGlass Inc.
+- **Legal Name:** ClearGlassInc
 - **Incorporation:** Ontario Business Corporations Act (OBCA)
 - **Headquarters:** Burlington, Ontario, Canada
 - **Operating Name for Platform Programs:** ClearGlassInc Artemis
@@ -44,7 +44,7 @@ Enable trusted, real-time intelligence fusion where analysts, operators, and AI 
 - **Criminal Code s.342.1** (Unauthorized use of computer systems)
 
 ## Contact
-**ClearGlass Inc.**  
+**ClearGlassInc**  
 Burlington, Ontario, Canada  
 Email: legal@clearglassinc.ca  
 Web: https://clearglassinc.ca

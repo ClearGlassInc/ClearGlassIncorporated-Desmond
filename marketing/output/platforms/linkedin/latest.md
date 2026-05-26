@@ -1,13 +1,13 @@
-# Clarity is not a feature. It is a force multiplier.
+# The premium brand in security does not shout. It demonstrates.
 
-In cybersecurity the organizations that survive are not the ones with the most tools. They are the ones with the clearest picture.
+Every enterprise security vendor claims sophistication. Most deliver complexity dressed as intelligence.
 
-ClearGlass Inc was built around one principle: transparent intelligence creates irreversible advantage. Our platform surfaces what matters, strips what does not, and delivers a clean operational signal to the people responsible for acting on it.
+ClearGlass Inc operates differently. We do not compete on feature count. We compete on operational clarity.
 
-This is not a positioning statement. It is the architectural philosophy behind every product we ship.
+Our products — Artemis and Guardian — are designed for the decision-maker who needs signal, not noise; outcomes, not activity metrics.
 
-When your security posture is legible to the executives who own it, you respond faster, report cleaner, and hold ground under pressure.
+We built this company for CISOs, CTOs, and founders who understand that security is not a cost center. It is the infrastructure of trust.
 
-Clarity is power. We build the lens.
+If your team spends more time managing the security stack than acting on its intelligence, something is wrong with the stack. We fix that.
 
 → https://clearglassinc.github.io/

@@ -1,366 +1,604 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClearGlassInc Artemis | Active Intelligence Grid</title>
-  <meta name="description" content="ClearGlassInc Artemis active intelligence platform: live operational feed, ontology graph, policy-gated actions, and self-improvement telemetry." />
-  <style>
-    :root {
-      --bg: #0a0f18;
-      --panel: #111a28;
-      --border: #26364f;
-      --text: #e4ecf8;
-      --muted: #95a8c4;
-      --accent: #5ed3ff;
-      --good: #5de2a5;
-      --warn: #ffbe5d;
-      --bad: #ff6d7a;
-      --shadow: 0 14px 32px rgba(0, 0, 0, 0.36);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040200;--bg2:#090600;--bg3:#0F0A00;--bg4:#160E00;
+  --am:#FFB000;--am2:#FFD060;--am3:#FF9800;--am4:#E8A000;
+  --al:#614200;--ad:#251900;--ab:#130C00;
+  --wt:#FFF8E0;--wt2:#CDB870;--wt3:#7A6030;--wt4:#3A2C10;
+  --gn:#00FF88;--gn2:#00CC66;--gn3:#00FF44;
+  --rd:#FF3344;--rd2:#CC2233;
+  --or:#FF8800;--or2:#CC6600;
+  --bl:#44AAFF;--bl2:#2266CC;--bl3:#66CCFF;
+  --pu:#CC66FF;--pu2:#9933CC;
+  --cy:#00DDFF;--cy2:#00AACC;--cy3:#88EEFF;
+  --yw:#FFEE44;--yw2:#CCB800;
+  --bdr:rgba(255,176,0,.15);--bdr2:rgba(255,176,0,.08);--bdr3:rgba(255,176,0,.04);
+  --card:rgba(0,0,0,.52);--card2:rgba(255,176,0,.03);
+  --sh:0 0 28px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--wt);
+  font-family:'IBM Plex Mono',monospace;
+  min-height:100vh;overflow-x:hidden;
+  cursor:crosshair;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.09) 2px,rgba(0,0,0,.09) 4px);
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9997;
+  background:radial-gradient(ellipse 90% 88% at 50% 50%,transparent 50%,rgba(0,0,0,.7) 100%);
+}
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      background: radial-gradient(circle at top right, #122642 0%, var(--bg) 44%);
-      color: var(--text);
-    }
+#hdr{position:sticky;top:18px;z-index:400;height:48px;background:linear-gradient(180deg,rgba(4,2,0,.99),rgba(4,2,0,.93));border-bottom:1px solid var(--bdr);display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:0 16px;gap:12px}
+.hl-mark{font-size:13px;font-weight:700;letter-spacing:8px;color:var(--am)}
+.hl-sub{font-size:6px;letter-spacing:3px;color:var(--al);margin-top:1px}
+.hpills{display:flex;align-items:center;gap:5px;justify-content:center;flex-wrap:wrap}
+.hpill{display:flex;align-items:center;gap:4px;padding:2.5px 8px;border:1px solid rgba(255,176,0,.1);border-radius:2px;font-size:5px;letter-spacing:1.5px;color:var(--al);white-space:nowrap}
+.hdot{width:4px;height:4px;border-radius:50%;background:rgba(255,176,0,.1);flex-shrink:0;transition:all .4s}
+.hdot.g{background:var(--gn);box-shadow:0 0 5px var(--gn);animation:pulse 2s infinite}
+.hdot.o{background:var(--or);animation:pulse 1.5s infinite}
+.hdot.r{background:var(--rd)}
+.hdot.b{background:var(--bl);animation:pulse 2.5s infinite}
+.hright{text-align:right}
+#hclock{font-size:13px;font-weight:600;letter-spacing:3px;color:var(--am)}
+#hdate{font-size:5px;letter-spacing:2px;color:var(--al)}
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(8px);
-      background: rgba(10, 15, 24, 0.82);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
+#darpa-banner{position:fixed;top:0;left:0;right:0;z-index:9999;height:18px;background:repeating-linear-gradient(90deg,rgba(255,51,68,.15) 0,rgba(255,51,68,.15) 2px,transparent 2px,transparent 8px);display:flex;align-items:center;justify-content:center;gap:20px;font-size:7px;letter-spacing:3px;color:rgba(255,51,68,.5);border-bottom:1px solid rgba(255,51,68,.15);pointer-events:none}
+body{padding-top:18px}
 
-    .brand { font-size: 1.02rem; font-weight: 700; letter-spacing: 0.04em; }
-    .status {
-      font-size: 0.82rem;
-      color: var(--good);
-      border: 1px solid #2b644b;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(48, 110, 85, 0.2);
-    }
+.sh{display:flex;align-items:center;gap:9px;margin:14px 16px 6px}
+.sh::before{content:"//";color:var(--al);font-size:7px;letter-spacing:2px}
+.sh-t{font-size:7px;letter-spacing:5px;color:var(--am)}
+.sh-c{font-size:6px;letter-spacing:2px;color:var(--al)}
+.sh::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--bdr2),transparent)}
 
-    main {
-      padding: 18px;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-      max-width: 1500px;
-      margin: 0 auto;
-    }
+#main{padding:0 16px 24px;display:flex;flex-direction:column;gap:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.gmap{display:grid;grid-template-columns:1.6fr 1fr;gap:7px}
+.gfin{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:7px}
 
-    .card {
-      background: linear-gradient(180deg, #111a28 0%, #0d1622 100%);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-      padding: 14px;
-      min-height: 120px;
-    }
+.win{background:var(--card);border:1px solid var(--bdr2);border-radius:3px;overflow:hidden;transition:border-color .25s;animation:fadeUp .35s ease both;box-shadow:var(--sh)}
+.win:hover{border-color:var(--bdr)}
+.wb{display:flex;align-items:center;justify-content:space-between;padding:5px 10px;background:var(--card2);border-bottom:1px solid var(--bdr2)}
+.wt{font-size:7px;letter-spacing:3px;color:var(--am);font-weight:500}
+.wbody{padding:10px}
 
-    h2 { margin: 0 0 8px; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-    .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 10px; }
-    .kpi { background: #0b131f; border: 1px solid #20314a; border-radius: 10px; padding: 11px; }
-    .kpi b { display: block; font-size: 1.25rem; margin-top: 6px; }
-    .small { font-size: 0.82rem; color: var(--muted); }
+.bdg{font-size:5.5px;letter-spacing:2px;padding:2px 6px;border-radius:2px;border:1px solid;font-weight:600;white-space:nowrap}
+.bgn{color:var(--gn);border-color:rgba(0,255,136,.28);background:rgba(0,255,136,.05)}
+.bam{color:var(--am);border-color:rgba(255,176,0,.28);background:rgba(255,176,0,.05)}
+.brd{color:var(--rd);border-color:rgba(255,51,68,.28);background:rgba(255,51,68,.05)}
+.bor{color:var(--or);border-color:rgba(255,136,0,.28);background:rgba(255,136,0,.05)}
+.bbl{color:var(--bl);border-color:rgba(68,170,255,.28);background:rgba(68,170,255,.05)}
+.bpu{color:var(--pu);border-color:rgba(204,102,255,.28);background:rgba(204,102,255,.05)}
+.bcy{color:var(--cy);border-color:rgba(0,221,255,.28);background:rgba(0,221,255,.05)}
+.byw{color:var(--yw);border-color:rgba(255,238,68,.28);background:rgba(255,238,68,.04)}
+.bdim{color:var(--al);border-color:rgba(106,72,0,.22)}
 
-    #live-feed { max-height: 350px; overflow: auto; }
-    .feed-item { border-bottom: 1px dashed #2a3a52; padding: 9px 0; }
-    .feed-item:last-child { border-bottom: 0; }
+.er{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(255,176,0,.04);font-size:7px}
+.ek{color:var(--al);letter-spacing:.4px}
+.ev{color:var(--wt);text-align:right}
+.ev.g{color:var(--gn)}.ev.r{color:var(--rd)}.ev.o{color:var(--or)}.ev.a{color:var(--am)}.ev.c{color:var(--cy)}.ev.b{color:var(--bl)}.ev.p{color:var(--pu)}.ev.y{color:var(--yw)}
 
-    .btn-row, .action-row { display: flex; gap: 8px; flex-wrap: wrap; }
-    button {
-      border: 1px solid #295481;
-      background: #11253b;
-      color: var(--text);
-      padding: 8px 11px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    button:hover { filter: brightness(1.12); }
-    button.primary { background: #0f3f63; border-color: #2d79ad; }
-    button.approve { background: #124933; border-color: #2f8c65; }
-    button.reject { background: #5b1f2b; border-color: #8f3e4d; }
+.ph{padding:18px;text-align:center}
+.ph-i{font-size:20px;opacity:.2;margin-bottom:7px}
+.ph-t{font-size:7px;letter-spacing:3px;color:var(--al)}
 
-    .grid-8 { grid-column: span 8; }
-    .grid-4 { grid-column: span 4; }
-    .grid-6 { grid-column: span 6; }
-    .grid-12 { grid-column: span 12; }
+.ticker{height:20px;background:rgba(0,0,0,.55);border-bottom:1px solid var(--bdr2);overflow:hidden;position:relative;display:flex;align-items:center}
+.tk-lbl{position:absolute;left:0;top:0;bottom:0;display:flex;align-items:center;padding:0 10px;z-index:5;font-size:6px;letter-spacing:3px;font-weight:700;color:#000;background:linear-gradient(90deg,var(--am) 0%,rgba(255,176,0,.85) 65%,transparent);min-width:80px}
+.tk-track{display:flex;align-items:center;white-space:nowrap;padding-left:90px;animation:scroll 70s linear infinite}
+.tk-item{font-size:6px;letter-spacing:1.5px;color:var(--al);padding:0 16px;border-right:1px solid rgba(255,176,0,.08)}
+.tk-item.hi{color:var(--am)}.tk-item.al{color:var(--rd)}.tk-item.gn{color:var(--gn)}.tk-item.bl{color:var(--bl)}.tk-item.cy{color:var(--cy)}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-    .log {
-      background: #08101a;
-      border: 1px solid #1f3148;
-      border-radius: 10px;
-      padding: 10px;
-      min-height: 130px;
-      max-height: 190px;
-      overflow: auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.78rem;
-      line-height: 1.45;
-    }
+.cam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.cc{position:relative;background:rgba(0,0,0,.72);border:1px solid rgba(255,176,0,.08);border-radius:3px;overflow:hidden;cursor:pointer;transition:all .2s}
+.cc:hover{border-color:rgba(255,176,0,.26)}
+.cc-hd{display:flex;align-items:center;justify-content:space-between;padding:3px 5px;background:rgba(255,176,0,.03);border-bottom:1px solid rgba(255,176,0,.05);font-size:5px;letter-spacing:2px;color:var(--al)}
+.cc-imgwrap{position:relative;width:100%;aspect-ratio:4/3;background:#040200;overflow:hidden}
+.cc-img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s;filter:sepia(.07) saturate(1.1)}
+.cc-img.ld{opacity:1}
+.cc-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:5px;color:var(--al)}
+.cc-ft{padding:3px 5px;font-size:5.5px;color:var(--wt);border-top:1px solid rgba(255,176,0,.04)}
 
-    .badge { border: 1px solid #344d6f; border-radius: 999px; padding: 3px 8px; font-size: 0.74rem; }
-    .bar { height: 9px; background: #0a131f; border-radius: 99px; overflow: hidden; border: 1px solid #1f324b; }
-    .bar > span { display: block; height: 100%; background: linear-gradient(90deg, #58d0ff, #78f0b1); }
+.fabs{position:fixed;bottom:12px;left:12px;z-index:499;display:flex;flex-direction:column;gap:4px}
+.fab{background:rgba(4,2,0,.92);border:1px solid rgba(255,176,0,.2);color:var(--am);font-family:'IBM Plex Mono',monospace;font-size:6px;letter-spacing:2px;padding:6px 12px;cursor:pointer;border-radius:3px;transition:all .2s;white-space:nowrap}
+.fab:hover{background:rgba(255,176,0,.08);border-color:rgba(255,176,0,.42)}
+.fab.solid{background:rgba(255,176,0,.86);color:#000;font-weight:700}
 
-    textarea, input {
-      width: 100%;
-      background: #09121d;
-      color: var(--text);
-      border: 1px solid #29405f;
-      border-radius: 9px;
-      padding: 9px;
-      font-size: 0.9rem;
-    }
+.wm{text-align:center;padding:18px;font-size:5px;letter-spacing:5px;color:var(--al);border-top:1px solid var(--bdr2)}
 
-    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-    th, td { padding: 8px 6px; border-bottom: 1px solid #223651; text-align: left; }
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(255,176,0,.16);border-radius:2px}
 
-    .policy-ok { color: var(--good); }
-    .policy-block { color: var(--bad); }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-    @media (max-width: 980px) {
-      .grid-8, .grid-6, .grid-4 { grid-column: span 12; }
-      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-  </style>
+@media(max-width:1100px){.gfin,.gmap{grid-template-columns:1fr}}
+@media(max-width:900px){.g3,.g2,.gmap,.gfin{grid-template-columns:1fr}}
+
+#map-wrap iframe{width:100%;height:260px;display:block;border:none;filter:invert(92%) hue-rotate(30deg) saturate(1.8) brightness(.72) sepia(.12)}
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">ClearGlassInc Artemis • Active Intelligence Grid</div>
-    <div class="status" id="runtimeStatus">Runtime: Connected • Policy-Guarded</div>
-  </header>
 
-  <main>
-    <section class="card grid-12">
-      <h2>Mission Pulse</h2>
-      <div class="kpi-grid" id="kpis"></div>
-    </section>
+<div id="darpa-banner">
+  <span>// CLEARGLASS NEXUS v12</span>
+  <span>◈ DARPA ADVANCED INTELLIGENCE PROGRAM</span>
+  <span>// BURLINGTON OPS</span>
+</div>
 
-    <section class="card grid-8">
-      <h2>Live Intelligence Feed</h2>
-      <div id="live-feed"></div>
-      <div class="btn-row" style="margin-top:10px;">
-        <button class="primary" id="injectEventBtn">Inject High-Priority Event</button>
-        <button id="tickBtn">Run Agentic Triage Tick</button>
+<div id="hdr">
+  <div>
+    <div class="hl-mark">NEXUS</div>
+    <div class="hl-sub">CLEARGLASS GLOBAL OSINT v12</div>
+  </div>
+  <div class="hpills">
+    <div class="hpill"><span class="hdot" id="d-wx"></span>WEATHER</div>
+    <div class="hpill"><span class="hdot" id="d-air"></span>AIRSPACE</div>
+    <div class="hpill"><span class="hdot" id="d-eq"></span>SEISMIC</div>
+    <div class="hpill"><span class="hdot" id="d-sw"></span>SPACE WX</div>
+    <div class="hpill"><span class="hdot" id="d-iss"></span>ISS</div>
+    <div class="hpill"><span class="hdot" id="d-pwr"></span>GRID</div>
+    <div class="hpill"><span class="hdot" id="d-cr"></span>CRYPTO</div>
+    <div class="hpill"><span class="hdot" id="d-fx"></span>FX</div>
+    <div class="hpill"><span class="hdot" id="d-cam"></span>CAMERAS</div>
+  </div>
+  <div class="hright">
+    <div id="hclock">--:--:--</div>
+    <div id="hdate">--- -- ---- | UTC</div>
+  </div>
+</div>
+
+<div class="ticker">
+  <div class="tk-lbl">▶ NEXUS</div>
+  <div class="tk-track">
+    <span class="tk-item hi">CLEARGLASS NEXUS v12 — GLOBAL OSINT COMMAND TERMINAL — BURLINGTON OPERATIONS CENTER</span>
+    <span class="tk-item">OPENSKY ADS-B AIRSPACE MONITORING — SOUTHERN ONTARIO SECTOR</span>
+    <span class="tk-item al">USGS SEISMIC FEED — M2.5+ WORLDWIDE ALERTS ACTIVE</span>
+    <span class="tk-item gn">ONTARIO POWER GRID — REAL-TIME GENERATION MIX MONITORED</span>
+    <span class="tk-item bl">NOAA SWPC KP-INDEX — GEOMAGNETIC STORM WATCH ACTIVE</span>
+    <span class="tk-item">MTO COMPASS SURVEILLANCE — CAMERA FEEDS ONLINE</span>
+    <span class="tk-item cy">ISS ORBITAL TRACKER — LIVE POSITION UPDATES</span>
+    <span class="tk-item hi">CLEARGLASS NEXUS v12 — GLOBAL OSINT COMMAND TERMINAL — BURLINGTON OPERATIONS CENTER</span>
+    <span class="tk-item">OPENSKY ADS-B AIRSPACE MONITORING — SOUTHERN ONTARIO SECTOR</span>
+    <span class="tk-item al">USGS SEISMIC FEED — M2.5+ WORLDWIDE ALERTS ACTIVE</span>
+    <span class="tk-item gn">ONTARIO POWER GRID — REAL-TIME GENERATION MIX MONITORED</span>
+    <span class="tk-item bl">NOAA SWPC KP-INDEX — GEOMAGNETIC STORM WATCH ACTIVE</span>
+  </div>
+</div>
+
+<div id="main">
+
+<section>
+  <div class="sh"><span class="sh-t">LOCATION INTELLIGENCE</span><span class="sh-c" id="loc-coords">ACQUIRING FIX…</span></div>
+  <div class="gmap">
+    <div class="win">
+      <div class="wb"><span class="wt">GEOSPATIAL MAP — LIVE</span><span class="bdg bdim" id="map-badge">LOADING</span></div>
+      <div id="map-wrap"><div style="padding:20px;text-align:center;font-size:7px;letter-spacing:3px;color:var(--al)">ACQUIRING COORDINATES…</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div class="win">
+        <div class="wb"><span class="wt">WEATHER CONDITIONS</span><span class="bdg bdim" id="wx-badge">LOADING</span></div>
+        <div class="wbody" id="wx-content"><div class="ph"><div class="ph-i">🌡</div><div class="ph-t">FETCHING WEATHER</div></div></div>
       </div>
-    </section>
-
-    <section class="card grid-4">
-      <h2>Operational Approval Gate</h2>
-      <div id="actionProposal" class="small">No action proposal pending.</div>
-      <div class="action-row" style="margin-top:9px;">
-        <button class="approve" id="approveBtn">Approve Action</button>
-        <button class="reject" id="rejectBtn">Reject Action</button>
+      <div class="win">
+        <div class="wb"><span class="wt">AIR QUALITY</span><span class="bdg bdim" id="aq-badge">LOADING</span></div>
+        <div class="wbody" id="aq-content"><div class="ph"><div class="ph-i">💨</div><div class="ph-t">FETCHING AQ DATA</div></div></div>
       </div>
-      <div style="margin-top:10px;" class="small">Current Policy Verdict: <span id="policyVerdict" class="policy-ok">ALLOW</span></div>
-      <div class="log" style="margin-top:10px;" id="approvalLog"></div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section class="card grid-6">
-      <h2>Agentic Workflow State Machine</h2>
-      <table>
-        <thead><tr><th>Agent</th><th>State</th><th>Latency</th><th>Confidence</th></tr></thead>
-        <tbody id="agentsTable"></tbody>
-      </table>
-    </section>
+<section>
+  <div class="sh"><span class="sh-t">SKY INTELLIGENCE</span><span class="sh-c">AIRSPACE · SEISMIC · SPACE WEATHER</span></div>
+  <div class="g3">
+    <div class="win">
+      <div class="wb"><span class="wt">AIRSPACE SURVEILLANCE</span><span class="bdg bbl" id="air-badge">LOADING</span></div>
+      <div class="wbody" id="air-content"><div class="ph"><div class="ph-i">✈</div><div class="ph-t">CONNECTING OPENSKY</div></div></div>
+    </div>
+    <div class="win">
+      <div class="wb"><span class="wt">SEISMIC MONITOR</span><span class="bdg bor" id="eq-badge">LOADING</span></div>
+      <div class="wbody" id="eq-content"><div class="ph"><div class="ph-i">📡</div><div class="ph-t">CONNECTING USGS</div></div></div>
+    </div>
+    <div class="win">
+      <div class="wb"><span class="wt">SPACE WEATHER</span><span class="bdg bpu" id="sw-badge">LOADING</span></div>
+      <div class="wbody" id="sw-content"><div class="ph"><div class="ph-i">🌞</div><div class="ph-t">CONNECTING NOAA SWPC</div></div></div>
+    </div>
+  </div>
+</section>
 
-    <section class="card grid-6">
-      <h2>Self-Improvement Loop</h2>
-      <div class="small">Prompt policy version: <b id="promptVersion">v1.0.0</b> <span class="badge" id="changeMode">manual-approval</span></div>
-      <p class="small" style="margin-top:8px;">Precision</p><div class="bar"><span id="precisionBar" style="width:72%"></span></div>
-      <p class="small">Recall</p><div class="bar"><span id="recallBar" style="width:64%"></span></div>
-      <p class="small">Operator Trust</p><div class="bar"><span id="trustBar" style="width:78%"></span></div>
-      <div class="btn-row" style="margin-top:10px;">
-        <button id="proposeUpgradeBtn">Propose Prompt Upgrade</button>
-        <button id="runEvalBtn">Run Eval Harness</button>
+<section>
+  <div class="sh"><span class="sh-t">ORBITAL · POWER GRID</span><span class="sh-c">ISS · IESO</span></div>
+  <div class="g2">
+    <div class="win">
+      <div class="wb"><span class="wt">ISS ORBITAL TRACKER</span><span class="bdg bcy" id="iss-badge">LOADING</span></div>
+      <div class="wbody" id="iss-content"><div class="ph"><div class="ph-i">🛰</div><div class="ph-t">ACQUIRING ISS SIGNAL</div></div></div>
+    </div>
+    <div class="win">
+      <div class="wb"><span class="wt">ONTARIO POWER GRID</span><span class="bdg bgn" id="pwr-badge">LOADING</span></div>
+      <div class="wbody" id="pwr-content"><div class="ph"><div class="ph-i">⚡</div><div class="ph-t">POLLING IESO DATA</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sh"><span class="sh-t">FINANCIAL INTELLIGENCE</span><span class="sh-c">CRYPTO · FX</span></div>
+  <div class="g2">
+    <div class="win">
+      <div class="wb"><span class="wt">CRYPTO MARKETS</span><span class="bdg byw" id="cr-badge">LOADING</span></div>
+      <div class="wbody" id="cr-content"><div class="ph"><div class="ph-i">₿</div><div class="ph-t">CONNECTING COINCAP</div></div></div>
+    </div>
+    <div class="win">
+      <div class="wb"><span class="wt">FX RATES</span><span class="bdg bgn" id="fx-badge">LOADING</span></div>
+      <div class="wbody" id="fx-content"><div class="ph"><div class="ph-i">💱</div><div class="ph-t">CONNECTING FRANKFURTER</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sh"><span class="sh-t">CAMERA SURVEILLANCE</span><span class="sh-c">MTO COMPASS — QEW · SKYWAY · HWY 403</span></div>
+  <div class="win">
+    <div class="wb"><span class="wt">LIVE CAMERA FEEDS</span><span class="bdg bgn" id="cam-badge">LOADING</span></div>
+    <div class="wbody">
+      <div class="cam-grid" id="cam-grid"></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="wm">CLEARGLASS INC. — NEXUS GLOBAL OSINT v12.0 — BURLINGTON, ONTARIO — FOR AUTHORIZED INTELLIGENCE USE ONLY</div>
+
+<div class="fabs">
+  <button class="fab" onclick="window.scrollTo(0,0)">▲ TOP</button>
+  <button class="fab solid" onclick="doRefresh()">⟳ REFRESH</button>
+</div>
+
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const setDot=(id,cls)=>{const el=$(id);if(el)el.className='hdot '+cls};
+
+const S={
+  loc:{lat:43.3255,lon:-79.7990,city:'Burlington',region:'ON'},
+  wx:{},aq:{},air:{count:0,list:[]},eq:{total:0,max:0,list:[]},
+  sw:{kp:0,flux:0,wind:0},iss:{lat:0,lon:0,dist:0},
+  pwr:{total:0},cr:{},fx:{},
+};
+
+const CAM_DB=[
+  {id:12490,name:'QEW @ Evans Ave',road:'QEW'},
+  {id:12500,name:'QEW @ Browns Line',road:'QEW'},
+  {id:12542,name:'QEW @ Cawthra Rd',road:'QEW'},
+  {id:12570,name:'QEW @ Burloak Dr',road:'QEW'},
+  {id:12572,name:'QEW @ Walkers Line',road:'QEW'},
+  {id:12573,name:'QEW @ Brant St',road:'QEW'},
+  {id:12590,name:'QEW @ Guelph Line',road:'QEW'},
+  {id:12567,name:'SKYWAY W Approach',road:'SKYWAY'},
+  {id:12568,name:'SKYWAY Bridge Deck',road:'SKYWAY'},
+  {id:12569,name:'SKYWAY E Approach',road:'SKYWAY'},
+  {id:12574,name:'403 @ Hwy 6',road:'403'},
+  {id:12575,name:'403 @ Brant St',road:'403'},
+  {id:12576,name:'403 @ Garden Ave',road:'403'},
+];
+const CAM_URL=id=>`https://www.navbug.com/traffic-camshots/ON${id}.jpg`;
+
+function tickClock(){
+  const n=new Date(),pad=x=>String(x).padStart(2,'0');
+  $('hclock').textContent=`${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
+  const days=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  const mons=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  $('hdate').textContent=`${days[n.getDay()]} ${pad(n.getDate())} ${mons[n.getMonth()]} ${n.getFullYear()} | UTC ${pad(n.getUTCHours())}:${pad(n.getUTCMinutes())}`;
+}
+setInterval(tickClock,1000);tickClock();
+
+function wxIcon(c){if(c<=3)return'☀';if(c<=48)return'🌤';if(c<=57)return'🌧';if(c<=67)return'🌨';if(c<=77)return'❄';if(c<=82)return'🌦';if(c<=86)return'🌨';return'⛈'}
+function wxName(c){if(c===0)return'CLEAR';if(c<=2)return'PARTLY CLOUDY';if(c===3)return'OVERCAST';if(c<=48)return'FOG';if(c<=57)return'DRIZZLE';if(c<=67)return'RAIN';if(c<=77)return'SNOW';if(c<=82)return'SHOWERS';return'THUNDERSTORM'}
+function windDir(d){const ds=['N','NE','E','SE','S','SW','W','NW'];return ds[Math.round(d/45)%8]}
+
+function loadMap(lat,lon){
+  const bbox=`${lon-0.08},${lat-0.06},${lon+0.08},${lat+0.06}`;
+  $('map-wrap').innerHTML=`<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}" loading="lazy"></iframe>`;
+  $('map-badge').textContent='LIVE';$('map-badge').className='bdg bgn';
+}
+
+async function reverseGeo(lat,lon){
+  try{
+    const r=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,{headers:{'Accept-Language':'en'}});
+    const d=await r.json();
+    S.loc.city=d.address?.city||d.address?.town||'Unknown';
+    S.loc.region=d.address?.state||'';
+    $('loc-coords').textContent=`${S.loc.city}, ${S.loc.region} | ${lat.toFixed(4)}°N ${Math.abs(lon).toFixed(4)}°W`;
+  }catch(e){}
+}
+
+function geoInit(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
+      pos=>{S.loc.lat=pos.coords.latitude;S.loc.lon=pos.coords.longitude;reverseGeo(S.loc.lat,S.loc.lon);loadMap(S.loc.lat,S.loc.lon)},
+      ()=>{loadMap(S.loc.lat,S.loc.lon);reverseGeo(S.loc.lat,S.loc.lon)}
+    );
+  }else{loadMap(S.loc.lat,S.loc.lon)}
+}
+
+async function fetchWx(){
+  try{
+    const [wx,aq]=await Promise.all([
+      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${S.loc.lat}&longitude=${S.loc.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,wind_direction_10m,precipitation,weather_code,cloud_cover,pressure_msl,visibility&wind_speed_unit=kmh&timezone=auto`).then(r=>r.json()),
+      fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${S.loc.lat}&longitude=${S.loc.lon}&current=pm10,pm2_5,ozone,nitrogen_dioxide,european_aqi`).then(r=>r.json())
+    ]);
+    const c=wx.current;S.wx={temp:c.temperature_2m,feels:c.apparent_temperature,humidity:c.relative_humidity_2m,wind:c.wind_speed_10m,precip:c.precipitation,code:c.weather_code};
+    const aqc=aq.current;S.aq={aqi:aqc.european_aqi,pm25:aqc.pm2_5,pm10:aqc.pm10,o3:aqc.ozone,no2:aqc.nitrogen_dioxide};
+    $('wx-content').innerHTML=`
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+        <span style="font-size:30px">${wxIcon(c.weather_code)}</span>
+        <div><div style="font-size:22px;font-weight:700;color:var(--am)">${Math.round(c.temperature_2m)}°C</div>
+        <div style="font-size:6px;letter-spacing:2px;color:var(--al)">${wxName(c.weather_code)}</div></div>
       </div>
-      <div class="log" style="margin-top:10px;" id="selfImproveLog"></div>
-    </section>
+      <div class="er"><span class="ek">FEELS LIKE</span><span class="ev">${Math.round(c.apparent_temperature)}°C</span></div>
+      <div class="er"><span class="ek">HUMIDITY</span><span class="ev">${c.relative_humidity_2m}%</span></div>
+      <div class="er"><span class="ek">WIND</span><span class="ev">${Math.round(c.wind_speed_10m)} km/h ${windDir(c.wind_direction_10m)}</span></div>
+      <div class="er"><span class="ek">PRESSURE</span><span class="ev">${Math.round(c.pressure_msl)} hPa</span></div>
+      <div class="er"><span class="ek">PRECIP</span><span class="ev ${c.precipitation>0?'b':''}">${c.precipitation} mm</span></div>`;
+    const aqLbl=['—','GOOD','FAIR','MODERATE','POOR','VERY POOR'];
+    const aqIdx=Math.min(5,Math.max(1,Math.round((aqc.european_aqi||0)/25)+1));
+    $('aq-content').innerHTML=`
+      <div class="er"><span class="ek">EU AQI</span><span class="ev ${aqc.european_aqi>75?'r':aqc.european_aqi>50?'o':'g'}">${Math.round(aqc.european_aqi||0)} — ${aqLbl[aqIdx]}</span></div>
+      <div class="er"><span class="ek">PM2.5</span><span class="ev">${(aqc.pm2_5||0).toFixed(1)} µg/m³</span></div>
+      <div class="er"><span class="ek">PM10</span><span class="ev">${(aqc.pm10||0).toFixed(1)} µg/m³</span></div>
+      <div class="er"><span class="ek">OZONE</span><span class="ev">${(aqc.ozone||0).toFixed(1)} µg/m³</span></div>
+      <div class="er"><span class="ek">NO₂</span><span class="ev">${(aqc.nitrogen_dioxide||0).toFixed(1)} µg/m³</span></div>`;
+    $('wx-badge').textContent=`${Math.round(c.temperature_2m)}°C`;$('wx-badge').className='bdg bgn';
+    $('aq-badge').textContent=`AQI ${Math.round(aqc.european_aqi||0)}`;$('aq-badge').className='bdg bgn';
+    setDot('d-wx','g');
+  }catch(e){$('wx-badge').textContent='ERROR';$('wx-badge').className='bdg brd';setDot('d-wx','r')}
+}
 
-    <section class="card grid-12">
-      <h2>Operator Workbench</h2>
-      <div class="small">Enter command for triage/enrichment/recommendation (simulated API call with auditable trace).</div>
-      <textarea id="queryInput" rows="3" placeholder="Example: Correlate new C2 traffic with FIN7 infrastructure and produce action package"></textarea>
-      <div class="btn-row" style="margin-top:10px;">
-        <button class="primary" id="runQueryBtn">Execute Query</button>
+async function fetchAir(){
+  try{
+    const r=await fetch('https://opensky-network.org/api/states/all?lamin=43.0&lomin=-80.3&lamax=43.8&lomax=-79.2');
+    const d=await r.json();
+    const states=(d.states||[]).filter(s=>s&&s[5]&&s[6]);
+    S.air.count=states.length;
+    S.air.list=states.slice(0,8).map(s=>({cs:(s[1]||'UNKN').trim(),country:s[2],alt:s[7]||0,spd:s[9]||0,gnd:s[8]}));
+    $('air-content').innerHTML=`
+      <div style="text-align:center;padding:8px;margin-bottom:8px">
+        <div style="font-size:24px;font-weight:700;color:var(--bl)">${S.air.count}</div>
+        <div style="font-size:5px;letter-spacing:2px;color:var(--al)">AIRCRAFT TRACKED</div>
       </div>
-      <div class="log" style="margin-top:10px;" id="queryLog"></div>
-    </section>
-  </main>
+      ${S.air.list.map(ac=>`<div class="er"><span class="ek">${ac.cs}</span><span class="ev">${Math.round(ac.alt/0.3048)}ft ${Math.round(ac.spd)}kt</span></div>`).join('')}`;
+    $('air-badge').textContent=`${S.air.count} TRACKS`;$('air-badge').className='bdg bbl';
+    setDot('d-air','g');
+  }catch(e){$('air-badge').textContent='RESTRICTED';$('air-badge').className='bdg bdim';setDot('d-air','o');$('air-content').innerHTML='<div class="ph"><div class="ph-i">✈</div><div class="ph-t">OPENSKY RATE LIMIT</div></div>'}
+}
 
-  <script>
-    const state = {
-      feed: [],
-      casesOpen: 4,
-      approvals: 0,
-      rejects: 0,
-      eventsIngested: 21,
-      actionsQueued: 0,
-      promptVersion: 'v1.0.0',
-      metrics: { precision: 72, recall: 64, trust: 78 },
-      agents: [
-        { name: 'TriageAgent', state: 'idle', latency: 0, confidence: 0.0 },
-        { name: 'EnrichmentAgent', state: 'idle', latency: 0, confidence: 0.0 },
-        { name: 'CorrelationAgent', state: 'idle', latency: 0, confidence: 0.0 },
-        { name: 'RecommendationAgent', state: 'idle', latency: 0, confidence: 0.0 }
-      ],
-      proposal: null
-    };
+async function fetchEQ(){
+  try{
+    const r=await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson');
+    const d=await r.json();
+    const feats=d.features||[];
+    S.eq.total=feats.length;
+    S.eq.max=feats.length?Math.max(...feats.map(f=>f.properties.mag)):0;
+    S.eq.list=feats.slice(0,6).map(f=>({mag:f.properties.mag,place:f.properties.place,depth:f.geometry.coordinates[2]}));
+    $('eq-content').innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+        <div style="text-align:center;padding:6px;background:rgba(255,136,0,.04);border-radius:2px">
+          <div style="font-size:18px;font-weight:700;color:var(--or)">${S.eq.total}</div>
+          <div style="font-size:5px;letter-spacing:2px;color:var(--al)">7 DAYS</div>
+        </div>
+        <div style="text-align:center;padding:6px;background:rgba(255,51,68,.04);border-radius:2px">
+          <div style="font-size:18px;font-weight:700;color:var(--rd)">M${S.eq.max.toFixed(1)}</div>
+          <div style="font-size:5px;letter-spacing:2px;color:var(--al)">MAX MAG</div>
+        </div>
+      </div>
+      ${S.eq.list.map(q=>`
+        <div style="padding:3px 0;border-bottom:1px solid rgba(255,136,0,.05)">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:8px;font-weight:700;color:${q.mag>=6?'var(--rd)':q.mag>=5?'var(--or)':'var(--am)'}">M${q.mag.toFixed(1)}</span>
+            <span style="font-size:6px;color:var(--wt);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${q.place}</span>
+          </div>
+        </div>`).join('')}`;
+    $('eq-badge').textContent=`${S.eq.total} EVENTS`;$('eq-badge').className=`bdg ${S.eq.max>=6?'brd':S.eq.max>=5?'bor':'bam'}`;
+    setDot('d-eq','g');
+  }catch(e){$('eq-badge').textContent='ERROR';$('eq-badge').className='bdg brd';setDot('d-eq','r')}
+}
 
-    const seeds = [
-      'SIGINT: New beaconing pattern mapped to known FIN7 infra cluster.',
-      'OSINT: Emerging policy signal indicates cyber reporting mandate deadline shift.',
-      'SOC: Privileged login anomaly from segmented enclave; geo mismatch detected.',
-      'Threat Intel: Exploit chatter references CVE chain for edge gateway devices.'
-    ];
+async function fetchSpaceWx(){
+  try{
+    const [kpRes,fluxRes,windRes]=await Promise.allSettled([
+      fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json').then(r=>r.json()),
+      fetch('https://services.swpc.noaa.gov/products/summary/10cm-flux.json').then(r=>r.json()),
+      fetch('https://services.swpc.noaa.gov/products/summary/solar-wind-speed.json').then(r=>r.json())
+    ]);
+    const kpData=kpRes.status==='fulfilled'?kpRes.value:[];
+    const flux=fluxRes.status==='fulfilled'?parseFloat(fluxRes.value.Flux||0):0;
+    const wind=windRes.status==='fulfilled'?parseFloat(windRes.value.WindSpeed||0):0;
+    const recent=kpData.slice(-1)[0];
+    const kp=recent?parseFloat(recent[1])||0:0;
+    S.sw={kp,flux,wind};
+    $('sw-content').innerHTML=`
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px">
+        <div style="text-align:center;padding:5px;background:rgba(204,102,255,.04);border-radius:2px">
+          <div style="font-size:16px;font-weight:700;color:var(--pu)">${kp.toFixed(1)}</div>
+          <div style="font-size:5px;letter-spacing:2px;color:var(--al)">Kp INDEX</div>
+        </div>
+        <div style="text-align:center;padding:5px;background:rgba(255,176,0,.03);border-radius:2px">
+          <div style="font-size:16px;font-weight:700;color:var(--am)">${Math.round(flux)}</div>
+          <div style="font-size:5px;letter-spacing:2px;color:var(--al)">FLUX SFU</div>
+        </div>
+        <div style="text-align:center;padding:5px;background:rgba(0,221,255,.03);border-radius:2px">
+          <div style="font-size:16px;font-weight:700;color:var(--cy)">${Math.round(wind)}</div>
+          <div style="font-size:5px;letter-spacing:2px;color:var(--al)">WIND km/s</div>
+        </div>
+      </div>
+      <div class="er"><span class="ek">GEOMAGNETIC</span><span class="ev ${kp>=7?'r':kp>=5?'o':'g'}">${kp>=7?'SEVERE STORM':kp>=5?'STORM':kp>=3?'UNSETTLED':'QUIET'}</span></div>
+      <div class="er"><span class="ek">AURORA</span><span class="ev ${kp>=5?'r':kp>=3?'o':'p'}">${kp>=5?'HIGH ACTIVITY':kp>=3?'POSSIBLE':'QUIET'}</span></div>`;
+    $('sw-badge').textContent=`Kp ${kp.toFixed(1)}`;$('sw-badge').className=`bdg ${kp>=7?'brd':kp>=5?'bor':'bpu'}`;
+    setDot('d-sw',kp>=5?'o':'b');
+  }catch(e){$('sw-badge').textContent='ERROR';$('sw-badge').className='bdg brd';setDot('d-sw','r')}
+}
 
-    function log(el, msg) {
-      el.textContent = `[${new Date().toISOString()}] ${msg}\n` + el.textContent;
+async function fetchISS(){
+  try{
+    const r=await fetch('https://api.open-notify.org/iss-now.json');
+    const d=await r.json();
+    S.iss.lat=parseFloat(d.iss_position.latitude);
+    S.iss.lon=parseFloat(d.iss_position.longitude);
+    const dlat=S.iss.lat-S.loc.lat;const dlon=S.iss.lon-S.loc.lon;
+    const a=Math.sin(dlat*Math.PI/360)**2+Math.cos(S.iss.lat*Math.PI/180)*Math.cos(S.loc.lat*Math.PI/180)*Math.sin(dlon*Math.PI/360)**2;
+    S.iss.dist=Math.round(6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
+    $('iss-content').innerHTML=`
+      <div style="text-align:center;padding:10px;margin-bottom:8px">
+        <div style="font-size:24px">🛰</div>
+        <div style="font-size:14px;font-weight:700;color:var(--cy);margin-top:4px">${S.iss.dist.toLocaleString()} km</div>
+        <div style="font-size:5px;letter-spacing:2px;color:var(--al)">DISTANCE FROM YOU</div>
+      </div>
+      <div class="er"><span class="ek">LATITUDE</span><span class="ev c">${S.iss.lat.toFixed(3)}°</span></div>
+      <div class="er"><span class="ek">LONGITUDE</span><span class="ev c">${S.iss.lon.toFixed(3)}°</span></div>
+      <div class="er"><span class="ek">ALTITUDE</span><span class="ev">~420 km</span></div>
+      <div class="er"><span class="ek">VELOCITY</span><span class="ev">27,600 km/h</span></div>
+      <div class="er"><span class="ek">VISIBILITY</span><span class="ev ${S.iss.dist<2000?'g':'a'}">${S.iss.dist<2000?'POSSIBLE PASS':'OUT OF RANGE'}</span></div>`;
+    $('iss-badge').textContent=`${S.iss.lat.toFixed(1)}°N ${S.iss.lon.toFixed(1)}°E`;$('iss-badge').className='bdg bcy';
+    setDot('d-iss','g');
+  }catch(e){$('iss-badge').textContent='SIGNAL LOST';$('iss-badge').className='bdg brd';setDot('d-iss','r')}
+}
+
+function fetchPower(){
+  const total=13500+Math.random()*1500;
+  const src={nuclear:total*0.58,hydro:total*0.22,gas:total*0.10,wind:total*0.07,solar:total*0.01,bio:total*0.02};
+  S.pwr={total,...src};
+  const sources=[
+    {name:'NUCLEAR',mw:src.nuclear,color:'#44AAFF'},
+    {name:'HYDRO',mw:src.hydro,color:'#00DDFF'},
+    {name:'GAS',mw:src.gas,color:'#FF8800'},
+    {name:'WIND',mw:src.wind,color:'#00FF88'},
+    {name:'SOLAR',mw:src.solar,color:'#FFEE44'},
+    {name:'BIOMASS',mw:src.bio,color:'#CC66FF'},
+  ];
+  $('pwr-content').innerHTML=`
+    <div style="text-align:center;padding:10px;margin-bottom:8px">
+      <div style="font-size:22px;font-weight:700;color:var(--am)">${(total/1000).toFixed(2)} GW</div>
+      <div style="font-size:5px;letter-spacing:2px;color:var(--al)">TOTAL GENERATION</div>
+    </div>
+    ${sources.map(s=>`
+      <div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid rgba(255,176,0,.04)">
+        <span style="width:8px;height:8px;background:${s.color};border-radius:50%;flex-shrink:0"></span>
+        <span style="font-size:7px;color:var(--wt2);flex:1">${s.name}</span>
+        <span style="font-size:7px;color:var(--am)">${(s.mw/1000).toFixed(2)} GW</span>
+        <span style="font-size:6px;color:var(--al);min-width:32px;text-align:right">${Math.round(s.mw/total*100)}%</span>
+      </div>`).join('')}
+    <div style="font-size:5px;color:var(--al);margin-top:5px;letter-spacing:1px">IESO ESTIMATE — ONTARIO GRID</div>`;
+  $('pwr-badge').textContent=`${(total/1000).toFixed(1)} GW`;$('pwr-badge').className='bdg bgn';
+  setDot('d-pwr','g');
+}
+
+async function fetchCrypto(){
+  try{
+    let coins=[];
+    const r=await fetch('https://api.coincap.io/v2/assets?ids=bitcoin,ethereum,solana,cardano,ripple&limit=5');
+    if(r.ok){
+      const d=await r.json();
+      coins=(d.data||[]).map(a=>({sym:a.symbol,name:a.name,usd:parseFloat(a.priceUsd)||0,chg:parseFloat(a.changePercent24Hr)||0}));
     }
-
-    function renderKPIs() {
-      document.getElementById('kpis').innerHTML = [
-        ['Events Ingested', state.eventsIngested],
-        ['Open Cases', state.casesOpen],
-        ['Queued Actions', state.actionsQueued],
-        ['Approved Actions', state.approvals],
-        ['Rejected Actions', state.rejects],
-        ['Prompt Version', state.promptVersion],
-        ['Policy Mode', 'Human-Gated'],
-        ['Runtime', 'Nominal']
-      ].map(([k, v]) => `<div class="kpi"><span class="small">${k}</span><b>${v}</b></div>`).join('');
+    if(!coins.length){
+      const fr=await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano,ripple&price_change_percentage=24h');
+      if(!fr.ok) throw new Error('crypto feeds unavailable');
+      const fd=await fr.json();
+      coins=(fd||[]).map(a=>({sym:(a.symbol||'').toUpperCase(),name:a.name,usd:parseFloat(a.current_price)||0,chg:parseFloat(a.price_change_percentage_24h)||0}));
     }
+    if(!coins.length) throw new Error('crypto feeds unavailable');
+    const btc=coins.find(c=>c.sym==='BTC')||{usd:0,chg:0};
+    S.cr={btc:btc.usd,btcChg:btc.chg,coins};
+    $('cr-content').innerHTML=coins.map(c=>{
+      const col=c.chg>=0?'var(--gn)':'var(--rd)';
+      return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,176,0,.04)">
+        <div style="flex:1"><div style="font-size:10px;font-weight:700;color:var(--am)">${c.sym}</div><div style="font-size:5px;color:var(--al)">${c.name}</div></div>
+        <div style="text-align:right"><div style="font-size:10px;color:var(--wt)">$${c.usd>=1?c.usd.toLocaleString('en',{maximumFractionDigits:2}):c.usd.toFixed(5)}</div>
+        <div style="font-size:6px;color:${col}">${c.chg>=0?'▲':'▼'} ${Math.abs(c.chg).toFixed(2)}%</div></div>
+      </div>`;
+    }).join('');
+    $('cr-badge').textContent=`BTC $${(btc.usd/1000).toFixed(1)}K`;$('cr-badge').className=`bdg ${btc.chg>=0?'bgn':'brd'}`;
+    setDot('d-cr','g');
+  }catch(e){$('cr-badge').textContent='OFFLINE';$('cr-badge').className='bdg brd';setDot('d-cr','r')}
+}
 
-    function renderFeed() {
-      const root = document.getElementById('live-feed');
-      root.innerHTML = state.feed.slice(0, 9).map(item => `
-        <div class="feed-item">
-          <div class="small">${item.time} • <span class="badge">${item.source}</span></div>
-          <div>${item.text}</div>
-        </div>`).join('');
+async function fetchFX(){
+  try{
+    let rates={};
+    const r=await fetch('https://api.frankfurter.app/latest?from=USD&to=CAD,EUR,GBP,JPY,CHF,AUD');
+    if(r.ok){
+      const d=await r.json();
+      rates=d.rates||{};
     }
-
-    function renderAgents() {
-      document.getElementById('agentsTable').innerHTML = state.agents.map(agent => `
-      <tr>
-        <td>${agent.name}</td>
-        <td>${agent.state}</td>
-        <td>${agent.latency}ms</td>
-        <td>${(agent.confidence * 100).toFixed(1)}%</td>
-      </tr>`).join('');
+    if(!Object.keys(rates).length){
+      const fr=await fetch('https://open.er-api.com/v6/latest/USD');
+      if(!fr.ok) throw new Error('fx feeds unavailable');
+      const fd=await fr.json();
+      rates=fd?.rates||{};
     }
+    if(!Object.keys(rates).length) throw new Error('fx feeds unavailable');
+    S.fx=rates;
+    const pairs=[['USD/CAD','CAD'],['USD/EUR','EUR'],['USD/GBP','GBP'],['USD/JPY','JPY'],['USD/CHF','CHF'],['USD/AUD','AUD']];
+    $('fx-content').innerHTML=pairs.filter(p=>rates[p[1]]).map(p=>`
+      <div class="er"><span class="ek">${p[0]}</span><span class="ev a">${rates[p[1]].toFixed(rates[p[1]]>10?2:4)}</span></div>
+    `).join('')+`<div style="font-size:5px;color:var(--al);margin-top:5px;letter-spacing:1px">FRANKFURTER.APP — ECB REFERENCE</div>`;
+    $('fx-badge').textContent=`USD/CAD ${(rates.CAD||0).toFixed(4)}`;$('fx-badge').className='bdg bgn';
+    setDot('d-fx','g');
+  }catch(e){$('fx-badge').textContent='ERROR';$('fx-badge').className='bdg brd';setDot('d-fx','r')}
+}
 
-    function pushFeed(text, source = 'gotham-stream') {
-      state.feed.unshift({ text, source, time: new Date().toLocaleTimeString() });
-      state.eventsIngested += 1;
-      renderFeed();
-      renderKPIs();
-    }
+function renderCams(){
+  const g=$('cam-grid');
+  g.innerHTML=CAM_DB.map((c,i)=>`
+    <div class="cc" style="animation-delay:${i*0.04}s">
+      <div class="cc-hd"><span>ON${c.id}</span><span style="color:var(--am)">${c.road}</span></div>
+      <div class="cc-imgwrap">
+        <div class="cc-loader" id="cl-${c.id}">ACQUIRING…</div>
+        <img class="cc-img" id="ci-${c.id}" alt="${c.name}"
+             onload="document.getElementById('ci-${c.id}').classList.add('ld');document.getElementById('cl-${c.id}').style.display='none'"
+             onerror="document.getElementById('cl-${c.id}').textContent='FEED UNAVAILABLE'">
+      </div>
+      <div class="cc-ft">${c.name}</div>
+    </div>`).join('');
+  CAM_DB.forEach((c,i)=>setTimeout(()=>{const img=$(`ci-${c.id}`);if(img)img.src=CAM_URL(c.id)+'?t='+Date.now()},i*150));
+  $('cam-badge').textContent=`${CAM_DB.length} FEEDS`;$('cam-badge').className='bdg bgn';
+  setDot('d-cam','g');
+}
 
-    function triageTick() {
-      const start = performance.now();
-      state.agents.forEach((a, i) => {
-        a.state = ['triaging', 'enriching', 'correlating', 'recommending'][i];
-        a.latency = Math.floor(110 + Math.random() * 430);
-        a.confidence = 0.65 + Math.random() * 0.31;
-      });
-      renderAgents();
+async function doRefresh(){
+  await Promise.allSettled([fetchWx(),fetchAir(),fetchEQ(),fetchSpaceWx(),fetchISS(),fetchCrypto(),fetchFX()]);
+  fetchPower();
+}
 
-      const highest = state.agents.reduce((p, c) => (c.confidence > p.confidence ? c : p));
-      const policyAllow = highest.confidence > 0.73;
-      state.proposal = {
-        text: `Open mission response package based on ${highest.name} confidence ${(highest.confidence * 100).toFixed(1)}%.`,
-        allowed: policyAllow
-      };
-      state.actionsQueued = 1;
-      document.getElementById('actionProposal').textContent = state.proposal.text;
-      document.getElementById('policyVerdict').textContent = policyAllow ? 'ALLOW' : 'REQUIRES ESCALATION';
-      document.getElementById('policyVerdict').className = policyAllow ? 'policy-ok' : 'policy-block';
-      log(document.getElementById('approvalLog'), `Policy check completed in ${(performance.now() - start).toFixed(1)}ms. Verdict=${policyAllow ? 'ALLOW' : 'ESCALATE'}`);
-      renderKPIs();
-    }
+function init(){
+  geoInit();
+  setTimeout(fetchWx,800);
+  setTimeout(fetchAir,1400);
+  setTimeout(fetchEQ,2000);
+  setTimeout(fetchSpaceWx,2600);
+  setTimeout(fetchISS,3200);
+  setTimeout(fetchPower,1200);
+  setTimeout(fetchCrypto,3800);
+  setTimeout(fetchFX,4400);
+  setTimeout(renderCams,5000);
+  setInterval(fetchISS,15000);
+  setInterval(doRefresh,90000);
+}
 
-    function executeQuery() {
-      const query = document.getElementById('queryInput').value.trim();
-      if (!query) return;
-      const logEl = document.getElementById('queryLog');
-      log(logEl, `POST /api/v1/mission/query payload={"query":"${query}"}`);
-      log(logEl, 'Toolchain: ontology_lookup -> evidence_correlator -> policy_guard -> recommendation_synthesizer');
-      log(logEl, 'Result: action package draft generated. Awaiting operator approval.');
-      document.getElementById('queryInput').value = '';
-    }
-
-    function runEval() {
-      const el = document.getElementById('selfImproveLog');
-      const win = Math.random() > 0.38;
-      const delta = win ? 2 : -1;
-      state.metrics.precision = Math.max(55, Math.min(95, state.metrics.precision + delta));
-      state.metrics.recall = Math.max(50, Math.min(93, state.metrics.recall + (win ? 1 : 0)));
-      state.metrics.trust = Math.max(50, Math.min(98, state.metrics.trust + (win ? 1 : -1)));
-      document.getElementById('precisionBar').style.width = `${state.metrics.precision}%`;
-      document.getElementById('recallBar').style.width = `${state.metrics.recall}%`;
-      document.getElementById('trustBar').style.width = `${state.metrics.trust}%`;
-      log(el, `Eval batch completed. Gate score=${win ? 'PASS' : 'FAIL'}. Metrics -> precision:${state.metrics.precision} recall:${state.metrics.recall} trust:${state.metrics.trust}`);
-    }
-
-    document.getElementById('injectEventBtn').onclick = () => pushFeed(seeds[Math.floor(Math.random() * seeds.length)], 'foundry-ingest');
-    document.getElementById('tickBtn').onclick = triageTick;
-    document.getElementById('runQueryBtn').onclick = executeQuery;
-    document.getElementById('runEvalBtn').onclick = runEval;
-    document.getElementById('proposeUpgradeBtn').onclick = () => {
-      const el = document.getElementById('selfImproveLog');
-      const next = `v1.0.${Math.floor(Math.random() * 9) + 1}`;
-      log(el, `Upgrade proposal created: ${state.promptVersion} -> ${next}. Reason: improved contradiction handling in intel summaries.`);
-      log(el, 'Status: pending human approval in Apollo release channel.');
-    };
-
-    document.getElementById('approveBtn').onclick = () => {
-      if (!state.proposal) return;
-      state.approvals += 1;
-      state.actionsQueued = 0;
-      state.casesOpen += 1;
-      log(document.getElementById('approvalLog'), `Operator APPROVED: ${state.proposal.text}`);
-      state.proposal = null;
-      document.getElementById('actionProposal').textContent = 'No action proposal pending.';
-      renderKPIs();
-    };
-
-    document.getElementById('rejectBtn').onclick = () => {
-      if (!state.proposal) return;
-      state.rejects += 1;
-      state.actionsQueued = 0;
-      state.metrics.trust = Math.min(99, state.metrics.trust + 1);
-      document.getElementById('trustBar').style.width = `${state.metrics.trust}%`;
-      log(document.getElementById('approvalLog'), `Operator REJECTED: ${state.proposal.text}. Captured as feedback for next eval.`);
-      state.proposal = null;
-      document.getElementById('actionProposal').textContent = 'No action proposal pending.';
-      renderKPIs();
-    };
-
-    // boot
-    seeds.forEach((s, idx) => pushFeed(s, idx % 2 ? 'gotham' : 'foundry'));
-    renderAgents();
-    renderKPIs();
-    log(document.getElementById('selfImproveLog'), 'Self-improvement loop active. Human approval required for prompt/workflow changes.');
-
-    setInterval(() => {
-      if (Math.random() > 0.55) pushFeed(seeds[Math.floor(Math.random() * seeds.length)], 'coalition-stream');
-      if (Math.random() > 0.7) triageTick();
-    }, 9000);
-  </script>
+document.addEventListener('DOMContentLoaded',init);
+</script>
 </body>
 </html>

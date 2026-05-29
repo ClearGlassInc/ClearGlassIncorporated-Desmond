@@ -17,13 +17,12 @@ side-effectful adapters belong in the deployment layer.
 from __future__ import annotations
 
 import json
-import os
 import uuid
 from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, timedelta, timezone
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Sequence
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "operations" / "output" / "cashpulse"

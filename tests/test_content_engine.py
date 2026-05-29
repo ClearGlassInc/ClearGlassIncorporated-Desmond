@@ -3,20 +3,14 @@
 from __future__ import annotations
 
 import json
-import os
-import tempfile
 from datetime import datetime, timezone
-from pathlib import Path
 
-import pytest
 
 from bots.content_engine import (
     CONTENT,
     PILLARS,
     PLATFORM_LIMITS,
     URLS,
-    ContentBundle,
-    PlatformContent,
     build_bundle,
     choose_pillar,
     choose_variant,
@@ -35,7 +29,6 @@ def test_choose_pillar_rotates_through_all():
             tzinfo=timezone.utc
         )
         # Simulate day-of-year offset
-        from datetime import timedelta
         now = datetime(2026, 1, day % 365 + 1, tzinfo=timezone.utc)
         seen.add(choose_pillar(now))
     assert seen == set(PILLARS)

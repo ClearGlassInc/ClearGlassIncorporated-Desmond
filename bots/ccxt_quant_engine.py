@@ -35,8 +35,8 @@ import time
 from dataclasses import asdict, dataclass
 from decimal import Decimal, InvalidOperation, ROUND_DOWN, getcontext
 from pathlib import Path
-from statistics import mean, pstdev
-from typing import Any, Iterable, Optional
+from statistics import pstdev
+from typing import Any, Optional
 
 import ccxt  # type: ignore
 

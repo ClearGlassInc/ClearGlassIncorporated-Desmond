@@ -116,7 +116,7 @@ def test_capital_stack_rejects_non_positive_profit() -> None:
 
 
 @pytest.mark.parametrize(
-    (contacted, serious_calls, buyers, expected),
+    "contacted, serious_calls, buyers, expected",
     [
         (10, 0, 0, "Change message. The market is not reacting."),
         (20, 2, 0, "Change offer. Buyers are not voting with money."),

@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import json
 from collections import Counter
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -198,8 +198,8 @@ def render_report_markdown(report: WeeklyReport) -> str:
         "",
         "## Coverage",
         "",
-        f"| Metric | Value |",
-        f"| --- | --- |",
+        "| Metric | Value |",
+        "| --- | --- |",
         f"| Runs (last 7 days) | {report.trailing_7_days} |",
         f"| Total all-time runs | {report.total_all_time} |",
         f"| Days with content | {report.days_with_content} / 7 |",

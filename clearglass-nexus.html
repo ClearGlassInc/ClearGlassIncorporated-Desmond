@@ -1019,9 +1019,9 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 
 <!-- DARPA Classification Banner -->
 <div id="darpa-banner">
-  <span>// CLEARGLASS NEXUS v11</span>
-  <span>◈ DARPA ADVANCED INTELLIGENCE PROGRAM</span>
-  <span>// OPERATOR: DESMOND OTIENO — BURLINGTON OPS</span>
+  <span>// CLEARGLASS NEXUS v12</span>
+  <span>◈ DARPA ADVANCED INTELLIGENCE PROGRAM · GOVERNMENT EDITION</span>
+  <span>// OPERATOR: DESMOND OTIENO — BURLINGTON OPS CENTER · <a href="government.html" style="color:inherit;opacity:.7">GOV SOLUTIONS ↗</a></span>
 </div>
 <!-- NEXUS v12 PANEL INSERTS — injected into existing DOM -->
 
@@ -1142,6 +1142,25 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
   <div id="memex-items" style="max-height:60px;overflow-y:auto;margin-top:4px"></div>
 </div>
 
+<!-- HELIX GEOSPATIAL THREAT HEATMAP -->
+<div style="background:rgba(0,0,0,.4);border:1px solid rgba(255,176,0,.1);border-radius:3px;padding:8px;margin:4px 8px;">
+  <div style="font-size:6px;color:var(--am);letter-spacing:1.5px;margin-bottom:4px;">
+    ◈ HELIX — GEOSPATIAL THREAT HEATMAP <span class="dp-badge">ARGUS</span>
+  </div>
+  <div id="helix-wrap" class="v12-canvas-wrap">
+    <canvas id="helix-canvas"></canvas>
+    <div class="v12-canvas-label">EQUIRECTANGULAR — LIVE EVENT OVERLAY</div>
+  </div>
+  <div class="helix-legend" style="margin-top:4px;">
+    <div class="helix-dot"><span style="background:rgba(255,80,0,.8)"></span>SEISMIC</div>
+    <div class="helix-dot"><span style="background:rgba(0,200,255,.8)"></span>WEATHER</div>
+    <div class="helix-dot"><span style="background:rgba(200,100,255,.8)"></span>SPACE WX</div>
+    <div class="helix-dot"><span style="background:rgba(255,51,68,.8)"></span>CYBER</div>
+    <div class="helix-dot"><span style="background:rgba(0,255,136,.8)"></span>ISS ORBIT</div>
+    <div class="helix-dot"><span style="background:rgba(255,176,0,.8)"></span>BURLINGTON OPS</div>
+  </div>
+</div>
+
 <!-- NEXUS CLI -->
 <div id="nexus-cli" style="margin:4px 8px;">
   <div style="font-size:5.5px;color:var(--am);letter-spacing:1.5px;margin-bottom:4px">
@@ -1163,8 +1182,8 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 <div id="boot-splash">
   <div class="b-logo">
     <div class="b-wordmark">NEXUS</div>
-    <div class="b-sub">CLEARGLASS INC. — GLOBAL OSINT COMMAND TERMINAL</div>
-    <div class="b-version">VERSION 10.0.0 — BURLINGTON OPERATIONS CENTER — CONFIDENTIAL</div>
+    <div class="b-sub">CLEARGLASS INC. — GLOBAL OSINT COMMAND TERMINAL · GOVERNMENT EDITION</div>
+    <div class="b-version">VERSION 12.0.0 — BURLINGTON OPERATIONS CENTER — DARPA INTELLIGENCE PROGRAM — AUTHORIZED USE ONLY</div>
   </div>
   <div class="b-bar-wrap"><div class="b-bar" id="bbar"></div></div>
   <div class="b-pct" id="bpct">INITIALIZING... 0%</div>
@@ -1672,7 +1691,7 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 </div><!-- /main -->
 
 <!-- ── FOOTER ── -->
-<div class="wm">CLEARGLASS INC. — NEXUS GLOBAL OSINT v10.0 — BURLINGTON, ONTARIO — FOR AUTHORIZED INTELLIGENCE USE ONLY — © 2025 DESMOND OTIENO ODHIAMBO</div>
+<div class="wm">CLEARGLASS INC. — NEXUS GLOBAL OSINT v12.0 — BURLINGTON, ONTARIO — FOR AUTHORIZED INTELLIGENCE USE ONLY — © 2026 DESMOND OTIENO ODHIAMBO · <a href="government.html" style="color:var(--am);text-decoration:none;letter-spacing:1px">GOV SOLUTIONS ↗</a></div>
 
 <!-- ══════════════════════════════════════
      FULLSCREEN CAMERA VIEWER
@@ -5531,21 +5550,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-<!-- HELIX GEOSPATIAL — new panel -->
-<div style="background:rgba(0,0,0,.4);border:1px solid rgba(255,176,0,.1);border-radius:3px;padding:8px;margin:4px 8px;">
-  <div style="font-size:6px;color:var(--am);letter-spacing:1.5px;margin-bottom:4px;">
-    ◈ HELIX — GEOSPATIAL THREAT HEATMAP <span class="dp-badge">ARGUS</span>
-  </div>
-  <div id="helix-wrap" class="v12-canvas-wrap">
-    <canvas id="helix-canvas"></canvas>
-    <div class="v12-canvas-label">EQUIRECTANGULAR — LIVE EVENT OVERLAY</div>
-  </div>
-  <div class="helix-legend" style="margin-top:4px;">
-    <div class="helix-dot"><span style="background:rgba(255,80,0,.8)"></span>SEISMIC</div>
-    <div class="helix-dot"><span style="background:rgba(0,200,255,.8)"></span>WEATHER</div>
-    <div class="helix-dot"><span style="background:rgba(200,100,255,.8)"></span>SPACE WX</div>
-    <div class="helix-dot"><span style="background:rgba(255,51,68,.8)"></span>CYBER</div>
-    <div class="helix-dot"><span style="background:rgba(0,255,136,.8)"></span>ISS ORBIT</div>
-    <div class="helix-dot"><span style="background:rgba(255,176,0,.8)"></span>BURLINGTON</div>
-  </div>
-</div>

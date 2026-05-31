@@ -793,6 +793,7 @@ let apiKey = localStorage.getItem('cc_api_key') || '';
 let selectedModel = localStorage.getItem('cc_model') || 'claude-sonnet-4-6';
 let convHistory = [];
 let isStreaming = false;
+let modelChangeListener = null;
 
 /* ── SCENARIOS ── */
 const SCENARIOS = [
@@ -889,11 +890,15 @@ function toggleSettings() {
   const isOpen = panel.classList.toggle('open');
   if (isOpen) {
     document.getElementById('spKeyField').value = apiKey || '';
-    document.getElementById('spModel').value = selectedModel;
-    document.getElementById('spModel').addEventListener('change', (e) => {
+    const modelSel = document.getElementById('spModel');
+    modelSel.value = selectedModel;
+    // Remove any previous listener before adding a fresh one
+    if (modelChangeListener) modelSel.removeEventListener('change', modelChangeListener);
+    modelChangeListener = (e) => {
       selectedModel = e.target.value;
       localStorage.setItem('cc_model', selectedModel);
-    }, { once: true });
+    };
+    modelSel.addEventListener('change', modelChangeListener);
   }
 }
 
@@ -962,14 +967,9 @@ async function sendMessage(userText) {
   setStatus('busy');
   document.getElementById('sendBtn').disabled = true;
 
-  const msgContainer = document.createElement('div');
-  msgContainer.className = 'msg bot';
-  msgContainer.innerHTML = `
-    <div class="msg-avatar">⚖️</div>
-    <div class="msg-bubble">
-      <div class="msg-role">CLEARCOUNSEL™ · SENIOR COUNSEL</div>
-      <div class="msg-text" id="streamingMsg"></div>
-    </div>`;
+  // Track streaming container so we can remove it on error
+  let msgContainer = null;
+  let typingRemoved = false;
 
   try {
     const messages = convHistory.slice(-20);
@@ -999,10 +999,20 @@ async function sendMessage(userText) {
     }
 
     typingEl.remove();
+    typingRemoved = true;
     const log = document.getElementById('chatLog');
-    log.appendChild(msgContainer);
-    const streamEl = document.getElementById('streamingMsg');
 
+    msgContainer = document.createElement('div');
+    msgContainer.className = 'msg bot';
+    msgContainer.innerHTML = `
+      <div class="msg-avatar">⚖️</div>
+      <div class="msg-bubble">
+        <div class="msg-role">CLEARCOUNSEL™ · SENIOR COUNSEL</div>
+        <div class="msg-text" id="streamingMsg"></div>
+      </div>`;
+    log.appendChild(msgContainer);
+
+    const streamEl = document.getElementById('streamingMsg');
     const reader = resp.body.getReader();
     const decoder = new TextDecoder();
     let buf = '';
@@ -1035,9 +1045,17 @@ async function sendMessage(userText) {
     setStatus('ready');
 
   } catch (err) {
-    typingEl.remove();
-    const isKeyErr = err.message.includes('401') || err.message.includes('authentication') || err.message.includes('invalid');
-    if (isKeyErr) setStatus('error', 'API key invalid or unauthorized');
+    // Remove failed user message so history stays valid (no consecutive user turns)
+    if (convHistory.length && convHistory[convHistory.length - 1].role === 'user') {
+      convHistory.pop();
+    }
+    // Remove typing indicator if still present
+    if (!typingRemoved && typingEl.parentNode) typingEl.remove();
+    // Remove any partial streaming container from DOM
+    if (msgContainer && msgContainer.parentNode) msgContainer.remove();
+
+    const isKeyErr = err.message.includes('401') || err.message.includes('authentication') || err.message.includes('invalid x-api-key');
+    if (isKeyErr) setStatus('error', 'API key invalid — check Settings');
     else setStatus('error', 'Connection error — retry');
     appendMessage('bot', `I apologize — there was an error connecting to the legal AI engine.\n\n**Error:** ${err.message}\n\nPlease verify your API key in Settings and try again.`, true);
   } finally {
@@ -1118,7 +1136,7 @@ function parseFivePart(text) {
     { pattern: /\*\*\s*1\.\s*Immediate Assessment\s*\*\*/i, cls: 'rs-assessment', num: '01', title: 'Immediate Assessment' },
     { pattern: /\*\*\s*2\.\s*Legal Analysis\s*\*\*/i, cls: 'rs-legal', num: '02', title: 'Legal Analysis' },
     { pattern: /\*\*\s*3\.\s*Recommended Actions\s*\*\*/i, cls: 'rs-actions', num: '03', title: 'Recommended Actions' },
-    { pattern: /\*\*\s*4\.\s*Risks\s*(?:&amp;|&|and)\s*Mitigations\s*\*\*/i, cls: 'rs-risks', num: '04', title: 'Risks & Mitigations' },
+    { pattern: /\*\*\s*4\.\s*Risks\s*(?:&amp;|&|and)\s*Mitigations\s*\*\*/i, cls: 'rs-risks', num: '04', title: 'Risks &amp; Mitigations' },
     { pattern: /\*\*\s*5\.\s*Next Steps\s*\*\*/i, cls: 'rs-next', num: '05', title: 'Next Steps' },
   ];
 
@@ -1134,16 +1152,16 @@ function parseFivePart(text) {
   const sections = [];
 
   for (let i = 0; i < found.length; i++) {
-    const start = text.search(found[i].pattern);
-    const headerMatch = text.match(found[i].pattern);
+    const start = found[i].pos;
+    const headerMatch = text.slice(start).match(found[i].pattern);
     const contentStart = start + (headerMatch ? headerMatch[0].length : 0);
-    const end = i + 1 < found.length ? text.search(found[i + 1].pattern) : text.length;
+    const end = i + 1 < found.length ? found[i + 1].pos : text.length;
     const content = text.slice(contentStart, end).trim();
     sections.push({ cls: found[i].cls, num: found[i].num, title: found[i].title, content });
   }
 
   // Check for content before first section
-  const firstPos = text.search(found[0].pattern);
+  const firstPos = found[0].pos;
   if (firstPos > 20) {
     const preContent = text.slice(0, firstPos).trim();
     if (preContent) {
@@ -1201,8 +1219,7 @@ function parseMarkdownSimple(text) {
   // Bullet lists
   t = t.replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>');
 
-  // Wrap consecutive <li> in list tags
-  t = t.replace(/(<li>[\s\S]*?<\/li>)(?=\s*<li>|$)/g, (match) => match);
+  // Wrap consecutive <li> elements in <ul>
   t = t.replace(/((?:<li>[\s\S]*?<\/li>\s*)+)/g, '<ul>$1</ul>');
 
   // Paragraphs: double newline → <p>

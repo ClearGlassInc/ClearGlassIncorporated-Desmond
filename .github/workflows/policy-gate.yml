@@ -6,11 +6,11 @@ name: Policy Gate
 # tested, so a broken policy can never ship.
 
 on:
+  # Runs on every PR (no path filter). This workflow is a required status check
+  # in infra/github/rulesets.tf — path-filtering it would let docs-only PRs skip
+  # the gate, so the required check would never report and merges would deadlock.
+  # Conftest runs in seconds, so unconditional execution is cheap.
   pull_request:
-    paths:
-      - ".github/workflows/**"
-      - "infra/**"
-      - "platform/policies/**"
   push:
     branches: ["main"]
   workflow_dispatch:
@@ -23,7 +23,10 @@ env:
 
 jobs:
   opa:
-    name: OPA / Conftest
+    # The check-run name (this job's `name`) is the status context referenced by
+    # the branch ruleset's required_status_checks. It MUST match the value in
+    # infra/github/variables.tf (`Policy Gate`).
+    name: Policy Gate
     runs-on: ubuntu-latest
     steps:
       # Pinned to a full commit SHA — the standard this gate enforces.

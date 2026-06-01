@@ -41,7 +41,8 @@ runs:
         while IFS= read -r -d '' f; do
           size=$(stat -c%s "$f")
           if [ "$size" -gt "$limit" ]; then
-            echo "::warning file=$f::page is $((size/1024))KB (budget ${{ inputs.max-page-kb }}KB)"
+            echo "::error file=$f::page is $((size/1024))KB exceeds budget ${{ inputs.max-page-kb }}KB"
+            fail=1
           fi
         done < <(find "${{ inputs.root }}" -name '*.html' -print0)
         exit $fail

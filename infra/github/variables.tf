@@ -14,6 +14,9 @@ variable "production_repos" {
 variable "required_status_checks" {
   type        = list(string)
   description = "Status check contexts that must pass before merge."
+  # Each entry must exactly match a job `name:` (the emitted check-run context),
+  # not a workflow file/name. "Policy Gate" maps to the job in
+  # .github/workflows/policy-gate.yml.
   default = [
     "Policy Gate",
     "Python Tests",

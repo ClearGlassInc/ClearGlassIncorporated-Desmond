@@ -1,0 +1,76 @@
+name: Content Pipeline
+
+on:
+  workflow_run:
+    workflows: ["Bot Orchestrator"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: content-pipeline
+  cancel-in-progress: false
+
+jobs:
+  validate-and-commit:
+    name: Validate & Commit Generated Content
+    permissions:
+      contents: write
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate content outputs
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          from pathlib import Path
+          ROOT = Path(".")
+          errors = []
+          for fname in ["operations/output/orchestrator_summary.json",
+                        "operations/output/site_health_report.json"]:
+              p = ROOT / fname
+              if p.exists():
+                  try:
+                      json.loads(p.read_text())
+                  except json.JSONDecodeError as e:
+                      errors.append(f"Invalid JSON in {fname}: {e}")
+          if errors:
+              for e in errors:
+                  print(f"ERROR: {e}", file=sys.stderr)
+              sys.exit(1)
+          print(f"Validated {len(list((ROOT / 'operations/output').glob('*.json')))} JSON output files")
+          PY
+
+      - name: Detect content changes
+        id: detect
+        run: |
+          git add marketing/output/ operations/output/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No content changes detected"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            CHANGED_FILES=$(git diff --staged --name-only | head -20 | tr '\n' ' ')
+            echo "files=$CHANGED_FILES" >> "$GITHUB_OUTPUT"
+            echo "Changed files: $CHANGED_FILES"
+          fi
+
+      - name: Commit content updates
+        if: steps.detect.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          TS=$(date -u "+%Y-%m-%d %H:%M UTC")
+          git commit -m "content: auto-update generated outputs — $TS [skip ci]"
+          git push origin HEAD
+          echo "Content committed and pushed"

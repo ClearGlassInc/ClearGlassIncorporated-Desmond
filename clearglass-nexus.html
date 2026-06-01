@@ -21,6 +21,7 @@
   --bdr:rgba(255,176,0,.15);--bdr2:rgba(255,176,0,.08);--bdr3:rgba(255,176,0,.04);
   --card:rgba(0,0,0,.52);--card2:rgba(255,176,0,.03);
   --sh:0 0 28px rgba(0,0,0,.7);
+}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -930,6 +931,10 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 .tick-item-sw  { color:var(--pu); }
 .tick-item-cr  { color:var(--yw); }
 .tick-item-net { color:var(--bl); }
+.tv{font-size:5.5px;letter-spacing:1.5px;color:var(--al);padding:0 14px;border-right:1px solid rgba(255,176,0,.08);white-space:nowrap}
+.tv.hi{color:var(--am)}.tv.al{color:var(--rd)}.tv.gn{color:var(--gn)}.tv.bl{color:var(--bl)}.tv.cy{color:var(--cy)}
+.tsep{font-size:5px;color:rgba(255,176,0,.25);padding:0 2px}
+.env-row{display:flex;justify-content:space-between;padding:2.5px 0;border-bottom:1px solid rgba(255,176,0,.04);font-size:6.5px}
 
 /* ── KP STORM GAUGE ──────────────────────────────────────────────────────── */
 #kp-gauge-wrap {
@@ -2055,7 +2060,7 @@ async function fetchWx(){
     const c=wx.current;
     S.wx.temp=c.temperature_2m;S.wx.feels=c.apparent_temperature;
     S.wx.humidity=c.relative_humidity_2m;S.wx.wind=c.wind_speed_10m;
-    S.wx.precip=c.precipitation;S.wx.code=c.weather_code;
+    S.wx.precip=c.precipitation;S.wx.precipitation=c.precipitation;S.wx.code=c.weather_code;
     const aqc=aq.current;
     S.aq.aqi=aqc.european_aqi;S.aq.pm25=aqc.pm2_5;S.aq.pm10=aqc.pm10;
     S.aq.o3=aqc.ozone;S.aq.no2=aqc.nitrogen_dioxide;
@@ -2500,7 +2505,7 @@ async function fetchSpaceWx(){
       </div>
       <div style="font-size:5.5px;letter-spacing:2px;color:var(--al);margin-bottom:4px">Kp INDEX — LAST 12 READINGS</div>
       <div class="kp-bars">${bars}</div>
-      <div class="kp-lbls"><span>-6h</span><span>-5h</span><span>-4h</span><span>-3h</span><span>-2h</span><span>-1h</span><span>NOW</span></div>
+      <div class="kp-lbls"><span>-11h</span><span>-9h</span><span>-7h</span><span>-5h</span><span>-3h</span><span>-1h</span><span>NOW</span></div>
       <div class="er" style="margin-top:6px"><span class="ek">AURORA FORECAST</span><span class="ev ${kp>=5?'r':kp>=3?'o':'p'}">${kp>=5?'🌌 HIGH ACTIVITY':kp>=3?'🌠 POSSIBLE':'🌑 QUIET'}</span></div>
       <div class="er"><span class="ek">GEOMAGNETIC</span><span class="ev ${kp>=7?'r':kp>=5?'o':'g'}">${kp>=7?'SEVERE STORM (G4)':kp>=5?'STORM (G2)':kp>=3?'UNSETTLED':'QUIET'}</span></div>
       <div class="er"><span class="ek">SOLAR FLUX</span><span class="ev">${flux} SFU — ${flux>150?'VERY HIGH':flux>120?'HIGH':flux>100?'MODERATE':'LOW'}</span></div>`;
@@ -3580,7 +3585,7 @@ async function fetchNews(){
       const date=item.pubDate?new Date(item.pubDate).toLocaleDateString('en-CA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
       const desc=(item.description||'').replace(/<[^>]+>/g,'').slice(0,120).trim();
       return`<div class="ni">
-        <div class="ni-src">${(item.author||d?.feed?.title||k.toUpperCase()).toUpperCase().slice(0,40)}</div>
+        <div class="ni-src">${(item.author||k.toUpperCase()).toUpperCase().slice(0,40)}</div>
         <div class="ni-title" onclick="window.open('${item.link||'#'}','_blank')">${item.title||'No title'}</div>
         ${desc?`<div class="ni-desc">${desc}…</div>`:''}
         <div class="ni-date">${date}</div>

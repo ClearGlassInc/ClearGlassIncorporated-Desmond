@@ -1,0 +1,100 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# TEMPLATE COPY — bundle-local reference.
+#
+# GitHub Actions ONLY runs workflows in the repository-root .github/workflows/
+# directory. The ACTIVE copy of this workflow lives at:
+#
+#     /.github/workflows/api-security-audit.yml   (repo root)
+#
+# This file is kept here so the api-security-audit/ bundle is self-contained
+# and portable. If you extract this bundle into a new repository, move this
+# file to that repo's root .github/workflows/ directory to activate it.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: API Security Audit
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"   # weekly, Monday 03:00 UTC
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: "Target environment base URL (staging/dev only)"
+        required: true
+        default: "https://staging-api.clearglassinc.com"
+      endpoints_file:
+        description: "Path to endpoint definitions JSON"
+        required: false
+        default: "api-security-audit/tests/endpoints_example.json"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  api-security-audit:
+    name: Defensive Authorization Audit
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate target is not production
+        run: |
+          TARGET="${{ github.event.inputs.target_env || 'https://staging-api.clearglassinc.com' }}"
+          if echo "$TARGET" | grep -qiE "(prod|production)"; then
+            echo "::error::Refusing to audit a production target. Use staging or dev."
+            exit 1
+          fi
+          echo "TARGET_URL=$TARGET" >> $GITHUB_ENV
+
+      - name: Run API Security Scanner
+        env:
+          AUDIT_VALID_TOKEN: ${{ secrets.AUDIT_VALID_TOKEN }}
+          AUDIT_LOW_PRIV_TOKEN: ${{ secrets.AUDIT_LOW_PRIV_TOKEN }}
+          AUDIT_OTHER_USER_ID: ${{ secrets.AUDIT_OTHER_USER_ID }}
+        run: |
+          python api-security-audit/scanner/audit_scan.py \
+            --base-url "$TARGET_URL" \
+            --endpoints "${{ github.event.inputs.endpoints_file || 'api-security-audit/tests/endpoints_example.json' }}" \
+            --valid-token "$AUDIT_VALID_TOKEN" \
+            --low-priv-token "$AUDIT_LOW_PRIV_TOKEN" \
+            --other-user-id "$AUDIT_OTHER_USER_ID" \
+            --output-dir audit-reports \
+            --timeout 12
+        continue-on-error: true
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-audit-report-${{ github.run_id }}
+          path: audit-reports/api_audit_*
+          retention-days: 90
+
+      - name: Parse results and set job summary
+        id: parse
+        run: |
+          REPORT=$(ls audit-reports/api_audit_*.json | head -1)
+          FAILURES=$(python3 -c "import json; print(json.load(open('$REPORT'))['summary']['failed'])")
+          RISK=$(python3 -c "import json; print(json.load(open('$REPORT'))['summary']['risk_rating'])")
+          echo "failures=$FAILURES" >> $GITHUB_OUTPUT
+          echo "risk=$RISK" >> $GITHUB_OUTPUT
+          {
+            echo "## API Security Audit — ${{ env.TARGET_URL }}"
+            echo ""
+            echo "- Failures: **$FAILURES**"
+            echo "- Risk rating: **$RISK**"
+          } >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail the job if audit found failures
+        if: steps.parse.outputs.failures != '0'
+        run: |
+          echo "::error::API security audit found ${{ steps.parse.outputs.failures }} failure(s). Risk: ${{ steps.parse.outputs.risk }}"
+          exit 1

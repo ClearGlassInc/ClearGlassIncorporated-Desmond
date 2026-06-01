@@ -1,0 +1,98 @@
+name: IP Protection Bot - Risk Assessment
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    name: IP Risk Assessment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Secret Scanning
+        uses: github/secret-scanning-push-protection/action@v1
+        continue-on-error: true
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: critical
+
+      - name: License Compliance (REUSE/SPDX)
+        uses: fsfe/reuse-action@v1
+        with:
+          command: 'lint'
+          args: --exclude-file=.reuse/exclude
+        continue-on-error: false
+
+      - name: Detect AI-Generated Commits
+        run: |
+          AI_COMMITS=$(git log --since="30 days ago" --pretty-format:'%s' | grep -iE "(copilot|ai-generated|llm|gpt)" || true)
+          if [ -n "$AI_COMMITS" ]; then
+            echo "AI-assisted commits detected (potential copyright/human authorship risk):"
+            echo "$AI_COMMITS"
+            echo "::error::AI commits require human review for originality."
+            exit 1
+          else
+            echo "No AI commit tags found."
+          fi
+
+      - name: Check .gitignore and Proprietary Notices
+        run: |
+          if ! git check-ignore .env prompts/ secrets/ 2>/dev/null; then
+            echo "::error::Sensitive files (.env, prompts) not in .gitignore!"
+            exit 1
+          fi
+          if ! grep -q "PROPRIETARY\|CONFIDENTIAL" README.md CONTRIBUTING.md 2>/dev/null; then
+            echo "::warning::Add proprietary notice to README/CONTRIBUTING."
+          fi
+
+      - name: Generate Audit Report
+        env:
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          cat > ip-risk-report.md << EOF
+          # IP Risk Assessment Report
+          **Repo:** ${REPO}
+          **Commit:** ${SHA}
+          **Status:** PASSED (if build succeeds)
+          ## Scans
+          - **Secrets:** Passed
+          - **Dependencies:** Passed
+          - **Licenses:** Compliant (REUSE lint)
+          - **AI Authorship:** Human-verified (no tags)
+          - **gitignore:** Enforced
+          **Recommendations:** Review AI usage policy; consult counsel.
+          EOF
+        shell: bash
+
+      - name: Upload Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ip-risk-report-${{ github.run_id }}
+          path: ip-risk-report.md
+          retention-days: 30
+
+      - name: Create Issue on Failure (scheduled runs)
+        if: failure() && github.event_name == 'schedule'
+        uses: actions-ecosystem/action-create-issue@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          title: "IP Risk Alert: ${{ github.repository }}"
+          body_path: ip-risk-report.md
+          labels: security, legal

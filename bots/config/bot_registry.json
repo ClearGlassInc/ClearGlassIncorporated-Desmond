@@ -1,0 +1,105 @@
+{
+  "version": "2.0",
+  "description": "ClearGlass bot registry — source of truth for bot metadata and scheduling",
+  "bots": [
+    {
+      "id": "marketing",
+      "module": "bots.marketing_bot",
+      "group": "content",
+      "schedule": "daily",
+      "description": "Content generation and social media scheduling",
+      "output_dir": "marketing/output",
+      "depends_on": []
+    },
+    {
+      "id": "growth",
+      "module": "bots.artemis_growth_bot",
+      "group": "analytics",
+      "schedule": "daily",
+      "description": "Growth metrics and forecast generation",
+      "output_dir": "marketing/output",
+      "depends_on": []
+    },
+    {
+      "id": "daily_priority",
+      "module": "bots.artemis_daily_priority_bot",
+      "group": "ops",
+      "schedule": "daily",
+      "description": "Daily executive priority briefing",
+      "output_dir": "operations/output",
+      "depends_on": []
+    },
+    {
+      "id": "campaign_reporter",
+      "module": "bots.campaign_reporter",
+      "group": "analytics",
+      "schedule": "daily",
+      "description": "Campaign performance synthesis and reporting",
+      "output_dir": "marketing/output",
+      "depends_on": ["marketing"]
+    },
+    {
+      "id": "sales",
+      "module": "bots.guardian_artemis_sales_bot",
+      "group": "content",
+      "schedule": "daily",
+      "description": "Audience-tuned sales narratives for investors, enterprise, and government",
+      "output_dir": "marketing/output/sales_guardian_artemis",
+      "depends_on": ["growth"]
+    },
+    {
+      "id": "operations",
+      "module": "bots.operations_finance_bot",
+      "group": "ops",
+      "schedule": "daily",
+      "description": "Operations and finance aggregation",
+      "output_dir": "operations/output",
+      "depends_on": ["daily_priority"]
+    },
+    {
+      "id": "site_health",
+      "module": "bots.site_health_bot",
+      "group": "monitoring",
+      "schedule": "daily",
+      "description": "Live site availability and SEO structure checks",
+      "output_dir": "operations/output",
+      "depends_on": []
+    },
+    {
+      "id": "seo_optimizer",
+      "module": "bots.seo_optimizer_bot",
+      "group": "seo",
+      "schedule": "weekly",
+      "description": "On-page SEO audit across all HTML files",
+      "output_dir": "operations/output",
+      "depends_on": []
+    },
+    {
+      "id": "release_notes",
+      "module": "bots.release_notes_bot",
+      "group": "ops",
+      "schedule": "weekly",
+      "description": "Structured release notes generated from git history",
+      "output_dir": "operations/output",
+      "depends_on": []
+    },
+    {
+      "id": "alert_dispatcher",
+      "module": "bots.alert_dispatcher_bot",
+      "group": "monitoring",
+      "schedule": "daily",
+      "description": "Reads bot outputs for failures and creates GitHub Issues for critical alerts",
+      "output_dir": "operations/output",
+      "depends_on": ["site_health", "growth", "operations"]
+    },
+    {
+      "id": "master_orchestrator",
+      "module": "bots.master_orchestrator",
+      "group": "orchestration",
+      "schedule": "daily",
+      "description": "Coordinates all bots with dependency ordering and parallel execution",
+      "output_dir": "operations/output",
+      "depends_on": []
+    }
+  ]
+}

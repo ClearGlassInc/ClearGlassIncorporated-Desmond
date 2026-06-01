@@ -19,7 +19,7 @@ jobs:
     name: IP Risk Assessment
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -41,7 +41,7 @@ jobs:
 
       - name: Detect AI-Generated Commits
         run: |
-          AI_COMMITS=$(git log --since="30 days ago" --pretty-format:'%s' | grep -iE "(copilot|ai-generated|llm|gpt)" || true)
+          AI_COMMITS=$(git log --since="30 days ago" --pretty=format:'%s' | grep -iE "(copilot|ai-generated|llm|gpt)" || true)
           if [ -n "$AI_COMMITS" ]; then
             echo "AI-assisted commits detected (potential copyright/human authorship risk):"
             echo "$AI_COMMITS"

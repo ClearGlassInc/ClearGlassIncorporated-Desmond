@@ -1,0 +1,50 @@
+name: Policy Gate
+
+# Policy-as-code gate. Replaces scattered grep-checks with one tested OPA/Rego
+# bundle (platform/policies). `deny` rules block the merge; `warn` rules are
+# advisory and surfaced in the job summary. The policy bundle is itself unit
+# tested, so a broken policy can never ship.
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "infra/**"
+      - "platform/policies/**"
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CONFTEST_VERSION: "0.56.0"
+
+jobs:
+  opa:
+    name: OPA / Conftest
+    runs-on: ubuntu-latest
+    steps:
+      # Pinned to a full commit SHA — the standard this gate enforces.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install Conftest
+        run: |
+          set -euo pipefail
+          curl -sSfL \
+            "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz" \
+            | tar -xz conftest
+          sudo install -m 0755 conftest /usr/local/bin/conftest
+          conftest --version
+
+      - name: Verify policy unit tests
+        run: conftest verify --policy platform/policies
+
+      - name: Evaluate workflows & IaC (deny = block, warn = advisory)
+        run: |
+          conftest test \
+            .github/workflows/*.yml \
+            infra/github/*.tf \
+            --policy platform/policies \
+            --output github

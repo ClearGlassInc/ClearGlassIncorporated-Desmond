@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta property="og:title" content="Artemis IV | ClearGlass Inc">
+  <meta property="og:description" content="Artemis IV autonomously synthesizes, runs, and refines software tests.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://clearglassinc.github.io/artemis-iv.html">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>CLEARGLASS INC · ARTEMIS IV · TACTICAL INTELLIGENCE CORE</title>
@@ -72,7 +76,7 @@
     }
     #nav-strip {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      grid-template-columns: repeat(8, 1fr);
       gap: 8px;
       padding: 12px;
       background: rgba(255,255,255,.56);
@@ -317,6 +321,130 @@
 
     .map-wrap{position:relative}
     .map-tooltip{position:absolute;pointer-events:none;background:rgba(255,255,255,.96);border:1px solid var(--line-strong);border-radius:10px;padding:8px 10px;font-family:var(--mono);font-size:.68rem;max-width:260px;display:none;z-index:5}
+
+    /* ── CAMERAS PANEL (scoped) ──────────────────────────────────── */
+    #panel-cameras .cam-strip{display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;font-family:var(--mono);font-size:.7rem;color:var(--muted);flex-wrap:wrap;letter-spacing:.04em}
+    #panel-cameras .cam-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+    #panel-cameras .cam-dot.live{background:var(--green);box-shadow:0 0 6px rgba(92,140,114,.55);animation:pulse 2s infinite}
+    #panel-cameras .cam-dot.warn{background:#d6a64a;animation:pulse 1.5s infinite}
+    #panel-cameras .cam-dot.err{background:var(--red)}
+    #panel-cameras .cam-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:10px}
+    #panel-cameras .cam-stat{background:rgba(255,255,255,.62);border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.85)}
+    #panel-cameras .cs-lbl{font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.12em}
+    #panel-cameras .cs-val{font-size:1.2rem;font-weight:650;margin-top:2px;color:var(--txt);font-family:var(--mono)}
+    #panel-cameras .cs-val.gn{color:var(--green)}
+    #panel-cameras .cs-val.rd{color:var(--red)}
+    #panel-cameras .cs-val.am{color:#b08a3d}
+    #panel-cameras .cs-sub{font-family:var(--mono);font-size:.54rem;color:var(--muted);letter-spacing:.1em;margin-top:2px}
+    #panel-cameras .cam-ctrl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+    #panel-cameras .cam-fbtn,#panel-cameras .cam-lbtn{border:1px solid var(--line);background:rgba(255,255,255,.66);color:var(--muted);border-radius:999px;padding:5px 11px;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;cursor:pointer}
+    #panel-cameras .cam-fbtn:hover,#panel-cameras .cam-lbtn:hover{border-color:var(--line-strong);color:var(--txt)}
+    #panel-cameras .cam-fbtn.active,#panel-cameras .cam-lbtn.active{border-color:var(--line-strong);color:var(--txt);background:rgba(255,255,255,.92)}
+    #panel-cameras .cam-search{flex:1;min-width:140px;max-width:240px;border:1px solid var(--line);background:rgba(255,255,255,.78);border-radius:10px;padding:6px 10px;font-family:var(--mono);font-size:.7rem;color:var(--txt);outline:none}
+    #panel-cameras .cam-search:focus{border-color:var(--line-strong)}
+    #panel-cameras .cam-refresh{margin-left:auto;border:1px solid var(--line-strong);background:rgba(255,255,255,.84);color:var(--txt);border-radius:10px;padding:6px 12px;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;cursor:pointer}
+    #panel-cameras .cam-refresh:hover{background:rgba(255,255,255,.96)}
+    #panel-cameras .cam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+    #panel-cameras .cam-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    #panel-cameras .cam-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    #panel-cameras .cam-grid.cols-4{grid-template-columns:repeat(4,1fr)}
+    #panel-cameras .cam-grid.cols-5{grid-template-columns:repeat(5,1fr)}
+    #panel-cameras .cam-card{background:rgba(255,255,255,.66);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .2s ease,box-shadow .2s ease;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,.85)}
+    #panel-cameras .cam-card:hover{border-color:var(--line-strong);box-shadow:0 12px 24px rgba(158,174,194,.18)}
+    #panel-cameras .cam-card.online{border-color:rgba(92,140,114,.4)}
+    #panel-cameras .cam-card.error{border-color:rgba(184,116,116,.4)}
+    #panel-cameras .cam-head{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:5px 9px;background:rgba(255,255,255,.62);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em}
+    #panel-cameras .cam-road{font-weight:700;padding:1px 7px;border-radius:6px;font-size:.55rem;border:1px solid var(--line);background:rgba(255,255,255,.66)}
+    #panel-cameras .cam-road.QEW{color:var(--green);border-color:rgba(92,140,114,.45)}
+    #panel-cameras .cam-road.SKY{color:#b08a3d;border-color:rgba(214,166,74,.5)}
+    #panel-cameras .cam-road.R403{color:#4d7baa;border-color:rgba(77,123,170,.45)}
+    #panel-cameras .cam-sdot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+    #panel-cameras .cam-sdot.gn{background:var(--green);box-shadow:0 0 4px rgba(92,140,114,.55)}
+    #panel-cameras .cam-sdot.rd{background:var(--red)}
+    #panel-cameras .cam-sdot.ld{background:#d6a64a;animation:pulse 1.5s infinite}
+    #panel-cameras .cam-imgwrap{position:relative;aspect-ratio:4/3;background:linear-gradient(180deg,rgba(239,245,250,.85),rgba(225,232,242,.85));overflow:hidden}
+    #panel-cameras .cam-img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .35s ease}
+    #panel-cameras .cam-img.loaded{opacity:1}
+    #panel-cameras .cam-img.errimg{opacity:.12;filter:grayscale(1)}
+    #panel-cameras .cam-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-family:var(--mono);font-size:.6rem;color:var(--muted);letter-spacing:.1em;pointer-events:none}
+    #panel-cameras .cam-spin{width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:camspin .8s linear infinite}
+    @keyframes camspin{to{transform:rotate(360deg)}}
+    #panel-cameras .cam-err{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:rgba(255,255,255,.86);font-family:var(--mono);font-size:.58rem;color:var(--red);text-align:center;letter-spacing:.08em;padding:6px}
+    #panel-cameras .cam-err.show{display:flex}
+    #panel-cameras .cam-retry{border:1px solid rgba(184,116,116,.45);color:var(--red);background:rgba(255,255,255,.84);border-radius:8px;font-family:var(--mono);font-size:.58rem;padding:3px 10px;cursor:pointer;margin-top:4px}
+    #panel-cameras .cam-retry:hover{background:rgba(255,240,240,.92)}
+    #panel-cameras .cam-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:5px 9px;border-top:1px solid var(--line);font-family:var(--mono);font-size:.6rem;color:var(--txt)}
+    #panel-cameras .cam-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    #panel-cameras .cam-ts{color:var(--muted);font-size:.55rem}
+    #panel-cameras .cam-zoom{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:6px;font-family:var(--mono);font-size:.58rem;padding:2px 7px;cursor:pointer;color:var(--muted)}
+    #panel-cameras .cam-zoom:hover{color:var(--txt);border-color:var(--line-strong)}
+    #panel-cameras .cam-empty{grid-column:1/-1;padding:24px;border:1px dashed var(--line-strong);border-radius:12px;text-align:center;font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.1em;background:rgba(255,255,255,.5)}
+    #panel-cameras .cam-matrix{margin-top:12px;padding:10px;background:rgba(255,255,255,.5);border:1px solid var(--line);border-radius:12px}
+    #panel-cameras .cam-matrix-hdr{font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.14em;margin-bottom:8px}
+    #panel-cameras .cam-matrix-grid{display:flex;flex-wrap:wrap;gap:3px}
+    #panel-cameras .cam-matrix-cell{width:12px;height:12px;border-radius:3px;background:var(--line);cursor:pointer;transition:transform .15s ease,background .3s ease;border:1px solid rgba(255,255,255,.5)}
+    #panel-cameras .cam-matrix-cell:hover{transform:scale(1.5);z-index:5}
+    #panel-cameras .cam-matrix-cell.gn{background:var(--green)}
+    #panel-cameras .cam-matrix-cell.rd{background:var(--red)}
+    #panel-cameras .cam-matrix-cell.ld{background:#d6a64a}
+    #panel-cameras .cam-matrix-legend{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap;font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em}
+    #panel-cameras .cam-matrix-legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:middle}
+    #panel-cameras .cam-matrix-legend i.gn{background:var(--green)}
+    #panel-cameras .cam-matrix-legend i.rd{background:var(--red)}
+    #panel-cameras .cam-matrix-legend i.ld{background:#d6a64a}
+    #panel-cameras .cam-matrix-legend i.dk{background:var(--line)}
+    #panel-cameras .cam-detail{display:none;margin-top:12px;background:rgba(255,255,255,.66);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.85)}
+    #panel-cameras .cam-detail.open{display:block}
+    #panel-cameras .cd-head{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:rgba(255,255,255,.7);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.72rem;color:var(--txt);letter-spacing:.08em}
+    #panel-cameras .cd-body{display:grid;grid-template-columns:220px 1fr;gap:14px;padding:12px}
+    #panel-cameras .cd-img{width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.06)}
+    #panel-cameras .cd-rows{font-family:var(--mono);font-size:.72rem}
+    #panel-cameras .cd-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--line)}
+    #panel-cameras .cd-row:last-child{border-bottom:0}
+    #panel-cameras .cd-k{color:var(--muted);letter-spacing:.08em}
+    #panel-cameras .cd-v{color:var(--txt)}
+    #panel-cameras .cd-v.gn{color:var(--green)}
+    #panel-cameras .cd-v.rd{color:var(--red)}
+    #panel-cameras .cd-link{color:#4d7baa;text-decoration:none;border-bottom:1px solid var(--line);font-size:.7rem}
+    #panel-cameras .cd-link:hover{color:var(--txt);border-color:var(--line-strong)}
+
+    /* fullscreen camera viewer */
+    #cam-fs{position:fixed;inset:0;background:rgba(20,28,40,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9000;display:none;flex-direction:column}
+    #cam-fs.open{display:flex}
+    #cam-fs .fs-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);font-family:var(--mono);flex-wrap:wrap;gap:8px}
+    #cam-fs .fs-meta{display:flex;gap:12px;align-items:center;font-size:.82rem;color:var(--txt);flex-wrap:wrap}
+    #cam-fs .fs-id{color:var(--muted);font-size:.66rem;letter-spacing:.12em}
+    #cam-fs .fs-road{font-size:.62rem;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);letter-spacing:.1em}
+    #cam-fs .fs-nav{display:flex;gap:8px;align-items:center;font-size:.66rem;color:var(--muted);flex-wrap:wrap}
+    #cam-fs .fs-btn{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:10px;font-family:var(--mono);font-size:.66rem;padding:5px 12px;color:var(--txt);cursor:pointer;letter-spacing:.06em}
+    #cam-fs .fs-btn:hover{background:rgba(255,255,255,.96);border-color:var(--line-strong)}
+    #cam-fs .fs-close{border-color:rgba(184,116,116,.5);color:var(--red);background:rgba(255,245,245,.86)}
+    #cam-fs .fs-body{flex:1;display:grid;grid-template-columns:1fr 280px;overflow:hidden;background:rgba(8,12,18,.92)}
+    #cam-fs .fs-img{width:100%;height:100%;object-fit:contain;background:rgba(8,12,18,.92)}
+    #cam-fs .fs-side{background:rgba(255,255,255,.94);border-left:1px solid var(--line);padding:14px;overflow-y:auto;font-family:var(--mono);font-size:.7rem;color:var(--txt)}
+    #cam-fs .fs-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--line);gap:6px}
+    #cam-fs .fs-k{color:var(--muted);letter-spacing:.08em}
+    #cam-fs .fs-v{color:var(--txt);text-align:right}
+    #cam-fs .fs-v.gn{color:var(--green)}
+    #cam-fs .fs-v.rd{color:var(--red)}
+    #cam-fs .fs-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+    #cam-fs .fs-thumb{aspect-ratio:4/3;background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:6px;cursor:pointer;overflow:hidden}
+    #cam-fs .fs-thumb img{width:100%;height:100%;object-fit:cover;opacity:.78;transition:opacity .2s}
+    #cam-fs .fs-thumb:hover img,#cam-fs .fs-thumb.active img{opacity:1}
+    #cam-fs .fs-thumb.active{border-color:var(--line-strong)}
+    #cam-fs .fs-foot{padding:10px 18px;background:rgba(255,255,255,.92);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.08em;flex-wrap:wrap;gap:6px}
+
+    @media (max-width: 1100px){
+      #panel-cameras .cam-stats{grid-template-columns:repeat(3,1fr)}
+      #panel-cameras .cam-grid.cols-4,#panel-cameras .cam-grid.cols-5{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width: 800px){
+      #panel-cameras .cam-stats{grid-template-columns:repeat(2,1fr)}
+      #panel-cameras .cam-grid,#panel-cameras .cam-grid.cols-3,#panel-cameras .cam-grid.cols-4,#panel-cameras .cam-grid.cols-5{grid-template-columns:repeat(2,1fr)}
+      #panel-cameras .cd-body{grid-template-columns:1fr}
+      #cam-fs .fs-body{grid-template-columns:1fr}
+      #cam-fs .fs-side{display:none}
+    }
 </style>
 </head>
 <body>
@@ -361,6 +489,7 @@
     <div class="nav-icon" data-tab="guardian">◍</div>
     <div class="nav-icon" data-tab="mission">◐</div>
     <div class="nav-icon" data-tab="nexus">◈</div>
+    <div class="nav-icon" data-tab="cameras">▣</div>
   </div>
 
   <div id="intel-sidebar">
@@ -388,6 +517,7 @@
     <div class="tab" data-tab="guardian">GUARDIAN</div>
     <div class="tab" data-tab="mission">MISSION LOG</div>
     <div class="tab" data-tab="nexus">NEXUS OPS</div>
+    <div class="tab" data-tab="cameras">CAMERAS</div>
   </div>
 
   <div id="content-main">
@@ -455,6 +585,111 @@
         <button id="execAiCmd" class="cmd-btn">EXECUTE</button>
         <div id="aiResponse" class="ai-response"></div>
       </div>
+    </div>
+
+    <div class="panel" id="panel-cameras">
+      <div class="cam-strip">
+        <span class="cam-dot" id="camStripDot"></span>
+        <span style="color:var(--txt);font-weight:600;letter-spacing:.08em">CAMERA NETWORK</span>
+        <span>·</span>
+        <span id="camStripStatus">INITIALIZING…</span>
+        <span style="margin-left:auto;color:var(--txt)" id="camStripCount">0 / 45 ONLINE</span>
+        <span>·</span>
+        <span id="camStripRefresh">CAM REFRESH IN 01:30</span>
+      </div>
+
+      <div class="cam-stats">
+        <div class="cam-stat"><div class="cs-lbl">CAMERAS</div><div class="cs-val" id="camStatTotal">45</div><div class="cs-sub">IN DATABASE</div></div>
+        <div class="cam-stat"><div class="cs-lbl">ONLINE</div><div class="cs-val gn" id="camStatOnline">—</div><div class="cs-sub">LIVE FEEDS</div></div>
+        <div class="cam-stat"><div class="cs-lbl">LOADING</div><div class="cs-val am" id="camStatLoading">45</div><div class="cs-sub">CONNECTING</div></div>
+        <div class="cam-stat"><div class="cs-lbl">ERRORS</div><div class="cs-val rd" id="camStatErrors">—</div><div class="cs-sub">UNAVAILABLE</div></div>
+        <div class="cam-stat"><div class="cs-lbl">SHOWING</div><div class="cs-val" id="camStatShown">45</div><div class="cs-sub">DISPLAYED</div></div>
+        <div class="cam-stat"><div class="cs-lbl">LAST REFRESH</div><div class="cs-val" id="camStatLast" style="font-size:.9rem;margin-top:6px">—</div><div class="cs-sub">LOCAL TIME</div></div>
+      </div>
+
+      <div class="cam-ctrl">
+        <span style="font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em">FILTER:</span>
+        <button class="cam-fbtn active" data-camfilter="all">ALL <span id="camCntAll"></span></button>
+        <button class="cam-fbtn" data-camfilter="QEW">QEW <span id="camCntQew"></span></button>
+        <button class="cam-fbtn" data-camfilter="SKYWAY">SKYWAY <span id="camCntSky"></span></button>
+        <button class="cam-fbtn" data-camfilter="403">HWY 403 <span id="camCnt403"></span></button>
+        <button class="cam-fbtn" data-camfilter="near6">NEAREST 6</button>
+        <button class="cam-fbtn" data-camfilter="online">ONLINE ONLY</button>
+        <span style="font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em;margin-left:8px">LAYOUT:</span>
+        <button class="cam-lbtn" data-camcols="3">▦</button>
+        <button class="cam-lbtn active" data-camcols="4">▦▦</button>
+        <button class="cam-lbtn" data-camcols="5">▦▦▦</button>
+        <button class="cam-lbtn" data-camcols="2">▣</button>
+        <input class="cam-search" id="camSearch" type="text" placeholder="search cameras…" autocomplete="off">
+        <button class="cam-refresh" id="camRefreshBtn">↻ REFRESH ALL</button>
+      </div>
+
+      <div class="cam-grid cols-4" id="camGrid"></div>
+
+      <div class="cam-matrix">
+        <div class="cam-matrix-hdr">FEED HEALTH MATRIX · ALL 45 CAMERAS</div>
+        <div class="cam-matrix-grid" id="camMatrixCells"></div>
+        <div class="cam-matrix-legend">
+          <span><i class="gn"></i>ONLINE</span>
+          <span><i class="rd"></i>ERROR</span>
+          <span><i class="ld"></i>LOADING</span>
+          <span><i class="dk"></i>QUEUED</span>
+        </div>
+      </div>
+
+      <div class="cam-detail" id="camDetail">
+        <div class="cd-head">
+          <span id="camDetailTitle">CAMERA DETAIL</span>
+          <button class="cmd-btn" id="camDetailClose">CLOSE</button>
+        </div>
+        <div class="cd-body">
+          <img class="cd-img" id="camDetailImg" src="" alt="">
+          <div class="cd-rows">
+            <div class="cd-row"><span class="cd-k">FEED ID</span><span class="cd-v" id="camDetailFid">—</span></div>
+            <div class="cd-row"><span class="cd-k">LOCATION</span><span class="cd-v" id="camDetailLoc">—</span></div>
+            <div class="cd-row"><span class="cd-k">ROAD</span><span class="cd-v" id="camDetailRoad">—</span></div>
+            <div class="cd-row"><span class="cd-k">COORDINATES</span><span class="cd-v" id="camDetailCoords">—</span></div>
+            <div class="cd-row"><span class="cd-k">DISTANCE</span><span class="cd-v" id="camDetailDist">—</span></div>
+            <div class="cd-row"><span class="cd-k">STATUS</span><span class="cd-v" id="camDetailStatus">—</span></div>
+            <div class="cd-row"><span class="cd-k">LOADED AT</span><span class="cd-v" id="camDetailLoaded">—</span></div>
+            <div class="cd-row"><span class="cd-k">RETRIES</span><span class="cd-v" id="camDetailRetries">—</span></div>
+            <div class="cd-row"><span class="cd-k">NETWORK</span><span class="cd-v">MTO COMPASS</span></div>
+            <div class="cd-row"><span class="cd-k">SOURCE</span><span class="cd-v">navbug.com</span></div>
+            <div class="cd-row"><span class="cd-k">DIRECT LINK</span><span class="cd-v"><a class="cd-link" id="camDetailLink" href="#" target="_blank" rel="noopener">OPEN ↗</a></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="cam-fs">
+    <div class="fs-hdr">
+      <div class="fs-meta">
+        <span class="fs-id" id="camFsId">ON—</span>
+        <span id="camFsName">CAMERA</span>
+        <span class="fs-road" id="camFsRoad">—</span>
+        <span class="fs-id" id="camFsCoords">—</span>
+      </div>
+      <div class="fs-nav">
+        <button class="fs-btn" id="camFsPrev">◀ PREV</button>
+        <span id="camFsPos">1 / 45</span>
+        <button class="fs-btn" id="camFsNext">NEXT ▶</button>
+        <button class="fs-btn" id="camFsRefresh">↻ REFRESH</button>
+        <button class="fs-btn fs-close" id="camFsClose">✕ CLOSE</button>
+      </div>
+    </div>
+    <div class="fs-body">
+      <img class="fs-img" id="camFsImg" src="" alt="">
+      <div class="fs-side">
+        <div style="font-family:var(--mono);font-size:.66rem;color:var(--muted);letter-spacing:.12em;margin-bottom:8px">CAMERA DETAILS</div>
+        <div id="camFsInfo"></div>
+        <div style="font-family:var(--mono);font-size:.66rem;color:var(--muted);letter-spacing:.12em;margin:10px 0 6px">NEARBY CAMERAS</div>
+        <div class="fs-thumbs" id="camFsThumbs"></div>
+      </div>
+    </div>
+    <div class="fs-foot">
+      <span id="camFsTs">LAST UPDATED: —</span>
+      <span id="camFsAuto">AUTO-REFRESH: 90s</span>
     </div>
   </div>
 
@@ -558,6 +793,7 @@
     if (tab === 'quantum') startQuantumCanvas();
     if (tab === 'intel')   ensureIntelPanel();
     if (tab === 'mission') renderMission();
+    if (tab === 'cameras') ensureCamerasPanel();
   }
   [...tabs, ...icons].forEach(el => el.addEventListener('click', () => {
     const t = el.dataset.tab;
@@ -565,10 +801,10 @@
     logMission('system', `Switched to ${t.toUpperCase()} panel`);
   }));
 
-  // 1-7 keyboard shortcuts
+  // 1-8 keyboard shortcuts
   document.addEventListener('keydown', (e) => {
     if (e.target.matches('input,textarea')) return;
-    const map = ['dashboard','threat','intel','quantum','guardian','mission','nexus'];
+    const map = ['dashboard','threat','intel','quantum','guardian','mission','nexus','cameras'];
     const idx = parseInt(e.key, 10) - 1;
     if (!isNaN(idx) && map[idx]) activate(map[idx]);
   });
@@ -1037,6 +1273,525 @@
     clearTimeout(toast._t);
     toast._t = setTimeout(() => toastEl.classList.remove('show'), 2200);
   }
+
+  // ── CRUCIX Markets (defensive no-op until grid + data are mounted) ──
+  function renderCXMarkets(){
+    try{
+      var g=document.getElementById('cxMarketsGrid');if(!g)return;
+      if(!CX.marketData||!Object.keys(CX.marketData).length)return;
+    }catch(e){}
+  }
+  window.renderCXMarkets = renderCXMarkets;
+
+  // ──────────────────────────────────────────────────────────────
+  // CAMERAS MODULE — Ontario MTO COMPASS Network · navbug.com feed
+  // 45 verified Burlington-area cameras (QEW / Skyway / Hwy 403)
+  // ──────────────────────────────────────────────────────────────
+  const CAM_DB = [
+    // QEW
+    {feedId:12490,name:'QEW near Royal Windsor Dr',       road:'QEW',    cls:'QEW',    lat:43.4490,lon:-79.6600,nb:339796},
+    {feedId:12500,name:'QEW near Burloak Drive',          road:'QEW',    cls:'QEW',    lat:43.4280,lon:-79.6770,nb:614454},
+    {feedId:12542,name:'QEW near Centennial Pkwy',        road:'QEW',    cls:'QEW',    lat:43.2455,lon:-79.8295,nb:869765},
+    {feedId:12543,name:'QEW near Grays Road',             road:'QEW',    cls:'QEW',    lat:43.2530,lon:-79.8190,nb:899817},
+    {feedId:12564,name:'QEW near Burlington Street',      road:'QEW',    cls:'QEW',    lat:43.3102,lon:-79.8498,nb:717592},
+    {feedId:12565,name:'QEW near Woodward Avenue',        road:'QEW',    cls:'QEW',    lat:43.3190,lon:-79.8444,nb:496519},
+    {feedId:12566,name:'QEW near Eastport Drive',         road:'QEW',    cls:'QEW',    lat:43.3260,lon:-79.8415,nb:229821},
+    {feedId:12570,name:'QEW South of Highway 2',          road:'QEW',    cls:'QEW',    lat:43.3320,lon:-79.8390,nb:188642},
+    {feedId:12571,name:'QEW North of Highway 2',          road:'QEW',    cls:'QEW',    lat:43.3410,lon:-79.8355,nb:1055149},
+    {feedId:12572,name:'QEW near Fairview Street',        road:'QEW',    cls:'QEW',    lat:43.3520,lon:-79.8290,nb:609825},
+    {feedId:12573,name:'QEW near Hwy 403 Interchange',    road:'QEW',    cls:'QEW',    lat:43.3580,lon:-79.8120,nb:783678},
+    {feedId:12590,name:'QEW btw Cawthra & Dixie Rd',      road:'QEW',    cls:'QEW',    lat:43.5600,lon:-79.5900,nb:442187},
+    {feedId:12591,name:'QEW near Cawthra Road',           road:'QEW',    cls:'QEW',    lat:43.5750,lon:-79.5800,nb:474961},
+    {feedId:12630,name:'QEW btw Hwy 10 & Cawthra',        road:'QEW',    cls:'QEW',    lat:43.5650,lon:-79.5950,nb:491560},
+    {feedId:12639,name:'QEW East of Third Line',          road:'QEW',    cls:'QEW',    lat:43.4660,lon:-79.7050,nb:404849},
+    {feedId:12640,name:'QEW btw Churchill & Erin Mills',  road:'QEW',    cls:'QEW',    lat:43.4750,lon:-79.6950,nb:340926},
+    {feedId:12641,name:'QEW near Winston Churchill Blvd', road:'QEW',    cls:'QEW',    lat:43.4820,lon:-79.6880,nb:390083},
+    {feedId:12642,name:'QEW near Hwy 403 (Oakville)',     road:'QEW',    cls:'QEW',    lat:43.4890,lon:-79.7200,nb:827637},
+    {feedId:12643,name:'QEW near Ford Plant',             road:'QEW',    cls:'QEW',    lat:43.4100,lon:-79.7455,nb:867940},
+    {feedId:12646,name:'QEW near Trafalgar Road',         road:'QEW',    cls:'QEW',    lat:43.4001,lon:-79.7089,nb:1030252},
+    {feedId:12647,name:'QEW East of Dorval Drive',        road:'QEW',    cls:'QEW',    lat:43.4220,lon:-79.6810,nb:810894},
+    {feedId:12648,name:'QEW near Dorval Drive',           road:'QEW',    cls:'QEW',    lat:43.4300,lon:-79.6750,nb:863714},
+    {feedId:12649,name:'QEW near Fourth Line',            road:'QEW',    cls:'QEW',    lat:43.4480,lon:-79.6620,nb:785891},
+    {feedId:12650,name:'QEW near Third Line',             road:'QEW',    cls:'QEW',    lat:43.4570,lon:-79.6520,nb:238312},
+    {feedId:12657,name:'QEW near Erin Mills Pkwy',        road:'QEW',    cls:'QEW',    lat:43.5020,lon:-79.6790,nb:240497},
+    {feedId:12658,name:'QEW btw Bronte & Third Line',     road:'QEW',    cls:'QEW',    lat:43.4610,lon:-79.7280,nb:1004477},
+    {feedId:12659,name:'QEW near Bronte Road',            road:'QEW',    cls:'QEW',    lat:43.4020,lon:-79.7500,nb:200901},
+    {feedId:12660,name:'QEW btw Burloak & Bronte',        road:'QEW',    cls:'QEW',    lat:43.4150,lon:-79.7355,nb:891071},
+    {feedId:12662,name:'QEW btw Appleby & Burloak',       road:'QEW',    cls:'QEW',    lat:43.3900,lon:-79.7420,nb:990058},
+    {feedId:12663,name:'QEW near Appleby Line',           road:'QEW',    cls:'QEW',    lat:43.3798,lon:-79.7533,nb:592332},
+    {feedId:12664,name:'QEW btw Walkers & Appleby',       road:'QEW',    cls:'QEW',    lat:43.3750,lon:-79.7640,nb:891484},
+    {feedId:12665,name:'QEW near Walkers Line',           road:'QEW',    cls:'QEW',    lat:43.3712,lon:-79.7747,nb:580425},
+    // Burlington Skyway
+    {feedId:12567,name:'QEW Skyway – Hamilton End',       road:'SKYWAY', cls:'SKYWAY', lat:43.2998,lon:-79.8520,nb:559545},
+    {feedId:12568,name:'QEW Skyway near Lift Bridge',     road:'SKYWAY', cls:'SKYWAY', lat:43.3055,lon:-79.8480,nb:1008264},
+    {feedId:12569,name:'QEW Skyway near Top',             road:'SKYWAY', cls:'SKYWAY', lat:43.3110,lon:-79.8460,nb:262687},
+    // Hwy 403
+    {feedId:12574,name:'Hwy 403 west of King Road',       road:'403',    cls:'403',    lat:43.3200,lon:-79.8600,nb:988917},
+    {feedId:12575,name:'Hwy 403 near King Road',          road:'403',    cls:'403',    lat:43.3250,lon:-79.8560,nb:493555},
+    {feedId:12576,name:'Hwy 403 near Dundas St',          road:'403',    cls:'403',    lat:43.3380,lon:-79.8480,nb:401020},
+    {feedId:12577,name:'Hwy 403 near Burnhamthorpe Rd',   road:'403',    cls:'403',    lat:43.5720,lon:-79.6980,nb:424435},
+    {feedId:12578,name:'Hwy 403 near 401/407 Split',      road:'403',    cls:'403',    lat:43.5500,lon:-79.6700,nb:819118},
+    {feedId:12579,name:'Hwy 403 near Winston Churchill',  road:'403',    cls:'403',    lat:43.5650,lon:-79.7160,nb:722287},
+    {feedId:12581,name:'Hwy 403 near Glen Erin Dr',       road:'403',    cls:'403',    lat:43.5850,lon:-79.7310,nb:1003546},
+    {feedId:12585,name:'Hwy 403 near Mavis Road',         road:'403',    cls:'403',    lat:43.5950,lon:-79.7450,nb:737412},
+    {feedId:12586,name:'Hwy 403 near Hwy 10',             road:'403',    cls:'403',    lat:43.6000,lon:-79.7580,nb:684363},
+    {feedId:12631,name:'Hwy 403 near Mississauga Rd',     road:'403',    cls:'403',    lat:43.5480,lon:-79.7750,nb:1071835},
+  ];
+
+  // Operator position (Burlington, ON — anchor for distance calcs)
+  const CAM_HOME = { lat: 43.3255, lon: -79.7990, label: 'Burlington' };
+
+  const CAM_ST = {};
+  CAM_DB.forEach(c => { CAM_ST[c.feedId] = { status:'queued', loadedAt:null, retries:0, dist:0 }; });
+
+  const camP2 = n => String(n).padStart(2, '0');
+  function camImgUrl(c, suffix){
+    const bucket = Math.floor(Date.now() / 90000);
+    return `https://www.navbug.com/traffic-camshots/ON${c.feedId}.jpg?t=${bucket}${suffix ? '&' + suffix : ''}`;
+  }
+  function camDetailUrl(c){ return `https://www.navbug.com/traffic-cam/${c.nb}/feed-${c.feedId}.htm`; }
+  function camRoadTag(cls){ return cls === 'QEW' ? 'QEW' : cls === 'SKYWAY' ? 'SKY' : cls === '403' ? 'R403' : 'GEN'; }
+  function camDist(c){
+    const R = 6371, toRad = d => d * Math.PI / 180;
+    const dLat = toRad(c.lat - CAM_HOME.lat), dLon = toRad(c.lon - CAM_HOME.lon);
+    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(CAM_HOME.lat)) * Math.cos(toRad(c.lat)) * Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+  function camById(id){ return CAM_DB.find(c => c.feedId === id) || null; }
+
+  const CAM = {
+    filterKey: 'all',
+    cols: 4,
+    searchQ: '',
+    shown: [],
+    inited: false,
+
+    calcDistances(){
+      CAM_DB.forEach(c => { CAM_ST[c.feedId].dist = camDist(c); c.dist = CAM_ST[c.feedId].dist; });
+    },
+
+    buildPool(){
+      let pool = [...CAM_DB];
+      const fk = this.filterKey;
+      if (fk === 'near6'){
+        this.calcDistances();
+        pool = [...CAM_DB].sort((a,b) => a.dist - b.dist).slice(0, 6);
+      } else if (fk === 'online'){
+        pool = CAM_DB.filter(c => CAM_ST[c.feedId].status === 'online');
+      } else if (fk !== 'all'){
+        const f = CAM_DB.filter(c => c.cls === fk);
+        pool = f.length ? f : CAM_DB;
+      }
+      const q = this.searchQ.toUpperCase();
+      if (q) pool = pool.filter(c => c.name.toUpperCase().includes(q) || c.road.toUpperCase().includes(q) || c.cls.toUpperCase().includes(q) || String(c.feedId).includes(q));
+      return pool;
+    },
+
+    render(){
+      const grid = $('#camGrid'); if (!grid) return;
+      const pool = this.buildPool();
+      this.shown = pool;
+      grid.className = `cam-grid cols-${this.cols}`;
+      if (!pool.length){
+        grid.innerHTML = '<div class="cam-empty">NO CAMERAS MATCH FILTER · CLEAR SEARCH OR PICK ANOTHER FILTER</div>';
+        $('#camStatShown').textContent = '0';
+        return;
+      }
+      grid.innerHTML = pool.map((c, i) => {
+        const st = CAM_ST[c.feedId];
+        const dotCls = st.status === 'online' ? 'gn' : st.status === 'error' ? 'rd' : 'ld';
+        const cardCls = st.status === 'online' ? ' online' : st.status === 'error' ? ' error' : '';
+        return `<div class="cam-card${cardCls}" data-camid="${c.feedId}">
+          <div class="cam-head">
+            <span>ON${c.feedId}</span>
+            <span class="cam-road ${camRoadTag(c.cls)}">${escapeHtml(c.road)}</span>
+            <span class="cam-sdot ${dotCls}" data-camdot="${c.feedId}"></span>
+          </div>
+          <div class="cam-imgwrap">
+            <img class="cam-img" data-camimg="${c.feedId}" src="${camImgUrl(c)}" alt="${escapeHtml(c.name)}" loading="lazy">
+            <div class="cam-loader" data-camldr="${c.feedId}">
+              <div class="cam-spin"></div>
+              <div>CONNECTING</div>
+              <div style="font-size:.52rem;letter-spacing:.06em;max-width:90%;text-align:center;color:var(--accent)">${escapeHtml(c.name.slice(0, 32))}</div>
+            </div>
+            <div class="cam-err" data-camerr="${c.feedId}">
+              <div style="font-size:1rem">📷</div>
+              <div>FEED UNAVAILABLE</div>
+              <div style="color:var(--muted)">ON${c.feedId}</div>
+              <button class="cam-retry" data-camretry="${c.feedId}">↻ RETRY</button>
+            </div>
+          </div>
+          <div class="cam-foot">
+            <span class="cam-name">${escapeHtml(c.name)}</span>
+            <span class="cam-ts" data-camts="${c.feedId}">—</span>
+            <span class="cam-zoom" data-camzoom="${c.feedId}">⛶</span>
+          </div>
+        </div>`;
+      }).join('');
+      // Restore visual state for already-known cameras
+      pool.forEach(c => {
+        const st = CAM_ST[c.feedId];
+        if (st.status === 'online') this._restoreOnline(c.feedId);
+        else if (st.status === 'error') this._restoreError(c.feedId);
+      });
+      $('#camStatShown').textContent = pool.length;
+      this.updateStats();
+    },
+
+    _imgLoaded(feedId){
+      const st = CAM_ST[feedId]; if (!st) return;
+      st.status = 'online';
+      st.loadedAt = Date.now();
+      this._restoreOnline(feedId);
+      this.updateStats();
+      $('#camStatLast').textContent = camP2(new Date().getHours()) + ':' + camP2(new Date().getMinutes());
+    },
+
+    _imgFailed(feedId){
+      const st = CAM_ST[feedId]; if (!st) return;
+      st.status = 'error';
+      this._restoreError(feedId);
+      this.updateStats();
+    },
+
+    _restoreOnline(feedId){
+      const img = document.querySelector(`[data-camimg="${feedId}"]`);
+      const ldr = document.querySelector(`[data-camldr="${feedId}"]`);
+      const err = document.querySelector(`[data-camerr="${feedId}"]`);
+      const dot = document.querySelector(`[data-camdot="${feedId}"]`);
+      const ts  = document.querySelector(`[data-camts="${feedId}"]`);
+      const card = document.querySelector(`[data-camid="${feedId}"]`);
+      if (img) { img.classList.add('loaded'); img.classList.remove('errimg'); }
+      if (ldr) ldr.style.display = 'none';
+      if (err) err.classList.remove('show');
+      if (dot) dot.className = 'cam-sdot gn';
+      if (card){ card.classList.add('online'); card.classList.remove('error'); }
+      if (ts){
+        const d = new Date();
+        ts.textContent = camP2(d.getHours()) + ':' + camP2(d.getMinutes()) + ':' + camP2(d.getSeconds());
+      }
+    },
+
+    _restoreError(feedId){
+      const img = document.querySelector(`[data-camimg="${feedId}"]`);
+      const ldr = document.querySelector(`[data-camldr="${feedId}"]`);
+      const err = document.querySelector(`[data-camerr="${feedId}"]`);
+      const dot = document.querySelector(`[data-camdot="${feedId}"]`);
+      const card = document.querySelector(`[data-camid="${feedId}"]`);
+      if (img) { img.classList.remove('loaded'); img.classList.add('errimg'); }
+      if (ldr) ldr.style.display = 'none';
+      if (err) err.classList.add('show');
+      if (dot) dot.className = 'cam-sdot rd';
+      if (card){ card.classList.add('error'); card.classList.remove('online'); }
+    },
+
+    retry(feedId){
+      const c = camById(feedId); if (!c) return;
+      const st = CAM_ST[feedId]; st.retries++; st.status = 'loading';
+      const img = document.querySelector(`[data-camimg="${feedId}"]`);
+      const ldr = document.querySelector(`[data-camldr="${feedId}"]`);
+      const err = document.querySelector(`[data-camerr="${feedId}"]`);
+      const dot = document.querySelector(`[data-camdot="${feedId}"]`);
+      if (img){ img.classList.remove('loaded', 'errimg'); img.src = camImgUrl(c, 'r=' + st.retries); }
+      if (ldr) ldr.style.display = 'flex';
+      if (err) err.classList.remove('show');
+      if (dot) dot.className = 'cam-sdot ld';
+      this.updateStats();
+    },
+
+    refreshAll(){
+      const btn = $('#camRefreshBtn');
+      if (btn){ btn.textContent = '↻ REFRESHING…'; btn.disabled = true; }
+      CAM_DB.forEach(c => {
+        const img = document.querySelector(`[data-camimg="${c.feedId}"]`);
+        if (img){
+          CAM_ST[c.feedId].status = 'loading';
+          const ldr = document.querySelector(`[data-camldr="${c.feedId}"]`);
+          const err = document.querySelector(`[data-camerr="${c.feedId}"]`);
+          const dot = document.querySelector(`[data-camdot="${c.feedId}"]`);
+          if (ldr) ldr.style.display = 'flex';
+          if (err) err.classList.remove('show');
+          if (dot) dot.className = 'cam-sdot ld';
+          img.classList.remove('loaded');
+          const delay = Math.random() * 3000;
+          setTimeout(() => { img.src = camImgUrl(c, 'rf=' + Date.now()); }, delay);
+        }
+      });
+      logMission('system', 'Camera network manual refresh dispatched');
+      setTimeout(() => {
+        if (btn){ btn.textContent = '↻ REFRESH ALL'; btn.disabled = false; }
+        $('#camStatLast').textContent = camP2(new Date().getHours()) + ':' + camP2(new Date().getMinutes());
+      }, 5000);
+    },
+
+    filter(key){
+      this.filterKey = key;
+      $$('.cam-fbtn').forEach(b => b.classList.toggle('active', b.dataset.camfilter === key));
+      this.render();
+    },
+
+    layout(cols){
+      this.cols = cols;
+      $$('.cam-lbtn').forEach(b => b.classList.toggle('active', String(b.dataset.camcols) === String(cols)));
+      const g = $('#camGrid'); if (g) g.className = `cam-grid cols-${cols}`;
+    },
+
+    search(q){ this.searchQ = q.trim(); this.render(); },
+
+    updateStats(){
+      let online = 0, loading = 0, errors = 0;
+      CAM_DB.forEach(c => {
+        const s = CAM_ST[c.feedId].status;
+        if (s === 'online') online++;
+        else if (s === 'error') errors++;
+        else loading++;
+      });
+      $('#camStatOnline').textContent = online || '—';
+      $('#camStatLoading').textContent = loading || '—';
+      $('#camStatErrors').textContent = errors || '—';
+      $('#camStatTotal').textContent = CAM_DB.length;
+      $('#camStripCount').textContent = `${online} / ${CAM_DB.length} ONLINE`;
+      const dot = $('#camStripDot');
+      const status = $('#camStripStatus');
+      if (dot && status){
+        if (online > 0){
+          dot.className = 'cam-dot live';
+          status.textContent = `LIVE · ${online} FEEDS ACTIVE · MTO COMPASS`;
+        } else if (loading > 0){
+          dot.className = 'cam-dot warn';
+          status.textContent = 'LOADING CAMERA FEEDS…';
+        } else {
+          dot.className = 'cam-dot err';
+          status.textContent = 'FEEDS UNAVAILABLE · CHECK NETWORK';
+        }
+      }
+      // Update health matrix
+      const mx = $('#camMatrixCells');
+      if (mx){
+        mx.innerHTML = CAM_DB.map(c => {
+          const s = CAM_ST[c.feedId].status;
+          const cls = s === 'online' ? 'gn' : s === 'error' ? 'rd' : s === 'loading' ? 'ld' : '';
+          return `<div class="cam-matrix-cell ${cls}" data-camcell="${c.feedId}" title="ON${c.feedId} · ${escapeHtml(c.name)} · ${s.toUpperCase()}"></div>`;
+        }).join('');
+      }
+    },
+
+    openDetail(feedId){
+      const c = camById(feedId); if (!c) return;
+      const st = CAM_ST[feedId];
+      const panel = $('#camDetail'); if (!panel) return;
+      panel.classList.add('open');
+      $('#camDetailTitle').textContent = `ON${feedId} · ${c.name}`;
+      $('#camDetailFid').textContent = `ON${feedId}`;
+      $('#camDetailLoc').textContent = c.name;
+      $('#camDetailRoad').textContent = c.road;
+      $('#camDetailCoords').textContent = `${c.lat.toFixed(4)}°N · ${Math.abs(c.lon).toFixed(4)}°W`;
+      $('#camDetailDist').textContent = `${camDist(c).toFixed(1)} km from ${CAM_HOME.label}`;
+      const sv = $('#camDetailStatus');
+      sv.textContent = st.status.toUpperCase();
+      sv.className = 'cd-v ' + (st.status === 'online' ? 'gn' : st.status === 'error' ? 'rd' : '');
+      $('#camDetailLoaded').textContent = st.loadedAt ? new Date(st.loadedAt).toLocaleTimeString() : '—';
+      $('#camDetailRetries').textContent = st.retries || '0';
+      $('#camDetailLink').href = camDetailUrl(c);
+      const img = $('#camDetailImg');
+      img.src = camImgUrl(c);
+      img.onerror = () => { img.style.opacity = '.18'; img.style.filter = 'grayscale(1)'; };
+      img.onload  = () => { img.style.opacity = '1'; img.style.filter = 'none'; };
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    },
+
+    closeDetail(){ $('#camDetail')?.classList.remove('open'); },
+
+    updateFilterCounts(){
+      const qew = CAM_DB.filter(c => c.cls === 'QEW').length;
+      const sky = CAM_DB.filter(c => c.cls === 'SKYWAY').length;
+      const r403 = CAM_DB.filter(c => c.cls === '403').length;
+      $('#camCntAll').textContent = `(${CAM_DB.length})`;
+      $('#camCntQew').textContent = `(${qew})`;
+      $('#camCntSky').textContent = `(${sky})`;
+      $('#camCnt403').textContent = `(${r403})`;
+    },
+
+    ariaReport(){
+      let online = 0, err = 0;
+      CAM_DB.forEach(c => { const s = CAM_ST[c.feedId].status; if (s === 'online') online++; else if (s === 'error') err++; });
+      return `${online}/${CAM_DB.length} cameras online · ${err} errors · filter=${this.filterKey} · layout=${this.cols}cols`;
+    },
+  };
+
+  // Fullscreen camera viewer
+  const camFs = {
+    pool: [],
+    idx: 0,
+    tickTimer: null,
+    countdown: 90,
+
+    open(feedId){
+      const cam = camById(feedId); if (!cam) return;
+      this.pool = CAM.shown.length ? [...CAM.shown] : [...CAM_DB];
+      this.idx = this.pool.findIndex(c => c.feedId === feedId);
+      if (this.idx < 0) { this.pool = [...CAM_DB]; this.idx = CAM_DB.findIndex(c => c.feedId === feedId); }
+      $('#cam-fs').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      this.render();
+      this.startCountdown();
+    },
+
+    close(){
+      $('#cam-fs').classList.remove('open');
+      document.body.style.overflow = '';
+      this.stopCountdown();
+    },
+
+    render(){
+      const cam = this.pool[this.idx]; if (!cam) return;
+      const st = CAM_ST[cam.feedId];
+      $('#camFsId').textContent = `ON${cam.feedId}`;
+      $('#camFsName').textContent = cam.name;
+      $('#camFsRoad').textContent = cam.road;
+      $('#camFsCoords').textContent = `${cam.lat.toFixed(4)}°N · ${Math.abs(cam.lon).toFixed(4)}°W`;
+      $('#camFsPos').textContent = `${this.idx + 1} / ${this.pool.length}`;
+      const img = $('#camFsImg');
+      img.style.opacity = '0';
+      img.src = camImgUrl(cam);
+      img.onload = () => {
+        img.style.opacity = '1';
+        $('#camFsTs').textContent = `LAST UPDATED: ${new Date().toLocaleTimeString()}`;
+      };
+      img.onerror = () => { img.style.opacity = '.18'; };
+      const info = $('#camFsInfo');
+      if (info){
+        const dist = camDist(cam).toFixed(1);
+        const row = (k, v, cls='') => `<div class="fs-row"><span class="fs-k">${escapeHtml(k)}</span><span class="fs-v ${cls}">${escapeHtml(v)}</span></div>`;
+        info.innerHTML =
+          row('FEED ID', `ON${cam.feedId}`) +
+          row('ROAD', cam.road) +
+          row('LOCATION', cam.name) +
+          row('LAT', `${cam.lat.toFixed(4)}°N`) +
+          row('LON', `${Math.abs(cam.lon).toFixed(4)}°W`) +
+          row('DISTANCE', `${dist} km from ${CAM_HOME.label}`) +
+          row('STATUS', st.status.toUpperCase(), st.status === 'online' ? 'gn' : st.status === 'error' ? 'rd' : '') +
+          row('RETRIES', String(st.retries || 0)) +
+          row('NETWORK', 'MTO COMPASS') +
+          row('SOURCE', 'navbug.com') +
+          `<div style="padding:6px 0"><a class="cd-link" href="${camDetailUrl(cam)}" target="_blank" rel="noopener">OPEN ON NAVBUG ↗</a></div>`;
+      }
+      const thumbs = $('#camFsThumbs');
+      if (thumbs){
+        const nearby = [...CAM_DB].sort((a,b) => camDist(a) - camDist(b)).slice(0, 9);
+        thumbs.innerHTML = nearby.map(nc => {
+          const active = nc.feedId === cam.feedId ? ' active' : '';
+          return `<div class="fs-thumb${active}" data-camfsthumb="${nc.feedId}" title="${escapeHtml(nc.name)}"><img src="${camImgUrl(nc)}" alt="${escapeHtml(nc.name)}" loading="lazy"></div>`;
+        }).join('');
+      }
+      this.countdown = 90;
+    },
+
+    prev(){ this.idx = (this.idx - 1 + this.pool.length) % this.pool.length; this.render(); },
+    next(){ this.idx = (this.idx + 1) % this.pool.length; this.render(); },
+
+    refreshCurrent(){
+      const cam = this.pool[this.idx]; if (!cam) return;
+      const img = $('#camFsImg');
+      img.style.opacity = '0';
+      img.src = camImgUrl(cam, 'rf=' + Date.now());
+      this.countdown = 90;
+    },
+
+    startCountdown(){
+      this.stopCountdown();
+      this.tickTimer = setInterval(() => {
+        this.countdown--;
+        const t = $('#camFsAuto'); if (t) t.textContent = `AUTO-REFRESH: ${this.countdown}s`;
+        if (this.countdown <= 0) this.refreshCurrent();
+      }, 1000);
+    },
+    stopCountdown(){ if (this.tickTimer){ clearInterval(this.tickTimer); this.tickTimer = null; } },
+  };
+
+  // Delegated event bindings for camera panel (single set, idempotent)
+  let camWired = false;
+  function wireCameraEvents(){
+    if (camWired) return;
+    camWired = true;
+
+    const grid = $('#camGrid');
+    grid?.addEventListener('click', (e) => {
+      const retry = e.target.closest('[data-camretry]');
+      if (retry){ e.stopPropagation(); CAM.retry(+retry.dataset.camretry); return; }
+      const zoom = e.target.closest('[data-camzoom]');
+      if (zoom){ e.stopPropagation(); camFs.open(+zoom.dataset.camzoom); return; }
+      const card = e.target.closest('[data-camid]');
+      if (card) CAM.openDetail(+card.dataset.camid);
+    });
+    grid?.addEventListener('load', (e) => {
+      const t = e.target;
+      if (t && t.matches && t.matches('[data-camimg]')) CAM._imgLoaded(+t.dataset.camimg);
+    }, true);
+    grid?.addEventListener('error', (e) => {
+      const t = e.target;
+      if (t && t.matches && t.matches('[data-camimg]')) CAM._imgFailed(+t.dataset.camimg);
+    }, true);
+
+    $$('.cam-fbtn').forEach(b => b.addEventListener('click', () => CAM.filter(b.dataset.camfilter)));
+    $$('.cam-lbtn').forEach(b => b.addEventListener('click', () => CAM.layout(+b.dataset.camcols)));
+    $('#camSearch')?.addEventListener('input', (e) => CAM.search(e.target.value));
+    $('#camRefreshBtn')?.addEventListener('click', () => CAM.refreshAll());
+    $('#camDetailClose')?.addEventListener('click', () => CAM.closeDetail());
+
+    $('#camMatrixCells')?.addEventListener('click', (e) => {
+      const cell = e.target.closest('[data-camcell]');
+      if (cell) CAM.openDetail(+cell.dataset.camcell);
+    });
+
+    $('#camFsPrev')?.addEventListener('click', () => camFs.prev());
+    $('#camFsNext')?.addEventListener('click', () => camFs.next());
+    $('#camFsRefresh')?.addEventListener('click', () => camFs.refreshCurrent());
+    $('#camFsClose')?.addEventListener('click', () => camFs.close());
+    $('#camFsThumbs')?.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-camfsthumb]');
+      if (t) camFs.open(+t.dataset.camfsthumb);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!$('#cam-fs').classList.contains('open')) return;
+      if (e.target.matches('input,textarea')) return;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') camFs.prev();
+      else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') camFs.next();
+      else if (e.key === 'Escape') camFs.close();
+      else if (e.key === 'r' || e.key === 'R') camFs.refreshCurrent();
+    });
+  }
+
+  function ensureCamerasPanel(){
+    if (CAM.inited) return;
+    CAM.inited = true;
+    CAM.calcDistances();
+    CAM.updateFilterCounts();
+    CAM.render();
+    wireCameraEvents();
+    logMission('system', `Cameras panel initialized · ${CAM_DB.length} MTO COMPASS feeds`);
+  }
+
+  // Strip countdown — aligns with MTO ~90s refresh cycle
+  let camStripTick = 90;
+  setInterval(() => {
+    camStripTick--;
+    const el = $('#camStripRefresh');
+    if (el) el.textContent = `CAM REFRESH IN ${camP2(Math.floor(camStripTick/60))}:${camP2(camStripTick%60)}`;
+    if (camStripTick <= 0){
+      camStripTick = 90;
+      if (CAM.inited){
+        // Soft cycle: only rotate images that are currently online
+        CAM_DB.forEach(c => {
+          if (CAM_ST[c.feedId].status === 'online'){
+            const img = document.querySelector(`[data-camimg="${c.feedId}"]`);
+            if (img) img.src = camImgUrl(c, 'auto=' + Date.now());
+          }
+        });
+      }
+    }
+  }, 1000);
 
   // ── Boot ───────────────────────────────────────────────────────
   $('#aiModeBadge').textContent = state.aiKey ? 'KEYED' : 'KEYLESS';

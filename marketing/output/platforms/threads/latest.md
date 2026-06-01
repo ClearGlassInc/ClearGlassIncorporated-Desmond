@@ -1,5 +1,5 @@
-1. Clarity is not a feature. It's a strategic posture.
-2. Most security tools add complexity and call it capability. ClearGlass removes complexity to reveal what's real.
-3. The organizations that survive breaches aren't the ones with the most alerts — they're the ones who acted on the right signal.
-4. That's what we build at ClearGlass: the lens, not the noise.
+1. Premium brands in security don't sell software. They sell trust.
+2. ClearGlass was built for operators who need to act — not analyze dashboards for 40 minutes.
+3. Every product we ship passes one test: does it make the right decision obvious?
+4. If it doesn't, it doesn't ship.
 5. → clearglassinc.github.io

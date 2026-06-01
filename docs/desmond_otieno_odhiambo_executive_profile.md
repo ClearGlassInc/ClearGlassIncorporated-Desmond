@@ -4,9 +4,9 @@
 **Tagline:** **CLEARGLASS: See Through Everything**
 
 ## Desmond Otieno Odhiambo
-Founder and Executive Lead, ClearGlass Inc.
+Founder and Executive Lead, ClearGlassInc
 
-Desmond Otieno Odhiambo is the founder of ClearGlass Inc., leading strategy and execution across intelligence architecture, secure AI operations, and enterprise modernization. He focuses on mission-grade systems that combine data fusion, governed automation, and operator-centered decision support.
+Desmond Otieno Odhiambo is the founder of ClearGlassInc, leading strategy and execution across intelligence architecture, secure AI operations, and enterprise modernization. He focuses on mission-grade systems that combine data fusion, governed automation, and operator-centered decision support.
 
 ## Core Competencies
 
@@ -40,7 +40,7 @@ A policy enforcement and mission assurance framework for approvals, provenance, 
 
 | Channel | Value |
 |---|---|
-| Organization | ClearGlass Inc. |
+| Organization | ClearGlassInc |
 | Email | desmond@clearglassinc.ca |
 | Legal/Commercial | legal@clearglassinc.ca |
 | Website | https://clearglassinc.ca |

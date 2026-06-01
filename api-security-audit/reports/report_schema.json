@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clearglassinc.github.io/security/api_audit_report_schema.json",
+  "title": "ClearGlass API Security Audit Report",
+  "type": "object",
+  "required": [
+    "report_id",
+    "generated_at",
+    "scanner_version",
+    "target_base_url",
+    "summary",
+    "endpoint_inventory",
+    "findings"
+  ],
+  "properties": {
+    "report_id": {
+      "type": "string",
+      "description": "UUID v4 for this audit run"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of report generation"
+    },
+    "scanner_version": {
+      "type": "string",
+      "description": "Semantic version of the scanner that produced this report"
+    },
+    "target_base_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Base URL of the API under test (must be an authorized environment)"
+    },
+    "authorized_by": {
+      "type": "string",
+      "description": "Name or ticket reference of the authorization to conduct this audit"
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_endpoints", "total_tests", "passed", "failed", "skipped", "risk_rating"],
+      "properties": {
+        "total_endpoints": {"type": "integer"},
+        "total_tests": {"type": "integer"},
+        "passed": {"type": "integer"},
+        "failed": {"type": "integer"},
+        "skipped": {"type": "integer"},
+        "critical_count": {"type": "integer"},
+        "high_count": {"type": "integer"},
+        "medium_count": {"type": "integer"},
+        "low_count": {"type": "integer"},
+        "risk_rating": {
+          "type": "string",
+          "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFORMATIONAL"]
+        }
+      }
+    },
+    "endpoint_inventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["method", "path", "auth_required", "roles_accepted", "object_type"],
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+          },
+          "path": {"type": "string"},
+          "auth_required": {"type": "boolean"},
+          "roles_accepted": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "object_type": {"type": "string"},
+          "uses_object_id": {"type": "boolean"},
+          "id_location": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["url", "query", "body", "header", "cookie"]
+            }
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["finding_id", "category", "severity", "endpoint", "scenario", "pass_fail", "description"],
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "description": "Unique identifier for this finding, e.g. NEXUS-AUTH-001"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "MISSING_AUTHENTICATION",
+              "BROKEN_OBJECT_LEVEL_AUTHORIZATION",
+              "IDOR",
+              "PRIVILEGE_ESCALATION",
+              "MISSING_RATE_LIMIT",
+              "LOGGING_GAP",
+              "RESPONSE_LEAKAGE",
+              "SESSION_MANAGEMENT",
+              "MULTI_STEP_BYPASS",
+              "INFORMATIONAL"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFORMATIONAL"]
+          },
+          "cvss_v31_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "cvss_v31_vector": {
+            "type": "string",
+            "description": "CVSS v3.1 vector string, e.g. CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N"
+          },
+          "endpoint": {
+            "type": "object",
+            "required": ["method", "path"],
+            "properties": {
+              "method": {"type": "string"},
+              "path": {"type": "string"},
+              "full_url": {"type": "string", "format": "uri"}
+            }
+          },
+          "scenario": {
+            "type": "string",
+            "description": "Test scenario that produced this finding"
+          },
+          "pass_fail": {
+            "type": "string",
+            "enum": ["PASS", "FAIL", "SKIP", "ERROR"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable explanation of the finding"
+          },
+          "request_snapshot": {
+            "type": "object",
+            "properties": {
+              "method": {"type": "string"},
+              "path": {"type": "string"},
+              "headers": {"type": "object"},
+              "body_summary": {"type": "string", "description": "Non-sensitive summary of request body"}
+            }
+          },
+          "response_snapshot": {
+            "type": "object",
+            "properties": {
+              "status_code": {"type": "integer"},
+              "size_bytes": {"type": "integer"},
+              "time_ms": {"type": "number"},
+              "notable_fields": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Field names that were present when they should not have been"
+              }
+            }
+          },
+          "expected_status": {"type": "integer"},
+          "actual_status": {"type": "integer"},
+          "remediation": {
+            "type": "string",
+            "description": "Recommended fix for this finding"
+          },
+          "verification_steps": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Steps to confirm the fix resolves this finding"
+          },
+          "references": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Links to OWASP, CWE, or internal documentation"
+          }
+        }
+      }
+    },
+    "logging_and_alerting_gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gap_id": {"type": "string"},
+          "description": {"type": "string"},
+          "affected_endpoints": {"type": "array", "items": {"type": "string"}},
+          "recommendation": {"type": "string"}
+        }
+      }
+    },
+    "scanner_config": {
+      "type": "object",
+      "description": "Configuration used for this scan — recorded for reproducibility",
+      "properties": {
+        "timeout_seconds": {"type": "integer"},
+        "max_sequential_ids_tested": {"type": "integer"},
+        "safe_mode": {"type": "boolean"},
+        "endpoints_file": {"type": "string"}
+      }
+    }
+  }
+}

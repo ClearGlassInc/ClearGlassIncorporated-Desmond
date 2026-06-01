@@ -1,0 +1,220 @@
+{
+  "report_id": "b3f1c2a4-7d6e-4f80-9a21-0c5e8d4b1f33",
+  "generated_at": "2026-06-01T03:00:12Z",
+  "scanner_version": "1.0.0",
+  "target_base_url": "https://staging-api.clearglassinc.com",
+  "authorized_by": "SEC-1184 — Q2 internal authorization audit",
+  "summary": {
+    "total_endpoints": 7,
+    "total_tests": 31,
+    "passed": 28,
+    "failed": 3,
+    "skipped": 0,
+    "critical_count": 1,
+    "high_count": 2,
+    "medium_count": 0,
+    "low_count": 0,
+    "risk_rating": "CRITICAL"
+  },
+  "endpoint_inventory": [
+    {
+      "method": "GET",
+      "path": "/api/v1/users/{id}",
+      "auth_required": true,
+      "roles_accepted": ["admin", "self"],
+      "object_type": "User",
+      "uses_object_id": true,
+      "id_location": ["url"]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/users/{id}",
+      "auth_required": true,
+      "roles_accepted": ["admin", "self"],
+      "object_type": "User",
+      "uses_object_id": true,
+      "id_location": ["url", "body"]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/users/{id}",
+      "auth_required": true,
+      "roles_accepted": ["admin"],
+      "object_type": "User",
+      "uses_object_id": true,
+      "id_location": ["url"]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/documents/{id}",
+      "auth_required": true,
+      "roles_accepted": ["owner", "viewer"],
+      "object_type": "Document",
+      "uses_object_id": true,
+      "id_location": ["url"]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/reports/{id}/export",
+      "auth_required": true,
+      "roles_accepted": ["owner", "admin"],
+      "object_type": "Report",
+      "uses_object_id": true,
+      "id_location": ["url"]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/documents/{id}",
+      "auth_required": true,
+      "roles_accepted": ["owner", "admin"],
+      "object_type": "Document",
+      "uses_object_id": true,
+      "id_location": ["url"]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "auth_required": false,
+      "roles_accepted": ["public"],
+      "object_type": "Status",
+      "uses_object_id": false,
+      "id_location": []
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "NEXUS-MIS-001",
+      "category": "MISSING_AUTHENTICATION",
+      "severity": "CRITICAL",
+      "cvss_v31_score": 9.1,
+      "cvss_v31_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+      "endpoint": {
+        "method": "DELETE",
+        "path": "/api/v1/documents/{id}",
+        "full_url": "https://staging-api.clearglassinc.com/api/v1/documents/101"
+      },
+      "scenario": "unauthenticated",
+      "pass_fail": "FAIL",
+      "description": "DELETE /api/v1/documents/{id} returned 200 (expected 401) under scenario 'unauthenticated'. The endpoint deletes a document without requiring any credential.",
+      "request_snapshot": {
+        "method": "DELETE",
+        "path": "/api/v1/documents/101",
+        "headers": {"Accept": "application/json"},
+        "body_summary": "(no body, no Authorization header)"
+      },
+      "response_snapshot": {
+        "status_code": 200,
+        "size_bytes": 42,
+        "time_ms": 88.4,
+        "notable_fields": ["deleted"]
+      },
+      "expected_status": 401,
+      "actual_status": 200,
+      "remediation": "Add authentication middleware to this route. Verify the middleware runs before any business logic. Return 401 with a WWW-Authenticate header when no valid credential is present.",
+      "verification_steps": [
+        "Re-run the 'unauthenticated' scenario against DELETE /api/v1/documents/{id}.",
+        "Confirm the response is now 401.",
+        "Confirm server logs record the denial event.",
+        "Run the full test matrix to detect regressions."
+      ],
+      "references": [
+        "https://owasp.org/API-Security/editions/2023/en/0xa2-broken-authentication/",
+        "https://cwe.mitre.org/data/definitions/284.html"
+      ]
+    },
+    {
+      "finding_id": "NEXUS-BRO-002",
+      "category": "BROKEN_OBJECT_LEVEL_AUTHORIZATION",
+      "severity": "HIGH",
+      "cvss_v31_score": 8.1,
+      "cvss_v31_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+      "endpoint": {
+        "method": "GET",
+        "path": "/api/v1/users/{id}",
+        "full_url": "https://staging-api.clearglassinc.com/api/v1/users/77"
+      },
+      "scenario": "cross_user_object_access",
+      "pass_fail": "FAIL",
+      "description": "GET /api/v1/users/{id} returned 200 (expected 403) when an authenticated user requested another user's record (ID 77). The route authenticates the caller but does not verify ownership of the requested object.",
+      "request_snapshot": {
+        "method": "GET",
+        "path": "/api/v1/users/77",
+        "headers": {"Authorization": "Bearer <valid-user-token>", "Accept": "application/json"},
+        "body_summary": "(no body)"
+      },
+      "response_snapshot": {
+        "status_code": 200,
+        "size_bytes": 318,
+        "time_ms": 64.2,
+        "notable_fields": ["email", "phone", "address"]
+      },
+      "expected_status": 403,
+      "actual_status": 200,
+      "remediation": "After authenticating the caller, verify that the requested object belongs to them (or that their role permits access). Add an ownership check on the query: WHERE id=? AND (owner_id=caller_id OR caller_role='admin').",
+      "verification_steps": [
+        "Re-run the 'cross_user_object_access' scenario against GET /api/v1/users/{id}.",
+        "Confirm the response is now 403 for a non-owned, non-admin object.",
+        "Confirm the owner and admin still receive 200.",
+        "Confirm server logs record the denial event."
+      ],
+      "references": [
+        "https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/",
+        "https://cwe.mitre.org/data/definitions/639.html"
+      ]
+    },
+    {
+      "finding_id": "NEXUS-IDO-003",
+      "category": "IDOR",
+      "severity": "HIGH",
+      "cvss_v31_score": 7.5,
+      "cvss_v31_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+      "endpoint": {
+        "method": "GET",
+        "path": "/api/v1/reports/{id}/export",
+        "full_url": "https://staging-api.clearglassinc.com/api/v1/reports/9/export"
+      },
+      "scenario": "seq_id_enum_+2",
+      "pass_fail": "FAIL",
+      "description": "GET /api/v1/reports/{id}/export returned 200 (expected 403) for report ID 9, which is owned by a different account. Sequential ID walking exposes other tenants' exported reports.",
+      "request_snapshot": {
+        "method": "GET",
+        "path": "/api/v1/reports/9/export",
+        "headers": {"Authorization": "Bearer <valid-user-token>", "Accept": "application/json"},
+        "body_summary": "(no body)"
+      },
+      "response_snapshot": {
+        "status_code": 200,
+        "size_bytes": 10482,
+        "time_ms": 142.7,
+        "notable_fields": ["report_payload"]
+      },
+      "expected_status": 403,
+      "actual_status": 200,
+      "remediation": "Replace sequential numeric report IDs with opaque per-user references (UUIDv4), and add an ownership check on every export query. Do not derive access from the URL alone.",
+      "verification_steps": [
+        "Re-run the sequential-ID enumeration scenario against GET /api/v1/reports/{id}/export.",
+        "Confirm non-owned IDs return 403.",
+        "Confirm the owner still receives 200 for their own report.",
+        "Confirm enumeration attempts trigger an alert after N denials."
+      ],
+      "references": [
+        "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References",
+        "https://cwe.mitre.org/data/definitions/639.html"
+      ]
+    }
+  ],
+  "logging_and_alerting_gaps": [
+    {
+      "gap_id": "LOG-001",
+      "description": "Authorization denials (403) on /api/v1/reports/{id}/export are not written to the audit log, so sequential enumeration goes undetected.",
+      "affected_endpoints": ["/api/v1/reports/{id}/export", "/api/v1/documents/{id}"],
+      "recommendation": "Emit a structured audit event on every 401/403, including caller ID, object ID, and source IP. Alert when a single token accumulates more than 10 denials in 60 seconds."
+    }
+  ],
+  "scanner_config": {
+    "timeout_seconds": 12,
+    "max_sequential_ids_tested": 5,
+    "safe_mode": true,
+    "endpoints_file": "tests/endpoints_example.json"
+  }
+}

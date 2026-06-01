@@ -83,6 +83,9 @@ marketing/output/private/
 operations/output/private/
 reports/
 exports/
+# Exception: api-security-audit bundle ships synthetic templates (no PII).
+!api-security-audit/reports/
+!api-security-audit/reports/*.json
 
 # ── IP PROTECTION: Terraform state (contains infra secrets) ──────────────────
 *.tfstate

@@ -1,0 +1,70 @@
+{
+  "run_utc": "2026-06-02T11:16:59.238932+00:00",
+  "dry_run": false,
+  "total": 10,
+  "ok": 10,
+  "failed": 0,
+  "skipped": 0,
+  "bots": [
+    {
+      "bot_id": "daily_priority",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
+    {
+      "bot_id": "growth",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
+    {
+      "bot_id": "marketing",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
+    {
+      "bot_id": "release_notes",
+      "status": "ok",
+      "duration_s": 0.06,
+      "error": null
+    },
+    {
+      "bot_id": "seo_optimizer",
+      "status": "ok",
+      "duration_s": 0.06,
+      "error": null
+    },
+    {
+      "bot_id": "site_health",
+      "status": "ok",
+      "duration_s": 0.46,
+      "error": null
+    },
+    {
+      "bot_id": "campaign_reporter",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
+    {
+      "bot_id": "operations",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
+    {
+      "bot_id": "sales",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
+    {
+      "bot_id": "alert_dispatcher",
+      "status": "ok",
+      "duration_s": 0.0,
+      "error": null
+    }
+  ]
+}

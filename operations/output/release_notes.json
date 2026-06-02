@@ -1,0 +1,991 @@
+{
+  "run_utc": "2026-06-02T11:16:58.796408+00:00",
+  "from_tag": null,
+  "to_ref": "HEAD",
+  "commit_count": 108,
+  "sections": {
+    "New Features": [
+      {
+        "sha": "fc62e51",
+        "type": "feat",
+        "scope": "loader",
+        "subject": "add cinematic command-interface loader and wire as session preloader",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "599ca3b",
+        "type": "feat",
+        "scope": "artemis-iv",
+        "subject": "add advanced tactical extensions",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "32e8417",
+        "type": "feat",
+        "scope": "nexus",
+        "subject": "live patch + advanced intel expansion (v12.1)",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "0c9204a",
+        "type": "feat",
+        "scope": "clearpulse",
+        "subject": "add architecture doc and demo intelligence console",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "af0ee22",
+        "type": "feat",
+        "scope": "platform",
+        "subject": "implement v2 platform engineering operating model",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "70f6657",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "add cyber-intelligence command console interface",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "a41e83b",
+        "type": "feat",
+        "scope": null,
+        "subject": "advanced bot orchestration system with full GitHub automation",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "a1140bd",
+        "type": "feat",
+        "scope": "government",
+        "subject": "add federal showcase page + patch NEXUS + enhance index for gov sale",
+        "author": "Claude",
+        "date": "2026-05-31",
+        "breaking": false
+      },
+      {
+        "sha": "7115daa",
+        "type": "feat",
+        "scope": "bots",
+        "subject": "add config-driven priority matrix bot",
+        "author": "Claude",
+        "date": "2026-05-31",
+        "breaking": false
+      }
+    ],
+    "Bug Fixes": [
+      {
+        "sha": "5ebf4bb",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "resolve pre-existing lint, workflow-doctor, and PR-triage failures",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "98f33d6",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "resolve 4 pre-existing failures inherited from prior PRs",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "0871f80",
+        "type": "fix",
+        "scope": "clearpulse",
+        "subject": "wrap triage rows on narrow viewports",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "6eed5f2",
+        "type": "fix",
+        "scope": "platform",
+        "subject": "address Codex review on PR #324",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "85ba879",
+        "type": "fix",
+        "scope": "workflows",
+        "subject": "pin actions/checkout to v5 in ip-protection-scan",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "9484a8f",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "pin checkout to v5 and correct git log flag in ip-protection-scan",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "c03deda",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "add ip-protection-scan workflow with corrected YAML syntax",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "b2256b9",
+        "type": "fix",
+        "scope": "site",
+        "subject": "add SEO/accessibility meta to key pages and extend reliability audit",
+        "author": "Claude",
+        "date": "2026-05-31",
+        "breaking": false
+      },
+      {
+        "sha": "89ec20e",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "stop Dependency Review job from hard-failing on compare errors",
+        "author": "Claude",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "7ee8144",
+        "type": "fix",
+        "scope": "site",
+        "subject": "resolve 32 broken local references surfaced by site-audit CI job",
+        "author": "Claude",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "da20de5",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "pin actions/checkout to v5 and resolve pre-existing lint/test failures",
+        "author": "Claude",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "c5de32d",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "build automated GitHub workflow repair and execution system",
+        "author": "Claude",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "981cc86",
+        "type": "fix",
+        "scope": "actions",
+        "subject": "skip Fly deploy when secrets are missing",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "b59144d",
+        "type": "fix",
+        "scope": "actions",
+        "subject": "harden Fly deployment diagnostics",
+        "author": "Desmond Otieno Odhiambo",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "717a1a8",
+        "type": "fix",
+        "scope": "actions",
+        "subject": "checkout repo before rollout sync",
+        "author": "Desmond Otieno Odhiambo",
+        "date": "2026-05-25",
+        "breaking": false
+      }
+    ],
+    "Tests": [
+      {
+        "sha": "6b7cf6a",
+        "type": "test",
+        "scope": "actions",
+        "subject": "add checkout probe",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      }
+    ],
+    "Maintenance": [
+      {
+        "sha": "1b8534d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Bump the actions group with 13 updates",
+        "author": "dependabot[bot]",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "5dd0582",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update pytest-cov requirement from <7,>=5.0 to >=5.0,<8",
+        "author": "dependabot[bot]",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "3ac35ed",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix typo in project name in README",
+        "author": "Desmond Otieno",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "da8904e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add API security audit package (prompt + scanner + CI workflow)",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "e846856",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add defensive access-control (IDOR/auth) audit harness",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "ab6bf8b",
+        "type": "chore",
+        "scope": null,
+        "subject": "add ClearGlass-AutoSync.ps1 for safe GitHub Pages sync",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "e7352ad",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix 6 bugs in NEXUS dashboard (both v12-FINAL and nexus variants)",
+        "author": "Claude",
+        "date": "2026-06-01",
+        "breaking": false
+      },
+      {
+        "sha": "6447d33",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update index.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "51fbe24",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearCounsel\u2122 corporate legal AI bot system",
+        "author": "Claude",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "6db49b1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove version number from ClearGlass NEXUS links",
+        "author": "Desmond Otieno",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "50e3ba3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update ClearGlass NEXUS link text",
+        "author": "Desmond Otieno",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "d16edf9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass NEXUS v12 as fourth product and wire into site nav",
+        "author": "Claude",
+        "date": "2026-05-29",
+        "breaking": false
+      },
+      {
+        "sha": "5567f5e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Delete logo.png",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "ac5bdb6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Delete CLEARGLASS INTEL.jpeg",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "fdcf218",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"Add NEXUS.html file\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "87b6cc4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"Rename ClearGlass-NEXUS-v12-FINAL.html to ClearGlass-NEXUS-FINAL.html\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "6190d14",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"Add NEXUS v12 to products and hover menu\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "219186b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"Create CLEARGLASSINC.FUNDING.yml for funding options\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "1999b65",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"Update dropdown label for Artemis VI\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "1e06252",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"Update link to Artemis IV Core in index.html\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "2fe2194",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"Update fmt.Println message from 'Hello' to 'Goodbye'\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "0618fa9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"ClearGlass Nexus Auto Deploy\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "0e70f55",
+        "type": "chore",
+        "scope": null,
+        "subject": "Revert \"ClearGlass Nexus Auto Deploy\"",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "46bffc3",
+        "type": "chore",
+        "scope": null,
+        "subject": "ClearGlass Nexus Auto Deploy",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "f37c19e",
+        "type": "chore",
+        "scope": null,
+        "subject": "ClearGlass Nexus Auto Deploy",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "feb3f60",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update fmt.Println message from 'Hello' to 'Goodbye'",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "598ccf9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update link to Artemis IV Core in index.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "76d6233",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update dropdown label for Artemis VI",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "120986d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Create CLEARGLASSINC.FUNDING.yml for funding options",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "64ed998",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add NEXUS v12 to products and hover menu",
+        "author": "Desmond Odhiambo",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "b6abbf7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Rename ClearGlass-NEXUS-v12-FINAL.html to ClearGlass-NEXUS-FINAL.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "fd1038b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add NEXUS.html file",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "dbda309",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and banners for Ontario Operations Center",
+        "author": "Desmond Otieno",
+        "date": "2026-05-28",
+        "breaking": false
+      },
+      {
+        "sha": "55ff9e7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add script to link NEXUS V12 FINAL in navigation",
+        "author": "Desmond Otieno",
+        "date": "2026-05-27",
+        "breaking": false
+      },
+      {
+        "sha": "bbe6081",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update index.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-27",
+        "breaking": false
+      },
+      {
+        "sha": "0f9b6db",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update branding and location references in guardian.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-27",
+        "breaking": false
+      },
+      {
+        "sha": "090aad3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update navigation icons in index.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "b2a1ccd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update Guardian sub-label in navigation menu",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "e0ec5ad",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove duplicate 'Guardian' link from footer",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "bb12198",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update navigation name from 'ClearGlass' to 'ClearGlassInc.'",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "8087936",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove icons from navigation dropdown items",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "30510b4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance README with detailed project overview",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "c375286",
+        "type": "chore",
+        "scope": null,
+        "subject": "ClearGlass-NEXUS-v12-FINAL.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "3e7d1c5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Shorten company name in loader HTML",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "6a69c34",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove download link for CLEARGLASS GUARDIAN v5.0",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "ea64780",
+        "type": "chore",
+        "scope": null,
+        "subject": "Replace icons in dropdown menu",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "eb5db15",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove SMB Suite link from footer",
+        "author": "Desmond Otieno",
+        "date": "2026-05-26",
+        "breaking": false
+      },
+      {
+        "sha": "24cad53",
+        "type": "chore",
+        "scope": null,
+        "subject": "remove smb replace guardian",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "a86edcf",
+        "type": "chore",
+        "scope": null,
+        "subject": "Deploy GitHub Pages from root",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "110ed43",
+        "type": "chore",
+        "scope": null,
+        "subject": "Sales bot: refresh outreach sequences [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "bbf34bd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix SMB logo and social preview image",
+        "author": "CLEARGLASS",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "c4e2f79",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove stray logo text file",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "c6824a1",
+        "type": "chore",
+        "scope": null,
+        "subject": "logo.png",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "2d0bb9f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add hero image section to smb.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "11ac796",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update Twitter meta tags for ClearGlassInc.",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "34b7b54",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix twitter:image meta tag in smb.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "f9d4970",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update Open Graph image meta tags in smb.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "43641df",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove logo image and update Open Graph tags",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "72f71ff",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add logo image to smb.html",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "a3f9bec",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add GitHub Actions workflow for site deployment",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "d01435e",
+        "type": "chore",
+        "scope": "actions",
+        "subject": "remove checkout probe",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      },
+      {
+        "sha": "a07f244",
+        "type": "chore",
+        "scope": null,
+        "subject": "Stabilize CI action versions",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "cbc470e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Install project test dependencies in CI",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "7466c0c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade daily ops summary checkout action",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "63acc85",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade operations finance checkout action",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "75c3102",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade marketing engine checkout action",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "2b2467d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade self-hosted deploy checkout action",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "85726e8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade IP protection scan checkout action",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "18a45ea",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade dependency scan action runtimes",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "6aea318",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix CI Node runtime action versions",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "e345778",
+        "type": "chore",
+        "scope": null,
+        "subject": "Document D.O.M.I.N.A.T.E. income algorithm",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "5302f45",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add tests for DOMINATE revenue engine",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "542ee2f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add DOMINATE revenue decision engine",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "391302a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add documentation for ClearGlass AI runtime v0.2",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "60b20f9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add environment template for ClearGlass AI runtime v0.2",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "905e84a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add dependencies for ClearGlass AI runtime v0.2",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "a71fb5d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Deploy ClearGlass AI runtime v0.2",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "a154a6c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add result log for ClearGlass multi-agent workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "e5b52de",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add demo run for ClearGlass multi-agent workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "bffa316",
+        "type": "chore",
+        "scope": null,
+        "subject": "Deploy ClearGlass multi-agent workflow prototype",
+        "author": "Desmond Otieno",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "5db91fa",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix Pages deployment workflow",
+        "author": "ClearGlassInc",
+        "date": "2026-05-24",
+        "breaking": false
+      },
+      {
+        "sha": "967ddae",
+        "type": "chore",
+        "scope": null,
+        "subject": "Content engine: brand pillar \u00b7 0052f5885fb7 [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-05-24",
+        "breaking": false
+      }
+    ],
+    "Other": [
+      {
+        "sha": "1eb0e5f",
+        "type": "ops",
+        "scope": null,
+        "subject": "replace smb.html with guardian.html; remove SMB page",
+        "author": "Desmond Otieno",
+        "date": "2026-05-25",
+        "breaking": false
+      }
+    ]
+  },
+  "breaking_changes": []
+}

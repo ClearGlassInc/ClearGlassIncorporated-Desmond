@@ -5553,5 +5553,406 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     NEXUS v12.1 — LIVE PATCH + ADVANCED INTEL EXPANSION
+     Fixes dead endpoints (open-notify.org ISS, CoinCap v2) and
+     introduces six new live intelligence streams: NASA NEO, BTC
+     mempool, CISA KEV, HackerNews top, GOES X-ray flux, solar wind.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+(()=>{
+  if(window.__NEXUS_PATCH_APPLIED) return;
+  window.__NEXUS_PATCH_APPLIED='12.1';
+  const log=(...a)=>{try{console.log('%c[NEXUS+]','color:#FFB000;font-weight:700',...a);}catch(_){}};
+  const $$ = id => document.getElementById(id);
+  const proxy = u => 'https://api.allorigins.win/raw?url='+encodeURIComponent(u);
+  async function jget(url, withProxy=false, timeoutMs=8000){
+    const ctrl=new AbortController();
+    const t=setTimeout(()=>ctrl.abort(),timeoutMs);
+    try{
+      const r=await fetch(withProxy?proxy(url):url,{signal:ctrl.signal,cache:'no-store'});
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return await r.json();
+    } finally { clearTimeout(t); }
+  }
+
+  /* ── PATCH: ISS TRACKER (open-notify.org dead → wheretheiss.at) ── */
+  window.fetchISS = async function(){
+    try{
+      if(typeof setSf==='function') setSf('sf-iss','o');
+      const d = await jget('https://api.wheretheiss.at/v1/satellites/25544');
+      window.S=window.S||{iss:{},loc:{lat:43.3255,lon:-79.7990}};
+      S.iss.lat=d.latitude; S.iss.lon=d.longitude;
+      S.iss.alt=Math.round(d.altitude||420);
+      S.iss.vel=d.velocity||27600;
+      const dlat=S.iss.lat-S.loc.lat;
+      const dlon=S.iss.lon-S.loc.lon;
+      const a=Math.sin(dlat*Math.PI/360)**2
+            + Math.cos(S.iss.lat*Math.PI/180)*Math.cos(S.loc.lat*Math.PI/180)
+            * Math.sin(dlon*Math.PI/360)**2;
+      S.iss.dist=Math.round(6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
+      if($$('c-iss')) $$('c-iss').textContent=S.iss.dist+' km';
+      if($$('tel-iss')){
+        $$('tel-iss').textContent=`${S.iss.lat.toFixed(2)}°N ${S.iss.lon.toFixed(2)}°E | ${S.iss.dist.toLocaleString()} km AWAY | ${Math.round(S.iss.vel).toLocaleString()} km/h | ALT ${S.iss.alt} km`;
+        $$('tel-iss').className='telv c';
+      }
+      if($$('iss-badge')){
+        $$('iss-badge').textContent=`${S.iss.lat.toFixed(1)}°N ${S.iss.lon.toFixed(1)}°E`;
+        $$('iss-badge').className='bdg bcy';
+      }
+      if(typeof setDot==='function') setDot('d-iss','g');
+      if(typeof setSf==='function') setSf('sf-iss','g');
+      if(typeof setBoot==='function') setBoot('bf6','OK');
+      if(typeof renderISS==='function') try{renderISS();}catch(_){}
+      if(!window.__nxIssInt) window.__nxIssInt=setInterval(window.fetchISS,5000);
+    }catch(e){
+      log('ISS endpoint failed',e.message);
+      if($$('iss-badge')){ $$('iss-badge').textContent='ACQUIRING…'; $$('iss-badge').className='bdg bor'; }
+      if(typeof setSf==='function') setSf('sf-iss','o');
+    }
+  };
+
+  /* ── PATCH: CRYPTO (CoinCap v2 deprecated → CoinGecko, Binance failover) ── */
+  window.fetchCrypto = async function(){
+    if(typeof setSf==='function') setSf('sf-cr','o');
+    const colMap={bitcoin:'#F7931A',ethereum:'#627EEA',solana:'#9945FF',cardano:'#0033AD',ripple:'#00AAE4'};
+    const iconMap={bitcoin:'₿',ethereum:'Ξ',solana:'◎',cardano:'₳',ripple:'✕'};
+    const renderRows=(coins)=>coins.map(c=>{
+      const chgCol=c.chg>=0?'var(--gn)':'var(--rd)';
+      const bar=Math.min(100,Math.round(Math.abs(c.chg)*10));
+      return `<div class="cr-row">
+        <span style="font-size:15px;color:${c.color};width:20px;text-align:center">${c.icon}</span>
+        <div class="cr-info"><div class="cr-sym">${c.sym}</div><div class="cr-name">${c.name}</div></div>
+        <div style="flex:1;padding:0 8px">
+          <div style="height:2px;background:rgba(255,255,255,.05);border-radius:1px;margin:6px 0">
+            <div style="width:${bar}%;height:100%;background:${chgCol};border-radius:1px"></div>
+          </div>
+        </div>
+        <div><div class="cr-price">$${c.usd>=1?c.usd.toLocaleString('en',{maximumFractionDigits:2}):c.usd.toFixed(5)}</div>
+        <div class="cr-chg ${c.chg>=0?'up':'dn'}">${c.chg>=0?'▲':'▼'} ${Math.abs(c.chg).toFixed(2)}%</div></div>
+      </div>`;
+    }).join('');
+    try{
+      const ids='bitcoin,ethereum,solana,cardano,ripple';
+      const d=await jget('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+ids+'&order=market_cap_desc');
+      const coins=d.map(a=>({
+        id:a.id, sym:(a.symbol||'').toUpperCase(), name:a.name,
+        usd:a.current_price||0, chg:a.price_change_percentage_24h||0,
+        rank:a.market_cap_rank||99, mcap:a.market_cap||0,
+        color:colMap[a.id]||'#aaa', icon:iconMap[a.id]||'●'
+      }));
+      const btc=coins.find(c=>c.id==='bitcoin')||{usd:0,chg:0};
+      const eth=coins.find(c=>c.id==='ethereum')||{usd:0,chg:0};
+      window.S=window.S||{}; S.cr={btc:btc.usd,eth:eth.usd,btcChg:btc.chg,coins};
+      if($$('c-btc')){ $$('c-btc').textContent=`$${Math.round(btc.usd).toLocaleString()}`; $$('c-btc').className='cv y'; }
+      if($$('c-eth')){ $$('c-eth').textContent=`$${Math.round(eth.usd).toLocaleString()}`; $$('c-eth').className='cv y'; }
+      if($$('cr-badge')){ $$('cr-badge').textContent=`BTC $${(btc.usd/1000).toFixed(1)}K`; $$('cr-badge').className=`bdg ${btc.chg>=0?'bgn':'brd'}`; }
+      if($$('tel-cr')){ $$('tel-cr').textContent=`BTC $${Math.round(btc.usd/1000)}K ${btc.chg>=0?'+':''}${btc.chg.toFixed(1)}% | ETH $${Math.round(eth.usd).toLocaleString()} | SOL $${Math.round(coins.find(c=>c.id==='solana')?.usd||0)}`; $$('tel-cr').className='telv y'; }
+      if(typeof setDot==='function') setDot('d-cr','g');
+      if(typeof setSf==='function') setSf('sf-cr','g');
+      if($$('cr-content')) $$('cr-content').innerHTML=renderRows(coins)+`<div style="font-size:4.5px;color:var(--al);margin-top:5px;letter-spacing:1px">COINGECKO API · LIVE · TOP 5 BY MARKET CAP · ${new Date().toLocaleTimeString()}</div>`;
+      if(typeof setBoot==='function') setBoot('bf9','OK');
+      try{localStorage.setItem('nexus_cr',JSON.stringify(coins));}catch(_){}
+      return;
+    }catch(e){ log('CoinGecko failed',e.message); }
+    // Failover: Binance public ticker
+    try{
+      const pairs=[['BTCUSDT','bitcoin','BTC','Bitcoin'],['ETHUSDT','ethereum','ETH','Ethereum'],['SOLUSDT','solana','SOL','Solana'],['ADAUSDT','cardano','ADA','Cardano'],['XRPUSDT','ripple','XRP','XRP']];
+      const out=[];
+      for(const [p,id,sym,name] of pairs){
+        try{
+          const j=await jget('https://api.binance.com/api/v3/ticker/24hr?symbol='+p);
+          out.push({id, sym, name, usd:parseFloat(j.lastPrice), chg:parseFloat(j.priceChangePercent), color:colMap[id]||'#aaa', icon:iconMap[id]||'●'});
+        }catch(_){}
+      }
+      if(out.length){
+        const btc=out.find(c=>c.id==='bitcoin')||out[0];
+        window.S=window.S||{}; S.cr={btc:btc.usd,eth:(out.find(c=>c.id==='ethereum')||{}).usd||0,btcChg:btc.chg,coins:out};
+        if($$('cr-badge')){ $$('cr-badge').textContent=`BTC $${(btc.usd/1000).toFixed(1)}K ★`; $$('cr-badge').className=`bdg ${btc.chg>=0?'bgn':'brd'}`; }
+        if($$('cr-content')) $$('cr-content').innerHTML=renderRows(out)+`<div style="font-size:4.5px;color:var(--al);margin-top:5px;letter-spacing:1px">BINANCE PUBLIC TICKER · FAILOVER MODE · ${new Date().toLocaleTimeString()}</div>`;
+        if(typeof setSf==='function') setSf('sf-cr','g');
+        if(typeof setDot==='function') setDot('d-cr','g');
+        if(typeof setBoot==='function') setBoot('bf9','OK');
+        return;
+      }
+    }catch(_){}
+    if($$('cr-badge')){ $$('cr-badge').textContent='OFFLINE'; $$('cr-badge').className='bdg brd'; }
+    if(typeof setSf==='function') setSf('sf-cr','r');
+  };
+
+  /* ── PATCH: AIRSPACE — ADSB.fi mirror failover when OpenSky rate-limits ── */
+  const _origFetchAir = window.fetchAir;
+  window.fetchAir = async function(){
+    try{ if(typeof _origFetchAir==='function') await _origFetchAir(); }catch(_){}
+    const badge=$$('air-badge');
+    if(!badge) return;
+    const txt=badge.textContent||'';
+    const need = txt==='RESTRICTED'||txt==='ERROR'||txt.includes('OFFLINE')||(window.S?.air?.count||0)===0;
+    if(!need) return;
+    try{
+      const d=await jget('https://opendata.adsb.fi/api/v2/lat/43.4/lon/-79.75/dist/50');
+      const acs=d.aircraft||[];
+      window.S=window.S||{air:{}};
+      S.air.count=acs.length;
+      S.air.list=acs.slice(0,12).map(a=>({
+        icao:a.hex, cs:(a.flight||'UNKN').trim(), country:a.r||'',
+        lat:a.lat, lon:a.lon,
+        alt:(a.alt_baro||0)*0.3048,
+        gnd:a.alt_baro==='ground',
+        spd:(a.gs||0)*1.852, hdg:a.track||0, vrt:0
+      }));
+      if($$('c-air')) $$('c-air').textContent=S.air.count;
+      if($$('air-badge')){ $$('air-badge').textContent=`${S.air.count} AIRCRAFT ★`; $$('air-badge').className='bdg bbl'; }
+      if(typeof setDot==='function') setDot('d-air','g');
+      if(typeof setSf==='function') setSf('sf-air','g');
+      if(typeof setBoot==='function') setBoot('bf3','OK');
+      if(typeof renderAir==='function') try{renderAir();}catch(_){}
+      log('Airspace ADSB.fi failover OK,',S.air.count,'tracks');
+    }catch(e){ log('ADSB.fi failover failed',e.message); }
+  };
+
+  /* ── NEW INTEL STREAMS ── */
+  window.S=window.S||{};
+
+  async function fetchNEO(){
+    try{
+      const today=new Date().toISOString().slice(0,10);
+      const d=await jget(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=DEMO_KEY`);
+      const list=d.near_earth_objects?.[today]||[];
+      const haz=list.filter(o=>o.is_potentially_hazardous_asteroid).length;
+      const closest=list.reduce((a,b)=>{
+        const ad=parseFloat(a?.close_approach_data?.[0]?.miss_distance?.kilometers||Infinity);
+        const bd=parseFloat(b?.close_approach_data?.[0]?.miss_distance?.kilometers||Infinity);
+        return bd<ad?b:a;
+      },{});
+      S.neo={count:list.length, haz, closest:closest?.name, dist:parseFloat(closest?.close_approach_data?.[0]?.miss_distance?.kilometers||0)};
+      return S.neo;
+    }catch(e){ log('NEO fail',e.message); return null; }
+  }
+  async function fetchMempool(){
+    try{
+      const [fees, mp]=await Promise.all([
+        jget('https://mempool.space/api/v1/fees/recommended'),
+        jget('https://mempool.space/api/mempool')
+      ]);
+      S.mempool={fast:fees.fastestFee, half:fees.halfHourFee, hour:fees.hourFee, eco:fees.economyFee, count:mp.count, vsize:mp.vsize};
+      return S.mempool;
+    }catch(e){ log('Mempool fail',e.message); return null; }
+  }
+  async function fetchKEV(){
+    try{
+      const d=await jget('https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json');
+      const all=d.vulnerabilities||[];
+      const cutoff=new Date(); cutoff.setDate(cutoff.getDate()-30);
+      const recent=all.filter(v=>new Date(v.dateAdded)>=cutoff);
+      S.kev={total:all.length, last30:recent.length, latest:recent.slice(-3).reverse()};
+      return S.kev;
+    }catch(e){ log('KEV fail',e.message); return null; }
+  }
+  async function fetchHN(){
+    try{
+      const ids=await jget('https://hacker-news.firebaseio.com/v0/topstories.json');
+      const top=ids.slice(0,3);
+      const stories=await Promise.all(top.map(id=>jget(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).catch(()=>null)));
+      S.hn=stories.filter(Boolean).map(s=>({title:s.title, url:s.url, score:s.score, by:s.by}));
+      return S.hn;
+    }catch(e){ log('HN fail',e.message); return null; }
+  }
+  function xrayClass(f){
+    if(!f) return '—';
+    if(f>=1e-4) return 'X'+(f/1e-4).toFixed(1);
+    if(f>=1e-5) return 'M'+(f/1e-5).toFixed(1);
+    if(f>=1e-6) return 'C'+(f/1e-6).toFixed(1);
+    if(f>=1e-7) return 'B'+(f/1e-7).toFixed(1);
+    return 'A'+(f/1e-8).toFixed(1);
+  }
+  async function fetchXray(){
+    try{
+      const d=await jget('https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json');
+      const longw=d.filter(r=>r.energy==='0.1-0.8nm');
+      const last=longw[longw.length-1];
+      S.xray={flux:last?.flux, cls:xrayClass(last?.flux), time:last?.time_tag};
+      return S.xray;
+    }catch(e){ log('Xray fail',e.message); return null; }
+  }
+  async function fetchSolarWind(){
+    try{
+      const d=await jget('https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json');
+      const last=d[d.length-1];
+      S.solarWind={density:parseFloat(last[1])||0, speed:parseFloat(last[2])||0, temp:parseFloat(last[3])||0};
+      return S.solarWind;
+    }catch(e){ return null; }
+  }
+  async function fetchFires(){
+    // NASA FIRMS active fire count globally (last 24h) via proxy
+    try{
+      const d=await jget('https://eonet.gsfc.nasa.gov/api/v3/events?category=wildfires&status=open&days=1');
+      S.fires={count:(d.events||[]).length, events:(d.events||[]).slice(0,5).map(e=>({title:e.title, cat:e.categories?.[0]?.title}))};
+      return S.fires;
+    }catch(e){ return null; }
+  }
+
+  /* ── INTEL+ TICKER ROW ── */
+  function ensureTickerRow(){
+    let el=$$('nx-intelplus-tk');
+    if(el) return el;
+    const ticker=$$('ticker'); if(!ticker) return null;
+    el=document.createElement('span');
+    el.id='nx-intelplus-tk';
+    el.className='tk-item cy';
+    el.style.color='var(--cy)';
+    el.style.fontWeight='600';
+    el.textContent='★ NEXUS+ INTEL EXPANSION INITIALIZING…';
+    ticker.appendChild(el);
+    return el;
+  }
+  function updateTickerRow(){
+    const el=ensureTickerRow(); if(!el) return;
+    const p=[];
+    if(S.neo) p.push(`NEO ${S.neo.count} TODAY · ${S.neo.haz} HAZARDOUS`);
+    if(S.mempool) p.push(`BTC FEE ${S.mempool.fast} sat/vB · ${(S.mempool.count/1000).toFixed(0)}k MEMPOOL`);
+    if(S.xray) p.push(`SOLAR X-RAY ${S.xray.cls}`);
+    if(S.solarWind) p.push(`SOLAR WIND ${Math.round(S.solarWind.speed)} km/s · ${S.solarWind.density.toFixed(1)} p/cm³`);
+    if(S.kev) p.push(`CISA KEV ${S.kev.total} (+${S.kev.last30}/30d)`);
+    if(S.fires) p.push(`ACTIVE WILDFIRES ${S.fires.count}`);
+    if(S.hn?.[0]) p.push(`HN TOP: ${S.hn[0].title.slice(0,60).toUpperCase()}`);
+    el.textContent='★ NEXUS+ · '+(p.join('  ·  ')||'STREAMING…')+' ·';
+  }
+
+  /* ── INTEL+ PANEL: inject below ticker ── */
+  function ensureIntelPanel(){
+    if($$('nx-intel-panel')) return $$('nx-intel-panel');
+    const tickerBlock=document.querySelector('.ticker');
+    if(!tickerBlock) return null;
+    const wrap=document.createElement('div');
+    wrap.id='nx-intel-panel';
+    wrap.style.cssText='display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:8px 14px;background:rgba(0,221,255,.025);border-bottom:1px solid rgba(0,221,255,.12);font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:1px';
+    wrap.innerHTML=`
+      <div data-cell="neo" style="padding:6px 8px;background:rgba(255,176,0,.04);border:1px solid rgba(255,176,0,.12);border-radius:2px">
+        <div style="font-size:5px;color:var(--al);letter-spacing:2px">☄ NEO TODAY</div>
+        <div id="nx-neo" style="font-size:13px;color:var(--am);font-weight:700">--</div>
+        <div id="nx-neo-sub" style="font-size:5px;color:var(--al);margin-top:2px">NASA FEED</div>
+      </div>
+      <div data-cell="btc" style="padding:6px 8px;background:rgba(247,147,26,.04);border:1px solid rgba(247,147,26,.14);border-radius:2px">
+        <div style="font-size:5px;color:var(--al);letter-spacing:2px">⚡ BTC FEE</div>
+        <div id="nx-fee" style="font-size:13px;color:#F7931A;font-weight:700">--</div>
+        <div id="nx-fee-sub" style="font-size:5px;color:var(--al);margin-top:2px">sat/vB · MEMPOOL</div>
+      </div>
+      <div data-cell="xray" style="padding:6px 8px;background:rgba(255,51,68,.04);border:1px solid rgba(255,51,68,.14);border-radius:2px">
+        <div style="font-size:5px;color:var(--al);letter-spacing:2px">☀ SOLAR X-RAY</div>
+        <div id="nx-xray" style="font-size:13px;color:var(--rd);font-weight:700">--</div>
+        <div id="nx-xray-sub" style="font-size:5px;color:var(--al);margin-top:2px">GOES-16 PRIMARY</div>
+      </div>
+      <div data-cell="sw" style="padding:6px 8px;background:rgba(204,102,255,.04);border:1px solid rgba(204,102,255,.14);border-radius:2px">
+        <div style="font-size:5px;color:var(--al);letter-spacing:2px">🌐 SOLAR WIND</div>
+        <div id="nx-sw" style="font-size:13px;color:var(--pu);font-weight:700">--</div>
+        <div id="nx-sw-sub" style="font-size:5px;color:var(--al);margin-top:2px">km/s · DENSITY</div>
+      </div>
+      <div data-cell="kev" style="padding:6px 8px;background:rgba(255,51,68,.04);border:1px solid rgba(255,51,68,.14);border-radius:2px">
+        <div style="font-size:5px;color:var(--al);letter-spacing:2px">🛡 CISA KEV</div>
+        <div id="nx-kev" style="font-size:13px;color:var(--rd);font-weight:700">--</div>
+        <div id="nx-kev-sub" style="font-size:5px;color:var(--al);margin-top:2px">EXPLOITED CVEs</div>
+      </div>
+      <div data-cell="hn" style="padding:6px 8px;background:rgba(0,255,136,.03);border:1px solid rgba(0,255,136,.14);border-radius:2px;overflow:hidden">
+        <div style="font-size:5px;color:var(--al);letter-spacing:2px">📰 HN TOP</div>
+        <div id="nx-hn" style="font-size:7px;color:var(--gn);font-weight:600;line-height:1.2;max-height:24px;overflow:hidden">acquiring…</div>
+        <div id="nx-hn-sub" style="font-size:5px;color:var(--al);margin-top:2px">YCOMBINATOR</div>
+      </div>`;
+    tickerBlock.parentNode.insertBefore(wrap, tickerBlock.nextSibling);
+    return wrap;
+  }
+  function updateIntelPanel(){
+    ensureIntelPanel();
+    if(S.neo){
+      $$('nx-neo').textContent=S.neo.count;
+      $$('nx-neo-sub').textContent=`${S.neo.haz} HAZARDOUS · CLOSEST ${S.neo.dist?(S.neo.dist/1000).toFixed(0)+'k km':'—'}`;
+    }
+    if(S.mempool){
+      $$('nx-fee').textContent=`${S.mempool.fast}`;
+      $$('nx-fee-sub').textContent=`${S.mempool.fast}/${S.mempool.half}/${S.mempool.hour} F/H/L · ${(S.mempool.count/1000).toFixed(1)}k TX`;
+    }
+    if(S.xray){
+      $$('nx-xray').textContent=S.xray.cls;
+      const t=S.xray.time?new Date(S.xray.time).toLocaleTimeString():'—';
+      $$('nx-xray-sub').textContent=`${S.xray.flux?S.xray.flux.toExponential(2):'—'} W/m² · ${t}`;
+    }
+    if(S.solarWind){
+      $$('nx-sw').textContent=Math.round(S.solarWind.speed);
+      $$('nx-sw-sub').textContent=`km/s · ${S.solarWind.density.toFixed(1)} p/cm³ · ${(S.solarWind.temp/1e5).toFixed(1)}×10⁵ K`;
+    }
+    if(S.kev){
+      $$('nx-kev').textContent=S.kev.total;
+      $$('nx-kev-sub').textContent=`+${S.kev.last30} ADDED 30d · ${S.kev.latest?.[0]?.cveID||''}`;
+    }
+    if(S.hn?.[0]){
+      $$('nx-hn').textContent=S.hn[0].title;
+      $$('nx-hn-sub').textContent=`▲ ${S.hn[0].score} · ${S.hn[0].by||'anon'}`;
+    }
+  }
+
+  /* ── AUTO-RECOVERY: re-fire any stuck feed every 45s ── */
+  function autoRecover(){
+    const lines=document.querySelectorAll('.bfl');
+    lines.forEach(el=>{
+      const t=el.textContent||'';
+      if(t==='PENDING'||t==='ERR'||t.includes('FAIL')){
+        const map={
+          bf1:'fetchGeo', bf3:'fetchAir', bf6:'fetchISS',
+          bf9:'fetchCrypto', bf10:'fetchFX',
+          bf2:'fetchEQ', bf4:'fetchSpaceWx', bf7:'fetchPower'
+        };
+        const fn=map[el.id];
+        if(fn && typeof window[fn]==='function'){
+          log('Auto-recover →',fn);
+          try{ window[fn](); }catch(_){}
+        }
+      }
+    });
+    // Camera retry: any stuck >5s in loading
+    if(typeof CAM_ST==='object' && typeof retryCam==='function'){
+      const stuck=Object.entries(CAM_ST).filter(([,s])=>s==='ld');
+      if(stuck.length>5){
+        stuck.slice(0,8).forEach(([id],i)=>setTimeout(()=>{try{retryCam(parseInt(id));}catch(_){}},i*100));
+      }
+    }
+  }
+
+  /* ── BOOT ── */
+  function boot(){
+    log('Initializing patch v12.1 …');
+    ensureIntelPanel();
+    ensureTickerRow();
+    // Re-run the patched fetchers immediately
+    try{ window.fetchISS(); }catch(_){}
+    try{ window.fetchCrypto(); }catch(_){}
+    setTimeout(()=>{ try{ window.fetchAir(); }catch(_){} }, 2500);
+
+    Promise.allSettled([fetchNEO(),fetchMempool(),fetchKEV(),fetchHN(),fetchXray(),fetchSolarWind(),fetchFires()])
+      .then(()=>{ updateIntelPanel(); updateTickerRow(); });
+
+    // Periodic refresh schedule
+    setInterval(()=>fetchMempool().then(updateIntelPanel),  60*1000);
+    setInterval(()=>fetchXray().then(updateIntelPanel),    120*1000);
+    setInterval(()=>fetchSolarWind().then(updateIntelPanel),120*1000);
+    setInterval(()=>fetchHN().then(updateIntelPanel),      5*60*1000);
+    setInterval(()=>fetchKEV().then(updateIntelPanel),    60*60*1000);
+    setInterval(()=>fetchNEO().then(updateIntelPanel),  6*60*60*1000);
+    setInterval(()=>fetchFires().then(updateIntelPanel),  15*60*1000);
+    setInterval(updateTickerRow, 10*1000);
+    setInterval(autoRecover, 45*1000);
+
+    // Stamp version into header subtitle
+    const sub=document.querySelector('.tk-item.hi');
+    if(sub && !sub.textContent.includes('v12.1')) sub.textContent=sub.textContent.replace('v12','v12.1 [PATCHED]');
+    log('NEXUS+ v12.1 online — 7 new intel streams + auto-recovery active');
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,1800));
+  } else {
+    setTimeout(boot,1800);
+  }
+})();
+</script>
 </body>
 </html>

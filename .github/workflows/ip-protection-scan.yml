@@ -19,7 +19,7 @@ jobs:
     name: IP Risk Assessment
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -36,6 +36,10 @@ jobs:
           fi
 
       - name: Dependency Review
+        # Requires GitHub Advanced Security / Dependency Graph to be enabled
+        # at the repository level. Soft-fail here so missing repo configuration
+        # does not block the IP risk assessment job; surface as a warning instead.
+        continue-on-error: true
         uses: actions/dependency-review-action@v5
         with:
           fail-on-severity: critical
@@ -90,7 +94,7 @@ jobs:
         shell: bash
 
       - name: Upload Report Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ip-risk-report-${{ github.run_id }}
           path: ip-risk-report.md

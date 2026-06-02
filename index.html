@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+/* ClearGlass loader gate — show cinematic loader once per session.
+   Opt out: ?noloader=1, prior session, reduced-motion, or hash. */
+(function(){
+  try{
+    var q = window.location.search || '';
+    var h = window.location.hash || '';
+    if (/noloader|skip/i.test(q+h)) return;
+    if (sessionStorage.getItem('clearglass.loader.seen')) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (document.referrer && /clearglassinc\.github\.io/.test(document.referrer)) return;
+    sessionStorage.setItem('clearglass.loader.seen','1');
+    window.location.replace('cg-loader.html?next=index.html');
+  }catch(e){}
+})();
+</script>
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>

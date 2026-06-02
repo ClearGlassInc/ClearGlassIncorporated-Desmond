@@ -76,6 +76,7 @@ jobs:
           echo "$FILES" | grep -q '^infra/'            && add_label "area:infra"     "e11d48"
           echo "$FILES" | grep -q '^deployment/'       && add_label "area:deploy"    "cc317c"
           echo "$FILES" | grep -q '^services/'         && add_label "area:services"  "7057ff"
+          true  # the last grep may return 1 (no match) — ensure step always exits 0
 
       - name: Post checklist on first open
         if: github.event.action == 'opened'

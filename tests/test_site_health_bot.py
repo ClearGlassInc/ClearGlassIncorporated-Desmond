@@ -7,18 +7,15 @@ import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from bots.site_health_bot import (
+from bots.site_health_bot import (  # noqa: E402
     PAGES_TO_CHECK,
     REQUIRED_ROOT_FILES,
     PageHealth,
     _check_local_files,
     _check_page,
-    run,
 )
 
 

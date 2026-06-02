@@ -23,9 +23,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Secret Scanning
-        uses: github/secret-scanning-push-protection/action@v1
+      - name: Secret Pattern Scan
         continue-on-error: true
+        run: |
+          # Scan recent commit patches for common credential patterns.
+          # Non-blocking (continue-on-error) — a finding flags for review, not a hard block.
+          if git log --patch --since="7 days ago" | \
+              grep -qiE '(api[_-]?key|secret[_-]?key|password|private[_-]?key)\s*[:=]\s*["\x27][^"x27]{8,}'; then
+            echo "::warning::Potential credential pattern detected in recent commits — review git history"
+          else
+            echo "Secret pattern scan: no credential patterns detected"
+          fi
 
       - name: Dependency Review
         uses: actions/dependency-review-action@v5
@@ -90,7 +98,7 @@ jobs:
 
       - name: Create Issue on Failure (scheduled runs)
         if: failure() && github.event_name == 'schedule'
-        uses: actions-ecosystem/action-create-issue@v2
+        uses: actions-ecosystem/action-create-issue@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           title: "IP Risk Alert: ${{ github.repository }}"

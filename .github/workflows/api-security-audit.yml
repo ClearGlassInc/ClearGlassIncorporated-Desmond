@@ -29,10 +29,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v5
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -62,14 +62,14 @@ jobs:
         continue-on-error: true  # always upload artifacts even on failure
 
       - name: Upload JSON report
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: api-audit-report-${{ github.run_id }}
           path: audit-reports/api_audit_*.json
           retention-days: 90
 
       - name: Upload CSV report
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: api-audit-csv-${{ github.run_id }}
           path: audit-reports/api_audit_*.csv

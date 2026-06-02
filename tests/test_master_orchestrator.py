@@ -6,12 +6,11 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from bots.master_orchestrator import DEPENDENCY_GRAPH, _topo_sort
+from bots.master_orchestrator import DEPENDENCY_GRAPH, _topo_sort  # noqa: E402
 
 
 class TestTopoSort:

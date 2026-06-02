@@ -20,7 +20,7 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v5
       - uses: actions/dependency-review-action@v5
         # The dependency graph compare API can return a non-200 for
         # bot-generated PR branches (and the action throws on it), which was
@@ -38,7 +38,7 @@ jobs:
     name: Secret Pattern Scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Detect hardcoded secrets
@@ -90,8 +90,8 @@ jobs:
     name: Workflow YAML Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip

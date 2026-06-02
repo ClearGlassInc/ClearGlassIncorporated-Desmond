@@ -66,13 +66,10 @@ class TestResult:
 def _request(method: str, url: str, headers: dict, timeout: int = 10) -> tuple[int, int, str]:
     req = urllib.request.Request(url, method=method, headers=headers)
     try:
-        start = time.monotonic()
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             body = resp.read(4096)
-            elapsed = (time.monotonic() - start) * 1000
             return resp.status, len(body), body.decode("utf-8", errors="replace")[:512]
     except urllib.error.HTTPError as e:
-        elapsed = (time.monotonic() - start) * 1000
         body = e.read(512)
         return e.code, len(body), body.decode("utf-8", errors="replace")[:512]
     except urllib.error.URLError as e:
@@ -368,7 +365,7 @@ def main():
 
     failures = report["summary"]["failed"]
     risk = report["summary"]["risk_rating"]
-    print(f"\n── Scan complete ──")
+    print("\n── Scan complete ──")
     print(f"   Tests: {report['summary']['total_tests']} | "
           f"Passed: {report['summary']['passed']} | "
           f"Failed: {failures}")

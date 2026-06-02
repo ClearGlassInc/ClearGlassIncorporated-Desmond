@@ -67,15 +67,16 @@ jobs:
             gh label create "$lbl" --repo "$GH_REPO" --color "$color" 2>/dev/null || true
             gh pr edit "$PR_NUMBER" --repo "$GH_REPO" --add-label "$lbl" 2>/dev/null || true
           }
-          echo "$FILES" | grep -q '\.github/workflows/' && add_label "area:workflows" "e4e669" || true
-          echo "$FILES" | grep -q '^bots/'             && add_label "area:bots"      "bfd4f2" || true
-          echo "$FILES" | grep -q '^scripts/'          && add_label "area:scripts"   "d4c5f9" || true
-          echo "$FILES" | grep -q '^tests/'            && add_label "area:tests"     "c2e0c6" || true
-          echo "$FILES" | grep -q '^docs/'             && add_label "area:docs"      "fef2c0" || true
-          echo "$FILES" | grep -q '\.html$'            && add_label "area:site"      "f9d0c4" || true
-          echo "$FILES" | grep -q '^infra/'            && add_label "area:infra"     "e11d48" || true
-          echo "$FILES" | grep -q '^deployment/'       && add_label "area:deploy"    "cc317c" || true
-          echo "$FILES" | grep -q '^services/'         && add_label "area:services"  "7057ff" || true
+          echo "$FILES" | grep -q '\.github/workflows/' && add_label "area:workflows" "e4e669"
+          echo "$FILES" | grep -q '^bots/'             && add_label "area:bots"      "bfd4f2"
+          echo "$FILES" | grep -q '^scripts/'          && add_label "area:scripts"   "d4c5f9"
+          echo "$FILES" | grep -q '^tests/'            && add_label "area:tests"     "c2e0c6"
+          echo "$FILES" | grep -q '^docs/'             && add_label "area:docs"      "fef2c0"
+          echo "$FILES" | grep -q '\.html$'            && add_label "area:site"      "f9d0c4"
+          echo "$FILES" | grep -q '^infra/'            && add_label "area:infra"     "e11d48"
+          echo "$FILES" | grep -q '^deployment/'       && add_label "area:deploy"    "cc317c"
+          echo "$FILES" | grep -q '^services/'         && add_label "area:services"  "7057ff"
+          true  # the last grep may return 1 (no match) — ensure step always exits 0
 
       - name: Post checklist on first open
         if: github.event.action == 'opened'

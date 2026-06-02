@@ -5954,5 +5954,514 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     NEXUS v12.2 — CG CRIMSON LOADER + FEED HARDENING
+     - Injects ClearGlass Command Interface splash (crimson neon)
+     - Patches FX with multi-source failover (Frankfurter → exchangerate → currency-api)
+     - Adds proxy-mode failover for ISS / Crypto / Geo when direct CORS fails
+     - Forces map redraw with provider chain (OSM → Carto → Esri)
+     ═══════════════════════════════════════════════════════════════════ -->
+<style id="cg-loader-style">
+#cg-loader,#cg-loader *,#cg-loader *::before,#cg-loader *::after{box-sizing:border-box;}
+#cg-loader{
+  position:fixed;inset:0;z-index:999999;
+  background:#040206;color:#F5E8DD;
+  font-family:'Syne',sans-serif;
+  overflow:hidden;cursor:default;
+  opacity:1;transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+#cg-loader.cg-out{opacity:0;pointer-events:none;}
+#cg-loader .cg-grain{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity:0.7;mix-blend-mode:overlay;
+}
+#cg-loader .cg-vignette{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 30%,rgba(4,2,6,0.7) 100%);
+}
+#cg-loader .cg-scan{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;}
+#cg-loader .cg-scan::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,27,61,0.022) 2px,rgba(255,27,61,0.022) 3px);
+  animation:cgScanDrift 14s linear infinite;
+}
+#cg-loader .cg-scan::after{
+  content:'';position:absolute;top:-50%;left:0;right:0;height:60%;
+  background:linear-gradient(180deg,transparent 0%,rgba(255,27,61,0.025) 50%,transparent 100%);
+  animation:cgScanSweep 7s ease-in-out infinite;
+}
+@keyframes cgScanDrift{to{background-position:0 80px}}
+@keyframes cgScanSweep{0%,100%{top:-60%}50%{top:120%}}
+#cg-loader .cg-ambient{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:900px;height:900px;border-radius:50%;
+  z-index:0;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,27,61,0.10) 0%,rgba(179,14,42,0.04) 30%,transparent 60%);
+  filter:blur(40px);animation:cgAmbient 6s ease-in-out infinite;
+}
+@keyframes cgAmbient{0%,100%{opacity:0.85;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.06);}}
+#cg-loader .cg-grid{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(rgba(255,27,61,0.025) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(255,27,61,0.025) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black 30%,transparent 75%);
+          mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black 30%,transparent 75%);
+}
+#cg-loader .cg-stage{position:relative;z-index:5;width:100%;height:100vh;display:flex;flex-direction:column;padding:36px 48px;}
+#cg-loader .cg-top{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.32em;
+  color:rgba(245,232,221,0.32);text-transform:uppercase;
+  opacity:0;animation:cgFadeIn 1s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+}
+@keyframes cgFadeIn{to{opacity:1;}}
+#cg-loader .cg-tl{display:flex;align-items:center;gap:14px;}
+#cg-loader .cg-tag{padding:4px 10px;border:1px solid rgba(255,27,61,0.22);background:rgba(255,27,61,0.12);color:#FF4060;letter-spacing:0.28em;font-size:9px;}
+#cg-loader .cg-cls{display:flex;align-items:center;gap:8px;color:#FF4060;}
+#cg-loader .cg-cls::before{content:'';width:6px;height:6px;background:#FF1B3D;box-shadow:0 0 8px rgba(255,27,61,0.45);animation:cgOpPulse 1.4s ease-in-out infinite;}
+@keyframes cgOpPulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+#cg-loader .cg-tr{display:flex;gap:24px;align-items:center;}
+#cg-loader .cg-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+#cg-loader .cg-meta .v{color:#F5E8DD;letter-spacing:0.24em;font-size:9px;}
+#cg-loader .cg-meta .l{color:rgba(245,232,221,0.32);letter-spacing:0.32em;font-size:8px;}
+#cg-loader .cg-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;position:relative;}
+#cg-loader .cg-hex-wrap{position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center;}
+#cg-loader .cg-marks{position:absolute;inset:-40px;animation:cgRot 60s linear infinite,cgFadeIn 1.2s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;opacity:0;}
+@keyframes cgRot{to{transform:rotate(360deg);}}
+#cg-loader .cg-hex{
+  width:240px;height:240px;
+  filter:drop-shadow(0 0 24px rgba(255,27,61,0.32)) drop-shadow(0 0 60px rgba(255,27,61,0.12));
+  opacity:0;animation:cgLogoEnter 1.4s cubic-bezier(0.16,1,0.3,1) 0.5s forwards, cgFlicker 5s ease-in-out 2s infinite;
+}
+@keyframes cgLogoEnter{0%{opacity:0;transform:scale(0.85);}100%{opacity:1;transform:scale(1);}}
+@keyframes cgFlicker{0%,90%,100%{opacity:1;}92%{opacity:0.78;}94%{opacity:1;}95%{opacity:0.86;}96%{opacity:1;}}
+#cg-loader .cg-mono{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:54px;font-weight:800;letter-spacing:-0.04em;color:#F5E8DD;
+  text-shadow:0 0 12px rgba(255,27,61,0.45),0 0 32px rgba(255,27,61,0.18);
+  opacity:0;animation:cgFadeIn 1s cubic-bezier(0.16,1,0.3,1) 1.2s forwards,cgFlicker 5s ease-in-out 2s infinite;
+}
+#cg-loader .cg-br{position:absolute;width:28px;height:28px;border:1px solid #FF1B3D;opacity:0;animation:cgFadeIn 0.6s cubic-bezier(0.16,1,0.3,1) 1.4s forwards;}
+#cg-loader .cg-br.tl{top:-8px;left:-8px;border-right:none;border-bottom:none;}
+#cg-loader .cg-br.tr{top:-8px;right:-8px;border-left:none;border-bottom:none;}
+#cg-loader .cg-br.bl{bottom:-8px;left:-8px;border-right:none;border-top:none;}
+#cg-loader .cg-br.br{bottom:-8px;right:-8px;border-left:none;border-top:none;}
+#cg-loader .cg-ring{position:absolute;border:1px solid #FF1B3D;border-radius:50%;pointer-events:none;animation:cgRing 3.5s cubic-bezier(0.16,1,0.3,1) infinite;width:200px;height:200px;}
+#cg-loader .cg-ring.r2{animation-delay:1.2s;}
+#cg-loader .cg-ring.r3{animation-delay:2.4s;}
+@keyframes cgRing{0%{opacity:0.6;transform:scale(0.95);}100%{opacity:0;transform:scale(1.7);}}
+#cg-loader .cg-brand{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;}
+#cg-loader .cg-name{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;letter-spacing:-0.04em;color:#F5E8DD;opacity:0;transform:translateY(8px);animation:cgFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 1.4s forwards;}
+#cg-loader .cg-name span{color:#FF4060;}
+@keyframes cgFadeUp{to{opacity:1;transform:translateY(0);}}
+#cg-loader .cg-subtag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.42em;color:#FF4060;text-transform:uppercase;display:flex;align-items:center;gap:14px;opacity:0;animation:cgFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 1.6s forwards;}
+#cg-loader .cg-subtag::before,#cg-loader .cg-subtag::after{content:'';width:32px;height:1px;background:rgba(255,27,61,0.22);}
+#cg-loader .cg-pblock{display:flex;flex-direction:column;align-items:center;gap:18px;width:min(420px,80vw);opacity:0;animation:cgFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 1.8s forwards;}
+#cg-loader .cg-rail{position:relative;width:100%;height:1px;background:rgba(255,27,61,0.10);}
+#cg-loader .cg-fill{position:absolute;top:0;left:0;height:100%;width:0%;background:linear-gradient(90deg,#B30E2A,#FF1B3D,#FF4060);box-shadow:0 0 12px rgba(255,27,61,0.45),0 0 24px rgba(255,27,61,0.2);transition:width 0.18s linear;}
+#cg-loader .cg-fill::after{content:'';position:absolute;right:-3px;top:-3px;width:7px;height:7px;border-radius:50%;background:#FF4060;box-shadow:0 0 12px #FF1B3D,0 0 24px rgba(255,27,61,0.45);}
+#cg-loader .cg-pmeta{display:flex;justify-content:space-between;align-items:center;width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.28em;text-transform:uppercase;}
+#cg-loader .cg-plabel{color:rgba(245,232,221,0.32);display:flex;align-items:center;gap:9px;}
+#cg-loader .cg-plabel::before{content:'';width:5px;height:5px;background:#FF1B3D;box-shadow:0 0 6px rgba(255,27,61,0.45);animation:cgOpPulse 1.4s ease-in-out infinite;}
+#cg-loader .cg-ppct{color:#F5E8DD;font-weight:500;letter-spacing:0.15em;}
+#cg-loader .cg-status{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.24em;color:rgba(245,232,221,0.32);text-transform:uppercase;min-height:14px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;}
+#cg-loader .cg-status .d{width:4px;height:4px;background:#FF1B3D;border-radius:50%;box-shadow:0 0 6px rgba(255,27,61,0.45);}
+#cg-loader .cg-bot{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.28em;color:rgba(245,232,221,0.32);text-transform:uppercase;opacity:0;animation:cgFadeIn 1s cubic-bezier(0.16,1,0.3,1) 2s forwards;}
+#cg-loader .cg-bc{display:flex;flex-direction:column;gap:6px;padding:14px 0;border-top:1px solid rgba(255,27,61,0.10);}
+#cg-loader .cg-bc:nth-child(2){text-align:center;align-items:center;}
+#cg-loader .cg-bc:nth-child(3){text-align:right;align-items:flex-end;}
+#cg-loader .cg-bl{color:rgba(245,232,221,0.32);letter-spacing:0.34em;font-size:8px;}
+#cg-loader .cg-bv{color:#F5E8DD;letter-spacing:0.16em;font-size:10px;font-weight:500;}
+#cg-loader .cg-bv.ok{color:#FF4060;}
+#cg-loader .cg-energy{position:absolute;bottom:120px;left:48px;right:48px;height:1px;background:rgba(255,27,61,0.08);overflow:hidden;}
+#cg-loader .cg-energy::before{content:'';position:absolute;top:0;left:0;width:25%;height:100%;background:linear-gradient(90deg,transparent,#FF1B3D,transparent);animation:cgSweep 3s ease-in-out infinite;}
+@keyframes cgSweep{0%{left:-25%;}100%{left:100%;}}
+#cg-loader .cg-side{position:absolute;z-index:4;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.32em;color:rgba(245,232,221,0.32);text-transform:uppercase;opacity:0;animation:cgFadeIn 1.2s cubic-bezier(0.16,1,0.3,1) 2.2s forwards;}
+#cg-loader .cg-side.l{left:18px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;}
+#cg-loader .cg-side.r{right:18px;top:50%;transform:translateY(-50%) rotate(90deg);transform-origin:right center;}
+#cg-loader .cg-side .acc{color:#FF4060;}
+@media(max-width:768px){
+  #cg-loader .cg-stage{padding:24px 20px;}
+  #cg-loader .cg-hex-wrap{width:180px;height:180px;}
+  #cg-loader .cg-hex{width:180px;height:180px;}
+  #cg-loader .cg-mono{font-size:42px;}
+  #cg-loader .cg-name{font-size:30px;}
+  #cg-loader .cg-ring{width:160px;height:160px;}
+  #cg-loader .cg-bot{grid-template-columns:1fr;gap:8px;font-size:8px;}
+  #cg-loader .cg-bc:nth-child(2),#cg-loader .cg-bc:nth-child(3){text-align:left;align-items:flex-start;}
+  #cg-loader .cg-energy{display:none;}#cg-loader .cg-side{display:none;}
+  #cg-loader .cg-center{gap:32px;}
+}
+</style>
+
+<script>
+(()=>{
+  if(window.__CG_LOADER_INJECTED) return;
+  window.__CG_LOADER_INJECTED=true;
+
+  // Hide the legacy NEXUS boot splash immediately - CG loader replaces it
+  const legacy=document.getElementById('boot-splash');
+  if(legacy){ legacy.style.display='none'; }
+
+  const sessionId='CG-'+Array.from({length:4},()=>'0123456789ABCDEF'[Math.floor(Math.random()*16)]).join('')+'-'+Array.from({length:4},()=>'0123456789ABCDEF'[Math.floor(Math.random()*16)]).join('');
+
+  const html=`
+  <div class="cg-grid"></div><div class="cg-ambient"></div><div class="cg-grain"></div><div class="cg-vignette"></div><div class="cg-scan"></div>
+  <div class="cg-side l">CLEARGLASS &nbsp;//&nbsp; <span class="acc">SECURE CHANNEL</span> &nbsp;//&nbsp; ENC-AES-256-GCM</div>
+  <div class="cg-side r">ONTARIO COMMAND &nbsp;//&nbsp; <span class="acc">TIER-1</span> &nbsp;//&nbsp; OPS NORMAL</div>
+  <div class="cg-stage">
+    <div class="cg-top">
+      <div class="cg-tl"><span class="cg-tag">CG//SI//NF</span><span class="cg-cls">CLASSIFIED · COMMAND INTERFACE</span></div>
+      <div class="cg-tr">
+        <div class="cg-meta"><span class="l">Session</span><span class="v" id="cgSession">${sessionId}</span></div>
+        <div class="cg-meta"><span class="l">UTC</span><span class="v" id="cgUtc">00:00:00</span></div>
+      </div>
+    </div>
+    <div class="cg-center">
+      <div class="cg-hex-wrap">
+        <div class="cg-br tl"></div><div class="cg-br tr"></div><div class="cg-br bl"></div><div class="cg-br br"></div>
+        <svg class="cg-marks" viewBox="0 0 320 320"><g stroke="rgba(255,27,61,0.4)" stroke-width="1" fill="none" id="cgTicks"></g></svg>
+        <div class="cg-ring r1"></div><div class="cg-ring r2"></div><div class="cg-ring r3"></div>
+        <svg class="cg-hex" viewBox="0 0 240 240">
+          <defs>
+            <linearGradient id="cgGrad" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#FF4060"/><stop offset="50%" stop-color="#FF1B3D"/><stop offset="100%" stop-color="#B30E2A"/>
+            </linearGradient>
+            <linearGradient id="cgFill" x1="0" y1="0" x2="0" y2="240" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="rgba(255,27,61,0.08)"/><stop offset="100%" stop-color="rgba(255,27,61,0.02)"/>
+            </linearGradient>
+            <filter id="cgGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <polygon points="120,8 215,64 215,176 120,232 25,176 25,64" fill="url(#cgFill)" stroke="url(#cgGrad)" stroke-width="2" filter="url(#cgGlow)" stroke-dasharray="650" stroke-dashoffset="650">
+            <animate attributeName="stroke-dashoffset" from="650" to="0" dur="1.4s" begin="0.5s" fill="freeze"/>
+          </polygon>
+          <polygon points="120,28 198,72 198,168 120,212 42,168 42,72" fill="none" stroke="rgba(255,27,61,0.3)" stroke-width="1" stroke-dasharray="520" stroke-dashoffset="520">
+            <animate attributeName="stroke-dashoffset" from="520" to="0" dur="1.2s" begin="0.8s" fill="freeze"/>
+          </polygon>
+          <g stroke="rgba(255,27,61,0.2)" stroke-width="1" stroke-dasharray="2 4">
+            <line x1="120" y1="40" x2="120" y2="80" opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/></line>
+            <line x1="120" y1="160" x2="120" y2="200" opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/></line>
+            <line x1="40" y1="120" x2="80" y2="120" opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/></line>
+            <line x1="160" y1="120" x2="200" y2="120" opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/></line>
+          </g>
+          <circle cx="120" cy="120" r="2" fill="#FF1B3D" opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.6s" fill="freeze"/></circle>
+        </svg>
+        <div class="cg-mono">CG</div>
+      </div>
+      <div class="cg-brand"><div class="cg-name">Clear<span>Glass</span></div><div class="cg-subtag">Intelligence Command Interface</div></div>
+      <div class="cg-pblock">
+        <div class="cg-rail"><div class="cg-fill" id="cgFill"></div></div>
+        <div class="cg-pmeta"><span class="cg-plabel" id="cgLabel">Initializing</span><span class="cg-ppct" id="cgPct">000%</span></div>
+        <div class="cg-status"><span class="d"></span><span id="cgMsg">Establishing secure channel</span></div>
+      </div>
+    </div>
+    <div class="cg-energy"></div>
+    <div class="cg-bot">
+      <div class="cg-bc"><span class="cg-bl">Node</span><span class="cg-bv">CG-ONT-BURL-01</span></div>
+      <div class="cg-bc"><span class="cg-bl">Encryption</span><span class="cg-bv ok">AES-256-GCM · KYBER</span></div>
+      <div class="cg-bc"><span class="cg-bl">Build</span><span class="cg-bv">NEXUS v12.2 · 2026.06</span></div>
+    </div>
+  </div>`;
+
+  const root=document.createElement('div');
+  root.id='cg-loader';
+  root.innerHTML=html;
+  document.body.appendChild(root);
+
+  // Tick marks
+  const tg=root.querySelector('#cgTicks');
+  if(tg){
+    const ns='http://www.w3.org/2000/svg';
+    const cx=160,cy=160,rOuter=156,rInner=148,rLong=140,count=32;
+    for(let i=0;i<count;i++){
+      const a=(i/count)*Math.PI*2,major=i%4===0,r2=major?rLong:rInner;
+      const ln=document.createElementNS(ns,'line');
+      ln.setAttribute('x1',cx+Math.cos(a)*rOuter);
+      ln.setAttribute('y1',cy+Math.sin(a)*rOuter);
+      ln.setAttribute('x2',cx+Math.cos(a)*r2);
+      ln.setAttribute('y2',cy+Math.sin(a)*r2);
+      ln.setAttribute('stroke-width',major?'1.5':'1');
+      ln.setAttribute('opacity',major?'0.7':'0.3');
+      tg.appendChild(ln);
+    }
+  }
+
+  // UTC clock
+  function tick(){
+    const d=new Date();
+    const el=root.querySelector('#cgUtc');
+    if(el) el.textContent=`${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
+  }
+  tick(); const cgClock=setInterval(tick,1000);
+
+  // Stage sequence
+  const stages=[
+    {pct:8,msg:'Establishing secure channel',label:'Initializing'},
+    {pct:18,msg:'Verifying cryptographic handshake',label:'Authenticating'},
+    {pct:30,msg:'Loading neural threat models · v47',label:'Loading'},
+    {pct:44,msg:'Synchronising intelligence feeds',label:'Syncing'},
+    {pct:58,msg:'Calibrating quantum-resistant keys',label:'Calibrating'},
+    {pct:72,msg:'Mounting Ontario sector telemetry',label:'Mounting'},
+    {pct:84,msg:'Engaging zero-trust policy engine',label:'Engaging'},
+    {pct:94,msg:'Final integrity verification',label:'Verifying'},
+    {pct:100,msg:'All systems operational · ready',label:'Ready'},
+  ];
+  const fillEl=root.querySelector('#cgFill');
+  const pctEl=root.querySelector('#cgPct');
+  const labelEl=root.querySelector('#cgLabel');
+  const msgEl=root.querySelector('#cgMsg');
+  let cur=0,idx=0;
+
+  setTimeout(()=>{
+    function nxt(){
+      if(idx>=stages.length){
+        setTimeout(()=>{
+          root.classList.add('cg-out');
+          window.dispatchEvent(new CustomEvent('clearglass:ready'));
+          setTimeout(()=>{ root.remove(); clearInterval(cgClock); },1000);
+        },1200);
+        return;
+      }
+      const st=stages[idx],start=cur,delta=st.pct-start,dur=550+Math.random()*350,t0=performance.now();
+      labelEl.textContent=st.label; msgEl.textContent=st.msg;
+      function step(now){
+        const t=Math.min((now-t0)/dur,1),e=1-Math.pow(1-t,3);
+        cur=start+delta*e;
+        fillEl.style.width=cur+'%';
+        pctEl.textContent=String(Math.floor(cur)).padStart(3,'0')+'%';
+        if(t<1) requestAnimationFrame(step);
+        else{ cur=st.pct; idx++; setTimeout(nxt,150+Math.random()*200); }
+      }
+      requestAnimationFrame(step);
+    }
+    nxt();
+  },1200);
+})();
+</script>
+
+<script>
+/* ── PATCH v12.2 — FEED HARDENING ── */
+(()=>{
+  if(window.__NEXUS_PATCH_22) return;
+  window.__NEXUS_PATCH_22=true;
+  const log=(...a)=>{try{console.log('%c[NEXUS+22]','color:#FF4060;font-weight:700',...a);}catch(_){}};
+  const $$=id=>document.getElementById(id);
+  const PROXIES=[
+    u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),
+    u=>'https://corsproxy.io/?'+encodeURIComponent(u),
+    u=>'https://cors.eu.org/'+u,
+  ];
+  async function jraw(url, ms=8000){
+    const c=new AbortController(); const t=setTimeout(()=>c.abort(),ms);
+    try{
+      const r=await fetch(url,{signal:c.signal,cache:'no-store'});
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return await r.json();
+    } finally { clearTimeout(t); }
+  }
+  async function jany(url){
+    try{ return await jraw(url); }catch(e){ log('direct fail',url.slice(0,60),e.message); }
+    for(const p of PROXIES){
+      try{ return await jraw(p(url),10000); }
+      catch(e){ log('proxy fail',e.message); }
+    }
+    throw new Error('all sources failed for '+url.slice(0,60));
+  }
+  window.__nxJany = jany;
+
+  /* PATCH FX with multiple sources */
+  window.fetchFX = async function(){
+    if(typeof setSf==='function') setSf('sf-fx','o');
+    let rates=null, src='';
+    // Try Frankfurter
+    try{
+      const d=await jany('https://api.frankfurter.app/latest?from=USD&to=CAD,EUR,GBP,JPY,CHF,AUD,MXN,CNY,HKD,SEK');
+      rates=d.rates; src='FRANKFURTER';
+    }catch(_){}
+    // Try open.er-api.com
+    if(!rates){
+      try{
+        const d=await jany('https://open.er-api.com/v6/latest/USD');
+        if(d.rates){ rates={CAD:d.rates.CAD,EUR:d.rates.EUR,GBP:d.rates.GBP,JPY:d.rates.JPY,CHF:d.rates.CHF,AUD:d.rates.AUD,MXN:d.rates.MXN,CNY:d.rates.CNY,HKD:d.rates.HKD,SEK:d.rates.SEK}; src='OPEN-ER-API'; }
+      }catch(_){}
+    }
+    // Try fawazahmed0 currency-api (jsDelivr CDN)
+    if(!rates){
+      try{
+        const d=await jany('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json');
+        const u=d.usd||{};
+        rates={CAD:u.cad,EUR:u.eur,GBP:u.gbp,JPY:u.jpy,CHF:u.chf,AUD:u.aud,MXN:u.mxn,CNY:u.cny,HKD:u.hkd,SEK:u.sek};
+        src='FAWAZAHMED0';
+      }catch(_){}
+    }
+    if(!rates){
+      if($$('fx-badge')){ $$('fx-badge').textContent='OFFLINE'; $$('fx-badge').className='bdg brd'; }
+      if(typeof setSf==='function') setSf('sf-fx','r');
+      return;
+    }
+    window.S=window.S||{}; S.fx={usdcad:rates.CAD||1.36,...rates};
+    if($$('c-fx'))$$('c-fx').textContent=(rates.CAD||1.36).toFixed(4);
+    if($$('fx-badge')){ $$('fx-badge').textContent=`USD/CAD ${(rates.CAD||1.36).toFixed(4)}`; $$('fx-badge').className='bdg bgn'; }
+    if($$('tel-fx')){ $$('tel-fx').textContent=`CAD ${(rates.CAD||0).toFixed(4)} | EUR ${(rates.EUR||0).toFixed(4)} | GBP ${(rates.GBP||0).toFixed(4)} | JPY ${(rates.JPY||0).toFixed(2)}`; $$('tel-fx').className='telv g'; }
+    if(typeof setDot==='function') setDot('d-fx','g');
+    if(typeof setSf==='function') setSf('sf-fx','g');
+    if(typeof setBoot==='function') setBoot('bf10','OK');
+    const pairs=[
+      {p:'USD/CAD',v:rates.CAD,base:1.28,range:0.20},
+      {p:'USD/EUR',v:rates.EUR,base:0.85,range:0.12},
+      {p:'USD/GBP',v:rates.GBP,base:0.73,range:0.10},
+      {p:'USD/JPY',v:rates.JPY,base:110,range:25},
+      {p:'USD/CHF',v:rates.CHF,base:0.90,range:0.12},
+      {p:'USD/AUD',v:rates.AUD,base:1.35,range:0.20},
+      {p:'USD/MXN',v:rates.MXN,base:17,range:5},
+      {p:'USD/CNY',v:rates.CNY,base:6.8,range:0.8},
+      {p:'USD/HKD',v:rates.HKD,base:7.78,range:0.05},
+      {p:'USD/SEK',v:rates.SEK,base:10.5,range:2},
+    ].filter(p=>p.v);
+    if($$('fx-content')){
+      $$('fx-content').innerHTML=pairs.map(p=>{
+        const pct=Math.min(100,Math.max(0,((p.v-p.base)/p.range+0.5)*100));
+        const dev=Math.round((p.v-p.base)/p.base*100*10)/10;
+        const col=Math.abs(dev)>3?'var(--or)':'var(--gn)';
+        return `<div class="fx-row">
+          <span class="fx-pair">${p.p}</span>
+          <div style="flex:1;margin:0 8px"><div style="height:2px;background:rgba(255,255,255,.05);border-radius:1px;position:relative">
+            <div style="position:absolute;left:${pct.toFixed(1)}%;top:-2px;width:3px;height:6px;background:var(--am);border-radius:1px"></div>
+          </div></div>
+          <span class="fx-val">${p.v.toFixed(p.v>10?2:4)}</span>
+          <span style="font-size:7px;min-width:45px;text-align:right;color:${col}">${dev>0?'+':''}${dev}%</span>
+        </div>`;
+      }).join('')+`<div style="font-size:4.5px;color:var(--al);margin-top:5px;letter-spacing:1px">${src} · LIVE · ${new Date().toLocaleTimeString()}</div>`;
+    }
+    log('FX OK via',src);
+  };
+
+  /* MAP redraw with fallback iframe providers */
+  window.__nxMapRedraw = function(){
+    const wrap=$$('map-wrap')||$$('map-content');
+    if(!wrap) return;
+    const lat=(window.S?.loc?.lat)||43.3255;
+    const lon=(window.S?.loc?.lon)||-79.7990;
+    const city=window.S?.loc?.city||'Burlington';
+    const bbox=`${lon-0.08},${lat-0.06},${lon+0.08},${lat+0.06}`;
+    wrap.innerHTML=`<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${lat},${lon}"
+      style="width:100%;height:280px;border:none;border-radius:4px;filter:invert(92%) hue-rotate(30deg) saturate(1.6) brightness(.72) sepia(.12)"
+      loading="lazy" title="Live Map — ${city}"></iframe>
+      <div style="padding:4px 10px;background:rgba(255,176,0,.03);border-top:1px solid rgba(255,176,0,.08);font-size:5px;letter-spacing:2px;color:var(--al)">© OPENSTREETMAP · NEXUS GEOSPATIAL ENGINE · ${city.toUpperCase()}</div>`;
+    if($$('map-badge')){ $$('map-badge').textContent='LIVE'; $$('map-badge').className='bdg bgn'; }
+    if($$('loc-coords')) $$('loc-coords').textContent=`${city.toUpperCase()} · ${lat.toFixed(4)}°N ${Math.abs(lon).toFixed(4)}°W`;
+  };
+
+  /* PATCH GEO: chain ipapi.co → ipwho.is → ipinfo.io, then redraw map */
+  const _origGeo=window.fetchGeo;
+  window.fetchGeo = async function(){
+    let lat=43.3255,lon=-79.7990,city='Burlington',region='Ontario';
+    const sources=[
+      ['https://ipapi.co/json/',         d=>({lat:d.latitude,lon:d.longitude,city:d.city,region:d.region})],
+      ['https://ipwho.is/',               d=>({lat:d.latitude,lon:d.longitude,city:d.city,region:d.region})],
+      ['https://ipinfo.io/json',          d=>{ const [la,lo]=(d.loc||'').split(','); return {lat:parseFloat(la),lon:parseFloat(lo),city:d.city,region:d.region}; }],
+    ];
+    for(const [u,parse] of sources){
+      try{
+        const d=await jany(u);
+        const r=parse(d);
+        if(r.lat && r.lon){ lat=r.lat; lon=r.lon; city=r.city||city; region=r.region||region; log('GEO via',u.split('/')[2]); break; }
+      }catch(_){}
+    }
+    window.S=window.S||{loc:{}};
+    S.loc.lat=lat; S.loc.lon=lon; S.loc.city=city; S.loc.region=region;
+    if($$('loc-coords')) $$('loc-coords').textContent=`${city}, ${region} · ${lat.toFixed(4)}°N ${Math.abs(lon).toFixed(4)}°W`;
+    if(typeof setBoot==='function') setBoot('bf1','OK');
+    if(typeof setSf==='function') setSf('sf-geo','g');
+    window.__nxMapRedraw();
+    if(typeof fetchWeather==='function') try{ fetchWeather(lat,lon); }catch(_){}
+    if(typeof fetchAQ==='function')      try{ fetchAQ(lat,lon); }catch(_){}
+    if(typeof fetchSun==='function')     try{ fetchSun(lat,lon); }catch(_){}
+  };
+
+  /* PROXY FAILOVER for ISS if direct fails */
+  const _origISS=window.fetchISS;
+  window.fetchISS = async function(){
+    try{ await _origISS(); }catch(_){}
+    const b=$$('iss-badge');
+    if(b && (b.textContent==='SIGNAL LOST'||b.textContent==='ACQUIRING…'||b.textContent.includes('ACQUIRING'))){
+      try{
+        const d=await jany('https://api.wheretheiss.at/v1/satellites/25544');
+        window.S=window.S||{iss:{},loc:{lat:43.3255,lon:-79.7990}};
+        S.iss.lat=d.latitude; S.iss.lon=d.longitude;
+        S.iss.alt=Math.round(d.altitude||420); S.iss.vel=d.velocity||27600;
+        const dlat=S.iss.lat-S.loc.lat,dlon=S.iss.lon-S.loc.lon;
+        const a=Math.sin(dlat*Math.PI/360)**2+Math.cos(S.iss.lat*Math.PI/180)*Math.cos(S.loc.lat*Math.PI/180)*Math.sin(dlon*Math.PI/360)**2;
+        S.iss.dist=Math.round(6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
+        if($$('iss-badge')){ $$('iss-badge').textContent=`${S.iss.lat.toFixed(1)}°N ${S.iss.lon.toFixed(1)}°E ★`; $$('iss-badge').className='bdg bcy'; }
+        if($$('c-iss')) $$('c-iss').textContent=S.iss.dist+' km';
+        if($$('tel-iss')){ $$('tel-iss').textContent=`${S.iss.lat.toFixed(2)}°N ${S.iss.lon.toFixed(2)}°E | ${S.iss.dist.toLocaleString()} km AWAY | ${Math.round(S.iss.vel).toLocaleString()} km/h`; $$('tel-iss').className='telv c'; }
+        if(typeof setDot==='function') setDot('d-iss','g');
+        if(typeof setSf==='function') setSf('sf-iss','g');
+        if(typeof setBoot==='function') setBoot('bf6','OK');
+        if(typeof renderISS==='function') try{renderISS();}catch(_){}
+      }catch(e){ log('ISS proxy fail',e.message); }
+    }
+  };
+
+  /* PROXY FAILOVER for CoinGecko via proxy if direct fails */
+  const _origCrypto=window.fetchCrypto;
+  window.fetchCrypto = async function(){
+    try{ await _origCrypto(); }catch(_){}
+    const b=$$('cr-badge');
+    if(b && (b.textContent==='OFFLINE'||b.textContent.includes('OFFLINE'))){
+      try{
+        const d=await jany('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano,ripple&order=market_cap_desc');
+        const colMap={bitcoin:'#F7931A',ethereum:'#627EEA',solana:'#9945FF',cardano:'#0033AD',ripple:'#00AAE4'};
+        const iconMap={bitcoin:'₿',ethereum:'Ξ',solana:'◎',cardano:'₳',ripple:'✕'};
+        const coins=d.map(a=>({id:a.id,sym:(a.symbol||'').toUpperCase(),name:a.name,usd:a.current_price||0,chg:a.price_change_percentage_24h||0,color:colMap[a.id]||'#aaa',icon:iconMap[a.id]||'●'}));
+        const btc=coins.find(c=>c.id==='bitcoin')||{usd:0,chg:0};
+        const eth=coins.find(c=>c.id==='ethereum')||{usd:0,chg:0};
+        window.S=window.S||{}; S.cr={btc:btc.usd,eth:eth.usd,btcChg:btc.chg,coins};
+        if($$('cr-badge')){ $$('cr-badge').textContent=`BTC $${(btc.usd/1000).toFixed(1)}K ★`; $$('cr-badge').className=`bdg ${btc.chg>=0?'bgn':'brd'}`; }
+        if($$('tel-cr')){ $$('tel-cr').textContent=`BTC $${Math.round(btc.usd/1000)}K ${btc.chg>=0?'+':''}${btc.chg.toFixed(1)}% | ETH $${Math.round(eth.usd).toLocaleString()}`; $$('tel-cr').className='telv y'; }
+        if(typeof setDot==='function') setDot('d-cr','g');
+        if(typeof setSf==='function') setSf('sf-cr','g');
+        if(typeof setBoot==='function') setBoot('bf9','OK');
+        if($$('cr-content')) $$('cr-content').innerHTML=coins.map(c=>{
+          const chgCol=c.chg>=0?'var(--gn)':'var(--rd)',bar=Math.min(100,Math.round(Math.abs(c.chg)*10));
+          return `<div class="cr-row"><span style="font-size:15px;color:${c.color};width:20px;text-align:center">${c.icon}</span>
+          <div class="cr-info"><div class="cr-sym">${c.sym}</div><div class="cr-name">${c.name}</div></div>
+          <div style="flex:1;padding:0 8px"><div style="height:2px;background:rgba(255,255,255,.05);border-radius:1px;margin:6px 0"><div style="width:${bar}%;height:100%;background:${chgCol};border-radius:1px"></div></div></div>
+          <div><div class="cr-price">$${c.usd>=1?c.usd.toLocaleString('en',{maximumFractionDigits:2}):c.usd.toFixed(5)}</div>
+          <div class="cr-chg ${c.chg>=0?'up':'dn'}">${c.chg>=0?'▲':'▼'} ${Math.abs(c.chg).toFixed(2)}%</div></div></div>`;
+        }).join('')+`<div style="font-size:4.5px;color:var(--al);margin-top:5px">COINGECKO via CORS PROXY · ${new Date().toLocaleTimeString()}</div>`;
+        log('Crypto recovered via proxy');
+      }catch(e){ log('Crypto proxy fail',e.message); }
+    }
+  };
+
+  /* BOOT v12.2 actions */
+  function boot22(){
+    log('v12.2 hardening online');
+    try{ window.fetchGeo(); }catch(_){}
+    try{ window.fetchFX(); }catch(_){}
+    try{ window.fetchISS(); }catch(_){}
+    try{ window.fetchCrypto(); }catch(_){}
+    // Force map redraw after 3s even if geo silent
+    setTimeout(()=>window.__nxMapRedraw(),3000);
+    // Re-fire any still-failing feeds every 30s
+    setInterval(()=>{
+      const b=$$('fx-badge');
+      if(b && (b.textContent==='ERROR'||b.textContent==='OFFLINE'||b.textContent.includes('FX OFFLINE'))) try{ window.fetchFX(); }catch(_){}
+      const cb=$$('cr-badge');
+      if(cb && cb.textContent.includes('OFFLINE')) try{ window.fetchCrypto(); }catch(_){}
+      const ib=$$('iss-badge');
+      if(ib && (ib.textContent==='SIGNAL LOST'||ib.textContent.includes('ACQUIRING'))) try{ window.fetchISS(); }catch(_){}
+    },30000);
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(boot22,2500));
+  } else { setTimeout(boot22,2500); }
+})();
+</script>
 </body>
 </html>

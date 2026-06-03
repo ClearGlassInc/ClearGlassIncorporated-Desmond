@@ -1,9 +1,12 @@
-# Release Notes — 2026-06-02
+# Release Notes — 2026-06-03
 
-*108 commit(s) since repository start*
+*109 commit(s) since repository start*
 
 ## New Features
 
+- wire PERCIVAL OS into site nav (#339) (`cbe0b64`)
+- **percival:** add PERCIVAL OS — Iron Man-class command center HUD + blueprint (`488f186`)
+- **clearpulse:** add architecture whitepaper + public reference page (`332a866`)
 - **loader:** add cinematic command-interface loader and wire as session preloader (`fc62e51`)
 - **artemis-iv:** add advanced tactical extensions (`599ca3b`)
 - **nexus:** live patch + advanced intel expansion (v12.1) (`32e8417`)
@@ -36,8 +39,16 @@
 
 - **actions:** add checkout probe (`6b7cf6a`)
 
+## CI/CD
+
+- **pages:** consolidate on Actions deploy, modernize for Node 24 (`85d898e`)
+- pin action versions + make IP Risk Assessment advisory (#337) (`a74a1f0`)
+
 ## Maintenance
 
+- Add JARVIS OS reference implementation: HUD, agent config, MCP connectors (`70db597`)
+- Add JARVIS OS system blueprint (`4785fd7`)
+- Add AI Operator Workspace reel with interactive JARVIS assistant (`77d170e`)
 - Bump the actions group with 13 updates (`1b8534d`)
 - Update pytest-cov requirement from <7,>=5.0 to >=5.0,<8 (`5dd0582`)
 - Fix typo in project name in README (`3ac35ed`)
@@ -112,14 +123,10 @@
 - Add tests for DOMINATE revenue engine (`5302f45`)
 - Add DOMINATE revenue decision engine (`542ee2f`)
 - Add documentation for ClearGlass AI runtime v0.2 (`391302a`)
-- Add environment template for ClearGlass AI runtime v0.2 (`60b20f9`)
-- Add dependencies for ClearGlass AI runtime v0.2 (`905e84a`)
-- Deploy ClearGlass AI runtime v0.2 (`a71fb5d`)
-- Add result log for ClearGlass multi-agent workflow (`a154a6c`)
-- Add demo run for ClearGlass multi-agent workflow (`e5b52de`)
-- Deploy ClearGlass multi-agent workflow prototype (`bffa316`)
-- Fix Pages deployment workflow (`5db91fa`)
-- Content engine: brand pillar · 0052f5885fb7 [skip ci] (`967ddae`)
+
+## Automation
+
+- update generated outputs — 2026-06-02 11:16 UTC [skip ci] (`dbaa841`)
 
 ## Other
 

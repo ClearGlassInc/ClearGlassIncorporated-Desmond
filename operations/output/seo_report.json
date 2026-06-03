@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-02T11:16:58.819821+00:00",
-  "files_audited": 25,
-  "average_score": 61.2,
+  "run_utc": "2026-06-03T11:55:56.412178+00:00",
+  "files_audited": 29,
+  "average_score": 62.4,
   "pages": [
     {
       "file": "404.html",
@@ -50,6 +50,27 @@
         "No <h1> tag found",
         "Missing og:title",
         "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "ai-operator.html",
+      "title": "AI Operator Workspace \u00b7 J.A.R.V.I.S. \u2014 ClearGlass Inc.",
+      "title_length": 54,
+      "title_ok": true,
+      "description": "A cinematic AI-operator command-center reel with a fully interactive J.A.R.V.I.S. assistant \u2014 voice + text, arc-reactor HUD, live automation commands. Built entirely in HTML, CSS &amp; JS.",
+      "description_length": 188,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 80,
+      "issues": [
+        "Description length 188 chars (ideal 120\u2013160)",
         "Missing og:image"
       ]
     },
@@ -236,6 +257,28 @@
         "No <h1> tag found",
         "Missing og:title",
         "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "clearpulse-architecture.html",
+      "title": "ClearPulse Architecture Whitepaper \u2014 Forensic AI for Healthcare | ClearGlass",
+      "title_length": 76,
+      "title_ok": false,
+      "description": "ClearPulse Architecture Whitepaper: the reference architecture for Provable Healthcare Intelligence Infrastructure. Entity resolution, graph intelligence, cryptographic audit chain, and incident abstraction for HIPAA-grade forensic AI.",
+      "description_length": 235,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Title length 76 chars (ideal 30\u201360)",
+        "Description length 235 chars (ideal 120\u2013160)",
         "Missing og:image"
       ]
     },
@@ -483,6 +526,51 @@
       ]
     },
     {
+      "file": "jarvis-os.html",
+      "title": "JARVIS OS \u2014 Command HUD",
+      "title_length": 23,
+      "title_ok": false,
+      "description": "JARVIS OS command HUD \u2014 an always-on executive command center: system health ring, KPI dashboards, daily briefing, agent swarm activity stream, approval ladder, and voice control. Built in HTML/CSS/JS.",
+      "description_length": 201,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Title length 23 chars (ideal 30\u201360)",
+        "Description length 201 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "percival-os.html",
+      "title": "PERCIVAL OS \u00b7 Intelligent Command Center \u2014 ClearGlass Inc.",
+      "title_length": 58,
+      "title_ok": true,
+      "description": "PERCIVAL \u2014 an Iron Man / JARVIS-class always-on intelligent command center. Holographic brain hub, agent swarm, live KPIs, threat monitor, and a voice + text command console. Built in pure HTML, CSS & JS.",
+      "description_length": 204,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Description length 204 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "revenue-engine.html",
       "title": "Revenue Engine \u2014 ClearGlass Inc. \u00b7 AI-Driven Business Automation",
       "title_length": 64,
@@ -570,12 +658,12 @@
     }
   ],
   "top_issues": [
-    "19x \u2014 Missing og:image",
-    "15x \u2014 Title length N chars (ideal N\u2013N)",
-    "15x \u2014 Description length N chars (ideal N\u2013N)",
+    "23x \u2014 Missing og:image",
+    "19x \u2014 Description length N chars (ideal N\u2013N)",
+    "17x \u2014 Title length N chars (ideal N\u2013N)",
+    "10x \u2014 No <hN> tag found",
     "9x \u2014 Missing og:title",
     "9x \u2014 Missing og:description",
-    "8x \u2014 No <hN> tag found",
     "7x \u2014 Missing canonical link tag",
     "6x \u2014 Missing meta description",
     "1x \u2014 N image(s) missing alt text",

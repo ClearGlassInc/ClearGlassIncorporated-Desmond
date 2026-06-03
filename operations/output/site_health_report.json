@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-02T11:16:59.219175+00:00",
+  "run_utc": "2026-06-03T11:55:57.525331+00:00",
   "site_url": "https://clearglassinc.github.io",
   "overall_healthy": false,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 90,
+      "response_ms": 181,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 57,
+      "response_ms": 123,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 62,
+      "response_ms": 130,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 44,
+      "response_ms": 237,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 62,
+      "response_ms": 209,
       "has_title": true,
       "missing_meta": [
         "description",
@@ -65,7 +65,7 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 40,
+      "response_ms": 182,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -74,9 +74,9 @@
   "local_issues": [
     "HTML page not referenced in sitemap.xml: 404.html",
     "HTML page not referenced in sitemap.xml: ClearGlass-NEXUS-v12-FINAL.html",
+    "HTML page not referenced in sitemap.xml: ai-operator.html",
     "HTML page not referenced in sitemap.xml: button-system.html",
     "HTML page not referenced in sitemap.xml: cg-loader.html",
-    "HTML page not referenced in sitemap.xml: clearpulse.html",
     "HTML page not referenced in sitemap.xml: command-console.html",
     "HTML page not referenced in sitemap.xml: corporate-legal-advisor.html",
     "HTML page not referenced in sitemap.xml: google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
@@ -85,6 +85,8 @@
     "HTML page not referenced in sitemap.xml: intelligence-command-surface.html",
     "HTML page not referenced in sitemap.xml: intelligence-interface.html",
     "HTML page not referenced in sitemap.xml: intelligence.html",
+    "HTML page not referenced in sitemap.xml: jarvis-os.html",
+    "HTML page not referenced in sitemap.xml: percival-os.html",
     "HTML page not referenced in sitemap.xml: revenue-engine.html"
   ]
 }

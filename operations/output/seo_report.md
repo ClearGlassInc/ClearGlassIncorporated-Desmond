@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-02T11:16:58.819821+00:00
-**Average Score:** 61.2/100
-**Files Audited:** 25
+**Run:** 2026-06-03T11:55:56.412178+00:00
+**Average Score:** 62.4/100
+**Files Audited:** 29
 
 ## Page Scores
 
@@ -18,11 +18,15 @@
 | `intelligence-interface.html` | 50/100 | 5 |
 | `artemis.html` | 60/100 | 4 |
 | `cg-loader.html` | 60/100 | 4 |
+| `jarvis-os.html` | 60/100 | 4 |
 | `smb.html` | 60/100 | 4 |
 | `artemis-blue-team.html` | 70/100 | 3 |
 | `artemis-iv.html` | 70/100 | 3 |
+| `clearpulse-architecture.html` | 70/100 | 3 |
 | `command-console.html` | 70/100 | 3 |
 | `intelligence.html` | 70/100 | 3 |
+| `percival-os.html` | 70/100 | 3 |
+| `ai-operator.html` | 80/100 | 2 |
 | `banking-law-advisor.html` | 80/100 | 2 |
 | `corporate-legal-advisor.html` | 80/100 | 2 |
 | `government.html` | 80/100 | 2 |
@@ -36,12 +40,12 @@
 
 ## Top Issues Across All Pages
 
-- 19x — Missing og:image
-- 15x — Title length N chars (ideal N–N)
-- 15x — Description length N chars (ideal N–N)
+- 23x — Missing og:image
+- 19x — Description length N chars (ideal N–N)
+- 17x — Title length N chars (ideal N–N)
+- 10x — No <hN> tag found
 - 9x — Missing og:title
 - 9x — Missing og:description
-- 8x — No <hN> tag found
 - 7x — Missing canonical link tag
 - 6x — Missing meta description
 - 1x — N image(s) missing alt text

@@ -65,6 +65,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "monitoring",
         "schedule": "daily",
     },
+    "content_collector": {
+        "module": "bots.content_collector_bot",
+        "group": "content",
+        "schedule": "daily",
+    },
     "seo_optimizer": {
         "module": "bots.seo_optimizer_bot",
         "group": "seo",

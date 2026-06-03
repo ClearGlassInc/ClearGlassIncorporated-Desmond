@@ -40,7 +40,7 @@ STABLE_ACTIONS = {
     "actions/download-artifact": "v4",
     "actions/configure-pages": "v5",
     "actions/upload-pages-artifact": "v3",
-    "actions/deploy-pages": "v4",
+    "actions/deploy-pages": "v5",
 }
 
 INVALID_REUSABLE_JOB_KEYS = {"runs-on", "steps", "permissions"}

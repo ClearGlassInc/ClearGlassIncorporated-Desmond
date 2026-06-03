@@ -66,6 +66,15 @@
       "depends_on": []
     },
     {
+      "id": "content_collector",
+      "module": "bots.content_collector_bot",
+      "group": "content",
+      "schedule": "daily",
+      "description": "Crawls every page and stores all site content into a structured knowledge store",
+      "output_dir": "operations/output",
+      "depends_on": []
+    },
+    {
       "id": "seo_optimizer",
       "module": "bots.seo_optimizer_bot",
       "group": "seo",

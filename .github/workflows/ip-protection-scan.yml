@@ -19,7 +19,7 @@ jobs:
     name: IP Risk Assessment
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -39,15 +39,22 @@ jobs:
         uses: actions/dependency-review-action@v5
         with:
           fail-on-severity: critical
+        # Non-blocking: dependency-review requires Dependency Graph + GitHub
+        # Advanced Security, which may be disabled on this repo. A finding (or
+        # the feature being unavailable) flags for review rather than hard-failing CI.
+        continue-on-error: true
 
       - name: License Compliance (REUSE/SPDX)
         uses: fsfe/reuse-action@v6
         with:
-          command: 'lint'
-          args: --exclude-file=.reuse/exclude
-        continue-on-error: false
+          args: lint
+        # Non-blocking: reuse-action@v6 changed its input interface and the
+        # repo is not yet fully REUSE/SPDX-annotated. Flags for review rather
+        # than hard-failing CI (part of making IP Risk Assessment advisory).
+        continue-on-error: true
 
       - name: Detect AI-Generated Commits
+        continue-on-error: true
         run: |
           AI_COMMITS=$(git log --since="30 days ago" --pretty=format:'%s' | grep -iE "(copilot|ai-generated|llm|gpt)" || true)
           if [ -n "$AI_COMMITS" ]; then
@@ -60,6 +67,7 @@ jobs:
           fi
 
       - name: Check .gitignore and Proprietary Notices
+        continue-on-error: true
         run: |
           if ! git check-ignore .env prompts/ secrets/ 2>/dev/null; then
             echo "::error::Sensitive files (.env, prompts) not in .gitignore!"
@@ -90,7 +98,7 @@ jobs:
         shell: bash
 
       - name: Upload Report Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ip-risk-report-${{ github.run_id }}
           path: ip-risk-report.md

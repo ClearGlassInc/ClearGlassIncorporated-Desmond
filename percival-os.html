@@ -78,6 +78,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 .clock .t{font-family:var(--display);font-weight:700;font-size:18px;color:#ffeef0;letter-spacing:.05em}
 .clock .d{font-size:9px;color:var(--dim);letter-spacing:.18em;text-transform:uppercase}
 .status-pill{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#ff6470;border:1px solid rgba(255,42,58,.4);background:rgba(255,42,58,.08);padding:7px 12px;border-radius:20px;box-shadow:0 0 18px rgba(255,42,58,.18)}
+.launch{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#7fe8db;text-decoration:none;border:1px solid rgba(47,212,192,.4);background:rgba(47,212,192,.08);padding:7px 12px;border-radius:20px;transition:.18s;white-space:nowrap}
+.launch:hover{color:#bff7ee;border-color:rgba(47,212,192,.7);background:rgba(47,212,192,.16);box-shadow:0 0 16px rgba(47,212,192,.3)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:blink 2s ease-in-out infinite}
 @keyframes blink{50%{opacity:.35}}
 
@@ -103,6 +105,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 .mitem .mi-n{font-size:12.5px;font-weight:600;color:#f3dde0}
 .mitem .mi-s{font-size:9.5px;color:var(--dim);font-family:var(--mono);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mitem .mi-b{margin-left:auto;font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:6px;background:rgba(255,122,24,.16);color:var(--amber);border:1px solid rgba(255,122,24,.3)}
+.mitem .mi-launch{margin-left:auto;text-decoration:none;color:#7fe8db;font-size:13px;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;border:1px solid rgba(47,212,192,.35);background:rgba(47,212,192,.08);transition:.15s}
+.mitem .mi-launch:hover{color:#bff7ee;border-color:rgba(47,212,192,.7);box-shadow:0 0 12px rgba(47,212,192,.35)}
+.mitem .mi-launch+.mi-b{margin-left:6px}
 .mitem.on .mi-ic{background:rgba(255,42,58,.18);color:var(--cyan)}
 
 /* ---- Center ---- */
@@ -264,6 +269,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
       <button class="on" data-mode="tactical">Tactical</button>
       <button data-mode="technical">Technical</button>
     </div>
+    <a class="launch" href="sentinel.html" title="Open SENTINEL geospatial + OSINT command center">◉ SENTINEL CC</a>
     <div class="status-pill"><span class="dot"></span>MISSION READY · ARMED</div>
     <div class="clock"><div class="t" id="clk">--:--:--</div><div class="d" id="cdate">—</div></div>
   </div>
@@ -392,6 +398,7 @@ const rail=document.getElementById('rail');
 rail.innerHTML=subsystems.map((x,i)=>`<div class="mitem ${i===0?'on':''}" data-id="${x.id}">
   <div class="mi-ic">${x.ic}</div>
   <div class="mi-tx"><div class="mi-n">${x.n}</div><div class="mi-s">${x.s}</div></div>
+  ${x.id==='security'?`<a class="mi-launch" href="sentinel.html" title="Open SENTINEL geospatial command center" onclick="event.stopPropagation()">◉</a>`:''}
   ${x.badge?`<div class="mi-b">${x.badge}</div>`:''}</div>`).join('');
 
 /* orbit nodes */

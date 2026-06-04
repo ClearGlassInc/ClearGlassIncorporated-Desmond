@@ -1,10 +1,37 @@
 {
-  "run_utc": "2026-06-02T11:16:58.796408+00:00",
+  "run_utc": "2026-06-04T10:38:19.578623+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
   "commit_count": 108,
   "sections": {
     "New Features": [
+      {
+        "sha": "cbe0b64",
+        "type": "feat",
+        "scope": null,
+        "subject": "wire PERCIVAL OS into site nav (#339)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "488f186",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "add PERCIVAL OS \u2014 Iron Man-class command center HUD + blueprint",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "332a866",
+        "type": "feat",
+        "scope": "clearpulse",
+        "subject": "add architecture whitepaper + public reference page",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
       {
         "sha": "fc62e51",
         "type": "feat",
@@ -235,7 +262,72 @@
         "breaking": false
       }
     ],
+    "CI/CD": [
+      {
+        "sha": "85d898e",
+        "type": "ci",
+        "scope": "pages",
+        "subject": "consolidate on Actions deploy, modernize for Node 24",
+        "author": "Claude",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "a74a1f0",
+        "type": "ci",
+        "scope": null,
+        "subject": "pin action versions + make IP Risk Assessment advisory (#337)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-03",
+        "breaking": false
+      }
+    ],
     "Maintenance": [
+      {
+        "sha": "4cebc6e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add content collector bot to harvest and store all site content",
+        "author": "Claude",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "c2ffdda",
+        "type": "chore",
+        "scope": null,
+        "subject": "green the deployment checklist (CI, bot tests, sitemap)",
+        "author": "Claude",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "70db597",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add JARVIS OS reference implementation: HUD, agent config, MCP connectors",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "4785fd7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add JARVIS OS system blueprint",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "77d170e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add AI Operator Workspace reel with interactive JARVIS assistant",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
       {
         "sha": "1b8534d",
         "type": "chore",
@@ -865,113 +957,25 @@
         "author": "Desmond Otieno",
         "date": "2026-05-24",
         "breaking": false
-      },
+      }
+    ],
+    "Automation": [
       {
-        "sha": "e345778",
-        "type": "chore",
+        "sha": "9ddea47",
+        "type": "bot",
         "scope": null,
-        "subject": "Document D.O.M.I.N.A.T.E. income algorithm",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "5302f45",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add tests for DOMINATE revenue engine",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "542ee2f",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add DOMINATE revenue decision engine",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "391302a",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add documentation for ClearGlass AI runtime v0.2",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "60b20f9",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add environment template for ClearGlass AI runtime v0.2",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "905e84a",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add dependencies for ClearGlass AI runtime v0.2",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "a71fb5d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Deploy ClearGlass AI runtime v0.2",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "a154a6c",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add result log for ClearGlass multi-agent workflow",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "e5b52de",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add demo run for ClearGlass multi-agent workflow",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "bffa316",
-        "type": "chore",
-        "scope": null,
-        "subject": "Deploy ClearGlass multi-agent workflow prototype",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "5db91fa",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix Pages deployment workflow",
-        "author": "ClearGlassInc",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "967ddae",
-        "type": "chore",
-        "scope": null,
-        "subject": "Content engine: brand pillar \u00b7 0052f5885fb7 [skip ci]",
+        "subject": "update generated outputs \u2014 2026-06-03 11:55 UTC [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-05-24",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "dbaa841",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-02 11:16 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-02",
         "breaking": false
       }
     ],

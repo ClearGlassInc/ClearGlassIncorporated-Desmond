@@ -1,4 +1,5 @@
 import { api } from "@/lib/api";
+import { ApprovalActions, ApproverToken } from "./actions";
 
 type Pending = {
   id: number; event_id: number; event_type: string; payload: Record<string, any>;
@@ -14,11 +15,12 @@ export default async function ApprovalsPage() {
   return (
     <section className="cg-card">
       <h2>Pending approvals</h2>
+      <ApproverToken />
       {err && <div className="empty">⚠ {err}</div>}
       {!err && rows.length === 0 && <div className="empty">No pending approvals.</div>}
       {!err && rows.length > 0 && (
         <table>
-          <thead><tr><th>#</th><th>Event</th><th>Action</th><th>Payload</th><th>Reasons</th><th>Audit</th></tr></thead>
+          <thead><tr><th>#</th><th>Event</th><th>Action</th><th>Payload</th><th>Reasons</th><th>Decide</th></tr></thead>
           <tbody>
             {rows.map(r => (
               <tr key={r.id}>
@@ -27,14 +29,15 @@ export default async function ApprovalsPage() {
                 <td>{r.action}</td>
                 <td><code>{JSON.stringify(r.payload)}</code></td>
                 <td>{r.reasons.join("; ")}</td>
-                <td><code>{r.audit_ref}</code></td>
+                <td><ApprovalActions id={r.id} /></td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
       <div className="empty" style={{ marginTop: 12 }}>
-        Approve/deny via the control plane API: <code>POST /v1/approvals/&lt;id&gt;/approve</code> or <code>/deny</code> with {"{ approver }"}. Read-first cockpit by design.
+        Approvals require a valid <code>X-Approver-Token</code> (role auth). Demo tokens:
+        <code> demo-ops-token</code> (ops-lead), <code>demo-fin-token</code> (finance-lead).
       </div>
     </section>
   );

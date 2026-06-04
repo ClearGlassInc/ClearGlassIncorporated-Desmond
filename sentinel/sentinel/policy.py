@@ -31,6 +31,7 @@ class PolicyOutcome(str, Enum):
 class RequestClass(str, Enum):
     ASSET_PROTECTION = "asset_protection"
     COMPLIANCE = "compliance"
+    EMERGENCY_RESPONSE = "emergency_response"
     INCIDENT_RESPONSE = "incident_response"
     UNCLASSIFIED = "unclassified"
 
@@ -43,6 +44,10 @@ APPROVED_SOURCES = {
     "employee_access_zone",
     "authorized_telemetry",
     "authorized_logs",
+    # geospatial / GEOINT
+    "lawful_satellite_imagery",
+    "authorized_sensor_feeds",
+    "owned_site_imagery",
 }
 
 # Intents that are categorically forbidden by the charter.
@@ -52,6 +57,16 @@ PROHIBITED_INTENTS = {
     "harass",
     "expose_private_person",
     "locate_private_person",
+    "profile_private_person",
+    "track_private_person",
+    "unlawful_surveillance",
+}
+
+# Access methods that are never permitted.
+PROHIBITED_ACCESS = {
+    "covert",
+    "deceptive",
+    "unauthorized_scraping",
 }
 
 
@@ -62,10 +77,13 @@ class RequestContext:
     data_source: str                             # must be in APPROVED_SOURCES
     intent: str = "monitor"                      # e.g. monitor, correlate, de_anonymize
     authorization_ref: Optional[str] = None      # documented legal authority / written policy
+    jurisdiction: Optional[str] = None           # required when targeting an individual
+    access_method: str = "authorized"            # authorized | covert | deceptive | unauthorized_scraping
     targets_private_individual: bool = False
     subject_consenting: bool = False
     uses_face_recognition: bool = False          # incl. person re-identification
     cross_source_matching: bool = False
+    combines_geospatial_sources: bool = False    # satellite/camera/OSINT/location fusion
     output_is_aggregate: bool = True
     sensitive_inference: bool = False
 
@@ -90,11 +108,15 @@ def _audit_ref(ctx: RequestContext) -> str:
 
 def _classify(purpose: str, intent: str) -> RequestClass:
     p = f"{purpose} {intent}".lower()
-    if any(w in p for w in ("incident", "breach", "intrusion", "response", "timeline")):
+    if any(w in p for w in ("emergency", "disaster", "rescue", "weather", "flood",
+                            "wildfire", "evacuat", "damage")):
+        return RequestClass.EMERGENCY_RESPONSE
+    if any(w in p for w in ("incident", "breach", "intrusion", "timeline")):
         return RequestClass.INCIDENT_RESPONSE
     if any(w in p for w in ("compliance", "audit", "policy", "regulat")):
         return RequestClass.COMPLIANCE
-    if any(w in p for w in ("asset", "perimeter", "monitor", "brand", "domain", "safety")):
+    if any(w in p for w in ("asset", "perimeter", "monitor", "brand", "domain",
+                            "safety", "facility", "vessel", "ship", "site", "infrastructure")):
         return RequestClass.ASSET_PROTECTION
     return RequestClass.UNCLASSIFIED
 
@@ -124,6 +146,11 @@ class PrivacyPolicy:
         if ctx.data_source not in APPROVED_SOURCES:
             deny.append(f"data source '{ctx.data_source}' is not approved")
 
+        # --- access method: no covert / deceptive / unauthorized scraping ---
+        if ctx.access_method in PROHIBITED_ACCESS:
+            deny.append(f"prohibited access method: {ctx.access_method} "
+                        "(no covert accounts, deceptive access, or unauthorized scraping)")
+
         # --- categorically prohibited intents ---
         if ctx.intent in PROHIBITED_INTENTS:
             deny.append(f"prohibited intent: {ctx.intent}")
@@ -133,10 +160,19 @@ class PrivacyPolicy:
             deny.append("face-recognition / re-identification / cross-source matching "
                         "on a non-consenting individual is prohibited")
 
-        # --- identify/track a private individual without documented authority ---
+        # --- geospatial fusion to de-anonymize / locate a person ---
+        if ctx.combines_geospatial_sources and ctx.targets_private_individual and not ctx.subject_consenting:
+            deny.append("combining satellite / camera / OSINT / location data to "
+                        "de-anonymize or locate a person is prohibited")
+
+        # --- identify / locate / track / profile a private individual without authority ---
         if ctx.targets_private_individual and not ctx.subject_consenting and not ctx.authorization_ref:
-            deny.append("identifying/tracking a private individual requires explicit "
-                        "documented authorization")
+            deny.append("identifying/locating/tracking/profiling a private individual "
+                        "requires explicit documented authorization")
+
+        # --- jurisdiction must be verified when an individual is in scope ---
+        if ctx.targets_private_individual and not (ctx.jurisdiction or "").strip():
+            deny.append("jurisdiction not verified for an individual-scoped request")
 
         if deny:
             return PolicyDecision(PolicyOutcome.DENY, cls, tuple(deny), True, ref)

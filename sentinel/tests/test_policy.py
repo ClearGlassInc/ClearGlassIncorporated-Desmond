@@ -97,10 +97,68 @@ def test_consented_watchlist_escalates():
         actor_role="security_lead", purpose="pre-approved watchlist under written policy",
         data_source="consented_watchlist", intent="monitor",
         targets_private_individual=True, subject_consenting=True,
-        authorization_ref="POLICY-2026-014",
+        authorization_ref="POLICY-2026-014", jurisdiction="US-CA",
     ))
     assert d.outcome is PolicyOutcome.ESCALATE
     assert d.requires_human_review
+
+
+def test_covert_access_denied():
+    d = POL.evaluate(RequestContext(
+        actor_role="analyst", purpose="brand monitoring",
+        data_source="public_source_brand_mentions", intent="correlate",
+        access_method="covert",
+    ))
+    assert d.outcome is PolicyOutcome.DENY
+    assert any("access method" in r for r in d.reasons)
+
+
+def test_unauthorized_scraping_denied():
+    d = POL.evaluate(RequestContext(
+        actor_role="analyst", purpose="collect data",
+        data_source="public_source_brand_mentions", intent="correlate",
+        access_method="unauthorized_scraping",
+    ))
+    assert d.outcome is PolicyOutcome.DENY
+
+
+def test_geospatial_fusion_to_locate_person_denied():
+    d = POL.evaluate(RequestContext(
+        actor_role="analyst", purpose="locate subject via imagery + posts",
+        data_source="lawful_satellite_imagery", intent="monitor",
+        combines_geospatial_sources=True, targets_private_individual=True,
+        jurisdiction="US-CA",
+    ))
+    assert d.outcome is PolicyOutcome.DENY
+    assert any("de-anonymize or locate a person" in r for r in d.reasons)
+
+
+def test_satellite_change_detection_on_owned_site_allowed():
+    d = POL.evaluate(RequestContext(
+        actor_role="facilities_soc", purpose="storm damage change detection on owned site",
+        data_source="lawful_satellite_imagery", intent="monitor",
+    ))
+    assert d.outcome is PolicyOutcome.ALLOW
+    assert d.request_class is RequestClass.EMERGENCY_RESPONSE
+
+
+def test_individual_scope_without_jurisdiction_denied():
+    d = POL.evaluate(RequestContext(
+        actor_role="security_lead", purpose="watchlist check",
+        data_source="consented_watchlist", intent="monitor",
+        targets_private_individual=True, subject_consenting=True,
+        authorization_ref="POLICY-1", jurisdiction=None,
+    ))
+    assert d.outcome is PolicyOutcome.DENY
+    assert any("jurisdiction" in r for r in d.reasons)
+
+
+def test_profiling_private_person_intent_denied():
+    d = POL.evaluate(RequestContext(
+        actor_role="analyst", purpose="build profile",
+        data_source="public_source_brand_mentions", intent="profile_private_person",
+    ))
+    assert d.outcome is PolicyOutcome.DENY
 
 
 def test_sensitive_inference_escalates():

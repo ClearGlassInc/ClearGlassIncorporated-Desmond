@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>SENTINEL · Geospatial + OSINT Command Center — ClearGlass Inc.</title>
-<meta name="description" content="SENTINEL — a privacy-first geospatial + OSINT command center: map-first situational awareness, owned-camera presence analytics, incident timelines, and evidence panels. Fail-closed: never identifies, locates, or tracks private individuals."/>
+<title>SENTINEL · Live Geospatial Command Center — ClearGlass Inc.</title>
+<meta name="description" content="SENTINEL — a privacy-first geospatial command center running on LIVE data: device location awareness, real map tiles, live USGS earthquake + NWS weather-alert feeds, and on-device anonymous camera presence. Fail-closed: never identifies, locates, or tracks private individuals."/>
 <link rel="canonical" href="https://clearglassinc.github.io/sentinel.html"/>
-<meta property="og:title" content="SENTINEL · Geospatial + OSINT Command Center — ClearGlass Inc."/>
-<meta property="og:description" content="Map-first situational awareness with privacy-first, fail-closed guardrails."/>
+<meta property="og:title" content="SENTINEL · Live Geospatial Command Center"/>
+<meta property="og:description" content="Live map, device location awareness, live USGS + NWS feeds, anonymous camera presence. Privacy-first, fail-closed."/>
 <meta property="og:type" content="website"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+<!-- Leaflet (real map tiles). Degrades gracefully if the CDN is blocked. -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --red:#ff2a3a;--red-2:#c81e28;--amber:#ffb347;--cyan:#36b6ff;--teal:#2fd4c0;
-  --violet:#9b7bff;--ok:#34d399;--ink:#070203;--panel:#150607;--panel-2:#170709;
+  --violet:#9b7bff;--ok:#34d399;--ink:#070203;--panel:#150607;
   --line:rgba(255,42,58,.16);--line-2:rgba(255,42,58,.30);
   --txt:#ffeef0;--dim:#c79ca0;--dim-2:#7c5b5e;
   --sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace;--display:'Orbitron',var(--sans);
@@ -24,79 +27,68 @@
 html,body{height:100%}
 body{font-family:var(--sans);color:var(--txt);overflow:hidden;
   background:radial-gradient(130% 100% at 50% -10%,#1a0608 0%,#0c0304 45%,#050202 100%);-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px);mix-blend-mode:overlay;opacity:.5}
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;background:radial-gradient(120% 90% at 50% 35%,transparent 55%,rgba(0,0,0,.55) 100%)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;background:radial-gradient(120% 90% at 50% 35%,transparent 60%,rgba(0,0,0,.5) 100%)}
 ::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-thumb{background:rgba(255,42,58,.25);border-radius:6px}
 
 .shell{height:100vh;display:grid;grid-template-rows:auto 1fr}
-.topbar{display:flex;align-items:center;gap:16px;padding:11px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(24,8,10,.92),rgba(12,4,5,.6));backdrop-filter:blur(8px);z-index:30}
-.brand{display:flex;align-items:center;gap:11px;min-width:230px}
+.topbar{display:flex;align-items:center;gap:14px;padding:11px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(24,8,10,.92),rgba(12,4,5,.6));backdrop-filter:blur(8px);z-index:1200}
+.brand{display:flex;align-items:center;gap:11px;min-width:200px}
 .brand .mk{width:32px;height:32px;border-radius:8px;flex:0 0 auto;position:relative;background:radial-gradient(circle at 40% 35%,#ffb6ba,#7a1018 60%,#1f0407);box-shadow:0 0 16px rgba(255,42,58,.6)}
 .brand .mk::after{content:"";position:absolute;inset:5px;border:1px solid rgba(255,200,200,.5);border-radius:4px}
-.b-name{font-family:var(--display);font-weight:900;letter-spacing:.2em;font-size:15px}
-.b-name b{color:var(--red)}
-.b-sub{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--dim-2);text-transform:uppercase}
+.b-name{font-family:var(--display);font-weight:900;letter-spacing:.2em;font-size:15px}.b-name b{color:var(--red)}
+.b-sub{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim-2);text-transform:uppercase}
 .spacer{flex:1}
-.pill{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;border-radius:18px;padding:6px 11px;border:1px solid}
-.pill.armed{color:#ff6470;border-color:rgba(255,42,58,.4);background:rgba(255,42,58,.08);box-shadow:0 0 16px rgba(255,42,58,.16)}
-.pill.juris{color:var(--teal);border-color:rgba(47,212,192,.35);background:rgba(47,212,192,.07)}
+.pill{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;border-radius:18px;padding:6px 11px;border:1px solid;white-space:nowrap}
+.pill.armed{color:#ff6470;border-color:rgba(255,42,58,.4);background:rgba(255,42,58,.08)}
+.pill.juris{color:var(--teal);border-color:rgba(47,212,192,.35);background:rgba(47,212,192,.07);cursor:pointer}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 9px var(--red);animation:blink 2s infinite}
 @keyframes blink{50%{opacity:.35}}
-.clock{font-family:var(--mono);text-align:right;min-width:120px}
-.clock .t{font-family:var(--display);font-weight:700;font-size:17px}
-.clock .d{font-size:9px;color:var(--dim);letter-spacing:.16em;text-transform:uppercase}
+.clock{font-family:var(--mono);text-align:right;min-width:118px}
+.clock .t{font-family:var(--display);font-weight:700;font-size:17px}.clock .d{font-size:9px;color:var(--dim);letter-spacing:.16em;text-transform:uppercase}
 
-.main{display:grid;grid-template-columns:212px 1fr 320px;gap:12px;padding:12px 16px 14px;min-height:0}
+.main{display:grid;grid-template-columns:228px 1fr 320px;gap:12px;padding:12px 16px 14px;min-height:0}
 .panel{background:linear-gradient(180deg,rgba(28,9,11,.72),rgba(14,5,6,.72));border:1px solid var(--line);border-radius:13px;position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:0}
-.panel::before{content:"";position:absolute;top:0;left:14px;right:14px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,182,186,.3),transparent)}
 .p-t{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);padding:12px 14px 8px;display:flex;align-items:center;gap:7px}
 .p-t .i{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 7px var(--red)}
 .p-t small{margin-left:auto;color:var(--dim-2);font-size:9px}
 
-/* left rail */
 .rail{overflow-y:auto}
-.layer{display:flex;align-items:center;gap:9px;padding:9px 12px;cursor:pointer;border-left:2px solid transparent;transition:.15s}
-.layer:hover{background:rgba(255,42,58,.05)}
-.layer.off{opacity:.38}
+.railsub{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim-2);padding:11px 12px 5px}
+.layer{display:flex;align-items:center;gap:9px;padding:8px 12px;cursor:pointer;transition:.15s}
+.layer:hover{background:rgba(255,42,58,.05)}.layer.off{opacity:.4}
 .layer .sw{width:11px;height:11px;border-radius:3px;flex:0 0 auto;box-shadow:0 0 8px currentColor}
-.layer .nm{font-size:12px;font-weight:600}
-.layer .ct{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--dim)}
-.railsub{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim-2);padding:12px 12px 5px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;padding:4px 12px 12px}
-.chip{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--dim);border:1px solid var(--line);background:rgba(255,42,58,.04);padding:5px 9px;border-radius:13px;cursor:pointer;transition:.15s}
-.chip.on{border-color:var(--line-2);color:var(--txt);background:rgba(255,42,58,.12)}
+.layer .nm{font-size:12px;font-weight:600}.layer .ct{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--dim)}
+.feedstat{display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:11px}
+.feedstat .led{width:8px;height:8px;border-radius:50%;flex:0 0 auto;background:var(--dim-2)}
+.feedstat .led.live{background:var(--ok);box-shadow:0 0 8px var(--ok);animation:blink 2.4s infinite}
+.feedstat .led.err{background:var(--red);box-shadow:0 0 8px var(--red)}
+.feedstat .led.pend{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.feedstat .nm{font-weight:600}.feedstat .up{margin-left:auto;font-family:var(--mono);font-size:8.5px;color:var(--dim-2)}
+.btn{display:block;margin:8px 12px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:9px;border-radius:9px;cursor:pointer;border:1px solid var(--line-2);background:rgba(47,212,192,.08);color:#9af0e4;transition:.15s}
+.btn:hover{background:rgba(47,212,192,.16);box-shadow:0 0 14px rgba(47,212,192,.25)}
+.btn.amber{border-color:rgba(255,179,71,.4);background:rgba(255,179,71,.08);color:var(--amber)}
 
-/* center: map + command */
 .center{display:grid;grid-template-rows:1fr auto;gap:12px;min-height:0}
-.stage{position:relative;border-radius:13px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(120% 110% at 50% 35%,#1c0708 0%,#100406 55%,#070203 100%)}
-#map{position:absolute;inset:0;width:100%;height:100%}
-.sweep{position:absolute;inset:0;pointer-events:none;background:conic-gradient(from 0deg at 50% 50%,rgba(255,42,58,.14),transparent 35%);animation:radar 6s linear infinite;mix-blend-mode:screen}
-@keyframes radar{to{transform:rotate(360deg)}}
-.mtag{position:absolute;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:rgba(255,170,176,.6);text-transform:uppercase}
-.mtag.tl{top:11px;left:13px}.mtag.tr{top:11px;right:13px;text-align:right;line-height:1.7}
-.mtag.bl{bottom:11px;left:13px;line-height:1.7}.mtag.br{bottom:11px;right:13px}
-.pin{position:absolute;transform:translate(-50%,-50%);cursor:pointer;z-index:5}
-.pin .glyph{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;border:1.5px solid currentColor;background:rgba(10,3,4,.8);box-shadow:0 0 12px currentColor;transition:.15s}
-.pin:hover .glyph{transform:scale(1.25)}
-.pin .lab{position:absolute;left:50%;top:120%;transform:translateX(-50%);font-family:var(--mono);font-size:8px;letter-spacing:.05em;color:var(--dim);white-space:nowrap;background:rgba(8,3,4,.7);padding:1px 4px;border-radius:3px}
-.pin.cam{color:var(--cyan)}.pin.sensor{color:var(--teal)}.pin.asset{color:var(--violet)}
-.pin.incident{color:var(--red)}.pin.zone{color:var(--amber)}
-.pin.incident .glyph{animation:alert 1.4s infinite}
-@keyframes alert{50%{box-shadow:0 0 22px var(--red)}}
-.zonearea{position:absolute;border-radius:50%;border:1.5px dashed rgba(255,179,71,.45);background:radial-gradient(closest-side,rgba(255,179,71,.10),transparent);transform:translate(-50%,-50%);z-index:2;pointer-events:none}
+.stage{position:relative;border-radius:13px;overflow:hidden;border:1px solid var(--line);background:#0a0304}
+#map{position:absolute;inset:0;width:100%;height:100%;background:#0a0304}
+.leaflet-container{background:#0a0304!important;font-family:var(--mono)!important}
+.mtag{position:absolute;z-index:800;font-family:var(--mono);font-size:9px;letter-spacing:.13em;color:rgba(255,170,176,.75);text-transform:uppercase;background:rgba(8,3,4,.6);padding:3px 7px;border-radius:5px;pointer-events:none}
+.mtag.tl{top:11px;left:11px;line-height:1.7}.mtag.br{bottom:11px;right:11px;text-align:right}
+.maphint{position:absolute;inset:0;display:grid;place-items:center;z-index:700;text-align:center;pointer-events:none}
+.maphint .box{background:rgba(10,4,5,.85);border:1px solid var(--line-2);border-radius:12px;padding:18px 22px;max-width:340px;pointer-events:auto}
+.maphint h3{font-family:var(--display);font-size:14px;letter-spacing:.05em;margin-bottom:7px}
+.maphint p{font-size:12px;color:var(--dim);line-height:1.55;margin-bottom:12px}
 
-/* command bar */
-.console{min-height:150px;max-height:38vh}
+.console{min-height:148px;max-height:36vh}
 .feed{flex:1;overflow-y:auto;padding:8px 14px 4px;display:flex;flex-direction:column;gap:9px}
-.msg{font-size:12.5px;line-height:1.55;max-width:94%}
-.msg.u{align-self:flex-end}
+.msg{font-size:12.5px;line-height:1.55;max-width:94%}.msg.u{align-self:flex-end}
 .msg .who{font-family:var(--mono);font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
 .msg.s .who{color:var(--red)}
 .msg .body{padding:9px 12px;border-radius:11px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,42,58,.07),rgba(255,42,58,.02))}
 .msg.u .body{background:rgba(54,182,255,.08);border-color:rgba(54,182,255,.28)}
 .msg .body b{color:#fff}
-.report{display:grid;gap:3px;font-size:11.5px}
-.report .ln{display:flex;gap:8px}.report .ln .k{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);min-width:88px;padding-top:2px}
+.report{display:grid;gap:3px;font-size:11.5px}.report .ln{display:flex;gap:8px}
+.report .ln .k{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);min-width:84px;padding-top:2px}
 .deny{border:1px solid rgba(255,42,58,.5);background:rgba(255,42,58,.09);border-radius:10px;padding:10px 12px}
 .deny .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#ff6470;display:flex;align-items:center;gap:6px;margin-bottom:5px}
 .aref{font-family:var(--mono);font-size:9px;color:var(--dim-2);letter-spacing:.06em}
@@ -109,290 +101,377 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;bac
 .qchip{font-family:var(--mono);font-size:9px;letter-spacing:.03em;color:var(--dim);border:1px solid var(--line);background:rgba(255,42,58,.04);padding:5px 8px;border-radius:12px;cursor:pointer}
 .qchip:hover{color:var(--txt);border-color:var(--line-2)}
 
-/* right column */
 .rightcol{display:grid;grid-template-rows:1fr 1fr;gap:12px;min-height:0}
 .scroll{overflow-y:auto;padding:2px 12px 12px;display:flex;flex-direction:column;gap:8px}
-.ev{display:flex;gap:8px;font-size:11px;line-height:1.4;animation:evin .4s ease}
+.ev{display:flex;gap:8px;font-size:11px;line-height:1.4;animation:evin .4s ease;cursor:pointer}
 @keyframes evin{from{opacity:0;transform:translateX(8px)}}
-.ev .t{font-family:var(--mono);font-size:8.5px;color:var(--dim-2);flex:0 0 40px;padding-top:2px}
+.ev:hover{opacity:.85}
+.ev .t{font-family:var(--mono);font-size:8.5px;color:var(--dim-2);flex:0 0 42px;padding-top:2px}
 .ev .d{width:8px;height:8px;border-radius:50%;margin-top:3px;flex:0 0 auto;background:var(--cyan);box-shadow:0 0 7px var(--cyan)}
 .ev.warn .d{background:var(--amber);box-shadow:0 0 7px var(--amber)}.ev.bad .d{background:var(--red);box-shadow:0 0 7px var(--red)}.ev.ok .d{background:var(--ok);box-shadow:0 0 7px var(--ok)}
-.ev .b{color:#e9cfd1}.ev .b b{color:#fff}
-.ev .src{display:block;font-family:var(--mono);font-size:8px;color:var(--dim-2);margin-top:1px}
+.ev .b{color:#e9cfd1}.ev .b b{color:#fff}.ev .src{display:block;font-family:var(--mono);font-size:8px;color:var(--dim-2);margin-top:1px}
+.empty{font-size:11px;color:var(--dim-2);padding:10px 14px;font-family:var(--mono);letter-spacing:.04em}
 
-/* drawer */
-.drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,92vw);background:linear-gradient(180deg,rgba(22,7,9,.99),rgba(10,4,5,.99));border-left:1px solid var(--line-2);box-shadow:-20px 0 60px rgba(0,0,0,.6);z-index:50;transform:translateX(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(390px,94vw);background:linear-gradient(180deg,rgba(22,7,9,.99),rgba(10,4,5,.99));border-left:1px solid var(--line-2);box-shadow:-20px 0 60px rgba(0,0,0,.6);z-index:1300;transform:translateX(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}
 .drawer.open{transform:translateX(0)}
 .dr-h{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .dr-h .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:14px;border:1px solid var(--line)}
-.dr-h .nm{font-family:var(--display);font-weight:700;font-size:14px}
-.dr-h .ty{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.dr-h .nm{font-family:var(--display);font-weight:700;font-size:14px}.dr-h .ty{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .dr-h .x{margin-left:auto;cursor:pointer;color:var(--dim);font-size:18px;background:none;border:0}
 .dr-body{overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
 .feedbox{position:relative;aspect-ratio:16/10;border-radius:9px;overflow:hidden;border:1px solid var(--line-2);background:#0a0304}
-.feedbox .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(54,182,255,.05) 0 2px,transparent 2px 4px)}
-.feedbox .noise{position:absolute;inset:0;opacity:.5;background:radial-gradient(120% 90% at 30% 20%,rgba(54,182,255,.12),transparent 60%)}
-.feedbox .box{position:absolute;border:1.5px solid var(--ok);border-radius:3px;box-shadow:0 0 8px rgba(52,211,153,.5)}
-.feedbox .lab{position:absolute;top:7px;left:8px;font-family:var(--mono);font-size:9px;color:var(--ok);letter-spacing:.08em;background:rgba(0,0,0,.5);padding:1px 5px;border-radius:3px}
-.feedbox .rec{position:absolute;top:7px;right:8px;font-family:var(--mono);font-size:9px;color:var(--red);display:flex;align-items:center;gap:4px}
+.feedbox video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.feedbox canvas.ov{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.feedbox .lab{position:absolute;top:7px;left:8px;font-family:var(--mono);font-size:9px;color:var(--ok);letter-spacing:.08em;background:rgba(0,0,0,.55);padding:1px 5px;border-radius:3px;z-index:3}
+.feedbox .rec{position:absolute;top:7px;right:8px;font-family:var(--mono);font-size:9px;color:var(--red);display:flex;align-items:center;gap:4px;z-index:3}
 .feedbox .rec::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 1.2s infinite}
 .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .meta .c{border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:rgba(0,0,0,.2)}
-.meta .c .k{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim-2)}
-.meta .c .v{font-size:12px;font-weight:600;margin-top:2px}
-.note{font-size:12px;color:var(--dim);line-height:1.55}
-.note b{color:var(--txt)}
+.meta .c .k{font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim-2)}.meta .c .v{font-size:12px;font-weight:600;margin-top:2px;word-break:break-word}
+.note{font-size:12px;color:var(--dim);line-height:1.55}.note b{color:var(--txt)}
 .privacy{font-family:var(--mono);font-size:9.5px;color:var(--teal);border:1px solid rgba(47,212,192,.3);background:rgba(47,212,192,.06);border-radius:8px;padding:8px 10px;line-height:1.5}
 
-.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(18px);z-index:55;background:rgba(14,5,6,.96);border:1px solid var(--line-2);border-radius:11px;padding:11px 16px;display:flex;align-items:center;gap:11px;opacity:0;transition:.32s;backdrop-filter:blur(8px)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(18px);z-index:1400;background:rgba(14,5,6,.96);border:1px solid var(--line-2);border-radius:11px;padding:11px 16px;display:flex;align-items:center;gap:11px;opacity:0;transition:.32s;backdrop-filter:blur(8px)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast .i{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;border:1px solid var(--line)}
 .toast b{font-size:12px;display:block}.toast span{font-family:var(--mono);font-size:9px;color:var(--dim)}
-
 @media(max-width:1080px){.main{grid-template-columns:1fr}.rail,.rightcol{display:none}.clock{display:none}}
 </style>
 </head>
 <body>
 <div class="shell">
   <div class="topbar">
-    <div class="brand">
-      <div class="mk"></div>
-      <div><div class="b-name">SENTINEL<b>·</b>CC</div><div class="b-sub">Geospatial + OSINT Command Center</div></div>
-    </div>
+    <div class="brand"><div class="mk"></div>
+      <div><div class="b-name">SENTINEL<b>·</b>LIVE</div><div class="b-sub">Live Geospatial Command Center</div></div></div>
     <div class="spacer"></div>
-    <div class="pill juris">⬢ JURISDICTION · US-CA VERIFIED</div>
+    <div class="pill juris" id="jurisPill" title="Enable device location">⬢ LOCATION · NOT SET</div>
     <div class="pill armed"><span class="dot"></span>FAIL-CLOSED · ARMED</div>
     <div class="clock"><div class="t" id="clk">--:--:--</div><div class="d" id="cdate">—</div></div>
   </div>
-
   <div class="main">
-    <!-- LEFT: layers + filters -->
     <div class="panel rail">
-      <div class="p-t"><span class="i"></span>Layers</div>
+      <div class="p-t"><span class="i"></span>Live Sources</div>
+      <div id="feeds"></div>
+      <button class="btn" id="btnLoc">⬢ Enable location awareness</button>
+      <button class="btn amber" id="btnCam">📷 Connect owned camera</button>
+      <button class="btn" id="btnRefresh">↻ Refresh live feeds</button>
+      <div class="railsub">Map layers</div>
       <div id="layers"></div>
-      <div class="railsub">Risk filter</div>
-      <div class="chips" id="risk"></div>
-      <div class="railsub">Source type</div>
-      <div class="chips" id="srcfilter"></div>
     </div>
-
-    <!-- CENTER: map + console -->
     <div class="center">
       <div class="stage">
-        <canvas id="map"></canvas>
-        <div class="sweep"></div>
-        <div class="mtag tl">SITE: BURLINGTON OPS · OWNED PERIMETER<br>GRID 17T · DATUM WGS84</div>
-        <div class="mtag tr" id="mtr">FEEDS 6 · SENSORS 3<br>UPLINK SECURE</div>
-        <div class="mtag bl" id="mbl">PRESENCE: ANONYMOUS COUNT ONLY<br>NO IDENTIFICATION</div>
-        <div class="mtag br" id="mbr">SWEEP ACTIVE</div>
-        <div id="pins"></div>
+        <div id="map"></div>
+        <div class="mtag tl" id="mtl">AWAITING LOCATION<br>LIVE: USGS · NWS</div>
+        <div class="mtag br" id="mbr">SOURCES: LIVE PUBLIC</div>
+        <div class="maphint" id="maphint"><div class="box">
+          <h3>Live geospatial mode</h3>
+          <p>SENTINEL runs on live data: your device location (with consent), real map tiles, and live <b>USGS earthquake</b> + <b>NWS weather-alert</b> feeds. No hardcoded data. Asset/hazard focus only — never person identification.</p>
+          <button class="btn" id="btnLoc2" style="margin:0">⬢ Enable location awareness</button>
+        </div></div>
       </div>
       <div class="panel console">
-        <div class="p-t"><span class="i"></span>Command Console <small>asset-focused · fail-closed</small></div>
-        <div class="feed" id="feed"></div>
+        <div class="p-t"><span class="i"></span>Command Console <small>live · fail-closed</small></div>
+        <div class="feed" id="cfeed"></div>
         <div class="qrow" id="qrow"></div>
         <div class="composer">
-          <input id="cmd" placeholder="Ask SENTINEL…  (try: status, show perimeter, open CAM-02, report)" autocomplete="off"/>
+          <input id="cmd" placeholder="Ask SENTINEL…  (try: status, quakes near me, weather alerts, report)" autocomplete="off"/>
           <button class="send" id="send">Run</button>
         </div>
       </div>
     </div>
-
-    <!-- RIGHT: timeline + incident feed -->
     <div class="rightcol">
       <div class="panel">
         <div class="p-t"><span class="i"></span>Activity Timeline <small id="tlc">live</small></div>
         <div class="scroll" id="timeline"></div>
       </div>
       <div class="panel">
-        <div class="p-t"><span class="i"></span>Incident Feed</div>
+        <div class="p-t"><span class="i"></span>Incident Feed <small id="incsrc">USGS · NWS</small></div>
         <div class="scroll" id="incidents"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- details drawer -->
 <div class="drawer" id="drawer">
-  <div class="dr-h">
-    <div class="ic" id="drIc">📷</div>
+  <div class="dr-h"><div class="ic" id="drIc">📷</div>
     <div><div class="nm" id="drNm">—</div><div class="ty" id="drTy">—</div></div>
-    <button class="x" id="drX">✕</button>
-  </div>
+    <button class="x" id="drX">✕</button></div>
   <div class="dr-body" id="drBody"></div>
 </div>
-
 <div class="toast" id="toast"><div class="i" id="tIc">◉</div><div><b id="tT">—</b><span id="tS">—</span></div></div>
 
 <script>
 "use strict";
-/* SENTINEL Command Center — front-end reference. The "intelligence" is a
-   deterministic demo; the deny-bar mirrors sentinel/sentinel/policy.py. */
-
-function clock(){const d=new Date();clk.textContent=d.toLocaleTimeString('en-GB');
-  cdate.textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
+/* ===========================================================================
+   SENTINEL LIVE — geospatial command center on LIVE public data.
+   Sources (all client-side, real, keyless):
+     - Geolocation API ............ device location awareness (consent)
+     - Leaflet + CARTO/OSM tiles .. real map
+     - USGS earthquakes GeoJSON ... live seismic events
+     - NWS api.weather.gov ........ live weather alerts + place/jurisdiction
+     - getUserMedia ............... live owned camera, ANONYMOUS presence only
+   Charter: never identify/locate/track/profile a private individual.
+   =========================================================================== */
+const $=id=>document.getElementById(id);
+function clock(){const d=new Date();$('clk').textContent=d.toLocaleTimeString('en-GB');
+  $('cdate').textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
 setInterval(clock,1000);clock();
 
-/* ---- data: assets on the owned site (NO personal identities anywhere) ---- */
-const COLORS={cam:'#36b6ff',sensor:'#2fd4c0',asset:'#9b7bff',incident:'#ff2a3a',zone:'#ffb347'};
-const GLYPH={cam:'📷',sensor:'📡',asset:'⬢',incident:'⚠',zone:'◎'};
-const NODES=[
-  {id:'CAM-01',type:'cam',x:24,y:30,risk:'low',src:'owned_camera',juris:'US-CA',conf:0.97,present:2,zone:'lobby',note:'Lobby — nominal occupancy.'},
-  {id:'CAM-02',type:'cam',x:70,y:26,risk:'med',src:'owned_camera',juris:'US-CA',conf:0.93,present:4,zone:'dock',note:'Loading dock — tailgating watch.'},
-  {id:'CAM-03',type:'cam',x:52,y:64,risk:'low',src:'owned_camera',juris:'US-CA',conf:0.95,present:0,zone:'yard',note:'South yard — clear.'},
-  {id:'SENS-01',type:'sensor',x:38,y:46,risk:'low',src:'authorized_sensor',juris:'US-CA',conf:0.9,note:'Door contact — closed.'},
-  {id:'SENS-02',type:'sensor',x:82,y:54,risk:'med',src:'authorized_sensor',juris:'US-CA',conf:0.88,note:'Vibration — minor, perimeter fence.'},
-  {id:'SENS-03',type:'sensor',x:16,y:62,risk:'low',src:'authorized_sensor',juris:'US-CA',conf:0.92,note:'Smoke/heat — nominal.'},
-  {id:'GEN-A',type:'asset',x:60,y:44,risk:'low',src:'owned_asset',juris:'US-CA',conf:1,note:'Backup generator — online.'},
-  {id:'SVR-RACK',type:'asset',x:44,y:22,risk:'low',src:'owned_asset',juris:'US-CA',conf:1,note:'Server room — access-controlled.'},
-  {id:'INC-204',type:'incident',x:74,y:30,risk:'high',src:'correlation',juris:'US-CA',conf:0.82,note:'Dock: 3 persons through access point within 4s — possible tailgating.'},
-  {id:'ZONE-PERIM',type:'zone',x:50,y:48,r:34,risk:'med',src:'policy',juris:'US-CA',conf:1,note:'Owned perimeter alert zone.'},
-];
-const SRC_TYPES=[...new Set(NODES.map(n=>n.src))];
+const state={pos:null,juris:null,map:null,markers:{quakes:[],alerts:[],me:null},
+  feeds:{location:'off',quakes:'pend',weather:'pend',camera:'off'},
+  data:{quakes:[],alerts:[]},camStream:null};
 
-/* ---- map canvas (stylized owned-site plan) ---- */
-const cv=map,ctx=cv.getContext('2d');
-function sizeMap(){const r=cv.parentElement.getBoundingClientRect();cv.width=r.width*devicePixelRatio;cv.height=r.height*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);drawMap();placePins();}
-function drawMap(){const w=cv.width/devicePixelRatio,h=cv.height/devicePixelRatio;ctx.clearRect(0,0,w,h);
-  // grid
-  ctx.strokeStyle='rgba(255,42,58,.07)';ctx.lineWidth=1;
-  for(let x=0;x<w;x+=34){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
-  for(let y=0;y<h;y+=34){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
-  // perimeter
-  ctx.strokeStyle='rgba(255,179,71,.35)';ctx.setLineDash([7,5]);ctx.lineWidth=1.5;
-  ctx.strokeRect(w*.08,h*.12,w*.84,h*.76);ctx.setLineDash([]);
-  // buildings
-  ctx.fillStyle='rgba(155,123,255,.10)';ctx.strokeStyle='rgba(155,123,255,.35)';
-  [[.16,.18,.26,.22],[.58,.16,.24,.2],[.4,.55,.3,.26]].forEach(([x,y,bw,bh])=>{
-    ctx.fillRect(w*x,h*y,w*bw,h*bh);ctx.strokeRect(w*x,h*y,w*bw,h*bh);});
-  // roads
-  ctx.strokeStyle='rgba(255,200,200,.12)';ctx.lineWidth=8;
-  ctx.beginPath();ctx.moveTo(w*.08,h*.5);ctx.lineTo(w*.92,h*.5);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(w*.5,h*.12);ctx.lineTo(w*.5,h*.88);ctx.stroke();
+/* ---------- map ---------- */
+let mapReady=false;
+function initMap(){
+  if(typeof L==='undefined'){$('mtl').innerHTML='MAP LIBRARY OFFLINE<br>FEEDS STILL LIVE';return;}
+  state.map=L.map('map',{zoomControl:true,attributionControl:true}).setView([39.5,-98.35],4);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+    subdomains:'abcd',maxZoom:19,attribution:'© OpenStreetMap © CARTO'}).addTo(state.map);
+  mapReady=true;
 }
-window.addEventListener('resize',sizeMap);
-
-/* ---- layers + filters ---- */
-const layerState={cam:true,sensor:true,asset:true,incident:true,zone:true};
-const LAYER_DEFS=[['cam','Cameras'],['sensor','Sensors'],['asset','Assets'],['incident','Incidents'],['zone','Alert Zones']];
-function renderLayers(){layers.innerHTML=LAYER_DEFS.map(([k,n])=>{
-  const ct=NODES.filter(x=>x.type===k).length;
-  return `<div class="layer ${layerState[k]?'':'off'}" data-k="${k}"><span class="sw" style="color:${COLORS[k]};background:${COLORS[k]}"></span><span class="nm">${n}</span><span class="ct">${ct}</span></div>`;}).join('');
-  layers.querySelectorAll('.layer').forEach(el=>el.onclick=()=>{layerState[el.dataset.k]=!layerState[el.dataset.k];renderLayers();placePins();});}
-let riskFilter='all',srcFilter='all';
-function renderFilters(){
-  risk.innerHTML=['all','low','med','high'].map(r=>`<div class="chip ${r===riskFilter?'on':''}" data-r="${r}">${r}</div>`).join('');
-  risk.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{riskFilter=c.dataset.r;renderFilters();placePins();});
-  srcfilter.innerHTML=['all',...SRC_TYPES].map(s=>`<div class="chip ${s===srcFilter?'on':''}" data-s="${s}">${s.replace('_',' ')}</div>`).join('');
-  srcfilter.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{srcFilter=c.dataset.s;renderFilters();placePins();});}
-
-/* ---- pins ---- */
-function visible(n){return layerState[n.type] && (riskFilter==='all'||n.risk===riskFilter) && (srcFilter==='all'||n.src===srcFilter);}
-function placePins(){
-  pins.innerHTML=NODES.map(n=>{
-    if(!visible(n))return '';
-    if(n.type==='zone'){const d=n.r*2;return `<div class="zonearea" style="left:${n.x}%;top:${n.y}%;width:${d}%;height:${d*0.72}%"></div>`;}
-    return `<div class="pin ${n.type}" data-id="${n.id}" style="left:${n.x}%;top:${n.y}%"><div class="glyph">${GLYPH[n.type]}</div><div class="lab">${n.id}</div></div>`;
+const LAYERS={me:true,quakes:true,alerts:true};
+const LDEF=[['me','#2fd4c0','My location'],['quakes','#ff2a3a','Earthquakes (USGS)'],['alerts','#ffb347','Weather alerts (NWS)']];
+function renderLayers(){
+  $('layers').innerHTML=LDEF.map(([k,c,n])=>{
+    const ct=k==='me'?(state.pos?1:0):state.data[k==='quakes'?'quakes':'alerts'].length;
+    return `<div class="layer ${LAYERS[k]?'':'off'}" data-k="${k}"><span class="sw" style="color:${c};background:${c}"></span><span class="nm">${n}</span><span class="ct">${ct}</span></div>`;
   }).join('');
-  pins.querySelectorAll('.pin').forEach(p=>p.onclick=()=>openNode(p.dataset.id));}
-
-/* ---- drawer ---- */
-function openNode(id){const n=NODES.find(x=>x.id===id);if(!n)return;
-  drIc.textContent=GLYPH[n.type];drIc.style.color=COLORS[n.type];
-  drNm.textContent=n.id;drTy.textContent=({cam:'Owned camera',sensor:'Authorized sensor',asset:'Owned asset',incident:'Incident',zone:'Alert zone'})[n.type];
-  let html='';
-  if(n.type==='cam'){
-    const boxes=Array.from({length:n.present}).map(()=>{const bw=10+Math.random()*8,bh=18+Math.random()*10,l=10+Math.random()*70,t=30+Math.random()*45;
-      return `<div class="box" style="left:${l}%;top:${t}%;width:${bw}%;height:${bh}%"></div>`;}).join('');
-    html+=`<div class="feedbox"><div class="noise"></div><div class="scan"></div>${boxes}<div class="lab">${n.id} · ${n.zone}</div><div class="rec">REC · LIVE</div></div>
-      <div class="privacy">🔒 Presence analytics only — <b style="color:#7fe8db">${n.present} anonymous detection(s)</b>. SENTINEL counts presence and flags safety events; it does <b style="color:#7fe8db">not</b> identify, recognize, or name any person.</div>`;
+  $('layers').querySelectorAll('.layer').forEach(el=>el.onclick=()=>{LAYERS[el.dataset.k]=!LAYERS[el.dataset.k];renderLayers();redraw();});
+}
+function redraw(){
+  if(!mapReady)return;
+  ['quakes','alerts'].forEach(k=>{state.markers[k].forEach(m=>state.map.removeLayer(m));state.markers[k]=[];});
+  if(state.markers.me){state.map.removeLayer(state.markers.me);state.markers.me=null;}
+  if(LAYERS.me&&state.pos){
+    state.markers.me=L.circleMarker([state.pos.lat,state.pos.lon],{radius:8,color:'#2fd4c0',fillColor:'#2fd4c0',fillOpacity:.6,weight:2}).addTo(state.map).bindPopup('Operator device (live)');
   }
-  html+=`<div class="meta">
-    <div class="c"><div class="k">Source</div><div class="v">${n.src.replace('_',' ')}</div></div>
-    <div class="c"><div class="k">Timestamp</div><div class="v">${new Date().toLocaleTimeString('en-GB')}</div></div>
-    <div class="c"><div class="k">Jurisdiction</div><div class="v" style="color:var(--teal)">${n.juris}</div></div>
-    <div class="c"><div class="k">Confidence</div><div class="v">${(n.conf*100|0)}%</div></div></div>
-    <div class="note"><b>Assessment.</b> ${n.note}</div>`;
-  if(n.type==='incident')html+=`<div class="privacy" style="color:#ff9aa2;border-color:rgba(255,42,58,.3);background:rgba(255,42,58,.06)">⚠ Anonymous safety event. Response is asset-focused (secure the dock, verify badge logs) — never person identification.</div>`;
-  drBody.innerHTML=html;drawer.classList.add('open');}
-drX.onclick=()=>drawer.classList.remove('open');
+  if(LAYERS.quakes)state.data.quakes.forEach(q=>{
+    const r=Math.max(4,q.mag*2.2),col=q.mag>=4?'#ff2a3a':q.mag>=2.5?'#ffb347':'#36b6ff';
+    const m=L.circleMarker([q.lat,q.lon],{radius:r,color:col,fillColor:col,fillOpacity:.35,weight:1.3}).addTo(state.map)
+      .bindPopup(`<b>M${q.mag.toFixed(1)}</b> ${q.place}<br>${new Date(q.time).toUTCString()}<br><span style="opacity:.7">source: USGS</span>`);
+    m.on('click',()=>openQuake(q));state.markers.quakes.push(m);});
+  if(LAYERS.alerts)state.data.alerts.forEach(a=>{ if(a.lat==null)return;
+    const m=L.circleMarker([a.lat,a.lon],{radius:9,color:'#ffb347',fillColor:'#ffb347',fillOpacity:.25,weight:1.5}).addTo(state.map)
+      .bindPopup(`<b>${a.event}</b><br>${a.area}<br><span style="opacity:.7">source: NWS</span>`);
+    state.markers.alerts.push(m);});
+}
 
-/* ---- timeline + incident feed ---- */
-const tl=timeline,inc=incidents;
+/* ---------- feed status UI ---------- */
+function setFeed(k,st,up){state.feeds[k]=st;renderFeeds(up);}
+function renderFeeds(up){
+  const rows=[
+    ['location','Device location',state.feeds.location],
+    ['quakes','USGS earthquakes',state.feeds.quakes],
+    ['weather','NWS weather alerts',state.feeds.weather],
+    ['camera','Owned camera',state.feeds.camera],
+  ];
+  $('feeds').innerHTML=rows.map(([k,n,st])=>{
+    const cls=st==='live'?'live':st==='err'?'err':st==='pend'?'pend':'';
+    const lab=st==='live'?'LIVE':st==='err'?'OFFLINE':st==='pend'?'…':'OFF';
+    return `<div class="feedstat"><span class="led ${cls}"></span><span class="nm">${n}</span><span class="up">${lab}</span></div>`;
+  }).join('');
+}
+
+/* ---------- geolocation ---------- */
+function enableLocation(){
+  if(!navigator.geolocation){say('Geolocation is not available in this browser.');setFeed('location','err');return;}
+  setFeed('location','pend');toast('⬢','Location','Requesting device position…');
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    state.pos={lat:pos.coords.latitude,lon:pos.coords.longitude,acc:pos.coords.accuracy};
+    setFeed('location','live');
+    $('maphint').style.display='none';
+    if(mapReady)state.map.setView([state.pos.lat,state.pos.lon],11);
+    renderLayers();redraw();
+    addTL('ok',`Device located — <b>${state.pos.lat.toFixed(4)}, ${state.pos.lon.toFixed(4)}</b> ±${Math.round(state.pos.acc)}m`,'geolocation');
+    $('mtl').innerHTML=`LOC ${state.pos.lat.toFixed(3)}, ${state.pos.lon.toFixed(3)}<br>±${Math.round(state.pos.acc)}m · LIVE`;
+    await resolveJurisdiction();
+    loadAll();
+  },err=>{setFeed('location','err');say(`Location denied or unavailable (${err.message}). Live hazard feeds still load globally.`);loadAll();},
+  {enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+}
+async function resolveJurisdiction(){
+  try{
+    const r=await fetchT(`https://api.weather.gov/points/${state.pos.lat.toFixed(4)},${state.pos.lon.toFixed(4)}`,{headers:{'Accept':'application/geo+json'}},8000);
+    const j=await r.json();const rl=j.properties&&j.properties.relativeLocation&&j.properties.relativeLocation.properties;
+    if(rl){state.juris=`${rl.city}, ${rl.state} (US)`;}
+    else state.juris=null;
+  }catch(e){state.juris=null;}
+  const p=$('jurisPill');
+  p.textContent='⬢ '+(state.juris?('JURISDICTION · '+state.juris.toUpperCase()):`LAT/LON ${state.pos.lat.toFixed(2)},${state.pos.lon.toFixed(2)}`);
+}
+
+/* ---------- live feeds ---------- */
+function fetchT(url,opts,ms){const c=new AbortController();const t=setTimeout(()=>c.abort(),ms||9000);
+  return fetch(url,Object.assign({signal:c.signal},opts||{})).finally(()=>clearTimeout(t));}
+
+async function loadQuakes(){
+  setFeed('quakes','pend');
+  try{
+    const r=await fetchT('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson',{},10000);
+    const j=await r.json();
+    let feats=j.features.map(f=>({mag:f.properties.mag||0,place:f.properties.place||'—',time:f.properties.time,
+      lon:f.geometry.coordinates[0],lat:f.geometry.coordinates[1],id:f.id,url:f.properties.url,tsunami:f.properties.tsunami}));
+    if(state.pos)feats.sort((a,b)=>dist(a,state.pos)-dist(b,state.pos));
+    else feats.sort((a,b)=>b.mag-a.mag);
+    state.data.quakes=feats.slice(0,40);
+    setFeed('quakes','live');renderLayers();redraw();renderIncidents();
+    addTL('',`USGS — <b>${j.features.length} quakes/24h</b> ingested`,'usgs.gov');
+  }catch(e){setFeed('quakes','err');addTL('bad','USGS feed unreachable','usgs.gov');renderIncidents();}
+}
+async function loadAlerts(){
+  setFeed('weather','pend');
+  try{
+    const url=state.pos?`https://api.weather.gov/alerts/active?point=${state.pos.lat.toFixed(4)},${state.pos.lon.toFixed(4)}`
+                       :'https://api.weather.gov/alerts/active?status=actual&limit=50';
+    const r=await fetchT(url,{headers:{'Accept':'application/geo+json'}},10000);
+    const j=await r.json();
+    state.data.alerts=(j.features||[]).map(f=>{const p=f.properties;let lat=null,lon=null;
+      if(f.geometry&&f.geometry.type==='Polygon'){const c=f.geometry.coordinates[0][0];lon=c[0];lat=c[1];}
+      return {event:p.event,area:p.areaDesc,sev:p.severity,headline:p.headline,sent:p.sent,lat,lon};}).slice(0,40);
+    setFeed('weather','live');renderLayers();redraw();renderIncidents();
+    addTL(state.data.alerts.length?'warn':'ok',`NWS — <b>${state.data.alerts.length} active alert(s)</b>`,'weather.gov');
+  }catch(e){setFeed('weather','err');addTL('bad','NWS feed unreachable','weather.gov');renderIncidents();}
+}
+function dist(a,b){const dx=a.lat-b.lat,dy=a.lon-b.lon;return dx*dx+dy*dy;}
+function loadAll(){loadQuakes();loadAlerts();}
+
+/* ---------- incident feed (LIVE) ---------- */
+function renderIncidents(){
+  const el=$('incidents');const items=[];
+  state.data.alerts.forEach(a=>items.push({kind:a.sev==='Extreme'||a.sev==='Severe'?'bad':'warn',
+    body:`<b>${a.event}</b> — ${a.area}`,src:'NWS · weather.gov',ts:a.sent}));
+  state.data.quakes.slice(0,12).forEach(q=>items.push({kind:q.mag>=4?'bad':q.mag>=2.5?'warn':'',
+    body:`<b>M${q.mag.toFixed(1)}</b> ${q.place}`,src:'USGS',ts:q.time,q}));
+  if(!items.length){el.innerHTML=`<div class="empty">${state.feeds.quakes==='err'||state.feeds.weather==='err'?'● feeds unreachable from this network':'awaiting live data — enable location or refresh'}</div>`;return;}
+  items.sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+  el.innerHTML=items.slice(0,18).map((it,i)=>{const t=new Date(it.ts).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    return `<div class="ev ${it.kind}" data-q="${it.q?it.q.id:''}"><div class="t">${t}</div><div class="d"></div><div class="b">${it.body}<span class="src">${it.src}</span></div></div>`;}).join('');
+  el.querySelectorAll('.ev[data-q]').forEach(e=>{const id=e.dataset.q;if(!id)return;e.onclick=()=>{const q=state.data.quakes.find(x=>x.id===id);if(q)openQuake(q);};});
+}
+
+/* ---------- timeline ---------- */
 function addTL(kind,body,src){const t=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
   const d=document.createElement('div');d.className='ev '+kind;d.innerHTML=`<div class="t">${t}</div><div class="d"></div><div class="b">${body}<span class="src">${src}</span></div>`;
-  tl.prepend(d);while(tl.children.length>22)tl.lastChild.remove();}
-function addInc(kind,body,src){const t=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  const d=document.createElement('div');d.className='ev '+kind;d.innerHTML=`<div class="t">${t}</div><div class="d"></div><div class="b">${body}<span class="src">${src}</span></div>`;
-  inc.prepend(d);while(inc.children.length>14)inc.lastChild.remove();}
-[['ok','Perimeter sweep complete — <b>nominal</b>','ZONE-PERIM'],
- ['','CAM-01 lobby — <b>2 present</b> (anonymous)','CAM-01'],
- ['warn','CAM-02 dock — occupancy rising','CAM-02'],
- ['ok','SENS-01 door contact — closed','SENS-01']].forEach(e=>addTL(e[0],e[1],e[2]));
-addInc('bad','INC-204 · possible <b>tailgating</b> at dock (3 in 4s)','correlation');
-addInc('warn','SENS-02 perimeter fence — minor vibration','SENS-02');
-const TLPOOL=[['','CAM-03 yard — <b>clear</b>','CAM-03'],['ok','Badge log reconciled at turnstile','access-ctrl'],
- ['warn','CAM-02 dock — <b>4 present</b> (anonymous)','CAM-02'],['','OSINT: brand mention spike (owned domain)','osint'],
- ['ok','Generator GEN-A — online','GEN-A'],['','Change-detection: no perimeter change','satellite']];
+  $('timeline').prepend(d);while($('timeline').children.length>24)$('timeline').lastChild.remove();}
 
-/* ---- console ---- */
-const feed=document.getElementById('feed');
+/* ---------- drawers ---------- */
+function openQuake(q){
+  $('drIc').textContent='⚠';$('drIc').style.color='#ff2a3a';$('drNm').textContent='M'+q.mag.toFixed(1)+' earthquake';$('drTy').textContent='USGS · live seismic';
+  $('drBody').innerHTML=`<div class="meta">
+    <div class="c"><div class="k">Magnitude</div><div class="v">${q.mag.toFixed(1)}</div></div>
+    <div class="c"><div class="k">When (UTC)</div><div class="v">${new Date(q.time).toUTCString().replace(' GMT','')}</div></div>
+    <div class="c"><div class="k">Location</div><div class="v">${q.place}</div></div>
+    <div class="c"><div class="k">Coordinates</div><div class="v">${q.lat.toFixed(3)}, ${q.lon.toFixed(3)}</div></div>
+    <div class="c"><div class="k">Tsunami flag</div><div class="v">${q.tsunami?'YES':'no'}</div></div>
+    <div class="c"><div class="k">Source</div><div class="v">USGS</div></div></div>
+    <div class="note"><b>Provenance.</b> Live USGS GeoJSON feed (all_day). <a href="${q.url}" target="_blank" rel="noopener" style="color:#36b6ff">Open USGS event ↗</a></div>
+    <div class="privacy">🔒 Hazard/asset data only. No personal data involved.</div>`;
+  if(mapReady){state.map.setView([q.lat,q.lon],8);}$('drawer').classList.add('open');
+}
+
+/* ---------- live camera: ANONYMOUS presence (motion only, no identity) ---------- */
+async function connectCamera(){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){say('Camera API unavailable in this browser.');return;}
+  $('drIc').textContent='📷';$('drIc').style.color='#36b6ff';$('drNm').textContent='Owned camera';$('drTy').textContent='Live · anonymous presence';
+  $('drBody').innerHTML=`<div class="feedbox"><video id="vid" autoplay playsinline muted></video><canvas class="ov" id="ov"></canvas>
+      <div class="lab" id="presLab">PRESENCE: —</div><div class="rec">REC · LIVE</div></div>
+    <div class="privacy">🔒 <b style="color:#7fe8db">Anonymous presence only.</b> SENTINEL measures motion/activity to flag presence and safety events. It does <b style="color:#7fe8db">not</b> run face recognition, identify, or name anyone. Frames are processed on-device and never stored.</div>
+    <div class="meta"><div class="c"><div class="k">Source</div><div class="v">owned camera (getUserMedia)</div></div>
+      <div class="c"><div class="k">Processing</div><div class="v">on-device · motion diff</div></div></div>`;
+  $('drawer').classList.add('open');
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
+    state.camStream=stream;setFeed('camera','live');
+    const vid=$('vid');vid.srcObject=stream;
+    addTL('ok','Owned camera connected — presence analytics (anonymous)','getUserMedia');
+    startPresence();
+  }catch(e){setFeed('camera','err');say('Camera access denied or unavailable: '+e.message);}
+}
+function startPresence(){
+  const vid=$('vid'),ov=$('ov');if(!vid||!ov)return;
+  const w=160,h=100;const work=document.createElement('canvas');work.width=w;work.height=h;const wx=work.getContext('2d',{willReadFrequently:true});
+  const octx=ov.getContext('2d');let prev=null;
+  function loop(){
+    if(!state.camStream||!document.getElementById('vid')){return;}
+    if(vid.videoWidth){
+      wx.drawImage(vid,0,0,w,h);const cur=wx.getImageData(0,0,w,h);
+      let motion=0,cells=new Array(64).fill(0);
+      if(prev){for(let i=0;i<cur.data.length;i+=4){
+        const d=Math.abs(cur.data[i]-prev.data[i])+Math.abs(cur.data[i+1]-prev.data[i+1])+Math.abs(cur.data[i+2]-prev.data[i+2]);
+        if(d>60){motion++;const px=(i/4)%w,py=Math.floor((i/4)/w);const cx=Math.floor(px/(w/8)),cy=Math.floor(py/(h/8));cells[cy*8+cx]++;}}}
+      prev=cur;
+      const active=cells.filter(c=>c>4).length;          // anonymous active regions, NOT people-ID
+      const pct=(100*motion/(w*h))|0;
+      ov.width=ov.clientWidth;ov.height=ov.clientHeight;octx.clearRect(0,0,ov.width,ov.height);
+      octx.strokeStyle='#34d399';octx.lineWidth=2;octx.shadowColor='#34d399';octx.shadowBlur=6;
+      const sx=ov.width/8,sy=ov.height/8;
+      for(let c=0;c<64;c++){if(cells[c]>4){const gx=c%8,gy=Math.floor(c/8);octx.strokeRect(ov.width-(gx+1)*sx+3,gy*sy+3,sx-6,sy-6);}}
+      const lvl=pct>8?'ELEVATED':pct>2?'ACTIVE':'CLEAR';
+      $('presLab').textContent=`PRESENCE: ${active} region(s) · motion ${pct}% · ${lvl}`;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+$('drX').onclick=()=>{$('drawer').classList.remove('open');};
+
+/* ---------- console + deny gate ---------- */
+const cfeed=$('cfeed');
 function aref(){return 'SENT-'+Math.random().toString(16).slice(2,8).toUpperCase();}
-function userSay(t){const d=document.createElement('div');d.className='msg u';d.innerHTML=`<div class="who">Operator</div><div class="body">${esc(t)}</div>`;feed.appendChild(d);feed.scrollTop=feed.scrollHeight;}
-function sentinelSay(html){const d=document.createElement('div');d.className='msg s';d.innerHTML=`<div class="who">SENTINEL</div><div class="body">${html}</div>`;feed.appendChild(d);feed.scrollTop=feed.scrollHeight;return d;}
+function userSay(t){const d=document.createElement('div');d.className='msg u';d.innerHTML=`<div class="who">Operator</div><div class="body">${esc(t)}</div>`;cfeed.appendChild(d);cfeed.scrollTop=cfeed.scrollHeight;}
+function say(html){const d=document.createElement('div');d.className='msg s';d.innerHTML=`<div class="who">SENTINEL</div><div class="body">${html}</div>`;cfeed.appendChild(d);cfeed.scrollTop=cfeed.scrollHeight;return d;}
 function esc(s){return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
-function toast(ic,t,s){tIc.textContent=ic;tT.textContent=t;tS.textContent=s;document.getElementById('toast').classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>document.getElementById('toast').classList.remove('show'),2600);}
-
-// DENY patterns mirror policy.py hard-deny conditions
+function toast(ic,t,s){$('tIc').textContent=ic;$('tT').textContent=t;$('tS').textContent=s;$('toast').classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>$('toast').classList.remove('show'),2600);}
 const DENY=/\b(who is|who'?s|identif|recogni[sz]e|facial|face recognition|de-?anon|re-?identif|stalk|surveil|profile|\b(find|locate|track|identify|name)\b.{0,16}\b(person|people|individual|someone|him|her|man|woman|guy|suspect|face)\b|\b(this|that|a|the)\s+(person|individual|suspect))/i;
 
 function handle(raw){const q=raw.trim();if(!q)return;userSay(q);const t=q.toLowerCase();
-  if(DENY.test(t)){
-    const r=aref();
-    sentinelSay(`<div class="deny"><div class="h">⛔ DENIED · fail-closed</div>
-      Request would identify, locate, track, or re-identify a private individual. That violates SENTINEL hard rules (no person identification, no biometric re-identification, no de-anonymization).<br>
-      <b>Redirect:</b> I can help with lawful asset protection instead — owned-camera <i>presence</i> analytics, perimeter status, incident timelines, or OSINT on owned organizations/domains.
-      <div class="aref" style="margin-top:7px">audit ref ${r} · logged · escalated to human review</div></div>`);
-    addInc('bad','Policy DENY — person-identification request blocked','policy-gate');
-    toast('⛔','Request denied','Person identification is prohibited');return;}
+  if(DENY.test(t)){const r=aref();
+    say(`<div class="deny"><div class="h">⛔ DENIED · fail-closed</div>Request would identify, locate, track, or re-identify a private individual — prohibited by SENTINEL hard rules (no person identification, no biometric re-identification, no de-anonymization).<br><b>Redirect:</b> lawful asset protection only — live hazard feeds, perimeter/occupancy presence, or asset-scoped OSINT.<div class="aref" style="margin-top:7px">audit ref ${r} · logged · escalated to human review</div></div>`);
+    addTL('bad','Policy DENY — person-identification request blocked','policy-gate');toast('⛔','Denied','Person identification prohibited');return;}
 
-  if(/perimeter|map|site|where|show|zone|overview/.test(t)){toast('🗺','Map focused','Owned perimeter + assets');
-    sentinelSay(`<b>Map view — Burlington Ops (owned perimeter).</b> 6 feeds, 3 sensors, 2 assets, 1 active incident in view. Alert zone <b>ZONE-PERIM</b> nominal. Select any pin for live status, provenance, and confidence.`);return;}
-  if(/cam|camera|feed/.test(t)){const m=q.match(/cam[-\s]?0?(\d)/i);const id=m?('CAM-0'+m[1]):'CAM-02';const n=NODES.find(x=>x.id===id)||NODES.find(x=>x.type==='cam');
-    openNode(n.id);toast('📷','Live feed',n.id+' · presence only');
-    sentinelSay(`<b>${n.id}</b> opened — <b>${n.present} anonymous presence detection(s)</b> in ${n.zone}. No identification performed. Source ${n.src.replace('_',' ')}, confidence ${(n.conf*100|0)}%, jurisdiction ${n.juris}.`);return;}
-  if(/recent|activity|timeline|event|happen/.test(t)){toast('🕑','Timeline','Recent activity');
-    sentinelSay(`<b>Recent activity (last cycle).</b> Perimeter sweep nominal · CAM-02 dock occupancy rising · SENS-02 minor fence vibration · INC-204 possible tailgating (3 persons in 4s, anonymous). See the timeline + incident feed at right.`);return;}
-  if(/report|summary|brief|sitrep/.test(t)){
-    const r=aref();
-    sentinelSay(`<div class="report">
-      <div class="ln"><span class="k">Top-line</span><span><b>Site secure; 1 open incident</b> (possible tailgating at dock).</span></div>
-      <div class="ln"><span class="k">Map</span><span>Owned perimeter ZONE-PERIM nominal; assets online.</span></div>
-      <div class="ln"><span class="k">Live feed</span><span>CAM-02 dock: 4 anonymous detections; CAM-01/03 nominal.</span></div>
-      <div class="ln"><span class="k">Timeline</span><span>Sweep ✓ · dock occupancy ↑ · SENS-02 vibration · INC-204 raised.</span></div>
-      <div class="ln"><span class="k">Evidence</span><span>owned_camera + authorized_sensor + correlation · timestamps logged.</span></div>
-      <div class="ln"><span class="k">Confidence</span><span>MED-HIGH (0.82–0.97).</span></div>
-      <div class="ln"><span class="k">Risk</span><span>Tailgating → unauthorized access risk at dock.</span></div>
-      <div class="ln"><span class="k">Next step</span><span>Dispatch guard to dock; reconcile badge logs; retain clips.</span></div>
-      <div class="ln"><span class="k">Audit</span><span>${r}</span></div></div>`);
-    toast('🧾','Report','Summary first, then evidence');return;}
-  if(/status|sitrep|health|nominal/.test(t)){sentinelSay(`<b>Status: ARMED · fail-closed.</b> Jurisdiction US-CA verified. 6 feeds + 3 sensors online; 1 open incident (INC-204). Presence analytics anonymous; no identification active. All decisions audited.`);return;}
-  if(/osint|brand|domain|org|exploit|vuln|cve/.test(t)){sentinelSay(`<b>OSINT (asset-focused).</b> Monitoring owned organizations, brands, domains, facilities + vulnerability intel (Exploit-DB) for exposure of <b>owned</b> assets. No person-scoped OSINT. What asset shall I check?`);return;}
-  if(/help|what can|capab/.test(t)){sentinelSay(`I provide <b>map-first situational awareness</b> for owned sites: live owned-camera <i>presence</i> analytics, sensor + incident timelines, perimeter/change detection, and asset-scoped OSINT — all fail-closed and audited. I will not identify, locate, or track private individuals.`);return;}
-  sentinelSay(`Acknowledged. I operate on <b>owned assets and approved sources</b> only. Try: <i>show perimeter</i> · <i>open CAM-02</i> · <i>recent activity</i> · <i>report</i> · <i>status</i>. Anything touching a private person is denied by design.`);
+  if(/locat|where am|my position|gps|jurisd/.test(t)){if(state.pos)say(`<b>Device location (live).</b> ${state.pos.lat.toFixed(4)}, ${state.pos.lon.toFixed(4)} ±${Math.round(state.pos.acc)}m. Jurisdiction: <b>${state.juris||'lat/lon only'}</b>. Source: device Geolocation API.`);else{say('Location not enabled. Requesting now (consent required)…');enableLocation();}return;}
+  if(/quake|earthquake|seismic|usgs/.test(t)){const n=state.data.quakes.length;if(!n){say(state.feeds.quakes==='err'?'USGS feed is unreachable from this network right now.':'Loading live USGS data…');loadQuakes();return;}
+    const top=state.data.quakes.slice(0,5).map(q=>`• <b>M${q.mag.toFixed(1)}</b> ${q.place} <span style="opacity:.6">(${new Date(q.time).toUTCString().slice(17,22)}Z)</span>`).join('<br>');
+    say(`<b>Live USGS — ${n} events (24h)${state.pos?', nearest first':''}.</b><br>${top}<br><span class="aref">source: earthquake.usgs.gov · ${new Date().toLocaleTimeString('en-GB')}</span>`);return;}
+  if(/weather|alert|storm|nws|hazard/.test(t)){const n=state.data.alerts.length;if(state.feeds.weather==='err'){say('NWS feed unreachable from this network right now.');return;}
+    if(!n){say(`<b>NWS — no active alerts</b> ${state.pos?'for your area':'(global sample)'}. Source: weather.gov.`);return;}
+    const top=state.data.alerts.slice(0,5).map(a=>`• <b>${a.event}</b> — ${a.area} <span style="opacity:.6">[${a.sev||'—'}]</span>`).join('<br>');
+    say(`<b>Live NWS — ${n} active alert(s).</b><br>${top}<br><span class="aref">source: api.weather.gov</span>`);return;}
+  if(/camera|cam|feed|presence|webcam/.test(t)){connectCamera();return;}
+  if(/report|summary|sitrep|brief/.test(t)){const r=aref();const q0=state.data.quakes[0],a0=state.data.alerts[0];
+    say(`<div class="report">
+      <div class="ln"><span class="k">Top-line</span><span><b>${state.data.alerts.length} active weather alert(s)</b>, ${state.data.quakes.length} quakes/24h in view.</span></div>
+      <div class="ln"><span class="k">Location</span><span>${state.pos?`${state.juris||state.pos.lat.toFixed(2)+','+state.pos.lon.toFixed(2)} (±${Math.round(state.pos.acc)}m)`:'not enabled'}</span></div>
+      <div class="ln"><span class="k">Feeds</span><span>USGS ${state.feeds.quakes.toUpperCase()} · NWS ${state.feeds.weather.toUpperCase()} · camera ${state.feeds.camera.toUpperCase()}</span></div>
+      <div class="ln"><span class="k">Timeline</span><span>${q0?`nearest M${q0.mag.toFixed(1)} ${q0.place}`:'—'}${a0?`; alert: ${a0.event}`:''}</span></div>
+      <div class="ln"><span class="k">Evidence</span><span>USGS GeoJSON + NWS alerts + device GPS · timestamps live.</span></div>
+      <div class="ln"><span class="k">Confidence</span><span>HIGH (authoritative public feeds).</span></div>
+      <div class="ln"><span class="k">Risk</span><span>${a0?(a0.sev||'weather')+' — '+a0.event:(q0&&q0.mag>=4?'significant seismic activity':'nominal')}</span></div>
+      <div class="ln"><span class="k">Next step</span><span>${a0?'brief site teams on '+a0.event:'monitor; no action required'}.</span></div>
+      <div class="ln"><span class="k">Audit</span><span>${r}</span></div></div>`);toast('🧾','Live report','Real feeds, timestamped');return;}
+  if(/status|health|online/.test(t)){say(`<b>Status: ARMED · fail-closed.</b> Location ${state.feeds.location.toUpperCase()}, USGS ${state.feeds.quakes.toUpperCase()}, NWS ${state.feeds.weather.toUpperCase()}, camera ${state.feeds.camera.toUpperCase()}. ${state.juris?('Jurisdiction '+state.juris+'.'):''} All sources live + public; no person identification active.`);return;}
+  if(/help|what can|capab/.test(t)){say(`I run on <b>live public data</b>: device location, real map tiles, live <b>USGS</b> quakes + <b>NWS</b> alerts, and on-device <b>anonymous</b> camera presence. Try: <i>enable location</i> · <i>quakes near me</i> · <i>weather alerts</i> · <i>connect camera</i> · <i>report</i>. I never identify or track people.`);return;}
+  say(`Acknowledged. I operate on <b>live, lawful, asset-focused sources</b> only. Try: <i>status</i> · <i>quakes</i> · <i>weather alerts</i> · <i>report</i>. Person identification is denied by design.`);
 }
-const cmd=document.getElementById('cmd');
-function submit(){const v=cmd.value;cmd.value='';handle(v);}
-document.getElementById('send').onclick=submit;cmd.addEventListener('keydown',e=>{if(e.key==='Enter')submit();});
-const QUICK=['Show perimeter','Open CAM-02','Recent activity','Report','Status','Find this person'];
-qrow.innerHTML=QUICK.map(q=>`<div class="qchip">${q}</div>`).join('');
-qrow.querySelectorAll('.qchip').forEach(c=>c.onclick=()=>handle(c.textContent));
+$('send').onclick=()=>{const v=$('cmd').value;$('cmd').value='';handle(v);};
+$('cmd').addEventListener('keydown',e=>{if(e.key==='Enter')$('send').click();});
+const QUICK=['Enable location','Quakes near me','Weather alerts','Connect camera','Report','Find this person'];
+$('qrow').innerHTML=QUICK.map(q=>`<div class="qchip">${q}</div>`).join('');
+$('qrow').querySelectorAll('.qchip').forEach(c=>c.onclick=()=>{const x=c.textContent;if(/enable location/i.test(x))enableLocation();else handle(x);});
 
-/* ---- boot ---- */
-renderLayers();renderFilters();sizeMap();
-sentinelSay(`SENTINEL command center online — <b>fail-closed, jurisdiction US-CA verified</b>. Map-first situational awareness for owned assets. Presence analytics are anonymous; I do not identify people. Try the quick commands below.`);
-setInterval(()=>{const e=TLPOOL[Math.floor(Math.random()*TLPOOL.length)];addTL(e[0],e[1],e[2]);},4200);
-let c=0;setInterval(()=>{c++;mbr.textContent='SWEEP '+c;},2000);
+/* ---------- buttons + boot ---------- */
+$('btnLoc').onclick=enableLocation;$('btnLoc2').onclick=enableLocation;
+$('btnCam').onclick=connectCamera;
+$('btnRefresh').onclick=()=>{toast('↻','Refresh','Reloading live feeds');loadAll();};
+$('jurisPill').onclick=enableLocation;
+
+renderFeeds();renderLayers();initMap();
+say(`SENTINEL <b>LIVE</b> online — fail-closed. Sources are real and public: device location, map tiles, <b>USGS</b> earthquakes, <b>NWS</b> weather alerts, and on-device <b>anonymous</b> camera presence. Click <b>Enable location awareness</b> to localize, or ask for <i>quakes</i> / <i>weather alerts</i>. I do not identify or track people.`);
+// kick global feeds immediately (work without location); refresh on intervals
+loadAll();
+setInterval(loadQuakes,90000);
+setInterval(loadAlerts,300000);
 </script>
 </body>
 </html>

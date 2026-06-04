@@ -18,7 +18,6 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from sentinel.audit import AuditLog
 from sentinel.models import AssuranceThresholds, Decision, Principal
 from sentinel.rbac import DocumentACL, InMemoryRBAC
-from sentinel.redteam import HeuristicRedTeam
 from sentinel.retrieval import retrieve
 from sentinel.vectorstore import (
     AclFilter,
@@ -163,7 +162,6 @@ def test_audit_chain_is_tamper_evident():
     assert audit.verify()
     assert len(audit.entries) >= 2                   # gate + retrieve
     # tamper with a recorded detail -> chain must fail verification
-    audit.entries  # snapshot
     object.__setattr__(audit._entries[0], "detail", {"tampered": True})
     assert audit.verify() is False
 

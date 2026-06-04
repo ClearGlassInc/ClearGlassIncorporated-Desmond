@@ -5,6 +5,26 @@ retrieval for the PERCIVAL / JARVIS OS control plane. It proves the Phase-One
 exit milestone: *the Governance Shell catches and blocks unauthorized agent
 retrieval in a restricted scope.*
 
+## Privacy charter (SENTINEL persona)
+
+SENTINEL operates under a **privacy-first security-intelligence charter**
+([`SENTINEL_CHARTER.md`](./SENTINEL_CHARTER.md)) whose hard rules are **enforced
+in code** by [`sentinel/policy.py`](./sentinel/policy.py) — a fail-closed gate
+that runs *before any feed or record is touched*:
+
+- No identifying/tracking private individuals without documented authority.
+- No face-recognition / re-identification / cross-source matching on
+  non-consenting people. No OSINT de-anonymization, stalking, or harassment.
+- Role + purpose + approved-source checks required; sensitive work escalates to
+  human review; every decision carries an `audit_ref`.
+
+```python
+from sentinel.policy import PrivacyPolicy, RequestContext
+PrivacyPolicy().evaluate(RequestContext(
+    actor_role="soc_analyst", purpose="perimeter intrusion monitoring",
+    data_source="owned_camera_network", intent="monitor"))  # -> ALLOW
+```
+
 ## The assurance gate (SABER-aligned)
 
 ```

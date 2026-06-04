@@ -191,8 +191,9 @@ class PrivacyPolicy:
             deny.append("combining satellite / camera / OSINT / location data to "
                         "de-anonymize or locate a person is prohibited")
 
-        # --- identify / locate / track / profile a private individual without authority ---
-        if targets_individual and not ctx.subject_consenting and not ctx.authorization_ref:
+        # --- identify / locate / track / profile a private individual ---
+        # Documented authorization is mandatory; consent alone is insufficient.
+        if targets_individual and not ctx.authorization_ref:
             deny.append("identifying/locating/tracking/profiling a private individual "
                         "requires explicit documented authorization")
 

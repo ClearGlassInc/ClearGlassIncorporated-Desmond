@@ -5,6 +5,21 @@ retrieval for the PERCIVAL / JARVIS OS control plane. It proves the Phase-One
 exit milestone: *the Governance Shell catches and blocks unauthorized agent
 retrieval in a restricted scope.*
 
+## Charter-compliant capabilities (no person identification)
+
+- **Command center** ([`../sentinel.html`](../sentinel.html)) — map-first
+  situational awareness for owned sites: live owned-camera *presence* analytics,
+  sensor/incident timelines, evidence cards (provenance · timestamp ·
+  jurisdiction · confidence), and a command bar whose deny-path mirrors the
+  policy gate (any person-identification query is refused + audited).
+- **Anonymous presence analytics** (`sentinel/vision.py · PresenceMonitor`) —
+  occupancy, tailgating, abandoned-object, and loitering events that count
+  *that* people are present, never *who*. No identity, no biometric templates.
+- **Consented access control** (`sentinel/vision.py · ConsentedAccessControl`) —
+  verifies an enrolled, opt-in credential behind the policy gate (documented
+  authorization + verified jurisdiction), grants pending human review, and never
+  identifies non-consenting people.
+
 ## Privacy charter (SENTINEL persona)
 
 SENTINEL is a privacy-first geospatial and OSINT intelligence platform for

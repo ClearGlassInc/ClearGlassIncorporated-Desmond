@@ -49,6 +49,16 @@ APPROVED_SOURCES = {
     "lawful_satellite_imagery",
     "authorized_sensor_feeds",
     "owned_site_imagery",
+    # vulnerability / threat intelligence (defensive: exposure of OWNED assets)
+    "vulnerability_intel",
+}
+
+# Approved public vulnerability / threat-intelligence feeds. Used only for
+# defensive context — assessing which published exploits/CVEs affect the
+# operator's OWNED software, assets, and infrastructure. Never for targeting
+# people or for offensive operations against third parties.
+THREAT_INTEL_FEEDS = {
+    "exploit_db": "https://www.exploit-db.com/",
 }
 
 # Intents that are categorically forbidden by the charter.

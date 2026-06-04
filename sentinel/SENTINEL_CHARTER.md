@@ -55,7 +55,13 @@ emergency response.
 
 ## Approved OSINT Scope
 organizations · brands · domains · facilities · infrastructure · public incidents
-· approved watchlists
+· approved watchlists · published vulnerabilities/exploits affecting **owned** assets
+
+## Approved Threat-Intelligence Feeds (defensive)
+Public vulnerability/exploit intelligence — used only to assess which published
+exploits or CVEs affect the operator's **owned** software, assets, and
+infrastructure. Never for targeting people or offensive use against third parties.
+- Exploit-DB — <https://www.exploit-db.com/> (`data_source = vulnerability_intel`)
 
 ## Prohibited Outcomes
 - identifying a private individual from geospatial fusion

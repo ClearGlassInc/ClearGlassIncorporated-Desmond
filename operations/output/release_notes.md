@@ -1,9 +1,25 @@
 # Release Notes — 2026-06-04
 
-*108 commit(s) since repository start*
+*110 commit(s) since repository start*
 
 ## New Features
 
+- **home:** live USGS/NWS LIVE OPS ribbon linking to SENTINEL (#359) (`ce95436`)
+- live USGS/NWS in PERCIVAL + live airspace (OpenSky) in SENTINEL (#358) (`2729bb6`)
+- **sentinel:** live geospatial mode — real location + USGS/NWS feeds + camera (#357) (`9d3c537`)
+- **sentinel:** live geospatial mode — real location + USGS/NWS feeds + camera (`e8f6d19`)
+- **percival:** link SENTINEL command center into the PERCIVAL HUD (#355) (`ac00ffe`)
+- **sentinel:** privacy-preserving vision ops + visual command center (#354) (`8a3b779`)
+- **sentinel:** privacy-preserving vision ops + visual command center (`4caf7dd`)
+- **sentinel:** add Exploit-DB as approved defensive threat-intel source (#352) (`aec99cd`)
+- **sentinel:** add Exploit-DB as approved defensive threat-intel source (`6cca8a4`)
+- **sentinel:** charter v2.1 — geospatial + OSINT extension (#350) (`9be32d5`)
+- **sentinel:** geospatial+OSINT charter + enforced hard rules (#349) (`bf288b4`)
+- **sentinel:** privacy-first SENTINEL charter + enforced policy gate (#348) (`5988604`)
+- **percival:** red/black mission-ready HUD reskin (#344) (`434aec1`)
+- **sentinel:** Phase-One Governance Shell + RBAC retrieval (#343) (`14ca6d4`)
+- **sentinel:** add Pinecone+Milvus adapters and recall harness (`193a832`)
+- **sentinel:** Phase-One fail-closed Governance Shell + RBAC retrieval (`5c9a5e7`)
 - wire PERCIVAL OS into site nav (#339) (`cbe0b64`)
 - **percival:** add PERCIVAL OS — Iron Man-class command center HUD + blueprint (`488f186`)
 - **clearpulse:** add architecture whitepaper + public reference page (`332a866`)
@@ -19,6 +35,9 @@
 
 ## Bug Fixes
 
+- **sitemap:** index remaining content pages; exempt non-indexable (#347) (`e895f24`)
+- **health-bot:** treat sitemap drift as warning, not a health failure (#346) (`23fcd32`)
+- **ci:** Health Monitor label crash + SENTINEL demo runner (#345) (`2eacb13`)
 - **ci:** resolve pre-existing lint, workflow-doctor, and PR-triage failures (`5ebf4bb`)
 - **ci:** resolve 4 pre-existing failures inherited from prior PRs (`98f33d6`)
 - **clearpulse:** wrap triage rows on narrow viewports (`0871f80`)
@@ -31,13 +50,10 @@
 - **site:** resolve 32 broken local references surfaced by site-audit CI job (`7ee8144`)
 - **ci:** pin actions/checkout to v5 and resolve pre-existing lint/test failures (`da20de5`)
 - **ci:** build automated GitHub workflow repair and execution system (`c5de32d`)
-- **actions:** skip Fly deploy when secrets are missing (`981cc86`)
-- **actions:** harden Fly deployment diagnostics (`b59144d`)
-- **actions:** checkout repo before rollout sync (`717a1a8`)
 
 ## Tests
 
-- **actions:** add checkout probe (`6b7cf6a`)
+- **sentinel:** drop unused import (ruff clean) (`db363ee`)
 
 ## CI/CD
 
@@ -106,24 +122,10 @@
 - logo.png (`c6824a1`)
 - Add hero image section to smb.html (`2d0bb9f`)
 - Update Twitter meta tags for ClearGlassInc. (`11ac796`)
-- Fix twitter:image meta tag in smb.html (`34b7b54`)
-- Update Open Graph image meta tags in smb.html (`f9d4970`)
-- Remove logo image and update Open Graph tags (`43641df`)
-- Add logo image to smb.html (`72f71ff`)
-- Add GitHub Actions workflow for site deployment (`a3f9bec`)
-- **actions:** remove checkout probe (`d01435e`)
-- Stabilize CI action versions (`a07f244`)
-- Install project test dependencies in CI (`cbc470e`)
-- Upgrade daily ops summary checkout action (`7466c0c`)
-- Upgrade operations finance checkout action (`63acc85`)
-- Upgrade marketing engine checkout action (`75c3102`)
-- Upgrade self-hosted deploy checkout action (`2b2467d`)
-- Upgrade IP protection scan checkout action (`85726e8`)
-- Upgrade dependency scan action runtimes (`18a45ea`)
-- Fix CI Node runtime action versions (`6aea318`)
 
 ## Automation
 
+- update generated outputs — 2026-06-04 10:38 UTC [skip ci] (`eb007c4`)
 - update generated outputs — 2026-06-03 11:55 UTC [skip ci] (`9ddea47`)
 - update generated outputs — 2026-06-02 11:16 UTC [skip ci] (`dbaa841`)
 

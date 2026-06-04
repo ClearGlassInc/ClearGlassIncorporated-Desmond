@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-04T10:38:19.604463+00:00
-**Average Score:** 62.4/100
-**Files Audited:** 29
+**Run:** 2026-06-04T19:41:55.625231+00:00
+**Average Score:** 62.7/100
+**Files Audited:** 30
 
 ## Page Scores
 
@@ -26,6 +26,7 @@
 | `command-console.html` | 70/100 | 3 |
 | `intelligence.html` | 70/100 | 3 |
 | `percival-os.html` | 70/100 | 3 |
+| `sentinel.html` | 70/100 | 3 |
 | `ai-operator.html` | 80/100 | 2 |
 | `banking-law-advisor.html` | 80/100 | 2 |
 | `corporate-legal-advisor.html` | 80/100 | 2 |
@@ -40,10 +41,10 @@
 
 ## Top Issues Across All Pages
 
-- 23x — Missing og:image
-- 19x — Description length N chars (ideal N–N)
+- 24x — Missing og:image
+- 20x — Description length N chars (ideal N–N)
 - 17x — Title length N chars (ideal N–N)
-- 10x — No <hN> tag found
+- 11x — No <hN> tag found
 - 9x — Missing og:title
 - 9x — Missing og:description
 - 7x — Missing canonical link tag

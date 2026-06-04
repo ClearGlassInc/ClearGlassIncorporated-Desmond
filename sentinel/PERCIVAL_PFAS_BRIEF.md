@@ -41,6 +41,39 @@ organizations manage PFAS risk continuously.
 upload report → detect PFAS → score risk → generate compliance package
               → recommend next action
 ```
+
+### Lab CSV ingester (`sentinel/pfas_ingest.py`)
+Long-form CSV is the durable, lossless format every accredited lab can emit.
+PDF layouts vary per provider and silent miscoding is the worst failure mode
+for a compliance tool, so PDF parsing is intentionally **out of scope** here —
+the operator workflow for PDF-only labs is *PDF → vendor CSV export → this
+ingester.* The ingester:
+
+- accepts long-form CSV (one row per analyte) with synonym-tolerant headers
+  (`analyte / value / units` required; `loq / mdl / qualifier / sample_id /
+  site_id / matrix / collected / lab / method` recognized);
+- converts µg/L · ppb · ppt to ng/L (and rejects anything it can't safely
+  convert);
+- treats `<`, `ND`, `U`, `BDL` as below-LOQ;
+- fails closed on inconsistent sample-level metadata or non-numeric values.
+
+```python
+from sentinel.pfas import ScreeningRequest, screen
+from sentinel.pfas_ingest import ingest_csv
+sample = ingest_csv(open("lab_export.csv").read())
+package = screen(ScreeningRequest(...), sample)
+```
+
+A sample CSV ships at [`assets/data/pfas-sample.csv`](../assets/data/pfas-sample.csv).
+
+### Site map view (`sentinel.html`)
+SENTINEL ships a **PERCIVAL · PFAS** map layer (button + quick chip + command)
+that loads a GeoJSON of monitored sites, color-coded by risk band
+(green LOW, amber ELEVATED, red EXCEEDANCE) against the HC 30 ng/L threshold.
+The demo dataset is at
+[`assets/data/pfas-burlington-demo.geojson`](../assets/data/pfas-burlington-demo.geojson)
+and is explicitly illustrative; production clients wire their own GeoJSON
+endpoint.
 - **Inputs:** `Sample` with `AnalyteResult[]` (ng/L, LOQ-aware), `ScreeningRequest`
   with mandatory `client_id / site_owner_ref / jurisdiction / purpose /
   requester_role` (fail-closed if any missing).

@@ -11,12 +11,18 @@ See [`PERCIVAL_AGENTS.md`](./PERCIVAL_AGENTS.md). Recent additions:
   ([`PURPLE_TEAM_PLAYBOOK.md`](./PURPLE_TEAM_PLAYBOOK.md) ·
   `sentinel/sentinel/purpleteam.py`).
 - **PFAS** — Ontario compliance + decision intelligence agent for water /
-  property / infrastructure ([`PERCIVAL_PFAS_BRIEF.md`](./PERCIVAL_PFAS_BRIEF.md) ·
-  `sentinel/sentinel/pfas.py`). Anchored to Health Canada's interim
-  drinking-water objective (30 ng/L, sum of 25 PFAS); fail-closed; no person
-  identification. Includes a lab **CSV ingester**
-  (`sentinel/sentinel/pfas_ingest.py`) and a **map layer** in `sentinel.html`
-  (button + command), plus demo GeoJSON / sample CSV under `assets/data/`.
+  property / infrastructure ([`PERCIVAL_PFAS_BRIEF.md`](./PERCIVAL_PFAS_BRIEF.md)).
+  Anchored to Health Canada's interim drinking-water objective (30 ng/L,
+  sum of 25 PFAS); fail-closed; no person identification.
+  - `sentinel/sentinel/pfas.py` — risk scoring + compliance package
+  - `sentinel/sentinel/pfas_ingest.py` — long-form lab **CSV ingester**
+  - `sentinel/sentinel/pfas_pdf.py` — **text-PDF profile** (EPA 533 style;
+    rejects image/encrypted PDFs)
+  - `sentinel/sentinel/pfas_export.py` — **evidence-pack exporter**
+    (client-ready Markdown + JSON)
+  - `sentinel.html` — **map layer** + per-site drawer with **Download
+    evidence pack** (in-browser .md + .json save)
+  - demo GeoJSON + sample CSV under `assets/data/`
 
 ## Charter-compliant capabilities (no person identification)
 

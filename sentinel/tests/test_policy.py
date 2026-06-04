@@ -202,6 +202,25 @@ def test_impersonation_access_denied():
     assert any("access method" in r for r in d.reasons)
 
 
+def test_vulnerability_intel_for_owned_assets_allowed():
+    from sentinel.policy import THREAT_INTEL_FEEDS
+    assert THREAT_INTEL_FEEDS["exploit_db"] == "https://www.exploit-db.com/"
+    d = POL.evaluate(RequestContext(
+        actor_role="vuln_mgmt", purpose="assess published-exploit exposure for owned infrastructure",
+        data_source="vulnerability_intel", intent="correlate",
+    ))
+    assert d.outcome is PolicyOutcome.ALLOW
+    assert d.request_class is RequestClass.ASSET_PROTECTION
+
+
+def test_vulnerability_intel_cannot_target_individual():
+    d = POL.evaluate(RequestContext(
+        actor_role="analyst", purpose="exploit research to locate a person",
+        data_source="vulnerability_intel", intent="locate_individual", jurisdiction="US-CA",
+    ))
+    assert d.outcome is PolicyOutcome.DENY
+
+
 def test_emergency_response_with_authorized_source_allowed():
     d = POL.evaluate(RequestContext(
         actor_role="emergency_ops", purpose="flood damage assessment of owned facility",

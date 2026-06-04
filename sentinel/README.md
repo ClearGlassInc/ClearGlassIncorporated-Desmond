@@ -7,16 +7,19 @@ retrieval in a restricted scope.*
 
 ## Privacy charter (SENTINEL persona)
 
-SENTINEL operates under a **privacy-first security-intelligence charter**
+SENTINEL operates under a **privacy-first geospatial & OSINT charter**
 ([`SENTINEL_CHARTER.md`](./SENTINEL_CHARTER.md)) whose hard rules are **enforced
 in code** by [`sentinel/policy.py`](./sentinel/policy.py) — a fail-closed gate
 that runs *before any feed or record is touched*:
 
-- No identifying/tracking private individuals without documented authority.
+- No identifying / locating / tracking / profiling private individuals without
+  documented authority.
 - No face-recognition / re-identification / cross-source matching on
-  non-consenting people. No OSINT de-anonymization, stalking, or harassment.
-- Role + purpose + approved-source checks required; sensitive work escalates to
-  human review; every decision carries an `audit_ref`.
+  non-consenting people; no combining satellite/camera/OSINT/location data to
+  de-anonymize a person; no OSINT stalking or harassment.
+- No covert accounts, deceptive access, or unauthorized scraping.
+- Role + purpose + jurisdiction + approved-source checks required; sensitive work
+  escalates to human review; every decision carries an `audit_ref`.
 
 ```python
 from sentinel.policy import PrivacyPolicy, RequestContext

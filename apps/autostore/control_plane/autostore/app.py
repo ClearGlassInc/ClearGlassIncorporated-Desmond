@@ -6,10 +6,11 @@ dropped in without changing the engine.
 """
 from __future__ import annotations
 
-from typing import Any
+import os
+from typing import Any, Optional
 
 try:
-    from fastapi import FastAPI, HTTPException
+    from fastapi import Depends, FastAPI, Header, HTTPException
     from pydantic import BaseModel
 except ImportError as exc:  # pragma: no cover
     raise ImportError("autostore.app requires fastapi + pydantic") from exc
@@ -19,6 +20,25 @@ from .models import EventType, Product
 from .store import InMemoryStore
 
 app = FastAPI(title="PERCIVAL Autostore — Control Plane", version="0.1.0")
+
+# --- role auth: approver tokens (env APPROVER_TOKENS="tok:name,tok2:name2") ---
+def _load_approvers() -> dict[str, str]:
+    raw = os.environ.get("APPROVER_TOKENS", "demo-ops-token:ops-lead,demo-fin-token:finance-lead")
+    out: dict[str, str] = {}
+    for pair in raw.split(","):
+        if ":" in pair:
+            tok, name = pair.split(":", 1)
+            out[tok.strip()] = name.strip()
+    return out
+
+_APPROVERS = _load_approvers()
+
+
+def require_approver(x_approver_token: Optional[str] = Header(default=None)) -> str:
+    name = _APPROVERS.get((x_approver_token or "").strip())
+    if not name:
+        raise HTTPException(status_code=401, detail="valid X-Approver-Token required")
+    return name
 
 _store = InMemoryStore()
 _store.seed_product(Product("SKU-RIDGE-01", "Ridge Hoodie",
@@ -35,8 +55,6 @@ class EventIn(BaseModel):
     payload: dict[str, Any]
 
 
-class ApprovalIn(BaseModel):
-    approver: str
 
 
 @app.get("/healthz")
@@ -71,22 +89,23 @@ def list_pending() -> list[dict]:
 
 
 @app.post("/v1/approvals/{pending_id}/approve")
-def approve(pending_id: int, body: ApprovalIn) -> dict:
+def approve(pending_id: int, approver: str = Depends(require_approver)) -> dict:
     try:
-        entry = _engine.approve(pending_id, body.approver)
+        entry = _engine.approve(pending_id, approver)
     except Exception as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     return {"audit_ref": entry.audit_ref, "executed": entry.executed,
-            "decision": entry.decision.value}
+            "decision": entry.decision.value, "approver": approver}
 
 
 @app.post("/v1/approvals/{pending_id}/deny")
-def deny(pending_id: int, body: ApprovalIn) -> dict:
+def deny(pending_id: int, approver: str = Depends(require_approver)) -> dict:
     try:
-        entry = _engine.deny(pending_id, body.approver)
+        entry = _engine.deny(pending_id, approver)
     except Exception as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
-    return {"audit_ref": entry.audit_ref, "decision": entry.decision.value}
+    return {"audit_ref": entry.audit_ref, "decision": entry.decision.value,
+            "approver": approver}
 
 
 @app.get("/v1/audit")

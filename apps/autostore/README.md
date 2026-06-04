@@ -74,8 +74,33 @@ python -m pytest -q     # 14 passed
 python -m ruff check autostore tests
 ```
 
+## Production wiring (phase 2 — shipped)
+
+- **PostgresStore** (`autostore/pg_store.py`) — implements the `Store` protocol
+  against Postgres via `psycopg`; drops in behind the protocol with zero engine
+  changes. Pure migration helpers (`discover_migrations`, `split_sql`) are
+  unit-tested DB-free.
+- **Migrations runner** — `python -m autostore.migrate` (uses `DATABASE_URL`);
+  `--list` works with no DB.
+- **Redis execution queue + worker** (`autostore/queue.py`, `autostore/worker.py`) —
+  pass a queue to the `Engine` and ALLOW/approved actions are **dispatched** as
+  authorized packets instead of applied inline; the dumb-by-design `Worker`
+  drains the queue, applies packets to the Store, and appends `*_applied`
+  audit entries. The `worker` service in compose runs it.
+- **Role auth** — approve/deny require an `X-Approver-Token`
+  (env `APPROVER_TOKENS="token:name,…"`; demo tokens `demo-ops-token`,
+  `demo-fin-token`). 401 without a valid token.
+- **Write cockpit** — `/approvals` now has Approve/Deny buttons + an approver
+  token field; the browser calls the Next.js route handler
+  `app/api/approvals`, which forwards the token to the control plane.
+
+```bash
+# queue mode demo (inline mode is still the default when no queue is passed)
+python -m autostore.migrate --list
+```
+
 ## Build order followed
-Postgres schema → FastAPI control plane → event ingestion API → worker queue
-hooks (Redis up; consumer is a thin executor) → guardrails → audit ledger UI
-→ Next.js cockpit. Anything further (assistant advisory layer, write-side
-cockpit) plugs in **after** the control plane has proven stable.
+Postgres schema → FastAPI control plane → event ingestion API → **Redis worker
+queue** → guardrails → audit ledger UI → Next.js cockpit (read + **write**).
+The assistant advisory layer plugs in **after** the control plane has proven
+stable.

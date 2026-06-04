@@ -14,6 +14,7 @@ from typing import Optional
 from .audit import AuditLedger
 from .models import ActionLogEntry, Decision, DecisionResult, Event, EventType
 from .policy import evaluate
+from .queue import ExecutionQueue, make_packet
 from .store import Store, StoreError
 
 
@@ -29,9 +30,11 @@ class Pending:
 
 
 class Engine:
-    def __init__(self, store: Store, ledger: Optional[AuditLedger] = None) -> None:
+    def __init__(self, store: Store, ledger: Optional[AuditLedger] = None,
+                 queue: Optional["ExecutionQueue"] = None) -> None:
         self.store = store
         self.ledger = ledger or AuditLedger()
+        self.queue = queue          # if set, ALLOW dispatches a packet instead of inline apply
         self._next_event_id = 1
         self._events: list[Event] = []
         self._pending: dict[int, Pending] = {}
@@ -51,8 +54,10 @@ class Engine:
         executed = False
         if result.decision is Decision.ALLOW:
             try:
-                self._execute(ev, result)
-                executed = True
+                applied = self._dispatch(ev, result)
+                executed = applied
+                if not applied:
+                    result.reasons = result.reasons + ["dispatched to worker queue"]
             except StoreError as exc:
                 result = DecisionResult(
                     decision=Decision.DENY,
@@ -86,9 +91,10 @@ class Engine:
         if not p or p.status != "pending":
             raise StoreError(f"no pending approval {pending_id}")
         try:
-            self._execute(p.event, p.result)
-            executed = True
-            reasons = p.result.reasons + [f"approved by {approver}"]
+            applied = self._dispatch(p.event, p.result)
+            executed = applied
+            tail = "approved by" if applied else "approved + dispatched to worker queue by"
+            reasons = p.result.reasons + [f"{tail} {approver}"]
             decision = Decision.ALLOW
             p.status = "approved"
         except StoreError as exc:
@@ -112,15 +118,28 @@ class Engine:
                                   reasons=p.result.reasons + [f"denied by {approver}"],
                                   executed=False)
 
-    # --- execute (only after ALLOW) -----------------------------------------
-    def _execute(self, ev: Event, result: DecisionResult) -> None:
-        payload = result.payload_validated
-        if ev.type is EventType.PRICE_RECOMMENDATION:
-            self.store.update_price(payload["sku"], int(payload["new_price_cents"]))
-        elif ev.type is EventType.AD_SPEND_REQUEST:
-            self.store.record_ad_spend(int(payload["amount_cents"]))
-        elif ev.type is EventType.INVENTORY_EVENT:
-            self.store.adjust_inventory(payload["sku"], int(payload["delta"]),
-                                        str(payload.get("reason", "n/a")))
-        # REFUND_REQUEST: a real implementation would call a payment processor
-        # here. The in-memory reference treats ALLOW as a recorded intent.
+    # --- dispatch (only after ALLOW) ----------------------------------------
+    def _dispatch(self, ev: Event, result: DecisionResult) -> bool:
+        """Apply inline (returns True) or enqueue a packet for a worker
+        (returns False). Either way, policy was already decided."""
+        if self.queue is not None:
+            self.queue.put(make_packet(
+                event_id=ev.id, action=result.action, audit_ref=result.audit_ref,
+                payload={"event_type": ev.type.value, **result.payload_validated},
+            ))
+            return False
+        apply_packet(self.store, ev.type.value, result.payload_validated)
+        return True
+
+
+def apply_packet(store: Store, event_type: str, payload: dict) -> None:
+    """Dumb executor — applies an already-authorized packet to the Store.
+    Shared by inline dispatch and the Redis worker. No policy here."""
+    if event_type == EventType.PRICE_RECOMMENDATION.value:
+        store.update_price(payload["sku"], int(payload["new_price_cents"]))
+    elif event_type == EventType.AD_SPEND_REQUEST.value:
+        store.record_ad_spend(int(payload["amount_cents"]))
+    elif event_type == EventType.INVENTORY_EVENT.value:
+        store.adjust_inventory(payload["sku"], int(payload["delta"]),
+                               str(payload.get("reason", "n/a")))
+    # REFUND_REQUEST: a real implementation would call a payment processor here.

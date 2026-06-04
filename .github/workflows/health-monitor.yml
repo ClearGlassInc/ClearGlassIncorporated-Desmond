@@ -42,10 +42,18 @@ jobs:
 
       - name: Create or update issue on failure
         if: steps.health.outputs.healthy == 'false'
+        continue-on-error: true          # alerting must never fail the monitor itself
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
         run: |
+          # Ensure required labels exist (idempotent) — a missing label must not
+          # turn a health *alert* into a workflow *failure*.
+          gh label create health-alert --repo "$GH_REPO" --color B60205 \
+            --description "Automated site health alert" 2>/dev/null || true
+          gh label create automated --repo "$GH_REPO" --color ededed \
+            --description "Automated workflow output" 2>/dev/null || true
+
           REPORT=$(cat operations/output/site_health_report.md 2>/dev/null || echo "Report unavailable — check workflow artifacts.")
           DATE=$(date -u +%Y-%m-%d)
           TITLE="[HEALTH] Site health check failed — $DATE"

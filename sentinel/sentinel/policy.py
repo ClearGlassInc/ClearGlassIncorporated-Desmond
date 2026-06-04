@@ -33,6 +33,7 @@ class RequestClass(str, Enum):
     COMPLIANCE = "compliance"
     EMERGENCY_RESPONSE = "emergency_response"
     INCIDENT_RESPONSE = "incident_response"
+    SITUATIONAL_AWARENESS = "situational_awareness"
     UNCLASSIFIED = "unclassified"
 
 
@@ -66,7 +67,17 @@ PROHIBITED_INTENTS = {
 PROHIBITED_ACCESS = {
     "covert",
     "deceptive",
+    "impersonation",
     "unauthorized_scraping",
+}
+
+# Intents that are inherently individual-scoped (treated as targeting a person).
+INDIVIDUAL_SCOPED_INTENTS = {
+    "identify_individual",
+    "locate_individual",
+    "track_individual",
+    "profile_individual",
+    "monitor_individual",
 }
 
 
@@ -111,6 +122,8 @@ def _classify(purpose: str, intent: str) -> RequestClass:
     if any(w in p for w in ("emergency", "disaster", "rescue", "weather", "flood",
                             "wildfire", "evacuat", "damage")):
         return RequestClass.EMERGENCY_RESPONSE
+    if any(w in p for w in ("situational awareness", "situational", "awareness", "posture")):
+        return RequestClass.SITUATIONAL_AWARENESS
     if any(w in p for w in ("incident", "breach", "intrusion", "timeline")):
         return RequestClass.INCIDENT_RESPONSE
     if any(w in p for w in ("compliance", "audit", "policy", "regulat")):
@@ -135,6 +148,9 @@ class PrivacyPolicy:
         ref = _audit_ref(ctx)
         cls = _classify(ctx.purpose, ctx.intent)
         deny: list[str] = []
+
+        # An individual-scoped intent is treated exactly like targeting a person.
+        targets_individual = ctx.targets_private_individual or (ctx.intent in INDIVIDUAL_SCOPED_INTENTS)
 
         # --- role + purpose checks ---
         if not ctx.actor_role.strip():
@@ -161,17 +177,17 @@ class PrivacyPolicy:
                         "on a non-consenting individual is prohibited")
 
         # --- geospatial fusion to de-anonymize / locate a person ---
-        if ctx.combines_geospatial_sources and ctx.targets_private_individual and not ctx.subject_consenting:
+        if ctx.combines_geospatial_sources and targets_individual and not ctx.subject_consenting:
             deny.append("combining satellite / camera / OSINT / location data to "
                         "de-anonymize or locate a person is prohibited")
 
         # --- identify / locate / track / profile a private individual without authority ---
-        if ctx.targets_private_individual and not ctx.subject_consenting and not ctx.authorization_ref:
+        if targets_individual and not ctx.subject_consenting and not ctx.authorization_ref:
             deny.append("identifying/locating/tracking/profiling a private individual "
                         "requires explicit documented authorization")
 
         # --- jurisdiction must be verified when an individual is in scope ---
-        if ctx.targets_private_individual and not (ctx.jurisdiction or "").strip():
+        if targets_individual and not (ctx.jurisdiction or "").strip():
             deny.append("jurisdiction not verified for an individual-scoped request")
 
         if deny:
@@ -179,7 +195,7 @@ class PrivacyPolicy:
 
         # --- escalation: permitted-but-sensitive ---
         escalate: list[str] = []
-        if ctx.targets_private_individual:        # consented or authorized, but still sensitive
+        if targets_individual:                    # consented or authorized, but still sensitive
             escalate.append("targets an individual — human review required before proceeding")
         if ctx.sensitive_inference:
             escalate.append("potentially sensitive inference — human review required")

@@ -161,6 +161,56 @@ def test_profiling_private_person_intent_denied():
     assert d.outcome is PolicyOutcome.DENY
 
 
+# ---- charter v2.1 additions ----
+
+def test_situational_awareness_class_allowed():
+    d = POL.evaluate(RequestContext(
+        actor_role="ops_center", purpose="situational awareness for owned infrastructure",
+        data_source="authorized_sensor_feeds", intent="monitor",
+    ))
+    assert d.outcome is PolicyOutcome.ALLOW
+    assert d.request_class is RequestClass.SITUATIONAL_AWARENESS
+
+
+def test_locate_individual_intent_denied_without_authority():
+    d = POL.evaluate(RequestContext(
+        actor_role="analyst", purpose="find subject",
+        data_source="lawful_satellite_imagery", intent="locate_individual",
+        jurisdiction="US-CA",
+    ))
+    assert d.outcome is PolicyOutcome.DENY
+    assert any("documented authorization" in r for r in d.reasons)
+
+
+def test_track_individual_intent_requires_jurisdiction():
+    d = POL.evaluate(RequestContext(
+        actor_role="security_lead", purpose="approved watchlist tracking",
+        data_source="consented_watchlist", intent="track_individual",
+        subject_consenting=True, authorization_ref="POLICY-9", jurisdiction=None,
+    ))
+    assert d.outcome is PolicyOutcome.DENY
+    assert any("jurisdiction" in r for r in d.reasons)
+
+
+def test_impersonation_access_denied():
+    d = POL.evaluate(RequestContext(
+        actor_role="analyst", purpose="collect",
+        data_source="public_source_brand_mentions", intent="correlate",
+        access_method="impersonation",
+    ))
+    assert d.outcome is PolicyOutcome.DENY
+    assert any("access method" in r for r in d.reasons)
+
+
+def test_emergency_response_with_authorized_source_allowed():
+    d = POL.evaluate(RequestContext(
+        actor_role="emergency_ops", purpose="flood damage assessment of owned facility",
+        data_source="lawful_satellite_imagery", intent="monitor",
+    ))
+    assert d.outcome is PolicyOutcome.ALLOW
+    assert d.request_class is RequestClass.EMERGENCY_RESPONSE
+
+
 def test_sensitive_inference_escalates():
     d = POL.evaluate(RequestContext(
         actor_role="soc_analyst", purpose="incident timeline",

@@ -530,6 +530,46 @@ function setOpen(isOpen){panel.classList.toggle('open',isOpen);launcher.setAttri
 if(launcher&&panel){launcher.addEventListener('click',function(){setOpen(!panel.classList.contains('open'));});closeBtn.addEventListener('click',function(){setOpen(false);});chatForm.addEventListener('submit',function(e){e.preventDefault();var q=chatInput.value.trim();if(!q)return;appendMsg(q,'user');chatInput.value='';setTimeout(function(){appendMsg(botReply(q),'bot');},220);});}
 
 </script>
+
+<!-- ===== LIVE OPS ribbon — real USGS + NWS feeds; auto-hides if offline ===== -->
+<style>
+#liveops{position:fixed;left:18px;bottom:20px;z-index:130;display:none;align-items:center;gap:10px;
+  text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#0a0c10;
+  background:rgba(252,253,254,.92);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
+  border:1px solid rgba(56,189,248,.35);border-radius:999px;padding:8px 14px 8px 12px;
+  box-shadow:0 10px 30px rgba(10,12,16,.12)}
+#liveops.show{display:inline-flex;animation:lo-in .5s cubic-bezier(.16,1,.3,1)}
+@keyframes lo-in{from{opacity:0;transform:translateY(10px)}}
+#liveops:hover{border-color:rgba(56,189,248,.7);box-shadow:0 12px 34px rgba(56,189,248,.22)}
+#liveops .lo-dot{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;animation:lo-blink 2.2s infinite}
+@keyframes lo-blink{50%{opacity:.4}}
+#liveops .lo-tag{font-weight:600;letter-spacing:.1em;color:#0a0c10}
+#liveops .lo-val{color:#2563eb;font-weight:600}
+#liveops .lo-sep{color:#94a3b8}
+#liveops .lo-go{color:#6b7280;font-size:11px;border-left:1px solid rgba(10,12,16,.12);padding-left:9px;margin-left:2px}
+@media(max-width:640px){#liveops{left:12px;bottom:84px;font-size:11px}}
+</style>
+<a id="liveops" href="sentinel.html" title="Open SENTINEL live command center" aria-label="Live operations status — open SENTINEL">
+  <span class="lo-dot"></span><span class="lo-tag">LIVE OPS</span>
+  <span id="loQ" class="lo-val"></span><span class="lo-sep">·</span><span id="loA" class="lo-val"></span>
+  <span class="lo-go">SENTINEL →</span>
+</a>
+<script>
+(function(){
+  var el=document.getElementById('liveops'),qEl=document.getElementById('loQ'),aEl=document.getElementById('loA');
+  function ft(u,o,ms){var c=new AbortController();var t=setTimeout(function(){c.abort();},ms||9000);
+    return fetch(u,Object.assign({signal:c.signal},o||{})).finally(function(){clearTimeout(t);});}
+  var quakes=null,alerts=null;
+  function show(){ if(quakes==null&&alerts==null)return;   // only show once real data arrives
+    qEl.textContent=(quakes==null?'—':quakes)+'q/24h';
+    aEl.textContent=(alerts==null?'—':alerts)+' wx alerts';
+    el.classList.add('show'); }
+  ft('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson',{},9000)
+    .then(function(r){return r.json();}).then(function(j){quakes=(j.features||[]).length;show();}).catch(function(){});
+  ft('https://api.weather.gov/alerts/active/count',{headers:{'Accept':'application/json'}},9000)
+    .then(function(r){return r.json();}).then(function(j){alerts=(j&&j.total!=null)?j.total:0;show();}).catch(function(){});
+})();
+</script>
 </body>
 </html>
 

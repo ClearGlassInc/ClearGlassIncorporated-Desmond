@@ -217,9 +217,9 @@ function clock(){const d=new Date();$('clk').textContent=d.toLocaleTimeString('e
   $('cdate').textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
 setInterval(clock,1000);clock();
 
-const state={pos:null,juris:null,map:null,markers:{quakes:[],alerts:[],me:null},
-  feeds:{location:'off',quakes:'pend',weather:'pend',camera:'off'},
-  data:{quakes:[],alerts:[]},camStream:null};
+const state={pos:null,juris:null,map:null,markers:{quakes:[],alerts:[],aircraft:[],me:null},
+  feeds:{location:'off',quakes:'pend',weather:'pend',aircraft:'off',camera:'off'},
+  data:{quakes:[],alerts:[],aircraft:[]},camStream:null};
 
 /* ---------- map ---------- */
 let mapReady=false;
@@ -231,17 +231,17 @@ function initMap(){
   mapReady=true;
 }
 const LAYERS={me:true,quakes:true,alerts:true};
-const LDEF=[['me','#2fd4c0','My location'],['quakes','#ff2a3a','Earthquakes (USGS)'],['alerts','#ffb347','Weather alerts (NWS)']];
+const LDEF=[['me','#2fd4c0','My location'],['quakes','#ff2a3a','Earthquakes (USGS)'],['alerts','#ffb347','Weather alerts (NWS)'],['aircraft','#9fb6ff','Aircraft (OpenSky)']];
 function renderLayers(){
   $('layers').innerHTML=LDEF.map(([k,c,n])=>{
-    const ct=k==='me'?(state.pos?1:0):state.data[k==='quakes'?'quakes':'alerts'].length;
+    const ct=k==='me'?(state.pos?1:0):(state.data[k]?state.data[k].length:0);
     return `<div class="layer ${LAYERS[k]?'':'off'}" data-k="${k}"><span class="sw" style="color:${c};background:${c}"></span><span class="nm">${n}</span><span class="ct">${ct}</span></div>`;
   }).join('');
   $('layers').querySelectorAll('.layer').forEach(el=>el.onclick=()=>{LAYERS[el.dataset.k]=!LAYERS[el.dataset.k];renderLayers();redraw();});
 }
 function redraw(){
   if(!mapReady)return;
-  ['quakes','alerts'].forEach(k=>{state.markers[k].forEach(m=>state.map.removeLayer(m));state.markers[k]=[];});
+  ['quakes','alerts','aircraft'].forEach(k=>{state.markers[k].forEach(m=>state.map.removeLayer(m));state.markers[k]=[];});
   if(state.markers.me){state.map.removeLayer(state.markers.me);state.markers.me=null;}
   if(LAYERS.me&&state.pos){
     state.markers.me=L.circleMarker([state.pos.lat,state.pos.lon],{radius:8,color:'#2fd4c0',fillColor:'#2fd4c0',fillOpacity:.6,weight:2}).addTo(state.map).bindPopup('Operator device (live)');
@@ -255,6 +255,11 @@ function redraw(){
     const m=L.circleMarker([a.lat,a.lon],{radius:9,color:'#ffb347',fillColor:'#ffb347',fillOpacity:.25,weight:1.5}).addTo(state.map)
       .bindPopup(`<b>${a.event}</b><br>${a.area}<br><span style="opacity:.7">source: NWS</span>`);
     state.markers.alerts.push(m);});
+  if(LAYERS.aircraft)state.data.aircraft.forEach(ac=>{
+    const icon=L.divIcon({className:'',html:`<div style="color:#9fb6ff;font-size:14px;transform:rotate(${(ac.track||0)}deg);text-shadow:0 0 6px #9fb6ff">✈</div>`,iconSize:[16,16]});
+    const m=L.marker([ac.lat,ac.lon],{icon}).addTo(state.map)
+      .bindPopup(`<b>${ac.call||ac.icao}</b><br>alt ${ac.alt!=null?Math.round(ac.alt)+'m':'—'} · ${ac.vel!=null?Math.round(ac.vel)+'m/s':''}<br>origin ${ac.origin||'—'}<br><span style="opacity:.7">source: OpenSky (ADS-B)</span>`);
+    state.markers.aircraft.push(m);});
 }
 
 /* ---------- feed status UI ---------- */
@@ -264,6 +269,7 @@ function renderFeeds(up){
     ['location','Device location',state.feeds.location],
     ['quakes','USGS earthquakes',state.feeds.quakes],
     ['weather','NWS weather alerts',state.feeds.weather],
+    ['aircraft','Airspace (OpenSky)',state.feeds.aircraft],
     ['camera','Owned camera',state.feeds.camera],
   ];
   $('feeds').innerHTML=rows.map(([k,n,st])=>{
@@ -333,8 +339,22 @@ async function loadAlerts(){
     addTL(state.data.alerts.length?'warn':'ok',`NWS — <b>${state.data.alerts.length} active alert(s)</b>`,'weather.gov');
   }catch(e){setFeed('weather','err');addTL('bad','NWS feed unreachable','weather.gov');renderIncidents();}
 }
+async function loadAircraft(){
+  if(!state.pos){setFeed('aircraft','off');return;}      // bounded to operator area only
+  setFeed('aircraft','pend');
+  const d=1.5,la=state.pos.lat,lo=state.pos.lon;
+  const url=`https://opensky-network.org/api/states/all?lamin=${(la-d).toFixed(3)}&lomin=${(lo-d).toFixed(3)}&lamax=${(la+d).toFixed(3)}&lomax=${(lo+d).toFixed(3)}`;
+  try{
+    const r=await fetchT(url,{},11000);const j=await r.json();
+    const st=j.states||[];
+    state.data.aircraft=st.map(s=>({icao:s[0],call:(s[1]||'').trim(),origin:s[2],lon:s[5],lat:s[6],
+      alt:s[7],vel:s[9],track:s[10]})).filter(a=>a.lat!=null&&a.lon!=null).slice(0,80);
+    setFeed('aircraft','live');renderLayers();redraw();
+    addTL('',`OpenSky — <b>${state.data.aircraft.length} aircraft</b> in ${(2*d).toFixed(0)}° box`,'opensky-network.org');
+  }catch(e){setFeed('aircraft','err');addTL('warn','OpenSky airspace feed unavailable','opensky-network.org');}
+}
 function dist(a,b){const dx=a.lat-b.lat,dy=a.lon-b.lon;return dx*dx+dy*dy;}
-function loadAll(){loadQuakes();loadAlerts();}
+function loadAll(){loadQuakes();loadAlerts();loadAircraft();}
 
 /* ---------- incident feed (LIVE) ---------- */
 function renderIncidents(){
@@ -438,6 +458,11 @@ function handle(raw){const q=raw.trim();if(!q)return;userSay(q);const t=q.toLowe
     if(!n){say(`<b>NWS — no active alerts</b> ${state.pos?'for your area':'(global sample)'}. Source: weather.gov.`);return;}
     const top=state.data.alerts.slice(0,5).map(a=>`• <b>${a.event}</b> — ${a.area} <span style="opacity:.6">[${a.sev||'—'}]</span>`).join('<br>');
     say(`<b>Live NWS — ${n} active alert(s).</b><br>${top}<br><span class="aref">source: api.weather.gov</span>`);return;}
+  if(/aircraft|airspace|plane|flight|adsb|ads-b/.test(t)){if(!state.pos){say('Enable location first — airspace is bounded to your area to stay lawful and light.');return;}
+    const n=state.data.aircraft.length;if(state.feeds.aircraft==='err'){say('OpenSky airspace feed is unreachable right now.');return;}
+    if(!n){say('Loading live airspace (OpenSky)…');loadAircraft();return;}
+    const top=state.data.aircraft.slice(0,6).map(a=>`• <b>${a.call||a.icao}</b> ${a.alt!=null?Math.round(a.alt)+'m':''} ${a.origin?'· '+a.origin:''}`).join('<br>');
+    say(`<b>Live airspace — ${n} aircraft</b> within ~1.5° of you (public ADS-B).<br>${top}<br><span class="aref">source: opensky-network.org · vehicles/airspace only, no persons</span>`);return;}
   if(/camera|cam|feed|presence|webcam/.test(t)){connectCamera();return;}
   if(/report|summary|sitrep|brief/.test(t)){const r=aref();const q0=state.data.quakes[0],a0=state.data.alerts[0];
     say(`<div class="report">
@@ -456,7 +481,7 @@ function handle(raw){const q=raw.trim();if(!q)return;userSay(q);const t=q.toLowe
 }
 $('send').onclick=()=>{const v=$('cmd').value;$('cmd').value='';handle(v);};
 $('cmd').addEventListener('keydown',e=>{if(e.key==='Enter')$('send').click();});
-const QUICK=['Enable location','Quakes near me','Weather alerts','Connect camera','Report','Find this person'];
+const QUICK=['Enable location','Quakes near me','Weather alerts','Aircraft','Connect camera','Report','Find this person'];
 $('qrow').innerHTML=QUICK.map(q=>`<div class="qchip">${q}</div>`).join('');
 $('qrow').querySelectorAll('.qchip').forEach(c=>c.onclick=()=>{const x=c.textContent;if(/enable location/i.test(x))enableLocation();else handle(x);});
 
@@ -472,6 +497,7 @@ say(`SENTINEL <b>LIVE</b> online — fail-closed. Sources are real and public: d
 loadAll();
 setInterval(loadQuakes,90000);
 setInterval(loadAlerts,300000);
+setInterval(()=>{if(state.pos)loadAircraft();},60000);   // airspace refresh (bounded)
 </script>
 </body>
 </html>

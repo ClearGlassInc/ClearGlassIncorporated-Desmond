@@ -14,7 +14,9 @@ See [`PERCIVAL_AGENTS.md`](./PERCIVAL_AGENTS.md). Recent additions:
   property / infrastructure ([`PERCIVAL_PFAS_BRIEF.md`](./PERCIVAL_PFAS_BRIEF.md) ·
   `sentinel/sentinel/pfas.py`). Anchored to Health Canada's interim
   drinking-water objective (30 ng/L, sum of 25 PFAS); fail-closed; no person
-  identification.
+  identification. Includes a lab **CSV ingester**
+  (`sentinel/sentinel/pfas_ingest.py`) and a **map layer** in `sentinel.html`
+  (button + command), plus demo GeoJSON / sample CSV under `assets/data/`.
 
 ## Charter-compliant capabilities (no person identification)
 

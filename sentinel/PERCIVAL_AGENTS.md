@@ -9,7 +9,7 @@ PERCIVAL under SENTINEL's fail-closed policy gate.
 | **PERCIVAL** | Always-on executive command center | `PERCIVAL_OS_BLUEPRINT.md` | `percival-os.html` + `sentinel/` |
 | **SENTINEL** | Privacy-first geospatial + OSINT command center | `SENTINEL_CHARTER.md` (v2.1) | `sentinel.html` + `sentinel/sentinel/` |
 | **Purple-Team** | Detection-engineering / SOC exercise driver (defensive) | `PURPLE_TEAM_PLAYBOOK.md` | `sentinel/sentinel/purpleteam.py` |
-| **PFAS** | Compliance + decision intelligence (Ontario water/property/infra) | `PERCIVAL_PFAS_BRIEF.md` | `sentinel/sentinel/pfas.py` |
+| **PFAS** | Compliance + decision intelligence (Ontario water/property/infra) | `PERCIVAL_PFAS_BRIEF.md` | `sentinel/sentinel/pfas.py` + `pfas_ingest.py` + `sentinel.html` map layer |
 
 All agents share:
 - the **fail-closed policy gate** (`sentinel/sentinel/policy.py`)

@@ -154,6 +154,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;bac
       <div id="feeds"></div>
       <button class="btn" id="btnLoc">⬢ Enable location awareness</button>
       <button class="btn amber" id="btnCam">📷 Connect owned camera</button>
+      <button class="btn" id="btnPfas">⬡ PERCIVAL · PFAS (Burlington)</button>
       <button class="btn" id="btnRefresh">↻ Refresh live feeds</button>
       <div class="railsub">Map layers</div>
       <div id="layers"></div>
@@ -217,9 +218,9 @@ function clock(){const d=new Date();$('clk').textContent=d.toLocaleTimeString('e
   $('cdate').textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
 setInterval(clock,1000);clock();
 
-const state={pos:null,juris:null,map:null,markers:{quakes:[],alerts:[],aircraft:[],me:null},
-  feeds:{location:'off',quakes:'pend',weather:'pend',aircraft:'off',camera:'off'},
-  data:{quakes:[],alerts:[],aircraft:[]},camStream:null};
+const state={pos:null,juris:null,map:null,markers:{quakes:[],alerts:[],aircraft:[],pfas:[],me:null},
+  feeds:{location:'off',quakes:'pend',weather:'pend',aircraft:'off',pfas:'off',camera:'off'},
+  data:{quakes:[],alerts:[],aircraft:[],pfas:[]},camStream:null};
 
 /* ---------- map ---------- */
 let mapReady=false;
@@ -231,7 +232,7 @@ function initMap(){
   mapReady=true;
 }
 const LAYERS={me:true,quakes:true,alerts:true};
-const LDEF=[['me','#2fd4c0','My location'],['quakes','#ff2a3a','Earthquakes (USGS)'],['alerts','#ffb347','Weather alerts (NWS)'],['aircraft','#9fb6ff','Aircraft (OpenSky)']];
+const LDEF=[['me','#2fd4c0','My location'],['quakes','#ff2a3a','Earthquakes (USGS)'],['alerts','#ffb347','Weather alerts (NWS)'],['aircraft','#9fb6ff','Aircraft (OpenSky)'],['pfas','#a78bfa','PFAS sites (PERCIVAL)']];
 function renderLayers(){
   $('layers').innerHTML=LDEF.map(([k,c,n])=>{
     const ct=k==='me'?(state.pos?1:0):(state.data[k]?state.data[k].length:0);
@@ -241,7 +242,7 @@ function renderLayers(){
 }
 function redraw(){
   if(!mapReady)return;
-  ['quakes','alerts','aircraft'].forEach(k=>{state.markers[k].forEach(m=>state.map.removeLayer(m));state.markers[k]=[];});
+  ['quakes','alerts','aircraft','pfas'].forEach(k=>{state.markers[k].forEach(m=>state.map.removeLayer(m));state.markers[k]=[];});
   if(state.markers.me){state.map.removeLayer(state.markers.me);state.markers.me=null;}
   if(LAYERS.me&&state.pos){
     state.markers.me=L.circleMarker([state.pos.lat,state.pos.lon],{radius:8,color:'#2fd4c0',fillColor:'#2fd4c0',fillOpacity:.6,weight:2}).addTo(state.map).bindPopup('Operator device (live)');
@@ -260,6 +261,12 @@ function redraw(){
     const m=L.marker([ac.lat,ac.lon],{icon}).addTo(state.map)
       .bindPopup(`<b>${ac.call||ac.icao}</b><br>alt ${ac.alt!=null?Math.round(ac.alt)+'m':'—'} · ${ac.vel!=null?Math.round(ac.vel)+'m/s':''}<br>origin ${ac.origin||'—'}<br><span style="opacity:.7">source: OpenSky (ADS-B)</span>`);
     state.markers.aircraft.push(m);});
+  if(LAYERS.pfas)state.data.pfas.forEach(s=>{
+    const c=s.risk==='EXCEEDANCE'?'#ff2a3a':s.risk==='ELEVATED'?'#ffb347':'#34d399';
+    const r=s.risk==='EXCEEDANCE'?12:s.risk==='ELEVATED'?10:8;
+    const m=L.circleMarker([s.lat,s.lon],{radius:r,color:c,fillColor:c,fillOpacity:.5,weight:2}).addTo(state.map)
+      .bindPopup(`<b>${s.label||s.site_id}</b><br>${s.matrix||''} · sum-of-25 <b>${s.sum_25_ngL} ng/L</b><br>risk: <b style="color:${c}">${s.risk}</b>${s.demo?'<br><span style="opacity:.7">demo data · illustrative only</span>':''}<br><span style="opacity:.7">threshold: HC 30 ng/L</span>`);
+    m.on('click',()=>openPfas(s));state.markers.pfas.push(m);});
 }
 
 /* ---------- feed status UI ---------- */
@@ -270,6 +277,7 @@ function renderFeeds(up){
     ['quakes','USGS earthquakes',state.feeds.quakes],
     ['weather','NWS weather alerts',state.feeds.weather],
     ['aircraft','Airspace (OpenSky)',state.feeds.aircraft],
+    ['pfas','PFAS sites (PERCIVAL)',state.feeds.pfas],
     ['camera','Owned camera',state.feeds.camera],
   ];
   $('feeds').innerHTML=rows.map(([k,n,st])=>{
@@ -355,6 +363,35 @@ async function loadAircraft(){
 }
 function dist(a,b){const dx=a.lat-b.lat,dy=a.lon-b.lon;return dx*dx+dy*dy;}
 function loadAll(){loadQuakes();loadAlerts();loadAircraft();}
+async function loadPfas(url){
+  url=url||'assets/data/pfas-burlington-demo.geojson';
+  setFeed('pfas','pend');
+  try{
+    const r=await fetchT(url,{},9000);const j=await r.json();
+    state.data.pfas=(j.features||[]).map(f=>Object.assign({lat:f.geometry.coordinates[1],lon:f.geometry.coordinates[0]},f.properties));
+    setFeed('pfas','live');renderLayers();redraw();
+    if(mapReady&&state.data.pfas[0]){state.map.setView([state.data.pfas[0].lat,state.data.pfas[0].lon],11);}
+    const n=state.data.pfas.length,exc=state.data.pfas.filter(s=>s.risk==='EXCEEDANCE').length;
+    addTL(exc?'bad':'',`PERCIVAL · PFAS — <b>${n} site(s)</b>${exc?', '+exc+' exceedance':''}`,'PERCIVAL/PFAS');
+  }catch(e){setFeed('pfas','err');addTL('warn','PFAS layer unavailable','PERCIVAL/PFAS');}
+}
+function openPfas(s){
+  const c=s.risk==='EXCEEDANCE'?'#ff2a3a':s.risk==='ELEVATED'?'#ffb347':'#34d399';
+  $('drIc').textContent='⬡';$('drIc').style.color=c;
+  $('drNm').textContent=s.label||s.site_id;$('drTy').textContent='PERCIVAL · PFAS site';
+  const ratio=(s.sum_25_ngL/30*100).toFixed(0);
+  $('drBody').innerHTML=`<div class="meta">
+    <div class="c"><div class="k">Sum of 25</div><div class="v">${s.sum_25_ngL} ng/L</div></div>
+    <div class="c"><div class="k">Threshold</div><div class="v">30 ng/L (HC)</div></div>
+    <div class="c"><div class="k">Risk band</div><div class="v" style="color:${c}">${s.risk}</div></div>
+    <div class="c"><div class="k">% of threshold</div><div class="v">${ratio}%</div></div>
+    <div class="c"><div class="k">Matrix</div><div class="v">${s.matrix||'—'}</div></div>
+    <div class="c"><div class="k">Site</div><div class="v">${s.site_id||'—'}</div></div></div>
+    <div class="note"><b>Health Canada interim drinking-water objective:</b> 30 ng/L (sum of 25 PFAS). ${s.risk==='EXCEEDANCE'?'<b style="color:#ff6470">Exceedance</b> — initiate source characterization + treatment evaluation; 7-day resample.':s.risk==='ELEVATED'?'<b style="color:var(--amber)">Elevated</b> — increase monitoring to monthly; pre-design GAC/IEX study.':'<b style="color:#7fe8db">Low</b> — maintain annual cadence.'}</div>
+    ${s.demo?'<div class="privacy" style="color:#ffb6ba;border-color:rgba(255,179,71,.3);background:rgba(255,179,71,.05)">⚠ Demo data — illustrative only. Real screenings use the PFAS CSV ingester (sentinel/sentinel/pfas_ingest.py) feeding pfas.screen().</div>':''}
+    <div class="privacy">🔒 Asset-focused compliance intelligence. No personal data.</div>`;
+  $('drawer').classList.add('open');
+}
 
 /* ---------- incident feed (LIVE) ---------- */
 function renderIncidents(){
@@ -458,6 +495,10 @@ function handle(raw){const q=raw.trim();if(!q)return;userSay(q);const t=q.toLowe
     if(!n){say(`<b>NWS — no active alerts</b> ${state.pos?'for your area':'(global sample)'}. Source: weather.gov.`);return;}
     const top=state.data.alerts.slice(0,5).map(a=>`• <b>${a.event}</b> — ${a.area} <span style="opacity:.6">[${a.sev||'—'}]</span>`).join('<br>');
     say(`<b>Live NWS — ${n} active alert(s).</b><br>${top}<br><span class="aref">source: api.weather.gov</span>`);return;}
+  if(/pfas|drinking water|compliance|burlington pfas|water quality/.test(t)){loadPfas();
+    if(!state.data.pfas.length){say('Loading PERCIVAL PFAS layer…');return;}
+    const n=state.data.pfas.length,exc=state.data.pfas.filter(s=>s.risk==='EXCEEDANCE').length,el=state.data.pfas.filter(s=>s.risk==='ELEVATED').length;
+    say(`<b>PERCIVAL · PFAS — ${n} site(s) in view.</b> ${exc} exceedance, ${el} elevated, ${n-exc-el} low.<br>Threshold: <b>Health Canada 30 ng/L</b> (sum of 25 PFAS). Demo data; real screenings via the lab CSV ingester.`);return;}
   if(/aircraft|airspace|plane|flight|adsb|ads-b/.test(t)){if(!state.pos){say('Enable location first — airspace is bounded to your area to stay lawful and light.');return;}
     const n=state.data.aircraft.length;if(state.feeds.aircraft==='err'){say('OpenSky airspace feed is unreachable right now.');return;}
     if(!n){say('Loading live airspace (OpenSky)…');loadAircraft();return;}
@@ -481,13 +522,14 @@ function handle(raw){const q=raw.trim();if(!q)return;userSay(q);const t=q.toLowe
 }
 $('send').onclick=()=>{const v=$('cmd').value;$('cmd').value='';handle(v);};
 $('cmd').addEventListener('keydown',e=>{if(e.key==='Enter')$('send').click();});
-const QUICK=['Enable location','Quakes near me','Weather alerts','Aircraft','Connect camera','Report','Find this person'];
+const QUICK=['Enable location','Quakes near me','Weather alerts','Aircraft','PFAS','Connect camera','Report','Find this person'];
 $('qrow').innerHTML=QUICK.map(q=>`<div class="qchip">${q}</div>`).join('');
 $('qrow').querySelectorAll('.qchip').forEach(c=>c.onclick=()=>{const x=c.textContent;if(/enable location/i.test(x))enableLocation();else handle(x);});
 
 /* ---------- buttons + boot ---------- */
 $('btnLoc').onclick=enableLocation;$('btnLoc2').onclick=enableLocation;
 $('btnCam').onclick=connectCamera;
+$('btnPfas').onclick=()=>{toast('⬡','PFAS','Loading Burlington demo layer');loadPfas();};
 $('btnRefresh').onclick=()=>{toast('↻','Refresh','Reloading live feeds');loadAll();};
 $('jurisPill').onclick=enableLocation;
 

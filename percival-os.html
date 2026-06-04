@@ -335,12 +335,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
       <div class="panel">
         <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
         <div class="threat">
-          <div class="th-h">⚠ Threat Monitor <span class="lvl" id="thLvl">LOW</span></div>
+          <div class="th-h">⚠ Hazard Monitor <span class="lvl" id="thLvl">—</span><small id="geoLive" style="margin-left:auto;font-size:8px;letter-spacing:.1em;color:var(--dim-2)">LIVE · USGS+NWS</small></div>
           <div class="tbar"><i id="thBar"></i></div>
           <div class="tgrid">
-            <div class="tcell"><div class="n" id="thBlocked">1,284</div><div class="l">Blocked 24h</div></div>
-            <div class="tcell"><div class="n" id="thAnom">3</div><div class="l">Anomalies</div></div>
-            <div class="tcell"><div class="n" id="thEndp">42</div><div class="l">Endpoints</div></div>
+            <div class="tcell"><div class="n" id="thBlocked">—</div><div class="l">Quakes 24h</div></div>
+            <div class="tcell"><div class="n" id="thAnom">—</div><div class="l">Wx Alerts</div></div>
+            <div class="tcell"><div class="n" id="thEndp">—</div><div class="l">Max Mag</div></div>
           </div>
         </div>
       </div>
@@ -497,16 +497,48 @@ const randEvents=[
 ];
 
 /* ---------- threat monitor ---------- */
-let threat={blocked:1284,anom:3,endp:42,level:18};
-function renderThreat(){document.getElementById('thBlocked').textContent=threat.blocked.toLocaleString();
-  document.getElementById('thAnom').textContent=threat.anom;document.getElementById('thEndp').textContent=threat.endp;
+let threat={blocked:0,anom:0,endp:0,level:8,quakes:0,maxMag:0,alerts:0,live:false};
+function renderThreat(){
+  document.getElementById('thBlocked').textContent=threat.live?threat.quakes.toLocaleString():'—';
+  document.getElementById('thAnom').textContent=threat.live?threat.alerts:'—';
+  document.getElementById('thEndp').textContent=threat.live?('M'+threat.maxMag.toFixed(1)):'—';
   const bar=document.getElementById('thBar'),lvl=document.getElementById('thLvl');
   bar.style.width=threat.level+'%';
   let txt='LOW',col='var(--ok)',grad='linear-gradient(90deg,#34d399,#ffb347)';
   if(threat.level>66){txt='HIGH';col='var(--bad)';grad='linear-gradient(90deg,#ffb347,#ff5c6c)';}
   else if(threat.level>33){txt='ELEVATED';col='var(--amber)';}
-  bar.style.background=grad;lvl.textContent=txt;lvl.style.color=col;}
+  bar.style.background=grad;lvl.textContent=threat.live?txt:'—';lvl.style.color=col;}
 renderThreat();
+
+/* ---------- LIVE geo-hazard feeds (USGS + NWS) -> Hazard Monitor + stream ---------- */
+function _fetchT(u,o,ms){const c=new AbortController();const t=setTimeout(()=>c.abort(),ms||9000);
+  return fetch(u,Object.assign({signal:c.signal},o||{})).finally(()=>clearTimeout(t));}
+function _setGeo(txt,col){const e=document.getElementById('geoLive');if(e){e.textContent=txt;e.style.color=col||'var(--dim-2)';}}
+async function loadGeoHazards(){
+  let ok=false;
+  try{
+    const r=await _fetchT('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson',{},10000);
+    const j=await r.json();const f=j.features||[];
+    threat.quakes=f.length;threat.maxMag=f.reduce((m,x)=>Math.max(m,x.properties.mag||0),0);
+    const big=f.filter(x=>(x.properties.mag||0)>=4.5).length;
+    threat.level=Math.min(96,12+big*14+(threat.maxMag>=5?30:threat.maxMag>=4?16:threat.maxMag>=2.5?6:0));
+    ok=true;
+    const top=[...f].sort((a,b)=>(b.properties.mag||0)-(a.properties.mag||0))[0];
+    if(top)addEvent(top.properties.mag>=4?'bad':top.properties.mag>=2.5?'warn':'',
+      `USGS · <b>M${(top.properties.mag||0).toFixed(1)}</b> ${(top.properties.place||'').slice(0,40)}`,'USGS');
+  }catch(e){}
+  try{
+    const r=await _fetchT('https://api.weather.gov/alerts/active?status=actual&limit=50',{headers:{'Accept':'application/geo+json'}},10000);
+    const j=await r.json();const a=j.features||[];
+    threat.alerts=a.length;
+    const sev=a.filter(x=>['Severe','Extreme'].includes(x.properties.severity)).length;
+    threat.level=Math.min(98,threat.level+sev*6);
+    ok=true;
+    if(a[0])addEvent('warn',`NWS · <b>${a[0].properties.event}</b> — ${(a[0].properties.areaDesc||'').slice(0,36)}`,'NWS');
+  }catch(e){}
+  threat.live=ok;renderThreat();
+  _setGeo(ok?('LIVE · USGS+NWS · '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})):'OFFLINE · feeds unreachable',ok?'var(--ok)':'var(--bad)');
+}
 
 /* ---------- modes ---------- */
 let mode='tactical';
@@ -651,7 +683,8 @@ function startLife(){
   setInterval(()=>{const e=randEvents[Math.floor(Math.random()*randEvents.length)];addEvent(e[0],e[1],e[2]);},3800);
   setInterval(pulseKpis,4200);
   setInterval(refreshRings,5000);
-  setInterval(()=>{threat.blocked+=(Math.random()*4)|0;if(Math.random()<.25)threat.level=Math.max(8,threat.level-3);renderThreat();},6000);
+  loadGeoHazards();                       // live USGS + NWS into the Hazard Monitor
+  setInterval(loadGeoHazards,120000);
   setInterval(()=>{cycle++;document.getElementById('tagBr').textContent='CYCLE '+cycle;
     document.getElementById('tagTr').innerHTML=`LAT ${(33.7+Math.random()*.2).toFixed(2)} · LON ${(-118.2-Math.random()*.2).toFixed(2)}<br>UPLINK SECURE`;},2000);
 }

@@ -1,6 +1,6 @@
-# Release Notes — 2026-06-03
+# Release Notes — 2026-06-04
 
-*109 commit(s) since repository start*
+*108 commit(s) since repository start*
 
 ## New Features
 
@@ -46,6 +46,8 @@
 
 ## Maintenance
 
+- Add content collector bot to harvest and store all site content (`4cebc6e`)
+- green the deployment checklist (CI, bot tests, sitemap) (`c2ffdda`)
 - Add JARVIS OS reference implementation: HUD, agent config, MCP connectors (`70db597`)
 - Add JARVIS OS system blueprint (`4785fd7`)
 - Add AI Operator Workspace reel with interactive JARVIS assistant (`77d170e`)
@@ -119,13 +121,10 @@
 - Upgrade IP protection scan checkout action (`85726e8`)
 - Upgrade dependency scan action runtimes (`18a45ea`)
 - Fix CI Node runtime action versions (`6aea318`)
-- Document D.O.M.I.N.A.T.E. income algorithm (`e345778`)
-- Add tests for DOMINATE revenue engine (`5302f45`)
-- Add DOMINATE revenue decision engine (`542ee2f`)
-- Add documentation for ClearGlass AI runtime v0.2 (`391302a`)
 
 ## Automation
 
+- update generated outputs — 2026-06-03 11:55 UTC [skip ci] (`9ddea47`)
 - update generated outputs — 2026-06-02 11:16 UTC [skip ci] (`dbaa841`)
 
 ## Other

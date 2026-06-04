@@ -73,7 +73,23 @@ that loads a GeoJSON of monitored sites, color-coded by risk band
 The demo dataset is at
 [`assets/data/pfas-burlington-demo.geojson`](../assets/data/pfas-burlington-demo.geojson)
 and is explicitly illustrative; production clients wire their own GeoJSON
-endpoint.
+endpoint. The site drawer carries a **Download evidence pack** button that
+saves the Markdown + JSON pack client-side (same shape as
+`sentinel/pfas_export.py`).
+
+### Evidence-pack exporter (`sentinel/pfas_export.py`)
+Renders any `CompliancePackage` as **client-ready Markdown** (top line, risk,
+detected analytes, next actions, treatment options, references) and as
+**machine-readable JSON** for archival. Denied packages export faithfully
+(reasons + audit_ref preserved — no fabrication).
+
+### Text-PDF profile (`sentinel/pfas_pdf.py`)
+A stdlib-only PDF profile for **text-based** EPA-Method-533-style lab reports.
+Extracts the analyte/result/units/LOQ table, hands the rows to the CSV
+ingester so the trust loop is identical. **Fail-closed for any layout it
+can't safely parse:** scanned/image PDFs are rejected (no silent OCR),
+encrypted PDFs are rejected, and tables without recognized PFAS rows raise
+`PDFProfileError` rather than inventing data.
 - **Inputs:** `Sample` with `AnalyteResult[]` (ng/L, LOQ-aware), `ScreeningRequest`
   with mandatory `client_id / site_owner_ref / jurisdiction / purpose /
   requester_role` (fail-closed if any missing).

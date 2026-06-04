@@ -1,10 +1,154 @@
 {
-  "run_utc": "2026-06-04T10:38:19.578623+00:00",
+  "run_utc": "2026-06-04T19:41:55.608810+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 108,
+  "commit_count": 110,
   "sections": {
     "New Features": [
+      {
+        "sha": "ce95436",
+        "type": "feat",
+        "scope": "home",
+        "subject": "live USGS/NWS LIVE OPS ribbon linking to SENTINEL (#359)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "2729bb6",
+        "type": "feat",
+        "scope": null,
+        "subject": "live USGS/NWS in PERCIVAL + live airspace (OpenSky) in SENTINEL (#358)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "9d3c537",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "live geospatial mode \u2014 real location + USGS/NWS feeds + camera (#357)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "e8f6d19",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "live geospatial mode \u2014 real location + USGS/NWS feeds + camera",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "ac00ffe",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "link SENTINEL command center into the PERCIVAL HUD (#355)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "8a3b779",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "privacy-preserving vision ops + visual command center (#354)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "4caf7dd",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "privacy-preserving vision ops + visual command center",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "aec99cd",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "add Exploit-DB as approved defensive threat-intel source (#352)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "6cca8a4",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "add Exploit-DB as approved defensive threat-intel source",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "9be32d5",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "charter v2.1 \u2014 geospatial + OSINT extension (#350)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "bf288b4",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "geospatial+OSINT charter + enforced hard rules (#349)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "5988604",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "privacy-first SENTINEL charter + enforced policy gate (#348)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "434aec1",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "red/black mission-ready HUD reskin (#344)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "14ca6d4",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "Phase-One Governance Shell + RBAC retrieval (#343)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "193a832",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "add Pinecone+Milvus adapters and recall harness",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "5c9a5e7",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "Phase-One fail-closed Governance Shell + RBAC retrieval",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
       {
         "sha": "cbe0b64",
         "type": "feat",
@@ -116,6 +260,33 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "e895f24",
+        "type": "fix",
+        "scope": "sitemap",
+        "subject": "index remaining content pages; exempt non-indexable (#347)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "23fcd32",
+        "type": "fix",
+        "scope": "health-bot",
+        "subject": "treat sitemap drift as warning, not a health failure (#346)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "2eacb13",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "Health Monitor label crash + SENTINEL demo runner (#345)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
         "sha": "5ebf4bb",
         "type": "fix",
         "scope": "ci",
@@ -222,43 +393,16 @@
         "author": "Claude",
         "date": "2026-05-29",
         "breaking": false
-      },
-      {
-        "sha": "981cc86",
-        "type": "fix",
-        "scope": "actions",
-        "subject": "skip Fly deploy when secrets are missing",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "b59144d",
-        "type": "fix",
-        "scope": "actions",
-        "subject": "harden Fly deployment diagnostics",
-        "author": "Desmond Otieno Odhiambo",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "717a1a8",
-        "type": "fix",
-        "scope": "actions",
-        "subject": "checkout repo before rollout sync",
-        "author": "Desmond Otieno Odhiambo",
-        "date": "2026-05-25",
-        "breaking": false
       }
     ],
     "Tests": [
       {
-        "sha": "6b7cf6a",
+        "sha": "db363ee",
         "type": "test",
-        "scope": "actions",
-        "subject": "add checkout probe",
+        "scope": "sentinel",
+        "subject": "drop unused import (ruff clean)",
         "author": "Desmond Otieno",
-        "date": "2026-05-25",
+        "date": "2026-06-04",
         "breaking": false
       }
     ],
@@ -822,144 +966,18 @@
         "author": "Desmond Otieno",
         "date": "2026-05-25",
         "breaking": false
-      },
-      {
-        "sha": "34b7b54",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix twitter:image meta tag in smb.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "f9d4970",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update Open Graph image meta tags in smb.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "43641df",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove logo image and update Open Graph tags",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "72f71ff",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add logo image to smb.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "a3f9bec",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add GitHub Actions workflow for site deployment",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "d01435e",
-        "type": "chore",
-        "scope": "actions",
-        "subject": "remove checkout probe",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "a07f244",
-        "type": "chore",
-        "scope": null,
-        "subject": "Stabilize CI action versions",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "cbc470e",
-        "type": "chore",
-        "scope": null,
-        "subject": "Install project test dependencies in CI",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "7466c0c",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade daily ops summary checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "63acc85",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade operations finance checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "75c3102",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade marketing engine checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "2b2467d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade self-hosted deploy checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "85726e8",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade IP protection scan checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "18a45ea",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade dependency scan action runtimes",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "6aea318",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix CI Node runtime action versions",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "eb007c4",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-04 10:38 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-04",
+        "breaking": false
+      },
       {
         "sha": "9ddea47",
         "type": "bot",

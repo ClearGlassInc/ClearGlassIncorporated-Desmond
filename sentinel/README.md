@@ -5,6 +5,17 @@ retrieval for the PERCIVAL / JARVIS OS control plane. It proves the Phase-One
 exit milestone: *the Governance Shell catches and blocks unauthorized agent
 retrieval in a restricted scope.*
 
+## PERCIVAL named agents
+See [`PERCIVAL_AGENTS.md`](./PERCIVAL_AGENTS.md). Recent additions:
+- **Purple-Team** — detection-engineering / SOC exercise driver
+  ([`PURPLE_TEAM_PLAYBOOK.md`](./PURPLE_TEAM_PLAYBOOK.md) ·
+  `sentinel/sentinel/purpleteam.py`).
+- **PFAS** — Ontario compliance + decision intelligence agent for water /
+  property / infrastructure ([`PERCIVAL_PFAS_BRIEF.md`](./PERCIVAL_PFAS_BRIEF.md) ·
+  `sentinel/sentinel/pfas.py`). Anchored to Health Canada's interim
+  drinking-water objective (30 ng/L, sum of 25 PFAS); fail-closed; no person
+  identification.
+
 ## Charter-compliant capabilities (no person identification)
 
 - **Command center** ([`../sentinel.html`](../sentinel.html)) — map-first

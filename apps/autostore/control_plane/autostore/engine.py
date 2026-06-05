@@ -31,14 +31,19 @@ class Pending:
 
 class Engine:
     def __init__(self, store: Store, ledger: Optional[AuditLedger] = None,
-                 queue: Optional["ExecutionQueue"] = None) -> None:
+                 queue: Optional["ExecutionQueue"] = None,
+                 risk_scorer=None, risk_escalate_band: str = "HIGH") -> None:
         self.store = store
         self.ledger = ledger or AuditLedger()
         self.queue = queue          # if set, ALLOW dispatches a packet instead of inline apply
+        self.risk_scorer = risk_scorer            # opt-in extra guardrail (escalates, never bypasses)
+        self.risk_escalate_band = risk_escalate_band
         self._next_event_id = 1
         self._events: list[Event] = []
         self._pending: dict[int, Pending] = {}
         self._next_pending = 1
+        self._idempotency: dict[str, tuple] = {}  # key -> (DecisionResult, ActionLogEntry)
+        self.last_risk = None
 
     # --- ingest --------------------------------------------------------------
     def ingest(self, event_type: EventType, payload: dict) -> Event:
@@ -51,6 +56,22 @@ class Engine:
     # --- decide --------------------------------------------------------------
     def decide(self, ev: Event) -> tuple[DecisionResult, ActionLogEntry]:
         result = evaluate(ev.type, ev.payload, self.store)
+
+        # Extra guardrail: high risk turns an ALLOW into an ESCALATE. Risk can
+        # ONLY make the system more cautious — it never relaxes a DENY.
+        self.last_risk = None
+        if self.risk_scorer is not None:
+            from .risk import band_at_least
+            rs = self.risk_scorer.score(ev.type, ev.payload, self.store)
+            self.last_risk = rs
+            if result.decision is Decision.ALLOW and band_at_least(rs.band, self.risk_escalate_band):
+                result = DecisionResult(
+                    decision=Decision.ESCALATE, action=result.action,
+                    reasons=result.reasons + [f"risk {rs.band} ({rs.score}): " + "; ".join(rs.factors)],
+                    audit_ref="", payload_validated=result.payload_validated,
+                    requires_approval=True,
+                )
+
         executed = False
         if result.decision is Decision.ALLOW:
             try:
@@ -78,8 +99,35 @@ class Engine:
                                          audit_ref=entry.audit_ref)
         return result, entry
 
-    def handle(self, event_type: EventType, payload: dict):
-        return self.decide(self.ingest(event_type, payload))
+    def handle(self, event_type: EventType, payload: dict, *,
+               idempotency_key: Optional[str] = None):
+        """Decide on an event. With an idempotency key, a repeated submission
+        returns the original decision instead of acting twice (safe retries)."""
+        if idempotency_key is not None and idempotency_key in self._idempotency:
+            return self._idempotency[idempotency_key]
+        out = self.decide(self.ingest(event_type, payload))
+        if idempotency_key is not None:
+            self._idempotency[idempotency_key] = out
+        return out
+
+    # --- metrics -------------------------------------------------------------
+    def metrics(self) -> dict:
+        entries = self.ledger.entries
+        by_decision: dict[str, int] = {}
+        executed = 0
+        for e in entries:
+            by_decision[e.decision.value] = by_decision.get(e.decision.value, 0) + 1
+            if e.executed:
+                executed += 1
+        return {
+            "events": len(self._events),
+            "ledger_entries": len(entries),
+            "by_decision": by_decision,
+            "executed": executed,
+            "pending_approvals": len(self.pending),
+            "idempotency_keys": len(self._idempotency),
+            "audit_intact": self.ledger.verify(),
+        }
 
     # --- approvals -----------------------------------------------------------
     @property

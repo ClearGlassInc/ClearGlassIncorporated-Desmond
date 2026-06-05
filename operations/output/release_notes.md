@@ -1,9 +1,21 @@
-# Release Notes — 2026-06-04
+# Release Notes — 2026-06-05
 
-*110 commit(s) since repository start*
+*107 commit(s) since repository start*
 
 ## New Features
 
+- **percival:** org-scoped Agent Mesh — ClearGlass-only OSINT orchestration (#372) (`bd6af99`)
+- **autostore:** risk scoring + read-only advisor + idempotency + metrics (#371) (`a7a2f58`)
+- **aegis:** legal-process register + transparency report + intake UI + shared audit (#370) (`b21ecdc`)
+- **percival:** AEGIS — lawful-access compliance & rights-protection agent (#369) (`6eb223a`)
+- **bots:** self-evolving wealth engine (revenue-first ladder + fleet evolution) (`e175e8a`)
+- **autostore:** PostgresStore + migrations, Redis worker, role auth, write cockpit (#366) (`ebe82b9`)
+- **autostore:** PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js) (#365) (`be2aac8`)
+- **autostore:** PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js) (`9d04576`)
+- **percival·pfas:** evidence-pack exporter + text-PDF profile + in-browser download (#364) (`b784662`)
+- **percival·pfas:** lab CSV ingester + SENTINEL map layer (#362) (`1ab16f8`)
+- **percival:** purple-team detection-engineering engine + PFAS agent (#361) (`91c0c25`)
+- **percival:** purple-team detection-engineering engine + PFAS agent (`dc85d5e`)
 - **home:** live USGS/NWS LIVE OPS ribbon linking to SENTINEL (#359) (`ce95436`)
 - live USGS/NWS in PERCIVAL + live airspace (OpenSky) in SENTINEL (#358) (`2729bb6`)
 - **sentinel:** live geospatial mode — real location + USGS/NWS feeds + camera (#357) (`9d3c537`)
@@ -107,28 +119,10 @@
 - Update Guardian sub-label in navigation menu (`b2a1ccd`)
 - Remove duplicate 'Guardian' link from footer (`e0ec5ad`)
 - Update navigation name from 'ClearGlass' to 'ClearGlassInc.' (`bb12198`)
-- Remove icons from navigation dropdown items (`8087936`)
-- Enhance README with detailed project overview (`30510b4`)
-- ClearGlass-NEXUS-v12-FINAL.html (`c375286`)
-- Shorten company name in loader HTML (`3e7d1c5`)
-- Remove download link for CLEARGLASS GUARDIAN v5.0 (`6a69c34`)
-- Replace icons in dropdown menu (`ea64780`)
-- Remove SMB Suite link from footer (`eb5db15`)
-- remove smb replace guardian (`24cad53`)
-- Deploy GitHub Pages from root (`a86edcf`)
-- Sales bot: refresh outreach sequences [skip ci] (`110ed43`)
-- Fix SMB logo and social preview image (`bbf34bd`)
-- Remove stray logo text file (`c4e2f79`)
-- logo.png (`c6824a1`)
-- Add hero image section to smb.html (`2d0bb9f`)
-- Update Twitter meta tags for ClearGlassInc. (`11ac796`)
 
 ## Automation
 
+- update generated outputs — 2026-06-04 19:41 UTC [skip ci] (`5deec71`)
 - update generated outputs — 2026-06-04 10:38 UTC [skip ci] (`eb007c4`)
 - update generated outputs — 2026-06-03 11:55 UTC [skip ci] (`9ddea47`)
 - update generated outputs — 2026-06-02 11:16 UTC [skip ci] (`dbaa841`)
-
-## Other
-
-- replace smb.html with guardian.html; remove SMB page (`1eb0e5f`)

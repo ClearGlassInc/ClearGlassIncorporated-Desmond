@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-04T19:41:55.625231+00:00
-**Average Score:** 62.7/100
-**Files Audited:** 30
+**Run:** 2026-06-05T10:45:37.677202+00:00
+**Average Score:** 62.6/100
+**Files Audited:** 31
 
 ## Page Scores
 
@@ -16,6 +16,7 @@
 | `404.html` | 40/100 | 5 |
 | `attack-prompt-core.html` | 50/100 | 5 |
 | `intelligence-interface.html` | 50/100 | 5 |
+| `aegis.html` | 60/100 | 4 |
 | `artemis.html` | 60/100 | 4 |
 | `cg-loader.html` | 60/100 | 4 |
 | `jarvis-os.html` | 60/100 | 4 |
@@ -41,12 +42,12 @@
 
 ## Top Issues Across All Pages
 
-- 24x — Missing og:image
-- 20x — Description length N chars (ideal N–N)
+- 25x — Missing og:image
+- 21x — Description length N chars (ideal N–N)
 - 17x — Title length N chars (ideal N–N)
-- 11x — No <hN> tag found
+- 12x — No <hN> tag found
+- 10x — Missing og:description
 - 9x — Missing og:title
-- 9x — Missing og:description
 - 7x — Missing canonical link tag
 - 6x — Missing meta description
 - 1x — N image(s) missing alt text

@@ -1,10 +1,118 @@
 {
-  "run_utc": "2026-06-04T19:41:55.608810+00:00",
+  "run_utc": "2026-06-05T10:45:37.650758+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 110,
+  "commit_count": 107,
   "sections": {
     "New Features": [
+      {
+        "sha": "bd6af99",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "org-scoped Agent Mesh \u2014 ClearGlass-only OSINT orchestration (#372)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "a7a2f58",
+        "type": "feat",
+        "scope": "autostore",
+        "subject": "risk scoring + read-only advisor + idempotency + metrics (#371)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "b21ecdc",
+        "type": "feat",
+        "scope": "aegis",
+        "subject": "legal-process register + transparency report + intake UI + shared audit (#370)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "6eb223a",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "AEGIS \u2014 lawful-access compliance & rights-protection agent (#369)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "e175e8a",
+        "type": "feat",
+        "scope": "bots",
+        "subject": "self-evolving wealth engine (revenue-first ladder + fleet evolution)",
+        "author": "Claude",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "ebe82b9",
+        "type": "feat",
+        "scope": "autostore",
+        "subject": "PostgresStore + migrations, Redis worker, role auth, write cockpit (#366)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "be2aac8",
+        "type": "feat",
+        "scope": "autostore",
+        "subject": "PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js) (#365)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "9d04576",
+        "type": "feat",
+        "scope": "autostore",
+        "subject": "PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js)",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "b784662",
+        "type": "feat",
+        "scope": "percival\u00b7pfas",
+        "subject": "evidence-pack exporter + text-PDF profile + in-browser download (#364)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "1ab16f8",
+        "type": "feat",
+        "scope": "percival\u00b7pfas",
+        "subject": "lab CSV ingester + SENTINEL map layer (#362)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "91c0c25",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "purple-team detection-engineering engine + PFAS agent (#361)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "dc85d5e",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "purple-team detection-engineering engine + PFAS agent",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
       {
         "sha": "ce95436",
         "type": "feat",
@@ -831,144 +939,18 @@
         "author": "Desmond Otieno",
         "date": "2026-05-26",
         "breaking": false
-      },
-      {
-        "sha": "8087936",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove icons from navigation dropdown items",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "30510b4",
-        "type": "chore",
-        "scope": null,
-        "subject": "Enhance README with detailed project overview",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "c375286",
-        "type": "chore",
-        "scope": null,
-        "subject": "ClearGlass-NEXUS-v12-FINAL.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "3e7d1c5",
-        "type": "chore",
-        "scope": null,
-        "subject": "Shorten company name in loader HTML",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "6a69c34",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove download link for CLEARGLASS GUARDIAN v5.0",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "ea64780",
-        "type": "chore",
-        "scope": null,
-        "subject": "Replace icons in dropdown menu",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "eb5db15",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove SMB Suite link from footer",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "24cad53",
-        "type": "chore",
-        "scope": null,
-        "subject": "remove smb replace guardian",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "a86edcf",
-        "type": "chore",
-        "scope": null,
-        "subject": "Deploy GitHub Pages from root",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "110ed43",
-        "type": "chore",
-        "scope": null,
-        "subject": "Sales bot: refresh outreach sequences [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "bbf34bd",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix SMB logo and social preview image",
-        "author": "CLEARGLASS",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "c4e2f79",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove stray logo text file",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "c6824a1",
-        "type": "chore",
-        "scope": null,
-        "subject": "logo.png",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "2d0bb9f",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add hero image section to smb.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "11ac796",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update Twitter meta tags for ClearGlassInc.",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "5deec71",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-04 19:41 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-04",
+        "breaking": false
+      },
       {
         "sha": "eb007c4",
         "type": "bot",
@@ -994,17 +976,6 @@
         "subject": "update generated outputs \u2014 2026-06-02 11:16 UTC [skip ci]",
         "author": "github-actions[bot]",
         "date": "2026-06-02",
-        "breaking": false
-      }
-    ],
-    "Other": [
-      {
-        "sha": "1eb0e5f",
-        "type": "ops",
-        "scope": null,
-        "subject": "replace smb.html with guardian.html; remove SMB page",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
         "breaking": false
       }
     ]

@@ -125,11 +125,23 @@ def _overbroad(scope: tuple[str, ...]) -> bool:
     return any(term in joined for term in OVERBROAD_TERMS)
 
 
+@dataclass
+class RegisterEntry:
+    """One row of the legal-process register (request + AEGIS assessment)."""
+    request: LegalRequest
+    assessment: "Assessment"
+
+
 class LegalProcessShield:
-    """Assess legal-process requests and gate our own conduct. Fail-closed."""
+    """Assess legal-process requests and gate our own conduct. Fail-closed.
+
+    Pass a shared ``AuditLog`` to wire AEGIS decisions into a wider audit
+    stream (e.g. the SENTINEL system ledger); otherwise AEGIS keeps its own.
+    """
 
     def __init__(self, audit: Optional[AuditLog] = None) -> None:
         self.audit = audit or AuditLog()
+        self.register: list[RegisterEntry] = []
 
     # ---- assess an incoming legal-process request --------------------------
     def assess(self, req: LegalRequest) -> Assessment:
@@ -200,11 +212,13 @@ class LegalProcessShield:
                                           "outcome": outcome.value,
                                           "protected_principal": protected,
                                           "defects": defects})
-        return Assessment(
+        assessment = Assessment(
             outcome=outcome, reasons=reasons, requires_counsel_review=True,
             protected_principal=protected, permitted_disclosure=permitted,
             objections=objections, next_actions=nxt, audit_ref=entry.entry_hash[:12],
         )
+        self.register.append(RegisterEntry(req, assessment))
+        return assessment
 
     def _objections(self, req: LegalRequest, defects: list[str], protected: bool) -> list[str]:
         obj = ["assert solicitor-client / litigation privilege over privileged materials",

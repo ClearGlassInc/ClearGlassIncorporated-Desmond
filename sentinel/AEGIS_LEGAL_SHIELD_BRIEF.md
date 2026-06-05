@@ -70,6 +70,21 @@ print(a.outcome, a.permitted_disclosure, a.audit_ref)
 shield.guard_action("destroy_evidence")   # -> REFUSE_UNLAWFUL
 ```
 
+## Register, transparency report & shared audit
+- **Register** — `LegalProcessShield.register` accumulates every `(request,
+  assessment)` row for downstream reporting.
+- **Transparency report** — `sentinel/sentinel/transparency.py`
+  (`build_report` → `report_markdown` / `report_json`) summarizes the register
+  into publishable **aggregate counts** (by type, by outcome, challenges,
+  refusals, protected-principal mentions) — never request content or disclosed
+  data.
+- **Shared audit stream** — pass a shared `AuditLog` to the shield
+  (`LegalProcessShield(audit=system_ledger)`) to wire AEGIS decisions into the
+  wider SENTINEL audit stream; the hash chain stays intact across actors.
+- **UI** — [`aegis.html`](../aegis.html): a local-only intake form + register +
+  one-click transparency-report download (mirrors the Python decision model).
+  Reachable from the PERCIVAL HUD (**⚖ AEGIS**).
+
 ## Boundaries
 - AEGIS is a **workflow aid**, not a lawyer. Engage qualified counsel.
 - It assists **lawful compliance and the assertion of legitimate rights** only.

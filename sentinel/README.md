@@ -24,6 +24,14 @@ See [`PERCIVAL_AGENTS.md`](./PERCIVAL_AGENTS.md). Recent additions:
     evidence pack** (in-browser .md + .json save)
   - demo GeoJSON + sample CSV under `assets/data/`
 
+- **AEGIS** — lawful-access **compliance & rights-protection** agent
+  ([`AEGIS_LEGAL_SHIELD_BRIEF.md`](./AEGIS_LEGAL_SHIELD_BRIEF.md) ·
+  `sentinel/sentinel/legalshield.py`). Validates legal-process requests
+  (warrants / production orders / subpoenas / preservation / emergency),
+  minimizes disclosure to what's lawfully compelled, routes everything to
+  counsel (fail-closed), and **refuses** to assist with evading or obstructing
+  valid process. Not legal advice.
+
 ## Charter-compliant capabilities (no person identification)
 
 - **Command center** ([`../sentinel.html`](../sentinel.html)) — map-first

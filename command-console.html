@@ -38,8 +38,8 @@
   --azure:#5aa6ff;
   --violet:#9a7bff;
   --green:#34f5a0;
-  --amber:#ffb454;
-  --danger:#ff4d6a;
+  --amber:#8f5bf8;
+  --danger:#f854e3;
 
   /* text */
   --txt-0:#eaf2ff;         /* primary       */
@@ -224,7 +224,7 @@ body{
 .btn--secondary{--bg:var(--glass);--bc:var(--glass-brd-strong);--accent:var(--azure)}
 .btn--ghost{--bg:transparent;--bc:var(--line);--accent:var(--azure);backdrop-filter:none}
 .btn--command{--bg:linear-gradient(180deg,rgba(154,123,255,0.18),rgba(91,166,255,0.1));--bc:color-mix(in srgb,var(--violet) 50%,transparent);--accent:var(--violet);color:#efeaff}
-.btn--danger{--bg:linear-gradient(180deg,rgba(255,77,106,0.16),rgba(255,77,106,0.06));--bc:color-mix(in srgb,var(--danger) 50%,transparent);--accent:var(--danger);color:#ffe2e8}
+.btn--danger{--bg:linear-gradient(180deg,rgba(248,84,227,0.16),rgba(248,84,227,0.06));--bc:color-mix(in srgb,var(--danger) 50%,transparent);--accent:var(--danger);color:#fee3f9}
 .btn--sm{padding:9px 15px;font-size:11px}
 .btn--block{display:flex;width:100%;justify-content:center}
 .btn[disabled],.btn[aria-disabled="true"]{opacity:.4;pointer-events:none;filter:saturate(.4)}
@@ -289,8 +289,8 @@ body{
   background:inherit;filter:blur(3px)}
 .chip--ok{color:#bff7df}.chip--ok .led{background:var(--green);box-shadow:0 0 8px var(--green)}
 .chip--ok .led{animation:pulse 2s var(--ease) infinite}
-.chip--warn{color:#ffe3bd}.chip--warn .led{background:var(--amber);box-shadow:0 0 8px var(--amber)}
-.chip--crit{color:#ffd0d8}.chip--crit .led{background:var(--danger);box-shadow:0 0 8px var(--danger);animation:pulse 1s var(--ease) infinite}
+.chip--warn{color:#d3c0fc}.chip--warn .led{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.chip--crit{color:#fdd2f7}.chip--crit .led{background:var(--danger);box-shadow:0 0 8px var(--danger);animation:pulse 1s var(--ease) infinite}
 .chip--idle{color:var(--txt-2)}.chip--idle .led{background:var(--txt-3)}
 
 /* =====================  ACTION BAR  ===================== */
@@ -687,5 +687,6 @@ body{
 })();
 </script>
 <script defer src="nav.js"></script>
+  <script defer src="ui.js"></script>
 </body>
 </html>

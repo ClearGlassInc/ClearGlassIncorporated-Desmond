@@ -15,7 +15,7 @@
 :root{
   --bg:#05060e;--bg2:#080a16;--bg3:#0c0f1e;--bg4:#11142a;
   --am:#60a5fa;--am2:#a78bfa;--am3:#818cf8;--am4:#3b82f6;
-  --al:#44507e;--ad:#16203a;--ab:#130C00;
+  --al:#44507e;--ad:#16203a;--ab:#050112;
   --wt:#eef2ff;--wt2:#aab4d8;--wt3:#2d3566;--wt4:#2a3358;
   --gn:#00FF88;--gn2:#00CC66;--gn3:#00FF44;
   --rd:#f472b6;--rd2:#3b82f6;
@@ -45,7 +45,7 @@ body::after{
   background:radial-gradient(ellipse 90% 88% at 50% 50%,transparent 50%,rgba(0,0,0,.7) 100%);
 }
 
-#hdr{position:sticky;top:18px;z-index:400;height:48px;background:linear-gradient(180deg,rgba(4,2,0,.99),rgba(4,2,0,.93));border-bottom:1px solid var(--bdr);display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:0 16px;gap:12px}
+#hdr{position:sticky;top:18px;z-index:400;height:48px;background:linear-gradient(180deg,rgba(2,0,4,.99),rgba(2,0,4,.93));border-bottom:1px solid var(--bdr);display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:0 16px;gap:12px}
 .hl-mark{font-size:13px;font-weight:700;letter-spacing:8px;color:var(--am)}
 .hl-sub{font-size:6px;letter-spacing:3px;color:var(--al);margin-top:1px}
 .hpills{display:flex;align-items:center;gap:5px;justify-content:center;flex-wrap:wrap}
@@ -118,7 +118,7 @@ body{padding-top:18px}
 .cc-ft{padding:3px 5px;font-size:5.5px;color:var(--wt);border-top:1px solid rgba(96,165,250,.04)}
 
 .fabs{position:fixed;bottom:12px;left:12px;z-index:499;display:flex;flex-direction:column;gap:4px}
-.fab{background:rgba(4,2,0,.92);border:1px solid rgba(96,165,250,.2);color:var(--am);font-family:'IBM Plex Mono',monospace;font-size:6px;letter-spacing:2px;padding:6px 12px;cursor:pointer;border-radius:3px;transition:all .2s;white-space:nowrap}
+.fab{background:rgba(2,0,4,.92);border:1px solid rgba(96,165,250,.2);color:var(--am);font-family:'IBM Plex Mono',monospace;font-size:6px;letter-spacing:2px;padding:6px 12px;cursor:pointer;border-radius:3px;transition:all .2s;white-space:nowrap}
 .fab:hover{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.42)}
 .fab.solid{background:rgba(96,165,250,.86);color:#000;font-weight:700}
 
@@ -611,5 +611,6 @@ function init(){
 document.addEventListener('DOMContentLoaded',init);
 </script>
 <script defer src="nav.js"></script>
+  <script defer src="ui.js"></script>
 </body>
 </html>

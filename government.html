@@ -25,10 +25,10 @@
   --dark:#0a0c10;--dark-2:#1a1d25;--dark-3:#0d1020;
   --text:#0a0c10;--text-2:#3a3f4a;--text-3:#6b7280;--text-4:#9ca3af;
   --navy:#0a1628;--navy-2:#0f1f3d;--navy-3:#1a2d4a;
-  --gold:#c8a84b;--gold-2:#e8cc7a;--gold-3:#8a6c1e;
+  --gold:#5b4bc8;--gold-2:#887ae8;--gold-3:#2f1e8a;
   --gov-blue:#1a3a6b;--gov-blue-2:#2a5298;--gov-light:#4a7fd4;
-  --prism-1:#38bdf8;--prism-2:#a78bfa;--prism-4:#34d399;--prism-5:#fbbf24;
-  --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);
+  --prism-1:#38bdf8;--prism-2:#a78bfa;--prism-4:#34d399;--prism-5:#4929f6;
+  --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#4929f6 75%,#34d399 100%);
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'Urbanist',system-ui,sans-serif;
   --mono:'IBM Plex Mono',monospace
@@ -38,10 +38,10 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 
 /* ── CLASSIFICATION BANNER ── */
 .class-banner{
-  background:#b71c1c;color:#fff;text-align:center;
+  background:#af1cb7;color:#fff;text-align:center;
   font-family:var(--mono);font-size:11px;letter-spacing:.18em;font-weight:700;
   padding:6px 16px;position:relative;z-index:200;
-  border-bottom:2px solid #7f0000;
+  border-bottom:2px solid #74057a;
 }
 .class-banner span{opacity:.8;font-weight:400;margin:0 8px}
 
@@ -119,9 +119,9 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 }
 .btn-gold{
   color:var(--navy);background:linear-gradient(135deg,var(--gold),var(--gold-2));
-  box-shadow:0 4px 20px rgba(200,168,75,.25);
+  box-shadow:0 4px 20px rgba(91,75,200,.25);
 }
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,168,75,.35)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(91,75,200,.35)}
 .btn-outline{
   color:rgba(255,255,255,.85);
   background:rgba(255,255,255,.06);
@@ -138,7 +138,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 }
 .hb-green{color:#4ade80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.07)}
 .hb-blue{color:#60a5fa;border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.06)}
-.hb-gold{color:var(--gold-2);border-color:rgba(200,168,75,.3);background:rgba(200,168,75,.06)}
+.hb-gold{color:var(--gold-2);border-color:rgba(91,75,200,.3);background:rgba(91,75,200,.06)}
 .hb-purple{color:#c084fc;border-color:rgba(192,132,252,.28);background:rgba(192,132,252,.05)}
 
 /* ── STAT STRIP ── */
@@ -219,9 +219,9 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 .comp-card p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.7}
 .badge-green{background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.25)}
 .badge-blue{background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.22)}
-.badge-gold{background:rgba(200,168,75,.12);color:var(--gold-2);border:1px solid rgba(200,168,75,.25)}
+.badge-gold{background:rgba(91,75,200,.12);color:var(--gold-2);border:1px solid rgba(91,75,200,.25)}
 .badge-purple{background:rgba(192,132,252,.1);color:#c084fc;border:1px solid rgba(192,132,252,.22)}
-.badge-red{background:rgba(248,113,113,.08);color:#f87171;border:1px solid rgba(248,113,113,.22)}
+.badge-red{background:rgba(241,113,248,.08);color:#f171f8;border:1px solid rgba(241,113,248,.22)}
 .badge-cyan{background:rgba(34,211,238,.08);color:#22d3ee;border:1px solid rgba(34,211,238,.2)}
 
 /* ── USE CASE CARDS ── */
@@ -443,7 +443,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         <h3>CMMC 2.0 Level 2</h3>
         <p>Cybersecurity Maturity Model Certification Level 2 practices implemented — safeguarding Controlled Unclassified Information (CUI) for DoD supply chain eligibility.</p>
       </div>
-      <div class="comp-card rv" style="--bar-color:rgba(200,168,75,.5)">
+      <div class="comp-card rv" style="--bar-color:rgba(91,75,200,.5)">
         <span class="comp-badge badge-gold">CCCS ALIGNED</span>
         <h3>Canadian Centre for Cyber Security</h3>
         <p>Platforms aligned to CCCS Security Controls Catalogue (ITSG-33) and the Government of Canada Cloud Security Risk Management Framework.</p>
@@ -453,7 +453,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         <h3>SOC 2 Type II Readiness</h3>
         <p>Trust Service Criteria (Security, Availability, Confidentiality, Processing Integrity, Privacy) built into operational controls and audit logging.</p>
       </div>
-      <div class="comp-card rv" style="--bar-color:rgba(248,113,113,.5)">
+      <div class="comp-card rv" style="--bar-color:rgba(241,113,248,.5)">
         <span class="comp-badge badge-red">ITAR ALIGNED</span>
         <h3>ITAR / EAR Compliance</h3>
         <p>Technology transfer controls aligned to US ITAR and EAR requirements. Dual-use technology classification reviewed and documented for defense export purposes.</p>
@@ -491,14 +491,14 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         <h3>NEXUS v12 — Global Intelligence Command Surface</h3>
         <p style="color:rgba(255,255,255,.55)">DARPA-grade full-spectrum intelligence platform operated from the Burlington Operations Center. Real-time multi-domain awareness across 45+ live feeds, AI-driven threat analysis, geospatial mapping, SIGINT-class signal intelligence, and a neuromorphic SyNAPSE threat engine. The most advanced open-source intelligence command surface available to government operators.</p>
         <div class="cap-feats">
-          <div class="cap-feat"><span class="ck" style="background:rgba(200,168,75,.12);color:var(--gold-2)">✓</span> SyNAPSE neuromorphic threat scoring engine</div>
-          <div class="cap-feat"><span class="ck" style="background:rgba(200,168,75,.12);color:var(--gold-2)">✓</span> 45-camera MTO COMPASS surveillance integration</div>
-          <div class="cap-feat"><span class="ck" style="background:rgba(200,168,75,.12);color:var(--gold-2)">✓</span> HELIX geospatial threat heatmap (ARGUS overlay)</div>
-          <div class="cap-feat"><span class="ck" style="background:rgba(200,168,75,.12);color:var(--gold-2)">✓</span> DARPA SIGMA anomaly detection (2.5σ threshold)</div>
-          <div class="cap-feat"><span class="ck" style="background:rgba(200,168,75,.12);color:var(--gold-2)">✓</span> CASCADE infrastructure dependency failure prediction</div>
-          <div class="cap-feat"><span class="ck" style="background:rgba(200,168,75,.12);color:var(--gold-2)">✓</span> MEMEX cross-domain intelligence correlation engine</div>
-          <div class="cap-feat"><span class="ck" style="background:rgba(200,168,75,.12);color:var(--gold-2)">✓</span> ISS orbital tracking + space weather monitoring (NOAA SWPC)</div>
-          <div class="cap-feat"><span class="ck" style="background:rgba(200,168,75,.12);color:var(--gold-2)">✓</span> Real-time AIS maritime + OpenSky airspace surveillance</div>
+          <div class="cap-feat"><span class="ck" style="background:rgba(91,75,200,.12);color:var(--gold-2)">✓</span> SyNAPSE neuromorphic threat scoring engine</div>
+          <div class="cap-feat"><span class="ck" style="background:rgba(91,75,200,.12);color:var(--gold-2)">✓</span> 45-camera MTO COMPASS surveillance integration</div>
+          <div class="cap-feat"><span class="ck" style="background:rgba(91,75,200,.12);color:var(--gold-2)">✓</span> HELIX geospatial threat heatmap (ARGUS overlay)</div>
+          <div class="cap-feat"><span class="ck" style="background:rgba(91,75,200,.12);color:var(--gold-2)">✓</span> DARPA SIGMA anomaly detection (2.5σ threshold)</div>
+          <div class="cap-feat"><span class="ck" style="background:rgba(91,75,200,.12);color:var(--gold-2)">✓</span> CASCADE infrastructure dependency failure prediction</div>
+          <div class="cap-feat"><span class="ck" style="background:rgba(91,75,200,.12);color:var(--gold-2)">✓</span> MEMEX cross-domain intelligence correlation engine</div>
+          <div class="cap-feat"><span class="ck" style="background:rgba(91,75,200,.12);color:var(--gold-2)">✓</span> ISS orbital tracking + space weather monitoring (NOAA SWPC)</div>
+          <div class="cap-feat"><span class="ck" style="background:rgba(91,75,200,.12);color:var(--gold-2)">✓</span> Real-time AIS maritime + OpenSky airspace surveillance</div>
         </div>
         <a href="clearglass-nexus.html" class="btn btn-gold">Launch NEXUS v12 →</a>
       </div>
@@ -555,7 +555,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         <div class="uc-flag">
           <span>🍁</span> CANADIAN DEFENCE — DND / CAF
         </div>
-        <div class="uc-icon" style="background:rgba(220,38,38,.08)">🛡️</div>
+        <div class="uc-icon" style="background:rgba(211,38,220,.08)">🛡️</div>
         <h3>National Defence & Armed Forces</h3>
         <p>NEXUS v12 provides the Canadian Armed Forces and DND with full-spectrum OSINT awareness, threat scoring, and geospatial intelligence — aligned to CF operational security doctrine.</p>
         <div class="uc-tags">
@@ -597,7 +597,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         <div class="uc-flag">
           <span>🍁</span> BORDER SERVICES — CBSA / PUBLIC SAFETY
         </div>
-        <div class="uc-icon" style="background:rgba(245,158,11,.08)">🛂</div>
+        <div class="uc-icon" style="background:rgba(72,11,245,.08)">🛂</div>
         <h3>Border & Public Safety</h3>
         <p>Real-time maritime AIS tracking, airspace surveillance, geomagnetic storm alerts, and infrastructure health monitoring support CBSA and Public Safety Canada operational mandates.</p>
         <div class="uc-tags">
@@ -625,7 +625,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         <div class="uc-flag">
           <span>🇺🇸</span> DEFENSE — DoD / DARPA PROGRAMS
         </div>
-        <div class="uc-icon" style="background:rgba(239,68,68,.08)">⚔️</div>
+        <div class="uc-icon" style="background:rgba(230,68,239,.08)">⚔️</div>
         <h3>Department of Defense</h3>
         <p>NEXUS v12 neuromorphic SyNAPSE engine, XAI explainable AI threat factors, and DARPA CASCADE failure prediction are directly aligned to DoD AI/ML modernization and DARPA program objectives.</p>
         <div class="uc-tags">
@@ -650,7 +650,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
     <div class="proc-grid">
       <!-- Canada -->
       <div class="proc-card rv">
-        <div class="proc-flag" style="color:#c0392b">🍁 CANADA — GOVERNMENT OF CANADA</div>
+        <div class="proc-flag" style="color:#a92bc0">🍁 CANADA — GOVERNMENT OF CANADA</div>
         <h3>Canadian Federal Procurement</h3>
         <div class="proc-list">
           <div class="proc-item">
@@ -723,7 +723,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         <h3>NSA / CISA / DARPA</h3>
         <p>NIST SP 800-53, CMMC 2.0 Level 2, ITAR/EAR, FedRAMP Moderate baseline. NSA-aligned cryptographic standards (CNSA Suite).</p>
       </div>
-      <div class="comp-card rv" style="--bar-color:rgba(200,168,75,.5)">
+      <div class="comp-card rv" style="--bar-color:rgba(91,75,200,.5)">
         <span class="comp-badge badge-gold">UNITED KINGDOM</span>
         <h3>GCHQ / NCSC</h3>
         <p>Cyber Essentials Plus alignment. NCSC Cloud Security Principles (14 controls). UK Government Security Classifications (OFFICIAL / SECRET) architecture support.</p>
@@ -865,5 +865,6 @@ var rvObs = new IntersectionObserver(function(entries){
 rvEls.forEach(function(el){ rvObs.observe(el); });
 </script>
 <script defer src="nav.js"></script>
+  <script defer src="ui.js"></script>
 </body>
 </html>

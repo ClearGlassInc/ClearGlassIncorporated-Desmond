@@ -99,6 +99,29 @@ python -m ruff check autostore tests
 python -m autostore.migrate --list
 ```
 
+## Advanced features (phase 3 — shipped)
+
+> These **strengthen** the rails — none of them is a bypass. Risk can only make
+> the system *more* cautious; the advisor can only *propose*; idempotency only
+> prevents double-acting.
+
+- **Explainable risk scoring** (`autostore/risk.py`) — every event scored in
+  [0,1] with human-readable factors + a band (LOW/MED/HIGH). Enable on the
+  engine (`Engine(store, risk_scorer=RiskScorer())`) and a **HIGH-risk ALLOW is
+  escalated** to human approval. Risk **never** relaxes a DENY. `/v1/events`
+  returns the risk on every decision.
+- **Read-only advisory assistant** (`autostore/advisor.py`, `GET /v1/advisor/{sku}`)
+  — proposes restock / margin-aware repricing with rationale + projected risk.
+  It is **inert**: no engine reference, no Store mutation, never below the price
+  floor. Proposals still go through policy + risk when submitted.
+- **Idempotency** — `POST /v1/events` honors an `Idempotency-Key` header; repeated
+  submissions return the original decision (safe retries; acts once).
+- **Metrics** — `GET /v1/metrics` (counts by decision, executed, pending,
+  audit-intact).
+- **Extended schema** (`db/migrations/002_extend.sql`) — customers, campaigns,
+  support_tickets, refund_requests, idempotency_keys + risk columns on
+  actions_log. Additive; core control logic unchanged.
+
 ## Build order followed
 Postgres schema → FastAPI control plane → event ingestion API → **Redis worker
 queue** → guardrails → audit ledger UI → Next.js cockpit (read + **write**).

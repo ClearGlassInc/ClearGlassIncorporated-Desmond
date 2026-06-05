@@ -15,8 +15,10 @@ try:
 except ImportError as exc:  # pragma: no cover
     raise ImportError("autostore.app requires fastapi + pydantic") from exc
 
+from .advisor import ReadOnlyAdvisor
 from .engine import Engine
 from .models import EventType, Product
+from .risk import RiskScorer
 from .store import InMemoryStore
 
 app = FastAPI(title="PERCIVAL Autostore — Control Plane", version="0.1.0")
@@ -47,7 +49,9 @@ _store.seed_product(Product("SKU-RIDGE-01", "Ridge Hoodie",
 _store.seed_product(Product("SKU-VAULT-02", "Vault Backpack",
                             price_cents=14900, cost_cents=6100,
                             min_price_cents=7500, inventory=42))
-_engine = Engine(_store)
+_engine = Engine(_store, risk_scorer=RiskScorer())   # risk guardrail enabled (escalates, never bypasses)
+_advisor = ReadOnlyAdvisor(_store)
+_SKUS = ["SKU-RIDGE-01", "SKU-VAULT-02"]
 
 
 class EventIn(BaseModel):
@@ -63,15 +67,17 @@ def healthz() -> dict:
 
 
 @app.post("/v1/events")
-def post_event(ev: EventIn) -> dict:
+def post_event(ev: EventIn, idempotency_key: Optional[str] = Header(default=None)) -> dict:
     try:
         kind = EventType(ev.type)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=f"unknown event type: {ev.type}") from exc
-    result, entry = _engine.handle(kind, ev.payload)
+    result, entry = _engine.handle(kind, ev.payload, idempotency_key=idempotency_key)
+    risk = _engine.last_risk
     return {
         "decision": result.decision.value,
         "action": result.action,
+        "risk": None if risk is None else {"score": risk.score, "band": risk.band, "factors": risk.factors},
         "reasons": list(result.reasons),
         "executed": entry.executed,
         "audit_ref": result.audit_ref,
@@ -120,3 +126,26 @@ def product(sku: str) -> dict:
         raise HTTPException(status_code=404, detail="unknown sku")
     return {"sku": p.sku, "title": p.title, "price_cents": p.price_cents,
             "min_price_cents": p.min_price_cents, "inventory": p.inventory}
+
+
+@app.get("/v1/metrics")
+def metrics() -> dict:
+    return _engine.metrics()
+
+
+@app.get("/v1/advisor/{sku}")
+def advisor(sku: str) -> dict:
+    """READ-ONLY suggestions. These are inert proposals — submitting one still
+    goes through /v1/events where policy + risk decide. The advisor never acts."""
+    report = _advisor.suggest_for_sku(sku)
+    return {
+        "advisory_only": True,
+        "disclaimer": report.disclaimer,
+        "notes": report.notes,
+        "proposals": [{
+            "event_type": p.event_type, "payload": p.payload, "rationale": p.rationale,
+            "confidence": p.confidence,
+            "projected_risk": {"score": p.projected_risk.score, "band": p.projected_risk.band,
+                               "factors": p.projected_risk.factors},
+        } for p in report.proposals],
+    }

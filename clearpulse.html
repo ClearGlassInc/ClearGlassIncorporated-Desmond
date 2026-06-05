@@ -25,18 +25,18 @@
   --txt:#d8e3ff;
   --txt-dim:#8aa0c8;
   --txt-mute:#5d6f93;
-  --accent:#5be1ff;
+  --accent:#60a5fa;
   --accent-2:#7c5bff;
   --good:#3fd9a0;
-  --warn:#ffc857;
-  --crit:#ff5670;
+  --warn:#60a5fa;
+  --crit:#f472b6;
   --shadow:0 20px 60px -20px rgba(0,8,30,0.7);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--bg-0);color:var(--txt);font-family:'Space Grotesk',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
 body{
   background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(91,225,255,0.10), transparent 60%),
+    radial-gradient(1200px 600px at 80% -10%, rgba(96,165,250,0.10), transparent 60%),
     radial-gradient(900px 500px at -10% 30%, rgba(124,91,255,0.10), transparent 60%),
     var(--bg-0);
 }
@@ -46,7 +46,7 @@ body{
 /* header */
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:24px;border-bottom:1px solid var(--line-2)}
 .brand{display:flex;align-items:center;gap:12px}
-.brand-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));position:relative;box-shadow:0 0 32px rgba(91,225,255,0.35)}
+.brand-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));position:relative;box-shadow:0 0 32px rgba(96,165,250,0.35)}
 .brand-mark::after{content:"";position:absolute;inset:5px;border-radius:7px;background:var(--bg-0)}
 .brand-mark::before{content:"";position:absolute;inset:12px;border-radius:3px;background:linear-gradient(135deg,var(--accent),var(--accent-2));z-index:1}
 .brand-name{font-weight:700;letter-spacing:0.04em}
@@ -82,7 +82,7 @@ h1 .grad{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit
 }
 .card::before{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(91,225,255,0.06),transparent 30%);
+  background:linear-gradient(180deg,rgba(96,165,250,0.06),transparent 30%);
   pointer-events:none;
 }
 .card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -102,7 +102,7 @@ h1 .grad{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit
 .pipe-step .n{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent)}
 .pipe-step .t{font-size:13px;margin-top:6px;font-weight:600}
 .pipe-step .d{font-size:11px;color:var(--txt-mute);margin-top:4px;line-height:1.4}
-.pipe-step.active{border-color:var(--accent);box-shadow:0 0 24px rgba(91,225,255,0.25)}
+.pipe-step.active{border-color:var(--accent);box-shadow:0 0 24px rgba(96,165,250,0.25)}
 .pipe-step.active .t{color:var(--accent)}
 @media (max-width:980px){.pipe{grid-template-columns:repeat(2,1fr)}}
 
@@ -120,7 +120,7 @@ h1 .grad{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit
 .row .sev{text-align:right;font-weight:700;font-size:13px}
 .row.lvl-low{border-left:3px solid var(--good)}
 .row.lvl-mid{border-left:3px solid var(--warn)}
-.row.lvl-high{border-left:3px solid var(--crit);background:rgba(255,86,112,0.08)}
+.row.lvl-high{border-left:3px solid var(--crit);background:rgba(244,114,182,0.08)}
 .row.lvl-low .sev{color:var(--good)}
 .row.lvl-mid .sev{color:var(--warn)}
 .row.lvl-high .sev{color:var(--crit)}
@@ -164,6 +164,7 @@ pre.env .c{color:var(--txt-mute)}
 .foot a:hover{color:var(--accent)}
 </style>
   <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="ui.css">
 </head>
 <body>
 <div class="wrap">
@@ -196,17 +197,17 @@ pre.env .c{color:var(--txt-mute)}
     <div class="card">
       <div class="card-h"><div class="card-title">Events / sec</div><div class="card-tag">LIVE</div></div>
       <div class="tele"><div class="tele-val" id="eps">1,284</div><div class="tele-lbl">Stream throughput</div></div>
-      <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline fill="none" stroke="#5be1ff" stroke-width="1.5" points="0,20 10,18 20,22 30,14 40,17 50,10 60,15 70,8 80,12 90,6 100,11"/></svg>
+      <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline fill="none" stroke="#60a5fa" stroke-width="1.5" points="0,20 10,18 20,22 30,14 40,17 50,10 60,15 70,8 80,12 90,6 100,11"/></svg>
     </div>
     <div class="card">
       <div class="card-h"><div class="card-title">Risk Index</div><div class="card-tag">15-MIN AVG</div></div>
       <div class="tele"><div class="tele-val">42<span class="small">/ 100</span></div><div class="tele-lbl">Population mean</div></div>
-      <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline fill="none" stroke="#ffc857" stroke-width="1.5" points="0,18 10,16 20,20 30,15 40,12 50,17 60,14 70,9 80,13 90,8 100,11"/></svg>
+      <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline fill="none" stroke="#60a5fa" stroke-width="1.5" points="0,18 10,16 20,20 30,15 40,12 50,17 60,14 70,9 80,13 90,8 100,11"/></svg>
     </div>
     <div class="card">
       <div class="card-h"><div class="card-title">Active Alerts</div><div class="card-tag">OPEN</div></div>
       <div class="tele"><div class="tele-val">7<span class="small">incidents</span></div><div class="tele-lbl">127 contributing events</div></div>
-      <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline fill="none" stroke="#ff5670" stroke-width="1.5" points="0,22 10,24 20,18 30,20 40,14 50,16 60,10 70,12 80,7 90,9 100,5"/></svg>
+      <svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline fill="none" stroke="#f472b6" stroke-width="1.5" points="0,22 10,24 20,18 30,20 40,14 50,16 60,10 70,12 80,7 90,9 100,5"/></svg>
     </div>
     <div class="card">
       <div class="card-h"><div class="card-title">PHI Exposure (24h)</div><div class="card-tag">SCAN</div></div>

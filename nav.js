@@ -37,7 +37,8 @@
       ["ClearTax", "tax.html", "🧾"]
     ]],
     ["Company", [
-      ["Home", "index.html", "⌂"]
+      ["Home", "index.html", "⌂"],
+      ["Button Lab", "button-lab.html", "◫"]
     ]]
   ];
 

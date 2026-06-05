@@ -15,7 +15,7 @@
   if (window.__cgUiLoaded) return;
   window.__cgUiLoaded = true;
 
-  var SEL = 'button,.btn,.cta,.button,[role="button"],a.btn,a.cta,a.button,input[type="submit"],input[type="button"]';
+  var SEL = 'button,.btn,.cta,.button,.cg-btn,[role="button"],a.btn,a.cta,a.button,a.cg-btn,input[type="submit"],input[type="button"]';
   var reduce = false, finePointer = true;
   try {
     reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

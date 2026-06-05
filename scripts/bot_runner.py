@@ -85,6 +85,16 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "monitoring",
         "schedule": "daily",
     },
+    "wealth_ladder": {
+        "module": "bots.wealth_ladder_bot",
+        "group": "strategy",
+        "schedule": "daily",
+    },
+    "self_evolving": {
+        "module": "bots.self_evolving_engine",
+        "group": "orchestration",
+        "schedule": "daily",
+    },
     "master_orchestrator": {
         "module": "bots.master_orchestrator",
         "group": "orchestration",

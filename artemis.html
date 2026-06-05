@@ -514,11 +514,13 @@ function fetchPower(){
 async function fetchCrypto(){
   try{
     let coins=[];
-    const r=await fetch('https://api.coincap.io/v2/assets?ids=bitcoin,ethereum,solana,cardano,ripple&limit=5');
-    if(r.ok){
-      const d=await r.json();
-      coins=(d.data||[]).map(a=>({sym:a.symbol,name:a.name,usd:parseFloat(a.priceUsd)||0,chg:parseFloat(a.changePercent24Hr)||0}));
-    }
+    try{
+      const r=await fetch('https://api.coincap.io/v2/assets?ids=bitcoin,ethereum,solana,cardano,ripple&limit=5');
+      if(r.ok){
+        const d=await r.json();
+        coins=(d.data||[]).map(a=>({sym:a.symbol,name:a.name,usd:parseFloat(a.priceUsd)||0,chg:parseFloat(a.changePercent24Hr)||0}));
+      }
+    }catch(_){ coins=[]; }  // CoinCap v2 retired → fall through to CoinGecko
     if(!coins.length){
       const fr=await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano,ripple&price_change_percentage=24h');
       if(!fr.ok) throw new Error('crypto feeds unavailable');

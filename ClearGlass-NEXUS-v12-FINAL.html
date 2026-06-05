@@ -3343,9 +3343,18 @@ function renderSatCount(d){
 async function fetchCrypto(){
   setSf('sf-cr','o');
   try{
-    const r=await fetchWithRetry('https://api.coincap.io/v2/assets?ids=bitcoin,ethereum,solana,cardano,ripple&limit=5');
-    const d=await r.json();
-    const assets=d.data||[];
+    let assets=[];
+    try{
+      const r=await fetchWithRetry('https://api.coincap.io/v2/assets?ids=bitcoin,ethereum,solana,cardano,ripple&limit=5');
+      const d=await r.json();
+      assets=d.data||[];
+    }catch(_){ assets=[]; }
+    if(!assets.length){
+      const gr=await fetchWithRetry('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano,ripple&price_change_percentage=24h');
+      const gd=await gr.json();
+      assets=(gd||[]).map(a=>({id:a.id,symbol:(a.symbol||'').toUpperCase(),name:a.name,priceUsd:a.current_price,changePercent24Hr:a.price_change_percentage_24h,rank:a.market_cap_rank}));
+    }
+    if(!assets.length) throw new Error('crypto feeds unavailable');
     const colMap={bitcoin:'#F7931A',ethereum:'#627EEA',solana:'#9945FF',cardano:'#0033AD',ripple:'#00AAE4'};
     const iconMap={bitcoin:'₿',ethereum:'Ξ',solana:'◎',cardano:'₳',ripple:'✕'};
     const coins=assets.map(a=>({

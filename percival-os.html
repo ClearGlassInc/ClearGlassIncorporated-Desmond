@@ -27,7 +27,7 @@
 html,body{height:100%}
 body{
   font-family:var(--sans);color:var(--txt);overflow:hidden;
-  background:radial-gradient(130% 100% at 50% -10%,#1a0608 0%,#0c0304 45%,#050202 100%);
+  background:radial-gradient(130% 100% at 50% -10%,#1a0619 0%,#0c030b 45%,#050205 100%);
   -webkit-font-smoothing:antialiased;
 }
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;
@@ -38,14 +38,14 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 ::selection{background:rgba(124,150,255,.3)}
 
 /* ============ BOOT ============ */
-#boot{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 45%,#16060a,#050203 70%);display:grid;place-items:center;transition:opacity .8s ease}
+#boot{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 45%,#160612,#050204 70%);display:grid;place-items:center;transition:opacity .8s ease}
 #boot.gone{opacity:0;pointer-events:none}
 .boot-core{position:relative;width:200px;height:200px;display:grid;place-items:center}
 .boot-ring{position:absolute;border-radius:50%;border:2px solid transparent}
 .boot-ring.a{inset:0;border-top-color:var(--cyan);border-right-color:var(--cyan-2);animation:spin 1.6s linear infinite}
 .boot-ring.b{inset:18px;border-bottom-color:var(--orange);border-left-color:var(--amber);animation:spin 2.4s linear infinite reverse}
 .boot-ring.c{inset:40px;border:1px dashed rgba(124,150,255,.4);animation:spin 9s linear infinite}
-.boot-orb{width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 55%,#1f0407);box-shadow:0 0 40px rgba(124,150,255,.8),0 0 90px rgba(124,150,255,.4) inset;animation:pulseCore 2.2s ease-in-out infinite}
+.boot-orb{width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 55%,#1f041d);box-shadow:0 0 40px rgba(124,150,255,.8),0 0 90px rgba(124,150,255,.4) inset;animation:pulseCore 2.2s ease-in-out infinite}
 .boot-txt{position:absolute;bottom:-78px;text-align:center;width:340px}
 .boot-name{font-family:var(--display);font-weight:900;letter-spacing:.34em;font-size:20px;color:#eef2ff;text-shadow:0 0 18px rgba(124,150,255,.6)}
 .boot-log{font-family:var(--mono);font-size:11px;color:var(--cyan);margin-top:12px;height:16px;letter-spacing:.06em}
@@ -60,7 +60,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 /* ---- Top bar ---- */
 .topbar{display:flex;align-items:center;gap:18px;padding:12px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(16,20,46,.9),rgba(9,11,24,.6));backdrop-filter:blur(8px);position:relative;z-index:30}
 .brand{display:flex;align-items:center;gap:12px;min-width:230px}
-.brand .mark{width:34px;height:34px;border-radius:50%;position:relative;flex:0 0 auto;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 60%,#1f0407);box-shadow:0 0 18px rgba(124,150,255,.7),0 0 6px rgba(124,150,255,.6) inset}
+.brand .mark{width:34px;height:34px;border-radius:50%;position:relative;flex:0 0 auto;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 60%,#1f041d);box-shadow:0 0 18px rgba(124,150,255,.7),0 0 6px rgba(124,150,255,.6) inset}
 .brand .mark::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--cyan);border-right-color:transparent;animation:spin 4s linear infinite}
 .brand .b-name{font-family:var(--display);font-weight:900;letter-spacing:.22em;font-size:16px}
 .brand .b-name b{color:var(--cyan)}
@@ -102,7 +102,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 .mitem.on{border-color:var(--line-2);background:linear-gradient(100deg,rgba(124,150,255,.14),rgba(124,150,255,.03));box-shadow:0 0 16px rgba(124,150,255,.12)}
 .mitem .mi-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:15px;background:rgba(124,150,255,.08);border:1px solid var(--line);flex:0 0 auto}
 .mitem .mi-tx{min-width:0}
-.mitem .mi-n{font-size:12.5px;font-weight:600;color:#f3dde0}
+.mitem .mi-n{font-size:12.5px;font-weight:600;color:#f3ddf1}
 .mitem .mi-s{font-size:9.5px;color:var(--dim);font-family:var(--mono);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mitem .mi-b{margin-left:auto;font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:6px;background:rgba(167,139,250,.16);color:var(--amber);border:1px solid rgba(167,139,250,.3)}
 .mitem .mi-launch{margin-left:auto;text-decoration:none;color:#7fe8db;font-size:13px;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;border:1px solid rgba(47,212,192,.35);background:rgba(47,212,192,.08);transition:.15s}
@@ -112,7 +112,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 
 /* ---- Center ---- */
 .center{display:grid;grid-template-rows:1fr auto;gap:14px;min-height:0}
-.stage{position:relative;border-radius:14px;overflow:hidden;background:radial-gradient(120% 110% at 50% 30%,#1e0608 0%,#120406 50%,#080203 100%);border:1px solid var(--line);min-height:0}
+.stage{position:relative;border-radius:14px;overflow:hidden;background:radial-gradient(120% 110% at 50% 30%,#1e061d 0%,#120411 50%,#080207 100%);border:1px solid var(--line);min-height:0}
 #neural{position:absolute;inset:0;width:100%;height:100%}
 .stage-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(124,150,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,255,.07) 1px,transparent 1px);background-size:34px 34px;-webkit-mask-image:radial-gradient(70% 70% at 50% 45%,#000,transparent);mask-image:radial-gradient(70% 70% at 50% 45%,#000,transparent)}
 .stage .tag{position:absolute;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:rgba(244,114,182,.6);text-transform:uppercase}
@@ -129,7 +129,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 .cr.arc{inset:0;border:2px solid transparent;border-top-color:var(--cyan);border-right-color:var(--cyan-2);animation:spin 7s linear infinite;filter:drop-shadow(0 0 8px rgba(124,150,255,.8))}
 .cr.arc2{inset:7%;border:2px solid transparent;border-bottom-color:var(--orange);border-left-color:var(--amber);animation:spin 11s linear infinite reverse;filter:drop-shadow(0 0 7px rgba(167,139,250,.7))}
 .cr.arc3{inset:15%;border:1px solid transparent;border-top-color:rgba(188,212,255,.7);animation:spin 4.5s linear infinite;filter:drop-shadow(0 0 5px rgba(188,212,255,.6))}
-.core-core{position:absolute;inset:30%;border-radius:50%;background:radial-gradient(circle at 42% 35%,#e4ebff,#c0303a 38%,#5a0c12 70%,#1f0407);box-shadow:0 0 50px rgba(124,150,255,.7),0 0 30px rgba(124,150,255,.6) inset;animation:pulseCore 3s ease-in-out infinite;display:grid;place-items:center}
+.core-core{position:absolute;inset:30%;border-radius:50%;background:radial-gradient(circle at 42% 35%,#e4ebff,#c030bc 38%,#5a0c57 70%,#1f041d);box-shadow:0 0 50px rgba(124,150,255,.7),0 0 30px rgba(124,150,255,.6) inset;animation:pulseCore 3s ease-in-out infinite;display:grid;place-items:center}
 .core-core span{font-family:var(--display);font-weight:900;font-size:13px;letter-spacing:.08em;color:#04222f;text-shadow:0 1px 0 rgba(255,255,255,.4)}
 .tick{position:absolute;inset:0;border-radius:50%}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -166,7 +166,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 .step .ag{margin-left:auto;font-size:8.5px;color:var(--dim-2)}
 .approve{margin-top:9px;border:1px solid rgba(96,165,250,.4);background:rgba(96,165,250,.06);border-radius:10px;padding:10px 12px}
 .approve .ah{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:6px;margin-bottom:5px}
-.approve .ab{font-size:12px;color:#f3dde0;margin-bottom:9px}
+.approve .ab{font-size:12px;color:#f3ddf1;margin-bottom:9px}
 .approve .btns{display:flex;gap:7px}
 .approve button{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border-radius:7px;cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);transition:.15s}
 .approve button.ok{border-color:rgba(52,211,153,.5);color:var(--ok);background:rgba(52,211,153,.1)}
@@ -694,5 +694,6 @@ function startLife(){
 }
 </script>
 <script defer src="nav.js"></script>
+  <script defer src="ui.js"></script>
 </body>
 </html>

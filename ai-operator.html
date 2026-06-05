@@ -16,7 +16,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --orange:#ff7a18;--orange-2:#ff9a3c;--amber:#ffb347;
+  --orange:#8821f6;--orange-2:#8f44f7;--amber:#824ef8;
   --cyan:#39c7ff;--cyan-2:#1aa6ff;--blue:#2b6cff;--ice:#bfe9ff;
   --ink:#05070c;--ink-2:#0a0e16;--panel:#0d1320;
   --sans:'Inter',system-ui,-apple-system,sans-serif;--mono:'IBM Plex Mono',monospace;--display:'Orbitron',var(--sans);
@@ -29,7 +29,7 @@ body{
 .wrap{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;max-width:1100px}
 .page-head{text-align:center;max-width:700px}
 .page-kicker{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);opacity:.85}
-.page-title{font-size:clamp(26px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin-top:10px;background:linear-gradient(100deg,#fff 0%,#bfe9ff 50%,#ff9a3c 110%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.page-title{font-size:clamp(26px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin-top:10px;background:linear-gradient(100deg,#fff 0%,#bfe9ff 50%,#8f44f7 110%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .page-sub{margin-top:12px;color:#9aa6b6;font-size:15px;line-height:1.65}
 .page-sub b{color:#cfe9ff}
 .page-foot{font-family:var(--mono);font-size:11px;color:#5b6678;letter-spacing:.12em;text-transform:uppercase;text-align:center}
@@ -43,17 +43,17 @@ body{
 .scene{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#0a0d14 0%,#0c0f17 55%,#070a10 100%)}
 
 /* ===== Room ===== */
-.wall .ceiling{position:absolute;top:0;left:0;right:0;height:30%;background:linear-gradient(180deg,#1a1712 0%,#120f0c 100%)}
+.wall .ceiling{position:absolute;top:0;left:0;right:0;height:30%;background:linear-gradient(180deg,#14121a 0%,#0e0c12 100%)}
 .wall .ceiling::after{content:"";position:absolute;inset:0;background:
-  radial-gradient(60% 80% at 35% 120%,rgba(255,138,40,.45),transparent 60%),
-  radial-gradient(40% 60% at 70% 130%,rgba(255,122,24,.25),transparent 60%);
+  radial-gradient(60% 80% at 35% 120%,rgba(137,49,246,.45),transparent 60%),
+  radial-gradient(40% 60% at 70% 130%,rgba(136,33,246,.25),transparent 60%);
   -webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
 .wall .back{position:absolute;top:22%;left:0;right:0;height:54%;
-  background:radial-gradient(120% 120% at 30% 130%,rgba(255,122,24,.34) 0%,rgba(255,122,24,.06) 40%,transparent 64%),linear-gradient(180deg,#0f0c0a 0%,#13110d 100%)}
-.wall .floor{position:absolute;bottom:0;left:0;right:0;height:24%;background:linear-gradient(180deg,#0a0805 0%,#040302 100%)}
+  background:radial-gradient(120% 120% at 30% 130%,rgba(136,33,246,.34) 0%,rgba(136,33,246,.06) 40%,transparent 64%),linear-gradient(180deg,#0d0a0f 0%,#0e0d13 100%)}
+.wall .floor{position:absolute;bottom:0;left:0;right:0;height:24%;background:linear-gradient(180deg,#06050a 0%,#030204 100%)}
 .glow-bar{position:absolute;left:7%;width:8px;bottom:14%;height:26%;border-radius:8px;
-  background:linear-gradient(180deg,transparent,var(--amber),var(--orange),#ff5500);
-  filter:blur(2px);box-shadow:0 0 34px 10px rgba(255,122,24,.6),0 0 90px 24px rgba(255,90,0,.34)}
+  background:linear-gradient(180deg,transparent,var(--amber),var(--orange),#930af5);
+  filter:blur(2px);box-shadow:0 0 34px 10px rgba(136,33,246,.6),0 0 90px 24px rgba(142,10,245,.34)}
 
 /* ===== Screens ===== */
 .screen{position:absolute;border-radius:7px;overflow:hidden;background:#04111f;box-shadow:0 0 0 2px #161b24,0 10px 30px rgba(0,0,0,.6)}
@@ -65,9 +65,9 @@ body{
 .dial{position:relative;width:46%;aspect-ratio:1;border-radius:50%}
 .ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(57,199,255,.18)}
 .ring.r2{inset:11%;border-style:dashed;border-color:rgba(57,199,255,.30);animation:spin 18s linear infinite}
-.ring.r3{inset:24%;border-color:rgba(255,154,60,.35)}
+.ring.r3{inset:24%;border-color:rgba(143,68,247,.35)}
 .ring.arc{inset:0;border:3px solid transparent;border-top-color:var(--cyan);border-right-color:var(--cyan-2);animation:spin 6s linear infinite;filter:drop-shadow(0 0 6px rgba(57,199,255,.8))}
-.ring.arc2{inset:11%;border:2px solid transparent;border-bottom-color:var(--orange);border-left-color:var(--amber);animation:spin 9s linear infinite reverse;filter:drop-shadow(0 0 5px rgba(255,122,24,.7))}
+.ring.arc2{inset:11%;border:2px solid transparent;border-bottom-color:var(--orange);border-left-color:var(--amber);animation:spin 9s linear infinite reverse;filter:drop-shadow(0 0 5px rgba(136,33,246,.7))}
 .dial-core{position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#1b6fa0,#05192b);box-shadow:0 0 24px rgba(57,199,255,.55) inset,0 0 16px rgba(57,199,255,.5);animation:pulseCore 3s ease-in-out infinite}
 @keyframes pulseCore{0%,100%{box-shadow:0 0 24px rgba(57,199,255,.45) inset,0 0 16px rgba(57,199,255,.4)}50%{box-shadow:0 0 34px rgba(57,199,255,.8) inset,0 0 26px rgba(57,199,255,.7)}}
 .dash-side{position:absolute;top:8%;font-family:var(--mono);font-size:6px;letter-spacing:.1em;color:rgba(173,221,255,.7);line-height:1.8}
@@ -95,15 +95,15 @@ body{
 .sheet .cell{border-right:1px solid rgba(255,255,255,.05);position:relative}
 .sheet .cell::after{content:"";position:absolute;top:50%;left:14%;right:30%;transform:translateY(-50%);height:2px;border-radius:2px;background:rgba(173,200,230,.20)}
 .sheet .row:first-child .cell::after{background:rgba(57,199,255,.5)}
-.sheet .cell.g::after{background:rgba(255,154,60,.5)}
+.sheet .cell.g::after{background:rgba(143,68,247,.5)}
 .stand{position:absolute;width:5px;height:6%;background:linear-gradient(180deg,#2a3140,#11151d);left:50%;transform:translateX(-50%);bottom:-6%;border-radius:0 0 2px 2px}
 .foot{position:absolute;bottom:-6.6%;left:50%;transform:translateX(-50%);width:26%;height:5px;border-radius:50%;background:#0b0e13;filter:blur(1px)}
 
 /* ===== Desk + peripherals ===== */
-.desk{position:absolute;left:0;right:0;bottom:18%;height:9%;background:linear-gradient(180deg,#15181f 0%,#0c0e13 60%,#070809 100%);box-shadow:0 -1px 0 rgba(255,255,255,.05) inset,0 -22px 50px -10px rgba(255,122,24,.30)}
+.desk{position:absolute;left:0;right:0;bottom:18%;height:9%;background:linear-gradient(180deg,#15181f 0%,#0c0e13 60%,#070809 100%);box-shadow:0 -1px 0 rgba(255,255,255,.05) inset,0 -22px 50px -10px rgba(136,33,246,.30)}
 .desk::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,rgba(191,233,255,.22),transparent)}
 .desk-leg{position:absolute;width:9px;bottom:0;height:18%;background:linear-gradient(180deg,#15181f,#070809);right:14%}
-.under-glow{position:absolute;left:14%;right:8%;bottom:14%;height:46px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,138,40,.8),rgba(255,90,0,.4) 55%,transparent 80%);filter:blur(10px)}
+.under-glow{position:absolute;left:14%;right:8%;bottom:14%;height:46px;border-radius:50%;background:radial-gradient(closest-side,rgba(137,49,246,.8),rgba(142,10,245,.4) 55%,transparent 80%);filter:blur(10px)}
 .kbd{position:absolute;bottom:24.5%;left:36%;width:30%;height:2.4%;border-radius:4px;background:linear-gradient(180deg,#1a1f29,#0c0f15);box-shadow:0 0 14px rgba(57,199,255,.20),0 3px 8px rgba(0,0,0,.6)}
 .kbd::after{content:"";position:absolute;inset:20% 6%;border-radius:2px;background-image:repeating-linear-gradient(90deg,rgba(57,199,255,.22) 0 2px,transparent 2px 6px);opacity:.7}
 .mouse{position:absolute;bottom:24.5%;left:69%;width:4.5%;height:2.3%;border-radius:40% 40% 45% 45%;background:linear-gradient(180deg,#1a1f29,#0b0e13);box-shadow:0 0 10px rgba(57,199,255,.18)}
@@ -113,11 +113,11 @@ body{
 
 /* ===== Standing figure ===== */
 .figure{position:absolute;bottom:18%;left:-2%;width:30%;height:56%;filter:blur(3px) brightness(.6) contrast(1.05);z-index:3}
-.fig-body{position:absolute;bottom:0;left:14%;width:70%;height:66%;border-radius:46% 46% 12% 12%/26% 26% 6% 6%;background:linear-gradient(100deg,#05070b 0%,#0c1119 45%,#241608 100%);box-shadow:16px 0 44px -8px rgba(255,122,24,.5),-6px 0 24px rgba(57,199,255,.10) inset}
-.fig-head{position:absolute;bottom:62%;left:48%;transform:translateX(-50%);width:26%;aspect-ratio:.8;border-radius:50% 50% 48% 48%;background:linear-gradient(100deg,#0a0d12,#2a1c0d);box-shadow:12px 2px 28px -6px rgba(255,122,24,.55)}
-.fig-arm{position:absolute;bottom:30%;left:10%;width:78%;height:8%;border-radius:8px;background:linear-gradient(100deg,#06080d,#1a120a);transform:rotate(-6deg);box-shadow:10px 4px 24px -6px rgba(255,122,24,.45)}
+.fig-body{position:absolute;bottom:0;left:14%;width:70%;height:66%;border-radius:46% 46% 12% 12%/26% 26% 6% 6%;background:linear-gradient(100deg,#05070b 0%,#0c1119 45%,#130824 100%);box-shadow:16px 0 44px -8px rgba(136,33,246,.5),-6px 0 24px rgba(57,199,255,.10) inset}
+.fig-head{position:absolute;bottom:62%;left:48%;transform:translateX(-50%);width:26%;aspect-ratio:.8;border-radius:50% 50% 48% 48%;background:linear-gradient(100deg,#0a0d12,#180d2a);box-shadow:12px 2px 28px -6px rgba(136,33,246,.55)}
+.fig-arm{position:absolute;bottom:30%;left:10%;width:78%;height:8%;border-radius:8px;background:linear-gradient(100deg,#06080d,#100a1a);transform:rotate(-6deg);box-shadow:10px 4px 24px -6px rgba(136,33,246,.45)}
 
-.vignette{position:absolute;inset:0;pointer-events:none;z-index:5;background:radial-gradient(120% 90% at 50% 30%,transparent 42%,rgba(0,0,0,.5) 100%),radial-gradient(90% 70% at 25% 60%,rgba(255,122,24,.05),transparent 60%)}
+.vignette{position:absolute;inset:0;pointer-events:none;z-index:5;background:radial-gradient(120% 90% at 50% 30%,transparent 42%,rgba(0,0,0,.5) 100%),radial-gradient(90% 70% at 25% 60%,rgba(136,33,246,.05),transparent 60%)}
 .grain{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* big caption */
@@ -138,9 +138,9 @@ body{
 .rail .act{display:flex;flex-direction:column;align-items:center;gap:4px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));background:none;border:0;color:#fff;cursor:pointer;font:inherit}
 .rail svg{width:32px;height:32px;display:block}
 .rail .lbl{font-size:13px;font-weight:600}
-.rail .act.liked svg{fill:#ff2d55;stroke:#ff2d55;animation:pop .4s ease}
+.rail .act.liked svg{fill:#f735d8;stroke:#f735d8;animation:pop .4s ease}
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
-.rail .thumb{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#39c7ff,#ff7a18);border:1.5px solid #fff}
+.rail .thumb{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#39c7ff,#8821f6);border:1.5px solid #fff}
 
 .made{position:absolute;left:14px;bottom:104px;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#fff;background:linear-gradient(90deg,rgba(124,58,237,.9),rgba(37,99,235,.9));padding:7px 12px;border-radius:9px;backdrop-filter:blur(4px)}
 .made svg{width:15px;height:15px}
@@ -186,9 +186,9 @@ body{
 .j-reactor .core{position:absolute;inset:36%;border-radius:50%;background:radial-gradient(circle at 45% 40%,#dffaff,#39c7ff 45%,#0a5e8f 100%);box-shadow:0 0 40px rgba(57,199,255,.9),0 0 80px rgba(57,199,255,.5)}
 .j-reactor.idle .core{animation:pulseCore 3s ease-in-out infinite}
 .j-reactor.speaking .core{animation:react .5s ease-in-out infinite}
-.j-reactor.listening{filter:drop-shadow(0 0 10px rgba(255,122,24,.6))}
+.j-reactor.listening{filter:drop-shadow(0 0 10px rgba(136,33,246,.6))}
 .j-reactor.listening .r-arc{border-top-color:var(--orange);border-right-color:var(--amber)}
-.j-reactor.listening .core{background:radial-gradient(circle at 45% 40%,#fff0df,#ff9a3c 45%,#b34d00 100%);box-shadow:0 0 40px rgba(255,122,24,.9)}
+.j-reactor.listening .core{background:radial-gradient(circle at 45% 40%,#ebe0fe,#8f44f7 45%,#5607ac 100%);box-shadow:0 0 40px rgba(136,33,246,.9)}
 @keyframes react{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
 
 .j-status{position:absolute;top:286px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:#7fd4ff;text-transform:uppercase;min-height:16px}
@@ -211,8 +211,8 @@ body{
 .j-input input:focus{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(57,199,255,.3)}
 .j-btn{width:42px;height:42px;border-radius:50%;border:1px solid rgba(57,199,255,.4);background:rgba(2,16,30,.85);color:#bfe9ff;display:grid;place-items:center;cursor:pointer;flex-shrink:0}
 .j-btn svg{width:20px;height:20px}
-.j-btn.mic.on{background:linear-gradient(135deg,var(--orange),var(--amber));border-color:var(--orange);color:#1a0d00;animation:micPulse 1.2s ease-in-out infinite}
-@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,122,24,.5)}50%{box-shadow:0 0 0 8px rgba(255,122,24,0)}}
+.j-btn.mic.on{background:linear-gradient(135deg,var(--orange),var(--amber));border-color:var(--orange);color:#0b0119;animation:micPulse 1.2s ease-in-out infinite}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(136,33,246,.5)}50%{box-shadow:0 0 0 8px rgba(136,33,246,0)}}
 .j-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(57,199,255,.35);background:rgba(2,16,30,.7);color:#bfe9ff;display:grid;place-items:center;cursor:pointer;z-index:2}
 .j-close svg{width:18px;height:18px}
 
@@ -254,7 +254,7 @@ body{
       <div class="screen lo mon-c"><div class="bezel-glow"></div><div class="chart">
         <svg viewBox="0 0 100 60" preserveAspectRatio="none">
           <polyline points="2,46 14,40 26,43 38,30 50,34 62,20 74,25 86,12 98,17" fill="none" stroke="#39c7ff" stroke-width="1.4" vector-effect="non-scaling-stroke" style="filter:drop-shadow(0 0 3px rgba(57,199,255,.9))"/>
-          <polyline points="2,52 14,49 26,50 38,44 50,46 62,39 74,42 86,34 98,37" fill="none" stroke="#ff9a3c" stroke-width="1" opacity=".7" vector-effect="non-scaling-stroke"/>
+          <polyline points="2,52 14,49 26,50 38,44 50,46 62,39 74,42 86,34 98,37" fill="none" stroke="#8f44f7" stroke-width="1" opacity=".7" vector-effect="non-scaling-stroke"/>
         </svg></div><div class="stand"></div><div class="foot"></div></div>
       <div class="screen lo mon-r"><div class="bezel-glow"></div><div class="sheet">
         <div class="row"><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div>
@@ -533,5 +533,6 @@ body{
 })();
 </script>
 <script defer src="nav.js"></script>
+  <script defer src="ui.js"></script>
 </body>
 </html>

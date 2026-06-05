@@ -29,10 +29,10 @@
   --navy:#1e3a5f;--navy-2:#2d527a;--navy-3:#3b6fa0;
   --blue:#2563eb;--blue-2:#1d4ed8;--blue-light:rgba(37,99,235,0.08);--blue-border:rgba(37,99,235,0.2);
   --cyan:#06b6d4;--cyan-light:rgba(6,182,212,0.08);
-  --prism-1:#38bdf8;--prism-2:#a78bfa;--prism-3:#f472b6;--prism-4:#34d399;--prism-5:#fbbf24;--prism-6:#60a5fa;
+  --prism-1:#38bdf8;--prism-2:#a78bfa;--prism-3:#f472b6;--prism-4:#34d399;--prism-5:#4929f6;--prism-6:#60a5fa;
   --bank-grad:linear-gradient(135deg,#1e3a5f 0%,#2563eb 40%,#06b6d4 80%,#38bdf8 100%);
   --bank-grad-soft:linear-gradient(135deg,rgba(30,58,95,.06) 0%,rgba(37,99,235,.04) 50%,rgba(6,182,212,.03) 100%);
-  --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);
+  --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#4929f6 75%,#34d399 100%);
   --serif:'Cormorant Garamond',Georgia,serif;--sans:'Urbanist',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace;
 }
 html{scroll-behavior:smooth;scroll-padding-top:80px}
@@ -132,8 +132,8 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 .demo-block-title{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--text-3)}
 .demo-risk{padding:3px 9px;border-radius:999px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em}
 .risk-low{background:rgba(52,211,153,.12);color:#059669}
-.risk-mod{background:rgba(245,158,11,.12);color:#d97706}
-.risk-high{background:rgba(239,68,68,.12);color:#dc2626}
+.risk-mod{background:rgba(72,11,245,.12);color:#5309d6}
+.risk-high{background:rgba(230,68,239,.12);color:#d326dc}
 .demo-block-body{padding:14px 16px;font-size:13px;line-height:1.72;color:var(--text-2)}
 .demo-block-body strong{color:var(--text);font-weight:600}
 .demo-block-body .reg{font-family:var(--mono);font-size:11px;color:var(--blue-2);font-weight:600}
@@ -479,8 +479,8 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
       <div class="output-wrap rv">
         <div class="output-header">
           <div class="output-dots">
-            <div class="output-dot" style="background:#ef4444"></div>
-            <div class="output-dot" style="background:#f59e0b"></div>
+            <div class="output-dot" style="background:#e644ef"></div>
+            <div class="output-dot" style="background:#480bf5"></div>
             <div class="output-dot" style="background:#22c55e"></div>
           </div>
           <span class="output-title">CLEARBANK LEGAL AI™ · SAMPLE OUTPUT</span>
@@ -497,7 +497,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
           <div class="output-section">
             <div class="os-label">RISK LEVEL</div>
             <div class="os-content os-risk-row" style="display:flex;align-items:center;gap:12px">
-              <span class="os-risk-badge" style="background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.2)">HIGH ENFORCEMENT RISK</span>
+              <span class="os-risk-badge" style="background:rgba(230,68,239,.1);color:#d326dc;border:1px solid rgba(230,68,239,.2)">HIGH ENFORCEMENT RISK</span>
               <span style="font-size:13px;color:var(--text-3)">Regulator examination scheduled Q3</span>
             </div>
           </div>
@@ -905,5 +905,6 @@ const observer=new IntersectionObserver(entries=>{
 document.querySelectorAll('.rv').forEach(el=>observer.observe(el));
 </script>
 <script defer src="nav.js"></script>
+  <script defer src="ui.js"></script>
 </body>
 </html>

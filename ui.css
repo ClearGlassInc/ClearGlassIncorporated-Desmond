@@ -73,6 +73,33 @@ a:not([class]):focus-visible { background-size: 100% 2px; }
 #cg-nav a, #cg-nav button { box-shadow: none; }
 #cg-nav a:hover, #cg-nav button:hover { transform: none; filter: none; box-shadow: none; }
 
+/* ── click ripple (driven by ui.js) ──────────────────────────────────────── */
+.cg-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(167,139,250,.45), rgba(96,165,250,.18) 60%, transparent 70%);
+  animation: cg-ripple .62s cubic-bezier(.22,.61,.36,1) forwards;
+  z-index: 0;
+  mix-blend-mode: screen;
+}
+@keyframes cg-ripple {
+  to { transform: scale(2.4); opacity: 0; }
+}
+
+/* ── pointer spotlight (driven by ui.js) — subtle ambient blue-violet glow ── */
+#cg-spotlight {
+  position: fixed; inset: 0; z-index: 2147483000;
+  pointer-events: none; opacity: 0;
+  transition: opacity .45s ease;
+  background: radial-gradient(280px circle at var(--cg-x, -100px) var(--cg-y, -100px),
+              rgba(124,150,255,.08), rgba(167,139,250,.04) 40%, transparent 62%);
+}
+
+/* ── magnetic-capable controls get a snappier transform curve ─────────────── */
+.cg-magnetic { transition: transform .22s cubic-bezier(.16,1,.3,1), box-shadow .25s ease, filter .25s ease !important; }
+
 /* ── respect reduced-motion preferences ──────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   :where(a, button, [role="button"], .btn, .cta, .button, input, summary) {
@@ -80,4 +107,6 @@ a:not([class]):focus-visible { background-size: 100% 2px; }
   }
   button:hover, [role="button"]:hover, .btn:hover, .cta:hover, .button:hover,
   a.btn:hover, a.cta:hover, a.button:hover { transform: none !important; }
+  .cg-ripple { display: none !important; }
+  #cg-spotlight { display: none !important; }
 }

@@ -21,9 +21,9 @@
 }
 html,body{height:100%}
 body{font-family:var(--sans);color:var(--txt);min-height:100vh;
-  background:radial-gradient(130% 100% at 50% -10%,#1a0608 0%,#0c0304 45%,#050202 100%);-webkit-font-smoothing:antialiased;padding-bottom:40px}
+  background:radial-gradient(130% 100% at 50% -10%,#1a0619 0%,#0c030b 45%,#050205 100%);-webkit-font-smoothing:antialiased;padding-bottom:40px}
 .top{display:flex;align-items:center;gap:13px;padding:14px 22px;border-bottom:1px solid var(--line);background:rgba(11,14,29,.7);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10}
-.mk{width:32px;height:32px;border-radius:8px;flex:0 0 auto;position:relative;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 60%,#1f0407);box-shadow:0 0 16px rgba(124,150,255,.6)}
+.mk{width:32px;height:32px;border-radius:8px;flex:0 0 auto;position:relative;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 60%,#1f041d);box-shadow:0 0 16px rgba(124,150,255,.6)}
 .mk::after{content:"⚖";position:absolute;inset:0;display:grid;place-items:center;font-size:15px}
 .b-name{font-family:var(--display);font-weight:900;letter-spacing:.2em;font-size:15px}.b-name b{color:var(--red)}
 .b-sub{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim-2);text-transform:uppercase}
@@ -54,7 +54,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--line-2);box-shadow:0 
 .assess.show{display:block;animation:in .35s ease}
 @keyframes in{from{opacity:0;transform:translateY(6px)}}
 .block{margin-top:12px}.block .k{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim-2);margin-bottom:4px}
-.block ul{margin:0;padding-left:18px;font-size:12.5px;line-height:1.6;color:#e9cfd1}
+.block ul{margin:0;padding-left:18px;font-size:12.5px;line-height:1.6;color:#e9cfe8}
 .aref{font-family:var(--mono);font-size:10px;color:var(--dim-2);margin-top:10px}
 table{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
 th,td{padding:7px 9px;text-align:left;border-bottom:1px solid rgba(124,150,255,.08);vertical-align:top}
@@ -232,5 +232,6 @@ $('clearReg').onclick=()=>{register.length=0;renderRegister();$('assessOut').cla
 renderRegister();
 </script>
 <script defer src="nav.js"></script>
+  <script defer src="ui.js"></script>
 </body>
 </html>

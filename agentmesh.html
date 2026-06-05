@@ -18,9 +18,9 @@
   --mono:'IBM Plex Mono',monospace;--display:'Orbitron','Inter',sans-serif;--sans:'Inter',system-ui,sans-serif}
 html,body{height:100%}
 body{font-family:var(--sans);color:var(--txt);min-height:100vh;padding-bottom:36px;
-  background:radial-gradient(130% 100% at 50% -10%,#1a0608 0%,#0c0304 45%,#050202 100%);-webkit-font-smoothing:antialiased}
+  background:radial-gradient(130% 100% at 50% -10%,#1a0619 0%,#0c030b 45%,#050205 100%);-webkit-font-smoothing:antialiased}
 .top{display:flex;align-items:center;gap:13px;padding:13px 22px;border-bottom:1px solid var(--line);background:rgba(11,14,29,.7);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10}
-.mk{width:30px;height:30px;border-radius:8px;position:relative;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 60%,#1f0407);box-shadow:0 0 14px rgba(124,150,255,.6)}
+.mk{width:30px;height:30px;border-radius:8px;position:relative;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 60%,#1f041d);box-shadow:0 0 14px rgba(124,150,255,.6)}
 .mk::after{content:"⌗";position:absolute;inset:0;display:grid;place-items:center;font-size:15px;color:#fff}
 .b-name{font-family:var(--display);font-weight:900;letter-spacing:.18em;font-size:15px}.b-name b{color:var(--red)}
 .b-sub{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim-2);text-transform:uppercase}
@@ -54,7 +54,7 @@ input:focus,select:focus{border-color:var(--line-2);box-shadow:0 0 0 3px rgba(12
 .out{margin-top:12px;display:none}.out.show{display:block;animation:in .3s ease}
 @keyframes in{from{opacity:0;transform:translateY(6px)}}
 .kv{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:7px}.kv b{color:var(--txt)}
-pre{font-family:var(--mono);font-size:10.5px;color:#d8c7c9;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:8px;padding:9px;overflow:auto;margin-top:8px;line-height:1.5}
+pre{font-family:var(--mono);font-size:10.5px;color:#d8c7d7;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:8px;padding:9px;overflow:auto;margin-top:8px;line-height:1.5}
 .ev{display:flex;gap:8px;font-size:11px;line-height:1.4;padding:5px 0;border-bottom:1px solid rgba(124,150,255,.06)}
 .ev .d{width:8px;height:8px;border-radius:50%;margin-top:3px;flex:0 0 auto}
 .ev.ok .d{background:var(--ok)}.ev.deny .d{background:var(--red)}.ev.esc .d{background:var(--amber)}
@@ -201,5 +201,6 @@ $('dispatch').onclick=()=>{
 renderFilter();renderSources();renderLog();
 </script>
 <script defer src="nav.js"></script>
+  <script defer src="ui.js"></script>
 </body>
 </html>

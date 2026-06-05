@@ -47,6 +47,7 @@ REQUIRED_ROOT_FILES = ["sitemap.xml", "robots.txt", "schema.json", ".nojekyll"]
 SITEMAP_EXEMPT = {
     "404.html",
     "button-system.html",
+    "button-lab.html",            # component showcase / demo, not a landing page
     "hover-menu.html",
     "smb.html",
     "index.html",                 # homepage is indexed as "/" — avoid duplicate

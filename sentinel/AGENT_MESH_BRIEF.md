@@ -99,6 +99,25 @@ mesh.dispatch(who, MissionPacket("a private person", Mission.TRACKING, "web",
                                  target_is_individual=True))   # DENIED
 ```
 
+## Collector, graph & dashboard
+- **OSINT collector** (`sentinel/sentinel/collector.py`) — a registry of **24
+  approved public sources** (USGS · NWS · OpenSky · Exploit-DB · NVD · CISA KEV/
+  advisories · GitHub advisories · abuse.ch URLhaus/ThreatFox/Feodo · PhishTank ·
+  Krebs · BleepingComputer · The Register · Hacker News · GDELT · SEC EDGAR ·
+  OpenCorporates* · Companies House* · OFAC SDN · Wikipedia; *=key required).
+  Fetching is **injected** (a `Fetcher`) so robots.txt/ToS/rate-limit compliance
+  is enforced at the boundary; RSS/Atom is normalized to `Signal` records
+  (entity · source · timestamp · confidence · summary). Org/asset scope only.
+- **Entity/topic graph** (`sentinel/sentinel/graph.py`) — corporate entity
+  linking (nodes = organizations/brands/domains/assets/topics/sources; typed,
+  weighted edges; BFS path; top-connected). **Person/individual nodes are
+  rejected.** `graph_from_signals` builds a graph straight from collector output.
+- **Orchestration dashboard** ([`agentmesh.html`](../agentmesh.html)) — map/
+  filter the 24 sources, submit a SIGINT-PRMPT mission packet, see the dispatch
+  decision (ACCEPTED/ESCALATE/DENIED), assigned agent, transparent identity,
+  report template, and a running dispatch log/alerts. Reachable from PERCIVAL
+  (**⌗ MESH**). Mirrors `agentmesh.py` exactly.
+
 ## Boundaries
 - Org-scoped tool, not a public service — and refusals are **transparent**.
 - **OSINT on organizations/assets only** — never private-person surveillance.

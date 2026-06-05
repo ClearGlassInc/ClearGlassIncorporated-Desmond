@@ -11,6 +11,7 @@ PERCIVAL under SENTINEL's fail-closed policy gate.
 | **Purple-Team** | Detection-engineering / SOC exercise driver (defensive) | `PURPLE_TEAM_PLAYBOOK.md` | `sentinel/sentinel/purpleteam.py` |
 | **PFAS** | Compliance + decision intelligence (Ontario water/property/infra) | `PERCIVAL_PFAS_BRIEF.md` | `sentinel/sentinel/pfas.py` + `pfas_ingest.py` + `pfas_pdf.py` + `pfas_export.py` + `sentinel.html` map layer & evidence-pack download |
 | **AEGIS** | Lawful-access compliance & rights protection (counsel-in-the-loop) | `AEGIS_LEGAL_SHIELD_BRIEF.md` | `sentinel/sentinel/legalshield.py` + `transparency.py` + `aegis.html` (intake/register/report UI) |
+| **Agent Mesh** | Org-scoped (ClearGlass-only) multi-agent **OSINT** orchestration; SIGINT-PRMPT packets; transparent, no person-targeting | `AGENT_MESH_BRIEF.md` | `sentinel/sentinel/agentmesh.py` |
 
 All agents share:
 - the **fail-closed policy gate** (`sentinel/sentinel/policy.py`)

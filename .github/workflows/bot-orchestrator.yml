@@ -64,6 +64,7 @@ jobs:
           path: |
             marketing/output/
             operations/output/
+            operations/wealth_ladder/
           retention-days: 30
 
       - name: Write job summary

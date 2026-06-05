@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIRS = [
     "marketing/output",
     "operations/output",
+    "operations/wealth_ladder",
 ]
 
 BOT_AUTHOR_NAME = "github-actions[bot]"

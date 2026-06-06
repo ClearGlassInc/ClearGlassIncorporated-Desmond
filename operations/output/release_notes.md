@@ -1,9 +1,17 @@
-# Release Notes — 2026-06-05
+# Release Notes — 2026-06-06
 
 *107 commit(s) since repository start*
 
 ## New Features
 
+- **ci:** add Cert Bot TLS expiry monitor (script + workflow + tests) (`12f4631`)
+- **nav:** ClearGlass Control Surface v3.1 — command-palette-first nav (#382) (`d759fa2`)
+- **buttons:** MACHINED GLASS button system + live Button Lab (#381) (`0f87bf0`)
+- **ui:** finish site-wide blue-violet recolor + advanced interaction behaviors (#379) (`903ec71`)
+- **ui:** deep-clean next-tier pages + advanced button/link interaction layer (#378) (`ac2c95d`)
+- **theme:** unify all pages on homepage blue-violet identity (#377) (`cd55882`)
+- **nav:** site-wide hover menu for easy navigation across all pages (#374) (`75eb9d9`)
+- **mesh:** OSINT collector (24 sources) + entity/topic graph + orchestration dashboard (#373) (`dca9cda`)
 - **percival:** org-scoped Agent Mesh — ClearGlass-only OSINT orchestration (#372) (`bd6af99`)
 - **autostore:** risk scoring + read-only advisor + idempotency + metrics (#371) (`a7a2f58`)
 - **aegis:** legal-process register + transparency report + intake UI + shared audit (#370) (`b21ecdc`)
@@ -47,6 +55,7 @@
 
 ## Bug Fixes
 
+- **live:** keep crypto panels live after CoinCap v2 retirement (#376) (`fcece3d`)
 - **sitemap:** index remaining content pages; exempt non-indexable (#347) (`e895f24`)
 - **health-bot:** treat sitemap drift as warning, not a health failure (#346) (`23fcd32`)
 - **ci:** Health Monitor label crash + SENTINEL demo runner (#345) (`2eacb13`)
@@ -108,21 +117,15 @@
 - Update link to Artemis IV Core in index.html (`598ccf9`)
 - Update dropdown label for Artemis VI (`76d6233`)
 - Create CLEARGLASSINC.FUNDING.yml for funding options (`120986d`)
-- Add NEXUS v12 to products and hover menu (`64ed998`)
-- Rename ClearGlass-NEXUS-v12-FINAL.html to ClearGlass-NEXUS-FINAL.html (`b6abbf7`)
-- Add NEXUS.html file (`fd1038b`)
-- Update title and banners for Ontario Operations Center (`dbda309`)
-- Add script to link NEXUS V12 FINAL in navigation (`55ff9e7`)
-- Update index.html (`bbe6081`)
-- Update branding and location references in guardian.html (`0f9b6db`)
-- Update navigation icons in index.html (`090aad3`)
-- Update Guardian sub-label in navigation menu (`b2a1ccd`)
-- Remove duplicate 'Guardian' link from footer (`e0ec5ad`)
-- Update navigation name from 'ClearGlass' to 'ClearGlassInc.' (`bb12198`)
 
 ## Automation
 
+- update generated outputs — 2026-06-05 10:45 UTC [skip ci] (`27a8de2`)
 - update generated outputs — 2026-06-04 19:41 UTC [skip ci] (`5deec71`)
 - update generated outputs — 2026-06-04 10:38 UTC [skip ci] (`eb007c4`)
 - update generated outputs — 2026-06-03 11:55 UTC [skip ci] (`9ddea47`)
 - update generated outputs — 2026-06-02 11:16 UTC [skip ci] (`dbaa841`)
+
+## Style
+
+- **nav:** recolor hover menu to homepage blue-violet theme (#375) (`4821656`)

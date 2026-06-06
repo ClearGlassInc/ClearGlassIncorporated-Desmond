@@ -50,6 +50,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "content",
         "schedule": "daily",
     },
+    "cpa_partner": {
+        "module": "bots.cpa_partner_outreach_bot",
+        "group": "content",
+        "schedule": "weekly",
+    },
     "operations": {
         "module": "bots.operations_finance_bot",
         "group": "ops",

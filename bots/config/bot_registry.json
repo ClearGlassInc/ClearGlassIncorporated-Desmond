@@ -48,6 +48,15 @@
       "depends_on": ["growth"]
     },
     {
+      "id": "cpa_partner",
+      "module": "bots.cpa_partner_outreach_bot",
+      "group": "content",
+      "schedule": "weekly",
+      "description": "CPA / fractional CFO partner-channel outreach: compliant templates, one-pager, weekly execution plan, revenue model",
+      "output_dir": "marketing/output/cpa_partner",
+      "depends_on": []
+    },
+    {
       "id": "operations",
       "module": "bots.operations_finance_bot",
       "group": "ops",

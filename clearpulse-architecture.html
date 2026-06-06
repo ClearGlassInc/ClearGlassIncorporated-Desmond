@@ -199,6 +199,19 @@ table tbody tr:hover{background:rgba(96,165,250,0.04)}
 
 /* anchor offsets for in-page nav */
 section[id]{scroll-margin-top:24px}
+
+/* restricted engineering annex */
+.annex-banner{
+  margin-top:56px;padding:18px 22px;border-radius:14px;
+  border:1px solid rgba(244,114,182,0.35);
+  background:linear-gradient(135deg,rgba(244,114,182,0.08),rgba(124,91,255,0.06));
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.annex-banner .lock{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:var(--crit)}
+.annex-banner .ttl{font-size:18px;font-weight:700;color:var(--txt)}
+.annex-banner .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--txt-mute);letter-spacing:0.12em}
+.card-tag.restricted{color:var(--crit);border-color:rgba(244,114,182,0.4)}
+pre.code .t{color:#7c5bff}
 </style>
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="theme.css">
@@ -232,7 +245,8 @@ section[id]{scroll-margin-top:24px}
       ClearPulse is the reference implementation of <strong>Provable Healthcare Intelligence Infrastructure (PHII)</strong> — a category defined by traceable identity, relationship-aware investigation, and cryptographically anchored audit lineage. This whitepaper specifies the architecture: pipeline, data model, the four upgrade priorities, and the six-month execution roadmap.
     </p>
     <div class="cta-row">
-      <a class="btn primary" href="./docs/clearpulse_architecture_whitepaper.md">Read the full whitepaper (Markdown)</a>
+      <a class="btn primary" href="#annex">Jump to Engineering Annex (§12–§16)</a>
+      <a class="btn" href="./docs/clearpulse_architecture_whitepaper.md">Full whitepaper (Markdown)</a>
       <a class="btn" href="./clearpulse.html">← ClearPulse live surface</a>
       <a class="btn" href="./index.html">ClearGlass home</a>
     </div>
@@ -648,6 +662,346 @@ anchor_rfc3161(merkle_root)            <span class="c">// public TSA</span></pre
         <span class="chip"><strong>Audience:</strong> auditors, not just analysts</span>
         <span class="chip"><strong>Output:</strong> evidence, not alerts</span>
       </div>
+    </div>
+  </section>
+
+  <!-- ENGINEERING ANNEX BANNER -->
+  <div class="annex-banner" id="annex">
+    <div>
+      <div class="lock">⛓ Restricted · Engineering Annex</div>
+      <div class="ttl">Concrete System Design &amp; Reference Implementations</div>
+    </div>
+    <div class="meta">INTERNAL · NEED-TO-BUILD · v2026.06</div>
+  </div>
+  <p class="sub" style="margin-top:14px">
+    Sections §1–§11 specify <em>what</em> ClearPulse is. The annex specifies <em>how it is built</em>: the polyglot data plane (Neo4j + Redis + Postgres), the entity-resolution math, the feature-store and model lifecycle, and an independent audit-chain verifier. Code is reference-grade — illustrative of the contracts, not a production drop-in.
+  </p>
+
+  <!-- 12. Polyglot data plane -->
+  <section class="block" id="data-plane">
+    <h2><span class="num">§12</span>Concrete System Design · Polyglot Data Plane</h2>
+    <p class="sub">Three stores, one trace_id. Each store owns the shape of problem it is best at: Postgres is the system of record and the audit ledger, Redis is the hot transport and sketch layer, Neo4j is the relationship and feature plane. Nothing is duplicated without a hash that proves it came from the ledger.</p>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-h"><div class="card-title">Postgres · system of record</div><div class="card-tag">SOR + LEDGER</div></div>
+        <ul>
+          <li>Append-only <code class="mono">envelope_ledger</code>, monthly range partitions</li>
+          <li>Hash-chain columns colocated with payload</li>
+          <li>Merkle anchors + RFC 3161 tokens</li>
+          <li>Per-tenant <code class="mono">row level security</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-h"><div class="card-title">Redis · hot transport</div><div class="card-tag">STREAMS + SKETCH</div></div>
+        <ul>
+          <li>Streams w/ consumer groups, at-least-once</li>
+          <li>HyperLogLog for cardinality per EID</li>
+          <li>Bloom for seen-before access tuples</li>
+          <li>Sorted sets for sliding-window scoring</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-h"><div class="card-title">Neo4j · relationship plane</div><div class="card-tag">GRAPH + FEATURES</div></div>
+        <ul>
+          <li>Identity, billing, access, device topology</li>
+          <li>GDS projections for PageRank / Louvain</li>
+          <li>Materialized feature rows pushed to store</li>
+          <li>Read replicas for investigator traversal</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:18px">
+      <div class="card">
+        <div class="card-h"><div class="card-title">Neo4j schema · constraints &amp; topology</div><div class="card-tag restricted">CYPHER DDL</div></div>
+<pre class="code"><span class="c">// ── identity-keyed uniqueness (every node on a stable EID) ──</span>
+<span class="kw">CREATE CONSTRAINT</span> patient_eid <span class="kw">IF NOT EXISTS</span>
+  <span class="kw">FOR</span> (p:Patient)  <span class="kw">REQUIRE</span> p.eid <span class="kw">IS UNIQUE</span>;
+<span class="kw">CREATE CONSTRAINT</span> provider_eid <span class="kw">IF NOT EXISTS</span>
+  <span class="kw">FOR</span> (p:Provider) <span class="kw">REQUIRE</span> p.eid <span class="kw">IS UNIQUE</span>;
+<span class="kw">CREATE CONSTRAINT</span> device_eid <span class="kw">IF NOT EXISTS</span>
+  <span class="kw">FOR</span> (d:Device)   <span class="kw">REQUIRE</span> d.eid <span class="kw">IS UNIQUE</span>;
+<span class="kw">CREATE CONSTRAINT</span> claim_id <span class="kw">IF NOT EXISTS</span>
+  <span class="kw">FOR</span> (c:Claim)    <span class="kw">REQUIRE</span> c.id  <span class="kw">IS UNIQUE</span>;
+
+<span class="c">// ── traversal indexes (hot investigation paths) ──</span>
+<span class="kw">CREATE INDEX</span> claim_ts <span class="kw">IF NOT EXISTS</span>
+  <span class="kw">FOR</span> (c:Claim) <span class="kw">ON</span> (c.ts);
+<span class="kw">CREATE INDEX</span> login_ts <span class="kw">IF NOT EXISTS</span>
+  <span class="kw">FOR</span> ()-[l:LOGGED_IN]-() <span class="kw">ON</span> (l.ts);
+
+<span class="c">// ── canonical edge topology ──</span>
+<span class="c">// (:Provider)-[:BILLED {ts}]-&gt;(:Claim)</span>
+<span class="c">// (:Claim)-[:DERIVED_FROM]-&gt;(:Encounter)</span>
+<span class="c">// (:Provider)-[:LOGGED_IN {ts,session}]-&gt;(:Workstation)</span>
+<span class="c">// (:Provider)-[:ACCESSED {ts,trace_id}]-&gt;(:Patient)</span>
+<span class="c">// (:Patient)-[:SAME_AS {p}]-&gt;(:Patient)  // ER merge edge</span>
+
+<span class="c">// ── GDS projection feeding the feature store ──</span>
+<span class="kw">CALL</span> gds.graph.project(
+  <span class="s">'billing-7d'</span>,
+  [<span class="s">'Provider'</span>, <span class="s">'Claim'</span>, <span class="s">'Encounter'</span>],
+  { BILLED: { orientation: <span class="s">'NATURAL'</span> },
+    DERIVED_FROM: { orientation: <span class="s">'UNDIRECTED'</span> } }
+);
+<span class="kw">CALL</span> gds.louvain.write(<span class="s">'billing-7d'</span>,
+  { writeProperty: <span class="s">'ring_community'</span> });
+<span class="kw">CALL</span> gds.pageRank.write(<span class="s">'billing-7d'</span>,
+  { writeProperty: <span class="s">'billing_pagerank'</span> });</pre>
+      </div>
+      <div class="card">
+        <div class="card-h"><div class="card-title">Postgres · ledger DDL (audit-grade)</div><div class="card-tag restricted">SQL</div></div>
+<pre class="code"><span class="kw">CREATE TABLE</span> envelope_ledger (
+  trace_id      uuid        <span class="kw">PRIMARY KEY</span>,
+  tenant_id     text        <span class="kw">NOT NULL</span>,
+  ingest_ts     timestamptz <span class="kw">NOT NULL</span>,
+  payload       jsonb       <span class="kw">NOT NULL</span>,   <span class="c">-- RFC 8785 canonical</span>
+  prev_hash     bytea       <span class="kw">NOT NULL</span>,
+  self_hash     bytea       <span class="kw">NOT NULL</span>,   <span class="c">-- sha256(payload||prev)</span>
+  merkle_window timestamptz,
+  patient_eid   text,
+  provider_eid  text
+) <span class="kw">PARTITION BY RANGE</span> (ingest_ts);
+
+<span class="c">-- append-only: no UPDATE/DELETE grant to app role</span>
+<span class="kw">CREATE TABLE</span> envelope_ledger_2026_06
+  <span class="kw">PARTITION OF</span> envelope_ledger
+  <span class="kw">FOR VALUES FROM</span> (<span class="s">'2026-06-01'</span>) <span class="kw">TO</span> (<span class="s">'2026-07-01'</span>);
+
+<span class="kw">CREATE INDEX</span> <span class="kw">ON</span> envelope_ledger (provider_eid, ingest_ts);
+<span class="kw">CREATE INDEX</span> <span class="kw">ON</span> envelope_ledger (patient_eid,  ingest_ts);
+
+<span class="c">-- Merkle anchors: one row per 5-min window</span>
+<span class="kw">CREATE TABLE</span> merkle_anchor (
+  window_ts   timestamptz <span class="kw">PRIMARY KEY</span>,
+  tenant_id   text <span class="kw">NOT NULL</span>,
+  merkle_root bytea <span class="kw">NOT NULL</span>,
+  leaf_count  int   <span class="kw">NOT NULL</span>,
+  tsa_token   bytea,            <span class="c">-- RFC 3161</span>
+  worm_uri    text              <span class="c">-- s3 object-lock</span>
+);
+
+<span class="c">-- tenant isolation by construction</span>
+<span class="kw">ALTER TABLE</span> envelope_ledger <span class="kw">ENABLE ROW LEVEL SECURITY</span>;
+<span class="kw">CREATE POLICY</span> tenant_iso <span class="kw">ON</span> envelope_ledger
+  <span class="kw">USING</span> (tenant_id = current_setting(<span class="s">'app.tenant'</span>));</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. Stream topology -->
+  <section class="block" id="streams">
+    <h2><span class="num">§13</span>Stream &amp; Sketch Topology · Redis</h2>
+    <p class="sub">Redis is the nervous system between stages. Consumer groups give at-least-once delivery with explicit acks; probabilistic sketches keep per-entity baselines in O(1) memory so the scorer never round-trips to Postgres on the hot path.</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-h"><div class="card-title">Consumer groups &amp; backpressure</div><div class="card-tag restricted">REDIS</div></div>
+<pre class="code"><span class="c"># one group per stage; pending-entry-list = backpressure signal</span>
+XGROUP CREATE stream:access cg:behavior $ MKSTREAM
+XGROUP CREATE stream:tx:new cg:score    $ MKSTREAM
+
+<span class="c"># scorer loop (pseudocode)</span>
+<span class="kw">while</span> True:
+    batch = XREADGROUP cg:score worker-7 \
+            COUNT <span class="n">256</span> BLOCK <span class="n">2000</span> STREAMS stream:tx:new &gt;
+    <span class="kw">for</span> trace_id, fields <span class="kw">in</span> batch:
+        env = score(fields)              <span class="c"># Risk Envelope</span>
+        XADD stream:scored * trace_id env
+        XACK stream:tx:new cg:score trace_id
+    <span class="c"># reclaim stalled work from dead workers</span>
+    XAUTOCLAIM stream:tx:new cg:score worker-7 <span class="n">30000</span> <span class="n">0</span></pre>
+      </div>
+      <div class="card">
+        <div class="card-h"><div class="card-title">Sketches · per-EID baselines</div><div class="card-tag restricted">HLL · BLOOM · ZSET</div></div>
+<pre class="code"><span class="c"># unique patients touched by provider, last 24h</span>
+PFADD hll:prv:0044b2:patients:24h  pat:7c1a09
+card = PFCOUNT hll:prv:0044b2:patients:24h
+
+<span class="c"># seen-before access tuple? (cheap novelty test)</span>
+BF.ADD   bloom:access:prv:0044b2  pat:7c1a09|ws-42
+novel =  BF.EXISTS bloom:access:prv:0044b2 pat:7c1a09|ws-42
+
+<span class="c"># sliding 15-min access volume → Z-score input</span>
+now = epoch_ms()
+ZADD  zset:prv:0044b2:access now trace_id
+ZREMRANGEBYSCORE zset:prv:0044b2:access -inf (now-<span class="n">900000</span>)
+vol = ZCARD zset:prv:0044b2:access     <span class="c"># feeds factor.access_spike.z</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. Entity resolution internals -->
+  <section class="block" id="er-internals">
+    <h2><span class="num">§14</span>Entity Resolution Internals · Fellegi-Sunter</h2>
+    <p class="sub">§4 states the policy; here is the math and the blocking strategy that make it run at 5k eps. Each candidate field contributes a log-likelihood weight; the sum is thresholded into match / review / non-match. Blocking keeps the comparison space sub-quadratic.</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-h"><div class="card-title">Match weight accumulation</div><div class="card-tag restricted">PYTHON</div></div>
+<pre class="code"><span class="kw">import</span> math
+
+<span class="c"># per-field m = P(agree | match), u = P(agree | non-match)</span>
+FIELDS = {
+  <span class="s">"surname"</span>: (<span class="n">0.95</span>, <span class="n">0.004</span>),
+  <span class="s">"dob"</span>:     (<span class="n">0.98</span>, <span class="n">0.0007</span>),
+  <span class="s">"postal"</span>:  (<span class="n">0.90</span>, <span class="n">0.02</span>),
+  <span class="s">"phone"</span>:   (<span class="n">0.85</span>, <span class="n">0.001</span>),
+  <span class="s">"device"</span>:  (<span class="n">0.70</span>, <span class="n">0.05</span>),
+}
+
+<span class="kw">def</span> <span class="t">match_weight</span>(a, b):
+    w = <span class="n">0.0</span>
+    <span class="kw">for</span> f, (m, u) <span class="kw">in</span> FIELDS.items():
+        agree = compare(a[f], b[f])      <span class="c"># Jaro-Winkler / exact</span>
+        <span class="kw">if</span> agree &gt;= <span class="n">0.9</span>:
+            w += math.log2(m / u)        <span class="c"># agreement weight</span>
+        <span class="kw">else</span>:
+            w += math.log2((<span class="n">1</span>-m) / (<span class="n">1</span>-u))  <span class="c"># disagreement</span>
+    <span class="kw">return</span> w                            <span class="c"># total log-likelihood ratio</span>
+
+<span class="c"># thresholds calibrated on labeled pairs</span>
+<span class="kw">def</span> <span class="t">decide</span>(w):
+    <span class="kw">if</span> w &gt;= <span class="n">14.0</span>:  <span class="kw">return</span> <span class="s">"MATCH"</span>          <span class="c"># p ≳ 0.92</span>
+    <span class="kw">if</span> w &gt;= <span class="n">6.0</span>:   <span class="kw">return</span> <span class="s">"REVIEW"</span>         <span class="c"># active-learning queue</span>
+    <span class="kw">return</span> <span class="s">"NO_MATCH"</span></pre>
+      </div>
+      <div class="card">
+        <div class="card-h"><div class="card-title">Blocking · sub-quadratic candidates</div><div class="card-tag restricted">PYTHON</div></div>
+<pre class="code"><span class="c"># never compare all-pairs; block on cheap keys first</span>
+<span class="kw">def</span> <span class="t">blocking_keys</span>(rec):
+    <span class="kw">return</span> {
+      <span class="s">"k1"</span>: soundex(rec[<span class="s">"surname"</span>]) + rec[<span class="s">"dob"</span>][:<span class="n">4</span>],
+      <span class="s">"k2"</span>: rec[<span class="s">"postal"</span>][:<span class="n">3</span>] + rec[<span class="s">"surname"</span>][:<span class="n">2</span>],
+      <span class="s">"k3"</span>: rec.get(<span class="s">"phone_hash"</span>, <span class="s">""</span>)[-<span class="n">6</span>:],
+    }
+
+<span class="c"># candidates = union of records sharing ANY block key</span>
+<span class="kw">def</span> <span class="t">candidates</span>(rec, index):
+    out = set()
+    <span class="kw">for</span> key <span class="kw">in</span> blocking_keys(rec).values():
+        out |= index.get(key, set())
+    <span class="kw">return</span> out
+
+<span class="c"># merge writes a SAME_AS edge w/ confidence → Neo4j</span>
+<span class="kw">def</span> <span class="t">merge</span>(a, b, w):
+    p = <span class="n">1</span> / (<span class="n">1</span> + <span class="n">2</span>**(-w))    <span class="c"># logistic of LLR</span>
+    graph.run(
+      <span class="s">"MATCH (x:Patient{eid:$a}),(y:Patient{eid:$b}) "</span>
+      <span class="s">"MERGE (x)-[r:SAME_AS]-(y) SET r.p=$p"</span>,
+      a=a, b=b, p=<span class="kw">round</span>(p, <span class="n">4</span>))</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. ML pipeline & feature store -->
+  <section class="block" id="ml-lifecycle">
+    <h2><span class="num">§15</span>ML Pipeline · Feature Store &amp; Model Lifecycle</h2>
+    <p class="sub">The decisive move from §5: train on the trace graph, not raw events. Features are materialized from the graph plane, versioned, and served point-in-time correct so a model never trains on data it could not have seen at scoring time. Every promotion passes an offline gate before it can touch the composite score.</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-h"><div class="card-title">Point-in-time feature materialization</div><div class="card-tag restricted">SQL · FEATURE STORE</div></div>
+<pre class="code"><span class="c">-- one row per (provider_eid, window) — no future leakage</span>
+<span class="kw">INSERT INTO</span> fs_provider_window
+<span class="kw">SELECT</span>
+  provider_eid,
+  date_trunc(<span class="s">'minute'</span>, ts) <span class="kw">AS</span> window_ts,
+  count(<span class="kw">DISTINCT</span> patient_eid)              <span class="kw">AS</span> degree_patients_15m,
+  max(billing_pagerank)                     <span class="kw">AS</span> pagerank_in_billing,
+  max(co_billing_jaccard)                   <span class="kw">AS</span> co_billing_jaccard_max,
+  count(<span class="kw">DISTINCT</span> device_eid)               <span class="kw">AS</span> shared_device_count,
+  max(ring_community_size)                  <span class="kw">AS</span> ring_membership_score
+<span class="kw">FROM</span> graph_feature_export        <span class="c">-- pushed from Neo4j GDS</span>
+<span class="kw">WHERE</span> ts &gt;= now() - interval <span class="s">'15 minutes'</span>
+<span class="kw">GROUP BY</span> provider_eid, window_ts;
+
+<span class="c">-- training join is point-in-time correct: label.ts &gt; feature.window_ts</span>
+<span class="kw">SELECT</span> f.*, l.is_fraud
+<span class="kw">FROM</span> labeled_incident l
+<span class="kw">JOIN LATERAL</span> (
+  <span class="kw">SELECT</span> * <span class="kw">FROM</span> fs_provider_window f
+  <span class="kw">WHERE</span> f.provider_eid = l.provider_eid
+    <span class="kw">AND</span> f.window_ts &lt;= l.detected_ts
+  <span class="kw">ORDER BY</span> f.window_ts <span class="kw">DESC LIMIT</span> <span class="n">1</span>
+) f <span class="kw">ON</span> <span class="kw">true</span>;</pre>
+      </div>
+      <div class="card">
+        <div class="card-h"><div class="card-title">Lifecycle &amp; promotion gate</div><div class="card-tag restricted">GOVERNED</div></div>
+<pre class="code"><span class="c"># registry-driven promotion; gate blocks the composite score</span>
+<span class="kw">def</span> <span class="t">promote</span>(candidate, champion, holdout):
+    m_c = evaluate(candidate, holdout)
+    m_p = evaluate(champion,  holdout)
+
+    gate = (
+        m_c.recall   &gt;= m_p.recall + <span class="n">0.02</span>   <span class="c"># +recall</span>
+        <span class="kw">and</span> m_c.fpr  &lt;= m_p.fpr   + <span class="n">0.10</span>   <span class="c"># ≤+10% FP (§5)</span>
+        <span class="kw">and</span> m_c.auprc &gt;= <span class="n">0.80</span>
+        <span class="kw">and</span> model_card_signed(candidate)
+        <span class="kw">and</span> pii_leakage_scan(candidate) == <span class="s">"CLEAN"</span>
+    )
+    <span class="kw">if</span> <span class="kw">not</span> gate:
+        <span class="kw">return</span> reject(candidate, reason=diff(m_c, m_p))
+
+    registry.tag(candidate, <span class="s">"champion"</span>)
+    ledger.anchor({                       <span class="c"># model change = audit event</span>
+        <span class="s">"event"</span>: <span class="s">"model_promotion"</span>,
+        <span class="s">"model"</span>: candidate.uri,
+        <span class="s">"alpha"</span>: <span class="n">0.30</span>, <span class="s">"beta"</span>: <span class="n">0.20</span>,
+        <span class="s">"metrics"</span>: m_c.as_dict(),
+    })
+
+<span class="c"># drift watch → shadow-deploy before any promotion</span>
+<span class="kw">def</span> <span class="t">drift</span>(live, ref):
+    <span class="kw">return</span> psi(live.scores, ref.scores) &gt; <span class="n">0.2</span>  <span class="c"># population stability</span></pre>
+      </div>
+    </div>
+    <div class="pull" style="margin-top:18px">
+      Models are governed artifacts, not silent upgrades. A promotion is itself a ledger-anchored event — so an auditor can ask "which model scored this envelope, and what did it beat to get there?" and get a cryptographically verifiable answer.
+      <span class="byline">— ML governance contract</span>
+    </div>
+  </section>
+
+  <!-- 16. Verifier -->
+  <section class="block" id="verifier">
+    <h2><span class="num">§16</span>Independent Audit-Chain Verifier</h2>
+    <p class="sub">The legal moat is only real if a third party can verify it without trusting ClearPulse at runtime. This reference verifier recomputes the hash chain, rebuilds the Merkle root, and checks it against the public RFC 3161 timestamp and the WORM mirror — offline.</p>
+    <div class="card">
+      <div class="card-h"><div class="card-title">verify_chain.py · trustless replay</div><div class="card-tag restricted">PYTHON · REFERENCE</div></div>
+<pre class="code"><span class="kw">import</span> hashlib, json
+<span class="kw">from</span> rfc3161ng <span class="kw">import</span> verify_timestamp
+
+<span class="kw">def</span> <span class="t">sha256</span>(b: bytes) -&gt; bytes:
+    <span class="kw">return</span> hashlib.sha256(b).digest()
+
+<span class="kw">def</span> <span class="t">canonical</span>(env: dict) -&gt; bytes:
+    <span class="c"># RFC 8785 JSON Canonicalization Scheme</span>
+    <span class="kw">return</span> json.dumps(env, sort_keys=<span class="kw">True</span>,
+                      separators=(<span class="s">","</span>, <span class="s">":"</span>)).encode()
+
+<span class="kw">def</span> <span class="t">merkle_root</span>(leaves: list[bytes]) -&gt; bytes:
+    <span class="kw">if</span> <span class="kw">not</span> leaves: <span class="kw">return</span> sha256(b<span class="s">""</span>)
+    level = leaves
+    <span class="kw">while</span> len(level) &gt; <span class="n">1</span>:
+        <span class="kw">if</span> len(level) % <span class="n">2</span>: level.append(level[-<span class="n">1</span>])
+        level = [sha256(level[i] + level[i+<span class="n">1</span>])
+                 <span class="kw">for</span> i <span class="kw">in</span> range(<span class="n">0</span>, len(level), <span class="n">2</span>)]
+    <span class="kw">return</span> level[<span class="n">0</span>]
+
+<span class="kw">def</span> <span class="t">verify_window</span>(records, anchor):
+    <span class="c"># 1) recompute the hash chain link by link</span>
+    prev = records[<span class="n">0</span>][<span class="s">"prev_hash"</span>]
+    leaves = []
+    <span class="kw">for</span> r <span class="kw">in</span> records:
+        h = sha256(canonical(r[<span class="s">"payload"</span>]) + prev)
+        <span class="kw">assert</span> h == r[<span class="s">"self_hash"</span>], f<span class="s">"BROKEN @ {r['trace_id']}"</span>
+        leaves.append(h); prev = h
+    <span class="c"># 2) rebuild root, match the anchored value</span>
+    root = merkle_root(leaves)
+    <span class="kw">assert</span> root == anchor[<span class="s">"merkle_root"</span>], <span class="s">"ROOT MISMATCH"</span>
+    <span class="c"># 3) prove the root existed at/before the claimed time</span>
+    <span class="kw">assert</span> verify_timestamp(anchor[<span class="s">"tsa_token"</span>], root), <span class="s">"BAD TSA"</span>
+    <span class="c"># 4) confirm the WORM mirror is byte-identical</span>
+    <span class="kw">assert</span> worm_fetch(anchor[<span class="s">"worm_uri"</span>]) == root, <span class="s">"WORM DRIFT"</span>
+    <span class="kw">return</span> <span class="s">"VERIFIED"</span>     <span class="c"># tamper-evident, no runtime trust</span></pre>
+      <p style="margin-top:12px">Any failed assertion localizes tampering to a single <code class="mono">trace_id</code> and proves the rest of the chain remained intact — the property that turns an audit log into admissible evidence (FRE 902(13)–(14)).</p>
     </div>
   </section>
 

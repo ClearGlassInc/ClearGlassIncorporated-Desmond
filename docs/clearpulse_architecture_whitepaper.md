@@ -563,3 +563,96 @@ Detection accuracy is the table stakes other vendors fight over. We compete on a
 Execute the four priorities in this whitepaper, ship the roadmap, and the market will not have a name for what ClearPulse is — they will adopt ours.
 
 — *ClearGlass Inc · ClearPulse Architecture Office · 2026*
+
+---
+
+# Engineering Annex (Restricted) — Concrete System Design & Reference Implementations
+
+> Sections 1–16 specify *what* ClearPulse is. The annex specifies *how it is built*: the polyglot data plane (Neo4j + Redis + Postgres), the entity-resolution math, the feature-store and model lifecycle, and an independent audit-chain verifier. Code is reference-grade — illustrative of the contracts, not a production drop-in. See the rendered annex at `clearpulse-architecture.html#annex` (§12–§16).
+
+## A1. Polyglot Data Plane
+
+Three stores, one `trace_id`. Postgres is the system of record and audit ledger; Redis is the hot transport and sketch layer; Neo4j is the relationship and feature plane. Nothing is duplicated without a hash proving it came from the ledger.
+
+**Neo4j — constraints & topology**
+
+```cypher
+CREATE CONSTRAINT patient_eid  IF NOT EXISTS FOR (p:Patient)  REQUIRE p.eid IS UNIQUE;
+CREATE CONSTRAINT provider_eid IF NOT EXISTS FOR (p:Provider) REQUIRE p.eid IS UNIQUE;
+CREATE CONSTRAINT device_eid   IF NOT EXISTS FOR (d:Device)   REQUIRE d.eid IS UNIQUE;
+
+CREATE INDEX claim_ts IF NOT EXISTS FOR (c:Claim) ON (c.ts);
+CREATE INDEX login_ts IF NOT EXISTS FOR ()-[l:LOGGED_IN]-() ON (l.ts);
+
+// (:Provider)-[:BILLED {ts}]->(:Claim)-[:DERIVED_FROM]->(:Encounter)
+// (:Provider)-[:LOGGED_IN {ts,session}]->(:Workstation)
+// (:Provider)-[:ACCESSED {ts,trace_id}]->(:Patient)
+// (:Patient)-[:SAME_AS {p}]->(:Patient)   // ER merge edge
+
+CALL gds.graph.project('billing-7d', ['Provider','Claim','Encounter'],
+  { BILLED:{orientation:'NATURAL'}, DERIVED_FROM:{orientation:'UNDIRECTED'} });
+CALL gds.louvain.write('billing-7d',  { writeProperty:'ring_community' });
+CALL gds.pageRank.write('billing-7d', { writeProperty:'billing_pagerank' });
+```
+
+**Postgres — audit-grade ledger DDL**
+
+```sql
+CREATE TABLE envelope_ledger (
+  trace_id      uuid        PRIMARY KEY,
+  tenant_id     text        NOT NULL,
+  ingest_ts     timestamptz NOT NULL,
+  payload       jsonb       NOT NULL,   -- RFC 8785 canonical
+  prev_hash     bytea       NOT NULL,
+  self_hash     bytea       NOT NULL,   -- sha256(payload||prev)
+  merkle_window timestamptz,
+  patient_eid   text,
+  provider_eid  text
+) PARTITION BY RANGE (ingest_ts);
+
+CREATE TABLE merkle_anchor (
+  window_ts   timestamptz PRIMARY KEY,
+  tenant_id   text  NOT NULL,
+  merkle_root bytea NOT NULL,
+  leaf_count  int   NOT NULL,
+  tsa_token   bytea,            -- RFC 3161
+  worm_uri    text              -- s3 object-lock
+);
+
+ALTER TABLE envelope_ledger ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_iso ON envelope_ledger
+  USING (tenant_id = current_setting('app.tenant'));
+```
+
+## A2. Stream & Sketch Topology (Redis)
+
+Consumer groups give at-least-once delivery with explicit acks; probabilistic sketches keep per-entity baselines in O(1) memory so the scorer never round-trips to Postgres on the hot path.
+
+```text
+XGROUP CREATE stream:tx:new cg:score $ MKSTREAM
+XREADGROUP cg:score worker-7 COUNT 256 BLOCK 2000 STREAMS stream:tx:new >
+XACK / XAUTOCLAIM ...                       # ack + reclaim stalled work
+
+PFADD  hll:prv:<eid>:patients:24h  pat:<eid>     # unique-patient cardinality
+BF.ADD bloom:access:prv:<eid>      pat|ws         # seen-before novelty test
+ZADD   zset:prv:<eid>:access  <now> trace_id      # sliding 15-min volume → Z
+```
+
+## A3. Entity Resolution Internals (Fellegi-Sunter)
+
+Each field contributes a log-likelihood weight `log2(m/u)` on agreement, `log2((1-m)/(1-u))` on disagreement; the sum is thresholded into MATCH / REVIEW / NO_MATCH. Blocking on Soundex+DOB / postal+name / phone-suffix keeps comparison sub-quadratic. A merge writes a `SAME_AS` edge with logistic confidence `p = 1/(1+2^-w)` into Neo4j.
+
+## A4. ML Pipeline — Feature Store & Lifecycle
+
+Train on the trace graph, not raw events. Features are materialized per `(provider_eid, window)` from the graph plane and joined **point-in-time correct** (`feature.window_ts <= label.detected_ts`) so a model never trains on data it could not have seen at scoring time. Promotion gate:
+
+```text
+recall ≥ champion.recall + 0.02   AND   fpr ≤ champion.fpr + 0.10
+AUPRC ≥ 0.80   AND   model_card_signed   AND   pii_leakage_scan == CLEAN
+```
+
+A passing promotion is itself a ledger-anchored event; drift is watched with PSI > 0.2 triggering shadow deploy before any promotion.
+
+## A5. Independent Audit-Chain Verifier
+
+A third party verifies the moat without trusting ClearPulse at runtime: (1) recompute each `self_hash = sha256(canonical(payload) || prev_hash)` link by link; (2) rebuild the Merkle root and match the anchored value; (3) verify the RFC 3161 timestamp token over the root; (4) confirm the WORM mirror is byte-identical. Any failed assertion localizes tampering to a single `trace_id` and proves the rest of the chain intact — the property that turns an audit log into admissible evidence (FRE 902(13)–(14)).

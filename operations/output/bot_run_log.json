@@ -54,12 +54,12 @@
     "duration_s": 1.17
   },
   {
-    "bot": "cpa_partner",
-    "module": "bots.cpa_partner_outreach_bot",
-    "group": "content",
+    "bot": "master_orchestrator",
+    "module": "bots.master_orchestrator",
+    "group": "orchestration",
     "status": "ok",
     "error": null,
-    "started_utc": "2026-06-06T15:36:08.122972+00:00",
-    "duration_s": 0.02
+    "started_utc": "2026-06-06T09:24:42.322805+00:00",
+    "duration_s": 1.21
   }
 ]

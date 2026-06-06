@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-05T10:45:38.700595+00:00",
+  "run_utc": "2026-06-06T09:24:43.511149+00:00",
   "site_url": "https://clearglassinc.github.io",
   "overall_healthy": true,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 229,
+      "response_ms": 217,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 134,
+      "response_ms": 130,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 122,
+      "response_ms": 165,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 122,
+      "response_ms": 159,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 267,
+      "response_ms": 178,
       "has_title": true,
       "missing_meta": [
         "description",
@@ -65,7 +65,7 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 107,
+      "response_ms": 153,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -74,6 +74,7 @@
   "local_issues": [],
   "local_warnings": [
     "HTML page not referenced in sitemap.xml: aegis.html",
+    "HTML page not referenced in sitemap.xml: agentmesh.html",
     "HTML page not referenced in sitemap.xml: sentinel.html"
   ]
 }

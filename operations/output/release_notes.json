@@ -1,10 +1,82 @@
 {
-  "run_utc": "2026-06-05T10:45:37.650758+00:00",
+  "run_utc": "2026-06-06T09:24:42.454770+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
   "commit_count": 107,
   "sections": {
     "New Features": [
+      {
+        "sha": "12f4631",
+        "type": "feat",
+        "scope": "ci",
+        "subject": "add Cert Bot TLS expiry monitor (script + workflow + tests)",
+        "author": "Claude",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "d759fa2",
+        "type": "feat",
+        "scope": "nav",
+        "subject": "ClearGlass Control Surface v3.1 \u2014 command-palette-first nav (#382)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "0f87bf0",
+        "type": "feat",
+        "scope": "buttons",
+        "subject": "MACHINED GLASS button system + live Button Lab (#381)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "903ec71",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "finish site-wide blue-violet recolor + advanced interaction behaviors (#379)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "ac2c95d",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "deep-clean next-tier pages + advanced button/link interaction layer (#378)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "cd55882",
+        "type": "feat",
+        "scope": "theme",
+        "subject": "unify all pages on homepage blue-violet identity (#377)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "75eb9d9",
+        "type": "feat",
+        "scope": "nav",
+        "subject": "site-wide hover menu for easy navigation across all pages (#374)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "dca9cda",
+        "type": "feat",
+        "scope": "mesh",
+        "subject": "OSINT collector (24 sources) + entity/topic graph + orchestration dashboard (#373)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
       {
         "sha": "bd6af99",
         "type": "feat",
@@ -367,6 +439,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "fcece3d",
+        "type": "fix",
+        "scope": "live",
+        "subject": "keep crypto panels live after CoinCap v2 retirement (#376)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
       {
         "sha": "e895f24",
         "type": "fix",
@@ -840,108 +921,18 @@
         "author": "Desmond Otieno",
         "date": "2026-05-28",
         "breaking": false
-      },
-      {
-        "sha": "64ed998",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add NEXUS v12 to products and hover menu",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "b6abbf7",
-        "type": "chore",
-        "scope": null,
-        "subject": "Rename ClearGlass-NEXUS-v12-FINAL.html to ClearGlass-NEXUS-FINAL.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "fd1038b",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add NEXUS.html file",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "dbda309",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update title and banners for Ontario Operations Center",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "55ff9e7",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add script to link NEXUS V12 FINAL in navigation",
-        "author": "Desmond Otieno",
-        "date": "2026-05-27",
-        "breaking": false
-      },
-      {
-        "sha": "bbe6081",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update index.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-27",
-        "breaking": false
-      },
-      {
-        "sha": "0f9b6db",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update branding and location references in guardian.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-27",
-        "breaking": false
-      },
-      {
-        "sha": "090aad3",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update navigation icons in index.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "b2a1ccd",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update Guardian sub-label in navigation menu",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "e0ec5ad",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove duplicate 'Guardian' link from footer",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "bb12198",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update navigation name from 'ClearGlass' to 'ClearGlassInc.'",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "27a8de2",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-05 10:45 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-05",
+        "breaking": false
+      },
       {
         "sha": "5deec71",
         "type": "bot",
@@ -976,6 +967,17 @@
         "subject": "update generated outputs \u2014 2026-06-02 11:16 UTC [skip ci]",
         "author": "github-actions[bot]",
         "date": "2026-06-02",
+        "breaking": false
+      }
+    ],
+    "Style": [
+      {
+        "sha": "4821656",
+        "type": "style",
+        "scope": "nav",
+        "subject": "recolor hover menu to homepage blue-violet theme (#375)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
         "breaking": false
       }
     ]

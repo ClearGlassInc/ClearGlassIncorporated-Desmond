@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-06-06T09:24:42.454770+00:00",
+  "run_utc": "2026-06-07T09:59:02.195287+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
   "commit_count": 107,
   "sections": {
     "New Features": [
+      {
+        "sha": "0e699a6",
+        "type": "feat",
+        "scope": "design",
+        "subject": "shared design-token system (Control Surface v3.3) (#385)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-06",
+        "breaking": false
+      },
       {
         "sha": "12f4631",
         "type": "feat",
@@ -617,6 +626,15 @@
     ],
     "Maintenance": [
       {
+        "sha": "2d99d1d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add CPA / fractional CFO partner outreach automation bot",
+        "author": "Claude",
+        "date": "2026-06-06",
+        "breaking": false
+      },
+      {
         "sha": "4cebc6e",
         "type": "chore",
         "scope": null,
@@ -885,45 +903,18 @@
         "author": "Desmond Odhiambo",
         "date": "2026-05-28",
         "breaking": false
-      },
-      {
-        "sha": "feb3f60",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update fmt.Println message from 'Hello' to 'Goodbye'",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "598ccf9",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update link to Artemis IV Core in index.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "76d6233",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update dropdown label for Artemis VI",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "120986d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Create CLEARGLASSINC.FUNDING.yml for funding options",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "6e77f2c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-06 09:24 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-06",
+        "breaking": false
+      },
       {
         "sha": "27a8de2",
         "type": "bot",
@@ -977,6 +968,15 @@
         "scope": "nav",
         "subject": "recolor hover menu to homepage blue-violet theme (#375)",
         "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "44ed956",
+        "type": "style",
+        "scope": "nav",
+        "subject": "recolor hover menu to homepage blue-violet theme",
+        "author": "Claude",
         "date": "2026-06-05",
         "breaking": false
       }

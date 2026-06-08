@@ -7,22 +7,15 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-# Opt the Pages actions (still shipping on Node 20) into Node 24 ahead of
-# GitHub's 2026-06-16 runner cutover so this deployment keeps working.
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

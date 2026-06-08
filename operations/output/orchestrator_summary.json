@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-07T09:59:02.644733+00:00",
+  "run_utc": "2026-06-08T11:57:04.725486+00:00",
   "dry_run": false,
   "total": 12,
   "ok": 12,
@@ -7,13 +7,13 @@
   "skipped": 0,
   "bots": [
     {
-      "bot_id": "growth",
+      "bot_id": "daily_priority",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "daily_priority",
+      "bot_id": "growth",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
@@ -45,7 +45,7 @@
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 0.49,
+      "duration_s": 2.58,
       "error": null
     },
     {

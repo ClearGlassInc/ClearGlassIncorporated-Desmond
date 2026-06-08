@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-06-07T09:59:02.195287+00:00",
+  "run_utc": "2026-06-08T11:57:02.188894+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
   "commit_count": 107,
   "sections": {
     "New Features": [
+      {
+        "sha": "5cbfd1c",
+        "type": "feat",
+        "scope": "ci",
+        "subject": "optimize workflow_doctor.py \u2014 add timeout enforcement + expanded stable actions [P0 milestone]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
       {
         "sha": "0e699a6",
         "type": "feat",
@@ -449,6 +458,42 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "687898f",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "make needs_fix advisory (CI green, repair applies fixes) [patch + run]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "309d776",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "make timeout enforcement --fix only (unblock dry-run CI) [patch]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "be77431",
+        "type": "fix",
+        "scope": "pages",
+        "subject": "move permissions to deploy job for GitHub Pages [workflow-doctor]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "a8a66d7",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "pin actions/checkout to v6 in cert-bot.yml [workflow-doctor]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
         "sha": "fcece3d",
         "type": "fix",
         "scope": "live",
@@ -625,6 +670,33 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "05d7a8f",
+        "type": "chore",
+        "scope": "ci",
+        "subject": "trigger all workflows [pages + doctor] 2026-06-08",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "3a49de8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update documentation structure: add docs/index.md as central hub linking AI TTS and future sections",
+        "author": "Desmond Otieno",
+        "date": "2026-06-07",
+        "breaking": false
+      },
+      {
+        "sha": "4b9e961",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add open-source TTS models guide for AI voice agents and custom cloning (Aria integration)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-07",
+        "breaking": false
+      },
       {
         "sha": "2d99d1d",
         "type": "chore",
@@ -822,90 +894,18 @@
         "author": "Desmond Odhiambo",
         "date": "2026-05-28",
         "breaking": false
-      },
-      {
-        "sha": "6190d14",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Add NEXUS v12 to products and hover menu\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "219186b",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Create CLEARGLASSINC.FUNDING.yml for funding options\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "1999b65",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Update dropdown label for Artemis VI\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "1e06252",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Update link to Artemis IV Core in index.html\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "2fe2194",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Update fmt.Println message from 'Hello' to 'Goodbye'\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "0618fa9",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"ClearGlass Nexus Auto Deploy\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "0e70f55",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"ClearGlass Nexus Auto Deploy\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "46bffc3",
-        "type": "chore",
-        "scope": null,
-        "subject": "ClearGlass Nexus Auto Deploy",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "f37c19e",
-        "type": "chore",
-        "scope": null,
-        "subject": "ClearGlass Nexus Auto Deploy",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "6277431",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-07 09:59 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-07",
+        "breaking": false
+      },
       {
         "sha": "6e77f2c",
         "type": "bot",

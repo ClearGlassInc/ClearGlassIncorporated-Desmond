@@ -1,9 +1,10 @@
-# Release Notes — 2026-06-07
+# Release Notes — 2026-06-08
 
 *107 commit(s) since repository start*
 
 ## New Features
 
+- **ci:** optimize workflow_doctor.py — add timeout enforcement + expanded stable actions [P0 milestone] (`5cbfd1c`)
 - **design:** shared design-token system (Control Surface v3.3) (#385) (`0e699a6`)
 - **ci:** add Cert Bot TLS expiry monitor (script + workflow + tests) (`12f4631`)
 - **nav:** ClearGlass Control Surface v3.1 — command-palette-first nav (#382) (`d759fa2`)
@@ -56,6 +57,10 @@
 
 ## Bug Fixes
 
+- **ci:** make needs_fix advisory (CI green, repair applies fixes) [patch + run] (`687898f`)
+- **ci:** make timeout enforcement --fix only (unblock dry-run CI) [patch] (`309d776`)
+- **pages:** move permissions to deploy job for GitHub Pages [workflow-doctor] (`be77431`)
+- **ci:** pin actions/checkout to v6 in cert-bot.yml [workflow-doctor] (`a8a66d7`)
 - **live:** keep crypto panels live after CoinCap v2 retirement (#376) (`fcece3d`)
 - **sitemap:** index remaining content pages; exempt non-indexable (#347) (`e895f24`)
 - **health-bot:** treat sitemap drift as warning, not a health failure (#346) (`23fcd32`)
@@ -84,6 +89,9 @@
 
 ## Maintenance
 
+- **ci:** trigger all workflows [pages + doctor] 2026-06-08 (`05d7a8f`)
+- Update documentation structure: add docs/index.md as central hub linking AI TTS and future sections (`3a49de8`)
+- Add open-source TTS models guide for AI voice agents and custom cloning (Aria integration) (`4b9e961`)
 - Add CPA / fractional CFO partner outreach automation bot (`2d99d1d`)
 - Add content collector bot to harvest and store all site content (`4cebc6e`)
 - green the deployment checklist (CI, bot tests, sitemap) (`c2ffdda`)
@@ -106,18 +114,10 @@
 - Delete CLEARGLASS INTEL.jpeg (`ac5bdb6`)
 - Revert "Add NEXUS.html file" (`fdcf218`)
 - Revert "Rename ClearGlass-NEXUS-v12-FINAL.html to ClearGlass-NEXUS-FINAL.html" (`87b6cc4`)
-- Revert "Add NEXUS v12 to products and hover menu" (`6190d14`)
-- Revert "Create CLEARGLASSINC.FUNDING.yml for funding options" (`219186b`)
-- Revert "Update dropdown label for Artemis VI" (`1999b65`)
-- Revert "Update link to Artemis IV Core in index.html" (`1e06252`)
-- Revert "Update fmt.Println message from 'Hello' to 'Goodbye'" (`2fe2194`)
-- Revert "ClearGlass Nexus Auto Deploy" (`0618fa9`)
-- Revert "ClearGlass Nexus Auto Deploy" (`0e70f55`)
-- ClearGlass Nexus Auto Deploy (`46bffc3`)
-- ClearGlass Nexus Auto Deploy (`f37c19e`)
 
 ## Automation
 
+- update generated outputs — 2026-06-07 09:59 UTC [skip ci] (`6277431`)
 - update generated outputs — 2026-06-06 09:24 UTC [skip ci] (`6e77f2c`)
 - update generated outputs — 2026-06-05 10:45 UTC [skip ci] (`27a8de2`)
 - update generated outputs — 2026-06-04 19:41 UTC [skip ci] (`5deec71`)

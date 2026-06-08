@@ -8,6 +8,7 @@ Audits and repairs common workflow bootstrap failures:
 - missing workflow_call support for locally-called workflows
 - self-hosted runner labels without fallback
 - Pages deploy permission inheritance
+- missing explicit timeout-minutes (prevents hung jobs)
 
 Run locally:
   python scripts/workflow_doctor.py --fix
@@ -41,6 +42,8 @@ STABLE_ACTIONS = {
     "actions/configure-pages": "v5",
     "actions/upload-pages-artifact": "v3",
     "actions/deploy-pages": "v5",
+    "actions/github-script": "v7",
+    "actions/dependency-review-action": "v4",
 }
 
 INVALID_REUSABLE_JOB_KEYS = {"runs-on", "steps", "permissions"}
@@ -139,6 +142,23 @@ def fix_self_hosted(data: dict[str, Any]) -> list[str]:
     return changes
 
 
+def ensure_timeouts(data: dict[str, Any]) -> list[str]:
+    """Add explicit timeout-minutes to prevent hung/stuck jobs (production hardening)."""
+    changes: list[str] = []
+    jobs = data.get("jobs") or {}
+    if not isinstance(jobs, dict):
+        return changes
+    for job_name, job in jobs.items():
+        if not isinstance(job, dict):
+            continue
+        if "timeout-minutes" not in job:
+            # Default 30min for most jobs; increase for known long-running (deploy, scans)
+            default_timeout = 60 if any(k in str(job).lower() for k in ["deploy", "scan", "audit", "build"]) else 30
+            job["timeout-minutes"] = default_timeout
+            changes.append(f"added timeout-minutes: {default_timeout} to {job_name}")
+    return changes
+
+
 def ensure_permissions(data: dict[str, Any]) -> list[str]:
     changes: list[str] = []
     text_needs_pages = "deploy-pages" in str(data) or "upload-pages-artifact" in str(data)
@@ -192,6 +212,7 @@ def main() -> int:
         changes: list[str] = []
         changes += fix_reusable_jobs(data)
         changes += fix_self_hosted(data)
+        changes += ensure_timeouts(data)
         changes += ensure_permissions(data)
         rel = str(path.relative_to(ROOT))
         if rel in all_called:

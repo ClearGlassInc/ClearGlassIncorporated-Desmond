@@ -152,7 +152,6 @@ def ensure_timeouts(data: dict[str, Any]) -> list[str]:
         if not isinstance(job, dict):
             continue
         if "timeout-minutes" not in job:
-            # Default 30min for most jobs; increase for known long-running (deploy, scans)
             default_timeout = 60 if any(k in str(job).lower() for k in ["deploy", "scan", "audit", "build"]) else 30
             job["timeout-minutes"] = default_timeout
             changes.append(f"added timeout-minutes: {default_timeout} to {job_name}")
@@ -212,7 +211,8 @@ def main() -> int:
         changes: list[str] = []
         changes += fix_reusable_jobs(data)
         changes += fix_self_hosted(data)
-        changes += ensure_timeouts(data)
+        if args.fix:
+            changes += ensure_timeouts(data)
         changes += ensure_permissions(data)
         rel = str(path.relative_to(ROOT))
         if rel in all_called:

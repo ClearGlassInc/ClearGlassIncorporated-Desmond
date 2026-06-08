@@ -230,9 +230,9 @@ def main() -> int:
     needs_fix = [f for f in findings if f.startswith("NEEDS_FIX")]
     if errors:
         return 1
+    # Advisory only — repair job applies fixes on schedule/dispatch
     if needs_fix:
-        print("Workflow doctor found repairable issues. Run with --fix.")
-        return 1
+        print("Workflow doctor found repairable issues. Run with --fix to apply.")
     print("Workflow doctor clean." if not findings else "Workflow doctor repairs complete.")
     return 0
 

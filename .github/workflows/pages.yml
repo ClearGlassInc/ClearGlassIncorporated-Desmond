@@ -27,3 +27,5 @@ jobs:
           path: "."
       - id: deployment
         uses: actions/deploy-pages@v5
+
+# Verified clean + triggered 2026-06-08

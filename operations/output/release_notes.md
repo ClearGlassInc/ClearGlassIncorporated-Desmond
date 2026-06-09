@@ -1,4 +1,4 @@
-# Release Notes — 2026-06-08
+# Release Notes — 2026-06-09
 
 *107 commit(s) since repository start*
 
@@ -90,6 +90,7 @@
 ## Maintenance
 
 - **ci:** trigger all workflows [pages + doctor] 2026-06-08 (`05d7a8f`)
+- **deps:** bump the actions group across 1 directory with 3 updates (`16a1516`)
 - Update documentation structure: add docs/index.md as central hub linking AI TTS and future sections (`3a49de8`)
 - Add open-source TTS models guide for AI voice agents and custom cloning (Aria integration) (`4b9e961`)
 - Add CPA / fractional CFO partner outreach automation bot (`2d99d1d`)
@@ -112,11 +113,10 @@
 - Add ClearGlass NEXUS v12 as fourth product and wire into site nav (`d16edf9`)
 - Delete logo.png (`5567f5e`)
 - Delete CLEARGLASS INTEL.jpeg (`ac5bdb6`)
-- Revert "Add NEXUS.html file" (`fdcf218`)
-- Revert "Rename ClearGlass-NEXUS-v12-FINAL.html to ClearGlass-NEXUS-FINAL.html" (`87b6cc4`)
 
 ## Automation
 
+- update generated outputs — 2026-06-08 11:57 UTC [skip ci] (`0f54742`)
 - update generated outputs — 2026-06-07 09:59 UTC [skip ci] (`6277431`)
 - update generated outputs — 2026-06-06 09:24 UTC [skip ci] (`6e77f2c`)
 - update generated outputs — 2026-06-05 10:45 UTC [skip ci] (`27a8de2`)

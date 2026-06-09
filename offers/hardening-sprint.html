@@ -51,8 +51,8 @@ footer.site a{color:#39d0c3}
   <h1>Microsoft 365 + Windows Hardening Sprint</h1>
   <p class="lead">In two weeks or less, we tighten your Microsoft 365 / Entra ID tenant and Windows endpoints to CIS-aligned baselines — then hand you a prioritized, plain-language remediation report. One fixed price. No open-ended hourly bills.</p>
   <div class="cta-row">
-    <!-- REPLACE: booking link (e.g. Cal.com / Calendly) -->
-    <a class="btn" href="https://cal.com/REPLACE_BOOKING/scoping" data-cg-placeholder="booking">Book a free scoping call →</a>
+    <!-- Booking via email for now; swap to Cal.com/Calendly link when ready -->
+    <a class="btn" href="mailto:Desmondotieno@icloud.com?subject=Scoping%20call%20%E2%80%94%20Hardening%20Sprint&body=Hi%20Desmond%2C%0A%0AI%27d%20like%20to%20book%20a%20free%20scoping%20call%20for%20the%20M365%2FWindows%20Hardening%20Sprint.%0A%0AOrganization%3A%20%0AApprox.%20users%2Fendpoints%3A%20%0APreferred%20times%3A%20">Book a free scoping call →</a>
     <a class="btn alt" href="#pricing">See pricing</a>
   </div>
 </div></div>
@@ -111,8 +111,8 @@ footer.site a{color:#39d0c3}
   </div>
   <p class="muted" style="margin-top:18px">Prices are starting points; final scope confirmed in writing before any work begins. A deposit secures your start date.</p>
   <div class="cta-row">
-    <!-- REPLACE: Stripe Payment Link for the deposit -->
-    <a class="btn" href="https://buy.stripe.com/REPLACE_DEPOSIT" data-cg-placeholder="deposit">Reserve with a deposit →</a>
+    <!-- STRIPE: paste deposit Payment Link in href below, then delete this comment. Interim: email inquiry. -->
+    <a class="btn" href="mailto:Desmondotieno@icloud.com?subject=Hardening%20Sprint%20deposit%20%E2%80%94%20reserve%20start%20date&body=Hi%20Desmond%2C%0A%0AI%27d%20like%20to%20reserve%20a%20start%20date%20for%20the%20Hardening%20Sprint%20with%20a%20deposit.%20Please%20send%20a%20Stripe%20invoice%2Fcheckout%20link.%0A%0AOrganization%3A%20%0ATier%20%28Essentials%2FStandard%2FPlus%29%3A%20" data-cg-stripe="deposit">Reserve with a deposit →</a>
   </div>
   <div class="note"><strong>How payment works:</strong> deposits and final invoices are handled through Stripe (hosted checkout) or a Stripe / Wave invoice. No funds are ever auto-sent.</div>
 </div></section>
@@ -121,9 +121,12 @@ footer.site a{color:#39d0c3}
   <div class="card">
     <h2>Request a scoping call</h2>
     <p class="muted">Tell us a little about your environment and we'll confirm scope and a fixed price. No obligation.</p>
-    <!-- REPLACE: Formspree (or Tally) form endpoint -->
-    <form action="https://formspree.io/f/REPLACE_FORM_ID" method="POST" data-cg-placeholder="form">
+    <form action="https://formsubmit.co/Desmondotieno@icloud.com" method="POST">
       <input type="hidden" name="_subject" value="Hardening Sprint enquiry">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://clearglassinc.github.io/offers/thank-you.html">
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
       <input type="hidden" name="form_source" value="hardening-sprint">
       <label>Name<input type="text" name="name" required></label>
       <label>Work email<input type="email" name="email" required></label>

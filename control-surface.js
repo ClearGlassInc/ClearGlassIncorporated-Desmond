@@ -51,12 +51,14 @@
     ]],
     ["Company", [
       ["Home", "index.html", "⌂"],
+      ["Web Design & Dev", "web-design.html", "◳"],
       ["Button Lab", "button-lab.html", "◫"]
     ]]
   ];
 
   // ── actions (verbs, not just destinations) ──────────────────────────────
   var ACTIONS = [
+    { label: "Website design & development", sub: "Engagement", icon: "◳", href: "web-design.html" },
     { label: "Open latest project", sub: "Artemis VI", icon: "🛰", href: "artemis.html" },
     { label: "Deployment status", sub: "GitHub Actions", icon: "◇", act: "status" },
     { label: "Security research", sub: "SENTINEL", icon: "◉", href: "sentinel.html" },

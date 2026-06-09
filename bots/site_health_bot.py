@@ -52,6 +52,7 @@ SITEMAP_EXEMPT = {
     "smb.html",
     "index.html",                 # homepage is indexed as "/" — avoid duplicate
     "cg-loader.html",             # session preloader fragment, not a landing page
+    "offline.html",               # service-worker offline shell (noindex)
     "ClearGlass-NEXUS-v12-FINAL.html",  # build artifact of clearglass-nexus.html
     # Google Search Console verification token — must NOT be in the sitemap
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",

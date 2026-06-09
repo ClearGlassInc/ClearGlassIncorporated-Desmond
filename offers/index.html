@@ -6,60 +6,101 @@
 <title>Services & Engagements — ClearGlass Inc.</title>
 <meta name="description" content="Fixed-scope cybersecurity, hardening, compliance-readiness, and automation services from ClearGlass Inc. — Ontario, Canada.">
 <link rel="canonical" href="https://clearglassinc.github.io/offers/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#0f1722;background:#f6f8fb;-webkit-font-smoothing:antialiased}
-a{color:#0b8f86;text-decoration:none}
-.wrap{max-width:980px;margin:0 auto;padding:0 22px}
-header.site{background:#05121a}
-header.site .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 22px}
-.brand{font-weight:700;letter-spacing:.04em;color:#fff;display:flex;gap:10px;align-items:center;font-size:15px}
-.brand em{color:#39d0c3;font-style:normal;font-weight:600;font-size:12px}
-.hero{background:linear-gradient(160deg,#05121a,#0a2230);color:#fff;padding:64px 0 56px}
-.eyebrow{color:#39d0c3;font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:14px}
-h1{font-size:clamp(28px,5vw,44px);line-height:1.1;font-weight:800;margin-bottom:18px}
-.lead{font-size:19px;color:#c7d6e0;max-width:720px}
-section{padding:48px 0}
-.grid{display:grid;gap:18px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#fafbfc;--off:#f3f5f8;
+  --glass:rgba(255,255,255,.55);--glass-border:rgba(0,0,0,.06);--glass-strong:rgba(255,255,255,.8);
+  --dark:#0a0c10;--dark-2:#1a1d25;
+  --text:#0a0c10;--text-2:#3a3f4a;--text-3:#6b7280;--text-4:#9ca3af;
+  --prism-1:#38bdf8;--prism-2:#a78bfa;--prism-3:#f472b6;--prism-4:#34d399;--prism-5:#fbbf24;
+  --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Urbanist',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased;line-height:1.6}
+a{color:var(--text);text-decoration:none}
+.wrap{width:min(1180px,92vw);margin:0 auto;padding:0 clamp(1rem,3vw,2rem)}
+
+header.site{position:sticky;top:0;z-index:50;background:rgba(250,251,252,.78);backdrop-filter:blur(20px) saturate(1.2);border-bottom:1px solid var(--glass-border)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(1rem,3vw,2rem)}
+.brand{display:flex;gap:12px;align-items:center;color:var(--text)}
+.brand-name{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:-.01em}
+.brand-name em{font-style:italic;font-weight:300;color:var(--text-3);font-size:18px}
+.back{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--text-3)}
+.back:hover{color:var(--text)}
+
+.hero{padding:clamp(80px,12vw,140px) 0 clamp(60px,9vw,100px);text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:50%;left:50%;width:700px;height:700px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,.07) 0%,rgba(167,139,250,.05) 30%,rgba(244,114,182,.03) 50%,transparent 70%);pointer-events:none}
+.eyebrow{position:relative;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-4);margin-bottom:22px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--text-4)}
+h1{position:relative;font-family:var(--serif);font-size:clamp(2.4rem,6vw,4.5rem);font-weight:300;line-height:1.05;letter-spacing:-.03em;max-width:880px;margin:0 auto 24px}
+h1 strong{font-weight:600}
+h1 .crystal-text{background:var(--crystal);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lead{position:relative;font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--text-3);line-height:1.75;max-width:680px;margin:0 auto}
+
+section.offers{padding:clamp(60px,9vw,100px) 0 clamp(80px,12vw,140px)}
+.grid{display:grid;gap:20px}
 @media(min-width:760px){.grid.c2{grid-template-columns:repeat(2,1fr)}}
-.card{background:#fff;border:1px solid #e4eaf1;border-radius:14px;padding:26px;box-shadow:0 8px 30px rgba(10,30,50,.05);display:flex;flex-direction:column}
-h2{font-size:26px;margin-bottom:18px;font-weight:800}
-h3{font-size:19px;margin-bottom:8px;font-weight:700}
-.tag{display:inline-block;background:#e8f7f5;color:#0b8f86;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;align-self:flex-start}
-.price{font-size:24px;font-weight:800;margin:10px 0}
-.muted{color:#5b6b7a}
-.btn{display:inline-block;background:#39d0c3;color:#04181c;font-weight:700;padding:12px 22px;border-radius:10px;margin-top:16px;align-self:flex-start}
-.btn:hover{filter:brightness(1.06)}
-footer.site{background:#05121a;color:#8aa0b3;font-size:13px;padding:30px 0;margin-top:20px}
-footer.site a{color:#39d0c3}
+
+.card{padding:clamp(28px,3.5vw,42px);border-radius:20px;border:1px solid var(--glass-border);background:var(--glass-strong);backdrop-filter:blur(20px);transition:transform .35s ease,box-shadow .35s ease;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--crystal);opacity:0;transition:opacity .35s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(0,0,0,.06)}
+.card:hover::after{opacity:1}
+
+.tag{display:inline-flex;align-items:center;align-self:flex-start;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--prism-1);margin-bottom:16px}
+.card h3{font-family:var(--serif);font-size:clamp(1.4rem,2.2vw,1.8rem);font-weight:500;letter-spacing:-.01em;margin-bottom:12px;line-height:1.2}
+.card p.muted{color:var(--text-3);font-size:14px;line-height:1.75}
+.price{font-family:var(--serif);font-size:clamp(1.4rem,2vw,1.7rem);font-weight:500;margin:18px 0 4px;letter-spacing:-.01em}
+.price .sub{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--text-4);letter-spacing:.08em;margin-left:6px}
+
+.btn{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:13px 24px;border-radius:999px;font-family:var(--sans);font-size:14px;font-weight:600;margin-top:18px;transition:transform .3s ease,background .3s ease}
+.btn-dark{color:#fff;background:var(--dark);box-shadow:0 2px 20px rgba(0,0,0,.08)}
+.btn-dark:hover{background:var(--dark-2);transform:translateY(-2px)}
+.btn-crystal{color:#fff;background:var(--crystal);background-size:200% 200%;animation:crystalShift 6s ease infinite;box-shadow:0 4px 25px rgba(56,189,248,.2)}
+.btn-crystal:hover{transform:translateY(-2px)}
+@keyframes crystalShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+footer.site{border-top:1px solid var(--glass-border);background:var(--off);color:var(--text-3);font-family:var(--mono);font-size:12px;letter-spacing:.04em;padding:32px 0}
+footer.site a{color:var(--text);border-bottom:1px solid rgba(0,0,0,.15)}
+footer.site a:hover{border-bottom-color:rgba(0,0,0,.45)}
 </style>
 </head>
 <body>
-<header class="site"><div class="wrap"><a class="brand" href="../index.html">ClearGlass Inc. <em>CLARITY IS POWER</em></a><a href="../index.html" style="color:#9fb3c2;font-size:14px">← Home</a></div></header>
 
-<div class="hero"><div class="wrap">
+<header class="site"><div class="wrap">
+  <a class="brand" href="../index.html"><span class="brand-name">ClearGlass <em>Inc.</em></span></a>
+  <a class="back" href="../index.html">← HOME</a>
+</div></header>
+
+<section class="hero"><div class="wrap">
   <div class="eyebrow">Services &amp; Engagements</div>
-  <h1>Fixed-scope security work.<br>Clear price. Clear outcome.</h1>
+  <h1>Fixed-scope security work.<br><strong class="crystal-text">Clear price. Clear outcome.</strong></h1>
   <p class="lead">Practical cybersecurity, identity hardening, compliance readiness, and automation for Ontario small and mid-sized organizations — delivered against a defined scope with a written remediation report, implementation priorities, and evidence you can act on.</p>
-</div></div>
+</div></section>
 
-<section><div class="wrap">
+<section class="offers"><div class="wrap">
   <div class="grid c2">
 
     <div class="card">
       <span class="tag">Most popular</span>
       <h3>Microsoft 365 + Windows Hardening Sprint</h3>
       <p class="muted">A 1–2 week engagement to reduce identity and endpoint exposure across Microsoft 365 / Entra ID and Windows — CIS-aligned configuration baselines, privilege reduction, authentication hardening, and a prioritized remediation plan.</p>
-      <div class="price">From CAD $2,500 <span class="muted" style="font-size:14px;font-weight:500">· fixed fee</span></div>
-      <a class="btn" href="hardening-sprint.html">View the offer →</a>
+      <div class="price">From CAD $2,500<span class="sub">· fixed fee</span></div>
+      <a class="btn btn-crystal" href="hardening-sprint.html">View the offer →</a>
     </div>
 
     <div class="card">
       <span class="tag">Start here</span>
       <h3>Security Quick-Audit</h3>
       <p class="muted">A low-commitment, read-only posture review that identifies the highest-risk configuration gaps, common identity weaknesses, and obvious exposure points — delivered as a branded findings report with clear next steps.</p>
-      <div class="price">CAD $249 <span class="muted" style="font-size:14px;font-weight:500">· one-time</span></div>
-      <a class="btn" href="security-quick-audit.html">Get a Quick-Audit →</a>
+      <div class="price">CAD $249<span class="sub">· one-time</span></div>
+      <a class="btn btn-dark" href="security-quick-audit.html">Get a Quick-Audit →</a>
     </div>
 
     <div class="card">
@@ -67,15 +108,15 @@ footer.site a{color:#39d0c3}
       <h3>PHIPA Readiness Assessment</h3>
       <p class="muted">For Ontario health-sector organizations: a privacy and security readiness review mapped to PHIPA obligations, with practical remediation guidance, policy gaps, and an implementation roadmap. Free checklist available.</p>
       <div class="price">Assessment from CAD $3,000</div>
-      <a class="btn" href="phipa-readiness.html">Get the free checklist →</a>
+      <a class="btn btn-dark" href="phipa-readiness.html">Get the free checklist →</a>
     </div>
 
     <div class="card">
       <span class="tag">Recurring</span>
       <h3>Automation-as-a-Service</h3>
       <p class="muted">Monthly retainer to build and maintain PowerShell and workflow automation for reporting, onboarding and offboarding, alerting, backups, and repetitive security operations.</p>
-      <div class="price">From CAD $600 / month</div>
-      <a class="btn" href="hardening-sprint.html#contact">Enquire →</a>
+      <div class="price">From CAD $600<span class="sub">/ month</span></div>
+      <a class="btn btn-dark" href="hardening-sprint.html#contact">Enquire →</a>
     </div>
 
   </div>
@@ -85,5 +126,6 @@ footer.site a{color:#39d0c3}
   ClearGlass Inc. · Ontario, Canada · <a href="../index.html">clearglassinc.github.io</a><br>
   All engagements are performed only with written authorization. Outreach complies with Canada's Anti-Spam Legislation (CASL).
 </div></footer>
+
 </body>
 </html>

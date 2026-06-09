@@ -95,6 +95,32 @@
   .trust li .ck{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:700;
     background:rgba(52,211,153,.14);color:#34d399;border:1px solid rgba(52,211,153,.3)}
 
+  /* comparison */
+  .cmp{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);
+    border-radius:var(--cg-r-md,18px);overflow:hidden;background:var(--panel-2);backdrop-filter:blur(12px)}
+  .cmp th,.cmp td{padding:16px 18px;text-align:left;font-size:14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .cmp thead th{font-family:var(--cg-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .cmp thead th.us{color:#cde0ff}
+  .cmp tbody th{font-weight:600;color:var(--txt);font-family:var(--cg-sans);width:30%}
+  .cmp td.them{color:var(--dim-2)}
+  .cmp td.us{color:var(--txt)}
+  .cmp td.us::before{content:"✓ ";color:#34d399;font-weight:700}
+  .cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+  .cmp col.usc{background:rgba(96,165,250,.05)}
+
+  /* faq */
+  .faq{display:grid;gap:12px;max-width:840px}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:var(--cg-r-sm,12px);
+    padding:2px 20px;backdrop-filter:blur(10px);transition:border-color .3s var(--cg-ease,ease)}
+  .faq details[open]{border-color:rgba(124,150,255,.4)}
+  .faq summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:600;font-size:15.5px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-family:var(--cg-mono);font-size:20px;color:var(--cg-prism-1,#38bdf8);transition:transform .3s var(--cg-ease,ease)}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq summary:focus-visible{outline:2px solid var(--cg-prism-1,#38bdf8);outline-offset:3px;border-radius:6px}
+  .faq p{color:var(--dim);font-size:14.5px;margin:0 0 18px;line-height:1.7;max-width:70ch}
+
   /* CTA */
   .cta{text-align:center;border:1px solid var(--line);border-radius:var(--cg-r-lg,24px);
     background:linear-gradient(150deg,rgba(56,189,248,.08),rgba(167,139,250,.06),rgba(8,11,24,.6));
@@ -128,8 +154,8 @@
 
     <div class="metrics" aria-label="Engineering targets">
       <div class="metric"><div class="n crystal">&lt;1s</div><div class="l">Target first-contentful paint on modern connections</div></div>
-      <div class="metric"><div class="n crystal">95+</div><div class="l">Lighthouse performance &amp; accessibility budget</div></div>
-      <div class="metric"><div class="n crystal">100%</div><div class="l">Responsive, mobile-first across breakpoints</div></div>
+      <div class="metric"><div class="n crystal"><span data-count="95">95</span>+</div><div class="l">Lighthouse performance &amp; accessibility budget</div></div>
+      <div class="metric"><div class="n crystal"><span data-count="100">100</span>%</div><div class="l">Responsive, mobile-first across breakpoints</div></div>
       <div class="metric"><div class="n crystal">0</div><div class="l">Build servers to babysit — static-first deploys</div></div>
     </div>
   </div>
@@ -235,6 +261,29 @@
   </div>
 </section>
 
+<!-- COMPARISON -->
+<section class="band" id="compare">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">The difference</span>
+      <h2>A typical build vs. <strong>an engineered system.</strong></h2>
+      <p>Where most projects cut corners that surface in production, we hold a measurable line.</p>
+    </div>
+    <table class="cmp">
+      <colgroup><col><col><col class="usc"></colgroup>
+      <thead><tr><th scope="col">Dimension</th><th scope="col">Typical build</th><th scope="col" class="us">ClearGlass</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Performance</th><td class="them">Heavy page-builder output; slow on real devices</td><td class="us">Measured against a payload + Core Web Vitals budget, verified in CI</td></tr>
+        <tr><th scope="row">Maintainability</th><td class="them">Sprawl nobody can safely change later</td><td class="us">Clean component model and documented code you own outright</td></tr>
+        <tr><th scope="row">Accessibility</th><td class="them">Patched on at the end, if at all</td><td class="us">Semantic, keyboard-first, AA contrast — built in from commit one</td></tr>
+        <tr><th scope="row">SEO structure</th><td class="them">Non-semantic markup, missing metadata</td><td class="us">Semantic headings, metadata, sitemaps, and structured data</td></tr>
+        <tr><th scope="row">Security</th><td class="them">Secrets in the client; unmanaged surface</td><td class="us">No client secrets, hardened posture, least-privilege automation</td></tr>
+        <tr><th scope="row">Deploy &amp; rollback</th><td class="them">Manual, fragile, hard to revert</td><td class="us">CI-validated, reproducible deploys with a tested rollback path</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <!-- TRUST -->
 <section class="band" id="trust">
   <div class="wrap">
@@ -254,6 +303,25 @@
           <li><span class="ck">✓</span> Long-term maintainability over short-term shortcuts</li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="band" id="faq">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">Questions, answered</span>
+      <h2>What serious clients <strong>actually ask.</strong></h2>
+      <p>Direct answers — the kind a technical decision-maker needs before an engagement.</p>
+    </div>
+    <div class="faq">
+      <details><summary>Do I own the code?</summary><p>Yes — outright. You receive a clean, documented, framework-honest codebase in your own repository. No proprietary page-builder lock-in, no licensing leash, no dependency on us to make a change.</p></details>
+      <details><summary>How fast will it actually be?</summary><p>We build to a measurable budget — minimal payload, lazy media, no render-blocking waste — and verify Core Web Vitals in CI. The target is sub-second first-contentful paint on modern connections and a 95+ Lighthouse score for performance and accessibility.</p></details>
+      <details><summary>Will it hold up on mobile?</summary><p>Mobile-first is the starting point, not an afterthought. Layouts keep their hierarchy and touch-target sizing from phone to ultrawide, and every interaction is tested with keyboard and reduced-motion preferences.</p></details>
+      <details><summary>Is it secure?</summary><p>No secrets ship in client code. Automation runs least-privilege, dependencies are kept current, and the threat surface is documented. Where the host can't set HTTP security headers (e.g. static hosting), we say so and mitigate at the layers we control rather than pretend otherwise.</p></details>
+      <details><summary>Can you maintain it after launch?</summary><p>Yes. We offer ongoing optimization — Core Web Vitals tuning, conversion iteration, content and security updates — on a clear cadence. Because the code is documented and yours, you're never locked in to that arrangement.</p></details>
+      <details><summary>How is it deployed?</summary><p>CI-validated, reproducible, static-first deploys with a tested rollback path. A bad change is reverted in one step and the previous state redeploys automatically — no servers to babysit.</p></details>
     </div>
   </div>
 </section>
@@ -282,6 +350,31 @@
   </div>
 </footer>
 
+<script>
+  // Count-up for hero metrics — once, on scroll-in, reduced-motion aware.
+  (function () {
+    var reduce = false;
+    try { reduce = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+    var nodes = document.querySelectorAll("[data-count]");
+    if (reduce || !("IntersectionObserver" in window)) return; // targets already show final value
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        var el = en.target, target = parseInt(el.getAttribute("data-count"), 10) || 0, t0 = null;
+        el.textContent = "0";
+        function step(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min((ts - t0) / 900, 1), eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target).toString();
+          if (p < 1) requestAnimationFrame(step); else el.textContent = target.toString();
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    nodes.forEach(function (n) { io.observe(n); });
+  })();
+</script>
 <link rel="stylesheet" href="theme.css">
 <script defer src="control-surface.js"></script>
 <script defer src="ui.js"></script>

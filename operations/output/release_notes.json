@@ -1,10 +1,379 @@
 {
-  "run_utc": "2026-06-02T11:16:58.796408+00:00",
+  "run_utc": "2026-06-09T10:33:54.970444+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 108,
+  "commit_count": 107,
   "sections": {
     "New Features": [
+      {
+        "sha": "5cbfd1c",
+        "type": "feat",
+        "scope": "ci",
+        "subject": "optimize workflow_doctor.py \u2014 add timeout enforcement + expanded stable actions [P0 milestone]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "0e699a6",
+        "type": "feat",
+        "scope": "design",
+        "subject": "shared design-token system (Control Surface v3.3) (#385)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-06",
+        "breaking": false
+      },
+      {
+        "sha": "12f4631",
+        "type": "feat",
+        "scope": "ci",
+        "subject": "add Cert Bot TLS expiry monitor (script + workflow + tests)",
+        "author": "Claude",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "d759fa2",
+        "type": "feat",
+        "scope": "nav",
+        "subject": "ClearGlass Control Surface v3.1 \u2014 command-palette-first nav (#382)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "0f87bf0",
+        "type": "feat",
+        "scope": "buttons",
+        "subject": "MACHINED GLASS button system + live Button Lab (#381)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "903ec71",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "finish site-wide blue-violet recolor + advanced interaction behaviors (#379)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "ac2c95d",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "deep-clean next-tier pages + advanced button/link interaction layer (#378)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "cd55882",
+        "type": "feat",
+        "scope": "theme",
+        "subject": "unify all pages on homepage blue-violet identity (#377)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "75eb9d9",
+        "type": "feat",
+        "scope": "nav",
+        "subject": "site-wide hover menu for easy navigation across all pages (#374)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "dca9cda",
+        "type": "feat",
+        "scope": "mesh",
+        "subject": "OSINT collector (24 sources) + entity/topic graph + orchestration dashboard (#373)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "bd6af99",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "org-scoped Agent Mesh \u2014 ClearGlass-only OSINT orchestration (#372)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "a7a2f58",
+        "type": "feat",
+        "scope": "autostore",
+        "subject": "risk scoring + read-only advisor + idempotency + metrics (#371)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "b21ecdc",
+        "type": "feat",
+        "scope": "aegis",
+        "subject": "legal-process register + transparency report + intake UI + shared audit (#370)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "6eb223a",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "AEGIS \u2014 lawful-access compliance & rights-protection agent (#369)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "e175e8a",
+        "type": "feat",
+        "scope": "bots",
+        "subject": "self-evolving wealth engine (revenue-first ladder + fleet evolution)",
+        "author": "Claude",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "ebe82b9",
+        "type": "feat",
+        "scope": "autostore",
+        "subject": "PostgresStore + migrations, Redis worker, role auth, write cockpit (#366)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "be2aac8",
+        "type": "feat",
+        "scope": "autostore",
+        "subject": "PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js) (#365)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "9d04576",
+        "type": "feat",
+        "scope": "autostore",
+        "subject": "PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js)",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "b784662",
+        "type": "feat",
+        "scope": "percival\u00b7pfas",
+        "subject": "evidence-pack exporter + text-PDF profile + in-browser download (#364)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "1ab16f8",
+        "type": "feat",
+        "scope": "percival\u00b7pfas",
+        "subject": "lab CSV ingester + SENTINEL map layer (#362)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "91c0c25",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "purple-team detection-engineering engine + PFAS agent (#361)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "dc85d5e",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "purple-team detection-engineering engine + PFAS agent",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "ce95436",
+        "type": "feat",
+        "scope": "home",
+        "subject": "live USGS/NWS LIVE OPS ribbon linking to SENTINEL (#359)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "2729bb6",
+        "type": "feat",
+        "scope": null,
+        "subject": "live USGS/NWS in PERCIVAL + live airspace (OpenSky) in SENTINEL (#358)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "9d3c537",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "live geospatial mode \u2014 real location + USGS/NWS feeds + camera (#357)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "e8f6d19",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "live geospatial mode \u2014 real location + USGS/NWS feeds + camera",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "ac00ffe",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "link SENTINEL command center into the PERCIVAL HUD (#355)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "8a3b779",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "privacy-preserving vision ops + visual command center (#354)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "4caf7dd",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "privacy-preserving vision ops + visual command center",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "aec99cd",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "add Exploit-DB as approved defensive threat-intel source (#352)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "6cca8a4",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "add Exploit-DB as approved defensive threat-intel source",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "9be32d5",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "charter v2.1 \u2014 geospatial + OSINT extension (#350)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "bf288b4",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "geospatial+OSINT charter + enforced hard rules (#349)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "5988604",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "privacy-first SENTINEL charter + enforced policy gate (#348)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "434aec1",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "red/black mission-ready HUD reskin (#344)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "14ca6d4",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "Phase-One Governance Shell + RBAC retrieval (#343)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "193a832",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "add Pinecone+Milvus adapters and recall harness",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "5c9a5e7",
+        "type": "feat",
+        "scope": "sentinel",
+        "subject": "Phase-One fail-closed Governance Shell + RBAC retrieval",
+        "author": "Claude",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "cbe0b64",
+        "type": "feat",
+        "scope": null,
+        "subject": "wire PERCIVAL OS into site nav (#339)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "488f186",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "add PERCIVAL OS \u2014 Iron Man-class command center HUD + blueprint",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "332a866",
+        "type": "feat",
+        "scope": "clearpulse",
+        "subject": "add architecture whitepaper + public reference page",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
       {
         "sha": "fc62e51",
         "type": "feat",
@@ -88,6 +457,78 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "687898f",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "make needs_fix advisory (CI green, repair applies fixes) [patch + run]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "309d776",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "make timeout enforcement --fix only (unblock dry-run CI) [patch]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "be77431",
+        "type": "fix",
+        "scope": "pages",
+        "subject": "move permissions to deploy job for GitHub Pages [workflow-doctor]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "a8a66d7",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "pin actions/checkout to v6 in cert-bot.yml [workflow-doctor]",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "fcece3d",
+        "type": "fix",
+        "scope": "live",
+        "subject": "keep crypto panels live after CoinCap v2 retirement (#376)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "e895f24",
+        "type": "fix",
+        "scope": "sitemap",
+        "subject": "index remaining content pages; exempt non-indexable (#347)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "23fcd32",
+        "type": "fix",
+        "scope": "health-bot",
+        "subject": "treat sitemap drift as warning, not a health failure (#346)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "2eacb13",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "Health Monitor label crash + SENTINEL demo runner (#345)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-04",
+        "breaking": false
+      },
       {
         "sha": "5ebf4bb",
         "type": "fix",
@@ -195,47 +636,130 @@
         "author": "Claude",
         "date": "2026-05-29",
         "breaking": false
-      },
-      {
-        "sha": "981cc86",
-        "type": "fix",
-        "scope": "actions",
-        "subject": "skip Fly deploy when secrets are missing",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "b59144d",
-        "type": "fix",
-        "scope": "actions",
-        "subject": "harden Fly deployment diagnostics",
-        "author": "Desmond Otieno Odhiambo",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "717a1a8",
-        "type": "fix",
-        "scope": "actions",
-        "subject": "checkout repo before rollout sync",
-        "author": "Desmond Otieno Odhiambo",
-        "date": "2026-05-25",
-        "breaking": false
       }
     ],
     "Tests": [
       {
-        "sha": "6b7cf6a",
+        "sha": "db363ee",
         "type": "test",
-        "scope": "actions",
-        "subject": "add checkout probe",
+        "scope": "sentinel",
+        "subject": "drop unused import (ruff clean)",
         "author": "Desmond Otieno",
-        "date": "2026-05-25",
+        "date": "2026-06-04",
+        "breaking": false
+      }
+    ],
+    "CI/CD": [
+      {
+        "sha": "85d898e",
+        "type": "ci",
+        "scope": "pages",
+        "subject": "consolidate on Actions deploy, modernize for Node 24",
+        "author": "Claude",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "a74a1f0",
+        "type": "ci",
+        "scope": null,
+        "subject": "pin action versions + make IP Risk Assessment advisory (#337)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-03",
         "breaking": false
       }
     ],
     "Maintenance": [
+      {
+        "sha": "05d7a8f",
+        "type": "chore",
+        "scope": "ci",
+        "subject": "trigger all workflows [pages + doctor] 2026-06-08",
+        "author": "Desmond Otieno",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "16a1516",
+        "type": "chore",
+        "scope": "deps",
+        "subject": "bump the actions group across 1 directory with 3 updates",
+        "author": "dependabot[bot]",
+        "date": "2026-06-08",
+        "breaking": false
+      },
+      {
+        "sha": "3a49de8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update documentation structure: add docs/index.md as central hub linking AI TTS and future sections",
+        "author": "Desmond Otieno",
+        "date": "2026-06-07",
+        "breaking": false
+      },
+      {
+        "sha": "4b9e961",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add open-source TTS models guide for AI voice agents and custom cloning (Aria integration)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-07",
+        "breaking": false
+      },
+      {
+        "sha": "2d99d1d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add CPA / fractional CFO partner outreach automation bot",
+        "author": "Claude",
+        "date": "2026-06-06",
+        "breaking": false
+      },
+      {
+        "sha": "4cebc6e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add content collector bot to harvest and store all site content",
+        "author": "Claude",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "c2ffdda",
+        "type": "chore",
+        "scope": null,
+        "subject": "green the deployment checklist (CI, bot tests, sitemap)",
+        "author": "Claude",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "70db597",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add JARVIS OS reference implementation: HUD, agent config, MCP connectors",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "4785fd7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add JARVIS OS system blueprint",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
+      {
+        "sha": "77d170e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add AI Operator Workspace reel with interactive JARVIS assistant",
+        "author": "Claude",
+        "date": "2026-06-02",
+        "breaking": false
+      },
       {
         "sha": "1b8534d",
         "type": "chore",
@@ -361,628 +885,99 @@
         "author": "Desmond Otieno",
         "date": "2026-05-28",
         "breaking": false
-      },
+      }
+    ],
+    "Automation": [
       {
-        "sha": "fdcf218",
-        "type": "chore",
+        "sha": "0f54742",
+        "type": "bot",
         "scope": null,
-        "subject": "Revert \"Add NEXUS.html file\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "87b6cc4",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Rename ClearGlass-NEXUS-v12-FINAL.html to ClearGlass-NEXUS-FINAL.html\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "6190d14",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Add NEXUS v12 to products and hover menu\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "219186b",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Create CLEARGLASSINC.FUNDING.yml for funding options\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "1999b65",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Update dropdown label for Artemis VI\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "1e06252",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Update link to Artemis IV Core in index.html\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "2fe2194",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"Update fmt.Println message from 'Hello' to 'Goodbye'\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "0618fa9",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"ClearGlass Nexus Auto Deploy\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "0e70f55",
-        "type": "chore",
-        "scope": null,
-        "subject": "Revert \"ClearGlass Nexus Auto Deploy\"",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "46bffc3",
-        "type": "chore",
-        "scope": null,
-        "subject": "ClearGlass Nexus Auto Deploy",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "f37c19e",
-        "type": "chore",
-        "scope": null,
-        "subject": "ClearGlass Nexus Auto Deploy",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "feb3f60",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update fmt.Println message from 'Hello' to 'Goodbye'",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "598ccf9",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update link to Artemis IV Core in index.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "76d6233",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update dropdown label for Artemis VI",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "120986d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Create CLEARGLASSINC.FUNDING.yml for funding options",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "64ed998",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add NEXUS v12 to products and hover menu",
-        "author": "Desmond Odhiambo",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "b6abbf7",
-        "type": "chore",
-        "scope": null,
-        "subject": "Rename ClearGlass-NEXUS-v12-FINAL.html to ClearGlass-NEXUS-FINAL.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "fd1038b",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add NEXUS.html file",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "dbda309",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update title and banners for Ontario Operations Center",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "55ff9e7",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add script to link NEXUS V12 FINAL in navigation",
-        "author": "Desmond Otieno",
-        "date": "2026-05-27",
-        "breaking": false
-      },
-      {
-        "sha": "bbe6081",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update index.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-27",
-        "breaking": false
-      },
-      {
-        "sha": "0f9b6db",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update branding and location references in guardian.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-27",
-        "breaking": false
-      },
-      {
-        "sha": "090aad3",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update navigation icons in index.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "b2a1ccd",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update Guardian sub-label in navigation menu",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "e0ec5ad",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove duplicate 'Guardian' link from footer",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "bb12198",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update navigation name from 'ClearGlass' to 'ClearGlassInc.'",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "8087936",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove icons from navigation dropdown items",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "30510b4",
-        "type": "chore",
-        "scope": null,
-        "subject": "Enhance README with detailed project overview",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "c375286",
-        "type": "chore",
-        "scope": null,
-        "subject": "ClearGlass-NEXUS-v12-FINAL.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "3e7d1c5",
-        "type": "chore",
-        "scope": null,
-        "subject": "Shorten company name in loader HTML",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "6a69c34",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove download link for CLEARGLASS GUARDIAN v5.0",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "ea64780",
-        "type": "chore",
-        "scope": null,
-        "subject": "Replace icons in dropdown menu",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "eb5db15",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove SMB Suite link from footer",
-        "author": "Desmond Otieno",
-        "date": "2026-05-26",
-        "breaking": false
-      },
-      {
-        "sha": "24cad53",
-        "type": "chore",
-        "scope": null,
-        "subject": "remove smb replace guardian",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "a86edcf",
-        "type": "chore",
-        "scope": null,
-        "subject": "Deploy GitHub Pages from root",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "110ed43",
-        "type": "chore",
-        "scope": null,
-        "subject": "Sales bot: refresh outreach sequences [skip ci]",
+        "subject": "update generated outputs \u2014 2026-06-08 11:57 UTC [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-05-25",
+        "date": "2026-06-08",
         "breaking": false
       },
       {
-        "sha": "bbf34bd",
-        "type": "chore",
+        "sha": "6277431",
+        "type": "bot",
         "scope": null,
-        "subject": "Fix SMB logo and social preview image",
-        "author": "CLEARGLASS",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "c4e2f79",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove stray logo text file",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "c6824a1",
-        "type": "chore",
-        "scope": null,
-        "subject": "logo.png",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "2d0bb9f",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add hero image section to smb.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "11ac796",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update Twitter meta tags for ClearGlassInc.",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "34b7b54",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix twitter:image meta tag in smb.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "f9d4970",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update Open Graph image meta tags in smb.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "43641df",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove logo image and update Open Graph tags",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "72f71ff",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add logo image to smb.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "a3f9bec",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add GitHub Actions workflow for site deployment",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "d01435e",
-        "type": "chore",
-        "scope": "actions",
-        "subject": "remove checkout probe",
-        "author": "Desmond Otieno",
-        "date": "2026-05-25",
-        "breaking": false
-      },
-      {
-        "sha": "a07f244",
-        "type": "chore",
-        "scope": null,
-        "subject": "Stabilize CI action versions",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "cbc470e",
-        "type": "chore",
-        "scope": null,
-        "subject": "Install project test dependencies in CI",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "7466c0c",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade daily ops summary checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "63acc85",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade operations finance checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "75c3102",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade marketing engine checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "2b2467d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade self-hosted deploy checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "85726e8",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade IP protection scan checkout action",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "18a45ea",
-        "type": "chore",
-        "scope": null,
-        "subject": "Upgrade dependency scan action runtimes",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "6aea318",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix CI Node runtime action versions",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "e345778",
-        "type": "chore",
-        "scope": null,
-        "subject": "Document D.O.M.I.N.A.T.E. income algorithm",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "5302f45",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add tests for DOMINATE revenue engine",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "542ee2f",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add DOMINATE revenue decision engine",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "391302a",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add documentation for ClearGlass AI runtime v0.2",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "60b20f9",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add environment template for ClearGlass AI runtime v0.2",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "905e84a",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add dependencies for ClearGlass AI runtime v0.2",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "a71fb5d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Deploy ClearGlass AI runtime v0.2",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "a154a6c",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add result log for ClearGlass multi-agent workflow",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "e5b52de",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add demo run for ClearGlass multi-agent workflow",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "bffa316",
-        "type": "chore",
-        "scope": null,
-        "subject": "Deploy ClearGlass multi-agent workflow prototype",
-        "author": "Desmond Otieno",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "5db91fa",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix Pages deployment workflow",
-        "author": "ClearGlassInc",
-        "date": "2026-05-24",
-        "breaking": false
-      },
-      {
-        "sha": "967ddae",
-        "type": "chore",
-        "scope": null,
-        "subject": "Content engine: brand pillar \u00b7 0052f5885fb7 [skip ci]",
+        "subject": "update generated outputs \u2014 2026-06-07 09:59 UTC [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-05-24",
+        "date": "2026-06-07",
+        "breaking": false
+      },
+      {
+        "sha": "6e77f2c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-06 09:24 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-06",
+        "breaking": false
+      },
+      {
+        "sha": "27a8de2",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-05 10:45 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "5deec71",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-04 19:41 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "eb007c4",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-04 10:38 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-04",
+        "breaking": false
+      },
+      {
+        "sha": "9ddea47",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-03 11:55 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-03",
+        "breaking": false
+      },
+      {
+        "sha": "dbaa841",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-02 11:16 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-02",
         "breaking": false
       }
     ],
-    "Other": [
+    "Style": [
       {
-        "sha": "1eb0e5f",
-        "type": "ops",
-        "scope": null,
-        "subject": "replace smb.html with guardian.html; remove SMB page",
+        "sha": "4821656",
+        "type": "style",
+        "scope": "nav",
+        "subject": "recolor hover menu to homepage blue-violet theme (#375)",
         "author": "Desmond Otieno",
-        "date": "2026-05-25",
+        "date": "2026-06-05",
+        "breaking": false
+      },
+      {
+        "sha": "44ed956",
+        "type": "style",
+        "scope": "nav",
+        "subject": "recolor hover menu to homepage blue-violet theme",
+        "author": "Claude",
+        "date": "2026-06-05",
         "breaking": false
       }
     ]

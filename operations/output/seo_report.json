@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-02T11:16:58.819821+00:00",
-  "files_audited": 25,
-  "average_score": 61.2,
+  "run_utc": "2026-06-09T10:33:54.983607+00:00",
+  "files_audited": 33,
+  "average_score": 62.1,
   "pages": [
     {
       "file": "404.html",
@@ -50,6 +50,74 @@
         "No <h1> tag found",
         "Missing og:title",
         "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "aegis.html",
+      "title": "AEGIS \u00b7 Legal-Process Shield \u2014 ClearGlass Inc.",
+      "title_length": 46,
+      "title_ok": true,
+      "description": "AEGIS \u2014 lawful-access compliance & rights-protection. Log and triage legal-process requests (warrants, production orders, subpoenas, preservation, emergency), minimize disclosure, route to counsel, and generate a transparency report. Not legal advice; counsel-in-the-loop; fail-closed.",
+      "description_length": 285,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": false,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Description length 285 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "agentmesh.html",
+      "title": "PERCIVAL \u00b7 Agent Mesh \u2014 OSINT Orchestration \u2014 ClearGlass Inc.",
+      "title_length": 61,
+      "title_ok": false,
+      "description": "ClearGlass-only OSINT agent orchestration dashboard: 20+ approved open sources, SIGINT-PRMPT mission packets, fail-closed privacy gate (no person targeting), transparent refusal, full audit.",
+      "description_length": 190,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Title length 61 chars (ideal 30\u201360)",
+        "Description length 190 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "ai-operator.html",
+      "title": "AI Operator Workspace \u00b7 J.A.R.V.I.S. \u2014 ClearGlass Inc.",
+      "title_length": 54,
+      "title_ok": true,
+      "description": "A cinematic AI-operator command-center reel with a fully interactive J.A.R.V.I.S. assistant \u2014 voice + text, arc-reactor HUD, live automation commands. Built entirely in HTML, CSS &amp; JS.",
+      "description_length": 188,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 80,
+      "issues": [
+        "Description length 188 chars (ideal 120\u2013160)",
         "Missing og:image"
       ]
     },
@@ -166,6 +234,29 @@
       ]
     },
     {
+      "file": "button-lab.html",
+      "title": "Button Lab \u00b7 ClearGlass \u2014 Machined Glass Control System",
+      "title_length": 55,
+      "title_ok": true,
+      "description": "ClearGlass MACHINED GLASS button system \u2014 precision-engineered, accessible controls in the company blue-violet.",
+      "description_length": 111,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Description length 111 chars (ideal 120\u2013160)",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "button-system.html",
       "title": "Button System \u2014 ClearGlass",
       "title_length": 26,
@@ -236,6 +327,28 @@
         "No <h1> tag found",
         "Missing og:title",
         "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "clearpulse-architecture.html",
+      "title": "ClearPulse Architecture Whitepaper \u2014 Forensic AI for Healthcare | ClearGlass",
+      "title_length": 76,
+      "title_ok": false,
+      "description": "ClearPulse Architecture Whitepaper: the reference architecture for Provable Healthcare Intelligence Infrastructure. Entity resolution, graph intelligence, cryptographic audit chain, and incident abstraction for HIPAA-grade forensic AI.",
+      "description_length": 235,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Title length 76 chars (ideal 30\u201360)",
+        "Description length 235 chars (ideal 120\u2013160)",
         "Missing og:image"
       ]
     },
@@ -483,6 +596,51 @@
       ]
     },
     {
+      "file": "jarvis-os.html",
+      "title": "JARVIS OS \u2014 Command HUD",
+      "title_length": 23,
+      "title_ok": false,
+      "description": "JARVIS OS command HUD \u2014 an always-on executive command center: system health ring, KPI dashboards, daily briefing, agent swarm activity stream, approval ladder, and voice control. Built in HTML/CSS/JS.",
+      "description_length": 201,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Title length 23 chars (ideal 30\u201360)",
+        "Description length 201 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "percival-os.html",
+      "title": "PERCIVAL OS \u00b7 Mission-Ready Command Center \u2014 ClearGlass Inc.",
+      "title_length": 60,
+      "title_ok": true,
+      "description": "PERCIVAL \u2014 an Iron Man / JARVIS-class always-on intelligent command center. Holographic brain hub, agent swarm, live KPIs, threat monitor, and a voice + text command console. Built in pure HTML, CSS & JS.",
+      "description_length": 204,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Description length 204 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "revenue-engine.html",
       "title": "Revenue Engine \u2014 ClearGlass Inc. \u00b7 AI-Driven Business Automation",
       "title_length": 64,
@@ -501,6 +659,28 @@
       "issues": [
         "Title length 64 chars (ideal 30\u201360)",
         "Description length 178 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "sentinel.html",
+      "title": "SENTINEL \u00b7 Live Geospatial Command Center \u2014 ClearGlass Inc.",
+      "title_length": 59,
+      "title_ok": true,
+      "description": "SENTINEL \u2014 a privacy-first geospatial command center running on LIVE data: device location awareness, real map tiles, live USGS earthquake + NWS weather-alert feeds, and on-device anonymous camera presence. Fail-closed: never identifies, locates, or tracks private individuals.",
+      "description_length": 277,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Description length 277 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
+        "Missing og:image"
       ]
     },
     {
@@ -570,12 +750,12 @@
     }
   ],
   "top_issues": [
-    "19x \u2014 Missing og:image",
-    "15x \u2014 Title length N chars (ideal N\u2013N)",
-    "15x \u2014 Description length N chars (ideal N\u2013N)",
-    "9x \u2014 Missing og:title",
-    "9x \u2014 Missing og:description",
-    "8x \u2014 No <hN> tag found",
+    "27x \u2014 Missing og:image",
+    "23x \u2014 Description length N chars (ideal N\u2013N)",
+    "18x \u2014 Title length N chars (ideal N\u2013N)",
+    "13x \u2014 No <hN> tag found",
+    "12x \u2014 Missing og:description",
+    "10x \u2014 Missing og:title",
     "7x \u2014 Missing canonical link tag",
     "6x \u2014 Missing meta description",
     "1x \u2014 N image(s) missing alt text",

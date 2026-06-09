@@ -33,6 +33,10 @@ DEPENDENCY_GRAPH: dict[str, list[str]] = {
     "seo_optimizer": [],
     "release_notes": [],
     "alert_dispatcher": ["site_health", "growth", "operations"],
+    "wealth_ladder": [],
+    # The self-evolving engine reads the fleet's run history, so it runs last —
+    # after the bots whose outcomes it scores.
+    "self_evolving": ["wealth_ladder", "operations", "site_health"],
 }
 
 MAX_PARALLEL_WORKERS = 4

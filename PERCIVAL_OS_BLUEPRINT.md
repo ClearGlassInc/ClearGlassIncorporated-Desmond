@@ -269,6 +269,13 @@ Content Repurposer (LinkedIn/X/Threads), Report Generator, Code/Script Generator
 
 ## 9. Security Model
 
+- **SENTINEL privacy charter.** The security-intelligence persona operates under a
+  privacy-first charter (`sentinel/SENTINEL_CHARTER.md`) whose hard rules are
+  **enforced in code** by a fail-closed policy gate (`sentinel/sentinel/policy.py`):
+  no identifying/tracking of private individuals without documented authority; no
+  face-recognition / re-identification / cross-source matching on non-consenting
+  people; no OSINT de-anonymization; role + purpose + approved-source checks before
+  any analysis; human review for sensitive inference; an `audit_ref` on every decision.
 - **Zero-trust by default.** Every tool/agent runs with the narrowest scope; permissions
   are explicit, time-boxed, and revocable.
 - **Approval modes:** AUTO (safe, reversible), CONFIRM (sensitive — APPROVE/DENY card),

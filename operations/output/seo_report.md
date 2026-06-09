@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-02T11:16:58.819821+00:00
-**Average Score:** 61.2/100
-**Files Audited:** 25
+**Run:** 2026-06-09T10:33:54.983607+00:00
+**Average Score:** 62.1/100
+**Files Audited:** 33
 
 ## Page Scores
 
@@ -14,15 +14,23 @@
 | `button-system.html` | 30/100 | 6 |
 | `hover-menu.html` | 30/100 | 6 |
 | `404.html` | 40/100 | 5 |
+| `agentmesh.html` | 50/100 | 5 |
 | `attack-prompt-core.html` | 50/100 | 5 |
 | `intelligence-interface.html` | 50/100 | 5 |
+| `aegis.html` | 60/100 | 4 |
 | `artemis.html` | 60/100 | 4 |
+| `button-lab.html` | 60/100 | 4 |
 | `cg-loader.html` | 60/100 | 4 |
+| `jarvis-os.html` | 60/100 | 4 |
 | `smb.html` | 60/100 | 4 |
 | `artemis-blue-team.html` | 70/100 | 3 |
 | `artemis-iv.html` | 70/100 | 3 |
+| `clearpulse-architecture.html` | 70/100 | 3 |
 | `command-console.html` | 70/100 | 3 |
 | `intelligence.html` | 70/100 | 3 |
+| `percival-os.html` | 70/100 | 3 |
+| `sentinel.html` | 70/100 | 3 |
+| `ai-operator.html` | 80/100 | 2 |
 | `banking-law-advisor.html` | 80/100 | 2 |
 | `corporate-legal-advisor.html` | 80/100 | 2 |
 | `government.html` | 80/100 | 2 |
@@ -36,12 +44,12 @@
 
 ## Top Issues Across All Pages
 
-- 19x — Missing og:image
-- 15x — Title length N chars (ideal N–N)
-- 15x — Description length N chars (ideal N–N)
-- 9x — Missing og:title
-- 9x — Missing og:description
-- 8x — No <hN> tag found
+- 27x — Missing og:image
+- 23x — Description length N chars (ideal N–N)
+- 18x — Title length N chars (ideal N–N)
+- 13x — No <hN> tag found
+- 12x — Missing og:description
+- 10x — Missing og:title
 - 7x — Missing canonical link tag
 - 6x — Missing meta description
 - 1x — N image(s) missing alt text

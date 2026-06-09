@@ -1,0 +1,67 @@
+/* ClearGlass · global theme layer — unifies every page on the homepage's
+   blue-violet identity. Linked last in <head> on all content pages.
+
+   Palette (from index.html):
+     sky-blue  #60a5fa   violet  #a78bfa   indigo glow rgba(124,150,255,…)
+     mint #34d399   amber-accent retired → blue   alert → homepage pink #f472b6
+
+   Strategy: remap the common accent CSS variables used across the site so any
+   element that references them shifts automatically. Uses !important so it wins
+   regardless of source order. Backgrounds are intentionally NOT forced here —
+   per-page dark canvases are deep-cleaned at the source on flagship pages. */
+
+:root,
+:root[data-theme],
+html {
+  /* generic accent names */
+  --accent:   #60a5fa !important;
+  --accent-2: #a78bfa !important;
+  --accent2:  #a78bfa !important;
+  --acc:      #60a5fa !important;
+  --acc-2:    #a78bfa !important;
+  --primary:  #60a5fa !important;
+  --secondary:#a78bfa !important;
+  --brand:    #60a5fa !important;
+  --brand-2:  #a78bfa !important;
+  --main:     #60a5fa !important;
+  --c1:       #60a5fa !important;
+  --c2:       #a78bfa !important;
+
+  /* amber / orange families → blue-violet */
+  --amber:    #60a5fa !important;
+  --amber-2:  #a78bfa !important;
+  --am:       #60a5fa !important;
+  --am2:      #a78bfa !important;
+  --am3:      #818cf8 !important;
+  --am4:      #6d8fd6 !important;
+  --orange:   #a78bfa !important;
+  --orange-2: #60a5fa !important;
+  --gold:     #a78bfa !important;
+  --yellow:   #60a5fa !important;
+  --yw:       #a78bfa !important;
+
+  /* red / "cyan"(mislabelled red) families → blue-violet brand, pink for alerts */
+  --red:      #7c9cff !important;
+  --red-2:    #6d5cf0 !important;
+  --rd:       #7c9cff !important;
+  --cyan:     #60a5fa !important;
+  --cyan-2:   #3b82f6 !important;
+  --ice:      #bcd4ff !important;
+
+  /* cohesive cyans already-blue → align to palette */
+  --teal:     #5eead4 !important;
+
+  /* lines / glows → indigo */
+  --line:     rgba(124,150,255,.16) !important;
+  --line-2:   rgba(124,150,255,.30) !important;
+  --glow:     rgba(96,165,250,.55)  !important;
+
+  /* shared positive/danger semantics on-palette */
+  --ok:       #34d399 !important;
+  --good:     #34d399 !important;
+  --warn:     #fbbf24 !important;
+  --bad:      #f472b6 !important;
+  --danger:   #f472b6 !important;
+}
+
+/* keep the nav menu mark consistent everywhere (already blue-violet) */

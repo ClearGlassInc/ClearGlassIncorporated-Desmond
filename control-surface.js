@@ -23,6 +23,7 @@
   // ── destinations (grouped) ──────────────────────────────────────────────
   var GROUPS = [
     ["Command", [
+      ["Systems Control Surface", "systems.html", "▣"],
       ["PERCIVAL OS", "percival-os.html", "◐"],
       ["SENTINEL · Live", "sentinel.html", "◉"],
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
@@ -58,6 +59,7 @@
 
   // ── actions (verbs, not just destinations) ──────────────────────────────
   var ACTIONS = [
+    { label: "Open Systems Control Surface", sub: "Operations console", icon: "▣", href: "systems.html" },
     { label: "Website design & development", sub: "Engagement", icon: "◳", href: "web-design.html" },
     { label: "Open latest project", sub: "Artemis VI", icon: "🛰", href: "artemis.html" },
     { label: "Deployment status", sub: "GitHub Actions", icon: "◇", act: "status" },
@@ -168,7 +170,7 @@
     "transition:transform .3s cubic-bezier(.16,1,.3,1)}" +
   ".cgcs-ov.open .cgcs-dr{transform:translateX(0)}" +
   ".cgcs-dh{display:flex;align-items:center;gap:10px;padding:2px 4px 12px;border-bottom:1px solid rgba(124,150,255,.16);margin-bottom:6px}" +
-  ".cgcs-mk{width:26px;height:26px;border-radius:8px;background:var(--cr);box-shadow:0 0 14px rgba(124,150,255,.55)}" +
+  ".cgcs-mk{width:28px;height:28px;border-radius:8px;box-shadow:0 0 14px rgba(124,150,255,.55);object-fit:cover}" +
   ".cgcs-dh b{background:var(--cr);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}" +
   ".cgcs-dx{margin-left:auto;background:none;border:0;color:#aab1d8;font-size:18px;cursor:pointer}" +
   ".cgcs-dr a{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:9px;color:#dbe3f7;text-decoration:none;font-size:13px;border:1px solid transparent}" +
@@ -231,7 +233,7 @@
     var dscrim = h("div", "cgcs-scrim");
     var dr = h("div", "cgcs-dr"); dr.setAttribute("role", "dialog"); dr.setAttribute("aria-modal", "true"); dr.setAttribute("aria-label", "Systems drawer");
     var dh = h("div", "cgcs-dh");
-    dh.innerHTML = '<div class="cgcs-mk"></div><div><div style="font-weight:800;letter-spacing:.14em;font-size:13px">ClearGlass<b>·</b>OS</div>' +
+    dh.innerHTML = '<img class="cgcs-mk" src="icon.svg" alt="" width="28" height="28"><div><div style="font-weight:800;letter-spacing:.14em;font-size:13px">ClearGlass<b>·</b>OS</div>' +
       '<div style="font-size:8.5px;letter-spacing:.18em;color:#8a90c4;text-transform:uppercase">Systems · Control Surface v3.1</div></div>';
     var dx = h("button", "cgcs-dx"); dx.setAttribute("aria-label", "Close"); dx.textContent = "✕"; dh.appendChild(dx);
     dr.appendChild(dh);

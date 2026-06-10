@@ -129,6 +129,8 @@ _LOC = re.compile(r"<loc>(.*?)</loc>")
 EXEMPT = frozenset({
     "404.html", "offline.html", "cg-loader.html", "button-system.html",
     "hover-menu.html", "button-lab.html", "ClearGlass-NEXUS-v12-FINAL.html",
+    # Search Console verification token — intentionally bare, must stay so
+    "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
 })
 
 
@@ -160,14 +162,20 @@ def audit_page(name: str, html: str) -> list[Finding]:
 
 
 def audit_sitemap(sitemap_xml: str, existing_pages: set[str]) -> list[Finding]:
-    """Content-drift checks between sitemap and the real page set."""
+    """Content-drift checks between sitemap and the real page set.
+
+    ``existing_pages`` is the ROOT-level page set, so only root-level locs are
+    judged for deadness; subdirectory entries (legal/, offers/, …) are outside
+    this audit's visibility and are skipped rather than guessed at."""
     out: list[Finding] = []
     listed: set[str] = set()
     for loc in _LOC.findall(sitemap_xml):
-        path = loc.rsplit("/", 1)[-1]
+        rel = re.sub(r"^https?://[^/]+/", "", loc).strip()
+        path = rel.rsplit("/", 1)[-1]
         if path:
             listed.add(path)
-            if path.endswith(".html") and path not in existing_pages:
+            if ("/" not in rel and path.endswith(".html")
+                    and path not in existing_pages):
                 out.append(Finding("sitemap_dead_url", "seo", path,
                                    f"sitemap lists missing file: {path}",
                                    Severity.MEDIUM, business_value=4,
@@ -181,13 +189,19 @@ def audit_sitemap(sitemap_xml: str, existing_pages: set[str]) -> list[Finding]:
 
 
 def audit_links(pages: dict[str, str]) -> list[Finding]:
-    """Broken internal links: href/src targets that aren't in the page set."""
+    """Broken internal links: href/src targets that aren't in the page set.
+    Scope: root-level pages only. ``./x.html`` is normalized; targets that
+    point into subdirectories (or out of them) are skipped, not guessed."""
     out: list[Finding] = []
     names = set(pages)
     href = re.compile(r'(?:href|src)="([^"#?:]+\.html)(?:[#?][^"]*)?"')
     for name, html in pages.items():
         for tgt in set(href.findall(html)):
             if tgt.startswith(("http", "//", "/")):
+                continue
+            if tgt.startswith("./"):
+                tgt = tgt[2:]
+            if "/" in tgt:          # subdirectory: outside this audit's set
                 continue
             if tgt not in names:
                 out.append(Finding("broken_link", "ux", name,

@@ -276,6 +276,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
     <a class="launch" href="sentinel.html" title="Open SENTINEL geospatial + OSINT command center">◉ SENTINEL CC</a>
     <a class="launch" href="aegis.html" title="Open AEGIS legal-process shield" style="color:#cdd9ff;border-color:rgba(96,165,250,.4);background:rgba(96,165,250,.08)">⚖ AEGIS</a>
     <a class="launch" href="agentmesh.html" title="Open the OSINT Agent Mesh orchestration dashboard" style="color:#b9c0ff;border-color:rgba(155,123,255,.4);background:rgba(155,123,255,.08)">⌗ MESH</a>
+    <a class="launch" href="percival-build.html" title="Open PERCIVAL BUILD — the orbital spatial workspace" style="color:#cdd9ff;border-color:rgba(124,150,255,.45);background:rgba(124,150,255,.10)">⊞ BUILD</a>
     <div class="status-pill"><span class="dot"></span>MISSION READY · ARMED</div>
     <div class="clock"><div class="t" id="clk">--:--:--</div><div class="d" id="cdate">—</div></div>
   </div>
@@ -631,6 +632,13 @@ async function handle(raw){
     const d=jarvisNode();d.innerHTML=`<div class="who">PERCIVAL</div><div class="body" style="font-family:var(--mono);font-size:11.5px;line-height:1.6"># scheduled · weekdays 07:00<br>brief = percival.compose_briefing(sources=["inbox","calendar","crm"])<br>percival.deliver(brief, channel="push", approval=<b>"auto"</b>)</div>`;scrollFeed();
     return approvalCard('Activate this scheduled workflow?','Runs weekdays 07:00. Safe + reversible. You can pause or roll back anytime.',()=>jarvisSay('Workflow active. First run tomorrow 07:00. Logged to audit trail.'));
   }
+  if(/\bbuild\b|spatial|workspace|orbital desktop|open build|launch build/.test(t)){
+    focusSub('orchestr');
+    await jarvisSay(`Opening <b>PERCIVAL BUILD</b> — the orbital spatial workspace. Floating widgets (clock, spectrum, telemetry, mixer) over a live space scene, with an app dock and command bar.`);
+    addEvent('ok','PERCIVAL BUILD spatial workspace launched','EXECUTION');
+    setTimeout(()=>{window.location.href='percival-build.html';},900);
+    return;
+  }
   if(/who are you|what are you|capab|help|what can you/.test(t)){
     return jarvisSay(`I am <b>PERCIVAL</b> — your always-on command center. I run a swarm of specialized agents across <b>command, orchestration, knowledge, security, and automation</b>. Try: <i>brief me</i>, <i>triage my inbox</i>, <i>any threats?</i>, <i>research this entity</i>, or <i>build an automation</i>. I show my plan, cite sources with confidence, and never take sensitive actions without your approval.`);
   }
@@ -662,7 +670,7 @@ const cmd=document.getElementById('cmd');
 function submit(){const v=cmd.value;cmd.value='';handle(v);}
 document.getElementById('send').onclick=submit;
 cmd.addEventListener('keydown',e=>{if(e.key==='Enter')submit();});
-const quick=['Brief me','Triage my inbox','Any threats?','Research an entity','Build an automation','Show KPIs'];
+const quick=['Brief me','Triage my inbox','Any threats?','Open Build','Build an automation','Show KPIs'];
 document.getElementById('chips').innerHTML=quick.map(q=>`<button class="qchip">${q}</button>`).join('');
 document.querySelectorAll('.qchip').forEach(c=>c.onclick=()=>handle(c.textContent));
 

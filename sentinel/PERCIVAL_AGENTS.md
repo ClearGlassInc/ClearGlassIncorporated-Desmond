@@ -12,6 +12,7 @@ PERCIVAL under SENTINEL's fail-closed policy gate.
 | **PFAS** | Compliance + decision intelligence (Ontario water/property/infra) | `PERCIVAL_PFAS_BRIEF.md` | `sentinel/sentinel/pfas.py` + `pfas_ingest.py` + `pfas_pdf.py` + `pfas_export.py` + `sentinel.html` map layer & evidence-pack download |
 | **AEGIS** | Lawful-access compliance & rights protection (counsel-in-the-loop) | `AEGIS_LEGAL_SHIELD_BRIEF.md` | `sentinel/sentinel/legalshield.py` + `transparency.py` + `aegis.html` (intake/register/report UI) |
 | **Agent Mesh** | Org-scoped (ClearGlass-only) multi-agent **OSINT** orchestration; SIGINT-PRMPT packets; transparent, no person-targeting | `AGENT_MESH_BRIEF.md` | `sentinel/sentinel/agentmesh.py` + `collector.py` (24 approved sources) + `graph.py` (entity/topic) + `agentmesh.html` (dashboard) |
+| **STEWARD** | Governed website steward — continuous UX/SEO/a11y/brand/content-drift audits ranked by value·impact·risk; SITREP briefs; AUTO_FIX only for safe-listed reversible changes, everything else PROPOSE/ESCALATE (no silent writes); keyless/stdlib; inbound-only lead qualification + human-send booking drafts | `steward.py` module docstring | `sentinel/sentinel/steward.py` + `sentinel/tests/test_steward.py` |
 
 All agents share:
 - the **fail-closed policy gate** (`sentinel/sentinel/policy.py`)

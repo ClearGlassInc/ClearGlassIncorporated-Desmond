@@ -55,6 +55,20 @@ def test_audit_links_finds_broken_internal() -> None:
     assert found[0].page == "a.html"
 
 
+def test_audit_links_normalizes_dot_slash_and_skips_subdirs() -> None:
+    pages = {"a.html": '<a href="./b.html">x</a><a href="legal/terms.html">y</a>',
+             "b.html": "<p>ok</p>"}
+    assert audit_links(pages) == []   # ./b.html resolves; subdir is out of scope
+
+
+def test_audit_sitemap_skips_subdirectory_locs() -> None:
+    sm = ("<urlset><url><loc>https://x/legal/terms.html</loc></url>"
+          "<url><loc>https://x/gone.html</loc></url></urlset>")
+    kinds = {(f.kind, f.page) for f in audit_sitemap(sm, {"live.html"})}
+    assert ("sitemap_dead_url", "gone.html") in kinds
+    assert all(p != "terms.html" for k, p in kinds if k == "sitemap_dead_url")
+
+
 def test_audit_brand_flags_warm_drift_but_keeps_alert_pink() -> None:
     assert audit_brand("p.html", "<i style='color:#ff8800'>")[0].kind == "brand_color_drift"
     assert audit_brand("p.html", "<i style='color:#f472b6'>") == []

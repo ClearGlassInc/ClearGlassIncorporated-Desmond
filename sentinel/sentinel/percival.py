@@ -124,18 +124,25 @@ _LANG = re.compile(r"<html[^>]*\blang=", re.I)
 _IMG = re.compile(r"<img\b[^>]*>", re.I)
 _ALT = re.compile(r"\balt=", re.I)
 _LOC = re.compile(r"<loc>(.*?)</loc>")
+_SCRIPT_STYLE = re.compile(r"<(script|style)\b[^>]*>.*?</\1>", re.I | re.S)
 
 # pages that are intentionally excluded from indexing/audit noise
 EXEMPT = frozenset({
     "404.html", "offline.html", "cg-loader.html", "button-system.html",
     "hover-menu.html", "button-lab.html", "ClearGlass-NEXUS-v12-FINAL.html",
+    "index.html",  # indexed as "/" in the sitemap — avoid duplicate-listing noise
     # Search Console verification token — intentionally bare, must stay so
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
 })
 
 
 def audit_page(name: str, html: str) -> list[Finding]:
-    """SEO + accessibility + brand checks for one page. Pure function."""
+    """SEO + accessibility + brand checks for one page. Pure function.
+
+    Markup inside <script>/<style> is stripped first so the audit reasons about
+    real DOM, not code/CSS that merely contains tag-like strings (e.g. an inline
+    engine whose source includes ``/<img ...>/`` regex literals)."""
+    html = _SCRIPT_STYLE.sub("", html)
     out: list[Finding] = []
     if not _TITLE.search(html):
         out.append(Finding("missing_title", "seo", name, "page has no <title>",

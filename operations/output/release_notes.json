@@ -1,10 +1,118 @@
 {
-  "run_utc": "2026-06-09T10:33:54.970444+00:00",
+  "run_utc": "2026-06-10T10:55:00.280014+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 107,
+  "commit_count": 111,
   "sections": {
     "New Features": [
+      {
+        "sha": "330e944",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "STEWARD \u2014 governed autonomous website-steward agent (#409)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-10",
+        "breaking": false
+      },
+      {
+        "sha": "58b1991",
+        "type": "feat",
+        "scope": "pwa",
+        "subject": "install-grade vector icon + first-class icon links",
+        "author": "Claude",
+        "date": "2026-06-10",
+        "breaking": false
+      },
+      {
+        "sha": "be2835d",
+        "type": "feat",
+        "scope": "platform",
+        "subject": "PWA + instant navigation + view transitions (#406)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "e61ab44",
+        "type": "feat",
+        "scope": "platform",
+        "subject": "PWA + instant navigation + view transitions",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "3e36220",
+        "type": "feat",
+        "scope": "prompts",
+        "subject": "add ClearGlassInc Revenue Agent system prompt",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "18151ad",
+        "type": "feat",
+        "scope": "web-design",
+        "subject": "add comparison table, FAQ, and animated metric counters (#399)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "1789be3",
+        "type": "feat",
+        "scope": "web-design",
+        "subject": "add comparison table, FAQ, and animated metric counters",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "5e2fac0",
+        "type": "feat",
+        "scope": "outreach",
+        "subject": "add personalized top-5 outreach drafts",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "05555b2",
+        "type": "feat",
+        "scope": "outreach",
+        "subject": "add real Oakville/Burlington lead list (public sources)",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "eceed0a",
+        "type": "feat",
+        "scope": "outreach",
+        "subject": "add CASL-compliant outreach templates and lead-list framework",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "a3be1a1",
+        "type": "feat",
+        "scope": "site",
+        "subject": "premium Website Design & Development landing page (#396)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "9f60093",
+        "type": "feat",
+        "scope": "offers",
+        "subject": "add revenue/offer assets and read-only audit tool",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
       {
         "sha": "5cbfd1c",
         "type": "feat",
@@ -411,42 +519,6 @@
         "breaking": false
       },
       {
-        "sha": "af0ee22",
-        "type": "feat",
-        "scope": "platform",
-        "subject": "implement v2 platform engineering operating model",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "70f6657",
-        "type": "feat",
-        "scope": "ui",
-        "subject": "add cyber-intelligence command console interface",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "a41e83b",
-        "type": "feat",
-        "scope": null,
-        "subject": "advanced bot orchestration system with full GitHub automation",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "a1140bd",
-        "type": "feat",
-        "scope": "government",
-        "subject": "add federal showcase page + patch NEXUS + enhance index for gov sale",
-        "author": "Claude",
-        "date": "2026-05-31",
-        "breaking": false
-      },
-      {
         "sha": "7115daa",
         "type": "feat",
         "scope": "bots",
@@ -457,6 +529,33 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "5e19664",
+        "type": "fix",
+        "scope": "steward",
+        "subject": "calibrate link/sitemap scanners from first live run (#410)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-10",
+        "breaking": false
+      },
+      {
+        "sha": "799b436",
+        "type": "fix",
+        "scope": "seo",
+        "subject": "repair malformed sitemap entries and drop dead URL (#402)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "9819626",
+        "type": "fix",
+        "scope": "pages",
+        "subject": "retire flaky legacy pages-build-deployment",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
       {
         "sha": "687898f",
         "type": "fix",
@@ -555,86 +654,25 @@
         "author": "Claude",
         "date": "2026-06-02",
         "breaking": false
-      },
+      }
+    ],
+    "Documentation": [
       {
-        "sha": "6eed5f2",
-        "type": "fix",
-        "scope": "platform",
-        "subject": "address Codex review on PR #324",
-        "author": "Claude",
-        "date": "2026-06-01",
+        "sha": "0fc8153",
+        "type": "docs",
+        "scope": "repo",
+        "subject": "add Code of Conduct, issue/PR templates, deployment runbook (#397)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-09",
         "breaking": false
       },
       {
-        "sha": "85ba879",
-        "type": "fix",
-        "scope": "workflows",
-        "subject": "pin actions/checkout to v5 in ip-protection-scan",
+        "sha": "5634704",
+        "type": "docs",
+        "scope": "offers",
+        "subject": "add ClearGlass ARTEMIS Service Agent specification",
         "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "9484a8f",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "pin checkout to v5 and correct git log flag in ip-protection-scan",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "c03deda",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "add ip-protection-scan workflow with corrected YAML syntax",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "b2256b9",
-        "type": "fix",
-        "scope": "site",
-        "subject": "add SEO/accessibility meta to key pages and extend reliability audit",
-        "author": "Claude",
-        "date": "2026-05-31",
-        "breaking": false
-      },
-      {
-        "sha": "89ec20e",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "stop Dependency Review job from hard-failing on compare errors",
-        "author": "Claude",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "7ee8144",
-        "type": "fix",
-        "scope": "site",
-        "subject": "resolve 32 broken local references surfaced by site-audit CI job",
-        "author": "Claude",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "da20de5",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "pin actions/checkout to v5 and resolve pre-existing lint/test failures",
-        "author": "Claude",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "c5de32d",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "build automated GitHub workflow repair and execution system",
-        "author": "Claude",
-        "date": "2026-05-29",
+        "date": "2026-06-09",
         "breaking": false
       }
     ],
@@ -670,6 +708,96 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "fabb22d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Wire up revenue funnel: live lead capture, working CTAs, pricing links",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "2322177",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update founder and chairman profile picture",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "0f47f4e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update small corner logo to new crystal seal across site",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "407cd9e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Build premium offers page and add ARTEMIS Service Agent",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "eb1bf6f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Match offers page palette to main site",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "ddbae4a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Sharpen offers page copy with hardening/PHIPA language",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "38000f9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ARTEMIS edge-native AI command system prompt",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "3912032",
+        "type": "chore",
+        "scope": null,
+        "subject": "Swap homepage hero video for updated clip (#390)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "09f2673",
+        "type": "chore",
+        "scope": null,
+        "subject": "Trim homepage Products menu to Guardian and Government only",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
+      {
+        "sha": "03032f3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Replace homepage hero image with autoplay video",
+        "author": "Claude",
+        "date": "2026-06-09",
+        "breaking": false
+      },
       {
         "sha": "05d7a8f",
         "type": "chore",
@@ -777,117 +905,18 @@
         "author": "dependabot[bot]",
         "date": "2026-06-01",
         "breaking": false
-      },
-      {
-        "sha": "3ac35ed",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix typo in project name in README",
-        "author": "Desmond Otieno",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "da8904e",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add API security audit package (prompt + scanner + CI workflow)",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "e846856",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add defensive access-control (IDOR/auth) audit harness",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "ab6bf8b",
-        "type": "chore",
-        "scope": null,
-        "subject": "add ClearGlass-AutoSync.ps1 for safe GitHub Pages sync",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "e7352ad",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix 6 bugs in NEXUS dashboard (both v12-FINAL and nexus variants)",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "6447d33",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update index.html",
-        "author": "Desmond Otieno",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "51fbe24",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add ClearCounsel\u2122 corporate legal AI bot system",
-        "author": "Claude",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "6db49b1",
-        "type": "chore",
-        "scope": null,
-        "subject": "Remove version number from ClearGlass NEXUS links",
-        "author": "Desmond Otieno",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "50e3ba3",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update ClearGlass NEXUS link text",
-        "author": "Desmond Otieno",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "d16edf9",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add ClearGlass NEXUS v12 as fourth product and wire into site nav",
-        "author": "Claude",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "5567f5e",
-        "type": "chore",
-        "scope": null,
-        "subject": "Delete logo.png",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
-      },
-      {
-        "sha": "ac5bdb6",
-        "type": "chore",
-        "scope": null,
-        "subject": "Delete CLEARGLASS INTEL.jpeg",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "82617c6",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-09 10:33 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-09",
+        "breaking": false
+      },
       {
         "sha": "0f54742",
         "type": "bot",
@@ -978,6 +1007,17 @@
         "subject": "recolor hover menu to homepage blue-violet theme",
         "author": "Claude",
         "date": "2026-06-05",
+        "breaking": false
+      }
+    ],
+    "Other": [
+      {
+        "sha": "7a6a3c7",
+        "type": "seo",
+        "scope": "sitemap",
+        "subject": "add offers/ landing pages to sitemap",
+        "author": "Claude",
+        "date": "2026-06-09",
         "breaking": false
       }
     ]

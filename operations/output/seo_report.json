@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-09T10:33:54.983607+00:00",
-  "files_audited": 33,
-  "average_score": 62.1,
+  "run_utc": "2026-06-10T10:55:00.293115+00:00",
+  "files_audited": 35,
+  "average_score": 61.4,
   "pages": [
     {
       "file": "404.html",
@@ -619,6 +619,31 @@
       ]
     },
     {
+      "file": "offline.html",
+      "title": "Offline \u00b7 ClearGlass",
+      "title_length": 20,
+      "title_ok": false,
+      "description": null,
+      "description_length": 0,
+      "description_ok": false,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 30,
+      "issues": [
+        "Title length 20 chars (ideal 30\u201360)",
+        "Missing meta description",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "percival-os.html",
       "title": "PERCIVAL OS \u00b7 Mission-Ready Command Center \u2014 ClearGlass Inc.",
       "title_length": 60,
@@ -747,17 +772,39 @@
         "Title length 92 chars (ideal 30\u201360)",
         "Description length 169 chars (ideal 120\u2013160)"
       ]
+    },
+    {
+      "file": "web-design.html",
+      "title": "Website Design & Development \u2014 Growth Infrastructure | ClearGlass Inc",
+      "title_length": 69,
+      "title_ok": false,
+      "description": "ClearGlass designs and builds fast, secure, accessible websites engineered as business growth infrastructure \u2014 architecture, front-end development, performance, SEO, and automation-friendly deployment.",
+      "description_length": 201,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Title length 69 chars (ideal 30\u201360)",
+        "Description length 201 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
     }
   ],
   "top_issues": [
-    "27x \u2014 Missing og:image",
-    "23x \u2014 Description length N chars (ideal N\u2013N)",
-    "18x \u2014 Title length N chars (ideal N\u2013N)",
+    "29x \u2014 Missing og:image",
+    "24x \u2014 Description length N chars (ideal N\u2013N)",
+    "20x \u2014 Title length N chars (ideal N\u2013N)",
+    "13x \u2014 Missing og:description",
     "13x \u2014 No <hN> tag found",
-    "12x \u2014 Missing og:description",
-    "10x \u2014 Missing og:title",
-    "7x \u2014 Missing canonical link tag",
-    "6x \u2014 Missing meta description",
+    "11x \u2014 Missing og:title",
+    "8x \u2014 Missing canonical link tag",
+    "7x \u2014 Missing meta description",
     "1x \u2014 N image(s) missing alt text",
     "1x \u2014 Missing <title>"
   ]

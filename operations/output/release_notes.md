@@ -1,9 +1,21 @@
-# Release Notes — 2026-06-09
+# Release Notes — 2026-06-10
 
-*107 commit(s) since repository start*
+*111 commit(s) since repository start*
 
 ## New Features
 
+- **percival:** STEWARD — governed autonomous website-steward agent (#409) (`330e944`)
+- **pwa:** install-grade vector icon + first-class icon links (`58b1991`)
+- **platform:** PWA + instant navigation + view transitions (#406) (`be2835d`)
+- **platform:** PWA + instant navigation + view transitions (`e61ab44`)
+- **prompts:** add ClearGlassInc Revenue Agent system prompt (`3e36220`)
+- **web-design:** add comparison table, FAQ, and animated metric counters (#399) (`18151ad`)
+- **web-design:** add comparison table, FAQ, and animated metric counters (`1789be3`)
+- **outreach:** add personalized top-5 outreach drafts (`5e2fac0`)
+- **outreach:** add real Oakville/Burlington lead list (public sources) (`05555b2`)
+- **outreach:** add CASL-compliant outreach templates and lead-list framework (`eceed0a`)
+- **site:** premium Website Design & Development landing page (#396) (`a3be1a1`)
+- **offers:** add revenue/offer assets and read-only audit tool (`9f60093`)
 - **ci:** optimize workflow_doctor.py — add timeout enforcement + expanded stable actions [P0 milestone] (`5cbfd1c`)
 - **design:** shared design-token system (Control Surface v3.3) (#385) (`0e699a6`)
 - **ci:** add Cert Bot TLS expiry monitor (script + workflow + tests) (`12f4631`)
@@ -49,14 +61,13 @@
 - **artemis-iv:** add advanced tactical extensions (`599ca3b`)
 - **nexus:** live patch + advanced intel expansion (v12.1) (`32e8417`)
 - **clearpulse:** add architecture doc and demo intelligence console (`0c9204a`)
-- **platform:** implement v2 platform engineering operating model (`af0ee22`)
-- **ui:** add cyber-intelligence command console interface (`70f6657`)
-- advanced bot orchestration system with full GitHub automation (`a41e83b`)
-- **government:** add federal showcase page + patch NEXUS + enhance index for gov sale (`a1140bd`)
 - **bots:** add config-driven priority matrix bot (`7115daa`)
 
 ## Bug Fixes
 
+- **steward:** calibrate link/sitemap scanners from first live run (#410) (`5e19664`)
+- **seo:** repair malformed sitemap entries and drop dead URL (#402) (`799b436`)
+- **pages:** retire flaky legacy pages-build-deployment (`9819626`)
 - **ci:** make needs_fix advisory (CI green, repair applies fixes) [patch + run] (`687898f`)
 - **ci:** make timeout enforcement --fix only (unblock dry-run CI) [patch] (`309d776`)
 - **pages:** move permissions to deploy job for GitHub Pages [workflow-doctor] (`be77431`)
@@ -68,15 +79,11 @@
 - **ci:** resolve pre-existing lint, workflow-doctor, and PR-triage failures (`5ebf4bb`)
 - **ci:** resolve 4 pre-existing failures inherited from prior PRs (`98f33d6`)
 - **clearpulse:** wrap triage rows on narrow viewports (`0871f80`)
-- **platform:** address Codex review on PR #324 (`6eed5f2`)
-- **workflows:** pin actions/checkout to v5 in ip-protection-scan (`85ba879`)
-- **ci:** pin checkout to v5 and correct git log flag in ip-protection-scan (`9484a8f`)
-- **ci:** add ip-protection-scan workflow with corrected YAML syntax (`c03deda`)
-- **site:** add SEO/accessibility meta to key pages and extend reliability audit (`b2256b9`)
-- **ci:** stop Dependency Review job from hard-failing on compare errors (`89ec20e`)
-- **site:** resolve 32 broken local references surfaced by site-audit CI job (`7ee8144`)
-- **ci:** pin actions/checkout to v5 and resolve pre-existing lint/test failures (`da20de5`)
-- **ci:** build automated GitHub workflow repair and execution system (`c5de32d`)
+
+## Documentation
+
+- **repo:** add Code of Conduct, issue/PR templates, deployment runbook (#397) (`0fc8153`)
+- **offers:** add ClearGlass ARTEMIS Service Agent specification (`5634704`)
 
 ## Tests
 
@@ -89,6 +96,16 @@
 
 ## Maintenance
 
+- Wire up revenue funnel: live lead capture, working CTAs, pricing links (`fabb22d`)
+- Update founder and chairman profile picture (`2322177`)
+- Update small corner logo to new crystal seal across site (`0f47f4e`)
+- Build premium offers page and add ARTEMIS Service Agent (`407cd9e`)
+- Match offers page palette to main site (`eb1bf6f`)
+- Sharpen offers page copy with hardening/PHIPA language (`ddbae4a`)
+- Add ARTEMIS edge-native AI command system prompt (`38000f9`)
+- Swap homepage hero video for updated clip (#390) (`3912032`)
+- Trim homepage Products menu to Guardian and Government only (`09f2673`)
+- Replace homepage hero image with autoplay video (`03032f3`)
 - **ci:** trigger all workflows [pages + doctor] 2026-06-08 (`05d7a8f`)
 - **deps:** bump the actions group across 1 directory with 3 updates (`16a1516`)
 - Update documentation structure: add docs/index.md as central hub linking AI TTS and future sections (`3a49de8`)
@@ -101,21 +118,10 @@
 - Add AI Operator Workspace reel with interactive JARVIS assistant (`77d170e`)
 - Bump the actions group with 13 updates (`1b8534d`)
 - Update pytest-cov requirement from <7,>=5.0 to >=5.0,<8 (`5dd0582`)
-- Fix typo in project name in README (`3ac35ed`)
-- Add API security audit package (prompt + scanner + CI workflow) (`da8904e`)
-- Add defensive access-control (IDOR/auth) audit harness (`e846856`)
-- add ClearGlass-AutoSync.ps1 for safe GitHub Pages sync (`ab6bf8b`)
-- Fix 6 bugs in NEXUS dashboard (both v12-FINAL and nexus variants) (`e7352ad`)
-- Update index.html (`6447d33`)
-- Add ClearCounsel™ corporate legal AI bot system (`51fbe24`)
-- Remove version number from ClearGlass NEXUS links (`6db49b1`)
-- Update ClearGlass NEXUS link text (`50e3ba3`)
-- Add ClearGlass NEXUS v12 as fourth product and wire into site nav (`d16edf9`)
-- Delete logo.png (`5567f5e`)
-- Delete CLEARGLASS INTEL.jpeg (`ac5bdb6`)
 
 ## Automation
 
+- update generated outputs — 2026-06-09 10:33 UTC [skip ci] (`82617c6`)
 - update generated outputs — 2026-06-08 11:57 UTC [skip ci] (`0f54742`)
 - update generated outputs — 2026-06-07 09:59 UTC [skip ci] (`6277431`)
 - update generated outputs — 2026-06-06 09:24 UTC [skip ci] (`6e77f2c`)
@@ -129,3 +135,7 @@
 
 - **nav:** recolor hover menu to homepage blue-violet theme (#375) (`4821656`)
 - **nav:** recolor hover menu to homepage blue-violet theme (`44ed956`)
+
+## Other
+
+- **sitemap:** add offers/ landing pages to sitemap (`7a6a3c7`)

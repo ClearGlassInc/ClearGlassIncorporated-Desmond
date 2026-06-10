@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-09T10:33:54.983607+00:00
-**Average Score:** 62.1/100
-**Files Audited:** 33
+**Run:** 2026-06-10T10:55:00.293115+00:00
+**Average Score:** 61.4/100
+**Files Audited:** 35
 
 ## Page Scores
 
@@ -13,6 +13,7 @@
 | `clearglass-nexus.html` | 20/100 | 7 |
 | `button-system.html` | 30/100 | 6 |
 | `hover-menu.html` | 30/100 | 6 |
+| `offline.html` | 30/100 | 6 |
 | `404.html` | 40/100 | 5 |
 | `agentmesh.html` | 50/100 | 5 |
 | `attack-prompt-core.html` | 50/100 | 5 |
@@ -30,6 +31,7 @@
 | `intelligence.html` | 70/100 | 3 |
 | `percival-os.html` | 70/100 | 3 |
 | `sentinel.html` | 70/100 | 3 |
+| `web-design.html` | 70/100 | 3 |
 | `ai-operator.html` | 80/100 | 2 |
 | `banking-law-advisor.html` | 80/100 | 2 |
 | `corporate-legal-advisor.html` | 80/100 | 2 |
@@ -44,13 +46,13 @@
 
 ## Top Issues Across All Pages
 
-- 27x — Missing og:image
-- 23x — Description length N chars (ideal N–N)
-- 18x — Title length N chars (ideal N–N)
+- 29x — Missing og:image
+- 24x — Description length N chars (ideal N–N)
+- 20x — Title length N chars (ideal N–N)
+- 13x — Missing og:description
 - 13x — No <hN> tag found
-- 12x — Missing og:description
-- 10x — Missing og:title
-- 7x — Missing canonical link tag
-- 6x — Missing meta description
+- 11x — Missing og:title
+- 8x — Missing canonical link tag
+- 7x — Missing meta description
 - 1x — N image(s) missing alt text
 - 1x — Missing <title>

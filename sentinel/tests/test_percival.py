@@ -156,3 +156,20 @@ def test_percival_never_autofixes_escalated_items(tmp_path: pathlib.Path) -> Non
     assert auto <= {"missing_meta_description", "missing_canonical",
                     "missing_img_alt", "sitemap_missing_page", "sitemap_dead_url",
                     "trailing_whitespace"}
+
+
+def test_audit_page_ignores_tags_inside_script() -> None:
+    # an inline engine whose source contains an <img ...> regex literal must NOT
+    # be read as a real image lacking alt text
+    html = ("<html lang='en'><head><title>T</title>"
+            "<meta name='description' content='d'>"
+            "<link rel='canonical' href='x'></head><body>"
+            "<script>var re=/<img\\b[^>]*>/gi;</script></body></html>")
+    assert audit_page("p.html", html) == []
+
+
+def test_index_is_exempt_from_sitemap_drift() -> None:
+    # index.html is represented by "/" in the sitemap; must not be flagged missing
+    found = audit_sitemap("<urlset></urlset>", {"index.html", "real.html"})
+    pages = {f.page for f in found if f.kind == "sitemap_missing_page"}
+    assert "index.html" not in pages and "real.html" in pages

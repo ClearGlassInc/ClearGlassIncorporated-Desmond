@@ -1,4 +1,4 @@
-"""STEWARD — governed website-steward agent tests."""
+"""PERCIVAL — governed website-percival agent tests."""
 from __future__ import annotations
 
 import pathlib
@@ -6,12 +6,12 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
-from sentinel.steward import (
+from sentinel.percival import (
     Action,
     Finding,
     InboundLead,
     Severity,
-    Steward,
+    Percival,
     audit_brand,
     audit_links,
     audit_page,
@@ -125,32 +125,32 @@ def test_booking_is_a_draft_requiring_human_send() -> None:
 
 # ── the agent end-to-end ────────────────────────────────────────────────────
 
-def test_steward_scan_and_dry_run_apply(tmp_path: pathlib.Path) -> None:
+def test_percival_scan_and_dry_run_apply(tmp_path: pathlib.Path) -> None:
     (tmp_path / "good.html").write_text(GOOD)
     (tmp_path / "bare.html").write_text(BARE)
     (tmp_path / "sitemap.xml").write_text(
         "<urlset><url><loc>https://x/good.html</loc></url>"
         "<url><loc>https://x/ghost.html</loc></url></urlset>")
-    s = Steward(tmp_path, clock=lambda: "2026-06-10T00:00:00Z")
+    s = Percival(tmp_path, clock=lambda: "2026-06-10T00:00:00Z")
     report = s.scan()
 
     kinds = {f.kind for f in report.findings}
     assert "sitemap_dead_url" in kinds and "missing_title" in kinds
     # sitrep brief is human-readable and locates the surface
     brief = report.brief()
-    assert "STEWARD SITREP" in brief and "clearglassinc.github.io" in brief
+    assert "PERCIVAL SITREP" in brief and "clearglassinc.github.io" in brief
 
     # default apply is a DRY RUN — no silent writes
     applied = s.apply(report)
     assert applied and all(a.startswith("DRY-RUN") for a in applied)
     # every action is on the tamper-evident audit chain
     assert s.audit.verify()
-    assert any(e.action == "steward.scan" for e in s.audit.entries)
+    assert any(e.action == "percival.scan" for e in s.audit.entries)
 
 
-def test_steward_never_autofixes_escalated_items(tmp_path: pathlib.Path) -> None:
+def test_percival_never_autofixes_escalated_items(tmp_path: pathlib.Path) -> None:
     (tmp_path / "bare.html").write_text(BARE)
-    s = Steward(tmp_path)
+    s = Percival(tmp_path)
     report = s.scan()
     auto = {d.finding.kind for d in report.decisions if d.action is Action.AUTO_FIX}
     assert auto <= {"missing_meta_description", "missing_canonical",

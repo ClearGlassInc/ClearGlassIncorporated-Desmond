@@ -1,6 +1,6 @@
-"""PERCIVAL — STEWARD: governed, self-managing website operations agent.
+"""PERCIVAL — the governed governed, self-managing website operations agent.
 
-STEWARD continuously observes the ClearGlass web estate (the repo's pages,
+PERCIVAL continuously observes the ClearGlass web estate (the repo's pages,
 sitemap, metadata, design-token discipline) plus public, org-scoped web signals
 via the existing approved-source collector, ranks findings by business value /
 user impact / technical risk, and proposes fixes. It is keyless and
@@ -15,7 +15,7 @@ Operating model (fail-closed):
   * Security-sensitive, destructive, ambiguous, or structurally risky actions
     are NEVER auto-executed. There are no silent writes: every decision is
     appended to the shared hash-chained audit log.
-  * Revenue pipeline is INBOUND-ONLY: STEWARD qualifies leads that contacted
+  * Revenue pipeline is INBOUND-ONLY: PERCIVAL qualifies leads that contacted
     ClearGlass and drafts booking artifacts for human send. It does not hunt,
     profile, or target private individuals — the SENTINEL charter applies.
 """
@@ -47,7 +47,7 @@ class Action(str, Enum):
     OBSERVE = "OBSERVE"            # report only
 
 
-# Reversible, non-structural change types STEWARD may fix automatically.
+# Reversible, non-structural change types PERCIVAL may fix automatically.
 SAFE_AUTO_FIXES = frozenset({
     "missing_meta_description",
     "missing_canonical",
@@ -232,7 +232,7 @@ def audit_brand(name: str, html: str) -> list[Finding]:
 
 @dataclass(frozen=True)
 class InboundLead:
-    """A lead who CONTACTED ClearGlass (form/email/referral). STEWARD never
+    """A lead who CONTACTED ClearGlass (form/email/referral). PERCIVAL never
     discovers or profiles individuals; it only qualifies inbound interest."""
     org: str
     contact_email: str
@@ -259,7 +259,7 @@ def qualify_lead(lead: InboundLead) -> tuple[int, str]:
 
 
 def draft_booking(lead: InboundLead, *, slot_utc: str) -> dict[str, str]:
-    """Produce a booking ARTIFACT (mailto draft) for human send — STEWARD never
+    """Produce a booking ARTIFACT (mailto draft) for human send — PERCIVAL never
     sends external communications itself."""
     subject = f"ClearGlass — {lead.service} intro call"
     body = (f"Hi {lead.org} team,%0D%0A%0D%0A"
@@ -278,7 +278,7 @@ def draft_booking(lead: InboundLead, *, slot_utc: str) -> dict[str, str]:
 
 
 @dataclass
-class StewardReport:
+class PercivalReport:
     sitrep: dict[str, str]
     findings: list[Finding]
     decisions: list[Decision]
@@ -288,7 +288,7 @@ class StewardReport:
     def brief(self) -> str:
         d = self.sitrep
         lines = [
-            "STEWARD SITREP",
+            "PERCIVAL SITREP",
             f"  surface : {d.get('surface', '?')} ({d.get('pages', '?')} pages)",
             f"  deploy  : {d.get('deploy', '?')}",
             f"  scanned : {d.get('scanned_utc', '?')}",
@@ -302,8 +302,8 @@ class StewardReport:
         return "\n".join(lines)
 
 
-class Steward:
-    """Governed website steward. Pass ``root`` for filesystem audits; writes
+class Percival:
+    """Governed website percival. Pass ``root`` for filesystem audits; writes
     happen ONLY through ``apply`` and only for AUTO_FIX decisions, and only
     when ``allow_writes=True`` (policy-explicit, never silent)."""
 
@@ -316,7 +316,7 @@ class Steward:
         self._now = clock or (lambda: _dt.datetime.now(_dt.timezone.utc).isoformat())
 
     # -- observation (always allowed) -------------------------------------
-    def scan(self) -> StewardReport:
+    def scan(self) -> PercivalReport:
         pages = {p.name: p.read_text(encoding="utf-8", errors="replace")
                  for p in sorted(self.root.glob("*.html"))}
         findings: list[Finding] = []
@@ -331,7 +331,7 @@ class Steward:
             findings += audit_sitemap(sm.read_text(encoding="utf-8"), set(pages))
         findings = rank(findings)
         decisions = [govern(f) for f in findings]
-        report = StewardReport(
+        report = PercivalReport(
             sitrep={
                 "surface": self.SURFACE,
                 "pages": str(len(pages)),
@@ -343,14 +343,14 @@ class Steward:
             escalations=[d.finding.kind for d in decisions
                          if d.action is Action.ESCALATE],
         )
-        self.audit.record(actor="STEWARD", action="steward.scan", detail={
+        self.audit.record(actor="PERCIVAL", action="percival.scan", detail={
             "pages": len(pages), "findings": len(findings),
             "escalations": len(report.escalations),
         })
         return report
 
     # -- execution (policy-explicit, reversible only) ----------------------
-    def apply(self, report: StewardReport, *, allow_writes: bool = False) -> list[str]:
+    def apply(self, report: PercivalReport, *, allow_writes: bool = False) -> list[str]:
         """Execute AUTO_FIX decisions. With allow_writes=False (default) this
         is a dry run that returns what WOULD change — no silent writes ever."""
         applied: list[str] = []
@@ -358,7 +358,7 @@ class Steward:
             if dec.action is not Action.AUTO_FIX:
                 continue
             desc = f"{dec.finding.kind}@{dec.finding.page}"
-            self.audit.record(actor="STEWARD", action="steward.fix", detail={
+            self.audit.record(actor="PERCIVAL", action="percival.fix", detail={
                 "target": desc, "dry_run": not allow_writes,
                 "reason": dec.reason,
             })

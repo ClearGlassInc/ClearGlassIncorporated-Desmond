@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-11T11:21:53.508669+00:00
-**Average Score:** 62.6/100
-**Files Audited:** 38
+**Run:** 2026-06-11T23:45:35.945479+00:00
+**Average Score:** 62.8/100
+**Files Audited:** 39
 
 ## Page Scores
 
@@ -33,6 +33,7 @@
 | `intelligence.html` | 70/100 | 3 |
 | `percival-build.html` | 70/100 | 3 |
 | `percival-os.html` | 70/100 | 3 |
+| `saas-platform.html` | 70/100 | 3 |
 | `sentinel.html` | 70/100 | 3 |
 | `web-design.html` | 70/100 | 3 |
 | `ai-operator.html` | 80/100 | 2 |
@@ -49,10 +50,10 @@
 
 ## Top Issues Across All Pages
 
-- 32x — Missing og:image
-- 27x — Description length N chars (ideal N–N)
+- 33x — Missing og:image
+- 28x — Description length N chars (ideal N–N)
 - 22x — Title length N chars (ideal N–N)
-- 15x — No <hN> tag found
+- 16x — No <hN> tag found
 - 13x — Missing og:description
 - 11x — Missing og:title
 - 6x — Missing meta description

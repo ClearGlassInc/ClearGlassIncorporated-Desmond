@@ -57,7 +57,6 @@
 - **sentinel:** Phase-One Governance Shell + RBAC retrieval (#343) (`14ca6d4`)
 - **sentinel:** add Pinecone+Milvus adapters and recall harness (`193a832`)
 - **sentinel:** Phase-One fail-closed Governance Shell + RBAC retrieval (`5c9a5e7`)
-- wire PERCIVAL OS into site nav (#339) (`cbe0b64`)
 
 ## Bug Fixes
 
@@ -86,10 +85,12 @@
 ## CI/CD
 
 - **pages:** consolidate on Actions deploy, modernize for Node 24 (`85d898e`)
-- pin action versions + make IP Risk Assessment advisory (#337) (`a74a1f0`)
 
 ## Maintenance
 
+- Patch all workflows: per-job timeouts + align doctor rules with proven versions (`29dc96f`)
+- Site health: index saas-platform + button-lab, add missing page metadata (`836252e`)
+- Create saas-platform.html for live dashboard (`e5297e1`)
 - Update header comment in control-surface.js (`89cfb43`)
 - Update title in hover-menu.html (`204d1d4`)
 - Update aria-label in icon.svg (`e45cae3`)
@@ -114,11 +115,10 @@
 - Add CPA / fractional CFO partner outreach automation bot (`2d99d1d`)
 - Add content collector bot to harvest and store all site content (`4cebc6e`)
 - green the deployment checklist (CI, bot tests, sitemap) (`c2ffdda`)
-- Add JARVIS OS reference implementation: HUD, agent config, MCP connectors (`70db597`)
-- Add JARVIS OS system blueprint (`4785fd7`)
 
 ## Automation
 
+- update generated outputs — 2026-06-11 11:21 UTC [skip ci] (`389c6d3`)
 - update generated outputs — 2026-06-10 10:55 UTC [skip ci] (`ddf8bae`)
 - update generated outputs — 2026-06-09 10:33 UTC [skip ci] (`82617c6`)
 - update generated outputs — 2026-06-08 11:57 UTC [skip ci] (`0f54742`)

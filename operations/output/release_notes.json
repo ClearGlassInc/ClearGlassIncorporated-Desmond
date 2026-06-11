@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-11T11:21:53.467004+00:00",
+  "run_utc": "2026-06-11T23:45:35.920328+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
   "commit_count": 109,
@@ -481,15 +481,6 @@
         "author": "Claude",
         "date": "2026-06-04",
         "breaking": false
-      },
-      {
-        "sha": "cbe0b64",
-        "type": "feat",
-        "scope": null,
-        "subject": "wire PERCIVAL OS into site nav (#339)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-03",
-        "breaking": false
       }
     ],
     "Bug Fixes": [
@@ -642,18 +633,36 @@
         "author": "Claude",
         "date": "2026-06-03",
         "breaking": false
-      },
-      {
-        "sha": "a74a1f0",
-        "type": "ci",
-        "scope": null,
-        "subject": "pin action versions + make IP Risk Assessment advisory (#337)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-03",
-        "breaking": false
       }
     ],
     "Maintenance": [
+      {
+        "sha": "29dc96f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Patch all workflows: per-job timeouts + align doctor rules with proven versions",
+        "author": "Claude",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "836252e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Site health: index saas-platform + button-lab, add missing page metadata",
+        "author": "Claude",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "e5297e1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Create saas-platform.html for live dashboard",
+        "author": "Desmond Otieno",
+        "date": "2026-06-11",
+        "breaking": false
+      },
       {
         "sha": "89cfb43",
         "type": "chore",
@@ -869,27 +878,18 @@
         "author": "Claude",
         "date": "2026-06-03",
         "breaking": false
-      },
-      {
-        "sha": "70db597",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add JARVIS OS reference implementation: HUD, agent config, MCP connectors",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "4785fd7",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add JARVIS OS system blueprint",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "389c6d3",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-11 11:21 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-11",
+        "breaking": false
+      },
       {
         "sha": "ddf8bae",
         "type": "bot",

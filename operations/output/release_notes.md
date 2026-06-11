@@ -1,9 +1,12 @@
-# Release Notes — 2026-06-10
+# Release Notes — 2026-06-11
 
-*111 commit(s) since repository start*
+*109 commit(s) since repository start*
 
 ## New Features
 
+- **nexus:** v12.3 — CG loader splash + live patch + intel expansion (#414) (`ac30b77`)
+- **percival:** PERCIVAL BUILD — orbital spatial workspace (#413) (`7bb48c8`)
+- **percival:** rename agent to PERCIVAL + Systems Control Surface console (#411) (`ba9650d`)
 - **percival:** STEWARD — governed autonomous website-steward agent (#409) (`330e944`)
 - **pwa:** install-grade vector icon + first-class icon links (`58b1991`)
 - **platform:** PWA + instant navigation + view transitions (#406) (`be2835d`)
@@ -55,16 +58,10 @@
 - **sentinel:** add Pinecone+Milvus adapters and recall harness (`193a832`)
 - **sentinel:** Phase-One fail-closed Governance Shell + RBAC retrieval (`5c9a5e7`)
 - wire PERCIVAL OS into site nav (#339) (`cbe0b64`)
-- **percival:** add PERCIVAL OS — Iron Man-class command center HUD + blueprint (`488f186`)
-- **clearpulse:** add architecture whitepaper + public reference page (`332a866`)
-- **loader:** add cinematic command-interface loader and wire as session preloader (`fc62e51`)
-- **artemis-iv:** add advanced tactical extensions (`599ca3b`)
-- **nexus:** live patch + advanced intel expansion (v12.1) (`32e8417`)
-- **clearpulse:** add architecture doc and demo intelligence console (`0c9204a`)
-- **bots:** add config-driven priority matrix bot (`7115daa`)
 
 ## Bug Fixes
 
+- **seo,a11y:** apply PERCIVAL's auto-fix queue + calibrate scanner (#412) (`73a8d5b`)
 - **steward:** calibrate link/sitemap scanners from first live run (#410) (`5e19664`)
 - **seo:** repair malformed sitemap entries and drop dead URL (#402) (`799b436`)
 - **pages:** retire flaky legacy pages-build-deployment (`9819626`)
@@ -76,9 +73,6 @@
 - **sitemap:** index remaining content pages; exempt non-indexable (#347) (`e895f24`)
 - **health-bot:** treat sitemap drift as warning, not a health failure (#346) (`23fcd32`)
 - **ci:** Health Monitor label crash + SENTINEL demo runner (#345) (`2eacb13`)
-- **ci:** resolve pre-existing lint, workflow-doctor, and PR-triage failures (`5ebf4bb`)
-- **ci:** resolve 4 pre-existing failures inherited from prior PRs (`98f33d6`)
-- **clearpulse:** wrap triage rows on narrow viewports (`0871f80`)
 
 ## Documentation
 
@@ -96,6 +90,13 @@
 
 ## Maintenance
 
+- Update header comment in control-surface.js (`89cfb43`)
+- Update title in hover-menu.html (`204d1d4`)
+- Update aria-label in icon.svg (`e45cae3`)
+- Update branding from CLEARGLASS to CLEARGLASSINC (`cbacd52`)
+- Update title and comments in ai-operator.html (`932bf6d`)
+- Add AVALON fusion core to schema.json structured data (`9298861`)
+- Add AVALON — ARTEMIS ⊕ PERCIVAL unified fusion core (`1afda34`)
 - Wire up revenue funnel: live lead capture, working CTAs, pricing links (`fabb22d`)
 - Update founder and chairman profile picture (`2322177`)
 - Update small corner logo to new crystal seal across site (`0f47f4e`)
@@ -115,12 +116,10 @@
 - green the deployment checklist (CI, bot tests, sitemap) (`c2ffdda`)
 - Add JARVIS OS reference implementation: HUD, agent config, MCP connectors (`70db597`)
 - Add JARVIS OS system blueprint (`4785fd7`)
-- Add AI Operator Workspace reel with interactive JARVIS assistant (`77d170e`)
-- Bump the actions group with 13 updates (`1b8534d`)
-- Update pytest-cov requirement from <7,>=5.0 to >=5.0,<8 (`5dd0582`)
 
 ## Automation
 
+- update generated outputs — 2026-06-10 10:55 UTC [skip ci] (`ddf8bae`)
 - update generated outputs — 2026-06-09 10:33 UTC [skip ci] (`82617c6`)
 - update generated outputs — 2026-06-08 11:57 UTC [skip ci] (`0f54742`)
 - update generated outputs — 2026-06-07 09:59 UTC [skip ci] (`6277431`)
@@ -129,7 +128,6 @@
 - update generated outputs — 2026-06-04 19:41 UTC [skip ci] (`5deec71`)
 - update generated outputs — 2026-06-04 10:38 UTC [skip ci] (`eb007c4`)
 - update generated outputs — 2026-06-03 11:55 UTC [skip ci] (`9ddea47`)
-- update generated outputs — 2026-06-02 11:16 UTC [skip ci] (`dbaa841`)
 
 ## Style
 

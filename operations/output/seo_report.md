@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-10T10:55:00.293115+00:00
-**Average Score:** 61.4/100
-**Files Audited:** 35
+**Run:** 2026-06-11T11:21:53.508669+00:00
+**Average Score:** 62.6/100
+**Files Audited:** 38
 
 ## Page Scores
 
@@ -10,18 +10,20 @@
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 20/100 | 7 |
-| `clearglass-nexus.html` | 20/100 | 7 |
 | `button-system.html` | 30/100 | 6 |
 | `hover-menu.html` | 30/100 | 6 |
 | `offline.html` | 30/100 | 6 |
 | `404.html` | 40/100 | 5 |
 | `agentmesh.html` | 50/100 | 5 |
-| `attack-prompt-core.html` | 50/100 | 5 |
-| `intelligence-interface.html` | 50/100 | 5 |
+| `clearglass-nexus.html` | 50/100 | 5 |
+| `systems.html` | 50/100 | 5 |
 | `aegis.html` | 60/100 | 4 |
+| `artemis-percival.html` | 60/100 | 4 |
 | `artemis.html` | 60/100 | 4 |
+| `attack-prompt-core.html` | 60/100 | 4 |
 | `button-lab.html` | 60/100 | 4 |
 | `cg-loader.html` | 60/100 | 4 |
+| `intelligence-interface.html` | 60/100 | 4 |
 | `jarvis-os.html` | 60/100 | 4 |
 | `smb.html` | 60/100 | 4 |
 | `artemis-blue-team.html` | 70/100 | 3 |
@@ -29,6 +31,7 @@
 | `clearpulse-architecture.html` | 70/100 | 3 |
 | `command-console.html` | 70/100 | 3 |
 | `intelligence.html` | 70/100 | 3 |
+| `percival-build.html` | 70/100 | 3 |
 | `percival-os.html` | 70/100 | 3 |
 | `sentinel.html` | 70/100 | 3 |
 | `web-design.html` | 70/100 | 3 |
@@ -46,13 +49,13 @@
 
 ## Top Issues Across All Pages
 
-- 29x — Missing og:image
-- 24x — Description length N chars (ideal N–N)
-- 20x — Title length N chars (ideal N–N)
+- 32x — Missing og:image
+- 27x — Description length N chars (ideal N–N)
+- 22x — Title length N chars (ideal N–N)
+- 15x — No <hN> tag found
 - 13x — Missing og:description
-- 13x — No <hN> tag found
 - 11x — Missing og:title
-- 8x — Missing canonical link tag
-- 7x — Missing meta description
-- 1x — N image(s) missing alt text
-- 1x — Missing <title>
+- 6x — Missing meta description
+- 5x — Missing canonical link tag
+- 2x — N image(s) missing alt text
+- 1x — Multiple <hN> tags (N)

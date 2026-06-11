@@ -1,10 +1,37 @@
 {
-  "run_utc": "2026-06-10T10:55:00.280014+00:00",
+  "run_utc": "2026-06-11T11:21:53.467004+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 111,
+  "commit_count": 109,
   "sections": {
     "New Features": [
+      {
+        "sha": "ac30b77",
+        "type": "feat",
+        "scope": "nexus",
+        "subject": "v12.3 \u2014 CG loader splash + live patch + intel expansion (#414)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "7bb48c8",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "PERCIVAL BUILD \u2014 orbital spatial workspace (#413)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-10",
+        "breaking": false
+      },
+      {
+        "sha": "ba9650d",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "rename agent to PERCIVAL + Systems Control Surface console (#411)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-10",
+        "breaking": false
+      },
       {
         "sha": "330e944",
         "type": "feat",
@@ -463,72 +490,18 @@
         "author": "Desmond Otieno",
         "date": "2026-06-03",
         "breaking": false
-      },
-      {
-        "sha": "488f186",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "add PERCIVAL OS \u2014 Iron Man-class command center HUD + blueprint",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "332a866",
-        "type": "feat",
-        "scope": "clearpulse",
-        "subject": "add architecture whitepaper + public reference page",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "fc62e51",
-        "type": "feat",
-        "scope": "loader",
-        "subject": "add cinematic command-interface loader and wire as session preloader",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "599ca3b",
-        "type": "feat",
-        "scope": "artemis-iv",
-        "subject": "add advanced tactical extensions",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "32e8417",
-        "type": "feat",
-        "scope": "nexus",
-        "subject": "live patch + advanced intel expansion (v12.1)",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "0c9204a",
-        "type": "feat",
-        "scope": "clearpulse",
-        "subject": "add architecture doc and demo intelligence console",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "7115daa",
-        "type": "feat",
-        "scope": "bots",
-        "subject": "add config-driven priority matrix bot",
-        "author": "Claude",
-        "date": "2026-05-31",
-        "breaking": false
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "73a8d5b",
+        "type": "fix",
+        "scope": "seo,a11y",
+        "subject": "apply PERCIVAL's auto-fix queue + calibrate scanner (#412)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-10",
+        "breaking": false
+      },
       {
         "sha": "5e19664",
         "type": "fix",
@@ -627,33 +600,6 @@
         "author": "Desmond Otieno",
         "date": "2026-06-04",
         "breaking": false
-      },
-      {
-        "sha": "5ebf4bb",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "resolve pre-existing lint, workflow-doctor, and PR-triage failures",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "98f33d6",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "resolve 4 pre-existing failures inherited from prior PRs",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "0871f80",
-        "type": "fix",
-        "scope": "clearpulse",
-        "subject": "wrap triage rows on narrow viewports",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
       }
     ],
     "Documentation": [
@@ -708,6 +654,69 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "89cfb43",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update header comment in control-surface.js",
+        "author": "Desmond Otieno",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "204d1d4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title in hover-menu.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "e45cae3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update aria-label in icon.svg",
+        "author": "Desmond Otieno",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "cbacd52",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update branding from CLEARGLASS to CLEARGLASSINC",
+        "author": "Desmond Otieno",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "932bf6d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and comments in ai-operator.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "9298861",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add AVALON fusion core to schema.json structured data",
+        "author": "Claude",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "1afda34",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add AVALON \u2014 ARTEMIS \u2295 PERCIVAL unified fusion core",
+        "author": "Claude",
+        "date": "2026-06-11",
+        "breaking": false
+      },
       {
         "sha": "fabb22d",
         "type": "chore",
@@ -878,36 +887,18 @@
         "author": "Claude",
         "date": "2026-06-02",
         "breaking": false
-      },
-      {
-        "sha": "77d170e",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add AI Operator Workspace reel with interactive JARVIS assistant",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "1b8534d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Bump the actions group with 13 updates",
-        "author": "dependabot[bot]",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "5dd0582",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update pytest-cov requirement from <7,>=5.0 to >=5.0,<8",
-        "author": "dependabot[bot]",
-        "date": "2026-06-01",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "ddf8bae",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-10 10:55 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-10",
+        "breaking": false
+      },
       {
         "sha": "82617c6",
         "type": "bot",
@@ -978,15 +969,6 @@
         "subject": "update generated outputs \u2014 2026-06-03 11:55 UTC [skip ci]",
         "author": "github-actions[bot]",
         "date": "2026-06-03",
-        "breaking": false
-      },
-      {
-        "sha": "dbaa841",
-        "type": "bot",
-        "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-02 11:16 UTC [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-06-02",
         "breaking": false
       }
     ],

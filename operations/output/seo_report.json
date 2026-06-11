@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-10T10:55:00.293115+00:00",
-  "files_audited": 35,
-  "average_score": 61.4,
+  "run_utc": "2026-06-11T11:21:53.508669+00:00",
+  "files_audited": 38,
+  "average_score": 62.6,
   "pages": [
     {
       "file": "404.html",
@@ -102,8 +102,8 @@
     },
     {
       "file": "ai-operator.html",
-      "title": "AI Operator Workspace \u00b7 J.A.R.V.I.S. \u2014 ClearGlass Inc.",
-      "title_length": 54,
+      "title": "AI Operator Workspace \u00b7 ClearGlass Inc.",
+      "title_length": 39,
       "title_ok": true,
       "description": "A cinematic AI-operator command-center reel with a fully interactive J.A.R.V.I.S. assistant \u2014 voice + text, arc-reactor HUD, live automation commands. Built entirely in HTML, CSS &amp; JS.",
       "description_length": 188,
@@ -166,6 +166,29 @@
       ]
     },
     {
+      "file": "artemis-percival.html",
+      "title": "AVALON \u00b7 ARTEMIS \u2295 PERCIVAL \u2014 Unified Fusion Core | ClearGlass Inc.",
+      "title_length": 67,
+      "title_ok": false,
+      "description": "AVALON \u2014 ARTEMIS fused into PERCIVAL. A glass-built, always-on fusion command center: holographic dual-core brain, agent swarm, live OSINT telemetry, a real multi-language Code Forge, and a versatile voice + text command console that answers and executes almost any demand.",
+      "description_length": 273,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 2,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Title length 67 chars (ideal 30\u201360)",
+        "Description length 273 chars (ideal 120\u2013160)",
+        "Multiple <h1> tags (2)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "artemis.html",
       "title": "ClearGlass NEXUS v12 \u2014 Intelligence Platform | Ontario Operations Center",
       "title_length": 72,
@@ -196,17 +219,16 @@
       "description": "ATT&CK-driven prompt core and full-stack implementation blueprint for ClearGlassInc Artemis.",
       "description_length": 92,
       "description_ok": false,
-      "canonical_present": false,
+      "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
       "img_without_alt": 0,
       "og_title": false,
       "og_description": false,
       "og_image": false,
-      "score": 50,
+      "score": 60,
       "issues": [
         "Description length 92 chars (ideal 120\u2013160)",
-        "Missing canonical link tag",
         "Missing og:title",
         "Missing og:description",
         "Missing og:image"
@@ -309,21 +331,19 @@
       "title": "ClearGlass NEXUS v12 \u2014 DARPA Intelligence Platform | Burlington Operations Center",
       "title_length": 81,
       "title_ok": false,
-      "description": null,
-      "description_length": 0,
-      "description_ok": false,
-      "canonical_present": false,
+      "description": "ClearGlass NEXUS v12 \u2014 a live intelligence platform fusing geospatial, threat, market, and space-weather feeds into one operations center.",
+      "description_length": 138,
+      "description_ok": true,
+      "canonical_present": true,
       "h1_count": 0,
       "h1_ok": false,
       "img_without_alt": 0,
       "og_title": false,
       "og_description": false,
       "og_image": false,
-      "score": 20,
+      "score": 50,
       "issues": [
         "Title length 81 chars (ideal 30\u201360)",
-        "Missing meta description",
-        "Missing canonical link tag",
         "No <h1> tag found",
         "Missing og:title",
         "Missing og:description",
@@ -485,8 +505,8 @@
     },
     {
       "file": "hover-menu.html",
-      "title": "ClearGlass \u00b7 Elegant Hover Menu",
-      "title_length": 31,
+      "title": "ClearGlassInc \u00b7 Elegant Hover Menu",
+      "title_length": 34,
       "title_ok": true,
       "description": null,
       "description_length": 0,
@@ -557,17 +577,16 @@
       "description": "ClearGlass 2027-grade cyber-intelligence command-center interface for GitHub Pages.",
       "description_length": 83,
       "description_ok": false,
-      "canonical_present": false,
+      "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
       "img_without_alt": 0,
       "og_title": false,
       "og_description": false,
       "og_image": false,
-      "score": 50,
+      "score": 60,
       "issues": [
         "Description length 83 chars (ideal 120\u2013160)",
-        "Missing canonical link tag",
         "Missing og:title",
         "Missing og:description",
         "Missing og:image"
@@ -640,6 +659,28 @@
         "Missing canonical link tag",
         "Missing og:title",
         "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "percival-build.html",
+      "title": "PERCIVAL BUILD \u00b7 Spatial Workspace \u2014 ClearGlass Inc.",
+      "title_length": 52,
+      "title_ok": true,
+      "description": "PERCIVAL BUILD \u2014 an orbital spatial workspace. A live space scene with floating, draggable widgets: digital clock, audio spectrum visualizer, system monitor, app dock, mixer tray, and a command bar. Pure HTML, CSS & JS.",
+      "description_length": 219,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Description length 219 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
         "Missing og:image"
       ]
     },
@@ -753,6 +794,30 @@
       ]
     },
     {
+      "file": "systems.html",
+      "title": "Systems Control Surface \u2014 PERCIVAL Operations Console | ClearGlass Inc",
+      "title_length": 70,
+      "title_ok": false,
+      "description": "ClearGlass Systems Control Surface \u2014 a live operations console monitoring site health, SEO, accessibility, brand consistency, deployments, and automation, governed by PERCIVAL.",
+      "description_length": 176,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 1,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Title length 70 chars (ideal 30\u201360)",
+        "Description length 176 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
+        "1 image(s) missing alt text",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "tax.html",
       "title": "ClearTax AI\u2122 \u2014 Precision Tax Intelligence \u00b7 U.S. &amp; Canada Cross-Border \u00b7 ClearGlass Inc.",
       "title_length": 92,
@@ -797,15 +862,15 @@
     }
   ],
   "top_issues": [
-    "29x \u2014 Missing og:image",
-    "24x \u2014 Description length N chars (ideal N\u2013N)",
-    "20x \u2014 Title length N chars (ideal N\u2013N)",
+    "32x \u2014 Missing og:image",
+    "27x \u2014 Description length N chars (ideal N\u2013N)",
+    "22x \u2014 Title length N chars (ideal N\u2013N)",
+    "15x \u2014 No <hN> tag found",
     "13x \u2014 Missing og:description",
-    "13x \u2014 No <hN> tag found",
     "11x \u2014 Missing og:title",
-    "8x \u2014 Missing canonical link tag",
-    "7x \u2014 Missing meta description",
-    "1x \u2014 N image(s) missing alt text",
-    "1x \u2014 Missing <title>"
+    "6x \u2014 Missing meta description",
+    "5x \u2014 Missing canonical link tag",
+    "2x \u2014 N image(s) missing alt text",
+    "1x \u2014 Multiple <hN> tags (N)"
   ]
 }

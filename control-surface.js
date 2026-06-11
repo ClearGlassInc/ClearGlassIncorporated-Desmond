@@ -24,6 +24,7 @@
   var GROUPS = [
     ["Command", [
       ["Systems Control Surface", "systems.html", "▣"],
+      ["AVALON · ARTEMIS ⊕ PERCIVAL", "artemis-percival.html", "⬣"],
       ["PERCIVAL OS", "percival-os.html", "◐"],
       ["SENTINEL · Live", "sentinel.html", "◉"],
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],

@@ -42,13 +42,17 @@ class TestPageHealth:
 
 
 class TestCheckLocalFiles:
-    def test_returns_list(self) -> None:
-        issues = _check_local_files()
-        assert isinstance(issues, list)
+    def test_returns_errors_and_warnings(self) -> None:
+        # Contract: _check_local_files() -> tuple[list[str], list[str]]
+        result = _check_local_files()
+        assert isinstance(result, tuple) and len(result) == 2
+        errors, warnings = result
+        assert isinstance(errors, list)
+        assert isinstance(warnings, list)
 
     def test_all_strings(self) -> None:
-        issues = _check_local_files()
-        for issue in issues:
+        errors, warnings = _check_local_files()
+        for issue in (*errors, *warnings):
             assert isinstance(issue, str)
 
 

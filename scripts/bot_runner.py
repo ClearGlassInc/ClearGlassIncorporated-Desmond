@@ -50,6 +50,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "content",
         "schedule": "daily",
     },
+    "cpa_partner": {
+        "module": "bots.cpa_partner_outreach_bot",
+        "group": "content",
+        "schedule": "weekly",
+    },
     "operations": {
         "module": "bots.operations_finance_bot",
         "group": "ops",
@@ -65,6 +70,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "monitoring",
         "schedule": "daily",
     },
+    "content_collector": {
+        "module": "bots.content_collector_bot",
+        "group": "content",
+        "schedule": "daily",
+    },
     "seo_optimizer": {
         "module": "bots.seo_optimizer_bot",
         "group": "seo",
@@ -78,6 +88,16 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
     "alert_dispatcher": {
         "module": "bots.alert_dispatcher_bot",
         "group": "monitoring",
+        "schedule": "daily",
+    },
+    "wealth_ladder": {
+        "module": "bots.wealth_ladder_bot",
+        "group": "strategy",
+        "schedule": "daily",
+    },
+    "self_evolving": {
+        "module": "bots.self_evolving_engine",
+        "group": "orchestration",
         "schedule": "daily",
     },
     "master_orchestrator": {

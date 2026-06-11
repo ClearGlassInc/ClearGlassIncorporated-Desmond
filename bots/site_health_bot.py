@@ -1,13 +1,22 @@
 # Copyright (c) 2024-2026 ClearGlass Inc. All Rights Reserved.
 # Proprietary and confidential. See LICENSE for terms.
-"""Site health bot — checks live page availability and SEO structure."""
+"""Site health bot — checks live page availability and SEO structure.
+
+Health policy:
+  * FAILURES (flip overall_healthy -> False): any monitored page unreachable,
+    or a required root file missing. These are genuine availability problems.
+  * WARNINGS (reported, do NOT fail health): HTML pages not referenced in
+    sitemap.xml. The repo intentionally ships many utility / non-indexed pages
+    (404, button-system, hover-menu, component demos, etc.), so sitemap drift
+    is informational, not an outage.
+"""
 from __future__ import annotations
 
 import json
 import re
 import sys
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -33,6 +42,22 @@ PAGES_TO_CHECK = [
 REQUIRED_META_TAGS = ["description", "og:title", "og:description"]
 REQUIRED_ROOT_FILES = ["sitemap.xml", "robots.txt", "schema.json", ".nojekyll"]
 
+# Pages that are intentionally not in the sitemap (utility / demo / fragments).
+# Drift on anything else is still surfaced as a warning, never a failure.
+SITEMAP_EXEMPT = {
+    "404.html",
+    "button-system.html",
+    "button-lab.html",            # component showcase / demo, not a landing page
+    "hover-menu.html",
+    "smb.html",
+    "index.html",                 # homepage is indexed as "/" — avoid duplicate
+    "cg-loader.html",             # session preloader fragment, not a landing page
+    "offline.html",               # service-worker offline shell (noindex)
+    "ClearGlass-NEXUS-v12-FINAL.html",  # build artifact of clearglass-nexus.html
+    # Google Search Console verification token — must NOT be in the sitemap
+    "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
+}
+
 
 @dataclass
 class PageHealth:
@@ -55,7 +80,8 @@ class HealthReport:
     pages_healthy: int
     pages_unreachable: int
     pages: list[dict[str, Any]]
-    local_issues: list[str]
+    local_issues: list[str]                       # failures
+    local_warnings: list[str] = field(default_factory=list)  # non-failing
 
 
 def _check_page(path: str) -> PageHealth:
@@ -92,26 +118,31 @@ def _check_page(path: str) -> PageHealth:
         )
 
 
-def _check_local_files() -> list[str]:
-    issues: list[str] = []
+def _check_local_files() -> tuple[list[str], list[str]]:
+    """Return (errors, warnings). Missing required files are errors; sitemap
+    drift is a warning."""
+    errors: list[str] = []
+    warnings: list[str] = []
 
     for fname in REQUIRED_ROOT_FILES:
         if not (ROOT / fname).exists():
-            issues.append(f"Missing required file: {fname}")
+            errors.append(f"Missing required file: {fname}")
 
     sitemap_path = ROOT / "sitemap.xml"
     if sitemap_path.exists():
         sitemap = sitemap_path.read_text()
         for html_file in sorted(ROOT.glob("*.html")):
+            if html_file.name in SITEMAP_EXEMPT:
+                continue
             if html_file.name not in sitemap:
-                issues.append(f"HTML page not referenced in sitemap.xml: {html_file.name}")
+                warnings.append(f"HTML page not referenced in sitemap.xml: {html_file.name}")
 
-    return issues
+    return errors, warnings
 
 
 def run() -> HealthReport:
     pages = [_check_page(p) for p in PAGES_TO_CHECK]
-    local_issues = _check_local_files()
+    local_errors, local_warnings = _check_local_files()
 
     healthy_count = sum(1 for p in pages if p.reachable and not p.missing_meta)
     unreachable_count = sum(1 for p in pages if not p.reachable)
@@ -119,12 +150,14 @@ def run() -> HealthReport:
     report = HealthReport(
         run_utc=datetime.now(timezone.utc).isoformat(),
         site_url=SITE_URL,
-        overall_healthy=(unreachable_count == 0 and not local_issues),
+        # Only true availability problems fail health; sitemap drift is a warning.
+        overall_healthy=(unreachable_count == 0 and not local_errors),
         pages_checked=len(pages),
         pages_healthy=healthy_count,
         pages_unreachable=unreachable_count,
         pages=[asdict(p) for p in pages],
-        local_issues=local_issues,
+        local_issues=local_errors,
+        local_warnings=local_warnings,
     )
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -149,10 +182,15 @@ def run() -> HealthReport:
         if p.error:
             md.append(f"  - Error: {p.error}")
 
-    if local_issues:
+    if local_errors:
         md += ["", "## Local Issues", ""]
-        for issue in local_issues:
-            md.append(f"- ⚠️ {issue}")
+        for issue in local_errors:
+            md.append(f"- ❌ {issue}")
+
+    if local_warnings:
+        md += ["", "## Warnings (non-failing)", ""]
+        for warn in local_warnings:
+            md.append(f"- ⚠️ {warn}")
 
     (OUTPUT_DIR / "site_health_report.md").write_text("\n".join(md))
     return report
@@ -162,6 +200,8 @@ def main() -> None:
     report = run()
     status = "HEALTHY" if report.overall_healthy else "ISSUES DETECTED"
     print(f"Site Health: {status} — {report.pages_healthy}/{report.pages_checked} pages OK")
+    if report.local_warnings:
+        print(f"  ({len(report.local_warnings)} non-failing sitemap warning(s))")
     if not report.overall_healthy:
         sys.exit(1)
 

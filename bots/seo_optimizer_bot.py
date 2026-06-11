@@ -48,13 +48,12 @@ class SEOReport:
 
 def _extract_meta_content(html: str, name: str) -> str | None:
     for pattern in (
-        rf'<meta[^>]+name=["\']({re.escape(name)})["\'][^>]+content=["\']([^"\']*)["\']',
-        rf'<meta[^>]+content=["\']([^"\']*)["\'][^>]+name=["\']({re.escape(name)})["\']',
+        rf'<meta[^>]+name=["\']{re.escape(name)}["\'][^>]+content=["\'](?P<content>[^"\']*)["\']',
+        rf'<meta[^>]+content=["\'](?P<content>[^"\']*)["\'][^>]+name=["\']{re.escape(name)}["\']',
     ):
         m = re.search(pattern, html, re.IGNORECASE)
         if m:
-            groups = m.groups()
-            return groups[-1].strip() if len(groups) >= 2 else groups[0].strip()
+            return m.group("content").strip()
     return None
 
 

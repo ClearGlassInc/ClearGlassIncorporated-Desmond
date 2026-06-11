@@ -12,6 +12,7 @@ jobs:
   update-python-deps:
     name: Check & Update Python Dependencies
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
       pull-requests: write

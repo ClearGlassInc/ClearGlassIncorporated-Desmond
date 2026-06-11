@@ -35,15 +35,15 @@ WORKFLOWS = ROOT / ".github" / "workflows"
 
 STABLE_ACTIONS = {
     "actions/checkout": "v6",
-    "actions/setup-python": "v5",
+    "actions/setup-python": "v6",
     "actions/setup-node": "v4",
     "actions/upload-artifact": "v7",
     "actions/download-artifact": "v4",
-    "actions/configure-pages": "v5",
-    "actions/upload-pages-artifact": "v3",
+    "actions/configure-pages": "v6",
+    "actions/upload-pages-artifact": "v5",
     "actions/deploy-pages": "v5",
-    "actions/github-script": "v7",
-    "actions/dependency-review-action": "v4",
+    "actions/github-script": "v9",
+    "actions/dependency-review-action": "v5",
 }
 
 INVALID_REUSABLE_JOB_KEYS = {"runs-on", "steps", "permissions"}
@@ -168,13 +168,27 @@ def ensure_permissions(data: dict[str, Any]) -> list[str]:
         if permissions.get("contents") != "read":
             permissions["contents"] = "read"
             changes.append("normalized contents permission to read")
-        if text_needs_pages:
+        if text_needs_pages and not _pages_perms_at_job_level(data):
             for key, value in {"pages": "write", "id-token": "write"}.items():
                 if permissions.get(key) != value:
                     permissions[key] = value
                     changes.append(f"added {key}: {value} for Pages deploy")
         data["permissions"] = permissions
     return changes
+
+
+def _pages_perms_at_job_level(data: dict[str, Any]) -> bool:
+    """Job-level pages/id-token write satisfies least privilege — don't widen to workflow level."""
+    jobs = data.get("jobs") or {}
+    if not isinstance(jobs, dict):
+        return False
+    for job in jobs.values():
+        if not isinstance(job, dict):
+            continue
+        perms = job.get("permissions")
+        if isinstance(perms, dict) and perms.get("pages") == "write" and perms.get("id-token") == "write":
+            return True
+    return False
 
 
 def main() -> int:

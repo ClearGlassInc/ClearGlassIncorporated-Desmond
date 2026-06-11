@@ -1,4 +1,4 @@
-/* ClearGlass · Control Surface v3.1
+/* ClearGlass · Control Surface 
    ────────────────────────────────────────────────────────────────────────────
    One integrated operating layer for the portfolio: a compact top cluster
    (status + command pill + menu), a command-palette-first interaction model

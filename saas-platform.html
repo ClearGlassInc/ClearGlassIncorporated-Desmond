@@ -312,16 +312,18 @@
 </main>
 
 <script>
-  // Read-first control plane: the page only fetches from approved,
-  // non-sensitive endpoints. n8n is the event ingress layer; events are
-  // normalized to {type,title,status,value,timestamp,source,severity}.
+  // Read-first control plane: same-origin JSON feeds published hourly by
+  // .github/workflows/control-surface-feeds.yml from real operational
+  // sources (Actions API, live site probes, repo state). Contract:
+  // docs/control-surface-event-contract.md — events normalized to
+  // {type,title,status,value,timestamp,source,severity}.
   const endpoints = {
-    metrics: "https://example.com/api/clearglass/metrics",
-    activity: "https://example.com/api/clearglass/activity",
-    pipeline: "https://example.com/api/clearglass/pipeline",
-    health: "https://example.com/api/clearglass/health",
-    alerts: "https://example.com/api/clearglass/alerts",
-    runs: "https://example.com/api/clearglass/runs"
+    metrics: "data/control-surface/metrics.json",
+    activity: "data/control-surface/activity.json",
+    pipeline: "data/control-surface/pipeline.json",
+    health: "data/control-surface/health.json",
+    alerts: "data/control-surface/alerts.json",
+    runs: "data/control-surface/runs.json"
   };
 
   const fallback = {

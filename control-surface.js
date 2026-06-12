@@ -55,6 +55,7 @@
     ]],
     ["Company", [
       ["Home", "index.html", "⌂"],
+      ["Pricing & Engagements", "pricing.html", "◎"],
       ["Web Design & Dev", "web-design.html", "◳"],
       ["Button Lab", "button-lab.html", "◫"]
     ]]
@@ -63,6 +64,7 @@
   // ── actions (verbs, not just destinations) ──────────────────────────────
   var ACTIONS = [
     { label: "Open Systems Control Surface", sub: "Operations console", icon: "▣", href: "systems.html" },
+    { label: "Pricing & engagements", sub: "Book a fixed-fee engagement", icon: "◎", href: "pricing.html" },
     { label: "Website design & development", sub: "Engagement", icon: "◳", href: "web-design.html" },
     { label: "Open latest project", sub: "Artemis VI", icon: "🛰", href: "artemis.html" },
     { label: "Deployment status", sub: "GitHub Actions", icon: "◇", act: "status" },
@@ -85,6 +87,7 @@
 
   var CORE = [
     ["Home", "index.html", "⌂"],
+      ["Pricing & Engagements", "pricing.html", "◎"],
     ["PERCIVAL", "percival-os.html", "◐"],
     ["SENTINEL", "sentinel.html", "◉"],
     ["Intel", "intelligence.html", "🧠"]

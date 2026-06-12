@@ -29,6 +29,7 @@
       ["SENTINEL · Live", "sentinel.html", "◉"],
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
       ["Agent Mesh", "agentmesh.html", "⌗"],
+      ["BLUEDESK · CISO Console", "bluedesk.html", "🛡"],
       ["AI Operator", "ai-operator.html", "🜂"],
       ["Command Console", "command-console.html", "▤"],
       ["Event Control Surface", "saas-platform.html", "◆"]
@@ -66,6 +67,7 @@
     { label: "Open latest project", sub: "Artemis VI", icon: "🛰", href: "artemis.html" },
     { label: "Deployment status", sub: "GitHub Actions", icon: "◇", act: "status" },
     { label: "Security research", sub: "SENTINEL", icon: "◉", href: "sentinel.html" },
+    { label: "BLUEDESK · CISO risk console", sub: "Blue team", icon: "🛡", href: "bluedesk.html" },
     { label: "Contact", sub: EMAIL, icon: "✉", act: "contact" },
     { label: "Copy contact email", sub: EMAIL, icon: "⧉", act: "copyEmail" },
     { label: "View source on GitHub", sub: REPO, icon: "⌥", href: "https://github.com/" + REPO, ext: true }

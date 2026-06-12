@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BLUEDESK — CISO Risk & Blue-Team Console | ClearGlass Inc</title>
+<meta name="description" content="ClearGlass BLUEDESK — a lawful, defensive CISO risk-intelligence and blue-team console: exposure visibility, detection coverage, control assurance, and audit-ready evidence. Public-source + defensive telemetry only.">
+<link rel="canonical" href="https://clearglassinc.github.io/bluedesk.html">
+<meta property="og:title" content="BLUEDESK — CISO Risk & Blue-Team Console | ClearGlass Inc">
+<meta property="og:description" content="Lawful, defensive risk visibility, detection coverage, control assurance, and audit-ready evidence for enterprise security teams.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clearglassinc.github.io/bluedesk.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  :root{
+    --bg:#070a14; --surf:rgba(17,22,40,.62); --surf2:rgba(12,16,32,.78); --line:rgba(124,150,255,.15);
+    --line2:rgba(124,150,255,.3); --txt:#e7ecff; --dim:#94a0c0; --dim2:#67718f;
+    --info:#38bdf8; --warn:#fbbf24; --crit:#f472b6; --good:#34d399; --neutral:#7c89a8;
+    --mono:'JetBrains Mono',ui-monospace,monospace; --sans:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--txt);font-family:var(--sans);background:
+    radial-gradient(1100px 700px at 88% -12%,rgba(167,139,250,.1),transparent 55%),
+    radial-gradient(900px 650px at -10% 12%,rgba(56,189,248,.1),transparent 52%),var(--bg);
+    -webkit-font-smoothing:antialiased;line-height:1.5}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .app{display:grid;grid-template-columns:228px 1fr;min-height:100vh}
+
+  /* left rail */
+  aside{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(10,13,26,.9),rgba(8,10,22,.82));backdrop-filter:blur(14px);padding:16px 12px}
+  .brand{display:flex;align-items:center;gap:10px;padding:6px 8px 16px;border-bottom:1px solid var(--line);margin-bottom:10px}
+  .brand img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 14px rgba(124,150,255,.45)}
+  .brand .t{font-weight:800;font-size:14px;letter-spacing:.02em}
+  .brand .t b{background:var(--cg-crystal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .brand .s{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2)}
+  .navgrp{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim2);padding:14px 10px 5px}
+  .nav{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:9px;color:var(--dim);
+    font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid transparent;width:100%;background:none;text-align:left;font-family:inherit}
+  .nav:hover{background:rgba(124,150,255,.08);color:#fff}
+  .nav[aria-current=true]{background:linear-gradient(100deg,rgba(96,165,250,.18),rgba(167,139,250,.06));
+    border-color:var(--line2);color:#fff}
+  .nav .d{width:6px;height:6px;border-radius:50%;background:var(--neutral);flex:0 0 auto}
+
+  /* main */
+  main{padding:0 0 60px}
+  .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:13px 22px;
+    border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(9,12,24,.92),rgba(9,12,24,.74));backdrop-filter:blur(16px)}
+  .omni{flex:1;display:flex;align-items:center;gap:10px;background:var(--surf2);border:1px solid var(--line);
+    border-radius:11px;padding:9px 14px}
+  .omni input{flex:1;background:none;border:0;outline:0;color:#fff;font-family:var(--mono);font-size:12.5px}
+  .omni input::placeholder{color:var(--dim2)}
+  .omni .k{font-family:var(--mono);font-size:9.5px;color:var(--dim2);border:1px solid var(--line);border-radius:5px;padding:2px 6px}
+  .live{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:var(--dim);white-space:nowrap}
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 8px var(--good);animation:pl 1.6s infinite}
+  @keyframes pl{50%{opacity:.4}}
+
+  .view{padding:20px 22px;display:none}
+  .view.on{display:block;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h1.vt{font-size:18px;font-weight:700;margin:0 0 2px;letter-spacing:-.01em}
+  .vsub{color:var(--dim);font-size:12.5px;margin-bottom:18px}
+
+  .grid{display:grid;gap:14px}
+  .g5{grid-template-columns:repeat(5,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:1.4fr 1fr}
+  .card{background:var(--surf);border:1px solid var(--line);border-radius:15px;padding:16px 17px;backdrop-filter:blur(12px)}
+  .card h3{margin:0 0 3px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);font-weight:600}
+  .kpi{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.05}
+  .kpi.crystal{background:var(--cg-crystal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .trend{font-size:11px;margin-top:5px}
+  .up{color:var(--crit)} .dn{color:var(--good)} .flat{color:var(--dim)}
+
+  /* meta line on every widget */
+  .meta{display:flex;flex-wrap:wrap;gap:5px 12px;margin-top:11px;padding-top:10px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:9.5px;color:var(--dim2)}
+  .meta b{color:var(--dim);font-weight:500}
+  .conf{display:inline-flex;align-items:center;gap:6px}
+  .ring{--p:80;width:13px;height:13px;border-radius:50%;
+    background:conic-gradient(var(--info) calc(var(--p)*1%),rgba(124,150,255,.15) 0)}
+  .sect{margin:24px 0 11px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim2);
+    display:flex;align-items:center;gap:10px;font-weight:600}
+  .sect::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+  .badge{font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;border-radius:999px;border:1px solid;white-space:nowrap}
+  .b-info{color:var(--info);border-color:rgba(56,189,248,.35);background:rgba(56,189,248,.08)}
+  .b-warn{color:var(--warn);border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.08)}
+  .b-crit{color:var(--crit);border-color:rgba(244,114,182,.35);background:rgba(244,114,182,.08)}
+  .b-good{color:var(--good);border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.08)}
+  .b-dim{color:var(--dim);border-color:var(--line)}
+
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--dim2);font-weight:500;padding:9px 12px;border-bottom:1px solid var(--line)}
+  td{padding:10px 12px;border-bottom:1px solid var(--line)}
+  tbody tr{cursor:pointer;transition:background .12s}
+  tbody tr:hover{background:rgba(124,150,255,.06)}
+  .tbl-wrap{background:var(--surf);border:1px solid var(--line);border-radius:15px;overflow:hidden;backdrop-filter:blur(12px)}
+  .bar{height:5px;border-radius:3px;background:rgba(124,150,255,.12);overflow:hidden;min-width:60px}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .loading{padding:24px;text-align:center;color:var(--dim2);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .empty{padding:30px;text-align:center;color:var(--dim2);font-size:12px}
+
+  /* drill-down panel */
+  .scrim{position:fixed;inset:0;background:rgba(6,8,18,.6);backdrop-filter:blur(3px);opacity:0;pointer-events:none;
+    transition:opacity .25s;z-index:60}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(520px,94vw);z-index:61;transform:translateX(102%);
+    transition:transform .3s cubic-bezier(.16,1,.3,1);background:linear-gradient(180deg,rgba(14,18,36,.99),rgba(9,11,24,.99));
+    border-left:1px solid var(--line2);box-shadow:-30px 0 80px -30px rgba(0,0,0,.8);overflow-y:auto;padding:20px 22px 60px}
+  .drawer.on{transform:translateX(0)}
+  .drawer h2{font-size:15px;margin:0 0 4px}
+  .dx{position:absolute;top:16px;right:18px;background:none;border:0;color:var(--dim);font-size:20px;cursor:pointer}
+  .kv{display:grid;grid-template-columns:120px 1fr;gap:7px 14px;font-size:12px;margin:14px 0}
+  .kv .k{color:var(--dim2);font-family:var(--mono);font-size:10px;letter-spacing:.04em;padding-top:1px}
+  .excerpt{font-family:var(--mono);font-size:11px;color:#bcd0ff;background:rgba(8,12,26,.7);border:1px solid var(--line);
+    border-radius:9px;padding:12px 14px;white-space:pre-wrap;line-height:1.6;margin:8px 0}
+  .draweracts{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+
+  .lawful{margin-top:8px;font-size:10.5px;color:var(--dim);background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.22);
+    border-radius:10px;padding:9px 13px;display:flex;gap:9px;align-items:flex-start}
+  .lawful b{color:var(--good)}
+  footer{padding:26px 22px;border-top:1px solid var(--line);color:var(--dim2);font-size:10.5px;margin-top:20px}
+
+  @media(max-width:1100px){.g5{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:1fr 1fr}.g3,.g2{grid-template-columns:1fr}}
+  @media(max-width:780px){.app{grid-template-columns:1fr}aside{position:static;height:auto;display:flex;flex-wrap:wrap;gap:4px}
+    .navgrp{width:100%}.nav{width:auto}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside aria-label="BLUEDESK navigation">
+    <div class="brand">
+      <img src="icon.svg" alt="ClearGlass crystal mark">
+      <div><div class="t">BLUE<b>DESK</b></div><div class="s">CISO Risk Console</div></div>
+    </div>
+    <div class="navgrp">Risk Intelligence</div>
+    <button class="nav" aria-current="true" data-view="exec"><span class="d" style="background:var(--info)"></span>Executive Brief</button>
+    <button class="nav" data-view="intel"><span class="d" style="background:var(--warn)"></span>Threat Intel</button>
+    <button class="nav" data-view="exposure"><span class="d" style="background:var(--crit)"></span>Exposure</button>
+    <button class="nav" data-view="ioc"><span class="d" style="background:var(--good)"></span>IOC Feed · Live</button>
+    <div class="navgrp">Blue Team Command</div>
+    <button class="nav" data-view="coverage"><span class="d" style="background:var(--info)"></span>Detection Coverage</button>
+    <button class="nav" data-view="controls"><span class="d" style="background:var(--good)"></span>Control Assurance</button>
+    <button class="nav" data-view="triage"><span class="d" style="background:var(--warn)"></span>Alert Triage</button>
+    <div class="navgrp">Governance</div>
+    <button class="nav" data-view="provenance"><span class="d" style="background:var(--neutral)"></span>Source Audit</button>
+    <button class="nav" data-view="exceptions"><span class="d" style="background:var(--neutral)"></span>Risk Exceptions</button>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <div class="omni">
+        <span class="mono" style="color:var(--dim2)">⌕</span>
+        <input id="omni" aria-label="Search risk intelligence" spellcheck="false"
+          placeholder="actor:APT29 AND type:infrastructure AND confidence:>80 AND source:(NVD OR CISA_KEV)">
+        <span class="k">Boolean · Regex · NL</span>
+      </div>
+      <span class="live"><span class="pulse"></span><span id="liveLbl">KEV feed: connecting…</span></span>
+    </div>
+
+    <!-- EXECUTIVE BRIEF -->
+    <section class="view on" id="v-exec">
+      <h1 class="vt">Executive Brief</h1>
+      <div class="vsub">Enterprise risk posture · public-source verification + defensive telemetry correlation · audit-ready.</div>
+      <div class="grid g5">
+        <div class="card"><h3>Risk posture</h3><div class="kpi crystal">72<span style="font-size:14px">/100</span></div><div class="trend dn">▼ 4 pts · 30d (improving)</div>
+          <div class="meta"><span><b>Source</b> aggregate</span><span><b>Fresh</b> 4m ago</span></div></div>
+        <div class="card"><h3>External attack surface Δ</h3><div class="kpi">+6</div><div class="trend up">▲ new exposed services</div>
+          <div class="meta"><span><b>Source</b> Public DNS</span><span><b>Fresh</b> live</span></div></div>
+        <div class="card"><h3>MTTA</h3><div class="kpi">18<span style="font-size:14px">m</span></div><div class="trend dn">▼ within SLA</div>
+          <div class="meta"><span><b>Source</b> SIEM</span><span><b>Verified</b> 1h ago</span></div></div>
+        <div class="card"><h3>MTTC</h3><div class="kpi">3.4<span style="font-size:14px">h</span></div><div class="trend flat">— stable</div>
+          <div class="meta"><span><b>Source</b> EDR + SIEM</span><span><b>Verified</b> 1h ago</span></div></div>
+        <div class="card"><h3>Evidence readiness</h3><div class="kpi" style="color:var(--good)">94<span style="font-size:14px">%</span></div><div class="trend dn">▼ SOC 2 / ISO ready</div>
+          <div class="meta"><span><b>Source</b> Evidence vault</span><span><b>Fresh</b> 22m ago</span></div></div>
+      </div>
+      <div class="sect">Top active risks · ranked by business impact</div>
+      <div class="tbl-wrap"><table><thead><tr>
+        <th>Risk</th><th>Impact</th><th>Confidence</th><th>Evidence</th><th>Status</th><th>Source</th><th>Fresh</th></tr></thead>
+        <tbody id="execRisks"></tbody></table></div>
+      <div class="lawful"><span>⚖</span><div><b>Lawful collection.</b> BLUEDESK correlates public-source intelligence and the organization's own
+        defensive telemetry only. No person tracking, no covert collection, GDPR/CCPA-compliant aggregation, full provenance and chain-of-custody on every artifact.</div></div>
+    </section>
+
+    <!-- THREAT INTEL -->
+    <section class="view" id="v-intel">
+      <h1 class="vt">Threat Intel</h1>
+      <div class="vsub">Actor profiles, TTP mapping, and MITRE ATT&CK alignment — synthetic profiles for demonstration.</div>
+      <div class="tbl-wrap"><table><thead><tr>
+        <th>Actor</th><th>Sectors</th><th>ATT&CK</th><th>Confidence</th><th>Related CVEs</th><th>Status</th><th>Source</th></tr></thead>
+        <tbody id="intelRows"></tbody></table></div>
+    </section>
+
+    <!-- EXPOSURE -->
+    <section class="view" id="v-exposure">
+      <h1 class="vt">Exposure → Detection Linkage</h1>
+      <div class="vsub">Every exposed asset mapped to CVEs, exploit maturity, business criticality, and detection coverage.</div>
+      <div class="tbl-wrap"><table><thead><tr>
+        <th>Asset</th><th>Open service</th><th>CVE</th><th>Exploit</th><th>Criticality</th><th>Detections</th><th>Gap</th></tr></thead>
+        <tbody id="expRows"></tbody></table></div>
+    </section>
+
+    <!-- IOC FEED (LIVE) -->
+    <section class="view" id="v-ioc">
+      <h1 class="vt">IOC Feed <span class="badge b-good" style="vertical-align:middle">LIVE · CISA KEV</span></h1>
+      <div class="vsub">Live known-exploited-vulnerability catalog from CISA (public, lawful, keyless). The defensive feed every blue team should watch.</div>
+      <div class="tbl-wrap"><table><thead><tr>
+        <th>CVE</th><th>Vendor / product</th><th>Vulnerability</th><th>Action due</th><th>Source</th></tr></thead>
+        <tbody id="kevRows"><tr><td colspan="5" class="loading">Fetching CISA KEV catalog…</td></tr></tbody></table></div>
+    </section>
+
+    <!-- DETECTION COVERAGE -->
+    <section class="view" id="v-coverage">
+      <h1 class="vt">Detection Coverage Matrix</h1>
+      <div class="vsub">MITRE ATT&CK-aligned coverage. Rule counts, signal sources, and detection gaps — synthetic SOC state.</div>
+      <div class="tbl-wrap"><table><thead><tr>
+        <th>Tactic</th><th>Technique</th><th>Rules</th><th>Signal source</th><th>Coverage</th><th>Last tested</th><th>Gap</th></tr></thead>
+        <tbody id="covRows"></tbody></table></div>
+    </section>
+
+    <!-- CONTROL ASSURANCE -->
+    <section class="view" id="v-controls">
+      <h1 class="vt">Control Assurance</h1>
+      <div class="vsub">Are core defensive controls actually functioning? Status, evidence freshness, and owner per control.</div>
+      <div class="grid g3" id="controlCards"></div>
+    </section>
+
+    <!-- ALERT TRIAGE -->
+    <section class="view" id="v-triage">
+      <h1 class="vt">Alert Triage Workbench</h1>
+      <div class="vsub">Analyst workflow: New → Enriched → Correlated → Escalated → Contained → Closed. Click a row to open the case panel.</div>
+      <div class="tbl-wrap"><table><thead><tr>
+        <th>Alert</th><th>Entity</th><th>Severity</th><th>Confidence</th><th>State</th><th>Owner</th><th>Source</th></tr></thead>
+        <tbody id="triageRows"></tbody></table></div>
+    </section>
+
+    <!-- SOURCE AUDIT -->
+    <section class="view" id="v-provenance">
+      <h1 class="vt">Source Audit &amp; Provenance</h1>
+      <div class="vsub">Lawful-collection transparency: basis, retention, verification, and compliance tags for every source.</div>
+      <div class="tbl-wrap"><table><thead><tr>
+        <th>Source</th><th>Category</th><th>Collection basis</th><th>Retention</th><th>Confidence</th><th>Compliance</th><th>Verified</th></tr></thead>
+        <tbody id="provRows"></tbody></table></div>
+    </section>
+
+    <!-- RISK EXCEPTIONS -->
+    <section class="view" id="v-exceptions">
+      <h1 class="vt">Risk Exception Register</h1>
+      <div class="vsub">Accepted risks with owner, compensating control, residual risk, expiry, and required executive sign-off.</div>
+      <div class="tbl-wrap"><table><thead><tr>
+        <th>Exception</th><th>Owner</th><th>Compensating control</th><th>Residual</th><th>Expires</th><th>Sign-off</th></tr></thead>
+        <tbody id="excRows"></tbody></table></div>
+    </section>
+
+    <footer>
+      BLUEDESK · ClearGlass Inc. — lawful, defensive risk intelligence. Public-source verification · GDPR/CCPA-compliant aggregation ·
+      audit-ready evidence · executive decision support. Internal SOC figures shown are synthetic for demonstration; the IOC feed is live CISA KEV.
+    </footer>
+  </main>
+</div>
+
+<!-- drill-down -->
+<div class="scrim" id="scrim"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Case detail">
+  <button class="dx" id="drawerClose" aria-label="Close">✕</button>
+  <div id="drawerBody"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s,r){return (r||document).querySelector(s);};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function ring(p,col){return '<span class="ring" style="--p:'+p+';background:conic-gradient('+(col||'var(--info)')+' calc('+p+'*1%),rgba(124,150,255,.15) 0)"></span>';}
+  function impactBadge(i){var m={Critical:"b-crit",High:"b-warn",Medium:"b-info",Low:"b-dim"};return '<span class="badge '+(m[i]||"b-dim")+'">'+i+'</span>';}
+  function metaCell(src,fresh,conf){return '<span class="conf">'+ring(conf)+conf+'%</span>';}
+
+  /* ── nav routing ── */
+  $$(".nav").forEach(function(b){b.addEventListener("click",function(){
+    $$(".nav").forEach(function(n){n.setAttribute("aria-current","false");});
+    b.setAttribute("aria-current","true");
+    $$(".view").forEach(function(v){v.classList.remove("on");});
+    $("#v-"+b.dataset.view).classList.add("on");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });});
+
+  /* ── synthetic, clearly-labeled SOC data (no real personal data, no exploit logic) ── */
+  var execRisks=[
+    {risk:"Internet-facing VPN on unpatched firmware",impact:"Critical",conf:91,ev:14,status:"Escalated",src:"Public DNS + NVD",fresh:"live"},
+    {risk:"Vendor breach — payroll processor",impact:"High",conf:78,ev:6,status:"Monitoring",src:"Vendor advisory",fresh:"2h ago"},
+    {risk:"Exposed object storage bucket",impact:"High",conf:88,ev:9,status:"Contained",src:"Cloud logs",fresh:"40m ago"},
+    {risk:"Phishing infrastructure spoofing brand",impact:"Medium",conf:72,ev:5,status:"Triaged",src:"Public web",fresh:"15m ago"},
+    {risk:"Stale privileged accounts",impact:"Medium",conf:84,ev:11,status:"New",src:"IAM logs",fresh:"1h ago"}
+  ];
+  var stMap={Escalated:"b-crit",Monitoring:"b-info",Contained:"b-good",Triaged:"b-warn","New":"b-dim"};
+  $("#execRisks").innerHTML=execRisks.map(function(r,i){return '<tr data-case="exec'+i+'">'+
+    '<td>'+esc(r.risk)+'</td><td>'+impactBadge(r.impact)+'</td><td>'+metaCell(r.src,r.fresh,r.conf)+'</td>'+
+    '<td class="mono">'+r.ev+'</td><td><span class="badge '+(stMap[r.status]||"b-dim")+'">'+r.status+'</span></td>'+
+    '<td class="mono" style="color:var(--dim2)">'+esc(r.src)+'</td><td class="mono" style="color:var(--dim2)">'+esc(r.fresh)+'</td></tr>';}).join("");
+
+  var intel=[
+    {a:"APT-SYNTH-29",sec:"Government, Energy",att:"T1190 · T1566 · T1071",conf:86,cve:"CVE-2024-3400",st:"Tracking"},
+    {a:"FIN-SYNTH-7",sec:"Financial",att:"T1486 · T1078 · T1567",conf:74,cve:"CVE-2023-34362",st:"Tracking"},
+    {a:"COMMODITY-LOADER",sec:"Cross-sector",att:"T1059 · T1105",conf:63,cve:"—",st:"Monitoring"}
+  ];
+  $("#intelRows").innerHTML=intel.map(function(r,i){return '<tr data-case="intel'+i+'"><td class="mono">'+esc(r.a)+'</td>'+
+    '<td>'+esc(r.sec)+'</td><td class="mono" style="color:var(--info)">'+esc(r.att)+'</td>'+
+    '<td>'+metaCell(0,0,r.conf)+'</td><td class="mono">'+esc(r.cve)+'</td>'+
+    '<td><span class="badge b-info">'+r.st+'</span></td><td class="mono" style="color:var(--dim2)">OSINT</td></tr>';}).join("");
+
+  var exp=[
+    {asset:"edge-vpn-01",svc:"443/tcp SSL-VPN",cve:"CVE-2024-3400",exp:"Weaponized",crit:"Critical",det:2,gap:"No egress rule"},
+    {asset:"mail-gw-02",svc:"25/tcp SMTP",cve:"CVE-2023-34362",exp:"PoC",crit:"High",det:4,gap:"—"},
+    {asset:"s3-public-assets",svc:"https public",cve:"—",exp:"N/A",crit:"High",det:1,gap:"No access alerting"},
+    {asset:"jenkins-ci",svc:"8080/tcp",cve:"CVE-2024-23897",exp:"Weaponized",crit:"Medium",det:0,gap:"No rule deployed"}
+  ];
+  $("#expRows").innerHTML=exp.map(function(r,i){var gb=r.gap==="—"?'<span class="badge b-good">covered</span>':'<span class="badge b-crit">'+esc(r.gap)+'</span>';
+    return '<tr data-case="exp'+i+'"><td class="mono">'+esc(r.asset)+'</td><td class="mono" style="color:var(--dim2)">'+esc(r.svc)+'</td>'+
+    '<td class="mono" style="color:var(--info)">'+esc(r.cve)+'</td><td><span class="badge '+(r.exp==="Weaponized"?"b-crit":r.exp==="PoC"?"b-warn":"b-dim")+'">'+r.exp+'</span></td>'+
+    '<td>'+impactBadge(r.crit)+'</td><td class="mono">'+r.det+'</td><td>'+gb+'</td></tr>';}).join("");
+
+  var cov=[
+    {ta:"Initial Access",te:"T1190 Exploit Public App",rules:6,sig:"WAF + NDR",cov:82,test:"3d ago",gap:"Low"},
+    {ta:"Execution",te:"T1059 Command Interpreter",rules:11,sig:"EDR",cov:90,test:"1d ago",gap:"None"},
+    {ta:"Persistence",te:"T1136 Create Account",rules:3,sig:"IAM logs",cov:55,test:"21d ago",gap:"Medium"},
+    {ta:"Exfiltration",te:"T1567 Exfil over Web",rules:2,sig:"DNS + proxy",cov:40,test:"34d ago",gap:"High"}
+  ];
+  $("#covRows").innerHTML=cov.map(function(r,i){var col=r.cov>=80?"var(--good)":r.cov>=55?"var(--warn)":"var(--crit)";
+    return '<tr data-case="cov'+i+'"><td>'+esc(r.ta)+'</td><td class="mono" style="color:var(--info)">'+esc(r.te)+'</td>'+
+    '<td class="mono">'+r.rules+'</td><td class="mono" style="color:var(--dim2)">'+esc(r.sig)+'</td>'+
+    '<td><div class="bar"><i style="width:'+r.cov+'%;background:'+col+'"></i></div></td>'+
+    '<td class="mono" style="color:var(--dim2)">'+esc(r.test)+'</td>'+
+    '<td><span class="badge '+(r.gap==="None"?"b-good":r.gap==="Low"?"b-info":r.gap==="Medium"?"b-warn":"b-crit")+'">'+r.gap+'</span></td></tr>';}).join("");
+
+  var ctrls=[
+    {n:"MFA enforcement",st:"Healthy",own:"IAM",fresh:"live",ev:"IdP policy export"},
+    {n:"EDR coverage",st:"Healthy",own:"SecOps",fresh:"8m ago",ev:"Agent inventory 98.6%"},
+    {n:"DNS filtering",st:"Healthy",own:"NetOps",fresh:"20m ago",ev:"Resolver policy"},
+    {n:"Email authentication",st:"Degraded",own:"Messaging",fresh:"1h ago",ev:"DMARC p=none on 2 domains"},
+    {n:"Patch SLA adherence",st:"At risk",own:"IT Ops",fresh:"3h ago",ev:"7 criticals past SLA"},
+    {n:"Backup verification",st:"Healthy",own:"Infra",fresh:"6h ago",ev:"Restore test passed"}
+  ];
+  $("#controlCards").innerHTML=ctrls.map(function(c){var b=c.st==="Healthy"?"b-good":c.st==="Degraded"?"b-warn":"b-crit";
+    return '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px">'+
+    '<h3 style="margin:0">'+esc(c.n)+'</h3><span class="badge '+b+'">'+c.st+'</span></div>'+
+    '<div style="font-size:12px;color:var(--dim);margin-top:9px">'+esc(c.ev)+'</div>'+
+    '<div class="meta"><span><b>Owner</b> '+esc(c.own)+'</span><span><b>Fresh</b> '+esc(c.fresh)+'</span></div></div>';}).join("");
+
+  var triage=[
+    {al:"Anomalous OAuth grant",ent:"svc-acct-ci",sev:"High",conf:81,st:"Enriched",own:"L2 · A.Rivera",src:"IAM logs"},
+    {al:"Beaconing to new ASN",ent:"host-fin-44",sev:"Critical",conf:88,st:"Escalated",own:"L3 · K.Osei",src:"NDR"},
+    {al:"KEV match on edge asset",ent:"edge-vpn-01",sev:"Critical",conf:93,st:"Correlated",own:"L2 · A.Rivera",src:"CISA KEV + SIEM"},
+    {al:"Impossible-travel sign-in",ent:"user-pool",sev:"Medium",conf:64,st:"New",own:"unassigned",src:"IdP logs"},
+    {al:"Mass file rename",ent:"fileserver-03",sev:"High",conf:70,st:"Contained",own:"L3 · K.Osei",src:"EDR"}
+  ];
+  var tstMap={Enriched:"b-info",Escalated:"b-crit",Correlated:"b-warn","New":"b-dim",Contained:"b-good"};
+  $("#triageRows").innerHTML=triage.map(function(r,i){return '<tr data-case="triage'+i+'"><td>'+esc(r.al)+'</td>'+
+    '<td class="mono">'+esc(r.ent)+'</td><td>'+impactBadge(r.sev)+'</td><td>'+metaCell(0,0,r.conf)+'</td>'+
+    '<td><span class="badge '+(tstMap[r.st]||"b-dim")+'">'+r.st+'</span></td>'+
+    '<td style="color:var(--dim)">'+esc(r.own)+'</td><td class="mono" style="color:var(--dim2)">'+esc(r.src)+'</td></tr>';}).join("");
+
+  var prov=[
+    {s:"CISA KEV",cat:"Vuln catalog",basis:"Public gov feed",ret:"Indefinite",conf:99,comp:"Public",ver:"live"},
+    {s:"NVD",cat:"Vuln intel",basis:"Public gov feed",ret:"Indefinite",conf:97,comp:"Public",ver:"1h ago"},
+    {s:"Internal SIEM",cat:"Defensive telemetry",basis:"Owned systems",ret:"400d",conf:95,comp:"SOC 2",ver:"live"},
+    {s:"EDR",cat:"Endpoint telemetry",basis:"Owned endpoints",ret:"180d",conf:96,comp:"SOC 2",ver:"8m ago"},
+    {s:"Public DNS",cat:"Attack surface",basis:"Public records",ret:"90d",conf:88,comp:"GDPR/CCPA",ver:"live"},
+    {s:"Vendor advisories",cat:"Third-party risk",basis:"Published advisories",ret:"Indefinite",conf:84,comp:"Public",ver:"2h ago"}
+  ];
+  $("#provRows").innerHTML=prov.map(function(r){return '<tr><td class="mono" style="color:var(--info)">'+esc(r.s)+'</td>'+
+    '<td>'+esc(r.cat)+'</td><td style="color:var(--dim)">'+esc(r.basis)+'</td><td class="mono">'+esc(r.ret)+'</td>'+
+    '<td>'+metaCell(0,0,r.conf)+'</td><td><span class="badge b-good">'+esc(r.comp)+'</span></td>'+
+    '<td class="mono" style="color:var(--dim2)">'+esc(r.ver)+'</td></tr>';}).join("");
+
+  var exc=[
+    {e:"Legacy TLS 1.1 on partner gateway",own:"VP Eng",cc:"IP allowlist + WAF",res:"Medium",exp:"2026-09-30",sign:"Pending CISO"},
+    {e:"Unmanaged contractor laptops",own:"IT Director",cc:"VDI-only access",res:"Low",exp:"2026-07-15",sign:"Approved"},
+    {e:"Delayed patch — ERP module",own:"CIO",cc:"Network segmentation",res:"High",exp:"2026-06-30",sign:"Pending Board"}
+  ];
+  $("#excRows").innerHTML=exc.map(function(r,i){return '<tr data-case="exc'+i+'"><td>'+esc(r.e)+'</td>'+
+    '<td style="color:var(--dim)">'+esc(r.own)+'</td><td class="mono" style="color:var(--dim2)">'+esc(r.cc)+'</td>'+
+    '<td>'+impactBadge(r.res)+'</td><td class="mono">'+esc(r.exp)+'</td>'+
+    '<td><span class="badge '+(/Pending/.test(r.sign)?"b-warn":"b-good")+'">'+esc(r.sign)+'</span></td></tr>';}).join("");
+
+  /* ── LIVE: CISA KEV catalog (public, keyless, lawful) ── */
+  fetch("https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",{cache:"no-store"})
+    .then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(function(d){
+      var vulns=(d.vulnerabilities||[]).slice().reverse().slice(0,25);
+      $("#liveLbl").textContent="KEV feed: live · "+(d.count||vulns.length)+" tracked";
+      $("#kevRows").innerHTML=vulns.map(function(v,i){return '<tr data-case="kev'+i+'" data-kev=\''+esc(JSON.stringify({c:v.cveID,p:v.vendorProject+" "+v.product,n:v.vulnerabilityName,a:v.dueDate,d:v.shortDescription}))+'\'>'+
+        '<td class="mono" style="color:var(--info)">'+esc(v.cveID)+'</td>'+
+        '<td>'+esc(v.vendorProject)+' · '+esc(v.product)+'</td>'+
+        '<td>'+esc((v.vulnerabilityName||"").slice(0,70))+'</td>'+
+        '<td class="mono" style="color:var(--warn)">'+esc(v.dueDate||"—")+'</td>'+
+        '<td class="mono" style="color:var(--dim2)">CISA KEV</td></tr>';}).join("");
+      bindRows();
+    })
+    .catch(function(){
+      $("#liveLbl").textContent="KEV feed: offline";
+      $("#kevRows").innerHTML='<tr><td colspan="5" class="empty">CISA KEV feed unreachable from this session (network or rate limit). The feed is public and keyless; it resolves when reachable.</td></tr>';
+    });
+
+  /* ── drill-down case panel ── */
+  function caseFor(id,row){
+    var kev=row&&row.getAttribute("data-kev");
+    if(kev){try{var v=JSON.parse(kev);return {
+      title:v.c+" — known exploited vulnerability",sev:"Critical",src:"CISA KEV (live)",conf:99,
+      excerpt:v.p+"\n"+v.n+"\nAction due: "+v.a+"\n\n"+(v.d||""),
+      rationale:"Listed in CISA's Known Exploited Vulnerabilities catalog — active exploitation observed in the wild. Prioritize remediation against the published due date.",
+      next:"Confirm asset exposure → apply vendor patch or compensating control → validate detection coverage → capture evidence."};}catch(e){}}
+    var title=row?row.cells[0].textContent.trim():id;
+    return {title:title,sev:(row&&/Critical/.test(row.textContent))?"Critical":"High",src:row?(row.cells[row.cells.length-1].textContent.trim()):"—",conf:80,
+      excerpt:"// synthetic case record — no real personal data\nentity: "+(row&&row.cells[1]?row.cells[1].textContent.trim():"—")+"\nobservations: correlated across approved defensive sources",
+      rationale:"Risk rationale derived from correlated public-source and owned defensive telemetry. Confidence reflects evidence count and source weighting.",
+      next:"Triage → enrich with related IOCs/CVEs → confirm control + detection coverage → decide: contain, accept (with sign-off), or close."};
+  }
+  function openCase(id,row){
+    var c=caseFor(id,row);
+    $("#drawerBody").innerHTML='<h2>'+esc(c.title)+'</h2>'+
+      '<div style="margin-top:6px">'+impactBadge(c.sev)+' &nbsp;<span class="badge b-good">'+esc(c.src)+'</span></div>'+
+      '<div class="kv"><span class="k">Confidence</span><span>'+ring(c.conf)+' '+c.conf+'%</span>'+
+      '<span class="k">Provenance</span><span>'+esc(c.src)+'</span>'+
+      '<span class="k">Analyst</span><span>monitoring · audit trail recorded</span></div>'+
+      '<div class="sect" style="margin-top:6px">Raw source excerpt</div><div class="excerpt">'+esc(c.excerpt)+'</div>'+
+      '<div class="sect">Risk rationale</div><div style="font-size:12.5px;color:var(--dim)">'+esc(c.rationale)+'</div>'+
+      '<div class="sect">Recommended next action</div><div style="font-size:12.5px;color:var(--dim)">'+esc(c.next)+'</div>'+
+      '<div class="draweracts">'+
+      '<button class="cg-btn cg-btn--primary cg-btn--sm">Export for audit</button>'+
+      '<button class="cg-btn cg-btn--secondary cg-btn--sm">Create incident ticket</button>'+
+      '<button class="cg-btn cg-btn--ghost cg-btn--sm">Mark accepted risk</button>'+
+      '<button class="cg-btn cg-btn--ghost cg-btn--sm">Add executive note</button></div>'+
+      '<div class="lawful" style="margin-top:18px"><span>⚖</span><div>Defensive action only. No offensive steps, exploit code, or unauthorized access. Every state change is written to the chain-of-custody audit trail.</div></div>';
+    $("#scrim").classList.add("on");$("#drawer").classList.add("on");
+    setTimeout(function(){$("#drawerClose").focus();},40);
+  }
+  function closeCase(){$("#scrim").classList.remove("on");$("#drawer").classList.remove("on");}
+  function bindRows(){$$("tbody tr[data-case]").forEach(function(tr){
+    if(tr.__b)return;tr.__b=1;
+    tr.addEventListener("click",function(){openCase(tr.dataset.case,tr);});
+    tr.setAttribute("tabindex","0");
+    tr.addEventListener("keydown",function(e){if(e.key==="Enter"){openCase(tr.dataset.case,tr);}});
+  });}
+  bindRows();
+  $("#drawerClose").addEventListener("click",closeCase);
+  $("#scrim").addEventListener("click",closeCase);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeCase();});
+
+  /* omnibox: filters the currently-visible table (client-side, no network) */
+  $("#omni").addEventListener("input",function(){
+    var q=this.value.toLowerCase().trim();
+    var tb=$(".view.on tbody");if(!tb)return;
+    $$("tr",tb).forEach(function(tr){tr.style.display=(!q||tr.textContent.toLowerCase().indexOf(q)>-1)?"":"none";});
+  });
+})();
+</script>
+<script defer src="control-surface.js"></script>
+<script defer src="ui.js"></script>
+<script defer src="platform.js"></script>
+</body>
+</html>

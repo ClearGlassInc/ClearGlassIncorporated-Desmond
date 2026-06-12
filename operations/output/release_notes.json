@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-06-11T23:45:35.920328+00:00",
+  "run_utc": "2026-06-12T11:00:24.254517+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 109,
+  "commit_count": 112,
   "sections": {
     "New Features": [
       {
@@ -624,18 +624,61 @@
         "breaking": false
       }
     ],
-    "CI/CD": [
-      {
-        "sha": "85d898e",
-        "type": "ci",
-        "scope": "pages",
-        "subject": "consolidate on Actions deploy, modernize for Node 24",
-        "author": "Claude",
-        "date": "2026-06-03",
-        "breaking": false
-      }
-    ],
     "Maintenance": [
+      {
+        "sha": "0dd3b21",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Control Surface event contract: n8n envelope spec + JSON Schema",
+        "author": "Claude",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "99519eb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Event-Driven Control Surface dashboard",
+        "author": "Claude",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "aabb04e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis OS \u2014 cinematic intelligence operating system page",
+        "author": "Claude",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "be11e06",
+        "type": "chore",
+        "scope": null,
+        "subject": "Rebuild saas-platform as event-driven Control Surface in brand palette",
+        "author": "Claude",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "72f9e16",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix dependency-updater: missing label must not abort PR creation",
+        "author": "Claude",
+        "date": "2026-06-11",
+        "breaking": false
+      },
+      {
+        "sha": "48c0e24",
+        "type": "chore",
+        "scope": null,
+        "subject": "update Python test dependencies",
+        "author": "github-actions[bot]",
+        "date": "2026-06-11",
+        "breaking": false
+      },
       {
         "sha": "29dc96f",
         "type": "chore",
@@ -860,27 +903,18 @@
         "author": "Claude",
         "date": "2026-06-06",
         "breaking": false
-      },
-      {
-        "sha": "4cebc6e",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add content collector bot to harvest and store all site content",
-        "author": "Claude",
-        "date": "2026-06-03",
-        "breaking": false
-      },
-      {
-        "sha": "c2ffdda",
-        "type": "chore",
-        "scope": null,
-        "subject": "green the deployment checklist (CI, bot tests, sitemap)",
-        "author": "Claude",
-        "date": "2026-06-03",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "c850adb",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-11 23:45 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-11",
+        "breaking": false
+      },
       {
         "sha": "389c6d3",
         "type": "bot",
@@ -960,15 +994,6 @@
         "subject": "update generated outputs \u2014 2026-06-04 10:38 UTC [skip ci]",
         "author": "github-actions[bot]",
         "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "9ddea47",
-        "type": "bot",
-        "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-03 11:55 UTC [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-06-03",
         "breaking": false
       }
     ],

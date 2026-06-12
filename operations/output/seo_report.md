@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-11T23:45:35.945479+00:00
-**Average Score:** 62.8/100
-**Files Audited:** 39
+**Run:** 2026-06-12T11:00:24.348889+00:00
+**Average Score:** 63.7/100
+**Files Audited:** 41
 
 ## Page Scores
 
@@ -23,6 +23,7 @@
 | `attack-prompt-core.html` | 60/100 | 4 |
 | `button-lab.html` | 60/100 | 4 |
 | `cg-loader.html` | 60/100 | 4 |
+| `control-surface.html` | 60/100 | 4 |
 | `intelligence-interface.html` | 60/100 | 4 |
 | `jarvis-os.html` | 60/100 | 4 |
 | `smb.html` | 60/100 | 4 |
@@ -33,7 +34,6 @@
 | `intelligence.html` | 70/100 | 3 |
 | `percival-build.html` | 70/100 | 3 |
 | `percival-os.html` | 70/100 | 3 |
-| `saas-platform.html` | 70/100 | 3 |
 | `sentinel.html` | 70/100 | 3 |
 | `web-design.html` | 70/100 | 3 |
 | `ai-operator.html` | 80/100 | 2 |
@@ -43,19 +43,21 @@
 | `guardian.html` | 80/100 | 2 |
 | `index.html` | 80/100 | 2 |
 | `revenue-engine.html` | 80/100 | 2 |
+| `saas-platform.html` | 80/100 | 2 |
 | `stegoforge.html` | 80/100 | 2 |
 | `tax.html` | 80/100 | 2 |
+| `artemis-os.html` | 90/100 | 1 |
 | `clearpulse.html` | 90/100 | 1 |
 | `intelligence-command-surface.html` | 90/100 | 1 |
 
 ## Top Issues Across All Pages
 
-- 33x — Missing og:image
-- 28x — Description length N chars (ideal N–N)
+- 34x — Missing og:image
+- 30x — Description length N chars (ideal N–N)
 - 22x — Title length N chars (ideal N–N)
-- 16x — No <hN> tag found
-- 13x — Missing og:description
-- 11x — Missing og:title
+- 15x — No <hN> tag found
+- 14x — Missing og:description
+- 12x — Missing og:title
 - 6x — Missing meta description
 - 5x — Missing canonical link tag
 - 2x — N image(s) missing alt text

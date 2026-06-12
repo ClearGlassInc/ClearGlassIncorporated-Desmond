@@ -1,6 +1,6 @@
-# Release Notes — 2026-06-11
+# Release Notes — 2026-06-12
 
-*109 commit(s) since repository start*
+*112 commit(s) since repository start*
 
 ## New Features
 
@@ -82,12 +82,14 @@
 
 - **sentinel:** drop unused import (ruff clean) (`db363ee`)
 
-## CI/CD
-
-- **pages:** consolidate on Actions deploy, modernize for Node 24 (`85d898e`)
-
 ## Maintenance
 
+- Add Control Surface event contract: n8n envelope spec + JSON Schema (`0dd3b21`)
+- Add Event-Driven Control Surface dashboard (`99519eb`)
+- Add Artemis OS — cinematic intelligence operating system page (`aabb04e`)
+- Rebuild saas-platform as event-driven Control Surface in brand palette (`be11e06`)
+- Fix dependency-updater: missing label must not abort PR creation (`72f9e16`)
+- update Python test dependencies (`48c0e24`)
 - Patch all workflows: per-job timeouts + align doctor rules with proven versions (`29dc96f`)
 - Site health: index saas-platform + button-lab, add missing page metadata (`836252e`)
 - Create saas-platform.html for live dashboard (`e5297e1`)
@@ -113,11 +115,10 @@
 - Update documentation structure: add docs/index.md as central hub linking AI TTS and future sections (`3a49de8`)
 - Add open-source TTS models guide for AI voice agents and custom cloning (Aria integration) (`4b9e961`)
 - Add CPA / fractional CFO partner outreach automation bot (`2d99d1d`)
-- Add content collector bot to harvest and store all site content (`4cebc6e`)
-- green the deployment checklist (CI, bot tests, sitemap) (`c2ffdda`)
 
 ## Automation
 
+- update generated outputs — 2026-06-11 23:45 UTC [skip ci] (`c850adb`)
 - update generated outputs — 2026-06-11 11:21 UTC [skip ci] (`389c6d3`)
 - update generated outputs — 2026-06-10 10:55 UTC [skip ci] (`ddf8bae`)
 - update generated outputs — 2026-06-09 10:33 UTC [skip ci] (`82617c6`)
@@ -127,7 +128,6 @@
 - update generated outputs — 2026-06-05 10:45 UTC [skip ci] (`27a8de2`)
 - update generated outputs — 2026-06-04 19:41 UTC [skip ci] (`5deec71`)
 - update generated outputs — 2026-06-04 10:38 UTC [skip ci] (`eb007c4`)
-- update generated outputs — 2026-06-03 11:55 UTC [skip ci] (`9ddea47`)
 
 ## Style
 

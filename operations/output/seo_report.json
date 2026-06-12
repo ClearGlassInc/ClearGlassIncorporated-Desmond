@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-11T23:45:35.945479+00:00",
-  "files_audited": 39,
-  "average_score": 62.8,
+  "run_utc": "2026-06-12T11:00:24.348889+00:00",
+  "files_audited": 41,
+  "average_score": 63.7,
   "pages": [
     {
       "file": "404.html",
@@ -163,6 +163,26 @@
         "No <h1> tag found",
         "2 image(s) missing alt text",
         "Missing og:image"
+      ]
+    },
+    {
+      "file": "artemis-os.html",
+      "title": "Artemis \u00b7 Intelligence Operating System \u00b7 ClearGlass Inc.",
+      "title_length": 57,
+      "title_ok": true,
+      "description": "Artemis is the intelligence operating system from ClearGlass Inc. \u2014 a cinematic AI-native layer for strategic intelligence, autonomous analysis, and visionary infrastructure.",
+      "description_length": 174,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 174 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -411,6 +431,29 @@
       "issues": [
         "Title length 66 chars (ideal 30\u201360)",
         "Description length 212 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "control-surface.html",
+      "title": "ClearGlass \u00b7 Event-Driven Control Surface",
+      "title_length": 41,
+      "title_ok": true,
+      "description": "ClearGlass Event-Driven Control Surface \u2014 live operational dashboard for metrics, activity, health, and alerts.",
+      "description_length": 111,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Description length 111 chars (ideal 120\u2013160)",
+        "Missing og:title",
+        "Missing og:description",
         "Missing og:image"
       ]
     },
@@ -729,23 +772,22 @@
     },
     {
       "file": "saas-platform.html",
-      "title": "ClearGlass \u2022 Live SaaS Platform",
-      "title_length": 31,
+      "title": "ClearGlass \u2022 Event-Driven Control Surface",
+      "title_length": 41,
       "title_ok": true,
-      "description": "ClearGlass SaaS Operations Center \u2014 a live dashboard concept for agent operations, threat monitoring, and zero-trust compliance status across protected Ontario organizations.",
-      "description_length": 174,
+      "description": "ClearGlass Event-Driven Control Surface \u2014 live operational dashboard for metrics, activity, lead pipeline, health, and alerts. Read-first, GitHub Pages friendly.",
+      "description_length": 161,
       "description_ok": false,
       "canonical_present": true,
-      "h1_count": 0,
-      "h1_ok": false,
+      "h1_count": 1,
+      "h1_ok": true,
       "img_without_alt": 0,
       "og_title": true,
       "og_description": true,
       "og_image": false,
-      "score": 70,
+      "score": 80,
       "issues": [
-        "Description length 174 chars (ideal 120\u2013160)",
-        "No <h1> tag found",
+        "Description length 161 chars (ideal 120\u2013160)",
         "Missing og:image"
       ]
     },
@@ -884,12 +926,12 @@
     }
   ],
   "top_issues": [
-    "33x \u2014 Missing og:image",
-    "28x \u2014 Description length N chars (ideal N\u2013N)",
+    "34x \u2014 Missing og:image",
+    "30x \u2014 Description length N chars (ideal N\u2013N)",
     "22x \u2014 Title length N chars (ideal N\u2013N)",
-    "16x \u2014 No <hN> tag found",
-    "13x \u2014 Missing og:description",
-    "11x \u2014 Missing og:title",
+    "15x \u2014 No <hN> tag found",
+    "14x \u2014 Missing og:description",
+    "12x \u2014 Missing og:title",
     "6x \u2014 Missing meta description",
     "5x \u2014 Missing canonical link tag",
     "2x \u2014 N image(s) missing alt text",

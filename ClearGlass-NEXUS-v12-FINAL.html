@@ -2498,10 +2498,17 @@ async function fetchSpaceWx(){
 async function fetchISS(){
   setSf('sf-iss','o');
   try{
-    const r=await fetch('https://api.open-notify.org/iss-now.json');
-    const d=await r.json();
-    S.iss.lat=parseFloat(d.iss_position.latitude);
-    S.iss.lon=parseFloat(d.iss_position.longitude);
+    let _lat, _lon;
+    try{
+      const wr=await fetch('https://api.wheretheiss.at/v1/satellites/25544');
+      if(!wr.ok) throw 0;
+      const wd=await wr.json(); _lat=parseFloat(wd.latitude); _lon=parseFloat(wd.longitude);
+    }catch(_){
+      const r=await fetch('https://api.open-notify.org/iss-now.json');
+      const d=await r.json(); _lat=parseFloat(d.iss_position.latitude); _lon=parseFloat(d.iss_position.longitude);
+    }
+    S.iss.lat=_lat;
+    S.iss.lon=_lon;
     S.iss.alt=420;
     const dlat=S.iss.lat-S.loc.lat;const dlon=S.iss.lon-S.loc.lon;
     const a=Math.sin(dlat*Math.PI/360)**2+Math.cos(S.iss.lat*Math.PI/180)*Math.cos(S.loc.lat*Math.PI/180)*Math.sin(dlon*Math.PI/360)**2;

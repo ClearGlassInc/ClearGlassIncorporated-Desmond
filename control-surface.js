@@ -30,7 +30,8 @@
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
       ["Agent Mesh", "agentmesh.html", "⌗"],
       ["AI Operator", "ai-operator.html", "🜂"],
-      ["Command Console", "command-console.html", "▤"]
+      ["Command Console", "command-console.html", "▤"],
+      ["Event Control Surface", "saas-platform.html", "◆"]
     ]],
     ["Platforms", [
       ["Artemis IV Core", "artemis-iv.html", "🧭"],

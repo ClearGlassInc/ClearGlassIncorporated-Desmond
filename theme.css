@@ -65,3 +65,20 @@ html {
 }
 
 /* keep the nav menu mark consistent everywhere (already blue-violet) */
+
+/* ── ADVANCED RENDERING SHARPNESS ──────────────────────────────────
+   Site-wide crispness layer. Smooths type consistently across engines and
+   renders bitmap marks (logos ship at 1320px, displayed at 40–44px) with
+   high-quality scaling so edges stay clean on standard and HiDPI/4K screens. */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+body { text-rendering: optimizeLegibility; }
+img,
+svg,
+.nav-mark img,
+.footer-mark img {
+  image-rendering: auto;          /* high-quality resampling on downscale */
+}

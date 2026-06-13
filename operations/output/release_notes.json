@@ -1,10 +1,37 @@
 {
-  "run_utc": "2026-06-12T11:00:24.254517+00:00",
+  "run_utc": "2026-06-13T09:56:10.138312+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
   "commit_count": 112,
   "sections": {
     "New Features": [
+      {
+        "sha": "b84d484",
+        "type": "feat",
+        "scope": "revenue",
+        "subject": "add live Interac e-Transfer payment rail to pricing (#429)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "abf8a61",
+        "type": "feat",
+        "scope": "revenue",
+        "subject": "live pricing storefront \u2014 book-ready conversion surface (#423)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "0a13c60",
+        "type": "feat",
+        "scope": "bluedesk",
+        "subject": "CISO risk & blue-team defensive console (#422)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-12",
+        "breaking": false
+      },
       {
         "sha": "ac30b77",
         "type": "feat",
@@ -357,15 +384,6 @@
         "breaking": false
       },
       {
-        "sha": "9d3c537",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "live geospatial mode \u2014 real location + USGS/NWS feeds + camera (#357)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
         "sha": "e8f6d19",
         "type": "feat",
         "scope": "sentinel",
@@ -373,117 +391,27 @@
         "author": "Claude",
         "date": "2026-06-04",
         "breaking": false
-      },
-      {
-        "sha": "ac00ffe",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "link SENTINEL command center into the PERCIVAL HUD (#355)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "8a3b779",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "privacy-preserving vision ops + visual command center (#354)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "4caf7dd",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "privacy-preserving vision ops + visual command center",
-        "author": "Claude",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "aec99cd",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "add Exploit-DB as approved defensive threat-intel source (#352)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "6cca8a4",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "add Exploit-DB as approved defensive threat-intel source",
-        "author": "Claude",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "9be32d5",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "charter v2.1 \u2014 geospatial + OSINT extension (#350)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "bf288b4",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "geospatial+OSINT charter + enforced hard rules (#349)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "5988604",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "privacy-first SENTINEL charter + enforced policy gate (#348)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "434aec1",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "red/black mission-ready HUD reskin (#344)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "14ca6d4",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "Phase-One Governance Shell + RBAC retrieval (#343)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "193a832",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "add Pinecone+Milvus adapters and recall harness",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "5c9a5e7",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "Phase-One fail-closed Governance Shell + RBAC retrieval",
-        "author": "Claude",
-        "date": "2026-06-04",
-        "breaking": false
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "ee3a1c8",
+        "type": "fix",
+        "scope": "seo",
+        "subject": "PERCIVAL sitemap sweep \u2014 index artemis-os + control-surface (#424)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "a84f742",
+        "type": "fix",
+        "scope": "live",
+        "subject": "replace dead open-notify ISS feed with wheretheiss.at (#421)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-12",
+        "breaking": false
+      },
       {
         "sha": "73a8d5b",
         "type": "fix",
@@ -564,33 +492,6 @@
         "author": "Desmond Otieno",
         "date": "2026-06-05",
         "breaking": false
-      },
-      {
-        "sha": "e895f24",
-        "type": "fix",
-        "scope": "sitemap",
-        "subject": "index remaining content pages; exempt non-indexable (#347)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "23fcd32",
-        "type": "fix",
-        "scope": "health-bot",
-        "subject": "treat sitemap drift as warning, not a health failure (#346)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "2eacb13",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "Health Monitor label crash + SENTINEL demo runner (#345)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
       }
     ],
     "Documentation": [
@@ -613,18 +514,88 @@
         "breaking": false
       }
     ],
-    "Tests": [
-      {
-        "sha": "db363ee",
-        "type": "test",
-        "scope": "sentinel",
-        "subject": "drop unused import (ruff clean)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      }
-    ],
     "Maintenance": [
+      {
+        "sha": "c47d3a4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Retire legacy pages-build-deployment by pinning Pages source to GitHub Actions",
+        "author": "Claude",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "0aac777",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove broken threads.html footer link in artemis-os",
+        "author": "Claude",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "0fc45dd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Rebuild control-surface command dropdown with crystal-glass styling and live page links",
+        "author": "Claude",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "e55d800",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix broken footer link in artemis-os.html",
+        "author": "Claude",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "9911afb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add UNCLASSIFIED classification banner to homepage",
+        "author": "Claude",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "acbebfb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add AEGIS-ML-Defense.ps1 - advanced adversarial ML input sanitization and entropy-based defense function",
+        "author": "Desmond Otieno",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "843124d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add scripts/Invoke-AegisMLDefense.ps1 - Production-ready adversarial ML input defense function with entropy analysis",
+        "author": "Desmond Otieno",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "05a2697",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add OSINT-Methodologies.md documenting gathering techniques and advanced automation",
+        "author": "Desmond Otieno",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
+        "sha": "5e65972",
+        "type": "chore",
+        "scope": null,
+        "subject": "Go live: real data plane for the Control Surface (all six streams)",
+        "author": "Claude",
+        "date": "2026-06-12",
+        "breaking": false
+      },
       {
         "sha": "0dd3b21",
         "type": "chore",
@@ -907,6 +878,42 @@
     ],
     "Automation": [
       {
+        "sha": "3944583",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "b1420c8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "5ad6ebf",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "67ba8fb",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-12 11:00 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-12",
+        "breaking": false
+      },
+      {
         "sha": "c850adb",
         "type": "bot",
         "scope": null,
@@ -983,15 +990,6 @@
         "type": "bot",
         "scope": null,
         "subject": "update generated outputs \u2014 2026-06-04 19:41 UTC [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "eb007c4",
-        "type": "bot",
-        "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-04 10:38 UTC [skip ci]",
         "author": "github-actions[bot]",
         "date": "2026-06-04",
         "breaking": false

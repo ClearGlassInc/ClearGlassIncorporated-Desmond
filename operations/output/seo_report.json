@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-12T11:00:24.348889+00:00",
-  "files_audited": 41,
-  "average_score": 63.7,
+  "run_utc": "2026-06-13T09:56:10.165318+00:00",
+  "files_audited": 43,
+  "average_score": 64.4,
   "pages": [
     {
       "file": "404.html",
@@ -276,6 +276,28 @@
       ]
     },
     {
+      "file": "bluedesk.html",
+      "title": "BLUEDESK \u2014 CISO Risk & Blue-Team Console | ClearGlass Inc",
+      "title_length": 57,
+      "title_ok": true,
+      "description": "ClearGlass BLUEDESK \u2014 a lawful, defensive CISO risk-intelligence and blue-team console: exposure visibility, detection coverage, control assurance, and audit-ready evidence. Public-source + defensive telemetry only.",
+      "description_length": 215,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 9,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Description length 215 chars (ideal 120\u2013160)",
+        "Multiple <h1> tags (9)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "button-lab.html",
       "title": "Button Lab \u00b7 ClearGlass \u2014 Machined Glass Control System",
       "title_length": 55,
@@ -436,24 +458,22 @@
     },
     {
       "file": "control-surface.html",
-      "title": "ClearGlass \u00b7 Event-Driven Control Surface",
-      "title_length": 41,
-      "title_ok": true,
-      "description": "ClearGlass Event-Driven Control Surface \u2014 live operational dashboard for metrics, activity, health, and alerts.",
-      "description_length": 111,
-      "description_ok": false,
+      "title": "ClearGlass \u00b7 Event-Driven Control Surface | PERCIVAL Command Surface",
+      "title_length": 68,
+      "title_ok": false,
+      "description": "ClearGlass Event-Driven Control Surface \u2014 PERCIVAL command surface with a crystal-glass dropdown linking every platform, console, and intelligence product.",
+      "description_length": 155,
+      "description_ok": true,
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
       "img_without_alt": 0,
-      "og_title": false,
-      "og_description": false,
+      "og_title": true,
+      "og_description": true,
       "og_image": false,
-      "score": 60,
+      "score": 80,
       "issues": [
-        "Description length 111 chars (ideal 120\u2013160)",
-        "Missing og:title",
-        "Missing og:description",
+        "Title length 68 chars (ideal 30\u201360)",
         "Missing og:image"
       ]
     },
@@ -750,6 +770,28 @@
       ]
     },
     {
+      "file": "pricing.html",
+      "title": "Pricing & Engagements \u2014 Start with ClearGlass | ClearGlass Inc",
+      "title_length": 62,
+      "title_ok": false,
+      "description": "Fixed-fee cybersecurity and web engineering engagements from ClearGlass Inc, Ontario \u2014 security quick-audit, Microsoft 365 hardening sprint, PHIPA readiness, managed monitoring, and website builds. Transparent pricing, secure checkout-ready.",
+      "description_length": 241,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Title length 62 chars (ideal 30\u201360)",
+        "Description length 241 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "revenue-engine.html",
       "title": "Revenue Engine \u2014 ClearGlass Inc. \u00b7 AI-Driven Business Automation",
       "title_length": 64,
@@ -926,15 +968,15 @@
     }
   ],
   "top_issues": [
-    "34x \u2014 Missing og:image",
-    "30x \u2014 Description length N chars (ideal N\u2013N)",
-    "22x \u2014 Title length N chars (ideal N\u2013N)",
+    "36x \u2014 Missing og:image",
+    "31x \u2014 Description length N chars (ideal N\u2013N)",
+    "24x \u2014 Title length N chars (ideal N\u2013N)",
     "15x \u2014 No <hN> tag found",
-    "14x \u2014 Missing og:description",
-    "12x \u2014 Missing og:title",
+    "13x \u2014 Missing og:description",
+    "11x \u2014 Missing og:title",
     "6x \u2014 Missing meta description",
     "5x \u2014 Missing canonical link tag",
     "2x \u2014 N image(s) missing alt text",
-    "1x \u2014 Multiple <hN> tags (N)"
+    "2x \u2014 Multiple <hN> tags (N)"
   ]
 }

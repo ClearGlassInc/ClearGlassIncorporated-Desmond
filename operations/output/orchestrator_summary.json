@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-12T11:00:24.870084+00:00",
+  "run_utc": "2026-06-13T09:56:10.643526+00:00",
   "dry_run": false,
   "total": 12,
   "ok": 12,
@@ -13,15 +13,21 @@
       "error": null
     },
     {
+      "bot_id": "daily_priority",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
+    {
       "bot_id": "growth",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "daily_priority",
+      "bot_id": "wealth_ladder",
       "status": "ok",
-      "duration_s": 0.02,
+      "duration_s": 0.05,
       "error": null
     },
     {
@@ -31,15 +37,9 @@
       "error": null
     },
     {
-      "bot_id": "wealth_ladder",
-      "status": "ok",
-      "duration_s": 0.06,
-      "error": null
-    },
-    {
       "bot_id": "seo_optimizer",
       "status": "ok",
-      "duration_s": 0.17,
+      "duration_s": 0.11,
       "error": null
     },
     {
@@ -75,7 +75,7 @@
     {
       "bot_id": "self_evolving",
       "status": "ok",
-      "duration_s": 0.09,
+      "duration_s": 0.01,
       "error": null
     }
   ]

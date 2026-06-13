@@ -1,9 +1,12 @@
-# Release Notes — 2026-06-12
+# Release Notes — 2026-06-13
 
 *112 commit(s) since repository start*
 
 ## New Features
 
+- **revenue:** add live Interac e-Transfer payment rail to pricing (#429) (`b84d484`)
+- **revenue:** live pricing storefront — book-ready conversion surface (#423) (`abf8a61`)
+- **bluedesk:** CISO risk & blue-team defensive console (#422) (`0a13c60`)
 - **nexus:** v12.3 — CG loader splash + live patch + intel expansion (#414) (`ac30b77`)
 - **percival:** PERCIVAL BUILD — orbital spatial workspace (#413) (`7bb48c8`)
 - **percival:** rename agent to PERCIVAL + Systems Control Surface console (#411) (`ba9650d`)
@@ -43,23 +46,12 @@
 - **percival:** purple-team detection-engineering engine + PFAS agent (`dc85d5e`)
 - **home:** live USGS/NWS LIVE OPS ribbon linking to SENTINEL (#359) (`ce95436`)
 - live USGS/NWS in PERCIVAL + live airspace (OpenSky) in SENTINEL (#358) (`2729bb6`)
-- **sentinel:** live geospatial mode — real location + USGS/NWS feeds + camera (#357) (`9d3c537`)
 - **sentinel:** live geospatial mode — real location + USGS/NWS feeds + camera (`e8f6d19`)
-- **percival:** link SENTINEL command center into the PERCIVAL HUD (#355) (`ac00ffe`)
-- **sentinel:** privacy-preserving vision ops + visual command center (#354) (`8a3b779`)
-- **sentinel:** privacy-preserving vision ops + visual command center (`4caf7dd`)
-- **sentinel:** add Exploit-DB as approved defensive threat-intel source (#352) (`aec99cd`)
-- **sentinel:** add Exploit-DB as approved defensive threat-intel source (`6cca8a4`)
-- **sentinel:** charter v2.1 — geospatial + OSINT extension (#350) (`9be32d5`)
-- **sentinel:** geospatial+OSINT charter + enforced hard rules (#349) (`bf288b4`)
-- **sentinel:** privacy-first SENTINEL charter + enforced policy gate (#348) (`5988604`)
-- **percival:** red/black mission-ready HUD reskin (#344) (`434aec1`)
-- **sentinel:** Phase-One Governance Shell + RBAC retrieval (#343) (`14ca6d4`)
-- **sentinel:** add Pinecone+Milvus adapters and recall harness (`193a832`)
-- **sentinel:** Phase-One fail-closed Governance Shell + RBAC retrieval (`5c9a5e7`)
 
 ## Bug Fixes
 
+- **seo:** PERCIVAL sitemap sweep — index artemis-os + control-surface (#424) (`ee3a1c8`)
+- **live:** replace dead open-notify ISS feed with wheretheiss.at (#421) (`a84f742`)
 - **seo,a11y:** apply PERCIVAL's auto-fix queue + calibrate scanner (#412) (`73a8d5b`)
 - **steward:** calibrate link/sitemap scanners from first live run (#410) (`5e19664`)
 - **seo:** repair malformed sitemap entries and drop dead URL (#402) (`799b436`)
@@ -69,21 +61,23 @@
 - **pages:** move permissions to deploy job for GitHub Pages [workflow-doctor] (`be77431`)
 - **ci:** pin actions/checkout to v6 in cert-bot.yml [workflow-doctor] (`a8a66d7`)
 - **live:** keep crypto panels live after CoinCap v2 retirement (#376) (`fcece3d`)
-- **sitemap:** index remaining content pages; exempt non-indexable (#347) (`e895f24`)
-- **health-bot:** treat sitemap drift as warning, not a health failure (#346) (`23fcd32`)
-- **ci:** Health Monitor label crash + SENTINEL demo runner (#345) (`2eacb13`)
 
 ## Documentation
 
 - **repo:** add Code of Conduct, issue/PR templates, deployment runbook (#397) (`0fc8153`)
 - **offers:** add ClearGlass ARTEMIS Service Agent specification (`5634704`)
 
-## Tests
-
-- **sentinel:** drop unused import (ruff clean) (`db363ee`)
-
 ## Maintenance
 
+- Retire legacy pages-build-deployment by pinning Pages source to GitHub Actions (`c47d3a4`)
+- Remove broken threads.html footer link in artemis-os (`0aac777`)
+- Rebuild control-surface command dropdown with crystal-glass styling and live page links (`0fc45dd`)
+- Fix broken footer link in artemis-os.html (`e55d800`)
+- Add UNCLASSIFIED classification banner to homepage (`9911afb`)
+- Add AEGIS-ML-Defense.ps1 - advanced adversarial ML input sanitization and entropy-based defense function (`acbebfb`)
+- Add scripts/Invoke-AegisMLDefense.ps1 - Production-ready adversarial ML input defense function with entropy analysis (`843124d`)
+- Add OSINT-Methodologies.md documenting gathering techniques and advanced automation (`05a2697`)
+- Go live: real data plane for the Control Surface (all six streams) (`5e65972`)
 - Add Control Surface event contract: n8n envelope spec + JSON Schema (`0dd3b21`)
 - Add Event-Driven Control Surface dashboard (`99519eb`)
 - Add Artemis OS — cinematic intelligence operating system page (`aabb04e`)
@@ -118,6 +112,10 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`3944583`)
+- refresh control-surface data feeds [skip ci] (`b1420c8`)
+- refresh control-surface data feeds [skip ci] (`5ad6ebf`)
+- update generated outputs — 2026-06-12 11:00 UTC [skip ci] (`67ba8fb`)
 - update generated outputs — 2026-06-11 23:45 UTC [skip ci] (`c850adb`)
 - update generated outputs — 2026-06-11 11:21 UTC [skip ci] (`389c6d3`)
 - update generated outputs — 2026-06-10 10:55 UTC [skip ci] (`ddf8bae`)
@@ -127,7 +125,6 @@
 - update generated outputs — 2026-06-06 09:24 UTC [skip ci] (`6e77f2c`)
 - update generated outputs — 2026-06-05 10:45 UTC [skip ci] (`27a8de2`)
 - update generated outputs — 2026-06-04 19:41 UTC [skip ci] (`5deec71`)
-- update generated outputs — 2026-06-04 10:38 UTC [skip ci] (`eb007c4`)
 
 ## Style
 

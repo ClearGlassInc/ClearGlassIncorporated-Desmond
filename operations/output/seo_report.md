@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-12T11:00:24.348889+00:00
-**Average Score:** 63.7/100
-**Files Audited:** 41
+**Run:** 2026-06-13T09:56:10.165318+00:00
+**Average Score:** 64.4/100
+**Files Audited:** 43
 
 ## Page Scores
 
@@ -23,21 +23,23 @@
 | `attack-prompt-core.html` | 60/100 | 4 |
 | `button-lab.html` | 60/100 | 4 |
 | `cg-loader.html` | 60/100 | 4 |
-| `control-surface.html` | 60/100 | 4 |
 | `intelligence-interface.html` | 60/100 | 4 |
 | `jarvis-os.html` | 60/100 | 4 |
 | `smb.html` | 60/100 | 4 |
 | `artemis-blue-team.html` | 70/100 | 3 |
 | `artemis-iv.html` | 70/100 | 3 |
+| `bluedesk.html` | 70/100 | 3 |
 | `clearpulse-architecture.html` | 70/100 | 3 |
 | `command-console.html` | 70/100 | 3 |
 | `intelligence.html` | 70/100 | 3 |
 | `percival-build.html` | 70/100 | 3 |
 | `percival-os.html` | 70/100 | 3 |
+| `pricing.html` | 70/100 | 3 |
 | `sentinel.html` | 70/100 | 3 |
 | `web-design.html` | 70/100 | 3 |
 | `ai-operator.html` | 80/100 | 2 |
 | `banking-law-advisor.html` | 80/100 | 2 |
+| `control-surface.html` | 80/100 | 2 |
 | `corporate-legal-advisor.html` | 80/100 | 2 |
 | `government.html` | 80/100 | 2 |
 | `guardian.html` | 80/100 | 2 |
@@ -52,13 +54,13 @@
 
 ## Top Issues Across All Pages
 
-- 34x — Missing og:image
-- 30x — Description length N chars (ideal N–N)
-- 22x — Title length N chars (ideal N–N)
+- 36x — Missing og:image
+- 31x — Description length N chars (ideal N–N)
+- 24x — Title length N chars (ideal N–N)
 - 15x — No <hN> tag found
-- 14x — Missing og:description
-- 12x — Missing og:title
+- 13x — Missing og:description
+- 11x — Missing og:title
 - 6x — Missing meta description
 - 5x — Missing canonical link tag
 - 2x — N image(s) missing alt text
-- 1x — Multiple <hN> tags (N)
+- 2x — Multiple <hN> tags (N)

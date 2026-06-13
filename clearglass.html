@@ -362,7 +362,7 @@
 
   function buildMockData(){
     // Root domain node
-    var root = addNode({id:DOMAIN, label:DOMAIN, kind:"domain"});
+    addNode({id:DOMAIN, label:DOMAIN, kind:"domain"});
 
     // Subdomains
     SUBS.forEach(function(s){
@@ -439,7 +439,7 @@
 
     treeEl.innerHTML = "";
     groups.forEach(function(g){
-      var key=g[0], lbl=g[1], items=g[2], col=g[3];
+      var key=g[0], lbl=g[1], items=g[2];
       var wrap=document.createElement("div");
       wrap.className="grp"+(state.collapsed[key]?" collapsed":"");
 
@@ -639,7 +639,6 @@
     canvas.style.width=r.width+"px"; canvas.style.height=r.height+"px";
   }
 
-  function worldToScreen(p){ return { x:(p.x+view.x)*view.k, y:(p.y+view.y)*view.k }; }
   function nodeRadius(n){ return n.kind==="domain"?9 : n.kind==="subdomain"?6 : 3.4; }
 
   function drawGraph(){

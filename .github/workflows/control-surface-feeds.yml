@@ -48,8 +48,18 @@ jobs:
           fi
           git add data/control-surface
           git commit -m "bot: refresh control-surface data feeds [skip ci]"
-          git push
-          echo "changed=true" >> "$GITHUB_OUTPUT"
+          # Other bots push to main during our run; a plain push hits a
+          # non-fast-forward rejection. Rebase onto the latest main and retry.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt/5) — rebasing onto latest main"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push refreshed feeds after 5 attempts"
+          exit 1
 
   dispatch-pages-deploy:
     name: Publish to Pages

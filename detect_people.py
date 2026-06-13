@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-# Copyright (c) 2024-2026 ClearGlass Inc. All Rights Reserved.
-# Proprietary and confidential. See LICENSE for terms.
 """Detect people in an input image.
 
-CLI entry point that accepts an image path via a parameter and runs people
-detection over it, emitting the result to stdout (human-readable or JSON).
+Command-line entry point that accepts an image path and runs people
+detection on it. The detection backend is intentionally pluggable: wire a
+real model into ``detect_people`` to return bounding boxes. Until a backend
+is configured the command reports that detection is unavailable rather than
+silently returning zero people.
 
-Run locally:
-  python detect_people.py path/to/image.jpg
-  python detect_people.py path/to/image.jpg --json
+Usage:
+    python detect_people.py --image path/to/photo.jpg
+    python detect_people.py --image path/to/photo.jpg --json
 """
+
 from __future__ import annotations
 
 import argparse
@@ -17,53 +19,62 @@ import json
 import sys
 from pathlib import Path
 
-SUPPORTED_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tiff"}
+
+class DetectionUnavailableError(RuntimeError):
+    """Raised when no people-detection backend has been configured."""
 
 
-def detect_people(image_path: Path) -> list[dict[str, float]]:
-    """Return bounding boxes for people detected in ``image_path``.
+def detect_people(image_path: Path) -> list[dict[str, int]]:
+    """Return detected people as a list of bounding boxes for ``image_path``.
 
-    Each detection is a dict with ``x``, ``y``, ``width``, ``height`` and
-    ``confidence`` keys. The detection backend is pluggable; until a model is
-    wired in this returns an empty list rather than fabricating detections.
-
-    Raises:
-        FileNotFoundError: if ``image_path`` does not point to a file.
-        ValueError: if the file extension is not a supported image type.
+    Each box is a dict with ``x``, ``y``, ``width`` and ``height`` keys.
+    This is a scaffold: integrate a detection model (e.g. an object-detection
+    API or a local model) here and return its results.
     """
-    if not image_path.is_file():
-        raise FileNotFoundError(f"Image not found: {image_path}")
-    if image_path.suffix.lower() not in SUPPORTED_SUFFIXES:
-        raise ValueError(f"Unsupported image type: {image_path.suffix or '<none>'}")
-    # Detection backend not yet configured; report no detections.
-    return []
+    raise DetectionUnavailableError(
+        "No people-detection backend is configured. "
+        "Implement detect_people() to wire in a model."
+    )
 
 
-def build_parser() -> argparse.ArgumentParser:
-    """Build the command-line argument parser."""
-    parser = argparse.ArgumentParser(description="Detect people in an image.")
-    parser.add_argument("image", type=Path, help="Path to the input image.")
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Detect people in an input image.",
+    )
+    parser.add_argument(
+        "-i",
+        "--image",
+        required=True,
+        type=Path,
+        help="Path to the input image to analyze.",
+    )
     parser.add_argument(
         "--json",
         action="store_true",
-        help="Emit results as JSON instead of human-readable text.",
+        dest="as_json",
+        help="Emit the result as JSON.",
     )
-    return parser
+    return parser.parse_args(argv)
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Run the detector against the image given on the command line."""
-    args = build_parser().parse_args(argv)
+    args = parse_args(argv)
+
+    if not args.image.exists():
+        print(f"error: image not found: {args.image}", file=sys.stderr)
+        return 2
+
     try:
         people = detect_people(args.image)
-    except (FileNotFoundError, ValueError) as exc:
+    except DetectionUnavailableError as exc:
         print(f"error: {exc}", file=sys.stderr)
-        return 1
+        return 3
 
-    if args.json:
-        print(json.dumps({"image": str(args.image), "count": len(people), "people": people}))
+    if args.as_json:
+        print(json.dumps({"image": str(args.image), "people": people}, indent=2))
     else:
         print(f"Detected {len(people)} person(s) in {args.image}")
+
     return 0
 
 

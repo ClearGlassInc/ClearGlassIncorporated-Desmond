@@ -2,71 +2,92 @@
   {
     "title": "Control Surface feeds refreshed",
     "status": "ok",
-    "detail": "Initial data plane seeded from fleet execution",
-    "time": "22:34",
-    "timestamp": "2026-06-12T22:34:00Z"
+    "detail": "Data plane regenerated from live sources",
+    "time": "01:34",
+    "timestamp": "2026-06-13T01:34:16Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "warn",
+    "detail": "schedule on main \u00b7 run #1",
+    "time": "01:34",
+    "timestamp": "2026-06-13T01:34:03Z"
+  },
+  {
+    "title": "CI",
+    "status": "bad",
+    "detail": "push on main \u00b7 run #502",
+    "time": "01:27",
+    "timestamp": "2026-06-13T01:27:09Z"
   },
   {
     "title": "Deploy GitHub Pages",
     "status": "ok",
-    "detail": "push on main \u00b7 run #213",
-    "time": "14:00",
-    "timestamp": "2026-06-11T14:00:16Z"
+    "detail": "push on main \u00b7 run #225",
+    "time": "01:27",
+    "timestamp": "2026-06-13T01:27:09Z"
   },
   {
-    "title": "Bot Orchestrator",
+    "title": "Security",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #12",
-    "time": "23:45",
-    "timestamp": "2026-06-11T23:45:24Z"
+    "detail": "push on main \u00b7 run #265",
+    "time": "01:27",
+    "timestamp": "2026-06-13T01:27:09Z"
   },
   {
-    "title": "Health Monitor",
+    "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #43",
-    "time": "23:45",
-    "timestamp": "2026-06-11T23:45:25Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #7",
-    "time": "23:45",
-    "timestamp": "2026-06-11T23:45:27Z"
-  },
-  {
-    "title": "Content Pipeline",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #13",
-    "time": "23:45",
-    "timestamp": "2026-06-11T23:45:28Z"
-  },
-  {
-    "title": "Compliance Evidence",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #2",
-    "time": "23:45",
-    "timestamp": "2026-06-11T23:45:31Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #86",
-    "time": "23:45",
-    "timestamp": "2026-06-11T23:45:32Z"
+    "detail": "push on main \u00b7 run #515",
+    "time": "01:27",
+    "timestamp": "2026-06-13T01:27:09Z"
   },
   {
     "title": "Policy Gate",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #213",
-    "time": "23:45",
-    "timestamp": "2026-06-11T23:45:34Z"
+    "detail": "push on main \u00b7 run #233",
+    "time": "01:27",
+    "timestamp": "2026-06-13T01:27:09Z"
   },
   {
-    "title": "API Security Audit",
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #656",
+    "time": "01:27",
+    "timestamp": "2026-06-13T01:27:08Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1147",
+    "time": "01:27",
+    "timestamp": "2026-06-13T01:27:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "workflow_dispatch on main \u00b7 run #2",
-    "time": "23:46",
-    "timestamp": "2026-06-11T23:46:00Z"
+    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-9e512393-5032-40a1-8ffd-a3a8cb99a4bb \u00b7 run #36",
+    "time": "01:08",
+    "timestamp": "2026-06-13T01:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-848c914d-2f2f-43c0-b750-42120ac2580e \u00b7 run #35",
+    "time": "00:08",
+    "timestamp": "2026-06-13T00:08:07Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1146",
+    "time": "23:22",
+    "timestamp": "2026-06-12T23:22:20Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #264",
+    "time": "23:22",
+    "timestamp": "2026-06-12T23:22:18Z"
   }
 ]

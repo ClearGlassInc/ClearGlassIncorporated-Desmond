@@ -1,7 +1,12 @@
 [
   {
     "status": "warn",
-    "title": "API Security Audit failing",
-    "detail": "Latest run #2 concluded failure (2026-06-11). Target staging-api.clearglassinc.com unreachable."
+    "title": "CI failing",
+    "detail": "Latest run #502 concluded failure (2026-06-13)."
+  },
+  {
+    "status": "warn",
+    "title": "Running Copilot cloud agent failing",
+    "detail": "Latest run #36 concluded failure (2026-06-13)."
   }
 ]

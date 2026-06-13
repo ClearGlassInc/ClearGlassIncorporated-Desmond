@@ -364,7 +364,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 "use strict";
 /* ============================================================
    PERCIVAL OS — reference command-center HUD (front-end only)
-   All "intelligence" here is a deterministic simulation that
+   All "intelligence" here is a deterministic ai that
    demonstrates the UX described in PERCIVAL_OS_BLUEPRINT.md.
    ============================================================ */
 
@@ -635,7 +635,7 @@ async function handle(raw){
   }
   if(/\bbuild\b|spatial|workspace|orbital desktop|open build|launch build/.test(t)){
     focusSub('orchestr');
-    await jarvisSay(`Opening <b>PERCIVAL BUILD</b> — the orbital spatial workspace. Floating widgets (clock, spectrum, telemetry, mixer) over a live space scene, with an app dock and command bar.`);
+    await CGSay(`Opening <b>PERCIVAL BUILD</b> — the orbital spatial workspace. Floating widgets (clock, spectrum, telemetry, mixer) over a live space scene, with an app dock and command bar.`);
     addEvent('ok','PERCIVAL BUILD spatial workspace launched','EXECUTION');
     setTimeout(()=>{window.location.href='percival-build.html';},900);
     return;
@@ -645,14 +645,14 @@ async function handle(raw){
   }
   if(/kpi|revenue|metric|dashboard|number|status/.test(t)){
     focusSub('command');
-    return jarvisSay(`<b>Live status.</b> Revenue MTD <b>${kpis[0].fmt(kpis[0].v)}</b> (▲12.4%) · Tasks cleared <b>${kpis[1].v|0}</b> · Uptime <b>99.98%</b> · Threats blocked <b>${threat.blocked.toLocaleString()}</b>. All subsystems nominal; security watching one contained anomaly.`,{conf:{src:5,lvl:'HIGH',ms:60}});
+    return CGSay(`<b>Live status.</b> Revenue MTD <b>${kpis[0].fmt(kpis[0].v)}</b> (▲12.4%) · Tasks cleared <b>${kpis[1].v|0}</b> · Uptime <b>99.98%</b> · Threats blocked <b>${threat.blocked.toLocaleString()}</b>. All subsystems nominal; security watching one contained anomaly.`,{conf:{src:5,lvl:'HIGH',ms:60}});
   }
   if(/memory|remember|forget|preference/.test(t)){
     focusSub('memory');
-    return jarvisSay(`Long-term memory holds your <b>preferences, projects, contacts, goals, and recurring workflows</b> — separate from session memory. You can view, edit, export, or delete any record; a "forget" cascades to the vector index. Provenance and timestamps are attached to every fact.`);
+    return CGSay(`Long-term memory holds your <b>preferences, projects, contacts, goals, and recurring workflows</b> — separate from session memory. You can view, edit, export, or delete any record; a "forget" cascades to the vector index. Provenance and timestamps are attached to every fact.`);
   }
   // fallback
-  return jarvisSay(`Acknowledged. In a live deployment I'd route "<i>${esc(q)}</i>" to the right agent, decompose it into steps, and report back with sources and confidence. For this demo, try: <i>brief me</i> · <i>triage inbox</i> · <i>any threats?</i> · <i>research entity</i> · <i>build automation</i>.`);
+  return CGSay(`Acknowledged. In a live deployment I'd route "<i>${esc(q)}</i>" to the right agent, decompose it into steps, and report back with sources and confidence. For this demo, try: <i>brief me</i> · <i>triage inbox</i> · <i>any threats?</i> · <i>research entity</i> · <i>build automation</i>.`);
 }
 
 /* ---------- focus subsystem ---------- */
@@ -684,7 +684,7 @@ if(SR){rec=new SR();rec.lang='en-US';rec.interimResults=false;
   rec.onend=()=>{listening=false;micBtn.classList.remove('live');};
 }
 micBtn.onclick=()=>{
-  if(!rec){jarvisSay('Voice input needs a browser that supports the Web Speech API (Chrome/Edge). Text command works perfectly here.');return;}
+  if(!rec){CGSay('Voice input needs a browser that supports the Web Speech API (Chrome/Edge). Text command works perfectly here.');return;}
   if(listening){rec.stop();return;}
   try{rec.start();listening=true;micBtn.classList.add('live');}catch(_){}
 };

@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "10:07",
-    "timestamp": "2026-06-13T10:07:49Z"
+    "time": "12:03",
+    "timestamp": "2026-06-13T12:03:17Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #4",
-    "time": "10:07",
-    "timestamp": "2026-06-13T10:07:40Z"
+    "detail": "schedule on main \u00b7 run #5",
+    "time": "12:03",
+    "timestamp": "2026-06-13T12:03:08Z"
   },
   {
-    "title": "Content Pipeline",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "workflow_run on main \u00b7 run #16",
-    "time": "09:56",
-    "timestamp": "2026-06-13T09:56:17Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #664",
-    "time": "09:56",
-    "timestamp": "2026-06-13T09:56:13Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1161",
-    "time": "09:56",
-    "timestamp": "2026-06-13T09:56:13Z"
-  },
-  {
-    "title": "Bot Orchestrator",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #14",
-    "time": "09:55",
-    "timestamp": "2026-06-13T09:55:52Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #9",
-    "time": "09:33",
-    "timestamp": "2026-06-13T09:33:17Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #49",
-    "time": "09:22",
-    "timestamp": "2026-06-13T09:22:41Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-916d0074-21b4-409d-a123-14989d340c5d \u00b7 run #44",
-    "time": "09:08",
-    "timestamp": "2026-06-13T09:08:07Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #243",
-    "time": "08:58",
-    "timestamp": "2026-06-13T08:58:45Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #275",
-    "time": "08:58",
-    "timestamp": "2026-06-13T08:58:45Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #512",
-    "time": "08:58",
-    "timestamp": "2026-06-13T08:58:45Z"
+    "detail": "pull_request on dependabot/npm_and_yarn/apps/autostore/cockpit/next-15.5.18 \u00b7 run #129",
+    "time": "12:02",
+    "timestamp": "2026-06-13T12:02:05Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "push on main \u00b7 run #526",
-    "time": "08:58",
-    "timestamp": "2026-06-13T08:58:45Z"
+    "detail": "pull_request on dependabot/npm_and_yarn/apps/autostore/cockpit/next-15.5.18 \u00b7 run #534",
+    "time": "12:02",
+    "timestamp": "2026-06-13T12:02:05Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on dependabot/npm_and_yarn/apps/autostore/cockpit/next-15.5.18 \u00b7 run #283",
+    "time": "12:02",
+    "timestamp": "2026-06-13T12:02:05Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "pull_request on dependabot/npm_and_yarn/apps/autostore/cockpit/next-15.5.18 \u00b7 run #520",
+    "time": "12:02",
+    "timestamp": "2026-06-13T12:02:05Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on dependabot/npm_and_yarn/apps/autostore/cockpit/next-15.5.18 \u00b7 run #251",
+    "time": "12:02",
+    "timestamp": "2026-06-13T12:02:05Z"
+  },
+  {
+    "title": "npm_and_yarn in /apps/autostore/cockpit for next - Update #1411145847",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #13",
+    "time": "12:00",
+    "timestamp": "2026-06-13T12:00:58Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #250",
+    "time": "11:54",
+    "timestamp": "2026-06-13T11:54:18Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #282",
+    "time": "11:54",
+    "timestamp": "2026-06-13T11:54:18Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #519",
+    "time": "11:54",
+    "timestamp": "2026-06-13T11:54:18Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #533",
+    "time": "11:54",
+    "timestamp": "2026-06-13T11:54:18Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #240",
+    "time": "11:54",
+    "timestamp": "2026-06-13T11:54:17Z"
   }
 ]

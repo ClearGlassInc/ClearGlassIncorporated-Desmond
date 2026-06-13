@@ -30,7 +30,7 @@ jobs:
           # Scan recent commit patches for common credential patterns.
           # Non-blocking (continue-on-error) — a finding flags for review, not a hard block.
           if git log --patch --since="7 days ago" | \
-              grep -qiE '(api[_-]?key|secret[_-]?key|password|private[_-]?key)\s*[:=]\s*["\x27][^"x27]{8,}'; then
+              grep -qiE '(api[_-]?key|secret[_-]?key|password|private[_-]?key)\s*[:=]\s*["'\''][^"'\'']{8,}'; then
             echo "::warning::Potential credential pattern detected in recent commits — review git history"
           else
             echo "Secret pattern scan: no credential patterns detected"

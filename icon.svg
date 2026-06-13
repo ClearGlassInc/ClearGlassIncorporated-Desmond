@@ -1,25 +1,10 @@
-<!-- Navigation Bar with your logo -->
-<nav class="navbar">
-  <div class="logo-container">
-    <img 
-      src="YOUR-LOGO-URL-HERE" 
-      alt="ClearGlass Inc."
-      class="company-logo"
-    />
-  </div>
-  <!-- Rest of your navigation -->
-</nav>
-
-<style>
-  .company-logo {
-    height: 60px;
-    width: auto;
-    object-fit: contain;
-  }
-  
-  @media (max-width: 768px) {
-    .company-logo {
-      height: 45px;
-    }
-  }
-</style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ClearGlassInc.">
+  <image 
+    href="logo.png" 
+    x="0" 
+    y="0" 
+    width="512" 
+    height="512"
+    preserveAspectRatio="xMidYMid meet"
+  />
+</svg>

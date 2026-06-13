@@ -73,5 +73,15 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           TS=$(date -u "+%Y-%m-%d %H:%M UTC")
           git commit -m "content: auto-update generated outputs — $TS [skip ci]"
-          git push origin HEAD
-          echo "Content committed and pushed"
+          # Concurrent bots push to main during our run; a plain push hits a
+          # non-fast-forward rejection. Rebase onto the latest main and retry.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD; then
+              echo "Content committed and pushed"
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt/5) — rebasing onto latest main"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push content updates after 5 attempts"
+          exit 1

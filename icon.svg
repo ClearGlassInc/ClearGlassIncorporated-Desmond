@@ -1,30 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ClearGlassInc.">
-  <defs>
-    <linearGradient id="cg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#38bdf8"/>
-      <stop offset="0.35" stop-color="#a78bfa"/>
-      <stop offset="0.62" stop-color="#f472b6"/>
-      <stop offset="1" stop-color="#34d399"/>
-    </linearGradient>
-    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
-      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.05"/>
-      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-    </linearGradient>
-    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="14" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-  <!-- full-bleed background (maskable: art stays within the central safe zone) -->
-  <rect width="512" height="512" fill="#0b0f1e"/>
-  <!-- centered crystal mark, kept inside the ~80% maskable safe area -->
-  <g transform="translate(256 256)" filter="url(#glow)">
-    <rect x="-118" y="-118" width="236" height="236" rx="56" fill="url(#cg)"/>
-    <rect x="-118" y="-118" width="236" height="236" rx="56" fill="url(#sheen)"/>
-    <rect x="-118" y="-118" width="236" height="236" rx="56" fill="none"
-          stroke="#ffffff" stroke-opacity="0.35" stroke-width="2"/>
-    <path d="M -52 -34 L 52 -34 L 14 34 L -90 34 Z" fill="#ffffff" fill-opacity="0.92"/>
-    <path d="M -14 -34 L 90 -34 L 52 34 L -52 34 Z" fill="#0b0f1e" fill-opacity="0.28"/>
-  </g>
-</svg>
+<!-- Navigation Bar with your logo -->
+<nav class="navbar">
+  <div class="logo-container">
+    <img 
+      src="YOUR-LOGO-URL-HERE" 
+      alt="ClearGlass Inc."
+      class="company-logo"
+    />
+  </div>
+  <!-- Rest of your navigation -->
+</nav>
+
+<style>
+  .company-logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  @media (max-width: 768px) {
+    .company-logo {
+      height: 45px;
+    }
+  }
+</style>

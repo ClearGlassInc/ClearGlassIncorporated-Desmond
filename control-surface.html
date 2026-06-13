@@ -1,545 +1,910 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="ClearGlass Event-Driven Control Surface — live operational dashboard for metrics, activity, health, and alerts." />
-  <meta name="theme-color" content="#02040a" />
-  <link rel="canonical" href="https://clearglassinc.github.io/control-surface.html"/>
-  <title>ClearGlass · Event-Driven Control Surface</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;600&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <style>
-    :root{
-      /* ClearGlass palette — mirrors artemis-os.html */
-      --black:#02040a;
-      --deep:#060d1c;
-      --surface:#0b1628;
-      --panel:rgba(11,22,40,.76);
-      --panel-2:rgba(15,28,50,.62);
-      --border:rgba(140,180,255,.10);
-      --border-hi:rgba(140,200,255,.25);
-      --blue:#5eb8ff;
-      --cyan:#7fe7ff;
-      --violet:#a78bfa;
-      --pink:#f472b6;
-      --gold:#fbbf24;
-      --green:#34d399;
-      --warn:#fbbf24;
-      --bad:#f87171;
-      --pearl:#f4f8ff;
-      --dim:rgba(244,248,255,.60);
-      --dimmer:rgba(244,248,255,.32);
-      --crystal:linear-gradient(135deg,#5eb8ff 0%,#7fe7ff 22%,#a78bfa 48%,#f472b6 72%,#fbbf24 100%);
-      --crystal-soft:linear-gradient(90deg,var(--cyan),var(--violet));
-      --shadow:0 18px 60px rgba(0,0,0,.45);
-      --radius:22px;
-      --ease:cubic-bezier(.22,.61,.36,1);
-      --serif:'Cormorant Garamond',Georgia,serif;
-      --sans:'Urbanist',system-ui,-apple-system,sans-serif;
-      --mono:'IBM Plex Mono',ui-monospace,monospace;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-    body{
-      font-family:var(--sans);color:var(--pearl);min-height:100vh;line-height:1.55;
-      -webkit-font-smoothing:antialiased;
-      background:
-        radial-gradient(60% 50% at 12% 0%,rgba(94,184,255,.10) 0%,transparent 60%),
-        radial-gradient(55% 45% at 88% 0%,rgba(167,139,250,.10) 0%,transparent 60%),
-        radial-gradient(80% 60% at 50% 110%,rgba(127,231,255,.07) 0%,transparent 70%),
-        linear-gradient(180deg,var(--black),var(--deep));
-    }
-    ::selection{background:rgba(94,184,255,.28);color:#fff}
-    a{color:inherit}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ClearGlass · Event-Driven Control Surface | PERCIVAL Command Surface</title>
+    <meta name="description" content="ClearGlass Event-Driven Control Surface — PERCIVAL command surface with a crystal-glass dropdown linking every platform, console, and intelligence product.">
+    <link rel="canonical" href="https://clearglassinc.github.io/control-surface.html"/>
+    <meta name="theme-color" content="#fafbfc">
+    <meta property="og:title" content="ClearGlass · Event-Driven Control Surface"/>
+    <meta property="og:description" content="PERCIVAL command surface — navigate every ClearGlass platform from one crystal-glass dropdown."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://clearglassinc.github.io/control-surface.html"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <style>
+        :root{
+            /* ClearGlass homepage palette */
+            --white:#fafbfc; --off:#f3f5f8;
+            --glass:rgba(255,255,255,0.55); --glass-border:rgba(0,0,0,0.06); --glass-strong:rgba(255,255,255,0.8);
+            --dark:#0a0c10; --dark-2:#1a1d25; --dark-3:#2a2d35;
+            --text:#0a0c10; --text-2:#3a3f4a; --text-3:#6b7280; --text-4:#9ca3af;
+            --prism-1:#38bdf8; --prism-2:#a78bfa; --prism-3:#f472b6; --prism-4:#34d399; --prism-5:#fbbf24; --prism-6:#60a5fa;
+            --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);
+            --serif:'Cormorant Garamond',Georgia,serif;
+            --sans:'Urbanist',system-ui,-apple-system,sans-serif;
+            --mono:'IBM Plex Mono',monospace;
+        }
 
-    .wrap{max-width:1240px;margin:0 auto;padding:20px clamp(1rem,3vw,2rem)}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
 
-    header.top{
-      position:sticky;top:0;z-index:30;
-      background:rgba(2,4,10,.62);backdrop-filter:blur(28px) saturate(140%);
-      -webkit-backdrop-filter:blur(28px) saturate(140%);
-      border-bottom:1px solid var(--border);
-    }
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:14px;min-width:0;text-decoration:none;color:inherit}
-    .mark{
-      width:36px;height:36px;border-radius:10px;flex:0 0 auto;
-      background:var(--crystal);display:grid;place-items:center;
-      font-size:12px;font-weight:800;color:#031018;
-      box-shadow:0 0 60px rgba(94,184,255,.18);position:relative;overflow:hidden;
-    }
-    .mark::after{
-      content:'';position:absolute;inset:0;
-      background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.5) 50%,transparent 70%);
-      animation:sheen 4s ease-in-out infinite;
-    }
-    @keyframes sheen{0%,100%{transform:translateX(-120%)}50%{transform:translateX(120%)}}
-    .brand-meta{display:flex;flex-direction:column;gap:2px;min-width:0}
-    .brand-name{
-      font-family:var(--serif);font-size:1.05rem;font-weight:600;
-      color:var(--pearl);letter-spacing:-.01em;line-height:1.1;
-    }
-    .brand-tag{
-      font-family:var(--mono);font-size:10px;letter-spacing:.22em;
-      color:var(--cyan);text-transform:uppercase;
-    }
-    .statusline{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .pill{
-      font-family:var(--mono);font-size:10px;letter-spacing:.16em;
-      padding:6px 12px;border-radius:999px;border:1px solid var(--border);
-      background:rgba(255,255,255,.03);color:var(--dim);
-      display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;
-    }
-    .pill.good{color:var(--green);border-color:rgba(52,211,153,.28);background:rgba(52,211,153,.06)}
-    .pill.good::before{
-      content:'';width:6px;height:6px;border-radius:50%;background:var(--green);
-      box-shadow:0 0 10px var(--green);animation:pulse 1.6s infinite;
-    }
-    .pill.warn{color:var(--warn);border-color:rgba(251,191,36,.28);background:rgba(251,191,36,.05)}
-    .pill.bad{color:var(--bad);border-color:rgba(248,113,113,.28);background:rgba(248,113,113,.05)}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.85)}}
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse 60% 50% at 20% 25%, rgba(56,189,248,0.08), transparent 60%),
+                radial-gradient(ellipse 50% 45% at 80% 70%, rgba(167,139,250,0.07), transparent 60%),
+                radial-gradient(circle at 50% 50%, var(--white), var(--off));
+            font-family: var(--sans);
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    main.wrap{padding-top:24px}
+        /* animated canvas background (prism particle field + neon grid) */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.55;
+        }
 
-    .grid{display:grid;gap:18px;grid-template-columns:repeat(12,1fr);margin-top:18px}
-    .card{
-      background:linear-gradient(180deg,var(--panel),var(--panel-2));
-      border:1px solid var(--border);border-radius:var(--radius);
-      box-shadow:var(--shadow);backdrop-filter:blur(18px);overflow:hidden;
-      position:relative;transition:border-color .3s var(--ease),box-shadow .3s var(--ease);
-    }
-    .card::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:1px;
-      background:linear-gradient(90deg,transparent,rgba(127,231,255,.28),transparent);
-    }
-    .card .hd{
-      padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;gap:14px;
-    }
-    .card .bd{padding:22px}
-    .title{
-      margin:0;font-family:var(--serif);font-size:1.4rem;font-weight:500;
-      letter-spacing:-.01em;color:var(--pearl);line-height:1.2;
-    }
-    .sub{margin:6px 0 0;color:var(--dim);font-size:.92rem;font-weight:300}
+        /* main glass container */
+        .dashboard {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+        }
 
-    .hero{grid-column:span 12}
-    .metrics{grid-column:span 8}
-    .health{grid-column:span 4}
-    .feed{grid-column:span 7}
-    .pipeline{grid-column:span 5}
-    .alerts{grid-column:span 6}
-    .runs{grid-column:span 6}
-    @media (max-width: 980px){
-      .metrics,.health,.feed,.pipeline,.alerts,.runs{grid-column:span 12}
-    }
+        /* glassmorphic cards */
+        .glass-card {
+            background: var(--glass-strong);
+            backdrop-filter: blur(22px) saturate(160%);
+            -webkit-backdrop-filter: blur(22px) saturate(160%);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.84);
+            box-shadow: 0 20px 50px rgba(10,12,16,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
+            transition: all 0.3s ease;
+        }
 
-    .hero .bd{display:flex;flex-direction:column;gap:8px}
-    .hero p.small{color:var(--dim);font-size:.95rem;font-weight:300;max-width:780px}
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.62);
+            backdrop-filter: blur(20px) saturate(140%);
+            -webkit-backdrop-filter: blur(20px) saturate(140%);
+            border-radius: 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 16px 40px rgba(10,12,16,0.05);
+        }
 
-    .metricgrid{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
-    @media (max-width: 860px){.metricgrid{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width: 520px){.metricgrid{grid-template-columns:1fr}}
-    .metric{
-      border:1px solid var(--border);border-radius:16px;
-      background:rgba(140,200,255,.025);padding:18px;min-height:120px;
-      position:relative;overflow:hidden;
-      transition:transform .3s var(--ease),border-color .3s var(--ease);
-    }
-    .metric::after{
-      content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
-      background:linear-gradient(to bottom,var(--cyan),transparent);
-    }
-    .metric:hover{transform:translateY(-2px);border-color:var(--border-hi)}
-    .metric .label{
-      font-family:var(--mono);font-size:10px;letter-spacing:.18em;
-      color:var(--dim);text-transform:uppercase;
-    }
-    .metric .value{
-      font-family:var(--serif);font-size:2.1rem;font-weight:500;line-height:1.05;
-      margin-top:10px;letter-spacing:-.02em;
-      background:var(--crystal);-webkit-background-clip:text;background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .metric .delta{
-      margin-top:10px;font-family:var(--mono);font-size:11px;
-      color:var(--dim);letter-spacing:.04em;
-    }
-    .bar{
-      height:4px;border-radius:999px;background:rgba(140,200,255,.08);
-      overflow:hidden;margin-top:12px;
-    }
-    .bar > span{
-      display:block;height:100%;border-radius:inherit;background:var(--crystal-soft);
-      transform-origin:left;transform:scaleX(var(--p,.5));transition:transform .8s var(--ease);
-    }
+        /* header section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-    .list{display:grid;gap:12px}
-    .item{
-      padding:14px 16px;border:1px solid var(--border);border-radius:14px;
-      background:rgba(140,200,255,.025);
-      transition:border-color .25s var(--ease),background .25s var(--ease);
-    }
-    .item:hover{border-color:var(--border-hi);background:rgba(140,200,255,.04)}
-    .row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-    .item strong{
-      display:block;font-family:var(--sans);font-weight:600;font-size:.95rem;
-      color:var(--pearl);letter-spacing:-.005em;
-    }
-    .item p{
-      margin:6px 0 0;color:var(--dim);font-size:.88rem;font-weight:300;line-height:1.55;
-    }
-    .small{
-      font-family:var(--mono);font-size:10px;color:var(--dimmer);
-      letter-spacing:.08em;margin-top:8px;display:block;
-    }
+        .title-section h1 {
+            font-family: var(--serif);
+            font-size: 2.6rem;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
 
-    .tag{
-      display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;
-      padding:4px 10px;border-radius:999px;font-family:var(--mono);
-      font-size:10px;font-weight:600;letter-spacing:.12em;border:1px solid var(--border);
-      text-transform:uppercase;color:var(--dim);background:rgba(255,255,255,.02);
-    }
-    .tag.good{color:var(--green);border-color:rgba(52,211,153,.28);background:rgba(52,211,153,.06)}
-    .tag.warn{color:var(--warn);border-color:rgba(251,191,36,.28);background:rgba(251,191,36,.06)}
-    .tag.bad{color:var(--bad);border-color:rgba(248,113,113,.28);background:rgba(248,113,113,.06)}
+        .title-section h1 .crystal-text {
+            background: var(--crystal);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
 
-    .controls{display:flex;flex-wrap:wrap;gap:10px}
-    button{
-      appearance:none;border:1px solid var(--border);color:var(--pearl);
-      background:rgba(255,255,255,.04);border-radius:999px;padding:10px 18px;
-      font:inherit;font-size:12px;font-weight:600;letter-spacing:.04em;cursor:pointer;
-      transition:transform .2s var(--ease),background .2s var(--ease),border-color .2s var(--ease);
-    }
-    button:hover{transform:translateY(-1px);border-color:var(--border-hi);background:rgba(127,231,255,.08)}
-    button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
-    button[aria-pressed="true"]{background:rgba(127,231,255,.10);border-color:rgba(127,231,255,.32);color:var(--cyan)}
+        .badge {
+            margin-top: 0.6rem;
+            display: inline-block;
+            background: rgba(255,255,255,0.7);
+            border-radius: 999px;
+            padding: 0.3rem 0.9rem;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-3);
+        }
 
-    .empty, .loading, .error{
-      padding:18px;border-radius:14px;border:1px dashed var(--border);
-      color:var(--dim);background:rgba(255,255,255,.02);font-size:.9rem;
-      font-family:var(--mono);letter-spacing:.04em;
-    }
-    .loading{color:var(--cyan);border-color:rgba(127,231,255,.20)}
-    .error{border-style:solid;border-color:rgba(248,113,113,.28);color:#ffd0d0;background:rgba(248,113,113,.04)}
+        .time-particle {
+            font-family: var(--mono);
+            font-weight: 500;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1.1rem;
+            border-radius: 999px;
+            letter-spacing: 2px;
+            color: var(--text-2);
+        }
 
-    .footer{
-      margin:28px 0 16px;color:var(--dimmer);font-family:var(--mono);
-      font-size:11px;letter-spacing:.12em;text-align:center;text-transform:uppercase;
-    }
+        /* main grid layout */
+        .grid-main {
+            display: grid;
+            grid-template-columns: 1fr 0.9fr;
+            gap: 1.8rem;
+            margin-bottom: 2rem;
+        }
 
-    .visually-hidden{
-      position:absolute!important;height:1px;width:1px;overflow:hidden;
-      clip:rect(1px,1px,1px,1px);white-space:nowrap;
-    }
+        @media (max-width: 900px) {
+            .grid-main { grid-template-columns: 1fr; }
+            .dashboard { padding: 1rem; }
+            .title-section h1 { font-size: 2rem; }
+        }
 
-    @media (prefers-reduced-motion: reduce){
-      *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important}
-    }
-  </style>
+        /* Command Surface Dropdown Hub */
+        .dropdown-hub {
+            padding: 1.8rem;
+        }
+
+        .dropdown-trigger {
+            width: 100%;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(255,255,255,0.9);
+            border-radius: 1.6rem;
+            padding: 1rem 1.5rem;
+            font-family: var(--sans);
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(.4,0,.2,1);
+            color: var(--text);
+            box-shadow: 0 6px 18px rgba(10,12,16,0.05);
+        }
+
+        .dropdown-trigger:hover {
+            background: rgba(255,255,255,0.95);
+            transform: translateY(-2px);
+            border-color: rgba(56,189,248,0.6);
+            box-shadow: 0 14px 30px -12px rgba(56,189,248,0.4);
+        }
+
+        .dropdown-trigger .trigger-sub {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--text-4);
+            letter-spacing: 0.08em;
+        }
+
+        .dropdown-icon {
+            font-size: 1rem;
+            color: var(--prism-1);
+            transition: transform 0.3s ease;
+        }
+
+        /* crystal glass dropdown menu */
+        .dropdown-menu {
+            margin-top: 1rem;
+            border-radius: 1.6rem;
+            background: rgba(252,253,254,0.82);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+            border: 1px solid rgba(255,255,255,0.92);
+            box-shadow: 0 25px 50px -12px rgba(10,12,16,0.18), inset 0 1px 0 rgba(255,255,255,0.7);
+            overflow: hidden;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transform-origin: top center;
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            display: block;
+            height: 3px;
+            background: var(--crystal);
+            background-size: 200% 200%;
+            animation: crystalShift 6s ease infinite;
+        }
+        @keyframes crystalShift {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+
+        .dropdown-menu.hidden {
+            display: none;
+        }
+
+        .search-area {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(255,255,255,0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.88rem;
+            font-family: var(--mono);
+            color: var(--text);
+            outline: none;
+            backdrop-filter: blur(6px);
+            transition: all 0.2s;
+        }
+
+        .search-input::placeholder { color: var(--text-4); }
+
+        .search-input:focus {
+            border-color: var(--prism-1);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(56,189,248,0.18);
+        }
+
+        .commands-list {
+            max-height: 480px;
+            overflow-y: auto;
+            padding: 0.8rem;
+        }
+
+        .command-category {
+            margin-bottom: 1rem;
+        }
+
+        .cat-title {
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-weight: 600;
+            color: var(--text-3);
+            padding: 0.4rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.4rem;
+        }
+        .cat-title::before {
+            content: '';
+            width: 16px;
+            height: 1px;
+            background: var(--text-4);
+        }
+
+        .command-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.7rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 1rem;
+            background: rgba(255,255,255,0.45);
+            backdrop-filter: blur(4px);
+            transition: all 0.18s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .command-item:hover {
+            background: #fff;
+            border-color: rgba(56,189,248,0.45);
+            transform: translateX(5px);
+            box-shadow: 0 8px 18px rgba(56,189,248,0.1);
+        }
+
+        .cmd-icon {
+            font-size: 1.25rem;
+            width: 1.6rem;
+            text-align: center;
+            filter: drop-shadow(0 2px 3px rgba(10,12,16,0.12));
+        }
+
+        .cmd-name {
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+        }
+
+        .cmd-tag {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            background: rgba(56,189,248,0.1);
+            padding: 0.22rem 0.6rem;
+            border-radius: 999px;
+            color: var(--prism-1);
+            border: 1px solid rgba(56,189,248,0.16);
+        }
+
+        /* Right panel - advanced telemetry & AI Core */
+        .neuro-panel {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+
+        .status-ring {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 1.2rem;
+            padding: 0.8rem 1rem;
+            flex: 1;
+            min-width: 90px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+        }
+
+        .metric .label {
+            font-family: var(--mono);
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-4);
+        }
+
+        .metric .value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            font-family: var(--mono);
+            color: var(--text);
+            margin-top: 0.2rem;
+        }
+
+        .shield-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.4rem;
+            padding: 0.7rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.92rem;
+        }
+
+        .toggle-switch {
+            width: 48px;
+            height: 24px;
+            background: #cbd5e1;
+            border-radius: 40px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .toggle-switch.active {
+            background: var(--prism-1);
+            box-shadow: 0 0 10px rgba(56,189,248,0.6);
+        }
+
+        .toggle-knob {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            transition: 0.2s;
+        }
+
+        .toggle-switch.active .toggle-knob {
+            left: 25px;
+        }
+
+        .pulse-label {
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.08em;
+            color: var(--text-3);
+        }
+
+        /* Console log */
+        .console-log {
+            margin-top: 0.4rem;
+            background: linear-gradient(160deg, rgba(10,12,16,0.92), rgba(15,28,50,0.9));
+            backdrop-filter: blur(12px);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .log-header {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+            letter-spacing: 0.06em;
+            display: flex;
+            justify-content: space-between;
+            color: rgba(226,232,240,0.7);
+        }
+        .log-header #logGlow { color: var(--prism-4); }
+
+        .log-area {
+            height: 120px;
+            overflow-y: auto;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            padding-right: 0.5rem;
+        }
+
+        .log-entry {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            color: rgba(219,234,254,0.85);
+        }
+
+        /* Platforms micro grid */
+        .platform-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .platform-pill {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 999px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-2);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* footer */
+        .footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            color: var(--text-4);
+        }
+
+        @keyframes pulse-glow {
+            0% { text-shadow: 0 0 0px rgba(56,189,248,0);}
+            100% { text-shadow: 0 0 6px rgba(56,189,248,0.6);}
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(10,12,16,0.05); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--prism-1), var(--prism-2)); border-radius: 10px; }
+    </style>
 </head>
 <body>
-<header class="top">
-  <div class="wrap topbar" role="banner">
-    <a class="brand" href="index.html" aria-label="ClearGlass control surface">
-      <span class="mark" aria-hidden="true">CG</span>
-      <span class="brand-meta">
-        <span class="brand-name">ClearGlass Control Surface</span>
-        <span class="brand-tag">Event-Driven Operations Dashboard</span>
-      </span>
-    </a>
-    <div class="statusline" aria-label="system status">
-      <span class="pill good" id="liveState">LIVE</span>
-      <span class="pill" id="nodeState">NODE · INITIALIZING</span>
-      <span class="pill" id="updatedState">UPDATED · --:--:--</span>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="dashboard">
+    <div class="header">
+        <div class="title-section">
+            <h1>Event-Driven <span class="crystal-text">Control Surface</span></h1>
+            <div class="badge">AVALON · ARTEMIS ⊕ PERCIVAL OS // SENTINEL · LIVE</div>
+        </div>
+        <div class="time-particle" id="quantumClock">--:--:--</div>
     </div>
-  </div>
-</header>
 
-<main class="wrap">
-  <section class="card hero" aria-labelledby="hero-title">
-    <div class="hd">
-      <div>
-        <h1 class="title" id="hero-title">Systems Control Surface</h1>
-        <p class="sub">Read-first, event-driven, GitHub Pages friendly, and built for high-trust operational clarity.</p>
-      </div>
-      <div class="controls">
-        <button id="refreshBtn" type="button">Refresh Now</button>
-        <button id="toggleAutoBtn" type="button" aria-pressed="true">Auto-Refresh On</button>
-      </div>
+    <div class="grid-main">
+        <!-- LEFT: Command Surface Dropdown Area (main focus) -->
+        <div class="glass-card dropdown-hub">
+            <div class="dropdown-trigger" id="dropdownTrigger">
+                <span>🌀 Command Surface <span class="trigger-sub">[Neural Nexus]</span></span>
+                <span class="dropdown-icon" id="dropdownIcon">▼</span>
+            </div>
+
+            <div id="dropdownMenu" class="dropdown-menu hidden">
+                <div class="search-area">
+                    <input type="text" id="commandSearch" class="search-input" placeholder="🔍 search command surface… (filter every platform)">
+                </div>
+                <div class="commands-list" id="commandsListContainer">
+                    <!-- dynamic commands injected via js -->
+                </div>
+            </div>
+
+            <div style="margin-top: 1.2rem; display: flex; gap: 12px; align-items: center; flex-wrap:wrap;">
+                <div style="font-family:var(--mono); font-size: 0.66rem; letter-spacing:0.06em; color:var(--text-3); background: rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.16); border-radius: 999px; padding: 0.25rem 0.8rem;">⚡ AGENT MESH ACTIVE</div>
+                <div style="font-family:var(--mono); font-size: 0.66rem; letter-spacing:0.06em; color:var(--text-3); background: rgba(167,139,250,0.1); border:1px solid rgba(167,139,250,0.16); border-radius: 999px; padding: 0.25rem 0.8rem;">🧠 PERCIVAL NEURO-LINK</div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: telemetry + AI Operator / ClearPulse -->
+        <div class="glass-panel neuro-panel">
+            <div class="status-ring">
+                <div class="metric"><div class="label">AI OPERATOR</div><div class="value" id="aiStatus">SYNAPSE</div></div>
+                <div class="metric"><div class="label">RELIABILITY</div><div class="value" id="quantumRel">99.98%</div></div>
+                <div class="metric"><div class="label">SENTINEL</div><div class="value" id="sentinelVal">ACTIVE</div></div>
+            </div>
+            <div class="shield-toggle">
+                <span>🛡️ AEGIS · Legal Shield</span>
+                <div id="shieldToggleBtn" class="toggle-switch active">
+                    <div class="toggle-knob"></div>
+                </div>
+            </div>
+            <div>
+                <div class="pulse-label">📡 CLEARPULSE · Neural Bandwidth</div>
+                <div style="height: 6px; background: rgba(10,12,16,0.08); border-radius: 999px; margin-top: 8px; overflow:hidden;">
+                    <div id="bandwidthFill" style="width: 87%; height: 100%; background: var(--crystal); border-radius: 999px;"></div>
+                </div>
+            </div>
+            <div class="platform-grid">
+                <span class="platform-pill">Artemis IV Core</span>
+                <span class="platform-pill">Artemis OS</span>
+                <span class="platform-pill">Guardian</span>
+                <span class="platform-pill">ClearGlass NEXUS</span>
+                <span class="platform-pill">Government</span>
+                <span class="platform-pill">ClearPulse</span>
+                <span class="platform-pill">BLUEDESK</span>
+            </div>
+            <div class="console-log">
+                <div class="log-header"><span>📟 COMMAND LOG [NEURAL FEED]</span><span id="logGlow">●</span></div>
+                <div class="log-area" id="logArea">
+                    <div class="log-entry">&gt; SYSTEM_READY // PERCIVAL OS · Control Surface</div>
+                    <div class="log-entry">&gt; AEGIS legal shield engaged // mesh stable</div>
+                    <div class="log-entry">&gt; await command surface input…</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="bd">
-      <p class="small">This interface renders approved metrics, live activity, pipeline counters, health, alerts, and workflow status from trusted endpoints only. Public surface is strictly read-only.</p>
+
+    <!-- intelligence strip + footer -->
+    <div class="glass-card" style="padding: 1rem 1.5rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:0.6rem;">
+        <div><span style="font-weight: 700;">🧠 Intelligence Stream</span> <span style="font-family: var(--mono); font-size:0.8rem; color:var(--text-3);">ClearGlass · AVALON ARTEMIS</span></div>
+        <div style="font-family:var(--mono); font-size:0.78rem; color:var(--text-3);">🌐 PERCIVAL · Agent Mesh: 12 active nodes</div>
+        <div style="font-family: var(--mono); font-size:0.78rem; color:var(--text-3);">clearglassinc.github.io</div>
     </div>
-  </section>
-
-  <div class="grid">
-    <section class="card metrics" aria-labelledby="metrics-title">
-      <div class="hd"><div>
-        <h2 class="title" id="metrics-title">Overview Metrics</h2>
-        <p class="sub">Highest-signal operational summary.</p>
-      </div></div>
-      <div class="bd">
-        <div class="metricgrid" id="metricsGrid">
-          <div class="loading">Loading metrics…</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card health" aria-labelledby="health-title">
-      <div class="hd"><div>
-        <h2 class="title" id="health-title">System Health</h2>
-        <p class="sub">Uptime and service state.</p>
-      </div></div>
-      <div class="bd" id="healthPanel">
-        <div class="loading">Loading health…</div>
-      </div>
-    </section>
-
-    <section class="card feed" aria-labelledby="feed-title">
-      <div class="hd"><div>
-        <h2 class="title" id="feed-title">Live Activity Feed</h2>
-        <p class="sub">Incoming operational events.</p>
-      </div></div>
-      <div class="bd">
-        <div class="list" id="activityList">
-          <div class="loading">Loading activity…</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card pipeline" aria-labelledby="pipeline-title">
-      <div class="hd"><div>
-        <h2 class="title" id="pipeline-title">Lead Pipeline</h2>
-        <p class="sub">Read-only counters and conversion state.</p>
-      </div></div>
-      <div class="bd">
-        <div class="list" id="pipelineList">
-          <div class="loading">Loading pipeline…</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card alerts" aria-labelledby="alerts-title">
-      <div class="hd"><div>
-        <h2 class="title" id="alerts-title">Alerts &amp; Exceptions</h2>
-        <p class="sub">Items requiring attention.</p>
-      </div></div>
-      <div class="bd">
-        <div class="list" id="alertsList">
-          <div class="empty">No active alerts.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card runs" aria-labelledby="runs-title">
-      <div class="hd"><div>
-        <h2 class="title" id="runs-title">Recent Workflow Executions</h2>
-        <p class="sub">Latest n8n or API-linked runs.</p>
-      </div></div>
-      <div class="bd">
-        <div class="list" id="runsList">
-          <div class="loading">Loading runs…</div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <p class="footer">ClearGlass · Operational · Calm · Precise</p>
-</main>
+    <div class="footer">⚡ CRYSTAL INTERFACE · GLASS CONTROL SURFACE · CLEARGLASS INC</div>
+</div>
 
 <script>
-  const endpoints = {
-    metrics:  "https://example.com/api/clearglass/metrics",
-    activity: "https://example.com/api/clearglass/activity",
-    pipeline: "https://example.com/api/clearglass/pipeline",
-    health:   "https://example.com/api/clearglass/health",
-    alerts:   "https://example.com/api/clearglass/alerts",
-    runs:     "https://example.com/api/clearglass/runs"
-  };
+    // =================== COMMAND SURFACE DATASET — every item links to its real page ===================
+    const commandsDataset = {
+        "COMMAND": [
+            { name: "Systems Control Surface", icon: "🎛️", tag: "CORE", link: "systems.html" },
+            { name: "AVALON · ARTEMIS ⊕ PERCIVAL", icon: "⚙️", tag: "PRIME", link: "artemis-percival.html" },
+            { name: "PERCIVAL OS", icon: "🧬", tag: "OS", link: "percival-os.html" },
+            { name: "PERCIVAL Build", icon: "🏗️", tag: "BUILD", link: "percival-build.html" },
+            { name: "SENTINEL · Live", icon: "👁️", tag: "ACTIVE", link: "sentinel.html" },
+            { name: "AEGIS · Legal Shield", icon: "🛡️", tag: "PROTECT", link: "aegis.html" },
+            { name: "Agent Mesh", icon: "🕸️", tag: "MESH", link: "agentmesh.html" },
+            { name: "BLUEDESK · CISO Console", icon: "📊", tag: "SEC", link: "bluedesk.html" },
+            { name: "AI Operator", icon: "🤖", tag: "NEURAL", link: "ai-operator.html" },
+            { name: "Command Console", icon: "⌨️", tag: "TERM", link: "command-console.html" },
+            { name: "Event Control Surface", icon: "🌊", tag: "EVENT", link: "control-surface.html" }
+        ],
+        "PLATFORMS": [
+            { name: "Artemis IV Core", icon: "💠", tag: "PLATFORM", link: "artemis-iv.html" },
+            { name: "Artemis OS", icon: "🔮", tag: "OS", link: "artemis-os.html" },
+            { name: "Artemis Blue Team", icon: "🔵", tag: "OSINT", link: "artemis-blue-team.html" },
+            { name: "ClearGlass NEXUS", icon: "🔷", tag: "HUB", link: "clearglass-nexus.html" },
+            { name: "Guardian", icon: "🛰️", tag: "DEFENSE", link: "guardian.html" },
+            { name: "Government", icon: "🏛️", tag: "FEDERAL", link: "government.html" },
+            { name: "ClearPulse", icon: "📡", tag: "HEALTH", link: "clearpulse.html" },
+            { name: "ClearPulse Architecture", icon: "📐", tag: "WHITEPAPER", link: "clearpulse-architecture.html" },
+            { name: "JARVIS OS", icon: "🦾", tag: "HUD", link: "jarvis-os.html" },
+            { name: "StegoForge", icon: "🔐", tag: "CYBER", link: "stegoforge.html" },
+            { name: "ATT&CK Prompt Core", icon: "🎯", tag: "OFFENSE", link: "attack-prompt-core.html" },
+            { name: "SaaS Platform", icon: "☁️", tag: "SAAS", link: "saas-platform.html" },
+            { name: "Revenue Engine", icon: "⚡", tag: "AUTOMATION", link: "revenue-engine.html" }
+        ],
+        "LEGAL & FINANCE": [
+            { name: "ClearBank Legal AI", icon: "🏦", tag: "BANKING", link: "banking-law-advisor.html" },
+            { name: "ClearCounsel Corporate Legal", icon: "⚖️", tag: "CORPORATE", link: "corporate-legal-advisor.html" },
+            { name: "ClearTax AI", icon: "🧾", tag: "TAX", link: "tax.html" }
+        ],
+        "INTELLIGENCE": [
+            { name: "Intelligence", icon: "🧠", tag: "ANALYSIS", link: "intelligence.html" },
+            { name: "Intelligence Command Surface", icon: "🛰️", tag: "COMMAND", link: "intelligence-command-surface.html" }
+        ],
+        "NAVIGATE": [
+            { name: "Home", icon: "🏠", tag: "HOME", link: "index.html" },
+            { name: "Pricing & Engagements", icon: "💎", tag: "PRICING", link: "pricing.html" }
+        ]
+    };
 
-  const fallback = {
-    metrics: [
-      {label:"Active agents",     value:"47",     delta:"+3 this hour",          pct:68},
-      {label:"Protected orgs",    value:"18",     delta:"Ontario SMBs + partners", pct:45},
-      {label:"Threats blocked",   value:"12",     delta:"All neutralized today", pct:82},
-      {label:"Monthly revenue",   value:"$14.8k", delta:"Current run-rate",      pct:74}
-    ],
-    health: {status:"Operational", uptime:"99.94%", detail:"All core services reachable"},
-    activity: [
-      {title:"Webhook received", status:"ok",   detail:"n8n event normalized and queued", time:"12:41"},
-      {title:"Metric refresh",   status:"ok",   detail:"Pipeline counters updated",        time:"12:40"},
-      {title:"Alert review",     status:"warn", detail:"One stale endpoint flagged",       time:"12:38"}
-    ],
-    pipeline: [
-      {label:"New leads",          value:"142"},
-      {label:"Qualified replies",  value:"11"},
-      {label:"Booked calls",       value:"4"},
-      {label:"Retained clients",   value:"1"}
-    ],
-    alerts: [
-      {status:"warn", title:"Stale metrics endpoint", detail:"No update in 16 minutes."}
-    ],
-    runs: [
-      {status:"ok", title:"n8n workflow",    detail:"Daily ingest completed",     time:"12:39"},
-      {status:"ok", title:"GitHub Action",   detail:"Cache refresh completed",    time:"11:30"}
-    ]
-  };
+    const CATEGORY_ORDER = ["COMMAND", "PLATFORMS", "LEGAL & FINANCE", "INTELLIGENCE", "NAVIGATE"];
 
-  const els = {
-    metricsGrid:    document.getElementById("metricsGrid"),
-    healthPanel:    document.getElementById("healthPanel"),
-    activityList:   document.getElementById("activityList"),
-    pipelineList:   document.getElementById("pipelineList"),
-    alertsList:     document.getElementById("alertsList"),
-    runsList:       document.getElementById("runsList"),
-    updatedState:   document.getElementById("updatedState"),
-    nodeState:      document.getElementById("nodeState"),
-    refreshBtn:     document.getElementById("refreshBtn"),
-    toggleAutoBtn:  document.getElementById("toggleAutoBtn"),
-  };
-
-  let autoRefresh = true;
-  let timer = null;
-
-  function nowTime(){
-    return new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"});
-  }
-  function tagClass(status){
-    return status === "ok" ? "good" : status === "warn" ? "warn" : "bad";
-  }
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  }
-
-  function metricCard(m){
-    const pct = Math.max(0, Math.min(100, Number(m.pct) || 50));
-    return `
-      <article class="metric" aria-label="${escapeHtml(m.label)}">
-        <div class="label">${escapeHtml(m.label)}</div>
-        <div class="value">${escapeHtml(m.value)}</div>
-        <div class="delta">${escapeHtml(m.delta || "")}</div>
-        <div class="bar" aria-hidden="true"><span style="--p:${(pct/100).toFixed(3)}"></span></div>
-      </article>`;
-  }
-  function feedItem(x){
-    return `
-      <article class="item">
-        <div class="row">
-          <strong>${escapeHtml(x.title)}</strong>
-          <span class="tag ${tagClass(x.status)}">${escapeHtml(String(x.status).toUpperCase())}</span>
-        </div>
-        <p>${escapeHtml(x.detail)}</p>
-        <span class="small">${escapeHtml(x.time || x.timestamp || "")}</span>
-      </article>`;
-  }
-  function alertItem(x){
-    return `
-      <article class="item">
-        <div class="row">
-          <strong>${escapeHtml(x.title)}</strong>
-          <span class="tag ${tagClass(x.status)}">${escapeHtml(String(x.status).toUpperCase())}</span>
-        </div>
-        <p>${escapeHtml(x.detail)}</p>
-      </article>`;
-  }
-  function runItem(x){
-    return `
-      <article class="item">
-        <div class="row">
-          <strong>${escapeHtml(x.title)}</strong>
-          <span class="tag ${tagClass(x.status)}">${escapeHtml(String(x.status).toUpperCase())}</span>
-        </div>
-        <p>${escapeHtml(x.detail)}</p>
-        <span class="small">${escapeHtml(x.time || x.timestamp || "")}</span>
-      </article>`;
-  }
-  function pipelineItem(x){
-    return `
-      <article class="item">
-        <div class="row">
-          <strong>${escapeHtml(x.label)}</strong>
-          <span class="tag good">${escapeHtml(x.value)}</span>
-        </div>
-      </article>`;
-  }
-
-  async function fetchJson(url){
-    const r = await fetch(url, {cache:"no-store"});
-    if(!r.ok) throw new Error(`HTTP ${r.status}`);
-    return await r.json();
-  }
-
-  async function refresh(){
-    els.nodeState.textContent = "NODE · SYNCING";
-    try{
-      const [metrics, health, activity, pipeline, alerts, runs] = await Promise.allSettled([
-        fetchJson(endpoints.metrics),
-        fetchJson(endpoints.health),
-        fetchJson(endpoints.activity),
-        fetchJson(endpoints.pipeline),
-        fetchJson(endpoints.alerts),
-        fetchJson(endpoints.runs)
-      ]);
-
-      const M = metrics.status  === "fulfilled" ? metrics.value  : fallback.metrics;
-      const H = health.status   === "fulfilled" ? health.value   : fallback.health;
-      const A = activity.status === "fulfilled" ? activity.value : fallback.activity;
-      const P = pipeline.status === "fulfilled" ? pipeline.value : fallback.pipeline;
-      const L = alerts.status   === "fulfilled" ? alerts.value   : fallback.alerts;
-      const R = runs.status     === "fulfilled" ? runs.value     : fallback.runs;
-
-      els.metricsGrid.innerHTML = Array.isArray(M) ? M.map(metricCard).join("") : fallback.metrics.map(metricCard).join("");
-      els.healthPanel.innerHTML = `
-        <article class="item">
-          <div class="row">
-            <strong>${escapeHtml(H.status || "Operational")}</strong>
-            <span class="tag good">${escapeHtml(H.uptime || "99.9%")}</span>
-          </div>
-          <p>${escapeHtml(H.detail || "Services reachable")}</p>
-        </article>`;
-      els.activityList.innerHTML = (Array.isArray(A) && A.length ? A : fallback.activity).map(feedItem).join("");
-      els.pipelineList.innerHTML = (Array.isArray(P) && P.length ? P : fallback.pipeline).map(pipelineItem).join("");
-      els.alertsList.innerHTML   = (Array.isArray(L) && L.length ? L : fallback.alerts).map(alertItem).join("");
-      els.runsList.innerHTML     = (Array.isArray(R) && R.length ? R : fallback.runs).map(runItem).join("");
-
-      els.updatedState.textContent = `UPDATED · ${nowTime()}`;
-      els.nodeState.textContent = "NODE · LIVE";
-    }catch(err){
-      els.nodeState.textContent = "NODE · DEGRADED";
-      els.metricsGrid.innerHTML  = `<div class="error">Metrics unavailable. Using fallback content.</div>`;
-      els.healthPanel.innerHTML  = `<div class="error">Health endpoint unavailable.</div>`;
-      els.activityList.innerHTML = `<div class="error">Activity feed unavailable.</div>`;
-      els.pipelineList.innerHTML = `<div class="error">Pipeline counters unavailable.</div>`;
-      els.alertsList.innerHTML   = `<div class="error">Alerts unavailable.</div>`;
-      els.runsList.innerHTML     = `<div class="error">Recent runs unavailable.</div>`;
-      els.updatedState.textContent = `UPDATED · ${nowTime()}`;
-      console.error(err);
+    let allCommandsFlat = [];
+    for (let cat in commandsDataset) {
+        commandsDataset[cat].forEach(cmd => {
+            allCommandsFlat.push({ ...cmd, category: cat });
+        });
     }
-  }
 
-  function startAuto(){
-    stopAuto();
-    timer = setInterval(refresh, 30000);
-    els.toggleAutoBtn.setAttribute("aria-pressed", "true");
-    els.toggleAutoBtn.textContent = "Auto-Refresh On";
-  }
-  function stopAuto(){
-    if(timer) clearInterval(timer);
-    timer = null;
-    els.toggleAutoBtn.setAttribute("aria-pressed", "false");
-    els.toggleAutoBtn.textContent = "Auto-Refresh Off";
-  }
+    function escapeAttr(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
 
-  els.refreshBtn.addEventListener("click", refresh);
-  els.toggleAutoBtn.addEventListener("click", () => {
-    autoRefresh = !autoRefresh;
-    autoRefresh ? startAuto() : stopAuto();
-  });
+    function buildCommandList(filterText = "") {
+        const container = document.getElementById("commandsListContainer");
+        if (!container) return;
+        const filterLower = filterText.toLowerCase();
+        let filtered = allCommandsFlat.filter(item => item.name.toLowerCase().includes(filterLower));
+        const grouped = {};
+        filtered.forEach(item => {
+            if (!grouped[item.category]) grouped[item.category] = [];
+            grouped[item.category].push(item);
+        });
 
-  refresh();
-  startAuto();
+        let html = "";
+        for (let cat of CATEGORY_ORDER) {
+            if (grouped[cat] && grouped[cat].length) {
+                html += `<div class="command-category"><div class="cat-title">${escapeAttr(cat)}</div>`;
+                grouped[cat].forEach(cmd => {
+                    html += `
+                        <a class="command-item" href="${escapeAttr(cmd.link)}" data-cmddisplay="${escapeAttr(cmd.name)}" data-cmdlink="${escapeAttr(cmd.link)}">
+                            <span class="cmd-icon">${cmd.icon}</span>
+                            <span class="cmd-name">${escapeAttr(cmd.name)}</span>
+                            <span class="cmd-tag">${escapeAttr(cmd.tag)}</span>
+                        </a>
+                    `;
+                });
+                html += `</div>`;
+            }
+        }
+        if (filtered.length === 0) html = `<div style="padding:1rem; text-align:center; color:var(--text-3); font-family:var(--mono); font-size:0.8rem;">⛔ no command found</div>`;
+        container.innerHTML = html;
+
+        // attach handlers: log the command, then navigate to its real page
+        document.querySelectorAll('.command-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                const cmdName = el.getAttribute('data-cmddisplay') || "unknown";
+                const link = el.getAttribute('data-cmdlink');
+                executeCommand(cmdName);
+                document.getElementById("dropdownMenu").classList.add("hidden");
+                document.getElementById("dropdownIcon").innerHTML = "▼";
+                dropdownVisible = false;
+                if (link) {
+                    setTimeout(() => { window.location.href = link; }, 260);
+                }
+            });
+        });
+    }
+
+    // Command execution with log + AI operator response
+    function executeCommand(cmdName) {
+        const logArea = document.getElementById("logArea");
+        const timestamp = new Date().toLocaleTimeString();
+        const logEntry = document.createElement("div");
+        logEntry.className = "log-entry";
+        logEntry.innerHTML = `[${timestamp}] &gt; ROUTE:: ${cmdName}  // neural handshake OK`;
+        logArea.appendChild(logEntry);
+        logEntry.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+        const aiResponses = [
+            "🌀 PERCIVAL orchestrating", "🔮 predictive path active", "⚡ latency 0.4ms",
+            "🧠 neural mesh integrated", "🛡️ AEGIS integrity verified", "📡 ClearPulse analyzing"
+        ];
+        const extra = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+        setTimeout(() => {
+            const respLog = document.createElement("div");
+            respLog.className = "log-entry";
+            respLog.innerHTML = `   ↳ AI Operator: ${extra}  // → ${cmdName.substring(0, 24)}`;
+            logArea.appendChild(respLog);
+            respLog.scrollIntoView({ behavior: "smooth" });
+            const sentinelSpan = document.getElementById("sentinelVal");
+            if (sentinelSpan) {
+                sentinelSpan.style.opacity = "0.7";
+                setTimeout(() => { sentinelSpan.style.opacity = "1"; }, 200);
+            }
+            let quantumSpan = document.getElementById("quantumRel");
+            let newVal = (99.92 + Math.random() * 0.07).toFixed(2);
+            quantumSpan.innerText = `${newVal}%`;
+        }, 120);
+    }
+
+    // dropdown logic
+    let dropdownVisible = false;
+    const trigger = document.getElementById("dropdownTrigger");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    const dropdownIconSpan = document.getElementById("dropdownIcon");
+
+    function toggleDropdown(show) {
+        if (show === undefined) dropdownVisible = !dropdownVisible;
+        else dropdownVisible = show;
+        if (dropdownVisible) {
+            dropdownMenu.classList.remove("hidden");
+            dropdownIconSpan.innerHTML = "▲";
+            const searchInput = document.getElementById("commandSearch");
+            if (searchInput) {
+                searchInput.value = "";
+                buildCommandList("");
+            } else buildCommandList("");
+        } else {
+            dropdownMenu.classList.add("hidden");
+            dropdownIconSpan.innerHTML = "▼";
+        }
+    }
+
+    trigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown();
+    });
+
+    document.addEventListener("click", function(e) {
+        if (dropdownVisible && !trigger.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            toggleDropdown(false);
+        }
+    });
+
+    const searchField = document.getElementById("commandSearch");
+    if (searchField) {
+        searchField.addEventListener("input", (e) => {
+            buildCommandList(e.target.value);
+        });
+    }
+
+    // AEGIS shield toggle + bandwidth simulation + clock
+    const shieldToggle = document.getElementById("shieldToggleBtn");
+    let shieldActive = true;
+    shieldToggle.addEventListener("click", () => {
+        shieldActive = !shieldActive;
+        if (shieldActive) {
+            shieldToggle.classList.add("active");
+            addLogEntry("🛡️ AEGIS Legal Shield REACTIVATED · protection nominal");
+        } else {
+            shieldToggle.classList.remove("active");
+            addLogEntry("⚠️ AEGIS Legal Shield PAUSED · regulatory override standby");
+        }
+    });
+
+    function addLogEntry(msg) {
+        const logArea = document.getElementById("logArea");
+        const entry = document.createElement("div");
+        entry.className = "log-entry";
+        entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        logArea.appendChild(entry);
+        entry.scrollIntoView({ behavior: "smooth" });
+    }
+
+    let bandwidthInterval = setInterval(() => {
+        const bandwidthFill = document.getElementById("bandwidthFill");
+        if (bandwidthFill) {
+            let newWidth = 65 + Math.random() * 30;
+            bandwidthFill.style.width = `${newWidth}%`;
+            let aiStatusSpan = document.getElementById("aiStatus");
+            const statuses = ["SYNAPSE", "NEURAL LINK", "QUANTUM AI", "PERCIVAL CORE"];
+            aiStatusSpan.innerText = statuses[Math.floor(Math.random() * statuses.length)];
+        }
+        const sentinelLive = document.getElementById("sentinelVal");
+        if (sentinelLive) {
+            sentinelLive.innerText = shieldActive ? "ACTIVE" : "STANDBY";
+        }
+    }, 3200);
+
+    function updateClock() {
+        const now = new Date();
+        let hours = now.getHours().toString().padStart(2,'0');
+        let minutes = now.getMinutes().toString().padStart(2,'0');
+        let seconds = now.getSeconds().toString().padStart(2,'0');
+        document.getElementById("quantumClock").innerHTML = `${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    buildCommandList("");
+
+    setTimeout(() => {
+        addLogEntry("🤖 AI Operator online · ClearGlass Control Surface");
+        addLogEntry("🌀 Command Surface ready — search any platform");
+    }, 500);
+
+    // ========== CANVAS BACKGROUND: PRISM PARTICLE FIELD + NEON GRID ==========
+    const canvas = document.getElementById("bg-canvas");
+    const ctx = canvas.getContext("2d");
+    let width, height;
+    let particles = [];
+    const PARTICLE_COUNT = 70;
+    const PRISM = ["56,189,248", "167,139,250", "244,114,182", "52,211,153", "96,165,250"];
+
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = (Math.random() - 0.5) * 0.2;
+            this.size = Math.random() * 2 + 1.2;
+            this.alpha = Math.random() * 0.4 + 0.2;
+            this.color = PRISM[Math.floor(Math.random() * PRISM.length)];
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0) this.x = width;
+            if (this.x > width) this.x = 0;
+            if (this.y < 0) this.y = height;
+            if (this.y > height) this.y = 0;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${this.color}, ${this.alpha * 0.55})`;
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+    }
+
+    function drawGrid() {
+        ctx.strokeStyle = "rgba(56, 189, 248, 0.08)";
+        ctx.lineWidth = 1;
+        const step = 56;
+        for (let x = 0; x < width; x += step) {
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+        }
+        for (let y = 0; y < height; y += step) {
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+        }
+        let time = Date.now() / 1500;
+        for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.arc(width * 0.2 + Math.sin(time) * 30, height * 0.7, 80 + Math.sin(time) * 15, 0, Math.PI*2);
+            ctx.strokeStyle = `rgba(167, 139, 250, 0.10)`;
+            ctx.stroke();
+        }
+    }
+
+    function animateBackground() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+        drawGrid();
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animateBackground);
+    }
+
+    window.addEventListener("resize", () => { resizeCanvas(); initParticles(); });
+    resizeCanvas();
+    initParticles();
+    animateBackground();
+
+    console.log("⚡ ClearGlass Control Surface · Crystal Glass Dropdown · Linked Navigation");
 </script>
 </body>
 </html>

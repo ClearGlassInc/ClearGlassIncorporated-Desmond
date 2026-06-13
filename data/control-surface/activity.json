@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "15:19",
-    "timestamp": "2026-06-13T15:19:45Z"
+    "time": "16:46",
+    "timestamp": "2026-06-13T16:46:01Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #8",
-    "time": "15:19",
-    "timestamp": "2026-06-13T15:19:30Z"
+    "detail": "schedule on main \u00b7 run #9",
+    "time": "16:45",
+    "timestamp": "2026-06-13T16:45:51Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #267",
+    "time": "16:17",
+    "timestamp": "2026-06-13T16:17:43Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "push on main \u00b7 run #542",
-    "time": "15:18",
-    "timestamp": "2026-06-13T15:18:19Z"
+    "detail": "push on main \u00b7 run #549",
+    "time": "16:17",
+    "timestamp": "2026-06-13T16:17:43Z"
   },
   {
     "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #528",
-    "time": "15:18",
-    "timestamp": "2026-06-13T15:18:19Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #291",
-    "time": "15:18",
-    "timestamp": "2026-06-13T15:18:19Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #260",
-    "time": "15:18",
-    "timestamp": "2026-06-13T15:18:19Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #94",
-    "time": "15:18",
-    "timestamp": "2026-06-13T15:18:19Z"
+    "status": "bad",
+    "detail": "push on main \u00b7 run #535",
+    "time": "16:17",
+    "timestamp": "2026-06-13T16:17:43Z"
   },
   {
     "title": "Deploy GitHub Pages",
     "status": "ok",
-    "detail": "push on main \u00b7 run #247",
-    "time": "15:18",
-    "timestamp": "2026-06-13T15:18:19Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #679",
-    "time": "15:18",
-    "timestamp": "2026-06-13T15:18:19Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "warn",
-    "detail": "dynamic on main \u00b7 run #1181",
-    "time": "15:18",
-    "timestamp": "2026-06-13T15:18:18Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "pull_request on claude/patch-all-deploy-wyuely \u00b7 run #527",
-    "time": "15:17",
-    "timestamp": "2026-06-13T15:17:49Z"
+    "detail": "push on main \u00b7 run #251",
+    "time": "16:17",
+    "timestamp": "2026-06-13T16:17:43Z"
   },
   {
     "title": "Security",
     "status": "ok",
-    "detail": "pull_request on claude/patch-all-deploy-wyuely \u00b7 run #290",
-    "time": "15:17",
-    "timestamp": "2026-06-13T15:17:49Z"
+    "detail": "push on main \u00b7 run #298",
+    "time": "16:17",
+    "timestamp": "2026-06-13T16:17:43Z"
   },
   {
-    "title": "Policy Gate",
+    "title": "Code Quality: Push on main",
     "status": "ok",
-    "detail": "pull_request on claude/patch-all-deploy-wyuely \u00b7 run #259",
-    "time": "15:17",
-    "timestamp": "2026-06-13T15:17:49Z"
+    "detail": "dynamic on main \u00b7 run #1189",
+    "time": "16:17",
+    "timestamp": "2026-06-13T16:17:42Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #683",
+    "time": "16:17",
+    "timestamp": "2026-06-13T16:17:42Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/scheduled-trigger-automation \u00b7 run #51",
+    "time": "16:08",
+    "timestamp": "2026-06-13T16:08:07Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/patch-all-deploy-wyuely \u00b7 run #137",
+    "time": "15:36",
+    "timestamp": "2026-06-13T15:36:25Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/patch-all-deploy-wyuely \u00b7 run #297",
+    "time": "15:36",
+    "timestamp": "2026-06-13T15:36:25Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "pull_request on claude/patch-all-deploy-wyuely \u00b7 run #534",
+    "time": "15:36",
+    "timestamp": "2026-06-13T15:36:25Z"
   }
 ]

@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "01:34",
-    "timestamp": "2026-06-13T01:34:16Z"
+    "time": "06:32",
+    "timestamp": "2026-06-13T06:32:26Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #1",
-    "time": "01:34",
-    "timestamp": "2026-06-13T01:34:03Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #502",
-    "time": "01:27",
-    "timestamp": "2026-06-13T01:27:09Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #225",
-    "time": "01:27",
-    "timestamp": "2026-06-13T01:27:09Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #265",
-    "time": "01:27",
-    "timestamp": "2026-06-13T01:27:09Z"
+    "detail": "schedule on main \u00b7 run #2",
+    "time": "06:32",
+    "timestamp": "2026-06-13T06:32:09Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "push on main \u00b7 run #515",
-    "time": "01:27",
-    "timestamp": "2026-06-13T01:27:09Z"
+    "detail": "schedule on main \u00b7 run #516",
+    "time": "06:22",
+    "timestamp": "2026-06-13T06:22:26Z"
   },
   {
-    "title": "Policy Gate",
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/scheduled-hourly-trigger-bots-sales-pipeline-yet-again \u00b7 run #41",
+    "time": "06:08",
+    "timestamp": "2026-06-13T06:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-fd49c96a-658f-487d-a387-d95fc627c1e2 \u00b7 run #40",
+    "time": "05:08",
+    "timestamp": "2026-06-13T05:08:08Z"
+  },
+  {
+    "title": "Health Monitor",
     "status": "ok",
-    "detail": "push on main \u00b7 run #233",
-    "time": "01:27",
-    "timestamp": "2026-06-13T01:27:09Z"
+    "detail": "schedule on main \u00b7 run #48",
+    "time": "04:12",
+    "timestamp": "2026-06-13T04:12:16Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-574b266b-c79f-4c22-9a08-e93767af25cc \u00b7 run #39",
+    "time": "04:08",
+    "timestamp": "2026-06-13T04:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-210fbf3b-417a-4da9-acd9-04867a4ccc24 \u00b7 run #38",
+    "time": "03:08",
+    "timestamp": "2026-06-13T03:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-75481578-3962-4bf2-93d7-7a064cf4e954 \u00b7 run #37",
+    "time": "02:08",
+    "timestamp": "2026-06-13T02:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #226",
+    "time": "01:34",
+    "timestamp": "2026-06-13T01:34:37Z"
   },
   {
     "title": "pages build and deployment",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #656",
-    "time": "01:27",
-    "timestamp": "2026-06-13T01:27:08Z"
+    "detail": "dynamic on main \u00b7 run #657",
+    "time": "01:34",
+    "timestamp": "2026-06-13T01:34:23Z"
   },
   {
     "title": "Code Quality: Push on main",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1147",
-    "time": "01:27",
-    "timestamp": "2026-06-13T01:27:07Z"
+    "detail": "dynamic on main \u00b7 run #1148",
+    "time": "01:34",
+    "timestamp": "2026-06-13T01:34:23Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-9e512393-5032-40a1-8ffd-a3a8cb99a4bb \u00b7 run #36",
-    "time": "01:08",
-    "timestamp": "2026-06-13T01:08:07Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-848c914d-2f2f-43c0-b750-42120ac2580e \u00b7 run #35",
-    "time": "00:08",
-    "timestamp": "2026-06-13T00:08:07Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
+    "title": "Control Surface Feeds",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1146",
-    "time": "23:22",
-    "timestamp": "2026-06-12T23:22:20Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #264",
-    "time": "23:22",
-    "timestamp": "2026-06-12T23:22:18Z"
+    "detail": "schedule on main \u00b7 run #1",
+    "time": "01:34",
+    "timestamp": "2026-06-13T01:34:03Z"
   }
 ]

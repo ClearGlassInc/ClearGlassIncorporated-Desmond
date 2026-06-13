@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #9",
+    "title": "Control Surface Feeds #10",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "18:43",
+    "timestamp": "2026-06-13T18:43:45Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #53",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-15c5ed56-a517-4ab6-b7b5-631cd88121ae",
+    "time": "18:08",
+    "timestamp": "2026-06-13T18:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #52",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-921447db-c1af-4de1-b934-9bfdb8e20fd9",
+    "time": "17:08",
+    "timestamp": "2026-06-13T17:08:08Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #252",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "16:46",
+    "timestamp": "2026-06-13T16:46:12Z"
+  },
+  {
+    "title": "pages build and deployment #684",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "16:46",
+    "timestamp": "2026-06-13T16:46:07Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1190",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "16:46",
+    "timestamp": "2026-06-13T16:46:07Z"
+  },
+  {
+    "title": "Control Surface Feeds #9",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "16:45",
     "timestamp": "2026-06-13T16:45:51Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/patch-all-deploy-wyuely",
     "time": "15:36",
     "timestamp": "2026-06-13T15:36:25Z"
-  },
-  {
-    "title": "Code Quality: PR #437 #1188",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/437/head",
-    "time": "15:36",
-    "timestamp": "2026-06-13T15:36:23Z"
-  },
-  {
-    "title": "Workflow Doctor #97",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/patch-all-deploy-wyuely",
-    "time": "15:36",
-    "timestamp": "2026-06-13T15:36:05Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #250",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "15:24",
-    "timestamp": "2026-06-13T15:24:27Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #547",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "15:24",
-    "timestamp": "2026-06-13T15:24:27Z"
-  },
-  {
-    "title": "Security #296",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "15:24",
-    "timestamp": "2026-06-13T15:24:27Z"
-  },
-  {
-    "title": "CI #533",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "15:24",
-    "timestamp": "2026-06-13T15:24:27Z"
   }
 ]

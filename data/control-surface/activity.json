@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "08:51",
-    "timestamp": "2026-06-13T08:51:55Z"
+    "time": "10:07",
+    "timestamp": "2026-06-13T10:07:49Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #3",
-    "time": "08:51",
-    "timestamp": "2026-06-13T08:51:42Z"
+    "detail": "schedule on main \u00b7 run #4",
+    "time": "10:07",
+    "timestamp": "2026-06-13T10:07:40Z"
   },
   {
-    "title": "CI",
+    "title": "Content Pipeline",
     "status": "ok",
-    "detail": "push on main \u00b7 run #509",
-    "time": "08:44",
-    "timestamp": "2026-06-13T08:44:47Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #240",
-    "time": "08:44",
-    "timestamp": "2026-06-13T08:44:47Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #272",
-    "time": "08:44",
-    "timestamp": "2026-06-13T08:44:47Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #229",
-    "time": "08:44",
-    "timestamp": "2026-06-13T08:44:47Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #523",
-    "time": "08:44",
-    "timestamp": "2026-06-13T08:44:47Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #91",
-    "time": "08:44",
-    "timestamp": "2026-06-13T08:44:47Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1156",
-    "time": "08:44",
-    "timestamp": "2026-06-13T08:44:46Z"
+    "detail": "workflow_run on main \u00b7 run #16",
+    "time": "09:56",
+    "timestamp": "2026-06-13T09:56:17Z"
   },
   {
     "title": "pages build and deployment",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #660",
-    "time": "08:44",
-    "timestamp": "2026-06-13T08:44:46Z"
+    "detail": "dynamic on main \u00b7 run #664",
+    "time": "09:56",
+    "timestamp": "2026-06-13T09:56:13Z"
   },
   {
-    "title": "CI",
+    "title": "Code Quality: Push on main",
     "status": "ok",
-    "detail": "pull_request on claude/patch-deploy-error-fixes-rcz8zq \u00b7 run #508",
-    "time": "08:36",
-    "timestamp": "2026-06-13T08:36:52Z"
+    "detail": "dynamic on main \u00b7 run #1161",
+    "time": "09:56",
+    "timestamp": "2026-06-13T09:56:13Z"
+  },
+  {
+    "title": "Bot Orchestrator",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #14",
+    "time": "09:55",
+    "timestamp": "2026-06-13T09:55:52Z"
+  },
+  {
+    "title": "Cert Bot",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #9",
+    "time": "09:33",
+    "timestamp": "2026-06-13T09:33:17Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #49",
+    "time": "09:22",
+    "timestamp": "2026-06-13T09:22:41Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-916d0074-21b4-409d-a123-14989d340c5d \u00b7 run #44",
+    "time": "09:08",
+    "timestamp": "2026-06-13T09:08:07Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #243",
+    "time": "08:58",
+    "timestamp": "2026-06-13T08:58:45Z"
   },
   {
     "title": "Security",
     "status": "ok",
-    "detail": "pull_request on claude/patch-deploy-error-fixes-rcz8zq \u00b7 run #271",
-    "time": "08:36",
-    "timestamp": "2026-06-13T08:36:52Z"
+    "detail": "push on main \u00b7 run #275",
+    "time": "08:58",
+    "timestamp": "2026-06-13T08:58:45Z"
   },
   {
-    "title": "PR Automation",
+    "title": "CI",
     "status": "ok",
-    "detail": "pull_request on claude/patch-deploy-error-fixes-rcz8zq \u00b7 run #127",
-    "time": "08:36",
-    "timestamp": "2026-06-13T08:36:52Z"
+    "detail": "push on main \u00b7 run #512",
+    "time": "08:58",
+    "timestamp": "2026-06-13T08:58:45Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #526",
+    "time": "08:58",
+    "timestamp": "2026-06-13T08:58:45Z"
   }
 ]

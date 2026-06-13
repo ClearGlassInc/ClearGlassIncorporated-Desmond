@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #11",
+    "title": "Control Surface Feeds #12",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:18",
+    "timestamp": "2026-06-13T22:18:54Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #57",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-79ad997e-a9ac-4ba9-8f0c-c2257357cb6c",
+    "time": "22:08",
+    "timestamp": "2026-06-13T22:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #56",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-f17feb8f-c209-4133-89e5-feac9a15c8e2",
+    "time": "21:08",
+    "timestamp": "2026-06-13T21:08:08Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #258",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:40",
+    "timestamp": "2026-06-13T20:40:45Z"
+  },
+  {
+    "title": "pages build and deployment #689",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:40",
+    "timestamp": "2026-06-13T20:40:35Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1198",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:40",
+    "timestamp": "2026-06-13T20:40:34Z"
+  },
+  {
+    "title": "Control Surface Feeds #11",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:40",
     "timestamp": "2026-06-13T20:40:16Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/adoring-darwin-7zp04f",
     "time": "19:05",
     "timestamp": "2026-06-13T19:05:24Z"
-  },
-  {
-    "title": "PR Automation #140",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/adoring-darwin-7zp04f",
-    "time": "19:05",
-    "timestamp": "2026-06-13T19:05:24Z"
-  },
-  {
-    "title": "Policy Gate #272",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/adoring-darwin-7zp04f",
-    "time": "19:05",
-    "timestamp": "2026-06-13T19:05:24Z"
-  },
-  {
-    "title": "Security #303",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/adoring-darwin-7zp04f",
-    "time": "19:05",
-    "timestamp": "2026-06-13T19:05:24Z"
-  },
-  {
-    "title": "Workflow Doctor #99",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/adoring-darwin-7zp04f",
-    "time": "19:05",
-    "timestamp": "2026-06-13T19:05:22Z"
-  },
-  {
-    "title": "Code Quality: PR #438 #1196",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/438/head",
-    "time": "19:05",
-    "timestamp": "2026-06-13T19:05:21Z"
-  },
-  {
-    "title": "CI #539",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:03",
-    "timestamp": "2026-06-13T19:03:37Z"
   }
 ]

@@ -1,6 +1,6 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-13T09:56:10.165318+00:00
+**Run:** 2026-06-13T15:09:41.649466+00:00
 **Average Score:** 64.4/100
 **Files Audited:** 43
 
@@ -17,6 +17,7 @@
 | `agentmesh.html` | 50/100 | 5 |
 | `clearglass-nexus.html` | 50/100 | 5 |
 | `systems.html` | 50/100 | 5 |
+| `CG-os.html` | 60/100 | 4 |
 | `aegis.html` | 60/100 | 4 |
 | `artemis-percival.html` | 60/100 | 4 |
 | `artemis.html` | 60/100 | 4 |
@@ -24,7 +25,6 @@
 | `button-lab.html` | 60/100 | 4 |
 | `cg-loader.html` | 60/100 | 4 |
 | `intelligence-interface.html` | 60/100 | 4 |
-| `jarvis-os.html` | 60/100 | 4 |
 | `smb.html` | 60/100 | 4 |
 | `artemis-blue-team.html` | 70/100 | 3 |
 | `artemis-iv.html` | 70/100 | 3 |

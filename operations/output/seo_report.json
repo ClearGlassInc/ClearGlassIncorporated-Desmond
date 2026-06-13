@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-13T09:56:10.165318+00:00",
+  "run_utc": "2026-06-13T15:09:41.649466+00:00",
   "files_audited": 43,
   "average_score": 64.4,
   "pages": [
@@ -24,6 +24,29 @@
         "Missing meta description",
         "Missing og:title",
         "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "CG-os.html",
+      "title": "CG OS \u2014 Command HUD",
+      "title_length": 19,
+      "title_ok": false,
+      "description": "CG OS command HUD \u2014 an always-on executive command center: system health ring, KPI dashboards, daily briefing, agent swarm activity stream, approval ladder, and voice control. Built in HTML/CSS/JS.",
+      "description_length": 197,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Title length 19 chars (ideal 30\u201360)",
+        "Description length 197 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
         "Missing og:image"
       ]
     },
@@ -347,11 +370,11 @@
     },
     {
       "file": "cg-loader.html",
-      "title": "ClearGlass \u00b7 Initializing",
-      "title_length": 25,
+      "title": "ClearGlassInc \u00b7 Initializing",
+      "title_length": 28,
       "title_ok": false,
-      "description": "ClearGlass cinematic command interface loader \u2014 initializing the tactical intelligence core.",
-      "description_length": 92,
+      "description": "ClearGlassInc cinematic command interface loader \u2014 initializing the tactical intelligence core.",
+      "description_length": 95,
       "description_ok": false,
       "canonical_present": true,
       "h1_count": 0,
@@ -362,8 +385,8 @@
       "og_image": false,
       "score": 60,
       "issues": [
-        "Title length 25 chars (ideal 30\u201360)",
-        "Description length 92 chars (ideal 120\u2013160)",
+        "Title length 28 chars (ideal 30\u201360)",
+        "Description length 95 chars (ideal 120\u2013160)",
         "No <h1> tag found",
         "Missing og:image"
       ]
@@ -674,29 +697,6 @@
       "issues": [
         "Title length 27 chars (ideal 30\u201360)",
         "Description length 90 chars (ideal 120\u2013160)",
-        "Missing og:image"
-      ]
-    },
-    {
-      "file": "jarvis-os.html",
-      "title": "JARVIS OS \u2014 Command HUD",
-      "title_length": 23,
-      "title_ok": false,
-      "description": "JARVIS OS command HUD \u2014 an always-on executive command center: system health ring, KPI dashboards, daily briefing, agent swarm activity stream, approval ladder, and voice control. Built in HTML/CSS/JS.",
-      "description_length": 201,
-      "description_ok": false,
-      "canonical_present": true,
-      "h1_count": 0,
-      "h1_ok": false,
-      "img_without_alt": 0,
-      "og_title": true,
-      "og_description": true,
-      "og_image": false,
-      "score": 60,
-      "issues": [
-        "Title length 23 chars (ideal 30\u201360)",
-        "Description length 201 chars (ideal 120\u2013160)",
-        "No <h1> tag found",
         "Missing og:image"
       ]
     },

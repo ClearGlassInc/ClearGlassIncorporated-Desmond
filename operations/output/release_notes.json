@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-13T09:56:10.138312+00:00",
+  "run_utc": "2026-06-13T15:09:41.600072+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
   "commit_count": 112,
@@ -283,114 +283,6 @@
         "author": "Desmond Otieno",
         "date": "2026-06-05",
         "breaking": false
-      },
-      {
-        "sha": "6eb223a",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "AEGIS \u2014 lawful-access compliance & rights-protection agent (#369)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "e175e8a",
-        "type": "feat",
-        "scope": "bots",
-        "subject": "self-evolving wealth engine (revenue-first ladder + fleet evolution)",
-        "author": "Claude",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "ebe82b9",
-        "type": "feat",
-        "scope": "autostore",
-        "subject": "PostgresStore + migrations, Redis worker, role auth, write cockpit (#366)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "be2aac8",
-        "type": "feat",
-        "scope": "autostore",
-        "subject": "PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js) (#365)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "9d04576",
-        "type": "feat",
-        "scope": "autostore",
-        "subject": "PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js)",
-        "author": "Claude",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "b784662",
-        "type": "feat",
-        "scope": "percival\u00b7pfas",
-        "subject": "evidence-pack exporter + text-PDF profile + in-browser download (#364)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "1ab16f8",
-        "type": "feat",
-        "scope": "percival\u00b7pfas",
-        "subject": "lab CSV ingester + SENTINEL map layer (#362)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "91c0c25",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "purple-team detection-engineering engine + PFAS agent (#361)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "dc85d5e",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "purple-team detection-engineering engine + PFAS agent",
-        "author": "Claude",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "ce95436",
-        "type": "feat",
-        "scope": "home",
-        "subject": "live USGS/NWS LIVE OPS ribbon linking to SENTINEL (#359)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "2729bb6",
-        "type": "feat",
-        "scope": null,
-        "subject": "live USGS/NWS in PERCIVAL + live airspace (OpenSky) in SENTINEL (#358)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "e8f6d19",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "live geospatial mode \u2014 real location + USGS/NWS feeds + camera",
-        "author": "Claude",
-        "date": "2026-06-04",
-        "breaking": false
       }
     ],
     "Bug Fixes": [
@@ -515,6 +407,78 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "ef5c74b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Apply suggested fix to claude_agent_sdk from Copilot Autofix",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "60f20da",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add async main function for querying directory files",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "8fd1ad9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix missing newline at end of icon.svg",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "70a0190",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update icon.svg to use SVG logo format",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "c2903db",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add navigation bar and logo styling",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "32b1637",
+        "type": "chore",
+        "scope": null,
+        "subject": "Replace 'jarvisSay' with 'CGSay' in HTML file",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "8b8ec63",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and meta description for branding",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "c0d2085",
+        "type": "chore",
+        "scope": null,
+        "subject": "Rename JARVIS OS to CG OS in HTML file",
+        "author": "Desmond Otieno",
+        "date": "2026-06-13",
+        "breaking": false
+      },
       {
         "sha": "c47d3a4",
         "type": "chore",
@@ -878,6 +842,42 @@
     ],
     "Automation": [
       {
+        "sha": "d056de8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "9b2b1a6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "4d0c801",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
+        "sha": "a20d4a2",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-13 09:56 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-13",
+        "breaking": false
+      },
+      {
         "sha": "3944583",
         "type": "bot",
         "scope": null,
@@ -984,15 +984,6 @@
         "author": "github-actions[bot]",
         "date": "2026-06-05",
         "breaking": false
-      },
-      {
-        "sha": "5deec71",
-        "type": "bot",
-        "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-04 19:41 UTC [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-06-04",
-        "breaking": false
       }
     ],
     "Style": [
@@ -1012,6 +1003,17 @@
         "subject": "recolor hover menu to homepage blue-violet theme",
         "author": "Claude",
         "date": "2026-06-05",
+        "breaking": false
+      }
+    ],
+    "Build": [
+      {
+        "sha": "a45fd83",
+        "type": "build",
+        "scope": "deps",
+        "subject": "bump next from 14.2.5 to 15.5.18 in /apps/autostore/cockpit",
+        "author": "dependabot[bot]",
+        "date": "2026-06-13",
         "breaking": false
       }
     ],

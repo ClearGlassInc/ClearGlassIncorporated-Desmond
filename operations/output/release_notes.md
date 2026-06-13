@@ -35,18 +35,6 @@
 - **percival:** org-scoped Agent Mesh — ClearGlass-only OSINT orchestration (#372) (`bd6af99`)
 - **autostore:** risk scoring + read-only advisor + idempotency + metrics (#371) (`a7a2f58`)
 - **aegis:** legal-process register + transparency report + intake UI + shared audit (#370) (`b21ecdc`)
-- **percival:** AEGIS — lawful-access compliance & rights-protection agent (#369) (`6eb223a`)
-- **bots:** self-evolving wealth engine (revenue-first ladder + fleet evolution) (`e175e8a`)
-- **autostore:** PostgresStore + migrations, Redis worker, role auth, write cockpit (#366) (`ebe82b9`)
-- **autostore:** PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js) (#365) (`be2aac8`)
-- **autostore:** PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js) (`9d04576`)
-- **percival·pfas:** evidence-pack exporter + text-PDF profile + in-browser download (#364) (`b784662`)
-- **percival·pfas:** lab CSV ingester + SENTINEL map layer (#362) (`1ab16f8`)
-- **percival:** purple-team detection-engineering engine + PFAS agent (#361) (`91c0c25`)
-- **percival:** purple-team detection-engineering engine + PFAS agent (`dc85d5e`)
-- **home:** live USGS/NWS LIVE OPS ribbon linking to SENTINEL (#359) (`ce95436`)
-- live USGS/NWS in PERCIVAL + live airspace (OpenSky) in SENTINEL (#358) (`2729bb6`)
-- **sentinel:** live geospatial mode — real location + USGS/NWS feeds + camera (`e8f6d19`)
 
 ## Bug Fixes
 
@@ -69,6 +57,14 @@
 
 ## Maintenance
 
+- Apply suggested fix to claude_agent_sdk from Copilot Autofix (`ef5c74b`)
+- Add async main function for querying directory files (`60f20da`)
+- Fix missing newline at end of icon.svg (`8fd1ad9`)
+- Update icon.svg to use SVG logo format (`70a0190`)
+- Add navigation bar and logo styling (`c2903db`)
+- Replace 'jarvisSay' with 'CGSay' in HTML file (`32b1637`)
+- Update title and meta description for branding (`8b8ec63`)
+- Rename JARVIS OS to CG OS in HTML file (`c0d2085`)
 - Retire legacy pages-build-deployment by pinning Pages source to GitHub Actions (`c47d3a4`)
 - Remove broken threads.html footer link in artemis-os (`0aac777`)
 - Rebuild control-surface command dropdown with crystal-glass styling and live page links (`0fc45dd`)
@@ -112,6 +108,10 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`d056de8`)
+- refresh control-surface data feeds [skip ci] (`9b2b1a6`)
+- refresh control-surface data feeds [skip ci] (`4d0c801`)
+- update generated outputs — 2026-06-13 09:56 UTC [skip ci] (`a20d4a2`)
 - refresh control-surface data feeds [skip ci] (`3944583`)
 - refresh control-surface data feeds [skip ci] (`b1420c8`)
 - refresh control-surface data feeds [skip ci] (`5ad6ebf`)
@@ -124,12 +124,15 @@
 - update generated outputs — 2026-06-07 09:59 UTC [skip ci] (`6277431`)
 - update generated outputs — 2026-06-06 09:24 UTC [skip ci] (`6e77f2c`)
 - update generated outputs — 2026-06-05 10:45 UTC [skip ci] (`27a8de2`)
-- update generated outputs — 2026-06-04 19:41 UTC [skip ci] (`5deec71`)
 
 ## Style
 
 - **nav:** recolor hover menu to homepage blue-violet theme (#375) (`4821656`)
 - **nav:** recolor hover menu to homepage blue-violet theme (`44ed956`)
+
+## Build
+
+- **deps:** bump next from 14.2.5 to 15.5.18 in /apps/autostore/cockpit (`a45fd83`)
 
 ## Other
 

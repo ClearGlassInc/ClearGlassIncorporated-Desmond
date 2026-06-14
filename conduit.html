@@ -446,7 +446,7 @@ function selectNode(id){
 
 /* ── wires (svg beziers) ─────────────────────────────────────────────────── */
 function center(id,side){
-  const n=nodes[id]; const w=176,h=document.getElementById(id).offsetHeight||72;
+  const n=nodes[id]; const w=176;
   return {x:n.x+(side==="out"?w-2:2), y:n.y+38};
 }
 function drawWires(){

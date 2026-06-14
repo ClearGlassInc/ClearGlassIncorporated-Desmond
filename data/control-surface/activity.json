@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "12:15",
-    "timestamp": "2026-06-14T12:15:03Z"
+    "time": "14:30",
+    "timestamp": "2026-06-14T14:30:50Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #16",
-    "time": "12:14",
-    "timestamp": "2026-06-14T12:14:51Z"
+    "detail": "schedule on main \u00b7 run #17",
+    "time": "14:30",
+    "timestamp": "2026-06-14T14:30:26Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-30ad281b-252b-49fa-9058-da119813d8dd \u00b7 run #71",
-    "time": "12:08",
-    "timestamp": "2026-06-14T12:08:07Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-b18d3f29-c5ac-412d-8c53-646b3a3ef755 \u00b7 run #70",
-    "time": "11:08",
-    "timestamp": "2026-06-14T11:08:07Z"
-  },
-  {
-    "title": "Content Pipeline",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "workflow_run on main \u00b7 run #19",
-    "time": "10:23",
-    "timestamp": "2026-06-14T10:23:59Z"
+    "detail": "pull_request on glass/white-glass-system \u00b7 run #147",
+    "time": "14:28",
+    "timestamp": "2026-06-14T14:28:17Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "Security",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #697",
-    "time": "10:23",
-    "timestamp": "2026-06-14T10:23:54Z"
+    "detail": "pull_request on glass/white-glass-system \u00b7 run #316",
+    "time": "14:28",
+    "timestamp": "2026-06-14T14:28:17Z"
   },
   {
-    "title": "Code Quality: Push on main",
+    "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1209",
-    "time": "10:23",
-    "timestamp": "2026-06-14T10:23:53Z"
+    "detail": "pull_request on glass/white-glass-system \u00b7 run #568",
+    "time": "14:28",
+    "timestamp": "2026-06-14T14:28:17Z"
   },
   {
-    "title": "Bot Orchestrator",
+    "title": "CI",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #16",
-    "time": "10:23",
-    "timestamp": "2026-06-14T10:23:38Z"
+    "detail": "pull_request on glass/white-glass-system \u00b7 run #553",
+    "time": "14:28",
+    "timestamp": "2026-06-14T14:28:17Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-4b1e305b-7c06-4acc-86f1-4c16e24d272d \u00b7 run #69",
-    "time": "10:08",
-    "timestamp": "2026-06-14T10:08:07Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
+    "title": "Policy Gate",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #266",
-    "time": "09:56",
-    "timestamp": "2026-06-14T09:56:34Z"
+    "detail": "pull_request on glass/white-glass-system \u00b7 run #285",
+    "time": "14:28",
+    "timestamp": "2026-06-14T14:28:17Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "Code Quality: PR #445",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #696",
-    "time": "09:56",
-    "timestamp": "2026-06-14T09:56:28Z"
+    "detail": "dynamic on refs/pull/445/head \u00b7 run #1217",
+    "time": "14:28",
+    "timestamp": "2026-06-14T14:28:15Z"
   },
   {
-    "title": "Code Quality: Push on main",
+    "title": "Workflow Doctor",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1208",
-    "time": "09:56",
-    "timestamp": "2026-06-14T09:56:28Z"
+    "detail": "push on claude/debug-github-repo-KUXej \u00b7 run #103",
+    "time": "14:24",
+    "timestamp": "2026-06-14T14:24:56Z"
   },
   {
-    "title": "Control Surface Feeds",
+    "title": "Code Quality: PR #432",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #15",
-    "time": "09:56",
-    "timestamp": "2026-06-14T09:56:08Z"
+    "detail": "dynamic on refs/pull/432/head \u00b7 run #1216",
+    "time": "14:24",
+    "timestamp": "2026-06-14T14:24:39Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #284",
+    "time": "14:24",
+    "timestamp": "2026-06-14T14:24:10Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #567",
+    "time": "14:24",
+    "timestamp": "2026-06-14T14:24:10Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #315",
+    "time": "14:24",
+    "timestamp": "2026-06-14T14:24:10Z"
   }
 ]

@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-13T15:09:41.649466+00:00
-**Average Score:** 64.4/100
-**Files Audited:** 43
+**Run:** 2026-06-14T10:23:51.080628+00:00
+**Average Score:** 64.1/100
+**Files Audited:** 44
 
 ## Page Scores
 
@@ -16,6 +16,7 @@
 | `404.html` | 40/100 | 5 |
 | `agentmesh.html` | 50/100 | 5 |
 | `clearglass-nexus.html` | 50/100 | 5 |
+| `clearglass.html` | 50/100 | 5 |
 | `systems.html` | 50/100 | 5 |
 | `CG-os.html` | 60/100 | 4 |
 | `aegis.html` | 60/100 | 4 |
@@ -54,12 +55,12 @@
 
 ## Top Issues Across All Pages
 
-- 36x — Missing og:image
-- 31x — Description length N chars (ideal N–N)
+- 37x — Missing og:image
+- 32x — Description length N chars (ideal N–N)
 - 24x — Title length N chars (ideal N–N)
-- 15x — No <hN> tag found
-- 13x — Missing og:description
-- 11x — Missing og:title
+- 16x — No <hN> tag found
+- 14x — Missing og:description
+- 12x — Missing og:title
 - 6x — Missing meta description
 - 5x — Missing canonical link tag
 - 2x — N image(s) missing alt text

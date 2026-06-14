@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-13T15:09:41.649466+00:00",
-  "files_audited": 43,
-  "average_score": 64.4,
+  "run_utc": "2026-06-14T10:23:51.080628+00:00",
+  "files_audited": 44,
+  "average_score": 64.1,
   "pages": [
     {
       "file": "404.html",
@@ -409,6 +409,30 @@
       "score": 50,
       "issues": [
         "Title length 81 chars (ideal 30\u201360)",
+        "No <h1> tag found",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "clearglass.html",
+      "title": "ClearGlass \u00b7 Network Flow Intelligence",
+      "title_length": 38,
+      "title_ok": true,
+      "description": "ClearGlass \u2014 a network flow intelligence platform for visualizing and analyzing domains, IP flows and entity relationships for security analysts and network engineers.",
+      "description_length": 167,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Description length 167 chars (ideal 120\u2013160)",
         "No <h1> tag found",
         "Missing og:title",
         "Missing og:description",
@@ -968,12 +992,12 @@
     }
   ],
   "top_issues": [
-    "36x \u2014 Missing og:image",
-    "31x \u2014 Description length N chars (ideal N\u2013N)",
+    "37x \u2014 Missing og:image",
+    "32x \u2014 Description length N chars (ideal N\u2013N)",
     "24x \u2014 Title length N chars (ideal N\u2013N)",
-    "15x \u2014 No <hN> tag found",
-    "13x \u2014 Missing og:description",
-    "11x \u2014 Missing og:title",
+    "16x \u2014 No <hN> tag found",
+    "14x \u2014 Missing og:description",
+    "12x \u2014 Missing og:title",
     "6x \u2014 Missing meta description",
     "5x \u2014 Missing canonical link tag",
     "2x \u2014 N image(s) missing alt text",

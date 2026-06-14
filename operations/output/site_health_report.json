@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-13T15:09:42.170333+00:00",
+  "run_utc": "2026-06-14T10:23:51.410978+00:00",
   "site_url": "https://clearglassinc.github.io",
   "overall_healthy": true,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 160,
+      "response_ms": 64,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 56,
+      "response_ms": 48,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 70,
+      "response_ms": 50,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 67,
+      "response_ms": 53,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 93,
+      "response_ms": 72,
       "has_title": true,
       "missing_meta": [
         "og:title"
@@ -63,14 +63,12 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 65,
+      "response_ms": 44,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
   "local_issues": [],
-  "local_warnings": [
-    "HTML page not referenced in sitemap.xml: CG-os.html"
-  ]
+  "local_warnings": []
 }

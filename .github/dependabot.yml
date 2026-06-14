@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # GitHub Actions — keep the supply chain current (and SHA pins fresh).
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "ci", "automated"]
+    groups:
+      actions:
+        patterns: ["*"]
+
+  # Python tooling used by bots/ and scripts/.
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "python", "automated"]
+
+  # Terraform providers/modules under infra/.
+  - package-ecosystem: terraform
+    directory: "/infra"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    labels: ["dependencies", "infra", "automated"]

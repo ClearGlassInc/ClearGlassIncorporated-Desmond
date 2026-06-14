@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: autostore
+      POSTGRES_PASSWORD: autostore
+      POSTGRES_DB: autostore
+    ports: ["5432:5432"]
+    volumes:
+      - autostore_pg:/var/lib/postgresql/data
+      - ../db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "autostore"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+  control_plane:
+    build:
+      context: ../control_plane
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://autostore:autostore@postgres:5432/autostore
+      REDIS_URL: redis://redis:6379/0
+      APPROVER_TOKENS: "demo-ops-token:ops-lead,demo-fin-token:finance-lead"
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis:    { condition: service_started }
+    ports: ["8000:8000"]
+    command: uvicorn autostore.app:app --host 0.0.0.0 --port 8000
+
+  worker:
+    build:
+      context: ../control_plane
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://autostore:autostore@postgres:5432/autostore
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      redis:    { condition: service_started }
+      postgres: { condition: service_healthy }
+    command: python -m autostore.worker
+
+  cockpit:
+    build:
+      context: ../cockpit
+      dockerfile: Dockerfile
+    environment:
+      AUTOSTORE_API_URL: http://control_plane:8000
+      NODE_ENV: production
+    depends_on:
+      control_plane: { condition: service_started }
+    ports: ["3000:3000"]
+
+volumes:
+  autostore_pg:

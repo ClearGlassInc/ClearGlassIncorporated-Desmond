@@ -1,3 +1,5 @@
+# Copyright (c) 2024-2026 ClearGlass Inc. All Rights Reserved.
+# Proprietary and confidential. See LICENSE for terms.
 from __future__ import annotations
 
 import json

@@ -2,19 +2,10 @@
 # Proprietary and confidential. See LICENSE for terms.
 from __future__ import annotations
 
-import json
-import tempfile
-from pathlib import Path
 
-import pytest
 
-from bots.content_engine import build_bundle, write_outputs
+from bots.content_engine import build_bundle
 from bots.content_validator import (
-    BRAND_KEYWORDS,
-    PLATFORM_LIMITS,
-    WEAK_PHRASES,
-    PlatformResult,
-    ValidationReport,
     validate_bundle,
     validate_platform,
 )
@@ -82,7 +73,7 @@ def test_validate_platform_fails_no_brand_keyword():
     # Replace any accidental brand keyword hits
     safe_body = text.replace("security", "protection")
     content = {"headline": "Strong protection posture", "body": safe_body}
-    result = validate_platform("linkedin", content, 400)
+    _result = validate_platform("linkedin", content, 400)
     # The URL itself doesn't count as a brand keyword; keywords are: clearglass, artemis, guardian, cybersecurity, security, intelligence
     # 'clearglassinc.github.io' doesn't match any keyword directly — but 'clearglassinc' contains 'clearglass'
     # Our check is text_lower contains kw — 'clearglassinc' does contain 'clearglass', so this would pass.
@@ -91,7 +82,7 @@ def test_validate_platform_fails_no_brand_keyword():
         "headline": "Strong posture matters",
         "body": "Organizations that operate at the edge must maintain continuous hardening. clearglassinc.github.io",
     }
-    result = validate_platform("linkedin", content, 400)
+    _result = validate_platform("linkedin", content, 400)
     # 'clearglassinc' includes 'clearglass' which is in BRAND_KEYWORDS, so it passes
     # Test the true failure path: no brand keyword, no site URL in text
     content_no_kw = {
@@ -168,7 +159,7 @@ def test_validate_bundle_detects_missing_platforms():
         "content_hash": "abc123",
         "platforms": [],
     }
-    report = validate_bundle(bundle)
+    _report = validate_bundle(bundle)
     # No platforms → no platform failures, but overall_passed is True with no violations
     # Empty platforms list means no content to reject; it passes vacuously.
     # Adjust: add a bad platform

@@ -36,6 +36,8 @@ node_modules/
 
 # Archives (build artifacts should not be committed)
 *.zip
+# Exception: product bundle assets served directly from Pages
+!downloads/opal-koboi-product-bundle.zip
 
 # ── IP PROTECTION: secrets & credentials ────────────────────────────────────
 # Never commit API keys, tokens, or credentials.

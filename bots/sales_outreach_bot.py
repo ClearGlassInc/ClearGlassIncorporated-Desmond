@@ -16,7 +16,6 @@ review and deployment. Designed to run on a weekly GitHub Actions schedule.
 from __future__ import annotations
 
 import json
-import random
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -282,7 +281,7 @@ ClearGlassInc
 
 
 def build_linkedin(v: dict) -> LinkedInMessage:
-    pain = v["pain_points"][0]
+    _pain = v["pain_points"][0]
     prop = v["value_props"][0]
 
     first_pain_word = v["pain_points"][0].split()[0]

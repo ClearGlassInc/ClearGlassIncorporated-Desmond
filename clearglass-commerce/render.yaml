@@ -33,6 +33,30 @@ services:
       - key: CHECKOUT_CANCEL_URL
         value: https://clearglassinc.github.io/conduit.html
 
+  - type: web
+    name: clearglass-commerce-storefront
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./clearglass-commerce/storefront/Dockerfile
+    dockerContext: ./clearglass-commerce/storefront
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE
+        value: https://clearglass-commerce-api.onrender.com
+
+  - type: web
+    name: clearglass-commerce-admin
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./clearglass-commerce/admin/Dockerfile
+    dockerContext: ./clearglass-commerce/admin
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE
+        value: https://clearglass-commerce-api.onrender.com
+
 databases:
   - name: clearglass-commerce-db
     plan: basic-256mb

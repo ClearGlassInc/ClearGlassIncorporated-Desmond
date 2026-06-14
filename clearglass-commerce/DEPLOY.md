@@ -15,8 +15,23 @@ admin are Next.js apps. Below are three paths — pick one.
 5. Point a Stripe webhook at `https://<your-service>.onrender.com/webhooks/stripe` and paste the
    signing secret into `STRIPE_WEBHOOK_SECRET`.
 
+The blueprint deploys **all three services** — API, storefront, admin — plus the database.
+
 `AUTO_CREATE_TABLES=true` creates the schema on first boot. For production hardening, switch it
 off and apply `control-plane/migrations/001_init.sql` (it adds the append-only ledger trigger).
+
+### Continuous deploy (GitHub Actions)
+
+`.github/workflows/commerce-deploy.yml` runs on every push to `main` that touches
+`clearglass-commerce/**`: it gates on `ruff` + the test suite, then triggers a Render deploy via a
+**Deploy Hook**. To enable it:
+
+1. Render → your API service → **Settings** → **Deploy Hook** → copy the URL.
+2. GitHub → repo **Settings** → **Secrets and variables** → **Actions** → add
+   `RENDER_DEPLOY_HOOK_URL`.
+
+Without the secret the deploy step is skipped (the test gate still runs), so the workflow is safe
+to merge before you have a Render account.
 
 ## B. Docker Compose (self-host / VPS)
 

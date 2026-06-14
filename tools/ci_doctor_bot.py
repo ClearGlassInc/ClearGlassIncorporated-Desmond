@@ -13,7 +13,6 @@ high-confidence breakages that can stop CI execution.
 from __future__ import annotations
 
 import re
-import sys
 from pathlib import Path
 from typing import Any
 

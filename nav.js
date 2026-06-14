@@ -21,6 +21,7 @@
     ]],
     ["Platforms", [
       ["Artemis IV Core", "artemis-iv.html", "🧭"],
+      ["ZEPHYR · Air Control", "air-control.html", "🜁"],
       ["Artemis VI", "artemis.html", "🛰"],
       ["Guardian", "guardian.html", "🌐"],
       ["ClearGlass NEXUS", "clearglass-nexus.html", "🛡"],

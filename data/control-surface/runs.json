@@ -1,8 +1,85 @@
 [
   {
-    "title": "Control Surface Feeds #14",
+    "title": "Control Surface Feeds #15",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "09:56",
+    "timestamp": "2026-06-14T09:56:08Z"
+  },
+  {
+    "title": "Cert Bot #11",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "09:55",
+    "timestamp": "2026-06-14T09:55:19Z"
+  },
+  {
+    "title": "Health Monitor #54",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "09:42",
+    "timestamp": "2026-06-14T09:42:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #68",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-trigger-ce53bba2-1023-4d1c-a008-f4bad35da11d",
+    "time": "09:08",
+    "timestamp": "2026-06-14T09:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #67",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-029e6ec4-c051-452d-a01f-1239bc496ff1",
+    "time": "08:08",
+    "timestamp": "2026-06-14T08:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #66",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-99e8ae11-93fc-40a5-82e3-708fe6216970",
+    "time": "07:08",
+    "timestamp": "2026-06-14T07:08:07Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #562",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "06:47",
+    "timestamp": "2026-06-14T06:47:46Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #65",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-trigger-ec86ee23-0ce3-49e9-b1dd-a6c5b27ce428",
+    "time": "06:08",
+    "timestamp": "2026-06-14T06:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #265",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "06:05",
+    "timestamp": "2026-06-14T06:05:28Z"
+  },
+  {
+    "title": "pages build and deployment #695",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "06:05",
+    "timestamp": "2026-06-14T06:05:21Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1207",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "06:05",
+    "timestamp": "2026-06-14T06:05:21Z"
+  },
+  {
+    "title": "Control Surface Feeds #14",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "06:04",
     "timestamp": "2026-06-14T06:04:59Z"
   },
@@ -43,8 +120,8 @@
   },
   {
     "title": "pages build and deployment #694",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on main",
+    "status": "warn",
+    "detail": "cancelled \u00b7 dynamic on main",
     "time": "05:55",
     "timestamp": "2026-06-14T05:55:08Z"
   },
@@ -61,82 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/enterprise-ai-platform-0KkXK",
     "time": "05:54",
     "timestamp": "2026-06-14T05:54:59Z"
-  },
-  {
-    "title": "Security #309",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/enterprise-ai-platform-0KkXK",
-    "time": "05:54",
-    "timestamp": "2026-06-14T05:54:59Z"
-  },
-  {
-    "title": "CI #546",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/enterprise-ai-platform-0KkXK",
-    "time": "05:54",
-    "timestamp": "2026-06-14T05:54:59Z"
-  },
-  {
-    "title": "PR Automation #143",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/enterprise-ai-platform-0KkXK",
-    "time": "05:54",
-    "timestamp": "2026-06-14T05:54:59Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #560",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/enterprise-ai-platform-0KkXK",
-    "time": "05:54",
-    "timestamp": "2026-06-14T05:54:59Z"
-  },
-  {
-    "title": "Code Quality: PR #442 #1205",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/442/head",
-    "time": "05:54",
-    "timestamp": "2026-06-14T05:54:58Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #559",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "05:35",
-    "timestamp": "2026-06-14T05:35:50Z"
-  },
-  {
-    "title": "CI #545",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "05:35",
-    "timestamp": "2026-06-14T05:35:50Z"
-  },
-  {
-    "title": "Workflow Doctor #102",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "05:35",
-    "timestamp": "2026-06-14T05:35:50Z"
-  },
-  {
-    "title": "Policy Gate #277",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "05:35",
-    "timestamp": "2026-06-14T05:35:50Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #263",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "05:35",
-    "timestamp": "2026-06-14T05:35:50Z"
-  },
-  {
-    "title": "Security #308",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "05:35",
-    "timestamp": "2026-06-14T05:35:50Z"
   }
 ]

@@ -4,3 +4,4 @@ pydantic>=2.7
 pydantic-settings>=2.3
 SQLAlchemy>=2.0
 psycopg[binary]>=3.1
+stripe>=10.0   # only required for live payments; mock mode needs no key

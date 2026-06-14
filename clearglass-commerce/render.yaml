@@ -1,0 +1,64 @@
+# Render blueprint for the ClearGlass commerce stack.
+# Deploy: push to GitHub, then in Render → "New +" → "Blueprint" → pick this repo.
+# Set the sync:false secrets (Stripe keys) in the Render dashboard after first deploy.
+services:
+  - type: web
+    name: clearglass-commerce-api
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./clearglass-commerce/control-plane/Dockerfile
+    dockerContext: ./clearglass-commerce/control-plane
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: REQUIRE_APPROVAL_FOR_HIGH_RISK
+        value: "true"
+      - key: AUTO_CREATE_TABLES
+        value: "true"   # first boot creates tables; switch to migrations for prod hardening
+      - key: DATABASE_URL
+        fromDatabase:
+          name: clearglass-commerce-db
+          property: connectionString
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: CHECKOUT_SUCCESS_URL
+        value: https://clearglassinc.github.io/conduit.html
+      - key: CHECKOUT_CANCEL_URL
+        value: https://clearglassinc.github.io/conduit.html
+
+  - type: web
+    name: clearglass-commerce-storefront
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./clearglass-commerce/storefront/Dockerfile
+    dockerContext: ./clearglass-commerce/storefront
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE
+        value: https://clearglass-commerce-api.onrender.com
+
+  - type: web
+    name: clearglass-commerce-admin
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./clearglass-commerce/admin/Dockerfile
+    dockerContext: ./clearglass-commerce/admin
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE
+        value: https://clearglass-commerce-api.onrender.com
+
+databases:
+  - name: clearglass-commerce-db
+    plan: basic-256mb
+    region: oregon
+    postgresMajorVersion: "16"

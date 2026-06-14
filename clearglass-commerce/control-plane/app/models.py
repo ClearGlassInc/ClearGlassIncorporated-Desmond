@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from decimal import Decimal
 
 from sqlalchemy import (
+    JSON,
     DateTime,
     ForeignKey,
     Integer,
@@ -17,6 +18,9 @@ from sqlalchemy import (
 )
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+# JSONB in Postgres, plain JSON elsewhere (SQLite for local/dev/demo runs).
+PortableJSON = JSON().with_variant(JSONB(), "postgresql")
 
 
 def _utcnow() -> datetime:
@@ -109,7 +113,7 @@ class Event(Base):
     actor: Mapped[str] = mapped_column(String(120))
     action: Mapped[str] = mapped_column(String(80))
     target: Mapped[str | None] = mapped_column(String(160), nullable=True)
-    payload: Mapped[dict] = mapped_column(JSONB, default=dict)
+    payload: Mapped[dict] = mapped_column(PortableJSON, default=dict)
     result: Mapped[str] = mapped_column(String(32), default="ok")
     risk_score: Mapped[int] = mapped_column(Integer, default=0)
     risk_tier: Mapped[str] = mapped_column(String(16), default="low")
@@ -123,7 +127,7 @@ class Approval(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     action: Mapped[str] = mapped_column(String(80))
     target: Mapped[str | None] = mapped_column(String(160), nullable=True)
-    payload: Mapped[dict] = mapped_column(JSONB, default=dict)
+    payload: Mapped[dict] = mapped_column(PortableJSON, default=dict)
     risk_score: Mapped[int] = mapped_column(Integer, default=0)
     risk_tier: Mapped[str] = mapped_column(String(16), default="high")
     status: Mapped[str] = mapped_column(String(16), default="pending")

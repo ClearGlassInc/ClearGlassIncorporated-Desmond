@@ -77,6 +77,9 @@ Nothing in the high/critical tier executes without an `approvals` row reaching `
 | `POST` | `/store/refresh-products` | medium |
 | `POST` | `/store/generate-copy` | low |
 | `POST` | `/store/update-pricing` | **high → approval** |
+| `POST` | `/checkout/session` | customer revenue (logged) |
+| `POST` | `/webhooks/stripe` | signed ingest → writes paid orders |
+| `POST` | `/payments/refund` | **critical → approval** |
 | `POST` | `/orders/reconcile` | low |
 | `POST` | `/inventory/check` | low (reorder = high) |
 | `GET`  | `/metrics/overview` | low |

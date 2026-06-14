@@ -5,11 +5,16 @@ from fastapi import FastAPI
 
 from . import __version__
 from .config import get_settings
-from .routers import approvals, events, inventory, metrics, orders, store
+from .routers import approvals, events, inventory, metrics, orders, payments, store
 
 
 def create_app() -> FastAPI:
     settings = get_settings()
+    if settings.auto_create_tables:
+        from .db import engine
+        from .models import Base
+
+        Base.metadata.create_all(engine)
     app = FastAPI(
         title="ClearGlass Autonomous E-Commerce Operator",
         version=__version__,
@@ -32,6 +37,7 @@ def create_app() -> FastAPI:
         }
 
     app.include_router(store.router)
+    app.include_router(payments.router)
     app.include_router(orders.router)
     app.include_router(inventory.router)
     app.include_router(metrics.router)

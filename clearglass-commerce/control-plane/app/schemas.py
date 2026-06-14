@@ -28,6 +28,34 @@ class InventoryCheckRequest(BaseModel):
     reorder: bool = False
 
 
+class CheckoutLineItem(BaseModel):
+    name: str
+    amount: int = Field(description="Unit price in the smallest currency unit (cents)", ge=0)
+    quantity: int = Field(default=1, ge=1)
+    currency: str = "cad"
+
+
+class CheckoutRequest(BaseModel):
+    items: list[CheckoutLineItem]
+    customer_email: str | None = None
+    success_url: str | None = None
+    cancel_url: str | None = None
+
+
+class CheckoutSessionOut(BaseModel):
+    id: str
+    url: str
+    mode: str               # live | mock
+    amount_total: int
+    currency: str
+
+
+class RefundRequest(BaseModel):
+    order_id: int
+    amount: int | None = Field(default=None, description="Cents to refund; None = full refund")
+    reason: str = ""
+
+
 class ActionResult(BaseModel):
     """Uniform envelope returned by every governed action."""
 

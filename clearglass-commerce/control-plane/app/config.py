@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     log_level: str = "info"
 
     database_url: str = "postgresql+psycopg://commerce:commerce@localhost:5432/commerce"
+    # Create tables from ORM metadata on startup (handy for SQLite/dev/demo; prod uses migrations).
+    auto_create_tables: bool = False
 
     # Governance
     require_approval_for_high_risk: bool = True

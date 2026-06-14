@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>CONDUIT · Workflow Automation — Self-Hosted, Open Source — ClearGlass Inc.</title>
+<meta name="description" content="CONDUIT — a self-hosted, open-source workflow automation platform. Visual drag-and-drop builder, 400+ app integrations (Gmail, Slack, Notion, Google Sheets, WhatsApp), and AI agent workflows that run on your own server. Zero data leaks. No subscription required."/>
+<link rel="canonical" href="https://clearglassinc.github.io/conduit.html"/>
+<meta property="og:title" content="CONDUIT · Workflow Automation — Self-Hosted, Open Source"/>
+<meta property="og:description" content="Automate Gmail, Slack, Notion, Sheets & WhatsApp. AI agent workflows on your own data and models. 400+ integrations, visual drag-and-drop, self-hosted. 100% free and open source."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#60a5fa;--amber:#60a5fa;--cyan:#36b6ff;--teal:#2fd4c0;--violet:#9b7bff;--ok:#34d399;--warn:#fbbf24;--pink:#f472b6;
+  --line:rgba(124,150,255,.16);--line-2:rgba(124,150,255,.3);--txt:#eef2ff;--dim:#9aa6c8;--dim-2:#5f6a8a;
+  --mono:'IBM Plex Mono',monospace;--display:'Orbitron','Inter',sans-serif;--sans:'Inter',system-ui,sans-serif}
+html,body{height:100%}
+body{font-family:var(--sans);color:var(--txt);min-height:100vh;
+  background:radial-gradient(130% 100% at 50% -10%,#0c1330 0%,#070a1c 48%,#04050d 100%);-webkit-font-smoothing:antialiased}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:13px;padding:13px 22px;border-bottom:1px solid var(--line);background:rgba(7,10,28,.72);backdrop-filter:blur(8px);position:sticky;top:0;z-index:40}
+.mk{width:30px;height:30px;border-radius:8px;position:relative;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 60%,#10183f);box-shadow:0 0 14px rgba(124,150,255,.6)}
+.mk::after{content:"⟿";position:absolute;inset:0;display:grid;place-items:center;font-size:16px;color:#fff}
+.b-name{font-family:var(--display);font-weight:900;letter-spacing:.18em;font-size:15px}.b-name b{background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.b-sub{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim-2);text-transform:uppercase}
+.spacer{flex:1}
+.back{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9fc4ff;text-decoration:none;border:1px solid rgba(96,165,250,.35);background:rgba(96,165,250,.07);padding:7px 12px;border-radius:18px}
+.back:hover{border-color:var(--line-2);box-shadow:0 0 14px rgba(124,150,255,.25)}
+
+/* hero */
+.hero{max-width:1180px;margin:0 auto;padding:54px 22px 26px;text-align:center}
+.tagchip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#bcd4ff;border:1px solid var(--line-2);background:rgba(124,150,255,.07);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+.tagchip .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(34px,6vw,62px);line-height:1.02;letter-spacing:-.01em}
+h1 .grad{background:var(--cg-crystal,linear-gradient(135deg,#38bdf8,#a78bfa 45%,#f472b6 75%,#34d399));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lede{max-width:680px;margin:18px auto 0;font-size:clamp(15px,2vw,18px);line-height:1.6;color:var(--dim)}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.btn{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:13px 22px;border-radius:11px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:.16s;border:1px solid var(--line-2)}
+.btn-primary{background:linear-gradient(180deg,rgba(124,150,255,.3),rgba(124,150,255,.08));color:#fff}
+.btn-primary:hover{box-shadow:0 0 22px rgba(124,150,255,.4);transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.02);color:#cdd6f5}
+.btn-ghost:hover{border-color:var(--line-2);color:#fff}
+
+/* stat strip */
+.stats{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:1000px;margin:40px auto 0;padding:0 22px}
+.stat{flex:1 1 200px;background:rgba(12,16,38,.6);border:1px solid var(--line);border-radius:14px;padding:18px 16px;text-align:center}
+.stat .n{font-family:var(--display);font-weight:900;font-size:30px;background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.stat .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:6px}
+
+/* section */
+section{max-width:1280px;margin:0 auto;padding:46px 22px}
+.sec-head{text-align:center;margin-bottom:26px}
+.sec-kicker{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--violet)}
+.sec-title{font-family:var(--display);font-weight:800;font-size:clamp(22px,3.4vw,34px);margin-top:8px}
+.sec-sub{color:var(--dim);max-width:620px;margin:12px auto 0;font-size:15px;line-height:1.6}
+
+/* ── BUILDER ───────────────────────────────────────── */
+.builder{background:rgba(8,11,28,.72);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.builder-bar{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line);background:rgba(11,14,34,.6);flex-wrap:wrap}
+.builder-bar .title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#cdd6f5}
+.builder-bar .meta{font-family:var(--mono);font-size:10px;color:var(--dim-2);letter-spacing:.06em}
+.bb-spacer{flex:1}
+.mini{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:8px 13px;border-radius:9px;cursor:pointer;border:1px solid var(--line);background:rgba(124,150,255,.06);color:#cdd6f5;transition:.14s}
+.mini:hover{border-color:var(--line-2);color:#fff}
+.mini.run{background:linear-gradient(180deg,rgba(52,211,153,.28),rgba(52,211,153,.08));border-color:rgba(52,211,153,.5);color:#d5ffe9}
+.mini.run:hover{box-shadow:0 0 16px rgba(52,211,153,.35)}
+.mini.danger:hover{border-color:rgba(244,114,182,.5);color:#ffd6ec}
+
+.builder-grid{display:grid;grid-template-columns:212px 1fr 280px;min-height:520px}
+@media(max-width:980px){.builder-grid{grid-template-columns:1fr;min-height:auto}}
+
+/* palette */
+.palette{border-right:1px solid var(--line);padding:12px;overflow-y:auto;max-height:560px}
+.pal-grp{font-family:var(--mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim-2);padding:12px 6px 6px}
+.pal-grp:first-child{padding-top:2px}
+.node-chip{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:10px;border:1px solid var(--line);background:rgba(124,150,255,.04);margin-bottom:6px;cursor:grab;font-size:12.5px;transition:.13s;user-select:none}
+.node-chip:hover{border-color:var(--line-2);background:rgba(124,150,255,.1);transform:translateX(2px)}
+.node-chip:active{cursor:grabbing}
+.node-chip .ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:14px;flex:0 0 auto;background:rgba(124,150,255,.1)}
+.pal-hint{font-family:var(--mono);font-size:9px;color:var(--dim-2);line-height:1.5;padding:10px 6px 2px;border-top:1px solid var(--line);margin-top:10px}
+
+/* canvas */
+.canvas-wrap{position:relative;overflow:hidden;background:
+  radial-gradient(circle at 1px 1px,rgba(124,150,255,.13) 1px,transparent 0) 0 0/26px 26px,
+  linear-gradient(180deg,rgba(8,11,26,.4),rgba(6,8,20,.4))}
+#canvas{position:absolute;inset:0}
+#wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.canvas-empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--dim-2);font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:20px;pointer-events:none}
+.canvas-empty span{display:block;font-size:32px;margin-bottom:10px;opacity:.6}
+
+/* node */
+.node{position:absolute;width:172px;background:linear-gradient(180deg,rgba(18,22,46,.97),rgba(12,15,34,.97));border:1px solid var(--line-2);border-radius:12px;z-index:2;box-shadow:0 12px 30px -12px rgba(0,0,0,.7);transition:box-shadow .15s,border-color .15s}
+.node:hover{border-color:rgba(124,150,255,.55)}
+.node.sel{border-color:#a78bfa;box-shadow:0 0 0 1px rgba(167,139,250,.5),0 12px 34px -10px rgba(124,150,255,.5)}
+.node.exec{border-color:var(--warn);box-shadow:0 0 0 1px var(--warn),0 0 22px rgba(251,191,36,.4)}
+.node.done{border-color:var(--ok)}
+.node-h{display:flex;align-items:center;gap:8px;padding:9px 10px;cursor:grab;border-bottom:1px solid var(--line)}
+.node-h:active{cursor:grabbing}
+.node-h .ic{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:13px;flex:0 0 auto}
+.node-h .nm{font-size:12.5px;font-weight:600;line-height:1.1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.node-h .nm small{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.08em;color:var(--dim-2);text-transform:uppercase;font-weight:400}
+.node-del{margin-left:auto;cursor:pointer;color:var(--dim-2);font-size:14px;line-height:1;background:none;border:0;flex:0 0 auto;padding:2px}
+.node-del:hover{color:var(--pink)}
+.node-b{padding:8px 10px;font-family:var(--mono);font-size:9.5px;color:var(--dim);line-height:1.45;min-height:20px}
+.node-status{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--dim-2);margin-right:5px;vertical-align:middle}
+.node.exec .node-status{background:var(--warn);box-shadow:0 0 7px var(--warn);animation:pulse .7s infinite}
+.node.done .node-status{background:var(--ok);box-shadow:0 0 7px var(--ok)}
+@keyframes pulse{50%{opacity:.4}}
+.port{position:absolute;width:14px;height:14px;border-radius:50%;background:#10183f;border:2px solid #60a5fa;top:50%;cursor:crosshair;z-index:3;transition:.12s}
+.port:hover{background:#a78bfa;border-color:#a78bfa;transform:translateY(-50%) scale(1.25)}
+.port.in{left:-8px;transform:translateY(-50%)}
+.port.out{right:-8px;transform:translateY(-50%)}
+.port.in:hover,.port.out:hover{transform:translateY(-50%) scale(1.25)}
+.port.armed{background:#a78bfa;border-color:#fff;box-shadow:0 0 10px #a78bfa}
+
+/* log panel */
+.logpane{border-left:1px solid var(--line);display:flex;flex-direction:column;max-height:560px}
+.logpane h3{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#cdd6f5;padding:12px 14px 10px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.logpane h3 .lc{margin-left:auto;color:var(--dim-2);font-size:9px}
+.log{flex:1;overflow-y:auto;padding:10px 12px;font-family:var(--mono);font-size:10.5px;line-height:1.55}
+.log .le{display:flex;gap:8px;padding:4px 0;border-bottom:1px solid rgba(124,150,255,.06);animation:slidein .25s ease}
+@keyframes slidein{from{opacity:0;transform:translateX(6px)}}
+.log .le .t{color:var(--dim-2);flex:0 0 auto}
+.log .le.ok .m{color:#bdf7da}.log .le.run .m{color:#ffe7a8}.log .le.info .m{color:var(--dim)}.log .le.err .m{color:#ffb8d8}
+.log .empty{color:var(--dim-2);padding:6px 2px}
+
+/* feature cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.fcard{background:rgba(12,16,38,.6);border:1px solid var(--line);border-radius:15px;padding:20px;transition:.16s}
+.fcard:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(124,150,255,.5)}
+.fcard .fi{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:20px;background:rgba(124,150,255,.1);border:1px solid var(--line);margin-bottom:13px}
+.fcard h4{font-size:16px;margin-bottom:7px}
+.fcard p{color:var(--dim);font-size:13.5px;line-height:1.55}
+
+/* integrations */
+.intg-bar{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.intg-search{font-family:var(--sans);font-size:13px;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--txt);outline:none;width:min(340px,80vw)}
+.intg-search:focus{border-color:var(--line-2);box-shadow:0 0 0 3px rgba(124,150,255,.08)}
+.intg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px}
+.intg{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:11px;border:1px solid var(--line);background:rgba(124,150,255,.04);font-size:12.5px;transition:.13s}
+.intg:hover{border-color:var(--line-2);background:rgba(124,150,255,.1)}
+.intg .glyph{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:12px;font-weight:700;flex:0 0 auto;color:#06080f}
+.intg .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.intg-more{text-align:center;color:var(--dim-2);font-family:var(--mono);font-size:11px;margin-top:18px;letter-spacing:.06em}
+
+/* terminal / self-host */
+.deploy{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+@media(max-width:860px){.deploy{grid-template-columns:1fr}}
+.term{background:#06080f;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-family:var(--mono);box-shadow:var(--cg-sh-3,0 24px 60px -24px rgba(6,8,18,.8))}
+.term-h{display:flex;align-items:center;gap:7px;padding:10px 13px;border-bottom:1px solid var(--line);background:rgba(124,150,255,.04)}
+.term-h .d{width:11px;height:11px;border-radius:50%}
+.term-h .t{margin-left:8px;font-size:10px;color:var(--dim-2);letter-spacing:.1em}
+.term-b{padding:16px;font-size:12.5px;line-height:1.75;overflow-x:auto}
+.term-b .c{color:#cdd6f5}.term-b .p{color:var(--violet)}.term-b .o{color:var(--dim)}.term-b .g{color:var(--ok)}
+.deploy ul{list-style:none;display:grid;gap:12px}
+.deploy li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--dim);line-height:1.5}
+.deploy li b{color:var(--txt);font-weight:600}
+.deploy li .ck{color:var(--ok);flex:0 0 auto;margin-top:2px}
+
+/* final cta */
+.final{text-align:center;background:linear-gradient(180deg,rgba(124,150,255,.08),rgba(124,150,255,.02));border:1px solid var(--line);border-radius:20px;padding:46px 24px;margin:10px auto 0;max-width:900px}
+.final h2{font-family:var(--display);font-weight:900;font-size:clamp(24px,4vw,38px)}
+.final p{color:var(--dim);max-width:520px;margin:14px auto 0;font-size:15px;line-height:1.6}
+
+footer{text-align:center;padding:34px 22px 56px;color:var(--dim-2);font-family:var(--mono);font-size:10px;letter-spacing:.1em;border-top:1px solid var(--line);margin-top:30px}
+footer b{color:var(--dim)}
+</style>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="ui.css">
+  <link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+</head>
+<body>
+
+<div class="top">
+  <div class="mk"></div>
+  <div><div class="b-name">CON<b>DUIT</b></div><div class="b-sub">Workflow Automation · Self-Hosted</div></div>
+  <div class="spacer"></div>
+  <a class="back" href="index.html">← ClearGlass</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="tagchip"><span class="dot"></span> 175,000+ ★ · 100% Open Source</div>
+  <h1>Automate everything.<br><span class="grad">On your own server.</span></h1>
+  <p class="lede">CONDUIT is a self-hosted workflow automation platform. Connect Gmail, Slack, Notion, Google Sheets &amp; WhatsApp, build AI agent workflows on your own data and models, and wire up 400+ apps with visual drag-and-drop — no Zapier subscription, zero data leaks.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#builder">⟿ Open the builder</a>
+    <a class="btn btn-ghost" href="#deploy">$ Self-host in 60s</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="n" data-count="175000" data-suffix="+">0</div><div class="l">GitHub stars</div></div>
+  <div class="stat"><div class="n" data-count="400" data-suffix="+">0</div><div class="l">App integrations</div></div>
+  <div class="stat"><div class="n">$0</div><div class="l">Subscription cost</div></div>
+  <div class="stat"><div class="n">100%</div><div class="l">Self-hosted &amp; private</div></div>
+</div>
+
+<!-- BUILDER -->
+<section id="builder">
+  <div class="sec-head">
+    <div class="sec-kicker">Visual workflow builder</div>
+    <h2 class="sec-title">Drag. Connect. Run.</h2>
+    <p class="sec-sub">Drag a node onto the canvas, click an output port then an input port to wire them, and hit <b>Run</b> to watch data flow through your workflow — live, right here in the browser.</p>
+  </div>
+
+  <div class="builder">
+    <div class="builder-bar">
+      <span class="title">⟿ Untitled workflow</span>
+      <span class="meta" id="bbMeta">0 nodes · 0 connections</span>
+      <div class="bb-spacer"></div>
+      <button class="mini" id="btnSample">↺ Load sample</button>
+      <button class="mini danger" id="btnClear">✕ Clear</button>
+      <button class="mini run" id="btnRun">▶ Run workflow</button>
+    </div>
+    <div class="builder-grid">
+      <!-- palette -->
+      <div class="palette" id="palette"></div>
+      <!-- canvas -->
+      <div class="canvas-wrap" id="canvasWrap">
+        <svg id="wires"></svg>
+        <div id="canvas"></div>
+        <div class="canvas-empty" id="canvasEmpty"><span>⟿</span>Drag nodes here to build a workflow<br>or click “Load sample”.</div>
+      </div>
+      <!-- log -->
+      <div class="logpane">
+        <h3>Execution log <span class="lc" id="logCount"></span></h3>
+        <div class="log" id="log"><div class="empty">— idle. Build a flow and press Run.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="sec-head">
+    <div class="sec-kicker">Why CONDUIT</div>
+    <h2 class="sec-title">A whole automation stack you own</h2>
+  </div>
+  <div class="cards">
+    <div class="fcard"><div class="fi">🧩</div><h4>400+ integrations</h4><p>Gmail, Slack, Notion, Google Sheets, WhatsApp, Stripe, GitHub, Postgres and hundreds more — plus a generic HTTP node for any API on earth.</p></div>
+    <div class="fcard"><div class="fi">🤖</div><h4>AI agent workflows</h4><p>Drop in LLM, agent and vector-store nodes. Bring your own data and models — OpenAI, Anthropic, or local Ollama — and let agents make decisions inside your flows.</p></div>
+    <div class="fcard"><div class="fi">🖱️</div><h4>Visual drag-and-drop</h4><p>Build branching, looping, multi-step automations on a canvas. No glue code required — but drop into a Code node whenever you want raw JavaScript.</p></div>
+    <div class="fcard"><div class="fi">🔒</div><h4>Self-hosted, zero leaks</h4><p>Runs entirely on your own server or laptop. Your credentials and data never leave your infrastructure. Air-gap it if you like.</p></div>
+    <div class="fcard"><div class="fi">⏱️</div><h4>Triggers for everything</h4><p>Schedules, webhooks, email arrivals, form submissions, file changes — kick off workflows the instant something happens.</p></div>
+    <div class="fcard"><div class="fi">⭐</div><h4>Free &amp; open source</h4><p>Backed by 175,000+ GitHub stars. No seats, no per-task billing, no Zapier subscription. Fork it, extend it, ship it.</p></div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section>
+  <div class="sec-head">
+    <div class="sec-kicker">Connect anything</div>
+    <h2 class="sec-title">400+ apps, one canvas</h2>
+    <p class="sec-sub">Search the integration library. Every app speaks the same node language, so you can chain them however you want.</p>
+  </div>
+  <div class="intg-bar">
+    <input class="intg-search" id="intgSearch" placeholder="🔍  Search integrations — try “mail”, “crm”, “ai”…"/>
+  </div>
+  <div class="intg-grid" id="intgGrid"></div>
+  <div class="intg-more" id="intgMore"></div>
+</section>
+
+<!-- DEPLOY -->
+<section id="deploy">
+  <div class="sec-head">
+    <div class="sec-kicker">Self-hosted in seconds</div>
+    <h2 class="sec-title">One command. Your server. Your data.</h2>
+  </div>
+  <div class="deploy">
+    <div class="term">
+      <div class="term-h"><span class="d" style="background:#ff5f57"></span><span class="d" style="background:#febc2e"></span><span class="d" style="background:#28c840"></span><span class="t">bash — conduit@yourserver</span></div>
+      <div class="term-b">
+<span class="p">$</span> <span class="c">docker run -it --rm \</span><br>
+&nbsp;&nbsp;<span class="c">-p 5678:5678 \</span><br>
+&nbsp;&nbsp;<span class="c">-v conduit_data:/home/node/.conduit \</span><br>
+&nbsp;&nbsp;<span class="c">clearglass/conduit</span><br>
+<span class="o">→ pulling clearglass/conduit … done</span><br>
+<span class="o">→ migrations applied · 412 nodes loaded</span><br>
+<span class="g">✓ CONDUIT ready on http://localhost:5678</span><br>
+<span class="g">✓ editor live · 0 credentials left your machine</span><br>
+<span class="p">$</span> <span class="c">_</span>
+      </div>
+    </div>
+    <ul>
+      <li><span class="ck">✓</span><div><b>No vendor lock-in.</b> Data lives in your own Postgres or SQLite — export it, back it up, move it anytime.</div></li>
+      <li><span class="ck">✓</span><div><b>Zero data leaks.</b> Credentials are encrypted at rest on your box; nothing is brokered through a third-party cloud.</div></li>
+      <li><span class="ck">✓</span><div><b>Scales with you.</b> Run a single container for a side project or a queue-mode cluster for millions of executions.</div></li>
+      <li><span class="ck">✓</span><div><b>Deploy anywhere.</b> Docker, Kubernetes, a Raspberry Pi, or the ClearGlass fleet — your call.</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section>
+  <div class="final">
+    <h2>Stop paying per task.</h2>
+    <p>Spin up CONDUIT, connect your stack, and let it run — 100% free, 100% open source, 100% yours.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#builder">⟿ Build a workflow now</a>
+      <a class="btn btn-ghost" href="#deploy">★ Self-host it</a>
+    </div>
+  </div>
+</section>
+
+<footer>CONDUIT · ClearGlass Inc. — <b>Clarity Is Power.</b> · Self-hosted workflow automation · Open source</footer>
+
+<script>
+"use strict";
+/* ───────────────────────────────────────────────────────────────────────────
+   CONDUIT · in-browser workflow builder
+   Drag nodes from the palette → canvas, wire output→input ports, run a
+   simulated execution that streams data through the graph into the log.
+   ─────────────────────────────────────────────────────────────────────────── */
+const $=s=>document.querySelector(s);
+
+/* ── node catalog ──────────────────────────────────────────────────────────*/
+const TYPES={
+  schedule : {cat:"Triggers", name:"Schedule",     sub:"trigger", ic:"⏱", c:"#fbbf24", trigger:true,  out:{at:"2026-06-14T09:00Z",cron:"0 9 * * *"}},
+  webhook  : {cat:"Triggers", name:"Webhook",      sub:"trigger", ic:"🪝", c:"#fbbf24", trigger:true,  out:{method:"POST",path:"/hook/abc",body:{id:42}}},
+  emailrx  : {cat:"Triggers", name:"Email Trigger",sub:"gmail",   ic:"📥", c:"#ef6f6f", trigger:true,  out:{from:"lead@acme.com",subject:"Demo request"}},
+  gmail    : {cat:"Apps",     name:"Gmail",        sub:"send",    ic:"✉️", c:"#ef6f6f", out:{sent:true,to:"lead@acme.com",thread:"t_91"}},
+  slack    : {cat:"Apps",     name:"Slack",        sub:"message", ic:"💬", c:"#7c5cff", out:{posted:true,channel:"#sales",ts:"171…"}},
+  notion   : {cat:"Apps",     name:"Notion",       sub:"db row",  ic:"📓", c:"#cdd6f5", out:{page:"pg_77",created:true}},
+  sheets   : {cat:"Apps",     name:"Google Sheets",sub:"append",  ic:"📊", c:"#34d399", out:{row:1284,range:"Leads!A:E"}},
+  whatsapp : {cat:"Apps",     name:"WhatsApp",     sub:"message", ic:"📱", c:"#25d366", out:{delivered:true,to:"+1•••4821"}},
+  http     : {cat:"Apps",     name:"HTTP Request", sub:"any api", ic:"🌐", c:"#60a5fa", out:{status:200,json:{ok:true}}},
+  agent    : {cat:"AI",       name:"AI Agent",     sub:"reason",  ic:"🤖", c:"#a78bfa", out:{decision:"qualified",confidence:0.92}},
+  llm      : {cat:"AI",       name:"LLM",          sub:"generate",ic:"✨", c:"#a78bfa", out:{text:"Drafted reply (128 tok)"}},
+  vector   : {cat:"AI",       name:"Vector Store", sub:"your data",ic:"🧠",c:"#a78bfa", out:{matches:5,top:"FAQ #12"}},
+  filter   : {cat:"Logic",   name:"Filter",       sub:"branch",  ic:"⑂", c:"#36b6ff", out:{passed:true}},
+  code     : {cat:"Logic",   name:"Code",         sub:"javascript",ic:"⌨",c:"#36b6ff",out:{returned:{items:3}}},
+  merge    : {cat:"Logic",   name:"Merge",        sub:"combine", ic:"⨝", c:"#36b6ff", out:{combined:2}},
+  wait     : {cat:"Logic",   name:"Wait",         sub:"delay",   ic:"⏸", c:"#36b6ff", out:{waited:"5m"}}
+};
+
+let nodes={}, edges=[], uid=0, selId=null, armed=null;
+const canvas=$("#canvas"), wires=$("#wires"), wrap=$("#canvasWrap");
+
+/* ── palette ───────────────────────────────────────────────────────────────*/
+(function buildPalette(){
+  const grps={};
+  for(const k in TYPES){(grps[TYPES[k].cat]=grps[TYPES[k].cat]||[]).push(k);}
+  let html="";
+  ["Triggers","Apps","AI","Logic"].forEach(g=>{
+    html+=`<div class="pal-grp">${g}</div>`;
+    grps[g].forEach(k=>{const t=TYPES[k];
+      html+=`<div class="node-chip" draggable="true" data-type="${k}">
+        <span class="ic" style="color:${t.c}">${t.ic}</span>${t.name}</div>`;});
+  });
+  html+=`<div class="pal-hint">Tip: drag onto the canvas. Click an <b style="color:#9fc4ff">●</b> output then an input to connect. ${' '}Double-click a node to delete.</div>`;
+  $("#palette").innerHTML=html;
+  $("#palette").querySelectorAll(".node-chip").forEach(ch=>{
+    ch.addEventListener("dragstart",e=>e.dataTransfer.setData("type",ch.dataset.type));
+  });
+})();
+
+/* ── drop onto canvas ────────────────────────────────────────────────────── */
+wrap.addEventListener("dragover",e=>e.preventDefault());
+wrap.addEventListener("drop",e=>{
+  e.preventDefault();
+  const type=e.dataTransfer.getData("type"); if(!type)return;
+  const r=wrap.getBoundingClientRect();
+  addNode(type, e.clientX-r.left-86, e.clientY-r.top-26);
+});
+
+function addNode(type,x,y){
+  const id="n"+(++uid), t=TYPES[type];
+  x=Math.max(6,Math.min(x, wrap.clientWidth-180));
+  y=Math.max(6,Math.min(y, wrap.clientHeight-90));
+  nodes[id]={id,type,x,y};
+  const el=document.createElement("div");
+  el.className="node"; el.id=id; el.style.left=x+"px"; el.style.top=y+"px";
+  el.innerHTML=`
+    ${t.trigger?"":'<div class="port in" data-id="'+id+'" data-kind="in"></div>'}
+    <div class="port out" data-id="${id}" data-kind="out"></div>
+    <div class="node-h">
+      <span class="ic" style="background:${hexA(t.c,.16)};color:${t.c}">${t.ic}</span>
+      <span class="nm">${t.name}<small>${t.sub}</small></span>
+      <button class="node-del" title="Delete">✕</button>
+    </div>
+    <div class="node-b"><span class="node-status"></span><span class="st">ready</span></div>`;
+  canvas.appendChild(el);
+  wireNode(el,id);
+  selectNode(id);
+  refresh();
+}
+
+function wireNode(el,id){
+  const h=el.querySelector(".node-h");
+  h.addEventListener("pointerdown",e=>{
+    if(e.target.closest(".node-del"))return;
+    selectNode(id);
+    const r=wrap.getBoundingClientRect(), n=nodes[id];
+    const ox=e.clientX-r.left-n.x, oy=e.clientY-r.top-n.y;
+    const move=ev=>{
+      n.x=Math.max(2,Math.min(ev.clientX-r.left-ox, wrap.clientWidth-176));
+      n.y=Math.max(2,Math.min(ev.clientY-r.top-oy, wrap.clientHeight-80));
+      el.style.left=n.x+"px"; el.style.top=n.y+"px"; drawWires();
+    };
+    const up=()=>{document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",up);};
+    document.addEventListener("pointermove",move);document.addEventListener("pointerup",up);
+  });
+  el.querySelector(".node-del").addEventListener("click",()=>delNode(id));
+  el.addEventListener("dblclick",()=>delNode(id));
+  el.querySelectorAll(".port").forEach(p=>p.addEventListener("click",ev=>{ev.stopPropagation();onPort(p);}));
+}
+
+/* ── connect ports ───────────────────────────────────────────────────────── */
+function onPort(p){
+  const id=p.dataset.id, kind=p.dataset.kind;
+  if(!armed){
+    if(kind!=="out"){flashLog("info","Start a wire from an output ● (right side).");return;}
+    armed={id,el:p}; p.classList.add("armed");
+  }else{
+    if(kind!=="in"){clearArmed();return;}
+    if(armed.id===id){clearArmed();return;}
+    if(!edges.some(e=>e.from===armed.id&&e.to===id)){
+      edges.push({from:armed.id,to:id}); flashLog("info",`Connected ${TYPES[nodes[armed.id].type].name} → ${TYPES[nodes[id].type].name}`);
+    }
+    clearArmed(); refresh();
+  }
+}
+function clearArmed(){if(armed){armed.el.classList.remove("armed");armed=null;}}
+canvas.addEventListener("click",e=>{if(e.target===canvas)clearArmed();});
+
+function delNode(id){
+  const el=document.getElementById(id); if(el)el.remove();
+  delete nodes[id];
+  edges=edges.filter(e=>e.from!==id&&e.to!==id);
+  if(selId===id)selId=null;
+  refresh();
+}
+
+function selectNode(id){
+  selId=id;
+  document.querySelectorAll(".node").forEach(n=>n.classList.toggle("sel",n.id===id));
+}
+
+/* ── wires (svg beziers) ─────────────────────────────────────────────────── */
+function center(id,side){
+  const n=nodes[id]; const w=176;
+  return {x:n.x+(side==="out"?w-2:2), y:n.y+38};
+}
+function drawWires(){
+  let s="";
+  edges.forEach(e=>{
+    if(!nodes[e.from]||!nodes[e.to])return;
+    const a=center(e.from,"out"), b=center(e.to,"in");
+    const dx=Math.max(40,Math.abs(b.x-a.x)*0.5);
+    s+=`<path d="M${a.x},${a.y} C${a.x+dx},${a.y} ${b.x-dx},${b.y} ${b.x},${b.y}"
+        fill="none" stroke="url(#wg)" stroke-width="2.2" opacity=".85"/>`;
+    s+=`<circle cx="${b.x}" cy="${b.y}" r="3" fill="#a78bfa"/>`;
+  });
+  wires.innerHTML=`<defs><linearGradient id="wg" x1="0" x2="1">
+    <stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>`+s;
+}
+
+/* ── housekeeping ────────────────────────────────────────────────────────── */
+function refresh(){
+  drawWires();
+  const nc=Object.keys(nodes).length;
+  $("#bbMeta").textContent=`${nc} node${nc!==1?"s":""} · ${edges.length} connection${edges.length!==1?"s":""}`;
+  $("#canvasEmpty").style.display=nc?"none":"grid";
+}
+function hexA(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}
+
+/* ── log ─────────────────────────────────────────────────────────────────── */
+let logN=0;
+function flashLog(cls,msg){
+  const log=$("#log");
+  if(log.querySelector(".empty"))log.innerHTML="";
+  const t=new Date().toLocaleTimeString([], {hour12:false});
+  const d=document.createElement("div");
+  d.className="le "+cls;
+  d.innerHTML=`<span class="t">${t}</span><span class="m">${msg}</span>`;
+  log.appendChild(d); log.scrollTop=log.scrollHeight;
+  $("#logCount").textContent=(++logN)+" lines";
+}
+
+/* ── run (simulated execution) ───────────────────────────────────────────── */
+let running=false;
+function execOrder(){
+  // start from trigger nodes (or any node with no incoming edge), BFS along edges
+  const incoming={}; Object.keys(nodes).forEach(id=>incoming[id]=0);
+  edges.forEach(e=>{if(incoming[e.to]!=null)incoming[e.to]++;});
+  const starts=Object.keys(nodes).filter(id=>incoming[id]===0);
+  const order=[], seen=new Set(), q=[...starts];
+  while(q.length){
+    const id=q.shift(); if(seen.has(id)||!nodes[id])continue; seen.add(id); order.push(id);
+    edges.filter(e=>e.from===id).forEach(e=>q.push(e.to));
+  }
+  // include any orphans
+  Object.keys(nodes).forEach(id=>{if(!seen.has(id))order.push(id);});
+  return order;
+}
+async function run(){
+  if(running)return;
+  const order=execOrder();
+  if(!order.length){flashLog("err","Nothing to run — add a node first.");return;}
+  running=true; $("#btnRun").textContent="● Running…";
+  document.querySelectorAll(".node").forEach(n=>n.classList.remove("done","exec"));
+  flashLog("info","── Execution started ──────────");
+  let items=1;
+  for(const id of order){
+    const el=document.getElementById(id), t=TYPES[nodes[id].type];
+    el.classList.add("exec"); el.querySelector(".st").textContent="executing…";
+    flashLog("run",`▶ ${t.name} · ${t.sub}`);
+    await sleep(430+Math.random()*260);
+    el.classList.remove("exec"); el.classList.add("done");
+    el.querySelector(".st").textContent="done";
+    if(t.trigger)items=1; else if(t.type==="filter"){}
+    flashLog("ok",`✓ ${t.name} → ${JSON.stringify(t.out)}`);
+  }
+  flashLog("ok",`── Done · ${order.length} nodes · ${items} item(s) processed ──`);
+  running=false; $("#btnRun").textContent="▶ Run workflow";
+}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* ── controls ────────────────────────────────────────────────────────────── */
+$("#btnRun").addEventListener("click",run);
+$("#btnClear").addEventListener("click",()=>{
+  canvas.innerHTML=""; nodes={}; edges=[]; selId=null; clearArmed();
+  $("#log").innerHTML='<div class="empty">— idle. Build a flow and press Run.</div>'; logN=0; $("#logCount").textContent="";
+  refresh();
+});
+$("#btnSample").addEventListener("click",loadSample);
+
+function loadSample(){
+  $("#btnClear").click();
+  // a lead-qualification flow: email trigger → AI agent → filter → Slack + Sheets + Gmail
+  const layout=[
+    ["emailrx", 20, 200],
+    ["agent",   230,200],
+    ["filter",  440,200],
+    ["slack",   650, 90],
+    ["sheets",  650,200],
+    ["gmail",   650,310]
+  ];
+  const ids=layout.map(([t,x,y])=>{addNode(t,x,y);return "n"+uid;});
+  edges.push({from:ids[0],to:ids[1]});
+  edges.push({from:ids[1],to:ids[2]});
+  edges.push({from:ids[2],to:ids[3]});
+  edges.push({from:ids[2],to:ids[4]});
+  edges.push({from:ids[2],to:ids[5]});
+  selId=null; document.querySelectorAll(".node").forEach(n=>n.classList.remove("sel"));
+  refresh();
+  flashLog("info","Loaded sample: AI lead-qualification workflow. Press Run ▶");
+}
+
+/* ── integrations gallery ────────────────────────────────────────────────── */
+const INTG=[
+  ["Gmail","✉","#ef6f6f","mail email google"],["Slack","#","#7c5cff","chat message"],["Notion","N","#cdd6f5","docs notes db"],
+  ["Google Sheets","▦","#34d399","spreadsheet data"],["WhatsApp","W","#25d366","message chat"],["Telegram","T","#36b6ff","message bot"],
+  ["Discord","D","#7c5cff","chat community"],["Microsoft Teams","T","#60a5fa","chat message"],["Outlook","O","#60a5fa","mail email"],
+  ["Stripe","S","#a78bfa","payments billing"],["PayPal","P","#36b6ff","payments"],["QuickBooks","Q","#34d399","accounting finance"],
+  ["Shopify","S","#34d399","ecommerce store"],["WooCommerce","W","#a78bfa","ecommerce"],["Salesforce","☁","#36b6ff","crm sales"],
+  ["HubSpot","H","#ef6f6f","crm marketing"],["Pipedrive","P","#34d399","crm sales"],["Airtable","A","#fbbf24","database"],
+  ["Postgres","🐘","#60a5fa","database sql"],["MySQL","M","#36b6ff","database sql"],["MongoDB","🍃","#34d399","database nosql"],
+  ["Redis","R","#ef6f6f","cache database"],["Supabase","S","#34d399","database backend"],["Firebase","🔥","#fbbf24","database"],
+  ["GitHub","⌥","#cdd6f5","code git dev"],["GitLab","🦊","#fbbf24","code git dev"],["Jira","J","#36b6ff","issues project"],
+  ["Linear","L","#a78bfa","issues project"],["Trello","▤","#36b6ff","board tasks"],["Asana","A","#ef6f6f","tasks project"],
+  ["ClickUp","C","#a78bfa","tasks project"],["Monday","M","#ef6f6f","project work"],["Calendly","C","#36b6ff","calendar booking"],
+  ["Google Calendar","📅","#34d399","calendar"],["Zoom","Z","#36b6ff","video meeting"],["Twilio","T","#ef6f6f","sms voice"],
+  ["SendGrid","✉","#36b6ff","mail email"],["Mailchimp","M","#fbbf24","email marketing"],["Twitter / X","𝕏","#cdd6f5","social"],
+  ["LinkedIn","in","#36b6ff","social"],["Facebook","f","#60a5fa","social ads"],["Instagram","◉","#ef6f6f","social"],
+  ["YouTube","▶","#ef6f6f","video media"],["Dropbox","▱","#36b6ff","files storage"],["Google Drive","△","#34d399","files storage"],
+  ["AWS S3","☁","#fbbf24","storage cloud"],["OpenAI","✦","#34d399","ai llm gpt"],["Anthropic","✦","#a78bfa","ai llm claude"],
+  ["Ollama","🦙","#cdd6f5","ai llm local"],["Pinecone","🌲","#34d399","ai vector"],["Hugging Face","🤗","#fbbf24","ai models"],
+  ["Zendesk","Z","#34d399","support helpdesk"],["Intercom","I","#36b6ff","support chat"],["Typeform","T","#cdd6f5","forms survey"],
+  ["Google Forms","▤","#a78bfa","forms"],["Webflow","W","#36b6ff","website cms"],["WordPress","W","#60a5fa","cms blog"],
+  ["Webhook","🪝","#fbbf24","trigger http"],["HTTP Request","🌐","#60a5fa","api any"],["GraphQL","◈","#ef6f6f","api"]
+];
+function renderIntg(q){
+  q=(q||"").toLowerCase().trim();
+  const grid=$("#intgGrid");
+  const list=INTG.filter(i=>!q||i[0].toLowerCase().includes(q)||i[3].includes(q));
+  grid.innerHTML=list.map(i=>`<div class="intg"><span class="glyph" style="background:${i[2]}">${i[1]}</span><span class="nm">${i[0]}</span></div>`).join("")
+    || `<div style="grid-column:1/-1;text-align:center;color:var(--dim-2);font-family:var(--mono);font-size:12px;padding:14px">No match for “${q}”. The full build ships with 400+.</div>`;
+  $("#intgMore").textContent=q? `${list.length} shown` : `…and 340+ more in the self-hosted build.`;
+}
+$("#intgSearch").addEventListener("input",e=>renderIntg(e.target.value));
+renderIntg("");
+
+/* ── count-up stats ──────────────────────────────────────────────────────── */
+function countUp(el){
+  const target=+el.dataset.count, suf=el.dataset.suffix||"", dur=1100, t0=performance.now();
+  function step(t){
+    const p=Math.min(1,(t-t0)/dur), v=Math.floor((1-Math.pow(1-p,3))*target);
+    el.textContent=v.toLocaleString()+(p>=1?suf:""); if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){countUp(e.target);io.unobserve(e.target);}}),{threshold:.5});
+document.querySelectorAll(".stat .n[data-count]").forEach(el=>io.observe(el));
+
+/* boot with sample so the canvas is alive on arrival */
+window.addEventListener("load",()=>{ loadSample(); });
+window.addEventListener("resize",drawWires);
+</script>
+
+<script defer src="nav.js"></script>
+<script defer src="control-surface.js"></script>
+<script defer src="ui.js"></script>
+<script defer src="platform.js"></script>
+<script defer src="/logo-badge.js"></script>
+</body>
+</html>

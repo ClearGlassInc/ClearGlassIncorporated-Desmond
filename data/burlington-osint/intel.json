@@ -32,7 +32,40 @@
       "source": "Statistics Canada / HRPS"
     }
   ],
+  "satellite": {
+    "label": "Burlington, ON — satellite imagery",
+    "lat": 43.3255,
+    "lng": -79.799,
+    "primary": "https://www.google.com/maps/@43.3316,-79.7989,13z/data=!3m1!1e3",
+    "links": [
+      {
+        "name": "Google Maps — satellite view (Burlington)",
+        "url": "https://www.google.com/maps/@43.3316,-79.7989,13z/data=!3m1!1e3",
+        "provider": "Google"
+      },
+      {
+        "name": "Sentinel Hub EO Browser — live Sentinel-2 imagery (Burlington)",
+        "url": "https://apps.sentinel-hub.com/eo-browser/?zoom=13&lat=43.3255&lng=-79.799",
+        "provider": "Copernicus / ESA"
+      },
+      {
+        "name": "Esri World Imagery — ArcGIS basemap (Burlington)",
+        "url": "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13",
+        "provider": "Esri"
+      }
+    ]
+  },
   "sources": [
+    {
+      "name": "Satellite imagery — Burlington (Google Maps)",
+      "url": "https://www.google.com/maps/@43.3316,-79.7989,13z/data=!3m1!1e3",
+      "type": "Satellite"
+    },
+    {
+      "name": "Satellite imagery — Burlington (Sentinel-2 / EO Browser)",
+      "url": "https://apps.sentinel-hub.com/eo-browser/?zoom=13&lat=43.3255&lng=-79.799",
+      "type": "Satellite"
+    },
     {
       "name": "Halton Regional Police — Interactive Crime Map (ArcGIS)",
       "url": "https://www.haltonpolice.ca/en/about-us/crime-map.aspx",

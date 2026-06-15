@@ -291,6 +291,8 @@ function seedEvents(){
 }
 
 /* ---------- intel feed loader (with embedded fallback) ---------- */
+// Burlington, ON satellite-imagery link (Google Maps satellite layer)
+const SAT_URL = "https://www.google.com/maps/@43.3316,-79.7989,13z/data=!3m1!1e3";
 const INTEL_FALLBACK = {
   updated:"2026-06-15",
   region:"Halton Region (Burlington, Oakville, Milton, Halton Hills)",
@@ -301,7 +303,18 @@ const INTEL_FALLBACK = {
     {label:"Property crime (B&E + auto theft)",value:"-15.9% YoY",trend:"down",note:"Targeted auto-theft enforcement.",source:"HRPS H1 2025 statistics"},
     {label:"Violent crime rate",value:"Lowest regional rate in province",trend:"flat",note:"Stable year over year.",source:"StatsCan / HRPS"},
   ],
+  satellite:{
+    label:"Burlington, ON — satellite imagery", lat:43.3255, lng:-79.799,
+    primary:SAT_URL,
+    links:[
+      {name:"Google Maps — satellite view (Burlington)",url:"https://www.google.com/maps/@43.3316,-79.7989,13z/data=!3m1!1e3",provider:"Google"},
+      {name:"Sentinel Hub EO Browser — live Sentinel-2 imagery (Burlington)",url:"https://apps.sentinel-hub.com/eo-browser/?zoom=13&lat=43.3255&lng=-79.799",provider:"Copernicus / ESA"},
+      {name:"Esri World Imagery — ArcGIS basemap (Burlington)",url:"https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13",provider:"Esri"},
+    ],
+  },
   sources:[
+    {name:"Satellite imagery — Burlington (Google Maps)",url:"https://www.google.com/maps/@43.3316,-79.7989,13z/data=!3m1!1e3",type:"Satellite"},
+    {name:"Satellite imagery — Burlington (Sentinel-2 / EO Browser)",url:"https://apps.sentinel-hub.com/eo-browser/?zoom=13&lat=43.3255&lng=-79.799",type:"Satellite"},
     {name:"Halton Regional Police — Crime Map (ArcGIS)",url:"https://www.haltonpolice.ca/en/about-us/crime-map.aspx",type:"Live map"},
     {name:"Halton Regional Police — Media Releases",url:"https://www.haltonpolice.ca/en/news/",type:"Press releases"},
     {name:"Statistics Canada — Crime Severity Index",url:"https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3510002601",type:"Open data"},
@@ -500,6 +513,18 @@ function ViewIntel(s){
   wrap.appendChild(el("div",{class:"card",style:"margin-bottom:16px"},
     el("h3",{},"Regional picture — "+d.region),
     el("div",{class:"muted",style:"font-size:13px"},d.summary)));
+  if(d.satellite){
+    const sat=d.satellite;
+    const satCard=el("div",{class:"card",style:"margin-bottom:16px"},
+      el("h3",{},"🛰 Satellite imagery — "+sat.label),
+      el("div",{class:"row",style:"margin-bottom:10px;align-items:center"},
+        el("a",{class:"btn primary sm",href:sat.primary,target:"_blank",rel:"noopener noreferrer"},"🛰 Open satellite view ↗"),
+        el("span",{class:"muted tiny mono"},"lat "+sat.lat+" · lng "+sat.lng)));
+    (sat.links||[]).forEach(l=>satCard.appendChild(el("div",{class:"src"},
+      el("a",{href:l.url,target:"_blank",rel:"noopener noreferrer"},l.name+" ↗"),
+      el("span",{class:"ty"},l.provider))));
+    wrap.appendChild(satCard);
+  }
   const srcCard=el("div",{class:"card",style:"margin-bottom:16px"},el("h3",{},"Cited public sources"));
   d.sources.forEach(src=>srcCard.appendChild(el("div",{class:"src"},
     el("a",{href:src.url,target:"_blank",rel:"noopener noreferrer"},src.name+" ↗"),
@@ -615,6 +640,7 @@ function render(){
             el("h1",{},TITLES[s.route]||""),
             el("div",{class:"sub"},"Burlington, Ontario · Crime & Governance OSINT")),
           el("div",{class:"spacer"}),
+          el("a",{class:"pill",href:(s.intel&&s.intel.satellite&&s.intel.satellite.primary)||SAT_URL,target:"_blank",rel:"noopener noreferrer",title:"Open Burlington satellite imagery"},"🛰 SAT LINK"),
           el("span",{class:"pill"+(s.streamOn?"":" off")},el("span",{class:"lv"}),s.streamOn?"STREAM LIVE":"STREAM PAUSED"),
           el("span",{class:"clock",id:"clk"},clockStr()),
         ),

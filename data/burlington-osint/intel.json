@@ -1,0 +1,72 @@
+{
+  "updated": "2026-06-15",
+  "region": "Halton Region (Burlington, Oakville, Milton, Halton Hills)",
+  "summary": "Burlington remains one of the safest large municipalities in Canada. Public records show no red-flag pattern of coordinated municipal corruption driving street-level crime. Procurement and land-use governance concerns are tracked separately from crime statistics.",
+  "metrics": [
+    {
+      "label": "Crime Severity Index rank",
+      "value": "Lowest of Ontario's \"Big 12\"",
+      "trend": "down",
+      "note": "17 consecutive years (2008–2024) holding the lowest CSI among Ontario's large police services.",
+      "source": "Statistics Canada CSI / Halton Regional Police Service annual reports"
+    },
+    {
+      "label": "Overall crime per 100k (H1 2025)",
+      "value": "-11.7% YoY",
+      "trend": "down",
+      "note": "First-half 2025 vs first-half 2024, rate per 100,000 residents.",
+      "source": "Halton Regional Police Service H1 2025 statistics"
+    },
+    {
+      "label": "Property crime (B&E + auto theft)",
+      "value": "-15.9% YoY",
+      "trend": "down",
+      "note": "Driven by targeted auto-theft enforcement and recovery operations.",
+      "source": "Halton Regional Police Service H1 2025 statistics"
+    },
+    {
+      "label": "Violent crime rate",
+      "value": "Lowest regional rate in province",
+      "trend": "flat",
+      "note": "Stable year over year; among the lowest in Ontario.",
+      "source": "Statistics Canada / HRPS"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Halton Regional Police — Interactive Crime Map (ArcGIS)",
+      "url": "https://www.haltonpolice.ca/en/about-us/crime-map.aspx",
+      "type": "Live map"
+    },
+    {
+      "name": "Halton Regional Police — Media Releases",
+      "url": "https://www.haltonpolice.ca/en/news/",
+      "type": "Press releases"
+    },
+    {
+      "name": "Statistics Canada — Crime Severity Index (Table 35-10-0026-01)",
+      "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3510002601",
+      "type": "Open data"
+    },
+    {
+      "name": "City of Burlington — Council & Committee Meetings / Minutes",
+      "url": "https://www.burlington.ca/en/city-hall/council-and-committee-meetings.aspx",
+      "type": "Public records"
+    },
+    {
+      "name": "Ontario Land Tribunal (OLT) — Case Search",
+      "url": "https://olt.gov.on.ca/",
+      "type": "Public records"
+    },
+    {
+      "name": "Ontario / Burlington Open Data Portals",
+      "url": "https://data.ontario.ca/",
+      "type": "Open data"
+    }
+  ],
+  "notes": [
+    "All entries reference 100% lawful, publicly available sources (open data, police media releases, council records, tribunal filings).",
+    "Recent public activity: targeted auto-theft enforcement, firearms recoveries during traffic stops, and routine missing-persons cases — typical for a mid-sized Canadian city.",
+    "Figures are operator-supplied snapshots intended for triage; verify against the linked primary sources before publication or filing."
+  ]
+}

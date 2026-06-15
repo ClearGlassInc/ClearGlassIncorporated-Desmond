@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "07:38",
-    "timestamp": "2026-06-15T07:38:48Z"
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:54Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "warn",
+    "detail": "dynamic on main \u00b7 run #713",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:51Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "warn",
+    "detail": "dynamic on main \u00b7 run #1238",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:50Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "warn",
+    "detail": "workflow_dispatch on main \u00b7 run #58",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:42Z"
+  },
+  {
+    "title": "Dependency Updater",
+    "status": "warn",
+    "detail": "workflow_dispatch on main \u00b7 run #4",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:41Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #23",
-    "time": "07:38",
-    "timestamp": "2026-06-15T07:38:31Z"
+    "detail": "workflow_dispatch on main \u00b7 run #24",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:39Z"
   },
   {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #581",
-    "time": "07:27",
-    "timestamp": "2026-06-15T07:27:49Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-trigger-automation-again \u00b7 run #90",
-    "time": "07:08",
-    "timestamp": "2026-06-15T07:08:09Z"
-  },
-  {
-    "title": "github_actions in /. - Update #1412856844",
-    "status": "warn",
-    "detail": "dynamic on main \u00b7 run #15",
-    "time": "06:19",
-    "timestamp": "2026-06-15T06:19:20Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-2eb745d0-9258-4f40-a637-6817714008e7 \u00b7 run #89",
-    "time": "06:08",
-    "timestamp": "2026-06-15T06:08:08Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-87d3858a-8e5c-4eab-9523-ddbb2371f293 \u00b7 run #88",
-    "time": "05:08",
-    "timestamp": "2026-06-15T05:08:08Z"
-  },
-  {
-    "title": "Health Monitor",
+    "title": "Content Pipeline",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #57",
-    "time": "04:52",
-    "timestamp": "2026-06-15T04:52:51Z"
+    "detail": "workflow_dispatch on main \u00b7 run #20",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:38Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-06623bd7-6214-4310-a837-3844dc175e93 \u00b7 run #87",
-    "time": "04:08",
-    "timestamp": "2026-06-15T04:08:08Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-trigger-bots-sales-pipeline-a9bda3ba-3d68-4a73-bb35-8fe086d18048 \u00b7 run #86",
-    "time": "03:08",
-    "timestamp": "2026-06-15T03:08:08Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/scheduled-hourly-interval-trigger-2554624e-3bc2-4015-8fbb-0c4c4cc96217 \u00b7 run #85",
-    "time": "02:08",
-    "timestamp": "2026-06-15T02:08:08Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
+    "title": "Compliance Evidence",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #280",
-    "time": "01:41",
-    "timestamp": "2026-06-15T01:41:15Z"
+    "detail": "workflow_dispatch on main \u00b7 run #4",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:35Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "Cert Bot",
     "status": "bad",
-    "detail": "dynamic on main \u00b7 run #711",
-    "time": "01:41",
-    "timestamp": "2026-06-15T01:41:08Z"
+    "detail": "workflow_dispatch on main \u00b7 run #12",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:33Z"
+  },
+  {
+    "title": "Bot Orchestrator",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #17",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:32Z"
+  },
+  {
+    "title": "API Security Audit",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #5",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:30Z"
+  },
+  {
+    "title": "Workflow Doctor",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #109",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:29Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #298",
+    "time": "09:43",
+    "timestamp": "2026-06-15T09:43:26Z"
   }
 ]

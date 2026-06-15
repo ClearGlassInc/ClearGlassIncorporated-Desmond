@@ -1,8 +1,78 @@
 [
   {
-    "title": "Control Surface Feeds #25",
+    "title": "Control Surface Feeds #26",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "19:08",
+    "timestamp": "2026-06-15T19:08:42Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #102",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-2dda0edf-34da-418f-8eed-0439efd2d06b",
+    "time": "19:08",
+    "timestamp": "2026-06-15T19:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #101",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-fd0a3c72-4d77-46ea-81c6-0d8a4886acaf",
+    "time": "18:08",
+    "timestamp": "2026-06-15T18:08:07Z"
+  },
+  {
+    "title": "Commerce Daily Loop #2",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "17:52",
+    "timestamp": "2026-06-15T17:52:19Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #100",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-4f008f00-4c17-4c62-be4c-6bc9431a72b9",
+    "time": "17:08",
+    "timestamp": "2026-06-15T17:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #99",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-46128493-d52c-45ac-a565-8ccb93b4ab22",
+    "time": "16:08",
+    "timestamp": "2026-06-15T16:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #98",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-f9391e06-51d2-47b9-a718-b36d67185f18",
+    "time": "15:08",
+    "timestamp": "2026-06-15T15:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #289",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "14:35",
+    "timestamp": "2026-06-15T14:35:59Z"
+  },
+  {
+    "title": "pages build and deployment #720",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:35",
+    "timestamp": "2026-06-15T14:35:45Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1247",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:35",
+    "timestamp": "2026-06-15T14:35:44Z"
+  },
+  {
+    "title": "Control Surface Feeds #25",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "14:35",
     "timestamp": "2026-06-15T14:35:16Z"
   },
@@ -68,75 +138,5 @@
     "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
     "time": "14:27",
     "timestamp": "2026-06-15T14:27:28Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #586",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
-    "time": "14:27",
-    "timestamp": "2026-06-15T14:27:28Z"
-  },
-  {
-    "title": "CI #570",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
-    "time": "14:27",
-    "timestamp": "2026-06-15T14:27:28Z"
-  },
-  {
-    "title": "Policy Gate #303",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
-    "time": "14:27",
-    "timestamp": "2026-06-15T14:27:26Z"
-  },
-  {
-    "title": "Code Quality: PR #452 #1245",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/452/head",
-    "time": "14:27",
-    "timestamp": "2026-06-15T14:27:20Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #97",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-7a638a8b-cb3e-44f8-9e72-770995b49c96",
-    "time": "14:08",
-    "timestamp": "2026-06-15T14:08:07Z"
-  },
-  {
-    "title": "Dependency Updater #5",
-    "status": "bad",
-    "detail": "failure \u00b7 schedule on main",
-    "time": "13:58",
-    "timestamp": "2026-06-15T13:58:09Z"
-  },
-  {
-    "title": "CI #569",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "13:45",
-    "timestamp": "2026-06-15T13:45:55Z"
-  },
-  {
-    "title": "Policy Gate #302",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "13:45",
-    "timestamp": "2026-06-15T13:45:55Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #287",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "13:45",
-    "timestamp": "2026-06-15T13:45:55Z"
-  },
-  {
-    "title": "Security #333",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "13:45",
-    "timestamp": "2026-06-15T13:45:55Z"
   }
 ]

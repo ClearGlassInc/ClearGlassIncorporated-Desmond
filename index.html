@@ -3,6 +3,19 @@
 <head>
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <meta charset="UTF-8"/>
+<script>
+/* First-visit boot routing — plays /loader.html once per browser session.
+   Bypass with ?skipboot=1, or visit /loader.html directly to replay. */
+(function(){
+  try {
+    var skip = /[?&]skipboot=1\b/.test(location.search);
+    if (skip || sessionStorage.getItem('cg.booted')) return;
+    sessionStorage.setItem('cg.booted', '1');
+    var here = location.pathname + location.search + location.hash;
+    location.replace('/loader.html?next=' + encodeURIComponent(here || '/'));
+  } catch (e) { /* storage unavailable — render normally */ }
+})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>ClearGlass Inc. — Clarity Is Power · Enterprise Cybersecurity &amp; Intelligent Systems · Vision 2040</title>
 <meta name="description" content="ClearGlass Inc. builds enterprise-grade cybersecurity platforms, quantum-augmented AI, and zero-trust digital infrastructure. Explore Artemis VI, Guardian, and our Vision 2040."/>

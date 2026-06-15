@@ -1,142 +1,142 @@
 [
   {
-    "title": "pages build and deployment #713",
+    "title": "Control Surface Feeds #25",
     "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:51Z"
+    "detail": "in_progress \u00b7 schedule on main",
+    "time": "14:35",
+    "timestamp": "2026-06-15T14:35:16Z"
   },
   {
-    "title": "Code Quality: Push on main #1238",
-    "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:50Z"
-  },
-  {
-    "title": "Health Monitor #58",
-    "status": "warn",
-    "detail": "queued \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:42Z"
-  },
-  {
-    "title": "Dependency Updater #4",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:41Z"
-  },
-  {
-    "title": "Control Surface Feeds #24",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:39Z"
-  },
-  {
-    "title": "Content Pipeline #20",
+    "title": "CI #571",
     "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:38Z"
+    "detail": "success \u00b7 push on main",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:44Z"
   },
   {
-    "title": "Compliance Evidence #4",
+    "title": "Security #335",
     "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:35Z"
+    "detail": "success \u00b7 push on main",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:44Z"
   },
   {
-    "title": "Cert Bot #12",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:33Z"
-  },
-  {
-    "title": "Bot Orchestrator #17",
+    "title": "Policy Gate #304",
     "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:32Z"
+    "detail": "success \u00b7 push on main",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:44Z"
   },
   {
-    "title": "API Security Audit #5",
+    "title": "IP Protection Bot - Risk Assessment #587",
     "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:30Z"
+    "detail": "success \u00b7 push on main",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:44Z"
   },
   {
-    "title": "Workflow Doctor #109",
+    "title": "Deploy GitHub Pages #288",
     "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:29Z"
+    "detail": "success \u00b7 push on main",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:44Z"
   },
   {
-    "title": "Policy Gate #298",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:26Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #282",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "09:43",
-    "timestamp": "2026-06-15T09:43:25Z"
-  },
-  {
-    "title": "Code Quality: PR #450 #1237",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/450/head",
-    "time": "09:40",
-    "timestamp": "2026-06-15T09:40:16Z"
-  },
-  {
-    "title": "API Security Audit #4",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "09:30",
-    "timestamp": "2026-06-15T09:30:05Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #92",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-d88fbac9-e97d-4228-b256-d1b07e4a8da5",
-    "time": "09:08",
-    "timestamp": "2026-06-15T09:08:08Z"
-  },
-  {
-    "title": "Workflow Doctor #108",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:47",
-    "timestamp": "2026-06-15T08:47:10Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #91",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-1d0b593f-be4b-4847-aee6-07e9703936d7",
-    "time": "08:08",
-    "timestamp": "2026-06-15T08:08:10Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #281",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "07:39",
-    "timestamp": "2026-06-15T07:39:08Z"
-  },
-  {
-    "title": "pages build and deployment #712",
+    "title": "pages build and deployment #719",
     "status": "ok",
     "detail": "success \u00b7 dynamic on main",
-    "time": "07:38",
-    "timestamp": "2026-06-15T07:38:54Z"
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:39Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1246",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:39Z"
+  },
+  {
+    "title": "PR Automation #156",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:28Z"
+  },
+  {
+    "title": "Security #334",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:28Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #586",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:28Z"
+  },
+  {
+    "title": "CI #570",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:28Z"
+  },
+  {
+    "title": "Policy Gate #303",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on ai-findings-autofix/marketing-output-sales_guardian_artemis-latest.md",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:26Z"
+  },
+  {
+    "title": "Code Quality: PR #452 #1245",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/452/head",
+    "time": "14:27",
+    "timestamp": "2026-06-15T14:27:20Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #97",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-7a638a8b-cb3e-44f8-9e72-770995b49c96",
+    "time": "14:08",
+    "timestamp": "2026-06-15T14:08:07Z"
+  },
+  {
+    "title": "Dependency Updater #5",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "13:58",
+    "timestamp": "2026-06-15T13:58:09Z"
+  },
+  {
+    "title": "CI #569",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "13:45",
+    "timestamp": "2026-06-15T13:45:55Z"
+  },
+  {
+    "title": "Policy Gate #302",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "13:45",
+    "timestamp": "2026-06-15T13:45:55Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #287",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "13:45",
+    "timestamp": "2026-06-15T13:45:55Z"
+  },
+  {
+    "title": "Security #333",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "13:45",
+    "timestamp": "2026-06-15T13:45:55Z"
   }
 ]

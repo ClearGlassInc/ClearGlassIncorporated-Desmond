@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #21",
+    "title": "Control Surface Feeds #22",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "01:40",
+    "timestamp": "2026-06-15T01:40:48Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #84",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-interval-trigger-b4c0d426-fe83-4411-a040-9d78c1342448",
+    "time": "01:08",
+    "timestamp": "2026-06-15T01:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #83",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-trigger-bots-another-one",
+    "time": "00:08",
+    "timestamp": "2026-06-15T00:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #82",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/scheduled-hourly-trigger-bots-sales-pipeline-dd180a5e-2e63-4800-b497-9b49f3c34b35",
+    "time": "23:08",
+    "timestamp": "2026-06-14T23:08:10Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #279",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:35",
+    "timestamp": "2026-06-14T22:35:19Z"
+  },
+  {
+    "title": "pages build and deployment #710",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "22:35",
+    "timestamp": "2026-06-14T22:35:12Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1234",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:35",
+    "timestamp": "2026-06-14T22:35:12Z"
+  },
+  {
+    "title": "Control Surface Feeds #21",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:34",
     "timestamp": "2026-06-14T22:34:58Z"
   },
@@ -89,54 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "21:51",
     "timestamp": "2026-06-14T21:51:14Z"
-  },
-  {
-    "title": "pages build and deployment #709",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "21:51",
-    "timestamp": "2026-06-14T21:51:14Z"
-  },
-  {
-    "title": "Commerce Daily Loop #1",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "21:48",
-    "timestamp": "2026-06-14T21:48:04Z"
-  },
-  {
-    "title": "Security #327",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/workflow-automation-platform-e1qake",
-    "time": "21:40",
-    "timestamp": "2026-06-14T21:40:38Z"
-  },
-  {
-    "title": "Policy Gate #296",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/workflow-automation-platform-e1qake",
-    "time": "21:40",
-    "timestamp": "2026-06-14T21:40:38Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #579",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/workflow-automation-platform-e1qake",
-    "time": "21:40",
-    "timestamp": "2026-06-14T21:40:38Z"
-  },
-  {
-    "title": "PR Automation #154",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/workflow-automation-platform-e1qake",
-    "time": "21:40",
-    "timestamp": "2026-06-14T21:40:38Z"
-  },
-  {
-    "title": "CI #564",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/workflow-automation-platform-e1qake",
-    "time": "21:40",
-    "timestamp": "2026-06-14T21:40:38Z"
   }
 ]

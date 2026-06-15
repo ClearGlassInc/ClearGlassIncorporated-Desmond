@@ -27,7 +27,8 @@
       ["Guardian", "guardian.html", "🌐"],
       ["ClearGlass NEXUS", "clearglass-nexus.html", "🛡"],
       ["Government", "government.html", "🏛"],
-      ["ClearPulse", "clearpulse.html", "📡"]
+      ["ClearPulse", "clearpulse.html", "📡"],
+      ["Satellite Map", "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13", "🛰"]
     ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
@@ -102,7 +103,9 @@
       html += '<div class="cg-grp">' + g[0] + "</div>";
       g[1].forEach(function (it) {
         var cur = it[1].toLowerCase() === here ? " cur" : "";
-        html += '<a class="cg-link' + cur + '" href="' + it[1] + '">' +
+        var ext = /^https?:/i.test(it[1]);
+        html += '<a class="cg-link' + cur + '" href="' + it[1] + '"' +
+          (ext ? ' target="_blank" rel="noopener noreferrer"' : "") + '>' +
           '<span class="ic">' + it[2] + "</span>" + it[0] +
           (cur ? ' <span style="margin-left:auto;font-family:monospace;font-size:9px;color:#8a90c4">● here</span>' : "") +
           "</a>";

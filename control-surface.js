@@ -40,12 +40,14 @@
       ["Guardian", "guardian.html", "🌐"],
       ["ClearGlass NEXUS", "clearglass-nexus.html", "🛡"],
       ["Government", "government.html", "🏛"],
-      ["ClearPulse", "clearpulse.html", "📡"]
+      ["ClearPulse", "clearpulse.html", "📡"],
+      ["Satellite Map", "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13", "🛰"]
     ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],
       ["Interface", "intelligence-interface.html", "🖥"],
+      ["Burlington OSINT Deck", "burlington-osint.html", "🛰"],
       ["Revenue Engine", "revenue-engine.html", "💹"]
     ]],
     ["Legal & Finance", [
@@ -255,7 +257,8 @@
       dr.appendChild(h("div", "cgcs-gl", g[0]));
       g[1].forEach(function (it) {
         var a = h("a"); if (it[1].toLowerCase() === here) a.className = "cur";
-        a.href = it[1]; a.innerHTML = '<span class="ic">' + it[2] + '</span>' + it[0] + (it[1].toLowerCase() === here ? ' <span style="margin-left:auto;font:9px monospace;color:#8a90c4">● here</span>' : "");
+        a.href = it[1]; if (/^https?:/i.test(it[1])) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+        a.innerHTML = '<span class="ic">' + it[2] + '</span>' + it[0] + (it[1].toLowerCase() === here ? ' <span style="margin-left:auto;font:9px monospace;color:#8a90c4">● here</span>' : "");
         dr.appendChild(a);
       });
     });
@@ -340,7 +343,7 @@
     if (it.act === "copyEmail") { try { navigator.clipboard.writeText(EMAIL); } catch (e) {} toast("Email copied: " + EMAIL); return; }
     if (it.act === "contact") { location.href = "mailto:" + EMAIL; return; }
     if (it.act === "status") { window.open("https://github.com/" + REPO + "/actions", "_blank", "noopener"); return; }
-    if (it.href) { if (it.ext) window.open(it.href, "_blank", "noopener"); else location.href = it.href; }
+    if (it.href) { if (it.ext || /^https?:/i.test(it.href)) window.open(it.href, "_blank", "noopener"); else location.href = it.href; }
   }
 
   // ── keyboard ──────────────────────────────────────────────────────────────

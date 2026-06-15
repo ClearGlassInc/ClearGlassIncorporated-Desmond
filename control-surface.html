@@ -622,7 +622,8 @@
             { name: "StegoForge", icon: "🔐", tag: "CYBER", link: "stegoforge.html" },
             { name: "ATT&CK Prompt Core", icon: "🎯", tag: "OFFENSE", link: "attack-prompt-core.html" },
             { name: "SaaS Platform", icon: "☁️", tag: "SAAS", link: "saas-platform.html" },
-            { name: "Revenue Engine", icon: "⚡", tag: "AUTOMATION", link: "revenue-engine.html" }
+            { name: "Revenue Engine", icon: "⚡", tag: "AUTOMATION", link: "revenue-engine.html" },
+            { name: "Satellite Map", icon: "🛰️", tag: "GEOINT", link: "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13" }
         ],
         "LEGAL & FINANCE": [
             { name: "ClearBank Legal AI", icon: "🏦", tag: "BANKING", link: "banking-law-advisor.html" },
@@ -631,7 +632,8 @@
         ],
         "INTELLIGENCE": [
             { name: "Intelligence", icon: "🧠", tag: "ANALYSIS", link: "intelligence.html" },
-            { name: "Intelligence Command Surface", icon: "🛰️", tag: "COMMAND", link: "intelligence-command-surface.html" }
+            { name: "Intelligence Command Surface", icon: "🛰️", tag: "COMMAND", link: "intelligence-command-surface.html" },
+            { name: "Burlington OSINT Deck", icon: "🛰️", tag: "OSINT", link: "burlington-osint.html" }
         ],
         "NAVIGATE": [
             { name: "Home", icon: "🏠", tag: "HOME", link: "index.html" },
@@ -693,7 +695,8 @@
                 document.getElementById("dropdownIcon").innerHTML = "▼";
                 dropdownVisible = false;
                 if (link) {
-                    setTimeout(() => { window.location.href = link; }, 260);
+                    const ext = /^https?:/i.test(link);
+                    setTimeout(() => { if (ext) window.open(link, "_blank", "noopener"); else window.location.href = link; }, 260);
                 }
             });
         });

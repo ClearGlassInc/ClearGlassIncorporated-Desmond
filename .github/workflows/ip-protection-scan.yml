@@ -158,6 +158,16 @@ jobs:
           path: ip-risk-report.md
           retention-days: 30
 
+      - name: Prepare issue body
+        if: always() && github.event_name == 'schedule' && steps.report.outputs.has_findings == 'true'
+        id: issue_body
+        run: |
+          {
+            echo "report<<REPORT_EOF"
+            cat ip-risk-report.md 2>/dev/null || echo "IP risk report unavailable."
+            echo "REPORT_EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Open issue on findings (scheduled runs)
         # Driven by real findings rather than failure(): every scan is advisory
         # (continue-on-error), so the job rarely reaches a failed state — the old
@@ -167,5 +177,10 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           title: "IP Risk Alert: ${{ github.repository }}"
-          body_path: ip-risk-report.md
-          labels: security, legal
+          # This action takes the issue body inline (it has no body_path input)
+          # and expects labels as a newline-separated list — a comma-separated
+          # string is treated as one invalid label name and 422s.
+          body: ${{ steps.issue_body.outputs.report }}
+          labels: |
+            security
+            legal

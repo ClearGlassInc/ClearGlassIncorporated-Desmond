@@ -34,6 +34,7 @@
       ["Command Surface", "intelligence-command-surface.html", "🗺"],
       ["Interface", "intelligence-interface.html", "🖥"],
       ["Flow Intelligence", "clearglass.html", "🕸"],
+      ["Burlington OSINT Deck", "burlington-osint.html", "🛰"],
       ["Revenue Engine", "revenue-engine.html", "💹"]
     ]],
     ["Legal & Finance", [

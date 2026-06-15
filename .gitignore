@@ -93,3 +93,6 @@ exports/
 # Priority Matrix bot runtime artifacts (keep example + latest sample)
 operations/priority_matrix/archive/
 operations/priority_matrix/config.json
+
+# Generated release reports (produced by the OSINT deck release gate)
+release/

@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-14T10:23:51.080628+00:00
-**Average Score:** 64.1/100
-**Files Audited:** 44
+**Run:** 2026-06-15T09:43:47.178153+00:00
+**Average Score:** 64.3/100
+**Files Audited:** 46
 
 ## Page Scores
 
@@ -27,11 +27,13 @@
 | `cg-loader.html` | 60/100 | 4 |
 | `intelligence-interface.html` | 60/100 | 4 |
 | `smb.html` | 60/100 | 4 |
+| `air-control.html` | 70/100 | 3 |
 | `artemis-blue-team.html` | 70/100 | 3 |
 | `artemis-iv.html` | 70/100 | 3 |
 | `bluedesk.html` | 70/100 | 3 |
 | `clearpulse-architecture.html` | 70/100 | 3 |
 | `command-console.html` | 70/100 | 3 |
+| `conduit.html` | 70/100 | 3 |
 | `intelligence.html` | 70/100 | 3 |
 | `percival-build.html` | 70/100 | 3 |
 | `percival-os.html` | 70/100 | 3 |
@@ -55,10 +57,10 @@
 
 ## Top Issues Across All Pages
 
-- 37x — Missing og:image
-- 32x — Description length N chars (ideal N–N)
-- 24x — Title length N chars (ideal N–N)
-- 16x — No <hN> tag found
+- 39x — Missing og:image
+- 34x — Description length N chars (ideal N–N)
+- 25x — Title length N chars (ideal N–N)
+- 17x — No <hN> tag found
 - 14x — Missing og:description
 - 12x — Missing og:title
 - 6x — Missing meta description

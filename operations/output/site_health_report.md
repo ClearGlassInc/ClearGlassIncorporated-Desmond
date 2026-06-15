@@ -1,15 +1,15 @@
 # Site Health Report
 
-**Run:** 2026-06-14T10:23:51.410978+00:00
+**Run:** 2026-06-15T09:43:47.586437+00:00
 **Status:** ✅ Healthy
 **Pages:** 5/6 healthy
 
 ## Pages
 
-- ✅ `/` (64ms)
+- ✅ `/` (85ms)
 - ✅ `/artemis.html` (48ms)
-- ✅ `/artemis-iv.html` (50ms)
-- ✅ `/guardian.html` (53ms)
-- ✅ `/clearglass-nexus.html` (72ms)
+- ✅ `/artemis-iv.html` (64ms)
+- ✅ `/guardian.html` (55ms)
+- ✅ `/clearglass-nexus.html` (64ms)
   - Missing meta: og:title
-- ✅ `/government.html` (44ms)
+- ✅ `/government.html` (62ms)

@@ -1,9 +1,11 @@
 # Release Notes — 2026-06-15
 
-*19 commit(s) since v1.0.0*
+*23 commit(s) since v1.0.0*
 
 ## Maintenance
 
+- Fix title formatting in bluedesk.html (`55de8f8`)
+- Fix IP Protection Bot issue creation: valid body input + label list (`d58b526`)
 - Stripe payments + commerce CD/deploy (#449) (`76ffe4b`)
 - Add ClearGlass Autonomous E-Commerce Operator (governed commerce engine) (`9a92126`)
 - Add monetization: open-core plans, managed Cloud, done-for-you setup (`09077a6`)
@@ -17,6 +19,8 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`5c63f71`)
+- update generated outputs — 2026-06-15 09:43 UTC [skip ci] (`27d613c`)
 - refresh control-surface data feeds [skip ci] (`2d75e52`)
 - refresh control-surface data feeds [skip ci] (`d8b0760`)
 - refresh control-surface data feeds [skip ci] (`aa9117b`)

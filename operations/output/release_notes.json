@@ -1,10 +1,28 @@
 {
-  "run_utc": "2026-06-15T09:43:47.159111+00:00",
+  "run_utc": "2026-06-15T13:12:06.888512+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 19,
+  "commit_count": 23,
   "sections": {
     "Maintenance": [
+      {
+        "sha": "55de8f8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix title formatting in bluedesk.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "d58b526",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix IP Protection Bot issue creation: valid body input + label list",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
       {
         "sha": "76ffe4b",
         "type": "chore",
@@ -97,6 +115,24 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "5c63f71",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "27d613c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-15 09:43 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
       {
         "sha": "2d75e52",
         "type": "bot",

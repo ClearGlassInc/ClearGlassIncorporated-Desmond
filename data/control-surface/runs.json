@@ -1,8 +1,85 @@
 [
   {
-    "title": "Control Surface Feeds #28",
+    "title": "Control Surface Feeds #29",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "05:32",
+    "timestamp": "2026-06-16T05:32:39Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #112",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-03308c98-a186-479c-bd5e-35dd768000a8",
+    "time": "05:08",
+    "timestamp": "2026-06-16T05:08:07Z"
+  },
+  {
+    "title": "Health Monitor #61",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "04:50",
+    "timestamp": "2026-06-16T04:50:11Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #111",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-6fb8ba6b-44ef-4033-99ff-d9b8349c359a",
+    "time": "04:08",
+    "timestamp": "2026-06-16T04:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #110",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-a5d28ba0-6481-4302-adca-33019c8a7a08",
+    "time": "03:08",
+    "timestamp": "2026-06-16T03:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #109",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-d23f098f-e001-4b0c-948b-dfe278c90406",
+    "time": "02:08",
+    "timestamp": "2026-06-16T02:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #108",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-695633d1-37ff-4032-adf1-5df32cbe452a",
+    "time": "01:08",
+    "timestamp": "2026-06-16T01:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #107",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-cf866131-bab1-4846-8d0b-d5f3c04341e2",
+    "time": "00:08",
+    "timestamp": "2026-06-16T00:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #298",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "00:02",
+    "timestamp": "2026-06-16T00:02:26Z"
+  },
+  {
+    "title": "pages build and deployment #729",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:02",
+    "timestamp": "2026-06-16T00:02:19Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1266",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:02",
+    "timestamp": "2026-06-16T00:02:19Z"
+  },
+  {
+    "title": "Control Surface Feeds #28",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "00:01",
     "timestamp": "2026-06-16T00:01:51Z"
   },
@@ -61,82 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "22:39",
     "timestamp": "2026-06-15T22:39:10Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1265",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "22:39",
-    "timestamp": "2026-06-15T22:39:09Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #599",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
-    "time": "22:39",
-    "timestamp": "2026-06-15T22:39:00Z"
-  },
-  {
-    "title": "CI #583",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
-    "time": "22:39",
-    "timestamp": "2026-06-15T22:39:00Z"
-  },
-  {
-    "title": "Security #347",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
-    "time": "22:39",
-    "timestamp": "2026-06-15T22:39:00Z"
-  },
-  {
-    "title": "PR Automation #163",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
-    "time": "22:39",
-    "timestamp": "2026-06-15T22:39:00Z"
-  },
-  {
-    "title": "Policy Gate #316",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
-    "time": "22:39",
-    "timestamp": "2026-06-15T22:39:00Z"
-  },
-  {
-    "title": "Workflow Doctor #116",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/burlington-osint-deck-oilw36",
-    "time": "22:38",
-    "timestamp": "2026-06-15T22:38:59Z"
-  },
-  {
-    "title": "Code Quality: PR #458 #1264",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/458/head",
-    "time": "22:38",
-    "timestamp": "2026-06-15T22:38:58Z"
-  },
-  {
-    "title": "Policy Gate #315",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
-    "time": "22:38",
-    "timestamp": "2026-06-15T22:38:15Z"
-  },
-  {
-    "title": "CI #582",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
-    "time": "22:38",
-    "timestamp": "2026-06-15T22:38:15Z"
-  },
-  {
-    "title": "PR Automation #162",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
-    "time": "22:38",
-    "timestamp": "2026-06-15T22:38:15Z"
   }
 ]

@@ -6,6 +6,18 @@ import json
 from app import payments
 
 
+def test_storefront_checkout_payload_is_accepted(monkeypatch) -> None:
+    """Contract test: the exact line-item shape the storefront posts to
+    /checkout/session produces a usable (mock) session. Kept stdlib-only (no
+    pydantic import) so it runs in the commerce-deploy CI gate."""
+    monkeypatch.delenv("STRIPE_SECRET_KEY", raising=False)
+    items = [{"name": "Aurora LED Desk Lamp", "amount": 4900, "quantity": 1, "currency": "cad"}]
+    session = payments.create_checkout_session(items, customer_email=None)
+    assert session["mode"] == "mock"
+    assert session["amount_total"] == 4900
+    assert session["url"]
+
+
 def test_mock_checkout_when_no_key(monkeypatch) -> None:
     monkeypatch.delenv("STRIPE_SECRET_KEY", raising=False)
     assert payments.is_live() is False

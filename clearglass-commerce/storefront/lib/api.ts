@@ -22,3 +22,31 @@ export interface MetricsOverview {
   open_approvals: number;
   window_days: number;
 }
+
+export interface CheckoutLineItem {
+  name: string;
+  amount: number; // unit price in cents
+  quantity?: number;
+  currency?: string;
+}
+
+export interface CheckoutSession {
+  id: string;
+  url: string;
+  mode: string; // "live" | "mock"
+  amount_total: number;
+  currency: string;
+}
+
+// Create a checkout session via the control plane. Returns a live Stripe
+// Checkout URL when STRIPE_SECRET_KEY is configured, or a deterministic mock
+// session URL otherwise — so the buy flow works in every environment.
+export async function createCheckout(
+  items: CheckoutLineItem[],
+  customerEmail?: string,
+): Promise<CheckoutSession> {
+  return api<CheckoutSession>("/checkout/session", {
+    method: "POST",
+    body: JSON.stringify({ items, customer_email: customerEmail ?? null }),
+  });
+}

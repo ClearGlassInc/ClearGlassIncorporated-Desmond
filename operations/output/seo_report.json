@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-15T13:12:06.927569+00:00",
-  "files_audited": 46,
-  "average_score": 64.3,
+  "run_utc": "2026-06-16T12:11:27.976710+00:00",
+  "files_audited": 47,
+  "average_score": 64.5,
   "pages": [
     {
       "file": "404.html",
@@ -339,6 +339,28 @@
       "issues": [
         "Description length 215 chars (ideal 120\u2013160)",
         "Multiple <h1> tags (9)",
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "burlington-osint.html",
+      "title": "ClearGlass \u00b7 Ontario OSINT Control Deck",
+      "title_length": 39,
+      "title_ok": true,
+      "description": "Ontario crime & governance OSINT control deck \u2014 live status stream, investigation task queue with optimistic updates, and a cited crime-intel feed sourced from public records across Ontario (Halton/Burlington home base, OPP, StatsCan, municipal records). Lawful public-source intelligence only.",
+      "description_length": 294,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Description length 294 chars (ideal 120\u2013160)",
+        "No <h1> tag found",
         "Missing og:image"
       ]
     },
@@ -882,7 +904,7 @@
     },
     {
       "file": "saas-platform.html",
-      "title": "ClearGlass \u2022 Event-Driven Control Surface",
+      "title": "ClearGlass \u2022 Event Driven Control Surface",
       "title_length": 41,
       "title_ok": true,
       "description": "ClearGlass Event-Driven Control Surface \u2014 live operational dashboard for metrics, activity, lead pipeline, health, and alerts. Read-first, GitHub Pages friendly.",
@@ -1036,10 +1058,10 @@
     }
   ],
   "top_issues": [
-    "39x \u2014 Missing og:image",
-    "34x \u2014 Description length N chars (ideal N\u2013N)",
+    "40x \u2014 Missing og:image",
+    "35x \u2014 Description length N chars (ideal N\u2013N)",
     "25x \u2014 Title length N chars (ideal N\u2013N)",
-    "17x \u2014 No <hN> tag found",
+    "18x \u2014 No <hN> tag found",
     "14x \u2014 Missing og:description",
     "12x \u2014 Missing og:title",
     "6x \u2014 Missing meta description",

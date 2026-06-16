@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-15T13:12:06.927569+00:00
-**Average Score:** 64.3/100
-**Files Audited:** 46
+**Run:** 2026-06-16T12:11:27.976710+00:00
+**Average Score:** 64.5/100
+**Files Audited:** 47
 
 ## Page Scores
 
@@ -31,6 +31,7 @@
 | `artemis-blue-team.html` | 70/100 | 3 |
 | `artemis-iv.html` | 70/100 | 3 |
 | `bluedesk.html` | 70/100 | 3 |
+| `burlington-osint.html` | 70/100 | 3 |
 | `clearpulse-architecture.html` | 70/100 | 3 |
 | `command-console.html` | 70/100 | 3 |
 | `conduit.html` | 70/100 | 3 |
@@ -57,10 +58,10 @@
 
 ## Top Issues Across All Pages
 
-- 39x — Missing og:image
-- 34x — Description length N chars (ideal N–N)
+- 40x — Missing og:image
+- 35x — Description length N chars (ideal N–N)
 - 25x — Title length N chars (ideal N–N)
-- 17x — No <hN> tag found
+- 18x — No <hN> tag found
 - 14x — Missing og:description
 - 12x — Missing og:title
 - 6x — Missing meta description

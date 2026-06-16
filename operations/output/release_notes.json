@@ -1,10 +1,246 @@
 {
-  "run_utc": "2026-06-15T13:12:06.888512+00:00",
+  "run_utc": "2026-06-16T12:11:27.926248+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 23,
+  "commit_count": 58,
   "sections": {
+    "CI/CD": [
+      {
+        "sha": "2b5109d",
+        "type": "ci",
+        "scope": null,
+        "subject": "add OSINT Deck Validator job (#461)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "60c0fbf",
+        "type": "ci",
+        "scope": null,
+        "subject": "add OSINT Deck Validator job (wire deck release gate into every build)",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      }
+    ],
     "Maintenance": [
+      {
+        "sha": "892cf76",
+        "type": "chore",
+        "scope": null,
+        "subject": "Master Investigator briefing: Dashboard, Active Investigations, Network Map views (#464)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "b31813c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix broken links & orphan page (site reliability audit) (#463)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "15669d2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix broken links & orphan page (site reliability audit)",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "e8589c7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Ontario OSINT Deck to Systems Control Surface menu (#462)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "f547b97",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Ontario OSINT Deck to Systems Control Surface menu + label consistency",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "951c2ba",
+        "type": "chore",
+        "scope": null,
+        "subject": "Ontario OSINT deck: advanced features, top-corner badge, Military-Op PROMPT.md (#460)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "979dd3d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add advanced operator features to the OSINT deck",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "cddfab9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Ontario-wide OSINT deck + top-corner ClearGlass badge + Military-Op PROMPT.md",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "319a67c",
+        "type": "chore",
+        "scope": null,
+        "subject": "OSINT deck: control-surface, homepage theme, logo + release-prompt consolidation (#458)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "cd733c8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove duplicate osint-deck-release.yml and RELEASE_PROMPT.md (merge reintroduced them)",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "7957d20",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ArcGIS satellite map link to all platforms (site-wide nav + control surface)",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "5fbd3a6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Consolidate release prompt into PROMPT.md; rename workflow to burlington-release.yml",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "c1aad94",
+        "type": "chore",
+        "scope": null,
+        "subject": "OSINT deck: list on control surface, match homepage theme, add logo",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "c9ef998",
+        "type": "chore",
+        "scope": null,
+        "subject": "OSINT deck release gate: master prompt, validator, least-privilege workflow (#457)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "5e19c27",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add OSINT deck release gate: master prompt, validator, workflow",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "fa6d311",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add PROMPT.md \u2014 autonomous repo-maintenance agent master prompt (#456)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "72d5a99",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add PROMPT.md \u2014 autonomous repo-maintenance agent master prompt",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "cc03499",
+        "type": "chore",
+        "scope": null,
+        "subject": "Burlington OSINT deck: offline/global availability + satellite link (#455)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "4a202ea",
+        "type": "chore",
+        "scope": null,
+        "subject": "Burlington OSINT deck: offline/global availability + satellite link",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "f2c68ec",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish Burlington OSINT deck: make indexable + add to sitemap (#454)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "2be97fa",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish Burlington OSINT deck: make indexable + add to sitemap",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "e73992e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Burlington OSINT control deck (live status, tasks, intel feed)",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "856869f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Apply suggested fix to marketing/output/sales_guardian_artemis/latest.md from Copilot Autofix",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "77f6e87",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and meta descriptions for clarity",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
       {
         "sha": "55de8f8",
         "type": "chore",
@@ -116,6 +352,78 @@
     ],
     "Automation": [
       {
+        "sha": "55af68f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "e71889b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "ca36b0b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "41fbc66",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "5c2fd19",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "6169e65",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "6bb3a13",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "19ea762",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-15 13:12 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
         "sha": "5c63f71",
         "type": "bot",
         "scope": null,
@@ -212,6 +520,17 @@
         "subject": "update generated outputs \u2014 2026-06-14 10:23 UTC [skip ci]",
         "author": "github-actions[bot]",
         "date": "2026-06-14",
+        "breaking": false
+      }
+    ],
+    "Other": [
+      {
+        "sha": "8024581",
+        "type": "deck",
+        "scope": null,
+        "subject": "Master Investigator briefing \u2014 dashboard, active investigations, network map",
+        "author": "Claude",
+        "date": "2026-06-16",
         "breaking": false
       }
     ]

@@ -158,6 +158,48 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--cyan)}
 .errband{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.4);border-radius:10px;padding:16px;color:var(--text)}
 
 .hide{display:none}
+
+/* ---------- Tactical dark mode (operator toggle) ---------- */
+body.theme-dark{
+  --bg:#070b10; --bg-2:#0b1119; --panel:#0e1622; --panel-2:#111c2b;
+  --line:rgba(120,170,210,0.14); --line-2:rgba(120,170,210,0.25);
+  --text:#dbe7f2; --text-2:#8aa2b8; --text-3:#5d7488;
+  --cyan:#22d3ee; --cyan-dim:#0e7490; --green:#34d399; --amber:#fbbf24; --red:#f87171;
+}
+body.theme-dark .topbar{background:rgba(7,11,16,0.7)}
+body.theme-dark .brand .logo,body.theme-dark .topbar .cg-badge{background:#0b1119}
+
+/* ---------- Threat meter ---------- */
+.threat{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:18px}
+.threat .lvl{font-family:var(--mono);font-weight:700;font-size:18px;letter-spacing:.06em;white-space:nowrap}
+.threat .bar{flex:1;height:10px;border-radius:6px;background:var(--bg-2);overflow:hidden;border:1px solid var(--line)}
+.threat .fill{height:100%;transition:width .5s,background .5s}
+.threat .desc{font-family:var(--mono);font-size:11px;color:var(--text-2);white-space:nowrap}
+
+/* ---------- Filters ---------- */
+.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.chip{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:20px;border:1px solid var(--line-2);color:var(--text-2);background:var(--panel);cursor:pointer;user-select:none}
+.chip.on{color:var(--cyan);border-color:var(--cyan)}
+.chip.high.on{color:var(--red);border-color:var(--red)} .chip.med.on{color:var(--amber);border-color:var(--amber)} .chip.low.on{color:var(--green);border-color:var(--green)}
+.search{max-width:280px}
+.count-note{font-family:var(--mono);font-size:10px;color:var(--text-3);margin-left:auto}
+
+/* ---------- Map embed ---------- */
+.mapwrap{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg-2)}
+.mapwrap iframe{width:100%;height:380px;border:0;display:block}
+
+/* ---------- Command palette ---------- */
+.cmdk{position:fixed;inset:0;background:rgba(3,6,10,0.55);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding-top:12vh;z-index:90}
+.cmdk .box{width:100%;max-width:540px;background:var(--panel);border:1px solid var(--line-2);border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.cmdk input{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:14px 16px;font-size:14px;background:transparent}
+.cmdk .items{max-height:50vh;overflow:auto}
+.cmdk .it{display:flex;align-items:center;gap:12px;padding:11px 16px;font-family:var(--mono);font-size:12px;color:var(--text-2);cursor:pointer;border-bottom:1px solid var(--line)}
+.cmdk .it .ic{width:18px;text-align:center}
+.cmdk .it .sub{margin-left:auto;font-size:10px;color:var(--text-3)}
+.cmdk .it.sel,.cmdk .it:hover{background:var(--panel-2);color:var(--cyan)}
+.cmdk .hint{padding:8px 16px;font-family:var(--mono);font-size:10px;color:var(--text-3);display:flex;gap:14px}
+kbd{font-family:var(--mono);font-size:10px;border:1px solid var(--line-2);border-radius:5px;padding:1px 6px;color:var(--text-2)}
+
 @media(max-width:820px){
   .shell{grid-template-columns:1fr}
   .sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;overflow-x:auto}
@@ -296,6 +338,8 @@ const store = createStore({
   streamOn:true,
   intel:null,
   intelError:false,
+  streamFilter:{high:true,med:true,low:true},
+  theme:(function(){try{return localStorage.getItem("cg.osint.theme")||"light";}catch(e){return "light";}})(),
 });
 
 function seedEvents(){
@@ -406,10 +450,40 @@ async function deleteTask(id){
    ============================================================ */
 const SEV_LABEL={high:"HIGH",med:"MED",low:"LOW"};
 const STATUSES=[["open","Open"],["in_progress","In progress"],["completed","Completed"],["blocked","Blocked"]];
+// DOM-local search queries (kept out of the store so typing doesn't trigger re-render)
+let STREAM_Q="", TASK_Q="";
+function applyDomFilter(listSel,countSel,q){
+  const list=$(listSel); if(!list)return;
+  let shown=0,total=0;
+  list.querySelectorAll("[data-s]").forEach(row=>{
+    total++;
+    const hit=!q || row.getAttribute("data-s").includes(q.toLowerCase());
+    row.style.display=hit?"":"none"; if(hit)shown++;
+  });
+  const c=$(countSel); if(c)c.textContent=shown+" / "+total+" shown";
+}
 
+function threatLevel(events){
+  const recent=events.slice(0,24);
+  const high=recent.filter(e=>e.sev==="high").length;
+  const med=recent.filter(e=>e.sev==="med").length;
+  const score=Math.min(100,high*28+med*10);
+  let level="LOW",color="var(--green)";
+  if(score>=60){level="ELEVATED";color="var(--red)";}
+  else if(score>=28){level="GUARDED";color="var(--amber)";}
+  return {level,color,score,high,med};
+}
 function ViewStatus(s){
   const wrap=el("div",{});
+  const sorted=s.events.slice().sort((a,b)=>b.ts-a.ts);
   const high=s.events.filter(e=>e.sev==="high").length;
+  const t=threatLevel(sorted);
+  // threat-level meter
+  wrap.appendChild(el("div",{class:"threat"},
+    el("div",{class:"lvl",style:"color:"+t.color},"⬢ "+t.level),
+    el("div",{class:"bar"},el("div",{class:"fill",style:"width:"+Math.max(6,t.score)+"%;background:"+t.color})),
+    el("div",{class:"desc"},"threat index "+t.score+"/100 · "+t.high+" high / "+t.med+" med (recent)"),
+  ));
   wrap.appendChild(el("div",{class:"stats"},
     statTile("Stream","LIVE",s.streamOn?"up":"warn",s.streamOn?"EventTarget · ~8.5s":"paused"),
     statTile("Events buffered",String(s.events.length),"down","since session start"),
@@ -422,15 +496,29 @@ function ViewStatus(s){
     el("span",{class:"muted tiny mono"},"High-severity incidents auto-raise an alert toast."),
   );
   wrap.appendChild(ctl);
+  // severity (store-driven) + text (DOM-local) filters
+  const f=s.streamFilter;
+  const setSev=(k)=>store.set(st=>({streamFilter:{...st.streamFilter,[k]:!st.streamFilter[k]}}));
+  const search=el("input",{class:"search",placeholder:"filter events…",value:STREAM_Q,
+    oninput:e=>{STREAM_Q=e.target.value;applyDomFilter("#ev-list","#ev-count",STREAM_Q);}});
+  const sevFiltered=sorted.filter(ev=>f[ev.sev]!==false);
+  wrap.appendChild(el("div",{class:"filters"},
+    el("span",{class:"chip high"+(f.high?" on":""),onclick:()=>setSev("high")},"HIGH"),
+    el("span",{class:"chip med"+(f.med?" on":""),onclick:()=>setSev("med")},"MED"),
+    el("span",{class:"chip low"+(f.low?" on":""),onclick:()=>setSev("low")},"LOW"),
+    search,
+    el("span",{class:"count-note",id:"ev-count"},sevFiltered.length+" / "+sorted.length+" shown"),
+  ));
   const card=el("div",{class:"card"},el("h3",{},"Live status stream"));
-  const list=el("div",{class:"stream"});
-  s.events.slice().sort((a,b)=>b.ts-a.ts).forEach(ev=>list.appendChild(eventRow(ev)));
+  const list=el("div",{class:"stream",id:"ev-list"});
+  if(!sevFiltered.length)list.appendChild(el("div",{class:"muted tiny",style:"padding:10px"},"— no events match the current severity filter —"));
+  sevFiltered.forEach(ev=>list.appendChild(eventRow(ev)));
   card.appendChild(list);
   wrap.appendChild(card);
   return wrap;
 }
 function eventRow(ev){
-  return el("div",{class:"ev"},
+  return el("div",{class:"ev","data-s":(ev.ti+" "+ev.de+" "+ev.cat+" "+ev.src).toLowerCase()},
     el("div",{class:"ts mono"},fmtTime(ev.ts)),
     el("div",{},
       el("div",{class:"ti"},ev.ti),
@@ -448,10 +536,15 @@ function statTile(k,v,cls,d){
 }
 
 function ViewTasks(s){
-  const wrap=el("div",{});
-  wrap.appendChild(el("div",{class:"row",style:"justify-content:space-between;align-items:center;margin-bottom:16px"},
+  const wrap=el("div",{id:"task-root"});
+  wrap.appendChild(el("div",{class:"row",style:"justify-content:space-between;align-items:center;margin-bottom:12px"},
     el("div",{class:"muted tiny mono"},"Optimistic CRUD · automatic rollback on failure · persisted to localStorage"),
     el("button",{class:"btn primary",onclick:()=>openTaskModal()},"+ New investigation task"),
+  ));
+  wrap.appendChild(el("div",{class:"filters"},
+    el("input",{class:"search",placeholder:"search tasks…",value:TASK_Q,
+      oninput:e=>{TASK_Q=e.target.value;applyDomFilter("#task-root","#task-count",TASK_Q);}}),
+    el("span",{class:"count-note",id:"task-count"},""),
   ));
   const order=["open","in_progress","blocked","completed"];
   order.forEach(st=>{
@@ -467,7 +560,7 @@ function ViewTasks(s){
 function taskRow(t){
   const sel=el("select",{onchange:e=>updateTaskStatus(t.id,e.target.value)});
   STATUSES.forEach(([v,l])=>{const o=el("option",{value:v},l);if(v===t.status)o.selected=true;sel.appendChild(o);});
-  return el("div",{class:"task"+(t._pending?" pending":"")},
+  return el("div",{class:"task"+(t._pending?" pending":""),"data-s":(t.title+" "+(t.desc||"")+" "+(t.tags||[]).join(" ")+" "+t.priority+" "+t.status).toLowerCase()},
     el("div",{},
       el("div",{class:"ti"},t.title," ",el("span",{class:"prio "+t.priority},"["+t.priority.toUpperCase()+"]")),
       t.desc?el("div",{class:"de"},t.desc):null,
@@ -542,6 +635,10 @@ function ViewIntel(s){
     (sat.links||[]).forEach(l=>satCard.appendChild(el("div",{class:"src"},
       el("a",{href:l.url,target:"_blank",rel:"noopener noreferrer"},l.name+" ↗"),
       el("span",{class:"ty"},l.provider))));
+    // embedded live map (OpenStreetMap — keyless, iframe-safe)
+    satCard.appendChild(el("div",{class:"mapwrap",style:"margin-top:12px"},
+      el("iframe",{loading:"lazy",title:"Ontario map — Burlington area",
+        src:"https://www.openstreetmap.org/export/embed.html?bbox="+(sat.lng-0.18)+"%2C"+(sat.lat-0.09)+"%2C"+(sat.lng+0.18)+"%2C"+(sat.lat+0.09)+"&layer=mapnik&marker="+sat.lat+"%2C"+sat.lng})));
     wrap.appendChild(satCard);
   }
   const srcCard=el("div",{class:"card",style:"margin-bottom:16px"},el("h3",{},"Cited public sources"));
@@ -588,11 +685,18 @@ function ViewConfig(s){
     el("div",{class:"row"},
       el("button",{class:"btn sm",onclick:()=>{
         const blob=new Blob([JSON.stringify(store.get().tasks,null,2)],{type:"application/json"});
-        const a=el("a",{href:URL.createObjectURL(blob),download:"burlington-tasks.json"});a.click();
+        const a=el("a",{href:URL.createObjectURL(blob),download:"ontario-osint-tasks.json"});a.click();
         Toast.info("Export","Task queue exported as JSON.");
       }},"⤓ Export tasks (JSON)"),
       el("button",{class:"btn sm",onclick:()=>{
-        if(!confirm("Reset task queue to seeded Burlington tasks? This clears local changes."))return;
+        const rows=[["timestamp","severity","category","title","detail","source"]]
+          .concat(store.get().events.map(e=>[new Date(e.ts).toISOString(),e.sev,e.cat,e.ti,e.de,e.src]));
+        const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\n");
+        const a=el("a",{href:URL.createObjectURL(new Blob([csv],{type:"text/csv"})),download:"ontario-osint-events.csv"});a.click();
+        Toast.info("Export","Status stream exported as CSV.");
+      }},"⤓ Export events (CSV)"),
+      el("button",{class:"btn sm",onclick:()=>{
+        if(!confirm("Reset task queue to seeded Ontario tasks? This clears local changes."))return;
         const seeded=SEED_TASKS();store.set({tasks:seeded});saveTasks(seeded);Toast.info("Reset","Task queue restored to seed.");
       }},"↺ Reset to seed"),
     ),
@@ -622,6 +726,7 @@ const TITLES={status:"Live Status Stream",tasks:"Investigation Task Queue",intel
 function render(){
   const s=store.get();
   const app=$("#app");
+  document.body.className=s.theme==="dark"?"theme-dark":"";
   let body;
   try{ body=(VIEWS[s.route]||ViewStatus)(s); }
   catch(err){
@@ -660,6 +765,8 @@ function render(){
             el("h1",{},TITLES[s.route]||""),
             el("div",{class:"sub"},"Ontario · Crime & Governance OSINT · Halton/Burlington home base")),
           el("div",{class:"spacer"}),
+          el("button",{class:"pill",style:"cursor:pointer",onclick:()=>openPalette(),title:"Command palette (Ctrl/Cmd+K)"},"⌘K"),
+          el("button",{class:"pill",style:"cursor:pointer",onclick:()=>toggleTheme(),title:"Toggle tactical dark mode"},s.theme==="dark"?"☀ LIGHT":"🌙 DARK"),
           el("a",{class:"pill",href:(s.intel&&s.intel.satellite&&s.intel.satellite.primary)||SAT_URL,target:"_blank",rel:"noopener noreferrer",title:"Open Ontario satellite imagery"},"🛰 SAT LINK"),
           el("span",{class:"pill"+(s.streamOn?"":" off")},el("span",{class:"lv"}),s.streamOn?"STREAM LIVE":"STREAM PAUSED"),
           el("span",{class:"clock",id:"clk"},clockStr()),
@@ -669,6 +776,59 @@ function render(){
         el("div",{class:"content"},body)),
     )
   );
+  // re-apply DOM-local search filters after the view rebuilds
+  if(s.route==="status")applyDomFilter("#ev-list","#ev-count",STREAM_Q);
+  if(s.route==="tasks")applyDomFilter("#task-root","#task-count",TASK_Q);
+}
+
+function toggleTheme(){
+  const next=store.get().theme==="dark"?"light":"dark";
+  try{localStorage.setItem("cg.osint.theme",next);}catch(e){}
+  store.set({theme:next});
+  Toast.info("Theme",next==="dark"?"Tactical dark mode engaged.":"Crystal-glass mode.");
+}
+
+/* ---------- command palette (Ctrl/Cmd+K) ---------- */
+function paletteItems(){
+  return [
+    {ic:"◉",label:"Go: Live Status",sub:"view",run:()=>store.set({route:"status"})},
+    {ic:"▦",label:"Go: Investigation Tasks",sub:"view",run:()=>store.set({route:"tasks"})},
+    {ic:"🗺",label:"Go: Crime Intel Feed",sub:"view",run:()=>store.set({route:"intel"})},
+    {ic:"⚙",label:"Go: Config / Sources",sub:"view",run:()=>store.set({route:"config"})},
+    {ic:"⊕",label:"Inject test event",sub:"action",run:()=>stream.pulse()},
+    {ic:"＋",label:"New investigation task",sub:"action",run:()=>{store.set({route:"tasks"});openTaskModal();}},
+    {ic:store.get().streamOn?"⏸":"▶",label:store.get().streamOn?"Pause stream":"Resume stream",sub:"action",run:()=>toggleStream()},
+    {ic:"🌙",label:"Toggle tactical dark mode",sub:"action",run:()=>toggleTheme()},
+    {ic:"🛰",label:"Open Ontario satellite map",sub:"link",run:()=>window.open(SAT_URL,"_blank","noopener")},
+  ];
+}
+function openPalette(){
+  if($(".cmdk"))return;
+  let items=paletteItems(), sel=0;
+  const overlay=el("div",{class:"cmdk",onclick:e=>{if(e.target===overlay)overlay.remove();}});
+  const input=el("input",{placeholder:"Type a command or view…"});
+  const listEl=el("div",{class:"items"});
+  const box=el("div",{class:"box"},input,listEl,
+    el("div",{class:"hint"},el("span",{},el("kbd",{},"↑↓")," navigate"),el("span",{},el("kbd",{},"↵")," run"),el("span",{},el("kbd",{},"esc")," close")));
+  overlay.appendChild(box);
+  function draw(){
+    const q=input.value.toLowerCase();
+    const f=items.filter(it=>it.label.toLowerCase().includes(q));
+    if(sel>=f.length)sel=Math.max(0,f.length-1);
+    listEl.replaceChildren(...f.map((it,i)=>el("div",{class:"it"+(i===sel?" sel":""),onclick:()=>{overlay.remove();it.run();}},
+      el("span",{class:"ic"},it.ic),it.label,el("span",{class:"sub"},it.sub))));
+    listEl._f=f;
+  }
+  input.addEventListener("input",draw);
+  input.addEventListener("keydown",e=>{
+    const f=listEl._f||[];
+    if(e.key==="ArrowDown"){e.preventDefault();sel=Math.min(f.length-1,sel+1);draw();}
+    else if(e.key==="ArrowUp"){e.preventDefault();sel=Math.max(0,sel-1);draw();}
+    else if(e.key==="Enter"){e.preventDefault();if(f[sel]){overlay.remove();f[sel].run();}}
+    else if(e.key==="Escape"){overlay.remove();}
+  });
+  document.body.appendChild(overlay);
+  draw(); input.focus();
 }
 
 function clockStr(){return new Date().toLocaleString("en-CA",{hour12:false,timeZone:"America/Toronto"})+" ET";}
@@ -686,6 +846,11 @@ stream.addEventListener("incident",e=>{
 
 window.addEventListener("error",e=>{Toast.error("Runtime error",e.message||"unknown");});
 window.addEventListener("unhandledrejection",e=>{Toast.error("Async error",(e.reason&&e.reason.message)||"promise rejected");});
+
+// ⌘K / Ctrl+K command palette
+window.addEventListener("keydown",e=>{
+  if((e.metaKey||e.ctrlKey)&&(e.key==="k"||e.key==="K")){e.preventDefault();if($(".cmdk"))$(".cmdk").remove();else openPalette();}
+});
 
 // live clock without full re-render
 setInterval(()=>{const c=$("#clk");if(c)c.textContent=clockStr();},1000);

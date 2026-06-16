@@ -1,9 +1,7 @@
-// Public storefront home. In production this lists products from the control plane;
-// the scaffold renders a static demo grid so it builds without a live API.
-const DEMO = [
-  { slug: "aurora-desk-lamp", title: "Aurora LED Desk Lamp", price: "CAD $49" },
-  { slug: "summit-water-bottle", title: "Summit Insulated Bottle", price: "CAD $34" },
-];
+// Public storefront home. In production this lists products from the control
+// plane; the scaffold renders the shared static catalog so it builds without a
+// live API and stays in sync with the checkout pricing.
+import { CATALOG, formatPrice } from "@/lib/catalog";
 
 export default function Home() {
   return (
@@ -21,7 +19,7 @@ export default function Home() {
           marginTop: 24,
         }}
       >
-        {DEMO.map((p) => (
+        {CATALOG.map((p) => (
           <a
             key={p.slug}
             href={`/products/${p.slug}`}
@@ -35,7 +33,7 @@ export default function Home() {
             }}
           >
             <div style={{ fontWeight: 600 }}>{p.title}</div>
-            <div style={{ color: "#a78bfa", marginTop: 8 }}>{p.price}</div>
+            <div style={{ color: "#a78bfa", marginTop: 8 }}>{formatPrice(p.amount, p.currency)}</div>
           </a>
         ))}
       </div>

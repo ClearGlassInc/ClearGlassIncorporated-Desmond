@@ -1,142 +1,142 @@
 [
   {
-    "title": "Cert Bot #14",
+    "title": "Control Surface Feeds #31",
     "status": "warn",
-    "detail": "queued \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:46Z"
+    "detail": "in_progress \u00b7 schedule on main",
+    "time": "11:34",
+    "timestamp": "2026-06-16T11:34:02Z"
   },
   {
-    "title": "Commerce Deploy #3",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:45Z"
+    "title": "Cert Bot #15",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "11:33",
+    "timestamp": "2026-06-16T11:33:06Z"
   },
   {
-    "title": "Bot Orchestrator #19",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:43Z"
-  },
-  {
-    "title": "Dependency Updater #6",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:41Z"
-  },
-  {
-    "title": "Commerce Daily Loop #3",
-    "status": "warn",
-    "detail": "queued \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:39Z"
-  },
-  {
-    "title": "Content Pipeline #23",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:38Z"
-  },
-  {
-    "title": "Compliance Evidence #6",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:36Z"
-  },
-  {
-    "title": "Control Surface Feeds #30",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:35Z"
-  },
-  {
-    "title": "Policy Gate #322",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:33Z"
-  },
-  {
-    "title": "Workflow Doctor #120",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:31Z"
-  },
-  {
-    "title": "API Security Audit #6",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:44Z"
-  },
-  {
-    "title": "Health Monitor #62",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:42Z"
-  },
-  {
-    "title": "Burlington Release #1",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:41Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1270",
-    "status": "warn",
-    "detail": "in_progress \u00b7 dynamic on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:30Z"
-  },
-  {
-    "title": "Policy Gate #321",
+    "title": "CI #592",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:27Z"
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:49Z"
   },
   {
-    "title": "Workflow Doctor #119",
+    "title": "Policy Gate #326",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:27Z"
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:49Z"
   },
   {
-    "title": "IP Protection Bot - Risk Assessment #605",
+    "title": "Security #356",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:27Z"
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:48Z"
   },
   {
-    "title": "CI #588",
+    "title": "Deploy GitHub Pages #304",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:27Z"
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:48Z"
   },
   {
-    "title": "Security #352",
+    "title": "IP Protection Bot - Risk Assessment #609",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:27Z"
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:48Z"
   },
   {
-    "title": "Deploy GitHub Pages #301",
+    "title": "pages build and deployment #735",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:48Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1275",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:47Z"
+  },
+  {
+    "title": "Code Quality: PR #461 #1274",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/461/head",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:42Z"
+  },
+  {
+    "title": "CI #591",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:11Z"
+  },
+  {
+    "title": "Security #355",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:11Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #608",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:11Z"
+  },
+  {
+    "title": "PR Automation #167",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:11Z"
+  },
+  {
+    "title": "Policy Gate #325",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/burlington-osint-deck-oilw36",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:11Z"
+  },
+  {
+    "title": "Code Quality: PR #462 #1273",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/462/head",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:03Z"
+  },
+  {
+    "title": "Health Monitor #63",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "11:19",
+    "timestamp": "2026-06-16T11:19:46Z"
+  },
+  {
+    "title": "Security #354",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:27Z"
+    "time": "11:14",
+    "timestamp": "2026-06-16T11:14:55Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #303",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "11:14",
+    "timestamp": "2026-06-16T11:14:55Z"
+  },
+  {
+    "title": "CI #590",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "11:14",
+    "timestamp": "2026-06-16T11:14:55Z"
   }
 ]

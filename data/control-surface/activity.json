@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:53Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #14",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:46Z"
-  },
-  {
-    "title": "Commerce Deploy",
-    "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #3",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:45Z"
-  },
-  {
-    "title": "Bot Orchestrator",
-    "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #19",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:43Z"
-  },
-  {
-    "title": "Dependency Updater",
-    "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #6",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:41Z"
-  },
-  {
-    "title": "Commerce Daily Loop",
-    "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #3",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:39Z"
-  },
-  {
-    "title": "Content Pipeline",
-    "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #23",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:38Z"
-  },
-  {
-    "title": "Compliance Evidence",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #6",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:36Z"
+    "time": "11:34",
+    "timestamp": "2026-06-16T11:34:14Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #30",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:35Z"
+    "detail": "schedule on main \u00b7 run #31",
+    "time": "11:34",
+    "timestamp": "2026-06-16T11:34:02Z"
+  },
+  {
+    "title": "Cert Bot",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #15",
+    "time": "11:33",
+    "timestamp": "2026-06-16T11:33:06Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #592",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:49Z"
   },
   {
     "title": "Policy Gate",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #322",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:33Z"
+    "detail": "push on main \u00b7 run #326",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:49Z"
   },
   {
-    "title": "Workflow Doctor",
-    "status": "warn",
-    "detail": "workflow_dispatch on main \u00b7 run #120",
-    "time": "11:11",
-    "timestamp": "2026-06-16T11:11:31Z"
-  },
-  {
-    "title": "API Security Audit",
+    "title": "Security",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #6",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:44Z"
+    "detail": "push on main \u00b7 run #356",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:48Z"
   },
   {
-    "title": "Health Monitor",
+    "title": "Deploy GitHub Pages",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #62",
-    "time": "11:10",
-    "timestamp": "2026-06-16T11:10:42Z"
+    "detail": "push on main \u00b7 run #304",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:48Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #609",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:48Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #735",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:48Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1275",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:47Z"
+  },
+  {
+    "title": "Code Quality: PR #461",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/461/head \u00b7 run #1274",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:42Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "pull_request on claude/burlington-osint-deck-oilw36 \u00b7 run #591",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:11Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/burlington-osint-deck-oilw36 \u00b7 run #355",
+    "time": "11:31",
+    "timestamp": "2026-06-16T11:31:11Z"
   }
 ]

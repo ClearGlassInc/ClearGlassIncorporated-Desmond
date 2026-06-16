@@ -59,3 +59,17 @@ jobs:
           cache: pip
       - run: pip install pyyaml
       - run: python scripts/workflow_doctor.py
+
+  osint-deck:
+    name: OSINT Deck Validator
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      # Fail-closed validation of the Ontario/Burlington OSINT deck: present,
+      # indexable, intel.json valid, sitemap/nav/sw wired, inline JS + sw.js
+      # syntax. Node ships on the runner, so the JS syntax checks run too.
+      - run: python scripts/osint_deck_release.py --strict

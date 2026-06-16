@@ -1,7 +1,7 @@
 {
   "updated": "2026-06-15",
-  "region": "Halton Region (Burlington, Oakville, Milton, Halton Hills)",
-  "summary": "Burlington remains one of the safest large municipalities in Canada. Public records show no red-flag pattern of coordinated municipal corruption driving street-level crime. Procurement and land-use governance concerns are tracked separately from crime statistics.",
+  "region": "Ontario — Halton/Burlington home base, province-wide coverage",
+  "summary": "Province-wide Ontario OSINT picture with Halton/Burlington as the home base. Burlington remains one of the safest large municipalities in Canada, and Halton holds the lowest Crime Severity Index among Ontario's large police services. Public records show no red-flag pattern of coordinated municipal corruption driving street-level crime. Provincial sources (OPP, Statistics Canada, Ontario open data) supplement regional records; procurement and land-use governance concerns are tracked separately from crime statistics.",
   "metrics": [
     {
       "label": "Crime Severity Index rank",
@@ -80,6 +80,21 @@
       "name": "Statistics Canada — Crime Severity Index (Table 35-10-0026-01)",
       "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3510002601",
       "type": "Open data"
+    },
+    {
+      "name": "Ontario Provincial Police (OPP) — News Releases",
+      "url": "https://www.opp.ca/index.php?id=115",
+      "type": "Press releases"
+    },
+    {
+      "name": "Ontario Open Data Catalogue — data.ontario.ca",
+      "url": "https://data.ontario.ca/",
+      "type": "Open data"
+    },
+    {
+      "name": "Ontario SOLGEN — Policing & Public Safety",
+      "url": "https://www.ontario.ca/page/ministry-solicitor-general",
+      "type": "Public records"
     },
     {
       "name": "City of Burlington — Council & Committee Meetings / Minutes",

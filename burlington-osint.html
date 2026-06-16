@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>ClearGlass · Burlington OSINT Control Deck</title>
-<meta name="description" content="Burlington / Halton crime & governance OSINT control deck — live status stream, investigation task queue with optimistic updates, and a cited crime-intel feed sourced from public records. Lawful public-source intelligence only."/>
+<title>ClearGlass · Ontario OSINT Control Deck</title>
+<meta name="description" content="Ontario crime & governance OSINT control deck — live status stream, investigation task queue with optimistic updates, and a cited crime-intel feed sourced from public records across Ontario (Halton/Burlington home base, OPP, StatsCan, municipal records). Lawful public-source intelligence only."/>
 <link rel="canonical" href="https://clearglassinc.github.io/burlington-osint.html"/>
 <meta name="theme-color" content="#fafbfc"/>
 <meta name="robots" content="index,follow"/>
-<meta property="og:title" content="ClearGlass · Burlington OSINT Control Deck"/>
-<meta property="og:description" content="Operator workstation for Burlington/Halton public-source intelligence: live status, investigation tasks, and a cited crime-intel feed."/>
+<meta property="og:title" content="ClearGlass · Ontario OSINT Control Deck"/>
+<meta property="og:description" content="Operator workstation for Ontario public-source intelligence: live status, investigation tasks, and a cited crime-intel feed. Halton/Burlington home base, province-wide coverage."/>
 <meta property="og:type" content="website"/>
 <link rel="icon" href="icon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -75,6 +75,9 @@ a:hover{text-decoration:underline}
 .topbar h1{font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.06em}
 .topbar .sub{font-size:11px;color:var(--text-2)}
 .topbar .spacer{flex:1}
+.topbar .cg-badge{width:34px;height:34px;border-radius:9px;overflow:hidden;display:block;flex:0 0 auto;border:1px solid var(--line-2);background:#fff;box-shadow:0 2px 12px rgba(56,189,248,0.18);transition:transform .18s,box-shadow .18s}
+.topbar .cg-badge:hover{transform:translateY(-1px) scale(1.05);box-shadow:0 5px 18px rgba(167,139,250,0.3)}
+.topbar .cg-badge img{width:100%;height:100%;object-fit:cover;display:block}
 .pill{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:20px;border:1px solid var(--line-2);color:var(--text-2);display:flex;align-items:center;gap:7px}
 .pill .lv{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
 .pill.off .lv{background:var(--text-3);box-shadow:none}
@@ -245,6 +248,11 @@ class StatusStream extends EventTarget{
       {sev:"low",ti:"Council closed-meeting report posted",de:"City of Burlington posted a closed-session summary to the public record. Queued for governance audit.",cat:"GOVERNANCE",src:"City of Burlington minutes"},
       {sev:"med",ti:"OLT filing — land-use appeal",de:"New Ontario Land Tribunal filing logged for a Burlington development; cross-reference with procurement watchlist.",cat:"GOVERNANCE",src:"OLT case search"},
       {sev:"low",ti:"Fraud awareness bulletin",de:"Regional bulletin on grandparent/CRA telephone scams; no local cluster identified.",cat:"FRAUD",src:"HRPS bulletin"},
+      {sev:"med",ti:"OPP province-wide auto-theft blitz",de:"OPP report multi-jurisdiction vehicle-theft enforcement across the GTA and Highway 401 corridor; recoveries logged.",cat:"AUTO-THEFT",src:"OPP media release"},
+      {sev:"low",ti:"StatsCan — Ontario crime statistics release",de:"Statistics Canada published updated police-reported crime data for Ontario; Halton retains lowest CSI among large services.",cat:"STATS",src:"Statistics Canada"},
+      {sev:"high",ti:"Toronto Police — firearms interdiction",de:"Province-wide firearms tracing flags a recovery linked to a GTA investigation; intelligence shared regionally.",cat:"FIREARMS",src:"Toronto Police Service"},
+      {sev:"med",ti:"Ottawa — procurement integrity review",de:"Ontario municipal procurement audit referenced in a public council report; cross-checked against provincial watchlist.",cat:"GOVERNANCE",src:"Ontario municipal records"},
+      {sev:"low",ti:"Ontario Open Data — dataset refresh",de:"data.ontario.ca refreshed a public safety dataset; ingestion queued for the intel baseline.",cat:"STATS",src:"data.ontario.ca"},
     ];
   }
   _emit(){
@@ -274,6 +282,9 @@ function SEED_TASKS(){
     {id:uid(),title:"Closed-meeting report audit (2025–2026)",desc:"Index every closed-session summary published by the City of Burlington and flag procurement/land items.",status:"open",priority:"med",tags:["governance","FOI","council"],created:now-86400000},
     {id:uid(),title:"FOI request — 2025 vendor performance reports",desc:"Draft and file a freedom-of-information request for 2025 municipal vendor performance evaluations.",status:"blocked",priority:"high",tags:["FOI","vendors"],created:now-3600000*8},
     {id:uid(),title:"Baseline CSI dossier (2008–2024)",desc:"Compile the 17-year Crime Severity Index baseline for Halton from StatsCan tables.",status:"completed",priority:"low",tags:["stats","baseline"],created:now-86400000*6},
+    {id:uid(),title:"Ontario CSI comparison — Big 12 services",desc:"Benchmark Halton against Ontario's twelve largest police services using StatsCan police-reported crime tables.",status:"open",priority:"med",tags:["ontario","stats","benchmark"],created:now-86400000*4},
+    {id:uid(),title:"OPP / 401-corridor auto-theft tracking",desc:"Monitor OPP province-wide auto-theft releases and map recoveries along the Highway 401 corridor.",status:"open",priority:"high",tags:["ontario","OPP","auto-theft"],created:now-3600000*20},
+    {id:uid(),title:"data.ontario.ca public-safety dataset ingest",desc:"Catalogue relevant Ontario open datasets (public safety, procurement, land use) for the intel baseline.",status:"in_progress",priority:"med",tags:["ontario","open-data","ingest"],created:now-3600000*30},
   ];
 }
 
@@ -290,7 +301,7 @@ const store = createStore({
 function seedEvents(){
   const base=Date.now();
   return [
-    {id:uid(),sev:"low",ti:"Deck initialized",de:"Burlington OSINT control deck online. Public-source feeds armed.",cat:"SYSTEM",src:"ClearGlass",ts:base-1000},
+    {id:uid(),sev:"low",ti:"Deck initialized",de:"Ontario OSINT control deck online. Public-source feeds armed (Halton/Burlington base, province-wide).",cat:"SYSTEM",src:"ClearGlass",ts:base-1000},
     {id:uid(),sev:"med",ti:"Auto-theft enforcement action",de:"Targeted operation disrupted a re-VIN ring; vehicles recovered in the Burlington/Oakville corridor.",cat:"AUTO-THEFT",src:"HRPS media release",ts:base-42000},
     {id:uid(),sev:"low",ti:"Crime Severity Index update",de:"Quarterly CSI snapshot consistent with Halton's lowest-in-province trend.",cat:"STATS",src:"StatsCan / HRPS",ts:base-90000},
   ];
@@ -301,8 +312,8 @@ function seedEvents(){
 const SAT_URL = "https://www.google.com/maps/@43.3316,-79.7989,13z/data=!3m1!1e3";
 const INTEL_FALLBACK = {
   updated:"2026-06-15",
-  region:"Halton Region (Burlington, Oakville, Milton, Halton Hills)",
-  summary:"Burlington remains one of the safest large municipalities in Canada. Public records show no red-flag pattern of coordinated municipal corruption driving street-level crime. Procurement and land-use governance concerns are tracked separately from crime statistics.",
+  region:"Ontario — Halton/Burlington home base, province-wide coverage",
+  summary:"Province-wide Ontario OSINT picture with Halton/Burlington as the home base. Halton holds the lowest Crime Severity Index among Ontario's large police services. Provincial sources (OPP, Statistics Canada, Ontario open data) supplement regional records; procurement and land-use governance concerns are tracked separately from crime statistics.",
   metrics:[
     {label:"Crime Severity Index rank",value:"Lowest of Ontario's \"Big 12\"",trend:"down",note:"17 consecutive years (2008–2024).",source:"StatsCan CSI / HRPS annual reports"},
     {label:"Overall crime per 100k (H1 2025)",value:"-11.7% YoY",trend:"down",note:"H1 2025 vs H1 2024, rate per 100,000.",source:"HRPS H1 2025 statistics"},
@@ -324,6 +335,8 @@ const INTEL_FALLBACK = {
     {name:"Halton Regional Police — Crime Map (ArcGIS)",url:"https://www.haltonpolice.ca/en/about-us/crime-map.aspx",type:"Live map"},
     {name:"Halton Regional Police — Media Releases",url:"https://www.haltonpolice.ca/en/news/",type:"Press releases"},
     {name:"Statistics Canada — Crime Severity Index",url:"https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3510002601",type:"Open data"},
+    {name:"Ontario Provincial Police (OPP) — News Releases",url:"https://www.opp.ca/index.php?id=115",type:"Press releases"},
+    {name:"Ontario Open Data Catalogue — data.ontario.ca",url:"https://data.ontario.ca/",type:"Open data"},
     {name:"City of Burlington — Council Meetings / Minutes",url:"https://www.burlington.ca/en/city-hall/council-and-committee-meetings.aspx",type:"Public records"},
     {name:"Ontario Land Tribunal — Case Search",url:"https://olt.gov.on.ca/",type:"Public records"},
   ],
@@ -401,7 +414,7 @@ function ViewStatus(s){
     statTile("Stream","LIVE",s.streamOn?"up":"warn",s.streamOn?"EventTarget · ~8.5s":"paused"),
     statTile("Events buffered",String(s.events.length),"down","since session start"),
     statTile("High-severity",String(high),high?"warn":"up",high?"review queue":"all clear"),
-    statTile("Region","HALTON","down","Burlington + 3"),
+    statTile("Region","ONTARIO","down","Halton/Burlington base"),
   ));
   const ctl=el("div",{class:"row",style:"margin-bottom:16px;align-items:center"},
     el("button",{class:"btn primary sm",onclick:()=>stream.pulse()},"⊕ Inject test event"),
@@ -627,7 +640,7 @@ function render(){
             el("img",{src:"assets/images/clearglass-logo.png",alt:"ClearGlass logo",decoding:"async"})),
           el("div",{},
             el("div",{class:"t1"},"OSINT DECK"),
-            el("div",{class:"t2"},"Burlington · Halton"))),
+            el("div",{class:"t2"},"Ontario · Halton/Burlington"))),
         ...NAV.map(([r,ic,label])=>{
           const n=el("button",{class:"navlink"+(s.route===r?" active":""),onclick:()=>{store.set({route:r});}},
             el("span",{class:"ic"},ic),label);
@@ -645,11 +658,13 @@ function render(){
         el("header",{class:"topbar"},
           el("div",{},
             el("h1",{},TITLES[s.route]||""),
-            el("div",{class:"sub"},"Burlington, Ontario · Crime & Governance OSINT")),
+            el("div",{class:"sub"},"Ontario · Crime & Governance OSINT · Halton/Burlington home base")),
           el("div",{class:"spacer"}),
-          el("a",{class:"pill",href:(s.intel&&s.intel.satellite&&s.intel.satellite.primary)||SAT_URL,target:"_blank",rel:"noopener noreferrer",title:"Open Burlington satellite imagery"},"🛰 SAT LINK"),
+          el("a",{class:"pill",href:(s.intel&&s.intel.satellite&&s.intel.satellite.primary)||SAT_URL,target:"_blank",rel:"noopener noreferrer",title:"Open Ontario satellite imagery"},"🛰 SAT LINK"),
           el("span",{class:"pill"+(s.streamOn?"":" off")},el("span",{class:"lv"}),s.streamOn?"STREAM LIVE":"STREAM PAUSED"),
           el("span",{class:"clock",id:"clk"},clockStr()),
+          el("a",{class:"cg-badge",href:"index.html","aria-label":"ClearGlass — home",title:"ClearGlass — home"},
+            el("img",{src:"assets/images/clearglass-logo.png",alt:"ClearGlass logo",decoding:"async"})),
         ),
         el("div",{class:"content"},body)),
     )

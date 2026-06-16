@@ -95,6 +95,23 @@ def test_annotate_unreachable_respects_strict_flag():
     assert not soft_failed and "::warning" in soft_line
 
 
+def test_annotate_auto_managed_expiring_is_advisory():
+    # *.github.io auto-renews: a still-valid but soon cert warns, never fails.
+    result = CertResult(host="clearglassinc.github.io", days_left=19,
+                        expiry=NOW + timedelta(days=19))
+    line, failed = annotate(result, 21, strict=True)
+    assert not failed
+    assert "::warning" in line and "auto-renews" in line
+
+
+def test_annotate_auto_managed_expired_still_fails():
+    # An actually-expired managed cert is a real outage and still errors.
+    result = CertResult(host="clearglassinc.github.io", days_left=-1,
+                        expiry=NOW - timedelta(days=1))
+    line, failed = annotate(result, 21, strict=True)
+    assert failed and "::error" in line
+
+
 # ── run ───────────────────────────────────────────────────────────────────────
 
 def test_run_returns_zero_when_all_healthy():

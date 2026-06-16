@@ -159,6 +159,49 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--cyan)}
 
 .hide{display:none}
 
+/* ---------- Print / PDF briefing ---------- */
+@media print{
+  .sidebar,.topbar,.indstrip,.toasts,.cmdk{display:none !important}
+  .shell{display:block}
+  .content{padding:0;max-width:100%}
+  body{background:#fff}
+  .card,.snap,.notice{break-inside:avoid;box-shadow:none}
+  .mapwrap{display:none}
+}
+
+/* ---------- Live-indicator strip ---------- */
+.indstrip{display:flex;gap:18px;flex-wrap:wrap;align-items:center;padding:8px 22px;border-bottom:1px solid var(--line);background:var(--panel);font-family:var(--mono);font-size:11px;color:var(--text-2)}
+.indstrip .ind{display:flex;align-items:center;gap:6px}
+.indstrip .ind.sep{margin-left:auto}
+
+/* ---------- Executive snapshot ---------- */
+.snap{background:linear-gradient(135deg,rgba(52,211,153,0.08),rgba(56,189,248,0.05));border:1px solid var(--line-2);border-radius:12px;padding:16px 18px;margin-bottom:18px}
+.snap-h{font-family:var(--mono);font-size:12px;letter-spacing:.06em;font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.verdict-pill{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;background:var(--green);color:#04140d;border-radius:6px;padding:2px 8px}
+body.theme-dark .verdict-pill{color:#04140d}
+.snap-body{font-size:14px;line-height:1.6}
+.snap-note{font-size:12px;color:var(--text-2);margin-top:10px;line-height:1.6;padding-left:12px;border-left:2px solid var(--line-2)}
+
+/* ---------- Briefing evidence / recommendations ---------- */
+.evi{padding:10px 0;border-bottom:1px solid var(--line)}
+.evi:last-child{border-bottom:0}
+.evi-t{font-weight:600;font-size:13px}
+.evi-d{font-size:12px;color:var(--text-2);margin-top:3px;line-height:1.6}
+.rec{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.rec:last-child{border-bottom:0}
+.rftable{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
+.rftable th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:6px 10px;border-bottom:1px solid var(--line-2)}
+.rftable td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.conf{font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.conf.high{background:rgba(248,113,113,0.15);color:var(--red)} .conf.med{background:rgba(251,191,36,0.14);color:var(--amber)} .conf.low{background:rgba(52,211,153,0.14);color:var(--green)}
+
+/* ---------- Network map (pending) ---------- */
+.pending-band{display:flex;gap:12px;align-items:flex-start;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.35);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.pending-dot{width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);margin-top:4px;animation:pulse 2s infinite;flex:0 0 auto}
+.netgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:4px}
+.netnode{background:var(--bg-2);border:1px dashed var(--line-2);border-radius:10px;padding:12px 14px}
+.nn-t{font-weight:600;font-size:13px} .nn-tag{font-family:var(--mono);font-size:10px;color:var(--text-3);margin-top:4px}
+
 /* ---------- Tactical dark mode (operator toggle) ---------- */
 body.theme-dark{
   --bg:#070b10; --bg-2:#0b1119; --panel:#0e1622; --panel-2:#111c2b;
@@ -319,6 +362,11 @@ function saveTasks(tasks){ try{localStorage.setItem(LS_KEY,JSON.stringify(tasks)
 function SEED_TASKS(){
   const now=Date.now();
   return [
+    {id:uid(),title:"OSINT sweep — Burlington ON core",desc:"Baseline public-source sweep of council, procurement, governance, and crime records for Burlington.",status:"completed",priority:"med",tags:["osint","burlington","baseline"],created:now-86400000*5},
+    {id:uid(),title:"Deep-dive Integrity Commissioner reports (2020–2023)",desc:"Read and index all published Integrity Commissioner reports; flag any adverse findings.",status:"in_progress",priority:"high",tags:["integrity","governance","records"],created:now-86400000*2},
+    {id:uid(),title:"Analyze DC reduction vote records & public submissions",desc:"Pull the development-charge reduction vote records and public submissions; map councillor positions.",status:"open",priority:"high",tags:["DC","votes","FOI"],created:now-3600000*26},
+    {id:uid(),title:"Provincial FOI impact assessment on municipal ops",desc:"Assess how provincial FOI/transparency amendments affect Burlington/MFIPPA processes.",status:"open",priority:"med",tags:["FOI","provincial","transparency"],created:now-3600000*22},
+    {id:uid(),title:"Generate exportable PDF briefing",desc:"Render the Active Investigations briefing to a print/PDF export for stakeholders.",status:"open",priority:"med",tags:["report","pdf","ready"],created:now-3600000*4},
     {id:uid(),title:"Millcroft Greens — OLT / procurement cross-check",desc:"Reconcile Ontario Land Tribunal filings against council procurement records for the Millcroft development.",status:"in_progress",priority:"high",tags:["land-use","procurement","OLT"],created:now-86400000*3},
     {id:uid(),title:"HRPS crime-map monitoring (weekly)",desc:"Pull weekly deltas from the Halton Regional Police ArcGIS crime map; log anomalies by ward.",status:"open",priority:"med",tags:["HRPS","crime-map","recurring"],created:now-86400000*2},
     {id:uid(),title:"Closed-meeting report audit (2025–2026)",desc:"Index every closed-session summary published by the City of Burlington and flag procurement/land items.",status:"open",priority:"med",tags:["governance","FOI","council"],created:now-86400000},
@@ -332,7 +380,7 @@ function SEED_TASKS(){
 
 /* ============================================================ */
 const store = createStore({
-  route:"status",
+  route:"dashboard",
   events: seedEvents(),
   tasks: loadTasks(),
   streamOn:true,
@@ -345,9 +393,12 @@ const store = createStore({
 function seedEvents(){
   const base=Date.now();
   return [
-    {id:uid(),sev:"low",ti:"Deck initialized",de:"Ontario OSINT control deck online. Public-source feeds armed (Halton/Burlington base, province-wide).",cat:"SYSTEM",src:"ClearGlass",ts:base-1000},
-    {id:uid(),sev:"med",ti:"Auto-theft enforcement action",de:"Targeted operation disrupted a re-VIN ring; vehicles recovered in the Burlington/Oakville corridor.",cat:"AUTO-THEFT",src:"HRPS media release",ts:base-42000},
-    {id:uid(),sev:"low",ti:"Crime Severity Index update",de:"Quarterly CSI snapshot consistent with Halton's lowest-in-province trend.",cat:"STATS",src:"StatsCan / HRPS",ts:base-90000},
+    {id:uid(),sev:"low",ti:"Deck initialized",de:"Master Investigator deck online. Public-source feeds armed (Burlington ON core, Canada brief).",cat:"SYSTEM",src:"ClearGlass",ts:base-1000},
+    {id:uid(),sev:"low",ti:"Integrity Commissioner reports indexed (2020–2023)",de:"No major adverse findings surfaced in published summaries.",cat:"GOVERNANCE",src:"Burlington Integrity Commissioner",ts:base-60000},
+    {id:uid(),sev:"med",ti:"Development Charges reduction motion advanced",de:"Public criticism on cost-shifting noted; multi-hour council debate.",cat:"GOVERNANCE",src:"City of Burlington council",ts:base-300000},
+    {id:uid(),sev:"med",ti:"Provincial FOI amendments flagged",de:"Transparency impact on municipalities flagged for monitoring (provincial origin).",cat:"FOI",src:"Province of Ontario",ts:base-720000},
+    {id:uid(),sev:"low",ti:"No new whistleblower escalations / audit red flags",de:"No adverse signals in open sources this cycle.",cat:"AUDIT",src:"City Auditor / Whistleblower program",ts:base-1100000},
+    {id:uid(),sev:"low",ti:"Greenbelt / Halton quarry tensions contextualized",de:"Provincial origin; no direct municipal-council linkage in open sources.",cat:"LAND-USE",src:"Public coverage",ts:base-1500000},
   ];
 }
 
@@ -696,6 +747,11 @@ function ViewConfig(s){
         Toast.info("Export","Status stream exported as CSV.");
       }},"⤓ Export events (CSV)"),
       el("button",{class:"btn sm",onclick:()=>{
+        store.set({route:"briefing"});
+        Toast.info("PDF briefing","Opening print dialog — choose 'Save as PDF'.");
+        setTimeout(()=>window.print(),400);
+      }},"⤓ PDF briefing"),
+      el("button",{class:"btn sm",onclick:()=>{
         if(!confirm("Reset task queue to seeded Ontario tasks? This clears local changes."))return;
         const seeded=SEED_TASKS();store.set({tasks:seeded});saveTasks(seeded);Toast.info("Reset","Task queue restored to seed.");
       }},"↺ Reset to seed"),
@@ -712,16 +768,136 @@ function toggleStream(){
 }
 
 /* ============================================================
+   INVESTIGATION BRIEFING — Burlington ON Core (evidence-based)
+   ============================================================ */
+const BRIEFING={
+  verdict:"No high-confidence evidence of systemic corruption, bribery, rigged procurement, or criminal misconduct by current City of Burlington council or staff in publicly available records (2023–2026 focus).",
+  snapshot:[
+    "Governance structures are present and functional: Integrity Commissioner (public reports), Audit Committee (with community members), and a Whistleblower Program (implemented 2025–2026 via City Auditor + HR). Procurement policies include standard conflict-of-interest declarations and anti-collusion clauses.",
+    "Dominant pattern: heated policy debates around development charges (DCs), housing-supply pressures, and provincial preemption — not proven personal enrichment or procedural fraud.",
+  ],
+  context:"Burlington, ON (part of Halton Region, Golden Horseshoe) faces intense development pressures amid Ontario's housing crisis. Provincial policy emphasizes supply increases, sometimes via Greenbelt adjustments and DC flexibility. Council manages DCs to fund infrastructure while debating reductions to stimulate building. Mayor Marianne Meed Ward (since 2018) leads; a historical 2018 election-ad controversy was resolved with withdrawn charges.",
+  evidence:[
+    {t:"Development Charges policy shift (2025–2026)",d:"Council advanced a temporary 2-year elimination/reduction of residential DCs. Backed by home builders as market stimulus; criticized locally as shifting infrastructure costs to taxpayers. Tense multi-hour meetings with councillor friction."},
+    {t:"Accountability infrastructure",d:"Active Integrity Commissioner with published reports; Audit Committee; Whistleblower portal/program rolled out ~2025–2026."},
+    {t:"Procurement framework",d:"Standard by-laws with COI disclosure, bid anti-collusion language, and reserved rights for rejection. No public evidence of widespread bid-rigging or kickbacks."},
+    {t:"Provincial overlap — Greenbelt (2022–2023)",d:"~7,400 acres removed favoring specific developers (RCMP noted in coverage). Burlington/Halton impacted by related development/quarry pressures (e.g., Nelson Aggregate). No direct municipal-council linkage found in open sources."},
+    {t:"FOI / transparency",d:"Provincial proposals to limit access to premier/cabinet/lobbyist records criticized as reducing accountability. Municipal MFIPPA processes operational; no Burlington-specific secrecy scandals identified."},
+    {t:"2018 election",d:"Third-party advertiser charged by OPP for spending violations targeting the Mayor; charges withdrawn 2022. No findings against municipal actors."},
+  ],
+  redflags:[
+    {flag:"DC reductions favoring developers",conf:"Medium",desc:"Potential cost-shift to existing taxpayers; pro-development tilt amid provincial housing push.",why:"Observable policy outcome + public criticism; no evidence of personal financial benefit or collusion."},
+    {flag:"Provincial FOI tightening",conf:"Medium (provincial)",desc:"Limits public insight into high-level influence/lobbying.",why:"Recent legislative moves; indirect municipal impact via reduced transparency."},
+    {flag:"Development-industry influence",conf:"Low–Medium",desc:"Broader Ontario pattern of developer proximity to approvals.",why:"Common critique; no Burlington-specific smoking-gun contracts or donations traced."},
+    {flag:"Historical election-ad issue",conf:"Low",desc:"Resolved, withdrawn charges.",why:"No ongoing findings against city officials."},
+  ],
+  vulnerabilities:"DC funding-model sensitivity to economic cycles; provincial preemption on land use/housing; potential for perceived (vs. actual) regulatory capture by the development sector.",
+  conclusion:"Clean on major corruption indicators. Focus area = policy accountability and transparency enhancements rather than criminal referral. Comparable to many Ontario municipalities under housing pressure — debates exist, but governance guardrails are in place.",
+  recommendations:[
+    {t:"FOI / Records Pull",d:"Target specific DC-related council votes, any linked developer correspondence, and full Integrity Commissioner reports.",pri:"high",tags:["FOI","DC","records"]},
+    {t:"Financial Flow Mapping",d:"Cross-reference development-charge reserve statements with major approvals (2024–2026).",pri:"high",tags:["finance","DC","mapping"]},
+    {t:"Network Scan",d:"Halton Region procurement overlap + any public lobbyist disclosures.",pri:"med",tags:["network","procurement","lobbyist"]},
+    {t:"Whistleblower / Audit Monitor",d:"Track new program outputs for internal flags.",pri:"med",tags:["audit","whistleblower"]},
+    {t:"Public Reporting",d:"Draft a neutral briefing for local stakeholders / ethics review.",pri:"low",tags:["reporting","ethics"]},
+  ],
+};
+const CONF_CLS=c=>/^low\b/i.test(c)?"low":/medium/i.test(c)?"med":"high";
+
+function ViewDashboard(s){
+  const wrap=el("div",{});
+  wrap.appendChild(el("div",{class:"snap"},
+    el("div",{class:"snap-h"},el("span",{class:"verdict-pill"},"VERDICT · CLEAN"),"Executive Snapshot — Overall Finding"),
+    el("div",{class:"snap-body"},BRIEFING.verdict),
+    ...BRIEFING.snapshot.map(p=>el("div",{class:"snap-note"},p)),
+  ));
+  // headline metrics from intel feed (if loaded)
+  if(s.intel&&s.intel.metrics){
+    wrap.appendChild(el("div",{class:"stats"},
+      ...s.intel.metrics.slice(0,4).map(m=>el("div",{class:"stat"},
+        el("div",{class:"k"},m.label),
+        el("div",{class:"v "+(m.trend==="down"?"down":m.trend==="up"?"warn":""),style:"font-size:16px;line-height:1.25;margin-top:8px"},m.value),
+        el("div",{class:"d"},m.note),
+      ))));
+  }
+  wrap.appendChild(el("div",{class:"row",style:"margin-top:4px"},
+    el("button",{class:"btn primary sm",onclick:()=>store.set({route:"briefing"})},"🔎 Open full briefing"),
+    el("button",{class:"btn sm",onclick:()=>store.set({route:"tasks"})},"▦ Task queue"),
+    el("button",{class:"btn sm",onclick:()=>store.set({route:"reports"})},"📤 Reports & exports"),
+    el("span",{class:"muted tiny mono"},"Confidence floor: evidence-based only · all claims sourced or labelled speculative."),
+  ));
+  return wrap;
+}
+
+function ViewBriefing(s){
+  const wrap=el("div",{});
+  wrap.appendChild(el("div",{class:"notice"},"🛈 Scope: Burlington, ON core (Halton Region), 2023–2026 focus. Evidence-tied; provincial items labelled as such. Suitable for legal/media review."));
+  wrap.appendChild(el("div",{class:"snap"},
+    el("div",{class:"snap-h"},el("span",{class:"verdict-pill"},"VERDICT · CLEAN"),"Current verdict"),
+    el("div",{class:"snap-body"},BRIEFING.verdict)));
+  wrap.appendChild(el("div",{class:"card",style:"margin-bottom:14px"},el("h3",{},"1 · Context"),el("div",{class:"muted",style:"font-size:13px"},BRIEFING.context)));
+  const ev=el("div",{class:"card",style:"margin-bottom:14px"},el("h3",{},"2 · Evidence (key verifiable items)"));
+  BRIEFING.evidence.forEach(e=>ev.appendChild(el("div",{class:"evi"},el("div",{class:"evi-t"},e.t),el("div",{class:"evi-d"},e.d))));
+  wrap.appendChild(ev);
+  // red-flag table
+  const rf=el("div",{class:"card",style:"margin-bottom:14px"},el("h3",{},"3 · Analysis — red flags (with confidence)"));
+  const tbl=el("table",{class:"rftable"},
+    el("thead",{},el("tr",{},el("th",{},"Red flag"),el("th",{},"Confidence"),el("th",{},"Description / justification"))));
+  const tb=el("tbody",{});
+  BRIEFING.redflags.forEach(r=>tb.appendChild(el("tr",{},
+    el("td",{},el("b",{},r.flag)),
+    el("td",{},el("span",{class:"conf "+CONF_CLS(r.conf)},r.conf)),
+    el("td",{},el("div",{},r.desc),el("div",{class:"muted tiny",style:"margin-top:4px"},"Why: "+r.why)),
+  )));
+  tbl.appendChild(tb); rf.appendChild(tbl);
+  rf.appendChild(el("div",{class:"muted tiny",style:"margin-top:10px"},"Distinction: primarily policy & transparency debates, not proven corruption (no bid-rigging, embezzlement, or bribery chains identified). Systemic vulnerabilities: "+BRIEFING.vulnerabilities));
+  wrap.appendChild(rf);
+  wrap.appendChild(el("div",{class:"card",style:"margin-bottom:14px"},el("h3",{},"4 · Conclusion"),el("div",{class:"muted",style:"font-size:13px"},BRIEFING.conclusion)));
+  // recommendations -> deployable to task queue
+  const rec=el("div",{class:"card"},el("h3",{},"Actionable recommendations (deploy to task queue)"));
+  BRIEFING.recommendations.forEach(r=>rec.appendChild(el("div",{class:"rec"},
+    el("div",{},el("div",{class:"evi-t"},r.t),el("div",{class:"evi-d"},r.d)),
+    el("button",{class:"btn sm",onclick:()=>{addTask({title:r.t,desc:r.d,priority:r.pri,status:"open",tags:r.tags});store.set({route:"tasks"});}},"+ Queue"),
+  )));
+  wrap.appendChild(rec);
+  return wrap;
+}
+
+function ViewNetwork(s){
+  const wrap=el("div",{});
+  wrap.appendChild(el("div",{class:"pending-band"},
+    el("span",{class:"pending-dot"}),
+    el("div",{},el("b",{},"Network Map — Pending"),
+      el("div",{class:"muted tiny",style:"margin-top:3px"},"Entity/relationship graph (councillors ↔ development files ↔ procurement ↔ lobbyist disclosures) is queued. Base geographic map below is live."))));
+  if(s.intel&&s.intel.satellite){
+    const sat=s.intel.satellite;
+    wrap.appendChild(el("div",{class:"card",style:"margin-bottom:14px"},
+      el("h3",{},"🗺 Geographic base map — "+sat.label),
+      el("div",{class:"mapwrap"},el("iframe",{loading:"lazy",title:"Ontario map — Burlington area",
+        src:"https://www.openstreetmap.org/export/embed.html?bbox="+(sat.lng-0.18)+"%2C"+(sat.lat-0.09)+"%2C"+(sat.lng+0.18)+"%2C"+(sat.lat+0.09)+"&layer=mapnik&marker="+sat.lat+"%2C"+sat.lng})),
+      el("div",{class:"row",style:"margin-top:10px"},el("a",{class:"btn primary sm",href:sat.primary,target:"_blank",rel:"noopener noreferrer"},"🛰 Open satellite view ↗"))));
+  }
+  // planned nodes
+  const nodes=[["Council & committees","governance"],["Development files / OLT","land-use"],["Procurement / vendors","procurement"],["Halton Region overlap","regional"],["Lobbyist disclosures","influence"],["Integrity / Audit / Whistleblower","oversight"]];
+  const grid=el("div",{class:"card"},el("h3",{},"Planned graph nodes"));
+  const inner=el("div",{class:"netgrid"});
+  nodes.forEach(([n,t])=>inner.appendChild(el("div",{class:"netnode"},el("div",{class:"nn-t"},n),el("div",{class:"nn-tag"},t))));
+  grid.appendChild(inner); wrap.appendChild(grid);
+  return wrap;
+}
+
+/* ============================================================
    ERROR BOUNDARY + RENDER
    ============================================================ */
 const NAV=[
-  ["status","◉","LIVE STATUS"],
-  ["tasks","▦","INVESTIGATION TASKS"],
-  ["intel","🗺","CRIME INTEL FEED"],
-  ["config","⚙","CONFIG / SOURCES"],
+  ["dashboard","▣","DASHBOARD"],
+  ["briefing","🔎","ACTIVE INVESTIGATIONS"],
+  ["status","◉","STATUS STREAM"],
+  ["tasks","▦","TASK QUEUE"],
+  ["network","🕸","NETWORK MAP"],
+  ["reports","📤","REPORTS & EXPORTS"],
 ];
-const VIEWS={status:ViewStatus,tasks:ViewTasks,intel:ViewIntel,config:ViewConfig};
-const TITLES={status:"Live Status Stream",tasks:"Investigation Task Queue",intel:"Crime Intelligence Feed",config:"Configuration & Sources"};
+const VIEWS={dashboard:ViewDashboard,briefing:ViewBriefing,status:ViewStatus,tasks:ViewTasks,network:ViewNetwork,reports:ViewConfig,intel:ViewIntel,config:ViewConfig};
+const TITLES={dashboard:"Dashboard · Executive Snapshot",briefing:"Active Investigations · Burlington ON Core",status:"Status Stream (Mock Realtime)",tasks:"Task Queue (Optimistic Patching)",network:"Network Map (Pending)",reports:"Reports & Exports",intel:"Crime Intelligence Feed",config:"Reports & Exports"};
 
 function render(){
   const s=store.get();
@@ -751,6 +927,7 @@ function render(){
             el("span",{class:"ic"},ic),label);
           if(r==="status"&&highCount)n.appendChild(el("span",{class:"badge"},String(highCount)));
           if(r==="tasks")n.appendChild(el("span",{class:"badge"},String(s.tasks.filter(t=>t.status!=="completed").length)));
+          if(r==="network")n.appendChild(el("span",{class:"badge",style:"background:var(--amber);color:#1a1204"},"PENDING"));
           return n;
         }),
         el("div",{class:"foot"},
@@ -763,7 +940,7 @@ function render(){
         el("header",{class:"topbar"},
           el("div",{},
             el("h1",{},TITLES[s.route]||""),
-            el("div",{class:"sub"},"Ontario · Crime & Governance OSINT · Halton/Burlington home base")),
+            el("div",{class:"sub"},"Master Investigator · Burlington ON & the whole of Canada Brief")),
           el("div",{class:"spacer"}),
           el("button",{class:"pill",style:"cursor:pointer",onclick:()=>openPalette(),title:"Command palette (Ctrl/Cmd+K)"},"⌘K"),
           el("button",{class:"pill",style:"cursor:pointer",onclick:()=>toggleTheme(),title:"Toggle tactical dark mode"},s.theme==="dark"?"☀ LIGHT":"🌙 DARK"),
@@ -772,6 +949,13 @@ function render(){
           el("span",{class:"clock",id:"clk"},clockStr()),
           el("a",{class:"cg-badge",href:"index.html","aria-label":"ClearGlass — home",title:"ClearGlass — home"},
             el("img",{src:"assets/images/clearglass-logo.png",alt:"ClearGlass logo",decoding:"async"})),
+        ),
+        el("div",{class:"indstrip"},
+          el("span",{class:"ind"},"🟢 OSINT Sources Synced"),
+          el("span",{class:"ind"},"🟡 Provincial FOI Watch"),
+          el("span",{class:"ind"},"🔵 Audit/Integrity Active"),
+          el("span",{class:"ind sep"},"Last Sync: moments ago"),
+          el("span",{class:"ind"},"Confidence Floor: evidence-based only"),
         ),
         el("div",{class:"content"},body)),
     )
@@ -791,10 +975,12 @@ function toggleTheme(){
 /* ---------- command palette (Ctrl/Cmd+K) ---------- */
 function paletteItems(){
   return [
-    {ic:"◉",label:"Go: Live Status",sub:"view",run:()=>store.set({route:"status"})},
-    {ic:"▦",label:"Go: Investigation Tasks",sub:"view",run:()=>store.set({route:"tasks"})},
-    {ic:"🗺",label:"Go: Crime Intel Feed",sub:"view",run:()=>store.set({route:"intel"})},
-    {ic:"⚙",label:"Go: Config / Sources",sub:"view",run:()=>store.set({route:"config"})},
+    {ic:"▣",label:"Go: Dashboard",sub:"view",run:()=>store.set({route:"dashboard"})},
+    {ic:"🔎",label:"Go: Active Investigations",sub:"view",run:()=>store.set({route:"briefing"})},
+    {ic:"◉",label:"Go: Status Stream",sub:"view",run:()=>store.set({route:"status"})},
+    {ic:"▦",label:"Go: Task Queue",sub:"view",run:()=>store.set({route:"tasks"})},
+    {ic:"🕸",label:"Go: Network Map (Pending)",sub:"view",run:()=>store.set({route:"network"})},
+    {ic:"📤",label:"Go: Reports & Exports",sub:"view",run:()=>store.set({route:"reports"})},
     {ic:"⊕",label:"Inject test event",sub:"action",run:()=>stream.pulse()},
     {ic:"＋",label:"New investigation task",sub:"action",run:()=>{store.set({route:"tasks"});openTaskModal();}},
     {ic:store.get().streamOn?"⏸":"▶",label:store.get().streamOn?"Pause stream":"Resume stream",sub:"action",run:()=>toggleStream()},

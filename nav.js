@@ -45,6 +45,8 @@
     ]],
     ["Company", [
       ["Home", "index.html", "⌂"],
+      ["Store · Buy", "store.html", "🛒"],
+      ["Pricing", "pricing.html", "₵"],
       ["Button Lab", "button-lab.html", "◫"]
     ]]
   ];

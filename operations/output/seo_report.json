@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-17T18:09:18.286305+00:00",
-  "files_audited": 48,
-  "average_score": 97.7,
+  "run_utc": "2026-06-17T18:29:38.848717+00:00",
+  "files_audited": 49,
+  "average_score": 97.6,
   "pages": [
     {
       "file": "404.html",
@@ -824,6 +824,26 @@
       "issues": []
     },
     {
+      "file": "store.html",
+      "title": "ClearGlass Store \u2014 Book a Security Engagement",
+      "title_length": 45,
+      "title_ok": true,
+      "description": "Book fixed-fee security & compliance engagements from ClearGlass Inc. \u2014 Quick-Audit, M365/Windows Hardening Sprint, PHIPA Readiness, and Managed Monitoring \u2014 secure Stripe checkout.",
+      "description_length": 181,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 181 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "systems.html",
       "title": "Systems Control Surface \u2014 PERCIVAL Operations Console |",
       "title_length": 55,
@@ -889,6 +909,7 @@
     "1x \u2014 Missing og:title",
     "1x \u2014 Missing og:description",
     "1x \u2014 Missing og:image",
+    "1x \u2014 Description length N chars (ideal N\u2013N)",
     "1x \u2014 N image(s) missing alt text"
   ]
 }

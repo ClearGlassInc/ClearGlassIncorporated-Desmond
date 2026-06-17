@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-17T18:09:18.286305+00:00
-**Average Score:** 97.7/100
-**Files Audited:** 48
+**Run:** 2026-06-17T18:29:38.848717+00:00
+**Average Score:** 97.6/100
+**Files Audited:** 49
 
 ## Page Scores
 
@@ -10,6 +10,7 @@
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
 | `artemis-percival.html` | 90/100 | 1 |
+| `store.html` | 90/100 | 1 |
 | `systems.html` | 90/100 | 1 |
 | `404.html` | 100/100 | 0 |
 | `CG-os.html` | 100/100 | 0 |
@@ -67,4 +68,5 @@
 - 1x — Missing og:title
 - 1x — Missing og:description
 - 1x — Missing og:image
+- 1x — Description length N chars (ideal N–N)
 - 1x — N image(s) missing alt text

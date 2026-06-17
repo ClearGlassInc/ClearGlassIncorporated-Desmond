@@ -5,6 +5,7 @@
 import { useState } from "react";
 import { createCheckout } from "@/lib/api";
 import { findProduct, formatPrice } from "@/lib/catalog";
+import { AddToCart } from "@/lib/AddToCart";
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const product = findProduct(params.slug);
@@ -48,22 +49,25 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           {formatPrice(product.amount, product.currency)}
         </div>
       )}
-      <button
-        onClick={buy}
-        disabled={!product || loading}
-        style={{
-          marginTop: 16,
-          padding: "12px 22px",
-          borderRadius: 10,
-          border: "1px solid rgba(124,150,255,.3)",
-          background: "linear-gradient(180deg,rgba(124,150,255,.3),rgba(124,150,255,.08))",
-          color: "#fff",
-          cursor: !product || loading ? "not-allowed" : "pointer",
-          opacity: !product || loading ? 0.6 : 1,
-        }}
-      >
-        {loading ? "Starting checkout…" : "Buy now"}
-      </button>
+      <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+        <button
+          onClick={buy}
+          disabled={!product || loading}
+          style={{
+            marginTop: 16,
+            padding: "12px 22px",
+            borderRadius: 10,
+            border: "1px solid rgba(124,150,255,.3)",
+            background: "linear-gradient(180deg,rgba(124,150,255,.3),rgba(124,150,255,.08))",
+            color: "#fff",
+            cursor: !product || loading ? "not-allowed" : "pointer",
+            opacity: !product || loading ? 0.6 : 1,
+          }}
+        >
+          {loading ? "Starting checkout…" : "Buy now"}
+        </button>
+        {product && <AddToCart product={product} />}
+      </div>
       {error && (
         <p role="alert" style={{ color: "#f87171", marginTop: 12 }}>
           {error}

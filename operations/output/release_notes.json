@@ -1,9 +1,47 @@
 {
-  "run_utc": "2026-06-16T12:11:27.926248+00:00",
+  "run_utc": "2026-06-17T11:46:55.253352+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 58,
+  "commit_count": 84,
   "sections": {
+    "Bug Fixes": [
+      {
+        "sha": "1434a5d",
+        "type": "fix",
+        "scope": "osint",
+        "subject": "complete burlington-osint -> Ontario-osint deck rename",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "f6b8faa",
+        "type": "fix",
+        "scope": "seo",
+        "subject": "stop alt-injection from corrupting JS inside <script> blocks",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "2835884",
+        "type": "fix",
+        "scope": "seo",
+        "subject": "raise on-page SEO from 64 to 98 across all pages",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "475646d",
+        "type": "fix",
+        "scope": null,
+        "subject": "add glass.css to burlington-osint.html (only page missing site-wide design system)",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      }
+    ],
     "CI/CD": [
       {
         "sha": "2b5109d",
@@ -25,6 +63,105 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "a45ae44",
+        "type": "chore",
+        "scope": null,
+        "subject": "Logo badge full coverage: loader.html + Ontario-osint.html (#475)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "2253cd4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title from 'ClearGlass' to 'ClearGlassInc'",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "4aaeb08",
+        "type": "chore",
+        "scope": null,
+        "subject": "Change canonical link and update script title",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "ad4ed06",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and description for clarity",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "6a081de",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update PERCIVAL OS link in hover-menu.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "6ad0af2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and links in index.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "7780f24",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add retina WebP hero asset for crisp HiDPI rendering",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "30e58ce",
+        "type": "chore",
+        "scope": null,
+        "subject": "loader.html: fix 4 bugs \u2014 open redirect, double-loader, skip race, premature skip",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "65d988d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Commerce funnel: storefront success/cancel pages + pricing CTA (#469)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "290c986",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlassInc Military-Op Release Pipeline (prompt + workflow) (#468)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "0908e94",
+        "type": "chore",
+        "scope": null,
+        "subject": "Cert Bot: treat platform-managed (*.github.io) certs as advisory (#466)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
       {
         "sha": "892cf76",
         "type": "chore",
@@ -260,6 +397,15 @@
         "breaking": false
       },
       {
+        "sha": "49fb855",
+        "type": "chore",
+        "scope": null,
+        "subject": "index.html: route first visit through /loader.html via sessionStorage",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
         "sha": "76ffe4b",
         "type": "chore",
         "scope": null,
@@ -348,9 +494,90 @@
         "author": "Claude",
         "date": "2026-06-14",
         "breaking": false
+      },
+      {
+        "sha": "3781a3f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add cinematic ClearGlass command interface loader (boot screen)",
+        "author": "Claude",
+        "date": "2026-05-14",
+        "breaking": false
+      },
+      {
+        "sha": "6dffe42",
+        "type": "chore",
+        "scope": null,
+        "subject": "Artemis IV: wire 8 real open-source live intelligence feeds",
+        "author": "Claude",
+        "date": "2026-05-12",
+        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "31897e7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "8450905",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "84190d8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "c83e629",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "701bfd5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "17c0f67",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "ea87e35",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-16 12:11 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
       {
         "sha": "55af68f",
         "type": "bot",
@@ -524,6 +751,15 @@
       }
     ],
     "Other": [
+      {
+        "sha": "75b2465",
+        "type": "commerce",
+        "scope": null,
+        "subject": "wire a working storefront checkout (revenue path) (#467)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
       {
         "sha": "8024581",
         "type": "deck",

@@ -1,9 +1,9 @@
 {
-  "run_utc": "2026-06-16T12:11:29.123929+00:00",
+  "run_utc": "2026-06-17T11:46:55.969384+00:00",
   "site_url": "https://clearglassinc.github.io",
   "overall_healthy": true,
   "pages_checked": 6,
-  "pages_healthy": 5,
+  "pages_healthy": 6,
   "pages_unreachable": 0,
   "pages": [
     {
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 198,
+      "response_ms": 174,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 128,
+      "response_ms": 110,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 229,
+      "response_ms": 75,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 142,
+      "response_ms": 101,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,11 +51,9 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 256,
+      "response_ms": 131,
       "has_title": true,
-      "missing_meta": [
-        "og:title"
-      ],
+      "missing_meta": [],
       "error": null
     },
     {
@@ -63,12 +61,14 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 183,
+      "response_ms": 70,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
   "local_issues": [],
-  "local_warnings": []
+  "local_warnings": [
+    "HTML page not referenced in sitemap.xml: loader.html"
+  ]
 }

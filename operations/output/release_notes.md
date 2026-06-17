@@ -1,6 +1,13 @@
-# Release Notes — 2026-06-16
+# Release Notes — 2026-06-17
 
-*58 commit(s) since v1.0.0*
+*84 commit(s) since v1.0.0*
+
+## Bug Fixes
+
+- **osint:** complete burlington-osint -> Ontario-osint deck rename (`1434a5d`)
+- **seo:** stop alt-injection from corrupting JS inside <script> blocks (`f6b8faa`)
+- **seo:** raise on-page SEO from 64 to 98 across all pages (`2835884`)
+- add glass.css to burlington-osint.html (only page missing site-wide design system) (`475646d`)
 
 ## CI/CD
 
@@ -9,6 +16,17 @@
 
 ## Maintenance
 
+- Logo badge full coverage: loader.html + Ontario-osint.html (#475) (`a45ae44`)
+- Update title from 'ClearGlass' to 'ClearGlassInc' (`2253cd4`)
+- Change canonical link and update script title (`4aaeb08`)
+- Update title and description for clarity (`ad4ed06`)
+- Update PERCIVAL OS link in hover-menu.html (`6a081de`)
+- Update title and links in index.html (`6ad0af2`)
+- Add retina WebP hero asset for crisp HiDPI rendering (`7780f24`)
+- loader.html: fix 4 bugs — open redirect, double-loader, skip race, premature skip (`30e58ce`)
+- Commerce funnel: storefront success/cancel pages + pricing CTA (#469) (`65d988d`)
+- Add ClearGlassInc Military-Op Release Pipeline (prompt + workflow) (#468) (`290c986`)
+- Cert Bot: treat platform-managed (*.github.io) certs as advisory (#466) (`0908e94`)
 - Master Investigator briefing: Dashboard, Active Investigations, Network Map views (#464) (`892cf76`)
 - Fix broken links & orphan page (site reliability audit) (#463) (`b31813c`)
 - Fix broken links & orphan page (site reliability audit) (`15669d2`)
@@ -35,6 +53,7 @@
 - Update title and meta descriptions for clarity (`77f6e87`)
 - Fix title formatting in bluedesk.html (`55de8f8`)
 - Fix IP Protection Bot issue creation: valid body input + label list (`d58b526`)
+- index.html: route first visit through /loader.html via sessionStorage (`49fb855`)
 - Stripe payments + commerce CD/deploy (#449) (`76ffe4b`)
 - Add ClearGlass Autonomous E-Commerce Operator (governed commerce engine) (`9a92126`)
 - Add monetization: open-core plans, managed Cloud, done-for-you setup (`09077a6`)
@@ -45,9 +64,18 @@
 - Add corner logo badge to every page except homepage (#444) (`7e84943`)
 - Add air-control.html to sitemap (`70e84cf`)
 - Add ZEPHYR air systems control surface — light glassy futuristic UI (`665bf0b`)
+- Add cinematic ClearGlass command interface loader (boot screen) (`3781a3f`)
+- Artemis IV: wire 8 real open-source live intelligence feeds (`6dffe42`)
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`31897e7`)
+- refresh control-surface data feeds [skip ci] (`8450905`)
+- refresh control-surface data feeds [skip ci] (`84190d8`)
+- refresh control-surface data feeds [skip ci] (`c83e629`)
+- refresh control-surface data feeds [skip ci] (`701bfd5`)
+- refresh control-surface data feeds [skip ci] (`17c0f67`)
+- update generated outputs — 2026-06-16 12:11 UTC [skip ci] (`ea87e35`)
 - refresh control-surface data feeds [skip ci] (`55af68f`)
 - refresh control-surface data feeds [skip ci] (`e71889b`)
 - refresh control-surface data feeds [skip ci] (`ca36b0b`)
@@ -70,4 +98,5 @@
 
 ## Other
 
+- wire a working storefront checkout (revenue path) (#467) (`75b2465`)
 - Master Investigator briefing — dashboard, active investigations, network map (`8024581`)

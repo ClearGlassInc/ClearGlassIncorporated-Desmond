@@ -10,7 +10,7 @@ This policy applies to the public ClearGlassInc Artemis GitHub Pages and support
 | Legacy snapshots and archived exports | ⚠️ Best effort |
 
 ## Reporting a vulnerability
-Report vulnerabilities privately to: **security@clearglassinc.com**
+Report vulnerabilities privately 
 
 Please include:
 - impacted file, endpoint, or feature;
@@ -24,7 +24,7 @@ Please include:
 - **Status updates:** at least every 5 business days until closure
 
 ## Safe harbor expectations
-Good-faith security research is permitted when it:
+Good faith security research is permitted when it:
 - avoids service disruption;
 - avoids unauthorized data access, exfiltration, or persistence;
 - remains within legal and ethical boundaries;
@@ -36,4 +36,4 @@ Good-faith security research is permitted when it:
 - Severity scoring and remediation decisions are handled by the ClearGlassInc Artemis security owner.
 
 ## Security commitments
-ClearGlassInc Artemis follows secure-by-design principles including least privilege, access control, logging, and policy-driven change management.
+ClearGlassInc Artemis follows secure by design principles including least privilege, access control, logging, and policy-driven change management.

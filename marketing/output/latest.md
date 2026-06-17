@@ -1,24 +1,60 @@
-# ClearGlass Marketing Bot Output
+# ClearGlass Content Engine Output
 
-- Run (UTC): 2026-04-26T14:09:18+00:00
-- Content pillar: brand
-- Facebook status: Skipped publish; secrets missing or publish disabled
+- Run (UTC): 2026-05-24T10:28:39+00:00
+- Pillar: brand
+- Variant index: 1
+- ISO week: 21
+- Content hash: 0052f5885fb7
 
-## Core message
-Clarity is power.
+## Linkedin (727 chars)
 
-## Strategic angle
-Position ClearGlass as the premium public-facing brand for transparent intelligence, disciplined execution, and long-horizon infrastructure thinking.
+# The premium brand in security does not shout. It demonstrates.
 
-## Primary CTA
-Direct decision-makers to the homepage and founder contact path.
+Every enterprise security vendor claims sophistication. Most deliver complexity dressed as intelligence.
 
-## Route map
-- Home: https://clearglassinc.github.io/
-- Artemis VI: https://clearglassinc.github.io/artemis.html
-- Guardian: https://clearglassinc.github.io/guardian.html
+ClearGlass Inc operates differently. We do not compete on feature count. We compete on operational clarity.
 
-## Operator notes
-- Keep copy premium, direct, and brand-consistent.
-- Do not claim platform capabilities that are not visible on the public site.
-- Preserve GitHub Pages URLs until a verified custom domain is live.
+Our products — Artemis and Guardian — are designed for the decision-maker who needs signal, not noise; outcomes, not activity metrics.
+
+We built this company for CISOs, CTOs, and founders who understand that security is not a cost center. It is the infrastructure of trust.
+
+If your team spends more time managing the security stack than acting on its intelligence, something is wrong with the stack. We fix that.
+
+→ https://clearglassinc.github.io/
+
+
+## Threads (294 chars)
+
+1. Premium brands in security don't sell software. They sell trust.
+2. ClearGlass was built for operators who need to act — not analyze dashboards for 40 minutes.
+3. Every product we ship passes one test: does it make the right decision obvious?
+4. If it doesn't, it doesn't ship.
+5. → clearglassinc.github.io
+
+
+## X (122 chars)
+
+Most security tools add complexity. ClearGlass strips it. Signal over noise — every time. https://clearglassinc.github.io/
+
+
+## Email (644 chars)
+
+Subject: Why clarity is ClearGlass Inc's primary product
+Preview: The organizations that survive aren't the ones with the most tools.
+
+In cybersecurity the difference between survival and compromise often comes down to one factor: how fast you can see what's real.
+
+ClearGlass Inc was founded on the belief that transparent intelligence is the ultimate competitive advantage. Not more dashboards. Not more alerts. Clarity.
+
+Our products — Artemis and Guardian — are built from a single principle: surface what matters, strip what doesn't, deliver a clean signal to the people responsible for acting on it.
+
+If you're evaluating your security posture this quarter, start here: https://clearglassinc.github.io/
+
+— The ClearGlass Team
+
+
+## Website (132 chars)
+
+[brand-statement]
+Transparent intelligence. Disciplined execution. Long-horizon infrastructure built for organizations that cannot afford to be wrong.
+

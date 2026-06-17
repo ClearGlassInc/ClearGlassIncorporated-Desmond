@@ -1,0 +1,39 @@
+{
+  "run_utc": "2026-05-24T10:28:39+00:00",
+  "pillar": "brand",
+  "content_hash": "0052f5885fb7",
+  "overall_passed": true,
+  "platform_results": [
+    {
+      "platform": "linkedin",
+      "passed": true,
+      "char_count": 727,
+      "failures": []
+    },
+    {
+      "platform": "threads",
+      "passed": true,
+      "char_count": 294,
+      "failures": []
+    },
+    {
+      "platform": "x",
+      "passed": true,
+      "char_count": 122,
+      "failures": []
+    },
+    {
+      "platform": "email",
+      "passed": true,
+      "char_count": 644,
+      "failures": []
+    },
+    {
+      "platform": "website",
+      "passed": true,
+      "char_count": 132,
+      "failures": []
+    }
+  ],
+  "global_failures": []
+}

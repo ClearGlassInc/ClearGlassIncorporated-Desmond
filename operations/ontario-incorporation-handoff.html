@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Ontario Incorporation Filing Handoff | ClearGlass Inc.</title>
+<meta name="description" content="Founder handoff scaffold for filing ClearGlass Inc. under the Ontario Business Corporations Act — NUANS reservation, Form 1 OBCA, registered office, and minute book."/>
+<link rel="canonical" href="https://clearglassinc.github.io/operations/ontario-incorporation-handoff.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--white:#fafbfc;--off:#f3f5f8;--glass-border:rgba(0,0,0,.06);--dark:#0a0c10;--dark-2:#1a1d25;--text:#0a0c10;--text-2:#3a3f4a;--text-3:#6b7280;--text-4:#9ca3af;--prism-1:#38bdf8;--prism-2:#a78bfa;--prism-4:#34d399;--prism-5:#fbbf24;--crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);--serif:'Cormorant Garamond',Georgia,serif;--sans:'Urbanist',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace}
+body{font-family:var(--sans);color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.25rem,5vw,4rem);background:rgba(250,251,252,.88);backdrop-filter:blur(30px) saturate(1.5);border-bottom:1px solid var(--glass-border)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+.nav-mark{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#fff;display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.nav-mark img{width:100%;height:100%;object-fit:cover}
+.nav-name{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-.01em}
+.nav-name em{font-style:italic;font-weight:300;color:var(--text-3)}
+.nav-links{display:flex;gap:2px}
+.nav-links a{color:var(--text-3);text-decoration:none;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;transition:all .2s}
+.nav-links a:hover{color:var(--text);background:rgba(0,0,0,.04)}
+.nav-cta{color:#fff!important;background:var(--dark)!important;margin-left:6px!important}
+.page-wrap{max-width:920px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem)}
+.hero{background:var(--dark);color:#fff;padding:clamp(110px,12vw,150px) 0 clamp(46px,6vw,68px);position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 18% 50%,rgba(52,211,153,.08),transparent),radial-gradient(ellipse 50% 60% at 82% 30%,rgba(56,189,248,.06),transparent);pointer-events:none}
+.crumb{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.4);margin-bottom:14px}
+.crumb a{color:rgba(255,255,255,.7);text-decoration:none}
+.crumb a:hover{color:#fff}
+.hero h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;letter-spacing:-.025em;line-height:1.1;color:#fff;margin-bottom:14px}
+.hero h1 strong{font-weight:600}
+.hero p{color:rgba(255,255,255,.55);font-size:clamp(1rem,1.4vw,1.08rem);line-height:1.8;max-width:640px}
+.hero-meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+.chip{padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.75);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em}
+.chip.warn{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.3);color:#fde68a}
+.body{padding:clamp(50px,7vw,90px) 0}
+h2.section-title{font-family:var(--serif);font-size:clamp(1.6rem,2.6vw,2.1rem);font-weight:500;letter-spacing:-.01em;margin-bottom:8px}
+.section-eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--text-4);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:'';width:18px;height:1px;background:currentColor}
+.section{margin-bottom:clamp(40px,5vw,60px)}
+.lead{font-size:15px;color:var(--text-3);line-height:1.78;max-width:680px;margin-bottom:18px}
+.steps{display:grid;gap:14px;counter-reset:step}
+.step{display:grid;grid-template-columns:44px 1fr;gap:18px;padding:22px 24px;border-radius:14px;border:1px solid var(--glass-border);background:#fff}
+.step::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:var(--mono);font-size:13px;font-weight:700;color:var(--prism-4);letter-spacing:.06em;padding-top:2px}
+.step h3{font-family:var(--serif);font-size:1.18rem;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
+.step p{font-size:14px;color:var(--text-3);line-height:1.75}
+.step .who{margin-top:10px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--text-4)}
+.step ul{margin-top:10px;padding-left:18px}
+.step li{font-size:13.5px;color:var(--text-2);line-height:1.7;margin-bottom:4px}
+code{font-family:var(--mono);font-size:12.5px;padding:2px 6px;border-radius:6px;background:var(--off);color:var(--text)}
+.control{padding:24px 28px;border-radius:14px;background:var(--off);border:1px solid var(--glass-border)}
+.control h3{font-family:var(--serif);font-size:1.25rem;font-weight:500;margin-bottom:8px}
+.control p{font-size:13.5px;color:var(--text-3);line-height:1.75}
+.return{margin-top:24px;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;color:var(--text-2);text-decoration:none;padding:10px 16px;border-radius:999px;border:1px solid var(--glass-border);background:#fff}
+.return:hover{background:var(--off)}
+.site-footer{border-top:1px solid var(--glass-border);padding:clamp(22px,4vw,32px) 0}
+.site-footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.site-footer p{font-size:12px;color:var(--text-4)}
+.site-footer-links{display:flex;gap:16px}
+.site-footer-links a{font-size:12px;color:var(--text-3);text-decoration:none;font-weight:500}
+@media(max-width:640px){.nav-name{display:none}.step{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="/assets/css/glass.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-brand">
+    <div class="nav-mark"><img src="/logo.png" alt="ClearGlass Inc." /></div>
+    <span class="nav-name">ClearGlass <em>Inc.</em></span>
+  </a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/legal/">Legal</a>
+    <a href="/operations/procurement-readiness.html">Procurement</a>
+    <a href="/#contact" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="page-wrap">
+    <div class="crumb"><a href="/operations/procurement-readiness.html">PROCUREMENT READINESS</a> · ONTARIO INCORPORATION</div>
+    <h1>File <strong>Ontario incorporation</strong></h1>
+    <p>The Articles of Incorporation, bylaws, banking resolution, and minute-book templates are drafted under <a href="/legal/">/legal/</a>. Founder execution turns them into a registered Ontario corporation.</p>
+    <div class="hero-meta">
+      <span class="chip">JURISDICTION · OBCA</span>
+      <span class="chip">OWNER · FOUNDER</span>
+      <span class="chip warn">PENDING · FILING</span>
+    </div>
+  </div>
+</section>
+
+<div class="body">
+  <div class="page-wrap">
+
+    <div class="section">
+      <div class="section-eyebrow">WHY THIS REQUIRES A HUMAN</div>
+      <h2 class="section-title">Incorporation is a sworn act by the named incorporator.</h2>
+      <p class="lead">Filing under the Ontario Business Corporations Act requires the incorporator's verified identity through the Ontario Business Registry, a paid NUANS name reservation, signed director acknowledgements, and confirmation of a registered office address in Ontario. None of these steps can be executed by a repository or automated agent.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">HANDOFF SEQUENCE</div>
+      <h2 class="section-title">Seven steps to a registered Ontario corporation.</h2>
+      <div class="steps">
+
+        <div class="step">
+          <div>
+            <h3>Reserve the corporate name (NUANS)</h3>
+            <p>Order a NUANS preliminary report for <em>ClearGlass Inc.</em> and any required variants. Confirm there is no conflicting Ontario or federal corporate name, business name, or trademark.</p>
+            <div class="who">OWNER · FOUNDER</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div>
+            <h3>Finalize Articles of Incorporation (Form 1 OBCA)</h3>
+            <p>Confirm details against the working draft at <a href="/legal/articles.html">/legal/articles.html</a>:</p>
+            <ul>
+              <li>Corporate name and English/French version</li>
+              <li>Registered office address in Ontario</li>
+              <li>Minimum / maximum number of directors</li>
+              <li>Share structure and restrictions on share transfer</li>
+              <li>Business restrictions (if any)</li>
+            </ul>
+            <div class="who">OWNER · FOUNDER · WITH COUNSEL</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div>
+            <h3>Submit the filing via the Ontario Business Registry</h3>
+            <p>Authenticate with a ServiceOntario / ONe-key account. Upload Form 1, the NUANS report, and pay the incorporation fee. Capture the resulting Ontario Corporation Number (OCN) and the issued Certificate of Incorporation.</p>
+            <div class="who">OWNER · FOUNDER</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div>
+            <h3>Hold the organizational meeting</h3>
+            <p>Sign the Initial Directors' Resolution, adopt the Bylaws, issue founders' shares per the Share Subscription, sign the IP Assignment and Banking Resolution. Templates live at <a href="/legal/">/legal/</a>.</p>
+            <div class="who">OWNER · FOUNDER · DIRECTORS</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div>
+            <h3>Open the minute book and record the share register</h3>
+            <p>Store originals of all signed documents in the minute book. Record the share ledger entries reflecting founders' issuances. Keep the book at the registered office or with corporate counsel.</p>
+            <div class="who">OWNER · FOUNDER · WITH COUNSEL</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div>
+            <h3>Register tax and payroll accounts</h3>
+            <p>Apply for the CRA Business Number, register for GST/HST, and open payroll (RP) and corporate tax (RC) program accounts. Capture the BN and remit access for the Stripe handoff.</p>
+            <div class="who">OWNER · FOUNDER</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div>
+            <h3>Update public corporate footprint</h3>
+            <p>Once the certificate is issued, update the corporate footer block, the homepage hero line, and the legal hub statistics to reflect the OCN and incorporation date. Mark this handoff complete on the procurement readiness hub.</p>
+            <div class="who">OWNER · FOUNDER → DELIVERY LEAD</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">CONTROL RULE</div>
+      <div class="control">
+        <h3>No certificate, no contracts.</h3>
+        <p>ClearGlass Inc. does not sign client contracts, vendor agreements, or banking documents in the corporate name until the Ontario Certificate of Incorporation has been issued and recorded in the minute book. Pre-incorporation activity is conducted personally and ratified later.</p>
+      </div>
+    </div>
+
+    <a class="return" href="/operations/procurement-readiness.html">← Back to procurement readiness</a>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="page-wrap site-footer-inner">
+    <p>© 2026 ClearGlass Inc. · Burlington, Ontario, Canada</p>
+    <div class="site-footer-links">
+      <a href="/operations/procurement-readiness.html">Procurement</a>
+      <a href="/legal/">Legal</a>
+      <a href="/">Home</a>
+    </div>
+  </div>
+</footer>
+
+  <script defer src="/logo-badge.js"></script>
+</body>
+</html>

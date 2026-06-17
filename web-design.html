@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Website Design & Development — Growth Infrastructure | ClearGlass Inc</title>
+<meta name="description" content="ClearGlass designs and builds fast, secure, accessible websites engineered as business growth infrastructure — architecture, front-end development, performance, SEO, and automation-friendly deployment.">
+<link rel="canonical" href="https://clearglassinc.github.io/web-design.html">
+<meta property="og:title" content="Website Design & Development | ClearGlass Inc">
+<meta property="og:description" content="Websites engineered for speed, trust, and conversion. Architecture, front-end, performance, accessibility, and maintainable code — built like a business system.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clearglassinc.github.io/web-design.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="ui.css">
+<style>
+  :root{
+    --bg:#070a14; --bg-2:#0b0f1e; --txt:#eaf0ff; --dim:#9aa6c8; --dim-2:#6b7596;
+    --panel:rgba(18,23,44,.55); --panel-2:rgba(14,18,36,.7); --line:rgba(124,150,255,.16);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; color:var(--txt); font-family:var(--cg-sans,'Urbanist',system-ui,sans-serif);
+    background:
+      radial-gradient(1200px 800px at 82% -8%,rgba(167,139,250,.14),transparent 55%),
+      radial-gradient(1000px 700px at -8% 12%,rgba(56,189,248,.14),transparent 52%),
+      var(--bg);
+    background-attachment:fixed; -webkit-font-smoothing:antialiased; line-height:1.6;
+  }
+  .wrap{width:min(1140px,92vw);margin:0 auto}
+  .eyebrow{font-family:var(--cg-mono,'IBM Plex Mono',monospace);font-size:12px;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--dim-2);display:inline-flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--dim-2)}
+  h1,h2,h3{font-family:var(--cg-serif,'Cormorant Garamond',Georgia,serif);font-weight:400;letter-spacing:-.02em;line-height:1.08}
+  .crystal{background:var(--cg-crystal,linear-gradient(135deg,#38bdf8,#a78bfa,#f472b6,#34d399));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+  /* hero */
+  .hero{padding:clamp(90px,14vw,160px) 0 clamp(50px,8vw,90px);position:relative}
+  .hero h1{font-size:clamp(2.8rem,7vw,5.6rem);max-width:14ch;margin:22px 0 0}
+  .hero h1 strong{font-weight:600}
+  .hero p.lead{font-size:clamp(1.05rem,1.8vw,1.3rem);color:var(--dim);max-width:60ch;margin:26px 0 0;font-weight:400}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:38px}
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:64px;
+    border:1px solid var(--line);border-radius:var(--cg-r-md,18px);overflow:hidden;background:var(--line)}
+  .metric{background:var(--panel-2);backdrop-filter:blur(12px);padding:24px 22px}
+  .metric .n{font-family:var(--cg-serif);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:500}
+  .metric .l{font-size:12.5px;color:var(--dim);margin-top:4px;line-height:1.45}
+
+  section.band{padding:clamp(64px,9vw,110px) 0}
+  .sh{max-width:680px;margin-bottom:clamp(36px,5vw,56px)}
+  .sh h2{font-size:clamp(2rem,4.5vw,3.4rem);margin:16px 0 0}
+  .sh h2 strong{font-weight:600}
+  .sh p{color:var(--dim);font-size:clamp(1rem,1.4vw,1.12rem);margin-top:16px}
+
+  .grid{display:grid;gap:18px}
+  .g-2{grid-template-columns:repeat(2,1fr)}
+  .g-3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--cg-r-md,18px);
+    padding:clamp(24px,3vw,34px);backdrop-filter:blur(14px);transition:transform .35s var(--cg-ease,cubic-bezier(.4,0,.2,1)),border-color .35s,background .35s;position:relative;overflow:hidden}
+  .card:hover{transform:translateY(-4px);border-color:rgba(124,150,255,.4);background:var(--panel-2)}
+  .card .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:22px;margin-bottom:20px;
+    background:linear-gradient(135deg,rgba(56,189,248,.16),rgba(167,139,250,.12));border:1px solid var(--line)}
+  .card h3{font-size:1.5rem;font-weight:500;margin:0 0 10px}
+  .card p{color:var(--dim);font-size:14px;margin:0}
+  .card .tag{display:inline-block;margin-top:16px;font-family:var(--cg-mono);font-size:10.5px;letter-spacing:.08em;
+    color:#bcd0ff;background:rgba(124,150,255,.1);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+
+  /* problem list */
+  .fail{display:grid;gap:1px;border:1px solid var(--line);border-radius:var(--cg-r-md);overflow:hidden;background:var(--line)}
+  .fail .row{background:var(--panel-2);padding:22px 26px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+  .fail .x{color:#f472b6;font-family:var(--cg-mono);font-size:13px;font-weight:600;padding-top:2px}
+  .fail .row b{font-weight:600;font-family:var(--cg-sans);font-size:15px}
+  .fail .row span{color:var(--dim);font-size:14px;display:block;margin-top:3px}
+
+  /* process */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:var(--cg-r-sm,12px);padding:22px 18px;position:relative}
+  .step .num{font-family:var(--cg-mono);font-size:11px;color:var(--cg-prism-1,#38bdf8);letter-spacing:.1em}
+  .step h3{font-size:1.15rem;font-weight:600;font-family:var(--cg-sans);margin:12px 0 8px;letter-spacing:0}
+  .step p{color:var(--dim);font-size:13px;margin:0}
+
+  /* stack */
+  .stack{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:var(--cg-mono);font-size:12.5px;color:#cdd6f5;background:var(--panel);
+    border:1px solid var(--line);border-radius:999px;padding:9px 16px;backdrop-filter:blur(8px)}
+
+  /* trust */
+  .trust{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+  .trust ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:12px}
+  .trust li{display:grid;grid-template-columns:auto 1fr;gap:12px;color:var(--dim);font-size:15px}
+  .trust li .ck{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:700;
+    background:rgba(52,211,153,.14);color:#34d399;border:1px solid rgba(52,211,153,.3)}
+
+  /* comparison */
+  .cmp{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);
+    border-radius:var(--cg-r-md,18px);overflow:hidden;background:var(--panel-2);backdrop-filter:blur(12px)}
+  .cmp th,.cmp td{padding:16px 18px;text-align:left;font-size:14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .cmp thead th{font-family:var(--cg-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .cmp thead th.us{color:#cde0ff}
+  .cmp tbody th{font-weight:600;color:var(--txt);font-family:var(--cg-sans);width:30%}
+  .cmp td.them{color:var(--dim-2)}
+  .cmp td.us{color:var(--txt)}
+  .cmp td.us::before{content:"✓ ";color:#34d399;font-weight:700}
+  .cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+  .cmp col.usc{background:rgba(96,165,250,.05)}
+
+  /* faq */
+  .faq{display:grid;gap:12px;max-width:840px}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:var(--cg-r-sm,12px);
+    padding:2px 20px;backdrop-filter:blur(10px);transition:border-color .3s var(--cg-ease,ease)}
+  .faq details[open]{border-color:rgba(124,150,255,.4)}
+  .faq summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:600;font-size:15.5px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-family:var(--cg-mono);font-size:20px;color:var(--cg-prism-1,#38bdf8);transition:transform .3s var(--cg-ease,ease)}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq summary:focus-visible{outline:2px solid var(--cg-prism-1,#38bdf8);outline-offset:3px;border-radius:6px}
+  .faq p{color:var(--dim);font-size:14.5px;margin:0 0 18px;line-height:1.7;max-width:70ch}
+
+  /* CTA */
+  .cta{text-align:center;border:1px solid var(--line);border-radius:var(--cg-r-lg,24px);
+    background:linear-gradient(150deg,rgba(56,189,248,.08),rgba(167,139,250,.06),rgba(8,11,24,.6));
+    padding:clamp(48px,7vw,84px) 24px;backdrop-filter:blur(16px)}
+  .cta h2{font-size:clamp(2.2rem,5vw,3.8rem);margin:0 auto;max-width:18ch}
+  .cta p{color:var(--dim);max-width:52ch;margin:18px auto 32px;font-size:1.05rem}
+  .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+  footer{padding:54px 0 80px;border-top:1px solid var(--line);margin-top:clamp(64px,9vw,110px);color:var(--dim-2);font-size:13px}
+  footer a{color:var(--dim);text-decoration:none}
+  footer a:hover{color:#fff}
+
+  @media(max-width:900px){.g-3{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.trust{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.g-2,.g-3{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card{transition:none}}
+</style>
+<link rel="stylesheet" href="/assets/css/glass.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">ClearGlass · Web Engineering Studio</span>
+    <h1>We design websites as <strong class="crystal">growth infrastructure.</strong></h1>
+    <p class="lead">A website should not just look premium — it should work like a business system.
+      We architect, build, and maintain fast, secure, accessible sites engineered for clarity,
+      performance, and long-term maintainability.</p>
+    <div class="hero-actions">
+      <a class="cg-btn cg-btn--primary cg-btn--lg" href="mailto:info@clearglassinc.com?subject=Website%20engagement">Start a project</a>
+      <a class="cg-btn cg-btn--ghost cg-btn--lg" href="#capabilities">See capabilities</a>
+    </div>
+
+    <div class="metrics" aria-label="Engineering targets">
+      <div class="metric"><div class="n crystal">&lt;1s</div><div class="l">Target first-contentful paint on modern connections</div></div>
+      <div class="metric"><div class="n crystal"><span data-count="95">95</span>+</div><div class="l">Lighthouse performance &amp; accessibility budget</div></div>
+      <div class="metric"><div class="n crystal"><span data-count="100">100</span>%</div><div class="l">Responsive, mobile-first across breakpoints</div></div>
+      <div class="metric"><div class="n crystal">0</div><div class="l">Build servers to babysit — static-first deploys</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- PROBLEM -->
+<section class="band" id="problem">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">Why most websites underperform</span>
+      <h2>Most sites are <strong>decorated, not engineered.</strong></h2>
+      <p>They look fine in a mockup and fail in production — slow on real devices, fragile to maintain,
+        invisible to search, and inaccessible to a meaningful share of visitors.</p>
+    </div>
+    <div class="fail">
+      <div class="row"><div class="x">SLOW</div><div><b>Heavy, unoptimized front-ends.</b><span>Megabytes of unused script and render-blocking assets cost you ranking and conversions on every visit.</span></div></div>
+      <div class="row"><div class="x">FRAGILE</div><div><b>No architecture, no maintainability.</b><span>Page-builder sprawl that nobody can safely change six months later without breaking something else.</span></div></div>
+      <div class="row"><div class="x">INVISIBLE</div><div><b>Weak semantic structure &amp; SEO.</b><span>Non-semantic markup and missing metadata leave search engines guessing what the page is about.</span></div></div>
+      <div class="row"><div class="x">EXCLUDING</div><div><b>Inaccessible by default.</b><span>Poor contrast, no keyboard support, missing labels — locking out users and inviting legal risk.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="band" id="solution">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">The build approach</span>
+      <h2>Engineered for clarity, performance, and <strong>long-term maintainability.</strong></h2>
+      <p>We start from architecture, not aesthetics — then layer a precise, high-contrast interface on a
+        foundation that stays fast, indexable, and easy to change.</p>
+    </div>
+    <div class="grid g-3">
+      <div class="card"><div class="ic">⛬</div><h3>Architecture first</h3><p>A clear component model and content structure that maps to how your business actually works — so the site scales without rewrites.</p><span class="tag">information architecture</span></div>
+      <div class="card"><div class="ic">⚡</div><h3>Performance budget</h3><p>Every page ships against a measurable budget: minimal payload, lazy media, no render-blocking waste. Speed is a feature, not an afterthought.</p><span class="tag">core web vitals</span></div>
+      <div class="card"><div class="ic">♿</div><h3>Accessible by construction</h3><p>Semantic HTML, keyboard paths, visible focus, and AA+ contrast built in from the first commit — not patched on at the end.</p><span class="tag">WCAG-aligned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="band" id="capabilities">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">Capabilities</span>
+      <h2>A complete <strong>web engineering practice.</strong></h2>
+      <p>One partner across the full lifecycle — architecture, front-end, performance, search, security, and the automation that keeps it shipping.</p>
+    </div>
+    <div class="grid g-3">
+      <div class="card"><div class="ic">▦</div><h3>Website architecture</h3><p>Content models, routing, and reusable components designed for clarity and change — a system, not a stack of pages.</p></div>
+      <div class="card"><div class="ic">⟨⟩</div><h3>Front-end development</h3><p>Hand-built, standards-based front-ends with clean, reviewable code and no framework lock-in where it isn't earned.</p></div>
+      <div class="card"><div class="ic">▭</div><h3>Responsive design</h3><p>Mobile-first layouts that hold their hierarchy and touch targets from phone to ultrawide.</p></div>
+      <div class="card"><div class="ic">⚡</div><h3>Performance optimization</h3><p>Asset budgets, caching strategy, image pipelines, and Core Web Vitals tuned to real-world devices.</p></div>
+      <div class="card"><div class="ic">🔎</div><h3>SEO-ready structure</h3><p>Semantic headings, metadata, sitemaps, and structured data so search engines understand and rank the page.</p></div>
+      <div class="card"><div class="ic">♿</div><h3>Accessibility</h3><p>Keyboard-first interaction, ARIA where needed, contrast and motion preferences respected by default.</p></div>
+      <div class="card"><div class="ic">🛡</div><h3>Security-minded implementation</h3><p>Least-privilege automation, hardened headers, no secrets in the client, dependency hygiene, and a documented threat surface.</p></div>
+      <div class="card"><div class="ic">🚀</div><h3>Automation-friendly deployment</h3><p>CI-validated, reproducible static-first deploys with a clean rollback path — ship confidently, revert instantly.</p></div>
+      <div class="card"><div class="ic">↻</div><h3>Conversion-focused UX</h3><p>Every interaction reduces friction and increases confidence — copy, hierarchy, and CTAs aligned to the decision the visitor is making.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="band" id="process">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">Process</span>
+      <h2>Disciplined from <strong>discovery to optimization.</strong></h2>
+      <p>A predictable engagement with clear deliverables at each stage — no black boxes, no surprises.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3>Discovery</h3><p>Goals, audience, constraints, and the metrics that define success.</p></div>
+      <div class="step"><div class="num">02</div><h3>Design</h3><p>Architecture, hierarchy, and a precise interface system mapped to your brand.</p></div>
+      <div class="step"><div class="num">03</div><h3>Build</h3><p>Semantic, performant, accessible front-end with reviewable, documented code.</p></div>
+      <div class="step"><div class="num">04</div><h3>Launch</h3><p>CI-validated deploy, security headers, analytics, and a tested rollback path.</p></div>
+      <div class="step"><div class="num">05</div><h3>Optimize</h3><p>Measure, tune Core Web Vitals, iterate on conversion, and maintain.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="band" id="stack">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">Technical stack</span>
+      <h2>Modern, durable, and <strong>boring in the right places.</strong></h2>
+      <p>We choose technology for longevity and performance, not novelty — standards-first, with build tooling only where it earns its keep.</p>
+    </div>
+    <div class="stack">
+      <span class="chip">Semantic HTML5</span>
+      <span class="chip">Modern CSS · custom properties</span>
+      <span class="chip">Progressive-enhancement JS</span>
+      <span class="chip">Design tokens</span>
+      <span class="chip">Static-first / JAMstack</span>
+      <span class="chip">GitHub Actions CI/CD</span>
+      <span class="chip">Lighthouse budgets</span>
+      <span class="chip">Core Web Vitals</span>
+      <span class="chip">Structured data · schema.org</span>
+      <span class="chip">WCAG 2.x</span>
+      <span class="chip">Hardened security headers</span>
+      <span class="chip">Edge CDN delivery</span>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="band" id="compare">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">The difference</span>
+      <h2>A typical build vs. <strong>an engineered system.</strong></h2>
+      <p>Where most projects cut corners that surface in production, we hold a measurable line.</p>
+    </div>
+    <table class="cmp">
+      <colgroup><col><col><col class="usc"></colgroup>
+      <thead><tr><th scope="col">Dimension</th><th scope="col">Typical build</th><th scope="col" class="us">ClearGlass</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Performance</th><td class="them">Heavy page-builder output; slow on real devices</td><td class="us">Measured against a payload + Core Web Vitals budget, verified in CI</td></tr>
+        <tr><th scope="row">Maintainability</th><td class="them">Sprawl nobody can safely change later</td><td class="us">Clean component model and documented code you own outright</td></tr>
+        <tr><th scope="row">Accessibility</th><td class="them">Patched on at the end, if at all</td><td class="us">Semantic, keyboard-first, AA contrast — built in from commit one</td></tr>
+        <tr><th scope="row">SEO structure</th><td class="them">Non-semantic markup, missing metadata</td><td class="us">Semantic headings, metadata, sitemaps, and structured data</td></tr>
+        <tr><th scope="row">Security</th><td class="them">Secrets in the client; unmanaged surface</td><td class="us">No client secrets, hardened posture, least-privilege automation</td></tr>
+        <tr><th scope="row">Deploy &amp; rollback</th><td class="them">Manual, fragile, hard to revert</td><td class="us">CI-validated, reproducible deploys with a tested rollback path</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="band" id="trust">
+  <div class="wrap">
+    <div class="trust">
+      <div>
+        <span class="eyebrow">Why ClearGlass</span>
+        <h2 style="font-size:clamp(2rem,4vw,3rem);margin:16px 0 0">An architecture partner — <strong>not a hobbyist freelancer.</strong></h2>
+        <p style="color:var(--dim);margin-top:16px;max-width:50ch">We build digital systems for organizations that treat their website as
+          infrastructure: measured, documented, secure, and engineered to keep performing long after launch.</p>
+      </div>
+      <div class="card">
+        <ul>
+          <li><span class="ck">✓</span> Measurable performance &amp; accessibility budgets, verified in CI</li>
+          <li><span class="ck">✓</span> Clean, reviewable, documented codebase you own outright</li>
+          <li><span class="ck">✓</span> Security-minded by default — no client secrets, hardened headers</li>
+          <li><span class="ck">✓</span> Reproducible deploys with a tested rollback path</li>
+          <li><span class="ck">✓</span> Long-term maintainability over short-term shortcuts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="band" id="faq">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">Questions, answered</span>
+      <h2>What serious clients <strong>actually ask.</strong></h2>
+      <p>Direct answers — the kind a technical decision-maker needs before an engagement.</p>
+    </div>
+    <div class="faq">
+      <details><summary>Do I own the code?</summary><p>Yes — outright. You receive a clean, documented, framework-honest codebase in your own repository. No proprietary page-builder lock-in, no licensing leash, no dependency on us to make a change.</p></details>
+      <details><summary>How fast will it actually be?</summary><p>We build to a measurable budget — minimal payload, lazy media, no render-blocking waste — and verify Core Web Vitals in CI. The target is sub-second first-contentful paint on modern connections and a 95+ Lighthouse score for performance and accessibility.</p></details>
+      <details><summary>Will it hold up on mobile?</summary><p>Mobile-first is the starting point, not an afterthought. Layouts keep their hierarchy and touch-target sizing from phone to ultrawide, and every interaction is tested with keyboard and reduced-motion preferences.</p></details>
+      <details><summary>Is it secure?</summary><p>No secrets ship in client code. Automation runs least-privilege, dependencies are kept current, and the threat surface is documented. Where the host can't set HTTP security headers (e.g. static hosting), we say so and mitigate at the layers we control rather than pretend otherwise.</p></details>
+      <details><summary>Can you maintain it after launch?</summary><p>Yes. We offer ongoing optimization — Core Web Vitals tuning, conversion iteration, content and security updates — on a clear cadence. Because the code is documented and yours, you're never locked in to that arrangement.</p></details>
+      <details><summary>How is it deployed?</summary><p>CI-validated, reproducible, static-first deploys with a tested rollback path. A bad change is reverted in one step and the previous state redeploys automatically — no servers to babysit.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="band">
+  <div class="wrap">
+    <div class="cta">
+      <span class="eyebrow" style="justify-content:center">Engagement</span>
+      <h2>Built for speed, trust, and <span class="crystal">conversion.</span></h2>
+      <p>Tell us what you're building. We'll respond with a clear architecture, a realistic plan,
+        and a fixed view of what success looks like.</p>
+      <div class="cta-actions">
+        <a class="cg-btn cg-btn--primary cg-btn--lg" href="mailto:info@clearglassinc.com?subject=Website%20engagement">Request a proposal</a>
+        <a class="cg-btn cg-btn--secondary cg-btn--lg" href="index.html">Explore ClearGlass</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    ClearGlass Inc. · Web Engineering Studio · <a href="mailto:info@clearglassinc.com">info@clearglassinc.com</a>
+    &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="https://github.com/ClearGlassInc/ClearGlassInc.github.io">Source</a>
+    <div style="margin-top:10px;color:var(--dim-2)">Engineered for clarity, performance, and long-term maintainability.</div>
+  </div>
+</footer>
+
+<script>
+  // Count-up for hero metrics — once, on scroll-in, reduced-motion aware.
+  (function () {
+    var reduce = false;
+    try { reduce = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+    var nodes = document.querySelectorAll("[data-count]");
+    if (reduce || !("IntersectionObserver" in window)) return; // targets already show final value
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        var el = en.target, target = parseInt(el.getAttribute("data-count"), 10) || 0, t0 = null;
+        el.textContent = "0";
+        function step(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min((ts - t0) / 900, 1), eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target).toString();
+          if (p < 1) requestAnimationFrame(step); else el.textContent = target.toString();
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    nodes.forEach(function (n) { io.observe(n); });
+  })();
+</script>
+<link rel="stylesheet" href="theme.css">
+<script defer src="control-surface.js"></script>
+<script defer src="ui.js"></script>
+  <script defer src="platform.js"></script>
+  <script defer src="/logo-badge.js"></script>
+</body>
+</html>

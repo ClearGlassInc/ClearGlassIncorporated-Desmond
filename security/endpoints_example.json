@@ -1,0 +1,58 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/users/{id}",
+    "auth_required": true,
+    "roles": ["admin", "self"],
+    "object_type": "User",
+    "example_id": "42"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/users/{id}",
+    "auth_required": true,
+    "roles": ["admin", "self"],
+    "object_type": "User",
+    "example_id": "42"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/users/{id}",
+    "auth_required": true,
+    "roles": ["admin"],
+    "object_type": "User",
+    "example_id": "42"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/documents/{id}",
+    "auth_required": true,
+    "roles": ["owner", "viewer"],
+    "object_type": "Document",
+    "example_id": "101"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/documents/{id}",
+    "auth_required": true,
+    "roles": ["owner", "admin"],
+    "object_type": "Document",
+    "example_id": "101"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/reports/{id}/export",
+    "auth_required": true,
+    "roles": ["owner", "admin"],
+    "object_type": "Report",
+    "example_id": "7"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/health",
+    "auth_required": false,
+    "roles": ["public"],
+    "object_type": "Status",
+    "example_id": null
+  }
+]

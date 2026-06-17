@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>PERCIVAL · Agent Mesh — OSINT Orchestration — ClearGlass Inc.</title>
+<meta name="description" content="ClearGlass-only OSINT agent orchestration dashboard: 20+ approved open sources, SIGINT-PRMPT mission packets, fail-closed privacy gate (no person targeting), transparent refusal, full audit."/>
+<link rel="canonical" href="https://clearglassinc.github.io/agentmesh.html"/>
+<meta property="og:title" content="PERCIVAL · Agent Mesh — OSINT Orchestration"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#60a5fa;--amber:#60a5fa;--cyan:#36b6ff;--teal:#2fd4c0;--violet:#9b7bff;--ok:#34d399;
+  --line:rgba(124,150,255,.16);--line-2:rgba(124,150,255,.3);--txt:#eef2ff;--dim:#9aa6c8;--dim-2:#5f6a8a;
+  --mono:'IBM Plex Mono',monospace;--display:'Orbitron','Inter',sans-serif;--sans:'Inter',system-ui,sans-serif}
+html,body{height:100%}
+body{font-family:var(--sans);color:var(--txt);min-height:100vh;padding-bottom:36px;
+  background:radial-gradient(130% 100% at 50% -10%,#1a0619 0%,#0c030b 45%,#050205 100%);-webkit-font-smoothing:antialiased}
+.top{display:flex;align-items:center;gap:13px;padding:13px 22px;border-bottom:1px solid var(--line);background:rgba(11,14,29,.7);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10}
+.mk{width:30px;height:30px;border-radius:8px;position:relative;background:radial-gradient(circle at 40% 35%,#bcd4ff,#1a2350 60%,#1f041d);box-shadow:0 0 14px rgba(124,150,255,.6)}
+.mk::after{content:"⌗";position:absolute;inset:0;display:grid;place-items:center;font-size:15px;color:#fff}
+.b-name{font-family:var(--display);font-weight:900;letter-spacing:.18em;font-size:15px}.b-name b{color:var(--red)}
+.b-sub{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim-2);text-transform:uppercase}
+.spacer{flex:1}.back{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7fd6ff;text-decoration:none;border:1px solid rgba(54,182,255,.35);background:rgba(54,182,255,.07);padding:7px 12px;border-radius:18px}
+.wrap{max-width:1280px;margin:0 auto;padding:18px;display:grid;gap:16px;grid-template-columns:300px 1fr 330px}
+@media(max-width:1080px){.wrap{grid-template-columns:1fr}}
+.card{background:rgba(11,14,29,.72);border:1px solid var(--line);border-radius:13px;padding:14px 16px;min-height:0}
+.card h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.card h2 small{margin-left:auto;color:var(--dim-2);font-size:9px}
+.disc{grid-column:1/-1;font-size:12px;line-height:1.5;color:var(--teal);border:1px solid rgba(47,212,192,.3);background:rgba(47,212,192,.06);border-radius:11px;padding:10px 13px}
+.disc b{color:#bff7ee}
+label{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:8px 0 3px}
+input,select{width:100%;background:rgba(0,0,0,.32);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--txt);font-size:12.5px;outline:none}
+input:focus,select:focus{border-color:var(--line-2);box-shadow:0 0 0 3px rgba(124,150,255,.08)}
+.row{display:flex;gap:9px}.row>div{flex:1}
+.chk{display:flex;align-items:center;gap:7px;margin-top:9px}.chk input{width:auto}
+.btn{margin-top:13px;width:100%;text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:10px;border-radius:9px;cursor:pointer;border:1px solid var(--line-2);background:linear-gradient(180deg,rgba(124,150,255,.22),rgba(124,150,255,.06));color:#fff}
+.btn:hover{box-shadow:0 0 14px rgba(124,150,255,.3)}
+.srcfilter{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px}
+.fchip{font-family:var(--mono);font-size:9px;letter-spacing:.04em;color:var(--dim);border:1px solid var(--line);padding:4px 8px;border-radius:12px;cursor:pointer}
+.fchip.on{border-color:var(--line-2);color:var(--txt);background:rgba(124,150,255,.12)}
+.src{display:flex;align-items:center;gap:8px;padding:6px 4px;font-size:11.5px;border-bottom:1px solid rgba(124,150,255,.06)}
+.src .d{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+.src .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.src .key{margin-left:auto;font-family:var(--mono);font-size:8px;color:var(--amber);border:1px solid rgba(96,165,250,.3);border-radius:5px;padding:1px 4px}
+.srcscroll{max-height:340px;overflow-y:auto}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-family:var(--mono);font-size:11px}
+.p-ok{background:rgba(52,211,153,.12);color:var(--ok);border:1px solid rgba(52,211,153,.4)}
+.p-deny{background:rgba(124,150,255,.12);color:#f472b6;border:1px solid rgba(124,150,255,.45)}
+.p-esc{background:rgba(96,165,250,.12);color:var(--amber);border:1px solid rgba(96,165,250,.4)}
+.out{margin-top:12px;display:none}.out.show{display:block;animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.kv{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:7px}.kv b{color:var(--txt)}
+pre{font-family:var(--mono);font-size:10.5px;color:#d8c7d7;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:8px;padding:9px;overflow:auto;margin-top:8px;line-height:1.5}
+.ev{display:flex;gap:8px;font-size:11px;line-height:1.4;padding:5px 0;border-bottom:1px solid rgba(124,150,255,.06)}
+.ev .d{width:8px;height:8px;border-radius:50%;margin-top:3px;flex:0 0 auto}
+.ev.ok .d{background:var(--ok)}.ev.deny .d{background:var(--red)}.ev.esc .d{background:var(--amber)}
+.ev .src2{display:block;font-family:var(--mono);font-size:8px;color:var(--dim-2)}
+.empty{color:var(--dim-2);font-size:11px;font-family:var(--mono);padding:8px}
+code{font-family:var(--mono);font-size:11px;color:var(--dim)}
+</style>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="ui.css">
+  <link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+</head>
+<body>
+<div class="top">
+  <div class="mk"></div>
+  <div><div class="b-name">PERCIVAL · <b>AGENT MESH</b></div><div class="b-sub">OSINT Orchestration · ClearGlass-only</div></div>
+  <div class="spacer"></div><a class="back" href="percival-os.html">← PERCIVAL</a>
+</div>
+
+<div class="wrap">
+  <div class="disc">⌗ <b>ClearGlass-only OSINT orchestration.</b> Lawful, approved public sources on organizations / brands / domains / assets — <b>never</b> private individuals. Org credential required; refusals are stated openly (no deception). Every dispatch is audited. This dashboard runs the mesh decision logic locally (mirrors <code>sentinel/sentinel/agentmesh.py</code>).</div>
+
+  <!-- sources -->
+  <div class="card">
+    <h2>Open sources <small id="srcCount"></small></h2>
+    <div class="srcfilter" id="srcFilter"></div>
+    <div class="srcscroll" id="sources"></div>
+  </div>
+
+  <!-- mission packet -->
+  <div class="card">
+    <h2>SIGINT-PRMPT mission packet</h2>
+    <label>Principal email (org credential lock)</label>
+    <input id="email" placeholder="you@clearglassinc.com" value="desmond@clearglassinc.com"/>
+    <div class="row">
+      <div><label>Target (org / brand / domain / asset)</label><input id="target" placeholder="acme-corp"/></div>
+      <div><label>Jurisdiction</label><input id="juris" placeholder="CA" value="CA"/></div>
+    </div>
+    <div class="row">
+      <div><label>Mission</label><select id="mission"><option>recon</option><option>association</option><option>pattern</option><option>tracking</option></select></div>
+      <div><label>Domain</label><select id="domain"><option>web</option><option>social</option><option>news</option><option>financial</option><option>legal</option><option>geospatial</option><option>telecom</option><option>vuln</option></select></div>
+    </div>
+    <div class="chk"><input type="checkbox" id="indiv"/><label style="margin:0">Target is a private individual (declared honestly)</label></div>
+    <button class="btn" id="dispatch">Dispatch mission</button>
+    <div class="out card" id="out" style="background:rgba(0,0,0,.18)"></div>
+    <details style="margin-top:12px"><summary style="cursor:pointer;font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.1em">JSON-PACKET SPEC</summary>
+      <pre>{
+  "target": "acme-corp",
+  "mission": "recon|association|pattern|tracking",
+  "domain": "web|social|news|financial|legal|geospatial|telecom|vuln",
+  "sources": ["public"],
+  "time_window": "past 30 days",
+  "jurisdiction": "CA",
+  "target_is_individual": false
+}</pre></details>
+  </div>
+
+  <!-- register / alerts -->
+  <div class="card">
+    <h2>Dispatch log & alerts <small id="logc"></small></h2>
+    <div id="log"><div class="empty">No dispatches yet.</div></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* Agent Mesh dashboard — mirrors sentinel/sentinel/agentmesh.py decision logic. */
+const $=id=>document.getElementById(id);
+// 20+ approved sources (key = collector registry key)
+const SOURCES=[
+ ["usgs_quakes","USGS earthquakes","geospatial",0],["nws_alerts","NWS weather alerts","geospatial",0],
+ ["opensky","OpenSky aircraft (ADS-B)","telecom",0],["exploit_db","Exploit-DB","vuln",0],
+ ["nvd_cve","NVD CVE feed","vuln",0],["cisa_kev","CISA Known Exploited Vulns","vuln",0],
+ ["cisa_advisories","CISA advisories","threat",0],["github_advisories","GitHub Security Advisories","vuln",0],
+ ["urlhaus","abuse.ch URLhaus","threat",0],["threatfox","abuse.ch ThreatFox","threat",0],
+ ["feodo","abuse.ch Feodo C2","threat",0],["phishtank","PhishTank","threat",0],
+ ["krebs","Krebs on Security","news",0],["bleeping","BleepingComputer","news",0],
+ ["theregister_sec","The Register · Security","news",0],["thehackernews","The Hacker News","news",0],
+ ["hn","Hacker News front page","web",0],["gdelt","GDELT events","news",0],
+ ["sec_edgar","SEC EDGAR filings","financial",0],["opencorporates","OpenCorporates","legal",1],
+ ["companies_house","UK Companies House","legal",1],["ofac_sdn","OFAC sanctions (SDN)","legal",0],
+ ["rss_generic","Generic RSS/Atom feed","news",0],["wikipedia","Wikipedia (org/entity)","web",0]];
+const DOMAIN_OK=new Set(["web","social","news","financial","legal","geospatial","telecom","vuln"]);
+const DCOLOR={geospatial:"#2fd4c0",telecom:"#9fb6ff",vuln:"#60a5fa",threat:"#60a5fa",news:"#36b6ff",financial:"#34d399",legal:"#9b7bff",web:"#9aa6c8"};
+const AGENTS=[["Agent.ClearGlass.OSINT-Harvest",["web","social","news"]],["Agent.ClearGlass.Entity-Link",["web","financial","legal"]],
+ ["Agent.ClearGlass.Legal-Sig",["legal"]],["Agent.ClearGlass.Financial-Sig",["financial"]],
+ ["Agent.ClearGlass.Geo-Telemetry",["geospatial","telecom"]],["Agent.ClearGlass.Vuln-Intel",["vuln"]]];
+const IDENTITY="ClearGlass Inc. internal intelligence agent. Access is restricted to ClearGlass-authorized principals; I state that restriction openly and refuse out-of-scope or unauthorized requests rather than concealing them.";
+const log=[];
+let dfilter="all";
+
+function routeAgent(domain){let best=null;AGENTS.forEach((a,i)=>{if(a[1].includes(domain)){const sz=a[1].length;if(!best||sz<best.sz||(sz===best.sz&&i<best.i))best={name:a[0],sz,i};}});return best?best.name:null;}
+function aref(){return "MESH-"+Math.random().toString(16).slice(2,8).toUpperCase();}
+function authorized(email){return (email||"").trim().toLowerCase().endsWith("@clearglassinc.com");}
+
+function dispatch(p){
+  // 1. org lock
+  if(!authorized(p.email))return {d:"DENIED",reasons:["principal is not ClearGlass-authorized — access is restricted to ClearGlass principals (stated openly)"],agent:null};
+  // 2. approved domain
+  if(!DOMAIN_OK.has(p.domain))return {d:"DENIED",reasons:["domain '"+p.domain+"' is not an approved OSINT domain"],agent:null};
+  // 3. privacy gate (no person targeting)
+  if(p.indiv){
+    return {d:"DENIED",reasons:["identifying/locating/tracking/profiling a private individual requires explicit documented authorization","privacy gate: person-targeting refused"],agent:null};
+  }
+  const agent=routeAgent(p.domain);
+  if(!agent)return {d:"DENIED",reasons:["no agent available for domain"],agent:null};
+  return {d:"ACCEPTED",reasons:["org-authorized + within approved OSINT scope"],agent,
+    report:{agent,target:p.target,domain:p.domain,schema:{entities:"[{id,type,name}] (orgs/assets only)",relationships:"[{from,to,kind,confidence}]",timestamps:"[ISO 8601]",confidence:"0..1 per finding",provenance:"approved source + collected_at; aggregate summaries only"},constraints:{jurisdiction:p.juris||"unspecified"}}};
+}
+
+function renderSources(){
+  const list=dfilter==="all"?SOURCES:SOURCES.filter(s=>s[2]===dfilter || (dfilter==="threat"&&s[2]==="threat"));
+  $('srcCount').textContent=SOURCES.length+" approved";
+  $('sources').innerHTML=list.map(s=>`<div class="src"><span class="d" style="background:${DCOLOR[s[2]]||'#999'};box-shadow:0 0 6px ${DCOLOR[s[2]]||'#999'}"></span><span class="nm">${s[1]}</span>${s[3]?'<span class="key">KEY</span>':''}<span style="font-family:var(--mono);font-size:8px;color:var(--dim-2);margin-left:6px">${s[2]}</span></div>`).join('');
+}
+function renderFilter(){
+  const doms=["all",...new Set(SOURCES.map(s=>s[2]))];
+  $('srcFilter').innerHTML=doms.map(d=>`<div class="fchip ${d===dfilter?'on':''}" data-d="${d}">${d}</div>`).join('');
+  $('srcFilter').querySelectorAll('.fchip').forEach(c=>c.onclick=()=>{dfilter=c.dataset.d;renderFilter();renderSources();});
+}
+function esc(s){return String(s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
+function renderOut(p,r){
+  const ar=aref();
+  const cls=r.d==="ACCEPTED"?"p-ok":r.d==="ESCALATE"?"p-esc":"p-deny";
+  $('out').innerHTML=`<span class="pill ${cls}">${r.d}</span>
+    <div class="kv">agent: <b>${r.agent||'— (refused)'}</b></div>
+    <div class="kv">reasons: ${r.reasons.map(esc).join('; ')}</div>
+    <div class="kv" style="color:var(--teal)">identity: ${esc(IDENTITY)}</div>
+    ${r.report?`<pre>${esc(JSON.stringify(r.report,null,2))}</pre>`:''}
+    <div class="kv">audit ref ${ar}</div>`;
+  $('out').classList.add('show');
+  log.unshift({d:r.d,target:p.target,domain:p.domain,agent:r.agent,ar});
+  renderLog();
+}
+function renderLog(){
+  $('logc').textContent=log.length?log.length+" total":"";
+  if(!log.length){$('log').innerHTML='<div class="empty">No dispatches yet.</div>';return;}
+  $('log').innerHTML=log.map(e=>{const cls=e.d==="ACCEPTED"?"ok":e.d==="ESCALATE"?"esc":"deny";
+    return `<div class="ev ${cls}"><div class="d"></div><div><b>${esc(e.d)}</b> ${esc(e.target||'—')} <span style="color:var(--dim-2)">[${esc(e.domain)}]</span><span class="src2">${e.agent||'refused'} · ${e.ar}</span></div></div>`;}).join('');
+}
+$('dispatch').onclick=()=>{
+  const p={email:$('email').value,target:$('target').value,juris:$('juris').value,
+    mission:$('mission').value,domain:$('domain').value,indiv:$('indiv').checked};
+  renderOut(p,dispatch(p));
+};
+renderFilter();renderSources();renderLog();
+</script>
+<script defer src="control-surface.js"></script>
+  <script defer src="ui.js"></script>
+  <script defer src="platform.js"></script>
+  <script defer src="/logo-badge.js"></script>
+</body>
+</html>

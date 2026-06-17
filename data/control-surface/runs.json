@@ -1,71 +1,134 @@
 [
   {
-    "title": "Burlington Release #4",
+    "title": "Control Surface Feeds #42",
     "status": "warn",
-    "detail": "queued \u00b7 workflow_dispatch on main",
+    "detail": "in_progress \u00b7 schedule on main",
+    "time": "20:30",
+    "timestamp": "2026-06-17T20:30:05Z"
+  },
+  {
+    "title": "Health Monitor #72",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "20:19",
+    "timestamp": "2026-06-17T20:19:41Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #151",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-6e5444c8-396b-4d86-b1e7-b2f8d3630259",
+    "time": "20:08",
+    "timestamp": "2026-06-17T20:08:04Z"
+  },
+  {
+    "title": "Commerce Deploy #7",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:22",
+    "timestamp": "2026-06-17T19:22:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #340",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:21",
+    "timestamp": "2026-06-17T19:21:29Z"
+  },
+  {
+    "title": "Content Pipeline #32",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_run on main",
+    "time": "19:21",
+    "timestamp": "2026-06-17T19:21:22Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #339",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:21",
+    "timestamp": "2026-06-17T19:21:19Z"
+  },
+  {
+    "title": "pages build and deployment #771",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "19:21",
+    "timestamp": "2026-06-17T19:21:13Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1334",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:21",
+    "timestamp": "2026-06-17T19:21:12Z"
+  },
+  {
+    "title": "Burlington Release #4",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:21",
     "timestamp": "2026-06-17T19:21:02Z"
   },
   {
     "title": "ClearGlassInc Military-Op Release Pipeline #2",
-    "status": "warn",
-    "detail": "queued \u00b7 workflow_dispatch on main",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:21",
     "timestamp": "2026-06-17T19:21:01Z"
   },
   {
     "title": "API Security Audit #9",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:59Z"
   },
   {
     "title": "Commerce Daily Loop #6",
-    "status": "warn",
-    "detail": "queued \u00b7 workflow_dispatch on main",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:58Z"
   },
   {
     "title": "Repo Audit #1",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:56Z"
   },
   {
     "title": "Workflow Doctor #133",
-    "status": "warn",
-    "detail": "queued \u00b7 workflow_dispatch on main",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:54Z"
   },
   {
     "title": "Policy Gate #371",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:53Z"
   },
   {
     "title": "Dependency Updater #9",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:51Z"
   },
   {
     "title": "Control Surface Feeds #41",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:49Z"
   },
   {
     "title": "Content Pipeline #31",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:48Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:46Z"
-  },
-  {
-    "title": "Cert Bot #19",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:44Z"
-  },
-  {
-    "title": "Health Monitor #71",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:42Z"
-  },
-  {
-    "title": "Bot Orchestrator #24",
-    "status": "warn",
-    "detail": "in_progress \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:41Z"
-  },
-  {
-    "title": "PR Automation #188",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/vibrant-pasteur-fgdru5",
-    "time": "19:16",
-    "timestamp": "2026-06-17T19:16:48Z"
-  },
-  {
-    "title": "CI #634",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "19:16",
-    "timestamp": "2026-06-17T19:16:33Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #652",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:16",
-    "timestamp": "2026-06-17T19:16:32Z"
-  },
-  {
-    "title": "Security #398",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:16",
-    "timestamp": "2026-06-17T19:16:32Z"
-  },
-  {
-    "title": "Policy Gate #370",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:16",
-    "timestamp": "2026-06-17T19:16:31Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #338",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:16",
-    "timestamp": "2026-06-17T19:16:27Z"
   }
 ]

@@ -47,7 +47,7 @@
       ["Intelligence", "intelligence.html", "🧠"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],
       ["Interface", "intelligence-interface.html", "🖥"],
-      ["Ontario OSINT Deck", "burlington-osint.html", "🛰"],
+      ["Ontario OSINT Deck", "Ontario-osint.html", "🛰"],
       ["Revenue Engine", "revenue-engine.html", "💹"]
     ]],
     ["Legal & Finance", [

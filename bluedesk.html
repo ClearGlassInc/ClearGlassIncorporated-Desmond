@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BLUEDESK — CISO Risk & Blue Team Console | ClearGlass Inc</title>
-<meta name="description" content="ClearGlass BLUEDESK — a lawful, defensive CISO risk-intelligence and blue-team console: exposure visibility, detection coverage, control assurance, and audit-ready evidence. Public-source + defensive telemetry only.">
+<meta name="description" content="ClearGlass BLUEDESK — a lawful, defensive CISO risk-intelligence and blue-team console: exposure visibility, detection coverage, control assurance, and…">
 <link rel="canonical" href="https://clearglassinc.github.io/bluedesk.html">
 <meta property="og:title" content="BLUEDESK — CISO Risk & Blue-Team Console | ClearGlass Inc">
 <meta property="og:description" content="Lawful, defensive risk visibility, detection coverage, control assurance, and audit-ready evidence for enterprise security teams.">
@@ -132,6 +132,8 @@
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
 <div class="app">
@@ -192,7 +194,7 @@
 
     <!-- THREAT INTEL -->
     <section class="view" id="v-intel">
-      <h1 class="vt">Threat Intel</h1>
+      <h2 class="vt">Threat Intel</h2>
       <div class="vsub">Actor profiles, TTP mapping, and MITRE ATT&CK alignment — synthetic profiles for demonstration.</div>
       <div class="tbl-wrap"><table><thead><tr>
         <th>Actor</th><th>Sectors</th><th>ATT&CK</th><th>Confidence</th><th>Related CVEs</th><th>Status</th><th>Source</th></tr></thead>
@@ -201,7 +203,7 @@
 
     <!-- EXPOSURE -->
     <section class="view" id="v-exposure">
-      <h1 class="vt">Exposure → Detection Linkage</h1>
+      <h2 class="vt">Exposure → Detection Linkage</h2>
       <div class="vsub">Every exposed asset mapped to CVEs, exploit maturity, business criticality, and detection coverage.</div>
       <div class="tbl-wrap"><table><thead><tr>
         <th>Asset</th><th>Open service</th><th>CVE</th><th>Exploit</th><th>Criticality</th><th>Detections</th><th>Gap</th></tr></thead>
@@ -210,7 +212,7 @@
 
     <!-- IOC FEED (LIVE) -->
     <section class="view" id="v-ioc">
-      <h1 class="vt">IOC Feed <span class="badge b-good" style="vertical-align:middle">LIVE · CISA KEV</span></h1>
+      <h2 class="vt">IOC Feed <span class="badge b-good" style="vertical-align:middle">LIVE · CISA KEV</span></h2>
       <div class="vsub">Live known-exploited-vulnerability catalog from CISA (public, lawful, keyless). The defensive feed every blue team should watch.</div>
       <div class="tbl-wrap"><table><thead><tr>
         <th>CVE</th><th>Vendor / product</th><th>Vulnerability</th><th>Action due</th><th>Source</th></tr></thead>
@@ -219,7 +221,7 @@
 
     <!-- DETECTION COVERAGE -->
     <section class="view" id="v-coverage">
-      <h1 class="vt">Detection Coverage Matrix</h1>
+      <h2 class="vt">Detection Coverage Matrix</h2>
       <div class="vsub">MITRE ATT&CK-aligned coverage. Rule counts, signal sources, and detection gaps — synthetic SOC state.</div>
       <div class="tbl-wrap"><table><thead><tr>
         <th>Tactic</th><th>Technique</th><th>Rules</th><th>Signal source</th><th>Coverage</th><th>Last tested</th><th>Gap</th></tr></thead>
@@ -228,14 +230,14 @@
 
     <!-- CONTROL ASSURANCE -->
     <section class="view" id="v-controls">
-      <h1 class="vt">Control Assurance</h1>
+      <h2 class="vt">Control Assurance</h2>
       <div class="vsub">Are core defensive controls actually functioning? Status, evidence freshness, and owner per control.</div>
       <div class="grid g3" id="controlCards"></div>
     </section>
 
     <!-- ALERT TRIAGE -->
     <section class="view" id="v-triage">
-      <h1 class="vt">Alert Triage Workbench</h1>
+      <h2 class="vt">Alert Triage Workbench</h2>
       <div class="vsub">Analyst workflow: New → Enriched → Correlated → Escalated → Contained → Closed. Click a row to open the case panel.</div>
       <div class="tbl-wrap"><table><thead><tr>
         <th>Alert</th><th>Entity</th><th>Severity</th><th>Confidence</th><th>State</th><th>Owner</th><th>Source</th></tr></thead>
@@ -244,7 +246,7 @@
 
     <!-- SOURCE AUDIT -->
     <section class="view" id="v-provenance">
-      <h1 class="vt">Source Audit &amp; Provenance</h1>
+      <h2 class="vt">Source Audit &amp; Provenance</h2>
       <div class="vsub">Lawful-collection transparency: basis, retention, verification, and compliance tags for every source.</div>
       <div class="tbl-wrap"><table><thead><tr>
         <th>Source</th><th>Category</th><th>Collection basis</th><th>Retention</th><th>Confidence</th><th>Compliance</th><th>Verified</th></tr></thead>
@@ -253,7 +255,7 @@
 
     <!-- RISK EXCEPTIONS -->
     <section class="view" id="v-exceptions">
-      <h1 class="vt">Risk Exception Register</h1>
+      <h2 class="vt">Risk Exception Register</h2>
       <div class="vsub">Accepted risks with owner, compensating control, residual risk, expiry, and required executive sign-off.</div>
       <div class="tbl-wrap"><table><thead><tr>
         <th>Exception</th><th>Owner</th><th>Compensating control</th><th>Residual</th><th>Expires</th><th>Sign-off</th></tr></thead>

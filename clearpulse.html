@@ -337,6 +337,127 @@ pre.env .c{color:var(--txt-mute)}
     </div>
   </div>
 
+  <!-- horizon 2030 -->
+  <div class="grid" style="margin-top:30px">
+    <div class="card">
+      <div class="card-h">
+        <div class="card-title">Horizon 2030 · Advanced Capability Layer</div>
+        <div class="card-tag">PQC · FL · TEE · ZK · AGENTIC</div>
+      </div>
+      <p class="lede" style="margin-top:0">A forward-deployment stack that takes ClearPulse from "9.5+ enterprise tier" to sovereign-grade healthcare intelligence — quantum-safe, privacy-preserving, autonomously investigated, and field-verifiable.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-3" style="margin-top:18px">
+    <div class="card">
+      <div class="card-h"><div class="card-title">Quantum-Safe Audit Chain</div><div class="card-tag">PQC</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        SHA-256 ledger upgraded to <strong style="color:var(--accent)">SHA3-512 + ML-DSA (Dilithium)</strong> signatures, NIST FIPS-204. Every ledger block carries a post-quantum signature; HSMs rotate keys under a CRYSTALS-Kyber KEM. Future "harvest-now, decrypt-later" attacks against 30-year retention archives are neutralized.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Sig:</strong> ML-DSA-65</span>
+        <span class="chip"><strong>KEM:</strong> ML-KEM-768</span>
+        <span class="chip"><strong>Hash:</strong> SHA3-512</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div class="card-title">Federated Learning Mesh</div><div class="card-tag">FL · DP</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        Hospitals train fraud and snooping models <strong style="color:var(--accent)">without sharing PHI</strong>. Gradients are clipped, perturbed with <em>(ε=2.5, δ=1e-6) differential privacy</em>, and aggregated via secure-aggregation (Paillier + masking). The global model improves across 200+ facilities; the data never leaves the edge.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Privacy:</strong> ε 2.5</span>
+        <span class="chip"><strong>Aggregator:</strong> SecAgg+</span>
+        <span class="chip"><strong>Rounds/day:</strong> 24</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div class="card-title">Confidential Compute Enclave</div><div class="card-tag">TEE</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        Risk Engine pinned inside <strong style="color:var(--accent)">Intel TDX / AMD SEV-SNP</strong> trusted execution environments. PHI is decrypted only inside the enclave; remote attestation proves to the hospital that the running binary matches a signed transparency-log entry before any record is forwarded.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Attestation:</strong> RA-TLS</span>
+        <span class="chip"><strong>Transparency:</strong> Sigstore</span>
+        <span class="chip"><strong>Memory:</strong> Sealed</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div class="card-title">Agentic Investigator Copilot</div><div class="card-tag">LLM AGENT</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        Each CRITICAL alert spawns a <strong style="color:var(--accent)">SOC agent</strong> that auto-drafts a forensic timeline, pulls related access events, queries the graph DB for collusion patterns, generates analyst questions, and proposes containment actions — all with citations back to ledger trace_ids. Analysts review, never start from blank.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Tools:</strong> 14</span>
+        <span class="chip"><strong>Citations:</strong> mandatory</span>
+        <span class="chip"><strong>Human-in-loop:</strong> always</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div class="card-title">Zero-Knowledge Audit Proofs</div><div class="card-tag">ZK-SNARK</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        Auditors verify "this risk score was produced by approved rule v2030.06 against a ledger-anchored event" <strong style="color:var(--accent)">without seeing the underlying PHI</strong>. Proofs are Halo2-compiled circuits over the rules engine; regulators run a 200ms verifier and get cryptographic certainty.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Scheme:</strong> Halo2 / Plonk</span>
+        <span class="chip"><strong>Verify:</strong> &lt; 250 ms</span>
+        <span class="chip"><strong>Proof size:</strong> 8 KB</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div class="card-title">Graph Neural Risk Brain</div><div class="card-tag">GNN</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        Temporal Graph Network over Provider · Patient · Claim · Workstation · Device nodes. Detects <strong style="color:var(--accent)">fraud rings invisible to row-based scoring</strong> — repeating subgraphs across weeks, shared-device collusion, money-mule provider chains. Streamed inference at &lt; 80 ms / event.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Model:</strong> TGN</span>
+        <span class="chip"><strong>Nodes:</strong> 12M</span>
+        <span class="chip"><strong>Inference:</strong> 80 ms</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div class="card-title">Synthetic Data Twin</div><div class="card-tag">RED-TEAM</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        A continuously-running shadow pipeline replays a <strong style="color:var(--accent)">GAN-generated patient population</strong> with planted fraud scenarios. Detection coverage is measured per rule, per model, per shift — providing live MTTD/MTTR metrics and red-team regressions without touching real patients.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Generator:</strong> Synthea-X</span>
+        <span class="chip"><strong>Scenarios:</strong> 340</span>
+        <span class="chip"><strong>MTTD:</strong> 11 s</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div class="card-title">Edge Inference at PoC</div><div class="card-tag">EDGE · NPU</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        ONNX-Runtime risk model runs on the workstation NPU at the <strong style="color:var(--accent)">point of care</strong>. Provider-side checks (off-roster billing, unusual code pair) trigger inline soft-blocks before submission — preventing fraud at the source instead of detecting it downstream.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Runtime:</strong> ORT-NPU</span>
+        <span class="chip"><strong>Latency:</strong> 4 ms</span>
+        <span class="chip"><strong>Offline:</strong> yes</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><div class="card-title">Sovereign Data Plane</div><div class="card-tag">REGION</div></div>
+      <div style="font-size:13px;line-height:1.55;color:var(--txt-dim)">
+        Region-pinned control plane with <strong style="color:var(--accent)">cross-border policy guards</strong>. HIPAA, EU GDPR Art.9, UK DSPT, Canada PIPEDA, AU My Health Records — each route through the pipeline is policy-checked at the bridge. Replication never crosses a jurisdiction without an explicit signed policy attestation.
+      </div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip"><strong>Policies:</strong> OPA / Rego</span>
+        <span class="chip"><strong>Regions:</strong> 9</span>
+        <span class="chip"><strong>Audit:</strong> per-route</span>
+      </div>
+    </div>
+  </div>
+
   <div class="foot">
     <div>© ClearGlass Inc · ClearPulse Pipeline · 2026</div>
     <div>

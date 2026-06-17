@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-17T11:46:55.286012+00:00
-**Average Score:** 97.7/100
-**Files Audited:** 48
+**Run:** 2026-06-17T18:30:09.957024+00:00
+**Average Score:** 97.8/100
+**Files Audited:** 49
 
 ## Page Scores
 
@@ -54,6 +54,7 @@
 | `sentinel.html` | 100/100 | 0 |
 | `smb.html` | 100/100 | 0 |
 | `stegoforge.html` | 100/100 | 0 |
+| `store.html` | 100/100 | 0 |
 | `tax.html` | 100/100 | 0 |
 | `web-design.html` | 100/100 | 0 |
 

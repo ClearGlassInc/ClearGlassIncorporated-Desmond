@@ -1,9 +1,14 @@
 # Release Notes — 2026-06-17
 
-*84 commit(s) since v1.0.0*
+*89 commit(s) since v1.0.0*
+
+## New Features
+
+- **commerce:** build storefront cart + interactive admin governance cockpit (`d215693`)
 
 ## Bug Fixes
 
+- **seo:** add missing meta to investors/offers/docs subdir pages (#477) (`3421aa5`)
 - **osint:** complete burlington-osint -> Ontario-osint deck rename (`1434a5d`)
 - **seo:** stop alt-injection from corrupting JS inside <script> blocks (`f6b8faa`)
 - **seo:** raise on-page SEO from 64 to 98 across all pages (`2835884`)
@@ -69,6 +74,9 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`ba67bd6`)
+- refresh control-surface data feeds [skip ci] (`4c22c96`)
+- update generated outputs — 2026-06-17 11:46 UTC [skip ci] (`a38dc47`)
 - refresh control-surface data feeds [skip ci] (`31897e7`)
 - refresh control-surface data feeds [skip ci] (`8450905`)
 - refresh control-surface data feeds [skip ci] (`84190d8`)

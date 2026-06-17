@@ -31,5 +31,43 @@ export interface Approval {
   risk_tier: string;
   status: string;
   requested_by: string;
+  decided_by: string | null;
   created_at: string;
+}
+
+export interface AuditEvent {
+  id: number;
+  ts: string;
+  actor: string;
+  action: string;
+  target: string | null;
+  result: string;
+  risk_score: number;
+  risk_tier: string;
+}
+
+// Read helpers used by server components. Each tolerates an unreachable control
+// plane by surfacing a typed fallback rather than crashing the render.
+export async function getOverview(windowDays = 7): Promise<MetricsOverview | null> {
+  try {
+    return await api<MetricsOverview>(`/metrics/overview?window_days=${windowDays}`);
+  } catch {
+    return null;
+  }
+}
+
+export async function listApprovals(status = "pending"): Promise<Approval[]> {
+  try {
+    return await api<Approval[]>(`/approvals?status=${encodeURIComponent(status)}`);
+  } catch {
+    return [];
+  }
+}
+
+export async function listEvents(limit = 100): Promise<AuditEvent[]> {
+  try {
+    return await api<AuditEvent[]>(`/events?limit=${limit}`);
+  } catch {
+    return [];
+  }
 }

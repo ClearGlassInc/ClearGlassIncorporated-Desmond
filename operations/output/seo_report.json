@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-17T11:46:55.286012+00:00",
-  "files_audited": 48,
-  "average_score": 97.7,
+  "run_utc": "2026-06-17T18:30:09.957024+00:00",
+  "files_audited": 49,
+  "average_score": 97.8,
   "pages": [
     {
       "file": "404.html",
@@ -812,6 +812,24 @@
       "title_ok": true,
       "description": "STEGOFORGE is the futuristic cybersecurity terminal for ClearGlassInc Artemis with steganography, AES-256-GCM workflows, covert channels, and forensic AI\u2026",
       "description_length": 154,
+      "description_ok": true,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 100,
+      "issues": []
+    },
+    {
+      "file": "store.html",
+      "title": "ClearGlass Store \u2014 Book a Security Engagement",
+      "title_length": 45,
+      "title_ok": true,
+      "description": "Book fixed-fee security & compliance engagements from ClearGlass Inc.: Quick-Audit, Hardening Sprint, PHIPA Readiness & Managed Monitoring.",
+      "description_length": 139,
       "description_ok": true,
       "canonical_present": true,
       "h1_count": 1,

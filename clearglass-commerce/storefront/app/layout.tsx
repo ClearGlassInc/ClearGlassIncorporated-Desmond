@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { StoreShell } from "@/lib/StoreShell";
 
 export const metadata = {
   title: "ClearGlass Store",
@@ -16,10 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           color: "#eef2ff",
         }}
       >
-        <header style={{ padding: "16px 24px", borderBottom: "1px solid rgba(124,150,255,.16)" }}>
-          <strong>ClearGlass Store</strong>
-        </header>
-        <main style={{ maxWidth: 1080, margin: "0 auto", padding: 24 }}>{children}</main>
+        <StoreShell>{children}</StoreShell>
       </body>
     </html>
   );

@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #42",
+    "title": "Control Surface Feeds #43",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:52",
+    "timestamp": "2026-06-17T22:52:58Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #153",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-0c67a624-a519-48a7-8880-db16f0aa2b39",
+    "time": "22:08",
+    "timestamp": "2026-06-17T22:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #152",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-7876cd39-6fc7-4cd6-805d-71b099a6727f",
+    "time": "21:08",
+    "timestamp": "2026-06-17T21:08:06Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #341",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:30",
+    "timestamp": "2026-06-17T20:30:32Z"
+  },
+  {
+    "title": "pages build and deployment #772",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:30",
+    "timestamp": "2026-06-17T20:30:25Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1335",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:30",
+    "timestamp": "2026-06-17T20:30:23Z"
+  },
+  {
+    "title": "Control Surface Feeds #42",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:30",
     "timestamp": "2026-06-17T20:30:05Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:20",
     "timestamp": "2026-06-17T19:20:56Z"
-  },
-  {
-    "title": "Workflow Doctor #133",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:54Z"
-  },
-  {
-    "title": "Policy Gate #371",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:53Z"
-  },
-  {
-    "title": "Dependency Updater #9",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:51Z"
-  },
-  {
-    "title": "Control Surface Feeds #41",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:49Z"
-  },
-  {
-    "title": "Content Pipeline #31",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:48Z"
-  },
-  {
-    "title": "Compliance Evidence #9",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:46Z"
   }
 ]

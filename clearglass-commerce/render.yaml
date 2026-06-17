@@ -29,9 +29,9 @@ services:
       - key: STRIPE_PUBLISHABLE_KEY
         sync: false
       - key: CHECKOUT_SUCCESS_URL
-        value: https://clearglassinc.github.io/conduit.html
+        value: https://clearglass-commerce-storefront.onrender.com/success
       - key: CHECKOUT_CANCEL_URL
-        value: https://clearglassinc.github.io/conduit.html
+        value: https://clearglass-commerce-storefront.onrender.com/cancel
 
   - type: web
     name: clearglass-commerce-storefront

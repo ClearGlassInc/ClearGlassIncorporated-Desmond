@@ -1,10 +1,30 @@
 {
-  "run_utc": "2026-06-17T11:46:55.253352+00:00",
+  "run_utc": "2026-06-17T18:09:18.266087+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 84,
+  "commit_count": 89,
   "sections": {
+    "New Features": [
+      {
+        "sha": "d215693",
+        "type": "feat",
+        "scope": "commerce",
+        "subject": "build storefront cart + interactive admin governance cockpit",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      }
+    ],
     "Bug Fixes": [
+      {
+        "sha": "3421aa5",
+        "type": "fix",
+        "scope": "seo",
+        "subject": "add missing meta to investors/offers/docs subdir pages (#477)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
       {
         "sha": "1434a5d",
         "type": "fix",
@@ -515,6 +535,33 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "ba67bd6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "4c22c96",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "a38dc47",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-17 11:46 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
       {
         "sha": "31897e7",
         "type": "bot",

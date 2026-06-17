@@ -8,8 +8,8 @@ ships through the existing GitHub Pages path on merge to main, and production
 publishing stays a human-approved step.
 
 Checks (all must pass in --strict):
-  - burlington-osint.html exists and is search-indexable (robots: index)
-  - data/burlington-osint/intel.json is valid JSON with required keys
+  - Ontario-osint.html exists and is search-indexable (robots: index)
+  - data/Ontario-osint/intel.json is valid JSON with required keys
   - sitemap.xml is well-formed XML and lists the deck
   - nav.js links the deck (site-wide reachability)
   - sw.js precaches the deck (offline / from-any-location availability)
@@ -35,12 +35,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DECK = ROOT / "burlington-osint.html"
-INTEL = ROOT / "data" / "burlington-osint" / "intel.json"
+DECK = ROOT / "Ontario-osint.html"
+INTEL = ROOT / "data" / "Ontario-osint" / "intel.json"
 SITEMAP = ROOT / "sitemap.xml"
 NAV = ROOT / "nav.js"
 SW = ROOT / "sw.js"
-DECK_URL = "https://clearglassinc.github.io/burlington-osint.html"
+DECK_URL = "https://clearglassinc.github.io/Ontario-osint.html"
 
 
 def check(results: list[tuple[str, bool, str]], name: str, ok: bool, detail: str) -> None:
@@ -59,7 +59,7 @@ def validate() -> list[tuple[str, bool, str]]:
               "robots=index" if indexable else "robots is not index,follow")
     else:
         html = ""
-        check(results, "deck present", False, "burlington-osint.html missing")
+        check(results, "deck present", False, "Ontario-osint.html missing")
         check(results, "deck indexable", False, "deck missing")
 
     # 2. intel.json valid + required keys
@@ -79,7 +79,7 @@ def validate() -> list[tuple[str, bool, str]]:
     if SITEMAP.exists():
         try:
             minidom.parseString(SITEMAP.read_text(encoding="utf-8"))
-            listed = "burlington-osint.html" in SITEMAP.read_text(encoding="utf-8")
+            listed = "Ontario-osint.html" in SITEMAP.read_text(encoding="utf-8")
             check(results, "sitemap valid", True, "well-formed XML")
             check(results, "sitemap lists deck", listed,
                   "listed" if listed else "deck URL not in sitemap")
@@ -89,12 +89,12 @@ def validate() -> list[tuple[str, bool, str]]:
         check(results, "sitemap valid", False, "sitemap.xml missing")
 
     # 4. nav links the deck
-    nav_ok = NAV.exists() and "burlington-osint.html" in NAV.read_text(encoding="utf-8")
+    nav_ok = NAV.exists() and "Ontario-osint.html" in NAV.read_text(encoding="utf-8")
     check(results, "nav links deck", nav_ok,
           "linked site-wide" if nav_ok else "nav.js does not link the deck")
 
     # 5. service worker precaches the deck
-    sw_ok = SW.exists() and "/burlington-osint.html" in SW.read_text(encoding="utf-8")
+    sw_ok = SW.exists() and "/Ontario-osint.html" in SW.read_text(encoding="utf-8")
     check(results, "sw precaches deck", sw_ok,
           "offline-ready" if sw_ok else "deck not in sw precache")
 

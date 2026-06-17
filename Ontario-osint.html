@@ -264,7 +264,7 @@ kbd{font-family:var(--mono);font-size:10px;border:1px solid var(--line-2);border
    Self-contained, dependency-free. Deploys directly on GitHub Pages.
    - Live status stream  : mock realtime via EventTarget (~8.5s)
    - Investigation tasks : optimistic CRUD + rollback + toasts + localStorage
-   - Crime intel feed    : cited public-source summary (data/burlington-osint/intel.json)
+   - Crime intel feed    : cited public-source summary (data/Ontario-osint/intel.json)
    - Config / sources    : source registry + stream controls
    All data = lawful public sources only.
    ============================================================ */
@@ -447,7 +447,7 @@ const INTEL_FALLBACK = {
 };
 async function loadIntel(){
   try{
-    const res=await fetch("data/burlington-osint/intel.json",{cache:"no-store"});
+    const res=await fetch("data/Ontario-osint/intel.json",{cache:"no-store"});
     if(!res.ok)throw new Error("HTTP "+res.status);
     const data=await res.json();
     store.set({intel:data,intelError:false});
@@ -732,7 +732,7 @@ function ViewConfig(s){
       el("li",{},"Statistics Canada CSI tables — ",el("span",{class:"mono tiny"},"open data, CSV/JSON")),
       el("li",{},"City of Burlington council minutes — ",el("span",{class:"mono tiny"},"scrape / FOI")),
       el("li",{},"Ontario Land Tribunal case search — ",el("span",{class:"mono tiny"},"manual / scrape")),
-      el("li",{},"intel.json snapshot — ",el("span",{class:"mono tiny"},"data/burlington-osint/intel.json")),
+      el("li",{},"intel.json snapshot — ",el("span",{class:"mono tiny"},"data/Ontario-osint/intel.json")),
     )));
 
   wrap.appendChild(el("div",{class:"card"},

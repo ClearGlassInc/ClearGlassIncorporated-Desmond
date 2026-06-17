@@ -21,8 +21,8 @@ var PRECACHE = [
   "/control-surface.js",
   "/platform.js",
   "/nav.js",
-  "/burlington-osint.html",
-  "/data/burlington-osint/intel.json",
+  "/Ontario-osint.html",
+  "/data/Ontario-osint/intel.json",
   "/icon.svg",
   "/manifest.webmanifest"
 ];

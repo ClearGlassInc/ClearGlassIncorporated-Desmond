@@ -623,19 +623,42 @@ const msgEl   = document.getElementById('statusMsg');
 let currentPct = 0;
 let stageIdx = 0;
 const startDelay = 1800;
+let navigating = false;
 
-// Allow ?next=... override for the redirect target. Default → Artemis IV.
+// ── Sanitize ?next= to prevent open-redirect / javascript: XSS ──
+// Only allows same-origin relative or absolute paths.
+function safeNext(raw, fallback) {
+  if (!raw) return fallback;
+  try {
+    // Reject protocol-relative URLs like //evil.com outright
+    if (/^[\s\\\/]{2,}/.test(raw)) return fallback;
+    // Reject any URL with an explicit scheme that isn't http/https on this origin
+    const u = new URL(raw, location.origin);
+    if (u.origin !== location.origin) return fallback;
+    if (u.protocol !== location.protocol) return fallback;
+    return u.pathname + u.search + u.hash;
+  } catch (e) { return fallback; }
+}
+
 const params  = new URLSearchParams(location.search);
-const nextUrl = params.get('next') || 'artemis-iv.html';
+const nextUrl = safeNext(params.get('next'), 'artemis-iv.html');
+
+// Single navigation choke-point: marks the session-flag, plays the exit
+// animation, then redirects exactly once.
+function handoff() {
+  if (navigating) return;
+  navigating = true;
+  try { sessionStorage.setItem('cg.booted', '1'); } catch (e) {}
+  document.body.classList.add('exiting');
+  setTimeout(() => { window.location.href = nextUrl; }, 700);
+}
 
 setTimeout(() => {
   function nextStage() {
     if (stageIdx >= stages.length) {
       setTimeout(() => {
-        document.body.classList.add('exiting');
         window.dispatchEvent(new CustomEvent('clearglass:ready'));
-        // Hand off to Artemis IV after the exit fade completes
-        setTimeout(() => { window.location.href = nextUrl; }, 850);
+        handoff();
       }, 1200);
       return;
     }
@@ -679,12 +702,14 @@ const flickerInt = setInterval(() => {
 }, 400);
 
 // ── Skip on click / key press for impatient operators ──
-function skipBoot(){
-  document.body.classList.add('exiting');
-  setTimeout(() => { window.location.href = nextUrl; }, 600);
-}
-document.addEventListener('click', skipBoot);
-document.addEventListener('keydown', (e) => { if (['Enter',' ','Escape'].includes(e.key)) skipBoot(); });
+// Bind after a short delay so an in-flight click that landed
+// during page-load doesn't instantly skip the boot sequence.
+setTimeout(() => {
+  document.addEventListener('click', handoff);
+  document.addEventListener('keydown', (e) => {
+    if (['Enter', ' ', 'Escape'].includes(e.key)) handoff();
+  });
+}, 800);
 </script>
 
 </body>

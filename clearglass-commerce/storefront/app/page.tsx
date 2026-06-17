@@ -2,6 +2,7 @@
 // plane; the scaffold renders the shared static catalog so it builds without a
 // live API and stays in sync with the checkout pricing.
 import { CATALOG, formatPrice } from "@/lib/catalog";
+import { AddToCart } from "@/lib/AddToCart";
 
 export default function Home() {
   return (
@@ -20,21 +21,31 @@ export default function Home() {
         }}
       >
         {CATALOG.map((p) => (
-          <a
+          <div
             key={p.slug}
-            href={`/products/${p.slug}`}
             style={{
               border: "1px solid rgba(124,150,255,.16)",
               borderRadius: 14,
               padding: 20,
-              textDecoration: "none",
-              color: "inherit",
               background: "rgba(12,16,38,.6)",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <div style={{ fontWeight: 600 }}>{p.title}</div>
-            <div style={{ color: "#a78bfa", marginTop: 8 }}>{formatPrice(p.amount, p.currency)}</div>
-          </a>
+            <a
+              href={`/products/${p.slug}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <div style={{ fontWeight: 600 }}>{p.title}</div>
+              <div style={{ color: "#9aa6c8", fontSize: 13, marginTop: 6, lineHeight: 1.5 }}>
+                {p.blurb}
+              </div>
+              <div style={{ color: "#a78bfa", marginTop: 8 }}>
+                {formatPrice(p.amount, p.currency)}
+              </div>
+            </a>
+            <AddToCart product={p} block />
+          </div>
         ))}
       </div>
     </section>

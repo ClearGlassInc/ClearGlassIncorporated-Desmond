@@ -31,6 +31,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <a href="/approvals" style={{ color: "#9fc4ff" }}>
             Approvals
           </a>
+          <a href="/audit" style={{ color: "#9fc4ff" }}>
+            Audit
+          </a>
         </nav>
         <main style={{ maxWidth: 1080, margin: "0 auto", padding: 24 }}>{children}</main>
       </body>

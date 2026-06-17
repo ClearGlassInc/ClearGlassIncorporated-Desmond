@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Systems Control Surface — PERCIVAL Operations Console</title>
+<title>Systems Control Surface — PERCIVAL Operations Console |</title>
 <meta name="description" content="ClearGlass Systems Control Surface — a live operations console monitoring site health, SEO, accessibility, brand consistency, deployments, and automation,…">
 <link rel="canonical" href="https://clearglassinc.github.io/systems.html">
 <meta property="og:title" content="Systems Control Surface | ClearGlass Inc">
@@ -326,7 +326,7 @@
           if (hasMeta) seoOK.meta++; else seo.push({ page: it.p, kind: "missing meta description", sev: "warn" });
           if (hasCanon) seoOK.canon++; else seo.push({ page: it.p, kind: "missing canonical", sev: "info" });
           if (!/<html[^>]*\blang=/i.test(h)) a11y.push({ page: it.p, kind: "html lang missing", sev: "warn" });
-          var imgs = h.match(/<img\b[^ alt="Clearglass">]*>/gi) || [];
+          var imgs = h.match(/<img\b[^>]*>/gi) || [];
           if (imgs.some(function (t) { return !/\balt=/i.test(t); }))
             a11y.push({ page: it.p, kind: "img without alt", sev: "warn" });
           var hexes = h.match(/#[0-9a-fA-F]{6}\b/g) || [];

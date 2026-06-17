@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-17T09:29:41.776119+00:00",
+  "run_utc": "2026-06-17T09:34:25.733662+00:00",
   "files_audited": 48,
-  "average_score": 97.9,
+  "average_score": 97.7,
   "pages": [
     {
       "file": "404.html",
@@ -41,8 +41,8 @@
     },
     {
       "file": "ClearGlass-NEXUS-v12-FINAL.html",
-      "title": "ClearGlass NEXUS v12 \u2014 DARPA Intelligence Platform",
-      "title_length": 50,
+      "title": "ClearGlass NEXUS v12 \u2014 DARPA Intelligence Platform |",
+      "title_length": 52,
       "title_ok": true,
       "description": "ClearGlass NEXUS v12 \u2014 DARPA Intelligence Platform | Burlington Operations Center ClearGlass Inc. builds intelligent automation, AI operations, and security\u2026",
       "description_length": 157,
@@ -203,8 +203,8 @@
     },
     {
       "file": "artemis-percival.html",
-      "title": "AVALON \u00b7 ARTEMIS \u2295 PERCIVAL \u2014 Unified Fusion Core",
-      "title_length": 49,
+      "title": "AVALON \u00b7 ARTEMIS \u2295 PERCIVAL \u2014 Unified Fusion Core |",
+      "title_length": 51,
       "title_ok": true,
       "description": "AVALON \u2014 ARTEMIS fused into PERCIVAL. A glass-built, always-on fusion command center: holographic dual-core brain, agent swarm, live OSINT telemetry, a real\u2026",
       "description_length": 157,
@@ -349,8 +349,8 @@
     },
     {
       "file": "clearglass-nexus.html",
-      "title": "ClearGlass NEXUS v12 \u2014 DARPA Intelligence Platform",
-      "title_length": 50,
+      "title": "ClearGlass NEXUS v12 \u2014 DARPA Intelligence Platform |",
+      "title_length": 52,
       "title_ok": true,
       "description": "ClearGlass NEXUS v12 \u2014 a live intelligence platform fusing geospatial, threat, market, and space-weather feeds into one operations center.",
       "description_length": 138,
@@ -439,8 +439,8 @@
     },
     {
       "file": "conduit.html",
-      "title": "CONDUIT \u00b7 Workflow Automation \u2014 Self-Hosted, Open Source",
-      "title_length": 56,
+      "title": "CONDUIT \u00b7 Workflow Automation \u2014 Self-Hosted, Open Source \u2014",
+      "title_length": 58,
       "title_ok": true,
       "description": "CONDUIT \u2014 a self-hosted, open-source workflow automation platform. Visual drag-and-drop builder, 400+ app integrations (Gmail, Slack, Notion, Google Sheets,\u2026",
       "description_length": 157,
@@ -825,8 +825,8 @@
     },
     {
       "file": "systems.html",
-      "title": "Systems Control Surface \u2014 PERCIVAL Operations Console",
-      "title_length": 53,
+      "title": "Systems Control Surface \u2014 PERCIVAL Operations Console |",
+      "title_length": 55,
       "title_ok": true,
       "description": "ClearGlass Systems Control Surface \u2014 a live operations console monitoring site health, SEO, accessibility, brand consistency, deployments, and automation,\u2026",
       "description_length": 155,
@@ -834,12 +834,14 @@
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
-      "img_without_alt": 0,
+      "img_without_alt": 1,
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 90,
+      "issues": [
+        "1 image(s) missing alt text"
+      ]
     },
     {
       "file": "tax.html",
@@ -861,8 +863,8 @@
     },
     {
       "file": "web-design.html",
-      "title": "Website Design & Development \u2014 Growth Infrastructure",
-      "title_length": 52,
+      "title": "Website Design & Development \u2014 Growth Infrastructure |",
+      "title_length": 54,
       "title_ok": true,
       "description": "ClearGlass designs and builds fast, secure, accessible websites engineered as business growth infrastructure \u2014 architecture, front-end development,\u2026",
       "description_length": 148,
@@ -886,6 +888,7 @@
     "1x \u2014 No <hN> tag found",
     "1x \u2014 Missing og:title",
     "1x \u2014 Missing og:description",
-    "1x \u2014 Missing og:image"
+    "1x \u2014 Missing og:image",
+    "1x \u2014 N image(s) missing alt text"
   ]
 }

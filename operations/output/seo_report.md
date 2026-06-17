@@ -1,7 +1,7 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-17T09:29:41.776119+00:00
-**Average Score:** 97.9/100
+**Run:** 2026-06-17T09:34:25.733662+00:00
+**Average Score:** 97.7/100
 **Files Audited:** 48
 
 ## Page Scores
@@ -10,6 +10,7 @@
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
 | `artemis-percival.html` | 90/100 | 1 |
+| `systems.html` | 90/100 | 1 |
 | `404.html` | 100/100 | 0 |
 | `CG-os.html` | 100/100 | 0 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 100/100 | 0 |
@@ -53,7 +54,6 @@
 | `sentinel.html` | 100/100 | 0 |
 | `smb.html` | 100/100 | 0 |
 | `stegoforge.html` | 100/100 | 0 |
-| `systems.html` | 100/100 | 0 |
 | `tax.html` | 100/100 | 0 |
 | `web-design.html` | 100/100 | 0 |
 
@@ -67,3 +67,4 @@
 - 1x — Missing og:title
 - 1x — Missing og:description
 - 1x — Missing og:image
+- 1x — N image(s) missing alt text

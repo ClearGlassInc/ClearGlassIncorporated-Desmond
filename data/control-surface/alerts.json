@@ -1,7 +1,22 @@
 [
   {
     "status": "warn",
+    "title": "CI failing",
+    "detail": "Latest run #634 concluded failure (2026-06-17)."
+  },
+  {
+    "status": "warn",
+    "title": "Dependency Updater failing",
+    "detail": "Latest run #8 concluded failure (2026-06-17)."
+  },
+  {
+    "status": "warn",
     "title": "Running Copilot cloud agent failing",
-    "detail": "Latest run #149 concluded failure (2026-06-17)."
+    "detail": "Latest run #150 concluded failure (2026-06-17)."
+  },
+  {
+    "status": "warn",
+    "title": "pages build and deployment failing",
+    "detail": "Latest run #770 concluded failure (2026-06-17)."
   }
 ]

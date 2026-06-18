@@ -1,8 +1,64 @@
 [
   {
-    "title": "Control Surface Feeds #48",
+    "title": "Control Surface Feeds #49",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:28",
+    "timestamp": "2026-06-18T21:28:15Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #176",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-3bc2bb35-5aa9-4824-b41e-b5c9fb3ecec9",
+    "time": "21:08",
+    "timestamp": "2026-06-18T21:08:06Z"
+  },
+  {
+    "title": "Health Monitor #76",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "20:30",
+    "timestamp": "2026-06-18T20:30:15Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #175",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-e0eea99b-e675-4d65-b7ee-defad300f8ef",
+    "time": "20:08",
+    "timestamp": "2026-06-18T20:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #174",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-1051371e-c4ed-4ad7-a1fa-03e49173d0d9",
+    "time": "19:08",
+    "timestamp": "2026-06-18T19:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #357",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "18:36",
+    "timestamp": "2026-06-18T18:36:18Z"
+  },
+  {
+    "title": "pages build and deployment #788",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:36",
+    "timestamp": "2026-06-18T18:36:13Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1364",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:36",
+    "timestamp": "2026-06-18T18:36:12Z"
+  },
+  {
+    "title": "Control Surface Feeds #48",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "18:35",
     "timestamp": "2026-06-18T18:35:56Z"
   },
@@ -82,61 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "15:52",
     "timestamp": "2026-06-18T15:52:49Z"
-  },
-  {
-    "title": "Health Monitor #75",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:35",
-    "timestamp": "2026-06-18T15:35:19Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #170",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-199bed6d-5a42-425c-922f-6bebc8f01111",
-    "time": "15:08",
-    "timestamp": "2026-06-18T15:08:05Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #169",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4bb4c22b-4352-4216-8f34-07fa9a5c8029",
-    "time": "14:08",
-    "timestamp": "2026-06-18T14:08:05Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #168",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-fdcbd78d-e5b1-497a-8182-dd1070ff909f",
-    "time": "13:08",
-    "timestamp": "2026-06-18T13:08:05Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #167",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-c2e39309-90f9-437b-a803-007ec5240b62",
-    "time": "12:08",
-    "timestamp": "2026-06-18T12:08:05Z"
-  },
-  {
-    "title": "Workflow Doctor #136",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "12:06",
-    "timestamp": "2026-06-18T12:06:00Z"
-  },
-  {
-    "title": "Content Pipeline #34",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "12:05",
-    "timestamp": "2026-06-18T12:05:45Z"
-  },
-  {
-    "title": "ClearGlassInc Military-Op Release Pipeline #3",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "12:05",
-    "timestamp": "2026-06-18T12:05:36Z"
   }
 ]

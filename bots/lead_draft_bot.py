@@ -220,7 +220,8 @@ def run() -> dict:
         out_disp = OUT_DIR.relative_to(ROOT)
     except ValueError:
         out_disp = OUT_DIR
-    print(f"lead_draft: generated {len(ready)} CASL-compliant draft(s), {len(skipped)} skipped. "
+    print(f"lead_draft: generated {len(ready)} CASL-structured draft(s) "
+          f"(add a complete mailing address before sending), {len(skipped)} skipped. "
           f"No emails sent. Output: {out_disp}")
     return {"ready": len(ready), "skipped": len(skipped), "sends": 0}
 

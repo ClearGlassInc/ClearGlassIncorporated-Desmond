@@ -1,142 +1,142 @@
 [
   {
-    "title": "Control Surface Feeds #45",
+    "title": "Control Surface Feeds #46",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
-    "time": "07:05",
-    "timestamp": "2026-06-18T07:05:47Z"
+    "time": "11:17",
+    "timestamp": "2026-06-18T11:17:08Z"
   },
   {
-    "title": "IP Protection Bot - Risk Assessment #665",
+    "title": "Deploy GitHub Pages #353",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "11:10",
+    "timestamp": "2026-06-18T11:10:31Z"
+  },
+  {
+    "title": "Security #418",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/production-deployments-patch-ln1shq",
+    "time": "11:10",
+    "timestamp": "2026-06-18T11:10:23Z"
+  },
+  {
+    "title": "PR Automation #200",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/production-deployments-patch-ln1shq",
+    "time": "11:10",
+    "timestamp": "2026-06-18T11:10:23Z"
+  },
+  {
+    "title": "Policy Gate #391",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/production-deployments-patch-ln1shq",
+    "time": "11:10",
+    "timestamp": "2026-06-18T11:10:23Z"
+  },
+  {
+    "title": "CI #654",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/production-deployments-patch-ln1shq",
+    "time": "11:10",
+    "timestamp": "2026-06-18T11:10:23Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #673",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/production-deployments-patch-ln1shq",
+    "time": "11:10",
+    "timestamp": "2026-06-18T11:10:23Z"
+  },
+  {
+    "title": "Code Quality: PR #491 #1359",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/491/head",
+    "time": "11:10",
+    "timestamp": "2026-06-18T11:10:21Z"
+  },
+  {
+    "title": "Content Pipeline #33",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_run on main",
+    "time": "11:08",
+    "timestamp": "2026-06-18T11:08:28Z"
+  },
+  {
+    "title": "pages build and deployment #784",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:08",
+    "timestamp": "2026-06-18T11:08:23Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1358",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:08",
+    "timestamp": "2026-06-18T11:08:23Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #166",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-455ae9cf-bba1-4644-bdb2-484dd3d66465",
+    "time": "11:08",
+    "timestamp": "2026-06-18T11:08:06Z"
+  },
+  {
+    "title": "Bot Orchestrator #25",
     "status": "ok",
     "detail": "success \u00b7 schedule on main",
-    "time": "06:58",
-    "timestamp": "2026-06-18T06:58:48Z"
+    "time": "11:08",
+    "timestamp": "2026-06-18T11:08:01Z"
   },
   {
-    "title": "CI #646",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:15",
-    "timestamp": "2026-06-18T06:15:16Z"
-  },
-  {
-    "title": "Policy Gate #383",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:15",
-    "timestamp": "2026-06-18T06:15:16Z"
-  },
-  {
-    "title": "PR Automation #196",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:15",
-    "timestamp": "2026-06-18T06:15:16Z"
-  },
-  {
-    "title": "Security #410",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:15",
-    "timestamp": "2026-06-18T06:15:16Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #664",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:15",
-    "timestamp": "2026-06-18T06:15:16Z"
-  },
-  {
-    "title": "Code Quality: PR #486 #1349",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/486/head",
-    "time": "06:15",
-    "timestamp": "2026-06-18T06:15:12Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #663",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:12",
-    "timestamp": "2026-06-18T06:12:55Z"
-  },
-  {
-    "title": "Security #409",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:12",
-    "timestamp": "2026-06-18T06:12:55Z"
-  },
-  {
-    "title": "PR Automation #195",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:12",
-    "timestamp": "2026-06-18T06:12:55Z"
-  },
-  {
-    "title": "CI #645",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:12",
-    "timestamp": "2026-06-18T06:12:55Z"
-  },
-  {
-    "title": "Policy Gate #382",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/outreach-automation",
-    "time": "06:12",
-    "timestamp": "2026-06-18T06:12:55Z"
-  },
-  {
-    "title": "Code Quality: PR #486 #1348",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/486/head",
-    "time": "06:12",
-    "timestamp": "2026-06-18T06:12:53Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #161",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-e36c7099-893e-4f8f-9d0c-e39979548773",
-    "time": "06:08",
-    "timestamp": "2026-06-18T06:08:06Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #662",
+    "title": "IP Protection Bot - Risk Assessment #672",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "06:06",
-    "timestamp": "2026-06-18T06:06:24Z"
+    "time": "11:02",
+    "timestamp": "2026-06-18T11:02:22Z"
   },
   {
-    "title": "Policy Gate #381",
+    "title": "CI #653",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "06:06",
-    "timestamp": "2026-06-18T06:06:24Z"
+    "time": "11:02",
+    "timestamp": "2026-06-18T11:02:22Z"
   },
   {
-    "title": "Security #408",
+    "title": "Security #417",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "06:06",
-    "timestamp": "2026-06-18T06:06:24Z"
+    "time": "11:02",
+    "timestamp": "2026-06-18T11:02:21Z"
   },
   {
-    "title": "Deploy GitHub Pages #347",
+    "title": "Workflow Doctor #135",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "06:06",
-    "timestamp": "2026-06-18T06:06:24Z"
+    "time": "11:02",
+    "timestamp": "2026-06-18T11:02:21Z"
   },
   {
-    "title": "CI #644",
+    "title": "Deploy GitHub Pages #352",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "06:06",
-    "timestamp": "2026-06-18T06:06:24Z"
+    "time": "11:02",
+    "timestamp": "2026-06-18T11:02:21Z"
+  },
+  {
+    "title": "Policy Gate #390",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "11:02",
+    "timestamp": "2026-06-18T11:02:21Z"
+  },
+  {
+    "title": "pages build and deployment #783",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:02",
+    "timestamp": "2026-06-18T11:02:20Z"
   }
 ]

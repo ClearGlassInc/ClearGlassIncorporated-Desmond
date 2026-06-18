@@ -13,6 +13,57 @@
   <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
   <link rel="icon" href="/icon.svg">
   <link rel="manifest" href="/manifest.webmanifest">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ClearGlass Inc.",
+    "url": "https://clearglassinc.github.io",
+    "logo": "https://clearglassinc.github.io/logo.png",
+    "sameAs": ["https://github.com/ClearGlassInc"],
+    "areaServed": { "@type": "AdministrativeArea", "name": "Ontario, Canada" },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "ClearGlass Security & Compliance Engagements",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "priceCurrency": "CAD",
+          "price": "249",
+          "url": "https://clearglassinc.github.io/store.html#quick-audit",
+          "itemOffered": { "@type": "Service", "name": "Security Quick-Audit",
+            "description": "Read-only security posture review with a branded findings report and a 30-minute readout call." }
+        },
+        {
+          "@type": "Offer",
+          "priceCurrency": "CAD",
+          "price": "2500",
+          "priceSpecification": { "@type": "PriceSpecification", "price": "2500", "priceCurrency": "CAD", "minPrice": "2500" },
+          "url": "https://clearglassinc.github.io/store.html#hardening",
+          "itemOffered": { "@type": "Service", "name": "M365 + Windows Hardening Sprint",
+            "description": "Fixed-fee 1-2 week sprint to harden Microsoft 365 / Entra ID and Windows endpoints to CIS-aligned baselines." }
+        },
+        {
+          "@type": "Offer",
+          "priceCurrency": "CAD",
+          "price": "3000",
+          "priceSpecification": { "@type": "PriceSpecification", "price": "3000", "priceCurrency": "CAD", "minPrice": "3000" },
+          "url": "https://clearglassinc.github.io/store.html#phipa",
+          "itemOffered": { "@type": "Service", "name": "PHIPA Readiness Assessment",
+            "description": "Privacy and security gap assessment for Ontario health-sector organizations, with a board-ready remediation roadmap." }
+        },
+        {
+          "@type": "Offer",
+          "priceCurrency": "CAD",
+          "url": "https://clearglassinc.github.io/store.html#monitoring",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "price": "600", "priceCurrency": "CAD", "unitText": "MONTH" },
+          "itemOffered": { "@type": "Service", "name": "Managed Monitoring",
+            "description": "Continuous attack-surface and posture monitoring with monthly executive risk reporting, governed by PERCIVAL." }
+        }
+      ]
+    }
+  }
+  </script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{

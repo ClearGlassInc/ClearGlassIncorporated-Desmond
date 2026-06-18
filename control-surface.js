@@ -18,7 +18,7 @@
   window.__cgNavLoaded = true;            // supersede the legacy hover menu (nav.js)
 
   var REPO = "ClearGlassInc/ClearGlassInc.github.io";
-  var EMAIL = "info@clearglassinc.com";
+  var EMAIL = "desmondotieno@icloud.com";
 
   // ── destinations (grouped) ──────────────────────────────────────────────
   var GROUPS = [

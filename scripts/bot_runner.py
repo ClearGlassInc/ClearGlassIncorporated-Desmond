@@ -75,6 +75,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "content",
         "schedule": "daily",
     },
+    "lead_draft": {
+        "module": "bots.lead_draft_bot",
+        "group": "sales",
+        "schedule": "daily",
+    },
     "seo_optimizer": {
         "module": "bots.seo_optimizer_bot",
         "group": "seo",

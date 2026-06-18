@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #43",
+    "title": "Control Surface Feeds #44",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "01:41",
+    "timestamp": "2026-06-18T01:41:50Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #156",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-2ba5fd38-7919-486b-a3ab-d97857b264f2",
+    "time": "01:08",
+    "timestamp": "2026-06-18T01:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #155",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-791a73b6-4abb-4940-9c17-b5fef85d320f",
+    "time": "00:08",
+    "timestamp": "2026-06-18T00:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #154",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4d166761-a313-4169-8241-93897638be12",
+    "time": "23:08",
+    "timestamp": "2026-06-17T23:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #342",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:53",
+    "timestamp": "2026-06-17T22:53:26Z"
+  },
+  {
+    "title": "pages build and deployment #773",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:53",
+    "timestamp": "2026-06-17T22:53:20Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1336",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:53",
+    "timestamp": "2026-06-17T22:53:19Z"
+  },
+  {
+    "title": "Control Surface Feeds #43",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:52",
     "timestamp": "2026-06-17T22:52:58Z"
   },
@@ -89,54 +138,5 @@
     "detail": "success \u00b7 workflow_dispatch on main",
     "time": "19:21",
     "timestamp": "2026-06-17T19:21:19Z"
-  },
-  {
-    "title": "pages build and deployment #771",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on main",
-    "time": "19:21",
-    "timestamp": "2026-06-17T19:21:13Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1334",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:21",
-    "timestamp": "2026-06-17T19:21:12Z"
-  },
-  {
-    "title": "Burlington Release #4",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:21",
-    "timestamp": "2026-06-17T19:21:02Z"
-  },
-  {
-    "title": "ClearGlassInc Military-Op Release Pipeline #2",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:21",
-    "timestamp": "2026-06-17T19:21:01Z"
-  },
-  {
-    "title": "API Security Audit #9",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:59Z"
-  },
-  {
-    "title": "Commerce Daily Loop #6",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:58Z"
-  },
-  {
-    "title": "Repo Audit #1",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:20",
-    "timestamp": "2026-06-17T19:20:56Z"
   }
 ]

@@ -90,3 +90,46 @@ If it is helpful, the simplest first step is our read-only **Security Quick-Audi
 
 — Desmond, ClearGlass Inc.
 {{CASL footer}}
+
+
+---
+
+## Follow-up cadence (CASL-compliant)
+
+Keep follow-ups few, polite, and easy to stop. Every follow-up still carries the CASL
+footer, references the original relevance, and honours opt-out immediately. **Stop the
+sequence the moment they reply.**
+
+### Touch 2 — gentle nudge (4-6 business days after Touch 1, only if no reply)
+**Subject:** Re: {{original subject}}
+
+Hi {{First name}},
+
+Quick follow-up in case my note slipped by. The {{offering}} is low-commitment and the
+findings are yours to keep regardless of next steps. If it's not relevant right now, no
+problem - just reply "not now" and I won't follow up again.
+
+- Desmond, ClearGlass Inc.
+{{CASL footer}}
+
+### Touch 3 - value + close (5-7 business days after Touch 2, final)
+**Subject:** One useful resource for {{Company}}
+
+Hi {{First name}},
+
+Last note from me. Whether or not we work together, here's a free resource your team may
+find useful: {{free PHIPA checklist / hardening quick-wins link}}. If a {{offering}} ever
+makes sense, I'm one reply away. I'll close the loop here and won't email again.
+
+- Desmond, ClearGlass Inc.
+{{CASL footer}}
+
+> **Rule:** maximum three touches per contact. Any reply, opt-out, or "no" ends the
+> sequence permanently. Personalize every send - no bulk blasting.
+
+## Subject-line variants (A/B - specific, never clickbait)
+- A 3-day read-only security check for {{Company}}
+- {{Company}}'s Microsoft 365 - a quick, no-change review
+- Where does {{Company}} stand on email security (SPF/DKIM/DMARC)?
+- Free PHIPA readiness checklist for {{clinic type}}
+- A fixed-price security starting point for {{sector}} teams

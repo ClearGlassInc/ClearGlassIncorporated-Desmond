@@ -146,6 +146,27 @@
       font-family:var(--sans);font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;border:0}
     .etx-notify{color:#081018;background:var(--crystal)}
     .etx-close{color:var(--t2);background:#fff;border:1px solid var(--line)}
+    /* conversion: trust strip, lead magnet, FAQ */
+    .trust{display:flex;flex-wrap:wrap;gap:9px 22px;margin:18px 0 2px;font-family:var(--mono);font-size:12px;color:var(--t3)}
+    .trust span{display:inline-flex;align-items:center;gap:7px}
+    .trust b{color:var(--ink);font-weight:700}
+    .lead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin:22px 0 6px;
+      padding:20px 22px;border:1px solid rgba(52,211,153,.35);border-radius:18px;
+      background:linear-gradient(120deg,rgba(52,211,153,.10),rgba(56,189,248,.06))}
+    .lead .lt{font-family:var(--serif);font-weight:600;font-size:1.2rem}
+    .lead .ld{color:var(--t2);font-size:.92rem;margin-top:3px;max-width:56ch}
+    .lead a.lcta{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;
+      background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:.92rem}
+    .lead a.lcta:hover{background:var(--ink-2)}
+    .faq{margin:30px 0 6px}
+    .faq h2{font-family:var(--serif);font-weight:600;font-size:1.5rem;margin-bottom:12px}
+    .faq details{border:1px solid var(--line);border-radius:12px;padding:2px 16px;margin-bottom:9px;background:#fff}
+    .faq summary{cursor:pointer;font-weight:700;padding:13px 0;font-size:.96rem;list-style:none}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary::after{content:"+";float:right;color:var(--t3);font-weight:400}
+    .faq details[open] summary::after{content:"\2013"}
+    .faq p{color:var(--t2);font-size:.92rem;padding:0 0 14px}
+    .faq a{color:#7c5cff}
   </style>
 </head>
 <body>
@@ -159,8 +180,14 @@
     <section class="hero">
       <div class="eyebrow">ClearGlass · Engagements · Ontario, Canada</div>
       <h1>Book a security engagement.</h1>
-      <p class="lede">Fixed-fee, scoped, and outcome-driven. Choose an engagement below and check out securely.
-        Card payments are powered by Stripe — your details never touch this site, and no funds are ever auto-sent.</p>
+      <p class="lede">Fixed-fee, scoped, and outcome-driven. Choose an engagement and pay the way you prefer —
+        <b>Interac e-Transfer</b>, card, or invoice. Nothing is auto-charged, and your details never touch this site.</p>
+      <div class="trust">
+        <span>📍 <b>Ontario-based</b> · Burlington</span>
+        <span>🛡 <b>CIS-aligned</b> baselines</span>
+        <span>✍ <b>Written authorization</b> before any work</span>
+        <span>💸 <b>No auto-charges</b></span>
+      </div>
     </section>
 
     <section class="grid" id="store">
@@ -229,11 +256,27 @@
       </article>
     </section>
 
+    <div class="lead">
+      <div>
+        <div class="lt">Free PHIPA Readiness Checklist</div>
+        <div class="ld">Ontario health-sector team? Start with our free checklist — zero commitment — then upgrade to a full assessment only if it's useful.</div>
+      </div>
+      <a class="lcta" href="offers/phipa-readiness-checklist.html">Get the free checklist →</a>
+    </div>
+
     <div class="note">
       <b>How payment works:</b> pay by <b>Interac e-Transfer</b> (no fees, Canadian banks) using the button on any
       engagement, by secure <b>card checkout</b> where enabled, or by a confirmed <b>invoice</b> raised on the scope call.
       <span class="lock">🔒</span> Your card details never touch this site, and no funds are ever auto-sent.
     </div>
+
+    <section class="faq">
+      <h2>Questions, answered</h2>
+      <details><summary>How do I pay?</summary><p>Three ways, your choice: <b>Interac e-Transfer</b> (no fees) to desmondotieno@icloud.com, secure <b>card checkout</b> where enabled, or a confirmed <b>invoice</b>. Nothing is auto-charged.</p></details>
+      <details><summary>What do I get, and how fast?</summary><p>Each engagement has fixed, written deliverables — e.g. the Quick-Audit returns a risk-ranked findings report in 3–5 business days plus a 30-minute readout call.</p></details>
+      <details><summary>Will anything change on my systems?</summary><p>The Quick-Audit is strictly read-only. Hands-on work (e.g. the Hardening Sprint) proceeds only under your written authorization, with changes applied on your sign-off.</p></details>
+      <details><summary>Not sure which one fits?</summary><p>Start with the <b>$249 Quick-Audit</b> — it's the low-commitment first step, and its findings tell you whether a Sprint, PHIPA assessment, or monitoring makes sense. Questions? <a href="mailto:desmondotieno@icloud.com">desmondotieno@icloud.com</a>.</p></details>
+    </section>
 
     <!-- Interac e-Transfer instructions modal (populated per engagement) -->
     <div class="etx-back" id="etxBack" role="dialog" aria-modal="true" aria-labelledby="etxTitle" aria-hidden="true">

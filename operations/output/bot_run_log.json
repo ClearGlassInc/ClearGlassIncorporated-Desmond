@@ -196,5 +196,23 @@
     "error": null,
     "started_utc": "2026-06-17T18:09:18.183291+00:00",
     "duration_s": 0.59
+  },
+  {
+    "bot": "marketing",
+    "module": "bots.marketing_bot",
+    "group": "content",
+    "status": "ok",
+    "error": null,
+    "started_utc": "2026-06-18T06:02:16.364685+00:00",
+    "duration_s": 0.01
+  },
+  {
+    "bot": "content_collector",
+    "module": "bots.content_collector_bot",
+    "group": "content",
+    "status": "ok",
+    "error": null,
+    "started_utc": "2026-06-18T06:02:16.434945+00:00",
+    "duration_s": 0.35
   }
 ]

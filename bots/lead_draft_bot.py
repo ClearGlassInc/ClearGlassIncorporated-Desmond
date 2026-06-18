@@ -177,11 +177,13 @@ def run() -> dict:
         "",
         f"_Generated {now.isoformat()} · {len(ready)} draft(s), {len(skipped)} skipped._",
         "",
-        "> **These are DRAFTS. Nothing has been sent.** Before sending each one: "
-        "(1) verify the recipient's public business email on the firm's Contact page, "
-        "(2) replace `{{First name}}` and `{{specific public observation}}`, "
-        "(3) fill the CASL footer address fields. Max **3 touches** per contact; any reply "
-        "or opt-out ends the sequence. Personalize every send — no bulk blasting.",
+        (
+            "> **These are DRAFTS. Nothing has been sent.** Before sending each one: "
+            + "(1) verify the recipient's public business email on the firm's Contact page, "
+            + "(2) replace `{{First name}}` and `{{specific public observation}}`, "
+            + "(3) fill the CASL footer address fields. Max **3 touches** per contact; any reply "
+            + "or opt-out ends the sequence. Personalize every send — no bulk blasting."
+        ),
         "",
     ]
     for d in ready:

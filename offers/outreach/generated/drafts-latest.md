@@ -1,6 +1,6 @@
 # ClearGlass — Generated Outreach Drafts
 
-_Generated 2026-06-18T06:12:31.135856+00:00 · 10 draft(s), 0 skipped._
+_Generated 2026-06-18T06:15:08.229896+00:00 · 10 draft(s), 0 skipped._
 
 > **These are DRAFTS. Nothing has been sent.** Before sending each one: (1) verify the recipient's public business email on the firm's Contact page, (2) replace `{{First name}}` and `{{specific public observation}}`, (3) fill the CASL footer address fields. Max **3 touches** per contact; any reply or opt-out ends the sequence. Personalize every send — no bulk blasting.
 

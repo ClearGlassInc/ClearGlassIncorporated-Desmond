@@ -1,8 +1,8 @@
 # ClearGlass — Generated Outreach Drafts
 
-_Generated 2026-06-18T06:15:08.229896+00:00 · 10 draft(s), 0 skipped._
+_Generated 2026-06-18T09:35:35.243526+00:00 · 10 draft(s), 0 skipped._
 
-> **These are DRAFTS. Nothing has been sent.** Before sending each one: (1) verify the recipient's public business email on the firm's Contact page, (2) replace `{{First name}}` and `{{specific public observation}}`, (3) fill the CASL footer address fields. Max **3 touches** per contact; any reply or opt-out ends the sequence. Personalize every send — no bulk blasting.
+> **These are DRAFTS. Nothing has been sent.** Before sending each one: (1) verify the recipient's public business email on the firm's Contact page, (2) replace `{{First name}}` and `{{specific public observation}}`, (3) **add a complete CASL mailing address** to the footer — a street address or PO box + postal code. *"Burlington, Ontario" alone is not a deliverable address and is not CASL-sufficient.* Max **3 touches** per contact; any reply or opt-out ends the sequence. Personalize every send — no bulk blasting.
 
 ## Positive Accounting — Accounting
 - **Offer:** Hardening Sprint (Standard)  ·  **Template:** hardening  ·  **Consent:** Published business email (CASL)
@@ -21,7 +21,7 @@ Open to a short scoping call to confirm fit and a fixed price? Details: https://
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -42,7 +42,7 @@ Open to a short scoping call to confirm fit and a fixed price? Details: https://
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -63,7 +63,7 @@ Worth a look? You can review or book it here: https://clearglassinc.github.io/st
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -84,7 +84,7 @@ Worth a look? You can review or book it here: https://clearglassinc.github.io/st
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -105,7 +105,7 @@ Open to a short scoping call to confirm fit and a fixed price? Details: https://
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -126,7 +126,7 @@ Open to a short scoping call to confirm fit and a fixed price? Details: https://
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -147,7 +147,7 @@ Open to a short scoping call to confirm fit and a fixed price? Details: https://
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -168,7 +168,7 @@ Open to a short scoping call to confirm fit and a fixed price? Details: https://
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -189,7 +189,7 @@ Open to a short scoping call to confirm fit and a fixed price? Details: https://
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```
 
@@ -210,6 +210,6 @@ Worth a short call to see if it fits? Details: https://clearglassinc.github.io/s
 
 — Desmond, ClearGlass Inc.
 
-ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada
+ClearGlass Inc. · Burlington, Ontario, Canada
 You're receiving this because your business contact is publicly listed and this relates to your role. Prefer not to hear from us? Reply "unsubscribe" and we'll remove you within 10 business days.
 ```

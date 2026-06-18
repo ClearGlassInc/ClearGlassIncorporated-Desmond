@@ -1,10 +1,64 @@
 {
-  "run_utc": "2026-06-17T18:09:18.266087+00:00",
+  "run_utc": "2026-06-18T11:08:19.473993+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 89,
+  "commit_count": 115,
   "sections": {
     "New Features": [
+      {
+        "sha": "b507131",
+        "type": "feat",
+        "scope": "outreach",
+        "subject": "automated CASL-compliant draft generation (never sends)",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "f25dd1d",
+        "type": "feat",
+        "scope": "revenue",
+        "subject": "store conversion boost + outreach follow-ups + bot content",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "bd23741",
+        "type": "feat",
+        "scope": "seo",
+        "subject": "full search-visibility strategy + high-impact technical fixes",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "e7df308",
+        "type": "feat",
+        "scope": "store",
+        "subject": "add Interac e-Transfer payment option to every engagement",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "c23737a",
+        "type": "feat",
+        "scope": "store",
+        "subject": "add JSON-LD structured data for storefront offers",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "b867724",
+        "type": "feat",
+        "scope": "store",
+        "subject": "native on-site storefront with secure Stripe checkout",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
       {
         "sha": "d215693",
         "type": "feat",
@@ -13,15 +67,60 @@
         "author": "Claude",
         "date": "2026-06-17",
         "breaking": false
+      },
+      {
+        "sha": "2a2a07b",
+        "type": "feat",
+        "scope": "clearpulse",
+        "subject": "add Horizon 2030 advanced capability layer",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "e0732b2",
+        "type": "fix",
+        "scope": "lint",
+        "subject": "remove unused 'import sys' in scripts/repo_audit.py",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "91c4611",
+        "type": "fix",
+        "scope": "store",
+        "subject": "trim store meta/og description into ideal length (SEO 100)",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "6861d25",
+        "type": "fix",
+        "scope": "store",
+        "subject": "trim store meta description into 120-160 range (SEO 100)",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
       {
         "sha": "3421aa5",
         "type": "fix",
         "scope": "seo",
         "subject": "add missing meta to investors/offers/docs subdir pages (#477)",
         "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "6a46c9e",
+        "type": "fix",
+        "scope": "seo",
+        "subject": "add missing lang/viewport/description meta to subdir pages",
+        "author": "Claude",
         "date": "2026-06-17",
         "breaking": false
       },
@@ -64,6 +163,15 @@
     ],
     "CI/CD": [
       {
+        "sha": "be962e6",
+        "type": "ci",
+        "scope": "pages",
+        "subject": "make Pages-source pin self-healing + document 403 fix",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
         "sha": "2b5109d",
         "type": "ci",
         "scope": null,
@@ -83,6 +191,60 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "c286852",
+        "type": "chore",
+        "scope": "outreach",
+        "subject": "make bot summary honest about address completeness",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "b2b6b9c",
+        "type": "chore",
+        "scope": "outreach",
+        "subject": "set CASL footer to Burlington, Ontario, Canada",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "9110c10",
+        "type": "chore",
+        "scope": null,
+        "subject": "Standardize all contact and payment emails to desmondotieno@icloud.com",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "2484b3b",
+        "type": "chore",
+        "scope": "store",
+        "subject": "route store + e-Transfer payments to desmondotieno@icloud.com",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "0420709",
+        "type": "chore",
+        "scope": null,
+        "subject": "Ignore generated audit-reports/ output dir",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "e76bbb1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add multi-repo audit pack: discovery + workflow/dependency/bot scoring",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
       {
         "sha": "a45ae44",
         "type": "chore",
@@ -536,6 +698,69 @@
     ],
     "Automation": [
       {
+        "sha": "78e33c5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "ed37393",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "3a823ef",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "f34300e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "1732705",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "07c0822",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "d04a913",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-17 18:09 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
         "sha": "ba67bd6",
         "type": "bot",
         "scope": null,
@@ -794,6 +1019,17 @@
         "subject": "update generated outputs \u2014 2026-06-14 10:23 UTC [skip ci]",
         "author": "github-actions[bot]",
         "date": "2026-06-14",
+        "breaking": false
+      }
+    ],
+    "Style": [
+      {
+        "sha": "d4e5147",
+        "type": "style",
+        "scope": "outreach",
+        "subject": "make draft banner string concatenation explicit",
+        "author": "Claude",
+        "date": "2026-06-18",
         "breaking": false
       }
     ],

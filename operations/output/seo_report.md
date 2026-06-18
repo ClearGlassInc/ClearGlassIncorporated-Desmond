@@ -1,7 +1,7 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-17T18:30:09.957024+00:00
-**Average Score:** 97.8/100
+**Run:** 2026-06-18T11:08:19.526227+00:00
+**Average Score:** 97.6/100
 **Files Audited:** 49
 
 ## Page Scores
@@ -10,6 +10,7 @@
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
 | `artemis-percival.html` | 90/100 | 1 |
+| `index.html` | 90/100 | 1 |
 | `systems.html` | 90/100 | 1 |
 | `404.html` | 100/100 | 0 |
 | `CG-os.html` | 100/100 | 0 |
@@ -40,7 +41,6 @@
 | `government.html` | 100/100 | 0 |
 | `guardian.html` | 100/100 | 0 |
 | `hover-menu.html` | 100/100 | 0 |
-| `index.html` | 100/100 | 0 |
 | `intelligence-command-surface.html` | 100/100 | 0 |
 | `intelligence-interface.html` | 100/100 | 0 |
 | `intelligence.html` | 100/100 | 0 |
@@ -68,4 +68,5 @@
 - 1x — Missing og:title
 - 1x — Missing og:description
 - 1x — Missing og:image
+- 1x — Description length N chars (ideal N–N)
 - 1x — N image(s) missing alt text

@@ -1,8 +1,9 @@
 {
-  "generation": 18,
+  "generation": 19,
   "weights": {
     "content_collector": 1.0,
-    "master_orchestrator": 2.8
+    "master_orchestrator": 2.9,
+    "marketing": 1.0
   },
   "quarantine": [],
   "lineage": [
@@ -129,6 +130,13 @@
       "generation": 18,
       "timestamp": "2026-06-17T18:09:18+00:00",
       "avg_fitness": 0.999,
+      "auto_applied_count": 1,
+      "proposed_count": 0
+    },
+    {
+      "generation": 19,
+      "timestamp": "2026-06-18T11:08:20+00:00",
+      "avg_fitness": 0.9993,
       "auto_applied_count": 1,
       "proposed_count": 0
     }

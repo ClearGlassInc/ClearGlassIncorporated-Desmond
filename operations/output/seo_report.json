@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-17T18:30:09.957024+00:00",
+  "run_utc": "2026-06-18T11:08:19.526227+00:00",
   "files_audited": 49,
-  "average_score": 97.8,
+  "average_score": 97.6,
   "pages": [
     {
       "file": "404.html",
@@ -576,9 +576,9 @@
       "title": "ClearGlass Inc \u2014 Clarity Is Power \u00b7 Enterprise",
       "title_length": 46,
       "title_ok": true,
-      "description": "ClearGlass Inc. builds enterprise-grade cybersecurity platforms, quantum augmented AI, and zero trust digital infrastructure. Explore Artemis IV Core,\u2026",
-      "description_length": 151,
-      "description_ok": true,
+      "description": "ClearGlass Inc. builds enterprise cybersecurity platforms, AI automation, autonomous agents, and zero-trust infrastructure. Founded by software architect Desmond Otieno Odhiambo \u2014 explore Artemis IV Core, Guardian, and Vision 2040.",
+      "description_length": 231,
+      "description_ok": false,
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
@@ -586,8 +586,10 @@
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 90,
+      "issues": [
+        "Description length 231 chars (ideal 120\u2013160)"
+      ]
     },
     {
       "file": "intelligence-command-surface.html",
@@ -907,6 +909,7 @@
     "1x \u2014 Missing og:title",
     "1x \u2014 Missing og:description",
     "1x \u2014 Missing og:image",
+    "1x \u2014 Description length N chars (ideal N\u2013N)",
     "1x \u2014 N image(s) missing alt text"
   ]
 }

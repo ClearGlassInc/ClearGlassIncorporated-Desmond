@@ -1,14 +1,25 @@
-# Release Notes — 2026-06-17
+# Release Notes — 2026-06-18
 
-*89 commit(s) since v1.0.0*
+*115 commit(s) since v1.0.0*
 
 ## New Features
 
+- **outreach:** automated CASL-compliant draft generation (never sends) (`b507131`)
+- **revenue:** store conversion boost + outreach follow-ups + bot content (`f25dd1d`)
+- **seo:** full search-visibility strategy + high-impact technical fixes (`bd23741`)
+- **store:** add Interac e-Transfer payment option to every engagement (`e7df308`)
+- **store:** add JSON-LD structured data for storefront offers (`c23737a`)
+- **store:** native on-site storefront with secure Stripe checkout (`b867724`)
 - **commerce:** build storefront cart + interactive admin governance cockpit (`d215693`)
+- **clearpulse:** add Horizon 2030 advanced capability layer (`2a2a07b`)
 
 ## Bug Fixes
 
+- **lint:** remove unused 'import sys' in scripts/repo_audit.py (`e0732b2`)
+- **store:** trim store meta/og description into ideal length (SEO 100) (`91c4611`)
+- **store:** trim store meta description into 120-160 range (SEO 100) (`6861d25`)
 - **seo:** add missing meta to investors/offers/docs subdir pages (#477) (`3421aa5`)
+- **seo:** add missing lang/viewport/description meta to subdir pages (`6a46c9e`)
 - **osint:** complete burlington-osint -> Ontario-osint deck rename (`1434a5d`)
 - **seo:** stop alt-injection from corrupting JS inside <script> blocks (`f6b8faa`)
 - **seo:** raise on-page SEO from 64 to 98 across all pages (`2835884`)
@@ -16,11 +27,18 @@
 
 ## CI/CD
 
+- **pages:** make Pages-source pin self-healing + document 403 fix (`be962e6`)
 - add OSINT Deck Validator job (#461) (`2b5109d`)
 - add OSINT Deck Validator job (wire deck release gate into every build) (`60c0fbf`)
 
 ## Maintenance
 
+- **outreach:** make bot summary honest about address completeness (`c286852`)
+- **outreach:** set CASL footer to Burlington, Ontario, Canada (`b2b6b9c`)
+- Standardize all contact and payment emails to desmondotieno@icloud.com (`9110c10`)
+- **store:** route store + e-Transfer payments to desmondotieno@icloud.com (`2484b3b`)
+- Ignore generated audit-reports/ output dir (`0420709`)
+- Add multi-repo audit pack: discovery + workflow/dependency/bot scoring (`e76bbb1`)
 - Logo badge full coverage: loader.html + Ontario-osint.html (#475) (`a45ae44`)
 - Update title from 'ClearGlass' to 'ClearGlassInc' (`2253cd4`)
 - Change canonical link and update script title (`4aaeb08`)
@@ -74,6 +92,13 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`78e33c5`)
+- refresh control-surface data feeds [skip ci] (`ed37393`)
+- refresh control-surface data feeds [skip ci] (`3a823ef`)
+- refresh control-surface data feeds [skip ci] (`f34300e`)
+- refresh control-surface data feeds [skip ci] (`1732705`)
+- refresh control-surface data feeds [skip ci] (`07c0822`)
+- update generated outputs — 2026-06-17 18:09 UTC [skip ci] (`d04a913`)
 - refresh control-surface data feeds [skip ci] (`ba67bd6`)
 - refresh control-surface data feeds [skip ci] (`4c22c96`)
 - update generated outputs — 2026-06-17 11:46 UTC [skip ci] (`a38dc47`)
@@ -103,6 +128,10 @@
 - refresh control-surface data feeds [skip ci] (`f2b0cfb`)
 - refresh control-surface data feeds [skip ci] (`0e7142d`)
 - update generated outputs — 2026-06-14 10:23 UTC [skip ci] (`5ba5c99`)
+
+## Style
+
+- **outreach:** make draft banner string concatenation explicit (`d4e5147`)
 
 ## Other
 

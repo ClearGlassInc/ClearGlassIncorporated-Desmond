@@ -29,18 +29,25 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       # Force the Pages publishing source to "GitHub Actions" (build_type:
-      # workflow). configure-pages alone has not reliably persisted this, so
-      # the legacy branch-based "pages-build-deployment" pipeline keeps being
-      # triggered and fails its deploy step with
+      # workflow). While the source stays "Deploy from a branch", GitHub keeps
+      # auto-triggering the legacy "pages build and deployment" pipeline on
+      # every push to main; its deploy step then fails with
       #   "No artifacts named github-pages were found for this workflow run"
-      # (under the workflow build type its build job produces no artifact).
-      # This explicit PUT is idempotent and non-fatal: once the source is
-      # already GitHub Actions it is a harmless no-op, and a permissions
-      # failure never blocks the real deploy below.
+      # (its build job uploads an artifact incompatible with deploy-pages@v5),
+      # leaving a red X even though the real deploy below succeeds.
+      #
+      # NOTE: updating the Pages source REQUIRES an admin-scoped token. The
+      # default GITHUB_TOKEN (even with pages:write) is rejected with HTTP 403,
+      # so this pin is a no-op unless a fine-grained PAT with "Pages" + repo
+      # administration access is provided as the PAGES_ADMIN_TOKEN secret.
+      # The step is non-fatal: a 403 (no PAT) never blocks the real deploy, and
+      # once the source is already GitHub Actions the PUT is a harmless no-op.
+      # Alternatively, an admin can flip Settings -> Pages -> Source to
+      # "GitHub Actions" once, which permanently stops the legacy pipeline.
       - name: Pin Pages source to GitHub Actions
         continue-on-error: true
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAGES_ADMIN_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' -X PUT \
             -H "Accept: application/vnd.github+json" \
@@ -50,6 +57,12 @@ jobs:
             -d '{"build_type":"workflow"}') || true
           echo "Set Pages build_type=workflow -> HTTP ${code}"
           cat /tmp/pages.json 2>/dev/null || true
+          if [ "${code}" = "403" ]; then
+            echo "::warning::Pages source not changed (HTTP 403). Provide a" \
+              "PAGES_ADMIN_TOKEN secret with admin scope, or set Settings ->" \
+              "Pages -> Source to 'GitHub Actions' to stop the legacy" \
+              "'pages build and deployment' pipeline from failing."
+          fi
       # enablement: true ensures Pages is enabled and exposes build outputs.
       - uses: actions/configure-pages@v6
         with:

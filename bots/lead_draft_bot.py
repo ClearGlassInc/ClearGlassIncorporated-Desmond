@@ -29,7 +29,7 @@ STORE_URL = "https://clearglassinc.github.io/store.html"
 SENDER = "Desmond, ClearGlass Inc."
 
 CASL_FOOTER = (
-    "ClearGlass Inc. · {{street address}}, Burlington, Ontario, {{postal code}}, Canada\n"
+    "ClearGlass Inc. · Burlington, Ontario, Canada\n"
     "You're receiving this because your business contact is publicly listed and this "
     "relates to your role. Prefer not to hear from us? Reply \"unsubscribe\" and we'll "
     "remove you within 10 business days."
@@ -181,8 +181,10 @@ def run() -> dict:
             "> **These are DRAFTS. Nothing has been sent.** Before sending each one: "
             + "(1) verify the recipient's public business email on the firm's Contact page, "
             + "(2) replace `{{First name}}` and `{{specific public observation}}`, "
-            + "(3) fill the CASL footer address fields. Max **3 touches** per contact; any reply "
-            + "or opt-out ends the sequence. Personalize every send — no bulk blasting."
+            + "(3) **add a complete CASL mailing address** to the footer — a street address or "
+            + "PO box + postal code. *\"Burlington, Ontario\" alone is not a deliverable address "
+            + "and is not CASL-sufficient.* Max **3 touches** per contact; any reply or opt-out "
+            + "ends the sequence. Personalize every send — no bulk blasting."
         ),
         "",
     ]
@@ -218,7 +220,8 @@ def run() -> dict:
         out_disp = OUT_DIR.relative_to(ROOT)
     except ValueError:
         out_disp = OUT_DIR
-    print(f"lead_draft: generated {len(ready)} CASL-compliant draft(s), {len(skipped)} skipped. "
+    print(f"lead_draft: generated {len(ready)} CASL-structured draft(s) "
+          f"(add a complete mailing address before sending), {len(skipped)} skipped. "
           f"No emails sent. Output: {out_disp}")
     return {"ready": len(ready), "skipped": len(skipped), "sends": 0}
 

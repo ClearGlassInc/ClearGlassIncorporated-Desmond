@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
 from .config import get_settings
@@ -22,6 +23,15 @@ def create_app() -> FastAPI:
             "Governed commerce control plane. Read-only analysis -> draft -> approval -> "
             "execution. Every material change is risk-scored and written to an append-only ledger."
         ),
+    )
+
+    origins = [o.strip() for o in settings.cors_allow_origins.split(",") if o.strip()]
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
     @app.get("/health", tags=["meta"])

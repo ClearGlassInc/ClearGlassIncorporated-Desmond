@@ -18,6 +18,13 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+psycopg://commerce:commerce@localhost:5432/commerce"
     # Create tables from ORM metadata on startup (handy for SQLite/dev/demo; prod uses migrations).
     auto_create_tables: bool = False
+    # Comma-separated browser origins allowed to call the API (storefront/admin).
+    cors_allow_origins: str = (
+        "https://clearglassinc.github.io,"
+        "https://clearglass-commerce-storefront.onrender.com,"
+        "https://clearglass-commerce-admin.onrender.com,"
+        "http://localhost:3000,http://localhost:3001"
+    )
 
     # Governance
     require_approval_for_high_risk: bool = True

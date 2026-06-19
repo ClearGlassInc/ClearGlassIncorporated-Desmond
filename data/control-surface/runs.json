@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #49",
+    "title": "Control Surface Feeds #50",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:00",
+    "timestamp": "2026-06-19T00:00:13Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #178",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-6f23c476-90fa-4135-bbbc-aff662301c42",
+    "time": "23:08",
+    "timestamp": "2026-06-18T23:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #177",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-dfb4149a-c708-42a3-b45f-439ac8833782",
+    "time": "22:08",
+    "timestamp": "2026-06-18T22:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #358",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:28",
+    "timestamp": "2026-06-18T21:28:36Z"
+  },
+  {
+    "title": "pages build and deployment #789",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:28",
+    "timestamp": "2026-06-18T21:28:31Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1365",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:28",
+    "timestamp": "2026-06-18T21:28:31Z"
+  },
+  {
+    "title": "Control Surface Feeds #49",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:28",
     "timestamp": "2026-06-18T21:28:15Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "16:29",
     "timestamp": "2026-06-18T16:29:10Z"
-  },
-  {
-    "title": "Code Quality: Scheduled #1363",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:17",
-    "timestamp": "2026-06-18T16:17:07Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #171",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-014bd9bc-c2eb-4639-8ef8-c798c8a8b3ef",
-    "time": "16:08",
-    "timestamp": "2026-06-18T16:08:09Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #356",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "15:53",
-    "timestamp": "2026-06-18T15:53:17Z"
-  },
-  {
-    "title": "pages build and deployment #787",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "15:53",
-    "timestamp": "2026-06-18T15:53:10Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1362",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "15:53",
-    "timestamp": "2026-06-18T15:53:09Z"
-  },
-  {
-    "title": "Control Surface Feeds #47",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:52",
-    "timestamp": "2026-06-18T15:52:49Z"
   }
 ]

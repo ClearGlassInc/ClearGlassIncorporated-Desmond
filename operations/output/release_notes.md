@@ -1,6 +1,6 @@
-# Release Notes — 2026-06-18
+# Release Notes — 2026-06-19
 
-*115 commit(s) since v1.0.0*
+*124 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -15,6 +15,8 @@
 
 ## Bug Fixes
 
+- add CORS to control plane for storefront/admin (#494) (`13ec862`)
+- **deploy:** stop failing legacy Pages "production" deployments (`6bd03c0`)
 - **lint:** remove unused 'import sys' in scripts/repo_audit.py (`e0732b2`)
 - **store:** trim store meta/og description into ideal length (SEO 100) (`91c4611`)
 - **store:** trim store meta description into 120-160 range (SEO 100) (`6861d25`)
@@ -92,6 +94,13 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`5facc63`)
+- refresh control-surface data feeds [skip ci] (`eaba2b9`)
+- refresh control-surface data feeds [skip ci] (`ff7d09e`)
+- refresh control-surface data feeds [skip ci] (`b9c98d4`)
+- refresh control-surface data feeds [skip ci] (`0b6a47d`)
+- refresh control-surface data feeds [skip ci] (`12d9cc0`)
+- update generated outputs — 2026-06-18 11:08 UTC [skip ci] (`eebad82`)
 - refresh control-surface data feeds [skip ci] (`78e33c5`)
 - refresh control-surface data feeds [skip ci] (`ed37393`)
 - refresh control-surface data feeds [skip ci] (`3a823ef`)

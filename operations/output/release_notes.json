@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-06-18T11:08:19.473993+00:00",
+  "run_utc": "2026-06-19T07:03:37.331406+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 115,
+  "commit_count": 124,
   "sections": {
     "New Features": [
       {
@@ -79,6 +79,24 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "13ec862",
+        "type": "fix",
+        "scope": null,
+        "subject": "add CORS to control plane for storefront/admin (#494)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "6bd03c0",
+        "type": "fix",
+        "scope": "deploy",
+        "subject": "stop failing legacy Pages \"production\" deployments",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
       {
         "sha": "e0732b2",
         "type": "fix",
@@ -697,6 +715,69 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "5facc63",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "eaba2b9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "ff7d09e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "b9c98d4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "0b6a47d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "12d9cc0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "eebad82",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-18 11:08 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
       {
         "sha": "78e33c5",
         "type": "bot",

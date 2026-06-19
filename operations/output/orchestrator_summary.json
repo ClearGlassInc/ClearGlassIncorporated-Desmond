@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-18T11:08:20.180897+00:00",
+  "run_utc": "2026-06-19T07:03:38.282631+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
@@ -13,13 +13,13 @@
       "error": null
     },
     {
-      "bot_id": "marketing",
+      "bot_id": "growth",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "growth",
+      "bot_id": "marketing",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
@@ -33,37 +33,37 @@
     {
       "bot_id": "release_notes",
       "status": "ok",
-      "duration_s": 0.05,
+      "duration_s": 0.06,
       "error": null
     },
     {
       "bot_id": "wealth_ladder",
       "status": "ok",
-      "duration_s": 0.05,
+      "duration_s": 0.04,
       "error": null
     },
     {
       "bot_id": "seo_optimizer",
       "status": "ok",
-      "duration_s": 0.1,
+      "duration_s": 0.08,
       "error": null
     },
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 0.72,
-      "error": null
-    },
-    {
-      "bot_id": "campaign_reporter",
-      "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 0.97,
       "error": null
     },
     {
       "bot_id": "operations",
       "status": "ok",
       "duration_s": 0.01,
+      "error": null
+    },
+    {
+      "bot_id": "campaign_reporter",
+      "status": "ok",
+      "duration_s": 0.02,
       "error": null
     },
     {

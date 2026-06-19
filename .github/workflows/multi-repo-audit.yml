@@ -1,0 +1,78 @@
+name: Multi-Repo Audit
+
+on:
+  schedule:
+    # Nightly at 04:17 UTC (off-peak)
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+    inputs:
+      owner:
+        description: "GitHub owner/org to audit"
+        required: false
+        default: "ClearGlassInc"
+      parallel:
+        description: "Parallel audit workers"
+        required: false
+        default: "4"
+      skip_deps:
+        description: "Skip pip-audit / npm audit (faster)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Discover, audit, aggregate
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      # Org-scoped PAT with repo:read + read:org. Add as repo secret CG_ORG_PAT.
+      GH_TOKEN: ${{ secrets.CG_ORG_PAT }}
+      GH_OWNER: ${{ github.event.inputs.owner || 'ClearGlassInc' }}
+      PARALLEL: ${{ github.event.inputs.parallel || '4' }}
+      SKIP_DEPS: ${{ github.event.inputs.skip_deps == 'true' && '1' || '0' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install pip-audit
+        run: pip install --quiet pip-audit
+
+      - name: Install jq
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq jq
+
+      - name: Verify gh auth
+        run: |
+          if [[ -z "${GH_TOKEN:-}" ]]; then
+            echo "::error::CG_ORG_PAT secret not set. Add an org-scoped PAT with repo:read + read:org."
+            exit 1
+          fi
+          gh auth status
+
+      - name: Run audit pipeline
+        run: bash scripts/audit/run_audit.sh
+
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-out
+          path: audit-out/
+          retention-days: 14
+
+      - name: Job summary
+        if: always()
+        run: |
+          if [[ -f audit-out/audit_report.md ]]; then
+            cat audit-out/audit_report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No report generated." >> "$GITHUB_STEP_SUMMARY"
+          fi

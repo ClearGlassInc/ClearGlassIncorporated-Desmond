@@ -112,12 +112,10 @@ class TestLogoCoverage:
     def test_missing_logo_is_reported_as_failure(self, tmp_path: Path) -> None:
         # A page without the logo must surface as an error (fails health),
         # not merely a warning.
-        import bots.site_health_bot as shb
-
         page = tmp_path / "no-logo.html"
         page.write_text("<html><body>nothing branded</body></html>")
-        with patch.object(shb, "ROOT", tmp_path):
-            errors, _warnings = shb._check_local_files()
+        with patch("bots.site_health_bot.ROOT", tmp_path):
+            errors, _warnings = _check_local_files()
         assert any("missing ClearGlass logo" in e for e in errors)
 
 

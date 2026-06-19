@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #55",
+    "title": "Control Surface Feeds #56",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:34",
+    "timestamp": "2026-06-19T21:34:10Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #200",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-58d6438a-cf7d-41d2-8ebb-6d70ff97d69e",
+    "time": "21:08",
+    "timestamp": "2026-06-19T21:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #199",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-7753b33d-c30e-4833-a638-d56371247044",
+    "time": "20:08",
+    "timestamp": "2026-06-19T20:08:08Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #375",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:03",
+    "timestamp": "2026-06-19T20:03:36Z"
+  },
+  {
+    "title": "pages build and deployment #806",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:03",
+    "timestamp": "2026-06-19T20:03:30Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1389",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:03",
+    "timestamp": "2026-06-19T20:03:29Z"
+  },
+  {
+    "title": "Control Surface Feeds #55",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:03",
     "timestamp": "2026-06-19T20:03:07Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "16:55",
     "timestamp": "2026-06-19T16:55:28Z"
-  },
-  {
-    "title": "CI #671",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:55",
-    "timestamp": "2026-06-19T16:55:28Z"
-  },
-  {
-    "title": "pages build and deployment #804",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:55",
-    "timestamp": "2026-06-19T16:55:28Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1387",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:55",
-    "timestamp": "2026-06-19T16:55:27Z"
-  },
-  {
-    "title": "Policy Gate #407",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:48",
-    "timestamp": "2026-06-19T16:48:20Z"
-  },
-  {
-    "title": "CI #670",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:48",
-    "timestamp": "2026-06-19T16:48:20Z"
-  },
-  {
-    "title": "Security #434",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:48",
-    "timestamp": "2026-06-19T16:48:20Z"
   }
 ]

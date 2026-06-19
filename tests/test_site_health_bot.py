@@ -11,11 +11,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from bots.site_health_bot import (  # noqa: E402
+    LOGO_EXEMPT,
     PAGES_TO_CHECK,
     REQUIRED_ROOT_FILES,
     PageHealth,
     _check_local_files,
     _check_page,
+    _page_has_logo,
 )
 
 
@@ -83,6 +85,40 @@ class TestCheckPage:
         with patch("bots.site_health_bot.urlopen", side_effect=err):
             result = _check_page("/missing")
         assert result.reachable is False
+
+
+class TestLogoCoverage:
+    """The ClearGlass logo must be present on every shipped webpage."""
+
+    def test_detects_badge_script(self) -> None:
+        assert _page_has_logo('<script defer src="/logo-badge.js"></script>')
+
+    def test_detects_logo_image(self) -> None:
+        assert _page_has_logo('<img src="assets/images/clearglass-logo.png">')
+
+    def test_negative_when_no_logo(self) -> None:
+        assert not _page_has_logo("<html><body>no brand here</body></html>")
+
+    def test_every_shipped_page_has_logo(self) -> None:
+        missing = [
+            str(p.relative_to(ROOT))
+            for p in sorted(ROOT.rglob("*.html"))
+            if ".git" not in p.parts
+            and p.name not in LOGO_EXEMPT
+            and not _page_has_logo(p.read_text(encoding="utf-8", errors="replace"))
+        ]
+        assert not missing, f"Pages missing the ClearGlass logo: {missing}"
+
+    def test_missing_logo_is_reported_as_failure(self, tmp_path: Path) -> None:
+        # A page without the logo must surface as an error (fails health),
+        # not merely a warning.
+        import bots.site_health_bot as shb
+
+        page = tmp_path / "no-logo.html"
+        page.write_text("<html><body>nothing branded</body></html>")
+        with patch.object(shb, "ROOT", tmp_path):
+            errors, _warnings = shb._check_local_files()
+        assert any("missing ClearGlass logo" in e for e in errors)
 
 
 class TestConstants:

@@ -1,9 +1,10 @@
 # Release Notes — 2026-06-19
 
-*124 commit(s) since v1.0.0*
+*133 commit(s) since v1.0.0*
 
 ## New Features
 
+- **ui:** site-wide Stealth Glass toggle on every page (`20ffe86`)
 - **outreach:** automated CASL-compliant draft generation (never sends) (`b507131`)
 - **revenue:** store conversion boost + outreach follow-ups + bot content (`f25dd1d`)
 - **seo:** full search-visibility strategy + high-impact technical fixes (`bd23741`)
@@ -27,6 +28,11 @@
 - **seo:** raise on-page SEO from 64 to 98 across all pages (`2835884`)
 - add glass.css to burlington-osint.html (only page missing site-wide design system) (`475646d`)
 
+## Tests
+
+- **site-health:** use a single import style in logo-coverage test (`56a92a0`)
+- **site-health:** guarantee ClearGlass logo on every page (`7406c02`)
+
 ## CI/CD
 
 - **pages:** make Pages-source pin self-healing + document 403 fix (`be962e6`)
@@ -35,6 +41,9 @@
 
 ## Maintenance
 
+- Fix Twitter description and update log line (`d93559c`)
+- Fix title formatting in aegis.html (`ebc675a`)
+- Update branding from ClearGlass to ClearGlassInc (`118d8f3`)
 - **outreach:** make bot summary honest about address completeness (`c286852`)
 - **outreach:** set CASL footer to Burlington, Ontario, Canada (`b2b6b9c`)
 - Standardize all contact and payment emails to desmondotieno@icloud.com (`9110c10`)
@@ -94,6 +103,8 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`ca0da4b`)
+- update generated outputs — 2026-06-19 07:03 UTC [skip ci] (`d0c536c`)
 - refresh control-surface data feeds [skip ci] (`5facc63`)
 - refresh control-surface data feeds [skip ci] (`eaba2b9`)
 - refresh control-surface data feeds [skip ci] (`ff7d09e`)
@@ -137,6 +148,10 @@
 - refresh control-surface data feeds [skip ci] (`f2b0cfb`)
 - refresh control-surface data feeds [skip ci] (`0e7142d`)
 - update generated outputs — 2026-06-14 10:23 UTC [skip ci] (`5ba5c99`)
+
+## Security
+
+- harden untrusted-XML parsing and add URL scheme allowlist (`a0517df`)
 
 ## Style
 

@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-06-19T07:03:37.331406+00:00",
+  "run_utc": "2026-06-19T11:21:36.604311+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 124,
+  "commit_count": 133,
   "sections": {
     "New Features": [
+      {
+        "sha": "20ffe86",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "site-wide Stealth Glass toggle on every page",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      },
       {
         "sha": "b507131",
         "type": "feat",
@@ -179,6 +188,26 @@
         "breaking": false
       }
     ],
+    "Tests": [
+      {
+        "sha": "56a92a0",
+        "type": "test",
+        "scope": "site-health",
+        "subject": "use a single import style in logo-coverage test",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "7406c02",
+        "type": "test",
+        "scope": "site-health",
+        "subject": "guarantee ClearGlass logo on every page",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      }
+    ],
     "CI/CD": [
       {
         "sha": "be962e6",
@@ -209,6 +238,33 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "d93559c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix Twitter description and update log line",
+        "author": "Desmond Otieno",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "ebc675a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix title formatting in aegis.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "118d8f3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update branding from ClearGlass to ClearGlassInc",
+        "author": "Desmond Otieno",
+        "date": "2026-06-19",
+        "breaking": false
+      },
       {
         "sha": "c286852",
         "type": "chore",
@@ -716,6 +772,24 @@
     ],
     "Automation": [
       {
+        "sha": "ca0da4b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "d0c536c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-19 07:03 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
         "sha": "5facc63",
         "type": "bot",
         "scope": null,
@@ -1100,6 +1174,17 @@
         "subject": "update generated outputs \u2014 2026-06-14 10:23 UTC [skip ci]",
         "author": "github-actions[bot]",
         "date": "2026-06-14",
+        "breaking": false
+      }
+    ],
+    "Security": [
+      {
+        "sha": "a0517df",
+        "type": "security",
+        "scope": null,
+        "subject": "harden untrusted-XML parsing and add URL scheme allowlist",
+        "author": "Claude",
+        "date": "2026-06-19",
         "breaking": false
       }
     ],

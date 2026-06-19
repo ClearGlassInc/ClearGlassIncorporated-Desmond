@@ -28,6 +28,7 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -77,9 +78,13 @@ def gh_api(path: str, token: str, timeout: int = 15) -> Any:
 
 
 def probe(url: str, timeout: int = 12) -> bool:
+    # Allowlist the scheme so a misconfigured/attacker-supplied target can't turn
+    # this health probe into a file:// / ftp:// read (CWE-22 / SSRF).
+    if urllib.parse.urlsplit(url).scheme not in ("http", "https"):
+        return False
     req = urllib.request.Request(url, headers={"User-Agent": "clearglass-health-probe"})
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec B310 - scheme allowlisted above
             return 200 <= resp.status < 400
     except (urllib.error.URLError, TimeoutError, OSError):
         return False

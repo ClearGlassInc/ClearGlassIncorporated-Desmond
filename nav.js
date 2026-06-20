@@ -30,6 +30,10 @@
       ["ClearPulse", "clearpulse.html", "📡"],
       ["Satellite Map", "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13", "🛰"]
     ]],
+    ["For Small Business", [
+      ["SMB Cyber Trust Kit", "smb-cyber-trust-kit.html", "🔐"],
+      ["Offers & Pricing", "offers/", "🎯"]
+    ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],

@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
+      - name: Storefront checkout smoke test (SOUL.md daily smoke guardrail)
+        run: python bots/store_smoke_bot.py
       - name: Governance self-check (fails if any financial action is auto-executable)
         working-directory: clearglass-commerce/control-plane
         run: python -m app.daily_loop --json

@@ -49,6 +49,17 @@ workflow (`.github/workflows/pages.yml`). There is no manual step.
 2. Open a PR → CI runs (`CI`, `Policy Gate`, `Security`, `IP Protection`).
 3. Merge (squash) once green → Pages redeploys `main`.
 
+> **Production deployments show a red X but the site is live?** That red X is
+> GitHub's *legacy* "pages build and deployment" pipeline, which keeps
+> auto-running while **Settings → Pages → Source** is "Deploy from a branch".
+> Its deploy step fails with `No artifacts named "github-pages"` — our own
+> **Deploy GitHub Pages** workflow is the real (green) publisher. Fix it once by
+> setting the source to **GitHub Actions**: run `scripts/fix_pages_source.sh`
+> with an admin-scoped `GITHUB_TOKEN` (fine-grained PAT: Pages-write +
+> Administration-write), or flip it in the UI. Wiring the same PAT up as the
+> `PAGES_ADMIN_TOKEN` repo secret lets `pages.yml` self-heal the source on every
+> run.
+
 **New indexable pages must be added to `sitemap.xml`** (or marked exempt in
 `bots/site_health_bot.py::SITEMAP_EXEMPT`); the site-health test enforces this.
 
@@ -102,6 +113,7 @@ an "OFFLINE"/"Status offline" state on error or rate-limit. Note: unauthenticate
 | Symptom | Likely cause | Action |
 |---|---|---|
 | Site 404 / not updating | Pages build failed | Check **Deploy GitHub Pages** run; re-run; verify `.nojekyll` present |
+| Production deploys red X (site still live) | Legacy "pages build and deployment" pipeline runs while Source = "Deploy from a branch" | Run `scripts/fix_pages_source.sh` (admin PAT) or set Settings → Pages → Source to "GitHub Actions" |
 | CI red on PR | test/lint failure | Open the failing job log; fix; the `CI` check is required to merge |
 | A data panel shows OFFLINE | upstream API down / CORS / rate limit | Expected degradation; confirm endpoint health; no deploy needed |
 | Status chip "Status offline" | GitHub API rate limit (60/hr/IP) | Transient; resets within the hour |

@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>PERCIVAL BUILD · Spatial Workspace — ClearGlass Inc.</title>
-<meta name="description" content="PERCIVAL BUILD — an orbital spatial workspace. A live space scene with floating, draggable widgets: digital clock, audio spectrum visualizer, system monitor, app dock, mixer tray, and a command bar. Pure HTML, CSS & JS."/>
+<meta name="description" content="PERCIVAL BUILD — an orbital spatial workspace. A live space scene with floating, draggable widgets: digital clock, audio spectrum visualizer, system monitor,…"/>
 <link rel="canonical" href="https://clearglassinc.github.io/percival-build.html"/>
 <meta property="og:title" content="PERCIVAL BUILD · Spatial Workspace — ClearGlass Inc."/>
 <meta property="og:description" content="An orbital spatial desktop: floating widgets over Earth and the Moon — clock, audio visualizer, system monitor, app dock and a command bar."/>
@@ -176,8 +176,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:91;
 @media (prefers-reduced-motion: reduce){.moon{animation:none}.brand .mark::after{animation:none}}
 </style>
 <link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
+  <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">PERCIVAL BUILD · Spatial Workspace — ClearGlass Inc.</h1>
 
 <canvas id="stars"></canvas>
 <div class="scene">
@@ -467,5 +471,7 @@ setTimeout(()=>toast('◐','PERCIVAL BUILD online','spatial workspace · drag, d
 setTimeout(()=>{const h=document.getElementById('hint');if(h)h.style.opacity='0';},6000);
 </script>
 <script defer src="platform.js"></script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>

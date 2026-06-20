@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="ClearGlass Event-Driven Control Surface — live operational dashboard for metrics, activity, lead pipeline, health, and alerts. Read-first, GitHub Pages friendly." />
+  <meta name="description" content="ClearGlass Event-Driven Control Surface — live operational dashboard for metrics, activity, lead pipeline, health, and alerts. Read-first, GitHub Pages…" />
   <meta name="theme-color" content="#0a0c10" />
-  <title>ClearGlass • Event-Driven Control Surface</title>
+  <title>ClearGlass • Event Driven Control Surface</title>
   <link rel="canonical" href="https://clearglassinc.github.io/saas-platform.html" />
-  <meta property="og:title" content="ClearGlass • Event-Driven Control Surface" />
+  <meta property="og:title" content="ClearGlass • Event Driven Control Surface" />
   <meta property="og:description" content="Read-first operational dashboard: metrics, live activity, pipeline counters, health, and alerts from approved endpoints only." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://clearglassinc.github.io/saas-platform.html" />
@@ -190,6 +190,9 @@
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="ui.css">
   <link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
 <header>
@@ -197,7 +200,7 @@
     <div class="brand" aria-label="ClearGlass control surface">
       <span class="mark" aria-hidden="true"></span>
       <h1>ClearGlass Control Surface</h1>
-      <span class="meta">Event-driven operations dashboard</span>
+      <span class="meta">Event driven operations dashboard</span>
     </div>
     <div class="statusline" aria-label="system status">
       <span class="pill good" id="liveState">LIVE</span>
@@ -212,7 +215,7 @@
     <div class="hd">
       <div>
         <h2 class="title" id="hero-title">Systems Control Surface</h2>
-        <p class="sub">Read-first, event-driven, GitHub Pages friendly, and built for high-trust operational clarity.</p>
+        <p class="sub">Read-first, event driven, GitHub Pages friendly, and built for high-trust operational clarity.</p>
       </div>
       <div class="controls">
         <button id="refreshBtn" type="button">Refresh now</button>
@@ -229,7 +232,7 @@
       <div class="hd">
         <div>
           <h2 class="title" id="metrics-title">Overview metrics</h2>
-          <p class="sub">Highest-signal operational summary.</p>
+          <p class="sub">Highest signal operational summary.</p>
         </div>
       </div>
       <div class="bd">
@@ -269,7 +272,7 @@
       <div class="hd">
         <div>
           <h2 class="title" id="pipeline-title">Lead pipeline</h2>
-          <p class="sub">Read-only counters and conversion state.</p>
+          <p class="sub">Read only counters and conversion state.</p>
         </div>
       </div>
       <div class="bd">
@@ -312,16 +315,18 @@
 </main>
 
 <script>
-  // Read-first control plane: the page only fetches from approved,
-  // non-sensitive endpoints. n8n is the event ingress layer; events are
-  // normalized to {type,title,status,value,timestamp,source,severity}.
+  // Read-first control plane: same-origin JSON feeds published hourly by
+  // .github/workflows/control surface-feeds.yml from real operational
+  // sources (Actions API, live site probes, repo state). Contract:
+  // docs/control-surface-event-contract.md — events normalized to
+  // {type,title,status,value,timestamp,source,severity}.
   const endpoints = {
-    metrics: "https://example.com/api/clearglass/metrics",
-    activity: "https://example.com/api/clearglass/activity",
-    pipeline: "https://example.com/api/clearglass/pipeline",
-    health: "https://example.com/api/clearglass/health",
-    alerts: "https://example.com/api/clearglass/alerts",
-    runs: "https://example.com/api/clearglass/runs"
+    metrics: "data/control-surface/metrics.json",
+    activity: "data/control-surface/activity.json",
+    pipeline: "data/control-surface/pipeline.json",
+    health: "data/control-surface/health.json",
+    alerts: "data/control-surface/alerts.json",
+    runs: "data/control-surface/runs.json"
   };
 
   const fallback = {
@@ -514,5 +519,7 @@
 <script defer src="control-surface.js"></script>
 <script defer src="ui.js"></script>
 <script defer src="platform.js"></script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>

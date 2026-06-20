@@ -1,64 +1,72 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-12T11:00:24.348889+00:00
-**Average Score:** 63.7/100
-**Files Audited:** 41
+**Run:** 2026-06-19T11:21:36.627003+00:00
+**Average Score:** 97.6/100
+**Files Audited:** 49
 
 ## Page Scores
 
 | File | Score | Issues |
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
-| `ClearGlass-NEXUS-v12-FINAL.html` | 20/100 | 7 |
-| `button-system.html` | 30/100 | 6 |
-| `hover-menu.html` | 30/100 | 6 |
-| `offline.html` | 30/100 | 6 |
-| `404.html` | 40/100 | 5 |
-| `agentmesh.html` | 50/100 | 5 |
-| `clearglass-nexus.html` | 50/100 | 5 |
-| `systems.html` | 50/100 | 5 |
-| `aegis.html` | 60/100 | 4 |
-| `artemis-percival.html` | 60/100 | 4 |
-| `artemis.html` | 60/100 | 4 |
-| `attack-prompt-core.html` | 60/100 | 4 |
-| `button-lab.html` | 60/100 | 4 |
-| `cg-loader.html` | 60/100 | 4 |
-| `control-surface.html` | 60/100 | 4 |
-| `intelligence-interface.html` | 60/100 | 4 |
-| `jarvis-os.html` | 60/100 | 4 |
-| `smb.html` | 60/100 | 4 |
-| `artemis-blue-team.html` | 70/100 | 3 |
-| `artemis-iv.html` | 70/100 | 3 |
-| `clearpulse-architecture.html` | 70/100 | 3 |
-| `command-console.html` | 70/100 | 3 |
-| `intelligence.html` | 70/100 | 3 |
-| `percival-build.html` | 70/100 | 3 |
-| `percival-os.html` | 70/100 | 3 |
-| `sentinel.html` | 70/100 | 3 |
-| `web-design.html` | 70/100 | 3 |
-| `ai-operator.html` | 80/100 | 2 |
-| `banking-law-advisor.html` | 80/100 | 2 |
-| `corporate-legal-advisor.html` | 80/100 | 2 |
-| `government.html` | 80/100 | 2 |
-| `guardian.html` | 80/100 | 2 |
-| `index.html` | 80/100 | 2 |
-| `revenue-engine.html` | 80/100 | 2 |
-| `saas-platform.html` | 80/100 | 2 |
-| `stegoforge.html` | 80/100 | 2 |
-| `tax.html` | 80/100 | 2 |
-| `artemis-os.html` | 90/100 | 1 |
-| `clearpulse.html` | 90/100 | 1 |
-| `intelligence-command-surface.html` | 90/100 | 1 |
+| `artemis-percival.html` | 90/100 | 1 |
+| `index.html` | 90/100 | 1 |
+| `systems.html` | 90/100 | 1 |
+| `404.html` | 100/100 | 0 |
+| `CG-os.html` | 100/100 | 0 |
+| `ClearGlass-NEXUS-v12-FINAL.html` | 100/100 | 0 |
+| `Ontario-osint.html` | 100/100 | 0 |
+| `aegis.html` | 100/100 | 0 |
+| `agentmesh.html` | 100/100 | 0 |
+| `ai-operator.html` | 100/100 | 0 |
+| `air-control.html` | 100/100 | 0 |
+| `artemis-blue-team.html` | 100/100 | 0 |
+| `artemis-iv.html` | 100/100 | 0 |
+| `artemis-os.html` | 100/100 | 0 |
+| `artemis.html` | 100/100 | 0 |
+| `attack-prompt-core.html` | 100/100 | 0 |
+| `banking-law-advisor.html` | 100/100 | 0 |
+| `bluedesk.html` | 100/100 | 0 |
+| `button-lab.html` | 100/100 | 0 |
+| `button-system.html` | 100/100 | 0 |
+| `cg-loader.html` | 100/100 | 0 |
+| `clearglass-nexus.html` | 100/100 | 0 |
+| `clearglass.html` | 100/100 | 0 |
+| `clearpulse-architecture.html` | 100/100 | 0 |
+| `clearpulse.html` | 100/100 | 0 |
+| `command-console.html` | 100/100 | 0 |
+| `conduit.html` | 100/100 | 0 |
+| `control-surface.html` | 100/100 | 0 |
+| `corporate-legal-advisor.html` | 100/100 | 0 |
+| `government.html` | 100/100 | 0 |
+| `guardian.html` | 100/100 | 0 |
+| `hover-menu.html` | 100/100 | 0 |
+| `intelligence-command-surface.html` | 100/100 | 0 |
+| `intelligence-interface.html` | 100/100 | 0 |
+| `intelligence.html` | 100/100 | 0 |
+| `loader.html` | 100/100 | 0 |
+| `offline.html` | 100/100 | 0 |
+| `percival-build.html` | 100/100 | 0 |
+| `percival-os.html` | 100/100 | 0 |
+| `pricing.html` | 100/100 | 0 |
+| `revenue-engine.html` | 100/100 | 0 |
+| `saas-platform.html` | 100/100 | 0 |
+| `sentinel.html` | 100/100 | 0 |
+| `smb.html` | 100/100 | 0 |
+| `stegoforge.html` | 100/100 | 0 |
+| `store.html` | 100/100 | 0 |
+| `tax.html` | 100/100 | 0 |
+| `web-design.html` | 100/100 | 0 |
 
 ## Top Issues Across All Pages
 
-- 34x — Missing og:image
-- 30x — Description length N chars (ideal N–N)
-- 22x — Title length N chars (ideal N–N)
-- 15x — No <hN> tag found
-- 14x — Missing og:description
-- 12x — Missing og:title
-- 6x — Missing meta description
-- 5x — Missing canonical link tag
-- 2x — N image(s) missing alt text
 - 1x — Multiple <hN> tags (N)
+- 1x — Missing <title>
+- 1x — Missing meta description
+- 1x — Missing canonical link tag
+- 1x — No <hN> tag found
+- 1x — Missing og:title
+- 1x — Missing og:description
+- 1x — Missing og:image
+- 1x — Description length N chars (ideal N–N)
+- 1x — N image(s) missing alt text

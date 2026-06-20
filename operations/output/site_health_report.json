@@ -1,9 +1,9 @@
 {
-  "run_utc": "2026-06-12T11:00:24.764225+00:00",
+  "run_utc": "2026-06-19T11:21:37.225155+00:00",
   "site_url": "https://clearglassinc.github.io",
   "overall_healthy": true,
   "pages_checked": 6,
-  "pages_healthy": 5,
+  "pages_healthy": 6,
   "pages_unreachable": 0,
   "pages": [
     {
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 132,
+      "response_ms": 128,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 81,
+      "response_ms": 74,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 61,
+      "response_ms": 120,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 56,
+      "response_ms": 68,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,11 +51,9 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 60,
+      "response_ms": 97,
       "has_title": true,
-      "missing_meta": [
-        "og:title"
-      ],
+      "missing_meta": [],
       "error": null
     },
     {
@@ -63,7 +61,7 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 50,
+      "response_ms": 76,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -71,7 +69,6 @@
   ],
   "local_issues": [],
   "local_warnings": [
-    "HTML page not referenced in sitemap.xml: artemis-os.html",
-    "HTML page not referenced in sitemap.xml: control-surface.html"
+    "HTML page not referenced in sitemap.xml: loader.html"
   ]
 }

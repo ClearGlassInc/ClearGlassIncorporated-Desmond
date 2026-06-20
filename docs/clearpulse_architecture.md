@@ -143,7 +143,63 @@ evidence for HIPAA, litigation, and insurance disputes.
           ledger replay reconstructs full timeline from raw bytes
 ```
 
-## 7. Maturity Targets
+## 7. Horizon 2030 — Advanced Capability Layer
+
+The §5 additions take ClearPulse to a 9.5+ enterprise tier. The 2030 horizon
+moves the platform to sovereign-grade healthcare intelligence: quantum-safe,
+privacy-preserving, field-verifiable, and autonomously triaged.
+
+### 7.1 Post-Quantum Audit Chain
+Replace SHA-256 hash-linking with **SHA3-512 + ML-DSA-65 (Dilithium)**
+signatures (NIST FIPS-204). Block keys are wrapped in **ML-KEM-768** under an
+HSM. Neutralizes harvest-now-decrypt-later attacks against 30-year retention.
+
+### 7.2 Federated Learning Mesh
+Hospitals train fraud / snooping models locally; only DP-perturbed gradients
+(`ε = 2.5`, `δ = 1e-6`, clipped) leave the edge. Secure aggregation via
+Paillier + masking. 200+ facility coverage, zero PHI movement.
+
+### 7.3 Confidential Compute Enclaves
+Risk Engine pinned inside Intel TDX / AMD SEV-SNP TEEs. PHI is decrypted only
+inside the enclave. Hospitals demand a remote attestation (RA-TLS) against a
+Sigstore-anchored transparency log before any record is forwarded.
+
+### 7.4 Agentic Investigator Copilot
+Every CRITICAL alert spawns an LLM agent constrained to 14 tools:
+`get_trace`, `walk_graph`, `replay_ledger`, `query_access_log`, etc.
+It produces a draft forensic timeline with mandatory `trace_id`
+citations. Analysts review, never start from blank. Human-in-the-loop
+gating on all proposed containment actions.
+
+### 7.5 Zero-Knowledge Audit Proofs
+Halo2 / Plonk circuits compiled from the rules engine. A regulator verifies
+"this score was produced by approved rule v2030.06 against ledger-anchored
+events" in `< 250 ms` with an `8 KB` proof — **without seeing the PHI**.
+Eliminates the audit/privacy trade-off.
+
+### 7.6 Temporal Graph Neural Network
+A TGN over Provider · Patient · Claim · Workstation · Device nodes detects
+repeating subgraphs across weeks: fraud rings, shared-device collusion,
+money-mule provider chains. Streamed inference `< 80 ms / event` over a
+12M-node graph.
+
+### 7.7 Synthetic Data Twin
+Continuously-running shadow pipeline replays a GAN-generated patient
+population with planted fraud scenarios. Provides live MTTD / MTTR per rule
+and per model, with weekly red-team regression scorecards.
+
+### 7.8 Edge Inference at Point of Care
+ONNX-Runtime risk model on workstation NPUs (`4 ms` latency). Inline
+soft-blocks on off-roster billing or unusual code pairs **before
+submission** — prevention, not detection.
+
+### 7.9 Sovereign Data Plane
+Region-pinned control plane with OPA / Rego policies for HIPAA, EU GDPR
+Art.9, UK DSPT, Canada PIPEDA, AU My Health Records. Replication never
+crosses a jurisdiction without a signed policy attestation; each routing
+decision is recorded for per-route audit.
+
+## 8. Maturity Targets
 
 | Area | Current | With §5 additions |
 |---|---|---|

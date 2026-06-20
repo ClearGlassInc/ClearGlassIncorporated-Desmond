@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClearGlass Store — Book a Security Engagement</title>
+  <meta name="description" content="Book fixed-fee security & compliance engagements from ClearGlass Inc.: Quick-Audit, Hardening Sprint, PHIPA Readiness & Managed Monitoring.">
+  <link rel="canonical" href="https://clearglassinc.github.io/store.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://clearglassinc.github.io/store.html">
+  <meta property="og:title" content="ClearGlass Store — Book a Security Engagement">
+  <meta property="og:description" content="Book fixed-fee security & compliance engagements with secure Stripe checkout — Quick-Audit, Hardening, PHIPA Readiness & Monitoring.">
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
+  <link rel="icon" href="/icon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ClearGlass Inc.",
+    "url": "https://clearglassinc.github.io",
+    "logo": "https://clearglassinc.github.io/logo.png",
+    "sameAs": ["https://github.com/ClearGlassInc"],
+    "areaServed": { "@type": "AdministrativeArea", "name": "Ontario, Canada" },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "ClearGlass Security & Compliance Engagements",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "priceCurrency": "CAD",
+          "price": "249",
+          "url": "https://clearglassinc.github.io/store.html#quick-audit",
+          "itemOffered": { "@type": "Service", "name": "Security Quick-Audit",
+            "description": "Read-only security posture review with a branded findings report and a 30-minute readout call." }
+        },
+        {
+          "@type": "Offer",
+          "priceCurrency": "CAD",
+          "price": "2500",
+          "priceSpecification": { "@type": "PriceSpecification", "price": "2500", "priceCurrency": "CAD", "minPrice": "2500" },
+          "url": "https://clearglassinc.github.io/store.html#hardening",
+          "itemOffered": { "@type": "Service", "name": "M365 + Windows Hardening Sprint",
+            "description": "Fixed-fee 1-2 week sprint to harden Microsoft 365 / Entra ID and Windows endpoints to CIS-aligned baselines." }
+        },
+        {
+          "@type": "Offer",
+          "priceCurrency": "CAD",
+          "price": "3000",
+          "priceSpecification": { "@type": "PriceSpecification", "price": "3000", "priceCurrency": "CAD", "minPrice": "3000" },
+          "url": "https://clearglassinc.github.io/store.html#phipa",
+          "itemOffered": { "@type": "Service", "name": "PHIPA Readiness Assessment",
+            "description": "Privacy and security gap assessment for Ontario health-sector organizations, with a board-ready remediation roadmap." }
+        },
+        {
+          "@type": "Offer",
+          "priceCurrency": "CAD",
+          "url": "https://clearglassinc.github.io/store.html#monitoring",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "price": "600", "priceCurrency": "CAD", "unitText": "MONTH" },
+          "itemOffered": { "@type": "Service", "name": "Managed Monitoring",
+            "description": "Continuous attack-surface and posture monitoring with monthly executive risk reporting, governed by PERCIVAL." }
+        }
+      ]
+    }
+  }
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --white:#fafbfc; --off:#f3f5f8; --line:rgba(10,12,16,.08);
+      --ink:#0a0c10; --ink-2:#1a1d25; --t2:#3a3f4a; --t3:#6b7280;
+      --sky:#38bdf8; --violet:#a78bfa; --pink:#f472b6; --mint:#34d399; --amber:#fbbf24;
+      --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);
+      --serif:'Cormorant Garamond',Georgia,serif; --sans:'Urbanist',system-ui,-apple-system,sans-serif;
+      --mono:'IBM Plex Mono',ui-monospace,monospace;
+    }
+    body{font-family:var(--sans);color:var(--ink);background:
+      radial-gradient(1100px 500px at 80% -10%,rgba(167,139,250,.10),transparent 60%),
+      radial-gradient(900px 460px at 0% 0%,rgba(56,189,248,.10),transparent 55%),var(--white);
+      -webkit-font-smoothing:antialiased;line-height:1.55;min-height:100vh}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.5rem)}
+    header.top{position:sticky;top:0;z-index:50;backdrop-filter:blur(24px) saturate(1.4);
+      background:rgba(250,251,252,.85);border-bottom:1px solid var(--line)}
+    .top .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+    .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+    .brand .mk{width:36px;height:36px;border-radius:9px;overflow:hidden;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.08);display:grid;place-items:center}
+    .brand .mk img{width:100%;height:100%;object-fit:cover}
+    .brand b{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-.01em}
+    .brand b em{font-style:italic;font-weight:300;color:var(--t3)}
+    .top a.back{font-family:var(--mono);font-size:12.5px;color:var(--t3);text-decoration:none}
+    .top a.back:hover{color:var(--ink)}
+    .hero{padding:clamp(2.6rem,7vw,4.8rem) 0 1.4rem}
+    .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#7c5cff;margin-bottom:14px}
+    h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.3rem,6vw,3.7rem);line-height:1.03;letter-spacing:-.02em;max-width:16ch}
+    .lede{margin-top:16px;color:var(--t2);font-size:clamp(1rem,2.4vw,1.16rem);max-width:60ch}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:30px 0 10px}
+    .card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
+      border-radius:20px;padding:24px 22px;box-shadow:0 12px 40px rgba(2,6,23,.05);transition:transform .18s,box-shadow .18s}
+    .card:hover{transform:translateY(-3px);box-shadow:0 20px 54px rgba(2,6,23,.09)}
+    .tag{align-self:flex-start;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--t3);border:1px solid var(--line);border-radius:999px;padding:4px 10px;margin-bottom:14px}
+    .card.feat{border-color:rgba(124,92,255,.35);box-shadow:0 18px 50px rgba(124,92,255,.12)}
+    .card.feat .tag{color:#7c5cff;border-color:rgba(124,92,255,.35)}
+    .card h3{font-family:var(--serif);font-weight:600;font-size:1.45rem;letter-spacing:-.01em}
+    .card .desc{color:var(--t2);font-size:.95rem;margin:8px 0 14px;flex:1}
+    .price{font-family:var(--serif);font-size:1.7rem;font-weight:600}
+    .price small{font-family:var(--sans);font-size:.85rem;color:var(--t3);font-weight:500}
+    ul.feats{list-style:none;margin:14px 0 18px;display:grid;gap:7px}
+    ul.feats li{font-size:.9rem;color:var(--t2);padding-left:22px;position:relative}
+    ul.feats li::before{content:"✓";position:absolute;left:0;color:var(--mint);font-weight:700}
+    .buy{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;
+      padding:13px 18px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;
+      font-family:var(--sans);font-weight:700;font-size:.96rem;color:#081018;background:var(--crystal);
+      box-shadow:0 10px 26px rgba(124,92,255,.25);transition:transform .15s,filter .15s}
+    .buy:hover{transform:translateY(-1px);filter:saturate(1.15)}
+    .pay{margin-top:9px;font-family:var(--mono);font-size:11.5px;color:var(--t3);text-align:center}
+    .note{margin:26px 0 8px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;
+      background:rgba(255,255,255,.6);color:var(--t2);font-size:.9rem}
+    .note b{color:var(--ink)}
+    footer{margin:48px 0 36px;padding-top:22px;border-top:1px solid var(--line);
+      color:var(--t3);font-size:.85rem;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
+    footer a{color:var(--t3);text-decoration:none}
+    footer a:hover{color:var(--ink)}
+    .lock{color:var(--mint)}
+    /* Interac e-Transfer secondary action + modal */
+    .etx-link{display:block;width:100%;margin-top:8px;text-align:center;background:none;border:0;cursor:pointer;
+      font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:#7c5cff;text-decoration:underline;text-underline-offset:3px}
+    .etx-link:hover{color:#5b3fd6}
+    .etx-back{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+      background:rgba(10,12,16,.55);backdrop-filter:blur(4px);padding:20px}
+    .etx-back.open{display:flex}
+    .etx-modal{max-width:440px;width:100%;background:#fff;border:1px solid var(--line);border-radius:20px;
+      padding:26px 24px;box-shadow:0 30px 80px rgba(2,6,23,.3)}
+    .etx-modal h3{font-family:var(--serif);font-weight:600;font-size:1.5rem;margin-bottom:4px}
+    .etx-modal .sub{color:var(--t3);font-size:.84rem;font-family:var(--mono);margin-bottom:18px}
+    .etx-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;
+      border:1px solid var(--line);border-radius:12px;margin-bottom:10px;background:var(--off)}
+    .etx-row .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);flex:0 0 auto}
+    .etx-row .v{font-weight:700;font-size:.94rem;color:var(--ink);word-break:break-word;text-align:right;flex:1}
+    .etx-copy{flex:0 0 auto;font-family:var(--mono);font-size:11px;border:1px solid var(--line);border-radius:8px;
+      padding:5px 9px;background:#fff;cursor:pointer;color:var(--t2)}
+    .etx-copy:hover{color:var(--ink);border-color:var(--violet)}
+    ol.etx-steps{font-size:.85rem;color:var(--t2);margin:14px 0 18px;padding-left:20px;display:grid;gap:5px}
+    .etx-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .etx-actions a,.etx-actions button{flex:1;min-width:130px;text-align:center;padding:11px 14px;border-radius:999px;
+      font-family:var(--sans);font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;border:0}
+    .etx-notify{color:#081018;background:var(--crystal)}
+    .etx-close{color:var(--t2);background:#fff;border:1px solid var(--line)}
+    /* conversion: trust strip, lead magnet, FAQ */
+    .trust{display:flex;flex-wrap:wrap;gap:9px 22px;margin:18px 0 2px;font-family:var(--mono);font-size:12px;color:var(--t3)}
+    .trust span{display:inline-flex;align-items:center;gap:7px}
+    .trust b{color:var(--ink);font-weight:700}
+    .lead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin:22px 0 6px;
+      padding:20px 22px;border:1px solid rgba(52,211,153,.35);border-radius:18px;
+      background:linear-gradient(120deg,rgba(52,211,153,.10),rgba(56,189,248,.06))}
+    .lead .lt{font-family:var(--serif);font-weight:600;font-size:1.2rem}
+    .lead .ld{color:var(--t2);font-size:.92rem;margin-top:3px;max-width:56ch}
+    .lead a.lcta{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;
+      background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:.92rem}
+    .lead a.lcta:hover{background:var(--ink-2)}
+    .faq{margin:30px 0 6px}
+    .faq h2{font-family:var(--serif);font-weight:600;font-size:1.5rem;margin-bottom:12px}
+    .faq details{border:1px solid var(--line);border-radius:12px;padding:2px 16px;margin-bottom:9px;background:#fff}
+    .faq summary{cursor:pointer;font-weight:700;padding:13px 0;font-size:.96rem;list-style:none}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary::after{content:"+";float:right;color:var(--t3);font-weight:400}
+    .faq details[open] summary::after{content:"\2013"}
+    .faq p{color:var(--t2);font-size:.92rem;padding:0 0 14px}
+    .faq a{color:#7c5cff}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap">
+    <a class="brand" href="index.html"><span class="mk"><img src="logo.png" alt="ClearGlass Inc. logo"></span>
+      <b>ClearGlass<em> Store</em></b></a>
+    <a class="back" href="pricing.html">← Pricing &amp; details</a>
+  </div></header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">ClearGlass · Engagements · Ontario, Canada</div>
+      <h1>Book a security engagement.</h1>
+      <p class="lede">Fixed-fee, scoped, and outcome-driven. Choose an engagement and pay the way you prefer —
+        <b>Interac e-Transfer</b>, card, or invoice. Nothing is auto-charged, and your details never touch this site.</p>
+      <div class="trust">
+        <span>📍 <b>Ontario-based</b> · Burlington</span>
+        <span>🛡 <b>CIS-aligned</b> baselines</span>
+        <span>✍ <b>Written authorization</b> before any work</span>
+        <span>💸 <b>No auto-charges</b></span>
+      </div>
+    </section>
+
+    <section class="grid" id="store">
+      <!-- Quick-Audit -->
+      <article class="card feat" data-sku="quick-audit">
+        <span class="tag">Best first step</span>
+        <h3>Security Quick-Audit</h3>
+        <p class="desc">A read-only posture review with a branded findings report — the low-commitment way to start.</p>
+        <div class="price">CAD&nbsp;$249 <small>one-time</small></div>
+        <ul class="feats">
+          <li>External exposure &amp; attack-surface scan</li>
+          <li>Microsoft&nbsp;365 / identity hygiene review</li>
+          <li>Prioritized findings report (3–5 business days)</li>
+          <li>30-minute readout call</li>
+        </ul>
+        <a class="buy" data-buy>Buy the Quick-Audit →</a>
+        <div class="pay" data-pay></div>
+      </article>
+
+      <!-- Hardening Sprint -->
+      <article class="card" data-sku="hardening">
+        <span class="tag">Most popular</span>
+        <h3>M365 + Windows Hardening Sprint</h3>
+        <p class="desc">A fixed-fee 1–2 week sprint to harden Microsoft&nbsp;365 / Entra&nbsp;ID and Windows endpoints to CIS-aligned baselines.</p>
+        <div class="price">from CAD&nbsp;$2,500 <small>fixed fee</small></div>
+        <ul class="feats">
+          <li>CIS-aligned M365 / Entra ID baseline</li>
+          <li>Windows endpoint hardening</li>
+          <li>MFA, conditional access &amp; logging review</li>
+          <li>Prioritized remediation report + evidence</li>
+        </ul>
+        <a class="buy" data-buy>Reserve a sprint →</a>
+        <div class="pay" data-pay></div>
+      </article>
+
+      <!-- PHIPA Readiness -->
+      <article class="card" data-sku="phipa">
+        <span class="tag">Health sector</span>
+        <h3>PHIPA Readiness</h3>
+        <p class="desc">A free readiness checklist for Ontario health-sector orgs, plus a fixed-fee privacy &amp; security assessment.</p>
+        <div class="price">from CAD&nbsp;$3,000 <small>assessment</small></div>
+        <ul class="feats">
+          <li>Privacy &amp; security gap assessment</li>
+          <li>Safeguard &amp; breach-readiness review</li>
+          <li>Board-ready remediation roadmap</li>
+          <li>Free PHIPA readiness checklist included</li>
+        </ul>
+        <a class="buy" data-buy>Start the assessment →</a>
+        <div class="pay" data-pay></div>
+      </article>
+
+      <!-- Managed Monitoring -->
+      <article class="card" data-sku="monitoring">
+        <span class="tag">Ongoing</span>
+        <h3>Managed Monitoring</h3>
+        <p class="desc">Continuous exposure &amp; posture monitoring with monthly executive reporting — governed by PERCIVAL.</p>
+        <div class="price">from CAD&nbsp;$600 <small>/ month</small></div>
+        <ul class="feats">
+          <li>Continuous attack-surface monitoring</li>
+          <li>KEV / advisory watch for your stack</li>
+          <li>Monthly executive risk report</li>
+          <li>Priority response window</li>
+        </ul>
+        <a class="buy" data-buy>Start monitoring →</a>
+        <div class="pay" data-pay></div>
+      </article>
+    </section>
+
+    <div class="lead">
+      <div>
+        <div class="lt">Free PHIPA Readiness Checklist</div>
+        <div class="ld">Ontario health-sector team? Start with our free checklist — zero commitment — then upgrade to a full assessment only if it's useful.</div>
+      </div>
+      <a class="lcta" href="offers/phipa-readiness-checklist.html">Get the free checklist →</a>
+    </div>
+
+    <div class="note">
+      <b>How payment works:</b> pay by <b>Interac e-Transfer</b> (no fees, Canadian banks) using the button on any
+      engagement, by secure <b>card checkout</b> where enabled, or by a confirmed <b>invoice</b> raised on the scope call.
+      <span class="lock">🔒</span> Your card details never touch this site, and no funds are ever auto-sent.
+    </div>
+
+    <section class="faq">
+      <h2>Questions, answered</h2>
+      <details><summary>How do I pay?</summary><p>Three ways, your choice: <b>Interac e-Transfer</b> (no fees) to desmondotieno@icloud.com, secure <b>card checkout</b> where enabled, or a confirmed <b>invoice</b>. Nothing is auto-charged.</p></details>
+      <details><summary>What do I get, and how fast?</summary><p>Each engagement has fixed, written deliverables — e.g. the Quick-Audit returns a risk-ranked findings report in 3–5 business days plus a 30-minute readout call.</p></details>
+      <details><summary>Will anything change on my systems?</summary><p>The Quick-Audit is strictly read-only. Hands-on work (e.g. the Hardening Sprint) proceeds only under your written authorization, with changes applied on your sign-off.</p></details>
+      <details><summary>Not sure which one fits?</summary><p>Start with the <b>$249 Quick-Audit</b> — it's the low-commitment first step, and its findings tell you whether a Sprint, PHIPA assessment, or monitoring makes sense. Questions? <a href="mailto:desmondotieno@icloud.com">desmondotieno@icloud.com</a>.</p></details>
+    </section>
+
+    <!-- Interac e-Transfer instructions modal (populated per engagement) -->
+    <div class="etx-back" id="etxBack" role="dialog" aria-modal="true" aria-labelledby="etxTitle" aria-hidden="true">
+      <div class="etx-modal">
+        <h3 id="etxTitle">Pay by Interac e-Transfer</h3>
+        <div class="sub" id="etxSub">—</div>
+        <div class="etx-row"><span class="k">Send&nbsp;to</span><span class="v" id="etxEmail"></span><button class="etx-copy" type="button" data-copy="etxEmail">Copy</button></div>
+        <div class="etx-row"><span class="k">Amount</span><span class="v" id="etxAmount"></span></div>
+        <div class="etx-row"><span class="k">Message</span><span class="v" id="etxMemo"></span><button class="etx-copy" type="button" data-copy="etxMemo">Copy</button></div>
+        <ol class="etx-steps">
+          <li>Open your bank's app → <b>Interac e-Transfer</b> → Send money.</li>
+          <li>Send to the email above for the amount shown.</li>
+          <li>Paste the Message into the e-Transfer memo so we can match your payment.</li>
+        </ol>
+        <div class="etx-actions">
+          <a class="etx-notify" id="etxNotify" href="#" rel="noopener">Notify us it's sent →</a>
+          <button class="etx-close" id="etxClose" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>© <span id="yr"></span> ClearGlass Inc. · Ontario, Canada</span>
+      <span><a href="pricing.html">Pricing</a> · <a href="index.html">Home</a> · <a href="mailto:desmondotieno@icloud.com">desmondotieno@icloud.com</a></span>
+    </footer>
+  </main>
+
+  <script>
+  (function(){
+    "use strict";
+    var EMAIL = "desmondotieno@icloud.com";
+
+    // ── PAYMENT CONFIG ─────────────────────────────────────────────────────────
+    // To take live card payments, create a Stripe Payment Link for each SKU in the
+    // Stripe Dashboard (Products → Payment links), then paste the resulting
+    // https://buy.stripe.com/… URL beside its SKU below. An empty string keeps the
+    // button on the secure confirmed-invoice flow. No API keys live in this file —
+    // Payment Links inherit your account's payment-method configuration
+    // (e.g. pmc_1TG2rP65MGeeiD4Kmrr8aZ9i) automatically.
+    // NOTE: live charging also requires your Stripe account capabilities to be
+    // active (the dashboard currently shows "Multiple capabilities paused").
+    var CHECKOUT = {
+      "quick-audit": "",   // e.g. "https://buy.stripe.com/xxxxxxxx"
+      "hardening":   "",
+      "phipa":       "",
+      "monitoring":  ""
+    };
+
+    var LABEL = {
+      "quick-audit": "Security Quick-Audit (CAD $249)",
+      "hardening":   "M365 + Windows Hardening Sprint (from CAD $2,500)",
+      "phipa":       "PHIPA Readiness assessment (from CAD $3,000)",
+      "monitoring":  "Managed Monitoring (from CAD $600/mo)"
+    };
+
+    function booking(sku){
+      var subj = encodeURIComponent("Engagement: " + (LABEL[sku] || sku));
+      var body = encodeURIComponent(
+        "Hi ClearGlass,\n\nI'd like to reserve the following engagement:\n  • " +
+        (LABEL[sku] || sku) + "\n\nOrganization:\nName:\nBest time for a scope call:\n\nThanks.");
+      return "mailto:" + EMAIL + "?subject=" + subj + "&body=" + body;
+    }
+
+    // ── INTERAC e-TRANSFER ─────────────────────────────────────────────────────
+    // Recipient for Interac e-Transfers. Set this to the email registered for
+    // Interac Autodeposit / e-Transfer at your bank. No account integration, keys,
+    // or backend needed — the customer sends from their own online banking.
+    var ETRANSFER_EMAIL = EMAIL;
+    var SHORT = {
+      "quick-audit": "Security Quick-Audit",
+      "hardening":   "Hardening Sprint",
+      "phipa":       "PHIPA Readiness",
+      "monitoring":  "Managed Monitoring"
+    };
+    // Amount requested by e-Transfer. Fixed-fee SKUs use the exact price; "from"
+    // SKUs request a deposit / first month, with final scope confirmed on the call.
+    var ETX_AMOUNT = {
+      "quick-audit": "CAD $249",
+      "hardening":   "CAD $2,500 (deposit · scope confirmed on call)",
+      "phipa":       "CAD $3,000 (deposit · scope confirmed on call)",
+      "monitoring":  "CAD $600 (first month)"
+    };
+
+    var back    = document.getElementById("etxBack");
+    var elEmail = document.getElementById("etxEmail");
+    var elAmt   = document.getElementById("etxAmount");
+    var elMemo  = document.getElementById("etxMemo");
+    var elSub   = document.getElementById("etxSub");
+    var elNotify= document.getElementById("etxNotify");
+    var lastFocus = null;
+
+    function memoFor(sku){ return (SHORT[sku] || sku) + " — your organization"; }
+
+    function openETX(sku){
+      lastFocus = document.activeElement;
+      elSub.textContent   = LABEL[sku] || sku;
+      elEmail.textContent = ETRANSFER_EMAIL;
+      elAmt.textContent   = ETX_AMOUNT[sku] || "";
+      elMemo.textContent  = memoFor(sku);
+      var subj = encodeURIComponent("Interac e-Transfer sent: " + (SHORT[sku] || sku));
+      var body = encodeURIComponent(
+        "Hi ClearGlass,\n\nI've sent an Interac e-Transfer for:\n  • " + (LABEL[sku] || sku) +
+        "\n  • Amount: " + (ETX_AMOUNT[sku] || "") +
+        "\n  • Memo used: " + memoFor(sku) +
+        "\n\nOrganization:\nName:\nSending email:\n\nThanks.");
+      elNotify.setAttribute("href", "mailto:" + EMAIL + "?subject=" + subj + "&body=" + body);
+      back.classList.add("open");
+      back.setAttribute("aria-hidden", "false");
+      document.getElementById("etxClose").focus();
+    }
+    function closeETX(){
+      back.classList.remove("open");
+      back.setAttribute("aria-hidden", "true");
+      if (lastFocus) lastFocus.focus();
+    }
+    document.getElementById("etxClose").addEventListener("click", closeETX);
+    back.addEventListener("click", function(e){ if (e.target === back) closeETX(); });
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape" && back.classList.contains("open")) closeETX(); });
+    Array.prototype.forEach.call(document.querySelectorAll(".etx-copy"), function(btn){
+      btn.addEventListener("click", function(){
+        var txt = document.getElementById(btn.getAttribute("data-copy")).textContent;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt);
+          var o = btn.textContent; btn.textContent = "Copied"; setTimeout(function(){ btn.textContent = o; }, 1200);
+        }
+      });
+    });
+
+    document.querySelectorAll(".card[data-sku]").forEach(function(card){
+      var sku  = card.getAttribute("data-sku");
+      var a    = card.querySelector("[data-buy]");
+      var note = card.querySelector("[data-pay]");
+      var link = CHECKOUT[sku];
+      if (link && /^https:\/\/(buy|book|checkout)\.stripe\.com\//.test(link)) {
+        a.setAttribute("href", link);
+        a.setAttribute("rel", "noopener");
+        a.setAttribute("target", "_blank");
+        a.textContent = "Secure checkout →";
+        note.textContent = "🔒 Stripe · encrypted card payment";
+      } else {
+        a.setAttribute("href", booking(sku));
+        note.textContent = "Confirmed booking · invoice on scope call";
+      }
+      // Interac e-Transfer option on every card — no account setup required
+      var etx = document.createElement("button");
+      etx.type = "button";
+      etx.className = "etx-link";
+      etx.textContent = "or pay by Interac e-Transfer →";
+      etx.addEventListener("click", function(){ openETX(sku); });
+      card.appendChild(etx);
+    });
+
+    document.getElementById("yr").textContent = new Date().getFullYear();
+  })();
+  </script>
+  <script defer src="nav.js"></script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
+</body>
+</html>

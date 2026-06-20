@@ -147,9 +147,13 @@ Includes:
 ├── products/
 ├── docs/
 └── README.md
-# ClearGlassInc.
+```
 
-Public website, governance documentation, and supporting automation for ClearGlassInc Artemis — enterprise cybersecurity, secure software architecture, and intelligence operations.
+---
+
+# ClearGlass Inc — Website & Engineering Monorepo
+
+Public website, governance documentation, and supporting automation for **ClearGlass Inc** — enterprise cybersecurity, secure software architecture, AI automation, and intelligence operations. Founded by **Desmond Otieno Odhiambo** (Founder & Chairman, Software Architect).
 
 The site is published via GitHub Pages from the `main` branch.
 

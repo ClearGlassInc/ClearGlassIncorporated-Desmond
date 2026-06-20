@@ -55,7 +55,17 @@ jobs:
 
       - name: Push outputs to remote
         if: ${{ inputs.dry_run != true }}
-        run: git push origin HEAD || true
+        run: |
+          # Concurrent bots push to main during our run; rebase and retry so a
+          # non-fast-forward rejection doesn't silently drop generated outputs.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt/5) — rebasing onto latest main"
+            git pull --rebase origin main || break
+          done
+          echo "::warning::Could not push bot outputs after retries — next run will pick them up"
 
       - name: Upload bot outputs
         uses: actions/upload-artifact@v7

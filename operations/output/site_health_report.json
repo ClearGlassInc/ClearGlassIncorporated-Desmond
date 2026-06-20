@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-19T11:21:37.225155+00:00",
+  "run_utc": "2026-06-20T10:08:07.454538+00:00",
   "site_url": "https://clearglassinc.github.io",
-  "overall_healthy": true,
+  "overall_healthy": false,
   "pages_checked": 6,
   "pages_healthy": 6,
   "pages_unreachable": 0,
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 128,
+      "response_ms": 152,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 74,
+      "response_ms": 113,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 120,
+      "response_ms": 140,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 68,
+      "response_ms": 104,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 97,
+      "response_ms": 126,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,13 +61,15 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 76,
+      "response_ms": 124,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
-  "local_issues": [],
+  "local_issues": [
+    "Page missing ClearGlass logo: smb-cyber-trust-kit.html"
+  ],
   "local_warnings": [
     "HTML page not referenced in sitemap.xml: loader.html"
   ]

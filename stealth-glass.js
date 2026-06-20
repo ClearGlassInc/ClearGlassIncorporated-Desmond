@@ -24,6 +24,17 @@
   if (window.__cgStealthGlass) return;
   window.__cgStealthGlass = true;
 
+  /* Load the site-wide analytics loader once. It is config-gated in
+     /analytics.js and does nothing (no network, no cookies) until a provider is
+     set there, so this is safe to ship on every page. */
+  if (!window.__cgAnalytics && !document.querySelector("script[data-cg-analytics]")) {
+    var _cgA = document.createElement("script");
+    _cgA.src = "/analytics.js";
+    _cgA.defer = true;
+    _cgA.setAttribute("data-cg-analytics", "");
+    (document.head || document.documentElement).appendChild(_cgA);
+  }
+
   var KEY = "cg-stealth"; // localStorage flag: "on" | "off"
   var ON = "on", OFF = "off";
   var reduce = false;

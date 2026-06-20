@@ -1,9 +1,12 @@
-# Release Notes — 2026-06-19
+# Release Notes — 2026-06-20
 
-*133 commit(s) since v1.0.0*
+*149 commit(s) since v1.0.0*
 
 ## New Features
 
+- **smb:** SMB Cyber Trust Kit — agent + interactive console + kit engine (`b8d49e1`)
+- **commerce:** add storefront checkout smoke test (SOUL.md guardrail) (`85d229c`)
+- **ui:** premium glass upgrade for the site-wide Stealth Glass button (`7aaa944`)
 - **ui:** site-wide Stealth Glass toggle on every page (`20ffe86`)
 - **outreach:** automated CASL-compliant draft generation (never sends) (`b507131`)
 - **revenue:** store conversion boost + outreach follow-ups + bot content (`f25dd1d`)
@@ -16,6 +19,8 @@
 
 ## Bug Fixes
 
+- **audit:** eliminate false-positive SEO/a11y warnings in site reliability audit (`aae6434`)
+- **ci:** stop Multi-Repo Audit nightly from hard-failing when CG_ORG_PAT is unset (`7ba8b96`)
 - add CORS to control plane for storefront/admin (#494) (`13ec862`)
 - **deploy:** stop failing legacy Pages "production" deployments (`6bd03c0`)
 - **lint:** remove unused 'import sys' in scripts/repo_audit.py (`e0732b2`)
@@ -28,6 +33,10 @@
 - **seo:** raise on-page SEO from 64 to 98 across all pages (`2835884`)
 - add glass.css to burlington-osint.html (only page missing site-wide design system) (`475646d`)
 
+## Documentation
+
+- add SOUL.md autonomous revenue agent charter (`a05c61a`)
+
 ## Tests
 
 - **site-health:** use a single import style in logo-coverage test (`56a92a0`)
@@ -35,12 +44,14 @@
 
 ## CI/CD
 
+- **audit:** nightly multi-repo audit workflow (`58260cf`)
 - **pages:** make Pages-source pin self-healing + document 403 fix (`be962e6`)
 - add OSINT Deck Validator job (#461) (`2b5109d`)
 - add OSINT Deck Validator job (wire deck release gate into every build) (`60c0fbf`)
 
 ## Maintenance
 
+- Add Web Design & Dev to Products menu/nav (`8772034`)
 - Fix Twitter description and update log line (`d93559c`)
 - Fix title formatting in aegis.html (`ebc675a`)
 - Update branding from ClearGlass to ClearGlassInc (`118d8f3`)
@@ -103,6 +114,14 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`750b828`)
+- refresh control-surface data feeds [skip ci] (`57c6c32`)
+- refresh control-surface data feeds [skip ci] (`d606d46`)
+- refresh control-surface data feeds [skip ci] (`ed4c380`)
+- refresh control-surface data feeds [skip ci] (`73be572`)
+- refresh control-surface data feeds [skip ci] (`a733124`)
+- refresh control-surface data feeds [skip ci] (`eae9bbb`)
+- update generated outputs — 2026-06-19 11:21 UTC [skip ci] (`abc9505`)
 - refresh control-surface data feeds [skip ci] (`ca0da4b`)
 - update generated outputs — 2026-06-19 07:03 UTC [skip ci] (`d0c536c`)
 - refresh control-surface data feeds [skip ci] (`5facc63`)

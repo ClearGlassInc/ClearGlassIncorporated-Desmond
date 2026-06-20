@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-19T11:21:36.627003+00:00",
-  "files_audited": 49,
-  "average_score": 97.6,
+  "run_utc": "2026-06-20T10:08:06.684155+00:00",
+  "files_audited": 50,
+  "average_score": 97.0,
   "pages": [
     {
       "file": "404.html",
@@ -790,6 +790,28 @@
       "issues": []
     },
     {
+      "file": "smb-cyber-trust-kit.html",
+      "title": "SMB Cyber Trust Kit \u2014 Plain-Language Cyber Resilience | ClearGlass Inc",
+      "title_length": 70,
+      "title_ok": false,
+      "description": "The ClearGlass SMB Cyber Trust Kit: a plain-language cyber resilience starter pack for small and medium businesses \u2014 simple policy templates, an interactive risk heat-map, an incident communication script, and a guide to talking about cyber risk without jargon. Powered by an on-page Trust Advisor agent.",
+      "description_length": 304,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Title length 70 chars (ideal 30\u201360)",
+        "Description length 304 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "smb.html",
       "title": "SMB Suite \u2014 ClearGlass \u00b7 Intelligent Systems",
       "title_length": 44,
@@ -901,6 +923,8 @@
     }
   ],
   "top_issues": [
+    "2x \u2014 Missing og:image",
+    "2x \u2014 Description length N chars (ideal N\u2013N)",
     "1x \u2014 Multiple <hN> tags (N)",
     "1x \u2014 Missing <title>",
     "1x \u2014 Missing meta description",
@@ -908,8 +932,6 @@
     "1x \u2014 No <hN> tag found",
     "1x \u2014 Missing og:title",
     "1x \u2014 Missing og:description",
-    "1x \u2014 Missing og:image",
-    "1x \u2014 Description length N chars (ideal N\u2013N)",
-    "1x \u2014 N image(s) missing alt text"
+    "1x \u2014 Title length N chars (ideal N\u2013N)"
   ]
 }

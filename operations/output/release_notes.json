@@ -1,10 +1,37 @@
 {
-  "run_utc": "2026-06-19T11:21:36.604311+00:00",
+  "run_utc": "2026-06-20T10:08:06.658682+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 133,
+  "commit_count": 149,
   "sections": {
     "New Features": [
+      {
+        "sha": "b8d49e1",
+        "type": "feat",
+        "scope": "smb",
+        "subject": "SMB Cyber Trust Kit \u2014 agent + interactive console + kit engine",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "85d229c",
+        "type": "feat",
+        "scope": "commerce",
+        "subject": "add storefront checkout smoke test (SOUL.md guardrail)",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "7aaa944",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "premium glass upgrade for the site-wide Stealth Glass button",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
       {
         "sha": "20ffe86",
         "type": "feat",
@@ -88,6 +115,24 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "aae6434",
+        "type": "fix",
+        "scope": "audit",
+        "subject": "eliminate false-positive SEO/a11y warnings in site reliability audit",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "7ba8b96",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "stop Multi-Repo Audit nightly from hard-failing when CG_ORG_PAT is unset",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
       {
         "sha": "13ec862",
         "type": "fix",
@@ -188,6 +233,17 @@
         "breaking": false
       }
     ],
+    "Documentation": [
+      {
+        "sha": "a05c61a",
+        "type": "docs",
+        "scope": null,
+        "subject": "add SOUL.md autonomous revenue agent charter",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      }
+    ],
     "Tests": [
       {
         "sha": "56a92a0",
@@ -209,6 +265,15 @@
       }
     ],
     "CI/CD": [
+      {
+        "sha": "58260cf",
+        "type": "ci",
+        "scope": "audit",
+        "subject": "nightly multi-repo audit workflow",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      },
       {
         "sha": "be962e6",
         "type": "ci",
@@ -238,6 +303,15 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "8772034",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Web Design & Dev to Products menu/nav",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      },
       {
         "sha": "d93559c",
         "type": "chore",
@@ -771,6 +845,78 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "750b828",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "57c6c32",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "d606d46",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "ed4c380",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "73be572",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "a733124",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "eae9bbb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "abc9505",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-19 11:21 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
       {
         "sha": "ca0da4b",
         "type": "bot",

@@ -17,12 +17,11 @@ Requires: face_recognition, opencv-python, pillow
 import os
 import json
 import pickle
-import cv2
 import face_recognition
 import numpy as np
 from datetime import datetime
 from pathlib import Path
-from typing import List, Dict, Optional, Tuple
+from typing import Dict, Optional
 import argparse
 import sys
 
@@ -174,7 +173,7 @@ class FaceRecognitionLocal:
         
         self._save_database()
         
-        print(f"\n✓ Enrollment successful!")
+        print("\n✓ Enrollment successful!")
         print(f"  Person: {person_name}")
         print(f"  Faces in database: {len(self.encodings_db['names'])}")
         print(f"{'='*50}\n")
@@ -238,7 +237,7 @@ class FaceRecognitionLocal:
         best_distance = face_distances[best_match_index]
         
         if best_distance > tolerance:
-            print(f"\n✗ No matching person found")
+            print("\n✗ No matching person found")
             print(f"  Best match distance: {best_distance:.3f} (threshold: {tolerance})")
             return None
         
@@ -258,7 +257,7 @@ class FaceRecognitionLocal:
         # Log identification
         self._log_identification(person_name, confidence, image_path)
         
-        print(f"\n✓ Person Identified!")
+        print("\n✓ Person Identified!")
         print(f"  Name: {person_name}")
         print(f"  Confidence: {confidence*100:.2f}%")
         print(f"  Distance: {best_distance:.3f}")
@@ -282,12 +281,12 @@ class FaceRecognitionLocal:
         result = self.identify_person(image_path, tolerance)
         
         if result and result["person_name"] == expected_name:
-            print(f"✓ Authentication Successful")
+            print("✓ Authentication Successful")
             print(f"  Person: {expected_name}")
             print(f"  Confidence: {result['confidence']*100:.2f}%")
             return True
         else:
-            print(f"✗ Authentication Failed")
+            print("✗ Authentication Failed")
             if result:
                 print(f"  Expected: {expected_name}")
                 print(f"  Detected: {result['person_name']}")
@@ -473,7 +472,7 @@ Examples:
     organize_parser.add_argument('--tolerance', type=float, default=0.6, help='Recognition tolerance')
     
     # List command
-    list_parser = subparsers.add_parser('list', help='List enrolled persons')
+    subparsers.add_parser('list', help='List enrolled persons')
     
     # Delete command
     delete_parser = subparsers.add_parser('delete', help='Delete person from database')

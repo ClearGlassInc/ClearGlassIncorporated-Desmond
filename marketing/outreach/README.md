@@ -26,6 +26,7 @@ send fewer, warmer, more relevant messages.
 | File | Use |
 | --- | --- |
 | `quick-audit-cold-email.md` | First-touch email for the CAD $249 Security Quick-Audit (the entry offer). |
+| `hardening-sprint-email.md` | First-touch email for the CAD $2,500+ M365 + Windows Hardening Sprint (highest-value offer). |
 | `phipa-readiness-onepager.md` | Leave-behind / attachment for Ontario health-sector orgs. |
 | `linkedin-connect.md` | Short, non-salesy LinkedIn connection + follow-up. |
 

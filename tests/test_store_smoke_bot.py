@@ -11,10 +11,14 @@ sys.path.insert(0, str(ROOT))
 
 from bots.store_smoke_bot import (  # noqa: E402
     REQUIRED_CONFIG_MAPS,
+    STRIPE_LINK_RE,
+    check_checkout_links,
     check_pricing,
     check_storefront,
     extract_card_skus,
+    extract_checkout_links,
     extract_map_keys,
+    live_checkout_skus,
     run,
 )
 
@@ -106,6 +110,51 @@ class TestCheckPricing:
         store = (ROOT / "store.html").read_text(encoding="utf-8")
         pricing = (ROOT / "pricing.html").read_text(encoding="utf-8")
         assert check_pricing(store, pricing) == []
+
+
+LIVE_LINK = "https://buy.stripe.com/test_abc123"
+STORE_WITH_LIVE = GOOD_STORE.replace('"alpha": "", "beta": ""',
+                                     f'"alpha": "{LIVE_LINK}", "beta": ""')
+
+
+class TestCheckoutLinks:
+    def test_extract_links_as_dict(self) -> None:
+        assert extract_checkout_links(GOOD_STORE) == {"alpha": "", "beta": ""}
+
+    def test_live_skus_are_the_non_empty_ones(self) -> None:
+        assert live_checkout_skus(GOOD_STORE) == set()
+        assert live_checkout_skus(STORE_WITH_LIVE) == {"alpha"}
+
+    def test_empty_links_pass(self) -> None:
+        assert check_checkout_links(GOOD_STORE) == []
+
+    def test_valid_stripe_link_passes(self) -> None:
+        assert check_checkout_links(STORE_WITH_LIVE) == []
+        assert STRIPE_LINK_RE.match(LIVE_LINK)
+
+    def test_wrong_domain_is_rejected(self) -> None:
+        bad = GOOD_STORE.replace('"alpha": ""', '"alpha": "https://evil.example/x"')
+        errors = check_checkout_links(bad, "store.html")
+        assert any("alpha" in e and "not a valid" in e for e in errors)
+
+    def test_plain_http_is_rejected(self) -> None:
+        bad = GOOD_STORE.replace('"alpha": ""', '"alpha": "http://buy.stripe.com/x"')
+        assert check_checkout_links(bad) != []
+
+    def test_bare_host_without_path_is_rejected(self) -> None:
+        bad = GOOD_STORE.replace('"alpha": ""', '"alpha": "https://buy.stripe.com/"')
+        assert check_checkout_links(bad) != []
+
+    def test_real_pages_have_only_valid_or_empty_links(self) -> None:
+        store = (ROOT / "store.html").read_text(encoding="utf-8")
+        pricing = (ROOT / "pricing.html").read_text(encoding="utf-8")
+        assert check_checkout_links(store, "store.html") == []
+        assert check_checkout_links(pricing, "pricing.html") == []
+
+    def test_live_checkout_must_match_across_pages(self) -> None:
+        # store enables live card checkout for 'alpha'; pricing does not.
+        errors = check_pricing(STORE_WITH_LIVE, GOOD_PRICING)
+        assert any("different SKUs across pages" in e for e in errors)
 
 
 class TestRun:

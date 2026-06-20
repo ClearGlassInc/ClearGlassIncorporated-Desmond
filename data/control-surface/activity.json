@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "18:45",
-    "timestamp": "2026-06-20T18:45:37Z"
+    "time": "20:41",
+    "timestamp": "2026-06-20T20:41:16Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #64",
-    "time": "18:45",
-    "timestamp": "2026-06-20T18:45:24Z"
+    "detail": "schedule on main \u00b7 run #65",
+    "time": "20:41",
+    "timestamp": "2026-06-20T20:41:05Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-c40a00bf-4706-4f99-b4b5-e3aa6b4c5e10 \u00b7 run #221",
-    "time": "18:08",
-    "timestamp": "2026-06-20T18:08:05Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-0cce43ac-633f-4bb2-b207-15e6c8d4ae19 \u00b7 run #223",
+    "time": "20:08",
+    "timestamp": "2026-06-20T20:08:05Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-5e4013a5-3cd8-485b-b36f-f7020f4c82c6 \u00b7 run #220",
-    "time": "17:08",
-    "timestamp": "2026-06-20T17:08:05Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
+    "title": "Health Monitor",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #391",
-    "time": "16:50",
-    "timestamp": "2026-06-20T16:50:43Z"
+    "detail": "schedule on main \u00b7 run #84",
+    "time": "19:43",
+    "timestamp": "2026-06-20T19:43:05Z"
   },
   {
-    "title": "pages build and deployment",
-    "status": "bad",
-    "detail": "dynamic on main \u00b7 run #823",
-    "time": "16:50",
-    "timestamp": "2026-06-20T16:50:38Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1417",
-    "time": "16:50",
-    "timestamp": "2026-06-20T16:50:37Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #63",
-    "time": "16:50",
-    "timestamp": "2026-06-20T16:50:24Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-e87aa38a-ca9c-4cd0-81d9-8c889355451a \u00b7 run #219",
-    "time": "16:08",
-    "timestamp": "2026-06-20T16:08:05Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #452",
-    "time": "15:29",
-    "timestamp": "2026-06-20T15:29:35Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #425",
-    "time": "15:29",
-    "timestamp": "2026-06-20T15:29:35Z"
+    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #220",
+    "time": "19:39",
+    "timestamp": "2026-06-20T19:39:06Z"
   },
   {
     "title": "CI",
     "status": "ok",
-    "detail": "push on main \u00b7 run #688",
-    "time": "15:29",
-    "timestamp": "2026-06-20T15:29:35Z"
+    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #693",
+    "time": "19:39",
+    "timestamp": "2026-06-20T19:39:06Z"
   },
   {
-    "title": "Deploy GitHub Pages",
+    "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "push on main \u00b7 run #390",
-    "time": "15:29",
-    "timestamp": "2026-06-20T15:29:35Z"
+    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #714",
+    "time": "19:39",
+    "timestamp": "2026-06-20T19:39:06Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #430",
+    "time": "19:39",
+    "timestamp": "2026-06-20T19:39:06Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #457",
+    "time": "19:39",
+    "timestamp": "2026-06-20T19:39:06Z"
+  },
+  {
+    "title": "Code Quality: PR #510",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/510/head \u00b7 run #1423",
+    "time": "19:39",
+    "timestamp": "2026-06-20T19:39:03Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #429",
+    "time": "19:35",
+    "timestamp": "2026-06-20T19:35:32Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #219",
+    "time": "19:35",
+    "timestamp": "2026-06-20T19:35:32Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #456",
+    "time": "19:35",
+    "timestamp": "2026-06-20T19:35:32Z"
   }
 ]

@@ -27,6 +27,10 @@
       ["Government", "government.html", "🏛"],
       ["ClearPulse", "clearpulse.html", "📡"]
     ]],
+    ["For Small Business", [
+      ["SMB Cyber Trust Kit", "smb-cyber-trust-kit.html", "🔐"],
+      ["Offers & Pricing", "offers/", "🎯"]
+    ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],

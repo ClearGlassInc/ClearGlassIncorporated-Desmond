@@ -95,6 +95,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "strategy",
         "schedule": "daily",
     },
+    "smb_cyber_trust_kit": {
+        "module": "bots.smb_cyber_trust_kit_bot",
+        "group": "content",
+        "schedule": "weekly",
+    },
     "self_evolving": {
         "module": "bots.self_evolving_engine",
         "group": "orchestration",

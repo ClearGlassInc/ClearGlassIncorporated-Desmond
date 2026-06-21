@@ -73,6 +73,31 @@ class Order(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
 
 
+class Payout(Base):
+    """A Stripe payout (settlement of platform balance to a connected bank account).
+
+    Populated from ``payout.created`` / ``payout.updated`` / ``payout.paid`` webhooks.
+    Deliberately stores no raw bank details: ``destination`` is Stripe's opaque external-account
+    token (e.g. ``ba_…``), never an account or routing number. ``amount`` is in major units
+    (dollars), matching :class:`Order.total`.
+    """
+
+    __tablename__ = "payouts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    stripe_payout_id: Mapped[str] = mapped_column(String(120), unique=True, index=True)
+    amount: Mapped[Decimal] = mapped_column(Numeric(12, 2), default=Decimal("0"))
+    currency: Mapped[str] = mapped_column(String(3), default="CAD")
+    status: Mapped[str] = mapped_column(String(32), default="pending")
+    destination: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    tenant_id: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
+    arrival_date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=_utcnow, onupdate=_utcnow
+    )
+
+
 class Inventory(Base):
     __tablename__ = "inventory"
 

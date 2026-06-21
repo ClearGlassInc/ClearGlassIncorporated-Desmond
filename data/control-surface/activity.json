@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "13:17",
-    "timestamp": "2026-06-21T13:17:56Z"
+    "time": "16:11",
+    "timestamp": "2026-06-21T16:11:00Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #70",
-    "time": "13:17",
-    "timestamp": "2026-06-21T13:17:43Z"
+    "detail": "schedule on main \u00b7 run #71",
+    "time": "16:10",
+    "timestamp": "2026-06-21T16:10:47Z"
   },
   {
-    "title": "Auto-Store",
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-046c68e3-3206-43d6-bc0d-24e902476bb3 \u00b7 run #243",
+    "time": "16:08",
+    "timestamp": "2026-06-21T16:08:05Z"
+  },
+  {
+    "title": "Code Quality: PR #516",
     "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #2",
-    "time": "13:16",
-    "timestamp": "2026-06-21T13:16:08Z"
+    "detail": "dynamic on refs/pull/516/head \u00b7 run #1445",
+    "time": "15:46",
+    "timestamp": "2026-06-21T15:46:54Z"
   },
   {
     "title": "CI",
     "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #706",
-    "time": "13:16",
-    "timestamp": "2026-06-21T13:16:08Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #470",
-    "time": "13:16",
-    "timestamp": "2026-06-21T13:16:08Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #443",
-    "time": "13:16",
-    "timestamp": "2026-06-21T13:16:08Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #728",
-    "time": "13:16",
-    "timestamp": "2026-06-21T13:16:08Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #226",
-    "time": "13:16",
-    "timestamp": "2026-06-21T13:16:08Z"
-  },
-  {
-    "title": "Code Quality: PR #515",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/515/head \u00b7 run #1442",
-    "time": "13:16",
-    "timestamp": "2026-06-21T13:16:06Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #727",
-    "time": "13:13",
-    "timestamp": "2026-06-21T13:13:40Z"
+    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #708",
+    "time": "15:46",
+    "timestamp": "2026-06-21T15:46:52Z"
   },
   {
     "title": "Auto-Store",
     "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #1",
-    "time": "13:13",
-    "timestamp": "2026-06-21T13:13:40Z"
+    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #4",
+    "time": "15:46",
+    "timestamp": "2026-06-21T15:46:52Z"
   },
   {
-    "title": "PR Automation",
+    "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #225",
-    "time": "13:13",
-    "timestamp": "2026-06-21T13:13:40Z"
+    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #730",
+    "time": "15:46",
+    "timestamp": "2026-06-21T15:46:52Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #472",
+    "time": "15:46",
+    "timestamp": "2026-06-21T15:46:52Z"
   },
   {
     "title": "Policy Gate",
     "status": "ok",
-    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #442",
-    "time": "13:13",
-    "timestamp": "2026-06-21T13:13:40Z"
+    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #445",
+    "time": "15:46",
+    "timestamp": "2026-06-21T15:46:52Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/clever-tesla-bani7o \u00b7 run #227",
+    "time": "15:46",
+    "timestamp": "2026-06-21T15:46:52Z"
+  },
+  {
+    "title": "Workflow Doctor",
+    "status": "ok",
+    "detail": "push on claude/clever-tesla-bani7o \u00b7 run #151",
+    "time": "15:46",
+    "timestamp": "2026-06-21T15:46:29Z"
+  },
+  {
+    "title": "ClearGlass Copilot Setup",
+    "status": "bad",
+    "detail": "push on main \u00b7 run #4",
+    "time": "15:40",
+    "timestamp": "2026-06-21T15:40:18Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #444",
+    "time": "15:40",
+    "timestamp": "2026-06-21T15:40:18Z"
   }
 ]

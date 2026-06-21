@@ -15,8 +15,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Fail-closed pre-publish gate. pages.yml is triggered by push to main in
+  # parallel with CI, so without this the site would deploy even if CI is red.
+  # If verify fails, `deploy` is skipped and the last good deploy stays live
+  # (rollback-safe by default). Revenue-critical checks run first.
+  verify:
+    name: Pre-deploy verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install pytest
+      - name: Storefront checkout smoke test (revenue-critical)
+        run: python bots/store_smoke_bot.py
+      - name: Test suite
+        run: pytest tests/ -q
+
   deploy:
     name: Deploy
+    needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:

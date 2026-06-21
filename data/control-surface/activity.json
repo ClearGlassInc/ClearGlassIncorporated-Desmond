@@ -3,12 +3,54 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "16:50",
-    "timestamp": "2026-06-20T16:50:32Z"
+    "time": "18:45",
+    "timestamp": "2026-06-20T18:45:37Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #64",
+    "time": "18:45",
+    "timestamp": "2026-06-20T18:45:24Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-c40a00bf-4706-4f99-b4b5-e3aa6b4c5e10 \u00b7 run #221",
+    "time": "18:08",
+    "timestamp": "2026-06-20T18:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-5e4013a5-3cd8-485b-b36f-f7020f4c82c6 \u00b7 run #220",
+    "time": "17:08",
+    "timestamp": "2026-06-20T17:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #391",
+    "time": "16:50",
+    "timestamp": "2026-06-20T16:50:43Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "bad",
+    "detail": "dynamic on main \u00b7 run #823",
+    "time": "16:50",
+    "timestamp": "2026-06-20T16:50:38Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1417",
+    "time": "16:50",
+    "timestamp": "2026-06-20T16:50:37Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #63",
     "time": "16:50",
     "timestamp": "2026-06-20T16:50:24Z"
@@ -47,47 +89,5 @@
     "detail": "push on main \u00b7 run #390",
     "time": "15:29",
     "timestamp": "2026-06-20T15:29:35Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #709",
-    "time": "15:29",
-    "timestamp": "2026-06-20T15:29:35Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1416",
-    "time": "15:29",
-    "timestamp": "2026-06-20T15:29:34Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "bad",
-    "detail": "dynamic on main \u00b7 run #822",
-    "time": "15:29",
-    "timestamp": "2026-06-20T15:29:34Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "ok",
-    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #217",
-    "time": "15:27",
-    "timestamp": "2026-06-20T15:27:11Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #687",
-    "time": "15:27",
-    "timestamp": "2026-06-20T15:27:11Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on claude/confident-feynman-s5ztsm \u00b7 run #451",
-    "time": "15:27",
-    "timestamp": "2026-06-20T15:27:11Z"
   }
 ]

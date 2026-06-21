@@ -257,6 +257,37 @@ IMG_003.jpg,Unknown,0
 
 ---
 
+## 🔐 Security Hardening (v2.0)
+
+These primitives live in [`opal_security.py`](opal_security.py) and are unit-tested in
+[`tests/test_opal_security.py`](../../tests/test_opal_security.py). They strengthen the
+**consent-based** product — none of them add surveillance or mass-identification capability.
+
+| Capability | What it does | Class |
+|---|---|---|
+| **Encryption-at-rest** | Biometric templates are stored via `EncryptedVault` (Fernet / AES-128-CBC + HMAC). The key lives in `face_vault.key` with `0600` permissions; nothing is written in plaintext. | `EncryptedVault` |
+| **Non-bypassable consent** | Enrollment refuses to persist a template without recorded consent. Skipping requires an explicit, audited `OPAL_ALLOW_NO_CONSENT=1` override (testing only). | `ConsentRegistry` |
+| **Tamper-evident audit** | Every consent / enroll / identify / authenticate / delete / purge event is appended to a hash-chained ledger (`audit_ledger_local.json`); `verify()` detects any retroactive edit. | `AuditLedger` |
+| **Retention / auto-purge** | Drop enrollments older than a configurable window (BIPA/GDPR data-minimization). | `RetentionPolicy` |
+| **Liveness / anti-spoofing** | The authentication path can require a liveness score in `[0,1]`, failing closed against photo-replay. | `LivenessPolicy` |
+
+### New CLI commands
+
+```bash
+# Require anti-spoofing on authentication (score from your liveness detector)
+python FaceRecognition-Local.py authenticate --image webcam.jpg --name "John Doe" \
+    --require-liveness --liveness-score 0.93
+
+# Purge enrollments older than 365 days (data-minimization)
+python FaceRecognition-Local.py purge --retention-days 365
+
+# Migrate a legacy plaintext pickle database into the encrypted vault
+python FaceRecognition-Local.py migrate --source face_database_local.pkl
+```
+
+> Requires `cryptography` (added to `requirements.txt`). The encrypted store now lives at
+> `face_database_local.enc`; run `migrate` once to import any pre-v2.0 `.pkl` database.
+
 ## Privacy & Data Management
 
 ### Viewing Consent Records

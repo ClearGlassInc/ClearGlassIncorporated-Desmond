@@ -1,0 +1,8 @@
+# Opal-Koboi runtime artifacts — NEVER commit biometric data or keys.
+face_vault.key
+face_database_local.enc
+face_database_local.pkl
+audit_ledger_local.json
+consent_log_local.json
+identification_log_local.json
+__pycache__/

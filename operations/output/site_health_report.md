@@ -1,21 +1,17 @@
 # Site Health Report
 
-**Run:** 2026-06-20T10:08:07.454538+00:00
-**Status:** ⚠️ Issues Detected
+**Run:** 2026-06-21T10:28:22.966014+00:00
+**Status:** ✅ Healthy
 **Pages:** 6/6 healthy
 
 ## Pages
 
-- ✅ `/` (152ms)
-- ✅ `/artemis.html` (113ms)
-- ✅ `/artemis-iv.html` (140ms)
-- ✅ `/guardian.html` (104ms)
-- ✅ `/clearglass-nexus.html` (126ms)
-- ✅ `/government.html` (124ms)
-
-## Local Issues
-
-- ❌ Page missing ClearGlass logo: smb-cyber-trust-kit.html
+- ✅ `/` (199ms)
+- ✅ `/artemis.html` (77ms)
+- ✅ `/artemis-iv.html` (117ms)
+- ✅ `/guardian.html` (91ms)
+- ✅ `/clearglass-nexus.html` (84ms)
+- ✅ `/government.html` (70ms)
 
 ## Warnings (non-failing)
 

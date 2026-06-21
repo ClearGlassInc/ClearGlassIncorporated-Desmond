@@ -1,9 +1,14 @@
-# Release Notes — 2026-06-20
+# Release Notes — 2026-06-21
 
-*149 commit(s) since v1.0.0*
+*175 commit(s) since v1.0.0*
 
 ## New Features
 
+- **products:** add PostLoop content engine + Flowsint OSINT graph (`0b7bb71`)
+- site-wide analytics loader + outreach drafts (go-to-market) (`df66b2f`)
+- **commerce:** validate Stripe checkout links + go-live runbook (#506) (`62a9668`)
+- **store:** ClearGlass Side Store — autonomous revenue agent SOUL spec (`e88865f`)
+- **commerce:** validate Stripe checkout links + go-live runbook (`0a1796e`)
 - **smb:** SMB Cyber Trust Kit — agent + interactive console + kit engine (`b8d49e1`)
 - **commerce:** add storefront checkout smoke test (SOUL.md guardrail) (`85d229c`)
 - **ui:** premium glass upgrade for the site-wide Stealth Glass button (`7aaa944`)
@@ -19,6 +24,10 @@
 
 ## Bug Fixes
 
+- **opal-koboi:** clear ruff errors in FaceRecognition-Local.py (`24e54ba`)
+- **lint:** remove unused Date() declarations in postloop & flowsint (`dd67f16`)
+- **lint:** clear pre-existing ruff errors in opal-koboi face-recognition (`4042d91`)
+- **smb:** add shared logo badge to Cyber Trust Kit page (`29087ca`)
 - **audit:** eliminate false-positive SEO/a11y warnings in site reliability audit (`aae6434`)
 - **ci:** stop Multi-Repo Audit nightly from hard-failing when CG_ORG_PAT is unset (`7ba8b96`)
 - add CORS to control plane for storefront/admin (#494) (`13ec862`)
@@ -35,6 +44,7 @@
 
 ## Documentation
 
+- **gtm:** go-to-market playbook + sitemap fix + hardening outreach (`83f49e3`)
 - add SOUL.md autonomous revenue agent charter (`a05c61a`)
 
 ## Tests
@@ -51,6 +61,12 @@
 
 ## Maintenance
 
+- AUTO-STORE-ENTERPRISE-WORKFLOW.YML (`12af922`)
+- **ci:** harden copilot workflow, document branch protection, drop binary (`57caf9e`)
+- Add GitHub Actions workflow for Copilot setup (`e7dcf85`)
+- **autostore:** gitignore cockpit build artifacts + pin npm deps (`4f8fddc`)
+- CLEARGLASS SEC AI (`1733d0d`)
+- FACIAL RECOGNITION (`581edf5`)
 - Add Web Design & Dev to Products menu/nav (`8772034`)
 - Fix Twitter description and update log line (`d93559c`)
 - Fix title formatting in aegis.html (`ebc675a`)
@@ -114,6 +130,16 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`1c39b36`)
+- refresh control-surface data feeds [skip ci] (`46db447`)
+- refresh control-surface data feeds [skip ci] (`a29026a`)
+- refresh control-surface data feeds [skip ci] (`77b3bd0`)
+- refresh control-surface data feeds [skip ci] (`20f13aa`)
+- refresh control-surface data feeds [skip ci] (`1c0dd9f`)
+- refresh control-surface data feeds [skip ci] (`b857508`)
+- refresh control-surface data feeds [skip ci] (`3652eb5`)
+- refresh control-surface data feeds [skip ci] (`2142eb4`)
+- update generated outputs — 2026-06-20 10:08 UTC [skip ci] (`b5c1695`)
 - refresh control-surface data feeds [skip ci] (`750b828`)
 - refresh control-surface data feeds [skip ci] (`57c6c32`)
 - refresh control-surface data feeds [skip ci] (`d606d46`)

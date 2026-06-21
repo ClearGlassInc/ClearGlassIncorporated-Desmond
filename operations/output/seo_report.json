@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-20T10:08:06.684155+00:00",
-  "files_audited": 50,
-  "average_score": 97.0,
+  "run_utc": "2026-06-21T10:28:22.287966+00:00",
+  "files_audited": 52,
+  "average_score": 95.6,
   "pages": [
     {
       "file": "404.html",
@@ -492,6 +492,29 @@
       "issues": []
     },
     {
+      "file": "flowsint.html",
+      "title": "Flowsint \u00b7 OSINT Investigation Graph \u2014 Domains, IPs & Transforms \u2014",
+      "title_length": 66,
+      "title_ok": false,
+      "description": "Flowsint \u2014 an OSINT investigation surface that maps domains, IPs and infrastructure as a live entity graph. Run transforms, resolve neighbors, and pivot across 900+ nodes in one sketch.",
+      "description_length": 185,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 2,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Title length 66 chars (ideal 30\u201360)",
+        "Description length 185 chars (ideal 120\u2013160)",
+        "Multiple <h1> tags (2)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
       "title": null,
       "title_length": 0,
@@ -718,6 +741,29 @@
       "issues": []
     },
     {
+      "file": "postloop.html",
+      "title": "PostLoop \u00b7 Autonomous Content Engine \u2014 Multi-Account Publishing on Autopilot \u2014",
+      "title_length": 78,
+      "title_ok": false,
+      "description": "PostLoop \u2014 an always-on content engine that drives, captions, scores, and publishes short-form video across Instagram, TikTok & YouTube. Multi-workspace, multi-account, creator-trend wall, and ad-boost in one live cockpit.",
+      "description_length": 222,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 2,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Title length 78 chars (ideal 30\u201360)",
+        "Description length 222 chars (ideal 120\u2013160)",
+        "Multiple <h1> tags (2)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "pricing.html",
       "title": "Pricing & Engagements \u2014 Start with ClearGlass | ClearGlass",
       "title_length": 58,
@@ -923,15 +969,15 @@
     }
   ],
   "top_issues": [
-    "2x \u2014 Missing og:image",
-    "2x \u2014 Description length N chars (ideal N\u2013N)",
-    "1x \u2014 Multiple <hN> tags (N)",
+    "4x \u2014 Description length N chars (ideal N\u2013N)",
+    "4x \u2014 Missing og:image",
+    "3x \u2014 Multiple <hN> tags (N)",
+    "3x \u2014 Title length N chars (ideal N\u2013N)",
     "1x \u2014 Missing <title>",
     "1x \u2014 Missing meta description",
     "1x \u2014 Missing canonical link tag",
     "1x \u2014 No <hN> tag found",
     "1x \u2014 Missing og:title",
-    "1x \u2014 Missing og:description",
-    "1x \u2014 Title length N chars (ideal N\u2013N)"
+    "1x \u2014 Missing og:description"
   ]
 }

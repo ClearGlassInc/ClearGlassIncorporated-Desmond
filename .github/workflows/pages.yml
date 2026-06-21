@@ -27,7 +27,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       # Force the Pages publishing source to "GitHub Actions" (build_type:
       # workflow). While the source stays "Deploy from a branch", GitHub keeps
       # auto-triggering the legacy "pages build and deployment" pipeline on
@@ -64,13 +64,13 @@ jobs:
               "'pages build and deployment' pipeline from failing."
           fi
       # enablement: true ensures Pages is enabled and exposes build outputs.
-      - uses: actions/configure-pages@v6
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
         with:
           enablement: true
-      - uses: actions/upload-pages-artifact@v5
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: "."
       - id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
 
 # Verified clean + triggered 2026-06-13

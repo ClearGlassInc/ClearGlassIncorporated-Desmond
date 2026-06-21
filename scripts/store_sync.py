@@ -58,9 +58,6 @@ SCHEMA = "clearglass.store.catalog/v1"
 # as a live link — it would silently bypass the money-safety guard.
 STRIPE_LINK_RE = re.compile(r"^https://(?:buy|book|checkout)\.stripe\.com/\S+$")
 
-# Checkout config maps in store.html, one per facet of the buy experience.
-_MAPS = ("CHECKOUT", "LABEL", "SHORT", "ETX_AMOUNT")
-
 
 class StoreSyncError(RuntimeError):
     """Raised when the storefront cannot be turned into a valid catalog."""

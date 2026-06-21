@@ -6,13 +6,19 @@ on:
       - main
   workflow_dispatch:
 
+# Least-privilege: this workflow only checks out the repo and runs a node
+# build/test. It never writes to the repo, so the default token is read-only.
+permissions:
+  contents: read
+
 jobs:
   copilot-setup:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

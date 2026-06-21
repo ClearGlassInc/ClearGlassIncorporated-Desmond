@@ -25,11 +25,29 @@ jobs:
         with:
           node-version: '20'
 
+      # The repo root has no Node project (it's a GitHub Pages site plus a
+      # Python control plane). Guard each npm step so the job is a clean no-op
+      # until a root package.json exists, instead of failing on ENOENT.
       - name: Install Dependencies
-        run: npm install
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "No root package.json; skipping npm install."
+          fi
 
       - name: Run Build
-        run: npm run build
+        run: |
+          if [ -f package.json ]; then
+            npm run build --if-present
+          else
+            echo "No root package.json; skipping build."
+          fi
 
       - name: Run Tests
-        run: npm test
+        run: |
+          if [ -f package.json ]; then
+            npm run test --if-present
+          else
+            echo "No root package.json; skipping tests."
+          fi

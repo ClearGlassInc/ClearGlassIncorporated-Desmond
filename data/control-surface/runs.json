@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #73",
+    "title": "Control Surface Feeds #74",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:41",
+    "timestamp": "2026-06-21T21:41:49Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #248",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-e314cfa2-5093-4103-93a9-1523c8f5bb4c",
+    "time": "21:08",
+    "timestamp": "2026-06-21T21:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #247",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-77438b45-873f-4be9-a44e-5869a0b37008",
+    "time": "20:08",
+    "timestamp": "2026-06-21T20:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #415",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:02",
+    "timestamp": "2026-06-21T20:02:28Z"
+  },
+  {
+    "title": "pages build and deployment #848",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:02",
+    "timestamp": "2026-06-21T20:02:21Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1456",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:02",
+    "timestamp": "2026-06-21T20:02:21Z"
+  },
+  {
+    "title": "Control Surface Feeds #73",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:02",
     "timestamp": "2026-06-21T20:02:02Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/affectionate-ritchie-0qg2ps",
     "time": "16:56",
     "timestamp": "2026-06-21T16:56:17Z"
-  },
-  {
-    "title": "Security #480",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/affectionate-ritchie-0qg2ps",
-    "time": "16:56",
-    "timestamp": "2026-06-21T16:56:17Z"
-  },
-  {
-    "title": "CI #716",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/affectionate-ritchie-0qg2ps",
-    "time": "16:56",
-    "timestamp": "2026-06-21T16:56:17Z"
-  },
-  {
-    "title": "Code Quality: PR #520 #1454",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/520/head",
-    "time": "16:56",
-    "timestamp": "2026-06-21T16:56:15Z"
-  },
-  {
-    "title": "Workflow Doctor #155",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/affectionate-ritchie-0qg2ps",
-    "time": "16:55",
-    "timestamp": "2026-06-21T16:55:44Z"
-  },
-  {
-    "title": "Graph Update: pip in /products/opal-koboi #1426603914 #18",
-    "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "16:27",
-    "timestamp": "2026-06-21T16:27:19Z"
-  },
-  {
-    "title": "Security #479",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:27",
-    "timestamp": "2026-06-21T16:27:17Z"
   }
 ]

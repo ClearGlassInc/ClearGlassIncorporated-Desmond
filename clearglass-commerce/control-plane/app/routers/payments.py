@@ -4,13 +4,20 @@ from __future__ import annotations
 from decimal import Decimal
 
 from fastapi import APIRouter, Depends, HTTPException, Request
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from .. import payments
 from ..audit import log_event
 from ..db import get_session
-from ..models import Order
-from ..schemas import ActionResult, CheckoutRequest, CheckoutSessionOut, RefundRequest
+from ..models import Order, Payout
+from ..schemas import (
+    ActionResult,
+    CheckoutRequest,
+    CheckoutSessionOut,
+    PayoutOut,
+    RefundRequest,
+)
 from ..service import run_governed_action
 
 router = APIRouter(tags=["payments"])
@@ -72,6 +79,22 @@ async def stripe_webhook(request: Request, session: Session = Depends(get_sessio
             payload={"verified": check["verified"], "amount_total": obj.get("amount_total")},
             result="executed",
         )
+    elif etype in payments.PAYOUT_EVENT_TYPES:
+        payout = _upsert_payout(session, obj, tenant_id=event.get("account"))
+        log_event(
+            session,
+            actor="stripe",
+            action="payout_recorded",
+            target=payout.stripe_payout_id,
+            payload={
+                "verified": check["verified"],
+                "event": etype,
+                "status": payout.status,
+                "amount": str(payout.amount),
+                "currency": payout.currency,
+            },
+            result="executed",
+        )
     else:
         log_event(
             session,
@@ -83,6 +106,50 @@ async def stripe_webhook(request: Request, session: Session = Depends(get_sessio
         )
 
     return {"received": True, "type": etype, "verified": check["verified"]}
+
+
+def _upsert_payout(session: Session, obj: dict, *, tenant_id: str | None) -> Payout:
+    """Insert or update a payout row keyed by Stripe's payout id (idempotent for retries).
+
+    Stripe redelivers webhooks and fires several events per payout (created -> in_transit ->
+    paid), so we look up by ``stripe_payout_id`` and update status/arrival in place rather than
+    creating duplicate rows.
+    """
+    fields = payments.parse_payout(obj)
+    existing = session.scalar(
+        select(Payout).where(Payout.stripe_payout_id == fields["stripe_payout_id"])
+    )
+    if existing is None:
+        payout = Payout(tenant_id=tenant_id, **fields)
+        session.add(payout)
+        session.flush()
+        return payout
+
+    existing.status = fields["status"]
+    existing.amount = fields["amount"]
+    existing.currency = fields["currency"]
+    existing.destination = fields["destination"]
+    existing.arrival_date = fields["arrival_date"]
+    if tenant_id and not existing.tenant_id:
+        existing.tenant_id = tenant_id
+    session.flush()
+    return existing
+
+
+@router.get("/payouts", response_model=list[PayoutOut])
+def list_payouts(
+    tenant_id: str | None = None,
+    limit: int = 100,
+    session: Session = Depends(get_session),
+) -> list[Payout]:
+    """Return recorded Stripe payouts, newest first. Optionally filter by ``tenant_id``.
+
+    Read-only: payouts are written solely by the verified Stripe webhook, never via this API.
+    """
+    stmt = select(Payout).order_by(Payout.created_at.desc()).limit(max(1, min(limit, 500)))
+    if tenant_id:
+        stmt = stmt.where(Payout.tenant_id == tenant_id)
+    return list(session.scalars(stmt).all())
 
 
 @router.post("/payments/refund", response_model=ActionResult)

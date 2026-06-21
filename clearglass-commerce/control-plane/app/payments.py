@@ -15,7 +15,13 @@ import hmac
 import json
 import os
 import time
+from datetime import datetime, timezone
+from decimal import Decimal
 from typing import Any
+
+PAYOUT_EVENT_TYPES = frozenset(
+    {"payout.created", "payout.updated", "payout.paid", "payout.failed", "payout.canceled"}
+)
 
 
 def _secret_key() -> str:
@@ -86,6 +92,34 @@ def create_checkout_session(
         "mode": "live",
         "amount_total": session.amount_total,
         "currency": session.currency,
+    }
+
+
+def parse_payout(obj: dict[str, Any]) -> dict[str, Any]:
+    """Normalize a Stripe ``payout`` object into the fields we persist.
+
+    ``amount`` is converted from Stripe's integer cents to major units (dollars). ``destination``
+    is kept as Stripe's opaque external-account token — no account/routing numbers are ever
+    extracted or stored. ``arrival_date`` (unix seconds) becomes a tz-aware datetime.
+    """
+    raw_dest = obj.get("destination")
+    # Stripe sometimes expands destination into an object; keep only its id token.
+    destination = raw_dest.get("id") if isinstance(raw_dest, dict) else raw_dest
+
+    arrival_ts = obj.get("arrival_date")
+    arrival = (
+        datetime.fromtimestamp(int(arrival_ts), tz=timezone.utc)
+        if isinstance(arrival_ts, (int, float))
+        else None
+    )
+
+    return {
+        "stripe_payout_id": obj.get("id"),
+        "amount": Decimal(str(obj.get("amount", 0))) / Decimal("100"),
+        "currency": (obj.get("currency") or "cad").upper(),
+        "status": obj.get("status") or "pending",
+        "destination": destination,
+        "arrival_date": arrival,
     }
 
 

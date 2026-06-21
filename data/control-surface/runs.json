@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #74",
+    "title": "Control Surface Feeds #75",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:44",
+    "timestamp": "2026-06-21T23:44:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #250",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-5be00df1-a881-410f-aca9-382b16b4f29c",
+    "time": "23:08",
+    "timestamp": "2026-06-21T23:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #249",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-5710a986-70a5-4e97-b34c-dab410fbdee7",
+    "time": "22:08",
+    "timestamp": "2026-06-21T22:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #416",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "21:42",
+    "timestamp": "2026-06-21T21:42:14Z"
+  },
+  {
+    "title": "pages build and deployment #849",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:42",
+    "timestamp": "2026-06-21T21:42:05Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1457",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:42",
+    "timestamp": "2026-06-21T21:42:04Z"
+  },
+  {
+    "title": "Control Surface Feeds #74",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:41",
     "timestamp": "2026-06-21T21:41:49Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "17:52",
     "timestamp": "2026-06-21T17:52:03Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #244",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-b1b79976-c15b-4378-b7b7-b2287738267a",
-    "time": "17:08",
-    "timestamp": "2026-06-21T17:08:04Z"
-  },
-  {
-    "title": "Commerce Frontend CI #1",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/affectionate-ritchie-0qg2ps",
-    "time": "16:56",
-    "timestamp": "2026-06-21T16:56:17Z"
-  },
-  {
-    "title": "Auto-Store #8",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/affectionate-ritchie-0qg2ps",
-    "time": "16:56",
-    "timestamp": "2026-06-21T16:56:17Z"
-  },
-  {
-    "title": "Policy Gate #453",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/affectionate-ritchie-0qg2ps",
-    "time": "16:56",
-    "timestamp": "2026-06-21T16:56:17Z"
-  },
-  {
-    "title": "PR Automation #231",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/affectionate-ritchie-0qg2ps",
-    "time": "16:56",
-    "timestamp": "2026-06-21T16:56:17Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #738",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/affectionate-ritchie-0qg2ps",
-    "time": "16:56",
-    "timestamp": "2026-06-21T16:56:17Z"
   }
 ]

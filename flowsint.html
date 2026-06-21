@@ -415,7 +415,7 @@ const CLINES=[
 let ci=2;
 setInterval(()=>{
   const [cls,tag,msg]=CLINES[ci%CLINES.length]; ci++;
-  const now=new Date(), ts=`11:36:${String(48+(ci%12)).padStart(2,'0')}`;
+  const ts=`11:36:${String(48+(ci%12)).padStart(2,'0')}`;
   const row=document.createElement("div");
   row.className="gl";
   row.innerHTML=`<span class="t">${ts}</span><span class="tag ${cls}">${tag}</span><span class="m">${msg}</span>`;

@@ -428,7 +428,7 @@ const LOG=[
 const log=$("#log"); let li=0;
 function pushLog(){
   const [cls,msg]=LOG[li%LOG.length]; li++;
-  const t=new Date(); const ts=String(14).padStart(2,"0")+":"+String(58-(li%59)).padStart(2,"0");
+  const ts=String(14).padStart(2,"0")+":"+String(58-(li%59)).padStart(2,"0");
   const row=document.createElement("div");
   row.className="le "+cls;
   row.innerHTML=`<span class="t">${ts}</span><span class="m">${msg}</span>`;

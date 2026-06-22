@@ -29,12 +29,13 @@ jobs:
   inspect:
     name: Inspect System
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     outputs:
       package_manager: ${{ steps.detect.outputs.pm }}
       site_type: ${{ steps.detect.outputs.site }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Detect package manager / site type
         id: detect
@@ -52,9 +53,10 @@ jobs:
     name: Build + Validate
     runs-on: ubuntu-latest
     needs: inspect
+    timeout-minutes: 30
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup Node (Pinned)
         if: ${{ needs.inspect.outputs.site_type == 'node' }}
@@ -103,9 +105,10 @@ jobs:
     name: Security Scan
     runs-on: ubuntu-latest
     needs: build-test
+    timeout-minutes: 30
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Dependency Audit
         run: |
@@ -117,7 +120,7 @@ jobs:
           fi
 
       - name: Upload Security Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: security-report
           path: audit-report.json
@@ -126,10 +129,11 @@ jobs:
     name: Deploy to Staging
     runs-on: ubuntu-latest
     needs: security
+    timeout-minutes: 30
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.DRY_RUN == 'false' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Authenticate via OIDC
         run: echo "OIDC token issued (short-lived identity)"
@@ -143,13 +147,14 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     needs: staging
+    timeout-minutes: 60
     environment:
       name: production
       url: https://clearglassinc.github.io
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.RELEASE == 'true' && github.event.inputs.DRY_RUN == 'false' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Require Approval Gate
         run: echo "Awaiting manual approval via protected environment"
@@ -166,12 +171,13 @@ jobs:
     name: Create Release Artifact
     runs-on: ubuntu-latest
     needs: production
+    timeout-minutes: 30
     permissions:
       contents: write   # required to push the release tag
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.RELEASE == 'true' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Create Artifact Bundle
         run: |
@@ -181,7 +187,7 @@ jobs:
             *.html *.css *.js sitemap.xml manifest.webmanifest 2>/dev/null || true
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: clearglassinc-release
           path: clearglassinc-release.tar.gz
@@ -197,9 +203,10 @@ jobs:
     name: Audit + Report
     runs-on: ubuntu-latest
     needs: [build-test, security]
+    timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Generate Audit Log
         run: |
@@ -210,7 +217,7 @@ jobs:
           echo "Security: COMPLETE" >> audit.log
 
       - name: Upload Audit Log
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: audit-log
           path: audit.log

@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-      - run: pip install pytest pytest-cov
+      - run: pip install pytest pytest-cov pyyaml
       - run: pytest tests/ --cov --cov-report=xml -q
 
   lint:

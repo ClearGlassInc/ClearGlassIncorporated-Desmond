@@ -16,6 +16,7 @@
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
       ["Agent Mesh", "agentmesh.html", "⌗"],
       ["CONDUIT · Automation", "conduit.html", "⟿"],
+      ["PostLoop · Content Engine", "postloop.html", "⟲"],
       ["AI Operator", "ai-operator.html", "🜂"],
       ["Command Console", "command-console.html", "▤"],
       ["Event Control Surface", "saas-platform.html", "◆"]
@@ -30,11 +31,16 @@
       ["ClearPulse", "clearpulse.html", "📡"],
       ["Satellite Map", "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13", "🛰"]
     ]],
+    ["For Small Business", [
+      ["SMB Cyber Trust Kit", "smb-cyber-trust-kit.html", "🔐"],
+      ["Offers & Pricing", "offers/", "🎯"]
+    ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],
       ["Interface", "intelligence-interface.html", "🖥"],
       ["Flow Intelligence", "clearglass.html", "🕸"],
+      ["Flowsint · OSINT Graph", "flowsint.html", "🕸"],
       ["Ontario OSINT Deck", "Ontario-osint.html", "🛰"],
       ["Revenue Engine", "revenue-engine.html", "💹"]
     ]],

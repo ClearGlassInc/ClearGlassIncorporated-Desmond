@@ -1,10 +1,82 @@
 {
-  "run_utc": "2026-06-19T11:21:36.604311+00:00",
+  "run_utc": "2026-06-21T10:28:22.273536+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 133,
+  "commit_count": 175,
   "sections": {
     "New Features": [
+      {
+        "sha": "0b7bb71",
+        "type": "feat",
+        "scope": "products",
+        "subject": "add PostLoop content engine + Flowsint OSINT graph",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "df66b2f",
+        "type": "feat",
+        "scope": null,
+        "subject": "site-wide analytics loader + outreach drafts (go-to-market)",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "62a9668",
+        "type": "feat",
+        "scope": "commerce",
+        "subject": "validate Stripe checkout links + go-live runbook (#506)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "e88865f",
+        "type": "feat",
+        "scope": "store",
+        "subject": "ClearGlass Side Store \u2014 autonomous revenue agent SOUL spec",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "0a1796e",
+        "type": "feat",
+        "scope": "commerce",
+        "subject": "validate Stripe checkout links + go-live runbook",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "b8d49e1",
+        "type": "feat",
+        "scope": "smb",
+        "subject": "SMB Cyber Trust Kit \u2014 agent + interactive console + kit engine",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "85d229c",
+        "type": "feat",
+        "scope": "commerce",
+        "subject": "add storefront checkout smoke test (SOUL.md guardrail)",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "7aaa944",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "premium glass upgrade for the site-wide Stealth Glass button",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
       {
         "sha": "20ffe86",
         "type": "feat",
@@ -88,6 +160,60 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "24e54ba",
+        "type": "fix",
+        "scope": "opal-koboi",
+        "subject": "clear ruff errors in FaceRecognition-Local.py",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "dd67f16",
+        "type": "fix",
+        "scope": "lint",
+        "subject": "remove unused Date() declarations in postloop & flowsint",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "4042d91",
+        "type": "fix",
+        "scope": "lint",
+        "subject": "clear pre-existing ruff errors in opal-koboi face-recognition",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "29087ca",
+        "type": "fix",
+        "scope": "smb",
+        "subject": "add shared logo badge to Cyber Trust Kit page",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "aae6434",
+        "type": "fix",
+        "scope": "audit",
+        "subject": "eliminate false-positive SEO/a11y warnings in site reliability audit",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "7ba8b96",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "stop Multi-Repo Audit nightly from hard-failing when CG_ORG_PAT is unset",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
       {
         "sha": "13ec862",
         "type": "fix",
@@ -188,6 +314,26 @@
         "breaking": false
       }
     ],
+    "Documentation": [
+      {
+        "sha": "83f49e3",
+        "type": "docs",
+        "scope": "gtm",
+        "subject": "go-to-market playbook + sitemap fix + hardening outreach",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "a05c61a",
+        "type": "docs",
+        "scope": null,
+        "subject": "add SOUL.md autonomous revenue agent charter",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      }
+    ],
     "Tests": [
       {
         "sha": "56a92a0",
@@ -209,6 +355,15 @@
       }
     ],
     "CI/CD": [
+      {
+        "sha": "58260cf",
+        "type": "ci",
+        "scope": "audit",
+        "subject": "nightly multi-repo audit workflow",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      },
       {
         "sha": "be962e6",
         "type": "ci",
@@ -238,6 +393,69 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "12af922",
+        "type": "chore",
+        "scope": null,
+        "subject": "AUTO-STORE-ENTERPRISE-WORKFLOW.YML",
+        "author": "Desmond Otieno",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "57caf9e",
+        "type": "chore",
+        "scope": "ci",
+        "subject": "harden copilot workflow, document branch protection, drop binary",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "e7dcf85",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add GitHub Actions workflow for Copilot setup",
+        "author": "Desmond Otieno",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "4f8fddc",
+        "type": "chore",
+        "scope": "autostore",
+        "subject": "gitignore cockpit build artifacts + pin npm deps",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "1733d0d",
+        "type": "chore",
+        "scope": null,
+        "subject": "CLEARGLASS SEC AI",
+        "author": "Desmond Otieno",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "581edf5",
+        "type": "chore",
+        "scope": null,
+        "subject": "FACIAL RECOGNITION",
+        "author": "Desmond Otieno",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "8772034",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Web Design & Dev to Products menu/nav",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      },
       {
         "sha": "d93559c",
         "type": "chore",
@@ -771,6 +989,168 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "1c39b36",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "46db447",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "a29026a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "77b3bd0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "20f13aa",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "1c0dd9f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "b857508",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "3652eb5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "2142eb4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "b5c1695",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-20 10:08 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "750b828",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "57c6c32",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "d606d46",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "ed4c380",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "73be572",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "a733124",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "eae9bbb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "abc9505",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-19 11:21 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
       {
         "sha": "ca0da4b",
         "type": "bot",

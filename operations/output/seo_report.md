@@ -1,14 +1,17 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-19T11:21:36.627003+00:00
-**Average Score:** 97.6/100
-**Files Audited:** 49
+**Run:** 2026-06-21T10:28:22.287966+00:00
+**Average Score:** 95.6/100
+**Files Audited:** 52
 
 ## Page Scores
 
 | File | Score | Issues |
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
+| `flowsint.html` | 60/100 | 4 |
+| `postloop.html` | 60/100 | 4 |
+| `smb-cyber-trust-kit.html` | 70/100 | 3 |
 | `artemis-percival.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
 | `systems.html` | 90/100 | 1 |
@@ -60,13 +63,13 @@
 
 ## Top Issues Across All Pages
 
-- 1x — Multiple <hN> tags (N)
+- 4x — Description length N chars (ideal N–N)
+- 4x — Missing og:image
+- 3x — Multiple <hN> tags (N)
+- 3x — Title length N chars (ideal N–N)
 - 1x — Missing <title>
 - 1x — Missing meta description
 - 1x — Missing canonical link tag
 - 1x — No <hN> tag found
 - 1x — Missing og:title
 - 1x — Missing og:description
-- 1x — Missing og:image
-- 1x — Description length N chars (ideal N–N)
-- 1x — N image(s) missing alt text

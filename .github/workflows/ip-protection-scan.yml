@@ -20,7 +20,7 @@ jobs:
     name: IP Risk Assessment
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
 
@@ -41,7 +41,7 @@ jobs:
 
       - name: Dependency Review
         id: deps
-        uses: actions/dependency-review-action@v5
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
         with:
           fail-on-severity: critical
         # Non-blocking: dependency-review requires Dependency Graph + GitHub
@@ -53,7 +53,7 @@ jobs:
 
       - name: License Compliance (REUSE/SPDX)
         id: reuse
-        uses: fsfe/reuse-action@v6
+        uses: fsfe/reuse-action@676e2d560c9a403aa252096d99fcab3e1132b0f5 # v6.0.0
         with:
           args: lint
         # Non-blocking: reuse-action@v6 changed its input interface and the
@@ -152,7 +152,7 @@ jobs:
           echo "has_findings=$([ "$findings" -gt 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
 
       - name: Upload Report Artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ip-risk-report-${{ github.run_id }}
           path: ip-risk-report.md
@@ -173,7 +173,7 @@ jobs:
         # (continue-on-error), so the job rarely reaches a failed state — the old
         # `failure()` condition meant findings never opened an issue.
         if: always() && github.event_name == 'schedule' && steps.report.outputs.has_findings == 'true'
-        uses: actions-ecosystem/action-create-issue@v1
+        uses: actions-ecosystem/action-create-issue@b02a3c1d9d929a5839315bd255e40389f0dab627 # v1.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           title: "IP Risk Alert: ${{ github.repository }}"

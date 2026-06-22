@@ -352,11 +352,12 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         <p class="eyebrow">Join the update list</p>
         <h2 id="signup-title">Subscribe with GitHub</h2>
         <p class="subtitle">Get product updates, launches, and private beta access.</p>
-        <form id="subscribeForm" class="signup-form" action="https://formsubmit.co/desmondotieno@icloud.com" method="POST">
+        <form id="subscribeForm" class="signup-form" action="https://formsubmit.co/dezzy.231@gmail.com" method="POST">
           <label for="email">Email address</label>
           <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required/>
           <input type="hidden" name="_subject" value="New subscriber — ClearGlass update list"/>
           <input type="hidden" name="form_source" value="homepage-subscribe"/>
+          <input type="hidden" name="_cc" value="Desmondotieno@icloud.com"/>
           <input type="hidden" name="_captcha" value="false"/>
           <input type="hidden" name="_template" value="table"/>
           <input type="hidden" name="_next" value="https://clearglassinc.github.io/offers/thank-you.html"/>
@@ -621,7 +622,7 @@ if(launcher&&panel){launcher.addEventListener('click',function(){setOpen(!panel.
 f.addEventListener('submit',function(e){e.preventDefault();var email=(f.email&&f.email.value||'').trim();if(!email)return;
 var btn=f.querySelector('button[type=submit]');if(btn){btn.disabled=true;}
 if(s){s.textContent='Subscribing…';s.style.color='';}
-fetch('https://formsubmit.co/ajax/desmondotieno@icloud.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
+fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
 .then(function(r){return r.json();})
 .then(function(){if(s){s.textContent='Thanks — you are on the list. Check your inbox to confirm.';s.style.color='#34d399';}f.reset();})
 .catch(function(){if(s){s.textContent='Could not submit just now. Email desmondotieno@icloud.com and we will add you.';s.style.color='#f472b6';}})

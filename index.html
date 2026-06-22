@@ -3,9 +3,12 @@
 <head>
 <script>
 /* ClearGlass loader gate — show cinematic loader once per session.
-   Opt out: ?noloader=1, prior session, reduced-motion, or hash. */
+   Opt out: ?noloader=1, prior session, reduced-motion, hash, or crawler.
+   SEO: never redirect search/AI crawlers — they must index the real page. */
 (function(){
   try{
+    var ua = navigator.userAgent || '';
+    if (/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua)) return;
     var q = window.location.search || '';
     var h = window.location.hash || '';
     if (/noloader|skip/i.test(q+h)) return;
@@ -19,9 +22,24 @@
 </script>
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <meta charset="UTF-8"/>
+<script>
+/* First-visit boot routing — plays /loader.html once per browser session.
+   Bypass with ?skipboot=1, or visit /loader.html directly to replay. */
+(function(){
+  try {
+    var ua = navigator.userAgent || '';
+    if (/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua)) return;
+    var skip = /[?&]skipboot=1\b/.test(location.search);
+    if (skip || sessionStorage.getItem('cg.booted')) return;
+    sessionStorage.setItem('cg.booted', '1');
+    var here = location.pathname + location.search + location.hash;
+    location.replace('/loader.html?next=' + encodeURIComponent(here || '/'));
+  } catch (e) { /* storage unavailable — render normally */ }
+})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>ClearGlass Inc. — Clarity Is Power · Enterprise Cybersecurity &amp; Intelligent Systems · Vision 2040</title>
-<meta name="description" content="ClearGlass Inc. builds enterprise-grade cybersecurity platforms, quantum augmented AI, and zero trust digital infrastructure. Explore Artemis IV Core, Guardian, and our Vision 2040."/>
+<title>ClearGlass Inc — Clarity Is Power · Enterprise</title>
+<meta name="description" content="ClearGlass Inc. builds enterprise cybersecurity platforms, AI automation, autonomous agents, and zero-trust infrastructure. Founded by software architect Desmond Otieno Odhiambo — explore Artemis IV Core, Guardian, and Vision 2040."/>
 <link rel="canonical" href="https://clearglassinc.github.io/"/>
 <meta property="og:title" content="ClearGlass Inc. — Clarity Is Power · Enterprise Cybersecurity &amp; Intelligent Systems"/>
 <meta property="og:description" content="ClearGlass Inc. builds enterprise-grade cybersecurity platforms, quantum-augmented AI, and zero trust digital infrastructure. Explore Artemis IV Core, Guardian, and our Vision 2040."/>
@@ -31,7 +49,7 @@
 <meta property="og:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="ClearGlass Inc. — Clarity Is Power · Enterprise Cybersecurity &amp; Intelligent Systems"/>
-<meta name="twitter:description" content="ClearGlass Inc. builds enterprise grade cybersecurity platforms, quantum augmented AI, and zero-trust digital infrastructure. Explore Artemis IV Core, Guardian, and our Vision 2040."/>
+<meta name="twitter:description" content="ClearGlass Inc. builds Enterprise Grade Cybersecurity Platforms, Quantum Augmented AI, & Zero Trust Digital Infrastructure. Explore Artemis IV Core, Guardian, and our Vision 2040."/>
 <meta name="twitter:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -39,8 +57,21 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--white:#fafbfc;--off:#f3f5f8;--glass:rgba(255,255,255,0.55);--glass-border:rgba(0,0,0,0.06);--glass-strong:rgba(255,255,255,0.8);--dark:#0a0c10;--dark-2:#1a1d25;--dark-3:#2a2d35;--text:#0a0c10;--text-2:#3a3f4a;--text-3:#6b7280;--text-4:#9ca3af;--prism-1:#38bdf8;--prism-2:#a78bfa;--prism-3:#f472b6;--prism-4:#34d399;--prism-5:#fbbf24;--prism-6:#60a5fa;--crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);--serif:'Cormorant Garamond',Georgia,serif;--sans:'Urbanist',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace}
+/* ── CLASSIFICATION BANNER (matches government.html) ── */
+.class-banner{
+  background:#af1cb7;color:#fff;text-align:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;font-weight:700;
+  padding:6px 16px;position:relative;z-index:200;
+  border-bottom:2px solid #74057a;
+}
+.class-banner span{opacity:.8;font-weight:400;margin:0 8px}
+.unclass-banner{
+  background:#1a4731;color:#4ade80;text-align:center;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;font-weight:700;
+  padding:5px 16px;border-top:1px solid rgba(74,222,128,.2);
+}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 .cursor-glow{position:fixed;width:400px;height:400px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(56,189,248,0.06) 0%,rgba(167,139,250,0.04) 30%,transparent 70%);transform:translate(-50%,-50%);transition:left .5s ease,top .5s ease}
 .nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:min(1240px,calc(100% - 2.5rem));z-index:100;height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,3vw,1.5rem);background:rgba(250,251,252,0.6);backdrop-filter:blur(20px) saturate(1.2);border:1px solid rgba(255,255,255,.72);border-radius:20px;box-shadow:0 8px 28px rgba(10,12,16,.05);transition:height .2s cubic-bezier(.4,0,.2,1),background .2s cubic-bezier(.4,0,.2,1),box-shadow .2s cubic-bezier(.4,0,.2,1),border-color .2s cubic-bezier(.4,0,.2,1)}
 .nav.scrolled{height:66px;background:rgba(250,251,252,0.78);border-color:rgba(0,0,0,.08);box-shadow:0 10px 30px rgba(10,12,16,.1)}
@@ -197,15 +228,23 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 .chatbot-form input{flex:1;border:1px solid #d1d5db;border-radius:10px;padding:10px 12px;font-size:14px}
 .chatbot-form button{border:none;background:var(--dark);color:#fff;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","logo":"https://clearglassinc.github.io/logo.png","foundingDate":"2024","sameAs":["https://github.com/ClearGlassInc"]},{"@type":"WebSite","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io","hasPart":[{"@type":"WebPage","name":"Home","url":"https://clearglassinc.github.io/"},{"@type":"WebPage","name":"Artemis IV Core","url":"https://clearglassinc.github.io/artemis-iv.html"},{"@type":"WebPage","name":"Guardian","url":"https://clearglassinc.github.io/guardian.html"},{"@type":"WebPage","name":"ClearGlass NEXUS v12","url":"https://clearglassinc.github.io/clearglass-nexus.html"}]}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","telephone":"+1-289-707-0269","address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://clearglassinc.github.io/#org","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","logo":"https://clearglassinc.github.io/logo.png","foundingDate":"2024","founder":{"@id":"https://clearglassinc.github.io/#desmond"},"sameAs":["https://github.com/ClearGlassInc"],"address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"},"contactPoint":{"@type":"ContactPoint","telephone":"+1-289-707-0269","contactType":"sales","areaServed":"Worldwide","availableLanguage":"en"}},{"@type":"Person","@id":"https://clearglassinc.github.io/#desmond","name":"Desmond Otieno Odhiambo","jobTitle":"Founder & Chairman, Software Architect","worksFor":{"@id":"https://clearglassinc.github.io/#org"},"url":"https://clearglassinc.github.io/#founder","email":"mailto:desmondotieno@icloud.com","alumniOf":[{"@type":"EducationalOrganization","name":"University of Pennsylvania"},{"@type":"EducationalOrganization","name":"Macquarie University"}],"knowsAbout":["Cybersecurity","AI Automation","Autonomous Agents","Software Architecture","OSINT","Digital Investigations","Financial Crime Analysis","Zero Trust Architecture","Enterprise Workflow Automation"],"sameAs":["https://github.com/ClearGlassInc"]},{"@type":"ProfessionalService","@id":"https://clearglassinc.github.io/#service","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","image":"https://clearglassinc.github.io/logo.png","telephone":"+1-289-707-0269","priceRange":"$$$","areaServed":"Worldwide","address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"},"parentOrganization":{"@id":"https://clearglassinc.github.io/#org"},"knowsAbout":["Cybersecurity Consulting","AI Engineering","Autonomous Systems","OSINT Tooling","Software Architecture","Investigative Automation","Enterprise Workflow Automation"]},{"@type":"WebSite","@id":"https://clearglassinc.github.io/#website","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io","publisher":{"@id":"https://clearglassinc.github.io/#org"},"hasPart":[{"@type":"WebPage","name":"Artemis IV Core","url":"https://clearglassinc.github.io/artemis-iv.html"},{"@type":"WebPage","name":"Guardian","url":"https://clearglassinc.github.io/guardian.html"},{"@type":"WebPage","name":"ClearGlass NEXUS v12","url":"https://clearglassinc.github.io/clearglass-nexus.html"},{"@type":"WebPage","name":"Services & Pricing","url":"https://clearglassinc.github.io/offers/index.html"}]}]}</script>
 <meta name="google-site-verification" content="23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM">
 <meta name="msvalidate.01" content="38EA88557DC6D3E51F03FCBF30E42E7F">
   <link rel="stylesheet" href="ui.css">
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
 </head>
 <body>
+<!-- Classification banner — UNCLASSIFIED demo instance -->
+<div class="class-banner" role="banner" aria-label="Document classification">
+  UNCLASSIFIED / NON-CLASSIFIÉ
+  <span>·</span>
+  CLEARGLASS INC — CAPABILITIES BRIEF
+  <span>·</span>
+  FOR OFFICIAL USE — AUTHORIZED DISTRIBUTION
+</div>
 <!-- ── CLEARGLASS PREMIUM LOADER ─────────────────────────────────── -->
 <div id="cg-loader" aria-hidden="true" role="presentation">
   <div class="cg-loader-inner">
@@ -220,7 +259,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
       <div class="cg-log-line" id="cgL1">Loading secure modules</div>
       <div class="cg-log-line" id="cgL2">Calibrating visual system</div>
       <div class="cg-log-line" id="cgL3">Establishing connection</div>
-      <div class="cg-log-line" id="cgL4">Entering ClearGlass</div>
+      <div class="cg-log-line" id="cgL4">Entering ClearGlassInc</div>
     </div>
     <div class="cg-status-row">
       <div class="cg-status-item"><span class="cg-status-dot"></span>Integrity verified</div>
@@ -254,6 +293,10 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
           <div class="nav-dd-icon">🏛️</div>
           <div class="nav-dd-meta"><span class="nav-dd-label">Government Solutions</span><span class="nav-dd-sub">FEDERAL &amp; DEFENCE</span></div>
         </a>
+        <a href="web-design.html" role="menuitem">
+          <div class="nav-dd-icon">💻</div>
+          <div class="nav-dd-meta"><span class="nav-dd-label">Web Design &amp; Dev</span><span class="nav-dd-sub">DESIGN &amp; DEVELOPMENT</span></div>
+        </a>
       </div>
     </div>
     <a href="offers/index.html">Services</a>
@@ -271,6 +314,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   <div class="mob-label">Products</div>
   <a href="guardian.html">Guardian <span style="color:var(--text-4);font-size:12px;font-weight:400">→</span></a>
   <a href="government.html">Government Solutions<span style="color:var(--text-4);font-size:12px;font-weight:400">→</span></a>
+  <a href="web-design.html">Web Design &amp; Dev <span style="color:var(--text-4);font-size:12px;font-weight:400">→</span></a>
   <div class="mob-sep"></div>
   <a href="offers/index.html">Services <span style="color:var(--text-4);font-size:12px;font-weight:400">→</span></a>
   <a href="#founder" onclick="closeMob()">Founder</a>
@@ -281,11 +325,14 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   <div class="hero-lines"><div class="hero-line" style="top:25%;width:60%;left:20%;animation-delay:0s"></div><div class="hero-line" style="top:50%;width:45%;left:30%;animation-delay:4s"></div><div class="hero-line" style="top:75%;width:55%;left:15%;animation-delay:8s"></div></div>
   <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg" aria-label="ClearGlass Ontario" style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;box-shadow:0 20px 70px rgba(0,0,0,.12);margin-bottom:42px;position:relative;z-index:1;">
     <source src="assets/video/hero.mp4" type="video/mp4">
-    <img src="20260203_224147843_iOS.png" alt="ClearGlass Ontario" style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;">
+    <picture>
+      <source type="image/webp" srcset="20260203_224147843_iOS.webp 1x, 20260203_224147843_iOS@2x.webp 2x">
+      <img src="20260203_224147843_iOS.png" alt="ClearGlass Ontario" decoding="async" style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;">
+    </picture>
   </video>
   <div class="hero-year">CLEARGLASS INC. · ESTABLISHED 2024 · VISION 2040</div>
   <h1><strong>Clarity</strong> is <span class="crystal-text">power.</span></h1>
-  <p class="hero-sub">Quantum intelligence. Ethical transparency. Zero-trust verification. ClearGlass builds the infrastructure that lets organizations see clearly, secure completely, and act with decisive advantage.</p>
+  <p class="hero-sub">Quantum intelligence. Ethical transparency. Zero trust verification. ClearGlass builds the infrastructure that lets organizations see clearly, secure completely, and act with decisive advantage.</p>
   <div class="hero-domain-line">ClearGlass Inc. · Official home at <a href="https://clearglassinc.github.io">clearglassinc.github.io</a> · Ontario, Canada<br>BTC Wallet (Homepage): <strong>bc1qppmeg3sr7h9kncthwslm9aj6gtkdnva7artfkk</strong></div>
   <div class="hero-actions"><a href="#products" class="btn btn-dark">Explore Platforms →</a><a href="offers/index.html" class="btn btn-glass">Services &amp; Pricing →</a><a href="artemis-iv.html" class="btn btn-glass">Open Artemis IV Core</a></div>
   <div class="hero-scroll"><span>SCROLL</span><div class="scroll-line"></div></div>
@@ -296,8 +343,8 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 <section class="sect sect-dark" id="technology"><div class="container"><div class="sh sh-dark rv"><div class="sh-tag">TECHNOLOGY STACK</div><h2>The architecture behind <strong>absolute clarity</strong></h2><p>Quantum-augmented AI, decentralized identity, and zero-trust networks fused into a unified intelligence fabric.</p></div><div class="tech-grid"><div class="tech-card rv"><div class="tc-icon">⚛</div><h3>Quantum Intelligence Core</h3><p>Post-quantum cryptography and quantum-augmented ML for high-speed threat processing.</p><div class="tc-tags"><span>LATTICE CRYPTO</span><span>QML</span><span>256-QUBIT</span></div></div><div class="tech-card rv"><div class="tc-icon">🧠</div><h3>Predictive AI Engine</h3><p>Behavioral prediction and anomaly detection across infrastructure and identity systems.</p><div class="tc-tags"><span>NEURAL MESH</span><span>GNN</span><span>REAL-TIME</span></div></div><div class="tech-card rv"><div class="tc-icon">🔒</div><h3>Zero-Trust Fabric</h3><p>Every packet authenticated. Every session verified. Lateral movement cut off by design.</p><div class="tc-tags"><span>MICROSEG</span><span>mTLS</span><span>SPIFFE</span></div></div></div></div></section>
 <section class="sect" id="products"><div class="container"><div class="sh sh-center rv"><div class="sh-tag" style="justify-content:center">PLATFORMS</div><h2>ClearGlass <strong>AgentOps Platform</strong></h2><p>We turn Microsoft AI tools into revenue-producing business workflows: train, build, deploy, and monetize enterprise-grade agent orchestration in one operating model.</p></div><div class="products-grid"><div class="product-card rv" style="grid-column:1/-1;background:linear-gradient(145deg,rgba(56,189,248,.08),rgba(167,139,250,.08),rgba(250,251,252,.92))"><div class="pc-era" style="color:#2563eb">CLEARGLASS AGENTOPS PLATFORM · MICROSOFT-ALIGNED</div><h3>From Idea to Deployed Agent in 1 Day</h3><p class="pd">Mission: train, build, deploy, and monetize enterprise-grade AI agent orchestration workflows using Microsoft Foundry Agent Service, Microsoft Agent Framework, and Copilot Studio.</p><div class="pc-feats" style="grid-template-columns:1fr 1fr;gap:8px"><div class="pc-feat"><span class="ck">✓</span> Agent Academy — hands-on courses, labs, certifications</div><div class="pc-feat"><span class="ck">✓</span> Workflow Builder — visual chains, approvals, tool-calls, RPA/API actions</div><div class="pc-feat"><span class="ck">✓</span> Agent Marketplace — sell and license enterprise-ready templates</div><div class="pc-feat"><span class="ck">✓</span> Enterprise Console — deploy, monitor, govern, evaluate, secure</div><div class="pc-feat"><span class="ck">✓</span> Knowledge Hub — SharePoint, OneDrive, Teams, SQL, CRM, PDFs</div><div class="pc-feat"><span class="ck">✓</span> Simulation Lab — test real business scenarios before deployment</div><div class="pc-feat"><span class="ck">✓</span> Partner Studio — co-build with Microsoft-aligned experts</div><div class="pc-feat"><span class="ck">✓</span> Revenue Engine — subscriptions, templates, workshops, private deployments</div></div><div style="margin-top:18px" class="pd"><strong>MVP focus:</strong> Workflow Builder, Training Academy, Template Marketplace, Azure Deployment Pipeline, Admin Dashboard.<br><strong>Monetization:</strong> Starter $99/mo · Pro $499/mo · Business $2,500/mo · Enterprise Custom · Workshops $5K–$25K · Templates $49–$999 · Private Deployment $15K–$100K+.</div><div style="margin-top:22px"><a href="artemis-iv.html" class="btn btn-dark">Launch AgentOps Blueprint →</a></div></div><div class="product-card rv"><div class="pc-era">TACTICAL PAGE</div><h3>Artemis IV Core</h3><p class="pd">High-intensity command shell for tactical intelligence workflows, threat matrix navigation, and mission logging.</p><div class="pc-feats"><div class="pc-feat"><span class="ck">✓</span> Dashboard + threat matrix tabs</div><div class="pc-feat"><span class="ck">✓</span> Console quick-action commands</div></div><div style="margin-top:22px"><a href="artemis-iv.html" class="btn btn-glass">Open Artemis IV Core</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(16,185,129,.05),rgba(14,165,233,.04),rgba(250,251,252,.9))"><div class="pc-era" style="color:#10b981">GUARDIAN PLATFORM</div><h3>ClearGlass Guardian Platform</h3><p class="pd">A complete financial intelligence platform built for Canadian small and medium businesses — six integrated modules replacing disconnected tools.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(16,185,129,.1);color:#10b981">✓</span> Unified dashboard + forecasting + health score</div><div class="pc-feat"><span class="ck" style="background:rgba(139,92,246,.1);color:#8b5cf6">✓</span> AI summaries + anomaly alerts + bank integrations</div></div><div style="margin-top:22px"><a href="guardian.html" class="btn btn-dark">Explore Guardian →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(255,176,0,.06),rgba(255,136,0,.04),rgba(250,251,252,.9))"><div class="pc-era" style="color:#d97706">CLEARGLASS NEXUS v12 · DARPA INTELLIGENCE PLATFORM</div><h3>ClearGlass NEXUS v12</h3><p class="pd">DARPA-grade intelligence command platform run from the Burlington Operations Center — a full-spectrum tactical surface for monitoring, analysis, and decisive action.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(255,176,0,.12);color:#d97706">✓</span> Real-time intelligence command surface</div><div class="pc-feat"><span class="ck" style="background:rgba(255,136,0,.12);color:#ea580c">✓</span> Operations center monitoring + analysis</div></div><div style="margin-top:22px"><a href="clearglass-nexus.html" class="btn btn-dark">Open NEXUS v12 →</a></div></div></div></div></section>
 <section class="sect" id="timeline"><div class="container"><div class="sh rv"><div class="sh-tag">EVOLUTION</div><h2>From Ontario to the <strong>quantum frontier</strong></h2></div><div class="timeline"><div class="tl-item rv"><div class="tl-year">2024</div><div class="tl-content"><h3>ClearGlass Founded</h3><p>Initial dashboards and cybersecurity assessment tools deployed.</p></div></div><div class="tl-item rv"><div class="tl-year">2025</div><div class="tl-content"><h3>NEXUS & ARTEMIS Launch</h3><p>Unified command dashboards moved from concept to operational products.</p></div></div><div class="tl-item rv"><div class="tl-year">2040</div><div class="tl-content"><h3>Global Intelligence Fabric</h3><p>Quantum intelligence, predictive AI, and zero-trust verification unified under one glass.</p></div></div></div></div></section>
-<section class="sect" id="founder"><div class="container"><div class="sh rv"><div class="sh-tag">LEADERSHIP</div><h2>Founder credentials built for <strong>trust and execution</strong></h2><p>A direct executive profile for collaborators, recruiters, investors, and strategic partners evaluating leadership, credibility, and long-horizon capability.</p></div><div class="founder-grid"><article class="founder-card rv"><img src="assets/images/desmond-cg-profile-picture.jpg" alt="Desmond ClearGlassInc profile picture" class="hero-profile"><div class="founder-kicker">Founder Profile</div><h3 class="founder-name">Desmond Otieno Odhiambo</h3><div class="founder-role">Founder & Chairman</div><div class="founder-copy"><p><strong>Desmond Otieno Odhiambo</strong> is the <strong>Founder & Chairman</strong> of ClearGlass, leading the company’s long-range vision across cybersecurity, intelligent systems, and advanced digital infrastructure.</p><p>His work is centered on building high-trust platforms that combine strategic clarity, disciplined execution, and forward-looking technical design. He operates with an executive mindset shaped by product development, systems thinking, and real-world deployment.</p><p>At ClearGlass, his focus is simple: develop modern, credible systems that help organizations operate with stronger resilience, sharper decision advantage, and greater confidence in the infrastructure they depend on.</p></div><div class="founder-actions"><a href="mailto:Desmondotieno@icloud.com" class="btn btn-dark">Email Desmond →</a><a href="#contact" class="btn btn-glass">Start a Conversation</a></div></article><aside class="credentials-card rv"><div class="founder-kicker">Founder Credentials</div><h3>Executive, innovative, and future-facing.</h3><div class="credentials-list"><div class="credential-item"><div class="credential-label">Role</div><div class="credential-value">Founder & Chairman, ClearGlass</div></div><div class="credential-item"><div class="credential-label">Education</div><div class="credential-value">University of Pennsylvania — Associate's Degree, Artificial Intelligence <span class="credential-sub">Oct 2022 — Jun 2025</span></div></div><div class="credential-item"><div class="credential-label">Certificate</div><div class="credential-value">Macquarie University — Cyber Security: Essentials for Forensics <span class="credential-sub">Oct 2025 — Oct 2025 · Grade: 94.68%</span></div></div><div class="credential-item"><div class="credential-label">License & Certification</div><div class="credential-value">Coursera — Introduction to Agile Development and Scrum <span class="credential-sub">Issued Apr 2026</span></div></div><div class="credential-item"><div class="credential-label">Professional Designations</div><div class="credential-value">Registered Trademark Agent, Canada | USPTO Patent Agent</div></div><div class="credential-item"><div class="credential-label">Accuracy Note</div><div class="credential-value">Trademark Agent licensed by CPATA | Patent Agent registered with the USPTO.</div></div><div class="credential-item"><div class="credential-label">Focus</div><div class="credential-value">Cybersecurity, intelligent systems, digital infrastructure, and strategic product leadership.</div></div><div class="credential-item"><div class="credential-label">Operating Style</div><div class="credential-value">Precision-led, systems-oriented, execution-focused, and built for durable long-term value creation.</div></div><div class="credential-item"><div class="credential-label">Contact</div><div class="credential-value"><a href="mailto:Desmondotieno@icloud.com">Desmondotieno@icloud.com</a></div></div></div></aside></div></div></section>
-<section class="cta-sect" id="contact"><div class="container"><h2 class="rv"><strong>See</strong> what others cannot.</h2><p class="rv">Connect directly with Desmond Otieno Odhiambo for strategic conversations, collaboration opportunities, investor discussions, or product briefings from the official GitHub Pages home of ClearGlass at clearglassinc.github.io.</p><div class="cta-actions rv"><a href="mailto:Desmondotieno@icloud.com" class="btn btn-crystal">Email Desmond →</a><a href="offers/index.html" class="btn btn-glass">See Services &amp; Pricing →</a><a href="guardian.html" class="btn btn-glass">Open Guardian</a></div></div></section>
+<section class="sect" id="founder"><div class="container"><div class="sh rv"><div class="sh-tag">LEADERSHIP</div><h2>Founder credentials built for <strong>trust and execution</strong></h2><p>A direct executive profile for collaborators, recruiters, investors, and strategic partners evaluating leadership, credibility, and long-horizon capability.</p></div><div class="founder-grid"><article class="founder-card rv"><img src="assets/images/desmond-cg-profile-picture.jpg" alt="Desmond ClearGlassInc profile picture" class="hero-profile"><div class="founder-kicker">Founder Profile</div><h3 class="founder-name">Desmond Otieno Odhiambo</h3><div class="founder-role">Founder & Chairman</div><div class="founder-copy"><p><strong>Desmond Otieno Odhiambo</strong> is the <strong>Founder & Chairman</strong> of ClearGlass, leading the company’s long-range vision across cybersecurity, intelligent systems, and advanced digital infrastructure.</p><p>His work is centered on building high-trust platforms that combine strategic clarity, disciplined execution, and forward-looking technical design. He operates with an executive mindset shaped by product development, systems thinking, and real-world deployment.</p><p>At ClearGlass, his focus is simple: develop modern, credible systems that help organizations operate with stronger resilience, sharper decision advantage, and greater confidence in the infrastructure they depend on.</p></div><div class="founder-actions"><a href="mailto:desmondotieno@icloud.com" class="btn btn-dark">Email Desmond →</a><a href="#contact" class="btn btn-glass">Start a Conversation</a></div></article><aside class="credentials-card rv"><div class="founder-kicker">Founder Credentials</div><h3>Executive, innovative, and future-facing.</h3><div class="credentials-list"><div class="credential-item"><div class="credential-label">Role</div><div class="credential-value">Founder & Chairman, ClearGlass</div></div><div class="credential-item"><div class="credential-label">Education</div><div class="credential-value">University of Pennsylvania — Associate's Degree, Artificial Intelligence <span class="credential-sub">Oct 2022 — Jun 2025</span></div></div><div class="credential-item"><div class="credential-label">Certificate</div><div class="credential-value">Macquarie University — Cyber Security: Essentials for Forensics <span class="credential-sub">Oct 2025 — Oct 2025 · Grade: 94.68%</span></div></div><div class="credential-item"><div class="credential-label">License & Certification</div><div class="credential-value">Coursera — Introduction to Agile Development and Scrum <span class="credential-sub">Issued Apr 2026</span></div></div><div class="credential-item"><div class="credential-label">Professional Designations</div><div class="credential-value">Registered Trademark Agent, Canada | USPTO Patent Agent</div></div><div class="credential-item"><div class="credential-label">Accuracy Note</div><div class="credential-value">Trademark Agent licensed by CPATA | Patent Agent registered with the USPTO.</div></div><div class="credential-item"><div class="credential-label">Focus</div><div class="credential-value">Cybersecurity, intelligent systems, digital infrastructure, and strategic product leadership.</div></div><div class="credential-item"><div class="credential-label">Operating Style</div><div class="credential-value">Precision-led, systems-oriented, execution-focused, and built for durable long-term value creation.</div></div><div class="credential-item"><div class="credential-label">Contact</div><div class="credential-value"><a href="mailto:desmondotieno@icloud.com">desmondotieno@icloud.com</a></div></div></div></aside></div></div></section>
+<section class="cta-sect" id="contact"><div class="container"><h2 class="rv"><strong>See</strong> what others cannot.</h2><p class="rv">Connect directly with Desmond Otieno Odhiambo for strategic conversations, collaboration opportunities, investor discussions, or product briefings from the official GitHub Pages home of ClearGlass at clearglassinc.github.io.</p><div class="cta-actions rv"><a href="mailto:desmondotieno@icloud.com" class="btn btn-crystal">Email Desmond →</a><a href="offers/index.html" class="btn btn-glass">See Services &amp; Pricing →</a><a href="guardian.html" class="btn btn-glass">Open Guardian</a></div></div></section>
 <section class="signup-sect">
   <div class="container">
     <section class="signup-card rv" aria-labelledby="signup-title">
@@ -377,7 +424,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
     <button id="chatbotClose" aria-label="Close chatbot" style="all:unset;cursor:pointer;font-size:20px;line-height:1">×</button>
   </div>
   <div class="chatbot-log" id="chatbotLog">
-    <div class="chat-msg bot">Hello, I can help you explore ClearGlass platforms, pricing pathways, and next steps.</div>
+    <div class="chat-msg bot">Hello, I can help you explore ClearGlassInc platforms, pricing pathways, and next steps.</div>
   </div>
   <form class="chatbot-form" id="chatbotForm">
     <input id="chatbotInput" type="text" placeholder="Ask about products, onboarding, or contact…" required />
@@ -390,7 +437,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
     <div class="footer-top">
       <div class="footer-brand-block">
         <div class="footer-mark"><img src="assets/images/clearglass-logo.png" alt="ClearGlass logo"></div>
-        <span class="footer-brand-name">ClearGlass</span>
+        <span class="footer-brand-name">ClearGlassInc</span>
         <span class="footer-brand-sub">See Through Everything</span>
       </div>
       <nav class="footer-cols" aria-label="Footer navigation">
@@ -403,22 +450,24 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         </div>
         <div class="footer-col">
           <div class="footer-col-head">Products</div>
+          <a href="artemis-percival.html">AVALON · Artemis ⊕ Percival</a>
           <a href="artemis.html">Artemis VI</a>
           <a href="artemis-iv.html">Artemis IV Core</a>
           <a href="guardian.html">Guardian</a>
-          <a href="clearglass-nexus.html">ClearGlass NEXUS</a>
+          <a href="clearglass-nexus.html">ClearGlassInc NEXUS</a>
           <a href="revenue-engine.html">Revenue Engine</a>
+          <a href="web-design.html">Web Design &amp; Dev</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-head">Legal</div>
           <a href="legal/terms.html">Terms</a>
           <a href="legal/privacy.html">Privacy</a>
           <a href="legal/">Security</a>
-          <a href="legal/">All Legal</a>
+          <a href="legal/">Legal</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-head">Operations</div>
-          <a href="operations/procurement-readiness.html">Procurement Readiness</a>
+          <a href="operations/procurement-readiness.html">Procurement</a>
           <a href="operations/federal-supplier-handoff.html">Federal Supplier Docs</a>
           <a href="operations/client-onboarding.html">Client Onboarding</a>
           <a href="operations/hubspot-handoff.html">HubSpot Handoff</a>
@@ -459,6 +508,9 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
     <div class="footer-tagline">"The truth is transparent. The truth is dangerous."</div>
   </div>
 </footer>
+
+<div class="unclass-banner">UNCLASSIFIED / NON-CLASSIFIÉ — END OF DOCUMENT</div>
+
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
 /* ── CLEARGLASS BOOT CONTROLLER ───────────────────────── */
@@ -516,7 +568,7 @@ var chatLog=document.getElementById('chatbotLog');
 var kb=[
   {k:['artemis','platform','ai'],a:'Artemis IV Core supports tactical intelligence workflows, mission logging, and command-shell operations. Open: artemis-iv.html'},
   {k:['smb','financial','forecast'],a:'ClearGlass Guardian Platform includes ClearDash, ClearCast, ClearScore, ClearInsights, ClearAlert, and ClearLink.'},
-  {k:['contact','email','founder'],a:'You can contact the founder directly at Desmondotieno@icloud.com.'},
+  {k:['contact','email','founder'],a:'You can contact the founder directly at desmondotieno@icloud.com.'},
   {k:['guardian','security'],a:'Guardian is the security-focused platform for monitoring and protective workflows. Open: guardian.html'}
 ];
 function appendMsg(text,who){var d=document.createElement('div');d.className='chat-msg '+who;d.textContent=text;chatLog.appendChild(d);chatLog.scrollTop=chatLog.scrollHeight;}
@@ -573,12 +625,14 @@ if(s){s.textContent='Subscribing…';s.style.color='';}
 fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
 .then(function(r){return r.json();})
 .then(function(){if(s){s.textContent='Thanks — you are on the list. Check your inbox to confirm.';s.style.color='#34d399';}f.reset();})
-.catch(function(){if(s){s.textContent='Could not submit just now. Email Desmondotieno@icloud.com and we will add you.';s.style.color='#f472b6';}})
+.catch(function(){if(s){s.textContent='Could not submit just now. Email desmondotieno@icloud.com and we will add you.';s.style.color='#f472b6';}})
 .then(function(){if(btn){btn.disabled=false;}});
 });})();
 </script>
 <script defer src="control-surface.js"></script>
   <script defer src="ui.js"></script>
+  <script defer src="platform.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>
 

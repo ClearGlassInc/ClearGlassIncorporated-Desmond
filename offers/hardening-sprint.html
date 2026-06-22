@@ -23,6 +23,8 @@ h1{font-size:clamp(27px,5vw,40px);line-height:1.12;font-weight:800;margin-bottom
 .btn{display:inline-block;background:#39d0c3;color:#04181c;font-weight:700;padding:14px 26px;border-radius:10px;border:0;cursor:pointer;font-size:16px}
 .btn.alt{background:transparent;color:#fff;border:1px solid #2b4a58}
 .btn:hover{filter:brightness(1.06)}
+.paynow{margin-top:16px;font-size:14px;color:#5b6b7a;line-height:1.6;max-width:680px}
+.paynow a{color:#0b8f86;font-weight:700}
 section{padding:44px 0}
 .card{background:#fff;border:1px solid #e4eaf1;border-radius:14px;padding:28px;box-shadow:0 8px 30px rgba(10,30,50,.05)}
 h2{font-size:25px;margin-bottom:18px;font-weight:800}
@@ -42,6 +44,7 @@ form input,form textarea{width:100%;padding:12px 14px;border:1px solid #cdd8e3;b
 footer.site{background:#05121a;color:#8aa0b3;font-size:13px;padding:30px 0}
 footer.site a{color:#39d0c3}
 </style>
+<link rel="stylesheet" href="/assets/css/glass.css">
 </head>
 <body>
 <header class="site"><div class="wrap"><a class="brand" href="../index.html">ClearGlass Inc. <em>CLARITY IS POWER</em></a><a href="index.html" style="color:#9fb3c2;font-size:14px">← All services</a></div></header>
@@ -52,7 +55,7 @@ footer.site a{color:#39d0c3}
   <p class="lead">In two weeks or less, we tighten your Microsoft 365 / Entra ID tenant and Windows endpoints to CIS-aligned baselines — then hand you a prioritized, plain-language remediation report. One fixed price. No open-ended hourly bills.</p>
   <div class="cta-row">
     <!-- Booking via email for now; swap to Cal.com/Calendly link when ready -->
-    <a class="btn" href="mailto:Desmondotieno@icloud.com?subject=Scoping%20call%20%E2%80%94%20Hardening%20Sprint&body=Hi%20Desmond%2C%0A%0AI%27d%20like%20to%20book%20a%20free%20scoping%20call%20for%20the%20M365%2FWindows%20Hardening%20Sprint.%0A%0AOrganization%3A%20%0AApprox.%20users%2Fendpoints%3A%20%0APreferred%20times%3A%20">Book a free scoping call →</a>
+    <a class="btn" href="mailto:desmondotieno@icloud.com?subject=Scoping%20call%20%E2%80%94%20Hardening%20Sprint&body=Hi%20Desmond%2C%0A%0AI%27d%20like%20to%20book%20a%20free%20scoping%20call%20for%20the%20M365%2FWindows%20Hardening%20Sprint.%0A%0AOrganization%3A%20%0AApprox.%20users%2Fendpoints%3A%20%0APreferred%20times%3A%20">Book a free scoping call →</a>
     <a class="btn alt" href="#pricing">See pricing</a>
   </div>
 </div></div>
@@ -112,9 +115,12 @@ footer.site a{color:#39d0c3}
   <p class="muted" style="margin-top:18px">Prices are starting points; final scope confirmed in writing before any work begins. A deposit secures your start date.</p>
   <div class="cta-row">
     <!-- STRIPE: paste deposit Payment Link in href below, then delete this comment. Interim: email inquiry. -->
-    <a class="btn" href="mailto:Desmondotieno@icloud.com?subject=Hardening%20Sprint%20deposit%20%E2%80%94%20reserve%20start%20date&body=Hi%20Desmond%2C%0A%0AI%27d%20like%20to%20reserve%20a%20start%20date%20for%20the%20Hardening%20Sprint%20with%20a%20deposit.%20Please%20send%20a%20Stripe%20invoice%2Fcheckout%20link.%0A%0AOrganization%3A%20%0ATier%20%28Essentials%2FStandard%2FPlus%29%3A%20" data-cg-stripe="deposit">Reserve with a deposit →</a>
+    <a class="btn" href="mailto:desmondotieno@icloud.com?subject=Hardening%20Sprint%20deposit%20%E2%80%94%20reserve%20start%20date&body=Hi%20Desmond%2C%0A%0AI%27d%20like%20to%20reserve%20a%20start%20date%20for%20the%20Hardening%20Sprint%20with%20a%20deposit.%20Please%20send%20a%20Stripe%20invoice%2Fcheckout%20link.%0A%0AOrganization%3A%20%0ATier%20%28Essentials%2FStandard%2FPlus%29%3A%20" data-cg-stripe="deposit">Reserve with a deposit →</a>
   </div>
-  <div class="note"><strong>How payment works:</strong> deposits and final invoices are handled through Stripe (hosted checkout) or a Stripe / Wave invoice. No funds are ever auto-sent.</div>
+  <p class="paynow">⚡ <strong>Reserve now by Interac e-Transfer:</strong> send a <strong>CAD&nbsp;$2,500 deposit</strong> to
+    <a href="mailto:desmondotieno@icloud.com?subject=Hardening%20Sprint%20deposit%20sent&body=Hi%20Desmond%2C%0A%0AI%27ve%20sent%20a%20CAD%20%242%2C500%20deposit%20by%20Interac%20e-Transfer%20to%20reserve%20a%20Hardening%20Sprint%20start%20date.%0A%0AOrganization%3A%20%0ATier%20%28Essentials%2FStandard%2FPlus%29%3A%20">desmondotieno@icloud.com</a>
+    (memo: &ldquo;Hardening Sprint deposit &mdash; your org&rdquo;), then email to confirm. Final scope is agreed in writing before any work begins.</p>
+  <div class="note"><strong>How payment works:</strong> deposits and final invoices are handled through <strong>Interac e-Transfer</strong>, Stripe (hosted checkout), or a Stripe / Wave invoice. No funds are ever auto-sent.</div>
 </div></section>
 
 <section id="contact"><div class="wrap">
@@ -144,5 +150,7 @@ footer.site a{color:#39d0c3}
   ClearGlass Inc. · Ontario, Canada · <a href="../index.html">clearglassinc.github.io</a><br>
   All hardening work is performed only under a signed engagement with written authorization for the systems in scope.
 </div></footer>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>

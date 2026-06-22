@@ -120,6 +120,15 @@
       "depends_on": []
     },
     {
+      "id": "smb_cyber_trust_kit",
+      "module": "bots.smb_cyber_trust_kit_bot",
+      "group": "content",
+      "schedule": "weekly",
+      "description": "Generates the SMB Cyber Trust Kit (plain-language policies, risk heat-map, incident communication script, non-technical guide) as Markdown + JSON and refreshes the web console data file",
+      "output_dir": "operations/smb_cyber_trust_kit",
+      "depends_on": []
+    },
+    {
       "id": "self_evolving",
       "module": "bots.self_evolving_engine",
       "group": "orchestration",

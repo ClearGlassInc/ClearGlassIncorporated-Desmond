@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>AI Operator Workspace · J.A.R.V.I.S. — ClearGlass Inc.</title>
-<meta name="description" content="A cinematic AI-operator command-center reel with a fully interactive J.A.R.V.I.S. assistant — voice + text, arc-reactor HUD, live automation commands. Built entirely in HTML, CSS &amp; JS."/>
+<title>AI Operator Workspace · ClearGlass Inc.</title>
+<meta name="description" content="A cinematic AI-operator command-center reel with a fully interactive J.A.R.V.I.S. assistant — voice + text, arc-reactor HUD, live automation commands. Built…"/>
 <link rel="canonical" href="https://clearglassinc.github.io/ai-operator.html"/>
-<meta property="og:title" content="AI Operator Workspace · J.A.R.V.I.S. — ClearGlass Inc."/>
+<meta property="og:title" content="AI Operator Workspace · ClearGlass Inc."/>
 <meta property="og:description" content="Cinematic AI command-center reel with an interactive Iron-Man-style JARVIS assistant."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://clearglassinc.github.io/ai-operator.html"/>
@@ -167,7 +167,7 @@ body{
 .hint{position:absolute;left:16px;right:62px;bottom:50px;font-size:11px;color:var(--cyan);font-family:var(--mono);letter-spacing:.04em;opacity:.9;animation:hintPulse 2.4s ease-in-out infinite;pointer-events:none}
 @keyframes hintPulse{0%,100%{opacity:.5}50%{opacity:1}}
 
-/* ===== JARVIS HUD overlay ===== */
+/* ===== HUD overlay ===== */
 .jarvis{position:absolute;inset:0;z-index:20;display:none;background:radial-gradient(120% 100% at 50% 0%,rgba(2,12,24,.82),rgba(1,4,10,.96));backdrop-filter:blur(6px);overflow:hidden}
 .jarvis.live{display:block}
 .jarvis::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(57,199,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(57,199,255,.06) 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:radial-gradient(80% 80% at 50% 40%,#000,transparent);mask-image:radial-gradient(80% 80% at 50% 40%,#000,transparent)}
@@ -223,6 +223,9 @@ body{
   <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="ui.css">
   <link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
 <div class="wrap">
@@ -307,14 +310,14 @@ body{
         </div>
         <div class="progress"><i></i></div>
 
-        <div class="hint" id="hint">▸ type "Jarvis" below to activate</div>
+        <div class="hint" id="hint">▸ type below to activate</div>
         <div class="commentbar">
           <input id="commentInput" type="text" placeholder="Add comment…" autocomplete="off"/>
           <button class="send" id="sendBtn" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linejoin="round"/></svg></button>
         </div>
       </div>
 
-      <!-- ===== JARVIS HUD ===== -->
+      <!-- ===== HUD ===== -->
       <div class="jarvis" id="jarvis" aria-hidden="true">
         <div class="j-scan"></div>
         <button class="j-close" id="jClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
@@ -370,7 +373,7 @@ body{
   document.getElementById('commentBtn').addEventListener('click',function(){input.focus();});
   document.getElementById('capJarvis').addEventListener('click',function(){openJarvis(true);});
 
-  /* =================== JARVIS ENGINE =================== */
+  /* =================== ENGINE =================== */
   var jarvis=document.getElementById('jarvis');
   var jLog=document.getElementById('jLog');
   var jInput=document.getElementById('jInput');
@@ -444,7 +447,7 @@ body{
       return "Now playing — <b>Should I Go (Remastered)</b>. I'll keep the volume low so we can talk.";
 
     if(/who are you|what are you|your name/.test(q))
-      return "I am J.A.R.V.I.S. — Just A Rather Very Intelligent System. I run the workspace, the dashboards, and the automations so you can focus on building, sir.";
+      return "Just A Rather Very Intelligent System. I run the workspace, the dashboards, and the automations so you can focus on building, sir.";
 
     if(/what can you do|help|commands|options/.test(q))
       return "I can run your inbox, pull revenue reports, run diagnostics, manage the lights and music, and add you to the operator waitlist. Try: <b>'automate my customer emails'</b>, <b>'system status'</b>, or <b>'revenue report'</b>.";
@@ -536,5 +539,8 @@ body{
 </script>
 <script defer src="control-surface.js"></script>
   <script defer src="ui.js"></script>
+  <script defer src="platform.js"></script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>

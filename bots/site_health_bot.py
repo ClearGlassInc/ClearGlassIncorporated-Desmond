@@ -4,7 +4,8 @@
 
 Health policy:
   * FAILURES (flip overall_healthy -> False): any monitored page unreachable,
-    or a required root file missing. These are genuine availability problems.
+    a required root file missing, or a shipped HTML page missing the ClearGlass
+    logo. These are genuine availability / branding problems.
   * WARNINGS (reported, do NOT fail health): HTML pages not referenced in
     sitemap.xml. The repo intentionally ships many utility / non-indexed pages
     (404, button-system, hover-menu, component demos, etc.), so sitemap drift
@@ -52,10 +53,28 @@ SITEMAP_EXEMPT = {
     "smb.html",
     "index.html",                 # homepage is indexed as "/" — avoid duplicate
     "cg-loader.html",             # session preloader fragment, not a landing page
+    "offline.html",               # service-worker offline shell (noindex)
     "ClearGlass-NEXUS-v12-FINAL.html",  # build artifact of clearglass-nexus.html
     # Google Search Console verification token — must NOT be in the sitemap
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
 }
+
+# Pages exempt from the "logo on every page" guarantee. The Google Search
+# Console verification file must contain ONLY its token — any extra markup
+# breaks domain verification — so it is the sole legitimate exemption.
+LOGO_EXEMPT = {
+    "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
+}
+
+# Proof that a page carries the ClearGlass logo: either the shared corner-badge
+# script (injected on every non-home page via <script src="/logo-badge.js">) or
+# a direct reference to the logo image asset (the homepage's nav/footer mark).
+LOGO_MARKERS = ("logo-badge.js", "clearglass-logo")
+
+
+def _page_has_logo(html: str) -> bool:
+    """True if the page carries the ClearGlass logo (badge script or logo img)."""
+    return any(marker in html for marker in LOGO_MARKERS)
 
 
 @dataclass
@@ -135,6 +154,21 @@ def _check_local_files() -> tuple[list[str], list[str]]:
                 continue
             if html_file.name not in sitemap:
                 warnings.append(f"HTML page not referenced in sitemap.xml: {html_file.name}")
+
+    # Every shipped HTML page must carry the ClearGlass logo — via the shared
+    # /logo-badge.js corner badge or a direct logo image (homepage nav/footer).
+    # A missing logo is a real branding regression, so it fails health. Scanned
+    # recursively so nested pages (legal/, offers/, products/, …) are covered.
+    for html_file in sorted(ROOT.rglob("*.html")):
+        if ".git" in html_file.parts or html_file.name in LOGO_EXEMPT:
+            continue
+        try:
+            page = html_file.read_text(encoding="utf-8", errors="replace")
+        except OSError as exc:  # pragma: no cover - unreadable file is itself a fault
+            errors.append(f"Could not read {html_file.relative_to(ROOT)}: {exc}")
+            continue
+        if not _page_has_logo(page):
+            errors.append(f"Page missing ClearGlass logo: {html_file.relative_to(ROOT)}")
 
     return errors, warnings
 

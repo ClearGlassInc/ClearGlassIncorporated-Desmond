@@ -1,21 +1,19 @@
 # Site Health Report
 
-**Run:** 2026-06-09T10:33:55.674277+00:00
+**Run:** 2026-06-22T12:49:32.004781+00:00
 **Status:** ✅ Healthy
-**Pages:** 5/6 healthy
+**Pages:** 6/6 healthy
 
 ## Pages
 
-- ✅ `/` (168ms)
-- ✅ `/artemis.html` (65ms)
-- ✅ `/artemis-iv.html` (70ms)
-- ✅ `/guardian.html` (225ms)
-- ✅ `/clearglass-nexus.html` (62ms)
-  - Missing meta: description, og:title, og:description
-- ✅ `/government.html` (56ms)
+- ✅ `/` (236ms)
+- ✅ `/artemis.html` (193ms)
+- ✅ `/artemis-iv.html` (201ms)
+- ✅ `/guardian.html` (151ms)
+- ✅ `/clearglass-nexus.html` (187ms)
+- ✅ `/government.html` (175ms)
 
 ## Warnings (non-failing)
 
-- ⚠️ HTML page not referenced in sitemap.xml: aegis.html
-- ⚠️ HTML page not referenced in sitemap.xml: agentmesh.html
-- ⚠️ HTML page not referenced in sitemap.xml: sentinel.html
+- ⚠️ HTML page not referenced in sitemap.xml: counter-uas-commercialization-os.html
+- ⚠️ HTML page not referenced in sitemap.xml: loader.html

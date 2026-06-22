@@ -1,9 +1,9 @@
 {
-  "run_utc": "2026-06-09T10:33:55.674277+00:00",
+  "run_utc": "2026-06-22T12:49:32.004781+00:00",
   "site_url": "https://clearglassinc.github.io",
   "overall_healthy": true,
   "pages_checked": 6,
-  "pages_healthy": 5,
+  "pages_healthy": 6,
   "pages_unreachable": 0,
   "pages": [
     {
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 168,
+      "response_ms": 236,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 65,
+      "response_ms": 193,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 70,
+      "response_ms": 201,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 225,
+      "response_ms": 151,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,13 +51,9 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 62,
+      "response_ms": 187,
       "has_title": true,
-      "missing_meta": [
-        "description",
-        "og:title",
-        "og:description"
-      ],
+      "missing_meta": [],
       "error": null
     },
     {
@@ -65,7 +61,7 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 56,
+      "response_ms": 175,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -73,8 +69,7 @@
   ],
   "local_issues": [],
   "local_warnings": [
-    "HTML page not referenced in sitemap.xml: aegis.html",
-    "HTML page not referenced in sitemap.xml: agentmesh.html",
-    "HTML page not referenced in sitemap.xml: sentinel.html"
+    "HTML page not referenced in sitemap.xml: counter-uas-commercialization-os.html",
+    "HTML page not referenced in sitemap.xml: loader.html"
   ]
 }

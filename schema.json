@@ -3,20 +3,79 @@
   "@graph": [
     {
       "@type": "Organization",
+      "@id": "https://clearglassinc.github.io/#org",
       "name": "ClearGlass Inc",
       "url": "https://clearglassinc.github.io",
       "logo": "https://clearglassinc.github.io/logo.png",
       "foundingDate": "2024",
+      "founder": { "@id": "https://clearglassinc.github.io/#desmond" },
+      "sameAs": ["https://github.com/ClearGlassInc"],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Burlington",
+        "addressRegion": "ON",
+        "addressCountry": "CA"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-289-707-0269",
+        "contactType": "sales",
+        "areaServed": "Worldwide",
+        "availableLanguage": "en"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://clearglassinc.github.io/#desmond",
+      "name": "Desmond Otieno Odhiambo",
+      "jobTitle": "Founder & Chairman, Software Architect",
+      "worksFor": { "@id": "https://clearglassinc.github.io/#org" },
+      "url": "https://clearglassinc.github.io/#founder",
+      "email": "mailto:desmondotieno@icloud.com",
+      "knowsAbout": [
+        "Cybersecurity",
+        "AI Automation",
+        "Autonomous Agents",
+        "Software Architecture",
+        "OSINT",
+        "Digital Investigations",
+        "Financial Crime Analysis",
+        "Zero Trust Architecture",
+        "Enterprise Workflow Automation"
+      ],
       "sameAs": ["https://github.com/ClearGlassInc"]
     },
     {
+      "@type": "ProfessionalService",
+      "@id": "https://clearglassinc.github.io/#service",
+      "name": "ClearGlass Inc",
+      "url": "https://clearglassinc.github.io",
+      "image": "https://clearglassinc.github.io/logo.png",
+      "telephone": "+1-289-707-0269",
+      "priceRange": "$$$",
+      "areaServed": "Worldwide",
+      "parentOrganization": { "@id": "https://clearglassinc.github.io/#org" },
+      "knowsAbout": [
+        "Cybersecurity Consulting",
+        "AI Engineering",
+        "Autonomous Systems",
+        "OSINT Tooling",
+        "Software Architecture",
+        "Investigative Automation",
+        "Enterprise Workflow Automation"
+      ]
+    },
+    {
       "@type": "WebSite",
+      "@id": "https://clearglassinc.github.io/#website",
       "name": "ClearGlass Inc.",
       "url": "https://clearglassinc.github.io",
+      "publisher": { "@id": "https://clearglassinc.github.io/#org" },
       "hasPart": [
-        {"@type": "WebPage", "name": "Home", "url": "https://clearglassinc.github.io/"},
-        {"@type": "WebPage", "name": "Artemis VI", "url": "https://clearglassinc.github.io/artemis.html"},
-        {"@type": "WebPage", "name": "Guardian", "url": "https://clearglassinc.github.io/guardian.html"}
+        {"@type": "WebPage", "name": "Artemis IV Core", "url": "https://clearglassinc.github.io/artemis-iv.html"},
+        {"@type": "WebPage", "name": "Guardian", "url": "https://clearglassinc.github.io/guardian.html"},
+        {"@type": "WebPage", "name": "ClearGlass NEXUS v12", "url": "https://clearglassinc.github.io/clearglass-nexus.html"},
+        {"@type": "WebPage", "name": "Services & Pricing", "url": "https://clearglassinc.github.io/offers/index.html"}
       ]
     }
   ]

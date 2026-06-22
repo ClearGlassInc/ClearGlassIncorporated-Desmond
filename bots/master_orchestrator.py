@@ -26,6 +26,7 @@ DEPENDENCY_GRAPH: dict[str, list[str]] = {
     "marketing": [],
     "growth": [],
     "daily_priority": [],
+    "lead_draft": [],
     "campaign_reporter": ["marketing"],
     "sales": ["growth"],
     "operations": ["daily_priority"],

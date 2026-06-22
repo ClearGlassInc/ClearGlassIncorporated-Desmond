@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #79",
+    "title": "Control Surface Feeds #80",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:54",
+    "timestamp": "2026-06-22T22:54:53Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #273",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-fe71bab7-24a5-43a5-9652-93835eb157f3",
+    "time": "22:08",
+    "timestamp": "2026-06-22T22:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #433",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:13",
+    "timestamp": "2026-06-22T21:13:44Z"
+  },
+  {
+    "title": "pages build and deployment #867",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:13",
+    "timestamp": "2026-06-22T21:13:37Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1493",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:13",
+    "timestamp": "2026-06-22T21:13:36Z"
+  },
+  {
+    "title": "Control Surface Feeds #79",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:13",
     "timestamp": "2026-06-22T21:13:18Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "18:27",
     "timestamp": "2026-06-22T18:27:23Z"
-  },
-  {
-    "title": ".github/workflows/workflow-repair-agent.yml #19",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:23Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1492",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:23Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #764",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:01Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #431",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:01Z"
-  },
-  {
-    "title": "Security #506",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:01Z"
   }
 ]

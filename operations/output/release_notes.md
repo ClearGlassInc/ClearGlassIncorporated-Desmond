@@ -1,10 +1,15 @@
-# Release Notes — 2026-06-21
+# Release Notes — 2026-06-22
 
-*175 commit(s) since v1.0.0*
+*203 commit(s) since v1.0.0*
 
 ## New Features
 
+- **offers:** add working Interac e-Transfer pay path to Hardening Sprint + PHIPA (`7216e11`)
+- **offers:** add working Interac e-Transfer pay path to the $249 Quick-Audit (`a88aaae`)
+- **opal-koboi:** security hardening v2.0 for the facial-recognition system (`3e4cdce`)
+- **ci:** add enterprise-grade auto-store release workflow (`86947c1`)
 - **products:** add PostLoop content engine + Flowsint OSINT graph (`0b7bb71`)
+- **commerce:** track Stripe payouts in the control plane (`8b17fb9`)
 - site-wide analytics loader + outreach drafts (go-to-market) (`df66b2f`)
 - **commerce:** validate Stripe checkout links + go-live runbook (#506) (`62a9668`)
 - **store:** ClearGlass Side Store — autonomous revenue agent SOUL spec (`e88865f`)
@@ -24,6 +29,10 @@
 
 ## Bug Fixes
 
+- **security:** upgrade Next.js 14/15 -> 16.2.9 (clears high-severity advisories) (`8f77bac`)
+- **security:** resolve Dependabot #85 — pin postcss >= 8.5.10 (moderate XSS) (`edc02dd`)
+- **site:** add ClearGlass logo badge to counter-uas-commercialization-os.html (`402b563`)
+- **admin:** repair build-breaking type error + add frontend CI gate (`97f20a8`)
 - **opal-koboi:** clear ruff errors in FaceRecognition-Local.py (`24e54ba`)
 - **lint:** remove unused Date() declarations in postloop & flowsint (`dd67f16`)
 - **lint:** clear pre-existing ruff errors in opal-koboi face-recognition (`4042d91`)
@@ -42,6 +51,10 @@
 - **seo:** raise on-page SEO from 64 to 98 across all pages (`2835884`)
 - add glass.css to burlington-osint.html (only page missing site-wide design system) (`475646d`)
 
+## Refactoring
+
+- **store-sync:** drop unused _MAPS constant (`3539715`)
+
 ## Documentation
 
 - **gtm:** go-to-market playbook + sitemap fix + hardening outreach (`83f49e3`)
@@ -54,6 +67,11 @@
 
 ## CI/CD
 
+- install pyyaml for python-tests job; skip doctor tests cleanly without it (`e36d840`)
+- stop workflow_doctor --fix from silently dropping `on:` triggers (`d018553`)
+- add hardened workflow repair agent (`9d3ea5c`)
+- stop Copilot Setup failing when repo root has no package.json (`b5ffbac`)
+- **supply-chain:** SHA-pin all GitHub Actions across every workflow (`56ba379`)
 - **audit:** nightly multi-repo audit workflow (`58260cf`)
 - **pages:** make Pages-source pin self-healing + document 403 fix (`be962e6`)
 - add OSINT Deck Validator job (#461) (`2b5109d`)
@@ -61,6 +79,9 @@
 
 ## Maintenance
 
+- **deps:** put the Next.js apps under Dependabot version monitoring (`4b14ac6`)
+- Fix bugs: pilot score formula, live KPI wiring, release tag permission (`48862eb`)
+- Add ARTEMIS Counter-UAS Commercialization OS + Military-Op pipeline (`edc254f`)
 - AUTO-STORE-ENTERPRISE-WORKFLOW.YML (`12af922`)
 - **ci:** harden copilot workflow, document branch protection, drop binary (`57caf9e`)
 - Add GitHub Actions workflow for Copilot setup (`e7dcf85`)
@@ -130,6 +151,16 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`7ff1353`)
+- refresh control-surface data feeds [skip ci] (`54da811`)
+- refresh control-surface data feeds [skip ci] (`f5269fd`)
+- refresh control-surface data feeds [skip ci] (`764fcd8`)
+- refresh control-surface data feeds [skip ci] (`a26f090`)
+- refresh control-surface data feeds [skip ci] (`6701403`)
+- refresh control-surface data feeds [skip ci] (`a14a659`)
+- refresh control-surface data feeds [skip ci] (`42e00a8`)
+- refresh control-surface data feeds [skip ci] (`202fbad`)
+- update generated outputs — 2026-06-21 10:28 UTC [skip ci] (`5bda635`)
 - refresh control-surface data feeds [skip ci] (`1c39b36`)
 - refresh control-surface data feeds [skip ci] (`46db447`)
 - refresh control-surface data feeds [skip ci] (`a29026a`)

@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-21T10:28:22.287966+00:00
-**Average Score:** 95.6/100
-**Files Audited:** 52
+**Run:** 2026-06-22T12:49:30.823497+00:00
+**Average Score:** 95.5/100
+**Files Audited:** 53
 
 ## Page Scores
 
@@ -13,6 +13,7 @@
 | `postloop.html` | 60/100 | 4 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
 | `artemis-percival.html` | 90/100 | 1 |
+| `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
 | `systems.html` | 90/100 | 1 |
 | `404.html` | 100/100 | 0 |
@@ -63,7 +64,7 @@
 
 ## Top Issues Across All Pages
 
-- 4x — Description length N chars (ideal N–N)
+- 5x — Description length N chars (ideal N–N)
 - 4x — Missing og:image
 - 3x — Multiple <hN> tags (N)
 - 3x — Title length N chars (ideal N–N)

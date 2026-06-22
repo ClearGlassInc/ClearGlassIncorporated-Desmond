@@ -1,11 +1,17 @@
 {
-  "run_utc": "2026-06-21T10:28:22.990416+00:00",
+  "run_utc": "2026-06-22T12:49:32.027470+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
   "failed": 0,
   "skipped": 0,
   "bots": [
+    {
+      "bot_id": "marketing",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
     {
       "bot_id": "daily_priority",
       "status": "ok",
@@ -19,21 +25,15 @@
       "error": null
     },
     {
-      "bot_id": "marketing",
-      "status": "ok",
-      "duration_s": 0.01,
-      "error": null
-    },
-    {
       "bot_id": "lead_draft",
       "status": "ok",
-      "duration_s": 0.03,
+      "duration_s": 0.02,
       "error": null
     },
     {
       "bot_id": "wealth_ladder",
       "status": "ok",
-      "duration_s": 0.03,
+      "duration_s": 0.06,
       "error": null
     },
     {
@@ -45,23 +45,23 @@
     {
       "bot_id": "seo_optimizer",
       "status": "ok",
-      "duration_s": 0.08,
+      "duration_s": 0.09,
       "error": null
     },
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 0.75,
+      "duration_s": 1.26,
       "error": null
     },
     {
-      "bot_id": "campaign_reporter",
+      "bot_id": "operations",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "operations",
+      "bot_id": "campaign_reporter",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
@@ -75,7 +75,7 @@
     {
       "bot_id": "alert_dispatcher",
       "status": "ok",
-      "duration_s": 0.0,
+      "duration_s": 0.01,
       "error": null
     },
     {

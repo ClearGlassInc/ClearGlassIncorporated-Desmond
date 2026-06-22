@@ -1,15 +1,60 @@
 {
-  "run_utc": "2026-06-21T10:28:22.273536+00:00",
+  "run_utc": "2026-06-22T12:49:30.804536+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 175,
+  "commit_count": 203,
   "sections": {
     "New Features": [
+      {
+        "sha": "7216e11",
+        "type": "feat",
+        "scope": "offers",
+        "subject": "add working Interac e-Transfer pay path to Hardening Sprint + PHIPA",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "a88aaae",
+        "type": "feat",
+        "scope": "offers",
+        "subject": "add working Interac e-Transfer pay path to the $249 Quick-Audit",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "3e4cdce",
+        "type": "feat",
+        "scope": "opal-koboi",
+        "subject": "security hardening v2.0 for the facial-recognition system",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "86947c1",
+        "type": "feat",
+        "scope": "ci",
+        "subject": "add enterprise-grade auto-store release workflow",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
       {
         "sha": "0b7bb71",
         "type": "feat",
         "scope": "products",
         "subject": "add PostLoop content engine + Flowsint OSINT graph",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "8b17fb9",
+        "type": "feat",
+        "scope": "commerce",
+        "subject": "track Stripe payouts in the control plane",
         "author": "Claude",
         "date": "2026-06-21",
         "breaking": false
@@ -160,6 +205,42 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "8f77bac",
+        "type": "fix",
+        "scope": "security",
+        "subject": "upgrade Next.js 14/15 -> 16.2.9 (clears high-severity advisories)",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "edc02dd",
+        "type": "fix",
+        "scope": "security",
+        "subject": "resolve Dependabot #85 \u2014 pin postcss >= 8.5.10 (moderate XSS)",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "402b563",
+        "type": "fix",
+        "scope": "site",
+        "subject": "add ClearGlass logo badge to counter-uas-commercialization-os.html",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "97f20a8",
+        "type": "fix",
+        "scope": "admin",
+        "subject": "repair build-breaking type error + add frontend CI gate",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
       {
         "sha": "24e54ba",
         "type": "fix",
@@ -314,6 +395,17 @@
         "breaking": false
       }
     ],
+    "Refactoring": [
+      {
+        "sha": "3539715",
+        "type": "refactor",
+        "scope": "store-sync",
+        "subject": "drop unused _MAPS constant",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      }
+    ],
     "Documentation": [
       {
         "sha": "83f49e3",
@@ -356,6 +448,51 @@
     ],
     "CI/CD": [
       {
+        "sha": "e36d840",
+        "type": "ci",
+        "scope": null,
+        "subject": "install pyyaml for python-tests job; skip doctor tests cleanly without it",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "d018553",
+        "type": "ci",
+        "scope": null,
+        "subject": "stop workflow_doctor --fix from silently dropping `on:` triggers",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "9d3ea5c",
+        "type": "ci",
+        "scope": null,
+        "subject": "add hardened workflow repair agent",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "b5ffbac",
+        "type": "ci",
+        "scope": null,
+        "subject": "stop Copilot Setup failing when repo root has no package.json",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "56ba379",
+        "type": "ci",
+        "scope": "supply-chain",
+        "subject": "SHA-pin all GitHub Actions across every workflow",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
         "sha": "58260cf",
         "type": "ci",
         "scope": "audit",
@@ -393,6 +530,33 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "4b14ac6",
+        "type": "chore",
+        "scope": "deps",
+        "subject": "put the Next.js apps under Dependabot version monitoring",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "48862eb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix bugs: pilot score formula, live KPI wiring, release tag permission",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "edc254f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ARTEMIS Counter-UAS Commercialization OS + Military-Op pipeline",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
       {
         "sha": "12af922",
         "type": "chore",
@@ -989,6 +1153,96 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "7ff1353",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "54da811",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "f5269fd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "764fcd8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "a26f090",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "6701403",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "a14a659",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "42e00a8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "202fbad",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "5bda635",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-21 10:28 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-21",
+        "breaking": false
+      },
       {
         "sha": "1c39b36",
         "type": "bot",

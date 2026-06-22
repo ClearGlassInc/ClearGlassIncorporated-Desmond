@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-21T10:28:22.287966+00:00",
-  "files_audited": 52,
-  "average_score": 95.6,
+  "run_utc": "2026-06-22T12:49:30.823497+00:00",
+  "files_audited": 53,
+  "average_score": 95.5,
   "pages": [
     {
       "file": "404.html",
@@ -492,6 +492,26 @@
       "issues": []
     },
     {
+      "file": "counter-uas-commercialization-os.html",
+      "title": "Counter-UAS Commercialization OS \u2014 ClearGlass Inc.",
+      "title_length": 50,
+      "title_ok": true,
+      "description": "ARTEMIS Commercialization OS: an autonomous, revenue-target-backward operating system for a Counter-UAS EO/IR detection company. Reverse-engineer the $1M plan, score pilots, track risk, and auto-draft investor updates from a handful of inputs.",
+      "description_length": 243,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 243 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "flowsint.html",
       "title": "Flowsint \u00b7 OSINT Investigation Graph \u2014 Domains, IPs & Transforms \u2014",
       "title_length": 66,
@@ -969,7 +989,7 @@
     }
   ],
   "top_issues": [
-    "4x \u2014 Description length N chars (ideal N\u2013N)",
+    "5x \u2014 Description length N chars (ideal N\u2013N)",
     "4x \u2014 Missing og:image",
     "3x \u2014 Multiple <hN> tags (N)",
     "3x \u2014 Title length N chars (ideal N\u2013N)",

@@ -10,6 +10,7 @@
 
   var GROUPS = [
     ["Command", [
+      ["Counter-UAS OS", "counter-uas-commercialization-os.html", "🛰"],
       ["PERCIVAL OS", "percival-os.html", "◐"],
       ["SENTINEL · Live", "sentinel.html", "◉"],
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],

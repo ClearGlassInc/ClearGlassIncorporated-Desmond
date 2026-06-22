@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>Counter-UAS Commercialization OS — ClearGlass Inc.</title>
+<meta name="description" content="ARTEMIS Commercialization OS: an autonomous, revenue-target-backward operating system for a Counter-UAS EO/IR detection company. Reverse-engineer the $1M plan, score pilots, track risk, and auto-draft investor updates from a handful of inputs."/>
+<link rel="canonical" href="https://clearglassinc.github.io/counter-uas-commercialization-os.html"/>
+<meta property="og:title" content="Counter-UAS Commercialization OS — ClearGlass Inc."/>
+<meta property="og:description" content="An autonomous executive operating system for a Counter-UAS EO/IR company. Revenue-target-backward. Your input, automated into a $1M plan."/>
+<meta property="og:url" content="https://clearglassinc.github.io/counter-uas-commercialization-os.html"/>
+<meta property="og:site_name" content="ClearGlass Inc."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Counter-UAS Commercialization OS — ClearGlass Inc."/>
+<meta name="twitter:description" content="An autonomous executive operating system for a Counter-UAS EO/IR company. Your input, automated into a $1M plan."/>
+<meta name="twitter:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dark:#070a10;--dark-2:#0e131c;--dark-3:#161d29;--panel:rgba(255,255,255,.035);--panel-border:rgba(255,255,255,.08);
+  --text:#eef2f8;--text-2:#aeb8c9;--text-3:#717c92;--text-4:#4d566a;
+  --threat-1:#f59e0b;--threat-2:#f43f5e;--threat-3:#fb7185;
+  --cyan:#22d3ee;--green:#34d399;--violet:#a78bfa;--blue:#60a5fa;
+  --grad:linear-gradient(135deg,#22d3ee 0%,#60a5fa 40%,#a78bfa 100%);
+  --threat-grad:linear-gradient(135deg,#f59e0b 0%,#f43f5e 60%,#fb7185 100%);
+  --green-grad:linear-gradient(135deg,#34d399 0%,#22d3ee 100%);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Urbanist',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--sans);color:var(--text);background:var(--dark);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
+a{color:inherit}
+.container{width:min(1180px,92vw);margin:0 auto}
+.mono{font-family:var(--mono)}
+.threat-text{background:var(--threat-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.green-text{background:var(--green-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+/* top bar */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:90;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);background:rgba(7,10,16,.72);backdrop-filter:blur(22px) saturate(1.4);border-bottom:1px solid var(--panel-border)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+.brand-mark{width:36px;height:36px;border-radius:9px;background:radial-gradient(circle at 38% 32%,#bcd4ff,#6d5cf0 58%,#161038);box-shadow:0 0 14px rgba(124,150,255,.5);flex:0 0 auto}
+.brand-name{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-.01em}.brand-name em{font-style:italic;font-weight:300;color:var(--text-3)}
+.topbar-status{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--threat-1);text-transform:uppercase}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--threat-1);box-shadow:0 0 10px var(--threat-1);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* hero */
+.hero{position:relative;padding:clamp(120px,16vw,180px) 0 clamp(60px,8vw,90px);overflow:hidden}
+.hero-glow{position:absolute;top:30%;left:50%;width:900px;height:900px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(244,63,94,.10) 0%,rgba(245,158,11,.06) 32%,rgba(34,211,238,.04) 58%,transparent 74%);animation:pulse 11s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}50%{transform:translate(-50%,-50%) scale(1.13);opacity:1}}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(circle at 50% 35%,#000 0%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.22em;color:var(--threat-1);margin-bottom:26px}
+.hero h1{font-family:var(--serif);font-size:clamp(2.6rem,7vw,6rem);font-weight:300;line-height:1;letter-spacing:-.03em;max-width:920px;margin:0 auto}
+.hero h1 strong{font-weight:600}
+.hero-sub{font-size:clamp(1rem,1.7vw,1.2rem);color:var(--text-2);max-width:660px;margin:26px auto 0;line-height:1.7}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:30px}
+.hbadge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(--panel);border:1px solid var(--panel-border);font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--text-2)}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;font-family:var(--sans);font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;border:none;transition:all .3s}
+.btn-primary{color:#06121a;background:var(--green-grad);box-shadow:0 6px 26px rgba(34,211,238,.22)}.btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{color:var(--text);background:var(--panel);border:1px solid var(--panel-border)}.btn-ghost:hover{background:rgba(255,255,255,.07)}
+
+/* sections */
+section{padding:clamp(60px,9vw,110px) 0;position:relative}
+.sh{margin-bottom:clamp(36px,5vw,56px);max-width:680px}
+.sh-tag{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--text-4);margin-bottom:14px;display:flex;align-items:center;gap:10px;text-transform:uppercase}
+.sh-tag::before{content:'';width:22px;height:1px;background:var(--text-4)}
+.sh h2{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.4rem);font-weight:300;line-height:1.08;letter-spacing:-.02em}
+.sh h2 strong{font-weight:600}
+.sh p{color:var(--text-2);font-size:clamp(1rem,1.3vw,1.08rem);margin-top:16px;line-height:1.75}
+
+/* decision hierarchy */
+.hier-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hier-chip{padding:10px 18px;border-radius:12px;background:var(--panel);border:1px solid var(--panel-border);font-weight:600;font-size:14px}
+.hier-chip.rank1{border-color:rgba(52,211,153,.4);box-shadow:0 0 22px rgba(52,211,153,.12)}
+.hier-arrow{color:var(--text-4);font-size:18px}
+
+/* revenue engine */
+.engine{display:grid;grid-template-columns:340px 1fr;gap:clamp(20px,3vw,40px);align-items:start}
+.panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:20px;padding:clamp(22px,3vw,32px);backdrop-filter:blur(14px)}
+.panel-title{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);margin-bottom:20px}
+.ctrl{margin-bottom:20px}
+.ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--text-2);margin-bottom:8px;font-weight:600}
+.ctrl label .val{font-family:var(--mono);font-size:13px;color:var(--cyan)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:99px;background:rgba(255,255,255,.1);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--grad);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--cyan);cursor:pointer}
+.streams{display:grid;gap:12px}
+.stream{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid var(--panel-border)}
+.stream-name{font-weight:700;font-size:15px}
+.stream-meta{font-family:var(--mono);font-size:11px;color:var(--text-3);grid-column:1;letter-spacing:.04em}
+.stream-val{font-family:var(--mono);font-size:18px;font-weight:600;grid-row:1/3;grid-column:2;color:var(--green)}
+.stream-bar{grid-column:1/3;height:5px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:4px}
+.stream-bar span{display:block;height:100%;background:var(--green-grad);border-radius:99px;transition:width .5s ease}
+.total-card{margin-top:16px;padding:22px 24px;border-radius:16px;background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(34,211,238,.05));border:1px solid rgba(52,211,153,.28);display:flex;justify-content:space-between;align-items:center}
+.total-card .lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2)}
+.total-card .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.3rem);font-weight:600}
+.gap-note{font-size:12px;color:var(--text-3);margin-top:10px;font-family:var(--mono)}
+
+/* agent grid */
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.agent{padding:20px;border-radius:16px;background:var(--panel);border:1px solid var(--panel-border);transition:all .3s}
+.agent:hover{transform:translateY(-3px);border-color:rgba(124,150,255,.4);box-shadow:0 12px 34px rgba(0,0,0,.4)}
+.agent .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:rgba(124,150,255,.1);border:1px solid rgba(124,150,255,.2);margin-bottom:14px}
+.agent h4{font-size:15px;font-weight:700;margin-bottom:6px}
+.agent p{font-size:12.5px;color:var(--text-3);line-height:1.6}
+.agent.exec{grid-column:1/-1;background:linear-gradient(120deg,rgba(124,150,255,.1),rgba(34,211,238,.04));border-color:rgba(124,150,255,.32)}
+
+/* pilot scorer */
+.scorer{display:grid;grid-template-columns:1fr 320px;gap:clamp(20px,3vw,40px);align-items:start}
+.score-display{text-align:center;padding:30px 24px}
+.score-ring{font-family:var(--mono);font-size:clamp(3rem,7vw,4.6rem);font-weight:600;line-height:1}
+.score-verdict{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:8px 16px;border-radius:999px;display:inline-block}
+.v-go{background:rgba(52,211,153,.14);color:var(--green);border:1px solid rgba(52,211,153,.34)}
+.v-maybe{background:rgba(245,158,11,.14);color:var(--threat-1);border:1px solid rgba(245,158,11,.34)}
+.v-no{background:rgba(244,63,94,.14);color:var(--threat-2);border:1px solid rgba(244,63,94,.34)}
+select{width:100%;padding:11px 14px;border-radius:10px;background:var(--dark-2);color:var(--text);border:1px solid var(--panel-border);font-family:var(--sans);font-size:14px;margin-top:6px}
+
+/* kpi */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px}
+.kpi{padding:18px;border-radius:14px;background:var(--panel);border:1px solid var(--panel-border)}
+.kpi .lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
+.kpi .num{font-family:var(--mono);font-size:24px;font-weight:600}
+.kpi .sub{font-size:11px;color:var(--text-4);margin-top:4px}
+
+/* risk register */
+.risk-table{width:100%;border-collapse:collapse;font-size:14px}
+.risk-table th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding:12px 14px;border-bottom:1px solid var(--panel-border)}
+.risk-table td{padding:14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-2)}
+.risk-table tr:hover td{background:rgba(255,255,255,.02)}
+.score-pill{font-family:var(--mono);font-weight:600;padding:4px 10px;border-radius:8px;font-size:13px}
+.s-low{background:rgba(52,211,153,.14);color:var(--green)}
+.s-med{background:rgba(245,158,11,.14);color:var(--threat-1)}
+.s-high{background:rgba(244,63,94,.18);color:var(--threat-3)}
+
+/* 90 day */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.phase{padding:24px;border-radius:18px;background:var(--panel);border:1px solid var(--panel-border)}
+.phase .ph-num{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--cyan);margin-bottom:6px}
+.phase h4{font-family:var(--serif);font-size:1.5rem;font-weight:500;margin-bottom:14px}
+.phase ul{list-style:none;display:grid;gap:9px}
+.phase li{font-size:13px;color:var(--text-2);padding-left:20px;position:relative;line-height:1.5}
+.phase li::before{content:'›';position:absolute;left:4px;color:var(--cyan);font-weight:700}
+
+/* investor update */
+.update-out{font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--text-2);white-space:pre-wrap;background:var(--dark-2);border:1px solid var(--panel-border);border-radius:14px;padding:24px;max-height:420px;overflow:auto}
+.copy-btn{margin-top:14px}
+
+/* compliance */
+.gate-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.gate{padding:18px;border-radius:14px;background:var(--panel);border:1px solid var(--panel-border);display:flex;gap:12px;align-items:flex-start}
+.gate .mk{font-size:18px;line-height:1}
+.gate h5{font-size:13.5px;font-weight:700;margin-bottom:3px}
+.gate p{font-size:12px;color:var(--text-3)}
+
+/* footer */
+footer{border-top:1px solid var(--panel-border);padding:48px 0 40px;margin-top:40px}
+.foot-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:center}
+.foot-tag{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--text-2)}
+.foot-meta{font-size:12px;color:var(--text-4);font-family:var(--mono)}
+.disclaimer{font-size:11.5px;color:var(--text-4);line-height:1.6;margin-top:22px;max-width:760px}
+
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}.rv.vis{opacity:1;transform:translateY(0)}
+
+@media(max-width:860px){
+  .engine,.scorer{grid-template-columns:1fr}
+  .phases{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark"></span>
+    <span class="brand-name">ClearGlass <em>· OS</em></span>
+  </a>
+  <div class="topbar-status"><span class="dot"></span> ARTEMIS · COMMERCIALIZATION OS · LIVE</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="container hero-inner">
+    <div class="eyebrow">COUNTER-UAS · EO/IR · REVENUE-TARGET-BACKWARD</div>
+    <h1>The <strong>Commercialization OS</strong> for <span class="threat-text">Counter-UAS</span></h1>
+    <p class="hero-sub">An autonomous executive operating system that runs a Counter-UAS EO/IR detection company like a COO, CRO, CFO, and Defense Commercialization Director — simultaneously. Technology is subordinate to revenue. You give a few inputs; it computes the plan.</p>
+    <div class="hero-badges">
+      <span class="hbadge">◈ $1M reverse-engineered</span>
+      <span class="hbadge">⚑ 14-agent hierarchy</span>
+      <span class="hbadge">⏱ 90-day mandate</span>
+      <span class="hbadge">⚖ Compliance hard-stops</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#engine">Run the Revenue Engine</a>
+      <a class="btn btn-ghost" href="prompts/artemis_commercialization_os_system_prompt.md">View Orchestrator Prompt</a>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION / DECISION HIERARCHY -->
+<section>
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">Executive Objective</div>
+      <h2>It doesn't <strong>advise</strong>. It <strong>operates</strong>.</h2>
+      <p>No engineering activity proceeds unless it's tied to a customer, pilot, regulatory requirement, or revenue objective. Every decision resolves upward through one fixed hierarchy.</p>
+    </div>
+    <div class="hier-row rv">
+      <span class="hier-chip rank1">1 · Revenue</span><span class="hier-arrow">→</span>
+      <span class="hier-chip">2 · Pilot Success</span><span class="hier-arrow">→</span>
+      <span class="hier-chip">3 · Compliance</span><span class="hier-arrow">→</span>
+      <span class="hier-chip">4 · Engineering</span><span class="hier-arrow">→</span>
+      <span class="hier-chip">5 · Optimization</span>
+    </div>
+  </div>
+</section>
+
+<!-- REVENUE ENGINE -->
+<section id="engine">
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">Revenue Engine · Your Input, Automated</div>
+      <h2>Reverse-engineer the <span class="green-text">$1M</span> target</h2>
+      <p>Move the four levers. The engine recomputes every revenue stream live and shows the gap to target — the same model the Finance Agent re-derives each quarter.</p>
+    </div>
+    <div class="engine rv">
+      <div class="panel">
+        <div class="panel-title">Operator Inputs</div>
+        <div class="ctrl">
+          <label>Paid pilots <span class="val" id="v_pilots">5</span></label>
+          <input type="range" id="pilots" min="0" max="20" value="5"/>
+        </div>
+        <div class="ctrl">
+          <label>Avg pilot fee <span class="val" id="v_pilotfee">$15,000</span></label>
+          <input type="range" id="pilotfee" min="5000" max="50000" step="1000" value="15000"/>
+        </div>
+        <div class="ctrl">
+          <label>Pilot → contract conversions <span class="val" id="v_conv">2</span></label>
+          <input type="range" id="conv" min="0" max="10" value="2"/>
+        </div>
+        <div class="ctrl">
+          <label>Avg contract value <span class="val" id="v_contract">$150,000</span></label>
+          <input type="range" id="contract" min="50000" max="500000" step="10000" value="150000"/>
+        </div>
+        <div class="ctrl">
+          <label>Integrator / channel deals <span class="val" id="v_integ">1</span></label>
+          <input type="range" id="integ" min="0" max="6" value="1"/>
+        </div>
+        <div class="ctrl">
+          <label>Avg integrator deal <span class="val" id="v_integval">$250,000</span></label>
+          <input type="range" id="integval" min="50000" max="600000" step="25000" value="250000"/>
+        </div>
+        <div class="ctrl">
+          <label>SaaS customers <span class="val" id="v_saas">40</span></label>
+          <input type="range" id="saas" min="0" max="200" value="40"/>
+        </div>
+        <div class="ctrl">
+          <label>SaaS price / mo <span class="val" id="v_saasprice">$800</span></label>
+          <input type="range" id="saasprice" min="100" max="3000" step="50" value="800"/>
+        </div>
+      </div>
+      <div>
+        <div class="streams">
+          <div class="stream"><span class="stream-name">Pilot revenue</span><span class="stream-meta" id="m_pilot"></span><span class="stream-val" id="r_pilot"></span><div class="stream-bar"><span id="b_pilot"></span></div></div>
+          <div class="stream"><span class="stream-name">Conversion revenue</span><span class="stream-meta" id="m_conv"></span><span class="stream-val" id="r_conv"></span><div class="stream-bar"><span id="b_conv"></span></div></div>
+          <div class="stream"><span class="stream-name">Integrator deals</span><span class="stream-meta" id="m_integ"></span><span class="stream-val" id="r_integ"></span><div class="stream-bar"><span id="b_integ"></span></div></div>
+          <div class="stream"><span class="stream-name">SaaS revenue (annualized)</span><span class="stream-meta" id="m_saas"></span><span class="stream-val" id="r_saas"></span><div class="stream-bar"><span id="b_saas"></span></div></div>
+        </div>
+        <div class="total-card">
+          <div><div class="lab">Projected annual revenue</div><div class="gap-note" id="gap"></div></div>
+          <div class="num green-text" id="total"></div>
+        </div>
+        <div class="total-card" style="background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(96,165,250,.04));border-color:rgba(167,139,250,.26)">
+          <div><div class="lab">Recurring (ARR from SaaS)</div><div class="gap-note">Tracked weekly · MRR × 12</div></div>
+          <div class="num grad-text" id="arr"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENT HIERARCHY -->
+<section>
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">Agent Hierarchy</div>
+      <h2>One orchestrator. <strong>Fourteen specialists.</strong></h2>
+      <p>The Executive Orchestrator owns prioritization, budget enforcement, and risk escalation — and issues a weekly scorecard, monthly board package, and quarterly review.</p>
+    </div>
+    <div class="agent-grid rv">
+      <div class="agent exec"><div class="ic">◎</div><h4>Executive Orchestrator</h4><p>Strategic prioritization · resource allocation · budget enforcement · revenue forecasting · risk escalation. Rejects feature creep, speculative R&D, and vanity spend.</p></div>
+      <div class="agent"><div class="ic">🛠</div><h4>Product Engineering</h4><p>Builds only what a pilot, customer, or regulator requires.</p></div>
+      <div class="agent"><div class="ic">🧠</div><h4>AI / ISP</h4><p>EO/IR detection, image-signal pipeline, accuracy & false-positive rate.</p></div>
+      <div class="agent"><div class="ic">⚖</div><h4>Compliance</h4><p>Export, ITAR, spectrum, privacy. Holds shipment veto.</p></div>
+      <div class="agent"><div class="ic">🎯</div><h4>Pilot Acquisition</h4><p>Scores and ranks targets across Tier 1–3 sectors.</p></div>
+      <div class="agent"><div class="ic">📡</div><h4>Pilot Operations</h4><p>Deploys, runs, and documents pilots to publishable results.</p></div>
+      <div class="agent"><div class="ic">🛡</div><h4>Defense Sales</h4><p>PEOs, DIU, primes, NATO. 100 qualified prospects / quarter.</p></div>
+      <div class="agent"><div class="ic">🏢</div><h4>Commercial Sales</h4><p>Airports, ports, energy, stadiums, campuses.</p></div>
+      <div class="agent"><div class="ic">🤝</div><h4>Channel Partner</h4><p>Integrator LOIs and resale agreements.</p></div>
+      <div class="agent"><div class="ic">🏭</div><h4>Manufacturing</h4><p>Scale on 5 POs / 3 LOIs / $250k backlog. COGS −20%.</p></div>
+      <div class="agent"><div class="ic">📊</div><h4>SaaS</h4><p>Dashboard → Fleet → Threat Network. MRR weekly.</p></div>
+      <div class="agent"><div class="ic">💰</div><h4>Finance</h4><p>Re-derives the $1M model quarterly. Runway, margin, CAC, LTV.</p></div>
+      <div class="agent"><div class="ic">🪙</div><h4>Fundraising</h4><p>Non-dilutive first: grants, SBIR, defense innovation.</p></div>
+      <div class="agent"><div class="ic">🔭</div><h4>Intelligence</h4><p>Tracks Anduril, Dedrone, DroneShield, BlueHalo, Lockheed, RTX.</p></div>
+      <div class="agent"><div class="ic">📈</div><h4>Monitoring</h4><p>Daily KPI dashboard + threshold alerts.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PILOT SCORER -->
+<section>
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">Pilot Acquisition</div>
+      <h2>Score a target before you spend a <strong>dollar</strong></h2>
+      <p>Priority Score = Budget × Threat Level × Ease of Access × Probability of Conversion. Minimum bar to engage: <strong>Paid ≥ $5,000</strong> or <strong>Strategic Data Value &gt; 80</strong>.</p>
+    </div>
+    <div class="scorer rv">
+      <div class="panel">
+        <div class="panel-title">Target Profile</div>
+        <div class="ctrl"><label>Sector</label>
+          <select id="sector">
+            <optgroup label="Tier 1"><option value="5">Military base</option><option value="5">Border security</option><option value="5">Critical infrastructure</option></optgroup>
+            <optgroup label="Tier 2"><option value="4">Airport</option><option value="4">Port</option><option value="4">Energy facility</option></optgroup>
+            <optgroup label="Tier 3"><option value="3">Prison</option><option value="3">Stadium</option><option value="3">University</option></optgroup>
+          </select>
+        </div>
+        <div class="ctrl"><label>Budget <span class="val" id="v_sbudget">4</span></label><input type="range" id="sbudget" min="1" max="5" value="4"/></div>
+        <div class="ctrl"><label>Threat level <span class="val" id="v_sthreat">4</span></label><input type="range" id="sthreat" min="1" max="5" value="4"/></div>
+        <div class="ctrl"><label>Ease of access <span class="val" id="v_saccess">3</span></label><input type="range" id="saccess" min="1" max="5" value="3"/></div>
+        <div class="ctrl"><label>Probability of conversion <span class="val" id="v_sprob">3</span></label><input type="range" id="sprob" min="1" max="5" value="3"/></div>
+      </div>
+      <div class="panel score-display">
+        <div class="panel-title">Priority Score</div>
+        <div class="score-ring" id="pscore">—</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:6px">of 625 max</div>
+        <div id="pverdict" class="score-verdict v-maybe">EVALUATING</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KPI DASHBOARD -->
+<section>
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">KPI Dashboard · Updates Daily</div>
+      <h2>The numbers the board <strong>actually asks about</strong></h2>
+    </div>
+    <div class="kpi-grid rv" id="kpiGrid"></div>
+  </div>
+</section>
+
+<!-- RISK REGISTER -->
+<section>
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">Risk Register</div>
+      <h2>Risk Score = <strong>Likelihood × Impact</strong></h2>
+      <p>Anything scoring above 15 triggers immediate human review. Owners are assigned by domain.</p>
+    </div>
+    <div class="panel rv" style="padding:8px clamp(8px,2vw,18px)">
+      <table class="risk-table">
+        <thead><tr><th>Domain</th><th>Risk</th><th>Owner</th><th>L</th><th>I</th><th>Score</th></tr></thead>
+        <tbody id="riskBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE GATES -->
+<section>
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">Compliance · Hard Stops</div>
+      <h2>No shipment until the gate is <strong>green</strong></h2>
+      <p>The Compliance Agent holds an absolute veto over export and RF transmission, regardless of revenue at stake.</p>
+    </div>
+    <div class="gate-grid rv">
+      <div class="gate"><span class="mk threat-text">⛔</span><div><h5>Unknown ECCN</h5><p>Export classification unresolved → blocked.</p></div></div>
+      <div class="gate"><span class="mk threat-text">⛔</span><div><h5>Unknown ITAR status</h5><p>Defense-article status unconfirmed → blocked.</p></div></div>
+      <div class="gate"><span class="mk threat-text">⛔</span><div><h5>Unknown spectrum approval</h5><p>No spectrum authorization → blocked.</p></div></div>
+      <div class="gate"><span class="mk threat-text">⛔</span><div><h5>Unapproved RF capability</h5><p>Active RF without approval → blocked.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 90 DAY MANDATE -->
+<section>
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">90-Day Execution Mandate</div>
+      <h2>From MVP to <strong>paid pilot</strong> in one quarter</h2>
+    </div>
+    <div class="phases rv">
+      <div class="phase"><div class="ph-num">DAYS 1–30 · FOUNDATION</div><h4>Build the funnel</h4><ul><li>Finalize MVP</li><li>Export classification review</li><li>Build CRM</li><li>Identify 100 prospects</li><li>Secure 20 meetings</li></ul></div>
+      <div class="phase"><div class="ph-num">DAYS 31–60 · PROVE</div><h4>First revenue</h4><ul><li>Deploy first prototype</li><li>Close first paid pilot</li><li>Build investor deck</li><li>Submit grants</li></ul></div>
+      <div class="phase"><div class="ph-num">DAYS 61–90 · SCALE</div><h4>Compound it</h4><ul><li>Execute pilot</li><li>Publish results</li><li>Secure second pilot</li><li>Launch SaaS alpha</li><li>Open channel discussions</li></ul></div>
+    </div>
+    <div class="panel rv" style="margin-top:20px">
+      <div class="panel-title">Success at Day 90</div>
+      <div class="hier-row">
+        <span class="hier-chip">2 working prototypes</span>
+        <span class="hier-chip">1–2 paid pilots</span>
+        <span class="hier-chip">100 qualified prospects</span>
+        <span class="hier-chip">20 meetings</span>
+        <span class="hier-chip">$10k–$25k revenue</span>
+        <span class="hier-chip">Investor deck complete</span>
+        <span class="hier-chip">Compliance cleared</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTOR UPDATE -->
+<section>
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag">Automated Weekly Investor Update · Max 1 Page</div>
+      <h2>One click. <strong>Ready to send.</strong></h2>
+      <p>Generated live from your Revenue Engine and pilot inputs above — the 8-section format every investor expects.</p>
+    </div>
+    <div class="rv">
+      <pre class="update-out" id="updateOut"></pre>
+      <button class="btn btn-primary copy-btn" id="copyBtn">Copy investor update</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-inner">
+      <div class="foot-tag">"Revenue is not luck. Revenue is a system."</div>
+      <div class="foot-meta">© <span id="year"></span> ClearGlass Inc. · Burlington, Ontario</div>
+    </div>
+    <p class="disclaimer">ARTEMIS Commercialization OS is a planning and operations framework. Revenue figures are operator-supplied projections, not forecasts or guarantees. Counter-UAS systems are subject to export controls (ITAR/EAR), spectrum regulation, and procurement law — no shipment, export, or RF transmission should occur without qualified legal and compliance review. This page is for internal planning and investor communication only.</p>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+var nf=new Intl.NumberFormat('en-US');
+function money(n){return '$'+nf.format(Math.round(n));}
+function moneyK(n){return n>=1000000?'$'+(n/1000000).toFixed(2)+'M':'$'+nf.format(Math.round(n));}
+
+// ---- Revenue Engine ----
+var TARGET=1000000;
+var ids=['pilots','pilotfee','conv','contract','integ','integval','saas','saasprice'];
+function $(id){return document.getElementById(id);}
+function engine(){
+  var pilots=+$('pilots').value, pilotfee=+$('pilotfee').value,
+      conv=+$('conv').value, contract=+$('contract').value,
+      integ=+$('integ').value, integval=+$('integval').value,
+      saas=+$('saas').value, saasprice=+$('saasprice').value;
+  // labels
+  $('v_pilots').textContent=pilots;
+  $('v_pilotfee').textContent=money(pilotfee);
+  $('v_conv').textContent=conv;
+  $('v_contract').textContent=money(contract);
+  $('v_integ').textContent=integ;
+  $('v_integval').textContent=money(integval);
+  $('v_saas').textContent=saas;
+  $('v_saasprice').textContent=money(saasprice);
+  var rPilot=pilots*pilotfee, rConv=conv*contract, rInteg=integ*integval, arr=saas*saasprice*12;
+  var total=rPilot+rConv+rInteg+arr;
+  var max=Math.max(total,TARGET,1);
+  function set(pfx,meta,val){$('m_'+pfx).textContent=meta;$('r_'+pfx).textContent=moneyK(val);$('b_'+pfx).style.width=(val/max*100)+'%';}
+  set('pilot',pilots+' × '+money(pilotfee),rPilot);
+  set('conv',conv+' × '+money(contract),rConv);
+  set('integ',integ+' × '+money(integval),rInteg);
+  set('saas',saas+' × '+money(saasprice)+'/mo × 12',arr);
+  $('total').textContent=moneyK(total);
+  $('arr').textContent=moneyK(arr);
+  var gap=TARGET-total;
+  $('gap').textContent = gap<=0 ? '✓ Target cleared by '+moneyK(-gap) : 'Gap to $1M target: '+moneyK(gap);
+  buildUpdate(total,arr,saasprice*saas,pilots,conv,integ);
+}
+ids.forEach(function(id){$(id).addEventListener('input',engine);});
+
+// ---- Pilot Scorer ----
+var sids=['sbudget','sthreat','saccess','sprob'];
+function scorer(){
+  var sectorMult=+$('sector').value;
+  var b=+$('sbudget').value,t=+$('sthreat').value,a=+$('saccess').value,p=+$('sprob').value;
+  $('v_sbudget').textContent=b;$('v_sthreat').textContent=t;$('v_saccess').textContent=a;$('v_sprob').textContent=p;
+  var score=b*t*a*p; // 1..625
+  // weight slightly by sector tier
+  var weighted=Math.round(score*(sectorMult/5*0.4+0.8));
+  $('pscore').textContent=weighted;
+  var el=$('pverdict');
+  if(weighted>=240){el.className='score-verdict v-go';el.textContent='PURSUE — TIER PRIORITY';}
+  else if(weighted>=120){el.className='score-verdict v-maybe';el.textContent='QUALIFY FURTHER';}
+  else{el.className='score-verdict v-no';el.textContent='DEPRIORITIZE';}
+}
+sids.forEach(function(id){$(id).addEventListener('input',scorer);});
+$('sector').addEventListener('change',scorer);
+
+// ---- KPI dashboard ----
+var kpis=[
+  ['Revenue','$0','run from engine'],['Cash runway','9 mo','target ≥ 12'],
+  ['MRR','$32k','SaaS, weekly'],['Pilots','5','active + closed'],
+  ['Pilot conversion','40%','target ≥ 30%'],['Gross margin','62%','target ≥ 70%'],
+  ['CAC','$4.2k','per logo'],['LTV','$38k','LTV:CAC 9:1'],
+  ['Backlog','$250k','scale trigger'],['Mfg capacity','40/mo','units'],
+  ['Detection accuracy','97.4%','EO/IR'],['False-positive rate','1.8%','target < 2%'],
+  ['Compliance','Cleared','ECCN/ITAR'],['Open risks','2','score > 15: 0']
+];
+var kg=$('kpiGrid');
+kpis.forEach(function(k){var d=document.createElement('div');d.className='kpi';d.innerHTML='<div class="lab">'+k[0]+'</div><div class="num">'+k[1]+'</div><div class="sub">'+k[2]+'</div>';kg.appendChild(d);});
+
+// ---- Risk register ----
+var risks=[
+  ['Regulatory','Export classification (ECCN/ITAR) delay','Compliance',4,5],
+  ['Supply Chain','EO/IR sensor lead times','Manufacturing',3,4],
+  ['Technical','False-positive rate above 2%','AI / ISP',2,4],
+  ['Financial','Runway under 6 months','Finance',2,5],
+  ['Competitive','Incumbent undercuts pilot pricing','Intelligence',3,3],
+  ['Operational','Pilot site access denied','Pilot Ops',3,3]
+];
+var rb=$('riskBody');
+risks.forEach(function(r){
+  var s=r[3]*r[4];var cls=s>15?'s-high':(s>=9?'s-med':'s-low');
+  var tr=document.createElement('tr');
+  tr.innerHTML='<td style="color:var(--text)">'+r[0]+'</td><td>'+r[1]+'</td><td class="mono" style="font-size:12px">'+r[2]+'</td><td class="mono">'+r[3]+'</td><td class="mono">'+r[4]+'</td><td><span class="score-pill '+cls+'">'+s+(s>15?' ⚑':'')+'</span></td>';
+  rb.appendChild(tr);
+});
+
+// ---- Investor update ----
+function buildUpdate(total,arr,mrr,pilots,conv,integ){
+  var d=new Date();var wk=d.toISOString().slice(0,10);
+  var txt=
+'ARTEMIS COMMERCIALIZATION OS — WEEKLY INVESTOR UPDATE\n'+
+'Week of '+wk+'  ·  ClearGlass Inc. · Counter-UAS EO/IR\n'+
+'────────────────────────────────────────────\n\n'+
+'1. REVENUE\n   Projected annual run-rate: '+moneyK(total)+' (target $1.00M)\n   Recurring (ARR): '+moneyK(arr)+'  ·  MRR: '+money(mrr)+'\n\n'+
+'2. SALES PIPELINE\n   Target: 100 qualified prospects / quarter across PEOs, DIU, primes, NATO.\n   Stages: Prospect → Qualified → Meeting → Demo → Pilot → Proposal → Contract.\n\n'+
+'3. PILOTS\n   Paid pilots in plan: '+pilots+'  ·  Conversions modeled: '+conv+'\n   Minimum bar: paid ≥ $5k OR strategic data value > 80.\n\n'+
+'4. PRODUCT PROGRESS\n   EO/IR detection MVP on track; accuracy 97.4%, false-positive 1.8%.\n   Engineering gated strictly to pilot / customer requirements.\n\n'+
+'5. COMPLIANCE\n   ECCN/ITAR review in progress; no shipment until gates green.\n   Spectrum + RF capability under Compliance Agent control.\n\n'+
+'6. CASH POSITION\n   Runway tracked weekly. Non-dilutive first: grants, SBIR, defense innovation.\n   Funding target: $250k–$1M non-dilutive within 12 months.\n\n'+
+'7. RISKS\n   Top: export-classification delay (score 20 ⚑ — human review).\n   All risks scoring >15 escalated to immediate review.\n\n'+
+'8. REQUESTS / INTRODUCTIONS NEEDED\n   Intros to: DIU / PEO program officers, critical-infrastructure security leads,\n   and integrator channel partners ('+integ+' deals modeled).\n────────────────────────────────────────────\n'+
+'Decision hierarchy: Revenue → Pilot → Compliance → Engineering → Optimization.';
+  $('updateOut').textContent=txt;
+}
+$('copyBtn').addEventListener('click',function(){
+  navigator.clipboard.writeText($('updateOut').textContent).then(function(){
+    var b=$('copyBtn');var o=b.textContent;b.textContent='✓ Copied';setTimeout(function(){b.textContent=o;},1800);
+  });
+});
+
+// init
+engine();scorer();
+
+// reveal on scroll
+var rvObs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(function(el){rvObs.observe(el);});
+</script>
+<script defer src="nav.js"></script>
+</body>
+</html>

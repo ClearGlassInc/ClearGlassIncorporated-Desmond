@@ -482,6 +482,8 @@ function engine(){
   $('arr').textContent=moneyK(arr);
   var gap=TARGET-total;
   $('gap').textContent = gap<=0 ? '✓ Target cleared by '+moneyK(-gap) : 'Gap to $1M target: '+moneyK(gap);
+  var revEl=$('kpi_rev'); if(revEl) revEl.textContent=moneyK(total);
+  var mrrEl=$('kpi_mrr'); if(mrrEl) mrrEl.textContent=money(saasprice*saas);
   buildUpdate(total,arr,saasprice*saas,pilots,conv,integ);
 }
 ids.forEach(function(id){$(id).addEventListener('input',engine);});
@@ -489,25 +491,24 @@ ids.forEach(function(id){$(id).addEventListener('input',engine);});
 // ---- Pilot Scorer ----
 var sids=['sbudget','sthreat','saccess','sprob'];
 function scorer(){
-  var sectorMult=+$('sector').value;
+  var tierVal=+$('sector').value; // 5=Tier1, 4=Tier2, 3=Tier3
   var b=+$('sbudget').value,t=+$('sthreat').value,a=+$('saccess').value,p=+$('sprob').value;
   $('v_sbudget').textContent=b;$('v_sthreat').textContent=t;$('v_saccess').textContent=a;$('v_sprob').textContent=p;
-  var score=b*t*a*p; // 1..625
-  // weight slightly by sector tier
-  var weighted=Math.round(score*(sectorMult/5*0.4+0.8));
-  $('pscore').textContent=weighted;
+  var score=b*t*a*p; // matches stated formula, range 1..625
+  $('pscore').textContent=score;
+  var tier=tierVal>=5?'Tier 1':(tierVal>=4?'Tier 2':'Tier 3');
   var el=$('pverdict');
-  if(weighted>=240){el.className='score-verdict v-go';el.textContent='PURSUE — TIER PRIORITY';}
-  else if(weighted>=120){el.className='score-verdict v-maybe';el.textContent='QUALIFY FURTHER';}
-  else{el.className='score-verdict v-no';el.textContent='DEPRIORITIZE';}
+  if(score>=250){el.className='score-verdict v-go';el.textContent='PURSUE · '+tier;}
+  else if(score>=125){el.className='score-verdict v-maybe';el.textContent='QUALIFY · '+tier;}
+  else{el.className='score-verdict v-no';el.textContent='DEPRIORITIZE · '+tier;}
 }
 sids.forEach(function(id){$(id).addEventListener('input',scorer);});
 $('sector').addEventListener('change',scorer);
 
 // ---- KPI dashboard ----
 var kpis=[
-  ['Revenue','$0','run from engine'],['Cash runway','9 mo','target ≥ 12'],
-  ['MRR','$32k','SaaS, weekly'],['Pilots','5','active + closed'],
+  ['Revenue','—','live from engine','kpi_rev'],['Cash runway','9 mo','target ≥ 12'],
+  ['MRR','—','live from engine','kpi_mrr'],['Pilots','5','active + closed'],
   ['Pilot conversion','40%','target ≥ 30%'],['Gross margin','62%','target ≥ 70%'],
   ['CAC','$4.2k','per logo'],['LTV','$38k','LTV:CAC 9:1'],
   ['Backlog','$250k','scale trigger'],['Mfg capacity','40/mo','units'],
@@ -515,7 +516,7 @@ var kpis=[
   ['Compliance','Cleared','ECCN/ITAR'],['Open risks','2','score > 15: 0']
 ];
 var kg=$('kpiGrid');
-kpis.forEach(function(k){var d=document.createElement('div');d.className='kpi';d.innerHTML='<div class="lab">'+k[0]+'</div><div class="num">'+k[1]+'</div><div class="sub">'+k[2]+'</div>';kg.appendChild(d);});
+kpis.forEach(function(k){var d=document.createElement('div');d.className='kpi';d.innerHTML='<div class="lab">'+k[0]+'</div><div class="num"'+(k[3]?' id="'+k[3]+'"':'')+'>'+k[1]+'</div><div class="sub">'+k[2]+'</div>';kg.appendChild(d);});
 
 // ---- Risk register ----
 var risks=[

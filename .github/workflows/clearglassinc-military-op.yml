@@ -166,6 +166,8 @@ jobs:
     name: Create Release Artifact
     runs-on: ubuntu-latest
     needs: production
+    permissions:
+      contents: write   # required to push the release tag
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.RELEASE == 'true' }}
 
     steps:

@@ -7,6 +7,10 @@ from pathlib import Path
 
 import pytest
 
+# The doctor calls sys.exit(2) at import if pyyaml is missing; skip cleanly
+# so the suite reports a clear "skip" instead of a fixture crash.
+pytest.importorskip("yaml")
+
 ROOT = Path(__file__).resolve().parents[1]
 DOCTOR_PATH = ROOT / "scripts" / "workflow_doctor.py"
 

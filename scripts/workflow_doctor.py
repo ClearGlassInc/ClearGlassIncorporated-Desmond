@@ -61,6 +61,13 @@ def load_yaml(path: Path) -> tuple[dict[str, Any] | None, str | None]:
 
 
 def dump_yaml(data: dict[str, Any]) -> str:
+    # PyYAML 1.1 parses bare `on:` as the boolean True; restore the literal
+    # key here so we never emit a `true:` block in place of the trigger map.
+    if True in data:
+        rebuilt: dict[Any, Any] = {}
+        for key, value in data.items():
+            rebuilt["on" if key is True else key] = value
+        data = rebuilt
     return yaml.safe_dump(data, sort_keys=False, width=120)
 
 

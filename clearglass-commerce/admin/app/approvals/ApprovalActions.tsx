@@ -3,21 +3,30 @@
 // Per-row decision controls for a pending approval. Optimistically disables
 // while the server action is in flight and surfaces control-plane errors inline
 // so a failed decision is never silently dropped.
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { approveAction, rejectAction } from "./actions";
 
 export function ApprovalActions({ id }: { id: number }) {
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
-  function run(decision: "approve" | "reject") {
+  // Server Actions are async, but React 18's startTransition requires a
+  // synchronous callback — so track in-flight state explicitly. try/finally
+  // guarantees the controls re-enable and a thrown decision surfaces an error
+  // inline rather than being silently dropped.
+  async function run(decision: "approve" | "reject") {
     setError(null);
-    startTransition(async () => {
+    setPending(true);
+    try {
       const fn = decision === "approve" ? approveAction : rejectAction;
       const res = await fn(id, note);
       if (!res.ok) setError(res.error ?? "decision failed");
-    });
+    } catch {
+      setError("decision failed — control plane unreachable");
+    } finally {
+      setPending(false);
+    }
   }
 
   return (

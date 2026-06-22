@@ -29,3 +29,36 @@ updates:
       interval: weekly
     open-pull-requests-limit: 3
     labels: ["dependencies", "infra", "automated"]
+
+  # npm — the commerce frontends were previously unmonitored (security alerts
+  # fired but no auto-update PRs), which let Next.js CVEs accumulate. Watch each
+  # Next.js app directory and group updates into one PR per app per week.
+  - package-ecosystem: npm
+    directory: "/clearglass-commerce/storefront"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "javascript", "automated"]
+    groups:
+      npm:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: "/clearglass-commerce/admin"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "javascript", "automated"]
+    groups:
+      npm:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: "/apps/autostore/cockpit"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "javascript", "automated"]
+    groups:
+      npm:
+        patterns: ["*"]

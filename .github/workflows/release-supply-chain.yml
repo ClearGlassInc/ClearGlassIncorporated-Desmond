@@ -34,6 +34,7 @@ permissions:
 jobs:
   build-sign-attest:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     permissions:
       contents: read
       id-token: write # OIDC for keyless signing + provenance

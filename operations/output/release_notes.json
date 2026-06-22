@@ -1,983 +1,1601 @@
 {
-  "run_utc": "2026-06-09T10:33:54.970444+00:00",
-  "from_tag": null,
+  "run_utc": "2026-06-21T10:28:22.273536+00:00",
+  "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 107,
+  "commit_count": 175,
   "sections": {
     "New Features": [
       {
-        "sha": "5cbfd1c",
+        "sha": "0b7bb71",
         "type": "feat",
-        "scope": "ci",
-        "subject": "optimize workflow_doctor.py \u2014 add timeout enforcement + expanded stable actions [P0 milestone]",
-        "author": "Desmond Otieno",
-        "date": "2026-06-08",
-        "breaking": false
-      },
-      {
-        "sha": "0e699a6",
-        "type": "feat",
-        "scope": "design",
-        "subject": "shared design-token system (Control Surface v3.3) (#385)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-06",
-        "breaking": false
-      },
-      {
-        "sha": "12f4631",
-        "type": "feat",
-        "scope": "ci",
-        "subject": "add Cert Bot TLS expiry monitor (script + workflow + tests)",
+        "scope": "products",
+        "subject": "add PostLoop content engine + Flowsint OSINT graph",
         "author": "Claude",
-        "date": "2026-06-05",
+        "date": "2026-06-21",
         "breaking": false
       },
       {
-        "sha": "d759fa2",
-        "type": "feat",
-        "scope": "nav",
-        "subject": "ClearGlass Control Surface v3.1 \u2014 command-palette-first nav (#382)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "0f87bf0",
-        "type": "feat",
-        "scope": "buttons",
-        "subject": "MACHINED GLASS button system + live Button Lab (#381)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "903ec71",
-        "type": "feat",
-        "scope": "ui",
-        "subject": "finish site-wide blue-violet recolor + advanced interaction behaviors (#379)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "ac2c95d",
-        "type": "feat",
-        "scope": "ui",
-        "subject": "deep-clean next-tier pages + advanced button/link interaction layer (#378)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "cd55882",
-        "type": "feat",
-        "scope": "theme",
-        "subject": "unify all pages on homepage blue-violet identity (#377)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "75eb9d9",
-        "type": "feat",
-        "scope": "nav",
-        "subject": "site-wide hover menu for easy navigation across all pages (#374)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "dca9cda",
-        "type": "feat",
-        "scope": "mesh",
-        "subject": "OSINT collector (24 sources) + entity/topic graph + orchestration dashboard (#373)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "bd6af99",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "org-scoped Agent Mesh \u2014 ClearGlass-only OSINT orchestration (#372)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "a7a2f58",
-        "type": "feat",
-        "scope": "autostore",
-        "subject": "risk scoring + read-only advisor + idempotency + metrics (#371)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "b21ecdc",
-        "type": "feat",
-        "scope": "aegis",
-        "subject": "legal-process register + transparency report + intake UI + shared audit (#370)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "6eb223a",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "AEGIS \u2014 lawful-access compliance & rights-protection agent (#369)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "e175e8a",
-        "type": "feat",
-        "scope": "bots",
-        "subject": "self-evolving wealth engine (revenue-first ladder + fleet evolution)",
-        "author": "Claude",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "ebe82b9",
-        "type": "feat",
-        "scope": "autostore",
-        "subject": "PostgresStore + migrations, Redis worker, role auth, write cockpit (#366)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "be2aac8",
-        "type": "feat",
-        "scope": "autostore",
-        "subject": "PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js) (#365)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "9d04576",
-        "type": "feat",
-        "scope": "autostore",
-        "subject": "PERCIVAL control-plane monorepo (Postgres + FastAPI + Next.js)",
-        "author": "Claude",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "b784662",
-        "type": "feat",
-        "scope": "percival\u00b7pfas",
-        "subject": "evidence-pack exporter + text-PDF profile + in-browser download (#364)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "1ab16f8",
-        "type": "feat",
-        "scope": "percival\u00b7pfas",
-        "subject": "lab CSV ingester + SENTINEL map layer (#362)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "91c0c25",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "purple-team detection-engineering engine + PFAS agent (#361)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "dc85d5e",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "purple-team detection-engineering engine + PFAS agent",
-        "author": "Claude",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "ce95436",
-        "type": "feat",
-        "scope": "home",
-        "subject": "live USGS/NWS LIVE OPS ribbon linking to SENTINEL (#359)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "2729bb6",
+        "sha": "df66b2f",
         "type": "feat",
         "scope": null,
-        "subject": "live USGS/NWS in PERCIVAL + live airspace (OpenSky) in SENTINEL (#358)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "9d3c537",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "live geospatial mode \u2014 real location + USGS/NWS feeds + camera (#357)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "e8f6d19",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "live geospatial mode \u2014 real location + USGS/NWS feeds + camera",
+        "subject": "site-wide analytics loader + outreach drafts (go-to-market)",
         "author": "Claude",
-        "date": "2026-06-04",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "ac00ffe",
+        "sha": "62a9668",
         "type": "feat",
-        "scope": "percival",
-        "subject": "link SENTINEL command center into the PERCIVAL HUD (#355)",
+        "scope": "commerce",
+        "subject": "validate Stripe checkout links + go-live runbook (#506)",
         "author": "Desmond Otieno",
-        "date": "2026-06-04",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "8a3b779",
+        "sha": "e88865f",
         "type": "feat",
-        "scope": "sentinel",
-        "subject": "privacy-preserving vision ops + visual command center (#354)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "4caf7dd",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "privacy-preserving vision ops + visual command center",
+        "scope": "store",
+        "subject": "ClearGlass Side Store \u2014 autonomous revenue agent SOUL spec",
         "author": "Claude",
-        "date": "2026-06-04",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "aec99cd",
+        "sha": "0a1796e",
         "type": "feat",
-        "scope": "sentinel",
-        "subject": "add Exploit-DB as approved defensive threat-intel source (#352)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "6cca8a4",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "add Exploit-DB as approved defensive threat-intel source",
+        "scope": "commerce",
+        "subject": "validate Stripe checkout links + go-live runbook",
         "author": "Claude",
-        "date": "2026-06-04",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "9be32d5",
+        "sha": "b8d49e1",
         "type": "feat",
-        "scope": "sentinel",
-        "subject": "charter v2.1 \u2014 geospatial + OSINT extension (#350)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "bf288b4",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "geospatial+OSINT charter + enforced hard rules (#349)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "5988604",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "privacy-first SENTINEL charter + enforced policy gate (#348)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "434aec1",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "red/black mission-ready HUD reskin (#344)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "14ca6d4",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "Phase-One Governance Shell + RBAC retrieval (#343)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "193a832",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "add Pinecone+Milvus adapters and recall harness",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "5c9a5e7",
-        "type": "feat",
-        "scope": "sentinel",
-        "subject": "Phase-One fail-closed Governance Shell + RBAC retrieval",
+        "scope": "smb",
+        "subject": "SMB Cyber Trust Kit \u2014 agent + interactive console + kit engine",
         "author": "Claude",
-        "date": "2026-06-04",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "cbe0b64",
+        "sha": "85d229c",
         "type": "feat",
-        "scope": null,
-        "subject": "wire PERCIVAL OS into site nav (#339)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-03",
-        "breaking": false
-      },
-      {
-        "sha": "488f186",
-        "type": "feat",
-        "scope": "percival",
-        "subject": "add PERCIVAL OS \u2014 Iron Man-class command center HUD + blueprint",
+        "scope": "commerce",
+        "subject": "add storefront checkout smoke test (SOUL.md guardrail)",
         "author": "Claude",
-        "date": "2026-06-02",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "332a866",
+        "sha": "7aaa944",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "premium glass upgrade for the site-wide Stealth Glass button",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "20ffe86",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "site-wide Stealth Glass toggle on every page",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "b507131",
+        "type": "feat",
+        "scope": "outreach",
+        "subject": "automated CASL-compliant draft generation (never sends)",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "f25dd1d",
+        "type": "feat",
+        "scope": "revenue",
+        "subject": "store conversion boost + outreach follow-ups + bot content",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "bd23741",
+        "type": "feat",
+        "scope": "seo",
+        "subject": "full search-visibility strategy + high-impact technical fixes",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "e7df308",
+        "type": "feat",
+        "scope": "store",
+        "subject": "add Interac e-Transfer payment option to every engagement",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "c23737a",
+        "type": "feat",
+        "scope": "store",
+        "subject": "add JSON-LD structured data for storefront offers",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "b867724",
+        "type": "feat",
+        "scope": "store",
+        "subject": "native on-site storefront with secure Stripe checkout",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "d215693",
+        "type": "feat",
+        "scope": "commerce",
+        "subject": "build storefront cart + interactive admin governance cockpit",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "2a2a07b",
         "type": "feat",
         "scope": "clearpulse",
-        "subject": "add architecture whitepaper + public reference page",
+        "subject": "add Horizon 2030 advanced capability layer",
         "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "fc62e51",
-        "type": "feat",
-        "scope": "loader",
-        "subject": "add cinematic command-interface loader and wire as session preloader",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "599ca3b",
-        "type": "feat",
-        "scope": "artemis-iv",
-        "subject": "add advanced tactical extensions",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "32e8417",
-        "type": "feat",
-        "scope": "nexus",
-        "subject": "live patch + advanced intel expansion (v12.1)",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "0c9204a",
-        "type": "feat",
-        "scope": "clearpulse",
-        "subject": "add architecture doc and demo intelligence console",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "af0ee22",
-        "type": "feat",
-        "scope": "platform",
-        "subject": "implement v2 platform engineering operating model",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "70f6657",
-        "type": "feat",
-        "scope": "ui",
-        "subject": "add cyber-intelligence command console interface",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "a41e83b",
-        "type": "feat",
-        "scope": null,
-        "subject": "advanced bot orchestration system with full GitHub automation",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "a1140bd",
-        "type": "feat",
-        "scope": "government",
-        "subject": "add federal showcase page + patch NEXUS + enhance index for gov sale",
-        "author": "Claude",
-        "date": "2026-05-31",
-        "breaking": false
-      },
-      {
-        "sha": "7115daa",
-        "type": "feat",
-        "scope": "bots",
-        "subject": "add config-driven priority matrix bot",
-        "author": "Claude",
-        "date": "2026-05-31",
+        "date": "2026-06-17",
         "breaking": false
       }
     ],
     "Bug Fixes": [
       {
-        "sha": "687898f",
+        "sha": "24e54ba",
+        "type": "fix",
+        "scope": "opal-koboi",
+        "subject": "clear ruff errors in FaceRecognition-Local.py",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "dd67f16",
+        "type": "fix",
+        "scope": "lint",
+        "subject": "remove unused Date() declarations in postloop & flowsint",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "4042d91",
+        "type": "fix",
+        "scope": "lint",
+        "subject": "clear pre-existing ruff errors in opal-koboi face-recognition",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "29087ca",
+        "type": "fix",
+        "scope": "smb",
+        "subject": "add shared logo badge to Cyber Trust Kit page",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "aae6434",
+        "type": "fix",
+        "scope": "audit",
+        "subject": "eliminate false-positive SEO/a11y warnings in site reliability audit",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "7ba8b96",
         "type": "fix",
         "scope": "ci",
-        "subject": "make needs_fix advisory (CI green, repair applies fixes) [patch + run]",
+        "subject": "stop Multi-Repo Audit nightly from hard-failing when CG_ORG_PAT is unset",
+        "author": "Claude",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "13ec862",
+        "type": "fix",
+        "scope": null,
+        "subject": "add CORS to control plane for storefront/admin (#494)",
         "author": "Desmond Otieno",
-        "date": "2026-06-08",
+        "date": "2026-06-19",
         "breaking": false
       },
       {
-        "sha": "309d776",
+        "sha": "6bd03c0",
         "type": "fix",
-        "scope": "ci",
-        "subject": "make timeout enforcement --fix only (unblock dry-run CI) [patch]",
+        "scope": "deploy",
+        "subject": "stop failing legacy Pages \"production\" deployments",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "e0732b2",
+        "type": "fix",
+        "scope": "lint",
+        "subject": "remove unused 'import sys' in scripts/repo_audit.py",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "91c4611",
+        "type": "fix",
+        "scope": "store",
+        "subject": "trim store meta/og description into ideal length (SEO 100)",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "6861d25",
+        "type": "fix",
+        "scope": "store",
+        "subject": "trim store meta description into 120-160 range (SEO 100)",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "3421aa5",
+        "type": "fix",
+        "scope": "seo",
+        "subject": "add missing meta to investors/offers/docs subdir pages (#477)",
         "author": "Desmond Otieno",
-        "date": "2026-06-08",
+        "date": "2026-06-17",
         "breaking": false
       },
       {
-        "sha": "be77431",
+        "sha": "6a46c9e",
         "type": "fix",
-        "scope": "pages",
-        "subject": "move permissions to deploy job for GitHub Pages [workflow-doctor]",
-        "author": "Desmond Otieno",
-        "date": "2026-06-08",
-        "breaking": false
-      },
-      {
-        "sha": "a8a66d7",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "pin actions/checkout to v6 in cert-bot.yml [workflow-doctor]",
-        "author": "Desmond Otieno",
-        "date": "2026-06-08",
-        "breaking": false
-      },
-      {
-        "sha": "fcece3d",
-        "type": "fix",
-        "scope": "live",
-        "subject": "keep crypto panels live after CoinCap v2 retirement (#376)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-05",
-        "breaking": false
-      },
-      {
-        "sha": "e895f24",
-        "type": "fix",
-        "scope": "sitemap",
-        "subject": "index remaining content pages; exempt non-indexable (#347)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "23fcd32",
-        "type": "fix",
-        "scope": "health-bot",
-        "subject": "treat sitemap drift as warning, not a health failure (#346)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "2eacb13",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "Health Monitor label crash + SENTINEL demo runner (#345)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
-        "breaking": false
-      },
-      {
-        "sha": "5ebf4bb",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "resolve pre-existing lint, workflow-doctor, and PR-triage failures",
+        "scope": "seo",
+        "subject": "add missing lang/viewport/description meta to subdir pages",
         "author": "Claude",
-        "date": "2026-06-02",
+        "date": "2026-06-17",
         "breaking": false
       },
       {
-        "sha": "98f33d6",
+        "sha": "1434a5d",
         "type": "fix",
-        "scope": "ci",
-        "subject": "resolve 4 pre-existing failures inherited from prior PRs",
+        "scope": "osint",
+        "subject": "complete burlington-osint -> Ontario-osint deck rename",
         "author": "Claude",
-        "date": "2026-06-02",
+        "date": "2026-06-17",
         "breaking": false
       },
       {
-        "sha": "0871f80",
+        "sha": "f6b8faa",
         "type": "fix",
-        "scope": "clearpulse",
-        "subject": "wrap triage rows on narrow viewports",
+        "scope": "seo",
+        "subject": "stop alt-injection from corrupting JS inside <script> blocks",
         "author": "Claude",
-        "date": "2026-06-02",
+        "date": "2026-06-17",
         "breaking": false
       },
       {
-        "sha": "6eed5f2",
+        "sha": "2835884",
         "type": "fix",
-        "scope": "platform",
-        "subject": "address Codex review on PR #324",
+        "scope": "seo",
+        "subject": "raise on-page SEO from 64 to 98 across all pages",
         "author": "Claude",
-        "date": "2026-06-01",
+        "date": "2026-06-17",
         "breaking": false
       },
       {
-        "sha": "85ba879",
+        "sha": "475646d",
         "type": "fix",
-        "scope": "workflows",
-        "subject": "pin actions/checkout to v5 in ip-protection-scan",
+        "scope": null,
+        "subject": "add glass.css to burlington-osint.html (only page missing site-wide design system)",
         "author": "Claude",
-        "date": "2026-06-01",
+        "date": "2026-06-17",
+        "breaking": false
+      }
+    ],
+    "Documentation": [
+      {
+        "sha": "83f49e3",
+        "type": "docs",
+        "scope": "gtm",
+        "subject": "go-to-market playbook + sitemap fix + hardening outreach",
+        "author": "Claude",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "9484a8f",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "pin checkout to v5 and correct git log flag in ip-protection-scan",
+        "sha": "a05c61a",
+        "type": "docs",
+        "scope": null,
+        "subject": "add SOUL.md autonomous revenue agent charter",
         "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "c03deda",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "add ip-protection-scan workflow with corrected YAML syntax",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "b2256b9",
-        "type": "fix",
-        "scope": "site",
-        "subject": "add SEO/accessibility meta to key pages and extend reliability audit",
-        "author": "Claude",
-        "date": "2026-05-31",
-        "breaking": false
-      },
-      {
-        "sha": "89ec20e",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "stop Dependency Review job from hard-failing on compare errors",
-        "author": "Claude",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "7ee8144",
-        "type": "fix",
-        "scope": "site",
-        "subject": "resolve 32 broken local references surfaced by site-audit CI job",
-        "author": "Claude",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "da20de5",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "pin actions/checkout to v5 and resolve pre-existing lint/test failures",
-        "author": "Claude",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "c5de32d",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "build automated GitHub workflow repair and execution system",
-        "author": "Claude",
-        "date": "2026-05-29",
+        "date": "2026-06-20",
         "breaking": false
       }
     ],
     "Tests": [
       {
-        "sha": "db363ee",
+        "sha": "56a92a0",
         "type": "test",
-        "scope": "sentinel",
-        "subject": "drop unused import (ruff clean)",
-        "author": "Desmond Otieno",
-        "date": "2026-06-04",
+        "scope": "site-health",
+        "subject": "use a single import style in logo-coverage test",
+        "author": "Claude",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "7406c02",
+        "type": "test",
+        "scope": "site-health",
+        "subject": "guarantee ClearGlass logo on every page",
+        "author": "Claude",
+        "date": "2026-06-19",
         "breaking": false
       }
     ],
     "CI/CD": [
       {
-        "sha": "85d898e",
+        "sha": "58260cf",
         "type": "ci",
-        "scope": "pages",
-        "subject": "consolidate on Actions deploy, modernize for Node 24",
+        "scope": "audit",
+        "subject": "nightly multi-repo audit workflow",
         "author": "Claude",
-        "date": "2026-06-03",
+        "date": "2026-06-19",
         "breaking": false
       },
       {
-        "sha": "a74a1f0",
+        "sha": "be962e6",
+        "type": "ci",
+        "scope": "pages",
+        "subject": "make Pages-source pin self-healing + document 403 fix",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "2b5109d",
         "type": "ci",
         "scope": null,
-        "subject": "pin action versions + make IP Risk Assessment advisory (#337)",
+        "subject": "add OSINT Deck Validator job (#461)",
         "author": "Desmond Otieno",
-        "date": "2026-06-03",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "60c0fbf",
+        "type": "ci",
+        "scope": null,
+        "subject": "add OSINT Deck Validator job (wire deck release gate into every build)",
+        "author": "Claude",
+        "date": "2026-06-16",
         "breaking": false
       }
     ],
     "Maintenance": [
       {
-        "sha": "05d7a8f",
+        "sha": "12af922",
+        "type": "chore",
+        "scope": null,
+        "subject": "AUTO-STORE-ENTERPRISE-WORKFLOW.YML",
+        "author": "Desmond Otieno",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "57caf9e",
         "type": "chore",
         "scope": "ci",
-        "subject": "trigger all workflows [pages + doctor] 2026-06-08",
+        "subject": "harden copilot workflow, document branch protection, drop binary",
+        "author": "Claude",
+        "date": "2026-06-21",
+        "breaking": false
+      },
+      {
+        "sha": "e7dcf85",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add GitHub Actions workflow for Copilot setup",
         "author": "Desmond Otieno",
-        "date": "2026-06-08",
+        "date": "2026-06-21",
         "breaking": false
       },
       {
-        "sha": "16a1516",
+        "sha": "4f8fddc",
         "type": "chore",
-        "scope": "deps",
-        "subject": "bump the actions group across 1 directory with 3 updates",
-        "author": "dependabot[bot]",
-        "date": "2026-06-08",
+        "scope": "autostore",
+        "subject": "gitignore cockpit build artifacts + pin npm deps",
+        "author": "Claude",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "3a49de8",
+        "sha": "1733d0d",
         "type": "chore",
         "scope": null,
-        "subject": "Update documentation structure: add docs/index.md as central hub linking AI TTS and future sections",
+        "subject": "CLEARGLASS SEC AI",
         "author": "Desmond Otieno",
-        "date": "2026-06-07",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "4b9e961",
+        "sha": "581edf5",
         "type": "chore",
         "scope": null,
-        "subject": "Add open-source TTS models guide for AI voice agents and custom cloning (Aria integration)",
+        "subject": "FACIAL RECOGNITION",
         "author": "Desmond Otieno",
-        "date": "2026-06-07",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "2d99d1d",
+        "sha": "8772034",
         "type": "chore",
         "scope": null,
-        "subject": "Add CPA / fractional CFO partner outreach automation bot",
+        "subject": "Add Web Design & Dev to Products menu/nav",
         "author": "Claude",
-        "date": "2026-06-06",
+        "date": "2026-06-19",
         "breaking": false
       },
       {
-        "sha": "4cebc6e",
+        "sha": "d93559c",
         "type": "chore",
         "scope": null,
-        "subject": "Add content collector bot to harvest and store all site content",
-        "author": "Claude",
-        "date": "2026-06-03",
-        "breaking": false
-      },
-      {
-        "sha": "c2ffdda",
-        "type": "chore",
-        "scope": null,
-        "subject": "green the deployment checklist (CI, bot tests, sitemap)",
-        "author": "Claude",
-        "date": "2026-06-03",
-        "breaking": false
-      },
-      {
-        "sha": "70db597",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add JARVIS OS reference implementation: HUD, agent config, MCP connectors",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "4785fd7",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add JARVIS OS system blueprint",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "77d170e",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add AI Operator Workspace reel with interactive JARVIS assistant",
-        "author": "Claude",
-        "date": "2026-06-02",
-        "breaking": false
-      },
-      {
-        "sha": "1b8534d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Bump the actions group with 13 updates",
-        "author": "dependabot[bot]",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "5dd0582",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update pytest-cov requirement from <7,>=5.0 to >=5.0,<8",
-        "author": "dependabot[bot]",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "3ac35ed",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix typo in project name in README",
+        "subject": "Fix Twitter description and update log line",
         "author": "Desmond Otieno",
-        "date": "2026-06-01",
+        "date": "2026-06-19",
         "breaking": false
       },
       {
-        "sha": "da8904e",
+        "sha": "ebc675a",
         "type": "chore",
         "scope": null,
-        "subject": "Add API security audit package (prompt + scanner + CI workflow)",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "e846856",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add defensive access-control (IDOR/auth) audit harness",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "ab6bf8b",
-        "type": "chore",
-        "scope": null,
-        "subject": "add ClearGlass-AutoSync.ps1 for safe GitHub Pages sync",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "e7352ad",
-        "type": "chore",
-        "scope": null,
-        "subject": "Fix 6 bugs in NEXUS dashboard (both v12-FINAL and nexus variants)",
-        "author": "Claude",
-        "date": "2026-06-01",
-        "breaking": false
-      },
-      {
-        "sha": "6447d33",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update index.html",
+        "subject": "Fix title formatting in aegis.html",
         "author": "Desmond Otieno",
-        "date": "2026-05-29",
+        "date": "2026-06-19",
         "breaking": false
       },
       {
-        "sha": "51fbe24",
+        "sha": "118d8f3",
         "type": "chore",
         "scope": null,
-        "subject": "Add ClearCounsel\u2122 corporate legal AI bot system",
+        "subject": "Update branding from ClearGlass to ClearGlassInc",
+        "author": "Desmond Otieno",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "c286852",
+        "type": "chore",
+        "scope": "outreach",
+        "subject": "make bot summary honest about address completeness",
         "author": "Claude",
-        "date": "2026-05-29",
+        "date": "2026-06-18",
         "breaking": false
       },
       {
-        "sha": "6db49b1",
+        "sha": "b2b6b9c",
         "type": "chore",
-        "scope": null,
-        "subject": "Remove version number from ClearGlass NEXUS links",
-        "author": "Desmond Otieno",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "50e3ba3",
-        "type": "chore",
-        "scope": null,
-        "subject": "Update ClearGlass NEXUS link text",
-        "author": "Desmond Otieno",
-        "date": "2026-05-29",
-        "breaking": false
-      },
-      {
-        "sha": "d16edf9",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add ClearGlass NEXUS v12 as fourth product and wire into site nav",
+        "scope": "outreach",
+        "subject": "set CASL footer to Burlington, Ontario, Canada",
         "author": "Claude",
-        "date": "2026-05-29",
+        "date": "2026-06-18",
         "breaking": false
       },
       {
-        "sha": "5567f5e",
+        "sha": "9110c10",
         "type": "chore",
         "scope": null,
-        "subject": "Delete logo.png",
-        "author": "Desmond Otieno",
-        "date": "2026-05-28",
+        "subject": "Standardize all contact and payment emails to desmondotieno@icloud.com",
+        "author": "Claude",
+        "date": "2026-06-18",
         "breaking": false
       },
       {
-        "sha": "ac5bdb6",
+        "sha": "2484b3b",
+        "type": "chore",
+        "scope": "store",
+        "subject": "route store + e-Transfer payments to desmondotieno@icloud.com",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "0420709",
         "type": "chore",
         "scope": null,
-        "subject": "Delete CLEARGLASS INTEL.jpeg",
+        "subject": "Ignore generated audit-reports/ output dir",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "e76bbb1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add multi-repo audit pack: discovery + workflow/dependency/bot scoring",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "a45ae44",
+        "type": "chore",
+        "scope": null,
+        "subject": "Logo badge full coverage: loader.html + Ontario-osint.html (#475)",
         "author": "Desmond Otieno",
-        "date": "2026-05-28",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "2253cd4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title from 'ClearGlass' to 'ClearGlassInc'",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "4aaeb08",
+        "type": "chore",
+        "scope": null,
+        "subject": "Change canonical link and update script title",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "ad4ed06",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and description for clarity",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "6a081de",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update PERCIVAL OS link in hover-menu.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "6ad0af2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and links in index.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "7780f24",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add retina WebP hero asset for crisp HiDPI rendering",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "30e58ce",
+        "type": "chore",
+        "scope": null,
+        "subject": "loader.html: fix 4 bugs \u2014 open redirect, double-loader, skip race, premature skip",
+        "author": "Claude",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "65d988d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Commerce funnel: storefront success/cancel pages + pricing CTA (#469)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "290c986",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlassInc Military-Op Release Pipeline (prompt + workflow) (#468)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "0908e94",
+        "type": "chore",
+        "scope": null,
+        "subject": "Cert Bot: treat platform-managed (*.github.io) certs as advisory (#466)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "892cf76",
+        "type": "chore",
+        "scope": null,
+        "subject": "Master Investigator briefing: Dashboard, Active Investigations, Network Map views (#464)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "b31813c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix broken links & orphan page (site reliability audit) (#463)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "15669d2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix broken links & orphan page (site reliability audit)",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "e8589c7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Ontario OSINT Deck to Systems Control Surface menu (#462)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "f547b97",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Ontario OSINT Deck to Systems Control Surface menu + label consistency",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "951c2ba",
+        "type": "chore",
+        "scope": null,
+        "subject": "Ontario OSINT deck: advanced features, top-corner badge, Military-Op PROMPT.md (#460)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "979dd3d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add advanced operator features to the OSINT deck",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "cddfab9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Ontario-wide OSINT deck + top-corner ClearGlass badge + Military-Op PROMPT.md",
+        "author": "Claude",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "319a67c",
+        "type": "chore",
+        "scope": null,
+        "subject": "OSINT deck: control-surface, homepage theme, logo + release-prompt consolidation (#458)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "cd733c8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove duplicate osint-deck-release.yml and RELEASE_PROMPT.md (merge reintroduced them)",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "7957d20",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ArcGIS satellite map link to all platforms (site-wide nav + control surface)",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "5fbd3a6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Consolidate release prompt into PROMPT.md; rename workflow to burlington-release.yml",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "c1aad94",
+        "type": "chore",
+        "scope": null,
+        "subject": "OSINT deck: list on control surface, match homepage theme, add logo",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "c9ef998",
+        "type": "chore",
+        "scope": null,
+        "subject": "OSINT deck release gate: master prompt, validator, least-privilege workflow (#457)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "5e19c27",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add OSINT deck release gate: master prompt, validator, workflow",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "fa6d311",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add PROMPT.md \u2014 autonomous repo-maintenance agent master prompt (#456)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "72d5a99",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add PROMPT.md \u2014 autonomous repo-maintenance agent master prompt",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "cc03499",
+        "type": "chore",
+        "scope": null,
+        "subject": "Burlington OSINT deck: offline/global availability + satellite link (#455)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "4a202ea",
+        "type": "chore",
+        "scope": null,
+        "subject": "Burlington OSINT deck: offline/global availability + satellite link",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "f2c68ec",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish Burlington OSINT deck: make indexable + add to sitemap (#454)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "2be97fa",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish Burlington OSINT deck: make indexable + add to sitemap",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "e73992e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Burlington OSINT control deck (live status, tasks, intel feed)",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "856869f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Apply suggested fix to marketing/output/sales_guardian_artemis/latest.md from Copilot Autofix",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "77f6e87",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update title and meta descriptions for clarity",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "55de8f8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix title formatting in bluedesk.html",
+        "author": "Desmond Otieno",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "d58b526",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix IP Protection Bot issue creation: valid body input + label list",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "49fb855",
+        "type": "chore",
+        "scope": null,
+        "subject": "index.html: route first visit through /loader.html via sessionStorage",
+        "author": "Claude",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "76ffe4b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Stripe payments + commerce CD/deploy (#449)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "9a92126",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Autonomous E-Commerce Operator (governed commerce engine)",
+        "author": "Claude",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "09077a6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add monetization: open-core plans, managed Cloud, done-for-you setup",
+        "author": "Claude",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "bfda27b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove unused variable h in center()",
+        "author": "Claude",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "8bed7de",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add CONDUIT to schema.json hasPart for SEO",
+        "author": "Claude",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "96088de",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add CONDUIT \u2014 self-hosted workflow automation platform page",
+        "author": "Claude",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "9940435",
+        "type": "chore",
+        "scope": null,
+        "subject": "Apply white glass design system site-wide (#445)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "7e84943",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add corner logo badge to every page except homepage (#444)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "70e84cf",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add air-control.html to sitemap",
+        "author": "Claude",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "665bf0b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ZEPHYR air systems control surface \u2014 light glassy futuristic UI",
+        "author": "Claude",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "3781a3f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add cinematic ClearGlass command interface loader (boot screen)",
+        "author": "Claude",
+        "date": "2026-05-14",
+        "breaking": false
+      },
+      {
+        "sha": "6dffe42",
+        "type": "chore",
+        "scope": null,
+        "subject": "Artemis IV: wire 8 real open-source live intelligence feeds",
+        "author": "Claude",
+        "date": "2026-05-12",
         "breaking": false
       }
     ],
     "Automation": [
       {
-        "sha": "0f54742",
+        "sha": "1c39b36",
         "type": "bot",
         "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-08 11:57 UTC [skip ci]",
+        "subject": "refresh control-surface data feeds [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-06-08",
+        "date": "2026-06-21",
         "breaking": false
       },
       {
-        "sha": "6277431",
+        "sha": "46db447",
         "type": "bot",
         "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-07 09:59 UTC [skip ci]",
+        "subject": "refresh control-surface data feeds [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-06-07",
+        "date": "2026-06-21",
         "breaking": false
       },
       {
-        "sha": "6e77f2c",
+        "sha": "a29026a",
         "type": "bot",
         "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-06 09:24 UTC [skip ci]",
+        "subject": "refresh control-surface data feeds [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-06-06",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "27a8de2",
+        "sha": "77b3bd0",
         "type": "bot",
         "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-05 10:45 UTC [skip ci]",
+        "subject": "refresh control-surface data feeds [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-06-05",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "5deec71",
+        "sha": "20f13aa",
         "type": "bot",
         "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-04 19:41 UTC [skip ci]",
+        "subject": "refresh control-surface data feeds [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-06-04",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "eb007c4",
+        "sha": "1c0dd9f",
         "type": "bot",
         "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-04 10:38 UTC [skip ci]",
+        "subject": "refresh control-surface data feeds [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-06-04",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "9ddea47",
+        "sha": "b857508",
         "type": "bot",
         "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-03 11:55 UTC [skip ci]",
+        "subject": "refresh control-surface data feeds [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-06-03",
+        "date": "2026-06-20",
         "breaking": false
       },
       {
-        "sha": "dbaa841",
+        "sha": "3652eb5",
         "type": "bot",
         "scope": null,
-        "subject": "update generated outputs \u2014 2026-06-02 11:16 UTC [skip ci]",
+        "subject": "refresh control-surface data feeds [skip ci]",
         "author": "github-actions[bot]",
-        "date": "2026-06-02",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "2142eb4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "b5c1695",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-20 10:08 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "750b828",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "57c6c32",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-20",
+        "breaking": false
+      },
+      {
+        "sha": "d606d46",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "ed4c380",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "73be572",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "a733124",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "eae9bbb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "abc9505",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-19 11:21 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "ca0da4b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "d0c536c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-19 07:03 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "5facc63",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "eaba2b9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-19",
+        "breaking": false
+      },
+      {
+        "sha": "ff7d09e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "b9c98d4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "0b6a47d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "12d9cc0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "eebad82",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-18 11:08 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "78e33c5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "ed37393",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-18",
+        "breaking": false
+      },
+      {
+        "sha": "3a823ef",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "f34300e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "1732705",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "07c0822",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "d04a913",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-17 18:09 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "ba67bd6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "4c22c96",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "a38dc47",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-17 11:46 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "31897e7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "8450905",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "84190d8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-17",
+        "breaking": false
+      },
+      {
+        "sha": "c83e629",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "701bfd5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "17c0f67",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "ea87e35",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-16 12:11 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "55af68f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "e71889b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "ca36b0b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "41fbc66",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-16",
+        "breaking": false
+      },
+      {
+        "sha": "5c2fd19",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "6169e65",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "6bb3a13",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "19ea762",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-15 13:12 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "5c63f71",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "27d613c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-15 09:43 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "2d75e52",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "d8b0760",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-15",
+        "breaking": false
+      },
+      {
+        "sha": "aa9117b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "35aca08",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "5438309",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "85a9652",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "f2b0cfb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "0e7142d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-14",
+        "breaking": false
+      },
+      {
+        "sha": "5ba5c99",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-14 10:23 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-14",
+        "breaking": false
+      }
+    ],
+    "Security": [
+      {
+        "sha": "a0517df",
+        "type": "security",
+        "scope": null,
+        "subject": "harden untrusted-XML parsing and add URL scheme allowlist",
+        "author": "Claude",
+        "date": "2026-06-19",
         "breaking": false
       }
     ],
     "Style": [
       {
-        "sha": "4821656",
+        "sha": "d4e5147",
         "type": "style",
-        "scope": "nav",
-        "subject": "recolor hover menu to homepage blue-violet theme (#375)",
+        "scope": "outreach",
+        "subject": "make draft banner string concatenation explicit",
+        "author": "Claude",
+        "date": "2026-06-18",
+        "breaking": false
+      }
+    ],
+    "Other": [
+      {
+        "sha": "75b2465",
+        "type": "commerce",
+        "scope": null,
+        "subject": "wire a working storefront checkout (revenue path) (#467)",
         "author": "Desmond Otieno",
-        "date": "2026-06-05",
+        "date": "2026-06-16",
         "breaking": false
       },
       {
-        "sha": "44ed956",
-        "type": "style",
-        "scope": "nav",
-        "subject": "recolor hover menu to homepage blue-violet theme",
+        "sha": "8024581",
+        "type": "deck",
+        "scope": null,
+        "subject": "Master Investigator briefing \u2014 dashboard, active investigations, network map",
         "author": "Claude",
-        "date": "2026-06-05",
+        "date": "2026-06-16",
         "breaking": false
       }
     ]

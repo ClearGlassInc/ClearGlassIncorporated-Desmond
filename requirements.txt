@@ -1,6 +1,7 @@
 # Test tooling
-pytest>=7.4,<10
-pytest-cov>=5.0,<8
+pytest==9.0.3
+pytest-cov==7.1.0
 
 # Type stubs used during static analysis (optional, no runtime impact)
 # Add runtime dependencies here as the bot layer grows
+jsonschema>=4.21,<5  # control-surface feed contract validation

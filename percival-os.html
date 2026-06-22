@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>PERCIVAL OS · Mission-Ready Command Center — ClearGlass Inc.</title>
-<meta name="description" content="PERCIVAL — an Iron Man / JARVIS-class always-on intelligent command center. Holographic brain hub, agent swarm, live KPIs, threat monitor, and a voice + text command console. Built in pure HTML, CSS & JS."/>
+<meta name="description" content="PERCIVAL — an Iron Man / JARVIS-class always-on intelligent command center. Holographic brain hub, agent swarm, live KPIs, threat monitor, and a voice + text…"/>
 <link rel="canonical" href="https://clearglassinc.github.io/percival-os.html"/>
 <meta property="og:title" content="PERCIVAL OS · Mission-Ready Command Center — ClearGlass Inc."/>
 <meta property="og:description" content="An Iron Man-class brain command center: holographic dashboards, agent swarm, voice console, and live telemetry."/>
@@ -238,8 +238,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
   <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="ui.css">
   <link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
+  <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">PERCIVAL OS · Mission-Ready Command Center — ClearGlass Inc.</h1>
 
 <!-- ============ BOOT ============ -->
 <div id="boot">
@@ -273,9 +277,11 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
       <button class="on" data-mode="tactical">Tactical</button>
       <button data-mode="technical">Technical</button>
     </div>
+    <a class="launch" href="artemis-percival.html" title="Open AVALON — ARTEMIS fused into PERCIVAL" style="color:#bcd4ff;border-color:rgba(124,150,255,.6);background:rgba(124,150,255,.14)">⬣ AVALON FUSION</a>
     <a class="launch" href="sentinel.html" title="Open SENTINEL geospatial + OSINT command center">◉ SENTINEL CC</a>
     <a class="launch" href="aegis.html" title="Open AEGIS legal-process shield" style="color:#cdd9ff;border-color:rgba(96,165,250,.4);background:rgba(96,165,250,.08)">⚖ AEGIS</a>
     <a class="launch" href="agentmesh.html" title="Open the OSINT Agent Mesh orchestration dashboard" style="color:#b9c0ff;border-color:rgba(155,123,255,.4);background:rgba(155,123,255,.08)">⌗ MESH</a>
+    <a class="launch" href="percival-build.html" title="Open PERCIVAL BUILD — the orbital spatial workspace" style="color:#cdd9ff;border-color:rgba(124,150,255,.45);background:rgba(124,150,255,.10)">⊞ BUILD</a>
     <div class="status-pill"><span class="dot"></span>MISSION READY · ARMED</div>
     <div class="clock"><div class="t" id="clk">--:--:--</div><div class="d" id="cdate">—</div></div>
   </div>
@@ -362,7 +368,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;
 "use strict";
 /* ============================================================
    PERCIVAL OS — reference command-center HUD (front-end only)
-   All "intelligence" here is a deterministic simulation that
+   All "intelligence" here is a deterministic ai that
    demonstrates the UX described in PERCIVAL_OS_BLUEPRINT.md.
    ============================================================ */
 
@@ -631,19 +637,26 @@ async function handle(raw){
     const d=jarvisNode();d.innerHTML=`<div class="who">PERCIVAL</div><div class="body" style="font-family:var(--mono);font-size:11.5px;line-height:1.6"># scheduled · weekdays 07:00<br>brief = percival.compose_briefing(sources=["inbox","calendar","crm"])<br>percival.deliver(brief, channel="push", approval=<b>"auto"</b>)</div>`;scrollFeed();
     return approvalCard('Activate this scheduled workflow?','Runs weekdays 07:00. Safe + reversible. You can pause or roll back anytime.',()=>jarvisSay('Workflow active. First run tomorrow 07:00. Logged to audit trail.'));
   }
+  if(/\bbuild\b|spatial|workspace|orbital desktop|open build|launch build/.test(t)){
+    focusSub('orchestr');
+    await CGSay(`Opening <b>PERCIVAL BUILD</b> — the orbital spatial workspace. Floating widgets (clock, spectrum, telemetry, mixer) over a live space scene, with an app dock and command bar.`);
+    addEvent('ok','PERCIVAL BUILD spatial workspace launched','EXECUTION');
+    setTimeout(()=>{window.location.href='percival-build.html';},900);
+    return;
+  }
   if(/who are you|what are you|capab|help|what can you/.test(t)){
     return jarvisSay(`I am <b>PERCIVAL</b> — your always-on command center. I run a swarm of specialized agents across <b>command, orchestration, knowledge, security, and automation</b>. Try: <i>brief me</i>, <i>triage my inbox</i>, <i>any threats?</i>, <i>research this entity</i>, or <i>build an automation</i>. I show my plan, cite sources with confidence, and never take sensitive actions without your approval.`);
   }
   if(/kpi|revenue|metric|dashboard|number|status/.test(t)){
     focusSub('command');
-    return jarvisSay(`<b>Live status.</b> Revenue MTD <b>${kpis[0].fmt(kpis[0].v)}</b> (▲12.4%) · Tasks cleared <b>${kpis[1].v|0}</b> · Uptime <b>99.98%</b> · Threats blocked <b>${threat.blocked.toLocaleString()}</b>. All subsystems nominal; security watching one contained anomaly.`,{conf:{src:5,lvl:'HIGH',ms:60}});
+    return CGSay(`<b>Live status.</b> Revenue MTD <b>${kpis[0].fmt(kpis[0].v)}</b> (▲12.4%) · Tasks cleared <b>${kpis[1].v|0}</b> · Uptime <b>99.98%</b> · Threats blocked <b>${threat.blocked.toLocaleString()}</b>. All subsystems nominal; security watching one contained anomaly.`,{conf:{src:5,lvl:'HIGH',ms:60}});
   }
   if(/memory|remember|forget|preference/.test(t)){
     focusSub('memory');
-    return jarvisSay(`Long-term memory holds your <b>preferences, projects, contacts, goals, and recurring workflows</b> — separate from session memory. You can view, edit, export, or delete any record; a "forget" cascades to the vector index. Provenance and timestamps are attached to every fact.`);
+    return CGSay(`Long-term memory holds your <b>preferences, projects, contacts, goals, and recurring workflows</b> — separate from session memory. You can view, edit, export, or delete any record; a "forget" cascades to the vector index. Provenance and timestamps are attached to every fact.`);
   }
   // fallback
-  return jarvisSay(`Acknowledged. In a live deployment I'd route "<i>${esc(q)}</i>" to the right agent, decompose it into steps, and report back with sources and confidence. For this demo, try: <i>brief me</i> · <i>triage inbox</i> · <i>any threats?</i> · <i>research entity</i> · <i>build automation</i>.`);
+  return CGSay(`Acknowledged. In a live deployment I'd route "<i>${esc(q)}</i>" to the right agent, decompose it into steps, and report back with sources and confidence. For this demo, try: <i>brief me</i> · <i>triage inbox</i> · <i>any threats?</i> · <i>research entity</i> · <i>build automation</i>.`);
 }
 
 /* ---------- focus subsystem ---------- */
@@ -662,7 +675,7 @@ const cmd=document.getElementById('cmd');
 function submit(){const v=cmd.value;cmd.value='';handle(v);}
 document.getElementById('send').onclick=submit;
 cmd.addEventListener('keydown',e=>{if(e.key==='Enter')submit();});
-const quick=['Brief me','Triage my inbox','Any threats?','Research an entity','Build an automation','Show KPIs'];
+const quick=['Brief me','Triage my inbox','Any threats?','Open Build','Build an automation','Show KPIs'];
 document.getElementById('chips').innerHTML=quick.map(q=>`<button class="qchip">${q}</button>`).join('');
 document.querySelectorAll('.qchip').forEach(c=>c.onclick=()=>handle(c.textContent));
 
@@ -675,7 +688,7 @@ if(SR){rec=new SR();rec.lang='en-US';rec.interimResults=false;
   rec.onend=()=>{listening=false;micBtn.classList.remove('live');};
 }
 micBtn.onclick=()=>{
-  if(!rec){jarvisSay('Voice input needs a browser that supports the Web Speech API (Chrome/Edge). Text command works perfectly here.');return;}
+  if(!rec){CGSay('Voice input needs a browser that supports the Web Speech API (Chrome/Edge). Text command works perfectly here.');return;}
   if(listening){rec.stop();return;}
   try{rec.start();listening=true;micBtn.classList.add('live');}catch(_){}
 };
@@ -698,5 +711,7 @@ function startLife(){
 <script defer src="control-surface.js"></script>
   <script defer src="ui.js"></script>
   <script defer src="platform.js"></script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>

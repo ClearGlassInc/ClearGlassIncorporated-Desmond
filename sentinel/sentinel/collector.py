@@ -16,6 +16,15 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from typing import Optional, Protocol
 
+# Feeds are untrusted external XML, so prefer defusedxml (blocks entity-expansion
+# "billion laughs" / external-entity attacks). It is an optional hardening dep so
+# the pure-stdlib trust loop still runs without an install; stdlib ElementTree has
+# no external-entity resolver, so the fallback is safe against XXE file reads.
+try:
+    from defusedxml.ElementTree import fromstring as _xml_fromstring
+except ImportError:  # pragma: no cover - exercised only when defusedxml is absent
+    from xml.etree.ElementTree import fromstring as _xml_fromstring  # nosec B314
+
 
 @dataclass(frozen=True)
 class OSINTSource:
@@ -94,8 +103,10 @@ def parse_feed(xml_text: str, *, source_name: str, entity: str) -> list[Signal]:
     """Parse RSS 2.0 or Atom into Signals. Confidence is a simple relevance
     heuristic: higher when the entity term appears in the title."""
     try:
-        root = ET.fromstring(xml_text)
-    except ET.ParseError as exc:
+        root = _xml_fromstring(xml_text)  # nosec B314 - defusedxml when available; stdlib fallback has no external-entity resolver
+    except (ET.ParseError, ValueError) as exc:
+        # ValueError covers defusedxml's EntitiesForbidden / DTDForbidden, so a
+        # malicious feed fails closed as a CollectorError rather than crashing.
         raise CollectorError(f"feed is not valid XML: {exc}") from exc
 
     ns = {"atom": "http://www.w3.org/2005/Atom"}

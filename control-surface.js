@@ -1,4 +1,4 @@
-/* ClearGlass · Control Surface v3.1
+/* ClearGlass · Control Surface 
    ────────────────────────────────────────────────────────────────────────────
    One integrated operating layer for the portfolio: a compact top cluster
    (status + command pill + menu), a command-palette-first interaction model
@@ -18,17 +18,21 @@
   window.__cgNavLoaded = true;            // supersede the legacy hover menu (nav.js)
 
   var REPO = "ClearGlassInc/ClearGlassInc.github.io";
-  var EMAIL = "info@clearglassinc.com";
+  var EMAIL = "desmondotieno@icloud.com";
 
   // ── destinations (grouped) ──────────────────────────────────────────────
   var GROUPS = [
     ["Command", [
+      ["Systems Control Surface", "systems.html", "▣"],
+      ["AVALON · ARTEMIS ⊕ PERCIVAL", "artemis-percival.html", "⬣"],
       ["PERCIVAL OS", "percival-os.html", "◐"],
       ["SENTINEL · Live", "sentinel.html", "◉"],
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
       ["Agent Mesh", "agentmesh.html", "⌗"],
+      ["BLUEDESK · CISO Console", "bluedesk.html", "🛡"],
       ["AI Operator", "ai-operator.html", "🜂"],
-      ["Command Console", "command-console.html", "▤"]
+      ["Command Console", "command-console.html", "▤"],
+      ["Event Control Surface", "saas-platform.html", "◆"]
     ]],
     ["Platforms", [
       ["Artemis IV Core", "artemis-iv.html", "🧭"],
@@ -36,12 +40,14 @@
       ["Guardian", "guardian.html", "🌐"],
       ["ClearGlass NEXUS", "clearglass-nexus.html", "🛡"],
       ["Government", "government.html", "🏛"],
-      ["ClearPulse", "clearpulse.html", "📡"]
+      ["ClearPulse", "clearpulse.html", "📡"],
+      ["Satellite Map", "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13", "🛰"]
     ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],
       ["Interface", "intelligence-interface.html", "🖥"],
+      ["Ontario OSINT Deck", "Ontario-osint.html", "🛰"],
       ["Revenue Engine", "revenue-engine.html", "💹"]
     ]],
     ["Legal & Finance", [
@@ -51,6 +57,7 @@
     ]],
     ["Company", [
       ["Home", "index.html", "⌂"],
+      ["Pricing & Engagements", "pricing.html", "◎"],
       ["Web Design & Dev", "web-design.html", "◳"],
       ["Button Lab", "button-lab.html", "◫"]
     ]]
@@ -58,10 +65,13 @@
 
   // ── actions (verbs, not just destinations) ──────────────────────────────
   var ACTIONS = [
+    { label: "Open Systems Control Surface", sub: "Operations console", icon: "▣", href: "systems.html" },
+    { label: "Pricing & engagements", sub: "Book a fixed-fee engagement", icon: "◎", href: "pricing.html" },
     { label: "Website design & development", sub: "Engagement", icon: "◳", href: "web-design.html" },
     { label: "Open latest project", sub: "Artemis VI", icon: "🛰", href: "artemis.html" },
     { label: "Deployment status", sub: "GitHub Actions", icon: "◇", act: "status" },
     { label: "Security research", sub: "SENTINEL", icon: "◉", href: "sentinel.html" },
+    { label: "BLUEDESK · CISO risk console", sub: "Blue team", icon: "🛡", href: "bluedesk.html" },
     { label: "Contact", sub: EMAIL, icon: "✉", act: "contact" },
     { label: "Copy contact email", sub: EMAIL, icon: "⧉", act: "copyEmail" },
     { label: "View source on GitHub", sub: REPO, icon: "⌥", href: "https://github.com/" + REPO, ext: true }
@@ -79,6 +89,7 @@
 
   var CORE = [
     ["Home", "index.html", "⌂"],
+      ["Pricing & Engagements", "pricing.html", "◎"],
     ["PERCIVAL", "percival-os.html", "◐"],
     ["SENTINEL", "sentinel.html", "◉"],
     ["Intel", "intelligence.html", "🧠"]
@@ -168,7 +179,7 @@
     "transition:transform .3s cubic-bezier(.16,1,.3,1)}" +
   ".cgcs-ov.open .cgcs-dr{transform:translateX(0)}" +
   ".cgcs-dh{display:flex;align-items:center;gap:10px;padding:2px 4px 12px;border-bottom:1px solid rgba(124,150,255,.16);margin-bottom:6px}" +
-  ".cgcs-mk{width:26px;height:26px;border-radius:8px;background:var(--cr);box-shadow:0 0 14px rgba(124,150,255,.55)}" +
+  ".cgcs-mk{width:28px;height:28px;border-radius:8px;box-shadow:0 0 14px rgba(124,150,255,.55);object-fit:cover}" +
   ".cgcs-dh b{background:var(--cr);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}" +
   ".cgcs-dx{margin-left:auto;background:none;border:0;color:#aab1d8;font-size:18px;cursor:pointer}" +
   ".cgcs-dr a{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:9px;color:#dbe3f7;text-decoration:none;font-size:13px;border:1px solid transparent}" +
@@ -231,7 +242,7 @@
     var dscrim = h("div", "cgcs-scrim");
     var dr = h("div", "cgcs-dr"); dr.setAttribute("role", "dialog"); dr.setAttribute("aria-modal", "true"); dr.setAttribute("aria-label", "Systems drawer");
     var dh = h("div", "cgcs-dh");
-    dh.innerHTML = '<div class="cgcs-mk"></div><div><div style="font-weight:800;letter-spacing:.14em;font-size:13px">ClearGlass<b>·</b>OS</div>' +
+    dh.innerHTML = '<img class="cgcs-mk" src="icon.svg" alt="" width="28" height="28"><div><div style="font-weight:800;letter-spacing:.14em;font-size:13px">ClearGlass<b>·</b>OS</div>' +
       '<div style="font-size:8.5px;letter-spacing:.18em;color:#8a90c4;text-transform:uppercase">Systems · Control Surface v3.1</div></div>';
     var dx = h("button", "cgcs-dx"); dx.setAttribute("aria-label", "Close"); dx.textContent = "✕"; dh.appendChild(dx);
     dr.appendChild(dh);
@@ -246,7 +257,8 @@
       dr.appendChild(h("div", "cgcs-gl", g[0]));
       g[1].forEach(function (it) {
         var a = h("a"); if (it[1].toLowerCase() === here) a.className = "cur";
-        a.href = it[1]; a.innerHTML = '<span class="ic">' + it[2] + '</span>' + it[0] + (it[1].toLowerCase() === here ? ' <span style="margin-left:auto;font:9px monospace;color:#8a90c4">● here</span>' : "");
+        a.href = it[1]; if (/^https?:/i.test(it[1])) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+        a.innerHTML = '<span class="ic">' + it[2] + '</span>' + it[0] + (it[1].toLowerCase() === here ? ' <span style="margin-left:auto;font:9px monospace;color:#8a90c4">● here</span>' : "");
         dr.appendChild(a);
       });
     });
@@ -331,7 +343,7 @@
     if (it.act === "copyEmail") { try { navigator.clipboard.writeText(EMAIL); } catch (e) {} toast("Email copied: " + EMAIL); return; }
     if (it.act === "contact") { location.href = "mailto:" + EMAIL; return; }
     if (it.act === "status") { window.open("https://github.com/" + REPO + "/actions", "_blank", "noopener"); return; }
-    if (it.href) { if (it.ext) window.open(it.href, "_blank", "noopener"); else location.href = it.href; }
+    if (it.href) { if (it.ext || /^https?:/i.test(it.href)) window.open(it.href, "_blank", "noopener"); else location.href = it.href; }
   }
 
   // ── keyboard ──────────────────────────────────────────────────────────────

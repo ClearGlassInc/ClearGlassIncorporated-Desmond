@@ -1,0 +1,175 @@
+"""PERCIVAL — governed website-percival agent tests."""
+from __future__ import annotations
+
+import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+
+from sentinel.percival import (
+    Action,
+    Finding,
+    InboundLead,
+    Severity,
+    Percival,
+    audit_brand,
+    audit_links,
+    audit_page,
+    audit_sitemap,
+    draft_booking,
+    govern,
+    qualify_lead,
+    rank,
+)
+
+GOOD = ("<html lang='en'><head><title>T</title>"
+        "<meta name='description' content='d'>"
+        "<link rel='canonical' href='x'></head>"
+        "<body><img src='a.png' alt='a'></body></html>")
+BARE = "<html><head></head><body><img src='a.png'></body></html>"
+
+
+# ── audits ──────────────────────────────────────────────────────────────────
+
+def test_audit_page_clean_on_good_html() -> None:
+    assert audit_page("p.html", GOOD) == []
+
+
+def test_audit_page_flags_seo_and_a11y_gaps() -> None:
+    kinds = {f.kind for f in audit_page("p.html", BARE)}
+    assert {"missing_title", "missing_meta_description", "missing_canonical",
+            "missing_lang", "missing_img_alt"} <= kinds
+
+
+def test_audit_sitemap_detects_drift_both_ways() -> None:
+    sm = "<urlset><url><loc>https://x/dead.html</loc></url></urlset>"
+    kinds = {(f.kind, f.page) for f in audit_sitemap(sm, {"live.html"})}
+    assert ("sitemap_dead_url", "dead.html") in kinds
+    assert ("sitemap_missing_page", "live.html") in kinds
+
+
+def test_audit_links_finds_broken_internal() -> None:
+    pages = {"a.html": '<a href="missing.html">x</a>', "b.html": '<a href="a.html">ok</a>'}
+    found = audit_links(pages)
+    assert [f.kind for f in found] == ["broken_link"]
+    assert found[0].page == "a.html"
+
+
+def test_audit_links_normalizes_dot_slash_and_skips_subdirs() -> None:
+    pages = {"a.html": '<a href="./b.html">x</a><a href="legal/terms.html">y</a>',
+             "b.html": "<p>ok</p>"}
+    assert audit_links(pages) == []   # ./b.html resolves; subdir is out of scope
+
+
+def test_audit_sitemap_skips_subdirectory_locs() -> None:
+    sm = ("<urlset><url><loc>https://x/legal/terms.html</loc></url>"
+          "<url><loc>https://x/gone.html</loc></url></urlset>")
+    kinds = {(f.kind, f.page) for f in audit_sitemap(sm, {"live.html"})}
+    assert ("sitemap_dead_url", "gone.html") in kinds
+    assert all(p != "terms.html" for k, p in kinds if k == "sitemap_dead_url")
+
+
+def test_audit_brand_flags_warm_drift_but_keeps_alert_pink() -> None:
+    assert audit_brand("p.html", "<i style='color:#ff8800'>")[0].kind == "brand_color_drift"
+    assert audit_brand("p.html", "<i style='color:#f472b6'>") == []
+
+
+# ── governance ──────────────────────────────────────────────────────────────
+
+def test_govern_autofix_only_for_safelisted_low_risk() -> None:
+    f = Finding("missing_canonical", "seo", "p.html", "", Severity.LOW,
+                technical_risk=1)
+    assert govern(f).action is Action.AUTO_FIX
+
+
+def test_govern_escalates_security_and_high_severity() -> None:
+    sec = Finding("exposed_token", "security", "p.html", "", Severity.LOW)
+    assert govern(sec).action is Action.ESCALATE
+    high = Finding("missing_canonical", "seo", "p.html", "", Severity.HIGH)
+    assert govern(high).action is Action.ESCALATE
+
+
+def test_govern_fails_closed_on_risky_unknowns() -> None:
+    risky = Finding("mystery", "content", "p.html", "", Severity.LOW,
+                    technical_risk=5)
+    assert govern(risky).action is Action.ESCALATE
+
+
+def test_rank_orders_by_value_and_impact() -> None:
+    low = Finding("a", "ux", "p", "", business_value=1, user_impact=1, technical_risk=1)
+    big = Finding("b", "ux", "p", "", business_value=5, user_impact=5, technical_risk=1)
+    assert rank([low, big])[0] is big
+
+
+# ── revenue (inbound-only, governed) ────────────────────────────────────────
+
+def test_lead_without_consent_scores_zero() -> None:
+    lead = InboundLead("Acme", "ops@acme.com", "security-audit", "25k+", consent=False)
+    score, tier = qualify_lead(lead)
+    assert score == 0 and tier.startswith("NO_CONSENT")
+
+
+def test_lead_qualification_tiers() -> None:
+    hot = InboundLead("Acme", "ops@acme.com", "security-audit", "25k+", consent=True)
+    assert qualify_lead(hot) == (10, "HOT")
+    nurture = InboundLead("Solo", "a@b.c", "other", "<5k", consent=True)
+    assert qualify_lead(nurture)[1] == "NURTURE"
+
+
+def test_booking_is_a_draft_requiring_human_send() -> None:
+    lead = InboundLead("Acme", "ops@acme.com", "web-design", "5-25k", consent=True)
+    art = draft_booking(lead, slot_utc="2026-06-15T15:00")
+    assert art["requires_human_send"] == "true"
+    assert art["mailto"].startswith("mailto:ops@acme.com")
+
+
+# ── the agent end-to-end ────────────────────────────────────────────────────
+
+def test_percival_scan_and_dry_run_apply(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "good.html").write_text(GOOD)
+    (tmp_path / "bare.html").write_text(BARE)
+    (tmp_path / "sitemap.xml").write_text(
+        "<urlset><url><loc>https://x/good.html</loc></url>"
+        "<url><loc>https://x/ghost.html</loc></url></urlset>")
+    s = Percival(tmp_path, clock=lambda: "2026-06-10T00:00:00Z")
+    report = s.scan()
+
+    kinds = {f.kind for f in report.findings}
+    assert "sitemap_dead_url" in kinds and "missing_title" in kinds
+    # sitrep brief is human-readable and locates the surface
+    brief = report.brief()
+    assert "PERCIVAL SITREP" in brief and "clearglassinc.github.io" in brief
+
+    # default apply is a DRY RUN — no silent writes
+    applied = s.apply(report)
+    assert applied and all(a.startswith("DRY-RUN") for a in applied)
+    # every action is on the tamper-evident audit chain
+    assert s.audit.verify()
+    assert any(e.action == "percival.scan" for e in s.audit.entries)
+
+
+def test_percival_never_autofixes_escalated_items(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    s = Percival(tmp_path)
+    report = s.scan()
+    auto = {d.finding.kind for d in report.decisions if d.action is Action.AUTO_FIX}
+    assert auto <= {"missing_meta_description", "missing_canonical",
+                    "missing_img_alt", "sitemap_missing_page", "sitemap_dead_url",
+                    "trailing_whitespace"}
+
+
+def test_audit_page_ignores_tags_inside_script() -> None:
+    # an inline engine whose source contains an <img ...> regex literal must NOT
+    # be read as a real image lacking alt text
+    html = ("<html lang='en'><head><title>T</title>"
+            "<meta name='description' content='d'>"
+            "<link rel='canonical' href='x'></head><body>"
+            "<script>var re=/<img\\b[^>]*>/gi;</script></body></html>")
+    assert audit_page("p.html", html) == []
+
+
+def test_index_is_exempt_from_sitemap_drift() -> None:
+    # index.html is represented by "/" in the sitemap; must not be flagged missing
+    found = audit_sitemap("<urlset></urlset>", {"index.html", "real.html"})
+    pages = {f.page for f in found if f.kind == "sitemap_missing_page"}
+    assert "index.html" not in pages and "real.html" in pages

@@ -8,7 +8,7 @@
    Bump VERSION to invalidate all caches on deploy. */
 "use strict";
 
-var VERSION = "cg-v1";
+var VERSION = "cg-v11";
 var PRECACHE = [
   "/",
   "/index.html",
@@ -19,7 +19,12 @@ var PRECACHE = [
   "/ui.css",
   "/ui.js",
   "/control-surface.js",
-  "/platform.js"
+  "/platform.js",
+  "/nav.js",
+  "/Ontario-osint.html",
+  "/data/Ontario-osint/intel.json",
+  "/icon.svg",
+  "/manifest.webmanifest"
 ];
 
 self.addEventListener("install", function (e) {

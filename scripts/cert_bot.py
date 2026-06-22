@@ -33,6 +33,16 @@ DEFAULT_MIN_DAYS = 21
 DEFAULT_PORT = 443
 DEFAULT_TIMEOUT = 10.0
 
+# Platform-managed domains issue and auto-renew their own TLS certificates, so a
+# soon-to-expire (but still valid) cert is not actionable by this repo and should
+# be advisory rather than a build failure. An already-expired one still errors.
+AUTO_MANAGED_SUFFIXES = (".github.io", ".pages.dev")
+
+
+def is_auto_managed(host: str) -> bool:
+    """True for platform-managed (auto-renewing) certificate hosts."""
+    return host.lower().endswith(AUTO_MANAGED_SUFFIXES)
+
 
 @dataclass
 class CertResult:
@@ -116,6 +126,15 @@ def annotate(result: CertResult, min_days: int, strict: bool) -> tuple[str, bool
     assert result.days_left is not None and result.expiry is not None
     stamp = result.expiry.date().isoformat()
     if result.days_left < min_days:
+        # Platform-managed certs (e.g. *.github.io) auto-renew and aren't
+        # actionable here: warn while still valid, only fail once expired.
+        if is_auto_managed(result.host) and result.days_left >= 0:
+            line = (
+                f"::warning title=Cert Bot::{result.host}: certificate expires in "
+                f"{result.days_left} day(s) on {stamp} (threshold {min_days}) — "
+                f"platform-managed (auto-renews), advisory only"
+            )
+            return line, False
         line = (
             f"::error title=Cert Bot::{result.host}: certificate expires in "
             f"{result.days_left} day(s) on {stamp} (threshold {min_days})"

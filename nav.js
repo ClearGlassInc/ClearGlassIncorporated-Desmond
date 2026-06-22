@@ -10,26 +10,38 @@
 
   var GROUPS = [
     ["Command", [
-      ["Counter-UAS OS", "counter-uas-commercialization-os.html", "🛰"],
+      ["AVALON · A⊕P Fusion", "artemis-percival.html", "⬣"],
       ["PERCIVAL OS", "percival-os.html", "◐"],
       ["SENTINEL · Live", "sentinel.html", "◉"],
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
       ["Agent Mesh", "agentmesh.html", "⌗"],
+      ["CONDUIT · Automation", "conduit.html", "⟿"],
+      ["PostLoop · Content Engine", "postloop.html", "⟲"],
       ["AI Operator", "ai-operator.html", "🜂"],
-      ["Command Console", "command-console.html", "▤"]
+      ["Command Console", "command-console.html", "▤"],
+      ["Event Control Surface", "saas-platform.html", "◆"]
     ]],
     ["Platforms", [
       ["Artemis IV Core", "artemis-iv.html", "🧭"],
+      ["ZEPHYR · Air Control", "air-control.html", "🜁"],
       ["Artemis VI", "artemis.html", "🛰"],
       ["Guardian", "guardian.html", "🌐"],
       ["ClearGlass NEXUS", "clearglass-nexus.html", "🛡"],
       ["Government", "government.html", "🏛"],
-      ["ClearPulse", "clearpulse.html", "📡"]
+      ["ClearPulse", "clearpulse.html", "📡"],
+      ["Satellite Map", "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13", "🛰"]
+    ]],
+    ["For Small Business", [
+      ["SMB Cyber Trust Kit", "smb-cyber-trust-kit.html", "🔐"],
+      ["Offers & Pricing", "offers/", "🎯"]
     ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],
       ["Interface", "intelligence-interface.html", "🖥"],
+      ["Flow Intelligence", "clearglass.html", "🕸"],
+      ["Flowsint · OSINT Graph", "flowsint.html", "🕸"],
+      ["Ontario OSINT Deck", "Ontario-osint.html", "🛰"],
       ["Revenue Engine", "revenue-engine.html", "💹"]
     ]],
     ["Legal & Finance", [
@@ -39,6 +51,9 @@
     ]],
     ["Company", [
       ["Home", "index.html", "⌂"],
+      ["Web Design & Dev", "web-design.html", "💻"],
+      ["Store · Buy", "store.html", "🛒"],
+      ["Pricing", "pricing.html", "₵"],
       ["Button Lab", "button-lab.html", "◫"]
     ]]
   ];
@@ -97,7 +112,9 @@
       html += '<div class="cg-grp">' + g[0] + "</div>";
       g[1].forEach(function (it) {
         var cur = it[1].toLowerCase() === here ? " cur" : "";
-        html += '<a class="cg-link' + cur + '" href="' + it[1] + '">' +
+        var ext = /^https?:/i.test(it[1]);
+        html += '<a class="cg-link' + cur + '" href="' + it[1] + '"' +
+          (ext ? ' target="_blank" rel="noopener noreferrer"' : "") + '>' +
           '<span class="ic">' + it[2] + "</span>" + it[0] +
           (cur ? ' <span style="margin-left:auto;font-family:monospace;font-size:9px;color:#8a90c4">● here</span>' : "") +
           "</a>";

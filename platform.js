@@ -29,6 +29,15 @@
     tc.content = "#0b0f1e";
     document.head.appendChild(tc);
   }
+  // first-class icons (vector favicon + iOS home-screen icon) where a page lacks them
+  function addLink(sel, attrs) {
+    if (document.querySelector(sel)) return;
+    var l = document.createElement("link");
+    Object.keys(attrs).forEach(function (k) { l.setAttribute(k, attrs[k]); });
+    document.head.appendChild(l);
+  }
+  addLink('link[rel="icon"][type="image/svg+xml"]', { rel: "icon", type: "image/svg+xml", href: "icon.svg" });
+  addLink('link[rel="apple-touch-icon"]', { rel: "apple-touch-icon", href: "logo.png" });
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("sw.js").catch(function () {

@@ -6,7 +6,7 @@ PERCIVAL under SENTINEL's fail-closed policy gate.
 
 | Agent | Scope | Source-of-truth | Executable |
 |---|---|---|---|
-| **PERCIVAL** | Always-on executive command center | `PERCIVAL_OS_BLUEPRINT.md` | `percival-os.html` + `sentinel/` |
+| **PERCIVAL** | Always-on executive command center + governed autonomous website agent — continuous UX/SEO/a11y/brand/content-drift audits ranked by value·impact·risk; SITREP briefs; AUTO_FIX only for safe-listed reversible changes, everything else PROPOSE/ESCALATE (no silent writes); keyless; inbound-only lead qualification + human-send booking drafts | `PERCIVAL_OS_BLUEPRINT.md` + `percival.py` docstring | `percival-os.html` + `systems.html` (Systems Control Surface) + `sentinel/sentinel/percival.py` (+ `tests/test_percival.py`) |
 | **SENTINEL** | Privacy-first geospatial + OSINT command center | `SENTINEL_CHARTER.md` (v2.1) | `sentinel.html` + `sentinel/sentinel/` |
 | **Purple-Team** | Detection-engineering / SOC exercise driver (defensive) | `PURPLE_TEAM_PLAYBOOK.md` | `sentinel/sentinel/purpleteam.py` |
 | **PFAS** | Compliance + decision intelligence (Ontario water/property/infra) | `PERCIVAL_PFAS_BRIEF.md` | `sentinel/sentinel/pfas.py` + `pfas_ingest.py` + `pfas_pdf.py` + `pfas_export.py` + `sentinel.html` map layer & evidence-pack download |

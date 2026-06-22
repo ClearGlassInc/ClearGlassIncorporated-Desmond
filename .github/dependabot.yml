@@ -1,0 +1,64 @@
+version: 2
+updates:
+  # GitHub Actions — keep the supply chain current (and SHA pins fresh).
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "ci", "automated"]
+    groups:
+      actions:
+        patterns: ["*"]
+
+  # Python tooling used by bots/ and scripts/.
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "python", "automated"]
+
+  # Terraform providers/modules under infra/.
+  - package-ecosystem: terraform
+    directory: "/infra"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    labels: ["dependencies", "infra", "automated"]
+
+  # npm — the commerce frontends were previously unmonitored (security alerts
+  # fired but no auto-update PRs), which let Next.js CVEs accumulate. Watch each
+  # Next.js app directory and group updates into one PR per app per week.
+  - package-ecosystem: npm
+    directory: "/clearglass-commerce/storefront"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "javascript", "automated"]
+    groups:
+      npm:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: "/clearglass-commerce/admin"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "javascript", "automated"]
+    groups:
+      npm:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: "/apps/autostore/cockpit"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "javascript", "automated"]
+    groups:
+      npm:
+        patterns: ["*"]

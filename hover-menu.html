@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClearGlass · Elegant Hover Menu</title>
+    <title>ClearGlassInc · Elegant Hover Menu</title>
     <style>
         * {
             margin: 0;
@@ -128,6 +128,20 @@
             transform: translateX(4px);
         }
 
+        .menu-link--flag {
+            color: #7fd6ff;
+            font-weight: 600;
+            background: linear-gradient(100deg, rgba(57, 199, 255, 0.14), rgba(57, 199, 255, 0.02));
+            border: 1px solid rgba(57, 199, 255, 0.28);
+            box-shadow: 0 0 16px rgba(57, 199, 255, 0.12);
+        }
+
+        .menu-link--flag:hover {
+            color: #ffffff;
+            background: linear-gradient(100deg, rgba(57, 199, 255, 0.24), rgba(255, 122, 24, 0.12));
+            border-color: rgba(57, 199, 255, 0.5);
+        }
+
         .dropdown-footer {
             margin-top: 18px;
             padding-top: 14px;
@@ -228,6 +242,17 @@
             text-decoration: none;
         }
         .menu-item:hover { background: #21262d; color: #ffffff; }
+        .menu-item--flag {
+            color: #7fd6ff; font-weight: 600;
+            background: linear-gradient(100deg, rgba(57,199,255,0.14), rgba(57,199,255,0.02));
+            border: 1px solid rgba(57,199,255,0.28);
+            box-shadow: 0 0 16px rgba(57,199,255,0.12);
+        }
+        .menu-item--flag:hover {
+            color: #ffffff;
+            background: linear-gradient(100deg, rgba(57,199,255,0.24), rgba(255,122,24,0.12));
+            border-color: rgba(57,199,255,0.5);
+        }
         .brand-footer {
             font-size: 0.7rem; color: #5c6e8c; margin-top: 12px; text-align: right;
             border-top: 1px solid #21262d; padding-top: 10px;
@@ -237,8 +262,18 @@
             .grid-menu { flex-direction: column; }
         }
     </style>
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://clearglassinc.github.io/hover-menu.html">
+  <meta name="description" content="ClearGlassInc · Elegant Hover Menu ClearGlass Inc. builds intelligent automation, AI operations, and security systems for modern teams.">
+  <link rel="canonical" href="https://clearglassinc.github.io/hover-menu.html">
+  <meta property="og:title" content="ClearGlassInc · Elegant Hover Menu">
+  <meta property="og:description" content="ClearGlassInc · Elegant Hover Menu ClearGlass Inc. builds intelligent automation, AI operations, and security systems for modern teams.">
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
+  <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">ClearGlassInc · Elegant Hover Menu</h1>
     <div class="clearglass-nav">
         <div class="nav-trigger">
             ClearGlass <span style="opacity:0.7;">▲</span> 2040
@@ -248,6 +283,7 @@
             <div class="menu-grid">
                 <div class="menu-section">
                     <div class="section-title">Vision</div>
+                    <a class="menu-link menu-link--flag" href="percival-os.html">◐</a>
                     <div class="menu-link">Artemis VI</div>
                     <div class="menu-link">Artemis IV Core</div>
                     <a class="menu-link" href="guardian.html">Guardian</a>
@@ -285,7 +321,7 @@
         <div class="menu-trigger">ClearGlass ▲ 2040</div>
         <div class="menu-dropdown">
             <div class="grid-menu">
-                <div class="menu-group"><div class="menu-category">VISION</div><div class="menu-item">Artemis VI</div><div class="menu-item">Artemis IV Core</div><a class="menu-item" href="guardian.html">Guardian</a><a class="menu-item" href="clearglass-nexus.html">ClearGlass NEXUS v12</a></div>
+                <div class="menu-group"><div class="menu-category">VISION</div><a class="menu-item menu-item--flag" href="percival-os.html">◐ PERCIVAL OS</a><div class="menu-item">Artemis VI</div><div class="menu-item">Artemis IV Core</div><a class="menu-item" href="guardian.html">Guardian</a><a class="menu-item" href="clearglass-nexus.html">ClearGlass NEXUS v12</a></div>
                 <div class="menu-group"><div class="menu-category">TECH</div><div class="menu-item">Threads Kit</div><div class="menu-item">SMB Suite</div><div class="menu-item">Revenue Engine</div></div>
                 <div class="menu-group"><div class="menu-category">PRODUCTS</div><div class="menu-item">ClearTax AI</div><div class="menu-item">Enter the Grid</div><div class="menu-item">Founder</div></div>
                 <div class="menu-group"><div class="menu-category">CORE</div><div class="menu-item">Vision</div><div class="menu-item">Technology</div><div class="menu-item">Products</div></div>
@@ -295,5 +331,7 @@
     </div>
     <div style="margin-top: 3rem; text-align: center; font-size: 0.8rem; color: #3d4a5f;">hover “ClearGlass ▲ 2040” → menu appears</div>
 </div>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>

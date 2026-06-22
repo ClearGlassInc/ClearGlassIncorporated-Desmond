@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="canonical" href="https://clearglassinc.github.io/stegoforge.html">
+<meta property="og:title" content="StegoForge | ClearGlass Inc">
+<meta property="og:description" content="StegoForge is a steganography toolkit for embedding and extracting hidden data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clearglassinc.github.io/stegoforge.html">
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>STEGOFORGE · ClearGlassInc Artemis Cybersecurity Terminal</title>
-<meta name="description" content="STEGOFORGE is the futuristic cybersecurity terminal for ClearGlassInc Artemis with steganography, AES-256-GCM workflows, covert channels, and forensic AI modules."/>
+<meta name="description" content="STEGOFORGE is the futuristic cybersecurity terminal for ClearGlassInc Artemis with steganography, AES-256-GCM workflows, covert channels, and forensic AI…"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
@@ -45,6 +50,13 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;background:rep
 .footer-note{margin-top:12px;font-size:.82rem;color:var(--muted)}
 @media (max-width:920px){.grid{grid-template-columns:1fr}.log{height:300px}.menu{grid-template-columns:repeat(2,minmax(90px,1fr))}}
 </style>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="ui.css">
+  <link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
   <main class="wrapper">
@@ -112,5 +124,10 @@ setInterval(()=>{
   pane.scrollTop = pane.scrollHeight;
 }, 1700);
 </script>
+<script defer src="control-surface.js"></script>
+  <script defer src="ui.js"></script>
+  <script defer src="platform.js"></script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>

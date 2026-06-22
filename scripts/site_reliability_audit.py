@@ -189,6 +189,44 @@ def check_pages_domain() -> list[AuditIssue]:
     return issues
 
 
+def check_seo_accessibility() -> list[AuditIssue]:
+    issues: list[AuditIssue] = []
+    html_files = sorted(REPO_ROOT.rglob("*.html"))
+    script_block = re.compile(r"<script\b[^>]*>.*?</script>", re.IGNORECASE | re.DOTALL)
+
+    for html_file in html_files:
+        rel = html_file.relative_to(REPO_ROOT)
+        text = html_file.read_text(encoding="utf-8", errors="ignore")
+
+        # Search-engine ownership-verification files (e.g. Google's
+        # google<token>.html) are bare verification strings, not real pages, and
+        # must keep their exact required content — skip page-level SEO/a11y checks.
+        if text.lstrip().lower().startswith("google-site-verification:"):
+            continue
+
+        if not re.search(r"<html[^>]*\blang=", text, re.IGNORECASE):
+            issues.append(AuditIssue("WARN", f"Missing <html lang> attribute in {rel}"))
+
+        if not re.search(r'name=["\']viewport["\']', text, re.IGNORECASE):
+            issues.append(AuditIssue("WARN", f"Missing <meta name=viewport> in {rel}"))
+
+        if not re.search(r"<title", text, re.IGNORECASE):
+            issues.append(AuditIssue("WARN", f"Missing <title> in {rel}"))
+
+        if not re.search(r'name=["\']description["\']', text, re.IGNORECASE):
+            issues.append(AuditIssue("WARN", f"Missing <meta name=description> in {rel}"))
+
+        # Strip <script> blocks before the <img> scan: inline JavaScript can
+        # contain regex/string literals like /<img[^>]*>/ that would otherwise
+        # trip the alt-attribute check (false positive on real, alt'd markup).
+        markup = script_block.sub("", text)
+        for img in re.findall(r"<img\b[^>]*>", markup, re.IGNORECASE):
+            if not re.search(r"\balt=", img, re.IGNORECASE):
+                issues.append(AuditIssue("WARN", f"Image missing alt attribute in {rel}"))
+
+    return issues
+
+
 def print_report(issues: list[AuditIssue]) -> int:
     errors = [issue for issue in issues if issue.level == "ERROR"]
     warns = [issue for issue in issues if issue.level == "WARN"]
@@ -215,6 +253,7 @@ def main() -> int:
     all_issues.extend(check_workflows())
     all_issues.extend(check_sitemap())
     all_issues.extend(check_pages_domain())
+    all_issues.extend(check_seo_accessibility())
     return print_report(all_issues)
 
 

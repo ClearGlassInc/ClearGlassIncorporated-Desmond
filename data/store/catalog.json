@@ -1,0 +1,62 @@
+{
+  "schema": "clearglass.store.catalog/v1",
+  "generated_utc": "2026-06-21T13:06:24+00:00",
+  "content_hash": "sha256:f084caa0b502b391b4b8a4a6fbd029eaf4a6d8913f5493adebd25521c6baef6b",
+  "source": "store.html",
+  "live_checkout_enabled": false,
+  "products": [
+    {
+      "sku": "quick-audit",
+      "name": "Security Quick-Audit",
+      "label": "Security Quick-Audit (CAD $249)",
+      "short": "Security Quick-Audit",
+      "price_display": "CAD $249 one-time",
+      "amount_cents": 24900,
+      "currency": "CAD",
+      "etransfer_amount": "CAD $249",
+      "checkout_url": "",
+      "live_checkout": false
+    },
+    {
+      "sku": "hardening",
+      "name": "M365 + Windows Hardening Sprint",
+      "label": "M365 + Windows Hardening Sprint (from CAD $2,500)",
+      "short": "Hardening Sprint",
+      "price_display": "from CAD $2,500 fixed fee",
+      "amount_cents": 250000,
+      "currency": "CAD",
+      "etransfer_amount": "CAD $2,500 (deposit · scope confirmed on call)",
+      "checkout_url": "",
+      "live_checkout": false
+    },
+    {
+      "sku": "phipa",
+      "name": "PHIPA Readiness",
+      "label": "PHIPA Readiness assessment (from CAD $3,000)",
+      "short": "PHIPA Readiness",
+      "price_display": "from CAD $3,000 assessment",
+      "amount_cents": 300000,
+      "currency": "CAD",
+      "etransfer_amount": "CAD $3,000 (deposit · scope confirmed on call)",
+      "checkout_url": "",
+      "live_checkout": false
+    },
+    {
+      "sku": "monitoring",
+      "name": "Managed Monitoring",
+      "label": "Managed Monitoring (from CAD $600/mo)",
+      "short": "Managed Monitoring",
+      "price_display": "from CAD $600 / month",
+      "amount_cents": 60000,
+      "currency": "CAD",
+      "etransfer_amount": "CAD $600 (first month)",
+      "checkout_url": "",
+      "live_checkout": false
+    }
+  ],
+  "summary": {
+    "sku_count": 4,
+    "live_checkout_skus": 0
+  },
+  "fallback_note": "Live card checkout disabled (no Stripe Payment Links configured). Interac e-Transfer + confirmed-invoice flow active — revenue continuity preserved."
+}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center</title>
+<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform |</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -21,6 +21,7 @@
   --bdr:rgba(255,176,0,.15);--bdr2:rgba(255,176,0,.08);--bdr3:rgba(255,176,0,.04);
   --card:rgba(0,0,0,.52);--card2:rgba(255,176,0,.03);
   --sh:0 0 28px rgba(0,0,0,.7);
+}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -930,6 +931,12 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 .tick-item-sw  { color:var(--pu); }
 .tick-item-cr  { color:var(--yw); }
 .tick-item-net { color:var(--bl); }
+/* ticker item classes used by updateTicker() */
+.tv{font-size:5.5px;letter-spacing:1.5px;color:var(--al);padding:0 14px;border-right:1px solid rgba(255,176,0,.08);white-space:nowrap}
+.tv.hi{color:var(--am)}.tv.al{color:var(--rd)}.tv.gn{color:var(--gn)}.tv.bl{color:var(--bl)}.tv.cy{color:var(--cy)}
+.tsep{font-size:5px;color:rgba(255,176,0,.25);padding:0 2px}
+/* env-row — shared weather/AQ row layout (alias for .er) */
+.env-row{display:flex;justify-content:space-between;padding:2.5px 0;border-bottom:1px solid rgba(255,176,0,.04);font-size:6.5px}
 
 /* ── KP STORM GAUGE ──────────────────────────────────────────────────────── */
 #kp-gauge-wrap {
@@ -1009,8 +1016,18 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 #gauge-arc { filter:drop-shadow(0 0 4px currentColor); }
 
 </style>
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://clearglassinc.github.io/ClearGlass-NEXUS-v12-FINAL.html">
+  <meta name="description" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center ClearGlass Inc. builds intelligent automation, AI operations, and security…">
+  <link rel="canonical" href="https://clearglassinc.github.io/ClearGlass-NEXUS-v12-FINAL.html">
+  <meta property="og:title" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform |">
+  <meta property="og:description" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center ClearGlass Inc. builds intelligent automation, AI operations, and security…">
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
+  <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center</h1>
 <!-- ═══════════════════════════════════════════════════════════
      DARPA NEXUS v11 — INTELLIGENCE PANELS
      ═══════════════════════════════════════════════════════════ -->
@@ -2034,7 +2051,7 @@ async function fetchWx(){
     const c=wx.current;
     S.wx.temp=c.temperature_2m;S.wx.feels=c.apparent_temperature;
     S.wx.humidity=c.relative_humidity_2m;S.wx.wind=c.wind_speed_10m;
-    S.wx.precip=c.precipitation;S.wx.code=c.weather_code;
+    S.wx.precip=c.precipitation;S.wx.precipitation=c.precipitation;S.wx.code=c.weather_code;
     const aqc=aq.current;
     S.aq.aqi=aqc.european_aqi;S.aq.pm25=aqc.pm2_5;S.aq.pm10=aqc.pm10;
     S.aq.o3=aqc.ozone;S.aq.no2=aqc.nitrogen_dioxide;
@@ -2479,7 +2496,7 @@ async function fetchSpaceWx(){
       </div>
       <div style="font-size:5.5px;letter-spacing:2px;color:var(--al);margin-bottom:4px">Kp INDEX — LAST 12 READINGS</div>
       <div class="kp-bars">${bars}</div>
-      <div class="kp-lbls"><span>-6h</span><span>-5h</span><span>-4h</span><span>-3h</span><span>-2h</span><span>-1h</span><span>NOW</span></div>
+      <div class="kp-lbls"><span>-11h</span><span>-9h</span><span>-7h</span><span>-5h</span><span>-3h</span><span>-1h</span><span>NOW</span></div>
       <div class="er" style="margin-top:6px"><span class="ek">AURORA FORECAST</span><span class="ev ${kp>=5?'r':kp>=3?'o':'p'}">${kp>=5?'🌌 HIGH ACTIVITY':kp>=3?'🌠 POSSIBLE':'🌑 QUIET'}</span></div>
       <div class="er"><span class="ek">GEOMAGNETIC</span><span class="ev ${kp>=7?'r':kp>=5?'o':'g'}">${kp>=7?'SEVERE STORM (G4)':kp>=5?'STORM (G2)':kp>=3?'UNSETTLED':'QUIET'}</span></div>
       <div class="er"><span class="ek">SOLAR FLUX</span><span class="ev">${flux} SFU — ${flux>150?'VERY HIGH':flux>120?'HIGH':flux>100?'MODERATE':'LOW'}</span></div>`;
@@ -2491,10 +2508,17 @@ async function fetchSpaceWx(){
 async function fetchISS(){
   setSf('sf-iss','o');
   try{
-    const r=await fetch('https://api.open-notify.org/iss-now.json');
-    const d=await r.json();
-    S.iss.lat=parseFloat(d.iss_position.latitude);
-    S.iss.lon=parseFloat(d.iss_position.longitude);
+    let _lat, _lon;
+    try{
+      const wr=await fetch('https://api.wheretheiss.at/v1/satellites/25544');
+      if(!wr.ok) throw 0;
+      const wd=await wr.json(); _lat=parseFloat(wd.latitude); _lon=parseFloat(wd.longitude);
+    }catch(_){
+      const r=await fetch('https://api.open-notify.org/iss-now.json');
+      const d=await r.json(); _lat=parseFloat(d.iss_position.latitude); _lon=parseFloat(d.iss_position.longitude);
+    }
+    S.iss.lat=_lat;
+    S.iss.lon=_lon;
     S.iss.alt=420;
     const dlat=S.iss.lat-S.loc.lat;const dlon=S.iss.lon-S.loc.lon;
     const a=Math.sin(dlat*Math.PI/360)**2+Math.cos(S.iss.lat*Math.PI/180)*Math.cos(S.loc.lat*Math.PI/180)*Math.sin(dlon*Math.PI/360)**2;
@@ -3336,9 +3360,18 @@ function renderSatCount(d){
 async function fetchCrypto(){
   setSf('sf-cr','o');
   try{
-    const r=await fetchWithRetry('https://api.coincap.io/v2/assets?ids=bitcoin,ethereum,solana,cardano,ripple&limit=5');
-    const d=await r.json();
-    const assets=d.data||[];
+    let assets=[];
+    try{
+      const r=await fetchWithRetry('https://api.coincap.io/v2/assets?ids=bitcoin,ethereum,solana,cardano,ripple&limit=5');
+      const d=await r.json();
+      assets=d.data||[];
+    }catch(_){ assets=[]; }
+    if(!assets.length){
+      const gr=await fetchWithRetry('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano,ripple&price_change_percentage=24h');
+      const gd=await gr.json();
+      assets=(gd||[]).map(a=>({id:a.id,symbol:(a.symbol||'').toUpperCase(),name:a.name,priceUsd:a.current_price,changePercent24Hr:a.price_change_percentage_24h,rank:a.market_cap_rank}));
+    }
+    if(!assets.length) throw new Error('crypto feeds unavailable');
     const colMap={bitcoin:'#F7931A',ethereum:'#627EEA',solana:'#9945FF',cardano:'#0033AD',ripple:'#00AAE4'};
     const iconMap={bitcoin:'₿',ethereum:'Ξ',solana:'◎',cardano:'₳',ripple:'✕'};
     const coins=assets.map(a=>({
@@ -3559,7 +3592,7 @@ async function fetchNews(){
       const date=item.pubDate?new Date(item.pubDate).toLocaleDateString('en-CA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
       const desc=(item.description||'').replace(/<[^>]+>/g,'').slice(0,120).trim();
       return`<div class="ni">
-        <div class="ni-src">${(item.author||d?.feed?.title||k.toUpperCase()).toUpperCase().slice(0,40)}</div>
+        <div class="ni-src">${(item.author||k.toUpperCase()).toUpperCase().slice(0,40)}</div>
         <div class="ni-title" onclick="window.open('${item.link||'#'}','_blank')">${item.title||'No title'}</div>
         ${desc?`<div class="ni-desc">${desc}…</div>`:''}
         <div class="ni-date">${date}</div>
@@ -5527,6 +5560,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>
 <!-- HELIX GEOSPATIAL — new panel -->

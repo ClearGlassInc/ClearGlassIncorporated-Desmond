@@ -1,0 +1,46 @@
+name: Commerce Deploy
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "clearglass-commerce/**"
+      - ".github/workflows/commerce-deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: Test & lint gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.11"
+      - run: pip install ruff pytest
+      - name: Lint commerce package
+        run: ruff check clearglass-commerce
+      - name: Governance + payments tests
+        working-directory: clearglass-commerce/control-plane
+        run: python -m pytest tests/ -q
+
+  deploy:
+    name: Deploy control plane (Render)
+    needs: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Trigger Render deploy
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "RENDER_DEPLOY_HOOK_URL secret not set — skipping deploy."
+            echo "Add a Render Deploy Hook URL as a repo secret to enable auto-deploy."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK" >/dev/null && echo "Render deploy triggered."

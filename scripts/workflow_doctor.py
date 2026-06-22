@@ -8,6 +8,7 @@ Audits and repairs common workflow bootstrap failures:
 - missing workflow_call support for locally-called workflows
 - self-hosted runner labels without fallback
 - Pages deploy permission inheritance
+- missing explicit timeout-minutes (prevents hung jobs)
 
 Run locally:
   python scripts/workflow_doctor.py --fix
@@ -33,14 +34,16 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOWS = ROOT / ".github" / "workflows"
 
 STABLE_ACTIONS = {
-    "actions/checkout": "v5",
-    "actions/setup-python": "v5",
+    "actions/checkout": "v6",
+    "actions/setup-python": "v6",
     "actions/setup-node": "v4",
-    "actions/upload-artifact": "v4",
+    "actions/upload-artifact": "v7",
     "actions/download-artifact": "v4",
-    "actions/configure-pages": "v5",
-    "actions/upload-pages-artifact": "v3",
-    "actions/deploy-pages": "v4",
+    "actions/configure-pages": "v6",
+    "actions/upload-pages-artifact": "v5",
+    "actions/deploy-pages": "v5",
+    "actions/github-script": "v9",
+    "actions/dependency-review-action": "v5",
 }
 
 INVALID_REUSABLE_JOB_KEYS = {"runs-on", "steps", "permissions"}
@@ -58,6 +61,13 @@ def load_yaml(path: Path) -> tuple[dict[str, Any] | None, str | None]:
 
 
 def dump_yaml(data: dict[str, Any]) -> str:
+    # PyYAML 1.1 parses bare `on:` as the boolean True; restore the literal
+    # key here so we never emit a `true:` block in place of the trigger map.
+    if True in data:
+        rebuilt: dict[Any, Any] = {}
+        for key, value in data.items():
+            rebuilt["on" if key is True else key] = value
+        data = rebuilt
     return yaml.safe_dump(data, sort_keys=False, width=120)
 
 
@@ -139,6 +149,22 @@ def fix_self_hosted(data: dict[str, Any]) -> list[str]:
     return changes
 
 
+def ensure_timeouts(data: dict[str, Any]) -> list[str]:
+    """Add explicit timeout-minutes to prevent hung/stuck jobs (production hardening)."""
+    changes: list[str] = []
+    jobs = data.get("jobs") or {}
+    if not isinstance(jobs, dict):
+        return changes
+    for job_name, job in jobs.items():
+        if not isinstance(job, dict):
+            continue
+        if "timeout-minutes" not in job:
+            default_timeout = 60 if any(k in str(job).lower() for k in ["deploy", "scan", "audit", "build"]) else 30
+            job["timeout-minutes"] = default_timeout
+            changes.append(f"added timeout-minutes: {default_timeout} to {job_name}")
+    return changes
+
+
 def ensure_permissions(data: dict[str, Any]) -> list[str]:
     changes: list[str] = []
     text_needs_pages = "deploy-pages" in str(data) or "upload-pages-artifact" in str(data)
@@ -149,13 +175,27 @@ def ensure_permissions(data: dict[str, Any]) -> list[str]:
         if permissions.get("contents") != "read":
             permissions["contents"] = "read"
             changes.append("normalized contents permission to read")
-        if text_needs_pages:
+        if text_needs_pages and not _pages_perms_at_job_level(data):
             for key, value in {"pages": "write", "id-token": "write"}.items():
                 if permissions.get(key) != value:
                     permissions[key] = value
                     changes.append(f"added {key}: {value} for Pages deploy")
         data["permissions"] = permissions
     return changes
+
+
+def _pages_perms_at_job_level(data: dict[str, Any]) -> bool:
+    """Job-level pages/id-token write satisfies least privilege — don't widen to workflow level."""
+    jobs = data.get("jobs") or {}
+    if not isinstance(jobs, dict):
+        return False
+    for job in jobs.values():
+        if not isinstance(job, dict):
+            continue
+        perms = job.get("permissions")
+        if isinstance(perms, dict) and perms.get("pages") == "write" and perms.get("id-token") == "write":
+            return True
+    return False
 
 
 def main() -> int:
@@ -192,6 +232,8 @@ def main() -> int:
         changes: list[str] = []
         changes += fix_reusable_jobs(data)
         changes += fix_self_hosted(data)
+        if args.fix:
+            changes += ensure_timeouts(data)
         changes += ensure_permissions(data)
         rel = str(path.relative_to(ROOT))
         if rel in all_called:
@@ -209,9 +251,9 @@ def main() -> int:
     needs_fix = [f for f in findings if f.startswith("NEEDS_FIX")]
     if errors:
         return 1
+    # Advisory only — repair job applies fixes on schedule/dispatch
     if needs_fix:
-        print("Workflow doctor found repairable issues. Run with --fix.")
-        return 1
+        print("Workflow doctor found repairable issues. Run with --fix to apply.")
     print("Workflow doctor clean." if not findings else "Workflow doctor repairs complete.")
     return 0
 

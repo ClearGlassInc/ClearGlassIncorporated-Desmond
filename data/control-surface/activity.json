@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "12:15",
-    "timestamp": "2026-06-23T12:15:14Z"
+    "time": "15:26",
+    "timestamp": "2026-06-23T15:26:09Z"
+  },
+  {
+    "title": "CI",
+    "status": "warn",
+    "detail": "pull_request on claude/affectionate-ritchie-0qg2ps \u00b7 run #743",
+    "time": "15:26",
+    "timestamp": "2026-06-23T15:26:08Z"
+  },
+  {
+    "title": "Security",
+    "status": "warn",
+    "detail": "pull_request on claude/affectionate-ritchie-0qg2ps \u00b7 run #508",
+    "time": "15:26",
+    "timestamp": "2026-06-23T15:26:08Z"
+  },
+  {
+    "title": "CodeQL - Code Quality",
+    "status": "warn",
+    "detail": "dynamic on refs/pull/534/head \u00b7 run #1500",
+    "time": "15:26",
+    "timestamp": "2026-06-23T15:26:04Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #84",
-    "time": "12:15",
-    "timestamp": "2026-06-23T12:15:04Z"
+    "detail": "schedule on main \u00b7 run #85",
+    "time": "15:25",
+    "timestamp": "2026-06-23T15:25:57Z"
   },
   {
-    "title": "Running Copilot cloud agent",
+    "title": "Workflow Doctor",
+    "status": "ok",
+    "detail": "push on claude/affectionate-ritchie-0qg2ps \u00b7 run #173",
+    "time": "15:25",
+    "timestamp": "2026-06-23T15:25:26Z"
+  },
+  {
+    "title": ".github/workflows/workflow-repair-agent.yml",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-a63ca361-8f6d-4c03-9280-181e2eaf701e \u00b7 run #287",
-    "time": "12:08",
-    "timestamp": "2026-06-23T12:08:04Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-5d293328-8a38-4e5d-9e43-890cf058d289 \u00b7 run #286",
-    "time": "11:08",
-    "timestamp": "2026-06-23T11:08:04Z"
-  },
-  {
-    "title": "Burlington Release",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #11",
-    "time": "10:44",
-    "timestamp": "2026-06-23T10:44:26Z"
-  },
-  {
-    "title": "Content Pipeline",
-    "status": "ok",
-    "detail": "workflow_run on main \u00b7 run #41",
-    "time": "10:36",
-    "timestamp": "2026-06-23T10:36:10Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #872",
-    "time": "10:36",
-    "timestamp": "2026-06-23T10:36:04Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1498",
-    "time": "10:36",
-    "timestamp": "2026-06-23T10:36:04Z"
-  },
-  {
-    "title": "Bot Orchestrator",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #31",
-    "time": "10:35",
-    "timestamp": "2026-06-23T10:35:43Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-2c8adac8-751a-4dd2-8eca-7fb5db2f86a6 \u00b7 run #285",
-    "time": "10:08",
-    "timestamp": "2026-06-23T10:08:04Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #25",
-    "time": "10:01",
-    "timestamp": "2026-06-23T10:01:48Z"
+    "detail": "push on claude/affectionate-ritchie-0qg2ps \u00b7 run #20",
+    "time": "15:25",
+    "timestamp": "2026-06-23T15:25:20Z"
   },
   {
     "title": "Health Monitor",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #93",
-    "time": "09:50",
-    "timestamp": "2026-06-23T09:50:17Z"
+    "detail": "schedule on main \u00b7 run #94",
+    "time": "15:10",
+    "timestamp": "2026-06-23T15:10:51Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-460a431d-6015-40d8-82a8-0dedf36f44e3 \u00b7 run #284",
-    "time": "09:08",
-    "timestamp": "2026-06-23T09:08:04Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-c11cf7de-2eed-45c7-8611-4f12c15a5991 \u00b7 run #290",
+    "time": "15:08",
+    "timestamp": "2026-06-23T15:08:09Z"
+  },
+  {
+    "title": "Auto-Store",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #18",
+    "time": "14:35",
+    "timestamp": "2026-06-23T14:35:12Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-d2b60ac9-f52b-45aa-9e92-fc6f360289ab \u00b7 run #289",
+    "time": "14:08",
+    "timestamp": "2026-06-23T14:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-5fb748c2-0b91-409b-9345-5913e0f5f2bc \u00b7 run #288",
+    "time": "13:08",
+    "timestamp": "2026-06-23T13:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #438",
+    "time": "12:15",
+    "timestamp": "2026-06-23T12:15:26Z"
   }
 ]

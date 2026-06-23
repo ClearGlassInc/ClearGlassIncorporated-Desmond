@@ -1,0 +1,60 @@
+name: CodeQL
+
+# Static analysis (SAST) for the Python services/bots and the TypeScript /
+# JavaScript commerce frontends. Runs on every push and PR to main, plus a
+# weekly schedule so newly published query packs catch regressions even when
+# the code is quiet. Findings surface as Code Scanning alerts; they do not fail
+# the build (gate on severity via branch protection if/when desired).
+#
+# Note: github/codeql-action is referenced by major tag (@v3) rather than a
+# full commit SHA because this change was prepared in a sandbox without
+# authenticated GitHub API egress to resolve the release SHA. The Dependabot
+# github-actions updater tracks it, and the policy-gate `warn` rule will flag
+# it until it is promoted to a SHA pin — consistent with the rest of the fleet.
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: "23 6 * * 1" # Monday 06:23 UTC
+  workflow_dispatch:
+
+# Explicit least-privilege token. The policy-gate hard-denies any workflow that
+# omits a top-level permissions block.
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    permissions:
+      contents: read
+      security-events: write # upload SARIF results to Code Scanning
+      actions: read # required to read workflow run metadata on private repos
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: python
+            build-mode: none
+          - language: javascript-typescript
+            build-mode: none
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-extended
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

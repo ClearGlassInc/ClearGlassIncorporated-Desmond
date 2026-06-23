@@ -14,13 +14,27 @@ updates:
       actions:
         patterns: ["*"]
 
-  # Python tooling used by bots/ and scripts/.
+  # Python — every package with a requirements file, not just the repo root.
+  # Previously only "/" was watched, so the control planes, automation, bots,
+  # and service packages received zero security-update PRs. One grouped PR per
+  # directory per week keeps the noise down.
   - package-ecosystem: pip
-    directory: "/"
+    directories:
+      - "/"
+      - "/apps/autostore/control_plane"
+      - "/automation/v0.2"
+      - "/clearglass-commerce/control-plane"
+      - "/deployment/artemis/app"
+      - "/products/opal-koboi"
+      - "/sentinel"
+      - "/services/clearglass_agent_service"
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 10
     labels: ["dependencies", "python", "automated"]
+    groups:
+      pip:
+        patterns: ["*"]
 
   # Terraform providers/modules under infra/.
   - package-ecosystem: terraform
@@ -30,31 +44,15 @@ updates:
     open-pull-requests-limit: 3
     labels: ["dependencies", "infra", "automated"]
 
-  # npm — the commerce frontends were previously unmonitored (security alerts
-  # fired but no auto-update PRs), which let Next.js CVEs accumulate. Watch each
-  # Next.js app directory and group updates into one PR per app per week.
+  # npm — the commerce frontends and the agentops package. Security alerts
+  # fired here but no auto-update PRs, which let Next.js CVEs accumulate. Watch
+  # every Node app directory and group updates into one PR per app per week.
   - package-ecosystem: npm
-    directory: "/clearglass-commerce/storefront"
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    labels: ["dependencies", "javascript", "automated"]
-    groups:
-      npm:
-        patterns: ["*"]
-
-  - package-ecosystem: npm
-    directory: "/clearglass-commerce/admin"
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    labels: ["dependencies", "javascript", "automated"]
-    groups:
-      npm:
-        patterns: ["*"]
-
-  - package-ecosystem: npm
-    directory: "/apps/autostore/cockpit"
+    directories:
+      - "/apps/autostore/cockpit"
+      - "/clearglass-agentops"
+      - "/clearglass-commerce/admin"
+      - "/clearglass-commerce/storefront"
     schedule:
       interval: weekly
     open-pull-requests-limit: 5

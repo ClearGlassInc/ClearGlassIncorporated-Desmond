@@ -248,6 +248,30 @@ kbd{font-family:var(--mono);font-size:10px;border:1px solid var(--line-2);border
   .sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;overflow-x:auto}
   .sidebar .brand,.sidebar .foot{width:100%}
 }
+
+/* ---------- Analytics charts (dependency-free SVG) ---------- */
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.chart h3{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);margin-bottom:12px;font-weight:600}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;font-family:var(--mono);font-size:10px;color:var(--text-2)}
+.legend .lg{display:flex;align-items:center;gap:6px}
+.legend .sw{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* ---------- Institutional relationship graph ---------- */
+.graphwrap{position:relative;background:var(--bg-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.graphwrap svg{width:100%;height:auto;display:block}
+.gnode{cursor:pointer}
+.gnode circle{transition:r .15s,fill .15s}
+.gnode:hover circle{fill:var(--cyan);fill-opacity:.18}
+.gnode text{font-family:var(--mono);font-size:9px;fill:var(--text-2);pointer-events:none}
+.gedge{stroke:var(--line-2);stroke-width:1.2}
+
+/* ---------- Evidence locker ---------- */
+.evidrow{display:grid;grid-template-columns:1fr auto;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.evidrow .src-name{font-weight:600;font-size:13px}
+.evidrow .hash{font-family:var(--mono);font-size:10px;color:var(--text-3);word-break:break-all;margin-top:6px}
+.evidrow .ctl{display:flex;flex-direction:column;gap:6px;align-items:flex-end;min-width:120px}
 </style>
 <link rel="stylesheet" href="/assets/css/glass.css">
 
@@ -363,6 +387,13 @@ function loadTasks(){
 }
 function saveTasks(tasks){ try{localStorage.setItem(LS_KEY,JSON.stringify(tasks));}catch(e){} }
 
+const LS_EVID="cg.ontario.osint.evidence.v1";
+function loadEvidence(){
+  try{const r=localStorage.getItem(LS_EVID);if(r)return JSON.parse(r);}catch(e){}
+  return [];
+}
+function saveEvidence(list){ try{localStorage.setItem(LS_EVID,JSON.stringify(list));}catch(e){} }
+
 function SEED_TASKS(){
   const now=Date.now();
   return [
@@ -387,6 +418,7 @@ const store = createStore({
   route:"dashboard",
   events: seedEvents(),
   tasks: loadTasks(),
+  evidence: loadEvidence(),
   streamOn:true,
   intel:null,
   intelError:false,
@@ -866,26 +898,214 @@ function ViewBriefing(s){
   return wrap;
 }
 
+/* ============================================================
+   ADVANCED: ANALYTICS · INSTITUTIONAL GRAPH · EVIDENCE LOCKER
+   Dependency-free. Operates only on aggregate, in-app, and
+   public-source data — no per-individual lookups or tracking.
+   ============================================================ */
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs={},...kids){
+  const n=document.createElementNS(SVGNS,tag);
+  for(const k in attrs){if(attrs[k]!=null)n.setAttribute(k,attrs[k]);}
+  for(const c of kids.flat()){if(c==null)continue;n.appendChild(typeof c==="string"?document.createTextNode(c):c);}
+  return n;
+}
+/* pure helpers (unit-tested below) */
+function tally(arr,keyFn){const o={};for(const x of arr){const k=keyFn(x);o[k]=(o[k]||0)+1;}return o;}
+function parseDelta(v){const m=String(v).match(/-?\d+(\.\d+)?/);return m?parseFloat(m[0]):null;}
+/* SHA-256 of text -> hex (browser-native SubtleCrypto; requires https context) */
+async function sha256(text){
+  if(!(window.crypto&&crypto.subtle))throw new Error("SubtleCrypto unavailable (needs https context)");
+  const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+const SEV_COLOR={high:"var(--red)",med:"var(--amber)",low:"var(--green)"};
+/* illustrative CSI index trend (shape only — verify exact values at the cited StatsCan table) */
+const CSI_TREND=[
+  {y:"'08",v:78},{y:"'10",v:74},{y:"'12",v:70},{y:"'14",v:66},
+  {y:"'16",v:63},{y:"'18",v:61},{y:"'20",v:58},{y:"'22",v:55},{y:"'24",v:52},
+];
+
+function donut(counts,labels){
+  const entries=Object.keys(labels).filter(k=>counts[k]).map(k=>({k,n:counts[k],color:labels[k]}));
+  const total=entries.reduce((a,b)=>a+b.n,0)||1;
+  const r=52,C=2*Math.PI*r,cx=70,cy=70;
+  const svg=svgEl("svg",{viewBox:"0 0 140 140",role:"img"});
+  svg.appendChild(svgEl("circle",{cx,cy,r,fill:"none",stroke:"var(--line)","stroke-width":18}));
+  let off=0;
+  entries.forEach(e=>{const len=e.n/total*C;
+    svg.appendChild(svgEl("circle",{cx,cy,r,fill:"none",stroke:e.color,"stroke-width":18,
+      "stroke-dasharray":len+" "+(C-len),"stroke-dashoffset":-off,transform:"rotate(-90 "+cx+" "+cy+")"}));
+    off+=len;});
+  svg.appendChild(svgEl("text",{x:cx,y:cy-2,"text-anchor":"middle","font-family":"var(--mono)","font-size":"22","font-weight":"700",fill:"var(--text)"},String(total)));
+  svg.appendChild(svgEl("text",{x:cx,y:cy+14,"text-anchor":"middle","font-family":"var(--mono)","font-size":"8",fill:"var(--text-3)"},"TOTAL"));
+  return svg;
+}
+function legend(counts,labels,names){
+  return el("div",{class:"legend"},...Object.keys(labels).filter(k=>counts[k]).map(k=>
+    el("span",{class:"lg"},el("span",{class:"sw",style:"background:"+labels[k]}),(names[k]||k)+" · "+counts[k])));
+}
+function barsChart(data){
+  const max=Math.max(1,...data.map(d=>d.value));
+  const w=300,bh=26,gap=12,h=data.length*(bh+gap);
+  const svg=svgEl("svg",{viewBox:"0 0 "+w+" "+h,role:"img"});
+  data.forEach((d,i)=>{const y=i*(bh+gap);const bw=Math.max(2,(d.value/max)*(w-90));
+    svg.appendChild(svgEl("rect",{x:80,y,width:bw,height:bh,rx:5,fill:d.color,opacity:"0.85"}));
+    svg.appendChild(svgEl("text",{x:74,y:y+bh/2+3,"text-anchor":"end","font-family":"var(--mono)","font-size":"9",fill:"var(--text-2)"},d.label));
+    svg.appendChild(svgEl("text",{x:84+bw,y:y+bh/2+3,"font-family":"var(--mono)","font-size":"10","font-weight":"700",fill:"var(--text)"},String(d.value)));
+  });
+  return svg;
+}
+function lineChart(series){
+  const w=320,h=120,pad=10;const vals=series.map(s=>s.v);const mn=Math.min(...vals),mx=Math.max(...vals);
+  const x=i=>pad+i*((w-2*pad)/(series.length-1));
+  const y=v=>h-pad-((v-mn)/((mx-mn)||1))*(h-2*pad-14);
+  const pts=series.map((s,i)=>x(i)+","+y(s.v)).join(" ");
+  const svg=svgEl("svg",{viewBox:"0 0 "+w+" "+h,role:"img"});
+  svg.appendChild(svgEl("polyline",{points:pts,fill:"none",stroke:"var(--cyan)","stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"}));
+  series.forEach((s,i)=>{svg.appendChild(svgEl("circle",{cx:x(i),cy:y(s.v),r:2.5,fill:"var(--cyan)"}));
+    svg.appendChild(svgEl("text",{x:x(i),y:h-1,"text-anchor":"middle","font-family":"var(--mono)","font-size":"8",fill:"var(--text-3)"},s.y));});
+  return svg;
+}
+
+function ViewAnalytics(s){
+  const wrap=el("div",{});
+  wrap.appendChild(el("div",{class:"notice"},"🛈 ",el("b",{},"Aggregate metrics only. "),
+    "Charts are computed from in-app activity and operator-supplied public-source snapshots — verify exact figures against the cited primary sources."));
+  if(s.intel&&s.intel.metrics){
+    wrap.appendChild(el("div",{class:"stats"},...s.intel.metrics.map(m=>el("div",{class:"stat"},
+      el("div",{class:"k"},m.label),
+      el("div",{class:"v "+(m.trend==="down"?"down":m.trend==="up"?"warn":""),style:"font-size:16px;margin-top:8px"},m.value),
+      el("div",{class:"d"},m.note),
+      el("div",{class:"tiny mono",style:"color:var(--text-3);margin-top:6px"},"src: "+m.source)))));
+  }
+  const sev=tally(s.events,e=>e.sev);
+  const tsk=tally(s.tasks,t=>t.status);
+  const charts=el("div",{class:"charts"});
+  const c1=el("div",{class:"chart"},el("h3",{},"Status-stream severity mix"));
+  c1.appendChild(donut(sev,SEV_COLOR));
+  c1.appendChild(legend(sev,SEV_COLOR,{high:"High",med:"Medium",low:"Low"}));
+  charts.appendChild(c1);
+  const c2=el("div",{class:"chart"},el("h3",{},"Investigation tasks by status"));
+  c2.appendChild(barsChart([
+    {label:"OPEN",value:tsk.open||0,color:"var(--cyan)"},
+    {label:"IN PROG",value:tsk.in_progress||0,color:"var(--violet)"},
+    {label:"BLOCKED",value:tsk.blocked||0,color:"var(--red)"},
+    {label:"DONE",value:tsk.completed||0,color:"var(--green)"},
+  ]));
+  charts.appendChild(c2);
+  const c3=el("div",{class:"chart"},el("h3",{},"Halton CSI — long-run trend (illustrative)"));
+  c3.appendChild(lineChart(CSI_TREND));
+  c3.appendChild(el("div",{class:"muted tiny",style:"margin-top:8px"},"Shape illustrative; confirm exact values at ",
+    el("a",{href:"https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3510002601",target:"_blank",rel:"noopener noreferrer"},"StatsCan 35-10-0026-01 ↗")));
+  charts.appendChild(c3);
+  wrap.appendChild(charts);
+  return wrap;
+}
+
+const GRAPH={
+  center:{id:"council",label:"Burlington Council",tag:"municipal"},
+  nodes:[
+    {id:"integrity",label:"Integrity Comm.",tag:"oversight"},
+    {id:"audit",label:"Audit Cttee",tag:"oversight"},
+    {id:"whistle",label:"Whistleblower",tag:"oversight"},
+    {id:"procure",label:"Procurement",tag:"procurement"},
+    {id:"olt",label:"Land Tribunal",tag:"land-use"},
+    {id:"devfiles",label:"Dev. Charges",tag:"land-use"},
+    {id:"halton",label:"Halton Region",tag:"regional"},
+    {id:"lobby",label:"Lobbyist Reg.",tag:"influence"},
+    {id:"hrps",label:"HRPS",tag:"public-safety"},
+    {id:"province",label:"Province of ON",tag:"provincial"},
+  ],
+  edges:[
+    ["integrity","council"],["audit","council"],["whistle","council"],
+    ["procure","council"],["devfiles","council"],["olt","devfiles"],
+    ["halton","council"],["lobby","council"],["hrps","halton"],
+    ["province","olt"],["province","council"],["devfiles","procure"],
+  ],
+};
 function ViewNetwork(s){
   const wrap=el("div",{});
-  wrap.appendChild(el("div",{class:"pending-band"},
-    el("span",{class:"pending-dot"}),
-    el("div",{},el("b",{},"Network Map — Pending"),
-      el("div",{class:"muted tiny",style:"margin-top:3px"},"Entity/relationship graph (councillors ↔ development files ↔ procurement ↔ lobbyist disclosures) is queued. Base geographic map below is live."))));
+  wrap.appendChild(el("div",{class:"notice"},"🛈 ",el("b",{},"Institutional relationship map. "),
+    "Nodes are public bodies and record types — not individuals. Tap a node for its public-record context."));
+  const cx=330,cy=205,R=150,w=660,h=420;
+  const svg=svgEl("svg",{viewBox:"0 0 "+w+" "+h,role:"img","aria-label":"Institutional relationship graph"});
+  const pos={};
+  GRAPH.nodes.forEach((n,i)=>{const a=-Math.PI/2+i*2*Math.PI/GRAPH.nodes.length;pos[n.id]={x:cx+R*Math.cos(a),y:cy+R*Math.sin(a)};});
+  pos[GRAPH.center.id]={x:cx,y:cy};
+  GRAPH.edges.forEach(([a,b])=>{const pa=pos[a],pb=pos[b];if(!pa||!pb)return;
+    svg.appendChild(svgEl("line",{class:"gedge",x1:pa.x,y1:pa.y,x2:pb.x,y2:pb.y}));});
+  const drawNode=(node,p,center)=>{
+    const g=svgEl("g",{class:"gnode"});
+    g.appendChild(svgEl("circle",{cx:p.x,cy:p.y,r:center?26:15,fill:center?"var(--cyan)":"var(--panel-2)",stroke:center?"var(--cyan)":"var(--line-2)","stroke-width":center?0:1.4}));
+    g.appendChild(svgEl("text",{x:p.x,y:p.y+(center?42:28),"text-anchor":"middle"},node.label));
+    g.addEventListener("click",()=>Toast.info(node.label,(node.tag?("["+node.tag+"] "):"")+"Public-record entity — citations in Crime Intel & Reports."));
+    return g;
+  };
+  GRAPH.nodes.forEach(n=>svg.appendChild(drawNode(n,pos[n.id],false)));
+  svg.appendChild(drawNode(GRAPH.center,pos[GRAPH.center.id],true));
+  wrap.appendChild(el("div",{class:"graphwrap",style:"padding:8px"},svg));
   if(s.intel&&s.intel.satellite){
     const sat=s.intel.satellite;
-    wrap.appendChild(el("div",{class:"card",style:"margin-bottom:14px"},
+    wrap.appendChild(el("div",{class:"card",style:"margin-top:14px"},
       el("h3",{},"🗺 Geographic base map — "+sat.label),
       el("div",{class:"mapwrap"},el("iframe",{loading:"lazy",title:"Ontario map — Burlington area",
         src:"https://www.openstreetmap.org/export/embed.html?bbox="+(sat.lng-0.18)+"%2C"+(sat.lat-0.09)+"%2C"+(sat.lng+0.18)+"%2C"+(sat.lat+0.09)+"&layer=mapnik&marker="+sat.lat+"%2C"+sat.lng})),
       el("div",{class:"row",style:"margin-top:10px"},el("a",{class:"btn primary sm",href:sat.primary,target:"_blank",rel:"noopener noreferrer"},"🛰 Open satellite view ↗"))));
   }
-  // planned nodes
-  const nodes=[["Council & committees","governance"],["Development files / OLT","land-use"],["Procurement / vendors","procurement"],["Halton Region overlap","regional"],["Lobbyist disclosures","influence"],["Integrity / Audit / Whistleblower","oversight"]];
-  const grid=el("div",{class:"card"},el("h3",{},"Planned graph nodes"));
-  const inner=el("div",{class:"netgrid"});
-  nodes.forEach(([n,t])=>inner.appendChild(el("div",{class:"netnode"},el("div",{class:"nn-t"},n),el("div",{class:"nn-tag"},t))));
-  grid.appendChild(inner); wrap.appendChild(grid);
+  return wrap;
+}
+
+function addEvidence(rec){const list=[rec,...store.get().evidence];store.set({evidence:list});saveEvidence(list);}
+function deleteEvidence(id){const list=store.get().evidence.filter(e=>e.id!==id);store.set({evidence:list});saveEvidence(list);}
+function ViewEvidence(s){
+  const wrap=el("div",{});
+  wrap.appendChild(el("div",{class:"notice"},"🔐 ",el("b",{},"Chain-of-custody log. "),
+    "Record each public source you rely on. The deck stores a SHA-256 fingerprint of the captured text (not the text itself), the URL, and the retrieval time — so you can later prove a citation hasn't changed. Everything stays in your browser."));
+  const nameI=el("input",{placeholder:"Source name — e.g. HRPS H1 2025 statistics"});
+  const urlI=el("input",{placeholder:"https://…  (public source URL)"});
+  const whenI=el("input",{type:"datetime-local"});
+  try{whenI.value=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);}catch(e){}
+  const txtI=el("textarea",{rows:"3",placeholder:"Paste the exact excerpt you're citing (hashed locally for integrity; not stored verbatim)"});
+  const confI=el("select",{});[["high","High confidence"],["med","Medium"],["low","Low / unverified"]].forEach(([v,l])=>{const o=el("option",{value:v},l);if(v==="med")o.selected=true;confI.appendChild(o);});
+  const notesI=el("input",{placeholder:"notes (optional)"});
+  wrap.appendChild(el("div",{class:"card",style:"margin-bottom:16px"},
+    el("h3",{},"➕ Log a public source"),
+    field("Source name",nameI),field("URL",urlI),
+    el("div",{class:"row"},el("div",{style:"flex:1;min-width:180px"},field("Retrieved at",whenI)),el("div",{style:"flex:1;min-width:140px"},field("Confidence",confI))),
+    field("Cited excerpt (hashed locally)",txtI),
+    field("Notes",notesI),
+    el("div",{class:"actions"},
+      el("button",{class:"btn primary",onclick:async()=>{
+        const name=nameI.value.trim();if(!name){Toast.error("Missing name","Give the source a name.");nameI.focus();return;}
+        let hash="(no excerpt)";const excerpt=txtI.value.trim();
+        if(excerpt){try{hash=await sha256(excerpt);}catch(e){hash="(hash unavailable — needs https)";}}
+        addEvidence({id:uid(),name,url:urlI.value.trim(),retrieved:whenI.value||new Date().toISOString(),hash,len:excerpt.length,conf:confI.value,notes:notesI.value.trim(),logged:Date.now()});
+        Toast.success("Source logged",name);
+        nameI.value=urlI.value=txtI.value=notesI.value="";
+      }},"Log source"))));
+  const list=el("div",{});
+  if(!s.evidence.length)list.appendChild(el("div",{class:"card muted"},"No sources logged yet. Add your first citation above."));
+  s.evidence.forEach(e=>list.appendChild(el("div",{class:"evidrow"},
+    el("div",{},
+      el("div",{class:"src-name"},e.name," ",el("span",{class:"conf "+CONF_CLS(e.conf)},e.conf)),
+      e.url?el("div",{style:"margin-top:3px"},el("a",{href:e.url,target:"_blank",rel:"noopener noreferrer"},e.url+" ↗")):null,
+      el("div",{class:"muted tiny mono",style:"margin-top:5px"},"retrieved: "+e.retrieved+(e.len?" · excerpt "+e.len+" chars":"")),
+      el("div",{class:"hash"},"sha256: "+e.hash),
+      e.notes?el("div",{class:"muted tiny",style:"margin-top:5px"},e.notes):null),
+    el("div",{class:"ctl"},
+      el("button",{class:"btn sm",onclick:()=>{if(navigator.clipboard)navigator.clipboard.writeText(e.hash);Toast.info("Copied","SHA-256 copied to clipboard.");}},"⧉ copy hash"),
+      el("button",{class:"btn sm",onclick:()=>{deleteEvidence(e.id);Toast.info("Removed",e.name);}},"✕ remove")))));
+  wrap.appendChild(list);
+  if(s.evidence.length){
+    wrap.appendChild(el("div",{class:"row",style:"margin-top:14px"},
+      el("button",{class:"btn sm",onclick:()=>{
+        const blob=new Blob([JSON.stringify(s.evidence,null,2)],{type:"application/json"});
+        const a=el("a",{href:URL.createObjectURL(blob),download:"ontario-osint-evidence.json"});a.click();
+        Toast.info("Export","Evidence log exported as JSON.");
+      }},"⤓ Export evidence log (JSON)")));
+  }
   return wrap;
 }
 
@@ -895,13 +1115,16 @@ function ViewNetwork(s){
 const NAV=[
   ["dashboard","▣","DASHBOARD"],
   ["briefing","🔎","ACTIVE INVESTIGATIONS"],
+  ["analytics","📊","ANALYTICS"],
   ["status","◉","STATUS STREAM"],
+  ["intel","🌐","CRIME INTEL"],
   ["tasks","▦","TASK QUEUE"],
   ["network","🕸","NETWORK MAP"],
+  ["evidence","🔐","EVIDENCE LOCKER"],
   ["reports","📤","REPORTS & EXPORTS"],
 ];
-const VIEWS={dashboard:ViewDashboard,briefing:ViewBriefing,status:ViewStatus,tasks:ViewTasks,network:ViewNetwork,reports:ViewConfig,intel:ViewIntel,config:ViewConfig};
-const TITLES={dashboard:"Dashboard · Executive Snapshot",briefing:"Active Investigations · Burlington ON Core",status:"Status Stream (Mock Realtime)",tasks:"Task Queue (Optimistic Patching)",network:"Network Map (Pending)",reports:"Reports & Exports",intel:"Crime Intelligence Feed",config:"Reports & Exports"};
+const VIEWS={dashboard:ViewDashboard,briefing:ViewBriefing,analytics:ViewAnalytics,status:ViewStatus,tasks:ViewTasks,network:ViewNetwork,evidence:ViewEvidence,reports:ViewConfig,intel:ViewIntel,config:ViewConfig};
+const TITLES={dashboard:"Dashboard · Executive Snapshot",briefing:"Active Investigations · Burlington ON Core",analytics:"Analytics · Public-Source Metrics",status:"Status Stream (Mock Realtime)",tasks:"Task Queue (Optimistic Patching)",network:"Network Map · Institutional Graph",evidence:"Evidence Locker · Chain of Custody",reports:"Reports & Exports",intel:"Crime Intelligence Feed",config:"Reports & Exports"};
 
 function render(){
   const s=store.get();
@@ -931,7 +1154,8 @@ function render(){
             el("span",{class:"ic"},ic),label);
           if(r==="status"&&highCount)n.appendChild(el("span",{class:"badge"},String(highCount)));
           if(r==="tasks")n.appendChild(el("span",{class:"badge"},String(s.tasks.filter(t=>t.status!=="completed").length)));
-          if(r==="network")n.appendChild(el("span",{class:"badge",style:"background:var(--amber);color:#1a1204"},"PENDING"));
+          if(r==="network")n.appendChild(el("span",{class:"badge"},String(GRAPH.nodes.length+1)));
+          if(r==="evidence"&&s.evidence.length)n.appendChild(el("span",{class:"badge"},String(s.evidence.length)));
           return n;
         }),
         el("div",{class:"foot"},
@@ -981,9 +1205,12 @@ function paletteItems(){
   return [
     {ic:"▣",label:"Go: Dashboard",sub:"view",run:()=>store.set({route:"dashboard"})},
     {ic:"🔎",label:"Go: Active Investigations",sub:"view",run:()=>store.set({route:"briefing"})},
+    {ic:"📊",label:"Go: Analytics",sub:"view",run:()=>store.set({route:"analytics"})},
     {ic:"◉",label:"Go: Status Stream",sub:"view",run:()=>store.set({route:"status"})},
+    {ic:"🌐",label:"Go: Crime Intel Feed",sub:"view",run:()=>store.set({route:"intel"})},
     {ic:"▦",label:"Go: Task Queue",sub:"view",run:()=>store.set({route:"tasks"})},
-    {ic:"🕸",label:"Go: Network Map (Pending)",sub:"view",run:()=>store.set({route:"network"})},
+    {ic:"🕸",label:"Go: Network Map",sub:"view",run:()=>store.set({route:"network"})},
+    {ic:"🔐",label:"Go: Evidence Locker",sub:"view",run:()=>store.set({route:"evidence"})},
     {ic:"📤",label:"Go: Reports & Exports",sub:"view",run:()=>store.set({route:"reports"})},
     {ic:"⊕",label:"Inject test event",sub:"action",run:()=>stream.pulse()},
     {ic:"＋",label:"New investigation task",sub:"action",run:()=>{store.set({route:"tasks"});openTaskModal();}},
@@ -1026,7 +1253,9 @@ function clockStr(){return new Date().toLocaleString("en-CA",{hour12:false,timeZ
 /* ============================================================
    WIRE-UP
    ============================================================ */
-store.subscribe(()=>render());
+function syncHash(){const r=store.get().route;if(("#"+r)!==location.hash){try{history.replaceState(null,"","#"+r);}catch(e){}}}
+window.addEventListener("hashchange",()=>{const r=location.hash.replace(/^#/,"");if(VIEWS[r]&&r!==store.get().route)store.set({route:r});});
+store.subscribe(()=>{render();syncHash();});
 
 stream.addEventListener("incident",e=>{
   const ev=e.detail;
@@ -1045,12 +1274,13 @@ window.addEventListener("keydown",e=>{
 // live clock without full re-render
 setInterval(()=>{const c=$("#clk");if(c)c.textContent=clockStr();},1000);
 
+(function(){const r=location.hash.replace(/^#/,"");if(VIEWS[r])store.set({route:r});})();
 render();
 stream.start();
 loadIntel();
 
 /* expose a tiny test surface (used by the page's self-test below) */
-window.__deck={uid,fmtTime,createStore,SEED_TASKS,Api};
+window.__deck={uid,fmtTime,createStore,SEED_TASKS,Api,tally,parseDelta,sha256};
 })();
 </script>
 
@@ -1078,6 +1308,12 @@ window.__deck={uid,fmtTime,createStore,SEED_TASKS,Api};
   // 4. seed shape
   const seed=D.SEED_TASKS();
   ok("seed tasks have required fields", seed.every(t=>t.id&&t.title&&t.status&&t.priority));
+  // 5. tally aggregates by key
+  ok("tally() counts by key", (function(){const t=D.tally([{s:"a"},{s:"a"},{s:"b"}],x=>x.s);return t.a===2&&t.b===1;})());
+  // 6. parseDelta pulls a signed number from a metric string
+  ok("parseDelta() extracts number", D.parseDelta("-11.7% YoY")===-11.7 && D.parseDelta("n/a")===null);
+  // 7. sha256 known vector (async — logs separately)
+  if(D.sha256){D.sha256("abc").then(h=>console.log("%c"+(h==="ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"?"PASS":"FAIL")+" · sha256('abc') known vector", h.startsWith("ba78")?"color:#34d399":"color:#f87171")).catch(()=>{});}
   console.log("%c[Burlington OSINT Deck] self-tests","color:#22d3ee;font-weight:bold");
   results.forEach(r=>console.log((r.startsWith("PASS")?"%c":"%c")+r, r.startsWith("PASS")?"color:#34d399":"color:#f87171"));
 })();

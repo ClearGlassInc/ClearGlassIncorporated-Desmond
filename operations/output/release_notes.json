@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-06-22T12:49:30.804536+00:00",
+  "run_utc": "2026-06-23T10:35:59.770074+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 203,
+  "commit_count": 214,
   "sections": {
     "New Features": [
+      {
+        "sha": "b8356f9",
+        "type": "feat",
+        "scope": "ci",
+        "subject": "add hardened, manually-triggered Workflow Repair Agent",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
       {
         "sha": "7216e11",
         "type": "feat",
@@ -205,6 +214,24 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "6981e89",
+        "type": "fix",
+        "scope": "storefront",
+        "subject": "read route params via useParams() (React 18 compatible)",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "abd7834",
+        "type": "fix",
+        "scope": "storefront",
+        "subject": "migrate product page to Next 15/16 async route params",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
       {
         "sha": "8f77bac",
         "type": "fix",
@@ -530,6 +557,15 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "64d218a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Deliver form leads to both Gmail and iCloud inboxes",
+        "author": "Claude",
+        "date": "2026-06-22",
+        "breaking": false
+      },
       {
         "sha": "4b14ac6",
         "type": "chore",
@@ -1153,6 +1189,69 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "cd8b98f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "63534dd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "7532507",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "cbf3ca3",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "f733661",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "22fb253",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-22",
+        "breaking": false
+      },
+      {
+        "sha": "e280de4",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-22 12:49 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-22",
+        "breaking": false
+      },
       {
         "sha": "7ff1353",
         "type": "bot",

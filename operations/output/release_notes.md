@@ -1,9 +1,10 @@
-# Release Notes — 2026-06-22
+# Release Notes — 2026-06-23
 
-*203 commit(s) since v1.0.0*
+*214 commit(s) since v1.0.0*
 
 ## New Features
 
+- **ci:** add hardened, manually-triggered Workflow Repair Agent (`b8356f9`)
 - **offers:** add working Interac e-Transfer pay path to Hardening Sprint + PHIPA (`7216e11`)
 - **offers:** add working Interac e-Transfer pay path to the $249 Quick-Audit (`a88aaae`)
 - **opal-koboi:** security hardening v2.0 for the facial-recognition system (`3e4cdce`)
@@ -29,6 +30,8 @@
 
 ## Bug Fixes
 
+- **storefront:** read route params via useParams() (React 18 compatible) (`6981e89`)
+- **storefront:** migrate product page to Next 15/16 async route params (`abd7834`)
 - **security:** upgrade Next.js 14/15 -> 16.2.9 (clears high-severity advisories) (`8f77bac`)
 - **security:** resolve Dependabot #85 — pin postcss >= 8.5.10 (moderate XSS) (`edc02dd`)
 - **site:** add ClearGlass logo badge to counter-uas-commercialization-os.html (`402b563`)
@@ -79,6 +82,7 @@
 
 ## Maintenance
 
+- Deliver form leads to both Gmail and iCloud inboxes (`64d218a`)
 - **deps:** put the Next.js apps under Dependabot version monitoring (`4b14ac6`)
 - Fix bugs: pilot score formula, live KPI wiring, release tag permission (`48862eb`)
 - Add ARTEMIS Counter-UAS Commercialization OS + Military-Op pipeline (`edc254f`)
@@ -151,6 +155,13 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`cd8b98f`)
+- refresh control-surface data feeds [skip ci] (`63534dd`)
+- refresh control-surface data feeds [skip ci] (`7532507`)
+- refresh control-surface data feeds [skip ci] (`cbf3ca3`)
+- refresh control-surface data feeds [skip ci] (`f733661`)
+- refresh control-surface data feeds [skip ci] (`22fb253`)
+- update generated outputs — 2026-06-22 12:49 UTC [skip ci] (`e280de4`)
 - refresh control-surface data feeds [skip ci] (`7ff1353`)
 - refresh control-surface data feeds [skip ci] (`54da811`)
 - refresh control-surface data feeds [skip ci] (`f5269fd`)

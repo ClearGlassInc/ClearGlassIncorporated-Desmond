@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #80",
+    "title": "Control Surface Feeds #81",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:21",
+    "timestamp": "2026-06-23T00:21:02Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #275",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-1761dccb-f85d-4716-82e6-713c00ab6ffc",
+    "time": "00:08",
+    "timestamp": "2026-06-23T00:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #274",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4419d431-fbb1-47f1-89a5-6a083d972a17",
+    "time": "23:08",
+    "timestamp": "2026-06-22T23:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #434",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:55",
+    "timestamp": "2026-06-22T22:55:21Z"
+  },
+  {
+    "title": "pages build and deployment #868",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "22:55",
+    "timestamp": "2026-06-22T22:55:13Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1494",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:55",
+    "timestamp": "2026-06-22T22:55:12Z"
+  },
+  {
+    "title": "Control Surface Feeds #80",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:54",
     "timestamp": "2026-06-22T22:54:53Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "18:27",
     "timestamp": "2026-06-22T18:27:28Z"
-  },
-  {
-    "title": "Security #507",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:28Z"
-  },
-  {
-    "title": "CI #742",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:27Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #432",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:26Z"
-  },
-  {
-    "title": "Commerce Frontend CI #9",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:26Z"
-  },
-  {
-    "title": "ClearGlass Copilot Setup #20",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:26Z"
-  },
-  {
-    "title": "pages build and deployment #866",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "18:27",
-    "timestamp": "2026-06-22T18:27:23Z"
   }
 ]

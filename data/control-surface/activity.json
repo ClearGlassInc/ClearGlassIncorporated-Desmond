@@ -3,12 +3,75 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "05:14",
-    "timestamp": "2026-06-23T05:14:30Z"
+    "time": "08:38",
+    "timestamp": "2026-06-23T08:38:38Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #83",
+    "time": "08:38",
+    "timestamp": "2026-06-23T08:38:25Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-fee9f8a1-8b3c-4763-8ddf-c29c3c5997b5 \u00b7 run #283",
+    "time": "08:08",
+    "timestamp": "2026-06-23T08:08:04Z"
+  },
+  {
+    "title": "Multi-Repo Audit",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #5",
+    "time": "07:57",
+    "timestamp": "2026-06-23T07:57:35Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-5cd6ef6c-6b88-49a3-a94c-459f1ba5e473 \u00b7 run #282",
+    "time": "07:08",
+    "timestamp": "2026-06-23T07:08:04Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #766",
+    "time": "06:13",
+    "timestamp": "2026-06-23T06:13:48Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-98209e95-6dec-446d-9014-8db519b50a65 \u00b7 run #281",
+    "time": "06:08",
+    "timestamp": "2026-06-23T06:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #436",
+    "time": "05:14",
+    "timestamp": "2026-06-23T05:14:47Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #870",
+    "time": "05:14",
+    "timestamp": "2026-06-23T05:14:38Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1496",
+    "time": "05:14",
+    "timestamp": "2026-06-23T05:14:37Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #82",
     "time": "05:14",
     "timestamp": "2026-06-23T05:14:18Z"
@@ -26,68 +89,5 @@
     "detail": "workflow_dispatch on main \u00b7 run #17",
     "time": "04:45",
     "timestamp": "2026-06-23T04:45:09Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-fa978464-a677-4b7c-9224-0ccb45a28992 \u00b7 run #279",
-    "time": "04:08",
-    "timestamp": "2026-06-23T04:08:04Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #92",
-    "time": "03:56",
-    "timestamp": "2026-06-23T03:56:31Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-acfd1acd-4e39-4a92-a91a-c2297b2ffb94 \u00b7 run #278",
-    "time": "03:08",
-    "timestamp": "2026-06-23T03:08:04Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-d7eb194e-db04-48c3-8ed8-62fa24c56660 \u00b7 run #277",
-    "time": "02:08",
-    "timestamp": "2026-06-23T02:08:04Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-2049d4e9-2006-4586-ad9f-210794ca1b2c \u00b7 run #276",
-    "time": "01:08",
-    "timestamp": "2026-06-23T01:08:04Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #435",
-    "time": "00:21",
-    "timestamp": "2026-06-23T00:21:31Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #869",
-    "time": "00:21",
-    "timestamp": "2026-06-23T00:21:24Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1495",
-    "time": "00:21",
-    "timestamp": "2026-06-23T00:21:23Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #81",
-    "time": "00:21",
-    "timestamp": "2026-06-23T00:21:02Z"
   }
 ]

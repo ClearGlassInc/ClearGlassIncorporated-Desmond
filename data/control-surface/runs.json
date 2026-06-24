@@ -1,8 +1,78 @@
 [
   {
-    "title": "Control Surface Feeds #90",
+    "title": "Control Surface Feeds #91",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "08:33",
+    "timestamp": "2026-06-24T08:33:18Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #307",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-83ffccf2-896c-44b7-a858-d227d57a14c7",
+    "time": "08:08",
+    "timestamp": "2026-06-24T08:08:08Z"
+  },
+  {
+    "title": "Multi-Repo Audit #6",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "07:52",
+    "timestamp": "2026-06-24T07:52:55Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #306",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-d08dea23-156a-4f08-8266-045fb1d5309d",
+    "time": "07:08",
+    "timestamp": "2026-06-24T07:08:07Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #784",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:12",
+    "timestamp": "2026-06-24T06:12:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #305",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-51dbcbc1-e7cc-4453-8fcf-a3e9a8acbf50",
+    "time": "06:08",
+    "timestamp": "2026-06-24T06:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #304",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-6f45b83a-8e1f-4401-9598-cc48f273e42c",
+    "time": "05:08",
+    "timestamp": "2026-06-24T05:08:06Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #454",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "04:35",
+    "timestamp": "2026-06-24T04:35:40Z"
+  },
+  {
+    "title": "pages build and deployment #888",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "04:35",
+    "timestamp": "2026-06-24T04:35:32Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1523",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "04:35",
+    "timestamp": "2026-06-24T04:35:31Z"
+  },
+  {
+    "title": "Control Surface Feeds #90",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "04:35",
     "timestamp": "2026-06-24T04:35:17Z"
   },
@@ -68,75 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "04:02",
     "timestamp": "2026-06-24T04:02:07Z"
-  },
-  {
-    "title": "pages build and deployment #887",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "04:02",
-    "timestamp": "2026-06-24T04:02:07Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1522",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "04:02",
-    "timestamp": "2026-06-24T04:02:06Z"
-  },
-  {
-    "title": "Workflow Repair Agent (Hardened) #33",
-    "status": "bad",
-    "detail": "failure \u00b7 issue_comment on main",
-    "time": "04:02",
-    "timestamp": "2026-06-24T04:02:05Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #782",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "04:01",
-    "timestamp": "2026-06-24T04:01:38Z"
-  },
-  {
-    "title": "Policy Gate #495",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "04:01",
-    "timestamp": "2026-06-24T04:01:38Z"
-  },
-  {
-    "title": "CI #758",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "04:01",
-    "timestamp": "2026-06-24T04:01:38Z"
-  },
-  {
-    "title": "CodeQL #184",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "04:01",
-    "timestamp": "2026-06-24T04:01:38Z"
-  },
-  {
-    "title": "ClearGlass Copilot Setup #28",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "04:01",
-    "timestamp": "2026-06-24T04:01:38Z"
-  },
-  {
-    "title": "Workflow Doctor #181",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "04:01",
-    "timestamp": "2026-06-24T04:01:38Z"
-  },
-  {
-    "title": "Security #523",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "04:01",
-    "timestamp": "2026-06-24T04:01:38Z"
   }
 ]

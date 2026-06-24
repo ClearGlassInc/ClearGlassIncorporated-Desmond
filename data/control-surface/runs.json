@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #96",
+    "title": "Control Surface Feeds #97",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:33",
+    "timestamp": "2026-06-24T23:33:51Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #322",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-0334c9c0-771c-4252-960d-a38d96cbb84b",
+    "time": "23:08",
+    "timestamp": "2026-06-24T23:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #321",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-ab63955a-e9f6-4ffe-ba4c-a8c0e65262f3",
+    "time": "22:08",
+    "timestamp": "2026-06-24T22:08:06Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #461",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:45",
+    "timestamp": "2026-06-24T21:45:53Z"
+  },
+  {
+    "title": "pages build and deployment #895",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:45",
+    "timestamp": "2026-06-24T21:45:47Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1530",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:45",
+    "timestamp": "2026-06-24T21:45:46Z"
+  },
+  {
+    "title": "Control Surface Feeds #96",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:45",
     "timestamp": "2026-06-24T21:45:28Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "17:18",
     "timestamp": "2026-06-24T17:18:08Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1528",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "17:18",
-    "timestamp": "2026-06-24T17:18:08Z"
-  },
-  {
-    "title": "Control Surface Feeds #94",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "17:17",
-    "timestamp": "2026-06-24T17:17:48Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #316",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-dadcfd37-6a5c-47f7-85d1-87671453a75a",
-    "time": "17:08",
-    "timestamp": "2026-06-24T17:08:05Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #315",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-e47d7744-d6cd-4d77-90ae-5b6bfaa7325d",
-    "time": "16:08",
-    "timestamp": "2026-06-24T16:08:11Z"
-  },
-  {
-    "title": "Commerce Daily Loop #14",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:32",
-    "timestamp": "2026-06-24T15:32:16Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #314",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-05040855-5235-45c0-8adc-8f47ea74591c",
-    "time": "15:08",
-    "timestamp": "2026-06-24T15:08:09Z"
   }
 ]

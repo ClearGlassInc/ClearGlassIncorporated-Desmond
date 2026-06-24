@@ -153,7 +153,7 @@ def render_site_page(threads: list[ThreadBundle]) -> str:
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
   <title>ClearGlassInc Artemis Threads Kit</title>
   <style>
-    body {{ font-family: Inter, system-ui, sans-serif; margin: 0; background: #080b12; color: #f3f5f9; }}
+    body {{ font-family: Inter, system-ui, sans-serif; margin: 0; background: #f7f8fa; color: #0c0e12; }}
     nav.site-nav {{ position: sticky; top: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem,4vw,3rem); height: 64px; background: rgba(8,11,18,.88); backdrop-filter: blur(24px); border-bottom: 1px solid #1e2d40; }}
     nav.site-nav .brand {{ display: flex; align-items: center; gap: 10px; text-decoration: none; color: #f3f5f9; font-weight: 700; font-size: 15px; }}
     nav.site-nav .links {{ display: flex; gap: 4px; flex-wrap: wrap; }}

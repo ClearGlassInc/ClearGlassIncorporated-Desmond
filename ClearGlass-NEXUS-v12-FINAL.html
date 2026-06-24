@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center</title>
+<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform |</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -1016,8 +1016,18 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 #gauge-arc { filter:drop-shadow(0 0 4px currentColor); }
 
 </style>
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://clearglassinc.github.io/ClearGlass-NEXUS-v12-FINAL.html">
+  <meta name="description" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center ClearGlass Inc. builds intelligent automation, AI operations, and security…">
+  <link rel="canonical" href="https://clearglassinc.github.io/ClearGlass-NEXUS-v12-FINAL.html">
+  <meta property="og:title" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform |">
+  <meta property="og:description" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center ClearGlass Inc. builds intelligent automation, AI operations, and security…">
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
+  <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center</h1>
 <!-- ═══════════════════════════════════════════════════════════
      DARPA NEXUS v11 — INTELLIGENCE PANELS
      ═══════════════════════════════════════════════════════════ -->
@@ -2498,10 +2508,17 @@ async function fetchSpaceWx(){
 async function fetchISS(){
   setSf('sf-iss','o');
   try{
-    const r=await fetch('https://api.open-notify.org/iss-now.json');
-    const d=await r.json();
-    S.iss.lat=parseFloat(d.iss_position.latitude);
-    S.iss.lon=parseFloat(d.iss_position.longitude);
+    let _lat, _lon;
+    try{
+      const wr=await fetch('https://api.wheretheiss.at/v1/satellites/25544');
+      if(!wr.ok) throw 0;
+      const wd=await wr.json(); _lat=parseFloat(wd.latitude); _lon=parseFloat(wd.longitude);
+    }catch(_){
+      const r=await fetch('https://api.open-notify.org/iss-now.json');
+      const d=await r.json(); _lat=parseFloat(d.iss_position.latitude); _lon=parseFloat(d.iss_position.longitude);
+    }
+    S.iss.lat=_lat;
+    S.iss.lon=_lon;
     S.iss.alt=420;
     const dlat=S.iss.lat-S.loc.lat;const dlon=S.iss.lon-S.loc.lon;
     const a=Math.sin(dlat*Math.PI/360)**2+Math.cos(S.iss.lat*Math.PI/180)*Math.cos(S.loc.lat*Math.PI/180)*Math.sin(dlon*Math.PI/360)**2;
@@ -5543,6 +5560,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>
 <!-- HELIX GEOSPATIAL — new panel -->

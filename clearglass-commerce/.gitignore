@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.next/
+next-env.d.ts
+dist/
+*.log
+.coverage
+coverage.xml
+*.db
+demo.db

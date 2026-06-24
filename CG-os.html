@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>JARVIS OS — Command HUD</title>
-<meta name="description" content="JARVIS OS command HUD — an always-on executive command center: system health ring, KPI dashboards, daily briefing, agent swarm activity stream, approval ladder, and voice control. Built in HTML/CSS/JS."/>
-<link rel="canonical" href="https://clearglassinc.github.io/jarvis-os.html"/>
-<meta property="og:title" content="JARVIS OS — Command HUD"/>
+<title>CG OS — Command HUD · ClearGlass Inc.</title>
+<meta name="description" content="CG OS command HUD — an always-on executive command center: system health ring, KPI dashboards, daily briefing, agent swarm activity stream, approval ladder,…"/>
+<link rel="canonical" href="https://clearglassinc.github.io/CG-os.html"/>
+<meta property="og:title" content="CG OS — Command HUD"/>
 <meta property="og:description" content="Always-on executive command center. Cinematic Iron-Man-style HUD with live dashboards, agent swarm, and approval ladder."/>
 <meta property="og:type" content="website"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -200,12 +200,16 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opa
   <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="ui.css">
   <link rel="stylesheet" href="buttons.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+
+  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
+  <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">CG OS — Command HUD</h1>
 <div class="app">
   <!-- ===== Command bar ===== -->
   <header class="cmdbar">
-    <div class="brand"><span class="orb"></span><span class="name">JARVIS<span>OS</span></span></div>
+    <div class="brand"><span class="orb"></span><span class="name">CG<span>OS</span></span></div>
     <span class="clock" id="clock">--:--:--</span>
     <span class="spacer"></span>
     <div class="modes" id="modes">
@@ -428,10 +432,10 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opa
     setTimeout(function(){$('.sys-status').innerHTML='<span class="dot"></span>ALL SYSTEMS GREEN';},4200);
   });
 
-  /* =================== JARVIS brain (shared w/ palette + voice) =================== */
+  /* =================== CG brain (shared w/ palette + voice) =================== */
   function respond(raw){
     var q=raw.toLowerCase().trim();var m;
-    if(/^(hi|hey|hello|jarvis|good (morning|evening|afternoon)|you there)/.test(q))
+    if(/^(hi|hey|hello|CG|good (morning|evening|afternoon)|you there)/.test(q))
       return "Online, sir. All systems green, 12 agents active, queue at 1,284. What do you need?";
     if(/brief|briefing|whats up|what.?s up|catch me up|priorit/.test(q))
       return "Three things need you, sir:\n• Board deck due 5pm — section 3 incomplete\n• Vendor invoice $13,330 — terms silently changed to Net-7, recommend hold\n• New-geo admin login 03:14 — session quarantined\nTwo opportunities queued. Shall I open any?";
@@ -495,5 +499,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <script defer src="control-surface.js"></script>
   <script defer src="ui.js"></script>
   <script defer src="platform.js"></script>
+  <script defer src="/logo-badge.js"></script>
+<script defer src="/stealth-glass.js"></script>
 </body>
 </html>

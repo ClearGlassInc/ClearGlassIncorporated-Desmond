@@ -1,18 +1,26 @@
 [
   {
-    "bot_id": "content_collector",
+    "bot_id": "marketing",
     "runs": 1,
     "success_rate": 1.0,
-    "avg_duration_s": 0.23,
+    "avg_duration_s": 0.01,
     "alignment": 0.0,
-    "fitness": 0.9996
+    "fitness": 1.0
+  },
+  {
+    "bot_id": "content_collector",
+    "runs": 2,
+    "success_rate": 1.0,
+    "avg_duration_s": 0.29,
+    "alignment": 0.0,
+    "fitness": 0.9995
   },
   {
     "bot_id": "master_orchestrator",
-    "runs": 11,
+    "runs": 20,
     "success_rate": 1.0,
-    "avg_duration_s": 1.034,
+    "avg_duration_s": 0.891,
     "alignment": 0.0,
-    "fitness": 0.9983
+    "fitness": 0.9985
   }
 ]

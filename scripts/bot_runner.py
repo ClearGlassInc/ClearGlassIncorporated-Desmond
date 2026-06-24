@@ -75,6 +75,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "content",
         "schedule": "daily",
     },
+    "lead_draft": {
+        "module": "bots.lead_draft_bot",
+        "group": "sales",
+        "schedule": "daily",
+    },
     "seo_optimizer": {
         "module": "bots.seo_optimizer_bot",
         "group": "seo",
@@ -94,6 +99,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "module": "bots.wealth_ladder_bot",
         "group": "strategy",
         "schedule": "daily",
+    },
+    "smb_cyber_trust_kit": {
+        "module": "bots.smb_cyber_trust_kit_bot",
+        "group": "content",
+        "schedule": "weekly",
     },
     "self_evolving": {
         "module": "bots.self_evolving_engine",

@@ -18,7 +18,7 @@
   window.__cgNavLoaded = true;            // supersede the legacy hover menu (nav.js)
 
   var REPO = "ClearGlassInc/ClearGlassInc.github.io";
-  var EMAIL = "info@clearglassinc.com";
+  var EMAIL = "desmondotieno@icloud.com";
 
   // ── destinations (grouped) ──────────────────────────────────────────────
   var GROUPS = [
@@ -30,8 +30,10 @@
       ["SENTINEL · Live", "sentinel.html", "◉"],
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
       ["Agent Mesh", "agentmesh.html", "⌗"],
+      ["BLUEDESK · CISO Console", "bluedesk.html", "🛡"],
       ["AI Operator", "ai-operator.html", "🜂"],
-      ["Command Console", "command-console.html", "▤"]
+      ["Command Console", "command-console.html", "▤"],
+      ["Event Control Surface", "saas-platform.html", "◆"]
     ]],
     ["Platforms", [
       ["Artemis IV Core", "artemis-iv.html", "🧭"],
@@ -39,12 +41,14 @@
       ["Guardian", "guardian.html", "🌐"],
       ["ClearGlass NEXUS", "clearglass-nexus.html", "🛡"],
       ["Government", "government.html", "🏛"],
-      ["ClearPulse", "clearpulse.html", "📡"]
+      ["ClearPulse", "clearpulse.html", "📡"],
+      ["Satellite Map", "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13", "🛰"]
     ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],
       ["Interface", "intelligence-interface.html", "🖥"],
+      ["Ontario OSINT Deck", "Ontario-osint.html", "🛰"],
       ["Revenue Engine", "revenue-engine.html", "💹"]
     ]],
     ["Legal & Finance", [
@@ -54,6 +58,7 @@
     ]],
     ["Company", [
       ["Home", "index.html", "⌂"],
+      ["Pricing & Engagements", "pricing.html", "◎"],
       ["Web Design & Dev", "web-design.html", "◳"],
       ["Button Lab", "button-lab.html", "◫"]
     ]]
@@ -62,10 +67,12 @@
   // ── actions (verbs, not just destinations) ──────────────────────────────
   var ACTIONS = [
     { label: "Open Systems Control Surface", sub: "Operations console", icon: "▣", href: "systems.html" },
+    { label: "Pricing & engagements", sub: "Book a fixed-fee engagement", icon: "◎", href: "pricing.html" },
     { label: "Website design & development", sub: "Engagement", icon: "◳", href: "web-design.html" },
     { label: "Open latest project", sub: "Artemis VI", icon: "🛰", href: "artemis.html" },
     { label: "Deployment status", sub: "GitHub Actions", icon: "◇", act: "status" },
     { label: "Security research", sub: "SENTINEL", icon: "◉", href: "sentinel.html" },
+    { label: "BLUEDESK · CISO risk console", sub: "Blue team", icon: "🛡", href: "bluedesk.html" },
     { label: "Contact", sub: EMAIL, icon: "✉", act: "contact" },
     { label: "Copy contact email", sub: EMAIL, icon: "⧉", act: "copyEmail" },
     { label: "View source on GitHub", sub: REPO, icon: "⌥", href: "https://github.com/" + REPO, ext: true }
@@ -83,6 +90,7 @@
 
   var CORE = [
     ["Home", "index.html", "⌂"],
+      ["Pricing & Engagements", "pricing.html", "◎"],
     ["PERCIVAL", "percival-os.html", "◐"],
     ["SENTINEL", "sentinel.html", "◉"],
     ["Intel", "intelligence.html", "🧠"]
@@ -250,7 +258,8 @@
       dr.appendChild(h("div", "cgcs-gl", g[0]));
       g[1].forEach(function (it) {
         var a = h("a"); if (it[1].toLowerCase() === here) a.className = "cur";
-        a.href = it[1]; a.innerHTML = '<span class="ic">' + it[2] + '</span>' + it[0] + (it[1].toLowerCase() === here ? ' <span style="margin-left:auto;font:9px monospace;color:#8a90c4">● here</span>' : "");
+        a.href = it[1]; if (/^https?:/i.test(it[1])) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+        a.innerHTML = '<span class="ic">' + it[2] + '</span>' + it[0] + (it[1].toLowerCase() === here ? ' <span style="margin-left:auto;font:9px monospace;color:#8a90c4">● here</span>' : "");
         dr.appendChild(a);
       });
     });
@@ -335,7 +344,7 @@
     if (it.act === "copyEmail") { try { navigator.clipboard.writeText(EMAIL); } catch (e) {} toast("Email copied: " + EMAIL); return; }
     if (it.act === "contact") { location.href = "mailto:" + EMAIL; return; }
     if (it.act === "status") { window.open("https://github.com/" + REPO + "/actions", "_blank", "noopener"); return; }
-    if (it.href) { if (it.ext) window.open(it.href, "_blank", "noopener"); else location.href = it.href; }
+    if (it.href) { if (it.ext || /^https?:/i.test(it.href)) window.open(it.href, "_blank", "noopener"); else location.href = it.href; }
   }
 
   // ── keyboard ──────────────────────────────────────────────────────────────

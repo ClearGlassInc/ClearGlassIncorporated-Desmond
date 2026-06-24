@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-23T10:35:59.798186+00:00",
+  "run_utc": "2026-06-24T10:22:01.738030+00:00",
   "files_audited": 53,
-  "average_score": 95.5,
+  "average_score": 95.1,
   "pages": [
     {
       "file": "404.html",
@@ -457,12 +457,12 @@
     },
     {
       "file": "control-surface.html",
-      "title": "ClearGlass \u00b7 Event-Driven Control Surface | PERCIVAL",
-      "title_length": 52,
-      "title_ok": true,
-      "description": "ClearGlass Event-Driven Control Surface \u2014 PERCIVAL command surface with a crystal-glass dropdown linking every platform, console, and intelligence product.",
-      "description_length": 155,
-      "description_ok": true,
+      "title": "Systems Control Surface v3.1 \u2014 Command Dashboard | ClearGlass Inc",
+      "title_length": 65,
+      "title_ok": false,
+      "description": "ClearGlass Systems Control Surface v3.1 \u2014 a next-gen light glass command dashboard unifying COMMAND, PLATFORMS, and INTELLIGENCE with a live AI Operator, a \u2318K command palette, an animated constellation field, and luminous blue-cyan accents.",
+      "description_length": 240,
+      "description_ok": false,
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
@@ -470,8 +470,11 @@
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 80,
+      "issues": [
+        "Title length 65 chars (ideal 30\u201360)",
+        "Description length 240 chars (ideal 120\u2013160)"
+      ]
     },
     {
       "file": "corporate-legal-advisor.html",
@@ -989,10 +992,10 @@
     }
   ],
   "top_issues": [
-    "5x \u2014 Description length N chars (ideal N\u2013N)",
+    "6x \u2014 Description length N chars (ideal N\u2013N)",
+    "4x \u2014 Title length N chars (ideal N\u2013N)",
     "4x \u2014 Missing og:image",
     "3x \u2014 Multiple <hN> tags (N)",
-    "3x \u2014 Title length N chars (ideal N\u2013N)",
     "1x \u2014 Missing <title>",
     "1x \u2014 Missing meta description",
     "1x \u2014 Missing canonical link tag",

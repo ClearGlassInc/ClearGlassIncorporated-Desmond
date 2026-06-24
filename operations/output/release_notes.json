@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-06-23T10:35:59.770074+00:00",
+  "run_utc": "2026-06-24T10:22:01.693468+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 214,
+  "commit_count": 232,
   "sections": {
     "New Features": [
+      {
+        "sha": "1354443",
+        "type": "feat",
+        "scope": "seo",
+        "subject": "add llms.txt and explicit AI-crawler allows in robots.txt",
+        "author": "Claude",
+        "date": "2026-06-23",
+        "breaking": false
+      },
       {
         "sha": "b8356f9",
         "type": "feat",
@@ -214,6 +223,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "37ab558",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "restore full dependency-review enforcement",
+        "author": "Claude",
+        "date": "2026-06-23",
+        "breaking": false
+      },
       {
         "sha": "6981e89",
         "type": "fix",
@@ -475,6 +493,15 @@
     ],
     "CI/CD": [
       {
+        "sha": "5eec8a5",
+        "type": "ci",
+        "scope": null,
+        "subject": "expand Dependabot coverage, add CodeQL SAST, SHA-pin remaining actions",
+        "author": "Claude",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
         "sha": "e36d840",
         "type": "ci",
         "scope": null,
@@ -557,6 +584,60 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "905cfac",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Defender: defensive security orchestrator",
+        "author": "Claude",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "a93b24e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Control Surface v3.1 \u2014 advanced light-glass command dashboard",
+        "author": "Claude",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "ede1cee",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Systems Control Surface v3.1 \u2014 light glass command dashboard",
+        "author": "Claude",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "e943470",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add CPA Partner Outreach Package to docs for revenue system",
+        "author": "Desmond Otieno",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "cb495f1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix Workflow Repair Agent startup failure: invalid id-token permission",
+        "author": "Claude",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "29ebb36",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add advanced Analytics, institutional graph, and Evidence Locker to Ontario OSINT deck",
+        "author": "Claude",
+        "date": "2026-06-23",
+        "breaking": false
+      },
       {
         "sha": "64d218a",
         "type": "chore",
@@ -1189,6 +1270,87 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "52626b8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "1fe4c5a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "b3b2f08",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "5a7317f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "4ba3b17",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "4b5e593",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "57315cd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "d5f8c3a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
+      {
+        "sha": "e9eb995",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-23 10:36 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-23",
+        "breaking": false
+      },
       {
         "sha": "cd8b98f",
         "type": "bot",

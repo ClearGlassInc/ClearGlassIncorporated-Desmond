@@ -23,6 +23,7 @@
   // ── destinations (grouped) ──────────────────────────────────────────────
   var GROUPS = [
     ["Command", [
+      ["Control Surface · v3.1", "control-surface.html", "◈"],
       ["Systems Control Surface", "systems.html", "▣"],
       ["AVALON · ARTEMIS ⊕ PERCIVAL", "artemis-percival.html", "⬣"],
       ["PERCIVAL OS", "percival-os.html", "◐"],

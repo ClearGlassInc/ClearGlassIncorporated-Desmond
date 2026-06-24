@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Systems Control Surface v3.1 — Command Dashboard | ClearGlass Inc</title>
+<meta name="description" content="ClearGlass Systems Control Surface v3.1 — a next-gen light glass command dashboard unifying COMMAND, PLATFORMS, and INTELLIGENCE with a live AI Operator, floating status indicators, and luminous blue-cyan accents.">
+<link rel="canonical" href="https://clearglassinc.github.io/control-surface.html">
+<meta name="theme-color" content="#eef3fa">
+<meta property="og:title" content="Systems Control Surface v3.1 | ClearGlass Inc">
+<meta property="og:description" content="A next-gen light glass command dashboard: COMMAND · PLATFORMS · INTELLIGENCE, a live AI Operator, and luminous blue-cyan accents.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clearglassinc.github.io/control-surface.html">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ── light glass palette ─────────────────────────────────────────── */
+    --bg-1:#f8fbff; --bg-2:#eef3fa; --bg-3:#e2e9f4; --bg-4:#dbe4f1;
+    --ink:#1e2a3a;            /* primary dark gray text          */
+    --ink-soft:#52617a;       /* secondary gray                  */
+    --ink-faint:#8c99b0;      /* tertiary                        */
+    --deep:#143a6b;           /* deep blue headings              */
+    --blue:#2563eb; --sky:#38bdf8; --cyan:#06b6d4; --indigo:#6366f1;
+    --glass:rgba(255,255,255,.60);
+    --glass-2:rgba(255,255,255,.42);
+    --glass-strong:rgba(255,255,255,.78);
+    --silver:rgba(226,233,244,.66);
+    --hair:rgba(120,141,173,.22);
+    --hair-2:rgba(120,141,173,.34);
+    --glow-cyan:rgba(56,189,248,.55);
+    --glow-blue:rgba(37,99,235,.40);
+    --ok:#10b981; --warn:#f59e0b; --bad:#ef4476; --live:#06b6d4;
+    --r-lg:24px; --r-md:18px; --r-sm:13px; --pill:999px;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --sans:'Urbanist',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;color:var(--ink);font-family:var(--sans);line-height:1.55;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    padding-bottom:64px;min-height:100vh;overflow-x:hidden;
+    background:
+      radial-gradient(1200px 760px at 84% -8%, rgba(56,189,248,.16), transparent 56%),
+      radial-gradient(980px 680px at -10% 12%, rgba(99,102,241,.13), transparent 54%),
+      radial-gradient(900px 720px at 50% 120%, rgba(37,99,235,.10), transparent 60%),
+      linear-gradient(165deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 78%, var(--bg-4) 100%);
+    background-attachment:fixed;
+  }
+  .wrap{width:min(1180px,92vw);margin:0 auto}
+
+  /* ── animated ambient field ──────────────────────────────────────────── */
+  .field{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+  .field b{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;mix-blend-mode:normal}
+  .field b:nth-child(1){width:46vw;height:46vw;left:-8vw;top:-10vw;
+    background:radial-gradient(circle,rgba(56,189,248,.34),transparent 68%);animation:drift1 26s var(--ease) infinite alternate}
+  .field b:nth-child(2){width:42vw;height:42vw;right:-10vw;top:6vw;
+    background:radial-gradient(circle,rgba(99,102,241,.30),transparent 68%);animation:drift2 32s var(--ease) infinite alternate}
+  .field b:nth-child(3){width:38vw;height:38vw;left:32vw;bottom:-14vw;
+    background:radial-gradient(circle,rgba(6,182,212,.26),transparent 68%);animation:drift3 30s var(--ease) infinite alternate}
+  @keyframes drift1{to{transform:translate(8vw,6vh) scale(1.12)}}
+  @keyframes drift2{to{transform:translate(-7vw,8vh) scale(1.08)}}
+  @keyframes drift3{to{transform:translate(5vw,-7vh) scale(1.14)}}
+  /* faint tech grid that slowly pans */
+  .grid-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+    background-image:
+      linear-gradient(rgba(99,124,165,.07) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(99,124,165,.07) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(circle at 50% 30%,#000,transparent 78%);
+            mask-image:radial-gradient(circle at 50% 30%,#000,transparent 78%);
+    animation:gridPan 40s linear infinite}
+  @keyframes gridPan{to{background-position:54px 54px}}
+
+  /* ── floating HUD header ──────────────────────────────────────────────── */
+  header.hud{position:sticky;top:14px;z-index:60;margin-top:18px}
+  .hud-glass{position:relative;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    padding:14px 20px;border-radius:var(--r-lg);
+    background:linear-gradient(180deg,var(--glass-strong),var(--glass));
+    border:1px solid rgba(255,255,255,.8);
+    backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);
+    box-shadow:0 18px 50px -22px rgba(31,52,96,.42),0 2px 0 rgba(255,255,255,.7) inset,
+      0 0 0 1px rgba(120,141,173,.10);overflow:hidden}
+  /* luminous reflection sheen across the header */
+  .hud-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.55) 48%,transparent 60%);
+    transform:translateX(-120%);animation:sheen 7s ease-in-out 1.2s infinite}
+  @keyframes sheen{0%{transform:translateX(-120%)}28%,100%{transform:translateX(120%)}}
+  /* glowing blue-cyan accent line under the header */
+  .hud-glass::after{content:"";position:absolute;left:18px;right:18px;bottom:0;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,transparent,var(--sky),var(--cyan),var(--blue),transparent);
+    background-size:220% 100%;box-shadow:0 0 16px var(--glow-cyan);animation:accent 6s linear infinite}
+  @keyframes accent{to{background-position:220% 0}}
+
+  .mark{width:46px;height:46px;border-radius:13px;flex:0 0 auto;position:relative;
+    background:conic-gradient(from 140deg,#38bdf8,#6366f1,#06b6d4,#38bdf8);
+    box-shadow:0 8px 22px -8px var(--glow-blue),0 0 0 1px rgba(255,255,255,.6) inset;
+    display:grid;place-items:center;animation:float 6s ease-in-out infinite}
+  .mark::after{content:"";position:absolute;inset:3px;border-radius:10px;
+    background:linear-gradient(160deg,rgba(255,255,255,.95),rgba(255,255,255,.55));
+    box-shadow:0 1px 6px rgba(31,52,96,.18) inset}
+  .mark svg{position:relative;z-index:1;width:24px;height:24px}
+  @keyframes float{50%{transform:translateY(-5px)}}
+
+  .id .t{font-weight:800;font-size:17px;letter-spacing:.01em;color:var(--deep);display:flex;align-items:center;gap:9px}
+  .id .t .ver{font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--blue);
+    padding:3px 8px;border-radius:var(--pill);background:rgba(37,99,235,.10);
+    border:1px solid rgba(37,99,235,.22);box-shadow:0 0 12px rgba(37,99,235,.16)}
+  .id .s{font:600 9.5px/1.4 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-top:5px}
+
+  .hud-status{margin-left:auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 13px;border-radius:var(--pill);
+    background:var(--glass-2);border:1px solid var(--hair);color:var(--ink-soft);
+    font:600 11.5px var(--sans);letter-spacing:.01em;backdrop-filter:blur(8px);
+    box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 6px 16px -10px rgba(31,52,96,.4);
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s}
+  .chip:hover{transform:translateY(-1px);border-color:var(--hair-2)}
+  .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-faint);flex:0 0 auto;position:relative}
+  .chip .dot.ok{background:var(--ok)} .chip .dot.warn{background:var(--warn)}
+  .chip .dot.bad{background:var(--bad)} .chip .dot.live{background:var(--live)}
+  .chip .dot.ok,.chip .dot.live,.chip .dot.sync{animation:dotPulse 1.8s ease-in-out infinite}
+  .chip .dot.ok::after,.chip .dot.live::after,.chip .dot.sync::after,.chip .dot.warn::after,.chip .dot.bad::after{
+    content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid currentColor;color:inherit;opacity:0}
+  .chip .dot.ok{color:var(--ok)} .chip .dot.live{color:var(--live)} .chip .dot.sync{color:var(--sky)}
+  .chip .dot.ok::after,.chip .dot.live::after,.chip .dot.sync::after{animation:ring 1.8s ease-out infinite}
+  @keyframes dotPulse{50%{box-shadow:0 0 0 4px rgba(6,182,212,.16)}}
+  @keyframes ring{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+  .chip.clock{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-soft)}
+
+  main{padding:34px 0 0}
+
+  /* ── AI OPERATOR hero card ────────────────────────────────────────────── */
+  .operator{position:relative;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;
+    padding:26px 30px;border-radius:var(--r-lg);overflow:hidden;
+    background:linear-gradient(135deg,var(--glass-strong),var(--glass) 60%,rgba(224,238,255,.55));
+    border:1px solid rgba(255,255,255,.82);
+    backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);
+    box-shadow:0 30px 70px -34px rgba(31,52,96,.5),0 2px 0 rgba(255,255,255,.75) inset}
+  /* glossy top reflection */
+  .operator::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+    background:linear-gradient(180deg,rgba(255,255,255,.5),transparent 30%)}
+  /* slow scanline */
+  .operator::after{content:"";position:absolute;left:0;right:0;height:34%;top:-34%;pointer-events:none;
+    background:linear-gradient(180deg,rgba(56,189,248,.10),transparent);animation:scan 6.5s linear infinite}
+  @keyframes scan{to{top:120%}}
+
+  .orb-wrap{position:relative;width:128px;height:128px;display:grid;place-items:center;flex:0 0 auto}
+  .orb{width:84px;height:84px;border-radius:50%;position:relative;z-index:2;
+    background:radial-gradient(circle at 34% 30%,#ffffff,#bfe6ff 38%,#6aa6ff 70%,#3f7bf0 100%);
+    box-shadow:0 0 0 1px rgba(255,255,255,.7) inset,0 10px 30px -8px rgba(37,99,235,.6),
+      0 0 30px var(--glow-cyan);animation:breathe 3.4s ease-in-out infinite}
+  .orb::after{content:"";position:absolute;left:20%;top:14%;width:34%;height:24%;border-radius:50%;
+    background:linear-gradient(180deg,rgba(255,255,255,.95),transparent);filter:blur(1px)}
+  @keyframes breathe{50%{transform:scale(1.06)}}
+  .pulse{position:absolute;inset:0;border-radius:50%;border:2px solid var(--cyan);opacity:0;z-index:1}
+  .pulse:nth-child(1){animation:pulse 3s ease-out infinite}
+  .pulse:nth-child(2){animation:pulse 3s ease-out infinite 1s}
+  .pulse:nth-child(3){animation:pulse 3s ease-out infinite 2s}
+  @keyframes pulse{0%{transform:scale(.62);opacity:.55;border-color:var(--sky)}
+    100%{transform:scale(1.25);opacity:0;border-color:var(--blue)}}
+
+  .op-body{position:relative;z-index:2;min-width:0}
+  .op-eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 10px/1 var(--mono);
+    letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+  .op-eyebrow .lv{width:7px;height:7px;border-radius:50%;background:var(--live);
+    box-shadow:0 0 0 0 var(--live);animation:dotPulse 1.6s ease-in-out infinite}
+  .op-title{margin:0;font-size:clamp(1.5rem,3vw,2rem);font-weight:800;letter-spacing:-.01em;color:var(--deep)}
+  .op-sub{margin:6px 0 0;color:var(--ink-soft);font-size:13.5px;max-width:54ch}
+  .op-wave{margin:14px 0 4px;width:100%;max-width:360px;height:34px;display:block;overflow:visible}
+  .op-wave path{fill:none;stroke:url(#wgrad);stroke-width:2.4;stroke-linecap:round;
+    filter:drop-shadow(0 0 5px var(--glow-cyan))}
+  .op-wave .trace{stroke-dasharray:520;stroke-dashoffset:520;animation:trace 3.2s linear infinite}
+  @keyframes trace{to{stroke-dashoffset:0}}
+  .op-metrics{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px}
+  .metric .mv{font:700 19px/1 var(--sans);color:var(--deep);letter-spacing:.01em}
+  .metric .mv small{font-size:11px;color:var(--ink-faint);font-weight:600}
+  .metric .ml{font:600 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-top:5px}
+  .op-cta{position:absolute;top:22px;right:24px;z-index:3}
+  .ghost-btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:var(--pill);
+    text-decoration:none;font:700 12px var(--sans);letter-spacing:.02em;color:#fff;
+    background:linear-gradient(120deg,var(--blue),var(--cyan));
+    box-shadow:0 10px 24px -10px var(--glow-blue),0 1px 0 rgba(255,255,255,.4) inset;
+    transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+  .ghost-btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -12px var(--glow-blue)}
+
+  /* ── luminous section dividers ────────────────────────────────────────── */
+  .divider{display:flex;align-items:center;gap:16px;margin:40px 2px 20px}
+  .divider .lbl{font:700 11px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;
+    color:var(--deep);white-space:nowrap;display:inline-flex;align-items:center;gap:10px}
+  .divider .lbl i{width:8px;height:8px;border-radius:2px;transform:rotate(45deg);
+    background:linear-gradient(135deg,var(--sky),var(--blue));box-shadow:0 0 10px var(--glow-cyan)}
+  .divider .ln{flex:1;height:1px;position:relative;
+    background:linear-gradient(90deg,var(--hair-2),transparent)}
+  .divider .ln::before{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,var(--sky),var(--cyan),transparent);
+    background-size:50% 100%;background-repeat:no-repeat;
+    box-shadow:0 0 12px var(--glow-cyan);animation:flow 4.5s linear infinite}
+  @keyframes flow{0%{background-position:-60% 0}100%{background-position:160% 0}}
+  .divider .cnt{font:600 10px var(--mono);color:var(--ink-faint);letter-spacing:.1em}
+
+  /* ── tile grid ────────────────────────────────────────────────────────── */
+  .tiles{display:grid;gap:16px;grid-template-columns:repeat(4,1fr)}
+  .tile{position:relative;display:flex;align-items:center;gap:14px;padding:17px 18px;
+    border-radius:var(--r-md);text-decoration:none;color:var(--ink);overflow:hidden;isolation:isolate;
+    background:linear-gradient(160deg,var(--glass),var(--glass-2));
+    border:1px solid rgba(255,255,255,.7);
+    backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
+    box-shadow:0 14px 34px -22px rgba(31,52,96,.45),0 1px 0 rgba(255,255,255,.7) inset;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+  /* top reflection */
+  .tile::before{content:"";position:absolute;left:0;right:0;top:0;height:46%;pointer-events:none;
+    background:linear-gradient(180deg,rgba(255,255,255,.42),transparent)}
+  /* glowing blue-cyan accent line that ignites on hover */
+  .tile::after{content:"";position:absolute;left:16px;right:16px;bottom:0;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,transparent,var(--sky),var(--cyan),transparent);
+    background-size:200% 100%;opacity:0;transform:translateY(2px);
+    transition:opacity .3s,transform .3s;box-shadow:0 0 14px var(--glow-cyan)}
+  .tile:hover{transform:translateY(-4px);border-color:rgba(56,189,248,.5);
+    box-shadow:0 26px 50px -24px rgba(37,99,235,.5),0 1px 0 rgba(255,255,255,.85) inset}
+  .tile:hover::after{opacity:1;transform:none;animation:accent 5s linear infinite}
+  .tile:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+  .tile .tic{width:42px;height:42px;flex:0 0 auto;border-radius:12px;display:grid;place-items:center;
+    font-size:19px;color:var(--deep);position:relative;
+    background:linear-gradient(160deg,rgba(255,255,255,.9),var(--silver));
+    border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 6px 16px -10px rgba(31,52,96,.5),0 0 0 1px rgba(120,141,173,.08) inset;
+    transition:transform .3s var(--ease),box-shadow .3s}
+  .tile:hover .tic{transform:scale(1.06) rotate(-3deg);box-shadow:0 10px 22px -10px var(--glow-blue)}
+  .tile .tbody{min-width:0;flex:1}
+  .tile .tlabel{display:block;font-weight:700;font-size:13.5px;letter-spacing:.005em;color:var(--ink);
+    line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tile .tsub{display:block;font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:6px}
+  .tile .tgo{margin-left:auto;flex:0 0 auto;color:var(--blue);font-size:15px;opacity:.5;
+    transition:transform .3s var(--ease),opacity .3s}
+  .tile:hover .tgo{opacity:1;transform:translateX(3px)}
+
+  /* a "live" tag for SENTINEL etc. */
+  .tile .tag{position:absolute;top:12px;right:14px;display:inline-flex;align-items:center;gap:5px;
+    font:700 8px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--live);
+    padding:3px 7px;border-radius:var(--pill);background:rgba(6,182,212,.10);border:1px solid rgba(6,182,212,.28)}
+  .tile .tag i{width:5px;height:5px;border-radius:50%;background:var(--live);animation:dotPulse 1.6s ease-in-out infinite}
+
+  /* ── reveal-on-scroll ─────────────────────────────────────────────────── */
+  .reveal{opacity:0;transform:translateY(18px)}
+  .reveal.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+
+  footer{margin-top:48px;padding:22px 0;text-align:center;color:var(--ink-faint);font-size:12px}
+  footer a{color:var(--blue);text-decoration:none;font-weight:600}
+  footer a:hover{text-decoration:underline}
+  footer .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;margin-top:6px;color:var(--ink-faint)}
+
+  /* ── responsive ───────────────────────────────────────────────────────── */
+  @media(max-width:980px){.tiles{grid-template-columns:repeat(2,1fr)}
+    .operator{grid-template-columns:1fr;text-align:left}.orb-wrap{margin:0 auto}
+    .op-cta{position:static;margin-top:16px}}
+  @media(max-width:560px){.tiles{grid-template-columns:1fr}.hud-status .clock{display:none}
+    .id .t{font-size:15px}.op-metrics{gap:16px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1!important;transform:none!important}.op-wave .trace{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+
+<div class="field" aria-hidden="true"><b></b><b></b><b></b></div>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <!-- ── floating HUD header ── -->
+  <header class="hud">
+    <div class="hud-glass">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 8.5 12 4l7 4.5-7 4.5z" fill="#143a6b" opacity=".92"/><path d="M5 8.5v7L12 20l7-4.5v-7L12 13z" fill="#2563eb" opacity=".55"/></svg>
+      </div>
+      <div class="id">
+        <div class="t">Systems Control Surface <span class="ver">v3.1</span></div>
+        <div class="s">PERCIVAL Operations Console · clearglassinc</div>
+      </div>
+      <div class="hud-status">
+        <span class="chip"><span class="dot sync" id="dDeploy"></span><span id="tDeploy">Deploy · checking</span></span>
+        <span class="chip"><span class="dot ok"></span>Estate · Nominal</span>
+        <span class="chip"><span class="dot live"></span>Agent Mesh · Online</span>
+        <span class="chip clock mono" id="clock" aria-label="Coordinated Universal Time">—:—:— UTC</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── AI OPERATOR live card ── -->
+    <section class="operator reveal" aria-label="AI Operator status">
+      <a class="ghost-btn op-cta" href="ai-operator.html">Open Operator <span aria-hidden="true">→</span></a>
+      <div class="orb-wrap" aria-hidden="true">
+        <span class="pulse"></span><span class="pulse"></span><span class="pulse"></span>
+        <span class="orb"></span>
+      </div>
+      <div class="op-body">
+        <span class="op-eyebrow"><span class="lv"></span>AI Operator · Live</span>
+        <h1 class="op-title">AI Operator</h1>
+        <p class="op-sub">Autonomous mission orchestration across the ClearGlass estate — routing signals, governing agents, and holding the line under PERCIVAL supervision.</p>
+        <svg class="op-wave" viewBox="0 0 360 34" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="wgrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#38bdf8"/><stop offset=".5" stop-color="#06b6d4"/><stop offset="1" stop-color="#2563eb"/>
+          </linearGradient></defs>
+          <path class="trace" d="M0 17 L40 17 L52 6 L64 28 L78 17 L120 17 L132 9 L146 25 L160 17 L210 17 L222 4 L236 30 L250 17 L300 17 L312 11 L326 23 L340 17 L360 17"/>
+        </svg>
+        <div class="op-metrics">
+          <div class="metric"><div class="mv"><span data-count="42">0</span><small>ms</small></div><div class="ml">Latency</div></div>
+          <div class="metric"><div class="mv"><span data-count="1284">0</span></div><div class="ml">Tasks / 24h</div></div>
+          <div class="metric"><div class="mv"><span data-count="99">0</span><small>.98%</small></div><div class="ml">Uptime</div></div>
+          <div class="metric"><div class="mv"><span data-count="7">0</span></div><div class="ml">Agents Active</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── COMMAND ── -->
+    <div class="divider reveal"><span class="lbl"><i></i>Command</span><span class="ln"></span><span class="cnt">07 modules</span></div>
+    <div class="tiles">
+      <a class="tile reveal" href="systems.html"><span class="tic">▣</span><span class="tbody"><span class="tlabel">Systems Control Surface</span><span class="tsub">Operations Console</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="artemis-percival.html"><span class="tic">⬣</span><span class="tbody"><span class="tlabel">AVALON · ARTEMIS ⊕ PERCIVAL</span><span class="tsub">Flagship Core</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="percival-os.html"><span class="tic">◐</span><span class="tbody"><span class="tlabel">PERCIVAL OS</span><span class="tsub">Governance</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="sentinel.html"><span class="tag"><i></i>Live</span><span class="tic">◉</span><span class="tbody"><span class="tlabel">SENTINEL · Live</span><span class="tsub">Security Research</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="aegis.html"><span class="tic">⚖</span><span class="tbody"><span class="tlabel">AEGIS · Legal Shield</span><span class="tsub">Compliance</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="agentmesh.html"><span class="tic">⌗</span><span class="tbody"><span class="tlabel">Agent Mesh</span><span class="tsub">Orchestration</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="command-console.html"><span class="tic">▤</span><span class="tbody"><span class="tlabel">Command Console</span><span class="tsub">Control</span></span><span class="tgo">→</span></a>
+    </div>
+
+    <!-- ── PLATFORMS ── -->
+    <div class="divider reveal"><span class="lbl"><i></i>Platforms</span><span class="ln"></span><span class="cnt">06 systems</span></div>
+    <div class="tiles">
+      <a class="tile reveal" href="artemis-iv.html"><span class="tic">🧭</span><span class="tbody"><span class="tlabel">Artemis IV Core</span><span class="tsub">Intelligence Engine</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="artemis.html"><span class="tic">🛰</span><span class="tbody"><span class="tlabel">Artemis VI</span><span class="tsub">Latest Platform</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="guardian.html"><span class="tic">🌐</span><span class="tbody"><span class="tlabel">Guardian</span><span class="tsub">Secure Browser</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="clearglass-nexus.html"><span class="tic">🛡</span><span class="tbody"><span class="tlabel">ClearGlass NEXUS</span><span class="tsub">Command Nexus</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="government.html"><span class="tic">🏛</span><span class="tbody"><span class="tlabel">Government</span><span class="tsub">Public Sector</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="clearpulse.html"><span class="tic">📡</span><span class="tbody"><span class="tlabel">ClearPulse</span><span class="tsub">Live Telemetry</span></span><span class="tgo">→</span></a>
+    </div>
+
+    <!-- ── INTELLIGENCE ── -->
+    <div class="divider reveal"><span class="lbl"><i></i>Intelligence</span><span class="ln"></span><span class="cnt">04 surfaces</span></div>
+    <div class="tiles">
+      <a class="tile reveal" href="intelligence.html"><span class="tic">🧠</span><span class="tbody"><span class="tlabel">Intelligence</span><span class="tsub">Signal Core</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="intelligence-command-surface.html"><span class="tic">🗺</span><span class="tbody"><span class="tlabel">Command Surface</span><span class="tsub">Mission Map</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="intelligence-interface.html"><span class="tic">🖥</span><span class="tbody"><span class="tlabel">Interface</span><span class="tsub">Operator View</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="revenue-engine.html"><span class="tic">💹</span><span class="tbody"><span class="tlabel">Revenue Engine</span><span class="tsub">Growth Ops</span></span><span class="tgo">→</span></a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div><a href="index.html">ClearGlass Inc</a> · Systems Control Surface v3.1 — next-gen command dashboard</div>
+    <div class="meta">Governed by PERCIVAL · light glass build · clearglassinc.github.io</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var REPO="ClearGlassInc/ClearGlassInc.github.io";
+  var reduce=false; try{reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;}catch(e){}
+
+  /* ── live UTC clock ── */
+  var clk=document.getElementById("clock");
+  function tick(){ if(clk) clk.textContent=new Date().toISOString().slice(11,19)+" UTC"; }
+  tick(); setInterval(tick,1000);
+
+  /* ── count-up metrics ── */
+  function countUp(el){
+    var target=parseFloat(el.getAttribute("data-count"))||0, dur=1100, t0=null;
+    if(reduce){ el.textContent=target; return; }
+    function step(ts){ if(t0===null)t0=ts; var p=Math.min((ts-t0)/dur,1);
+      var e=1-Math.pow(1-p,3); el.textContent=Math.round(target*e); if(p<1)requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+
+  /* ── reveal on scroll + trigger count-up ── */
+  var revealed=false;
+  function fireCounts(){ if(revealed)return; revealed=true;
+    document.querySelectorAll("[data-count]").forEach(countUp); }
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in");
+        if(en.target.querySelector&&en.target.querySelector("[data-count]"))fireCounts();
+        io.unobserve(en.target); } });
+    },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+    document.querySelectorAll(".reveal").forEach(function(el,i){
+      el.style.transitionDelay=(Math.min(i,8)*45)+"ms"; io.observe(el); });
+    setTimeout(fireCounts,1400);
+  } else {
+    document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in");}); fireCounts();
+  }
+
+  /* ── subtle pointer tilt on tiles (fine pointers only) ── */
+  var fine=false; try{fine=matchMedia("(hover:hover) and (pointer:fine)").matches;}catch(e){}
+  if(fine && !reduce){
+    document.querySelectorAll(".tile").forEach(function(t){
+      var raf=0,rx=0,ry=0;
+      t.addEventListener("pointermove",function(e){
+        var r=t.getBoundingClientRect();
+        var dx=(e.clientX-(r.left+r.width/2))/(r.width/2);
+        var dy=(e.clientY-(r.top+r.height/2))/(r.height/2);
+        ry=Math.max(-1,Math.min(1,dx))*4; rx=Math.max(-1,Math.min(1,dy))*-4;
+        if(!raf)raf=requestAnimationFrame(function(){raf=0;
+          t.style.transform="translateY(-4px) perspective(700px) rotateX("+rx+"deg) rotateY("+ry+"deg)";});
+      });
+      t.addEventListener("pointerleave",function(){ if(raf){cancelAnimationFrame(raf);raf=0;} t.style.transform="";});
+    });
+  }
+
+  /* ── live deploy telemetry (keyless GitHub Actions; degrades to offline) ── */
+  function setDeploy(cls,txt){
+    var d=document.getElementById("dDeploy"), t=document.getElementById("tDeploy");
+    if(d)d.className="dot "+cls; if(t)t.textContent="Deploy · "+txt;
+  }
+  fetch("https://api.github.com/repos/"+REPO+"/actions/runs?per_page=10",
+    {headers:{Accept:"application/vnd.github+json"}})
+    .then(function(r){ if(!r.ok)throw 0; return r.json(); })
+    .then(function(d){
+      var runs=(d&&d.workflow_runs)||[];
+      if(!runs.length){ setDeploy("warn","no runs"); return; }
+      if(runs.some(function(r){return r.status!=="completed";})){ setDeploy("sync","pipeline running"); return; }
+      var c=runs[0].conclusion;
+      if(c==="success") setDeploy("ok","build healthy");
+      else if(c==="failure"||c==="timed_out"||c==="startup_failure") setDeploy("bad","pipeline failure");
+      else setDeploy("warn","degraded");
+    })
+    .catch(function(){ setDeploy("","offline"); });
+})();
+</script>
+<script defer src="platform.js"></script>
+</body>
+</html>

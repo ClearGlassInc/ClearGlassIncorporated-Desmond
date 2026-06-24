@@ -32,7 +32,7 @@ permissions:
   contents: read
   pull-requests: read
   actions: read
-  id-token: read # for OIDC if needed later
+  id-token: none # OIDC unused; scope only accepts write|none (read is invalid)
 
 defaults:
   run:
@@ -46,7 +46,7 @@ jobs:
       contents: write
       pull-requests: write
       actions: read
-      id-token: read
+      id-token: none
 
     steps:
       - name: Harden runner environment

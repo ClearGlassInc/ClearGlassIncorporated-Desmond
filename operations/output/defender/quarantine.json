@@ -1,0 +1,104 @@
+{
+  "run_utc": "2026-06-24T03:59:41+00:00",
+  "repo": "clearglassinc/clearglassinc.github.io",
+  "enforcement": "advisory",
+  "quarantined": 5,
+  "response_plan": [
+    "require_review",
+    "alert_owner",
+    "open_incident_issue",
+    "block_merge"
+  ],
+  "incidents": [
+    {
+      "rule_id": "curl_pipe_shell",
+      "category": "command",
+      "severity": "high",
+      "title": "Remote script piped straight into a shell",
+      "file": "runner/setup-runner.sh",
+      "line": 48,
+      "evidence": "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
+      "recommended_actions": [
+        "require_review",
+        "alert_owner",
+        "open_incident_issue",
+        "block_merge"
+      ],
+      "status": "flagged_for_review",
+      "enforcement": "advisory",
+      "file_sha256": "a51ef6679debabfb9d4239b31f164860ea20b0e75417d455eb2ccc8fe9ae82b7"
+    },
+    {
+      "rule_id": "require_sha_pinned_actions",
+      "category": "workflow",
+      "severity": "high",
+      "title": "Third-party action is not pinned to a full commit SHA",
+      "file": ".github/workflows/agent.yml",
+      "line": 57,
+      "evidence": "uses: actions/checkout@v5",
+      "recommended_actions": [
+        "require_review",
+        "alert_owner",
+        "open_incident_issue",
+        "block_merge"
+      ],
+      "status": "flagged_for_review",
+      "enforcement": "advisory",
+      "file_sha256": "d4388b7466ac982e4120b4b8216bc175c83747ec2eb7463902fdf60dc46ac0b7"
+    },
+    {
+      "rule_id": "require_sha_pinned_actions",
+      "category": "workflow",
+      "severity": "high",
+      "title": "Third-party action is not pinned to a full commit SHA",
+      "file": ".github/workflows/agent.yml",
+      "line": 62,
+      "evidence": "uses: anthropics/claude-code-action@v1",
+      "recommended_actions": [
+        "require_review",
+        "alert_owner",
+        "open_incident_issue",
+        "block_merge"
+      ],
+      "status": "flagged_for_review",
+      "enforcement": "advisory",
+      "file_sha256": "d4388b7466ac982e4120b4b8216bc175c83747ec2eb7463902fdf60dc46ac0b7"
+    },
+    {
+      "rule_id": "require_sha_pinned_actions",
+      "category": "workflow",
+      "severity": "high",
+      "title": "Third-party action is not pinned to a full commit SHA",
+      "file": ".github/workflows/codeql.yml",
+      "line": 51,
+      "evidence": "uses: github/codeql-action/init@v3",
+      "recommended_actions": [
+        "require_review",
+        "alert_owner",
+        "open_incident_issue",
+        "block_merge"
+      ],
+      "status": "flagged_for_review",
+      "enforcement": "advisory",
+      "file_sha256": "82bc11b30342adedaa0dcde1b1fd8d7ef70789723b787d84366f62f1ad91bfd2"
+    },
+    {
+      "rule_id": "require_sha_pinned_actions",
+      "category": "workflow",
+      "severity": "high",
+      "title": "Third-party action is not pinned to a full commit SHA",
+      "file": ".github/workflows/codeql.yml",
+      "line": 58,
+      "evidence": "uses: github/codeql-action/analyze@v3",
+      "recommended_actions": [
+        "require_review",
+        "alert_owner",
+        "open_incident_issue",
+        "block_merge"
+      ],
+      "status": "flagged_for_review",
+      "enforcement": "advisory",
+      "file_sha256": "82bc11b30342adedaa0dcde1b1fd8d7ef70789723b787d84366f62f1ad91bfd2"
+    }
+  ]
+}

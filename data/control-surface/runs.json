@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #88",
+    "title": "Control Surface Feeds #89",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:11",
+    "timestamp": "2026-06-24T00:11:29Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #299",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-dd5e824e-155c-48ed-a4e1-2d3cab522e90",
+    "time": "00:08",
+    "timestamp": "2026-06-24T00:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #298",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-60c5dd86-2242-48dd-b7e0-6f8e02b7f1ce",
+    "time": "23:08",
+    "timestamp": "2026-06-23T23:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #446",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:38",
+    "timestamp": "2026-06-23T22:38:16Z"
+  },
+  {
+    "title": "pages build and deployment #881",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:38",
+    "timestamp": "2026-06-23T22:38:08Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1511",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:38",
+    "timestamp": "2026-06-23T22:38:08Z"
+  },
+  {
+    "title": "Control Surface Feeds #88",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:37",
     "timestamp": "2026-06-23T22:37:49Z"
   },
@@ -96,47 +138,5 @@
     "detail": "failure \u00b7 push on main",
     "time": "19:03",
     "timestamp": "2026-06-23T19:03:06Z"
-  },
-  {
-    "title": "Security #515",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:03",
-    "timestamp": "2026-06-23T19:03:05Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #774",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:03",
-    "timestamp": "2026-06-23T19:03:04Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #444",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:03",
-    "timestamp": "2026-06-23T19:03:04Z"
-  },
-  {
-    "title": "pages build and deployment #879",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:03",
-    "timestamp": "2026-06-23T19:03:00Z"
-  },
-  {
-    "title": ".github/workflows/workflow-repair-agent.yml #27",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "19:03",
-    "timestamp": "2026-06-23T19:03:00Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1509",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:03",
-    "timestamp": "2026-06-23T19:03:00Z"
   }
 ]

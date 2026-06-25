@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "08:31",
-    "timestamp": "2026-06-25T08:31:27Z"
+    "time": "11:49",
+    "timestamp": "2026-06-25T11:49:56Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #99",
-    "time": "08:31",
-    "timestamp": "2026-06-25T08:31:14Z"
+    "detail": "schedule on main \u00b7 run #100",
+    "time": "11:49",
+    "timestamp": "2026-06-25T11:49:44Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-e2035758-2a2c-49e3-bbeb-98678a39cbc1 \u00b7 run #331",
-    "time": "08:08",
-    "timestamp": "2026-06-25T08:08:12Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-9b6bdebc-9fda-41ba-99cd-8d91d954998d \u00b7 run #334",
+    "time": "11:08",
+    "timestamp": "2026-06-25T11:08:12Z"
   },
   {
-    "title": "Multi-Repo Audit",
+    "title": "Burlington Release",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #7",
-    "time": "07:53",
-    "timestamp": "2026-06-25T07:53:52Z"
+    "detail": "schedule on main \u00b7 run #13",
+    "time": "10:21",
+    "timestamp": "2026-06-25T10:21:24Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-2106f738-0232-496f-acfb-9cdac8fafe48 \u00b7 run #330",
-    "time": "07:08",
-    "timestamp": "2026-06-25T07:08:12Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
+    "title": "Content Pipeline",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #785",
-    "time": "06:13",
-    "timestamp": "2026-06-25T06:13:46Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-07a44738-2da8-43c8-9d95-119261efc434 \u00b7 run #329",
-    "time": "06:08",
-    "timestamp": "2026-06-25T06:08:12Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-cad25e05-7373-4cc4-8fd5-884cb8347123 \u00b7 run #328",
-    "time": "05:08",
-    "timestamp": "2026-06-25T05:08:11Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #463",
-    "time": "04:34",
-    "timestamp": "2026-06-25T04:34:16Z"
+    "detail": "workflow_run on main \u00b7 run #43",
+    "time": "10:15",
+    "timestamp": "2026-06-25T10:15:07Z"
   },
   {
     "title": "pages build and deployment",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #897",
-    "time": "04:34",
-    "timestamp": "2026-06-25T04:34:09Z"
+    "detail": "dynamic on main \u00b7 run #899",
+    "time": "10:15",
+    "timestamp": "2026-06-25T10:15:00Z"
   },
   {
     "title": "Code Quality: Push on main",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1532",
-    "time": "04:34",
-    "timestamp": "2026-06-25T04:34:08Z"
+    "detail": "dynamic on main \u00b7 run #1538",
+    "time": "10:15",
+    "timestamp": "2026-06-25T10:15:00Z"
   },
   {
-    "title": "Control Surface Feeds",
+    "title": "Bot Orchestrator",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #98",
-    "time": "04:33",
-    "timestamp": "2026-06-25T04:33:48Z"
+    "detail": "schedule on main \u00b7 run #33",
+    "time": "10:14",
+    "timestamp": "2026-06-25T10:14:41Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-2dd3a722-7154-492c-80f6-1515b923d3c0 \u00b7 run #333",
+    "time": "10:08",
+    "timestamp": "2026-06-25T10:08:12Z"
+  },
+  {
+    "title": "Cert Bot",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #27",
+    "time": "09:42",
+    "timestamp": "2026-06-25T09:42:57Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #7",
-    "time": "04:13",
-    "timestamp": "2026-06-25T04:13:55Z"
+    "detail": "schedule on main \u00b7 run #12",
+    "time": "09:36",
+    "timestamp": "2026-06-25T09:36:21Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #101",
+    "time": "09:29",
+    "timestamp": "2026-06-25T09:29:56Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/gracious-hopper-gnwsgu \u00b7 run #259",
+    "time": "09:25",
+    "timestamp": "2026-06-25T09:25:39Z"
   }
 ]

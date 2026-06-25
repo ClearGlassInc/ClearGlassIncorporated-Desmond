@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "11:49",
-    "timestamp": "2026-06-25T11:49:56Z"
+    "time": "15:12",
+    "timestamp": "2026-06-25T15:12:29Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #100",
-    "time": "11:49",
-    "timestamp": "2026-06-25T11:49:44Z"
+    "detail": "schedule on main \u00b7 run #101",
+    "time": "15:12",
+    "timestamp": "2026-06-25T15:12:17Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-9b6bdebc-9fda-41ba-99cd-8d91d954998d \u00b7 run #334",
-    "time": "11:08",
-    "timestamp": "2026-06-25T11:08:12Z"
-  },
-  {
-    "title": "Burlington Release",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #13",
-    "time": "10:21",
-    "timestamp": "2026-06-25T10:21:24Z"
-  },
-  {
-    "title": "Content Pipeline",
-    "status": "ok",
-    "detail": "workflow_run on main \u00b7 run #43",
-    "time": "10:15",
-    "timestamp": "2026-06-25T10:15:07Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #899",
-    "time": "10:15",
-    "timestamp": "2026-06-25T10:15:00Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1538",
-    "time": "10:15",
-    "timestamp": "2026-06-25T10:15:00Z"
-  },
-  {
-    "title": "Bot Orchestrator",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #33",
-    "time": "10:14",
-    "timestamp": "2026-06-25T10:14:41Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-2dd3a722-7154-492c-80f6-1515b923d3c0 \u00b7 run #333",
-    "time": "10:08",
-    "timestamp": "2026-06-25T10:08:12Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #27",
-    "time": "09:42",
-    "timestamp": "2026-06-25T09:42:57Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-9ba064a3-861e-4cdf-a150-f8ef6efb4968 \u00b7 run #338",
+    "time": "15:08",
+    "timestamp": "2026-06-25T15:08:04Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #12",
-    "time": "09:36",
-    "timestamp": "2026-06-25T09:36:21Z"
+    "detail": "schedule on main \u00b7 run #18",
+    "time": "14:47",
+    "timestamp": "2026-06-25T14:47:34Z"
   },
   {
     "title": "Health Monitor",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #101",
-    "time": "09:29",
-    "timestamp": "2026-06-25T09:29:56Z"
+    "detail": "schedule on main \u00b7 run #102",
+    "time": "14:40",
+    "timestamp": "2026-06-25T14:40:41Z"
   },
   {
-    "title": "PR Automation",
+    "title": "CI",
     "status": "ok",
-    "detail": "pull_request on claude/gracious-hopper-gnwsgu \u00b7 run #259",
-    "time": "09:25",
-    "timestamp": "2026-06-25T09:25:39Z"
+    "detail": "push on main \u00b7 run #768",
+    "time": "14:34",
+    "timestamp": "2026-06-25T14:34:15Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #533",
+    "time": "14:34",
+    "timestamp": "2026-06-25T14:34:15Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #505",
+    "time": "14:34",
+    "timestamp": "2026-06-25T14:34:14Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #17",
+    "time": "14:34",
+    "timestamp": "2026-06-25T14:34:14Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #794",
+    "time": "14:34",
+    "timestamp": "2026-06-25T14:34:14Z"
+  },
+  {
+    "title": "ClearGlass Copilot Setup",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #33",
+    "time": "14:34",
+    "timestamp": "2026-06-25T14:34:14Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #469",
+    "time": "14:34",
+    "timestamp": "2026-06-25T14:34:13Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #904",
+    "time": "14:34",
+    "timestamp": "2026-06-25T14:34:12Z"
   }
 ]

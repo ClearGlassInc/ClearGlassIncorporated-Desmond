@@ -105,7 +105,7 @@ def _render_markdown(record: dict[str, Any]) -> str:
         f"- Run (UTC): {record['run_utc']}",
         f"- Repository: `{record['repo']}`",
         f"- Quarantined items: {record['quarantined']}",
-        f"- Enforcement: **advisory** (no files were modified or deleted)",
+        "- Enforcement: **advisory** (no files were modified or deleted)",
         "",
         "> Quarantine is a review gate, not a destructive action. Enforce the "
         "response plan through branch protection, required reviews, and token rotation.",

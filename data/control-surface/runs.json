@@ -1,8 +1,99 @@
 [
   {
-    "title": "Control Surface Feeds #101",
+    "title": "Control Surface Feeds #102",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "17:23",
+    "timestamp": "2026-06-25T17:23:02Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #340",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-060516da-df55-4bbd-a2d1-312996dae42a",
+    "time": "17:08",
+    "timestamp": "2026-06-25T17:08:03Z"
+  },
+  {
+    "title": "npm_and_yarn in /apps/autostore/cockpit, /clearglass-agentops, /clearglass-commerce/admin, /clearglass-commerce/storefront - Update #1435371123 #36",
+    "status": "warn",
+    "detail": "queued \u00b7 dynamic on main",
+    "time": "17:03",
+    "timestamp": "2026-06-25T17:03:53Z"
+  },
+  {
+    "title": "pip in /., /apps/autostore/control_plane, /automation/v0.2, /clearglass-commerce/control-plane, /deployment/artemis/app, /products/opal-koboi, /sentinel, /services/clearglass_agent_service - Update #1435370723 #35",
+    "status": "warn",
+    "detail": "queued \u00b7 dynamic on main",
+    "time": "17:03",
+    "timestamp": "2026-06-25T17:03:49Z"
+  },
+  {
+    "title": "terraform in /infra - Update #1435370651 #34",
+    "status": "warn",
+    "detail": "queued \u00b7 dynamic on main",
+    "time": "17:03",
+    "timestamp": "2026-06-25T17:03:48Z"
+  },
+  {
+    "title": "Code Quality: Scheduled #1546",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "16:13",
+    "timestamp": "2026-06-25T16:13:48Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #339",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-029a579a-86ae-4599-a3a7-aba30db6afbb",
+    "time": "16:08",
+    "timestamp": "2026-06-25T16:08:05Z"
+  },
+  {
+    "title": "API Security Audit #11",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "15:42",
+    "timestamp": "2026-06-25T15:42:35Z"
+  },
+  {
+    "title": "Repo Audit #3",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "15:42",
+    "timestamp": "2026-06-25T15:42:34Z"
+  },
+  {
+    "title": "Commerce Daily Loop #15",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "15:41",
+    "timestamp": "2026-06-25T15:41:59Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #470",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "15:12",
+    "timestamp": "2026-06-25T15:12:43Z"
+  },
+  {
+    "title": "pages build and deployment #905",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "15:12",
+    "timestamp": "2026-06-25T15:12:37Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1545",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "15:12",
+    "timestamp": "2026-06-25T15:12:36Z"
+  },
+  {
+    "title": "Control Surface Feeds #101",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "15:12",
     "timestamp": "2026-06-25T15:12:17Z"
   },
@@ -47,96 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "14:34",
     "timestamp": "2026-06-25T14:34:14Z"
-  },
-  {
-    "title": "Defender Watch #17",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "14:34",
-    "timestamp": "2026-06-25T14:34:14Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #794",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "14:34",
-    "timestamp": "2026-06-25T14:34:14Z"
-  },
-  {
-    "title": "ClearGlass Copilot Setup #33",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "14:34",
-    "timestamp": "2026-06-25T14:34:14Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #469",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "14:34",
-    "timestamp": "2026-06-25T14:34:13Z"
-  },
-  {
-    "title": "pages build and deployment #904",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "14:34",
-    "timestamp": "2026-06-25T14:34:12Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1544",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "14:34",
-    "timestamp": "2026-06-25T14:34:11Z"
-  },
-  {
-    "title": "Workflow Repair Agent (Hardened) #37",
-    "status": "ok",
-    "detail": "success \u00b7 issue_comment on main",
-    "time": "14:34",
-    "timestamp": "2026-06-25T14:34:07Z"
-  },
-  {
-    "title": "Policy Gate #504",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/docs-pages-deploy-runbook",
-    "time": "14:33",
-    "timestamp": "2026-06-25T14:33:07Z"
-  },
-  {
-    "title": "Security #532",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on claude/docs-pages-deploy-runbook",
-    "time": "14:33",
-    "timestamp": "2026-06-25T14:33:06Z"
-  },
-  {
-    "title": "Defender Watch #16",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/docs-pages-deploy-runbook",
-    "time": "14:33",
-    "timestamp": "2026-06-25T14:33:06Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #793",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/docs-pages-deploy-runbook",
-    "time": "14:33",
-    "timestamp": "2026-06-25T14:33:06Z"
-  },
-  {
-    "title": "CI #767",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/docs-pages-deploy-runbook",
-    "time": "14:33",
-    "timestamp": "2026-06-25T14:33:06Z"
-  },
-  {
-    "title": "PR Automation #260",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/docs-pages-deploy-runbook",
-    "time": "14:33",
-    "timestamp": "2026-06-25T14:33:06Z"
   }
 ]

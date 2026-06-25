@@ -95,6 +95,11 @@ BOT_REGISTRY: dict[str, dict[str, str]] = {
         "group": "monitoring",
         "schedule": "daily",
     },
+    "defender": {
+        "module": "bots.defender",
+        "group": "monitoring",
+        "schedule": "daily",
+    },
     "wealth_ladder": {
         "module": "bots.wealth_ladder_bot",
         "group": "strategy",

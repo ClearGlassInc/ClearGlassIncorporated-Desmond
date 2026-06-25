@@ -1,5 +1,5 @@
 {
-  "generation": 25,
+  "generation": 26,
   "weights": {
     "content_collector": 1.0,
     "master_orchestrator": 3.0,
@@ -179,6 +179,13 @@
       "generation": 25,
       "timestamp": "2026-06-23T10:36:00+00:00",
       "avg_fitness": 0.9993,
+      "auto_applied_count": 0,
+      "proposed_count": 0
+    },
+    {
+      "generation": 26,
+      "timestamp": "2026-06-24T10:22:02+00:00",
+      "avg_fitness": 0.9994,
       "auto_applied_count": 0,
       "proposed_count": 0
     }

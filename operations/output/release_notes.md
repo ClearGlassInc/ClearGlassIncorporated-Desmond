@@ -1,9 +1,10 @@
-# Release Notes — 2026-06-23
+# Release Notes — 2026-06-24
 
-*214 commit(s) since v1.0.0*
+*232 commit(s) since v1.0.0*
 
 ## New Features
 
+- **seo:** add llms.txt and explicit AI-crawler allows in robots.txt (`1354443`)
 - **ci:** add hardened, manually-triggered Workflow Repair Agent (`b8356f9`)
 - **offers:** add working Interac e-Transfer pay path to Hardening Sprint + PHIPA (`7216e11`)
 - **offers:** add working Interac e-Transfer pay path to the $249 Quick-Audit (`a88aaae`)
@@ -30,6 +31,7 @@
 
 ## Bug Fixes
 
+- **ci:** restore full dependency-review enforcement (`37ab558`)
 - **storefront:** read route params via useParams() (React 18 compatible) (`6981e89`)
 - **storefront:** migrate product page to Next 15/16 async route params (`abd7834`)
 - **security:** upgrade Next.js 14/15 -> 16.2.9 (clears high-severity advisories) (`8f77bac`)
@@ -70,6 +72,7 @@
 
 ## CI/CD
 
+- expand Dependabot coverage, add CodeQL SAST, SHA-pin remaining actions (`5eec8a5`)
 - install pyyaml for python-tests job; skip doctor tests cleanly without it (`e36d840`)
 - stop workflow_doctor --fix from silently dropping `on:` triggers (`d018553`)
 - add hardened workflow repair agent (`9d3ea5c`)
@@ -82,6 +85,12 @@
 
 ## Maintenance
 
+- Add ClearGlass Defender: defensive security orchestrator (`905cfac`)
+- Control Surface v3.1 — advanced light-glass command dashboard (`a93b24e`)
+- Add Systems Control Surface v3.1 — light glass command dashboard (`ede1cee`)
+- Add CPA Partner Outreach Package to docs for revenue system (`e943470`)
+- Fix Workflow Repair Agent startup failure: invalid id-token permission (`cb495f1`)
+- Add advanced Analytics, institutional graph, and Evidence Locker to Ontario OSINT deck (`29ebb36`)
 - Deliver form leads to both Gmail and iCloud inboxes (`64d218a`)
 - **deps:** put the Next.js apps under Dependabot version monitoring (`4b14ac6`)
 - Fix bugs: pilot score formula, live KPI wiring, release tag permission (`48862eb`)
@@ -155,6 +164,15 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`52626b8`)
+- refresh control-surface data feeds [skip ci] (`1fe4c5a`)
+- refresh control-surface data feeds [skip ci] (`b3b2f08`)
+- refresh control-surface data feeds [skip ci] (`5a7317f`)
+- refresh control-surface data feeds [skip ci] (`4ba3b17`)
+- refresh control-surface data feeds [skip ci] (`4b5e593`)
+- refresh control-surface data feeds [skip ci] (`57315cd`)
+- refresh control-surface data feeds [skip ci] (`d5f8c3a`)
+- update generated outputs — 2026-06-23 10:36 UTC [skip ci] (`e9eb995`)
 - refresh control-surface data feeds [skip ci] (`cd8b98f`)
 - refresh control-surface data feeds [skip ci] (`63534dd`)
 - refresh control-surface data feeds [skip ci] (`7532507`)

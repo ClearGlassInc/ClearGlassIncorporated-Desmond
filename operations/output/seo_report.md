@@ -1,7 +1,7 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-23T10:35:59.798186+00:00
-**Average Score:** 95.5/100
+**Run:** 2026-06-24T10:22:01.738030+00:00
+**Average Score:** 95.1/100
 **Files Audited:** 53
 
 ## Page Scores
@@ -12,6 +12,7 @@
 | `flowsint.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
+| `control-surface.html` | 80/100 | 2 |
 | `artemis-percival.html` | 90/100 | 1 |
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
@@ -40,7 +41,6 @@
 | `clearpulse.html` | 100/100 | 0 |
 | `command-console.html` | 100/100 | 0 |
 | `conduit.html` | 100/100 | 0 |
-| `control-surface.html` | 100/100 | 0 |
 | `corporate-legal-advisor.html` | 100/100 | 0 |
 | `government.html` | 100/100 | 0 |
 | `guardian.html` | 100/100 | 0 |
@@ -64,10 +64,10 @@
 
 ## Top Issues Across All Pages
 
-- 5x — Description length N chars (ideal N–N)
+- 6x — Description length N chars (ideal N–N)
+- 4x — Title length N chars (ideal N–N)
 - 4x — Missing og:image
 - 3x — Multiple <hN> tags (N)
-- 3x — Title length N chars (ideal N–N)
 - 1x — Missing <title>
 - 1x — Missing meta description
 - 1x — Missing canonical link tag

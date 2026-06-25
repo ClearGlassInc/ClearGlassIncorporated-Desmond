@@ -385,7 +385,7 @@ def _render_markdown(report: DefenderReport) -> str:
         "",
         "## Severity summary",
         "",
-        f"| 🔴 critical | 🟠 high | 🟡 medium | 🔵 low | ⚪ info |",
+        "| 🔴 critical | 🟠 high | 🟡 medium | 🔵 low | ⚪ info |",
         "| --- | --- | --- | --- | --- |",
         f"| {s['critical']} | {s['high']} | {s['medium']} | {s['low']} | {s['info']} |",
         "",

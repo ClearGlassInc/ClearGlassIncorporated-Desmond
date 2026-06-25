@@ -63,7 +63,7 @@ def _issue_title(findings: list["Finding"]) -> str:
 def _issue_body(report: "DefenderReport", findings: list["Finding"]) -> str:
     rows = "\n".join(
         f"| {_ICON.get(f.severity, '•')} {f.severity} | `{f.rule_id}` | "
-        f"`{f.file}{f':' + str(f.line) if f.line else ''}` | {f.title} |"
+        f"`{f.file}{':' + str(f.line) if f.line else ''}` | {f.title} |"
         for f in findings
     )
     plan = "\n".join(f"- `{a}`" for a in report.response_plan) or "- _none_"

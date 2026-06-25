@@ -114,6 +114,7 @@ an "OFFLINE"/"Status offline" state on error or rate-limit. Note: unauthenticate
 |---|---|---|
 | Site 404 / not updating | Pages build failed | Check **Deploy GitHub Pages** run; re-run; verify `.nojekyll` present |
 | Production deploys red X (site still live) | Legacy "pages build and deployment" pipeline runs while Source = "Deploy from a branch" | Run `scripts/fix_pages_source.sh` (admin PAT) or set Settings → Pages → Source to "GitHub Actions" |
+| Deploy run fails with `Deployment cancelled` (status was `deployment_queued`) | Several merges to `main` landed close together; the `github-pages` environment publishes one deploy at a time, so a still-queued deploy is superseded by a newer one | **Benign** — confirm the **Deploy GitHub Pages** run for a *later* commit is green (the newest successful deploy is what's served). Permanently removed by the same Source → "GitHub Actions" fix above, which stops the racing legacy pipeline. Optionally space rapid back-to-back merges |
 | CI red on PR | test/lint failure | Open the failing job log; fix; the `CI` check is required to merge |
 | A data panel shows OFFLINE | upstream API down / CORS / rate limit | Expected degradation; confirm endpoint health; no deploy needed |
 | Status chip "Status offline" | GitHub API rate limit (60/hr/IP) | Transient; resets within the hour |

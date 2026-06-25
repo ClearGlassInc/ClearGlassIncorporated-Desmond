@@ -63,7 +63,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python (pinned minor)
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b47905c375deb86ac5 # v5.1.0 SHA
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: "3.12"
 
@@ -296,7 +296,7 @@ jobs:
         if: |
           github.event_name == 'workflow_dispatch' &&
           inputs.mode == 'fix-and-pr'
-        uses: peter-evans/create-pull-request@b1ddad2c994a45f0e7552226218b9e2472395a18 # v6.0.3 SHA
+        uses: peter-evans/create-pull-request@v7 # major tag; promote to SHA once resolvable (policy-gate: advisory warn)
         with:
           commit-message: "fix(ci): repair GitHub workflows and validation"
           branch: fix/ci-workflows-agent
@@ -327,7 +327,7 @@ jobs:
           signoff: true
 
       - name: Upload audit artifacts
-        uses: actions/upload-artifact@65c4c4a1ddee5b72c6b5816e8b9d70099ac3667c # v4.3.4 SHA
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: agent-audit-${{ github.run_id }}
           path: audit/

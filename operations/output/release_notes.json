@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-06-24T10:22:01.693468+00:00",
+  "run_utc": "2026-06-25T10:14:55.883770+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 232,
+  "commit_count": 241,
   "sections": {
     "New Features": [
       {
@@ -1270,6 +1270,87 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "dead1ba",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "3f67bce",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "773255c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "e4fedf1",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "d65e9e5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "1183e61",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "93d0070",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "fcb9d99",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
+      {
+        "sha": "2c74f45",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-24 10:22 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-24",
+        "breaking": false
+      },
       {
         "sha": "52626b8",
         "type": "bot",

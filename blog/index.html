@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>Insights — ClearGlass Inc. · Governed AI, Cybersecurity &amp; Autonomy</title>
+<meta name="description" content="ClearGlass Insights — field notes on AI agent governance, governed autonomy, cybersecurity, and the architecture of trustworthy intelligent systems."/>
+<link rel="canonical" href="https://clearglassinc.github.io/blog/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="ClearGlass Insights — Governed AI &amp; Autonomy"/>
+<meta property="og:description" content="Field notes on AI agent governance, governed autonomy, and the architecture of trustworthy intelligent systems."/>
+<meta property="og:url" content="https://clearglassinc.github.io/blog/"/>
+<meta property="og:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--white:#fafbfc;--off:#f3f5f8;--paper:#fff;--dark:#0a0c10;--text:#0a0c10;--text-2:#3a3f4a;--text-3:#6b7280;--text-4:#9ca3af;--line:rgba(10,12,16,.08);
+--prism-1:#38bdf8;--prism-2:#a78bfa;--prism-3:#f472b6;--prism-4:#34d399;--prism-5:#fbbf24;
+--crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);
+--serif:'Cormorant Garamond',Georgia,serif;--sans:'Urbanist',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.class-banner{background:#0a0c10;color:#cfe9ff;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.18em;font-weight:600;padding:6px 16px}
+.class-banner span{opacity:.55;font-weight:400;margin:0 8px}
+.unclass-banner{background:#0d1f17;color:#4ade80;text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;font-weight:700;padding:6px 16px}
+.nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,5vw,40px);background:rgba(250,251,252,.78);backdrop-filter:blur(20px) saturate(1.2);border-bottom:1px solid var(--line)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+.nav-mark{width:40px;height:40px;border-radius:11px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.nav-mark img{width:100%;height:100%;object-fit:cover;display:block}
+.nav-name{font-family:var(--serif);font-size:21px;font-weight:600;letter-spacing:-.01em}
+.nav-name em{font-style:italic;font-weight:300;color:var(--text-3)}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{color:var(--text-3);text-decoration:none;font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:10px;transition:.18s}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.7)}
+.nav-cta{background:var(--dark);color:#fff !important}
+@media(max-width:860px){.nav-links a:not(.nav-cta){display:none}}
+.wrap{max-width:1040px;margin:0 auto;padding:0 clamp(20px,5vw,28px)}
+.head{padding:clamp(56px,9vw,96px) 0 clamp(28px,5vw,40px)}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-3);font-weight:600;margin-bottom:20px}
+.kicker::before{content:"";width:24px;height:1.5px;background:var(--crystal)}
+.head h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,7vw,72px);line-height:1.02;letter-spacing:-.02em}
+.head h1 em{font-style:italic;font-weight:400;background:var(--crystal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.head p{font-size:clamp(17px,2.3vw,21px);color:var(--text-2);max-width:54ch;margin-top:18px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;padding-bottom:64px}
+.card{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 14px 44px -32px rgba(6,8,18,.5);transition:transform .18s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 26px 60px -34px rgba(6,8,18,.55)}
+.card-top{padding:26px 24px 0;display:flex;justify-content:space-between;align-items:center}
+.card-tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--prism-2);font-weight:700}
+.card-read{font-family:var(--mono);font-size:11px;color:var(--text-4)}
+.card-body{padding:14px 24px 24px;flex:1;display:flex;flex-direction:column}
+.card h2{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.12;letter-spacing:-.01em;margin-bottom:10px}
+.card p{font-size:15px;color:var(--text-3);line-height:1.5;flex:1}
+.card-foot{margin-top:18px;font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
+.feat{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 1fr;background:radial-gradient(120% 140% at 0% 0%,#15192a 0%,#0a0c10 60%);color:#fff;border:none}
+.feat .card-tag{color:#fff}.feat .card-read{color:#9aa6c8}
+.feat h2{font-size:clamp(28px,3.6vw,40px)}
+.feat p{color:#cdd5ef;font-size:16px}
+.feat .card-foot{color:#fff}
+.feat-art{background:var(--crystal);position:relative;min-height:220px;display:grid;place-items:center;overflow:hidden}
+.feat-art span{font-family:var(--serif);font-style:italic;color:rgba(255,255,255,.92);font-size:clamp(22px,3vw,30px);text-align:center;padding:24px;line-height:1.2;text-shadow:0 2px 30px rgba(0,0,0,.25)}
+@media(max-width:760px){.feat{grid-template-columns:1fr}.feat-art{min-height:150px}}
+.sub{margin:8px 0 64px;padding:clamp(28px,5vw,44px);border-radius:24px;background:var(--off);border:1px solid var(--line);text-align:center}
+.sub h3{font-family:var(--serif);font-weight:600;font-size:clamp(24px,3.4vw,34px);margin-bottom:10px}
+.sub p{color:var(--text-3);max-width:46ch;margin:0 auto 22px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:13px;font-weight:700;font-size:15px;text-decoration:none;background:var(--dark);color:#fff;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.footer{background:#0a0c10;color:#9aa6c8;padding:48px clamp(20px,5vw,40px) 26px;text-align:center}
+.footer .ft{font-family:var(--serif);font-style:italic;color:#6b7280;font-size:15px;margin-top:14px}
+.footer a{color:#9aa6c8;text-decoration:none}.footer a:hover{color:#fff}
+</style>
+</head>
+<body>
+<div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
+<nav class="nav">
+  <a href="../index.html" class="nav-brand">
+    <div class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"></div>
+    <div class="nav-name">ClearGlassInc. <em>2040</em></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Insights</a>
+    <a href="../ai-operator.html">AI Operator</a>
+    <a href="../guardian.html">Guardian</a>
+    <a href="../government.html">Government</a>
+    <a href="../index.html#contact" class="nav-cta">Book a briefing →</a>
+  </div>
+</nav>
+
+<header class="head wrap">
+  <div class="kicker">ClearGlass Insights</div>
+  <h1>Field notes on <em>governed</em> intelligence.</h1>
+  <p>Depth over hype. We write about AI agent governance, autonomy, and the architecture of systems you can actually trust with real-world stakes.</p>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+
+    <a class="card feat" href="ai-agent-governance-governed-autonomy.html">
+      <div class="card-body">
+        <div class="card-top"><span class="card-tag">AI &amp; Autonomy</span><span class="card-read">11 min</span></div>
+        <h2>AI Agent Governance: The Governed Autonomy Playbook</h2>
+        <p>Everyone is racing to make AI agents more autonomous. The winners of the agentic era will be the ones who govern them first. Inside the Four Gates and the Risk Router we run in production.</p>
+        <div class="card-foot">Read the playbook →</div>
+      </div>
+      <div class="feat-art"><span>"The bottleneck isn't intelligence. It's accountability."</span></div>
+    </a>
+
+  </div>
+
+  <div class="sub">
+    <h3>One sharp idea at a time.</h3>
+    <p>New field notes on governed AI, security, and autonomy — written for people who build and decide. No fluff.</p>
+    <a href="../index.html#contact" class="btn">Get briefed →</a>
+  </div>
+</main>
+
+<footer class="footer">
+  <div>© <span id="year"></span> ClearGlass Inc. · Ontario, Canada · <a href="../index.html">clearglassinc.github.io</a></div>
+  <div class="ft">"Clarity Is Power."</div>
+</footer>
+<div class="unclass-banner">UNCLASSIFIED / NON-CLASSIFIÉ — END OF DOCUMENT</div>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>

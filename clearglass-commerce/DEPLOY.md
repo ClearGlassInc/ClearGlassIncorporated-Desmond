@@ -71,3 +71,31 @@ The store runs in **mock mode** with no Stripe key (safe for demos). To take rea
 1. Add `STRIPE_SECRET_KEY` (live or test) → `/checkout/session` creates real Stripe Checkout URLs.
 2. Add `STRIPE_WEBHOOK_SECRET` → `/webhooks/stripe` verifies signatures and rejects forgeries.
 3. Refunds stay behind the approval gate; approve via `/approvals/{id}/approve` before any money moves.
+
+## Morning sales-ops briefing (email)
+
+`.github/workflows/sales-ops-briefing.yml` runs every morning (≈07:17 ET), builds a factual
+briefing from the control-plane database — yesterday + month-to-date revenue, run-rate forecast
+movement, new/stalled/at-risk orders, operator activity, and data-quality/approval-gate issues —
+then emails it via Gmail SMTP. Build it manually any time with:
+
+```bash
+cd control-plane
+python -m app.sales_ops_briefing            # markdown to stdout
+python -m app.sales_ops_briefing --json     # machine-readable
+python -m app.sales_ops_briefing --email    # also email (needs the secrets below)
+```
+
+Add these repo **Actions secrets** to send real numbers (without them it runs in safe mode: a
+clearly-marked "no live source" briefing, no email, no fabricated figures):
+
+| Secret | Purpose |
+|--------|---------|
+| `DATABASE_URL` | Control-plane Postgres URL (read-only use by the briefing) |
+| `GMAIL_USER` | Sending Gmail address |
+| `GMAIL_APP_PASSWORD` | Gmail **App Password** (requires 2FA; not your account password) |
+| `BRIEFING_TO` | Recipient(s), comma-separated (defaults to `GMAIL_USER`) |
+
+> Coverage note: the source is commerce/Stripe, **not a deal CRM**. "Deals" map to orders and
+> "rep activity" maps to operator/automation ledger activity. For true rep-level pipeline,
+> forecast, and stage data, connect a CRM (HubSpot/Salesforce) as the source instead.

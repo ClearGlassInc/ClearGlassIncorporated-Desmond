@@ -21,7 +21,13 @@ jobs:
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: "3.11"
-      - run: pip install ruff pytest
+      - name: Install tooling + control-plane deps
+        run: |
+          pip install ruff pytest
+          # Install the full web stack (fastapi, sqlalchemy, httpx via TestClient) so the
+          # webhook -> DB -> /payouts integration tests actually RUN. Without these the
+          # tests silently skip and the governed money-movement paths go unexercised.
+          pip install -r clearglass-commerce/control-plane/requirements.txt
       - name: Lint commerce package
         run: ruff check clearglass-commerce
       - name: Governance + payments tests

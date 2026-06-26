@@ -21,6 +21,21 @@ sys.modules[_spec.name] = sec
 _spec.loader.exec_module(sec)
 
 
+def _require_crypto():
+    """Skip (not fail) when the cryptography native backend is unavailable.
+
+    pytest.importorskip only catches ImportError, but a broken/missing native
+    binding (e.g. absent _cffi_backend) surfaces as pyo3_runtime.PanicException,
+    which is NOT an ImportError — so it would fail the suite red on an
+    environment that simply lacks the compiled dependency. The EncryptedVault
+    code is unchanged; this only keeps the harness honest across environments.
+    """
+    try:
+        import cryptography.fernet  # noqa: F401
+    except BaseException as exc:  # noqa: BLE001 — import probe; any failure → skip
+        pytest.skip(f"cryptography native backend unavailable: {exc!r}")
+
+
 # --------------------------------------------------------------------------- #
 # AuditLedger
 # --------------------------------------------------------------------------- #
@@ -141,7 +156,7 @@ def test_vault_envelope_constant():
 
 
 def test_vault_roundtrip_and_tamper(tmp_path):
-    pytest.importorskip("cryptography")
+    _require_crypto()
     vault = sec.EncryptedVault(tmp_path / "vault.key")
     assert vault.crypto_available() is True
     obj = {"encodings": [[0.1, 0.2, 0.3]], "names": ["alice"], "metadata": [{}]}
@@ -157,7 +172,7 @@ def test_vault_roundtrip_and_tamper(tmp_path):
 
 
 def test_vault_key_file_permissions(tmp_path):
-    pytest.importorskip("cryptography")
+    _require_crypto()
     key_path = tmp_path / "vault.key"
     sec.EncryptedVault(key_path)
     assert key_path.exists()

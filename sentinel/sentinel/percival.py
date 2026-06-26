@@ -129,6 +129,7 @@ _SCRIPT_STYLE = re.compile(r"<(script|style)\b[^>]*>.*?</\1>", re.I | re.S)
 # pages that are intentionally excluded from indexing/audit noise
 EXEMPT = frozenset({
     "404.html", "offline.html", "cg-loader.html", "button-system.html",
+    "loader.html",  # noindex initializer, not a landing page
     "hover-menu.html", "button-lab.html", "ClearGlass-NEXUS-v12-FINAL.html",
     "index.html",  # indexed as "/" in the sitemap — avoid duplicate-listing noise
     # Search Console verification token — intentionally bare, must stay so

@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "19:03",
-    "timestamp": "2026-06-26T19:03:24Z"
+    "time": "20:55",
+    "timestamp": "2026-06-26T20:55:14Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #110",
-    "time": "19:03",
-    "timestamp": "2026-06-26T19:03:12Z"
+    "detail": "schedule on main \u00b7 run #111",
+    "time": "20:55",
+    "timestamp": "2026-06-26T20:55:02Z"
   },
   {
-    "title": "Running Copilot cloud agent",
+    "title": "pages build and deployment",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-54185631-5850-4f4e-b204-fbf25eabd5b0 \u00b7 run #365",
-    "time": "18:08",
-    "timestamp": "2026-06-26T18:08:04Z"
+    "detail": "dynamic on main \u00b7 run #927",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:01Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-743a02da-4bed-4c5c-bf42-dcab0c8a4309 \u00b7 run #364",
-    "time": "17:08",
-    "timestamp": "2026-06-26T17:08:04Z"
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #533",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:01Z"
   },
   {
     "title": "Deploy GitHub Pages",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #487",
-    "time": "16:28",
-    "timestamp": "2026-06-26T16:28:09Z"
+    "detail": "push on main \u00b7 run #491",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:01Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "CI",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #923",
-    "time": "16:28",
-    "timestamp": "2026-06-26T16:28:01Z"
+    "detail": "push on main \u00b7 run #796",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:01Z"
   },
   {
-    "title": "Code Quality: Push on main",
+    "title": "Defender Watch",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1577",
-    "time": "16:28",
-    "timestamp": "2026-06-26T16:28:01Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #109",
-    "time": "16:27",
-    "timestamp": "2026-06-26T16:27:41Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-b8234032-76e7-41b5-83b1-931646f6c05c \u00b7 run #363",
-    "time": "16:08",
-    "timestamp": "2026-06-26T16:08:08Z"
-  },
-  {
-    "title": "Commerce Daily Loop",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #16",
-    "time": "15:22",
-    "timestamp": "2026-06-26T15:22:15Z"
-  },
-  {
-    "title": "Workflow Repair Agent (Hardened)",
-    "status": "ok",
-    "detail": "issue_comment on main \u00b7 run #45",
-    "time": "15:17",
-    "timestamp": "2026-06-26T15:17:31Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #922",
-    "time": "15:17",
-    "timestamp": "2026-06-26T15:17:31Z"
+    "detail": "push on main \u00b7 run #51",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:01Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "push on main \u00b7 run #817",
-    "time": "15:17",
-    "timestamp": "2026-06-26T15:17:31Z"
+    "detail": "push on main \u00b7 run #823",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:01Z"
+  },
+  {
+    "title": "ClearGlass Copilot Setup",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #45",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:01Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #561",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:01Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1584",
+    "time": "20:52",
+    "timestamp": "2026-06-26T20:52:00Z"
+  },
+  {
+    "title": "Workflow Repair Agent (Hardened)",
+    "status": "ok",
+    "detail": "issue_comment on main \u00b7 run #48",
+    "time": "20:51",
+    "timestamp": "2026-06-26T20:51:56Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "pull_request on fix/ci-green-and-percival-sweep \u00b7 run #795",
+    "time": "20:51",
+    "timestamp": "2026-06-26T20:51:51Z"
   }
 ]

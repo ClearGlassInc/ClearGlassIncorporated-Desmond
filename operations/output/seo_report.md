@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-25T10:14:55.915292+00:00
-**Average Score:** 95.1/100
-**Files Audited:** 53
+**Run:** 2026-06-26T10:22:27.798282+00:00
+**Average Score:** 93.3/100
+**Files Audited:** 54
 
 ## Page Scores
 
@@ -12,14 +12,20 @@
 | `flowsint.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
+| `artemis-percival.html` | 80/100 | 2 |
+| `conduit.html` | 80/100 | 2 |
 | `control-surface.html` | 80/100 | 2 |
-| `artemis-percival.html` | 90/100 | 1 |
+| `systems.html` | 80/100 | 2 |
+| `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
+| `clearglass-nexus.html` | 90/100 | 1 |
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
-| `systems.html` | 90/100 | 1 |
+| `sentinel.html` | 90/100 | 1 |
+| `tax.html` | 90/100 | 1 |
+| `traffic-enforcement.html` | 90/100 | 1 |
+| `web-design.html` | 90/100 | 1 |
 | `404.html` | 100/100 | 0 |
 | `CG-os.html` | 100/100 | 0 |
-| `ClearGlass-NEXUS-v12-FINAL.html` | 100/100 | 0 |
 | `Ontario-osint.html` | 100/100 | 0 |
 | `aegis.html` | 100/100 | 0 |
 | `agentmesh.html` | 100/100 | 0 |
@@ -35,12 +41,10 @@
 | `button-lab.html` | 100/100 | 0 |
 | `button-system.html` | 100/100 | 0 |
 | `cg-loader.html` | 100/100 | 0 |
-| `clearglass-nexus.html` | 100/100 | 0 |
 | `clearglass.html` | 100/100 | 0 |
 | `clearpulse-architecture.html` | 100/100 | 0 |
 | `clearpulse.html` | 100/100 | 0 |
 | `command-console.html` | 100/100 | 0 |
-| `conduit.html` | 100/100 | 0 |
 | `corporate-legal-advisor.html` | 100/100 | 0 |
 | `government.html` | 100/100 | 0 |
 | `guardian.html` | 100/100 | 0 |
@@ -55,17 +59,14 @@
 | `pricing.html` | 100/100 | 0 |
 | `revenue-engine.html` | 100/100 | 0 |
 | `saas-platform.html` | 100/100 | 0 |
-| `sentinel.html` | 100/100 | 0 |
 | `smb.html` | 100/100 | 0 |
 | `stegoforge.html` | 100/100 | 0 |
 | `store.html` | 100/100 | 0 |
-| `tax.html` | 100/100 | 0 |
-| `web-design.html` | 100/100 | 0 |
 
 ## Top Issues Across All Pages
 
-- 6x — Description length N chars (ideal N–N)
-- 4x — Title length N chars (ideal N–N)
+- 11x — Title length N chars (ideal N–N)
+- 9x — Description length N chars (ideal N–N)
 - 4x — Missing og:image
 - 3x — Multiple <hN> tags (N)
 - 1x — Missing <title>

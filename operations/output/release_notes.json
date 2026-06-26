@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-06-25T10:14:55.883770+00:00",
+  "run_utc": "2026-06-26T10:22:27.751241+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 241,
+  "commit_count": 262,
   "sections": {
     "New Features": [
+      {
+        "sha": "5b87a61",
+        "type": "feat",
+        "scope": "commerce",
+        "subject": "morning sales-ops briefing emailed from commerce data",
+        "author": "Claude",
+        "date": "2026-06-26",
+        "breaking": false
+      },
       {
         "sha": "1354443",
         "type": "feat",
@@ -223,6 +232,42 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "d5d3e43",
+        "type": "fix",
+        "scope": "lint",
+        "subject": "clear ruff F541/F401 violations in defender bot",
+        "author": "Claude",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "65efc0b",
+        "type": "fix",
+        "scope": "lint",
+        "subject": "clear ruff F541/F401 violations in defender bot",
+        "author": "Claude",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "3c7380b",
+        "type": "fix",
+        "scope": "seo",
+        "subject": "repair truncated titles/descriptions sitewide + canonical hygiene",
+        "author": "Claude",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "7d425dc",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "repair Workflow Repair Agent action pins; drop conflicting CodeQL workflow",
+        "author": "Claude",
+        "date": "2026-06-25",
+        "breaking": false
+      },
       {
         "sha": "37ab558",
         "type": "fix",
@@ -453,6 +498,15 @@
     ],
     "Documentation": [
       {
+        "sha": "4744a42",
+        "type": "docs",
+        "scope": "deploy",
+        "subject": "document \"Deployment cancelled\" Pages failures as benign",
+        "author": "Claude",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
         "sha": "83f49e3",
         "type": "docs",
         "scope": "gtm",
@@ -492,6 +546,33 @@
       }
     ],
     "CI/CD": [
+      {
+        "sha": "be44939",
+        "type": "ci",
+        "scope": null,
+        "subject": "pin actions/checkout to v6 in agent.yml (#554)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "b60a059",
+        "type": "ci",
+        "scope": null,
+        "subject": "pin actions/checkout to v6 in agent.yml (workflow doctor)",
+        "author": "Claude",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "a09f380",
+        "type": "ci",
+        "scope": null,
+        "subject": "allow manual on-demand runs of the CI suite (workflow_dispatch)",
+        "author": "Claude",
+        "date": "2026-06-25",
+        "breaking": false
+      },
       {
         "sha": "5eec8a5",
         "type": "ci",
@@ -584,6 +665,33 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "f36761c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Register Insights blog in site-wide schema.json graph",
+        "author": "Claude",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "fc2017e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Insights blog with Governed Autonomy flagship post",
+        "author": "Claude",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "083a190",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Traffic Enforcement page and Control Surface tile (#552)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-25",
+        "breaking": false
+      },
       {
         "sha": "905cfac",
         "type": "chore",
@@ -1270,6 +1378,78 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "ee064a8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "7877528",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "dabb207",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "d6eea59",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "2aff8e7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "ec024b0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "4783473",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-25",
+        "breaking": false
+      },
+      {
+        "sha": "b40d50f",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-25 10:14 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-25",
+        "breaking": false
+      },
       {
         "sha": "dead1ba",
         "type": "bot",
@@ -2176,6 +2356,15 @@
       }
     ],
     "Other": [
+      {
+        "sha": "753f89d",
+        "type": "commerce",
+        "scope": null,
+        "subject": "run governed payout/webhook tests in CI + repo orientation",
+        "author": "Claude",
+        "date": "2026-06-26",
+        "breaking": false
+      },
       {
         "sha": "75b2465",
         "type": "commerce",

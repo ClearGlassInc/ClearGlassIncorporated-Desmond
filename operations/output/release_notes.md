@@ -1,9 +1,10 @@
-# Release Notes — 2026-06-25
+# Release Notes — 2026-06-26
 
-*241 commit(s) since v1.0.0*
+*262 commit(s) since v1.0.0*
 
 ## New Features
 
+- **commerce:** morning sales-ops briefing emailed from commerce data (`5b87a61`)
 - **seo:** add llms.txt and explicit AI-crawler allows in robots.txt (`1354443`)
 - **ci:** add hardened, manually-triggered Workflow Repair Agent (`b8356f9`)
 - **offers:** add working Interac e-Transfer pay path to Hardening Sprint + PHIPA (`7216e11`)
@@ -31,6 +32,10 @@
 
 ## Bug Fixes
 
+- **lint:** clear ruff F541/F401 violations in defender bot (`d5d3e43`)
+- **lint:** clear ruff F541/F401 violations in defender bot (`65efc0b`)
+- **seo:** repair truncated titles/descriptions sitewide + canonical hygiene (`3c7380b`)
+- **ci:** repair Workflow Repair Agent action pins; drop conflicting CodeQL workflow (`7d425dc`)
 - **ci:** restore full dependency-review enforcement (`37ab558`)
 - **storefront:** read route params via useParams() (React 18 compatible) (`6981e89`)
 - **storefront:** migrate product page to Next 15/16 async route params (`abd7834`)
@@ -62,6 +67,7 @@
 
 ## Documentation
 
+- **deploy:** document "Deployment cancelled" Pages failures as benign (`4744a42`)
 - **gtm:** go-to-market playbook + sitemap fix + hardening outreach (`83f49e3`)
 - add SOUL.md autonomous revenue agent charter (`a05c61a`)
 
@@ -72,6 +78,9 @@
 
 ## CI/CD
 
+- pin actions/checkout to v6 in agent.yml (#554) (`be44939`)
+- pin actions/checkout to v6 in agent.yml (workflow doctor) (`b60a059`)
+- allow manual on-demand runs of the CI suite (workflow_dispatch) (`a09f380`)
 - expand Dependabot coverage, add CodeQL SAST, SHA-pin remaining actions (`5eec8a5`)
 - install pyyaml for python-tests job; skip doctor tests cleanly without it (`e36d840`)
 - stop workflow_doctor --fix from silently dropping `on:` triggers (`d018553`)
@@ -85,6 +94,9 @@
 
 ## Maintenance
 
+- Register Insights blog in site-wide schema.json graph (`f36761c`)
+- Add ClearGlass Insights blog with Governed Autonomy flagship post (`fc2017e`)
+- Add Traffic Enforcement page and Control Surface tile (#552) (`083a190`)
 - Add ClearGlass Defender: defensive security orchestrator (`905cfac`)
 - Control Surface v3.1 — advanced light-glass command dashboard (`a93b24e`)
 - Add Systems Control Surface v3.1 — light glass command dashboard (`ede1cee`)
@@ -164,6 +176,14 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`ee064a8`)
+- refresh control-surface data feeds [skip ci] (`7877528`)
+- refresh control-surface data feeds [skip ci] (`dabb207`)
+- refresh control-surface data feeds [skip ci] (`d6eea59`)
+- refresh control-surface data feeds [skip ci] (`2aff8e7`)
+- refresh control-surface data feeds [skip ci] (`ec024b0`)
+- refresh control-surface data feeds [skip ci] (`4783473`)
+- update generated outputs — 2026-06-25 10:14 UTC [skip ci] (`b40d50f`)
 - refresh control-surface data feeds [skip ci] (`dead1ba`)
 - refresh control-surface data feeds [skip ci] (`3f67bce`)
 - refresh control-surface data feeds [skip ci] (`773255c`)
@@ -273,5 +293,6 @@
 
 ## Other
 
+- run governed payout/webhook tests in CI + repo orientation (`753f89d`)
 - wire a working storefront checkout (revenue path) (#467) (`75b2465`)
 - Master Investigator briefing — dashboard, active investigations, network map (`8024581`)

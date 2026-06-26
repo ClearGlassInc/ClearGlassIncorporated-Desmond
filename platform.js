@@ -38,6 +38,14 @@
   }
   addLink('link[rel="icon"][type="image/svg+xml"]', { rel: "icon", type: "image/svg+xml", href: "icon.svg" });
   addLink('link[rel="apple-touch-icon"]', { rel: "apple-touch-icon", href: "logo.png" });
+
+  /* ── advanced motion layer (fx.css + fx.js) — progressive enhancement ───── */
+  addLink('link[href="fx.css"]', { rel: "stylesheet", href: "fx.css" });
+  if (!document.querySelector('script[src="fx.js"]')) {
+    var fx = document.createElement("script");
+    fx.src = "fx.js"; fx.defer = true;
+    document.body.appendChild(fx);
+  }
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("sw.js").catch(function () {

@@ -28,7 +28,9 @@ try:
     from app.models import Base
 
     _HAS_WEB_STACK = True
-except ImportError:  # pragma: no cover - lets the helper tests run in a minimal env
+except (ImportError, RuntimeError):  # pragma: no cover - lets the helper tests run in a minimal env
+    # ImportError: fastapi/sqlalchemy absent. RuntimeError: fastapi present but
+    # httpx missing (TestClient raises RuntimeError, not ImportError, in that case).
     _HAS_WEB_STACK = False
 
 

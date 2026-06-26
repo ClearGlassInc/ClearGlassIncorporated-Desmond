@@ -3,12 +3,75 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "10:28",
-    "timestamp": "2026-06-26T10:28:45Z"
+    "time": "13:20",
+    "timestamp": "2026-06-26T13:20:36Z"
+  },
+  {
+    "title": "Sales-Ops Briefing",
+    "status": "warn",
+    "detail": "schedule on main \u00b7 run #1",
+    "time": "13:20",
+    "timestamp": "2026-06-26T13:20:28Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #108",
+    "time": "13:20",
+    "timestamp": "2026-06-26T13:20:20Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-b18f71b8-7ec3-4ebc-a5d4-8afafd285702 \u00b7 run #360",
+    "time": "13:08",
+    "timestamp": "2026-06-26T13:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-eba2c363-0d14-4c25-aba4-021f2cdb0494 \u00b7 run #359",
+    "time": "12:08",
+    "timestamp": "2026-06-26T12:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-98cadca8-00ca-4160-a6b7-b47c9e8433da \u00b7 run #358",
+    "time": "11:08",
+    "timestamp": "2026-06-26T11:08:03Z"
+  },
+  {
+    "title": "Burlington Release",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #14",
+    "time": "10:29",
+    "timestamp": "2026-06-26T10:29:11Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #482",
+    "time": "10:29",
+    "timestamp": "2026-06-26T10:29:02Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #918",
+    "time": "10:28",
+    "timestamp": "2026-06-26T10:28:52Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1569",
+    "time": "10:28",
+    "timestamp": "2026-06-26T10:28:52Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #107",
     "time": "10:28",
     "timestamp": "2026-06-26T10:28:31Z"
@@ -26,68 +89,5 @@
     "detail": "dynamic on main \u00b7 run #917",
     "time": "10:22",
     "timestamp": "2026-06-26T10:22:32Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1568",
-    "time": "10:22",
-    "timestamp": "2026-06-26T10:22:31Z"
-  },
-  {
-    "title": "Bot Orchestrator",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #34",
-    "time": "10:22",
-    "timestamp": "2026-06-26T10:22:17Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-d29469cc-a687-4722-bfa6-052ef655fba2 \u00b7 run #357",
-    "time": "10:08",
-    "timestamp": "2026-06-26T10:08:05Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #28",
-    "time": "09:50",
-    "timestamp": "2026-06-26T09:50:30Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #37",
-    "time": "09:42",
-    "timestamp": "2026-06-26T09:42:17Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #105",
-    "time": "09:35",
-    "timestamp": "2026-06-26T09:35:07Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-967d6dd1-8aff-4666-b206-a5f82a374af0 \u00b7 run #356",
-    "time": "09:08",
-    "timestamp": "2026-06-26T09:08:06Z"
-  },
-  {
-    "title": "Commerce Deploy",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #19",
-    "time": "08:41",
-    "timestamp": "2026-06-26T08:41:13Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #521",
-    "time": "08:41",
-    "timestamp": "2026-06-26T08:41:13Z"
   }
 ]

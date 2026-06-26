@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #111",
+    "title": "Control Surface Feeds #112",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:35",
+    "timestamp": "2026-06-26T22:35:39Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #369",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-62d87faf-270e-469c-9314-c7d7f390145a",
+    "time": "22:08",
+    "timestamp": "2026-06-26T22:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #368",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-b2a3531f-b834-4eca-8e3d-60f833d43a5e",
+    "time": "21:08",
+    "timestamp": "2026-06-26T21:08:06Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #492",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:55",
+    "timestamp": "2026-06-26T20:55:26Z"
+  },
+  {
+    "title": "pages build and deployment #928",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:55",
+    "timestamp": "2026-06-26T20:55:20Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1585",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:55",
+    "timestamp": "2026-06-26T20:55:19Z"
+  },
+  {
+    "title": "Control Surface Feeds #111",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:55",
     "timestamp": "2026-06-26T20:55:02Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 pull_request on fix/ci-green-and-percival-sweep",
     "time": "20:51",
     "timestamp": "2026-06-26T20:51:51Z"
-  },
-  {
-    "title": "PR Automation #276",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/ci-green-and-percival-sweep",
-    "time": "20:51",
-    "timestamp": "2026-06-26T20:51:51Z"
-  },
-  {
-    "title": "Security #560",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/ci-green-and-percival-sweep",
-    "time": "20:51",
-    "timestamp": "2026-06-26T20:51:51Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #822",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/ci-green-and-percival-sweep",
-    "time": "20:51",
-    "timestamp": "2026-06-26T20:51:51Z"
-  },
-  {
-    "title": "Code Quality: PR #563 #1583",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/563/head",
-    "time": "20:51",
-    "timestamp": "2026-06-26T20:51:49Z"
-  },
-  {
-    "title": "Configured Graph Update: pip in /deployment/artemis/app, /services/clearglass_agent_service #1436693593 #20",
-    "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "20:49",
-    "timestamp": "2026-06-26T20:49:19Z"
-  },
-  {
-    "title": "Policy Gate #531",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "20:49",
-    "timestamp": "2026-06-26T20:49:17Z"
   }
 ]

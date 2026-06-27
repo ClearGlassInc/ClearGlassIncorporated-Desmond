@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #122",
+    "title": "Control Surface Feeds #123",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:17",
+    "timestamp": "2026-06-27T23:17:55Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #394",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-bcbb1a4a-f8e5-4b2e-98a8-67b7cc5d8c13",
+    "time": "23:08",
+    "timestamp": "2026-06-27T23:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #503",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:16",
+    "timestamp": "2026-06-27T22:16:04Z"
+  },
+  {
+    "title": "pages build and deployment #940",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:15",
+    "timestamp": "2026-06-27T22:15:55Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1597",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:15",
+    "timestamp": "2026-06-27T22:15:55Z"
+  },
+  {
+    "title": "Control Surface Feeds #122",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:15",
     "timestamp": "2026-06-27T22:15:38Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "18:18",
     "timestamp": "2026-06-27T18:18:13Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #389",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-cf4a8cb4-11da-4d55-a26c-d6ac8792e276",
-    "time": "18:08",
-    "timestamp": "2026-06-27T18:08:08Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #388",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-517ff466-8da6-4c7c-b9af-7b46378c327f",
-    "time": "17:08",
-    "timestamp": "2026-06-27T17:08:07Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #500",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "16:19",
-    "timestamp": "2026-06-27T16:19:33Z"
-  },
-  {
-    "title": "pages build and deployment #937",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:19",
-    "timestamp": "2026-06-27T16:19:26Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1594",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:19",
-    "timestamp": "2026-06-27T16:19:25Z"
   }
 ]

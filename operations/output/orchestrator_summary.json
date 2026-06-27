@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-26T10:22:28.640580+00:00",
+  "run_utc": "2026-06-27T09:32:34.675900+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
@@ -7,13 +7,13 @@
   "skipped": 0,
   "bots": [
     {
-      "bot_id": "growth",
+      "bot_id": "daily_priority",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "daily_priority",
+      "bot_id": "growth",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
@@ -21,19 +21,19 @@
     {
       "bot_id": "marketing",
       "status": "ok",
-      "duration_s": 0.02,
+      "duration_s": 0.01,
       "error": null
     },
     {
       "bot_id": "lead_draft",
       "status": "ok",
-      "duration_s": 0.04,
+      "duration_s": 0.03,
       "error": null
     },
     {
       "bot_id": "release_notes",
       "status": "ok",
-      "duration_s": 0.05,
+      "duration_s": 0.07,
       "error": null
     },
     {
@@ -51,7 +51,7 @@
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 0.9,
+      "duration_s": 0.74,
       "error": null
     },
     {

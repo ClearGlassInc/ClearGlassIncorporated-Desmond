@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-06-26T10:22:27.751241+00:00",
+  "run_utc": "2026-06-27T09:32:33.963361+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 262,
+  "commit_count": 278,
   "sections": {
     "New Features": [
+      {
+        "sha": "6a0ac14",
+        "type": "feat",
+        "scope": "fx",
+        "subject": "advanced motion layer \u2014 progress, shimmer, reveal, tilt, back-to-top (#561)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-26",
+        "breaking": false
+      },
       {
         "sha": "5b87a61",
         "type": "feat",
@@ -232,6 +241,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "447e7ee",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "green the suite (env-safe crypto skip) + PERCIVAL sitemap sweep (#563)",
+        "author": "Desmond Otieno",
+        "date": "2026-06-26",
+        "breaking": false
+      },
       {
         "sha": "d5d3e43",
         "type": "fix",
@@ -665,6 +683,42 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "00527cc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Bump FastAPI + pin starlette to clear 8 starlette CVEs",
+        "author": "dezzy",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "8a84dbe",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe remediation script to replace unsafe auto-patch phase",
+        "author": "Claude",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "358d745",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Insights to nav dropdown (desktop + mobile)",
+        "author": "Claude",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "0b815d0",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add honest ClearGlassInc CI audit report",
+        "author": "Claude",
+        "date": "2026-06-26",
+        "breaking": false
+      },
       {
         "sha": "f36761c",
         "type": "chore",
@@ -1378,6 +1432,96 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "9e3d97c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-27",
+        "breaking": false
+      },
+      {
+        "sha": "77cf78a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-27",
+        "breaking": false
+      },
+      {
+        "sha": "bad47c0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-27",
+        "breaking": false
+      },
+      {
+        "sha": "4d0e893",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "622a68b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "fa50d60",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "bc8004d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "02448ff",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "2388ccf",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
+      {
+        "sha": "ebea8db",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-26 10:22 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-26",
+        "breaking": false
+      },
       {
         "sha": "ee064a8",
         "type": "bot",

@@ -1,9 +1,10 @@
-# Release Notes — 2026-06-26
+# Release Notes — 2026-06-27
 
-*262 commit(s) since v1.0.0*
+*278 commit(s) since v1.0.0*
 
 ## New Features
 
+- **fx:** advanced motion layer — progress, shimmer, reveal, tilt, back-to-top (#561) (`6a0ac14`)
 - **commerce:** morning sales-ops briefing emailed from commerce data (`5b87a61`)
 - **seo:** add llms.txt and explicit AI-crawler allows in robots.txt (`1354443`)
 - **ci:** add hardened, manually-triggered Workflow Repair Agent (`b8356f9`)
@@ -32,6 +33,7 @@
 
 ## Bug Fixes
 
+- **ci:** green the suite (env-safe crypto skip) + PERCIVAL sitemap sweep (#563) (`447e7ee`)
 - **lint:** clear ruff F541/F401 violations in defender bot (`d5d3e43`)
 - **lint:** clear ruff F541/F401 violations in defender bot (`65efc0b`)
 - **seo:** repair truncated titles/descriptions sitewide + canonical hygiene (`3c7380b`)
@@ -94,6 +96,10 @@
 
 ## Maintenance
 
+- Bump FastAPI + pin starlette to clear 8 starlette CVEs (`00527cc`)
+- Add safe remediation script to replace unsafe auto-patch phase (`8a84dbe`)
+- Add Insights to nav dropdown (desktop + mobile) (`358d745`)
+- Add honest ClearGlassInc CI audit report (`0b815d0`)
 - Register Insights blog in site-wide schema.json graph (`f36761c`)
 - Add ClearGlass Insights blog with Governed Autonomy flagship post (`fc2017e`)
 - Add Traffic Enforcement page and Control Surface tile (#552) (`083a190`)
@@ -176,6 +182,16 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`9e3d97c`)
+- refresh control-surface data feeds [skip ci] (`77cf78a`)
+- refresh control-surface data feeds [skip ci] (`bad47c0`)
+- refresh control-surface data feeds [skip ci] (`4d0e893`)
+- refresh control-surface data feeds [skip ci] (`622a68b`)
+- refresh control-surface data feeds [skip ci] (`fa50d60`)
+- refresh control-surface data feeds [skip ci] (`bc8004d`)
+- refresh control-surface data feeds [skip ci] (`02448ff`)
+- refresh control-surface data feeds [skip ci] (`2388ccf`)
+- update generated outputs — 2026-06-26 10:22 UTC [skip ci] (`ebea8db`)
 - refresh control-surface data feeds [skip ci] (`ee064a8`)
 - refresh control-surface data feeds [skip ci] (`7877528`)
 - refresh control-surface data feeds [skip ci] (`dabb207`)

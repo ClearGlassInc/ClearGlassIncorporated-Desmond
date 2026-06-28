@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #126",
+    "title": "Control Surface Feeds #127",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "12:44",
+    "timestamp": "2026-06-28T12:44:28Z"
+  },
+  {
+    "title": "Sales-Ops Briefing #3",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "12:20",
+    "timestamp": "2026-06-28T12:20:59Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #407",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-743fc0a0-f419-4663-8aa3-2826483b8f32",
+    "time": "12:08",
+    "timestamp": "2026-06-28T12:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #507",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "11:16",
+    "timestamp": "2026-06-28T11:16:26Z"
+  },
+  {
+    "title": "pages build and deployment #945",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:16",
+    "timestamp": "2026-06-28T11:16:17Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1602",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:16",
+    "timestamp": "2026-06-28T11:16:17Z"
+  },
+  {
+    "title": "Control Surface Feeds #126",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "11:15",
     "timestamp": "2026-06-28T11:15:58Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "08:28",
     "timestamp": "2026-06-28T08:28:31Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1600",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "08:28",
-    "timestamp": "2026-06-28T08:28:31Z"
-  },
-  {
-    "title": "Control Surface Feeds #125",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:28",
-    "timestamp": "2026-06-28T08:28:17Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #403",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-df1b1c63-d5df-47be-8c9b-2f1405aeaa7f",
-    "time": "08:08",
-    "timestamp": "2026-06-28T08:08:08Z"
-  },
-  {
-    "title": "Multi-Repo Audit #10",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "07:57",
-    "timestamp": "2026-06-28T07:57:13Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #402",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-2d8c89a4-fde8-4c8b-8532-658231860456",
-    "time": "07:08",
-    "timestamp": "2026-06-28T07:08:08Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #825",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "06:24",
-    "timestamp": "2026-06-28T06:24:49Z"
   }
 ]

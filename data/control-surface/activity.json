@@ -3,12 +3,54 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "11:16",
-    "timestamp": "2026-06-28T11:16:10Z"
+    "time": "12:44",
+    "timestamp": "2026-06-28T12:44:39Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #127",
+    "time": "12:44",
+    "timestamp": "2026-06-28T12:44:28Z"
+  },
+  {
+    "title": "Sales-Ops Briefing",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #3",
+    "time": "12:20",
+    "timestamp": "2026-06-28T12:20:59Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-743fc0a0-f419-4663-8aa3-2826483b8f32 \u00b7 run #407",
+    "time": "12:08",
+    "timestamp": "2026-06-28T12:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #507",
+    "time": "11:16",
+    "timestamp": "2026-06-28T11:16:26Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #945",
+    "time": "11:16",
+    "timestamp": "2026-06-28T11:16:17Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1602",
+    "time": "11:16",
+    "timestamp": "2026-06-28T11:16:17Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #126",
     "time": "11:15",
     "timestamp": "2026-06-28T11:15:58Z"
@@ -47,47 +89,5 @@
     "detail": "dynamic on main \u00b7 run #944",
     "time": "09:56",
     "timestamp": "2026-06-28T09:56:37Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1601",
-    "time": "09:56",
-    "timestamp": "2026-06-28T09:56:36Z"
-  },
-  {
-    "title": "Bot Orchestrator",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #36",
-    "time": "09:56",
-    "timestamp": "2026-06-28T09:56:22Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #30",
-    "time": "09:31",
-    "timestamp": "2026-06-28T09:31:37Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #57",
-    "time": "09:23",
-    "timestamp": "2026-06-28T09:23:21Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #113",
-    "time": "09:16",
-    "timestamp": "2026-06-28T09:16:42Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-b83d34ed-3b3c-413d-a969-a29027604114 \u00b7 run #404",
-    "time": "09:08",
-    "timestamp": "2026-06-28T09:08:07Z"
   }
 ]

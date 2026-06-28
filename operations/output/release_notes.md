@@ -1,6 +1,6 @@
-# Release Notes — 2026-06-27
+# Release Notes — 2026-06-28
 
-*278 commit(s) since v1.0.0*
+*289 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -182,6 +182,17 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`cbe168a`)
+- refresh control-surface data feeds [skip ci] (`9ed9638`)
+- refresh control-surface data feeds [skip ci] (`1e50c58`)
+- refresh control-surface data feeds [skip ci] (`5cf0d3e`)
+- refresh control-surface data feeds [skip ci] (`1755d22`)
+- refresh control-surface data feeds [skip ci] (`036dc49`)
+- refresh control-surface data feeds [skip ci] (`11754d0`)
+- refresh control-surface data feeds [skip ci] (`7f7f616`)
+- refresh control-surface data feeds [skip ci] (`517551e`)
+- refresh control-surface data feeds [skip ci] (`ed85d42`)
+- update generated outputs — 2026-06-27 09:32 UTC [skip ci] (`d8f6e62`)
 - refresh control-surface data feeds [skip ci] (`9e3d97c`)
 - refresh control-surface data feeds [skip ci] (`77cf78a`)
 - refresh control-surface data feeds [skip ci] (`bad47c0`)

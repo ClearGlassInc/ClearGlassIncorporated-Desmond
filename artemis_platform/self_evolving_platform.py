@@ -151,6 +151,47 @@ class IonosphericObservation:
         )
 
 
+RiskBand = Literal["GREEN", "YELLOW", "RED"]
+
+
+@dataclass(frozen=True)
+class EnvironmentalCyberRiskSignal:
+    """Phase 1 signal contract for Environmental Cyber-Risk alerting."""
+
+    signal_id: str
+    log_nf2: float
+    kp_index: float | None
+    scintillation_s4: float | None
+    total_electron_content_tecu: float | None
+    affected_systems: set[Literal["HF_COMMS", "OTH_RADAR", "GNSS_NAV", "TIMING"]]
+    source_system: str
+    observed_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    confidence: float = 0.80
+
+
+def environmental_risk_band(log_nf2: float) -> RiskBand:
+    """Map the approved Phase 1 log N_F2 thresholds to alert bands."""
+
+    if not isfinite(log_nf2):
+        raise ValueError("log_nf2 must be finite")
+    if log_nf2 < 5.4:
+        return "GREEN"
+    if log_nf2 <= 5.8:
+        return "YELLOW"
+    return "RED"
+
+
+def environmental_risk_score(signal: EnvironmentalCyberRiskSignal) -> float:
+    """Return a 0..10 auditable Environmental Cyber-Risk score."""
+
+    band_base = {"GREEN": 2.0, "YELLOW": 5.8, "RED": 8.4}[environmental_risk_band(signal.log_nf2)]
+    kp_component = _clamp_probability((signal.kp_index or 0.0) / 9.0) * 0.7
+    scintillation_component = _clamp_probability(signal.scintillation_s4 or 0.0) * 0.6
+    tec_component = _clamp_probability((signal.total_electron_content_tecu or 0.0) / 100.0) * 0.3
+    dependency_component = min(len(signal.affected_systems), 4) * 0.15
+    return round(min(10.0, band_base + kp_component + scintillation_component + tec_component + dependency_component), 2)
+
+
 @dataclass
 class UpgradeProposal:
     proposal_id: str

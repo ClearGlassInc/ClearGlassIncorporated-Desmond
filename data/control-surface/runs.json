@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #138",
+    "title": "Control Surface Feeds #139",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:45",
+    "timestamp": "2026-06-29T21:45:12Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #552",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:16",
+    "timestamp": "2026-06-29T20:16:12Z"
+  },
+  {
+    "title": "pages build and deployment #992",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:16",
+    "timestamp": "2026-06-29T20:16:06Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1682",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:16",
+    "timestamp": "2026-06-29T20:16:05Z"
+  },
+  {
+    "title": "Control Surface Feeds #138",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:15",
     "timestamp": "2026-06-29T20:15:44Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "16:38",
     "timestamp": "2026-06-29T16:38:01Z"
-  },
-  {
-    "title": "Security #628",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:01Z"
-  },
-  {
-    "title": "pages build and deployment #990",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on main",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:00Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1680",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:00Z"
-  },
-  {
-    "title": "Defender Watch #127",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/launch-linkedin-post-and-x-thread",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:39Z"
   }
 ]

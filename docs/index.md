@@ -4,6 +4,9 @@
 
 ## AI Agents & Voice Systems
 
+- [ClearGlassInc Artemis Autonomous Repair, Verification, and Release System](clearglassinc_artemis_autonomous_repair_release_system.md)
+  A conservative autonomous software reliability layer for triage, root cause analysis, patching, verification, staged release preparation, rollback, and audit trails.
+
 - [Open-Source TTS Models (2026)](open-source-tts-models.md)
   Zero-shot voice cloning for custom personas (Aria British RP female advisor). Chatterbox, Qwen3-TTS, Fish Speech. Self-host ready for ClearGlass AI ecosystem.
 

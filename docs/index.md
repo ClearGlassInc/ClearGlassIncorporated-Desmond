@@ -4,6 +4,9 @@
 
 ## AI Agents & Voice Systems
 
+- [ClearGlassInc Artemis Skeleton Key Palantir Self-Evolving Intelligence Platform Blueprint (2026-06-29)](clearglassinc_artemis_skeleton_key_palantir_platform_blueprint_2026-06-29.md)
+  Production-grade Gotham, Foundry, AIP, and Apollo architecture for a human-approved self-improving intelligence platform with ontology, agents, policy, evals, and deployment controls.
+
 - [ClearGlassInc Artemis Autonomous Repair, Verification, and Release System](clearglassinc_artemis_autonomous_repair_release_system.md)
   A conservative autonomous software reliability layer for triage, root cause analysis, patching, verification, staged release preparation, rollback, and audit trails.
 

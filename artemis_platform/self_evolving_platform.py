@@ -11,6 +11,8 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from hashlib import sha256
+from math import exp, isfinite
+from statistics import fmean, pstdev
 from typing import Any, Literal
 from uuid import uuid4
 
@@ -86,6 +88,18 @@ class OperatorFeedback:
     correction: str
     outcome_score: float
     captured_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass(frozen=True)
+class IonosphereSample:
+    """Precision feature vector for radio-propagation and space-weather triage."""
+
+    total_electron_content_tecu: float
+    fof2_mhz: float
+    scintillation_s4: float
+    kp_index: float
+    frequency_mhz: float
+    path_length_km: float
 
 
 @dataclass
@@ -179,3 +193,44 @@ class SelfImprovementLoop:
         if proposal.eval_metrics["p95_latency_ms"] > 750:
             return "reject"
         return "revise"
+
+
+def _clamp_probability(value: float) -> float:
+    if not isfinite(value):
+        raise ValueError("probability feature must be finite")
+    return max(0.0, min(1.0, value))
+
+
+def ionospheric_disruption_score(sample: IonosphereSample) -> float:
+    """Return an auditable 0..1 disruption score before ML model routing.
+
+    The deterministic baseline is intentionally simple enough to review in
+    classified or coalition environments, while still capturing the main
+    propagation stressors used by the Artemis ionospheric research mission pack.
+    """
+
+    scintillation_component = _clamp_probability(sample.scintillation_s4)
+    geomagnetic_component = _clamp_probability(sample.kp_index / 9.0)
+    hf_component = (
+        _clamp_probability((10.0 - sample.fof2_mhz) / 10.0)
+        if sample.frequency_mhz < 30.0
+        else 0.15
+    )
+    path_component = _clamp_probability(sample.path_length_km / 5000.0)
+    linear_score = (
+        1.35 * scintillation_component
+        + 1.10 * geomagnetic_component
+        + 0.85 * hf_component
+        + 0.45 * path_component
+        - 1.25
+    )
+    return _clamp_probability(1.0 / (1.0 + exp(-linear_score)))
+
+
+def drift_zscore(current_window: list[float], baseline_window: list[float]) -> float:
+    """Measure drift between live and baseline ionospheric feature windows."""
+
+    if len(current_window) < 5 or len(baseline_window) < 5:
+        raise ValueError("drift windows require at least five samples")
+    baseline_sigma = pstdev(baseline_window) or 1e-6
+    return abs(fmean(current_window) - fmean(baseline_window)) / baseline_sigma

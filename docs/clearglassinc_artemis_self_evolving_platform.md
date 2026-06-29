@@ -1237,3 +1237,149 @@ JOIN mission_outcomes o ON o.action_package_id = ap.action_package_id;
 ```
 
 This expanded blueprint preserves the original architecture while adding deeper implementation detail, stronger trust controls, and a clearer conversion of operator behavior into safe, auditable platform improvement.
+
+---
+
+## Ionospheric Research Mission Pack
+
+ClearGlassInc Artemis can be instantiated as an ionospheric-physics and space-weather intelligence workspace for research operations where the mission is to advance understanding of radio-wave propagation, navigation impacts, radar performance, and natural solar-driven ionospheric dynamics. In this deployment profile, Gotham provides the operational investigation graph for events, assets, sensors, stations, and campaigns; Foundry integrates historical and live scientific data into governed ontology objects; AIP runs analyst copilots and experiment agents; and Apollo controls safe promotion of models, prompts, pipelines, and edge deployments.
+
+### Research scope
+
+- **Purpose**: advance understanding of ionospheric physics, space weather, radio-wave propagation, and how ionospheric state affects communication, radar, and navigation systems.
+- **Natural-process focus**: correlate solar flux, geomagnetic activity, plasma irregularities, total electron content, scintillation, auroral conditions, and atmospheric coupling signals.
+- **Controlled-artificial-effects focus**: analyze small-scale, instrumented perturbation studies only under explicit legal, safety, environmental, and operator approvals.
+- **Open science posture**: support international researchers, visiting investigators, open houses, education events, reproducible notebooks, and releasable public data products.
+- **Mission-critical posture**: keep operationally sensitive infrastructure, controlled experiment parameters, and coalition-restricted data separated from public research outputs.
+
+### Domain ontology extensions
+
+```yaml
+objects:
+  IonosphericObservation:
+    properties:
+      observation_id: string
+      station_id: string
+      latitude: float
+      longitude: float
+      altitude_km: float
+      observed_at: datetime
+      total_electron_content_tecu: float
+      foF2_mhz: float
+      hmF2_km: float
+      scintillation_s4: float
+      phase_sigma: float
+      confidence_score: float
+      classification: enum[UNCLASS, CUI, SECRET]
+    links:
+      station: SensorStation
+      solar_context: SolarWeatherState
+      propagation_paths: [RadioPropagationPath]
+      campaign: ResearchCampaign
+
+  SolarWeatherState:
+    properties:
+      state_id: string
+      observed_at: datetime
+      f107_flux: float
+      kp_index: float
+      dst_index_nt: float
+      solar_wind_speed_kps: float
+      imf_bz_nt: float
+      flare_class: string
+      confidence_score: float
+
+  RadioPropagationPath:
+    properties:
+      path_id: string
+      transmitter_id: string
+      receiver_id: string
+      frequency_mhz: float
+      mode: enum[HF, VHF, UHF, GNSS, RADAR]
+      predicted_loss_db: float
+      measured_loss_db: float
+      anomaly_score: float
+    links:
+      source_observations: [IonosphericObservation]
+      affected_assets: [Asset]
+
+  ResearchCampaign:
+    properties:
+      campaign_id: string
+      name: string
+      objective: string
+      principal_investigator: string
+      public_release_state: enum[draft, reviewed, releasable, restricted]
+      approved_experiment_bounds: object
+```
+
+### Precision feature engineering in Python
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from math import exp, isfinite
+from statistics import fmean, pstdev
+
+
+@dataclass(frozen=True)
+class IonosphereSample:
+    tec_tecu: float
+    fof2_mhz: float
+    scintillation_s4: float
+    kp_index: float
+    frequency_mhz: float
+    path_length_km: float
+
+
+def clamp(value: float, low: float = 0.0, high: float = 1.0) -> float:
+    if not isfinite(value):
+        raise ValueError("feature must be finite")
+    return max(low, min(high, value))
+
+
+def ionospheric_disruption_score(sample: IonosphereSample) -> float:
+    """Deterministic, auditable baseline used before ML/routing decisions."""
+    scintillation_component = clamp(sample.scintillation_s4 / 1.0)
+    geomagnetic_component = clamp(sample.kp_index / 9.0)
+    hf_component = clamp((10.0 - sample.fof2_mhz) / 10.0) if sample.frequency_mhz < 30 else 0.15
+    path_component = clamp(sample.path_length_km / 5000.0)
+    linear = (
+        1.35 * scintillation_component
+        + 1.10 * geomagnetic_component
+        + 0.85 * hf_component
+        + 0.45 * path_component
+        - 1.25
+    )
+    return clamp(1.0 / (1.0 + exp(-linear)))
+
+
+def drift_zscore(current_window: list[float], baseline_window: list[float]) -> float:
+    if len(current_window) < 5 or len(baseline_window) < 5:
+        raise ValueError("drift windows require at least five samples")
+    baseline_sigma = pstdev(baseline_window) or 1e-6
+    return abs(fmean(current_window) - fmean(baseline_window)) / baseline_sigma
+```
+
+### Ionospheric self-improvement loop
+
+1. Operators and researchers correct propagation forecasts, entity links, campaign metadata, and event labels in the same ontology-backed workflow used by agents.
+2. The improvement engine converts these corrections into versioned eval datasets partitioned by region, season, solar conditions, instrument family, and releasability boundary.
+3. Candidate prompt, workflow, feature, and model-routing changes are evaluated against precision, recall, false-alarm rate, calibration error, p95 latency, and policy violations.
+4. Proposed changes are submitted as governed `UpgradeProposal` objects with lineage to feedback, eval runs, model cards, and rollback targets.
+5. Apollo promotes only human-approved candidates through research, staging, canary, and production rings; any degradation freezes promotion and rolls back to the last signed manifest.
+
+### Example operator workflow
+
+```text
+Live digisonde + GNSS TEC + magnetometer feed
+  -> Foundry stream normalization
+  -> IonosphericObservation ontology write
+  -> AIP triage agent scores propagation-disruption risk
+  -> Analyst Copilot explains evidence, uncertainty, and affected paths
+  -> Research lead approves public research note or rejects recommendation
+  -> Feedback becomes a labeled eval item for the next candidate workflow
+```
+
+This mission pack preserves the broader ClearGlassInc Artemis operating principle: the platform may propose better prompts, workflows, heuristics, and model routes, but it cannot expand its mission authority, relax policy, or execute operationally significant actions without explicit human approval.

@@ -1096,3 +1096,39 @@ The next similar event is summarized with clearer uncertainty, no premature coal
 - Run mission simulation exercises and after-action eval refinement.
 
 ClearGlassInc Artemis becomes a compounding intelligence system by combining Palantir’s operational data model, human-approved AI agents, eval-driven self-improvement, and Apollo-controlled deployment discipline into one audited mission platform.
+
+---
+
+## Environmental Cyber-Risk Phase 1 Launch Pack
+
+ClearGlassInc Artemis adds **Environmental Cyber-Risk Intelligence** as a Tier-2 threat vector that maps public space-weather and ionospheric indicators into enterprise communication, navigation, timing, and logistics risk. Phase 1 is deliberately lightweight: public Canadian Space Agency, NOAA SWPC, and open ionospheric-model feeds are normalized into Foundry datasets, surfaced as Gotham investigation context, reasoned over by AIP agents, and deployed through Apollo as a reversible dashboard/service pack.
+
+### Phase 1 Dashboard Contract
+
+| Input family | Examples | Artemis use |
+|---|---|---|
+| Space-weather alerts | CSA notices, NOAA SWPC geomagnetic and radio alerts | Event trigger, severity context, operator-facing citations |
+| Ionospheric state | `logNmF2`, foF2, TEC, scintillation S4 | Primary propagation stress and threshold mapping |
+| Enterprise telemetry | GNSS error, HF degradation, timing drift, network latency | Client-specific impact correlation |
+| Mission context | Site, sector, dependency map, SLA | Prioritization and mitigation routing |
+
+The production threshold contract is intentionally auditable:
+
+```text
+GREEN  = logNmF2 < 5.4
+YELLOW = 5.4 <= logNmF2 <= 5.8
+RED    = logNmF2 > 5.8
+```
+
+AIP agents may enrich the band with Kp, scintillation, HF absorption, and GNSS-error features, but they cannot silently change the band thresholds. Threshold edits are treated as `MODEL_OR_PROMPT_CHANGE` proposals and require eval evidence, human approval, Apollo canary deployment, and rollback pointers.
+
+### Burlington/GTA Pilot Workflow
+
+1. **Ingest** CSA/NOAA/open-model data into a Foundry bronze dataset every 5-15 minutes.
+2. **Normalize** station observations into `EnvironmentalCyberRiskSignal` records with lineage hashes.
+3. **Score** each site using the deterministic Python threshold function before any ML routing.
+4. **Correlate** risk bands with client GNSS, timing, HF, surveying, logistics, or latency anomalies.
+5. **Recommend** mitigations as an AIP action package; case writeback and client notifications require approval.
+6. **Publish** a dashboard tile and a 12-page pilot brief with evidence, confidence, limitations, and mitigation steps.
+
+This launch pack preserves the Artemis governance model: public/open data first, no offensive collection, no unsupported predictive certainty, and no operationally significant action without an authorized human approval token.

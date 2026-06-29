@@ -103,6 +103,55 @@ class IonosphereSample:
 
 
 @dataclass
+class IonosphericObservation:
+    """Research observation for space-weather and radio-propagation studies."""
+
+    observation_id: str
+    station_id: str
+    fo_f2_mhz: float | None
+    tec_units: float | None
+    scintillation_s4: float | None
+    kp_index: float | None
+    solar_flux_f107: float | None
+    affected_systems: set[Literal["HF_COMMS", "OTH_RADAR", "GNSS_NAV", "TIMING"]]
+    observed_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    classification: Classification = "UNCLASS"
+    compartments: set[str] = field(default_factory=lambda: {"IONO_RESEARCH"})
+    coalition_releasability: set[str] = field(default_factory=lambda: {"OPEN_RESEARCH"})
+    confidence: float = 0.85
+
+    def to_ontology_object(self) -> OntologyObject:
+        payload = {
+            "observation_id": self.observation_id,
+            "station_id": self.station_id,
+            "fo_f2_mhz": self.fo_f2_mhz,
+            "tec_units": self.tec_units,
+            "scintillation_s4": self.scintillation_s4,
+            "kp_index": self.kp_index,
+            "solar_flux_f107": self.solar_flux_f107,
+            "affected_systems": sorted(self.affected_systems),
+        }
+        return OntologyObject(
+            object_id=self.observation_id,
+            object_type="IONOSPHERIC_OBSERVATION",
+            classification=self.classification,
+            compartments=self.compartments,
+            coalition_releasability=self.coalition_releasability,
+            confidence=self.confidence,
+            valid_from=self.observed_at,
+            attributes=payload,
+            lineage=[
+                LineageRef.from_payload(
+                    source_system="ionosphere_research_feed",
+                    dataset_rid="foundry.dataset.ionosphere.observations",
+                    transform_version="iono-normalizer.v1",
+                    payload=payload,
+                )
+            ],
+        )
+
+
+@dataclass
 class UpgradeProposal:
     proposal_id: str
     target: Literal["prompt", "workflow", "heuristic", "model_route"]
@@ -161,6 +210,65 @@ class ArtemisWorkflow:
             ApprovalGate.OPERATIONAL_EFFECT,
             ApprovalGate.MODEL_OR_PROMPT_CHANGE,
         }
+
+
+class IonosphericResearchWorkflow(ArtemisWorkflow):
+    """Domain workflow for ionospheric physics, space weather, and propagation impacts."""
+
+    def triage_ionospheric_observation(
+        self,
+        observation: IonosphericObservation,
+        mission: MissionContext,
+        subject: dict[str, Any],
+    ) -> AgentAction:
+        event = observation.to_ontology_object()
+        if not self.policy.authorize(subject, event, mission):
+            raise PermissionError("Subject is not authorized for the ionospheric observation")
+
+        propagation_risk = self._propagation_risk(observation)
+        if propagation_risk >= 0.80:
+            tool_name = "open_gotham_case"
+            gate = ApprovalGate.CASE_WRITEBACK
+        else:
+            tool_name = "publish_research_summary"
+            gate = ApprovalGate.READ_ONLY
+
+        rationale = (
+            f"Ionospheric propagation risk {propagation_risk:.2f}; "
+            f"affected systems={','.join(sorted(observation.affected_systems))}; "
+            f"Kp={observation.kp_index}; S4={observation.scintillation_s4}; "
+            f"mission objective={mission.objective}"
+        )
+        return AgentAction(
+            action_id=str(uuid4()),
+            agent_name="ionosphere_research_agent.v1",
+            gate=gate,
+            tool_name=tool_name,
+            arguments={
+                "observation_id": observation.observation_id,
+                "station_id": observation.station_id,
+                "affected_systems": sorted(observation.affected_systems),
+                "risk_score": propagation_risk,
+                "mission_id": mission.mission_id,
+            },
+            rationale=rationale,
+            confidence=min(0.99, max(0.01, observation.confidence * propagation_risk)),
+            policy_labels=observation.compartments,
+        )
+
+    @staticmethod
+    def _propagation_risk(observation: IonosphericObservation) -> float:
+        kp_component = min((observation.kp_index or 0.0) / 9.0, 1.0)
+        scintillation_component = min(observation.scintillation_s4 or 0.0, 1.0)
+        tec_component = min((observation.tec_units or 0.0) / 100.0, 1.0)
+        system_component = min(len(observation.affected_systems) / 4.0, 1.0)
+        return round(
+            0.35 * kp_component
+            + 0.30 * scintillation_component
+            + 0.20 * tec_component
+            + 0.15 * system_component,
+            4,
+        )
 
 
 class SelfImprovementLoop:

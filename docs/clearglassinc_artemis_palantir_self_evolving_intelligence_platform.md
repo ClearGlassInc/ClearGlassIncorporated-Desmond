@@ -344,3 +344,99 @@ allow {
 - Require human approval for policy/risk threshold changes.
 - Build “explain why” UX everywhere: confidence, provenance, and policy decisions.
 - Treat eval quality as a first-class SLO alongside latency and uptime.
+
+---
+
+## Ionospheric Research and Space-Weather Mission Module
+
+ClearGlassInc Artemis can be configured as a research-grade ionospheric intelligence cell for lawful science, education, and infrastructure resilience. In this mode, Artemis advances understanding of ionospheric physics, space weather, radio-wave propagation, and ionosphere-driven impacts on communication, radar, and navigation systems. The module supports natural-process research influenced by solar activity and tightly bounded studies of small-scale artificial effects, while preserving explicit human approval, auditability, and coalition-aware data sharing.
+
+### Mission Objectives
+- Fuse solar, geomagnetic, GNSS, radar, ionosonde, HF-link, and operator-observed signal data into one governed Foundry Ontology.
+- Track how ionospheric state changes affect HF/VHF/UHF communications, over-the-horizon radar, GNSS positioning, timing integrity, and navigation confidence.
+- Support international researchers through compartmented collaboration spaces, releasability-aware data products, open-house demonstrations, and educational event datasets.
+- Convert observed propagation outcomes into evaluations that improve forecast prompts, retrieval logic, routing thresholds, and anomaly triage workflows only after human review.
+
+### Ionospheric Ontology Extension
+
+```sql
+CREATE TABLE ionospheric_observation (
+  observation_id        TEXT PRIMARY KEY,
+  observed_at           TIMESTAMP NOT NULL,
+  station_id            TEXT NOT NULL,
+  latitude              DOUBLE PRECISION,
+  longitude             DOUBLE PRECISION,
+  altitude_km           DOUBLE PRECISION,
+  fo_f2_mhz             DOUBLE PRECISION,
+  hm_f2_km              DOUBLE PRECISION,
+  tec_units             DOUBLE PRECISION,
+  scintillation_s4      DOUBLE PRECISION,
+  kp_index              DOUBLE PRECISION,
+  solar_flux_f107       DOUBLE PRECISION,
+  source_system         TEXT NOT NULL,
+  confidence_score      DOUBLE PRECISION NOT NULL,
+  lineage_id            TEXT NOT NULL,
+  classification_level  TEXT NOT NULL,
+  coalition_tag         TEXT
+);
+
+CREATE TABLE propagation_impact (
+  impact_id             TEXT PRIMARY KEY,
+  observation_id        TEXT NOT NULL REFERENCES ionospheric_observation(observation_id),
+  affected_system_type  TEXT NOT NULL, -- HF_COMMS, OTH_RADAR, GNSS_NAV, TIMING
+  frequency_mhz         DOUBLE PRECISION,
+  degradation_score     DOUBLE PRECISION NOT NULL,
+  predicted_duration_min INTEGER,
+  operational_note      TEXT,
+  approval_status       TEXT NOT NULL DEFAULT 'RESEARCH_ONLY'
+);
+```
+
+### Agent Workflow for Ionospheric Events
+
+1. **Ingest**: Foundry pipelines normalize ionosonde sweeps, GNSS total electron content, solar flux, geomagnetic indices, radar propagation reports, and communications-link quality metrics.
+2. **Correlate**: AIP agents compare live anomalies against historical storms, diurnal patterns, seasonal baselines, and known instrumentation artifacts.
+3. **Explain**: The analyst copilot produces a cited causal hypothesis: solar driver, local ionospheric layer change, probable propagation impact, confidence, and caveats.
+4. **Recommend**: Agents may propose research tasks, collection plans, public education summaries, or resilience advisories. Any operationally significant action remains gated by a human approver.
+5. **Learn**: Operator labels and downstream link outcomes become eval examples for prompt, heuristic, and model-router proposals. Apollo canary channels promote only approved changes with rollback pointers.
+
+### Representative Python Event Handler
+
+```python
+from artemis_platform.self_evolving_platform import (
+    IonosphericObservation,
+    IonosphericResearchWorkflow,
+    MissionContext,
+    PolicyEngine,
+)
+
+mission = MissionContext(
+    mission_id="ionosphere-research-2026",
+    objective="Understand space-weather effects on communications, radar, and navigation resilience.",
+    commander_intent="Support open research while preventing ungated operational effects.",
+    allowed_actions={"publish_research_summary", "open_gotham_case", "append_watchlist_note"},
+    prohibited_actions={"operational_effect"},
+    latency_budget_ms=500,
+    compartments={"IONO_RESEARCH"},
+)
+
+observation = IonosphericObservation(
+    observation_id="obs-20260629-001",
+    station_id="research-array-north",
+    fo_f2_mhz=4.2,
+    tec_units=76.5,
+    scintillation_s4=0.82,
+    kp_index=7.0,
+    solar_flux_f107=188.0,
+    affected_systems={"HF_COMMS", "GNSS_NAV"},
+)
+
+workflow = IonosphericResearchWorkflow(PolicyEngine())
+recommendation = workflow.triage_ionospheric_observation(
+    observation=observation,
+    mission=mission,
+    subject={"clearance": "UNCLASS", "compartments": ["IONO_RESEARCH"]},
+)
+```
+
+This module makes the architecture concrete for ionospheric physics and space-weather research while preserving the core Artemis rule: the platform may propose better prompts, workflows, heuristics, and routing logic, but only human-approved, evaluated, versioned, and rollback-safe changes can be promoted.

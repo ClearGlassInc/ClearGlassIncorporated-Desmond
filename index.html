@@ -216,17 +216,6 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 @media(max-width:980px){.nav-links{display:none}.nav-toggle{display:flex}}
 @media(max-width:768px){.nav{top:8px;width:calc(100% - 1rem);height:64px;padding:0 .85rem}.mobile-menu{top:84px;left:.5rem;right:.5rem}.cursor-glow{display:none}}
 
-.chatbot-launcher{position:fixed;right:22px;bottom:22px;z-index:140;background:var(--dark);color:#fff;border:none;border-radius:999px;padding:12px 18px;font-weight:700;cursor:pointer;box-shadow:0 12px 28px rgba(0,0,0,.22)}
-.chatbot-panel{position:fixed;right:22px;bottom:78px;width:min(380px,calc(100vw - 24px));max-height:70vh;display:none;flex-direction:column;z-index:141;border:1px solid var(--glass-border);border-radius:18px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);box-shadow:0 20px 44px rgba(0,0,0,.2);overflow:hidden}
-.chatbot-panel.open{display:flex}
-.chatbot-head{padding:14px 16px;background:var(--dark);color:#fff;display:flex;justify-content:space-between;align-items:center;font-weight:600}
-.chatbot-log{padding:14px;overflow:auto;display:grid;gap:10px;background:#f8fafc}
-.chat-msg{padding:10px 12px;border-radius:12px;font-size:14px;line-height:1.5;max-width:90%}
-.chat-msg.user{justify-self:end;background:#111827;color:#fff}
-.chat-msg.bot{justify-self:start;background:#fff;border:1px solid #e5e7eb;color:#111827}
-.chatbot-form{display:flex;gap:8px;padding:12px;border-top:1px solid #e5e7eb;background:#fff}
-.chatbot-form input{flex:1;border:1px solid #d1d5db;border-radius:10px;padding:10px 12px;font-size:14px}
-.chatbot-form button{border:none;background:var(--dark);color:#fff;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://clearglassinc.github.io/#org","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","logo":"https://clearglassinc.github.io/logo.png","foundingDate":"2024","founder":{"@id":"https://clearglassinc.github.io/#desmond"},"sameAs":["https://github.com/ClearGlassInc"],"address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"},"contactPoint":{"@type":"ContactPoint","telephone":"+1-289-707-0269","contactType":"sales","areaServed":"Worldwide","availableLanguage":"en"}},{"@type":"Person","@id":"https://clearglassinc.github.io/#desmond","name":"Desmond Otieno Odhiambo","jobTitle":"Founder & Chairman, Software Architect","worksFor":{"@id":"https://clearglassinc.github.io/#org"},"url":"https://clearglassinc.github.io/#founder","email":"mailto:desmondotieno@icloud.com","alumniOf":[{"@type":"EducationalOrganization","name":"University of Pennsylvania"},{"@type":"EducationalOrganization","name":"Macquarie University"}],"knowsAbout":["Cybersecurity","AI Automation","Autonomous Agents","Software Architecture","OSINT","Digital Investigations","Financial Crime Analysis","Zero Trust Architecture","Enterprise Workflow Automation"],"sameAs":["https://github.com/ClearGlassInc"]},{"@type":"ProfessionalService","@id":"https://clearglassinc.github.io/#service","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","image":"https://clearglassinc.github.io/logo.png","telephone":"+1-289-707-0269","priceRange":"$$$","areaServed":"Worldwide","address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"},"parentOrganization":{"@id":"https://clearglassinc.github.io/#org"},"knowsAbout":["Cybersecurity Consulting","AI Engineering","Autonomous Systems","OSINT Tooling","Software Architecture","Investigative Automation","Enterprise Workflow Automation"]},{"@type":"WebSite","@id":"https://clearglassinc.github.io/#website","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io","publisher":{"@id":"https://clearglassinc.github.io/#org"},"hasPart":[{"@type":"WebPage","name":"Artemis IV Core","url":"https://clearglassinc.github.io/artemis-iv.html"},{"@type":"WebPage","name":"Guardian","url":"https://clearglassinc.github.io/guardian.html"},{"@type":"WebPage","name":"ClearGlass NEXUS v12","url":"https://clearglassinc.github.io/clearglass-nexus.html"},{"@type":"WebPage","name":"Services & Pricing","url":"https://clearglassinc.github.io/offers/index.html"}]}]}</script>
 <meta name="google-site-verification" content="23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM">
@@ -423,21 +412,6 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   </div>
 </section>
 
-<button class="chatbot-launcher" id="chatbotLauncher" aria-controls="chatbotPanel" aria-expanded="false">Artemis Chat</button>
-<section class="chatbot-panel" id="chatbotPanel" aria-label="Artemis chatbot">
-  <div class="chatbot-head">
-    <span>ClearGlass Artemis Assistant</span>
-    <button id="chatbotClose" aria-label="Close chatbot" style="all:unset;cursor:pointer;font-size:20px;line-height:1">×</button>
-  </div>
-  <div class="chatbot-log" id="chatbotLog">
-    <div class="chat-msg bot">Hello, I can help you explore ClearGlassInc platforms, pricing pathways, and next steps.</div>
-  </div>
-  <form class="chatbot-form" id="chatbotForm">
-    <input id="chatbotInput" type="text" placeholder="Ask about products, onboarding, or contact…" required />
-    <button type="submit">Send</button>
-  </form>
-</section>
-
 <footer class="footer" role="contentinfo">
   <div class="container">
     <div class="footer-top">
@@ -565,64 +539,6 @@ var glow=document.getElementById('cursorGlow');if(window.matchMedia('(pointer:fi
 var rvEls=document.querySelectorAll('.rv');var rvObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)entry.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});rvEls.forEach(function(el){rvObs.observe(el)});
 document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var href=this.getAttribute('href');if(href==='#')return;var t=document.querySelector(href);if(t){e.preventDefault();closeMob();t.scrollIntoView({behavior:'smooth'})}})});
 
-/* ── lightweight website chatbot ── */
-var launcher=document.getElementById('chatbotLauncher');
-var panel=document.getElementById('chatbotPanel');
-var closeBtn=document.getElementById('chatbotClose');
-var chatForm=document.getElementById('chatbotForm');
-var chatInput=document.getElementById('chatbotInput');
-var chatLog=document.getElementById('chatbotLog');
-var kb=[
-  {k:['artemis','platform','ai'],a:'Artemis IV Core supports tactical intelligence workflows, mission logging, and command-shell operations. Open: artemis-iv.html'},
-  {k:['smb','financial','forecast'],a:'ClearGlass Guardian Platform includes ClearDash, ClearCast, ClearScore, ClearInsights, ClearAlert, and ClearLink.'},
-  {k:['contact','email','founder'],a:'You can contact the founder directly at desmondotieno@icloud.com.'},
-  {k:['guardian','security'],a:'Guardian is the security-focused platform for monitoring and protective workflows. Open: guardian.html'}
-];
-function appendMsg(text,who){var d=document.createElement('div');d.className='chat-msg '+who;d.textContent=text;chatLog.appendChild(d);chatLog.scrollTop=chatLog.scrollHeight;}
-function botReply(q){var t=q.toLowerCase();for(var i=0;i<kb.length;i++){if(kb[i].k.some(function(key){return t.includes(key)}))return kb[i].a;}return 'I can help with products, onboarding, operations pages, and contact routing. Try asking about Artemis, Guardian, or Guardian.';}
-function setOpen(isOpen){panel.classList.toggle('open',isOpen);launcher.setAttribute('aria-expanded',String(isOpen));if(isOpen)chatInput.focus();}
-if(launcher&&panel){launcher.addEventListener('click',function(){setOpen(!panel.classList.contains('open'));});closeBtn.addEventListener('click',function(){setOpen(false);});chatForm.addEventListener('submit',function(e){e.preventDefault();var q=chatInput.value.trim();if(!q)return;appendMsg(q,'user');chatInput.value='';setTimeout(function(){appendMsg(botReply(q),'bot');},220);});}
-
-</script>
-
-<!-- ===== LIVE OPS ribbon — real USGS + NWS feeds; auto-hides if offline ===== -->
-<style>
-#liveops{position:fixed;left:18px;bottom:20px;z-index:130;display:none;align-items:center;gap:10px;
-  text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#0a0c10;
-  background:rgba(252,253,254,.92);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
-  border:1px solid rgba(56,189,248,.35);border-radius:999px;padding:8px 14px 8px 12px;
-  box-shadow:0 10px 30px rgba(10,12,16,.12)}
-#liveops.show{display:inline-flex;animation:lo-in .5s cubic-bezier(.16,1,.3,1)}
-@keyframes lo-in{from{opacity:0;transform:translateY(10px)}}
-#liveops:hover{border-color:rgba(56,189,248,.7);box-shadow:0 12px 34px rgba(56,189,248,.22)}
-#liveops .lo-dot{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;animation:lo-blink 2.2s infinite}
-@keyframes lo-blink{50%{opacity:.4}}
-#liveops .lo-tag{font-weight:600;letter-spacing:.1em;color:#0a0c10}
-#liveops .lo-val{color:#2563eb;font-weight:600}
-#liveops .lo-sep{color:#94a3b8}
-#liveops .lo-go{color:#6b7280;font-size:11px;border-left:1px solid rgba(10,12,16,.12);padding-left:9px;margin-left:2px}
-@media(max-width:640px){#liveops{left:12px;bottom:84px;font-size:11px}}
-</style>
-<a id="liveops" href="sentinel.html" title="Open SENTINEL live command center" aria-label="Live operations status — open SENTINEL">
-  <span class="lo-dot"></span><span class="lo-tag">LIVE OPS</span>
-  <span id="loQ" class="lo-val"></span><span class="lo-sep">·</span><span id="loA" class="lo-val"></span>
-  <span class="lo-go">SENTINEL →</span>
-</a>
-<script>
-(function(){
-  var el=document.getElementById('liveops'),qEl=document.getElementById('loQ'),aEl=document.getElementById('loA');
-  function ft(u,o,ms){var c=new AbortController();var t=setTimeout(function(){c.abort();},ms||9000);
-    return fetch(u,Object.assign({signal:c.signal},o||{})).finally(function(){clearTimeout(t);});}
-  var quakes=null,alerts=null;
-  function show(){ if(quakes==null&&alerts==null)return;   // only show once real data arrives
-    qEl.textContent=(quakes==null?'—':quakes)+'q/24h';
-    aEl.textContent=(alerts==null?'—':alerts)+' wx alerts';
-    el.classList.add('show'); }
-  ft('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson',{},9000)
-    .then(function(r){return r.json();}).then(function(j){quakes=(j.features||[]).length;show();}).catch(function(){});
-  ft('https://api.weather.gov/alerts/active/count',{headers:{'Accept':'application/json'}},9000)
-    .then(function(r){return r.json();}).then(function(j){alerts=(j&&j.total!=null)?j.total:0;show();}).catch(function(){});
-})();
 </script>
 <script>
 (function(){var f=document.getElementById('subscribeForm');if(!f)return;var s=document.getElementById('status');
@@ -636,10 +552,8 @@ fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'
 .then(function(){if(btn){btn.disabled=false;}});
 });})();
 </script>
-<script defer src="control-surface.js"></script>
   <script defer src="ui.js"></script>
   <script defer src="platform.js"></script>
-<script defer src="/stealth-glass.js"></script>
 </body>
 </html>
 

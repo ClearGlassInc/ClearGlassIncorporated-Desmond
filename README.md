@@ -225,3 +225,7 @@ Report vulnerabilities privately to **clearglass369@gmail.com**. Scope, response
 ## Leadership
 
 Founder & Chairman **Desmond Otieno Odhiambo**. See `docs/Desmond_Otieno_Odhiambo_executive_profile.md`.
+
+## Architecture Blueprints
+
+- [ClearGlassInc Artemis full-stack intelligence blueprint](CLEARGLASSINC_ARTEMIS_FULL_STACK_INTELLIGENCE_BLUEPRINT.md)

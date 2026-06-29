@@ -5,6 +5,13 @@
 ### 1) Mission Context and Platform Mapping
 ClearGlassInc Artemis is designed as a **secure, coalition-aware, multi-domain intelligence platform** with machine-speed decision support and human-in-the-loop control.
 
+#### Purpose and Research
+ClearGlassInc Artemis advances understanding of **ionospheric physics, space weather, radio wave propagation, and the operational effects of the ionosphere on communication, radar, and navigation systems**. The platform treats the ionosphere as a mission-relevant, dynamic environment that can alter signal quality, sensor reliability, timing accuracy, and the confidence of downstream intelligence products.
+
+The research mission covers both natural processes, such as solar-driven disturbances and geomagnetic activity, and small-scale artificial effects that can be studied under controlled governance. Artemis supports reproducible analysis by fusing live observations, historical archives, model outputs, operator feedback, and provenance-rich experiment records into a governed ontology.
+
+The platform is designed to be open to approved international researchers, with coalition-aware access controls, compartmented datasets, and audit-ready collaboration workflows. It can also support open houses, demonstrations, and educational events through sanitized views, curated scenarios, explainable visualizations, and non-sensitive training datasets.
+
 - **Gotham**: operational investigation UI, case management, link analysis, entity tracking.
 - **Foundry**: integration layer, ontology, pipelines, feature/materialization, application logic.
 - **AIP**: copilots, agentic workflows, model orchestration, eval harnesses.

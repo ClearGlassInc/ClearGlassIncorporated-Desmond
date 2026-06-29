@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-29T12:00:59.445204+00:00",
+  "run_utc": "2026-06-29T15:23:09.833256+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
@@ -7,7 +7,7 @@
   "skipped": 0,
   "bots": [
     {
-      "bot_id": "marketing",
+      "bot_id": "daily_priority",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
@@ -19,21 +19,21 @@
       "error": null
     },
     {
-      "bot_id": "daily_priority",
+      "bot_id": "marketing",
       "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 0.02,
       "error": null
     },
     {
       "bot_id": "lead_draft",
       "status": "ok",
-      "duration_s": 0.03,
+      "duration_s": 0.04,
       "error": null
     },
     {
       "bot_id": "release_notes",
       "status": "ok",
-      "duration_s": 0.06,
+      "duration_s": 0.07,
       "error": null
     },
     {
@@ -45,23 +45,23 @@
     {
       "bot_id": "seo_optimizer",
       "status": "ok",
-      "duration_s": 0.08,
+      "duration_s": 0.09,
       "error": null
     },
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 0.58,
+      "duration_s": 1.35,
       "error": null
     },
     {
-      "bot_id": "campaign_reporter",
+      "bot_id": "operations",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "operations",
+      "bot_id": "campaign_reporter",
       "status": "ok",
       "duration_s": 0.01,
       "error": null

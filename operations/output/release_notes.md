@@ -1,6 +1,6 @@
 # Release Notes — 2026-06-29
 
-*300 commit(s) since v1.0.0*
+*317 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -96,6 +96,21 @@
 
 ## Maintenance
 
+- Add Artemis skeleton key execution blueprint (`0878b84`)
+- Expand Artemis self-evolving platform blueprint (`f4f2028`)
+- Add System 2040 Artemis intelligence blueprint (`cd9432d`)
+- Add Artemis self-evolving platform skeleton (`0c0a123`)
+- Add Artemis Skeleton Key platform blueprint (`a02abb3`)
+- Add Artemis intelligence platform blueprint (`c857fbd`)
+- Add Artemis strategic content engine (`42d1e0f`)
+- Add Artemis 2040 intelligence platform blueprint (`6768cae`)
+- Add Artemis 2040 self-evolving intelligence blueprint (`0cc2d1a`)
+- Add strategic viral content engine (`739839d`)
+- Expand Artemis 2040 architecture blueprint (`a2f3494`)
+- Expand Artemis intelligence platform blueprint (`5c5f108`)
+- Add Artemis autonomous repair release blueprint (`8c10742`)
+- Simplify homepage floating controls (`73b132f`)
+- Add Artemis intelligence platform blueprint (`3f18cec`)
 - Bump FastAPI + pin starlette to clear 8 starlette CVEs (`00527cc`)
 - Add safe remediation script to replace unsafe auto-patch phase (`8a84dbe`)
 - Add Insights to nav dropdown (desktop + mobile) (`358d745`)
@@ -182,6 +197,8 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`6a4659d`)
+- update generated outputs — 2026-06-29 12:00 UTC [skip ci] (`f053451`)
 - refresh control-surface data feeds [skip ci] (`15f24df`)
 - refresh control-surface data feeds [skip ci] (`a8428ed`)
 - refresh control-surface data feeds [skip ci] (`eccf2e9`)

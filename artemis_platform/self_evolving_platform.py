@@ -16,7 +16,6 @@ from statistics import fmean, pstdev
 from typing import Any, Literal
 from uuid import uuid4
 
-
 Classification = Literal["UNCLASS", "CUI", "SECRET", "TOP_SECRET"]
 Decision = Literal["approve", "reject", "revise"]
 
@@ -37,9 +36,21 @@ class LineageRef:
     checksum: str
 
     @classmethod
-    def from_payload(cls, source_system: str, dataset_rid: str, transform_version: str, payload: dict[str, Any]) -> "LineageRef":
+    def from_payload(
+        cls,
+        source_system: str,
+        dataset_rid: str,
+        transform_version: str,
+        payload: dict[str, Any],
+    ) -> "LineageRef":
         digest = sha256(repr(sorted(payload.items())).encode("utf-8")).hexdigest()
-        return cls(source_system, dataset_rid, transform_version, datetime.now(timezone.utc), digest)
+        return cls(
+            source_system,
+            dataset_rid,
+            transform_version,
+            datetime.now(timezone.utc),
+            digest,
+        )
 
 
 @dataclass
@@ -88,6 +99,35 @@ class OperatorFeedback:
     correction: str
     outcome_score: float
     captured_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass(frozen=True)
+class EnvironmentalCyberRiskSignal:
+    """Enterprise-facing space-weather feature vector for Phase 1 risk mapping.
+
+    log_nm_f2 follows the ClearGlassInc Artemis launch thresholds:
+    GREEN < 5.4, YELLOW 5.4..5.8, RED > 5.8. Additional features raise
+    confidence and recommended mitigations without overriding the audited band.
+    """
+
+    signal_id: str
+    site_id: str
+    log_nm_f2: float
+    kp_index: float
+    scintillation_s4: float
+    hf_absorption_db: float
+    gnss_error_m: float
+    observed_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass(frozen=True)
+class EnvironmentalCyberRiskAssessment:
+    signal_id: str
+    band: Literal["GREEN", "YELLOW", "RED"]
+    score: float
+    affected_services: tuple[str, ...]
+    mitigation_playbook: tuple[str, ...]
+    rationale: str
 
 
 @dataclass(frozen=True)
@@ -166,15 +206,26 @@ class UpgradeProposal:
 class PolicyEngine:
     """Policy-as-code facade for entity, row, column, and action-level checks."""
 
-    def authorize(self, subject: dict[str, Any], obj: OntologyObject | AgentAction, mission: MissionContext) -> bool:
+    def authorize(
+        self,
+        subject: dict[str, Any],
+        obj: OntologyObject | AgentAction,
+        mission: MissionContext,
+    ) -> bool:
         subject_clearance = subject.get("clearance", "UNCLASS")
         clearance_order = ["UNCLASS", "CUI", "SECRET", "TOP_SECRET"]
         obj_classification = getattr(obj, "classification", "UNCLASS")
-        if clearance_order.index(subject_clearance) < clearance_order.index(obj_classification):
+        if clearance_order.index(subject_clearance) < clearance_order.index(
+            obj_classification
+        ):
             return False
         subject_compartments = set(subject.get("compartments", []))
-        obj_compartments = getattr(obj, "compartments", getattr(obj, "policy_labels", set()))
-        if not set(obj_compartments).issubset(subject_compartments | mission.compartments):
+        obj_compartments = getattr(
+            obj, "compartments", getattr(obj, "policy_labels", set())
+        )
+        if not set(obj_compartments).issubset(
+            subject_compartments | mission.compartments
+        ):
             return False
         if isinstance(obj, AgentAction) and obj.tool_name in mission.prohibited_actions:
             return False
@@ -187,12 +238,16 @@ class ArtemisWorkflow:
     def __init__(self, policy: PolicyEngine) -> None:
         self.policy = policy
 
-    def triage_event(self, event: OntologyObject, mission: MissionContext, subject: dict[str, Any]) -> AgentAction:
+    def triage_event(
+        self, event: OntologyObject, mission: MissionContext, subject: dict[str, Any]
+    ) -> AgentAction:
         if not self.policy.authorize(subject, event, mission):
             raise PermissionError("Subject is not authorized for the event context")
         severity = float(event.attributes.get("severity", 0.0))
         action = "open_gotham_case" if severity >= 0.75 else "append_watchlist_note"
-        gate = ApprovalGate.CASE_WRITEBACK if severity >= 0.75 else ApprovalGate.READ_ONLY
+        gate = (
+            ApprovalGate.CASE_WRITEBACK if severity >= 0.75 else ApprovalGate.READ_ONLY
+        )
         return AgentAction(
             action_id=str(uuid4()),
             agent_name="triage_agent.v1",
@@ -223,7 +278,9 @@ class IonosphericResearchWorkflow(ArtemisWorkflow):
     ) -> AgentAction:
         event = observation.to_ontology_object()
         if not self.policy.authorize(subject, event, mission):
-            raise PermissionError("Subject is not authorized for the ionospheric observation")
+            raise PermissionError(
+                "Subject is not authorized for the ionospheric observation"
+            )
 
         propagation_risk = self._propagation_risk(observation)
         if propagation_risk >= 0.80:
@@ -274,7 +331,9 @@ class IonosphericResearchWorkflow(ArtemisWorkflow):
 class SelfImprovementLoop:
     """Converts feedback and outcomes into safe, evaluated upgrade proposals."""
 
-    def propose_upgrade(self, feedback: list[OperatorFeedback], current_version: str) -> UpgradeProposal | None:
+    def propose_upgrade(
+        self, feedback: list[OperatorFeedback], current_version: str
+    ) -> UpgradeProposal | None:
         rejected = [f for f in feedback if f.decision in {"reject", "revise"}]
         if len(rejected) < 3:
             return None
@@ -296,7 +355,10 @@ class SelfImprovementLoop:
         )
 
     def promotion_decision(self, proposal: UpgradeProposal) -> Decision:
-        if proposal.eval_metrics["precision"] >= 0.90 and proposal.eval_metrics["operator_trust"] >= 0.80:
+        if (
+            proposal.eval_metrics["precision"] >= 0.90
+            and proposal.eval_metrics["operator_trust"] >= 0.80
+        ):
             return "approve"
         if proposal.eval_metrics["p95_latency_ms"] > 750:
             return "reject"
@@ -333,6 +395,74 @@ def ionospheric_disruption_score(sample: IonosphereSample) -> float:
         - 1.25
     )
     return _clamp_probability(1.0 / (1.0 + exp(-linear_score)))
+
+
+def environmental_cyber_risk_assessment(
+    signal: EnvironmentalCyberRiskSignal,
+) -> EnvironmentalCyberRiskAssessment:
+    """Map ionospheric conditions to an enterprise mitigation-ready risk band."""
+
+    if not all(
+        isfinite(value)
+        for value in (
+            signal.log_nm_f2,
+            signal.kp_index,
+            signal.scintillation_s4,
+            signal.hf_absorption_db,
+            signal.gnss_error_m,
+        )
+    ):
+        raise ValueError("environmental cyber-risk features must be finite")
+
+    if signal.log_nm_f2 < 5.4:
+        band: Literal["GREEN", "YELLOW", "RED"] = "GREEN"
+    elif signal.log_nm_f2 <= 5.8:
+        band = "YELLOW"
+    else:
+        band = "RED"
+
+    normalized_pressure = (
+        0.36 * _clamp_probability((signal.log_nm_f2 - 5.0) / 1.2)
+        + 0.24 * _clamp_probability(signal.kp_index / 9.0)
+        + 0.18 * _clamp_probability(signal.scintillation_s4)
+        + 0.12 * _clamp_probability(signal.hf_absorption_db / 20.0)
+        + 0.10 * _clamp_probability(signal.gnss_error_m / 25.0)
+    )
+
+    affected = ["GNSS_NAVIGATION", "PRECISION_TIMING"]
+    if signal.hf_absorption_db >= 6.0 or band == "RED":
+        affected.append("HF_COMMUNICATIONS")
+    if signal.scintillation_s4 >= 0.45 or signal.gnss_error_m >= 8.0:
+        affected.append("SURVEYING_AND_LOGISTICS")
+
+    mitigations = [
+        "validate GNSS-dependent operations against terrestrial timing or inertial fallback",
+        "increase monitoring cadence for affected Burlington/GTA sites",
+    ]
+    if band in {"YELLOW", "RED"}:
+        mitigations.extend(
+            [
+                "notify operations leads of possible propagation-driven degradation",
+                "enable alternate communication paths and frequency-agility procedures",
+            ]
+        )
+    if band == "RED":
+        mitigations.append(
+            "open a reviewed Gotham case and prepare a client action package before operational changes"
+        )
+
+    return EnvironmentalCyberRiskAssessment(
+        signal_id=signal.signal_id,
+        band=band,
+        score=round(_clamp_probability(normalized_pressure), 4),
+        affected_services=tuple(affected),
+        mitigation_playbook=tuple(mitigations),
+        rationale=(
+            f"logNmF2={signal.log_nm_f2:.2f} maps to {band}; "
+            f"Kp={signal.kp_index:.1f}, S4={signal.scintillation_s4:.2f}, "
+            f"HF absorption={signal.hf_absorption_db:.1f} dB, GNSS error={signal.gnss_error_m:.1f} m"
+        ),
+    )
 
 
 def drift_zscore(current_window: list[float], baseline_window: list[float]) -> float:

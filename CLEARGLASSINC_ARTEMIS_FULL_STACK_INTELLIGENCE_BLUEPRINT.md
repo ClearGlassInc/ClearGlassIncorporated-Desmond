@@ -1111,3 +1111,106 @@ SELF_IMPROVEMENT_INVARIANTS = {
     'must_support_rollback': True,
 }
 ```
+
+## Phase 1 Execution Pack: Environmental Threat Command Interface
+
+ClearGlassInc Artemis can ship the Phase 1 Environmental Threat Vector Mapping capability as a thin, auditable vertical slice before deeper Palantir integration. The initial deployment uses public CSA/NOAA-style feed adapters, deterministic Python classifiers, and an operator-facing command tile. Custom GNSS telemetry, authenticated client feeds, and premium correlation models are promoted only after the pilot eval set proves value.
+
+### Minimal Streamlit Command Tile
+
+```python
+import pandas as pd
+import plotly.graph_objects as go
+import streamlit as st
+from datetime import datetime, timezone
+
+from artemis_platform.self_evolving_platform import (
+    EnvironmentalCyberRiskSignal,
+    environmental_cyber_risk_assessment,
+    environmental_risk_score,
+)
+
+st.set_page_config(
+    page_title="ClearGlassInc Artemis Environmental Threat Command",
+    layout="wide",
+    page_icon="🛰️",
+)
+
+signal = EnvironmentalCyberRiskSignal(
+    signal_id="pilot-burlington-001",
+    site_id="burlington-command",
+    log_nm_f2=5.62,
+    kp_index=4.0,
+    scintillation_s4=0.35,
+    hf_absorption_db=4.8,
+    gnss_error_m=6.4,
+    observed_at=datetime.now(timezone.utc),
+)
+assessment = environmental_cyber_risk_assessment(signal)
+score_0_10 = environmental_risk_score(signal)
+
+st.title("🛰️ ClearGlassInc Artemis — Environmental Threat Command")
+st.caption(f"Burlington, Ontario | {signal.observed_at:%Y-%m-%d %H:%M UTC} | audited pilot mode")
+
+left, middle, right = st.columns(3)
+with left:
+    st.metric("log N_F2", f"{signal.log_nm_f2:.2f}", delta="Phase 1 threshold basis")
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=score_0_10,
+        gauge={"axis": {"range": [0, 10]}, "bar": {"color": "orange" if assessment.band == "YELLOW" else "red" if assessment.band == "RED" else "green"}},
+        title={"text": "Environmental Cyber-Risk Score"},
+    ))
+    st.plotly_chart(fig, use_container_width=True)
+
+with middle:
+    if assessment.band == "RED":
+        st.error(f"{assessment.band} — action package required")
+    elif assessment.band == "YELLOW":
+        st.warning(f"{assessment.band} — monitor communications")
+    else:
+        st.success(f"{assessment.band} — nominal")
+    st.write(assessment.rationale)
+
+with right:
+    st.subheader("Affected services")
+    st.dataframe(pd.DataFrame({"service": assessment.affected_services}), use_container_width=True)
+
+st.subheader("Mitigation playbook")
+for step in assessment.mitigation_playbook:
+    st.write(f"- {step}")
+```
+
+### Pilot Acceptance Criteria
+
+| Control | Required evidence |
+|---|---|
+| Threshold correctness | Unit tests prove GREEN `< 5.4`, YELLOW `5.4..5.8`, and RED `> 5.8`. |
+| Operator trust | Every alert displays threshold basis, feature values, recommended mitigations, and confidence. |
+| Governance | No client-facing notification, operational disruption, or production prompt/workflow promotion occurs without human approval. |
+| Self-improvement | Operator corrections become eval cases; candidate threshold, workflow, and wording changes remain proposals until approved and Apollo-promoted. |
+| Rollback | The prior classifier/workflow/prompt pointer is retained as the rollback target for every candidate. |
+
+### Tactical Launch Assets
+
+- **LinkedIn lead-generation post**: position the capability as Environmental Cyber-Risk for Canadian GNSS, HF communications, OTH radar, 5G reliability, logistics, surveying, aviation support, and utilities.
+- **X/Threads authority thread**: open with ionospheric risk as a silent infrastructure vulnerability, then explain science, dashboard thresholds, mitigation, and the pilot brief CTA.
+- **Gated pilot brief**: `ClearGlass_Environmental_Cyber_Risk_Whitepaper_2026.pdf`, generated from cited ontology evidence and human-reviewed before release.
+- **Dashboard hero visual**: the command tile above, expanded later with real API adapters and client-specific exposure graphs.
+
+### Governed System 2040 Automation Module
+
+The executable companion module `artemis_platform/system_2040_dominance_protection.py` implements the safe merge of the System 2040 concept. It deliberately replaces unrestricted "skeleton key" behavior with a `GovernedAccessBroker`, mission-scoped entitlements, purpose binding, lease obligations, and audit events. Protection and growth automation are still machine-speed, but operational disruption, external communications, CRM updates, revenue claims, and publication actions are emitted only as `ActionPackage` drafts or `pending_human_approval` packages.
+
+```python
+broker = GovernedAccessBroker()
+loop = System2040AutomationLoop(
+    protection_engine=System2040ProtectionEngine(broker),
+    growth_engine=GovernedDominancePushEngine(),
+)
+result = loop.run_once(principal, environmental_signal)
+# result["dashboard"] updates the command surface
+# result["action_packages"] routes mitigations and growth assets to human approval
+```
+
+This preserves the requested automation path — sensors → findings → dashboard → alerts → mitigation packages → revenue-support drafts — while maintaining ClearGlassInc Artemis invariants: no unauthorized access, no secret materialization, no autonomous external outreach, no autonomous operational disruption, full provenance, and Apollo-compatible rollback.

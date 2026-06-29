@@ -848,6 +848,177 @@ export function CaseBriefPanel({ caseId }: { caseId: string }) {
 
 ---
 
+## Global NET Ionosphere Data Product Integration
+
+ClearGlassInc Artemis can operationalize the **NET model** as a governed Foundry/Gotham data product for space-weather-aware intelligence workflows. In this design, NET means the neural-network-based electron-density model for the topside ionosphere and F2-layer peak electron density. Artemis treats the model output as mission context: not as a standalone decision authority, but as a continuously evaluated environmental signal that can affect communications, GNSS reliability, HF propagation, radar quality, and remote-sensing confidence.
+
+### NET Operational Role in Artemis
+
+| Capability | Artemis implementation |
+|---|---|
+| Global F2-layer peak electron-density maps | Foundry transform materializes gridded `IonosphereCell` objects keyed by timestamp, altitude band, hemisphere, latitude, longitude, and `log10_nf2`. |
+| GNSS and HF-risk context | AIP agents join NET-derived ionospheric state with mission assets, communications links, sensors, routes, and alert timelines. |
+| Space-weather monitoring | Streaming jobs compute anomaly deltas against seasonal baselines and publish `SpaceWeatherAlert` objects. |
+| Mission reliability scoring | Case and recommendation services add `comms_risk`, `gnss_risk`, `radar_absorption_risk`, and `remote_sensing_degradation_risk` fields. |
+| Human-approved adaptation | Artemis can recommend alternate communications windows, confidence caveats, or collection re-tasking, but operational changes require approval. |
+
+### NET Ontology Extension
+
+```sql
+CREATE TABLE artemis_ionosphere_cell (
+  cell_id UUID PRIMARY KEY,
+  observed_at TIMESTAMPTZ NOT NULL,
+  model_name TEXT NOT NULL DEFAULT 'NET',
+  model_version TEXT NOT NULL,
+  hemisphere TEXT NOT NULL CHECK (hemisphere IN ('north','south','equatorial')),
+  latitude NUMERIC(8,5) NOT NULL CHECK (latitude BETWEEN -90 AND 90),
+  longitude NUMERIC(8,5) NOT NULL CHECK (longitude BETWEEN -180 AND 180),
+  altitude_band_km INT4RANGE NOT NULL,
+  log10_nf2 NUMERIC(6,4) NOT NULL,
+  density_el_m3 DOUBLE PRECISION GENERATED ALWAYS AS (power(10.0, log10_nf2)) STORED,
+  uncertainty NUMERIC(5,4) NOT NULL CHECK (uncertainty BETWEEN 0 AND 1),
+  source_lineage JSONB NOT NULL,
+  quality_flags TEXT[] NOT NULL DEFAULT '{}',
+  classification TEXT NOT NULL DEFAULT 'UNCLASSIFIED',
+  releasability TEXT[] NOT NULL DEFAULT '{}',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE artemis_space_weather_alert (
+  alert_id UUID PRIMARY KEY,
+  alert_type TEXT NOT NULL CHECK (alert_type IN (
+    'gnss_degradation','hf_absorption','radar_propagation_shift','remote_sensing_caveat'
+  )),
+  mission_id UUID NOT NULL,
+  valid_from TIMESTAMPTZ NOT NULL,
+  valid_to TIMESTAMPTZ NOT NULL,
+  affected_region GEOGRAPHY(POLYGON, 4326),
+  severity TEXT NOT NULL CHECK (severity IN ('LOW','MEDIUM','HIGH','CRITICAL')),
+  confidence NUMERIC(5,4) NOT NULL CHECK (confidence BETWEEN 0 AND 1),
+  evidence_cell_ids UUID[] NOT NULL,
+  recommended_mitigations JSONB NOT NULL DEFAULT '[]',
+  approval_state approval_state NOT NULL DEFAULT 'draft',
+  lineage JSONB NOT NULL
+);
+```
+
+### Python Precision Transform for NET Grids
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from decimal import Decimal, ROUND_HALF_UP
+from math import pow
+from typing import Iterable
+from uuid import UUID, uuid5, NAMESPACE_URL
+
+@dataclass(frozen=True)
+class NetGridPoint:
+    observed_at: datetime
+    model_version: str
+    latitude: float
+    longitude: float
+    altitude_min_km: int
+    altitude_max_km: int
+    log10_nf2: Decimal
+    uncertainty: Decimal
+    quality_flags: tuple[str, ...]
+
+@dataclass(frozen=True)
+class IonosphereCell:
+    cell_id: UUID
+    observed_at: datetime
+    model_name: str
+    model_version: str
+    hemisphere: str
+    latitude: Decimal
+    longitude: Decimal
+    altitude_band_km: tuple[int, int]
+    log10_nf2: Decimal
+    density_el_m3: Decimal
+    uncertainty: Decimal
+    quality_flags: tuple[str, ...]
+
+FOUR_PLACES = Decimal('0.0001')
+FIVE_PLACES = Decimal('0.00001')
+
+
+def quantize_decimal(value: float | Decimal, places: Decimal) -> Decimal:
+    return Decimal(str(value)).quantize(places, rounding=ROUND_HALF_UP)
+
+
+def infer_hemisphere(latitude: Decimal) -> str:
+    if latitude > 0:
+        return 'north'
+    if latitude < 0:
+        return 'south'
+    return 'equatorial'
+
+
+def stable_cell_id(point: NetGridPoint) -> UUID:
+    key = '|'.join([
+        'NET', point.model_version, point.observed_at.astimezone(timezone.utc).isoformat(),
+        f'{point.latitude:.5f}', f'{point.longitude:.5f}',
+        str(point.altitude_min_km), str(point.altitude_max_km), str(point.log10_nf2),
+    ])
+    return uuid5(NAMESPACE_URL, f'clearglassinc-artemis:ionosphere:{key}')
+
+
+def normalize_net_grid(points: Iterable[NetGridPoint]) -> list[IonosphereCell]:
+    cells: list[IonosphereCell] = []
+    for point in points:
+        lat = quantize_decimal(point.latitude, FIVE_PLACES)
+        lon = quantize_decimal(point.longitude, FIVE_PLACES)
+        log10_nf2 = quantize_decimal(point.log10_nf2, FOUR_PLACES)
+        density = Decimal(str(pow(10.0, float(log10_nf2)))).quantize(Decimal('1.0000'))
+        cells.append(IonosphereCell(
+            cell_id=stable_cell_id(point),
+            observed_at=point.observed_at.astimezone(timezone.utc),
+            model_name='NET',
+            model_version=point.model_version,
+            hemisphere=infer_hemisphere(lat),
+            latitude=lat,
+            longitude=lon,
+            altitude_band_km=(point.altitude_min_km, point.altitude_max_km),
+            log10_nf2=log10_nf2,
+            density_el_m3=density,
+            uncertainty=quantize_decimal(point.uncertainty, FOUR_PLACES),
+            quality_flags=point.quality_flags,
+        ))
+    return cells
+```
+
+### NET-Aware Agent Behavior
+
+1. **Triage Agent** checks whether a live alert overlaps regions with abnormal `log10_nf2`, elevated uncertainty, or known space-weather caveats.
+2. **Correlation Agent** prevents false attribution by asking whether GNSS drift, HF fading, or radar propagation changes could explain the observation.
+3. **Recommendation Agent** adds mitigations such as alternate collection windows, redundant sensor confirmation, confidence caveats, or communications-route changes.
+4. **Compliance Agent** enforces that NET-derived environmental context cannot be framed as hostile intent without independent evidence.
+5. **Improvement Service** learns from operator corrections: if analysts repeatedly reject alerts later explained by ionospheric conditions, Artemis creates eval cases and proposes new triage thresholds.
+
+### NET Evaluation Metrics
+
+```yaml
+net_eval_suite:
+  objectives:
+    - reduce_false_attribution_from_space_weather
+    - improve_gnss_degradation_forecasts
+    - improve_hf_communications_window_recommendations
+  metrics:
+    false_positive_reduction: 'dismissed_alerts_explained_by_net / total_dismissed_alerts'
+    precision_at_high_severity: 'confirmed_high_space_weather_alerts / emitted_high_space_weather_alerts'
+    caveat_coverage: 'intel_products_with_required_net_caveats / products_needing_caveats'
+    latency_p95_ms: 'p95(ingest_to_space_weather_alert)'
+  guardrails:
+    - net_context_may_reduce_sensor_confidence_but_must_not_change_mission_goal
+    - operational_mitigation_requires_human_approval
+    - coalition_release_uses_same_need_to_know_policy_as_other_ontology_objects
+```
+
+---
+
 ## Scenario Walkthrough
 
 ### 1. Live Event Enters

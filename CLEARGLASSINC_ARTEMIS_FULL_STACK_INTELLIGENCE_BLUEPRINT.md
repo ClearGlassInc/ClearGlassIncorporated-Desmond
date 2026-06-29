@@ -913,3 +913,201 @@ def classify_environmental_risk(t: EnvironmentalTelemetry) -> EnvironmentalAsses
 | Phase 3 | 10-14 weeks | Prompt/workflow registry, candidate generation, governance board, Apollo canary and rollback. |
 | Phase 4 | 14-20 weeks | Coalition-aware release workflows, advanced drift detection, A/B testing, mission impact analytics. |
 
+
+## System 2040 Governed Autonomy Addendum
+
+This addendum converts the requested "dominance protection" concept into a production-safe ClearGlassInc Artemis capability. The platform does **not** use universal or unauthorized "skeleton key" access. Instead, every dataset, API, model, tool, deployment target, and action path is mediated by a governed access broker with explicit entitlements, policy checks, audit trails, and human approval for operationally significant outcomes.
+
+### Governed Access Broker
+
+```python
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from enum import StrEnum
+from typing import Any
+
+class ResourceKind(StrEnum):
+    DATASET = 'dataset'
+    API = 'api'
+    MODEL = 'model'
+    TOOL = 'tool'
+    INFRASTRUCTURE = 'infrastructure'
+
+@dataclass(frozen=True)
+class AccessRequest:
+    actor_id: str
+    mission_id: str
+    purpose: str
+    resource_kind: ResourceKind
+    resource_name: str
+    classification: str
+    compartments: tuple[str, ...]
+    justification: str
+
+@dataclass(frozen=True)
+class AccessDecision:
+    allow: bool
+    reason: str
+    lease_seconds: int = 0
+    obligations: tuple[str, ...] = ()
+
+class GovernedAccessBroker:
+    def __init__(self, policy_client, audit_writer, secret_broker):
+        self.policy_client = policy_client
+        self.audit_writer = audit_writer
+        self.secret_broker = secret_broker
+
+    async def request(self, req: AccessRequest) -> dict[str, Any]:
+        decision = await self.policy_client.evaluate('artemis.resource.access', req.__dict__)
+        await self.audit_writer.write({
+            'event_type': 'resource_access_decision',
+            'actor_id': req.actor_id,
+            'mission_id': req.mission_id,
+            'resource': f'{req.resource_kind}:{req.resource_name}',
+            'allow': decision.allow,
+            'reason': decision.reason,
+            'observed_at': datetime.now(timezone.utc).isoformat(),
+        })
+        if not decision.allow:
+            return {'status': 'DENIED', 'reason': decision.reason}
+
+        credential = await self.secret_broker.issue_short_lived_credential(
+            subject=req.actor_id,
+            resource=req.resource_name,
+            ttl_seconds=decision.lease_seconds,
+            obligations=list(decision.obligations),
+        )
+        return {
+            'status': 'GRANTED',
+            'credential_ref': credential.reference,
+            'expires_at': credential.expires_at.isoformat(),
+            'obligations': decision.obligations,
+        }
+```
+
+### Protection and Growth Automation Boundaries
+
+```yaml
+artemis_system_2040:
+  mission: protect_clearGlassInc_artemis_and_clients
+  posture: defensive_resilience_and_governed_growth
+  prohibited:
+    - unauthorized_access
+    - credential_harvesting
+    - stealth_persistence
+    - policy_bypass
+    - autonomous_external_outreach_without_approval
+    - autonomous_operational_disruption
+  automated_without_human_approval:
+    - schema_validation
+    - telemetry_normalization
+    - enrichment_against_authorized_sources
+    - severity_scoring
+    - dashboard_updates
+    - draft_brief_generation
+    - draft_action_package_generation
+    - eval_set_generation
+  requires_human_approval:
+    - client_external_notification
+    - production_workflow_promotion
+    - prompt_or_model_route_promotion
+    - firewall_or_network_control_change
+    - service_launch_claims_or_revenue_projection_publication
+    - business_continuity_recommendation_execution
+```
+
+### Machine-Speed Protection Loop
+
+```python
+class ArtemisProtectionLoop:
+    def __init__(self, access_broker, ontology, agents, policy, audit, dashboard):
+        self.access_broker = access_broker
+        self.ontology = ontology
+        self.agents = agents
+        self.policy = policy
+        self.audit = audit
+        self.dashboard = dashboard
+
+    async def run_once(self, mission_context: dict) -> dict:
+        authorized_feeds = await self._resolve_authorized_feeds(mission_context)
+        observations = await self.agents.intake.normalize(authorized_feeds, mission_context)
+        ontology_delta = await self.ontology.upsert_observations(observations)
+        triage = await self.agents.triage.score(ontology_delta, mission_context)
+        evidence = await self.agents.enrichment.collect(triage, mission_context)
+        recommendations = await self.agents.recommender.propose(evidence, mission_context)
+        gated = []
+        for recommendation in recommendations:
+            decision = await self.policy.evaluate('artemis.recommendation.gate', recommendation)
+            gated.append({'recommendation': recommendation, 'decision': decision})
+            await self.audit.write({
+                'event_type': 'recommendation_gate',
+                'recommendation_id': recommendation['id'],
+                'allow': decision['allow'],
+                'requires_approval': decision.get('requires_approval', True),
+            })
+        await self.dashboard.publish({'triage': triage, 'evidence': evidence, 'gated_recommendations': gated})
+        return {'triage': triage, 'gated_recommendations': gated}
+
+    async def _resolve_authorized_feeds(self, mission_context: dict) -> list[dict]:
+        requested = mission_context['requested_feeds']
+        granted = []
+        for feed in requested:
+            access = await self.access_broker.request(AccessRequest(
+                actor_id=mission_context['actor_id'],
+                mission_id=mission_context['mission_id'],
+                purpose=mission_context['purpose'],
+                resource_kind=ResourceKind.DATASET,
+                resource_name=feed,
+                classification=mission_context['classification'],
+                compartments=tuple(mission_context['compartments']),
+                justification='mission-authorized resilience monitoring',
+            ))
+            if access['status'] == 'GRANTED':
+                granted.append({'feed': feed, 'credential_ref': access['credential_ref']})
+        return granted
+```
+
+### Revenue and Client Growth Guardrails
+
+ClearGlassInc Artemis may draft account intelligence, market segmentation, client risk reports, and service-line metrics, but it must keep revenue automation inside governance boundaries:
+
+1. **Draft only by default**: generated outreach, proposals, and whitepapers remain drafts until a human approver releases them.
+2. **Evidence-backed claims**: every technical or revenue claim is tied to a source, assumption, confidence score, owner, and expiry date.
+3. **No deceptive targeting**: segmentation uses authorized CRM/consented data and approved public sources only.
+4. **No autonomous spending**: paid campaigns, procurement, or third-party messaging require approval.
+5. **Outcome learning**: accepted proposals, lost deals, client objections, and delivery outcomes feed evals for better positioning without changing mission goals.
+
+```sql
+create table growth_claim_registry (
+  claim_id uuid primary key,
+  claim_text text not null,
+  claim_type text not null check (claim_type in ('technical','market','revenue','timeline','capability')),
+  evidence_refs text[] not null,
+  assumption_refs text[] not null default '{}',
+  confidence numeric(5,4) not null check (confidence between 0 and 1),
+  owner text not null,
+  approved_by text,
+  approved_at timestamptz,
+  expires_at timestamptz not null,
+  status text not null check (status in ('draft','approved','expired','withdrawn')),
+  audit_ref text not null
+);
+```
+
+### Self-Improvement Invariants
+
+```python
+SELF_IMPROVEMENT_INVARIANTS = {
+    'may_propose_prompt_diffs': True,
+    'may_propose_workflow_diffs': True,
+    'may_propose_threshold_diffs': True,
+    'may_propose_model_route_diffs': True,
+    'may_autonomously_promote_to_prod': False,
+    'may_expand_data_access_scope': False,
+    'may_reduce_required_approval_level': False,
+    'may_change_mission_objective': False,
+    'must_preserve_policy_tests': True,
+    'must_preserve_auditability': True,
+    'must_support_rollback': True,
+}
+```

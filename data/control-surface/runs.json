@@ -1,8 +1,64 @@
 [
   {
-    "title": "Control Surface Feeds #137",
+    "title": "Control Surface Feeds #138",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "20:15",
+    "timestamp": "2026-06-29T20:15:44Z"
+  },
+  {
+    "title": "Defender Watch #129",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "20:12",
+    "timestamp": "2026-06-29T20:12:39Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #438",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-18fdd1d7-1c45-43e8-b0e4-50feef577ed1",
+    "time": "20:08",
+    "timestamp": "2026-06-29T20:08:04Z"
+  },
+  {
+    "title": "Health Monitor #119",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "20:04",
+    "timestamp": "2026-06-29T20:04:23Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #437",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-b2a53fa4-1182-43a6-bd66-b4fc46fc14ff",
+    "time": "18:08",
+    "timestamp": "2026-06-29T18:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #551",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "17:47",
+    "timestamp": "2026-06-29T17:47:47Z"
+  },
+  {
+    "title": "pages build and deployment #991",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "17:47",
+    "timestamp": "2026-06-29T17:47:42Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1681",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "17:47",
+    "timestamp": "2026-06-29T17:47:42Z"
+  },
+  {
+    "title": "Control Surface Feeds #137",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "17:47",
     "timestamp": "2026-06-29T17:47:26Z"
   },
@@ -82,61 +138,5 @@
     "detail": "success \u00b7 pull_request on codex/launch-linkedin-post-and-x-thread",
     "time": "16:37",
     "timestamp": "2026-06-29T16:37:39Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #891",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/launch-linkedin-post-and-x-thread",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:39Z"
-  },
-  {
-    "title": "Security #627",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/launch-linkedin-post-and-x-thread",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:39Z"
-  },
-  {
-    "title": "PR Automation #310",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/launch-linkedin-post-and-x-thread",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:39Z"
-  },
-  {
-    "title": "CI #861",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/launch-linkedin-post-and-x-thread",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:39Z"
-  },
-  {
-    "title": "Policy Gate #599",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/launch-linkedin-post-and-x-thread",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:39Z"
-  },
-  {
-    "title": "Code Quality: PR #601 #1679",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/601/head",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:37Z"
-  },
-  {
-    "title": "Commerce Daily Loop #19",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:35Z"
-  },
-  {
-    "title": "ClearGlass Copilot Setup #77",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:07Z"
   }
 ]

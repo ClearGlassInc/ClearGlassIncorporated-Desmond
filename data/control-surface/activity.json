@@ -3,12 +3,68 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "17:47",
-    "timestamp": "2026-06-29T17:47:35Z"
+    "time": "20:15",
+    "timestamp": "2026-06-29T20:15:59Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #138",
+    "time": "20:15",
+    "timestamp": "2026-06-29T20:15:44Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #129",
+    "time": "20:12",
+    "timestamp": "2026-06-29T20:12:39Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-18fdd1d7-1c45-43e8-b0e4-50feef577ed1 \u00b7 run #438",
+    "time": "20:08",
+    "timestamp": "2026-06-29T20:08:04Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #119",
+    "time": "20:04",
+    "timestamp": "2026-06-29T20:04:23Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-b2a53fa4-1182-43a6-bd66-b4fc46fc14ff \u00b7 run #437",
+    "time": "18:08",
+    "timestamp": "2026-06-29T18:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #551",
+    "time": "17:47",
+    "timestamp": "2026-06-29T17:47:47Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #991",
+    "time": "17:47",
+    "timestamp": "2026-06-29T17:47:42Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1681",
+    "time": "17:47",
+    "timestamp": "2026-06-29T17:47:42Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #137",
     "time": "17:47",
     "timestamp": "2026-06-29T17:47:26Z"
@@ -33,61 +89,5 @@
     "detail": "push on main \u00b7 run #600",
     "time": "16:38",
     "timestamp": "2026-06-29T16:38:01Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #128",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:01Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #862",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:01Z"
-  },
-  {
-    "title": "ClearGlass Copilot Setup",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #78",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:01Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #550",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:01Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #628",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:01Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "bad",
-    "detail": "dynamic on main \u00b7 run #990",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:00Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1680",
-    "time": "16:38",
-    "timestamp": "2026-06-29T16:38:00Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "pull_request on codex/launch-linkedin-post-and-x-thread \u00b7 run #127",
-    "time": "16:37",
-    "timestamp": "2026-06-29T16:37:39Z"
   }
 ]

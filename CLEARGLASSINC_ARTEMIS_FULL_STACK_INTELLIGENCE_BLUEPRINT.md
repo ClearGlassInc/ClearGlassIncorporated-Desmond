@@ -746,6 +746,135 @@ async def propose_prompt_candidate(cluster_id: str, failures: list[dict]) -> dic
     }
 ```
 
+## Environmental Threat Vector Cross-Reference
+
+This blueprint cross-references the Phase 1 Environmental Threat Vector Mapping directive and treats ionospheric/space-weather effects as a first-class **Environmental Cyber-Risk** domain inside ClearGlassInc Artemis. The domain is defensive and operational: it maps public and partner telemetry to communication failure chains, client exposure, mitigation recommendations, and governed action packages.
+
+### Phase 1 to Platform Capability Map
+
+| Directive element | Artemis implementation | Palantir anchor | Primary output |
+|---|---|---|---|
+| CSA/NOAA/EISCAT/public ionospheric feed ingestion | `environmental.raw` and `environmental.normalized` streaming connectors with schema validation, provenance, and source reliability scores. | Foundry pipelines and datasets | Governed environmental telemetry data products |
+| GREEN/YELLOW/RED thresholds | Deterministic `EnvironmentalRiskClassifier` service using log NF2 thresholds plus explainable contributing factors. | AIP tool + Foundry transform | Auditable alert severity and rationale |
+| Burlington/GTA pilot use case | Mission-scoped asset exposure graph for logistics, surveying, utilities, aviation support, and GNSS/HF-dependent workflows. | Gotham entity graph + Foundry ontology | Pilot client brief and impact map |
+| Environmental Threat Vector dashboard tile | React mission card backed by GraphQL subscriptions and ontology-driven status summaries. | Foundry app / Gotham workflow surface | Real-time command interface tile |
+| 12-page client brief | AIP brief generator constrained to cited ontology evidence, confidence, uncertainty, and mitigation templates. | AIP copilot/tool workflow | Human-reviewable intelligence product |
+| Phase 2 Environmental Cyber-Risk Framework | Versioned scoring model, eval suite, approval gates, and Apollo-controlled release rings. | AIP evaluations + Apollo | Governed B2B service line |
+
+### Environmental Cyber-Risk Ontology Extension
+
+```yaml
+entities:
+  EnvironmentalObservation:
+    fields:
+      - observation_id
+      - observed_at
+      - source_system
+      - latitude
+      - longitude
+      - altitude_km
+      - log_nf2
+      - tec
+      - kp_index
+      - xray_flux
+      - d_region_absorption_db
+      - confidence
+      - lineage_hash
+      - classification
+      - coalition_scope
+  CommunicationDependency:
+    fields:
+      - dependency_id
+      - asset_id
+      - dependency_type   # GNSS, HF, SATCOM, OTHR, timing, network_backhaul
+      - operational_role
+      - tolerance_seconds
+      - fallback_available
+      - criticality
+  EnvironmentalRiskAssessment:
+    fields:
+      - assessment_id
+      - mission_id
+      - region
+      - severity          # GREEN, YELLOW, RED
+      - score_0_10
+      - threshold_basis
+      - rationale
+      - recommended_mitigations
+      - model_version
+      - prompt_version
+
+relationships:
+  - OBSERVATION_AFFECTS_REGION: EnvironmentalObservation -> Region
+  - ASSET_DEPENDS_ON_COMMUNICATION: Asset -> CommunicationDependency
+  - DEPENDENCY_EXPOSED_TO_OBSERVATION: CommunicationDependency -> EnvironmentalObservation
+  - ASSESSMENT_RATES_ASSET: EnvironmentalRiskAssessment -> Asset
+  - ASSESSMENT_SUPPORTS_ALERT: EnvironmentalRiskAssessment -> Alert
+```
+
+### Python Precision Classifier
+
+```python
+from dataclasses import dataclass
+from enum import StrEnum
+
+class EnvSeverity(StrEnum):
+    GREEN = 'GREEN'
+    YELLOW = 'YELLOW'
+    RED = 'RED'
+
+@dataclass(frozen=True)
+class EnvironmentalTelemetry:
+    log_nf2: float
+    kp_index: float | None = None
+    d_region_absorption_db: float | None = None
+    source_confidence: float = 0.75
+
+@dataclass(frozen=True)
+class EnvironmentalAssessment:
+    severity: EnvSeverity
+    score_0_10: float
+    rationale: list[str]
+    mitigations: list[str]
+
+def classify_environmental_risk(t: EnvironmentalTelemetry) -> EnvironmentalAssessment:
+    rationale: list[str] = []
+    if t.log_nf2 > 5.8:
+        severity = EnvSeverity.RED
+        base_score = 8.2
+        rationale.append('log NF2 exceeds RED threshold > 5.8')
+    elif t.log_nf2 >= 5.4:
+        severity = EnvSeverity.YELLOW
+        base_score = 5.8
+        rationale.append('log NF2 is inside YELLOW threshold 5.4-5.8')
+    else:
+        severity = EnvSeverity.GREEN
+        base_score = 2.0
+        rationale.append('log NF2 remains below GREEN threshold < 5.4')
+
+    if t.kp_index is not None and t.kp_index >= 5:
+        base_score += 0.7
+        rationale.append('geomagnetic activity is elevated at Kp >= 5')
+    if t.d_region_absorption_db is not None and t.d_region_absorption_db >= 5:
+        base_score += 0.8
+        rationale.append('D-region absorption may degrade HF propagation')
+
+    score = round(min(10.0, base_score) * t.source_confidence, 2)
+    mitigations = [
+        'verify GNSS-dependent workflows against tolerance bands',
+        'activate alternate positioning/timing source if client threshold is exceeded',
+        'increase monitoring cadence and capture operator feedback for evals',
+    ]
+    return EnvironmentalAssessment(severity, score, rationale, mitigations)
+```
+
+### Cross-Reference Rules for Agents
+
+- Environmental agents must cite telemetry source, timestamp, transform version, threshold basis, confidence, and client exposure path before recommending action.
+- Recommendations that alter operations, notify external parties, or change client workflow state require human approval and immutable audit logging.
+- The self-improvement loop may propose threshold tuning, retrieval-order changes, or mitigation wording updates only after offline evals and governance approval; it may not autonomously expand mission scope or downgrade policy.
+- Dashboard and brief generation must distinguish observed telemetry, modeled inference, and business-impact inference so operators can challenge the chain of reasoning.
+
 ## Scenario Walkthrough
 
 1. **Live event enters**: a Burlington facility reports GNSS positioning drift while the environmental connector receives elevated log NF2 and TEC readings. The intake service validates schemas, records lineage, and emits `intel.raw` and `intel.normalized` events.

@@ -28,6 +28,7 @@ Long-form blueprints, platform designs, and corporate documentation supporting t
 - `clearglassinc_artemis_coo_self_improving_platform_blueprint.md`
 - `clearglassinc_artemis_gotham_foundry_aip_apollo_self_evolving_blueprint.md`
 - `clearglassinc_artemis_gotham_foundry_aip_apollo_extreme_blueprint.md`
+- `clearglassinc_artemis_palantir_self_evolving_intelligence_platform_2040.md`
 - `CLEARGLASSINC_ARTEMIS_SELF_EVOLVING_AI_PLATFORM_DESIGN_2026-05-06.md`
 
 ## Revenue, intelligence, and automation

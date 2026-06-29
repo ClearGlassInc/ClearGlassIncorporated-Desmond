@@ -222,6 +222,265 @@ Each agent can call tools with constrained schemas:
 
 ---
 
+---
+
+## Global NET Model: Ionosphere F2 Layer Peak Electron Density
+
+### What is the NET Model?
+The **NET (Neural network-based model of Electron density in the Topside ionosphere)** is a neural-network model for reconstructing topside ionospheric electron density from long-duration GNSS radio occultation observations. In the ClearGlassInc Artemis architecture, NET is treated as a mission-grade environmental intelligence model: it enriches signal-propagation, GNSS reliability, HF communications, over-the-horizon radar, and remote-sensing workflows with time-aware F2-layer electron density context.
+
+**Primary scientific basis:** the NET model was developed from **19 years of GNSS radio occultation data** and is documented in *Scientific Reports* by Nature Portfolio: <https://www.nature.com/articles/s41598-023-28034-z>.
+
+### Key Characteristics of the Global NET Model
+
+| Feature | Description |
+|---------|-------------|
+| **Coverage** | Global maps of F2-layer peak electron density, suitable for mission-scale ionospheric awareness and correlation with operational events. |
+| **Altitude focus** | Topside ionosphere above the F2-layer peak, especially the 100-200 km region above the peak where the model shows strong performance. |
+| **Data source** | 19 years of GNSS radio occultation observations from CHAMP, GRACE, and COSMIC satellite missions. |
+| **Operational product fit** | Electron-density maps can be consumed alongside DLR IMPC products for ionospheric perturbation monitoring: <https://impc.dlr.de/products/ionospheric-perturbations/electron-density>. |
+| **Visualization** | Northern and Southern Hemisphere views at selected Universal Time slices, including **00:00 UT** mission baselines. |
+| **Color scale** | Mission UI renders `log10(N_F2)` values from **5.0 to 6.2** using a blue-green-yellow-red ramp for low-to-peak density. |
+
+### Why NET Outperforms Traditional Models
+
+The NET model is important to ClearGlassInc Artemis because it provides a data-driven complement to classical climatological ionosphere models.
+
+- **Superior reconstruction accuracy:** published results report that NET can outperform the International Reference Ionosphere (IRI) model by up to **one order of magnitude** in selected topside regions.
+- **Best operational fit:** the highest value for Artemis is the region **100-200 km above the F2-layer peak**, where density structure affects radio propagation and model-driven correction logic.
+- **Paradigm shift:** neural reconstruction captures complex nonlinear effects from solar activity, geomagnetic forcing, local time, season, and geographic structure without requiring every physical driver to be explicitly hand-modeled.
+
+### Visual Description: Global NET Model at 00:00 UT
+
+**Northern Hemisphere**
+- Color-coded F2 peak electron density in `log10(N_F2)` units.
+- Values range from **5.0** in blue to **6.2** in red.
+- Higher-density structures can be correlated with auroral-region activity, geomagnetic conditions, and signal-quality degradation.
+
+**Southern Hemisphere**
+- Hemispheric asymmetry is preserved rather than averaged away.
+- Values use the same **5.0-6.2** range to keep analyst comparison consistent.
+- South Atlantic anomaly context can be layered as an additional mission overlay.
+
+**Color scale**
+- Blue: `5.0` low density.
+- Green: `5.6` moderate density.
+- Yellow: `5.9` high density.
+- Red: `6.2` peak density.
+
+### Scientific and Operational Applications
+
+| Application | Impact in ClearGlassInc Artemis |
+|-------------|----------------------------------|
+| **GNSS signal propagation** | Improves correction of ionospheric delay, phase disturbance, and reliability degradation in positioning workflows. |
+| **Space weather monitoring** | Maps electron-density changes during geomagnetic storms and links them to mission alerts. |
+| **HF radio communication** | Supports frequency planning by estimating propagation viability and absorption risk. |
+| **Over-the-horizon radar (OTHR)** | Improves interpretation of radar anomalies caused by changing ionospheric layers and D-region absorption. |
+| **Remote sensing** | Adds ionospheric context to satellite measurement quality, anomaly triage, and downstream correction. |
+
+### Critical Importance for Modern Systems
+
+NET-derived ionospheric awareness helps Artemis mitigate space-weather impacts on:
+
+1. **Communication systems**
+   - HF radio propagation over thousands of kilometers through ground-ionosphere reflection.
+   - Telecommunication signal amplitude, phase, and polarization effects caused by ionospheric plasma.
+2. **Navigation systems**
+   - GNSS/GPS positioning errors from horizontal electron-density gradients.
+   - Accuracy degradation from plasma dynamics, scintillation, and fast-changing total electron content.
+3. **Radar systems**
+   - OTHR surveillance uncertainty when enhanced D-region electron density increases HF absorption.
+   - Reduced usable frequency range during disturbed space-weather conditions.
+4. **Remote sensing systems**
+   - Need for ionospheric correction in satellite measurements.
+   - Interference patterns during solar radio bursts and geomagnetic disturbances.
+
+### How Artemis Uses NET Safely
+
+ClearGlassInc Artemis does **not** allow NET or any AI model to autonomously change mission objectives. NET is used as an evidence-producing model inside a human-governed workflow:
+
+```mermaid
+flowchart LR
+  A[GNSS RO + IMPC Products + Mission Sensors] --> B[Foundry Ingestion]
+  B --> C[NET Feature Builder]
+  C --> D[Ontology Objects: IonosphereCell, DensityMap, SpaceWeatherEvent]
+  D --> E[AIP Triage + Correlation Agents]
+  E --> F[Recommendation with Evidence]
+  F --> G{Human Approval Gate}
+  G -->|Approved| H[Gotham Case / Action Package]
+  G -->|Rejected or Edited| I[Feedback Label]
+  I --> J[Eval Dataset + Prompt/Workflow Candidate]
+  J --> K[Apollo-Governed Canary or Rollback]
+```
+
+### NET Ontology Extension
+
+```yaml
+objects:
+  IonosphereCell:
+    key: cell_id
+    attrs:
+      - geohash
+      - hemisphere
+      - altitude_band_km
+      - local_time
+      - universal_time
+      - log10_nf2
+      - density_confidence
+      - geomagnetic_context
+      - valid_time
+      - classification
+      - coalition_tags
+
+  DensityMap:
+    key: density_map_id
+    attrs:
+      - model_name        # NET, IRI, NEDM-v1, ensemble
+      - model_version
+      - generated_at
+      - ut_slice
+      - color_scale_min
+      - color_scale_max
+      - source_lineage
+      - qa_status
+
+  SpaceWeatherEvent:
+    key: space_weather_event_id
+    attrs:
+      - event_type        # storm, scintillation, absorption, anomaly
+      - severity
+      - confidence
+      - first_seen
+      - last_seen
+      - affected_regions
+      - operational_effects
+
+links:
+  - CELL_IN_MAP(IonosphereCell -> DensityMap)
+  - PERTURBS(SpaceWeatherEvent -> IonosphereCell)
+  - AFFECTS_SIGNAL(IonosphereCell -> Signal)
+  - EXPLAINS_ANOMALY(SpaceWeatherEvent -> Event)
+  - SUPPORTS_RECOMMENDATION(DensityMap -> Recommendation)
+```
+
+### Python Implementation Skeleton: NET Feature Ingestion and Mission Scoring
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from enum import StrEnum
+from math import exp
+from typing import Iterable
+
+
+class Hemisphere(StrEnum):
+    NORTH = "north"
+    SOUTH = "south"
+
+
+@dataclass(frozen=True)
+class NetCell:
+    cell_id: str
+    geohash: str
+    hemisphere: Hemisphere
+    altitude_band_km: tuple[int, int]
+    universal_time: datetime
+    log10_nf2: float
+    confidence: float
+    source_lineage: str
+
+
+@dataclass(frozen=True)
+class MissionAsset:
+    asset_id: str
+    geohash: str
+    dependency: str  # gnss, hf_radio, othr, remote_sensing
+    criticality: float
+
+
+def normalize_density(log10_nf2: float, lo: float = 5.0, hi: float = 6.2) -> float:
+    """Map the NET UI color-scale range to [0, 1] for scoring."""
+    return max(0.0, min(1.0, (log10_nf2 - lo) / (hi - lo)))
+
+
+def propagation_risk(cell: NetCell, asset: MissionAsset) -> float:
+    """Precision-oriented mission risk score used by Artemis triage agents."""
+    density = normalize_density(cell.log10_nf2)
+    dependency_weight = {
+        "gnss": 0.92,
+        "hf_radio": 0.86,
+        "othr": 0.89,
+        "remote_sensing": 0.72,
+    }.get(asset.dependency, 0.50)
+    nonlinear = 1.0 / (1.0 + exp(-8.0 * (density - 0.58)))
+    return round(nonlinear * dependency_weight * asset.criticality * cell.confidence, 4)
+
+
+def score_assets(cells: Iterable[NetCell], assets: Iterable[MissionAsset]) -> list[dict]:
+    cells_by_geohash = {cell.geohash: cell for cell in cells}
+    scored: list[dict] = []
+    for asset in assets:
+        cell = cells_by_geohash.get(asset.geohash)
+        if not cell:
+            continue
+        risk = propagation_risk(cell, asset)
+        scored.append({
+            "asset_id": asset.asset_id,
+            "dependency": asset.dependency,
+            "cell_id": cell.cell_id,
+            "log10_nf2": cell.log10_nf2,
+            "risk": risk,
+            "requires_operator_review": risk >= 0.72,
+            "scored_at": datetime.now(timezone.utc).isoformat(),
+        })
+    return sorted(scored, key=lambda row: row["risk"], reverse=True)
+```
+
+### AIP Tool Contract for NET-Aware Recommendations
+
+```python
+from pydantic import BaseModel, Field
+from typing import Literal
+
+
+class NetDensityQuery(BaseModel):
+    mission_id: str
+    ut_slice: str = Field(description="ISO-8601 Universal Time slice, for example 2026-06-29T00:00:00Z")
+    hemisphere: Literal["north", "south", "both"] = "both"
+    min_log10_nf2: float = 5.0
+    max_log10_nf2: float = 6.2
+    dependencies: list[Literal["gnss", "hf_radio", "othr", "remote_sensing"]]
+
+
+class NetRecommendation(BaseModel):
+    mission_id: str
+    summary: str
+    affected_assets: list[str]
+    recommended_actions: list[str]
+    evidence_density_maps: list[str]
+    confidence: float
+    approval_required: bool = True
+```
+
+### Governance Rules for NET-Driven Automation
+
+- NET can **rank**, **explain**, and **recommend**; it cannot independently issue operational commands.
+- Any recommendation affecting communications, navigation, radar tasking, collection posture, or coalition data sharing requires explicit human approval.
+- Prompt, workflow, and model-router updates derived from NET outcomes must pass offline evals, bias/coverage checks, red-team review, and Apollo canary deployment before promotion.
+- Every density-derived recommendation stores model version, data lineage, UT slice, feature hash, prompt version, policy decision, operator decision, and rollback pointer.
+
+### Scenario: NET-Aware Space Weather Triage
+
+1. A 00:00 UT density map enters Foundry from a governed NET pipeline.
+2. Artemis materializes `IonosphereCell` objects and links high-density cells to mission assets dependent on GNSS and HF radio.
+3. An AIP triage agent detects elevated `log10(N_F2)` near a mission corridor and produces an evidence-backed recommendation: shift HF frequency planning and increase GNSS integrity monitoring.
+4. The compliance agent checks classification, coalition tags, and mission authority before presenting the recommendation in Gotham.
+5. The operator approves the GNSS monitoring increase but edits the HF recommendation after local context shows a planned maintenance window.
+6. The edit becomes a labeled feedback event. The eval pipeline converts it into a regression case so future NET recommendations learn to consider scheduled communications maintenance before recommending frequency changes.
+7. Apollo deploys the updated prompt/workflow as a canary; if precision, latency, or operator-trust metrics regress, the system rolls back automatically.
+
 ## Full-Stack Implementation
 
 ### 1) Web UI (React/TypeScript)

@@ -743,3 +743,48 @@ def build_briefs() -> list[ContentBrief]:
 12. **Promotion or rollback**: if metrics hold for 24 hours, the workflow promotes to the next ring. If trust drops or policy denials spike, Apollo rolls back automatically and opens an incident ticket.
 13. **Market flywheel**: anonymized, approved metrics become a technical article on auditable AI systems, driving executive briefings through the AI risk conversion path.
 
+
+---
+
+## Skeleton Key Execution Addendum — June 29, 2026
+
+ClearGlassInc Artemis now treats the 8-phase Skeleton Key workflow as an auditable operating cycle rather than a one-time content burst. Brand strategy, campaign generation, research agents, media planning, content production, analytics, and conversion outcomes become first-class telemetry that can be evaluated with the same governance pattern used for mission intelligence workflows.
+
+### Workflow Control Plane
+
+| Phase | Artemis implementation | Human gate | Output artifact |
+|---|---|---|---|
+| Brand creation | Foundry-owned brand profile object with approved voice, offers, and exclusions | COO approval | Versioned `BrandProfile` ontology object |
+| Brand dashboard | KPI objects linked to GA4, LinkedIn, X, HubSpot, and site events | Weekly review | Dashboard dataset and executive brief |
+| Campaign setup | AIP campaign planner proposes concepts, formats, CTAs, and UTM routes | Marketing approval | Campaign plan and landing-page backlog |
+| Research workflow | Analyst agents collect trend, competitor, threat, and legal-tech signals | Source-quality review | Evidence pack with lineage and confidence |
+| Strategy workflow | Strategy agent maps hooks, offers, proof points, and risk disclaimers | Executive approval | Strategy version and prompt bundle |
+| Media plan | Scheduler agent allocates channels, cadence, repurposing, and review windows | Publishing approval | Calendar plus channel-specific tasks |
+| Content generation | Tool-using generators produce blogs, threads, carousels, scripts, and briefs | Editorial approval | Reviewable content assets |
+| Analytics and conversion | Outcome agent joins impressions, downloads, replies, calls, and revenue | Revenue review | Evals, ROI reports, and upgrade proposals |
+
+### Python Reference Skeleton
+
+The repository now includes a dependency-light Python skeleton that makes the control loop concrete: ontology objects carry classification, compartments, coalition releasability, confidence, temporal validity, and lineage; actions are labeled with approval gates; operator feedback is converted into evaluated upgrade proposals rather than silently changing system behavior.
+
+```python
+policy = PolicyEngine()
+workflow = ArtemisWorkflow(policy)
+loop = SelfImprovementLoop()
+
+candidate_action = workflow.triage_event(event, mission, subject)
+if workflow.approval_required(candidate_action):
+    route_to_human_review(candidate_action)
+
+proposal = loop.propose_upgrade(feedback_batch, current_version="triage_workflow.v7")
+if proposal and loop.promotion_decision(proposal) == "approve":
+    submit_to_apollo_canary(proposal)
+```
+
+### Precision Rules for Self-Evolution
+
+1. **No autonomous goal changes**: Artemis may optimize prompts, routing, thresholds, and workflow order, but it cannot redefine mission objectives, brand claims, prohibited actions, or coalition release rules.
+2. **Every upgrade is diffable**: prompt, workflow, model-routing, heuristic, and data-contract changes are versioned with current version, candidate version, metrics, rollback pointer, and approver identity.
+3. **Every metric has a safety pair**: growth metrics are paired with trust and policy metrics; for example, lead downloads are reviewed alongside complaint rate, source quality, and claim substantiation.
+4. **Apollo controls runtime exposure**: accepted upgrades start in canary rings, receive automatic rollback triggers, and promote only after latency, precision, recall, operator trust, and policy-denial thresholds remain healthy.
+5. **Foundry owns lineage**: all generated claims, recommendations, and intelligence outputs point back to source datasets, transform versions, prompt versions, and reviewer decisions.

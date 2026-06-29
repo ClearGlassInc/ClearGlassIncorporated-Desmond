@@ -52,6 +52,8 @@ class FeedbackSignal:
                 "signal_type": self.signal_type.value,
                 "mission_id": self.mission_id,
                 "object": self.ontology_object_id,
+                "classification": self.classification,
+                "compartment": self.compartment,
                 "payload": self.payload,
                 "observed_at": self.observed_at.isoformat(),
             },
@@ -92,6 +94,8 @@ class ChangeProposal:
     patch: dict[str, Any]
     evidence_hashes: list[str]
     eval_result: EvalResult
+    classification: str
+    compartment: str
     approval_required: bool = True
     rollout_ring: str = "staging-canary"
 
@@ -112,12 +116,13 @@ class ArtemisImprovementEngine:
         self.component_versions = component_versions
 
     def synthesize_proposals(self, signals: Iterable[FeedbackSignal]) -> list[ChangeProposal]:
-        grouped: dict[str, list[FeedbackSignal]] = {}
+        grouped: dict[tuple[str, str, str], list[FeedbackSignal]] = {}
         for signal in signals:
-            grouped.setdefault(signal.mission_id, []).append(signal)
+            security_scope = (signal.mission_id, signal.classification, signal.compartment)
+            grouped.setdefault(security_scope, []).append(signal)
 
         proposals: list[ChangeProposal] = []
-        for mission_id, mission_signals in grouped.items():
+        for (mission_id, classification, compartment), mission_signals in grouped.items():
             corrections = [s for s in mission_signals if s.signal_type == SignalType.OPERATOR_CORRECTION]
             outcomes = [s for s in mission_signals if s.signal_type == SignalType.ALERT_OUTCOME]
             latency = [float(s.payload.get("latency_ms", 0)) for s in mission_signals if s.signal_type == SignalType.LATENCY_SAMPLE]
@@ -127,7 +132,13 @@ class ArtemisImprovementEngine:
                 patch = self._build_prompt_patch(corrections)
                 proposals.append(
                     ChangeProposal(
-                        proposal_id=self._proposal_id(mission_id, "triage-copilot", patch),
+                        proposal_id=self._proposal_id(
+                            mission_id,
+                            classification,
+                            compartment,
+                            "triage-copilot",
+                            patch,
+                        ),
                         proposal_type=ProposalType.PROMPT_PATCH,
                         target_component="aip.agent.triage_copilot",
                         current_version=self.component_versions.get("aip.agent.triage_copilot", "0.0.0"),
@@ -138,6 +149,8 @@ class ArtemisImprovementEngine:
                         patch=patch,
                         evidence_hashes=[s.lineage_hash for s in mission_signals],
                         eval_result=eval_result,
+                        classification=classification,
+                        compartment=compartment,
                     )
                 )
         return proposals
@@ -176,9 +189,22 @@ class ArtemisImprovementEngine:
         }
 
     @staticmethod
-    def _proposal_id(mission_id: str, component: str, patch: dict[str, Any]) -> str:
-        digest = hashlib.sha256(json.dumps(patch, sort_keys=True).encode("utf-8")).hexdigest()[:12]
-        return f"prop-{mission_id}-{component}-{digest}"
+    def _proposal_id(
+        mission_id: str,
+        classification: str,
+        compartment: str,
+        component: str,
+        patch: dict[str, Any],
+    ) -> str:
+        scope = {
+            "mission_id": mission_id,
+            "classification": classification,
+            "compartment": compartment,
+            "component": component,
+            "patch": patch,
+        }
+        digest = hashlib.sha256(json.dumps(scope, sort_keys=True).encode("utf-8")).hexdigest()[:12]
+        return f"prop-{mission_id}-{classification}-{compartment}-{component}-{digest}"
 
     @staticmethod
     def _next_patch_version(version: str) -> str:

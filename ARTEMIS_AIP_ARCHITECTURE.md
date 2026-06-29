@@ -37,6 +37,15 @@ Every published asset uses at least one hook class: shocking statistics, contrar
 
 ---
 
+
+### Implementation Artifacts in This Repository
+
+This blueprint is backed by a deterministic Python generator and a committed weekly launch pack:
+
+- `bots/strategic_viral_engine.py` builds the 7-concept weekly content system, UTM-tagged CTA routing, and KPI dashboard payload.
+- `content/weekly_content_20260701.json` is the generated launch artifact containing 7 concepts across SEO outlines, LinkedIn posts, X threads, LinkedIn carousels, 60-second scripts, hashtags, and analytics targets.
+- The generator is intentionally deterministic so ClearGlassInc Artemis can version, diff, review, approve, and roll back content-system changes the same way it governs AI workflows.
+
 ## System Architecture
 
 ### Palantir Roles

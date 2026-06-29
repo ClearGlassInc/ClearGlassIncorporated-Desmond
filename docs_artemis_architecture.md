@@ -883,3 +883,156 @@ Phase 3: AIP copilots — tool registry, agent runtime, citations, model router,
 Phase 4: EvalOps — feedback capture, gold datasets, offline replay, A/B testing, drift detection
 Phase 5: self-improvement — candidate generation, release board, Apollo canary, automated rollback
 ```
+
+---
+
+## Mission Research Domain Extension — Ionospheric / Space-Weather Intelligence
+
+ClearGlassInc Artemis can also operate as a research intelligence fabric for ionospheric physics, space weather, radio-wave propagation, and the operational effects of ionospheric variability on communication, radar, and navigation systems. In this mode, Gotham represents facilities, campaigns, transmitters, receivers, radar tracks, observations, hypotheses, and investigation cases; Foundry integrates live and historical science data into governed data products and ontology objects; AIP assists researchers with correlation, experiment design, summarization, and reproducible analysis; and Apollo controls secure deployment of models, pipelines, prompts, and edge collectors across research sites.
+
+### Research Mission Objectives
+
+* Advance understanding of natural ionospheric processes influenced by solar activity, geomagnetic storms, neutral atmosphere coupling, and seasonal/diurnal variability.
+* Study small-scale artificial effects with strict governance, bounded experiments, transparent provenance, and explicit human approval gates.
+* Improve models of high-frequency radio propagation, radar over-the-horizon behavior, GNSS scintillation, and communication outages.
+* Support international researchers through coalition-aware workspaces, open-house education modes, publishable provenance bundles, and releasability-aware collaboration.
+
+### Research Data Products
+
+| Foundry Data Product | Example Sources | Update Mode | Primary Consumers |
+|---|---|---:|---|
+| `space_weather_bronze` | NOAA SWPC, solar wind, Kp/Dst/F10.7, GOES X-ray flux | streaming + batch | triage agents, dashboards |
+| `ionogram_silver` | ionosondes, ISR, digisonde traces, autoscaled foF2/hmF2 | near real time | propagation models |
+| `gnss_scintillation_silver` | receiver networks, S4, sigma-phi, TEC | streaming | navigation-risk scoring |
+| `radar_link_gold` | radar path metadata, link budgets, observed fades | batch + event | mission planners |
+| `experiment_campaign_gold` | campaign plans, approved windows, observations, outcomes | workflow-driven | researchers, governance board |
+
+### Research Ontology Additions
+
+```yaml
+ontology_extensions:
+  objects:
+    ResearchFacility:
+      properties: [name, location, operator, capabilities, releasability]
+    Instrument:
+      properties: [instrument_type, frequency_range, calibration_state, owner, site]
+    IonosphericObservation:
+      properties: [timestamp, latitude, longitude, altitude_km, parameter, value, uncertainty]
+    SpaceWeatherEvent:
+      properties: [event_class, start_time, peak_time, end_time, kp, dst, f107, source_region]
+    PropagationPath:
+      properties: [tx_site, rx_site, frequency_mhz, path_length_km, mode, expected_loss_db]
+    ResearchCampaign:
+      properties: [campaign_id, hypothesis, approved_window, principal_investigator, ethics_review]
+    ExperimentAction:
+      properties: [action_type, bounded_parameters, approval_state, rollback_plan, observed_effect]
+  links:
+    - MEASURED_BY: {from: IonosphericObservation, to: Instrument}
+    - OBSERVED_DURING: {from: IonosphericObservation, to: SpaceWeatherEvent}
+    - AFFECTS_PATH: {from: SpaceWeatherEvent, to: PropagationPath}
+    - PART_OF_CAMPAIGN: {from: ExperimentAction, to: ResearchCampaign}
+    - VALIDATES_HYPOTHESIS: {from: IonosphericObservation, to: ResearchCampaign}
+```
+
+### Python Precision Model for Propagation Risk
+
+```python
+from dataclasses import dataclass
+from math import exp
+
+@dataclass(frozen=True)
+class IonoFeatures:
+    kp_index: float
+    dst_nt: float
+    f107_sfu: float
+    tec_tecu: float
+    scintillation_s4: float
+    solar_zenith_deg: float
+    frequency_mhz: float
+
+
+def sigmoid(x: float) -> float:
+    return 1.0 / (1.0 + exp(-x))
+
+
+def propagation_disruption_probability(x: IonoFeatures) -> float:
+    """Deterministic, auditable baseline scorer used before ML calibration.
+
+    The coefficients are intentionally transparent. AIP can propose new coefficients
+    or feature transforms, but promotion requires offline evals, policy checks, and
+    human approval before Apollo deploys the model artifact.
+    """
+    storm_pressure = 0.34 * x.kp_index + 0.018 * max(0.0, -x.dst_nt)
+    ionization_pressure = 0.006 * x.f107_sfu + 0.027 * x.tec_tecu
+    scintillation_pressure = 2.15 * x.scintillation_s4
+    hf_penalty = 0.55 if 3.0 <= x.frequency_mhz <= 30.0 else 0.15
+    daylight_term = max(0.0, 1.0 - x.solar_zenith_deg / 120.0)
+    logit = -5.25 + storm_pressure + ionization_pressure + scintillation_pressure + hf_penalty + daylight_term
+    return round(sigmoid(logit), 4)
+```
+
+### Research Agent Workflow
+
+```python
+from pydantic import BaseModel, Field
+from typing import Literal
+
+class ResearchQuestion(BaseModel):
+    question: str
+    campaign_id: str
+    allowed_data_products: list[str]
+    max_classification: str
+    require_publishable_sources: bool = True
+
+class ResearchFinding(BaseModel):
+    claim: str
+    confidence: float = Field(ge=0, le=1)
+    evidence_object_ids: list[str]
+    caveats: list[str]
+    recommended_next_experiment: str | None
+
+async def answer_research_question(q: ResearchQuestion) -> ResearchFinding:
+    policy = await opa.evaluate("artemis/research_read", q.model_dump())
+    if not policy["allow"]:
+        raise PermissionError(policy.get("reason", "research_policy_denied"))
+
+    observations = await query_foundry_ontology(
+        object_types=["IonosphericObservation", "SpaceWeatherEvent", "PropagationPath"],
+        data_products=q.allowed_data_products,
+        filters={"campaign_id": q.campaign_id, "classification_lte": q.max_classification},
+    )
+    correlation = await run_reproducible_notebook("iono_correlation_v2", observations)
+    return ResearchFinding(
+        claim=correlation.summary,
+        confidence=correlation.confidence,
+        evidence_object_ids=correlation.evidence_ids,
+        caveats=correlation.limitations,
+        recommended_next_experiment=correlation.next_experiment,
+    )
+```
+
+### Governance for Research and Public Education Modes
+
+* **Research mode** exposes only approved, need-to-know datasets and records every query, notebook run, model route, and generated finding.
+* **Coalition collaboration mode** adds releasability filters, export review, data minimization, and object-level provenance bundles.
+* **Open-house education mode** uses sanitized synthetic data, public-source space-weather feeds, non-sensitive visualizations, and disabled operational action tools.
+* **Experiment mode** requires campaign approval, bounded parameters, real-time safety monitors, stop conditions, and immutable after-action records.
+
+```rego
+package artemis.research_action
+
+default allow = false
+
+allow {
+  input.action.type == "analysis_only"
+  input.user.id in data.campaign_members[input.campaign_id]
+  input.dataset.releasability[_] == input.user.coalition
+}
+
+allow {
+  input.action.type == "experiment_prepare"
+  input.campaign.approval_state == "approved"
+  input.user.role == "principal_investigator"
+  input.action.requires_execution == false
+}
+```

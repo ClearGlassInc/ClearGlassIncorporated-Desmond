@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "09:58",
-    "timestamp": "2026-06-29T09:58:45Z"
+    "time": "14:19",
+    "timestamp": "2026-06-29T14:19:07Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #135",
-    "time": "09:58",
-    "timestamp": "2026-06-29T09:58:31Z"
+    "detail": "schedule on main \u00b7 run #136",
+    "time": "14:18",
+    "timestamp": "2026-06-29T14:18:54Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-eb0e56b8-1f9f-4d37-80c7-67e78a8f1ce8 \u00b7 run #428",
-    "time": "09:08",
-    "timestamp": "2026-06-29T09:08:04Z"
-  },
-  {
-    "title": "Multi-Repo Audit",
+    "title": "Defender Watch",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #11",
-    "time": "09:06",
-    "timestamp": "2026-06-29T09:06:14Z"
+    "detail": "push on main \u00b7 run #69",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:06Z"
   },
   {
-    "title": "API Security Audit",
+    "title": "Security",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #12",
-    "time": "08:21",
-    "timestamp": "2026-06-29T08:21:07Z"
+    "detail": "push on main \u00b7 run #570",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:06Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-d164882b-8434-4cb8-a49a-068cecc51370 \u00b7 run #427",
-    "time": "08:08",
-    "timestamp": "2026-06-29T08:08:06Z"
-  },
-  {
-    "title": "Workflow Doctor",
+    "title": "pages build and deployment",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #197",
-    "time": "07:20",
-    "timestamp": "2026-06-29T07:20:20Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-16ef2ed8-745c-4b16-8a1d-a41a1570ba40 \u00b7 run #426",
-    "time": "07:08",
-    "timestamp": "2026-06-29T07:08:03Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #826",
-    "time": "06:55",
-    "timestamp": "2026-06-29T06:55:56Z"
-  },
-  {
-    "title": "github_actions in /. - Update #1438449231",
-    "status": "warn",
-    "detail": "dynamic on main \u00b7 run #37",
-    "time": "06:15",
-    "timestamp": "2026-06-29T06:15:35Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-519f91e4-2844-4eca-94b5-64acfc6547a4 \u00b7 run #425",
-    "time": "06:08",
-    "timestamp": "2026-06-29T06:08:06Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-cda82bff-385d-4bff-913d-c5cb04b11f13 \u00b7 run #424",
-    "time": "05:08",
-    "timestamp": "2026-06-29T05:08:03Z"
+    "detail": "dynamic on main \u00b7 run #959",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:06Z"
   },
   {
     "title": "Deploy GitHub Pages",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #515",
-    "time": "04:59",
-    "timestamp": "2026-06-29T04:59:17Z"
+    "detail": "push on main \u00b7 run #520",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:06Z"
+  },
+  {
+    "title": "CI",
+    "status": "bad",
+    "detail": "push on main \u00b7 run #804",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:06Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #541",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:06Z"
+  },
+  {
+    "title": "ClearGlass Copilot Setup",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #49",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:06Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #834",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:06Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1620",
+    "time": "14:09",
+    "timestamp": "2026-06-29T14:09:05Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on codex/define-autonomous-ai-operations-system-roles \u00b7 run #569",
+    "time": "14:08",
+    "timestamp": "2026-06-29T14:08:45Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on codex/define-autonomous-ai-operations-system-roles \u00b7 run #280",
+    "time": "14:08",
+    "timestamp": "2026-06-29T14:08:45Z"
   }
 ]

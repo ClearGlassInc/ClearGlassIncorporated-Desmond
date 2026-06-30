@@ -887,3 +887,208 @@ def record_recommendation_metrics(*, latency_ms: float, accepted: bool, prompt_v
 9. Human approvers sign the change. Apollo deploys to the mission-canary ring. If policy violations, latency, or rejection rate regress, Apollo rolls back automatically and records the rollback in immutable audit.
 10. The platform gets better by learning decision boundaries, evidence presentation, routing latency, and workflow sequencing while never changing mission goals or executing significant actions without human approval.
 
+
+---
+
+## Priority Sequence Alpha Execution Addendum — 2026-06-30
+
+### System Architecture
+
+This addendum binds the ClearGlassInc Artemis self-evolving platform blueprint to the approved Priority Sequence Alpha operating record. The runtime remains a full-stack, Python-first, evidence-gated system built on Gotham for investigations and entity tracking, Foundry for ontology and pipelines, AIP for copilots and agents, and Apollo for signed deployment, rollback, and runtime control.
+
+```mermaid
+flowchart LR
+  WAF[Cloudflare WAF Event Export] --> FOUNDRY[Foundry Evidence Pipeline]
+  GW[Gateway Access Logs] --> FOUNDRY
+  APP[Staging Application Logs] --> FOUNDRY
+  AUTH[Authentication Failure Logs] --> FOUNDRY
+  DB[Backend Datastore Logs] --> FOUNDRY
+  EDR[AEGIS EDR Correlation] --> FOUNDRY
+  FOUNDRY --> ONTO[Artemis Security Ontology]
+  ONTO --> GOTHAM[Gotham Case SEC-20260630-0014]
+  ONTO --> AIP[AIP Security Triage Agents]
+  AIP --> APPROVAL[Human Approval Gate]
+  APPROVAL --> APOLLO[Apollo-Controlled Policy + Detection Rollout]
+```
+
+### Data and Ontology
+
+Priority Sequence Alpha extends the Artemis ontology with concrete security, vendor-risk, and executive-priority objects:
+
+```yaml
+objectTypes:
+  SecurityEvent:
+    key: event_id
+    properties:
+      - classification
+      - environment
+      - observed_at
+      - escalation_level
+      - containment_status
+      - preliminary_exposure_assessment
+  EvidenceAttachment:
+    key: evidence_id
+    properties:
+      - attachment_type
+      - source_system
+      - retained_uri
+      - hash
+      - validation_status
+      - collected_at
+  VendorRiskAssessment:
+    key: assessment_id
+    properties:
+      - vendor_name
+      - decision_deadline
+      - signoff_status
+      - mandatory_criteria_passed
+      - escalation_reason
+  CalendarPriorityDecision:
+    key: decision_id
+    properties:
+      - selected_event
+      - delegated_event
+      - rationale
+      - operator
+      - decision_time
+relationships:
+  - SecurityEvent REQUIRES EvidenceAttachment
+  - VendorRiskAssessment REQUIRES EvidenceAttachment
+  - VendorRiskAssessment BLOCKS ExecutiveSignoff
+  - CalendarPriorityDecision PRIORITIZES MissionActivity
+```
+
+### AI and Agent Design
+
+The `SecurityTriageAgent` treats SEC-20260630-0014 as blocked and contained until contradictory application, datastore, or backend evidence is validated. It may recommend WAF source-range blocking, staging mTLS/VPN/IP allow-listing, authentication-failure burst detection, enhanced logging, and JWT validation review, but it cannot execute a block, change access policy, or close the event without a human approval token.
+
+```python
+from dataclasses import dataclass
+from enum import Enum
+
+class ClosureState(str, Enum):
+    OPEN_PENDING_EVIDENCE = "open_pending_evidence"
+    CONTAINED_NOT_CLOSED = "contained_not_closed"
+    CLOSED_NO_EXPOSURE = "closed_no_exposure"
+    ESCALATED = "escalated"
+
+REQUIRED_SECURITY_EVIDENCE = {
+    "cloudflare_waf_event_export",
+    "gateway_access_logs",
+    "staging_application_access_logs",
+    "authentication_failure_logs",
+    "backend_datastore_access_logs",
+    "aegis_edr_correlation_output",
+    "source_ip_asn_24h_recurrence_review",
+}
+
+@dataclass(frozen=True)
+class SecurityClosureDecision:
+    event_id: str
+    state: ClosureState
+    missing_evidence: set[str]
+    preliminary_finding: str
+
+
+def evaluate_security_closure(event_id: str, evidence_types: set[str]) -> SecurityClosureDecision:
+    missing = REQUIRED_SECURITY_EVIDENCE - evidence_types
+    if missing:
+        return SecurityClosureDecision(
+            event_id=event_id,
+            state=ClosureState.CONTAINED_NOT_CLOSED,
+            missing_evidence=missing,
+            preliminary_finding="No data exposure indicated by edge telemetry; final closure blocked pending full log validation.",
+        )
+    return SecurityClosureDecision(
+        event_id=event_id,
+        state=ClosureState.CLOSED_NO_EXPOSURE,
+        missing_evidence=set(),
+        preliminary_finding="Required edge, application, datastore, and EDR evidence reviewed with no exposure indicated.",
+    )
+```
+
+### Self-Improvement Loop
+
+The self-improvement loop now captures three operator judgment classes from Priority Sequence Alpha:
+
+1. **Security evidence validation:** missing evidence prevents premature closure; future prompts must preserve the distinction between edge containment and final exposure confirmation.
+2. **Vendor-risk signoff:** Apex Infrastructure signoff is approved only if all mandatory criteria pass with retained evidence.
+3. **Calendar prioritization:** engineering architecture wins over budget review because the Q3 migration is 15% behind schedule and creates downstream Q4 freeze risk.
+
+```python
+MANDATORY_APEX_CRITERIA = {
+    "data_access_scope_limited_to_non_production_telemetry",
+    "no_unapproved_production_customer_data_or_pii",
+    "subprocessors_disclosed_and_equivalently_controlled",
+    "current_compliance_evidence_within_validity_period",
+    "contractual_incident_notification_and_deletion_obligations",
+}
+
+
+def apex_signoff_decision(passed_criteria: set[str], evidence_retained: bool) -> tuple[str, list[str]]:
+    missing = sorted(MANDATORY_APEX_CRITERIA - passed_criteria)
+    if missing or not evidence_retained:
+        reasons = missing + ([] if evidence_retained else ["required evidence not retained"])
+        return "suspend_and_escalate", reasons
+    return "approved_for_executive_signoff", ["all mandatory criteria satisfied before 16:30 EDT"]
+```
+
+### Full-Stack Implementation
+
+Priority Sequence Alpha is implemented as a case/workflow package:
+
+```text
+frontend:
+  /command/priority-alpha            # executive sequence board
+  /security/events/SEC-20260630-0014 # localized threat report and evidence checklist
+  /vendors/apex-risk-assessment      # five-criteria signoff gate
+backend:
+  security-evidence-validator        # evidence completeness and closure state
+  vendor-risk-gate                   # Apex signoff/elevation logic
+  priority-router                    # compliance/architecture/security scheduling logic
+streaming:
+  artemis.security.evidence.v1
+  artemis.vendor.risk.v1
+  artemis.operator.priority.v1
+```
+
+### Security and Governance
+
+All generated recommendations are constrained by ClearGlassInc zero-trust, OSINT-only, evidence-gated operating policy. Artemis records immutable audit entries for evidence retention, signoff decisions, calendar delegation, and any proposed staging-control update. Row/entity-level policy prevents a vendor-risk agent from accessing security telemetry unless the same operator, mission, classification, and purpose-of-use grants are present.
+
+### Code Examples
+
+```rego
+package artemis.priority_alpha
+
+default allow_security_closure := false
+
+allow_security_closure if {
+  input.event_id == "SEC-20260630-0014"
+  count(input.missing_evidence) == 0
+  input.datastore_access_exposure == false
+  input.application_access_established == false
+  input.approver.role in {"COO", "CISO", "SecurityLead"}
+}
+
+default allow_apex_signoff := false
+
+allow_apex_signoff if {
+  input.vendor == "Apex Infrastructure"
+  input.evidence_retained == true
+  input.criteria.data_scope == "non-production-telemetry-only"
+  input.criteria.production_pii_access == false
+  input.criteria.subprocessors_disclosed == true
+  input.criteria.compliance_evidence_current == true
+  input.criteria.incident_notification_defined == true
+  input.criteria.deletion_survives_termination == true
+}
+```
+
+### Scenario Walkthrough
+
+At 14:12 EDT on June 30, 2026, Cloudflare edge telemetry reports an external POST attempt against `staging.clearglassinc.com`. Artemis ingests the event, creates `SecurityEvent(SEC-20260630-0014)`, marks it blocked/contained, and opens an evidence checklist. The Security Copilot recommends a source-range WAF block pending validation, an ASN recurrence review, stronger staging access controls, AEGIS burst detection, and JWT validation checks. The operator approves evidence validation and narrow containment, while Artemis prevents final closure until WAF, gateway, application, authentication, datastore, EDR, and 24-hour source-IP/ASN recurrence evidence are attached.
+
+In parallel, the Vendor Risk Copilot opens the Apex Infrastructure assessment. It blocks executive signoff unless the Data Processing Agreement, subprocessor list, SOC 2 Type II or equivalent evidence, incident notification clause, termination/deletion clause, certificate-of-destruction obligation, and audit-rights language are reviewed and retained. If all five mandatory criteria pass before 16:30 EDT, Artemis prepares the signoff language for Desmond Otieno; otherwise it escalates.
+
+The Priority Router resolves the 15:30 calendar conflict by prioritizing the Engineering Architecture Sync because the Q3 infrastructure migration is 15% behind schedule. The Q3 Budget Review is delegated with a request for notes and decision items before EOD. Feedback from these choices becomes eval data for future priority-routing prompts, improving evidence discipline and executive scheduling precision without autonomous changes to ClearGlassInc Artemis goals.

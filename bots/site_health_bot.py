@@ -67,6 +67,18 @@ LOGO_EXEMPT = {
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
 }
 
+
+IGNORED_HTML_DIRS = {
+    ".git",
+    ".next",
+    "node_modules",
+}
+
+
+def _is_shipped_html(path: Path) -> bool:
+    """Return True for source-controlled HTML pages, not generated deps/builds."""
+    return not any(part in IGNORED_HTML_DIRS for part in path.relative_to(ROOT).parts)
+
 # Proof that a page carries the ClearGlass logo: either the shared corner-badge
 # script (injected on every non-home page via <script src="/logo-badge.js">) or
 # a direct reference to the logo image asset (the homepage's nav/footer mark).
@@ -161,7 +173,7 @@ def _check_local_files() -> tuple[list[str], list[str]]:
     # A missing logo is a real branding regression, so it fails health. Scanned
     # recursively so nested pages (legal/, offers/, products/, …) are covered.
     for html_file in sorted(ROOT.rglob("*.html")):
-        if ".git" in html_file.parts or html_file.name in LOGO_EXEMPT:
+        if html_file.name in LOGO_EXEMPT or not _is_shipped_html(html_file):
             continue
         try:
             page = html_file.read_text(encoding="utf-8", errors="replace")

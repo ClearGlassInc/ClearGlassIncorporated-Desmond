@@ -14,6 +14,7 @@ dependencies = [
     "httpx>=0.27",
     "pydantic>=2.7",
     "pydantic-settings>=2.3",
+    "prometheus-client>=0.21",
 ]
 
 [project.optional-dependencies]
@@ -39,9 +40,9 @@ dev = [
 artemis-api = "artemis.api.app:main"
 
 [tool.pytest.ini_options]
-asyncio_mode = "auto"
-testpaths = ["artemis/tests"]
-addopts = "-v --tb=short"
+pythonpath = [".", "sentinel", "clearglass-commerce/control-plane"]
+testpaths = ["artemis/tests", "tests", "sentinel/tests", "clearglass-commerce/control-plane/tests"]
+addopts = "-v --tb=short --import-mode=importlib"
 
 [tool.coverage.run]
 source = ["artemis"]

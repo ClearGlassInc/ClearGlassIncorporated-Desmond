@@ -1,8 +1,113 @@
 [
   {
-    "title": "Control Surface Feeds #143",
+    "title": "Control Surface Feeds #144",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "13:15",
+    "timestamp": "2026-06-30T13:15:20Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #454",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-968e7294-22f9-4a2f-845b-ede146dac47b",
+    "time": "13:08",
+    "timestamp": "2026-06-30T13:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #453",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-2bae91a0-06fd-4c7c-b321-a0d3f6d2854e",
+    "time": "12:08",
+    "timestamp": "2026-06-30T12:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #452",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-e652d442-4914-4d0b-b5f7-e4365431fadb",
+    "time": "11:08",
+    "timestamp": "2026-06-30T11:08:05Z"
+  },
+  {
+    "title": "Policy Gate #616",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
+    "time": "10:44",
+    "timestamp": "2026-06-30T10:44:36Z"
+  },
+  {
+    "title": "Defender Watch #147",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
+    "time": "10:44",
+    "timestamp": "2026-06-30T10:44:36Z"
+  },
+  {
+    "title": "Security #644",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
+    "time": "10:44",
+    "timestamp": "2026-06-30T10:44:36Z"
+  },
+  {
+    "title": "PR Automation #319",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
+    "time": "10:44",
+    "timestamp": "2026-06-30T10:44:36Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #909",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
+    "time": "10:44",
+    "timestamp": "2026-06-30T10:44:36Z"
+  },
+  {
+    "title": "CI #878",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
+    "time": "10:44",
+    "timestamp": "2026-06-30T10:44:36Z"
+  },
+  {
+    "title": "Code Quality: PR #614 #1706",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/614/head",
+    "time": "10:44",
+    "timestamp": "2026-06-30T10:44:34Z"
+  },
+  {
+    "title": "Burlington Release #18",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "10:39",
+    "timestamp": "2026-06-30T10:39:17Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #564",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "10:36",
+    "timestamp": "2026-06-30T10:36:37Z"
+  },
+  {
+    "title": "pages build and deployment #1005",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "10:36",
+    "timestamp": "2026-06-30T10:36:29Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1705",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "10:36",
+    "timestamp": "2026-06-30T10:36:28Z"
+  },
+  {
+    "title": "Control Surface Feeds #143",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "10:36",
     "timestamp": "2026-06-30T10:36:07Z"
   },
@@ -33,110 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "10:31",
     "timestamp": "2026-06-30T10:31:46Z"
-  },
-  {
-    "title": "CI #877",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:46Z"
-  },
-  {
-    "title": "Policy Gate #615",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:46Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #908",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:46Z"
-  },
-  {
-    "title": "pages build and deployment #1004",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:46Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1704",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:45Z"
-  },
-  {
-    "title": "Content Pipeline #49",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_run on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:21Z"
-  },
-  {
-    "title": "pages build and deployment #1003",
-    "status": "warn",
-    "detail": "cancelled \u00b7 dynamic on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:16Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1703",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:16Z"
-  },
-  {
-    "title": "Bot Orchestrator #39",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "10:31",
-    "timestamp": "2026-06-30T10:31:00Z"
-  },
-  {
-    "title": "CI #876",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
-    "time": "10:27",
-    "timestamp": "2026-06-30T10:27:46Z"
-  },
-  {
-    "title": "PR Automation #318",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
-    "time": "10:27",
-    "timestamp": "2026-06-30T10:27:46Z"
-  },
-  {
-    "title": "Security #642",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
-    "time": "10:27",
-    "timestamp": "2026-06-30T10:27:46Z"
-  },
-  {
-    "title": "Policy Gate #614",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
-    "time": "10:27",
-    "timestamp": "2026-06-30T10:27:46Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #907",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
-    "time": "10:27",
-    "timestamp": "2026-06-30T10:27:46Z"
-  },
-  {
-    "title": "Defender Watch #145",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/elegant-thompson-pq9ue4",
-    "time": "10:27",
-    "timestamp": "2026-06-30T10:27:46Z"
   }
 ]

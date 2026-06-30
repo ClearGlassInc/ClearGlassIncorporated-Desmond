@@ -256,9 +256,60 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
   <p>Artemis is organized as seven planes. The experience plane gives analysts and commanders a web console, live mission board, entity graph, alert inbox, and product editor. The service plane exposes a FastAPI gateway, workflow services, case services, feedback services, and tool-execution services. The data plane ingests streaming telemetry, historical holdings, documents, geospatial tracks, reports, and operator annotations into Foundry-backed pipelines and lakehouse tables. The ontology plane turns raw records into objects, links, actions, confidence, provenance, and policy-aware views.</p>
   <p>Gotham anchors operational intelligence: investigations, entity tracking, graph exploration, link analysis, and case context. Foundry provides data integration, transformation, ontology development, application logic, and operational data products. Palantir describes AIP as connecting AI with data and operations, with tools for automation and users across the organization; Artemis uses it as the agent orchestration layer. Apollo becomes the control tower for deploying services, models, prompts, policy bundles, schema migrations, and rollbacks across cloud, secure enclave, air-gapped, and edge environments.</p>
 
+  <h3>Reference deployment topology</h3>
+  <p>The production topology separates command experience from operational execution. Browser clients terminate at a zero-trust edge. The API gateway validates identity, mission tenancy, request signatures, and trace headers. Backend services publish immutable events, while Foundry transforms raw feeds into ontology-backed operational objects. AIP agents consume only governed tool contracts. Apollo deploys every runtime artifact as a signed bundle with environment-specific policy overlays.</p>
+
+<pre><code class="language-yaml">planes:
+  frontend:
+    apps: [mission-console, commander-copilot, eval-dashboard]
+    controls: [csp, passkeys, device-posture, websocket-jwt-rotation]
+  backend:
+    services: [ingest-api, ontology-query, workflow-orchestrator, feedback-api]
+    runtime: python-fastapi + temporal + open-telemetry
+  data:
+    streaming: redpanda.kafka.topics[raw, normalized, ontology, feedback, evals]
+    lakehouse: foundry.datasets + object-storage + vector-index
+  ai:
+    aip: [agent-registry, tool-registry, prompt-registry, eval-harness]
+    routers: [latency, criticality, classification, cost, eval-score]
+  deployment:
+    apollo: [signed-release, canary, health-gate, rollback, enclave-sync]</code></pre>
+
   <h2>Data and Ontology</h2>
   <p>The ontology is the most important design decision because it defines what agents are allowed to know and do. Artemis models nouns such as <code>Person</code>, <code>Organization</code>, <code>Asset</code>, <code>Location</code>, <code>Signal</code>, <code>Event</code>, <code>Case</code>, <code>Mission</code>, <code>Source</code>, <code>IntelProduct</code>, <code>Hypothesis</code>, <code>ActionPackage</code>, and <code>FeedbackRecord</code>. It models verbs such as <code>open_case</code>, <code>link_entity</code>, <code>request_collection</code>, <code>draft_assessment</code>, <code>escalate_alert</code>, and <code>prepare_action_package</code>. Every verb has a risk band, permission predicate, audit requirement, and approval path.</p>
   <p>Each object carries confidence, lineage, temporal validity, mission relevance, and security compartments. A fact can be true for one time interval, disputed by another source, visible to one coalition partner, and hidden from another. That prevents the common failure mode where AI systems flatten intelligence into a single synthetic answer and erase uncertainty. Human workflows and AI behavior both route through the same ontology, which means an agent cannot invent a capability outside the action model.</p>
+
+  <h3>Ontology object contract</h3>
+  <p>Every object in ClearGlassInc Artemis implements a common operational envelope: identity, temporal state, provenance, confidence math, access policy, and mission context. Relationship edges are objects too, so a link between a vehicle and an event can have its own evidence, confidence, validity window, and releasability rules.</p>
+
+<pre><code class="language-python">from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Literal
+
+class SecurityLabel(BaseModel):
+    classification: Literal["U", "C", "S", "TS"]
+    compartments: set[str] = Field(default_factory=set)
+    coalition_releasable_to: set[str] = Field(default_factory=set)
+    caveats: set[str] = Field(default_factory=set)
+
+class OntologyEnvelope(BaseModel):
+    object_id: str
+    object_type: str
+    mission_id: str | None
+    confidence: float = Field(ge=0, le=1)
+    valid_from: datetime
+    valid_to: datetime | None
+    lineage_event_ids: list[str]
+    source_reliability: dict[str, float]
+    label: SecurityLabel
+    policy_tags: set[str]
+
+class Relationship(BaseModel):
+    relationship_id: str
+    source_object_id: str
+    target_object_id: str
+    predicate: Literal["observed_near", "affiliated_with", "controls", "contradicts", "supports"]
+    envelope: OntologyEnvelope</code></pre>
 
 <pre><code class="language-sql">CREATE TABLE artemis_event (
   event_id UUID PRIMARY KEY,
@@ -282,6 +333,36 @@ CREATE INDEX artemis_event_payload_idx ON artemis_event USING GIN (payload);</co
   <h2>AI and Agent Design</h2>
   <p>Artemis uses copilots for analysts and commanders, but the real leverage comes from bounded multi-agent workflows. A triage agent scores urgency and ambiguity. An enrichment agent pulls relevant entity history, geospatial context, previous cases, and source reliability. A correlation agent proposes links. A summarization agent produces commander-ready briefs. A recommendation agent drafts options, risks, and required approvals. A governance agent checks whether proposed actions comply with policy and mission authority.</p>
   <p>The model router selects the cheapest sufficient model based on task criticality, latency, classification, tool need, context length, and eval performance. Routine summarization can use a fast model. Cross-compartment reasoning, contested-source synthesis, or operational recommendations require a higher-assurance route with stricter logging and human approval. Tools are first-class, typed, and auditable; the agent never “has database access” in the abstract. It has permission to call a specific ontology query with a specific mission context.</p>
+
+  <h3>Agent workflow state machine</h3>
+  <p>Agentic work is modeled as an explicit state machine instead of an open-ended loop. Each transition emits an audit event, carries policy context, and can be replayed for incident review or eval generation.</p>
+
+<pre><code class="language-python">from enum import Enum
+
+class TriageState(str, Enum):
+    RECEIVED = "received"
+    POLICY_SCREENED = "policy_screened"
+    ENRICHED = "enriched"
+    CORRELATED = "correlated"
+    RECOMMENDATION_DRAFTED = "recommendation_drafted"
+    AWAITING_APPROVAL = "awaiting_approval"
+    CLOSED = "closed"
+
+TRANSITIONS = {
+    TriageState.RECEIVED: [TriageState.POLICY_SCREENED],
+    TriageState.POLICY_SCREENED: [TriageState.ENRICHED, TriageState.CLOSED],
+    TriageState.ENRICHED: [TriageState.CORRELATED],
+    TriageState.CORRELATED: [TriageState.RECOMMENDATION_DRAFTED],
+    TriageState.RECOMMENDATION_DRAFTED: [TriageState.AWAITING_APPROVAL, TriageState.CLOSED],
+    TriageState.AWAITING_APPROVAL: [TriageState.CLOSED],
+}
+
+def transition(case, target: TriageState, actor: str, reason: str):
+    if target not in TRANSITIONS[case.state]:
+        raise ValueError(f"illegal transition {case.state} -> {target}")
+    audit.record("workflow.transition", case_id=case.id, src=case.state, dst=target, actor=actor, reason=reason)
+    case.state = target
+    return case</code></pre>
 
 <pre><code class="language-python">class ArtemisToolCall(BaseModel):
     tool: Literal["query_ontology", "draft_intel", "open_case", "prepare_action_package"]
@@ -308,6 +389,33 @@ async def execute_tool(call: ArtemisToolCall) -> dict:
   <p>The platform gets better by learning from operator behavior without changing its own goals. Artemis captures corrections, accepted and rejected recommendations, query refinements, alert outcomes, case closure notes, false positives, false negatives, latency, escalation quality, and mission impact. Those signals become evaluation datasets. Evaluation results generate proposed prompt edits, workflow threshold changes, retrieval policy updates, feature additions, or model-routing changes. Nothing operationally significant self-deploys. Proposed upgrades enter a review queue with diff, rationale, offline eval score, blast-radius estimate, rollback plan, and approver identity.</p>
   <p>Safe evolution depends on treating prompts and workflows like code. Every prompt has a semantic version. Every workflow has a state-machine definition. Every model route has an eval-backed policy. Apollo deploys approved bundles with canaries, health checks, and instant rollback. Drift detection watches source distributions, ontology link density, alert precision, operator override rates, and model refusal or hallucination rates. When drift crosses threshold, Artemis slows autonomy: it narrows routing, raises approval requirements, or falls back to last-known-good prompts.</p>
 
+  <h3>Python precision loop</h3>
+  <p>The improvement engine turns human corrections into statistical evidence. It optimizes for precision, recall, latency, operator trust, and mission impact, but it can only propose a change. Approval gates decide whether a prompt, workflow, heuristic, or model-route update is promoted.</p>
+
+<pre><code class="language-python">from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class EvalMetrics:
+    precision: float
+    recall: float
+    p95_latency_ms: int
+    override_rate: float
+    critical_failures: int
+
+
+def safe_to_promote(candidate: EvalMetrics, baseline: EvalMetrics) -> tuple[bool, str]:
+    if candidate.critical_failures > 0:
+        return False, "critical failure detected"
+    if candidate.precision < baseline.precision + 0.015:
+        return False, "precision gain below promotion threshold"
+    if candidate.recall < baseline.recall - 0.005:
+        return False, "recall regression exceeds guardrail"
+    if candidate.p95_latency_ms > baseline.p95_latency_ms * 1.20:
+        return False, "latency budget exceeded"
+    if candidate.override_rate > baseline.override_rate:
+        return False, "operator trust proxy regressed"
+    return True, "eligible for human review and Apollo canary"</code></pre>
+
 <pre><code class="language-python">def propose_upgrade(eval_run: EvalRun) -> UpgradeProposal:
     if eval_run.precision_delta < 0 or eval_run.critical_failures:
         return UpgradeProposal(status="rejected", reason="eval regression")
@@ -322,6 +430,16 @@ async def execute_tool(call: ArtemisToolCall) -> dict:
 
   <h2>Full-Stack Implementation</h2>
   <p>The frontend is a TypeScript application with a mission timeline, map, graph canvas, agent transcript, source panel, approval inbox, and eval dashboard. The API gateway handles authentication, request signing, tenancy, rate limits, and OpenTelemetry trace propagation. Backend services run in Python: ingestion, entity resolution, workflow orchestration, feedback capture, eval generation, model routing, and policy enforcement. Kafka or Redpanda carries event streams; Foundry pipelines clean and fuse data; vector and hybrid search index documents, entity summaries, and case memory; ontology actions write back through governed APIs.</p>
+
+  <h3>Service boundaries</h3>
+  <ul>
+    <li><strong>API gateway:</strong> OAuth/OIDC, mTLS, request signing, tenant isolation, throttling, and trace propagation.</li>
+    <li><strong>Ingestion service:</strong> validates live feeds, normalizes schemas, stamps lineage, and publishes raw events.</li>
+    <li><strong>Ontology service:</strong> resolves entities, enforces policy-aware projections, and exposes typed object/action APIs.</li>
+    <li><strong>Agent service:</strong> runs AIP-backed tools, workflows, model routing, prompt versions, and approval gates.</li>
+    <li><strong>Eval service:</strong> builds datasets from feedback, runs offline and online evals, and opens upgrade proposals.</li>
+    <li><strong>Deployment controller:</strong> hands approved bundles to Apollo for signed rollout, canary, promotion, and rollback.</li>
+  </ul>
 
 <pre><code class="language-python">@app.post("/events/live")
 async def ingest_live_event(event: LiveEvent, actor: Actor = Depends(authn)):
@@ -345,6 +463,27 @@ async def ingest_live_event(event: LiveEvent, actor: Actor = Depends(authn)):
 
   <h2>Security and Governance</h2>
   <p>Artemis assumes zero trust. Need-to-know is enforced at row, column, object, link, action, and tool level. Coalition boundaries are encoded as policy, not etiquette. Compartments move with the data through ingestion, retrieval, prompts, tool outputs, generated briefs, and audit logs. An agent answering a coalition user receives only the ontology projection that user may see. Prompt governance prevents hidden policy drift: prompt changes require owners, tests, risk labels, and immutable history. Model governance records model identity, version, route, input classification, output disposition, and evaluation status.</p>
+
+<pre><code class="language-rego">package artemis.actions
+
+default allow := false
+
+default require_approval := true
+
+allow if {
+  input.actor.clearance_rank >= input.resource.classification_rank
+  every c in input.resource.compartments { c in input.actor.compartments }
+  input.resource.mission_id in input.actor.missions
+  not denied_coalition
+}
+
+require_approval if {
+  input.action.risk_band in {"high", "critical"}
+}
+
+denied_coalition if {
+  input.actor.coalition not in input.resource.releasable_to
+}</code></pre>
 
 <pre><code class="language-python">def can_view(actor: Actor, obj: OntologyObject) -> bool:
     return (

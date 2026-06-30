@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from bots.site_health_bot import (  # noqa: E402
+    IGNORED_HTML_DIRS,
     LOGO_EXEMPT,
     PAGES_TO_CHECK,
     REQUIRED_ROOT_FILES,
@@ -103,7 +104,7 @@ class TestLogoCoverage:
         missing = [
             str(p.relative_to(ROOT))
             for p in sorted(ROOT.rglob("*.html"))
-            if ".git" not in p.parts
+            if not any(part in IGNORED_HTML_DIRS for part in p.relative_to(ROOT).parts)
             and p.name not in LOGO_EXEMPT
             and not _page_has_logo(p.read_text(encoding="utf-8", errors="replace"))
         ]

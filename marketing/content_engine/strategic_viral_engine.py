@@ -194,8 +194,8 @@ def x_thread(concept: Concept, pillar: dict[str, str]) -> list[str]:
     url = utm_url(pillar, "x", concept.id, "social")
     tweets = [
         f"1/ {concept.hook}",
-        f"2/ The market rewards speed. Regulators, customers, and courts reward proof. The winner needs both.",
-        f"3/ My rule at ClearGlassInc: no critical workflow ships unless it creates evidence while it operates.",
+        "2/ The market rewards speed. Regulators, customers, and courts reward proof. The winner needs both.",
+        "3/ My rule at ClearGlassInc: no critical workflow ships unless it creates evidence while it operates.",
         "4/ Evidence means: source, timestamp, model version, prompt version, policy decision, human approval, and outcome.",
         "5/ The hidden failure mode is silent automation drift. Yesterday's perfect prompt becomes tomorrow's liability.",
         "6/ Fix: treat prompts like production code. Version them. Test them. Roll them back.",

@@ -1,5 +1,37 @@
 # ClearGlassInc Artemis — Priority Sequence Alpha Implementation Packet
 
+
+## 2026-Proven Baseline Grounding
+
+Priority Sequence Alpha is grounded exclusively in approved 2026 baselines rather than speculative autonomy. The runtime may reference SPD-SmartGlass and PDLC as bounded control-surface and privacy-switching assumptions, IBM quantum as bounded optimization/research context, Neuralink BCI as human-interface research context without autonomous command authority, and Siemens AI-GLASS as an industrial AI/edge-inspection baseline. The policy layer remains zero-trust and OSINT-only for enrichment, and any external effect remains human-approved.
+
+The executable artifact for this lane is `tools/priority_alpha_engine.py`, which converts the June 30, 2026 packet into deterministic Python objects for security triage, Apex Infrastructure sign-off readiness, and the 15:30 calendar conflict. The module intentionally does not block networks, send messages, sign agreements, or mutate calendars; it emits approval-ready packets and lineage hashes.
+
+## Priority Alpha Execution Packet
+
+The June 30, 2026 packet is represented by three audited work products:
+
+| Work product | Deterministic status | Human gate | Implementation object |
+| --- | --- | --- | --- |
+| `SEC-20260630-0014` | `Security Event — Blocked / Contained` when the request never reaches backend services and `data_exposure=false` | Approve WAF/deny-list hardening before enforcement | `SecurityEventReport` |
+| Apex Infrastructure assessment | `ready_for_human_approval` only when all five criteria pass with low or accepted risk | Sign vendor assessment before the 17:00 EDT deadline | `VendorRiskAssessment` |
+| 15:30 calendar conflict | `ready_for_human_approval` only when both source events are resolved; otherwise `blocked` | Send delegation note or request event IDs | `CalendarConflictResolution` |
+
+### Python execution artifact
+
+```bash
+python3 tools/priority_alpha_engine.py
+```
+
+The output contains the approved baseline constraints, security classification and hardening list, Apex sign-off language, calendar delegation note, and required human gates.
+
+### Additional policy invariants
+
+- A security event cannot be downgraded if telemetry indicates backend reachability or possible exposure.
+- Vendor sign-off cannot be marked ready if any mandatory criterion fails or has non-low residual risk.
+- Calendar automation cannot mutate events unless exact source event identifiers are available.
+- Self-improvement may propose prompt, workflow, routing, or heuristic changes, but cannot alter goals, approvals, access scope, or external-effect thresholds.
+
 ## System Architecture
 
 Priority Sequence Alpha extends ClearGlassInc Artemis with an operator-command execution lane for time-sensitive intelligence work. The lane runs on Palantir Gotham for operational case context, Foundry for governed data products and Ontology actions, AIP for agent planning and human-in-the-loop copilots, and Apollo for controlled release, rollback, and runtime enforcement.

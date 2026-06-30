@@ -25,6 +25,7 @@
     ["Command", [
       ["Control Surface · v3.1", "control-surface.html", "◈"],
       ["Systems Control Surface", "systems.html", "▣"],
+      ["Air Systems Control", "air-systems-control.html", "◍"],
       ["AVALON · ARTEMIS ⊕ PERCIVAL", "artemis-percival.html", "⬣"],
       ["PERCIVAL OS", "percival-os.html", "◐"],
       ["SENTINEL · Live", "sentinel.html", "◉"],
@@ -67,6 +68,7 @@
   // ── actions (verbs, not just destinations) ──────────────────────────────
   var ACTIONS = [
     { label: "Open Systems Control Surface", sub: "Operations console", icon: "▣", href: "systems.html" },
+    { label: "Open Air Systems Control", sub: "Atmospheric glass console", icon: "◍", href: "air-systems-control.html" },
     { label: "Pricing & engagements", sub: "Book a fixed-fee engagement", icon: "◎", href: "pricing.html" },
     { label: "Website design & development", sub: "Engagement", icon: "◳", href: "web-design.html" },
     { label: "Open latest project", sub: "Artemis VI", icon: "🛰", href: "artemis.html" },

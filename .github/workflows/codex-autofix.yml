@@ -1,0 +1,94 @@
+name: Codex Autofix
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -eo pipefail {0}
+
+jobs:
+  fix:
+    name: Run Codex autofix and open PR
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+
+    steps:
+      - name: Resolve source branch
+        id: source
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            echo "ref=${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.source.outputs.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Install Codex
+        run: npm install -g @openai/codex
+
+      - name: Configure git author
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Run Codex autofix
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          codex -a auto-edit --quiet "
+          You are Codex, a careful and conservative automated developer working inside the repository.
+          Your goal is to make the minimal, well-scoped changes necessary to make the repository pass its CI checks and local test suite, and to fix clear runtime errors revealed by running project checks.
+
+          Only change files required to fix failing tests or errors.
+          Run the repo tests and linters, inspect failures, apply minimal patches, and re-run the checks.
+          Prefer Python for deterministic validation scripts and precision when adding or adjusting checks.
+          Do not make product, architecture, branding, or documentation changes unless they are directly required by a failing check.
+          Leave the working tree with only necessary fixes for a pull request.
+          "
+
+      - name: Show git status
+        run: git status --short
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@67ccf7813b8a9b55c1fafaf0c01a6af6de5f722c # v7.0.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: apply codex autofix"
+          branch: codex/autofix-${{ github.run_id }}
+          delete-branch: true
+          title: "Codex Autofix"
+          body: |
+            Automated Codex autofix for failing CI or manual workflow dispatch.
+
+            Source branch: `${{ steps.source.outputs.ref }}`
+            Trigger: `${{ github.event_name }}`

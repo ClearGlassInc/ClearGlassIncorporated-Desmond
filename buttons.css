@@ -283,3 +283,68 @@
   .cg-btn:hover { transform: none; }
   .cg-btn.is-loading::after { animation-duration: 1.4s; }
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ADVANCED MOTION LAYER  (additive — every rule below either targets the masked
+   ::before edge or an opt-in variant, so existing button physics are untouched)
+     • primary + engaged-toggle gain a slow "living aurora" machined edge
+     • .cg-btn--aurora  — flowing prism fill with an ambient glow
+     • .cg-btn--holo    — continuous holographic shimmer sweep
+   All new motion is frozen under prefers-reduced-motion at the end.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* living aurora edge: animates ONLY the 1px masked ::before border (inherits the
+   base mask), so it never competes with the hover transform / box-shadow / filter */
+.cg-btn--primary::before,
+.cg-btn--toggle[aria-pressed="true"]::before {
+  background: linear-gradient(115deg, #38bdf8, #a78bfa 28%, #f472b6 50%, #a78bfa 72%, #38bdf8);
+  background-size: 300% 100%;
+  opacity: 1;
+  animation: cgBtnAurora 6s linear infinite;
+}
+@keyframes cgBtnAurora { to { background-position: 300% 0; } }
+
+/* primary hover: deepen the aurora edge + lift the glow a touch further */
+@media (hover: hover) {
+  .cg-btn--primary:hover::before { animation-duration: 2.4s; }
+}
+
+/* ── opt-in variant: --aurora — a slowly flowing prism fill ─────────────────── */
+.cg-btn--aurora {
+  color: #07112b;
+  border-color: transparent;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.30), rgba(255,255,255,0) 46%),
+    linear-gradient(115deg, #38bdf8, #a78bfa 30%, #f472b6 52%, #34d399 78%, #38bdf8);
+  background-size: 100% 100%, 280% 100%;
+  text-shadow: 0 1px 0 rgba(255,255,255,.28);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.5) inset,
+    0 14px 30px -14px rgba(96,165,250,.8),
+    0 0 22px -6px rgba(167,139,250,.7);
+  animation: cgBtnAuroraFill 7s linear infinite;
+}
+.cg-btn--aurora::after { display: none; }
+@keyframes cgBtnAuroraFill { to { background-position: 0 0, 280% 0; } }
+
+/* ── opt-in variant: --holo — a continuous holographic shimmer sweep ────────── */
+.cg-btn--holo::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  z-index: 1; pointer-events: none;
+  background: linear-gradient(115deg, transparent 20%, rgba(56,189,248,.45) 38%,
+              rgba(167,139,250,.5) 50%, rgba(244,114,182,.4) 62%, transparent 80%);
+  background-size: 220% 100%;
+  mix-blend-mode: screen;
+  opacity: .55;
+  transform: none;
+  animation: cgBtnHolo 3.2s linear infinite;
+}
+@keyframes cgBtnHolo { to { background-position: 220% 0; } }
+
+/* freeze all new motion when the user prefers reduced motion (look stays, loop stops) */
+@media (prefers-reduced-motion: reduce) {
+  .cg-btn--primary::before,
+  .cg-btn--toggle[aria-pressed="true"]::before,
+  .cg-btn--aurora,
+  .cg-btn--holo::after { animation: none !important; }
+}

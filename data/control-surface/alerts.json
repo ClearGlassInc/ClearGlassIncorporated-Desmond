@@ -1,7 +1,22 @@
 [
   {
     "status": "warn",
+    "title": "CI failing",
+    "detail": "Latest run #916 concluded failure (2026-06-30)."
+  },
+  {
+    "status": "warn",
+    "title": "Codex Autofix failing",
+    "detail": "Latest run #35 concluded failure (2026-06-30)."
+  },
+  {
+    "status": "warn",
     "title": "Running Copilot cloud agent failing",
-    "detail": "Latest run #459 concluded failure (2026-06-30)."
+    "detail": "Latest run #461 concluded failure (2026-06-30)."
+  },
+  {
+    "status": "warn",
+    "title": "pages build and deployment failing",
+    "detail": "Latest run #1028 concluded failure (2026-06-30)."
   }
 ]

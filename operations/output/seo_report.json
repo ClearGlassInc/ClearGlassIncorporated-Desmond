@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-29T15:23:08.538437+00:00",
-  "files_audited": 54,
-  "average_score": 93.3,
+  "run_utc": "2026-06-30T10:31:13.176782+00:00",
+  "files_audited": 56,
+  "average_score": 92.5,
   "pages": [
     {
       "file": "404.html",
@@ -148,6 +148,30 @@
       "og_image": true,
       "score": 100,
       "issues": []
+    },
+    {
+      "file": "artemis-2040.html",
+      "title": "ClearGlassInc Artemis 2040 Intelligence Platform",
+      "title_length": 48,
+      "title_ok": true,
+      "description": "ClearGlassInc Artemis 2040 blueprint: self-evolving AI intelligence platform spanning Gotham, Foundry, AIP, Apollo, secure agents, and human-approved self-improvement.",
+      "description_length": 167,
+      "description_ok": false,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Description length 167 chars (ideal 120\u2013160)",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
     },
     {
       "file": "artemis-blue-team.html",
@@ -520,6 +544,26 @@
       "score": 90,
       "issues": [
         "Description length 243 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "environmental-cyber-risk.html",
+      "title": "Environmental Cyber-Risk | ClearGlassInc Artemis",
+      "title_length": 48,
+      "title_ok": true,
+      "description": "Artemis turns space-weather disruption into executive cyber-risk decisions for resilient infrastructure operations.",
+      "description_length": 115,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 115 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -1028,14 +1072,14 @@
   ],
   "top_issues": [
     "11x \u2014 Title length N chars (ideal N\u2013N)",
-    "9x \u2014 Description length N chars (ideal N\u2013N)",
-    "4x \u2014 Missing og:image",
+    "11x \u2014 Description length N chars (ideal N\u2013N)",
+    "5x \u2014 Missing og:image",
     "3x \u2014 Multiple <hN> tags (N)",
+    "2x \u2014 Missing canonical link tag",
+    "2x \u2014 Missing og:title",
+    "2x \u2014 Missing og:description",
     "1x \u2014 Missing <title>",
     "1x \u2014 Missing meta description",
-    "1x \u2014 Missing canonical link tag",
-    "1x \u2014 No <hN> tag found",
-    "1x \u2014 Missing og:title",
-    "1x \u2014 Missing og:description"
+    "1x \u2014 No <hN> tag found"
   ]
 }

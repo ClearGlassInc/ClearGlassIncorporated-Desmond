@@ -1,6 +1,6 @@
-# Release Notes — 2026-06-29
+# Release Notes — 2026-06-30
 
-*317 commit(s) since v1.0.0*
+*348 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -33,6 +33,7 @@
 
 ## Bug Fixes
 
+- **ci:** remove invalid strategic viral f-strings (`04d3a5e`)
 - **ci:** green the suite (env-safe crypto skip) + PERCIVAL sitemap sweep (#563) (`447e7ee`)
 - **lint:** clear ruff F541/F401 violations in defender bot (`d5d3e43`)
 - **lint:** clear ruff F541/F401 violations in defender bot (`65efc0b`)
@@ -96,6 +97,29 @@
 
 ## Maintenance
 
+- Remove environmental cyber-risk from products list (`1a37bca`)
+- Merge flagship Artemis page positioning (`1827c61`)
+- Strengthen environmental cyber-risk positioning (`8369617`)
+- Fix monorepo audit blockers (`b672af2`)
+- Revise environmental cyber-risk page (`4d5dbcd`)
+- Add governed System 2040 automation loop (`7f962ee`)
+- Add Artemis Palantir intelligence platform blueprint (`4f9956c`)
+- Add Artemis environmental cyber risk dashboard (`ce9ed9a`)
+- Add governed Artemis System 2040 blueprint (`08d80f5`)
+- Add environmental cyber-risk launch pack (`e2f2d53`)
+- Add environmental cyber-risk phase 1 blueprint (`0b0f41f`)
+- Add Artemis environmental threat cross-reference (`2dcaeee`)
+- Launch environmental cyber-risk intelligence patch (`d96a475`)
+- Add Artemis intelligence platform blueprint (`2f21ac6`)
+- Add Artemis Global NET self-evolving platform blueprint (`c723489`)
+- Add NET ionosphere integration blueprint (`95d1a7f`)
+- Add Global NET model blueprint (`4b712f2`)
+- Expand Artemis ionospheric research blueprint (`9ad678b`)
+- Add ionospheric research module to Artemis blueprint (`a8849b6`)
+- Expand Artemis self-evolving platform blueprint (`34ad7c0`)
+- Add ionospheric Artemis mission pack (`86ccbc7`)
+- Add Artemis purpose and research section (`2c25ccb`)
+- Add Artemis 2040 advanced intelligence features (`9003b99`)
 - Add Artemis skeleton key execution blueprint (`0878b84`)
 - Expand Artemis self-evolving platform blueprint (`f4f2028`)
 - Add System 2040 Artemis intelligence blueprint (`cd9432d`)
@@ -197,6 +221,13 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`d3d8cdb`)
+- refresh control-surface data feeds [skip ci] (`787247c`)
+- refresh control-surface data feeds [skip ci] (`1883ea4`)
+- refresh control-surface data feeds [skip ci] (`90aed55`)
+- refresh control-surface data feeds [skip ci] (`2a8917d`)
+- refresh control-surface data feeds [skip ci] (`ad8ce61`)
+- update generated outputs — 2026-06-29 15:23 UTC [skip ci] (`ff7d401`)
 - refresh control-surface data feeds [skip ci] (`6a4659d`)
 - update generated outputs — 2026-06-29 12:00 UTC [skip ci] (`f053451`)
 - refresh control-surface data feeds [skip ci] (`15f24df`)

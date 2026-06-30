@@ -1,14 +1,15 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-29T15:23:08.538437+00:00
-**Average Score:** 93.3/100
-**Files Audited:** 54
+**Run:** 2026-06-30T10:31:13.176782+00:00
+**Average Score:** 92.5/100
+**Files Audited:** 56
 
 ## Page Scores
 
 | File | Score | Issues |
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
+| `artemis-2040.html` | 50/100 | 5 |
 | `flowsint.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
@@ -19,6 +20,7 @@
 | `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
+| `environmental-cyber-risk.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
 | `sentinel.html` | 90/100 | 1 |
 | `tax.html` | 90/100 | 1 |
@@ -66,12 +68,12 @@
 ## Top Issues Across All Pages
 
 - 11x — Title length N chars (ideal N–N)
-- 9x — Description length N chars (ideal N–N)
-- 4x — Missing og:image
+- 11x — Description length N chars (ideal N–N)
+- 5x — Missing og:image
 - 3x — Multiple <hN> tags (N)
+- 2x — Missing canonical link tag
+- 2x — Missing og:title
+- 2x — Missing og:description
 - 1x — Missing <title>
 - 1x — Missing meta description
-- 1x — Missing canonical link tag
 - 1x — No <hN> tag found
-- 1x — Missing og:title
-- 1x — Missing og:description

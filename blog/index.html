@@ -1,85 +1,493 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>Insights — ClearGlass Inc. · Governed AI, Cybersecurity &amp; Autonomy</title>
-<meta name="description" content="ClearGlass Insights is a premium editorial hub for governed AI, cybersecurity architecture, autonomy, OSINT workflows, and high-trust software systems."/>
-<meta name="keywords" content="governed AI, AI agent governance, cybersecurity architecture, autonomous agents, OSINT workflows, financial crime detection, high trust software, ClearGlass Inc"/>
-<meta name="author" content="ClearGlass Inc."/>
-<meta name="robots" content="index,follow,max-image-preview:large"/>
-<link rel="canonical" href="https://clearglassinc.github.io/blog/"/>
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="ClearGlass Inc."/>
-<meta property="og:title" content="ClearGlass Insights — Governed AI, Cybersecurity &amp; Autonomy"/>
-<meta property="og:description" content="A high-authority editorial desk for governed AI, cyber operations, autonomy, OSINT, and high-trust software systems."/>
-<meta property="og:url" content="https://clearglassinc.github.io/blog/"/>
-<meta property="og:image" content="https://clearglassinc.github.io/assets/images/clearglass-logo.png"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="ClearGlass Insights — Governed AI, Cybersecurity &amp; Autonomy"/>
-<meta name="twitter:description" content="Research-grade field notes for serious builders, operators, and leaders working at the edge of governed intelligence."/>
-<meta name="twitter:image" content="https://clearglassinc.github.io/assets/images/clearglass-logo.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Blog",
-  "name":"ClearGlass Insights",
-  "url":"https://clearglassinc.github.io/blog/",
-  "description":"Editorial intelligence on governed AI, cybersecurity, autonomy, OSINT, and high-trust software systems.",
-  "publisher":{"@type":"Organization","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io/","logo":{"@type":"ImageObject","url":"https://clearglassinc.github.io/assets/images/clearglass-logo.png"}},
-  "about":["Governed AI","Cybersecurity Architecture","Autonomous Agents","OSINT Workflows","Financial Crime Detection","High-Trust Software Systems"],
-  "potentialAction":{"@type":"SearchAction","target":"https://clearglassinc.github.io/blog/?q={search_term_string}","query-input":"required name=search_term_string"}
-}
-</script>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#050711;--panel:#0a1020;--panel2:#0e172a;--ink:#f8fbff;--muted:#9fb0cf;--soft:#c9d7ef;--line:rgba(136,166,255,.18);--line2:rgba(136,166,255,.34);--blue:#60a5fa;--violet:#a78bfa;--pink:#f472b6;--mint:#34d399;--amber:#fbbf24;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace;--grad:linear-gradient(135deg,var(--blue),var(--violet) 45%,var(--pink));--glow:0 0 80px rgba(96,165,250,.28)}html{scroll-behavior:smooth}body{font-family:var(--sans);background:radial-gradient(circle at 15% 0%,rgba(96,165,250,.18),transparent 28%),radial-gradient(circle at 85% 10%,rgba(167,139,250,.18),transparent 30%),linear-gradient(180deg,#050711 0%,#08101f 52%,#050711 100%);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 80%)}a{color:inherit}.class-banner,.unclass-banner{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-align:center;font-weight:700;padding:7px 16px}.class-banner{background:#030712;color:#cfe9ff}.unclass-banner{background:#06170f;color:#5df29a}.class-banner span{opacity:.55;margin:0 8px}.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,4vw,44px);background:rgba(5,7,17,.72);backdrop-filter:blur(22px) saturate(1.2);border-bottom:1px solid var(--line)}.nav-brand{display:flex;gap:12px;align-items:center;text-decoration:none}.nav-mark{width:40px;height:40px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 0 30px rgba(96,165,250,.35)}.nav-mark img{width:100%;height:100%;object-fit:cover;display:block}.nav-name{font-family:var(--serif);font-size:22px;font-weight:700}.nav-name em{font-weight:400;color:var(--muted)}.nav-links{display:flex;gap:6px;align-items:center}.nav-links a{text-decoration:none;color:var(--muted);font-size:13px;font-weight:700;padding:9px 13px;border-radius:999px}.nav-links a:hover{color:#fff;background:rgba(255,255,255,.07)}.nav-cta{background:var(--grad);color:#050711!important;box-shadow:0 12px 35px rgba(96,165,250,.22)}.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,32px)}.hero{padding:clamp(58px,9vw,112px) 0 34px;display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:end}.eyebrow,.section-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#a8c7ff;font-weight:700}.hero h1{font-family:var(--serif);font-size:clamp(46px,8vw,90px);line-height:.94;letter-spacing:-.04em;margin:18px 0}.hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.lead{font-size:clamp(17px,2vw,21px);color:var(--soft);line-height:1.6;max-width:720px}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-radius:14px;padding:14px 18px;font-weight:800;font-size:14px;border:1px solid var(--line2);background:rgba(255,255,255,.06)}.btn.primary{background:var(--grad);color:#04101f;border:0}.signal-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(14,23,42,.92),rgba(5,7,17,.88));border-radius:28px;padding:24px;box-shadow:var(--glow);position:relative;overflow:hidden}.signal-card::after{content:"";position:absolute;inset:auto -20% -35% -20%;height:150px;background:radial-gradient(closest-side,rgba(52,211,153,.28),transparent)}.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}.metric{border:1px solid var(--line);border-radius:18px;padding:15px;background:rgba(255,255,255,.04)}.metric b{display:block;font-family:var(--mono);font-size:20px;color:#fff}.metric span{font-size:12px;color:var(--muted)}.chips{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}.chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#d9e7ff;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:10px 12px;background:rgba(255,255,255,.045)}.section{padding:36px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}.section h2{font-family:var(--serif);font-size:clamp(30px,4vw,48px);line-height:1}.editorial-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:18px}.feature,.card,.panel{border:1px solid var(--line);background:rgba(10,16,32,.74);border-radius:26px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.25)}.feature{display:grid;grid-template-columns:1fr .82fr;min-height:390px}.feature-copy,.card{padding:24px}.tag{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#a8c7ff;font-weight:800}.feature h3,.card h3{font-family:var(--serif);font-size:clamp(30px,4vw,50px);line-height:1.02;margin:16px 0 12px}.feature p,.card p,.panel p{color:var(--muted);line-height:1.62}.feature-art{padding:24px;background:radial-gradient(circle at 30% 20%,rgba(96,165,250,.42),transparent 24%),radial-gradient(circle at 70% 45%,rgba(244,114,182,.28),transparent 26%),#060a14;display:flex;flex-direction:column;justify-content:space-between}.quote{font-family:var(--serif);font-size:34px;line-height:1.05}.mini-list{display:grid;gap:12px}.mini{display:block;text-decoration:none;border:1px solid var(--line);border-radius:22px;padding:18px;background:rgba(255,255,255,.045)}.mini h4{font-size:17px;margin:9px 0 6px}.mini p{font-size:13px;color:var(--muted);line-height:1.5}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{display:flex;flex-direction:column;min-height:260px;text-decoration:none}.card h3{font-size:27px}.card .foot,.feature .foot{margin-top:auto;padding-top:18px;font-weight:900;color:#fff}.clusters{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.cluster{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:18px;padding:16px}.cluster b{display:block;margin-bottom:8px}.cluster span{font-size:13px;color:var(--muted);line-height:1.45}.conversion{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{padding:26px}.newsletter{background:linear-gradient(135deg,rgba(96,165,250,.18),rgba(167,139,250,.12)),rgba(10,16,32,.8)}.form{display:flex;gap:10px;margin-top:18px}.form input{flex:1;min-width:0;border:1px solid var(--line);background:#050711;color:#fff;border-radius:14px;padding:14px}.power{border-left:3px solid var(--mint)}.search{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:rgba(255,255,255,.045);max-width:360px}.search input{width:100%;background:transparent;border:0;color:#fff;outline:0}.footer{margin-top:42px;border-top:1px solid var(--line);background:#030712;color:var(--muted);padding:42px clamp(20px,5vw,40px) 26px}.footer-grid{max-width:1180px;margin:auto;display:grid;grid-template-columns:1fr auto;gap:22px}.footer a{text-decoration:none;color:#cbd8f6}.trust{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;color:#7f91b7}@media(max-width:900px){.hero,.editorial-grid,.feature,.conversion,.footer-grid{grid-template-columns:1fr}.cards,.clusters{grid-template-columns:1fr 1fr}.nav-links a:not(.nav-cta){display:none}}@media(max-width:560px){.cards,.clusters,.metric-grid{grid-template-columns:1fr}.form{flex-direction:column}.hero h1{font-size:48px}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <title>Insights — ClearGlass Inc. · Governed AI, Cybersecurity &amp; Autonomy</title>
+  <meta name="description" content="ClearGlass Insights is a premium, high-authority editorial hub for governed AI, cybersecurity, autonomy, OSINT, and advanced software systems." />
+  <meta name="keywords" content="ClearGlass Inc, governed AI, AI agent governance, cybersecurity architecture, autonomous agents, OSINT workflows, AI automation, financial crime detection, high-trust software" />
+  <meta name="author" content="ClearGlass Inc." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <link rel="canonical" href="https://clearglassinc.github.io/blog/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ClearGlass Inc." />
+  <meta property="og:title" content="ClearGlass Insights — Governed AI, Cybersecurity &amp; Autonomy" />
+  <meta property="og:description" content="A research-lab, founder-blog, and premium media hub for serious people building governed intelligence systems." />
+  <meta property="og:url" content="https://clearglassinc.github.io/blog/" />
+  <meta property="og:image" content="https://clearglassinc.github.io/assets/images/clearglass-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ClearGlass Insights — Governed AI, Cybersecurity &amp; Autonomy" />
+  <meta name="twitter:description" content="Precise, intelligent field notes on governed AI, cybersecurity, autonomy, OSINT, and high-trust software systems." />
+  <meta name="twitter:image" content="https://clearglassinc.github.io/assets/images/clearglass-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "ClearGlass Insights",
+    "headline": "Governed AI, Cybersecurity & Autonomy",
+    "url": "https://clearglassinc.github.io/blog/",
+    "description": "A premium editorial hub for governed AI, cybersecurity, autonomy, OSINT, and advanced software systems.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ClearGlass Inc.",
+      "url": "https://clearglassinc.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://clearglassinc.github.io/assets/images/clearglass-logo.png"
+      }
+    },
+    "about": [
+      "Governed AI",
+      "Autonomous agents",
+      "Cybersecurity architecture",
+      "OSINT workflows",
+      "AI automation",
+      "Financial crime detection",
+      "High-trust software systems"
+    ],
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://clearglassinc.github.io/blog/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #050711;
+      --bg-2: #08101f;
+      --panel: rgba(10, 16, 32, .78);
+      --panel-strong: rgba(14, 23, 42, .94);
+      --ink: #f8fbff;
+      --soft: #c9d7ef;
+      --muted: #9fb0cf;
+      --dim: #7181a4;
+      --line: rgba(136, 166, 255, .18);
+      --line-strong: rgba(136, 166, 255, .36);
+      --blue: #60a5fa;
+      --violet: #a78bfa;
+      --pink: #f472b6;
+      --mint: #34d399;
+      --amber: #fbbf24;
+      --grad: linear-gradient(135deg, var(--blue), var(--violet) 48%, var(--pink));
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --shadow: 0 28px 100px rgba(0, 0, 0, .34);
+      --glow: 0 0 80px rgba(96, 165, 250, .24);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 16% 0%, rgba(96, 165, 250, .22), transparent 28%),
+        radial-gradient(circle at 88% 6%, rgba(167, 139, 250, .2), transparent 30%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 52%, var(--bg) 100%);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .75), transparent 78%);
+      pointer-events: none;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .class-banner, .unclass-banner {
+      padding: 7px 16px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .class-banner { background: #030712; color: #cfe9ff; }
+    .unclass-banner { background: #06170f; color: #5df29a; }
+    .class-banner span { margin: 0 8px; opacity: .55; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px clamp(16px, 4vw, 44px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(5, 7, 17, .74);
+      backdrop-filter: blur(22px) saturate(1.15);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-mark { width: 42px; height: 42px; overflow: hidden; border-radius: 13px; background: #fff; box-shadow: 0 0 30px rgba(96, 165, 250, .35); }
+    .nav-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .nav-name { font-family: var(--serif); font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+    .nav-name em { color: var(--muted); font-weight: 400; }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a { border-radius: 999px; padding: 9px 13px; color: var(--muted); font-size: 13px; font-weight: 750; text-decoration: none; }
+    .nav-links a:hover { color: #fff; background: rgba(255, 255, 255, .07); }
+    .nav-cta { border: 0; background: var(--grad); color: #04101f !important; box-shadow: 0 12px 35px rgba(96, 165, 250, .22); }
+
+    .eyebrow, .kicker, .tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #a8c7ff;
+    }
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 34px; align-items: end; padding: clamp(62px, 9vw, 116px) 0 40px; }
+    .hero h1 { max-width: 850px; margin: 18px 0; font-family: var(--serif); font-size: clamp(47px, 8vw, 92px); line-height: .94; letter-spacing: -.045em; }
+    .hero h1 span, .gradient-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lead { max-width: 760px; color: var(--soft); font-size: clamp(17px, 2vw, 21px); line-height: 1.62; }
+    .hero-actions, .chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; border: 1px solid var(--line-strong); border-radius: 14px; padding: 13px 17px; background: rgba(255, 255, 255, .06); color: #fff; font-size: 14px; font-weight: 850; text-decoration: none; }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(255, 255, 255, .38); }
+    .btn.primary { border: 0; background: var(--grad); color: #04101f; }
+    .chip { border: 1px solid var(--line); border-radius: 999px; padding: 10px 12px; background: rgba(255, 255, 255, .045); color: #d9e7ff; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+
+    .signal-card, .panel, .card, .feature, .mini, .cluster, .wire-box {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .signal-card { position: relative; overflow: hidden; border-radius: 30px; padding: 24px; background: linear-gradient(180deg, var(--panel-strong), rgba(5, 7, 17, .86)); box-shadow: var(--glow); }
+    .signal-card::after { content: ""; position: absolute; inset: auto -20% -35% -20%; height: 160px; background: radial-gradient(closest-side, rgba(52, 211, 153, .28), transparent); }
+    .metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0; }
+    .metric { border: 1px solid var(--line); border-radius: 18px; padding: 15px; background: rgba(255, 255, 255, .045); }
+    .metric b { display: block; font-family: var(--mono); font-size: 21px; color: #fff; }
+    .metric span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .section { padding: 38px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .section h2 { margin-top: 8px; font-family: var(--serif); font-size: clamp(31px, 4vw, 49px); line-height: 1; letter-spacing: -.02em; }
+    .section-copy { max-width: 760px; margin-top: 10px; color: var(--muted); line-height: 1.65; }
+
+    .editorial-grid { display: grid; grid-template-columns: 1.35fr .65fr; gap: 18px; }
+    .feature { display: grid; grid-template-columns: 1fr .82fr; min-height: 392px; overflow: hidden; border-radius: 28px; text-decoration: none; }
+    .feature-copy { display: flex; flex-direction: column; padding: 28px; }
+    .feature h3, .card h3 { margin: 16px 0 12px; font-family: var(--serif); font-size: clamp(30px, 4vw, 50px); line-height: 1.02; letter-spacing: -.02em; }
+    .feature p, .card p, .panel p, .mini p, .cluster span, .wire-box li { color: var(--muted); line-height: 1.62; }
+    .feature-art { display: flex; flex-direction: column; justify-content: space-between; padding: 28px; background: radial-gradient(circle at 30% 20%, rgba(96, 165, 250, .42), transparent 25%), radial-gradient(circle at 76% 45%, rgba(244, 114, 182, .29), transparent 28%), #060a14; }
+    .quote { font-family: var(--serif); font-size: clamp(30px, 4vw, 38px); line-height: 1.04; letter-spacing: -.02em; }
+    .foot { margin-top: auto; padding-top: 18px; color: #fff; font-weight: 900; }
+    .mini-list { display: grid; gap: 12px; }
+    .mini { display: block; border-radius: 22px; padding: 18px; text-decoration: none; }
+    .mini h4 { margin: 9px 0 6px; font-size: 17px; }
+
+    .search { display: flex; align-items: center; gap: 10px; width: min(360px, 100%); border: 1px solid var(--line); border-radius: 18px; padding: 12px 14px; background: rgba(255, 255, 255, .045); }
+    .search input { width: 100%; border: 0; outline: 0; color: #fff; background: transparent; }
+    .search input::placeholder { color: var(--dim); }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { display: flex; flex-direction: column; min-height: 274px; border-radius: 26px; padding: 24px; text-decoration: none; }
+    .card h3 { font-size: 28px; }
+    .card:hover, .mini:hover, .cluster:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+
+    .blueprint { display: grid; grid-template-columns: .7fr 1.3fr; gap: 18px; }
+    .wire-box { border-radius: 24px; padding: 22px; }
+    .wire-box ol, .wire-box ul { display: grid; gap: 10px; padding-left: 20px; margin-top: 14px; }
+    .style-stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+    .swatch { min-height: 114px; border: 1px solid var(--line); border-radius: 18px; padding: 14px; background: rgba(255,255,255,.045); }
+    .swatch b { display: block; margin-bottom: 8px; }
+    .swatch:nth-child(1) { background: linear-gradient(135deg, rgba(96,165,250,.26), rgba(10,16,32,.82)); }
+    .swatch:nth-child(2) { background: linear-gradient(135deg, rgba(167,139,250,.24), rgba(10,16,32,.82)); }
+    .swatch:nth-child(3) { background: linear-gradient(135deg, rgba(244,114,182,.22), rgba(10,16,32,.82)); }
+
+    .clusters { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .cluster { border-radius: 18px; padding: 16px; }
+    .cluster b { display: block; margin-bottom: 8px; }
+    .conversion { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .panel { border-radius: 28px; padding: 28px; }
+    .newsletter { background: linear-gradient(135deg, rgba(96, 165, 250, .18), rgba(167, 139, 250, .12)), var(--panel); }
+    .power { border-left: 3px solid var(--mint); }
+    .form { display: flex; gap: 10px; margin-top: 18px; }
+    .form input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: #050711; color: #fff; }
+
+    .footer { margin-top: 42px; border-top: 1px solid var(--line); background: #030712; color: var(--muted); padding: 42px clamp(20px, 5vw, 40px) 26px; }
+    .footer-grid { display: grid; grid-template-columns: 1fr auto; gap: 22px; width: min(1180px, 100%); margin: auto; }
+    .footer a { color: #cbd8f6; text-decoration: none; }
+    .trust { margin-top: 12px; color: #7f91b7; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+
+    @media (max-width: 940px) {
+      .hero, .editorial-grid, .feature, .blueprint, .conversion, .footer-grid { grid-template-columns: 1fr; }
+      .cards, .clusters, .style-stack { grid-template-columns: 1fr 1fr; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+    @media (max-width: 580px) {
+      .wrap { width: min(100% - 28px, 1180px); }
+      .cards, .clusters, .style-stack, .metric-grid { grid-template-columns: 1fr; }
+      .form { flex-direction: column; }
+      .hero h1 { font-size: 48px; }
+    }
+  </style>
 </head>
 <body>
-<div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
-<nav class="nav" aria-label="Primary">
-  <a href="../index.html" class="nav-brand"><div class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"></div><div class="nav-name">ClearGlassInc. <em>Insights</em></div></a>
-  <div class="nav-links"><a href="#featured">Featured</a><a href="#latest">Latest</a><a href="#clusters">Topics</a><a href="#power">Power User</a><a href="../index.html#contact" class="nav-cta">Book a briefing →</a></div>
-</nav>
-<header class="hero wrap">
-  <div>
-    <div class="eyebrow">Research lab · Founder notes · Intelligence media</div>
-    <h1>Serious field notes for the age of <span>governed intelligence.</span></h1>
-    <p class="lead">ClearGlass Insights is where enterprise leaders, engineers, analysts, and security operators learn what comes next in governed AI, cyber operations, autonomous agents, OSINT, and high-trust software systems.</p>
-    <div class="hero-actions"><a class="btn primary" href="#featured">Read the flagship brief →</a><a class="btn" href="#newsletter">Join the intelligence list</a><a class="btn" href="../index.html#contact">Request a private briefing</a></div>
-    <div class="chips" aria-label="Topical navigation"><a class="chip" href="#clusters">Governed AI</a><a class="chip" href="#clusters">Autonomous Agents</a><a class="chip" href="#clusters">Cyber Architecture</a><a class="chip" href="#clusters">OSINT Workflows</a><a class="chip" href="#clusters">Financial Crime</a><a class="chip" href="#power">Code + Diagrams</a></div>
-  </div>
-  <aside class="signal-card" aria-label="Editorial operating model">
-    <div class="section-kicker">Signal protocol</div>
-    <div class="metric-grid"><div class="metric"><b>01</b><span>Founder-led essays with technical depth</span></div><div class="metric"><b>10</b><span>Topic clusters for durable search authority</span></div><div class="metric"><b>4×</b><span>Share-ready formats: brief, quote, diagram, code</span></div><div class="metric"><b>24/7</b><span>Evergreen hub for repeat visits</span></div></div>
-    <p>Every article is designed to be cited, saved, shared, and turned into an operator checklist or executive decision memo.</p>
-  </aside>
-</header>
-<main class="wrap">
-  <section class="section" id="featured">
-    <div class="section-head"><div><div class="section-kicker">Featured intelligence</div><h2>The current brief</h2></div><div class="search"><span>⌕</span><input aria-label="Search insights" placeholder="Search governed AI, OSINT, cyber..."/></div></div>
-    <div class="editorial-grid">
-      <a class="feature" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html">
-        <div class="feature-copy"><div class="tag">AI Architecture · 16 min read</div><h3>ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform</h3><p>A production-grade blueprint for a governed, mission-speed intelligence platform on Gotham, Foundry, AIP, and Apollo — with ontology-driven agents, evals, policy-as-code, audit trails, and human-approved self-improvement loops.</p><div class="foot">Read the flagship architecture →</div></div>
-        <div class="feature-art"><div class="quote">“The future belongs to systems that improve without escaping governance.”</div><div class="tag">Ontology · Agents · Evals · Apollo rollback</div></div>
-      </a>
-      <div class="mini-list">
-        <a class="mini" href="ai-agent-governance-governed-autonomy.html"><div class="tag">Governed autonomy · 11 min</div><h4>AI Agent Governance: The Governed Autonomy Playbook</h4><p>The Four Gates and Risk Router pattern for deploying useful agents without surrendering accountability.</p></a>
-        <a class="mini" href="#clusters"><div class="tag">Series tracker</div><h4>Follow the ClearGlass research streams</h4><p>Governed AI, cyber architecture, OSINT automation, financial crime detection, and high-trust software.</p></a>
-        <a class="mini" href="#newsletter"><div class="tag">Lead magnet</div><h4>Get the weekly intelligence brief</h4><p>One concise tactical insight, one diagram, and one implementation note for builders and decision-makers.</p></a>
+  <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
+
+  <nav class="nav" aria-label="Primary">
+    <a href="../index.html" class="nav-brand">
+      <div class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo" /></div>
+      <div class="nav-name">ClearGlassInc. <em>Insights</em></div>
+    </a>
+    <div class="nav-links">
+      <a href="#featured">Featured</a>
+      <a href="#latest">Latest</a>
+      <a href="#blueprint">Blueprint</a>
+      <a href="#clusters">Topics</a>
+      <a href="#power">Power User</a>
+      <a href="../index.html#contact" class="nav-cta">Book a briefing →</a>
+    </div>
+  </nav>
+
+  <header class="hero wrap">
+    <div>
+      <div class="eyebrow">Research lab · Elite founder blog · Premium media platform</div>
+      <h1>Serious field notes for the age of <span>governed intelligence.</span></h1>
+      <p class="lead">ClearGlass Insights is where enterprise buyers, engineers, security professionals, and AI enthusiasts come to understand what is next in governed AI, cybersecurity, autonomy, OSINT, and high-trust software systems.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#featured">Read the flagship brief →</a>
+        <a class="btn" href="#newsletter">Join the intelligence list</a>
+        <a class="btn" href="../index.html#contact">Request a private briefing</a>
+      </div>
+      <div class="chips" aria-label="Core topics">
+        <a class="chip" href="#clusters">Governed AI</a>
+        <a class="chip" href="#clusters">Autonomous Agents</a>
+        <a class="chip" href="#clusters">Cyber Architecture</a>
+        <a class="chip" href="#clusters">OSINT Workflows</a>
+        <a class="chip" href="#clusters">Financial Crime</a>
+        <a class="chip" href="#power">Code + Diagrams</a>
       </div>
     </div>
-  </section>
-  <section class="section" id="latest"><div class="section-head"><div><div class="section-kicker">Latest insights</div><h2>Built for click-through, retention, and citation</h2></div></div><div class="cards"><a class="card" href="ai-agent-governance-governed-autonomy.html"><div class="tag">AI &amp; Autonomy</div><h3>The Governed Autonomy Playbook</h3><p>Why the winning agentic systems will route risk before they route tasks.</p><div class="foot">Open article →</div></a><a class="card" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"><div class="tag">Palantir stack</div><h3>Self-Evolving Intelligence Platform</h3><p>How feedback, evals, prompts, workflows, and model routing improve under human-approved guardrails.</p><div class="foot">Open blueprint →</div></a><a class="card" href="../government.html"><div class="tag">Public sector</div><h3>Coalition-Aware AI Operations</h3><p>Need-to-know access, compartment boundaries, provenance, and audited AI for sensitive missions.</p><div class="foot">Explore capability →</div></a></div></section>
-  <section class="section" id="clusters"><div class="section-head"><div><div class="section-kicker">Information architecture</div><h2>Top 10 editorial categories</h2></div></div><div class="clusters"><div class="cluster"><b>Governed AI</b><span>Policy, evals, approvals, and accountable autonomy.</span></div><div class="cluster"><b>Autonomous Agents</b><span>Agent workflows, tools, routing, and operational gates.</span></div><div class="cluster"><b>Cybersecurity Architecture</b><span>Zero trust, detection engineering, and secure systems.</span></div><div class="cluster"><b>OSINT Workflows</b><span>Collection, enrichment, correlation, and source confidence.</span></div><div class="cluster"><b>AI Automation</b><span>Repeatable workflows that compress analyst toil.</span></div><div class="cluster"><b>Financial Crime</b><span>Entity resolution, anomaly detection, and investigations.</span></div><div class="cluster"><b>High-Trust Software</b><span>Reliability, lineage, testing, and audit-by-design.</span></div><div class="cluster"><b>Data Ontologies</b><span>Entity models that drive apps and AI behavior.</span></div><div class="cluster"><b>Executive Briefs</b><span>Decision-ready summaries for leaders and boards.</span></div><div class="cluster"><b>Research Notes</b><span>Diagrams, code snippets, benchmarks, and hypotheses.</span></div></div></section>
-  <section class="section conversion" id="newsletter"><div class="panel newsletter"><div class="section-kicker">Conversion layer</div><h2>Join the intelligence list</h2><p>Get high-signal ClearGlass field notes: sharp headlines, quotable insights, diagrams, and implementation patterns for governed AI and cyber operations.</p><form class="form" action="../index.html#contact"><input type="email" placeholder="operator@example.com" aria-label="Email address"><button class="btn primary" type="submit">Get the brief →</button></form></div><div class="panel power" id="power"><div class="section-kicker">Power user mode</div><h2>Deep dives for builders</h2><p>Articles can expand into code snippets, ontology tables, mermaid diagrams, research notes, eval scorecards, prompt diffs, and operator checklists — all Markdown-friendly for GitHub Pages and Jekyll.</p><div class="chips"><span class="chip">Python evals</span><span class="chip">TypeScript UI</span><span class="chip">SQL lineage</span><span class="chip">Mermaid diagrams</span></div></div></section>
-</main>
-<footer class="footer"><div class="footer-grid"><div><strong>ClearGlass Inc.</strong><p>Premium intelligence systems for governed AI, cybersecurity, autonomy, and high-trust software.</p><div class="trust">Trust signals · audited workflows · human-approved autonomy · secure delivery</div></div><div><a href="../index.html#contact">Contact</a> · <a href="../government.html">Government</a> · <a href="../artemis.html">Artemis</a></div></div></footer>
-<div class="unclass-banner">UNCLASSIFIED / NON-CLASSIFIÉ — END OF DOCUMENT</div>
-<script>document.querySelector('.search input')?.addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('.card,.mini,.cluster').forEach(el=>{el.style.display=el.textContent.toLowerCase().includes(q)?'':'none'});});</script>
-<script defer src="/logo-badge.js"></script>
+    <aside class="signal-card" aria-label="Editorial operating model">
+      <div class="kicker">Viral-ready editorial operating system</div>
+      <div class="metric-grid">
+        <div class="metric"><b>01</b><span>Premium founder-led point of view.</span></div>
+        <div class="metric"><b>10</b><span>Topic clusters for durable search authority.</span></div>
+        <div class="metric"><b>4×</b><span>Share formats: brief, quote, diagram, code.</span></div>
+        <div class="metric"><b>24/7</b><span>Evergreen hub for repeat visits.</span></div>
+      </div>
+      <p>Every post should be easy to read, save, cite, share, and repurpose into an executive memo, operator checklist, social card, or technical implementation note.</p>
+    </aside>
+  </header>
+
+  <main class="wrap">
+    <section class="section" id="featured">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Featured article spotlight</div>
+          <h2>The current brief</h2>
+          <p class="section-copy">A high-authority lead story establishes the editorial thesis, then routes readers into related playbooks, series, and conversion paths.</p>
+        </div>
+        <label class="search">
+          <span aria-hidden="true">⌕</span>
+          <input id="insight-search" aria-label="Search insights" placeholder="Search governed AI, OSINT, cyber..." />
+        </label>
+      </div>
+      <div class="editorial-grid">
+        <a class="feature" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html">
+          <div class="feature-copy">
+            <div class="tag">AI Architecture · 16 min read</div>
+            <h3>ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform</h3>
+            <p>A production-grade blueprint for a governed, mission-speed intelligence platform on Gotham, Foundry, AIP, and Apollo — with ontology-driven agents, evals, policy-as-code, audit trails, and human-approved self-improvement loops.</p>
+            <div class="foot">Read the flagship architecture →</div>
+          </div>
+          <div class="feature-art">
+            <div class="quote">“The future belongs to systems that improve without escaping governance.”</div>
+            <div class="tag">Ontology · Agents · Evals · Apollo rollback</div>
+          </div>
+        </a>
+        <div class="mini-list">
+          <a class="mini" href="ai-agent-governance-governed-autonomy.html">
+            <div class="tag">Governed autonomy · 11 min</div>
+            <h4>AI Agent Governance: The Governed Autonomy Playbook</h4>
+            <p>The Four Gates and Risk Router pattern for deploying useful agents without surrendering accountability.</p>
+          </a>
+          <a class="mini" href="#clusters">
+            <div class="tag">Featured series</div>
+            <h4>Follow the ClearGlass research streams</h4>
+            <p>Governed AI, cyber architecture, OSINT automation, financial crime detection, and high-trust software.</p>
+          </a>
+          <a class="mini" href="#newsletter">
+            <div class="tag">Lead magnet</div>
+            <h4>Get the weekly intelligence brief</h4>
+            <p>One tactical insight, one diagram, and one implementation note for serious builders and decision-makers.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="latest">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Latest insights grid</div>
+          <h2>Built for click-through, retention, and citation</h2>
+        </div>
+      </div>
+      <div class="cards">
+        <a class="card" href="ai-agent-governance-governed-autonomy.html">
+          <div class="tag">AI &amp; Autonomy</div>
+          <h3>The Governed Autonomy Playbook</h3>
+          <p>Why the winning agentic systems will route risk before they route tasks.</p>
+          <div class="foot">Open article →</div>
+        </a>
+        <a class="card" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html">
+          <div class="tag">Palantir stack</div>
+          <h3>Self-Evolving Intelligence Platform</h3>
+          <p>How feedback, evals, prompts, workflows, and model routing improve under human-approved guardrails.</p>
+          <div class="foot">Open blueprint →</div>
+        </a>
+        <a class="card" href="../government.html">
+          <div class="tag">Public sector</div>
+          <h3>Coalition-Aware AI Operations</h3>
+          <p>Need-to-know access, compartment boundaries, provenance, and audited AI for sensitive missions.</p>
+          <div class="foot">Explore capability →</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="blueprint">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Redesign concept + implementation blueprint</div>
+          <h2>A blog homepage that behaves like a content engine</h2>
+          <p class="section-copy">The page is structured around authority, discovery, conversion, and repeat visits while staying fast enough for GitHub Pages and simple enough for Markdown/Jekyll publishing.</p>
+        </div>
+      </div>
+      <div class="blueprint">
+        <div class="wire-box">
+          <div class="tag">Homepage wireframe</div>
+          <ol>
+            <li>Sticky intelligence-desk navigation with briefing CTA.</li>
+            <li>Cinematic hero with exact positioning and category chips.</li>
+            <li>Featured article spotlight with quotable pull-quote.</li>
+            <li>Related series rail and lead-magnet entry point.</li>
+            <li>Latest insights card grid for social-style scanning.</li>
+            <li>Topic clusters for SEO and internal linking.</li>
+            <li>Newsletter, consulting, and demo conversion layer.</li>
+            <li>Power-user mode for code, diagrams, and research notes.</li>
+            <li>Footer with trust signals and high-value links.</li>
+          </ol>
+        </div>
+        <div class="wire-box">
+          <div class="tag">Modern visual style guide</div>
+          <p class="section-copy">Dark cinematic base, crisp editorial typography, command-center grid texture, blue-violet-pink glow system, glass panels, monospace metadata, and restrained motion states.</p>
+          <div class="style-stack">
+            <div class="swatch"><b>Command Center</b><span>Near-black canvas, subtle grid, secure operations tone.</span></div>
+            <div class="swatch"><b>Research Lab</b><span>Serif headlines, precise labels, technical credibility.</span></div>
+            <div class="swatch"><b>Media Platform</b><span>Clickable cards, shareable quotes, strong hierarchy.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="clusters">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Information architecture</div>
+          <h2>Top 10 blog categories</h2>
+        </div>
+      </div>
+      <div class="clusters">
+        <div class="cluster"><b>Governed AI</b><span>Policy, evals, approvals, and accountable autonomy.</span></div>
+        <div class="cluster"><b>Autonomous Agents</b><span>Tool use, workflow routing, and operational gates.</span></div>
+        <div class="cluster"><b>Cybersecurity Architecture</b><span>Zero trust, detection engineering, and secure systems.</span></div>
+        <div class="cluster"><b>OSINT Workflows</b><span>Collection, enrichment, correlation, and source confidence.</span></div>
+        <div class="cluster"><b>AI Automation</b><span>Repeatable workflows that compress analyst toil.</span></div>
+        <div class="cluster"><b>Financial Crime</b><span>Entity resolution, anomaly detection, and investigations.</span></div>
+        <div class="cluster"><b>High-Trust Software</b><span>Reliability, lineage, testing, and audit-by-design.</span></div>
+        <div class="cluster"><b>Data Ontologies</b><span>Entity models that drive apps and AI behavior.</span></div>
+        <div class="cluster"><b>Executive Briefs</b><span>Decision-ready summaries for leaders and boards.</span></div>
+        <div class="cluster"><b>Research Notes</b><span>Diagrams, code snippets, benchmarks, and hypotheses.</span></div>
+      </div>
+    </section>
+
+    <section class="section conversion" id="newsletter">
+      <div class="panel newsletter">
+        <div class="kicker">Conversion layer</div>
+        <h2>Join the intelligence list</h2>
+        <p>Get high-signal ClearGlass field notes: sharp headlines, quotable insights, diagrams, and implementation patterns for governed AI and cyber operations.</p>
+        <form class="form" action="../index.html#contact">
+          <input type="email" placeholder="operator@example.com" aria-label="Email address" />
+          <button class="btn primary" type="submit">Get the brief →</button>
+        </form>
+      </div>
+      <div class="panel power" id="power">
+        <div class="kicker">Power user mode</div>
+        <h2>Deep dives for builders</h2>
+        <p>Posts can expand into code snippets, ontology tables, Mermaid diagrams, research notes, eval scorecards, prompt diffs, and operator checklists — all Markdown-friendly for GitHub Pages and Jekyll.</p>
+        <div class="chips">
+          <span class="chip">Python evals</span>
+          <span class="chip">TypeScript UI</span>
+          <span class="chip">SQL lineage</span>
+          <span class="chip">Mermaid diagrams</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="blueprint">
+        <div class="wire-box">
+          <div class="tag">SEO blueprint</div>
+          <ul>
+            <li>Use canonical URLs, Open Graph, Twitter cards, and structured Blog metadata.</li>
+            <li>Build internal links around topic clusters and featured series.</li>
+            <li>Give every post a social-preview headline, excerpt, category, reading time, and image.</li>
+            <li>Publish evergreen pillar pages that collect related field notes.</li>
+          </ul>
+        </div>
+        <div class="wire-box">
+          <div class="tag">Engagement + viral mechanics</div>
+          <ul>
+            <li>Lead with a bold thesis readers can quote.</li>
+            <li>Use cards that promise a specific operational insight.</li>
+            <li>Add diagrams, code blocks, checklists, and “save this” summaries to deep dives.</li>
+            <li>Route readers into newsletter signup, consulting, demos, or contact without feeling generic.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <strong>ClearGlass Inc.</strong>
+        <p>Premium intelligence systems for governed AI, cybersecurity, autonomy, and high-trust software.</p>
+        <div class="trust">Trust signals · audited workflows · human-approved autonomy · secure delivery</div>
+      </div>
+      <div><a href="../index.html#contact">Contact</a> · <a href="../government.html">Government</a> · <a href="../artemis.html">Artemis</a></div>
+    </div>
+  </footer>
+  <div class="unclass-banner">UNCLASSIFIED / NON-CLASSIFIÉ — END OF DOCUMENT</div>
+
+  <script>
+    const searchInput = document.getElementById('insight-search');
+    const searchableItems = document.querySelectorAll('.card, .mini, .cluster, .wire-box');
+
+    searchInput?.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+      searchableItems.forEach((item) => {
+        item.style.display = item.textContent.toLowerCase().includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+  <script defer src="/logo-badge.js"></script>
 </body>
 </html>

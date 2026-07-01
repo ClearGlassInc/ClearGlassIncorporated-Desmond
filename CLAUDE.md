@@ -25,6 +25,7 @@ The flagship backend is the **Autonomous E‑Commerce Operator** in
 | `bots/` | Standalone Python automation bots invoked by workflows (e.g. `store_smoke_bot.py`) |
 | `data/` | Committed JSON feeds: `data/store/catalog.json`, `data/control-surface/*` |
 | `operations/` | Generated reports + handoff pages (priority matrix, SEO, health, defender) |
+| `sentinel/` | Named-agent index (PERCIVAL, SENTINEL, AEGIS, PFAS, Agent Mesh) — keyless, stdlib-only, fail-closed Python agents; see `sentinel/PERCIVAL_AGENTS.md`. Includes the real PERCIVAL governor/identity/capability/mission-memory stack plus target-state v9 distributed-architecture docs (nothing in those docs is provisioned — see their own status banners) |
 | `.github/workflows/` | ~29 workflows: CI, Pages deploy, commerce gates, scheduled bot loops |
 
 ## The commerce OS safety model (read before touching `clearglass-commerce/`)

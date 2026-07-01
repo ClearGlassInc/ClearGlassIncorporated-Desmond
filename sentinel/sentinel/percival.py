@@ -18,6 +18,15 @@ Operating model (fail-closed):
   * Revenue pipeline is INBOUND-ONLY: PERCIVAL qualifies leads that contacted
     ClearGlass and drafts booking artifacts for human send. It does not hunt,
     profile, or target private individuals — the SENTINEL charter applies.
+
+Bridge to the wider PERCIVAL control plane: ``identity.py``, ``capability.py``,
+``governor.py``, and ``mission_memory.py`` in this package are the real,
+tested v7-v8 deny-by-default core (scoped identity -> capability broker ->
+sovereign policy governor -> durable memory). ``PERCIVAL_V9_DEPLOYMENT.md``
+and ``../../docs/PERCIVAL_V9_ARCHITECTURE.md`` sketch how that core would be
+deployed as a distributed service (EKS/Temporal/LangGraph/OPA) — neither is
+provisioned, and neither changes what this file does today: this remains the
+keyless, stdlib-only, fail-closed website-governance agent that actually runs.
 """
 from __future__ import annotations
 
@@ -55,6 +64,7 @@ SAFE_AUTO_FIXES = frozenset({
     "sitemap_dead_url",
     "missing_img_alt",
     "trailing_whitespace",
+    "missing_og_tags",
 })
 
 # Categories that must always escalate, regardless of severity.
@@ -125,6 +135,8 @@ _IMG = re.compile(r"<img\b[^>]*>", re.I)
 _ALT = re.compile(r"\balt=", re.I)
 _LOC = re.compile(r"<loc>(.*?)</loc>")
 _SCRIPT_STYLE = re.compile(r"<(script|style)\b[^>]*>.*?</\1>", re.I | re.S)
+_OG_TITLE = re.compile(r'<meta\s+property=["\']og:title["\']', re.I)
+_OG_DESC = re.compile(r'<meta\s+property=["\']og:description["\']', re.I)
 
 # pages that are intentionally excluded from indexing/audit noise
 EXEMPT = frozenset({
@@ -166,6 +178,10 @@ def audit_page(name: str, html: str) -> list[Finding]:
                                "img without alt text", Severity.LOW,
                                business_value=2, user_impact=4, technical_risk=1))
             break  # one finding per page is enough to act on
+    if not (_OG_TITLE.search(html) and _OG_DESC.search(html)):
+        out.append(Finding("missing_og_tags", "seo", name,
+                           "no og:title/og:description — weak social share preview",
+                           Severity.LOW, business_value=3, user_impact=2, technical_risk=1))
     return out
 
 

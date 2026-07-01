@@ -34,47 +34,217 @@
 }
 </script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#05070d;--bg2:#09101c;--panel:rgba(255,255,255,.055);--panel2:rgba(255,255,255,.085);--line:rgba(180,214,255,.16);--line2:rgba(255,255,255,.26);--text:#f8fbff;--muted:#a8b4c7;--soft:#dbe7ff;--cyan:#39d8ff;--violet:#9d7bff;--green:#55f2a6;--amber:#ffd166;--red:#ff5c7a;--ink:#070a12;--mono:'IBM Plex Mono',monospace;--sans:'Inter',system-ui,sans-serif;--serif:'Cormorant Garamond',Georgia,serif;--glow:0 0 42px rgba(57,216,255,.28);--max:1180px}html{scroll-behavior:smooth}body{font-family:var(--sans);color:var(--text);background:radial-gradient(circle at 8% -10%,rgba(57,216,255,.22),transparent 34%),radial-gradient(circle at 92% 0%,rgba(157,123,255,.22),transparent 30%),linear-gradient(180deg,#05070d 0%,#08111d 48%,#05070d 100%);-webkit-font-smoothing:antialiased;overflow-x:hidden}body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,#000,transparent 78%)}a{color:inherit}.wrap{width:min(var(--max),calc(100% - 40px));margin-inline:auto}.class-banner,.unclass-banner{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-align:center;padding:7px 16px;color:#b9ffe0;background:#07140f;border-bottom:1px solid rgba(85,242,166,.18)}.class-banner span{opacity:.5;margin:0 8px}.nav{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);background:rgba(5,7,13,.76);backdrop-filter:blur(22px) saturate(1.25)}.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}.nav-mark{width:42px;height:42px;border:1px solid var(--line2);border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--glow)}.nav-mark img{width:100%;height:100%;object-fit:cover}.nav-name{font-family:var(--serif);font-size:24px;font-weight:700;letter-spacing:-.02em}.nav-name em{font-style:italic;color:var(--cyan);font-weight:500}.nav-links{display:flex;align-items:center;gap:3px}.nav-links a{font-size:13px;font-weight:800;color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:999px}.nav-links a:hover{color:#fff;background:var(--panel2)}.nav-cta{color:#031016!important;background:linear-gradient(135deg,var(--cyan),var(--green));box-shadow:0 0 28px rgba(57,216,255,.25)}.hero{padding:74px 0 34px}.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:36px;align-items:center}.eyebrow,.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:800}.eyebrow::before,.kicker::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--cyan),var(--green))}.hero h1{font-family:var(--serif);font-size:clamp(50px,7.5vw,92px);line-height:.9;letter-spacing:-.055em;margin:18px 0}.gradient{background:linear-gradient(120deg,#fff 0%,#b7f1ff 30%,#bfaaff 60%,#baffdd 100%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:62ch;font-size:clamp(17px,2vw,21px);line-height:1.65;color:var(--soft)}.hero-actions,.section-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 18px;border-radius:999px;font-weight:900;font-size:14px;text-decoration:none;border:1px solid var(--line2);background:var(--panel);color:#fff}.btn.primary{background:linear-gradient(135deg,var(--cyan),var(--green));color:#031016;border:0}.btn:hover{transform:translateY(-2px)}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.metric{padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.045)}.metric strong{display:block;font-size:24px}.metric span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}.command{position:relative;border:1px solid var(--line);border-radius:30px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.035));box-shadow:0 28px 90px rgba(0,0,0,.45),var(--glow);overflow:hidden}.command::before{content:"";position:absolute;inset:-30%;background:conic-gradient(from 180deg,transparent,var(--cyan),transparent,var(--violet),transparent);opacity:.13;animation:spin 9s linear infinite}@keyframes spin{to{transform:rotate(1turn)}}.screen{position:relative;border-radius:22px;background:#050914;border:1px solid rgba(255,255,255,.14);padding:18px}.screen-top{display:flex;justify-content:space-between;color:var(--muted);font-family:var(--mono);font-size:11px;margin-bottom:18px}.radar{height:255px;border-radius:20px;background:radial-gradient(circle,rgba(57,216,255,.22) 0 2px,transparent 3px),radial-gradient(circle at center,transparent 0 22%,rgba(57,216,255,.12) 22.5% 23%,transparent 23.5% 43%,rgba(85,242,166,.13) 43.5% 44%,transparent 44.5%),linear-gradient(135deg,rgba(57,216,255,.12),rgba(157,123,255,.1));position:relative;overflow:hidden}.radar::after{content:"";position:absolute;inset:50% 0 0 50%;background:linear-gradient(45deg,rgba(85,242,166,.42),transparent 55%);transform-origin:0 0;animation:sweep 4s linear infinite}@keyframes sweep{to{transform:rotate(1turn)}}.intel-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.08);padding:12px 0;color:var(--soft);font-size:13px}.intel-line code{font-family:var(--mono);color:var(--green)}.chips{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 46px}.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:10px 13px;text-decoration:none;color:var(--soft);font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.chip:hover{border-color:var(--cyan);box-shadow:var(--glow)}section{padding:42px 0}.section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:20px}.section-head h2{font-family:var(--serif);font-size:clamp(34px,4.8vw,58px);line-height:.96;letter-spacing:-.04em}.section-head p{max-width:56ch;color:var(--muted);line-height:1.7}.feature{display:grid;grid-template-columns:1.12fr .88fr;gap:20px}.article-card,.panel{border:1px solid var(--line);border-radius:26px;background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.035));box-shadow:0 24px 70px rgba(0,0,0,.24);overflow:hidden}.article-card{display:flex;flex-direction:column;text-decoration:none;transition:.2s}.article-card:hover{transform:translateY(-5px);border-color:rgba(57,216,255,.45)}.card-art{min-height:170px;background:radial-gradient(circle at 30% 20%,rgba(85,242,166,.42),transparent 28%),radial-gradient(circle at 70% 30%,rgba(157,123,255,.42),transparent 30%),linear-gradient(135deg,#07172b,#0b0718);display:grid;place-items:center;text-align:center;padding:20px}.quote{font-family:var(--serif);font-style:italic;font-size:clamp(26px,3vw,38px);line-height:1.05}.card-body{padding:24px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}.meta span{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--green);border:1px solid rgba(85,242,166,.22);padding:6px 8px;border-radius:999px}.article-card h3{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);line-height:1;letter-spacing:-.03em;margin-bottom:12px}.article-card p,.panel p{color:var(--muted);line-height:1.65}.read{display:inline-flex;margin-top:20px;color:#fff;font-weight:900}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid .article-card h3{font-size:27px}.grid .card-art{min-height:96px}.panel{padding:24px}.panel h3{font-family:var(--serif);font-size:32px;line-height:1;margin-bottom:10px}.list{display:grid;gap:12px;margin-top:18px}.list li{list-style:none;padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);color:var(--soft);line-height:1.5}.search{display:flex;gap:10px;margin:16px 0}.search input{width:100%;min-height:48px;border-radius:999px;border:1px solid var(--line);background:#07101d;color:#fff;padding:0 16px;font:600 14px var(--sans);outline:none}.search input:focus{border-color:var(--cyan);box-shadow:var(--glow)}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.blueprint{counter-reset:item}.blueprint li{counter-increment:item}.blueprint li::before{content:"0" counter(item);display:block;font-family:var(--mono);color:var(--cyan);font-weight:900;margin-bottom:4px}.power{background:linear-gradient(135deg,rgba(57,216,255,.12),rgba(157,123,255,.12));border:1px solid rgba(57,216,255,.24);border-radius:32px;padding:28px}.code{font-family:var(--mono);font-size:12px;line-height:1.55;color:#ccffe5;background:#030711;border:1px solid rgba(85,242,166,.2);border-radius:18px;padding:18px;overflow:auto;margin-top:16px}.newsletter{display:grid;grid-template-columns:1fr .86fr;gap:22px;align-items:center;border:1px solid rgba(85,242,166,.28);border-radius:34px;padding:clamp(24px,5vw,42px);background:radial-gradient(circle at 0 0,rgba(85,242,166,.16),transparent 34%),linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035))}.newsletter h2{font-family:var(--serif);font-size:clamp(36px,5vw,64px);line-height:.95}.form{display:grid;gap:12px}.form input{min-height:52px;border-radius:16px;border:1px solid var(--line);background:#06101c;color:#fff;padding:0 16px;font-weight:700}.footer{padding:54px 0 30px;border-top:1px solid var(--line);color:var(--muted)}.footer-grid{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:24px}.footer h4{color:#fff;margin-bottom:10px}.footer a{display:block;color:var(--muted);text-decoration:none;margin:8px 0}.footer a:hover{color:#fff}.ft{font-family:var(--serif);font-style:italic;color:#fff;margin-top:22px}@media(max-width:920px){.hero-grid,.feature,.two,.newsletter,.footer-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.nav-links a:not(.nav-cta){display:none}}@media(max-width:640px){.wrap{width:min(100% - 28px,var(--max))}.grid,.metrics{grid-template-columns:1fr}.hero{padding-top:46px}.nav-name{font-size:20px}.section-head{display:block}.command{padding:10px}.radar{height:190px}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05070d;--bg2:#09101c;
+  --panel:rgba(255,255,255,.055);--panel2:rgba(255,255,255,.09);--panel3:rgba(255,255,255,.14);
+  --line:rgba(180,214,255,.16);--line2:rgba(255,255,255,.26);
+  --text:#f8fbff;--muted:#a8b4c7;--soft:#dbe7ff;
+  --cyan:#39d8ff;--violet:#9d7bff;--green:#55f2a6;--amber:#ffd166;--red:#ff5c7a;--ink:#070a12;
+  --mono:'IBM Plex Mono',monospace;--sans:'Inter',system-ui,sans-serif;--serif:'Cormorant Garamond',Georgia,serif;
+  --glow:0 0 42px rgba(57,216,255,.28);--glow-violet:0 0 46px rgba(157,123,255,.26);
+  --max:1180px;
+  --ease-liquid:cubic-bezier(.16,1,.3,1);--ease-soft:cubic-bezier(.22,.61,.36,1);
+  --mx:50%;--my:35%;
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);color:var(--text);
+  background:
+    radial-gradient(650px 500px at var(--mx) var(--my),rgba(57,216,255,.10),transparent 60%),
+    radial-gradient(circle at 8% -10%,rgba(57,216,255,.22),transparent 34%),
+    radial-gradient(circle at 92% 0%,rgba(157,123,255,.22),transparent 30%),
+    linear-gradient(180deg,#05070d 0%,#08111d 48%,#05070d 100%);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,#000,transparent 78%)}
+a{color:inherit}
+.wrap{width:min(var(--max),calc(100% - 40px));margin-inline:auto;position:relative;z-index:2}
+
+/* particle field — fixed, cheap, GPU-composited canvas */
+#field{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+
+.class-banner,.unclass-banner{position:relative;z-index:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-align:center;padding:7px 16px;color:#b9ffe0;background:#07140f;border-bottom:1px solid rgba(85,242,166,.18)}
+.class-banner span{opacity:.5;margin:0 8px}
+
+/* nav — floating glass, holographic bottom edge */
+.nav{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);background:rgba(5,7,13,.72);backdrop-filter:blur(22px) saturate(1.3);transition:padding .4s var(--ease-soft),background .4s var(--ease-soft);isolation:isolate}
+.nav::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--green),var(--violet),transparent);background-size:200% 100%;animation:holo-sweep 7s linear infinite;opacity:.55}
+.nav.scrolled{background:rgba(5,7,13,.92)}
+.nav.scrolled .nav-inner{height:60px}
+@keyframes holo-sweep{to{background-position:-200% 0}}
+.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:height .35s var(--ease-soft)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-mark{width:42px;height:42px;border:1px solid var(--line2);border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--glow)}
+.nav-mark img{width:100%;height:100%;object-fit:cover}
+.nav-name{font-family:var(--serif);font-size:24px;font-weight:700;letter-spacing:-.02em}
+.nav-name em{font-style:italic;color:var(--cyan);font-weight:500}
+.nav-links{display:flex;align-items:center;gap:3px}
+.nav-links a{font-size:13px;font-weight:800;color:var(--muted);text-decoration:none;padding:10px 12px;border-radius:999px;transition:color .2s,background .2s}
+.nav-links a:hover{color:#fff;background:var(--panel2)}
+.nav-cta{color:#031016!important;background:linear-gradient(135deg,var(--cyan),var(--green));box-shadow:0 0 28px rgba(57,216,255,.25)}
+
+/* buttons — magnetic, luminous */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 18px;border-radius:999px;font-weight:900;font-size:14px;text-decoration:none;border:1px solid var(--line2);background:var(--panel);color:#fff;position:relative;transition:transform .35s var(--ease-liquid),box-shadow .35s var(--ease-soft),border-color .3s;will-change:transform}
+.btn.primary{background:linear-gradient(135deg,var(--cyan),var(--green));color:#031016;border:0}
+.btn:hover{box-shadow:0 10px 34px rgba(57,216,255,.22)}
+.hero-actions,.section-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+
+.hero{padding:74px 0 34px;position:relative}
+.hero-aura{position:absolute;left:50%;top:10%;width:640px;height:640px;transform:translateX(-50%);background:radial-gradient(circle,rgba(57,216,255,.24),rgba(157,123,255,.14) 45%,transparent 70%);filter:blur(10px);pointer-events:none;z-index:0;animation:breathe 8s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.55;transform:translateX(-50%) scale(1)}50%{opacity:.85;transform:translateX(-50%) scale(1.08)}}
+.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:36px;align-items:center;position:relative;z-index:1}
+.eyebrow,.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:800}
+.eyebrow::before,.kicker::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--cyan),var(--green))}
+.hero h1{font-family:var(--serif);font-size:clamp(50px,7.5vw,92px);line-height:.9;letter-spacing:-.055em;margin:18px 0}
+.gradient{background:linear-gradient(120deg,#fff 0%,#b7f1ff 30%,#bfaaff 60%,#baffdd 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:hue-drift 10s ease-in-out infinite}
+@keyframes hue-drift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero p{max-width:62ch;font-size:clamp(17px,2vw,21px);line-height:1.65;color:var(--soft)}
+
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+.metric{padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.045);position:relative;overflow:hidden;transition:transform .4s var(--ease-liquid),border-color .3s}
+.metric:hover{transform:translateY(-3px);border-color:rgba(57,216,255,.4)}
+.metric strong{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+.metric span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+/* command console — holographic conic border + specular sheen */
+.command{position:relative;border:1px solid var(--line);border-radius:30px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.035));box-shadow:0 28px 90px rgba(0,0,0,.45),var(--glow);overflow:hidden}
+.command::before{content:"";position:absolute;inset:-30%;background:conic-gradient(from 180deg,transparent,var(--cyan),transparent,var(--violet),transparent);opacity:.13;animation:spin 9s linear infinite}
+.command::after{content:"";position:absolute;inset:0;background:radial-gradient(320px 220px at var(--sx,50%) var(--sy,20%),rgba(255,255,255,.16),transparent 60%);mix-blend-mode:screen;pointer-events:none;transition:opacity .4s}
+@keyframes spin{to{transform:rotate(1turn)}}
+.screen{position:relative;border-radius:22px;background:#050914;border:1px solid rgba(255,255,255,.14);padding:18px;z-index:1}
+.screen-top{display:flex;justify-content:space-between;color:var(--muted);font-family:var(--mono);font-size:11px;margin-bottom:18px}
+.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 1.6s ease-in-out infinite;margin-right:6px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.radar{height:255px;border-radius:20px;background:radial-gradient(circle,rgba(57,216,255,.22) 0 2px,transparent 3px),radial-gradient(circle at center,transparent 0 22%,rgba(57,216,255,.12) 22.5% 23%,transparent 23.5% 43%,rgba(85,242,166,.13) 43.5% 44%,transparent 44.5%),linear-gradient(135deg,rgba(57,216,255,.12),rgba(157,123,255,.1));position:relative;overflow:hidden}
+.radar::after{content:"";position:absolute;inset:50% 0 0 50%;background:linear-gradient(45deg,rgba(85,242,166,.42),transparent 55%);transform-origin:0 0;animation:sweep 4s linear infinite}
+@keyframes sweep{to{transform:rotate(1turn)}}
+.intel-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.08);padding:12px 0;color:var(--soft);font-size:13px}
+.intel-line code{font-family:var(--mono);color:var(--green)}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 46px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:10px 13px;text-decoration:none;color:var(--soft);font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;transition:border-color .25s,box-shadow .25s,transform .3s var(--ease-liquid)}
+.chip:hover{border-color:var(--cyan);box-shadow:var(--glow);transform:translateY(-2px)}
+
+section{padding:42px 0}
+.section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:20px}
+.section-head h2{font-family:var(--serif);font-size:clamp(34px,4.8vw,58px);line-height:.96;letter-spacing:-.04em}
+.section-head p{max-width:56ch;color:var(--muted);line-height:1.7}
+.feature{display:grid;grid-template-columns:1.12fr .88fr;gap:20px}
+
+/* glass cards — tilt + moving specular highlight, holographic edge on hover */
+.article-card,.panel{border:1px solid var(--line);border-radius:26px;background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.035));box-shadow:0 24px 70px rgba(0,0,0,.24);overflow:hidden;position:relative}
+.article-card{display:flex;flex-direction:column;text-decoration:none;transform-style:preserve-3d;transition:transform .5s var(--ease-liquid),border-color .3s,box-shadow .4s}
+.article-card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(120deg,transparent,rgba(57,216,255,.55),transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
+.article-card::after{content:"";position:absolute;inset:0;background:radial-gradient(280px 200px at var(--sx,50%) var(--sy,0%),rgba(255,255,255,.14),transparent 60%);mix-blend-mode:screen;opacity:0;transition:opacity .35s;pointer-events:none}
+.article-card:hover{border-color:rgba(57,216,255,.45);box-shadow:0 30px 90px rgba(0,0,0,.4),var(--glow)}
+.article-card:hover::before,.article-card:hover::after{opacity:1}
+.card-art{min-height:170px;background:radial-gradient(circle at 30% 20%,rgba(85,242,166,.42),transparent 28%),radial-gradient(circle at 70% 30%,rgba(157,123,255,.42),transparent 30%),linear-gradient(135deg,#07172b,#0b0718);display:grid;place-items:center;text-align:center;padding:20px}
+.quote{font-family:var(--serif);font-style:italic;font-size:clamp(26px,3vw,38px);line-height:1.05}
+.card-body{padding:24px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.meta span{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--green);border:1px solid rgba(85,242,166,.22);padding:6px 8px;border-radius:999px}
+.article-card h3{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);line-height:1;letter-spacing:-.03em;margin-bottom:12px}
+.article-card p,.panel p{color:var(--muted);line-height:1.65}
+.read{display:inline-flex;margin-top:20px;color:#fff;font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid .article-card h3{font-size:27px}
+.grid .card-art{min-height:96px}
+.panel{padding:24px}
+.panel h3{font-family:var(--serif);font-size:32px;line-height:1;margin-bottom:10px}
+.list{display:grid;gap:12px;margin-top:18px}
+.list li{list-style:none;padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);color:var(--soft);line-height:1.5}
+.search{display:flex;gap:10px;margin:16px 0}
+.search input{width:100%;min-height:48px;border-radius:999px;border:1px solid var(--line);background:#07101d;color:#fff;padding:0 16px;font:600 14px var(--sans);outline:none;transition:border-color .25s,box-shadow .25s}
+.search input:focus{border-color:var(--cyan);box-shadow:var(--glow)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.blueprint{counter-reset:item}
+.blueprint li{counter-increment:item}
+.blueprint li::before{content:"0" counter(item);display:block;font-family:var(--mono);color:var(--cyan);font-weight:900;margin-bottom:4px}
+.power{background:linear-gradient(135deg,rgba(57,216,255,.12),rgba(157,123,255,.12));border:1px solid rgba(57,216,255,.24);border-radius:32px;padding:28px}
+.code{font-family:var(--mono);font-size:12px;line-height:1.55;color:#ccffe5;background:#030711;border:1px solid rgba(85,242,166,.2);border-radius:18px;padding:18px;overflow:auto;margin-top:16px}
+
+.newsletter{display:grid;grid-template-columns:1fr .86fr;gap:22px;align-items:center;border:1px solid rgba(85,242,166,.28);border-radius:34px;padding:clamp(24px,5vw,42px);background:radial-gradient(circle at 0 0,rgba(85,242,166,.16),transparent 34%),linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035))}
+.newsletter h2{font-family:var(--serif);font-size:clamp(36px,5vw,64px);line-height:.95}
+.form{display:grid;gap:12px}
+.form input{min-height:52px;border-radius:16px;border:1px solid var(--line);background:#06101c;color:#fff;padding:0 16px;font-weight:700;transition:border-color .25s,box-shadow .25s}
+.form input:focus{outline:none;border-color:var(--cyan);box-shadow:var(--glow)}
+
+/* finale — premium launch screen */
+.finale{position:relative;border-radius:36px;padding:clamp(40px,8vw,90px) clamp(24px,6vw,60px);text-align:center;overflow:hidden;border:1px solid rgba(157,123,255,.3);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02))}
+.finale::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0deg,rgba(57,216,255,.35) 60deg,transparent 140deg,rgba(157,123,255,.35) 230deg,transparent 320deg);animation:spin 14s linear infinite;opacity:.5}
+.finale::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 20%,rgba(5,7,13,0),rgba(5,7,13,.85) 72%)}
+.finale-inner{position:relative;z-index:1}
+.finale .kicker{justify-content:center}
+.finale h2{font-family:var(--serif);font-size:clamp(40px,7vw,84px);line-height:.95;letter-spacing:-.04em;margin:16px 0}
+.finale p{max-width:56ch;margin-inline:auto;color:var(--soft);line-height:1.7;font-size:clamp(15px,1.6vw,18px)}
+.finale .hero-actions{justify-content:center}
+.finale .btn.primary{padding:0 30px;min-height:54px;font-size:15px;box-shadow:0 0 50px rgba(85,242,166,.35)}
+
+.footer{padding:54px 0 30px;border-top:1px solid var(--line);color:var(--muted)}
+.footer-grid{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:24px}
+.footer h4{color:#fff;margin-bottom:10px}
+.footer a{display:block;color:var(--muted);text-decoration:none;margin:8px 0;transition:color .2s}
+.footer a:hover{color:#fff}
+.ft{font-family:var(--serif);font-style:italic;color:#fff;margin-top:22px}
+
+/* scroll-reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease-soft),transform .9s var(--ease-soft)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.stagger>*{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease-soft),transform .8s var(--ease-soft)}
+.stagger.in>*{opacity:1;transform:translateY(0)}
+.stagger.in>*:nth-child(1){transition-delay:.03s}
+.stagger.in>*:nth-child(2){transition-delay:.12s}
+.stagger.in>*:nth-child(3){transition-delay:.21s}
+.stagger.in>*:nth-child(4){transition-delay:.30s}
+.stagger.in>*:nth-child(5){transition-delay:.39s}
+.stagger.in>*:nth-child(6){transition-delay:.48s}
+
+@media(max-width:920px){.hero-grid,.feature,.two,.newsletter,.footer-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.nav-links a:not(.nav-cta){display:none}}
+@media(max-width:640px){.wrap{width:min(100% - 28px,var(--max))}.grid,.metrics{grid-template-columns:1fr}.hero{padding-top:46px}.nav-name{font-size:20px}.section-head{display:block}.command{padding:10px}.radar{height:190px}#field{opacity:.35}}
 </style>
 </head>
 <body>
+<canvas id="field" aria-hidden="true"></canvas>
 <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
-<nav class="nav" aria-label="Primary navigation"><div class="wrap nav-inner">
+<nav class="nav" id="nav" aria-label="Primary navigation"><div class="wrap nav-inner">
   <a href="../index.html" class="nav-brand"><div class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"></div><div class="nav-name">ClearGlassInc. <em>Insights</em></div></a>
-  <div class="nav-links"><a href="#series">Series</a><a href="#latest">Latest</a><a href="#blueprint">Blueprint</a><a href="#power">Power User</a><a href="../index.html#contact" class="nav-cta">Book a briefing →</a></div>
+  <div class="nav-links"><a href="#series">Series</a><a href="#latest">Latest</a><a href="#blueprint">Blueprint</a><a href="#power">Power User</a><a href="#access">Access</a><a href="../index.html#contact" class="nav-cta btn-magnet">Book a briefing →</a></div>
 </div></nav>
 <header class="hero wrap">
+  <div class="hero-aura" id="aura"></div>
   <div class="hero-grid">
-    <div>
+    <div class="reveal in">
       <div class="eyebrow">Premium editorial hub · governed intelligence</div>
       <h1>Where serious builders learn what is next in <span class="gradient">governed AI, cyber defense, autonomy, and OSINT.</span></h1>
       <p>ClearGlass Insights is the founder-led field journal for operators, engineers, and executives building high-trust intelligent systems. No hype cycles. Just architectures, threat models, playbooks, and research notes you can cite.</p>
-      <div class="hero-actions"><a class="btn primary" href="#latest">Read the latest brief →</a><a class="btn" href="#newsletter">Join the intelligence list</a><a class="btn" href="../index.html#contact">Request advisory</a></div>
-      <div class="metrics" aria-label="Editorial promises"><div class="metric"><strong>7</strong><span>Core topic clusters</span></div><div class="metric"><strong>10</strong><span>Signal categories</span></div><div class="metric"><strong>0</strong><span>Generic thought leadership</span></div></div>
+      <div class="hero-actions"><a class="btn primary btn-magnet" href="#latest">Read the latest brief →</a><a class="btn btn-magnet" href="#newsletter">Join the intelligence list</a><a class="btn btn-magnet" href="../index.html#contact">Request advisory</a></div>
+      <div class="metrics" aria-label="Editorial promises"><div class="metric"><strong data-count="7">0</strong><span>Core topic clusters</span></div><div class="metric"><strong data-count="10">0</strong><span>Signal categories</span></div><div class="metric"><strong data-count="0">0</strong><span>Generic thought leadership</span></div></div>
     </div>
-    <div class="command" aria-label="Cinematic intelligence console"><div class="screen"><div class="screen-top"><span>ARTEMIS//EDITORIAL_RADAR</span><span>LIVE</span></div><div class="radar"></div><div class="intel-line"><span>Governed autonomy</span><code>risk-router</code></div><div class="intel-line"><span>OSINT workflows</span><code>source-lineage</code></div><div class="intel-line"><span>High-trust software</span><code>audit-first</code></div></div></div>
+    <div class="command tilt-card" aria-label="Cinematic intelligence console"><div class="screen"><div class="screen-top"><span><i class="live-dot"></i>ARTEMIS//EDITORIAL_RADAR</span><span>LIVE</span></div><div class="radar"></div><div class="intel-line"><span>Governed autonomy</span><code>risk-router</code></div><div class="intel-line"><span>OSINT workflows</span><code>source-lineage</code></div><div class="intel-line"><span>High-trust software</span><code>audit-first</code></div></div></div>
   </div>
   <div class="chips" id="topics"><a class="chip" href="#governed-ai">Governed AI</a><a class="chip" href="#agents">Autonomous agents</a><a class="chip" href="#cyber">Cyber architecture</a><a class="chip" href="#osint">OSINT workflows</a><a class="chip" href="#automation">AI automation</a><a class="chip" href="#fincrime">Financial crime detection</a><a class="chip" href="#systems">High-trust systems</a></div>
 </header>
 <main>
   <section class="wrap" id="latest">
-    <div class="section-head"><div><div class="kicker">Featured spotlight</div><h2>Start with the playbooks that define the ClearGlass point of view.</h2></div><p>Each piece is designed to be shareable, quotable, and useful: a sharp thesis, a strong visual hierarchy, an implementation lens, and next-step reading paths.</p></div>
-    <div class="feature">
-      <a class="article-card" href="ai-agent-governance-governed-autonomy.html" data-title="AI Agent Governance The Governed Autonomy Playbook" data-tags="governed ai autonomous agents risk router policy"><div class="card-art"><div class="quote">“The bottleneck is not intelligence. It is accountability.”</div></div><div class="card-body"><div class="meta"><span>Flagship</span><span>AI &amp; Autonomy</span><span>11 min</span></div><h3>AI Agent Governance: The Governed Autonomy Playbook</h3><p>Everyone is racing to make AI agents more autonomous. The winners of the agentic era will govern them first — with gates, routing, approvals, and measurable accountability.</p><span class="read">Read the playbook →</span></div></a>
+    <div class="section-head reveal"><div><div class="kicker">Featured spotlight</div><h2>Start with the playbooks that define the ClearGlass point of view.</h2></div><p>Each piece is designed to be shareable, quotable, and useful: a sharp thesis, a strong visual hierarchy, an implementation lens, and next-step reading paths.</p></div>
+    <div class="feature stagger reveal">
+      <a class="article-card tilt-card" href="ai-agent-governance-governed-autonomy.html" data-title="AI Agent Governance The Governed Autonomy Playbook" data-tags="governed ai autonomous agents risk router policy"><div class="card-art"><div class="quote">"The bottleneck is not intelligence. It is accountability."</div></div><div class="card-body"><div class="meta"><span>Flagship</span><span>AI &amp; Autonomy</span><span>11 min</span></div><h3>AI Agent Governance: The Governed Autonomy Playbook</h3><p>Everyone is racing to make AI agents more autonomous. The winners of the agentic era will govern them first — with gates, routing, approvals, and measurable accountability.</p><span class="read">Read the playbook →</span></div></a>
       <div class="panel"><h3>Founder-led editorial promise</h3><p>ClearGlass Insights turns advanced AI, cybersecurity, and autonomy into repeatable mental models for buyers and builders.</p><ul class="list"><li><strong>Precise:</strong> every essay opens with a defensible thesis.</li><li><strong>Operational:</strong> frameworks are written like systems you can implement.</li><li><strong>Citable:</strong> concepts, diagrams, code blocks, and research notes are structured for reuse.</li><li><strong>Conversion-aware:</strong> advisory, demo, and newsletter paths appear only when contextually useful.</li></ul></div>
     </div>
   </section>
   <section class="wrap">
-    <div class="search" role="search"><input id="smartSearch" type="search" placeholder="Search the hub: governed AI, OSINT, agents, financial crime, policy-as-code…" aria-label="Search ClearGlass Insights"></div>
-    <div class="grid" id="postGrid">
-      <a class="article-card" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html" data-title="ClearGlassInc Artemis Self-Evolving AI Intelligence Platform" data-tags="palantir foundry aip apollo self improving agents governance"><div class="card-art"><div class="quote">Artemis systems blueprint</div></div><div class="card-body"><div class="meta"><span>AI Architecture</span><span>16 min</span></div><h3>ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform</h3><p>A full-stack blueprint for mission-speed intelligence with ontology-driven agents, evals, policy-as-code, and safe self-improvement.</p><span class="read">Read the architecture →</span></div></a>
-      <article class="article-card" data-title="The OSINT Workflow That Survives Contact With Reality" data-tags="osint workflows source confidence lineage"><div class="card-art"><div class="quote">OSINT with provenance</div></div><div class="card-body"><div class="meta"><span>Coming series</span><span>OSINT</span></div><h3>The OSINT Workflow That Survives Contact With Reality</h3><p>How to design collection, source grading, entity resolution, and analyst review loops without drowning in noise.</p><span class="read">Follow this series →</span></div></article>
-      <article class="article-card" data-title="Cybersecurity Architecture for Agentic Software" data-tags="cybersecurity architecture agents zero trust audit"><div class="card-art"><div class="quote">Zero-trust agents</div></div><div class="card-body"><div class="meta"><span>Coming series</span><span>Cyber</span></div><h3>Cybersecurity Architecture for Agentic Software</h3><p>The command-control patterns, permissions, logs, and kill switches required before AI agents touch real infrastructure.</p><span class="read">Follow this series →</span></div></article>
+    <div class="search reveal" role="search"><input id="smartSearch" type="search" placeholder="Search the hub: governed AI, OSINT, agents, financial crime, policy-as-code…" aria-label="Search ClearGlass Insights"></div>
+    <div class="grid stagger reveal" id="postGrid">
+      <a class="article-card tilt-card" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html" data-title="ClearGlassInc Artemis Self-Evolving AI Intelligence Platform" data-tags="palantir foundry aip apollo self improving agents governance"><div class="card-art"><div class="quote">Artemis systems blueprint</div></div><div class="card-body"><div class="meta"><span>AI Architecture</span><span>16 min</span></div><h3>ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform</h3><p>A full-stack blueprint for mission-speed intelligence with ontology-driven agents, evals, policy-as-code, and safe self-improvement.</p><span class="read">Read the architecture →</span></div></a>
+      <article class="article-card tilt-card" data-title="The OSINT Workflow That Survives Contact With Reality" data-tags="osint workflows source confidence lineage"><div class="card-art"><div class="quote">OSINT with provenance</div></div><div class="card-body"><div class="meta"><span>Coming series</span><span>OSINT</span></div><h3>The OSINT Workflow That Survives Contact With Reality</h3><p>How to design collection, source grading, entity resolution, and analyst review loops without drowning in noise.</p><span class="read">Follow this series →</span></div></article>
+      <article class="article-card tilt-card" data-title="Cybersecurity Architecture for Agentic Software" data-tags="cybersecurity architecture agents zero trust audit"><div class="card-art"><div class="quote">Zero-trust agents</div></div><div class="card-body"><div class="meta"><span>Coming series</span><span>Cyber</span></div><h3>Cybersecurity Architecture for Agentic Software</h3><p>The command-control patterns, permissions, logs, and kill switches required before AI agents touch real infrastructure.</p><span class="read">Follow this series →</span></div></article>
     </div>
   </section>
-  <section class="wrap" id="series"><div class="section-head"><div><div class="kicker">Information architecture</div><h2>Topic clusters built for authority, return visits, and internal links.</h2></div><p>Top 10 categories: Governed AI, Autonomous Agents, Cybersecurity Architecture, OSINT Workflows, AI Automation, Financial Crime Detection, High-Trust Software Engineering, Policy-as-Code, Intelligence Operations, and Founder Field Notes.</p></div><div class="two"><div class="panel"><h3>Featured series labels</h3><ul class="list"><li>Governed Autonomy Playbooks</li><li>Artemis Engineering Notes</li><li>OSINT Tradecraft Briefs</li><li>Financial Crime Detection Lab</li><li>High-Trust Systems Patterns</li></ul></div><div class="panel"><h3>Viral headline system</h3><ul class="list"><li><strong>Contrarian thesis:</strong> “The AI Agent Problem Is Not Intelligence — It Is Accountability.”</li><li><strong>Blueprint hook:</strong> “The Risk Router Pattern for Enterprise AI Agents.”</li><li><strong>Save-worthy list:</strong> “12 Controls Every Autonomous Workflow Needs.”</li><li><strong>Founder note:</strong> “What We Would Never Let an Agent Do Without Approval.”</li></ul></div></div></section>
-  <section class="wrap" id="blueprint"><div class="section-head"><div><div class="kicker">SEO blueprint</div><h2>Fast static publishing with machine-readable authority.</h2></div><p>GitHub Pages and Jekyll can support the full hub through Markdown posts, front matter, reusable includes, static JSON indexes, and lightweight client-side filtering.</p></div><ol class="grid blueprint"><li class="panel"><h3>Metadata</h3><p>Use unique titles, descriptions, canonical URLs, Open Graph, Twitter cards, and `jekyll-seo-tag` for every post.</p></li><li class="panel"><h3>Schema</h3><p>Emit `Blog`, `BlogPosting`, `BreadcrumbList`, `Organization`, `FAQPage`, and `ItemList` JSON-LD where relevant.</p></li><li class="panel"><h3>Internal links</h3><p>Every article links to a pillar, a series page, two related posts, and one conversion path.</p></li><li class="panel"><h3>Topic clusters</h3><p>Organize posts around governed AI, agents, cyber, OSINT, automation, financial crime, and high-trust systems.</p></li><li class="panel"><h3>Share surfaces</h3><p>Add quotable pull quotes, social preview copy, copy-link actions, and section anchors for citation.</p></li><li class="panel"><h3>Performance</h3><p>Static HTML/CSS, no heavy frameworks, font preconnects, compressed images, and progressive enhancement only.</p></li></ol></section>
-  <section class="wrap" id="power"><div class="power"><div class="section-head"><div><div class="kicker">Power user mode</div><h2>Deep-dive blocks for engineers, analysts, and security professionals.</h2></div><p>Posts can expand beyond essays into diagrams, code snippets, eval tables, threat models, source notes, and implementation checklists.</p></div><div class="code"><pre>---
+  <section class="wrap" id="series"><div class="section-head reveal"><div><div class="kicker">Information architecture</div><h2>Topic clusters built for authority, return visits, and internal links.</h2></div><p>Top 10 categories: Governed AI, Autonomous Agents, Cybersecurity Architecture, OSINT Workflows, AI Automation, Financial Crime Detection, High-Trust Software Engineering, Policy-as-Code, Intelligence Operations, and Founder Field Notes.</p></div><div class="two stagger reveal"><div class="panel"><h3>Featured series labels</h3><ul class="list"><li>Governed Autonomy Playbooks</li><li>Artemis Engineering Notes</li><li>OSINT Tradecraft Briefs</li><li>Financial Crime Detection Lab</li><li>High-Trust Systems Patterns</li></ul></div><div class="panel"><h3>Viral headline system</h3><ul class="list"><li><strong>Contrarian thesis:</strong> "The AI Agent Problem Is Not Intelligence — It Is Accountability."</li><li><strong>Blueprint hook:</strong> "The Risk Router Pattern for Enterprise AI Agents."</li><li><strong>Save-worthy list:</strong> "12 Controls Every Autonomous Workflow Needs."</li><li><strong>Founder note:</strong> "What We Would Never Let an Agent Do Without Approval."</li></ul></div></div></section>
+  <section class="wrap" id="blueprint"><div class="section-head reveal"><div><div class="kicker">SEO blueprint</div><h2>Fast static publishing with machine-readable authority.</h2></div><p>GitHub Pages and Jekyll can support the full hub through Markdown posts, front matter, reusable includes, static JSON indexes, and lightweight client-side filtering.</p></div><ol class="grid blueprint stagger reveal"><li class="panel"><h3>Metadata</h3><p>Use unique titles, descriptions, canonical URLs, Open Graph, Twitter cards, and `jekyll-seo-tag` for every post.</p></li><li class="panel"><h3>Schema</h3><p>Emit `Blog`, `BlogPosting`, `BreadcrumbList`, `Organization`, `FAQPage`, and `ItemList` JSON-LD where relevant.</p></li><li class="panel"><h3>Internal links</h3><p>Every article links to a pillar, a series page, two related posts, and one conversion path.</p></li><li class="panel"><h3>Topic clusters</h3><p>Organize posts around governed AI, agents, cyber, OSINT, automation, financial crime, and high-trust systems.</p></li><li class="panel"><h3>Share surfaces</h3><p>Add quotable pull quotes, social preview copy, copy-link actions, and section anchors for citation.</p></li><li class="panel"><h3>Performance</h3><p>Static HTML/CSS, no heavy frameworks, font preconnects, compressed images, and progressive enhancement only.</p></li></ol></section>
+  <section class="wrap" id="power"><div class="power reveal"><div class="section-head"><div><div class="kicker">Power user mode</div><h2>Deep-dive blocks for engineers, analysts, and security professionals.</h2></div><p>Posts can expand beyond essays into diagrams, code snippets, eval tables, threat models, source notes, and implementation checklists.</p></div><div class="code"><pre>---
 layout: post
 title: "Risk Router Pattern for Governed AI Agents"
 categories: [governed-ai, autonomous-agents]
@@ -92,14 +262,94 @@ if action.impact >= HIGH or confidence < 0.82:
 else:
     execute_with_audit(action)
 ```</pre></div></div></section>
-  <section class="wrap" id="newsletter"><div class="newsletter"><div><div class="kicker">Conversion layer</div><h2>Get the ClearGlass intelligence brief.</h2><p>Join the list for governed AI playbooks, OSINT workflows, cybersecurity architecture notes, and founder briefings. Built for enterprise buyers, engineers, and security leaders.</p><div class="section-actions"><a class="btn primary" href="../index.html#contact">Request a strategy briefing →</a><a class="btn" href="mailto:desmondotieno@icloud.com?subject=ClearGlass%20Insights%20newsletter">Subscribe by email</a></div></div><form class="form" action="mailto:desmondotieno@icloud.com" method="post" enctype="text/plain"><input name="email" type="email" placeholder="work email" aria-label="Email address"><input name="interest" type="text" placeholder="topic: governed AI, OSINT, cyber…" aria-label="Topic interest"><button class="btn primary" type="submit">Join the brief</button></form></div></section>
+  <section class="wrap" id="newsletter"><div class="newsletter reveal"><div><div class="kicker">Conversion layer</div><h2>Get the ClearGlass intelligence brief.</h2><p>Join the list for governed AI playbooks, OSINT workflows, cybersecurity architecture notes, and founder briefings. Built for enterprise buyers, engineers, and security leaders.</p><div class="section-actions"><a class="btn primary btn-magnet" href="../index.html#contact">Request a strategy briefing →</a><a class="btn btn-magnet" href="mailto:desmondotieno@icloud.com?subject=ClearGlass%20Insights%20newsletter">Subscribe by email</a></div></div><form class="form" action="mailto:desmondotieno@icloud.com" method="post" enctype="text/plain"><input name="email" type="email" placeholder="work email" aria-label="Email address"><input name="interest" type="text" placeholder="topic: governed AI, OSINT, cyber…" aria-label="Topic interest"><button class="btn primary" type="submit">Join the brief</button></form></div></section>
+  <section class="wrap" id="access">
+    <div class="finale reveal"><div class="finale-inner">
+      <div class="kicker">The desk is open</div>
+      <h2>Governed intelligence, <span class="gradient">delivered like it's 2050.</span></h2>
+      <p>One list for architecture teardown, threat models, and governed-autonomy patterns before they hit the mainstream feed.</p>
+      <div class="hero-actions"><a class="btn primary btn-magnet" href="#newsletter">Join the intelligence list →</a><a class="btn btn-magnet" href="../index.html#contact">Request a briefing</a></div>
+    </div></div>
+  </section>
 </main>
-<footer class="footer"><div class="wrap footer-grid"><div><h4>ClearGlass Insights</h4><p>A premium research-led content engine for governed AI, cybersecurity, autonomy, OSINT, financial crime detection, and high-trust software systems.</p><div class="ft">“Clarity Is Power.”</div></div><div><h4>Navigate</h4><a href="#latest">Latest</a><a href="#series">Series</a><a href="#blueprint">SEO Blueprint</a></div><div><h4>Platforms</h4><a href="../ai-operator.html">AI Operator</a><a href="../guardian.html">Guardian</a><a href="../government.html">Government</a></div><div><h4>Trust</h4><a href="../index.html#contact">Contact</a><a href="../robots.txt">Robots</a><a href="../sitemap.xml">Sitemap</a></div></div><div class="wrap" style="margin-top:28px">© <span id="year"></span> ClearGlass Inc. · Ontario, Canada · Open publication</div></footer>
+<footer class="footer"><div class="wrap footer-grid"><div><h4>ClearGlass Insights</h4><p>A premium research-led content engine for governed AI, cybersecurity, autonomy, OSINT, financial crime detection, and high-trust software systems.</p><div class="ft">"Clarity Is Power."</div></div><div><h4>Navigate</h4><a href="#latest">Latest</a><a href="#series">Series</a><a href="#blueprint">SEO Blueprint</a></div><div><h4>Platforms</h4><a href="../ai-operator.html">AI Operator</a><a href="../guardian.html">Guardian</a><a href="../government.html">Government</a></div><div><h4>Trust</h4><a href="../index.html#contact">Contact</a><a href="../robots.txt">Robots</a><a href="../sitemap.xml">Sitemap</a></div></div><div class="wrap" style="margin-top:28px">© <span id="year"></span> ClearGlass Inc. · Ontario, Canada · Open publication</div></footer>
 <div class="unclass-banner">UNCLASSIFIED / NON-CLASSIFIÉ — END OF DOCUMENT</div>
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
+
 const search=document.getElementById('smartSearch');const cards=[...document.querySelectorAll('[data-title]')];
 search?.addEventListener('input',()=>{const q=search.value.toLowerCase().trim();cards.forEach(card=>{const hay=(card.dataset.title+' '+card.dataset.tags).toLowerCase();card.style.display=!q||hay.includes(q)?'flex':'none';});});
+
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const root=document.documentElement;
+
+/* nav shrink-on-scroll */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>10)},{passive:true});
+
+/* hero aura + ambient background follow cursor */
+if(!reduceMotion){
+  let tx=innerWidth/2,ty=innerHeight*.35,cx=tx,cy=ty;
+  addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;},{passive:true});
+  (function loop(){cx+=(tx-cx)*.06;cy+=(ty-cy)*.06;root.style.setProperty('--mx',cx+'px');root.style.setProperty('--my',cy+'px');requestAnimationFrame(loop);})();
+}
+
+/* scroll-reveal */
+const io=new IntersectionObserver(entries=>{entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* count-up stat pills */
+const counters=[...document.querySelectorAll('[data-count]')];
+const cio=new IntersectionObserver(entries=>{entries.forEach(en=>{if(!en.isIntersecting)return;cio.unobserve(en.target);const el=en.target,target=+el.dataset.count,dur=900,start=performance.now();
+  (function tick(now){const p=Math.min((now-start)/dur,1);el.textContent=Math.round(target*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick);})(start);
+});},{threshold:.6});
+counters.forEach(el=>cio.observe(el));
+
+/* magnetic buttons */
+if(!reduceMotion){
+  document.querySelectorAll('.btn-magnet').forEach(btn=>{
+    btn.addEventListener('pointermove',e=>{const r=btn.getBoundingClientRect();const relX=e.clientX-(r.left+r.width/2);const relY=e.clientY-(r.top+r.height/2);btn.style.transform=`translate(${relX*.28}px,${relY*.4}px)`;});
+    btn.addEventListener('pointerleave',()=>{btn.style.transform='translate(0,0)';});
+  });
+}
+
+/* tilt + specular reflection on glass cards */
+if(!reduceMotion){
+  document.querySelectorAll('.tilt-card').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect();const px=(e.clientX-r.left)/r.width;const py=(e.clientY-r.top)/r.height;
+      const rx=(py-.5)*-6;const ry=(px-.5)*8;
+      card.style.transform=`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+      card.style.setProperty('--sx',(px*100)+'%');card.style.setProperty('--sy',(py*100)+'%');
+    });
+    card.addEventListener('pointerleave',()=>{card.style.transform='perspective(900px) rotateX(0) rotateY(0)';});
+  });
+}
+
+/* ambient particle field */
+(function(){
+  const canvas=document.getElementById('field');const ctx=canvas.getContext('2d');
+  let w,h,dpr=Math.min(devicePixelRatio||1,2);
+  function resize(){w=canvas.width=innerWidth*dpr;h=canvas.height=innerHeight*dpr;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';}
+  resize();addEventListener('resize',resize,{passive:true});
+  const colors=['57,216,255','157,123,255','85,242,166'];
+  const count=reduceMotion?0:Math.min(60,Math.floor((innerWidth*innerHeight)/26000));
+  const pts=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.15*dpr,vy:(Math.random()-.5)*.15*dpr,r:(Math.random()*1.6+.6)*dpr,c:colors[Math.floor(Math.random()*colors.length)]}));
+  let visible=true,running=false;
+  new IntersectionObserver(es=>{visible=es[0].isIntersecting;if(visible)start();},{threshold:0}).observe(canvas);
+  function frame(){
+    if(!visible){running=false;return;}
+    ctx.clearRect(0,0,w,h);
+    for(const p of pts){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(${p.c},.55)`;ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  function start(){if(!running&&pts.length){running=true;requestAnimationFrame(frame);}}
+  start();
+})();
 </script>
 <script defer src="/logo-badge.js"></script>
 </body>

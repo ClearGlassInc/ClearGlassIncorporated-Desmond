@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #155",
+    "title": "Control Surface Feeds #156",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:50",
+    "timestamp": "2026-07-01T21:50:23Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #486",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-df19c38b-1f84-436e-8c3f-db8a7a055e07",
+    "time": "21:08",
+    "timestamp": "2026-07-01T21:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #617",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:16",
+    "timestamp": "2026-07-01T20:16:56Z"
+  },
+  {
+    "title": "pages build and deployment #1059",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:16",
+    "timestamp": "2026-07-01T20:16:48Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1817",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:16",
+    "timestamp": "2026-07-01T20:16:47Z"
+  },
+  {
+    "title": "Control Surface Feeds #155",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:16",
     "timestamp": "2026-07-01T20:16:33Z"
   },
@@ -99,41 +134,6 @@
   },
   {
     "title": "Policy Gate #703",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:58",
-    "timestamp": "2026-07-01T19:58:14Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #615",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:58",
-    "timestamp": "2026-07-01T19:58:14Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #997",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:58",
-    "timestamp": "2026-07-01T19:58:14Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #125",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:58",
-    "timestamp": "2026-07-01T19:58:14Z"
-  },
-  {
-    "title": "Defender Watch #239",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:58",
-    "timestamp": "2026-07-01T19:58:14Z"
-  },
-  {
-    "title": "Security #731",
     "status": "ok",
     "detail": "success \u00b7 push on main",
     "time": "19:58",

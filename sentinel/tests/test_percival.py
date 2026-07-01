@@ -24,7 +24,9 @@ from sentinel.percival import (
 
 GOOD = ("<html lang='en'><head><title>T</title>"
         "<meta name='description' content='d'>"
-        "<link rel='canonical' href='x'></head>"
+        "<link rel='canonical' href='x'>"
+        "<meta property='og:title' content='T'>"
+        "<meta property='og:description' content='d'></head>"
         "<body><img src='a.png' alt='a'></body></html>")
 BARE = "<html><head></head><body><img src='a.png'></body></html>"
 
@@ -38,7 +40,18 @@ def test_audit_page_clean_on_good_html() -> None:
 def test_audit_page_flags_seo_and_a11y_gaps() -> None:
     kinds = {f.kind for f in audit_page("p.html", BARE)}
     assert {"missing_title", "missing_meta_description", "missing_canonical",
-            "missing_lang", "missing_img_alt"} <= kinds
+            "missing_lang", "missing_img_alt", "missing_og_tags"} <= kinds
+
+
+def test_audit_page_flags_partial_og_tags() -> None:
+    html = GOOD.replace("<meta property='og:description' content='d'>", "")
+    kinds = {f.kind for f in audit_page("p.html", html)}
+    assert "missing_og_tags" in kinds
+
+
+def test_missing_og_tags_is_safe_autofix() -> None:
+    f = Finding("missing_og_tags", "seo", "p.html", "", Severity.LOW, technical_risk=1)
+    assert govern(f).action is Action.AUTO_FIX
 
 
 def test_audit_sitemap_detects_drift_both_ways() -> None:
@@ -155,7 +168,7 @@ def test_percival_never_autofixes_escalated_items(tmp_path: pathlib.Path) -> Non
     auto = {d.finding.kind for d in report.decisions if d.action is Action.AUTO_FIX}
     assert auto <= {"missing_meta_description", "missing_canonical",
                     "missing_img_alt", "sitemap_missing_page", "sitemap_dead_url",
-                    "trailing_whitespace"}
+                    "trailing_whitespace", "missing_og_tags"}
 
 
 def test_audit_page_ignores_tags_inside_script() -> None:
@@ -163,7 +176,9 @@ def test_audit_page_ignores_tags_inside_script() -> None:
     # be read as a real image lacking alt text
     html = ("<html lang='en'><head><title>T</title>"
             "<meta name='description' content='d'>"
-            "<link rel='canonical' href='x'></head><body>"
+            "<link rel='canonical' href='x'>"
+            "<meta property='og:title' content='T'>"
+            "<meta property='og:description' content='d'></head><body>"
             "<script>var re=/<img\\b[^>]*>/gi;</script></body></html>")
     assert audit_page("p.html", html) == []
 

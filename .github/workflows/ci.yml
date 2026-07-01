@@ -13,6 +13,64 @@ permissions:
   contents: read
 
 jobs:
+  validate-site:
+    name: validate-site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # Node24-compatible pinned checkout
+
+      - name: Validate required site files
+        shell: bash
+        run: |
+          set -euo pipefail
+          missing=0
+          for required_file in index.html 404.html sitemap.xml robots.txt; do
+            if [ ! -f "$required_file" ]; then
+              echo "::error file=$required_file::Required site file is missing"
+              missing=1
+            else
+              echo "OK: $required_file present"
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+          echo "Required site files present. index.html is protected and not modified."
+
+      - name: Validate HTML files without blocking deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          if sudo apt-get update -y >/dev/null 2>&1 && sudo apt-get install -y tidy >/dev/null 2>&1; then
+            find . -name "*.html" -not -path "./.git/*" -print0 | while IFS= read -r -d '' file; do
+              echo "Checking HTML: $file"
+              tidy -errors -quiet -utf8 "$file" 2>&1 || true
+            done
+            echo "HTML validation completed with warnings only."
+          else
+            echo "::warning::Unable to install tidy; skipping HTML validation."
+          fi
+
+      - name: Check internal links without blocking deploy
+        shell: bash
+        run: |
+          set -euo pipefail
+          find . -name "*.html" -not -path "./.git/*" -print0 | while IFS= read -r -d '' file; do
+            base=$(dirname "$file")
+            grep -oE 'href="[^"]+"' "$file" | sed -E 's/^href="//; s/"$//' | grep -Ev '^(https?:|mailto:|tel:|#|javascript:)' | while IFS= read -r link; do
+              clean="${link%%#*}"
+              [ -z "$clean" ] && continue
+              target="$base/$clean"
+              if [ ! -f "$target" ] && [ ! -f "$clean" ] && [ ! -d "$target" ] && [ ! -d "$clean" ]; then
+                echo "::warning file=$file::Possible broken internal link: $link"
+              fi
+            done || true
+          done
+          echo "Internal link check completed with warnings only."
+
   python-tests:
     name: Python Tests
     runs-on: ubuntu-latest

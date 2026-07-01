@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-06-30T10:31:13.129049+00:00",
+  "run_utc": "2026-07-01T10:40:52.587158+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 348,
+  "commit_count": 394,
   "sections": {
     "New Features": [
       {
@@ -241,6 +241,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "b19a348",
+        "type": "fix",
+        "scope": "site",
+        "subject": "add ClearGlass logo badge to air-systems-control.html",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "04d3a5e",
         "type": "fix",
@@ -525,6 +534,15 @@
     ],
     "Documentation": [
       {
+        "sha": "463f600",
+        "type": "docs",
+        "scope": null,
+        "subject": "honest reference for legitimate zero-cost online income",
+        "author": "Claude",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
         "sha": "4744a42",
         "type": "docs",
         "scope": "deploy",
@@ -573,6 +591,15 @@
       }
     ],
     "CI/CD": [
+      {
+        "sha": "6c176e8",
+        "type": "ci",
+        "scope": null,
+        "subject": "add codex autofix workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
       {
         "sha": "be44939",
         "type": "ci",
@@ -692,6 +719,294 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "64f0806",
+        "type": "chore",
+        "scope": null,
+        "subject": "Redesign Insights editorial hub",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "c841fd1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Build air control surface v0.2 prototype",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "7f069be",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis quantum AI platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "607cc0b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Complete air control component prototype",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "99fc88e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add quantum HVAC recommendation panel",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "54b498e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass logo badge to air-systems-control page",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "f786fed",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add least-privilege permissions block to Pages check workflow",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "7509cb8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix logo coverage: add brand badge to air-systems-control.html",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "75db396",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add static GitHub Pages validation workflow",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "3f06cbd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Air Control \u2014 Next.js + Tailwind prototype (apps/air-control)",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "82550d4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis production intelligence platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "146f77f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Priority Sequence Alpha Artemis addendum",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "4b9c789",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass air control prototype",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "460cb69",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add air systems control surface link",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "7b52453",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Priority Alpha execution engine",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "6cc0f7b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis priority alpha blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "dbf15bd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Expand Artemis intelligence platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "456cb01",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis air systems control surface",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "486e35f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Expand Artemis self-evolving platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "5b7cf54",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis self-evolving AI platform article",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "8ff6650",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add legitimate sitemap ping workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "b994e8a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis legal architecture blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "d7404e8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Priority Alpha Artemis platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "3db1fe9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass executive AI operating system spec",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "7e528d7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add canonical ClearGlass system prompt",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "516d29a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Rename executive AI operating system to ClearGlass",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "92e22cf",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add AI automation consulting operating model",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "512405c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlassInc AI automation offer sheet",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "447c568",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Codex autofix workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "4b5717d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis self-evolving AI platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "877b2bf",
+        "type": "chore",
+        "scope": null,
+        "subject": "PERCIVAL OS: light-glass theme + elegant British female voice",
+        "author": "Claude",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "f46d5f9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Logo on every page + advanced button motion layer",
+        "author": "Claude",
+        "date": "2026-06-30",
+        "breaking": false
+      },
       {
         "sha": "1a37bca",
         "type": "chore",
@@ -1783,6 +2098,96 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "79c387e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "3ff1a26",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "95eedf6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "54e72bc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "fd73a3a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "79b9a37",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "8d023d5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "2a9b42e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "8fda378",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-30",
+        "breaking": false
+      },
+      {
+        "sha": "7083ffa",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-06-30 10:31 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-06-30",
+        "breaking": false
+      },
       {
         "sha": "d3d8cdb",
         "type": "bot",
@@ -3130,6 +3535,15 @@
       }
     ],
     "Other": [
+      {
+        "sha": "a213285",
+        "type": "harden",
+        "scope": "ci",
+        "subject": "make Codex Autofix dispatch-only, least-privilege, PR-based",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "753f89d",
         "type": "commerce",

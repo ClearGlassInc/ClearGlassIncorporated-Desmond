@@ -210,7 +210,7 @@ section{padding:42px 0}
 <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
 <nav class="nav" id="nav" aria-label="Primary navigation"><div class="wrap nav-inner">
   <a href="../index.html" class="nav-brand"><div class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"></div><div class="nav-name">ClearGlassInc. <em>Insights</em></div></a>
-  <div class="nav-links"><a href="#series">Series</a><a href="#latest">Latest</a><a href="#blueprint">Blueprint</a><a href="#power">Power User</a><a href="#access">Access</a><a href="../index.html#contact" class="nav-cta btn-magnet">Book a briefing →</a></div>
+  <div class="nav-links"><a href="#series">Series</a><a href="#latest">Latest</a><a href="#blueprint">Blueprint</a><a href="#power">Power User</a><a href="#engine">Engine</a><a href="#access">Access</a><a href="../index.html#contact" class="nav-cta btn-magnet">Book a briefing →</a></div>
 </div></nav>
 <header class="hero wrap">
   <div class="hero-aura" id="aura"></div>
@@ -262,6 +262,23 @@ if action.impact >= HIGH or confidence < 0.82:
 else:
     execute_with_audit(action)
 ```</pre></div></div></section>
+  <section class="wrap" id="engine"><div class="power reveal"><div class="section-head"><div><div class="kicker">Editorial engine</div><h2>The system prompt that writes like the desk thinks.</h2></div><p>Every Insights post is generated against a version-controlled editorial contract: E-E-A-T voice rules, a viral headline system, mandatory content architecture, SEO and JSON-LD requirements, Artemis platform integration, a strict output protocol, and refusal rules. The full prompt is versioned in the repo.</p></div><div class="two"><div class="panel"><h3>Mandatory content architecture</h3><ul class="list"><li>Defensible thesis in the first two sentences; quotable TL;DR block.</li><li>At least one system diagram and one implementation block (code, config, schema, or checklist).</li><li>A governance lens: what must be gated, logged, approved, or refused.</li><li>Two citation-ready pull quotes; internal links to one pillar, one series, two related posts, exactly one conversion path.</li></ul></div><div class="panel"><h3>Output protocol &amp; refusal rules</h3><ul class="list"><li><strong>Strict order:</strong> front matter → TL;DR → body → pull quotes → JSON-LD → social pack → internal-link map.</li><li><strong>Refuse thin topics:</strong> if a request can't support deep technical value or clear governance implications, propose a stronger adjacent topic instead.</li><li><strong>Never fabricate</strong> benchmarks, incidents, customer stories, or statistics.</li><li><strong>Defensive framing only</strong>, consistent with the SENTINEL charter.</li></ul></div></div><div class="code"><pre>You are the ClearGlass Insights Editorial Engine — a research-led technical
+content system for ClearGlass Inc. Every claim must be defensible, sourced,
+and implementable.
+
+VIRAL HEADLINE SYSTEM (choose or blend ONE primary)
+  contrarian thesis · blueprint hook · save-worthy list · founder note
+
+ARTEMIS PLATFORM INTEGRATION
+  When relevant, connect the post to the Artemis Self-Evolving AI
+  Intelligence Platform: ontology-driven agents, continuous evals,
+  policy-as-code enforcement, safe self-improvement loops, and
+  mission-speed intelligence with provenance.
+
+You are building a permanent technical asset. Every post must be worthy
+of citation by other serious practitioners in 2027–2030.
+
+# full contract: prompts/clearglass_insights_editorial_system_prompt.md</pre></div></section>
   <section class="wrap" id="newsletter"><div class="newsletter reveal"><div><div class="kicker">Conversion layer</div><h2>Get the ClearGlass intelligence brief.</h2><p>Join the list for governed AI playbooks, OSINT workflows, cybersecurity architecture notes, and founder briefings. Built for enterprise buyers, engineers, and security leaders.</p><div class="section-actions"><a class="btn primary btn-magnet" href="../index.html#contact">Request a strategy briefing →</a><a class="btn btn-magnet" href="mailto:desmondotieno@icloud.com?subject=ClearGlass%20Insights%20newsletter">Subscribe by email</a></div></div><form class="form" action="mailto:desmondotieno@icloud.com" method="post" enctype="text/plain"><input name="email" type="email" placeholder="work email" aria-label="Email address"><input name="interest" type="text" placeholder="topic: governed AI, OSINT, cyber…" aria-label="Topic interest"><button class="btn primary" type="submit">Join the brief</button></form></div></section>
   <section class="wrap" id="access">
     <div class="finale reveal"><div class="finale-inner">

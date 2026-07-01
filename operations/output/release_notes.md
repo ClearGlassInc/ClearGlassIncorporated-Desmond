@@ -1,6 +1,6 @@
-# Release Notes — 2026-06-30
+# Release Notes — 2026-07-01
 
-*348 commit(s) since v1.0.0*
+*394 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -33,6 +33,7 @@
 
 ## Bug Fixes
 
+- **site:** add ClearGlass logo badge to air-systems-control.html (`b19a348`)
 - **ci:** remove invalid strategic viral f-strings (`04d3a5e`)
 - **ci:** green the suite (env-safe crypto skip) + PERCIVAL sitemap sweep (#563) (`447e7ee`)
 - **lint:** clear ruff F541/F401 violations in defender bot (`d5d3e43`)
@@ -70,6 +71,7 @@
 
 ## Documentation
 
+- honest reference for legitimate zero-cost online income (`463f600`)
 - **deploy:** document "Deployment cancelled" Pages failures as benign (`4744a42`)
 - **gtm:** go-to-market playbook + sitemap fix + hardening outreach (`83f49e3`)
 - add SOUL.md autonomous revenue agent charter (`a05c61a`)
@@ -81,6 +83,7 @@
 
 ## CI/CD
 
+- add codex autofix workflow (`6c176e8`)
 - pin actions/checkout to v6 in agent.yml (#554) (`be44939`)
 - pin actions/checkout to v6 in agent.yml (workflow doctor) (`b60a059`)
 - allow manual on-demand runs of the CI suite (workflow_dispatch) (`a09f380`)
@@ -97,6 +100,38 @@
 
 ## Maintenance
 
+- Redesign Insights editorial hub (`64f0806`)
+- Build air control surface v0.2 prototype (`c841fd1`)
+- Add Artemis quantum AI platform blueprint (`7f069be`)
+- Complete air control component prototype (`607cc0b`)
+- Add quantum HVAC recommendation panel (`99fc88e`)
+- Add ClearGlass logo badge to air-systems-control page (`54b498e`)
+- Add least-privilege permissions block to Pages check workflow (`f786fed`)
+- Fix logo coverage: add brand badge to air-systems-control.html (`7509cb8`)
+- Add static GitHub Pages validation workflow (`75db396`)
+- Add ClearGlass Air Control — Next.js + Tailwind prototype (apps/air-control) (`3f06cbd`)
+- Add Artemis production intelligence platform blueprint (`82550d4`)
+- Add Priority Sequence Alpha Artemis addendum (`146f77f`)
+- Add ClearGlass air control prototype (`4b9c789`)
+- Add air systems control surface link (`460cb69`)
+- Add Priority Alpha execution engine (`7b52453`)
+- Add Artemis priority alpha blueprint (`6cc0f7b`)
+- Expand Artemis intelligence platform blueprint (`dbf15bd`)
+- Add Artemis air systems control surface (`456cb01`)
+- Expand Artemis self-evolving platform blueprint (`486e35f`)
+- Add Artemis self-evolving AI platform article (`5b7cf54`)
+- Add legitimate sitemap ping workflow (`8ff6650`)
+- Add Artemis legal architecture blueprint (`b994e8a`)
+- Add Priority Alpha Artemis platform blueprint (`d7404e8`)
+- Add ClearGlass executive AI operating system spec (`3db1fe9`)
+- Add canonical ClearGlass system prompt (`7e528d7`)
+- Rename executive AI operating system to ClearGlass (`516d29a`)
+- Add AI automation consulting operating model (`92e22cf`)
+- Add ClearGlassInc AI automation offer sheet (`512405c`)
+- Add Codex autofix workflow (`447c568`)
+- Add Artemis self-evolving AI platform blueprint (`4b5717d`)
+- PERCIVAL OS: light-glass theme + elegant British female voice (`877b2bf`)
+- Logo on every page + advanced button motion layer (`f46d5f9`)
 - Remove environmental cyber-risk from products list (`1a37bca`)
 - Merge flagship Artemis page positioning (`1827c61`)
 - Strengthen environmental cyber-risk positioning (`8369617`)
@@ -221,6 +256,16 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`79c387e`)
+- refresh control-surface data feeds [skip ci] (`3ff1a26`)
+- refresh control-surface data feeds [skip ci] (`95eedf6`)
+- refresh control-surface data feeds [skip ci] (`54e72bc`)
+- refresh control-surface data feeds [skip ci] (`fd73a3a`)
+- refresh control-surface data feeds [skip ci] (`79b9a37`)
+- refresh control-surface data feeds [skip ci] (`8d023d5`)
+- refresh control-surface data feeds [skip ci] (`2a9b42e`)
+- refresh control-surface data feeds [skip ci] (`8fda378`)
+- update generated outputs — 2026-06-30 10:31 UTC [skip ci] (`7083ffa`)
 - refresh control-surface data feeds [skip ci] (`d3d8cdb`)
 - refresh control-surface data feeds [skip ci] (`787247c`)
 - refresh control-surface data feeds [skip ci] (`1883ea4`)
@@ -379,6 +424,7 @@
 
 ## Other
 
+- **ci:** make Codex Autofix dispatch-only, least-privilege, PR-based (`a213285`)
 - run governed payout/webhook tests in CI + repo orientation (`753f89d`)
 - wire a working storefront checkout (revenue path) (#467) (`75b2465`)
 - Master Investigator briefing — dashboard, active investigations, network map (`8024581`)

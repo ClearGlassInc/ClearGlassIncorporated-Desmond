@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-30T10:31:13.549150+00:00",
+  "run_utc": "2026-07-01T10:40:53.753282+00:00",
   "site_url": "https://clearglassinc.github.io",
   "overall_healthy": true,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 89,
+      "response_ms": 306,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 65,
+      "response_ms": 144,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 55,
+      "response_ms": 134,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 47,
+      "response_ms": 180,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 62,
+      "response_ms": 173,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,7 +61,7 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 47,
+      "response_ms": 161,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -69,6 +69,7 @@
   ],
   "local_issues": [],
   "local_warnings": [
+    "HTML page not referenced in sitemap.xml: air-systems-control.html",
     "HTML page not referenced in sitemap.xml: artemis-2040.html",
     "HTML page not referenced in sitemap.xml: environmental-cyber-risk.html"
   ]

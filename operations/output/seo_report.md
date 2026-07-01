@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-06-30T10:31:13.176782+00:00
+**Run:** 2026-07-01T10:40:52.615034+00:00
 **Average Score:** 92.5/100
-**Files Audited:** 56
+**Files Audited:** 57
 
 ## Page Scores
 
@@ -18,6 +18,7 @@
 | `control-surface.html` | 80/100 | 2 |
 | `systems.html` | 80/100 | 2 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
+| `air-systems-control.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `environmental-cyber-risk.html` | 90/100 | 1 |
@@ -69,7 +70,7 @@
 
 - 11x — Title length N chars (ideal N–N)
 - 11x — Description length N chars (ideal N–N)
-- 5x — Missing og:image
+- 6x — Missing og:image
 - 3x — Multiple <hN> tags (N)
 - 2x — Missing canonical link tag
 - 2x — Missing og:title

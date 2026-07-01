@@ -50,6 +50,8 @@ SECTIONS = frozenset(
         "brand_position",
         "dependencies",          # what must land before what (mission graph edges)
         "approval_boundaries",   # standing thresholds for what needs human sign-off
+        "approved_workflows",    # workflows the operator has blessed for reuse
+        "decision_history",      # prior decisions, for continuity and non-repetition
     }
 )
 

@@ -105,14 +105,19 @@ def test_empty_briefing_does_not_fabricate():
 
 
 def test_mission_graph_sections_supported():
-    # v4 mission graph: dependencies + approval boundaries are first-class.
-    assert "dependencies" in SECTIONS
-    assert "approval_boundaries" in SECTIONS
+    # v4/v5 mission graph: dependencies, approval boundaries, approved workflows,
+    # and decision history are first-class sections.
+    for section in ("dependencies", "approval_boundaries", "approved_workflows", "decision_history"):
+        assert section in SECTIONS
     mem = MissionMemory()
     dep = mem.remember("dependencies", "Storefront deploy blocks payout tests", source="op")
     bnd = mem.remember("approval_boundaries", "Any pricing change requires founder sign-off", source="op")
+    wf = mem.remember("approved_workflows", "Weekly SEO sweep via seo_optimizer_bot", source="op")
+    hist = mem.remember("decision_history", "Chose Interac e-Transfer over publishing bank details", source="op")
     assert mem.items("dependencies")[0].id == dep.id
     assert mem.items("approval_boundaries")[0].id == bnd.id
+    assert mem.items("approved_workflows")[0].id == wf.id
+    assert mem.items("decision_history")[0].id == hist.id
 
 
 # --------------------------------------------------------------------------- #

@@ -2,9 +2,12 @@
   "name": "ClearGlass Executive Intelligence Layer",
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "memory_backend": "sentinel/sentinel/mission_memory.py",
   "capability_layer": "sentinel/sentinel/capability.py",
+  "identity_layer": "sentinel/sentinel/identity.py",
+  "default_authority": "READ_ONLY",
+  "identity_requirements": ["distinct instance_id", "human sponsor", "defined purpose"],
   "control_plane_layers": [
     "policy",
     "routing",
@@ -48,6 +51,7 @@
     "recommendation ranking",
     "approval gating for sensitive actions (fail-closed)",
     "object-capability gating, deny-by-default (sentinel/sentinel/capability.py)",
+    "scoped sponsor-owned identity, read-only by default (sentinel/sentinel/identity.py)",
     "layered control plane (policy always wins)",
     "conflict-resolution precedence (policy > safety > audit > intent)",
     "self-improvement loop"

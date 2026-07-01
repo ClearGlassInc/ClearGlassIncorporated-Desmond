@@ -167,7 +167,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(18px);
     }
-    .signal-card { position: relative; overflow: hidden; border-radius: 30px; padding: 24px; background: linear-gradient(180deg, var(--panel-strong), rgba(5, 7, 17, .86)); box-shadow: var(--glow); }
+    .signal-card { position: relative; overflow: hidden; border-radius: 30px; padding: 24px; background: linear-gradient(180deg, var(--panel-strong), rgba(5, 7, 17, .86)); box-shadow: var(--glow); animation: glassFloat 8s ease-in-out infinite; }
     .signal-card::after { content: ""; position: absolute; inset: auto -20% -35% -20%; height: 160px; background: radial-gradient(closest-side, rgba(52, 211, 153, .28), transparent); }
     .metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 18px 0; }
     .metric { border: 1px solid var(--line); border-radius: 18px; padding: 15px; background: rgba(255, 255, 255, .045); }
@@ -198,7 +198,7 @@
     .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .card { display: flex; flex-direction: column; min-height: 274px; border-radius: 26px; padding: 24px; text-decoration: none; }
     .card h3 { font-size: 28px; }
-    .card:hover, .mini:hover, .cluster:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+    .card:hover, .mini:hover, .cluster:hover { transform: translateY(-6px) scale(1.01); border-color: var(--line-strong); box-shadow: 0 34px 110px rgba(96, 165, 250, .16); }
 
     .blueprint { display: grid; grid-template-columns: .7fr 1.3fr; gap: 18px; }
     .wire-box { border-radius: 24px; padding: 22px; }
@@ -220,7 +220,31 @@
     .form { display: flex; gap: 10px; margin-top: 18px; }
     .form input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: #050711; color: #fff; }
 
+
+    .orb-field { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .orb { position: absolute; width: 34vw; height: 34vw; border-radius: 999px; filter: blur(34px); opacity: .18; transform: translate3d(0,0,0); animation: orbDrift 18s ease-in-out infinite; }
+    .orb:nth-child(1) { left: -10vw; top: 18vh; background: var(--blue); }
+    .orb:nth-child(2) { right: -12vw; top: 28vh; background: var(--violet); animation-delay: -6s; }
+    .orb:nth-child(3) { left: 42vw; bottom: -18vw; background: var(--pink); animation-delay: -11s; }
+    .cursor-aura { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 22%), rgba(96,165,250,.16), transparent 42%); mix-blend-mode: screen; }
+    .particle-field { position: absolute; inset: 0; z-index: -1; pointer-events: none; background-image: radial-gradient(circle, rgba(255,255,255,.38) 1px, transparent 1.4px); background-size: 42px 42px; opacity: .12; animation: particleFlow 24s linear infinite; mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 66%, transparent); }
+    .hero-visual { position: absolute; inset: 252px 5vw auto auto; width: min(420px, 38vw); height: 420px; z-index: -1; pointer-events: none; border-radius: 50%; background: conic-gradient(from 180deg, rgba(96,165,250,.0), rgba(96,165,250,.42), rgba(167,139,250,.28), rgba(244,114,182,.38), rgba(96,165,250,.0)); filter: blur(18px); opacity: .52; animation: auraSpin 18s linear infinite; }
+    .nav, .feature, .card, .mini, .cluster, .panel, .wire-box, .signal-card { position: relative; isolation: isolate; transition: transform .45s cubic-bezier(.2,.8,.2,1), border-color .45s, box-shadow .45s, background .45s; }
+    .feature::before, .card::before, .mini::before, .cluster::before, .panel::before, .wire-box::before, .signal-card::before, .nav::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,.42), rgba(96,165,250,.18), rgba(244,114,182,.24), rgba(255,255,255,.07)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .7; }
+    .feature::after, .card::after, .panel::after, .wire-box::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,.12) 22%, transparent 38%); transform: translateX(-120%); transition: transform .9s cubic-bezier(.2,.8,.2,1); }
+    .feature:hover::after, .card:hover::after, .panel:hover::after, .wire-box:hover::after { transform: translateX(120%); }
+    .holo-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
+    .holo-pill { border: 1px solid var(--line); border-radius: 999px; padding: 9px 11px; background: rgba(255,255,255,.055); color: var(--soft); font-family: var(--mono); font-size: 10px; letter-spacing: .13em; text-transform: uppercase; box-shadow: inset 0 1px rgba(255,255,255,.16); }
+    .finale { overflow: hidden; text-align: center; background: radial-gradient(circle at 50% 0%, rgba(96,165,250,.22), transparent 48%), linear-gradient(180deg, rgba(14,23,42,.9), rgba(5,7,17,.9)); }
+    .finale h2 { max-width: 820px; margin-inline: auto; }
+    .finale p { max-width: 700px; margin: 14px auto 0; }
+    @keyframes orbDrift { 0%,100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(4vw,-3vh,0) scale(1.08); } }
+    @keyframes auraSpin { to { transform: rotate(360deg); } }
+    @keyframes particleFlow { to { background-position: 420px 840px; } }
+    @keyframes glassFloat { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(0,-8px,0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition: none !important; } }
     .footer { margin-top: 42px; border-top: 1px solid var(--line); background: #030712; color: var(--muted); padding: 42px clamp(20px, 5vw, 40px) 26px; }
+
     .footer-grid { display: grid; grid-template-columns: 1fr auto; gap: 22px; width: min(1180px, 100%); margin: auto; }
     .footer a { color: #cbd8f6; text-decoration: none; }
     .trust { margin-top: 12px; color: #7f91b7; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
@@ -239,6 +263,11 @@
   </style>
 </head>
 <body>
+  <div class="orb-field" aria-hidden="true"><span class="orb"></span><span class="orb"></span><span class="orb"></span></div>
+  <div class="cursor-aura" aria-hidden="true"></div>
+  <div class="particle-field" aria-hidden="true"></div>
+  <div class="hero-visual" aria-hidden="true"></div>
+
   <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
 
   <nav class="nav" aria-label="Primary">
@@ -284,6 +313,12 @@
         <div class="metric"><b>24/7</b><span>Evergreen hub for repeat visits.</span></div>
       </div>
       <p>Every post should be easy to read, save, cite, share, and repurpose into an executive memo, operator checklist, social card, or technical implementation note.</p>
+      <div class="holo-strip" aria-label="Live interface signals">
+        <span class="holo-pill">Refraction</span>
+        <span class="holo-pill">Signal</span>
+        <span class="holo-pill">Depth</span>
+        <span class="holo-pill">Trust</span>
+      </div>
     </aside>
   </header>
 
@@ -387,7 +422,7 @@
         </div>
         <div class="wire-box">
           <div class="tag">Modern visual style guide</div>
-          <p class="section-copy">Dark cinematic base, crisp editorial typography, command-center grid texture, blue-violet-pink glow system, glass panels, monospace metadata, and restrained motion states.</p>
+          <p class="section-copy">Obsidian base, layered frosted glass, refractive depth, chromatic edge highlights, liquid reflections, holographic borders, GPU-friendly ambient motion, and restrained micro-interactions that feel expensive rather than noisy.</p>
           <div class="style-stack">
             <div class="swatch"><b>Command Center</b><span>Near-black canvas, subtle grid, secure operations tone.</span></div>
             <div class="swatch"><b>Research Lab</b><span>Serif headlines, precise labels, technical credibility.</span></div>
@@ -463,6 +498,42 @@
         </div>
       </div>
     </section>
+
+
+    <section class="section">
+      <div class="blueprint">
+        <div class="wire-box">
+          <div class="tag">Motion system</div>
+          <ul>
+            <li>Panels drift slowly using transform-only keyframes.</li>
+            <li>Gradients breathe through large blurred orbital layers.</li>
+            <li>Cards use tactile hover lift, luminous border shimmer, and specular sweeps.</li>
+            <li>Cursor aura reacts to pointer position without blocking interaction.</li>
+            <li>Reduced-motion users receive a stable, non-animated interface.</li>
+          </ul>
+        </div>
+        <div class="wire-box">
+          <div class="tag">Do not do</div>
+          <ul>
+            <li>No cheap neon overload, fake 3D gimmicks, or unreadable blur.</li>
+            <li>No cluttered dashboard chrome that fights editorial content.</li>
+            <li>No motion that harms comprehension or scroll performance.</li>
+            <li>No generic template blocks; each module must signal advanced intelligence.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section panel finale">
+      <div class="kicker">2050 launch surface</div>
+      <h2>Make the blog feel like the front door to a future intelligence company.</h2>
+      <p>ClearGlass Insights should land with the memory of a luxury command surface: glass depth, precise language, visible trust, and enough motion to feel alive without sacrificing clarity.</p>
+      <div class="hero-actions" style="justify-content:center">
+        <a class="btn primary" href="../index.html#contact">Build with ClearGlass →</a>
+        <a class="btn" href="#featured">Return to featured brief</a>
+      </div>
+    </section>
+
   </main>
 
   <footer class="footer">
@@ -487,6 +558,11 @@
         item.style.display = item.textContent.toLowerCase().includes(query) ? '' : 'none';
       });
     });
+
+    window.addEventListener('pointermove', (event) => {
+      document.documentElement.style.setProperty('--mx', `${event.clientX}px`);
+      document.documentElement.style.setProperty('--my', `${event.clientY}px`);
+    }, { passive: true });
   </script>
   <script defer src="/logo-badge.js"></script>
 </body>

@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #148",
+    "title": "Workflow Doctor #205",
+    "status": "warn",
+    "detail": "in_progress \u00b7 push on claude/elegant-thompson-pq9ue4",
+    "time": "00:21",
+    "timestamp": "2026-07-01T00:21:08Z"
+  },
+  {
+    "title": "Control Surface Feeds #149",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:21",
+    "timestamp": "2026-07-01T00:21:02Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #465",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-647843bf-d793-44c7-9068-6b0f2ee6f6e4",
+    "time": "00:08",
+    "timestamp": "2026-07-01T00:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #464",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-aea796fa-a9d0-4025-b773-804234f09432",
+    "time": "23:08",
+    "timestamp": "2026-06-30T23:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #592",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:39",
+    "timestamp": "2026-06-30T22:39:39Z"
+  },
+  {
+    "title": "pages build and deployment #1033",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "22:39",
+    "timestamp": "2026-06-30T22:39:35Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1759",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:39",
+    "timestamp": "2026-06-30T22:39:35Z"
+  },
+  {
+    "title": "Control Surface Feeds #148",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:39",
     "timestamp": "2026-06-30T22:39:20Z"
   },
@@ -89,54 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "20:28",
     "timestamp": "2026-06-30T20:28:28Z"
-  },
-  {
-    "title": "Codex Autofix #40",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "20:28",
-    "timestamp": "2026-06-30T20:28:28Z"
-  },
-  {
-    "title": "PR Automation #340",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/deliver-clearglass-air-systems-control-surface-v0.2",
-    "time": "20:28",
-    "timestamp": "2026-06-30T20:28:07Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #952",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/deliver-clearglass-air-systems-control-surface-v0.2",
-    "time": "20:28",
-    "timestamp": "2026-06-30T20:28:07Z"
-  },
-  {
-    "title": "CI #921",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/deliver-clearglass-air-systems-control-surface-v0.2",
-    "time": "20:28",
-    "timestamp": "2026-06-30T20:28:07Z"
-  },
-  {
-    "title": "Policy Gate #659",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/deliver-clearglass-air-systems-control-surface-v0.2",
-    "time": "20:28",
-    "timestamp": "2026-06-30T20:28:07Z"
-  },
-  {
-    "title": "Security #687",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/deliver-clearglass-air-systems-control-surface-v0.2",
-    "time": "20:28",
-    "timestamp": "2026-06-30T20:28:07Z"
-  },
-  {
-    "title": "Defender Watch #192",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/deliver-clearglass-air-systems-control-surface-v0.2",
-    "time": "20:28",
-    "timestamp": "2026-06-30T20:28:07Z"
   }
 ]

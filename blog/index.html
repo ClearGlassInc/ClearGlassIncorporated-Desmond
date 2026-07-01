@@ -203,6 +203,11 @@
     .blueprint { display: grid; grid-template-columns: .7fr 1.3fr; gap: 18px; }
     .wire-box { border-radius: 24px; padding: 22px; }
     .wire-box ol, .wire-box ul { display: grid; gap: 10px; padding-left: 20px; margin-top: 14px; }
+    .spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
+    .spec-card { border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: rgba(255,255,255,.045); }
+    .spec-card b { display: block; margin-bottom: 8px; color: #fff; }
+    .spec-card span { color: var(--muted); line-height: 1.55; }
+    .code-panel { margin-top: 16px; overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; padding: 18px; background: rgba(3, 7, 18, .78); color: #dceafe; font-family: var(--mono); font-size: 12px; line-height: 1.65; box-shadow: inset 0 1px rgba(255,255,255,.08); }
     .style-stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
     .swatch { min-height: 114px; border: 1px solid var(--line); border-radius: 18px; padding: 14px; background: rgba(255,255,255,.045); }
     .swatch b { display: block; margin-bottom: 8px; }
@@ -251,12 +256,12 @@
 
     @media (max-width: 940px) {
       .hero, .editorial-grid, .feature, .blueprint, .conversion, .footer-grid { grid-template-columns: 1fr; }
-      .cards, .clusters, .style-stack { grid-template-columns: 1fr 1fr; }
+      .cards, .clusters, .style-stack, .spec-grid { grid-template-columns: 1fr 1fr; }
       .nav-links a:not(.nav-cta) { display: none; }
     }
     @media (max-width: 580px) {
       .wrap { width: min(100% - 28px, 1180px); }
-      .cards, .clusters, .style-stack, .metric-grid { grid-template-columns: 1fr; }
+      .cards, .clusters, .style-stack, .metric-grid, .spec-grid { grid-template-columns: 1fr; }
       .form { flex-direction: column; }
       .hero h1 { font-size: 48px; }
     }
@@ -521,6 +526,103 @@
             <li>No generic template blocks; each module must signal advanced intelligence.</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Implementation-ready product system</div>
+          <h2>Desktop, mobile, tokens, states, and motion directions</h2>
+          <p class="section-copy">This section turns the visual concept into a practical front-end architecture that can be recreated in React, Next.js, Tailwind, Framer Motion, or GSAP without losing performance discipline.</p>
+        </div>
+      </div>
+      <div class="blueprint">
+        <div class="wire-box">
+          <div class="tag">Desktop layout</div>
+          <ul>
+            <li>Asymmetrical hero: editorial thesis left, floating signal console right.</li>
+            <li>Glass nav floats above the content with a luminous briefing CTA.</li>
+            <li>Featured story spans wide with an integrated holographic quote panel.</li>
+            <li>Blueprint, category, and conversion sections alternate density to create cinematic scroll pacing.</li>
+          </ul>
+        </div>
+        <div class="wire-box">
+          <div class="tag">Mobile layout</div>
+          <ul>
+            <li>Hero stacks into headline, CTAs, topic chips, then compact signal console.</li>
+            <li>Cards become single-column glass modules with reduced blur and no heavy parallax.</li>
+            <li>Motion simplifies to opacity, transform, and slow background breathing.</li>
+            <li>Touch targets stay large; decorative particles remain behind content.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wire-box" style="margin-top:18px">
+        <div class="tag">Component tokens</div>
+        <div class="spec-grid">
+          <div class="spec-card"><b>Glass card</b><span>bg: rgba(10,16,32,.78); blur: 18px; border: rgba(136,166,255,.18); radius: 24–30px.</span></div>
+          <div class="spec-card"><b>Nav bar</b><span>sticky; blur 22px; holographic 1px mask border; compact pill links.</span></div>
+          <div class="spec-card"><b>Primary CTA</b><span>blue→violet→pink gradient, dark text, luminous border, transform hover only.</span></div>
+          <div class="spec-card"><b>Stat pill</b><span>monospace metadata, inset highlight, small caps, soft glow only on active state.</span></div>
+          <div class="spec-card"><b>Hero panel</b><span>floating glass module, animated drift, signal chips, refractive lower glow.</span></div>
+          <div class="spec-card"><b>Focus state</b><span>2px outline in #a8c7ff with 3px transparent offset for keyboard clarity.</span></div>
+          <div class="spec-card"><b>Blur variants</b><span>surface: 14px; console: 18px; nav: 22px; modal: 28px max.</span></div>
+          <div class="spec-card"><b>Shadow levels</b><span>card: 0 28px 100px rgba(0,0,0,.34); active: add blue glow under 18% opacity.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="blueprint">
+        <div class="wire-box">
+          <div class="tag">React / Next.js architecture map</div>
+          <ul>
+            <li><strong>BlogShell</strong>: metadata, background fields, nav, footer.</li>
+            <li><strong>HeroConsole</strong>: headline, CTAs, topic chips, signal module.</li>
+            <li><strong>FeaturedSpotlight</strong>: flagship post, quote surface, related rail.</li>
+            <li><strong>InsightGrid</strong>: searchable cards and category chips.</li>
+            <li><strong>DesignSystemPanel</strong>: tokens, motion rules, do-not-do guardrails.</li>
+            <li><strong>ConversionBand</strong>: newsletter, briefing, demo/contact pathways.</li>
+          </ul>
+        </div>
+        <div class="wire-box">
+          <div class="tag">Performance + accessibility notes</div>
+          <ul>
+            <li>Animate only transform and opacity; never animate blur radius on scroll.</li>
+            <li>Throttle pointer effects through CSS variables; keep decorative layers pointer-events none.</li>
+            <li>Use prefers-reduced-motion to disable drift, particles, and aura transitions.</li>
+            <li>Keep text on opaque-enough glass; do not place body copy over high-frequency particles.</li>
+            <li>Use semantic headings, visible focus states, and high-contrast CTA text.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wire-box" style="margin-top:18px">
+        <div class="tag">Sample code direction</div>
+        <pre class="code-panel"><code>const tokens = {
+  glass: 'bg-slate-950/70 border border-blue-200/15 backdrop-blur-xl rounded-[28px]',
+  glow: 'shadow-[0_28px_100px_rgba(96,165,250,.16)]',
+  cta: 'bg-gradient-to-r from-sky-400 via-violet-400 to-pink-400 text-slate-950',
+};
+
+function HeroConsole() {
+  return (
+    &lt;section className="relative grid gap-8 lg:grid-cols-[1.1fr_.9fr]"&gt;
+      &lt;div&gt;
+        &lt;p className="font-mono uppercase tracking-[.22em] text-sky-200"&gt;2050 intelligence surface&lt;/p&gt;
+        &lt;h1&gt;Serious field notes for governed intelligence.&lt;/h1&gt;
+        &lt;a className={`${tokens.cta} rounded-2xl px-5 py-3 font-black`}&gt;Read the brief&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;motion.aside
+        className={`${tokens.glass} ${tokens.glow} p-6`}
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 90, damping: 18 }}
+      /&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
       </div>
     </section>
 

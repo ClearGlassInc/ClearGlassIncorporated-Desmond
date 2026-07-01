@@ -3,35 +3,45 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AirSystemState, ZoneId } from '@/lib/types';
 
-const STORAGE_KEY = 'clearglass-air-control-v0.1';
+const STORAGE_KEY = 'clearglass-air-system-v0.2';
 
-const initialState: AirSystemState = {
+const defaultState: AirSystemState = {
   airflow: 68,
-  pressure: 2.4,
+  pressure: 101.3,
   temperature: 22.4,
-  humidity: 44,
-  filtration: 96,
-  ventAngle: 34,
+  humidity: 42,
+  filtration: 94,
+  ventAngle: 45,
   activeZone: 'Zone A',
-  autonomousMode: true,
+  autonomousMode: false,
 };
 
 export function useAirSystem() {
-  const [state, setState] = useState<AirSystemState>(initialState);
+  const [state, setState] = useState<AirSystemState>(defaultState);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved) setState({ ...initialState, ...JSON.parse(saved) });
+    if (!saved) return;
+
+    try {
+      setState({ ...defaultState, ...JSON.parse(saved) });
+    } catch {
+      window.localStorage.removeItem(STORAGE_KEY);
+    }
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state]);
 
+  const update = (key: keyof AirSystemState, value: number | string | boolean) => {
+    setState((prev) => ({ ...prev, [key]: value }));
+  };
+
   const riskIndex = useMemo(() => {
     const tempRisk = Math.abs(state.temperature - 22) * 4;
     const humidityRisk = Math.abs(state.humidity - 45) * 0.7;
-    const pressureRisk = Math.abs(state.pressure - 2.4) * 12;
+    const pressureRisk = Math.abs(state.pressure - 101.3) * 1.6;
     const filterRisk = Math.max(0, 98 - state.filtration) * 1.8;
     return Math.min(100, Math.round(tempRisk + humidityRisk + pressureRisk + filterRisk));
   }, [state]);
@@ -39,13 +49,14 @@ export function useAirSystem() {
   return {
     state,
     riskIndex,
-    setAirflow: (airflow: number) => setState((s) => ({ ...s, airflow })),
-    setPressure: (pressure: number) => setState((s) => ({ ...s, pressure })),
-    setTemperature: (temperature: number) => setState((s) => ({ ...s, temperature })),
-    setHumidity: (humidity: number) => setState((s) => ({ ...s, humidity })),
-    setFiltration: (filtration: number) => setState((s) => ({ ...s, filtration })),
-    setVentAngle: (ventAngle: number) => setState((s) => ({ ...s, ventAngle })),
-    setActiveZone: (activeZone: ZoneId) => setState((s) => ({ ...s, activeZone })),
-    setAutonomousMode: (autonomousMode: boolean) => setState((s) => ({ ...s, autonomousMode })),
+    update,
+    setAirflow: (airflow: number) => update('airflow', airflow),
+    setPressure: (pressure: number) => update('pressure', pressure),
+    setTemperature: (temperature: number) => update('temperature', temperature),
+    setHumidity: (humidity: number) => update('humidity', humidity),
+    setFiltration: (filtration: number) => update('filtration', filtration),
+    setVentAngle: (ventAngle: number) => update('ventAngle', ventAngle),
+    setActiveZone: (activeZone: ZoneId) => update('activeZone', activeZone),
+    setAutonomousMode: (autonomousMode: boolean) => update('autonomousMode', autonomousMode),
   };
 }

@@ -3,17 +3,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AirSystemState, ZoneId, zoneIds, zones } from '@/lib/types';
 
-const STORAGE_KEY = 'clearglass-air-control-v0.1';
+const STORAGE_KEY = 'clearglass-air-system-v0.2';
 
 export const initialAirSystemState: AirSystemState = {
   airflow: 68,
-  pressure: 2.4,
+  pressure: 101.3,
   temperature: 22.4,
-  humidity: 44,
-  filtration: 96,
-  ventAngle: 34,
+  humidity: 42,
+  filtration: 94,
+  ventAngle: 45,
   activeZone: 'Zone A',
-  autonomousMode: true,
+  autonomousMode: false,
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -55,6 +55,10 @@ export function useAirSystem() {
     () => zones.find((zone) => zone.id === state.activeZone) ?? zones[0],
     [state.activeZone],
   );
+
+  const update = (key: keyof AirSystemState, value: number | string | boolean) => {
+    setState((prev) => ({ ...prev, [key]: value }));
+  };
 
   const riskIndex = useMemo(() => {
     const tempRisk = Math.abs(state.temperature - activeZoneProfile.targetTemperature) * 4.2;

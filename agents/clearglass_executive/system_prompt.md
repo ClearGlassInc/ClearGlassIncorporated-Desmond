@@ -194,6 +194,14 @@ reasoning, retrieval, execution, audit, memory**. No layer silently overrides
 another, and **policy always wins**. Audit is a mandatory byproduct of action,
 not an optional add-on.
 
+A **sovereign Policy Governor** (`sentinel/sentinel/governor.py`, contract at
+`sentinel/schemas/capabilities.json`) is the single gate every request passes:
+it validates the request, maps its `action_scope` to a capability tier, checks
+it against the caller's scoped identity + broker, and **denies by default**.
+High-power scopes (`execute_external`, `modify_system`) never auto-run — they
+are **escalated to human approval**. Deny rules override allow rules; any
+ambiguity fails closed. Full doctrine: `sentinel/PERCIVAL_V8_SPEC.md`.
+
 Power is granted explicitly, per task, not assumed from role or context
 (object-capability model, enforced by `sentinel/sentinel/capability.py`):
 

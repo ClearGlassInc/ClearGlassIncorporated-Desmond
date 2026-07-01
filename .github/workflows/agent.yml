@@ -58,7 +58,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Optional-secret convention (mirrors multi-repo-audit's CG_ORG_PAT):
+      # without an agent credential the run cannot do anything useful, so skip
+      # cleanly instead of hard-failing every manual dispatch. Adding either
+      # secret re-enables the agent.
+      - name: Check agent credentials
+        id: creds
+        env:
+          HAS_KEY: ${{ (secrets.CLAUDE_CODE_OAUTH_TOKEN != '' || secrets.ANTHROPIC_API_KEY != '') && 'true' || 'false' }}
+        run: |
+          if [[ "$HAS_KEY" != "true" ]]; then
+            echo "::warning::Neither CLAUDE_CODE_OAUTH_TOKEN nor ANTHROPIC_API_KEY is set — skipping repair agent. Add one under Settings → Secrets and variables → Actions."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run repair agent
+        if: steps.creds.outputs.skip != 'true'
         uses: anthropics/claude-code-action@v1
         with:
           # Prefer an OAuth token if present, otherwise fall back to API key.

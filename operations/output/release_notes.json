@@ -1,10 +1,64 @@
 {
-  "run_utc": "2026-07-01T10:40:52.587158+00:00",
+  "run_utc": "2026-07-01T23:17:53.663564+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 394,
+  "commit_count": 419,
   "sections": {
     "New Features": [
+      {
+        "sha": "2593473",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "v9 \u2014 fail-closed audit sync, prompt pack, deployment blueprint",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "ee8e9ac",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "v8 policy governor + capability schema + control-plane spec",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "1cf0dd8",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "v7 identity & authority \u2014 scoped, sponsor-owned instances",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "4c4cd1b",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "v5 control plane \u2014 object-capability gating + approval tiers",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "625055a",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "real persistent mission-memory backend + v3/v4 persona",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "ebd51b6",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "add advanced executive-layer capabilities to system prompt",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "6a0ac14",
         "type": "feat",
@@ -534,6 +588,24 @@
     ],
     "Documentation": [
       {
+        "sha": "dd4ea12",
+        "type": "docs",
+        "scope": null,
+        "subject": "add cross-repo GitHub Actions patterns & prompt pack",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "13ad5c8",
+        "type": "docs",
+        "scope": null,
+        "subject": "add Percival v9 governed orchestration architecture blueprint",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
         "sha": "463f600",
         "type": "docs",
         "scope": null,
@@ -719,6 +791,96 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "fa226ee",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis Palantir implementation blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "bb63f9e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis Palantir quantum AI platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "1e2602e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Expand Artemis AI platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "5ddc3f6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Aurora Glass \u2014 futuristic 2050 UI system",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "65ceb89",
+        "type": "chore",
+        "scope": null,
+        "subject": "Redesign blog hub with cinematic 2050 glass UI",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "7ac21e1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add production motion guidance",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "4ad039f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add implementation specs to glass blog",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "fbce8b4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add futuristic glass motion to blog",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "2b8ea58",
+        "type": "chore",
+        "scope": null,
+        "subject": "Polish blog redesign blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "49edd8a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Redesign blog editorial hub",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "64f0806",
         "type": "chore",
@@ -2098,6 +2260,60 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "e006f27",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "c92a114",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "cc48e29",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "991258f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "1c9972b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "d76cad8",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-01 10:40 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "79c387e",
         "type": "bot",
@@ -3535,6 +3751,15 @@
       }
     ],
     "Other": [
+      {
+        "sha": "404809f",
+        "type": "agents",
+        "scope": null,
+        "subject": "add ClearGlass Executive Intelligence Layer agent",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "a213285",
         "type": "harden",

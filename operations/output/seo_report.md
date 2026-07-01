@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-01T10:40:52.615034+00:00
-**Average Score:** 92.5/100
-**Files Audited:** 57
+**Run:** 2026-07-01T23:17:53.707421+00:00
+**Average Score:** 92.4/100
+**Files Audited:** 58
 
 ## Page Scores
 
@@ -22,6 +22,7 @@
 | `clearglass-nexus.html` | 90/100 | 1 |
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `environmental-cyber-risk.html` | 90/100 | 1 |
+| `futuristic.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
 | `sentinel.html` | 90/100 | 1 |
 | `tax.html` | 90/100 | 1 |
@@ -68,8 +69,8 @@
 
 ## Top Issues Across All Pages
 
+- 12x — Description length N chars (ideal N–N)
 - 11x — Title length N chars (ideal N–N)
-- 11x — Description length N chars (ideal N–N)
 - 6x — Missing og:image
 - 3x — Multiple <hN> tags (N)
 - 2x — Missing canonical link tag

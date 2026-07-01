@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-01T10:40:52.615034+00:00",
-  "files_audited": 57,
-  "average_score": 92.5,
+  "run_utc": "2026-07-01T23:17:53.707421+00:00",
+  "files_audited": 58,
+  "average_score": 92.4,
   "pages": [
     {
       "file": "404.html",
@@ -610,6 +610,26 @@
       ]
     },
     {
+      "file": "futuristic.html",
+      "title": "ClearGlass \u00b7 Aurora Glass \u2014 Futuristic Control Surface",
+      "title_length": 54,
+      "title_ok": true,
+      "description": "Aurora Glass: ClearGlass",
+      "description_length": 24,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 24 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
       "title": null,
       "title_length": 0,
@@ -1091,8 +1111,8 @@
     }
   ],
   "top_issues": [
+    "12x \u2014 Description length N chars (ideal N\u2013N)",
     "11x \u2014 Title length N chars (ideal N\u2013N)",
-    "11x \u2014 Description length N chars (ideal N\u2013N)",
     "6x \u2014 Missing og:image",
     "3x \u2014 Multiple <hN> tags (N)",
     "2x \u2014 Missing canonical link tag",

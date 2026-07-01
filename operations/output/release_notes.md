@@ -1,9 +1,15 @@
 # Release Notes — 2026-07-01
 
-*394 commit(s) since v1.0.0*
+*419 commit(s) since v1.0.0*
 
 ## New Features
 
+- **percival:** v9 — fail-closed audit sync, prompt pack, deployment blueprint (`2593473`)
+- **percival:** v8 policy governor + capability schema + control-plane spec (`ee8e9ac`)
+- **percival:** v7 identity & authority — scoped, sponsor-owned instances (`1cf0dd8`)
+- **percival:** v5 control plane — object-capability gating + approval tiers (`4c4cd1b`)
+- **percival:** real persistent mission-memory backend + v3/v4 persona (`625055a`)
+- **percival:** add advanced executive-layer capabilities to system prompt (`ebd51b6`)
 - **fx:** advanced motion layer — progress, shimmer, reveal, tilt, back-to-top (#561) (`6a0ac14`)
 - **commerce:** morning sales-ops briefing emailed from commerce data (`5b87a61`)
 - **seo:** add llms.txt and explicit AI-crawler allows in robots.txt (`1354443`)
@@ -71,6 +77,8 @@
 
 ## Documentation
 
+- add cross-repo GitHub Actions patterns & prompt pack (`dd4ea12`)
+- add Percival v9 governed orchestration architecture blueprint (`13ad5c8`)
 - honest reference for legitimate zero-cost online income (`463f600`)
 - **deploy:** document "Deployment cancelled" Pages failures as benign (`4744a42`)
 - **gtm:** go-to-market playbook + sitemap fix + hardening outreach (`83f49e3`)
@@ -100,6 +108,16 @@
 
 ## Maintenance
 
+- Add Artemis Palantir implementation blueprint (`fa226ee`)
+- Add Artemis Palantir quantum AI platform blueprint (`bb63f9e`)
+- Expand Artemis AI platform blueprint (`1e2602e`)
+- Add Aurora Glass — futuristic 2050 UI system (`5ddc3f6`)
+- Redesign blog hub with cinematic 2050 glass UI (`65ceb89`)
+- Add production motion guidance (`7ac21e1`)
+- Add implementation specs to glass blog (`4ad039f`)
+- Add futuristic glass motion to blog (`fbce8b4`)
+- Polish blog redesign blueprint (`2b8ea58`)
+- Redesign blog editorial hub (`49edd8a`)
 - Redesign Insights editorial hub (`64f0806`)
 - Build air control surface v0.2 prototype (`c841fd1`)
 - Add Artemis quantum AI platform blueprint (`7f069be`)
@@ -256,6 +274,12 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`e006f27`)
+- refresh control-surface data feeds [skip ci] (`c92a114`)
+- refresh control-surface data feeds [skip ci] (`cc48e29`)
+- refresh control-surface data feeds [skip ci] (`991258f`)
+- refresh control-surface data feeds [skip ci] (`1c9972b`)
+- update generated outputs — 2026-07-01 10:40 UTC [skip ci] (`d76cad8`)
 - refresh control-surface data feeds [skip ci] (`79c387e`)
 - refresh control-surface data feeds [skip ci] (`3ff1a26`)
 - refresh control-surface data feeds [skip ci] (`95eedf6`)
@@ -424,6 +448,7 @@
 
 ## Other
 
+- add ClearGlass Executive Intelligence Layer agent (`404809f`)
 - **ci:** make Codex Autofix dispatch-only, least-privilege, PR-based (`a213285`)
 - run governed payout/webhook tests in CI + repo orientation (`753f89d`)
 - wire a working storefront checkout (revenue path) (#467) (`75b2465`)

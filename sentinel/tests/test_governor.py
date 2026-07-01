@@ -157,3 +157,34 @@ def test_every_decision_is_audited_and_chain_verifies():
     gov.evaluate(_request(action_scope="modify_system", target_lane=["security"]))
     assert gov.verify() is True
     assert len(gov.audit.entries) == 2
+
+
+# --------------------------------------------------------------------------- #
+# v9 fail-closed audit sync
+# --------------------------------------------------------------------------- #
+class _BrokenAudit:
+    """Audit ledger that fails on write, simulating a ledger outage."""
+
+    def record(self, *a, **k):
+        raise RuntimeError("audit ledger timeout")
+
+    def verify(self) -> bool:
+        return True
+
+
+def test_audit_write_failure_degrades_to_deny_all():
+    gov = PolicyGovernor(_identity(), audit=_BrokenAudit())
+    # A request that would otherwise be allowed is denied, because it can't be logged.
+    d = gov.evaluate(_request(action_scope="read_only", target_lane=["strategy"]))
+    assert d.allowed is False
+    assert gov.degraded is True
+    assert "degraded to deny-all" in d.reason
+
+
+def test_degraded_governor_denies_all_subsequent_requests():
+    gov = PolicyGovernor(_identity(), audit=_BrokenAudit())
+    gov.evaluate(_request())          # trips degraded
+    d = gov.evaluate(_request())      # now hard deny-all, no further audit attempt
+    assert d.allowed is False
+    assert d.escalate is True
+    assert "audit ledger unavailable" in d.reason

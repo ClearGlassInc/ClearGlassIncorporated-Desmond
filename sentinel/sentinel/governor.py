@@ -89,6 +89,10 @@ class PolicyGovernor:
         self.broker = broker if broker is not None else identity.new_broker()
         self.audit = audit or AuditLog()
         self.schema = json.loads(Path(schema_path or _SCHEMA_PATH).read_text())
+        # Fail-closed audit sync (v9): if the audit ledger becomes unavailable,
+        # the governor transitions to deny-all. Auditability is a precondition
+        # for action — an un-loggable decision must not proceed.
+        self.degraded = False
 
     # ------------------------------------------------------------------ #
     # Schema validation (hand-rolled subset of draft-07: required/enum/type)
@@ -132,6 +136,16 @@ class PolicyGovernor:
     # ------------------------------------------------------------------ #
     def evaluate(self, request: dict[str, Any], *, confidence: float = 1.0) -> GovernorDecision:
         """Decide a request. Deny-all default; deny overrides allow; fail closed."""
+        # Fail-closed audit sync: once the ledger is unreachable, deny everything
+        # until it recovers. This decision itself cannot be audited, so return it
+        # directly without attempting another (failing) write.
+        if self.degraded:
+            return GovernorDecision(
+                False, True,
+                "DENY: audit ledger unavailable — governor degraded to deny-all (incident)",
+                str(request.get("action_scope", "")),
+            )
+
         err = self.validate_request(request)
         if err is not None:
             return self._deny(f"schema violation: {err}", request.get("action_scope", ""))
@@ -172,11 +186,21 @@ class PolicyGovernor:
     # Decision helpers (each writes an audit entry)
     # ------------------------------------------------------------------ #
     def _record(self, decision: GovernorDecision) -> GovernorDecision:
-        self.audit.record(
-            actor=f"governor:{self.identity.instance_id}",
-            action="evaluate",
-            detail=decision.as_dict(),
-        )
+        try:
+            self.audit.record(
+                actor=f"governor:{self.identity.instance_id}",
+                action="evaluate",
+                detail=decision.as_dict(),
+            )
+        except Exception:  # noqa: BLE001 — any audit failure trips fail-closed
+            # The action could not be logged. Auditability is mandatory, so the
+            # governor degrades to deny-all and this request is denied too.
+            self.degraded = True
+            return GovernorDecision(
+                False, True,
+                "DENY: audit write failed — governor degraded to deny-all (incident)",
+                decision.action_scope, decision.required_tier, decision.lanes,
+            )
         return decision
 
     def _deny(self, reason: str, scope: str, tier: Optional[Tier] = None, lanes: Optional[list[str]] = None) -> GovernorDecision:

@@ -2,13 +2,19 @@
   "name": "ClearGlass Executive Intelligence Layer",
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "memory_backend": "sentinel/sentinel/mission_memory.py",
   "capability_layer": "sentinel/sentinel/capability.py",
   "identity_layer": "sentinel/sentinel/identity.py",
   "policy_governor": "sentinel/sentinel/governor.py",
   "capability_schema": "sentinel/schemas/capabilities.json",
   "control_plane_spec": "sentinel/PERCIVAL_V8_SPEC.md",
+  "deployment_blueprint": "sentinel/PERCIVAL_V9_DEPLOYMENT.md",
+  "prompt_pack": {
+    "system": "prompts/percival/system.md",
+    "developer": "prompts/percival/developer.md",
+    "operator": "prompts/percival/operator.md"
+  },
   "default_authority": "READ_ONLY",
   "identity_requirements": ["distinct instance_id", "human sponsor", "defined purpose"],
   "action_scopes": ["read_only", "draft_proposal", "execute_internal", "execute_external", "modify_system"],
@@ -59,6 +65,7 @@
     "scoped sponsor-owned identity, read-only by default (sentinel/sentinel/identity.py)",
     "sovereign deny-all policy governor w/ schema validation (sentinel/sentinel/governor.py)",
     "escalation gate: external/system scopes blocked pending human approval",
+    "fail-closed audit sync: deny-all if the audit ledger is unavailable",
     "layered control plane (policy always wins)",
     "conflict-resolution precedence (policy > safety > audit > intent)",
     "self-improvement loop"

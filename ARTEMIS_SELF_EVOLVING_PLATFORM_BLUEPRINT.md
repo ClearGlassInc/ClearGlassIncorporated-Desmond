@@ -576,3 +576,74 @@ group by prompt_name, prompt_version, workflow_version, model_route;
 ## How Artemis Gets Better Safely
 
 Artemis improves by converting operator behavior and mission outcomes into governed evals, not by autonomously rewriting its goals. It can recommend prompt edits, workflow graph changes, retrieval parameters, model routes, and heuristic thresholds. Humans approve or reject those recommendations. Apollo deploys approved versions gradually, observability verifies live behavior, and immutable audit records preserve every reason, score, diff, approval, and rollback.
+
+## Defensive Cyber Technique Tool Merge
+
+ClearGlassInc Artemis now exposes an operator-facing **Attack Lifecycle Defense Matrix** in the command console. The tool is intentionally defensive and educational: it helps analysts normalize common cybersecurity lifecycle terms into observable risk states, candidate telemetry, and approved countermeasures.
+
+### Technique catalog
+
+| Technique | Operational meaning | Defensive posture |
+|---|---|---|
+| Exploitation | Abuse of a vulnerability, unpatched system, or misconfiguration to produce unintended behavior. | Patch management, vulnerability scanning, secure input validation, exploit telemetry correlation. |
+| Credential Theft | Unauthorized acquisition of usernames, passwords, hashes, session tokens, or authentication material. | MFA, least privilege, credential guardrails, token anomaly analytics. |
+| LSASS Dumping | Attempted memory access against `lsass.exe` to obtain cached credentials or password hashes. | Windows Defender Credential Guard, LSA Protection, handle-access alerting, privileged process monitoring. |
+| AMSI Bypass | Attempts to blind or disable the Windows Antimalware Scan Interface before script inspection. | Script Block Logging, transcription, AMSI tamper analytics, behavior-based EDR. |
+| Defender Disabling | Unauthorized changes that pause, disable, or weaken Microsoft Defender Antivirus controls. | Tamper Protection, managed baselines, drift detection, blocked local policy changes. |
+| Defense Evasion | Obfuscation, injection, timestamp manipulation, or other behavior intended to avoid detection. | EDR heuristic analytics, provenance checks, suspicious process lineage detection. |
+| Stealth Persistence | Maintaining access across restart or credential rotation while minimizing visible footprint. | Autorun audits, scheduled-task baselines, WMI consumer monitoring, configuration-delta review. |
+| Lateral Movement | Movement from one affected system to other hosts or trust zones using remote admin pathways. | Segmentation, privileged access boundaries, east-west authentication monitoring. |
+| Unauthorized Access | Any actor, process, or device reaches data or segments without explicit authorization. | Zero Trust Architecture, entity-level permissions, continuous verification, purpose-of-use enforcement. |
+
+### Ontology alignment
+
+```yaml
+objectTypes:
+  DefensiveTechnique:
+    pk: technique_id
+    properties:
+      - name
+      - lifecycle_phase
+      - operational_definition
+      - defensive_countermeasure
+      - telemetry_sources
+      - approved_playbooks
+      - classification
+
+relationships:
+  - DefensiveTechnique MITIGATES ThreatPattern
+  - DefensiveTechnique MAPS_TO MitreAttackTechnique
+  - Alert INDICATES DefensiveTechnique
+  - Playbook IMPLEMENTS DefensiveTechnique
+  - OperatorFeedback TUNES DefensiveTechnique
+```
+
+### Precision scoring helper
+
+```python
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class TechniqueSignal:
+    technique_id: str
+    true_positive: int
+    false_positive: int
+    false_negative: int
+
+    @property
+    def precision(self) -> float:
+        denom = self.true_positive + self.false_positive
+        return self.true_positive / denom if denom else 0.0
+
+    @property
+    def recall(self) -> float:
+        denom = self.true_positive + self.false_negative
+        return self.true_positive / denom if denom else 0.0
+
+    @property
+    def f1(self) -> float:
+        p, r = self.precision, self.recall
+        return 2 * p * r / (p + r) if p + r else 0.0
+```
+
+The same technique catalog drives UI education, AIP agent grounding, SIEM correlation labels, operator feedback capture, and eval slices for precision/recall measurement.

@@ -385,6 +385,7 @@ body{
     <a href="#overview">Overview</a>
     <a href="#systems">Systems</a>
     <a href="#components">Components</a>
+    <a href="#defense-matrix">Defense Matrix</a>
     <a href="#console">Telemetry</a>
   </nav>
   <span class="clock" id="clock" aria-live="off">--:--:-- UTC</span>
@@ -529,10 +530,52 @@ body{
     </div>
   </section>
 
+
+  <!-- ============ DEFENSE MATRIX TOOL ============ -->
+  <section class="sec" id="defense-matrix">
+    <div class="sec-head">
+      <span class="idx">03 /</span><h2>Attack Lifecycle Defense Matrix</h2><span class="rule" aria-hidden="true"></span>
+    </div>
+    <div class="grid" style="grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:var(--gap)">
+      <article class="card reveal" style="padding:26px">
+        <div class="c-top">
+          <div class="c-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-5"/></svg></div>
+          <span class="chip chip--ok"><span class="led" aria-hidden="true"></span>Defensive</span>
+        </div>
+        <h3>Cyber Attack Lifecycle Tool</h3>
+        <p>This educational console maps common ATT&amp;CK-aligned phases to defensive posture: exploitation, credential theft, LSASS dumping, AMSI bypass, Defender disabling, evasion, stealth persistence, lateral movement, and unauthorized access.</p>
+        <div class="btn-row" style="margin-top:22px" aria-label="Defense matrix technique selector">
+          <button class="btn btn--secondary btn--sm is-active" type="button" data-technique="exploitation">Exploitation</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-technique="credential-theft">Credential Theft</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-technique="lsass-dumping">LSASS Dumping</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-technique="amsi-bypass">AMSI Bypass</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-technique="defender-disabling">Defender Disabling</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-technique="evasion">Evasion</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-technique="stealth-persistence">Stealth Persistence</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-technique="lateral-movement">Lateral Movement</button>
+          <button class="btn btn--secondary btn--sm" type="button" data-technique="unauthorized-access">Unauthorized Access</button>
+        </div>
+      </article>
+      <article class="card reveal" style="padding:26px" aria-live="polite">
+        <div class="c-top">
+          <div class="c-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
+          <span class="chip chip--warn"><span class="led" aria-hidden="true"></span>Matrix</span>
+        </div>
+        <h3 id="tech-title">Exploitation</h3>
+        <p id="tech-meaning">Taking advantage of a vulnerability, software bug, unpatched system, or misconfiguration to make a system behave in an unintended way.</p>
+        <div class="console" style="margin-top:18px">
+          <div class="c-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span> defensive-control — recommendation</div>
+          <div class="c-body" id="tech-defense" aria-label="Selected defensive countermeasure"><span class="ln"><span class="ok">Countermeasure</span> strict patch management, vulnerability scanning, and robust input validation.</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
   <!-- ============ CONSOLE / TELEMETRY ============ -->
   <section class="sec" id="console">
     <div class="sec-head">
-      <span class="idx">03 /</span><h2>Live Telemetry</h2><span class="rule" aria-hidden="true"></span>
+      <span class="idx">04 /</span><h2>Live Telemetry</h2><span class="rule" aria-hidden="true"></span>
     </div>
     <div class="console reveal">
       <div class="c-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span> artemis@command — secure shell</div>
@@ -679,6 +722,34 @@ body{
       card.addEventListener("pointerleave",function(){ card.style.transform=""; });
     });
   }
+
+
+  /* ---- defensive technique matrix tool ---- */
+  var matrix = {
+    "exploitation": ["Exploitation", "Taking advantage of a vulnerability, software bug, unpatched system, or misconfiguration to make a system behave in an unintended way.", "Strict patch management, vulnerability scanning, and robust input validation."],
+    "credential-theft": ["Credential Theft", "Unauthorized acquisition of usernames, cleartext passwords, cryptographic hashes, or active session tokens that can let an actor masquerade as a legitimate user.", "Enforce MFA, least privilege access, credential protection utilities, and anomaly detection for impossible travel or abnormal token use."],
+    "lsass-dumping": ["LSASS Dumping", "Copying memory from the Windows Local Security Authority Subsystem Service process, which can expose active credentials or password hashes.", "Enable Windows Defender Credential Guard, LSA Protection, protected process light controls, and alert on suspicious handle access to lsass.exe."],
+    "amsi-bypass": ["AMSI Bypass", "A code technique intended to blind or disable the Antimalware Scan Interface before suspicious script content is inspected.", "Turn on Script Block Logging, transcription tracking, behavioral monitoring, and alert on AMSI tampering indicators."],
+    "defender-disabling": ["Defender Disabling", "Attempts to alter system configurations, registry keys, or policies to pause or disable Microsoft Defender Antivirus protections.", "Enable Tamper Protection, enforce managed security baselines, monitor policy drift, and block unauthorized security-setting changes."],
+    "evasion": ["Defense Evasion", "A broad set of behaviors used to avoid detection, such as process injection, obfuscation, encrypted payloads, or timestamp manipulation.", "Use EDR analytics focused on behavior and heuristics, correlate telemetry, and require provenance for executable changes."],
+    "stealth-persistence": ["Stealth Persistence", "Maintaining access after restart or credential changes while minimizing footprint through scheduled tasks, registry run keys, or WMI consumers.", "Continuously audit autorun locations, baseline scheduled tasks, monitor configuration changes, and review persistence deltas."],
+    "lateral-movement": ["Lateral Movement", "Extending access from an initially affected endpoint to additional systems by abusing legitimate remote administration paths.", "Apply network segmentation, restrict privileged credential use, harden RDP/SSH/PsExec paths, and monitor east-west authentication patterns."],
+    "unauthorized-access": ["Unauthorized Access", "A user, process, or device reaches data, resources, or network segments without explicit authorization.", "Implement Zero Trust Architecture with continuous verification, purpose-of-use checks, session risk scoring, and entity-level permissions."]
+  };
+  var title = document.getElementById("tech-title");
+  var meaning = document.getElementById("tech-meaning");
+  var defense = document.getElementById("tech-defense");
+  document.querySelectorAll("[data-technique]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var data = matrix[btn.getAttribute("data-technique")];
+      if(!data || !title || !meaning || !defense) return;
+      document.querySelectorAll("[data-technique]").forEach(function(b){ b.classList.remove("is-active"); });
+      btn.classList.add("is-active");
+      title.textContent = data[0];
+      meaning.textContent = data[1];
+      defense.innerHTML = '<span class="ln"><span class="ok">Countermeasure</span> '+data[2]+'</span>';
+    });
+  });
 
   /* ---- stealth glass skin toggle ---- */
   var skin = document.getElementById("skin");

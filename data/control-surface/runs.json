@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #163",
+    "title": "Control Surface Feeds #164",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "18:47",
+    "timestamp": "2026-07-02T18:47:49Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #507",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-8f6f96c4-fdda-4f1c-9b4b-dcab9d4f1092",
+    "time": "18:08",
+    "timestamp": "2026-07-02T18:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #506",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-495f8eba-0575-4c96-ba3e-5970f068c7cf",
+    "time": "17:08",
+    "timestamp": "2026-07-02T17:08:08Z"
+  },
+  {
+    "title": "npm_and_yarn in /apps/autostore/cockpit, /clearglass-agentops, /clearglass-commerce/admin, /clearglass-commerce/storefront - Update #1445629289 #42",
+    "status": "warn",
+    "detail": "queued \u00b7 dynamic on main",
+    "time": "17:03",
+    "timestamp": "2026-07-02T17:03:47Z"
+  },
+  {
+    "title": "pip in /., /apps/autostore/control_plane, /automation/v0.2, /clearglass-commerce/control-plane, /deployment/artemis/app, /products/opal-koboi, /sentinel, /services/clearglass_agent_service - Update #1445628978 #41",
+    "status": "warn",
+    "detail": "queued \u00b7 dynamic on main",
+    "time": "17:03",
+    "timestamp": "2026-07-02T17:03:42Z"
+  },
+  {
+    "title": "terraform in /infra - Update #1445628814 #40",
+    "status": "warn",
+    "detail": "queued \u00b7 dynamic on main",
+    "time": "17:03",
+    "timestamp": "2026-07-02T17:03:41Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #636",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "17:01",
+    "timestamp": "2026-07-02T17:01:56Z"
+  },
+  {
+    "title": "pages build and deployment #1079",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "17:01",
+    "timestamp": "2026-07-02T17:01:50Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1851",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "17:01",
+    "timestamp": "2026-07-02T17:01:49Z"
+  },
+  {
+    "title": "Control Surface Feeds #163",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "17:01",
     "timestamp": "2026-07-02T17:01:27Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "14:14",
     "timestamp": "2026-07-02T14:14:56Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #503",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9ba96860-c59b-40f6-bc3b-057f14db0b09",
-    "time": "14:08",
-    "timestamp": "2026-07-02T14:08:05Z"
-  },
-  {
-    "title": "Auto-Store #38",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "13:45",
-    "timestamp": "2026-07-02T13:45:06Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #502",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-83e14cfb-c119-446f-afa8-ae9f66079d9e",
-    "time": "13:08",
-    "timestamp": "2026-07-02T13:08:04Z"
-  },
-  {
-    "title": "Sales-Ops Briefing #8",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "13:07",
-    "timestamp": "2026-07-02T13:07:03Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #501",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9a1cf02c-4064-476d-a0fd-8066f104ac1f",
-    "time": "12:08",
-    "timestamp": "2026-07-02T12:08:14Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #634",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "11:43",
-    "timestamp": "2026-07-02T11:43:44Z"
-  },
-  {
-    "title": "pages build and deployment #1077",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "11:43",
-    "timestamp": "2026-07-02T11:43:37Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1848",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "11:43",
-    "timestamp": "2026-07-02T11:43:36Z"
-  },
-  {
-    "title": "Control Surface Feeds #161",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "11:43",
-    "timestamp": "2026-07-02T11:43:16Z"
   }
 ]

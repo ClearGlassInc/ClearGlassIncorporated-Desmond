@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-07-01T23:17:53.663564+00:00",
+  "run_utc": "2026-07-02T10:09:37.336813+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 419,
+  "commit_count": 435,
   "sections": {
     "New Features": [
+      {
+        "sha": "c261827",
+        "type": "feat",
+        "scope": "agents",
+        "subject": "add ClearGlass Marketing Command orchestrator",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "2593473",
         "type": "feat",
@@ -664,6 +673,33 @@
     ],
     "CI/CD": [
       {
+        "sha": "f2968c5",
+        "type": "ci",
+        "scope": null,
+        "subject": "skip repair agent cleanly when no agent credential is set",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "1dc3913",
+        "type": "ci",
+        "scope": null,
+        "subject": "satisfy workflow doctor on regressed Pages check workflow",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "1748802",
+        "type": "ci",
+        "scope": null,
+        "subject": "disambiguate duplicate workflow display name",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
         "sha": "6c176e8",
         "type": "ci",
         "scope": null,
@@ -791,6 +827,60 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "f928d05",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis cyber defense matrix tool",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "03120dc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Artemis blog advanced features",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "13c2115",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis Python self-improvement control pack",
+        "author": "Desmond Otieno",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "19d9d17",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis blog content-engine system prompt",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "b7c97c3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Editorial Engine section + versioned Insights system prompt",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "51a5f0d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add missing_og_tags safe-autofix audit to PERCIVAL; document existing v7-v9 stack",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "fa226ee",
         "type": "chore",
@@ -2260,6 +2350,51 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "276fef1",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-02",
+        "breaking": false
+      },
+      {
+        "sha": "07ae67e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-02",
+        "breaking": false
+      },
+      {
+        "sha": "0392a88",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "ce0b537",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
+      {
+        "sha": "d88dd5c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-01 23:17 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "e006f27",
         "type": "bot",
@@ -3751,6 +3886,15 @@
       }
     ],
     "Other": [
+      {
+        "sha": "627c948",
+        "type": "percival",
+        "scope": null,
+        "subject": "executable v9 scaffold with fail-closed policy tests + workflow_call gate",
+        "author": "Claude",
+        "date": "2026-07-01",
+        "breaking": false
+      },
       {
         "sha": "404809f",
         "type": "agents",

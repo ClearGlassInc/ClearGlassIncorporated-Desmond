@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #166",
+    "title": "Control Surface Feeds #167",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:18",
+    "timestamp": "2026-07-03T00:18:26Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #513",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9c5a1add-a21d-4ea4-b27e-291114a7c430",
+    "time": "00:08",
+    "timestamp": "2026-07-03T00:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #512",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-98737bd3-f322-40c9-b493-db3c4582ffe1",
+    "time": "23:08",
+    "timestamp": "2026-07-02T23:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #639",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:19",
+    "timestamp": "2026-07-02T22:19:02Z"
+  },
+  {
+    "title": "pages build and deployment #1082",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:18",
+    "timestamp": "2026-07-02T22:18:55Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1854",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:18",
+    "timestamp": "2026-07-02T22:18:54Z"
+  },
+  {
+    "title": "Control Surface Feeds #166",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:18",
     "timestamp": "2026-07-02T22:18:33Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "18:48",
     "timestamp": "2026-07-02T18:48:06Z"
-  },
-  {
-    "title": "Control Surface Feeds #164",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "18:47",
-    "timestamp": "2026-07-02T18:47:49Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #507",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-8f6f96c4-fdda-4f1c-9b4b-dcab9d4f1092",
-    "time": "18:08",
-    "timestamp": "2026-07-02T18:08:04Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #506",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-495f8eba-0575-4c96-ba3e-5970f068c7cf",
-    "time": "17:08",
-    "timestamp": "2026-07-02T17:08:08Z"
-  },
-  {
-    "title": "npm_and_yarn in /apps/autostore/cockpit, /clearglass-agentops, /clearglass-commerce/admin, /clearglass-commerce/storefront - Update #1445629289 #42",
-    "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "17:03",
-    "timestamp": "2026-07-02T17:03:47Z"
-  },
-  {
-    "title": "pip in /., /apps/autostore/control_plane, /automation/v0.2, /clearglass-commerce/control-plane, /deployment/artemis/app, /products/opal-koboi, /sentinel, /services/clearglass_agent_service - Update #1445628978 #41",
-    "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "17:03",
-    "timestamp": "2026-07-02T17:03:42Z"
-  },
-  {
-    "title": "terraform in /infra - Update #1445628814 #40",
-    "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "17:03",
-    "timestamp": "2026-07-02T17:03:41Z"
   }
 ]

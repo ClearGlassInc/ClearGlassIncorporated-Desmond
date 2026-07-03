@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "updated": "2026-07-03",
+  "site": "https://clearglassinc.github.io",
+  "topics": {
+    "governed-ai": "Governed AI",
+    "agents": "Autonomous agents",
+    "cyber": "Cyber architecture",
+    "osint": "OSINT workflows",
+    "automation": "AI automation",
+    "fincrime": "Financial crime detection",
+    "systems": "High-trust systems"
+  },
+  "posts": [
+    {
+      "slug": "ai-agent-governance-governed-autonomy",
+      "url": "/blog/ai-agent-governance-governed-autonomy.html",
+      "title": "AI Agent Governance: The Governed Autonomy Playbook",
+      "description": "The bottleneck to deploying AI agents isn't intelligence — it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
+      "category": "AI & Autonomy",
+      "series": "Governed Autonomy Playbooks",
+      "topics": ["governed-ai", "agents", "cyber"],
+      "tags": ["governance", "risk-router", "approvals", "audit-ledger", "policy", "human-in-the-loop"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-06-26",
+      "readMinutes": 11,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
+    {
+      "slug": "clearglassinc-artemis-self-evolving-ai-intelligence-platform",
+      "url": "/blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html",
+      "title": "ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform",
+      "description": "A full-stack blueprint for mission-speed intelligence with ontology-driven agents, continuous evals, policy-as-code, safe self-improvement, and a power-user prompt system.",
+      "category": "AI Architecture",
+      "series": "Artemis Engineering Notes",
+      "topics": ["governed-ai", "automation", "systems"],
+      "tags": ["artemis", "ontology", "evals", "policy-as-code", "apollo", "foundry", "self-improvement"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-06-30",
+      "readMinutes": 16,
+      "featured": false,
+      "deskRank": 2,
+      "status": "published"
+    },
+    {
+      "slug": "osint-workflow-that-survives-reality",
+      "url": null,
+      "title": "The OSINT Workflow That Survives Contact With Reality",
+      "description": "How to design collection, source grading, entity resolution, and analyst review loops without drowning in noise.",
+      "category": "OSINT",
+      "series": "OSINT Tradecraft Briefs",
+      "topics": ["osint", "systems"],
+      "tags": ["osint", "source-grading", "lineage", "entity-resolution"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": null,
+      "readMinutes": null,
+      "featured": false,
+      "deskRank": 3,
+      "status": "series"
+    },
+    {
+      "slug": "cybersecurity-architecture-for-agentic-software",
+      "url": null,
+      "title": "Cybersecurity Architecture for Agentic Software",
+      "description": "The command-control patterns, permissions, logs, and kill switches required before AI agents touch real infrastructure.",
+      "category": "Cyber",
+      "series": "High-Trust Systems Patterns",
+      "topics": ["cyber", "agents", "systems"],
+      "tags": ["zero-trust", "kill-switch", "permissions", "audit"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": null,
+      "readMinutes": null,
+      "featured": false,
+      "deskRank": null,
+      "status": "series"
+    }
+  ]
+}

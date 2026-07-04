@@ -6,6 +6,8 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
+from sentinel.capability import Tier
+from sentinel.identity import AgentIdentity
 from sentinel.percival import (
     Action,
     Finding,
@@ -21,6 +23,16 @@ from sentinel.percival import (
     qualify_lead,
     rank,
 )
+
+
+def _ops_identity(default_tier: Tier) -> AgentIdentity:
+    return AgentIdentity(
+        instance_id="percival-live",
+        sponsor="Desmond",
+        purpose="governed website operations",
+        allowed_scopes={"operations"},
+        default_tier=default_tier,
+    )
 
 GOOD = ("<html lang='en'><head><title>T</title>"
         "<meta name='description' content='d'>"
@@ -181,6 +193,49 @@ def test_audit_page_ignores_tags_inside_script() -> None:
             "<meta property='og:description' content='d'></head><body>"
             "<script>var re=/<img\\b[^>]*>/gi;</script></body></html>")
     assert audit_page("p.html", html) == []
+
+
+# ── control-plane wiring (identity -> governor -> capability -> audit) ───────
+
+def test_governor_wired_change_identity_permits_writes(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    # A CHANGE-scoped, sponsored identity may perform internal writes.
+    s = Percival(tmp_path, identity=_ops_identity(Tier.CHANGE))
+    report = s.scan()
+    applied = s.apply(report, allow_writes=True)
+    assert applied and not any(a.startswith("BLOCKED") for a in applied)
+    assert s.audit.verify()
+
+
+def test_governor_wired_readonly_identity_blocks_writes(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    # A READ_ONLY identity cannot execute internal writes — every fix is blocked
+    # by the sovereign governor, and nothing is applied.
+    s = Percival(tmp_path, identity=_ops_identity(Tier.READ_ONLY))
+    report = s.scan()
+    applied = s.apply(report, allow_writes=True)
+    assert applied and all(a.startswith("BLOCKED") for a in applied)
+    assert s.audit.verify()
+
+
+def test_stopped_identity_blocks_all_writes(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    ident = _ops_identity(Tier.CHANGE)
+    ident.stop()  # halted instance may touch nothing
+    s = Percival(tmp_path, identity=ident)
+    report = s.scan()
+    applied = s.apply(report, allow_writes=True)
+    assert applied and all(a.startswith("BLOCKED") for a in applied)
+
+
+def test_no_identity_preserves_legacy_write_behavior(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    # Without an identity, real writes proceed under the legacy AUTO_FIX policy
+    # (no governor gating, no BLOCKED entries).
+    s = Percival(tmp_path)
+    report = s.scan()
+    applied = s.apply(report, allow_writes=True)
+    assert applied and not any(a.startswith("BLOCKED") for a in applied)
 
 
 def test_index_is_exempt_from_sitemap_drift() -> None:

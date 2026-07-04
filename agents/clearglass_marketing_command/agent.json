@@ -2,10 +2,21 @@
   "name": "ClearGlass Marketing Command",
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "default_authority": "READ_ONLY",
   "role": "Orchestrator for a coordinated army of specialized marketing agents — grows awareness, authority, engagement, leads, and revenue through ethical, measurable, brand-consistent automation.",
   "system_prompt_path": "system_prompt.md",
+  "bot_ecosystem_path": "bot_ecosystem.md",
+  "bot_roster": [
+    "RESEARCH-01",
+    "CONTENT-02",
+    "SEO-03",
+    "SOCIAL-04",
+    "EMAIL-05",
+    "LEADS-06",
+    "ANALYTICS-07",
+    "WATCH-08"
+  ],
   "model_recommendation": "claude-opus-4-7",
   "specialist_agents": [
     "strategy",

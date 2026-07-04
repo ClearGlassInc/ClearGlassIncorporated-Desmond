@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:42",
-    "timestamp": "2026-07-01T23:42:29Z"
+    "time": "17:18",
+    "timestamp": "2026-07-04T17:18:29Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #158",
-    "time": "23:42",
-    "timestamp": "2026-07-01T23:42:17Z"
+    "detail": "schedule on main \u00b7 run #183",
+    "time": "17:18",
+    "timestamp": "2026-07-04T17:18:16Z"
   },
   {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #988",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:17Z"
+    "title": "Deploy GitHub Pages",
+    "status": "bad",
+    "detail": "push on main \u00b7 run #661",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:59Z"
   },
   {
     "title": "Policy Gate",
     "status": "ok",
-    "detail": "push on main \u00b7 run #726",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:17Z"
+    "detail": "push on main \u00b7 run #742",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:59Z"
   },
   {
-    "title": "Security",
+    "title": "Defender Watch",
     "status": "ok",
-    "detail": "push on main \u00b7 run #753",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:17Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1019",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:17Z"
+    "detail": "push on main \u00b7 run #290",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:59Z"
   },
   {
     "title": "ClearGlass GitHub Pages Check",
     "status": "ok",
-    "detail": "push on main \u00b7 run #136",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:17Z"
+    "detail": "push on main \u00b7 run #143",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:59Z"
   },
   {
-    "title": "Defender Watch",
+    "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "push on main \u00b7 run #263",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:17Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #629",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:17Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "bad",
-    "detail": "dynamic on main \u00b7 run #1071",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:17Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1841",
-    "time": "23:35",
-    "timestamp": "2026-07-01T23:35:16Z"
+    "detail": "push on main \u00b7 run #1038",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:59Z"
   },
   {
     "title": "Security",
     "status": "ok",
-    "detail": "pull_request on codex/add-advanced-features-to-blog-page \u00b7 run #752",
-    "time": "23:34",
-    "timestamp": "2026-07-01T23:34:54Z"
+    "detail": "push on main \u00b7 run #769",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:59Z"
   },
   {
-    "title": "Defender Watch",
+    "title": "CI",
     "status": "ok",
-    "detail": "pull_request on codex/add-advanced-features-to-blog-page \u00b7 run #262",
-    "time": "23:34",
-    "timestamp": "2026-07-01T23:34:54Z"
+    "detail": "push on main \u00b7 run #1004",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:59Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "bad",
+    "detail": "dynamic on main \u00b7 run #1106",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:58Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1885",
+    "time": "17:14",
+    "timestamp": "2026-07-04T17:14:58Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-9cc374c7-d239-4303-8f42-08b3479b0a5d \u00b7 run #554",
+    "time": "17:08",
+    "timestamp": "2026-07-04T17:08:03Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/wire-percival-control-plane \u00b7 run #393",
+    "time": "17:05",
+    "timestamp": "2026-07-04T17:05:21Z"
   }
 ]

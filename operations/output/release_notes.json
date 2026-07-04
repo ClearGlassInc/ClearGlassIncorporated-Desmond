@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-07-03T09:57:04.904584+00:00",
+  "run_utc": "2026-07-04T09:21:22.620391+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 445,
+  "commit_count": 457,
   "sections": {
     "New Features": [
+      {
+        "sha": "f2aee9a",
+        "type": "feat",
+        "scope": "content",
+        "subject": "two field notes, Ultra Glass page, marketing bot ecosystem",
+        "author": "Claude",
+        "date": "2026-07-03",
+        "breaking": false
+      },
       {
         "sha": "c261827",
         "type": "feat",
@@ -2351,6 +2360,96 @@
     ],
     "Automation": [
       {
+        "sha": "f7c3d30",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "b49508f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "046c163",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "breaking": false
+      },
+      {
+        "sha": "ccd5db4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "breaking": false
+      },
+      {
+        "sha": "c1960eb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "breaking": false
+      },
+      {
+        "sha": "5ff4cac",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "breaking": false
+      },
+      {
+        "sha": "b2238e0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "breaking": false
+      },
+      {
+        "sha": "9aafd6a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "breaking": false
+      },
+      {
+        "sha": "643a2f3",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "breaking": false
+      },
+      {
+        "sha": "1030bcd",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-03 09:57 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-03",
+        "breaking": false
+      },
+      {
         "sha": "4ff498f",
         "type": "bot",
         "scope": null,
@@ -3976,6 +4075,15 @@
       }
     ],
     "Other": [
+      {
+        "sha": "82d903f",
+        "type": "blog",
+        "scope": null,
+        "subject": "add advanced insights layer \u2014 filters, palette, TOC, related posts, feeds",
+        "author": "Claude",
+        "date": "2026-07-03",
+        "breaking": false
+      },
       {
         "sha": "627c948",
         "type": "percival",

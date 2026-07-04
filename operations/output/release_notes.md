@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-03
+# Release Notes — 2026-07-04
 
-*445 commit(s) since v1.0.0*
+*457 commit(s) since v1.0.0*
 
 ## New Features
 
+- **content:** two field notes, Ultra Glass page, marketing bot ecosystem (`f2aee9a`)
 - **agents:** add ClearGlass Marketing Command orchestrator (`c261827`)
 - **percival:** v9 — fail-closed audit sync, prompt pack, deployment blueprint (`2593473`)
 - **percival:** v8 policy governor + capability schema + control-plane spec (`ee8e9ac`)
@@ -284,6 +285,16 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`f7c3d30`)
+- refresh control-surface data feeds [skip ci] (`b49508f`)
+- refresh control-surface data feeds [skip ci] (`046c163`)
+- refresh control-surface data feeds [skip ci] (`ccd5db4`)
+- refresh control-surface data feeds [skip ci] (`c1960eb`)
+- refresh control-surface data feeds [skip ci] (`5ff4cac`)
+- refresh control-surface data feeds [skip ci] (`b2238e0`)
+- refresh control-surface data feeds [skip ci] (`9aafd6a`)
+- refresh control-surface data feeds [skip ci] (`643a2f3`)
+- update generated outputs — 2026-07-03 09:57 UTC [skip ci] (`1030bcd`)
 - refresh control-surface data feeds [skip ci] (`4ff498f`)
 - refresh control-surface data feeds [skip ci] (`86b79c0`)
 - refresh control-surface data feeds [skip ci] (`3fce7e8`)
@@ -473,6 +484,7 @@
 
 ## Other
 
+- add advanced insights layer — filters, palette, TOC, related posts, feeds (`82d903f`)
 - executable v9 scaffold with fail-closed policy tests + workflow_call gate (`627c948`)
 - add ClearGlass Executive Intelligence Layer agent (`404809f`)
 - **ci:** make Codex Autofix dispatch-only, least-privilege, PR-based (`a213285`)

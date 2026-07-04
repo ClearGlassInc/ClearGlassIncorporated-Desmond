@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #185",
+    "title": "Control Surface Feeds #186",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:11",
+    "timestamp": "2026-07-04T22:11:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #559",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-eea30b25-2f08-41e9-b9fa-eb5613bb384f",
+    "time": "22:08",
+    "timestamp": "2026-07-04T22:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #666",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:13",
+    "timestamp": "2026-07-04T21:13:44Z"
+  },
+  {
+    "title": "pages build and deployment #1111",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:13",
+    "timestamp": "2026-07-04T21:13:35Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1894",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:13",
+    "timestamp": "2026-07-04T21:13:34Z"
+  },
+  {
+    "title": "Control Surface Feeds #185",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:13",
     "timestamp": "2026-07-04T21:13:16Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "18:13",
     "timestamp": "2026-07-04T18:13:13Z"
-  },
-  {
-    "title": "Defender Watch #295",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:12Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1043",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:12Z"
-  },
-  {
-    "title": "pages build and deployment #1109",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:12Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1892",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:12Z"
-  },
-  {
-    "title": "Policy Gate #746",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-clearglass-growth-entity-powershell-script",
-    "time": "18:12",
-    "timestamp": "2026-07-04T18:12:52Z"
   }
 ]

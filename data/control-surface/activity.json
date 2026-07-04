@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "21:13",
-    "timestamp": "2026-07-04T21:13:28Z"
+    "time": "22:11",
+    "timestamp": "2026-07-04T22:11:22Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #186",
+    "time": "22:11",
+    "timestamp": "2026-07-04T22:11:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-eea30b25-2f08-41e9-b9fa-eb5613bb384f \u00b7 run #559",
+    "time": "22:08",
+    "timestamp": "2026-07-04T22:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #666",
+    "time": "21:13",
+    "timestamp": "2026-07-04T21:13:44Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1111",
+    "time": "21:13",
+    "timestamp": "2026-07-04T21:13:35Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1894",
+    "time": "21:13",
+    "timestamp": "2026-07-04T21:13:34Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #185",
     "time": "21:13",
     "timestamp": "2026-07-04T21:13:16Z"
@@ -54,40 +89,5 @@
     "detail": "schedule on main \u00b7 run #184",
     "time": "19:36",
     "timestamp": "2026-07-04T19:36:01Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #296",
-    "time": "19:24",
-    "timestamp": "2026-07-04T19:24:55Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #140",
-    "time": "19:20",
-    "timestamp": "2026-07-04T19:20:03Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-4e26ae89-a831-405c-b5cc-35cfa13d719d \u00b7 run #556",
-    "time": "19:08",
-    "timestamp": "2026-07-04T19:08:03Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #664",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:13Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #145",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:13Z"
   }
 ]

@@ -83,8 +83,9 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: |
-            Read PROMPT.md at the repository root and follow it exactly as your
-            operating contract.
+            Read agents/workflow_repair/system_prompt.md and follow it exactly
+            as your operating contract. (PROMPT.md at the repository root is
+            the release commander's contract, not yours — ignore it.)
 
             Run parameters for this invocation:
               mode:  ${{ github.event.inputs.mode }}

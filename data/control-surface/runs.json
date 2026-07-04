@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #184",
+    "title": "Control Surface Feeds #185",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:13",
+    "timestamp": "2026-07-04T21:13:16Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #558",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-2d01b651-3c92-4f16-8702-1123721011e8",
+    "time": "21:08",
+    "timestamp": "2026-07-04T21:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #557",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-62b503cb-706a-4421-9613-e0392a3e3863",
+    "time": "20:08",
+    "timestamp": "2026-07-04T20:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #665",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:36",
+    "timestamp": "2026-07-04T19:36:28Z"
+  },
+  {
+    "title": "pages build and deployment #1110",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:36",
+    "timestamp": "2026-07-04T19:36:22Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1893",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:36",
+    "timestamp": "2026-07-04T19:36:21Z"
+  },
+  {
+    "title": "Control Surface Feeds #184",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "19:36",
     "timestamp": "2026-07-04T19:36:01Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 pull_request on codex/add-clearglass-growth-entity-powershell-script",
     "time": "18:12",
     "timestamp": "2026-07-04T18:12:52Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1042",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-clearglass-growth-entity-powershell-script",
-    "time": "18:12",
-    "timestamp": "2026-07-04T18:12:52Z"
-  },
-  {
-    "title": "Defender Watch #294",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-clearglass-growth-entity-powershell-script",
-    "time": "18:12",
-    "timestamp": "2026-07-04T18:12:52Z"
-  },
-  {
-    "title": "CI #1008",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-clearglass-growth-entity-powershell-script",
-    "time": "18:12",
-    "timestamp": "2026-07-04T18:12:52Z"
-  },
-  {
-    "title": "PR Automation #396",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-clearglass-growth-entity-powershell-script",
-    "time": "18:12",
-    "timestamp": "2026-07-04T18:12:52Z"
-  },
-  {
-    "title": "Security #773",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-clearglass-growth-entity-powershell-script",
-    "time": "18:12",
-    "timestamp": "2026-07-04T18:12:52Z"
-  },
-  {
-    "title": "Code Quality: PR #677 #1891",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/677/head",
-    "time": "18:12",
-    "timestamp": "2026-07-04T18:12:51Z"
   }
 ]

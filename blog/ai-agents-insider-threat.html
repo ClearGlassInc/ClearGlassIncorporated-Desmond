@@ -6,6 +6,7 @@
 <title>AI Agents Are the New Insider Threat — ClearGlass Inc.</title>
 <meta name="description" content="Your insider-threat program watches humans. The newest insider isn't one. Inside AIRF — the Agent Insider Risk Framework (Identity, Intent, Blast Radius, Ledger) for securing autonomous AI agents."/>
 <link rel="canonical" href="https://clearglassinc.github.io/blog/ai-agents-insider-threat.html"/>
+<link rel="alternate" type="application/rss+xml" title="ClearGlass Insights RSS" href="https://clearglassinc.github.io/blog/feed.xml"/>
 <meta name="author" content="Desmond Otieno Odhiambo"/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
 <meta name="keywords" content="AI agent insider threat, AI agent security, agentic AI risk, non-human identity, AI agent identity, machine identity security, AI audit trail, insider risk program, autonomous AI agents, AIRF"/>
@@ -27,6 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="insights.css"/>
 
 <script type="application/ld+json">
 {
@@ -206,7 +208,7 @@ article ul li::marker{color:var(--prism-2)}
 .footer-tagline{margin-top:18px;font-family:var(--serif);font-style:italic;color:#6b7280;font-size:15px}
 </style>
 </head>
-<body>
+<body data-ix-page="article" data-ix-slug="ai-agents-insider-threat" data-ix-theme="light">
 <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
 <div class="progress" id="progress"></div>
 
@@ -381,6 +383,14 @@ article ul li::marker{color:var(--prism-2)}
     </div>
   </div>
 
+  <section class="ix-related" id="ixRelated">
+    <b>Related from the desk</b>
+    <div class="ix-related-grid">
+      <a class="ix-related-card" href="ai-agent-governance-governed-autonomy.html"><span class="k">AI &amp; Autonomy</span><h4>AI Agent Governance: The Governed Autonomy Playbook</h4><p>The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.</p><span class="m">11 min read · Governed Autonomy Playbooks</span></a>
+      <a class="ix-related-card" href="index.html"><span class="k">The hub</span><h4>All ClearGlass Insights</h4><p>Governed AI, cybersecurity architecture, autonomy, OSINT workflows, and high-trust software systems.</p><span class="m">Browse every brief →</span></a>
+    </div>
+  </section>
+
   <div class="endbar">
     <div class="tags">
       <span class="tag">#AIagentsecurity</span>
@@ -441,6 +451,7 @@ var pb=document.getElementById('progress');
 function upd(){var h=document.documentElement;var sc=h.scrollTop||document.body.scrollTop;var mx=h.scrollHeight-h.clientHeight;pb.style.width=(mx>0?(sc/mx*100):0)+'%';}
 addEventListener('scroll',upd,{passive:true});upd();
 </script>
+<script defer src="insights.js"></script>
 <script defer src="/logo-badge.js"></script>
 </body>
 </html>

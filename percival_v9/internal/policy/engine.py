@@ -44,6 +44,26 @@ class Capability:
 
 
 @dataclass(frozen=True)
+class SignedApproval:
+    """Single-use approval envelope for sensitive or external actions."""
+
+    identity: str
+    capability: str
+    signer: str
+    signature: str
+    policy_version: str
+
+    def is_valid_for(self, identity: str, capability: str, policy_version: str) -> bool:
+        return (
+            self.identity == identity
+            and self.capability == capability
+            and self.policy_version == policy_version
+            and self.signer.startswith("operator:")
+            and self.signature.startswith("sig:")
+        )
+
+
+@dataclass(frozen=True)
 class Decision:
     """Outcome of a policy evaluation. ``allow`` is never implicit."""
 
@@ -51,6 +71,8 @@ class Decision:
     reason: str
     capability: str
     identity: str
+    policy_version: str = "v9-local"
+    recovery: str | None = None
 
 
 @dataclass
@@ -60,6 +82,10 @@ class PolicyGovernor:
     ledger: AuditLedger
     _grants: dict[str, dict[str, Capability]] = field(default_factory=dict)
     _approvals: set[tuple[str, str]] = field(default_factory=set)
+    _signed_approvals: dict[tuple[str, str], SignedApproval] = field(default_factory=dict)
+    _explicit_denies: set[tuple[str, str]] = field(default_factory=set)
+    active_policy_version: str = "v9-local"
+    required_policy_version: str = "v9-local"
     _deny_all: bool = False
 
     # -- administration -------------------------------------------------
@@ -69,9 +95,30 @@ class PolicyGovernor:
     def revoke(self, identity: str, capability_name: str) -> None:
         self._grants.get(identity, {}).pop(capability_name, None)
 
+    def deny(self, identity: str, capability_name: str) -> None:
+        """Explicit deny rule. Deny always overrides any allow grant."""
+        self._explicit_denies.add((identity, capability_name))
+
+    def deploy_policy_bundle(self, version: str) -> None:
+        """Atomically mark a policy bundle as both required and active locally."""
+        self.required_policy_version = version
+        self.active_policy_version = version
+
+    def require_policy_version(self, version: str) -> None:
+        """Advance the approved version; stale sidecars must fail closed."""
+        self.required_policy_version = version
+
+    def refresh_policy_cache(self) -> None:
+        """Simulate OPA sidecar cache invalidation after bundle deployment."""
+        self.active_policy_version = self.required_policy_version
+
     def approve(self, identity: str, capability_name: str) -> None:
-        """Operator approval for one gated execution (single-use)."""
+        """Legacy operator approval for one gated execution (single-use)."""
         self._approvals.add((identity, capability_name))
+
+    def approve_signed(self, approval: SignedApproval) -> None:
+        """Register a signed approval envelope for a gated action."""
+        self._signed_approvals[(approval.identity, approval.capability)] = approval
 
     @property
     def deny_all(self) -> bool:
@@ -100,26 +147,51 @@ class PolicyGovernor:
                 reason="fail-closed: audit ledger unavailable; deny-all engaged",
                 capability=capability_name,
                 identity=identity,
+                policy_version=self.active_policy_version,
+                recovery="deny_all",
             )
         if decision.allow and decision.capability_obj is not None:
             if decision.capability_obj.requires_approval:
                 self._approvals.discard((identity, capability_name))  # consume
-        return Decision(decision.allow, decision.reason, capability_name, identity)
+                self._signed_approvals.pop((identity, capability_name), None)
+        return Decision(
+            decision.allow,
+            decision.reason,
+            capability_name,
+            identity,
+            self.active_policy_version,
+            decision.recovery,
+        )
 
     @dataclass(frozen=True)
     class _Verdict:
         allow: bool
         reason: str
         capability_obj: Capability | None = None
+        recovery: str | None = None
 
     def _decide(self, identity: str, capability_name: str) -> _Verdict:
         if self._deny_all:
             return self._Verdict(False, "deny-all mode active (fail-closed)")
+        if self.active_policy_version != self.required_policy_version:
+            return self._Verdict(
+                False,
+                "stale-policy: sidecar bundle lagging approved version",
+                recovery="refresh_policy_cache",
+            )
+        if (identity, capability_name) in self._explicit_denies:
+            return self._Verdict(False, "explicit-deny: deny overrides allow")
         cap = self._grants.get(identity, {}).get(capability_name)
         if cap is None:
             return self._Verdict(False, "deny-by-default: capability not granted")
-        if cap.requires_approval and (identity, capability_name) not in self._approvals:
-            return self._Verdict(
-                False, f"escalation gate: {cap.risk.value}-risk action awaiting approval"
+        if cap.requires_approval:
+            signed = self._signed_approvals.get((identity, capability_name))
+            legacy_ok = (identity, capability_name) in self._approvals
+            signed_ok = signed is not None and signed.is_valid_for(
+                identity, capability_name, self.active_policy_version
             )
+            if not legacy_ok and not signed_ok:
+                return self._Verdict(
+                    False, f"escalation gate: {cap.risk.value}-risk action awaiting signed approval"
+                )
         return self._Verdict(True, "granted", cap)

@@ -106,7 +106,6 @@
     });
   }
   function paletteEntries() {
-    var base = page === 'article' ? '' : '';
     var items = posts.map(function (p) {
       return {
         kind: p.status === 'series' ? 'series' : (p.category || 'brief'),

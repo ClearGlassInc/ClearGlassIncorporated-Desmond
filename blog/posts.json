@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "updated": "2026-07-03",
+  "version": 2,
+  "updated": "2026-07-04",
   "site": "https://clearglassinc.github.io",
   "topics": {
     "governed-ai": "Governed AI",
@@ -26,6 +26,38 @@
       "readMinutes": 11,
       "featured": true,
       "deskRank": 1,
+      "status": "published"
+    },
+    {
+      "slug": "ai-agents-insider-threat",
+      "url": "/blog/ai-agents-insider-threat.html",
+      "title": "AI Agents Are the New Insider Threat",
+      "description": "Agents hold credentials, access, and goals — the textbook insider profile — and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
+      "category": "AI & Security",
+      "series": "Field Notes",
+      "topics": ["agents", "cyber", "governed-ai"],
+      "tags": ["insider-threat", "non-human-identity", "blast-radius", "ledger", "airf"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-07-02",
+      "readMinutes": 12,
+      "featured": false,
+      "deskRank": null,
+      "status": "published"
+    },
+    {
+      "slug": "zero-trust-is-outdated",
+      "url": "/blog/zero-trust-is-outdated.html",
+      "title": "Zero Trust Is Outdated",
+      "description": "Zero trust answered \"who are you?\" The agentic era asks \"should this action happen, and at what cost?\" The Adaptive Trust Systems Model: action trust, intent verification, learning policy, trust economics.",
+      "category": "Cyber Architecture",
+      "series": "Field Notes",
+      "topics": ["cyber", "systems", "agents"],
+      "tags": ["zero-trust", "adaptive-trust", "action-trust", "intent-verification", "trust-economics"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-07-02",
+      "readMinutes": 12,
+      "featured": false,
+      "deskRank": null,
       "status": "published"
     },
     {

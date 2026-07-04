@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "13:57",
-    "timestamp": "2026-07-04T13:57:21Z"
+    "time": "15:29",
+    "timestamp": "2026-07-04T15:29:56Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #182",
+    "time": "15:29",
+    "timestamp": "2026-07-04T15:29:47Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-a9c1ea0a-708e-499d-92ed-46cbca3e38dc \u00b7 run #552",
+    "time": "15:08",
+    "timestamp": "2026-07-04T15:08:03Z"
+  },
+  {
+    "title": "Commerce Daily Loop",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #25",
+    "time": "14:27",
+    "timestamp": "2026-07-04T14:27:42Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-b8022ca2-c033-4bbd-8ad5-9c5e97273d1b \u00b7 run #551",
+    "time": "14:08",
+    "timestamp": "2026-07-04T14:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #659",
+    "time": "13:57",
+    "timestamp": "2026-07-04T13:57:34Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "bad",
+    "detail": "dynamic on main \u00b7 run #1104",
+    "time": "13:57",
+    "timestamp": "2026-07-04T13:57:27Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1883",
+    "time": "13:57",
+    "timestamp": "2026-07-04T13:57:26Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #181",
     "time": "13:57",
     "timestamp": "2026-07-04T13:57:12Z"
@@ -40,54 +89,5 @@
     "detail": "dynamic on main \u00b7 run #43",
     "time": "13:33",
     "timestamp": "2026-07-04T13:33:16Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #287",
-    "time": "13:33",
-    "timestamp": "2026-07-04T13:33:05Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #767",
-    "time": "13:33",
-    "timestamp": "2026-07-04T13:33:04Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1002",
-    "time": "13:33",
-    "timestamp": "2026-07-04T13:33:04Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #658",
-    "time": "13:33",
-    "timestamp": "2026-07-04T13:33:04Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #223",
-    "time": "13:33",
-    "timestamp": "2026-07-04T13:33:04Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #740",
-    "time": "13:33",
-    "timestamp": "2026-07-04T13:33:04Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #142",
-    "time": "13:33",
-    "timestamp": "2026-07-04T13:33:04Z"
   }
 ]

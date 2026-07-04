@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #186",
+    "title": "Control Surface Feeds #187",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:12",
+    "timestamp": "2026-07-04T23:12:23Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #560",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-25cd6f4d-4c70-4e0a-90d0-0a6e018abfeb",
+    "time": "23:08",
+    "timestamp": "2026-07-04T23:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #667",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:11",
+    "timestamp": "2026-07-04T22:11:35Z"
+  },
+  {
+    "title": "pages build and deployment #1112",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:11",
+    "timestamp": "2026-07-04T22:11:29Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1895",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:11",
+    "timestamp": "2026-07-04T22:11:28Z"
+  },
+  {
+    "title": "Control Surface Feeds #186",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:11",
     "timestamp": "2026-07-04T22:11:08Z"
   },
@@ -103,40 +138,5 @@
     "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4e26ae89-a831-405c-b5cc-35cfa13d719d",
     "time": "19:08",
     "timestamp": "2026-07-04T19:08:03Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #664",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:13Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #145",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:13Z"
-  },
-  {
-    "title": "Security #774",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:13Z"
-  },
-  {
-    "title": "CI #1009",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:13Z"
-  },
-  {
-    "title": "Policy Gate #747",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:13",
-    "timestamp": "2026-07-04T18:13:13Z"
   }
 ]

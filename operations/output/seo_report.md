@@ -1,7 +1,7 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-04T09:21:22.649935+00:00
-**Average Score:** 92.2/100
+**Run:** 2026-07-05T09:41:15.126628+00:00
+**Average Score:** 92.0/100
 **Files Audited:** 59
 
 ## Page Scores
@@ -18,6 +18,7 @@
 | `control-surface.html` | 80/100 | 2 |
 | `systems.html` | 80/100 | 2 |
 | `ultra-glass.html` | 80/100 | 2 |
+| `web-design.html` | 80/100 | 2 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
 | `air-systems-control.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
@@ -28,7 +29,6 @@
 | `sentinel.html` | 90/100 | 1 |
 | `tax.html` | 90/100 | 1 |
 | `traffic-enforcement.html` | 90/100 | 1 |
-| `web-design.html` | 90/100 | 1 |
 | `404.html` | 100/100 | 0 |
 | `CG-os.html` | 100/100 | 0 |
 | `Ontario-osint.html` | 100/100 | 0 |
@@ -70,7 +70,7 @@
 
 ## Top Issues Across All Pages
 
-- 13x — Description length N chars (ideal N–N)
+- 14x — Description length N chars (ideal N–N)
 - 12x — Title length N chars (ideal N–N)
 - 6x — Missing og:image
 - 3x — Multiple <hN> tags (N)

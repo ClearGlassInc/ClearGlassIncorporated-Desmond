@@ -1,9 +1,12 @@
-# Release Notes — 2026-07-04
+# Release Notes — 2026-07-05
 
-*457 commit(s) since v1.0.0*
+*482 commit(s) since v1.0.0*
 
 ## New Features
 
+- **agents:** add ClearGlass Autonomous Agent OS v8.0 orchestration layer (`13cefd2`)
+- **percival:** wire the governance core into the live agent's write path (`3ce1f37`)
+- **agents:** add Workflow Repair Agent definition + wire it into agent.yml (`27b6b88`)
 - **content:** two field notes, Ultra Glass page, marketing bot ecosystem (`f2aee9a`)
 - **agents:** add ClearGlass Marketing Command orchestrator (`c261827`)
 - **percival:** v9 — fail-closed audit sync, prompt pack, deployment blueprint (`2593473`)
@@ -79,6 +82,7 @@
 
 ## Documentation
 
+- **prompts:** add prompt & agent workflow repair pack (`ab2d1e6`)
 - add cross-repo GitHub Actions patterns & prompt pack (`dd4ea12`)
 - add Percival v9 governed orchestration architecture blueprint (`13ad5c8`)
 - honest reference for legitimate zero-cost online income (`463f600`)
@@ -113,6 +117,12 @@
 
 ## Maintenance
 
+- Restore red web design page and remove extra nav overlays (`faa2e94`)
+- Add Artemis self-evolving intelligence system (`0c12f66`)
+- Publish OSINT and agentic-cyber briefs across hub, index, feed, and sitemap (`5c76d34`)
+- Build advanced blog: two new flagship posts, post index, RSS, filters, writing assistant (`b2b039a`)
+- Add ClearGlass growth entity script (`9c3ae95`)
+- Add Percival v10 policy recovery semantics (`8ec27ad`)
 - Add Artemis cyber defense matrix tool (`f928d05`)
 - Enhance Artemis blog advanced features (`03120dc`)
 - Add Artemis Python self-improvement control pack (`13c2115`)
@@ -285,6 +295,19 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`cd29480`)
+- refresh control-surface data feeds [skip ci] (`146b016`)
+- refresh control-surface data feeds [skip ci] (`364203e`)
+- refresh control-surface data feeds [skip ci] (`42b879c`)
+- refresh control-surface data feeds [skip ci] (`b67ccaf`)
+- refresh control-surface data feeds [skip ci] (`4609b45`)
+- refresh control-surface data feeds [skip ci] (`c44ebd7`)
+- refresh control-surface data feeds [skip ci] (`a441e4e`)
+- refresh control-surface data feeds [skip ci] (`cc6e39c`)
+- refresh control-surface data feeds [skip ci] (`e8cd886`)
+- refresh control-surface data feeds [skip ci] (`5c74516`)
+- refresh control-surface data feeds [skip ci] (`d2adb9b`)
+- update generated outputs — 2026-07-04 09:21 UTC [skip ci] (`a542a39`)
 - refresh control-surface data feeds [skip ci] (`f7c3d30`)
 - refresh control-surface data feeds [skip ci] (`b49508f`)
 - refresh control-surface data feeds [skip ci] (`046c163`)
@@ -484,6 +507,8 @@
 
 ## Other
 
+- add Insight Atlas — living intelligence-graph panel + integrate new field notes (`d491d4b`)
+- remove unused variable in insights.js paletteEntries (`d1dd78b`)
 - add advanced insights layer — filters, palette, TOC, related posts, feeds (`82d903f`)
 - executable v9 scaffold with fail-closed policy tests + workflow_call gate (`627c948`)
 - add ClearGlass Executive Intelligence Layer agent (`404809f`)

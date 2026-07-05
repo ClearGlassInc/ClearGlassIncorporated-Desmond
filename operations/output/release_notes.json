@@ -1,10 +1,37 @@
 {
-  "run_utc": "2026-07-04T09:21:22.620391+00:00",
+  "run_utc": "2026-07-05T09:41:15.076601+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 457,
+  "commit_count": 482,
   "sections": {
     "New Features": [
+      {
+        "sha": "13cefd2",
+        "type": "feat",
+        "scope": "agents",
+        "subject": "add ClearGlass Autonomous Agent OS v8.0 orchestration layer",
+        "author": "Claude",
+        "date": "2026-07-05",
+        "breaking": false
+      },
+      {
+        "sha": "3ce1f37",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "wire the governance core into the live agent's write path",
+        "author": "Claude",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "27b6b88",
+        "type": "feat",
+        "scope": "agents",
+        "subject": "add Workflow Repair Agent definition + wire it into agent.yml",
+        "author": "Claude",
+        "date": "2026-07-04",
+        "breaking": false
+      },
       {
         "sha": "f2aee9a",
         "type": "feat",
@@ -606,6 +633,15 @@
     ],
     "Documentation": [
       {
+        "sha": "ab2d1e6",
+        "type": "docs",
+        "scope": "prompts",
+        "subject": "add prompt & agent workflow repair pack",
+        "author": "Claude",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
         "sha": "dd4ea12",
         "type": "docs",
         "scope": null,
@@ -836,6 +872,60 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "faa2e94",
+        "type": "chore",
+        "scope": null,
+        "subject": "Restore red web design page and remove extra nav overlays",
+        "author": "Desmond Otieno",
+        "date": "2026-07-05",
+        "breaking": false
+      },
+      {
+        "sha": "0c12f66",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis self-evolving intelligence system",
+        "author": "Desmond Otieno",
+        "date": "2026-07-05",
+        "breaking": false
+      },
+      {
+        "sha": "5c76d34",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish OSINT and agentic-cyber briefs across hub, index, feed, and sitemap",
+        "author": "Claude",
+        "date": "2026-07-05",
+        "breaking": false
+      },
+      {
+        "sha": "b2b039a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Build advanced blog: two new flagship posts, post index, RSS, filters, writing assistant",
+        "author": "Claude",
+        "date": "2026-07-05",
+        "breaking": false
+      },
+      {
+        "sha": "9c3ae95",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass growth entity script",
+        "author": "Desmond Otieno",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "8ec27ad",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Percival v10 policy recovery semantics",
+        "author": "Desmond Otieno",
+        "date": "2026-07-04",
+        "breaking": false
+      },
       {
         "sha": "f928d05",
         "type": "chore",
@@ -2359,6 +2449,123 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "cd29480",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-05",
+        "breaking": false
+      },
+      {
+        "sha": "146b016",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-05",
+        "breaking": false
+      },
+      {
+        "sha": "364203e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-05",
+        "breaking": false
+      },
+      {
+        "sha": "42b879c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "b67ccaf",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "4609b45",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "c44ebd7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "a441e4e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "cc6e39c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "e8cd886",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "5c74516",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "d2adb9b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "a542a39",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-04 09:21 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-04",
+        "breaking": false
+      },
       {
         "sha": "f7c3d30",
         "type": "bot",
@@ -4075,6 +4282,24 @@
       }
     ],
     "Other": [
+      {
+        "sha": "d491d4b",
+        "type": "blog",
+        "scope": null,
+        "subject": "add Insight Atlas \u2014 living intelligence-graph panel + integrate new field notes",
+        "author": "Claude",
+        "date": "2026-07-04",
+        "breaking": false
+      },
+      {
+        "sha": "d1dd78b",
+        "type": "blog",
+        "scope": null,
+        "subject": "remove unused variable in insights.js paletteEntries",
+        "author": "Claude",
+        "date": "2026-07-04",
+        "breaking": false
+      },
       {
         "sha": "82d903f",
         "type": "blog",

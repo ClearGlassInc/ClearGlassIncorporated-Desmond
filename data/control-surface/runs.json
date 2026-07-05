@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #187",
+    "title": "Control Surface Feeds #188",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:12",
+    "timestamp": "2026-07-05T00:12:44Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #561",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-cf7b1c53-d17a-401d-b1ff-4015646ba348",
+    "time": "00:08",
+    "timestamp": "2026-07-05T00:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #668",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "23:12",
+    "timestamp": "2026-07-04T23:12:49Z"
+  },
+  {
+    "title": "pages build and deployment #1113",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "23:12",
+    "timestamp": "2026-07-04T23:12:42Z"
+  },
+  {
+    "title": "Code Quality: Push on main #1896",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:12",
+    "timestamp": "2026-07-04T23:12:41Z"
+  },
+  {
+    "title": "Control Surface Feeds #187",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:12",
     "timestamp": "2026-07-04T23:12:23Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "19:36",
     "timestamp": "2026-07-04T19:36:22Z"
-  },
-  {
-    "title": "Code Quality: Push on main #1893",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:36",
-    "timestamp": "2026-07-04T19:36:21Z"
-  },
-  {
-    "title": "Control Surface Feeds #184",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "19:36",
-    "timestamp": "2026-07-04T19:36:01Z"
-  },
-  {
-    "title": "Defender Watch #296",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "19:24",
-    "timestamp": "2026-07-04T19:24:55Z"
-  },
-  {
-    "title": "Health Monitor #140",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "19:20",
-    "timestamp": "2026-07-04T19:20:03Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #556",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4e26ae89-a831-405c-b5cc-35cfa13d719d",
-    "time": "19:08",
-    "timestamp": "2026-07-04T19:08:03Z"
   }
 ]

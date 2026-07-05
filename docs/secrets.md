@@ -50,3 +50,9 @@ Repository → **Settings → Secrets and variables → Actions → New reposito
 secret**. Use the exact name from the tables above. For org-wide secrets
 (`CG_ORG_PAT`), set them at the organization level and grant this repository
 access.
+
+---
+
+## ClearGlassInc Artemis core deployment secret posture
+
+Core GitHub Pages deployment requires no custom secrets. The optional `PAGES_ADMIN_TOKEN` may be used to pin the Pages source to **GitHub Actions**, but deployment remains non-blocking if it is absent. External deploy hooks must be optional, guarded by explicit non-empty secret checks, and documented before use.

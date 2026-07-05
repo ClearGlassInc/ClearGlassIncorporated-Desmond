@@ -1,0 +1,33 @@
+{
+  "organization": "ClearGlassInc Artemis",
+  "runtime": "static-compatible",
+  "version": "2026.07.05",
+  "guardrails": [
+    "No secrets in repository content or logs",
+    "Human approval required before production-impacting deploy, policy, legal, or operational changes",
+    "All agents emit structured logs with task_id, result, failure_mode, and next_step",
+    "Core GitHub Pages deployment must not depend on paid services or optional external secrets"
+  ],
+  "agents": [
+    {"id":"intake","name":"Intake Agent","purpose":"Receive tasks, classify intent, urgency, affected systems, and route work.","inputs":["issue","workflow_dispatch","operator_request"],"outputs":["classified_task"]},
+    {"id":"planner","name":"Planner Agent","purpose":"Break approved tasks into reversible execution plans with test gates.","inputs":["classified_task"],"outputs":["execution_plan"]},
+    {"id":"executor","name":"Executor Agent","purpose":"Perform approved repo, build, content, and deployment actions using least privilege.","inputs":["execution_plan"],"outputs":["change_set","command_log"]},
+    {"id":"auditor","name":"Auditor Agent","purpose":"Check security, links, accessibility, SEO, assets, and workflow health.","inputs":["change_set","site_artifact"],"outputs":["audit_report"]},
+    {"id":"logger","name":"Logger Agent","purpose":"Record actions, failures, evidence, and next steps in structured operational reports.","inputs":["all_agent_events"],"outputs":["operations_log"]},
+    {"id":"deployment","name":"Deployment Agent","purpose":"Validate GitHub Pages readiness, artifact creation, rollback notes, and deployment summaries.","inputs":["audit_report","site_artifact"],"outputs":["deployment_readiness"]},
+    {"id":"marketing","name":"Marketing Agent","purpose":"Prepare safe website, product, offer, blog, and social content without unsupported claims.","inputs":["product_brief","campaign_goal"],"outputs":["content_draft"]},
+    {"id":"revenue","name":"Revenue Agent","purpose":"Identify conversion paths, CTAs, lead capture logic, and product link continuity.","inputs":["site_map","offer_catalog"],"outputs":["conversion_report"]},
+    {"id":"compliance","name":"Compliance Agent","purpose":"Review privacy, legal, employment, public-sector, and operational-risk language.","inputs":["content_draft","workflow_change"],"outputs":["compliance_findings"]},
+    {"id":"monitoring","name":"Monitoring Agent","purpose":"Check workflow status, validation output, deploy health, and report failures clearly.","inputs":["github_actions_status","site_health_report"],"outputs":["monitoring_report"]}
+  ],
+  "routing": [
+    {"from":"intake","to":"planner","condition":"task.valid == true"},
+    {"from":"planner","to":"executor","condition":"plan.approved == true"},
+    {"from":"executor","to":"auditor","condition":"change_set.created == true"},
+    {"from":"auditor","to":"deployment","condition":"audit.errors == 0"},
+    {"from":"deployment","to":"logger","condition":"always"},
+    {"from":"marketing","to":"compliance","condition":"public_content == true"},
+    {"from":"revenue","to":"auditor","condition":"site_link_changes == true"},
+    {"from":"monitoring","to":"intake","condition":"failure_detected == true"}
+  ]
+}

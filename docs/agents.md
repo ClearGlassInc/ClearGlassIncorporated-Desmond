@@ -73,3 +73,15 @@ than a new backend:
 4. Keep money-movement / pricing / outbound behind the commerce governance layer.
 5. Run `pytest tests/ -q`, `ruff check .`, and
    `python scripts/site_reliability_audit.py` before pushing.
+
+---
+
+## ClearGlassInc Artemis coordinated company-agent registry
+
+The current static-compatible command-system registry is maintained at `agents/company_system/agent_registry.json`. It connects the required Intake, Planner, Executor, Auditor, Logger, Deployment, Marketing, Revenue, Compliance, and Monitoring agents through explicit routing rules and guardrails.
+
+Validation command:
+
+```bash
+python scripts/validate-site
+```

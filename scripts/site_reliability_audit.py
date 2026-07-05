@@ -24,6 +24,14 @@ import xml.etree.ElementTree as ET
 REPO_ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_DOMAIN = "clearglassinc.github.io"
 
+EXCLUDED_DIR_PARTS = {".git", "node_modules", ".next", "dist", "build", "coverage", "__pycache__"}
+
+def is_auditable_path(path: Path) -> bool:
+    return not any(part in EXCLUDED_DIR_PARTS for part in path.relative_to(REPO_ROOT).parts)
+
+def html_documents() -> list[Path]:
+    return sorted(path for path in REPO_ROOT.rglob("*.html") if is_auditable_path(path))
+
 
 class LinkParser(HTMLParser):
     def __init__(self) -> None:
@@ -51,7 +59,7 @@ def is_local_ref(ref: str) -> bool:
 
 def check_links() -> list[AuditIssue]:
     issues: list[AuditIssue] = []
-    html_files = sorted(REPO_ROOT.rglob("*.html"))
+    html_files = html_documents()
 
     for html_file in html_files:
         parser = LinkParser()
@@ -191,7 +199,7 @@ def check_pages_domain() -> list[AuditIssue]:
 
 def check_seo_accessibility() -> list[AuditIssue]:
     issues: list[AuditIssue] = []
-    html_files = sorted(REPO_ROOT.rglob("*.html"))
+    html_files = html_documents()
     script_block = re.compile(r"<script\b[^>]*>.*?</script>", re.IGNORECASE | re.DOTALL)
 
     for html_file in html_files:

@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+"""Fail-closed local link checker for GitHub Pages content."""
+from __future__ import annotations
+
+import importlib.util
+import sys
+from pathlib import Path
+
+spec = importlib.util.spec_from_file_location(
+    "site_reliability_audit", Path(__file__).with_name("site_reliability_audit.py")
+)
+assert spec and spec.loader
+mod = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = mod
+spec.loader.exec_module(mod)
+issues = mod.check_links()
+for issue in issues:
+    print(f"{issue.level}: {issue.message}")
+raise SystemExit(1 if any(issue.level == "ERROR" for issue in issues) else 0)

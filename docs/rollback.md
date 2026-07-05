@@ -94,3 +94,17 @@ python scripts/site_reliability_audit.py   # site integrity
 
 Then confirm the live site (or `curl -I` the affected page) reflects the
 reverted state and the relevant Actions run is green.
+
+---
+
+## ClearGlassInc Artemis validation rollback addendum
+
+After any rollback, run the consolidated static validation gate before redeploying:
+
+```bash
+python scripts/validate-site
+python scripts/check-links
+python scripts/audit-assets
+```
+
+If agent routing changes caused the rollback, revert `agents/company_system/agent_registry.json`, then rerun the same validation commands.

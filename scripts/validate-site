@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""Static-compatible ClearGlass site validation: links, assets, SEO/a11y, workflows."""
+from __future__ import annotations
+
+import ast
+import importlib.util
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location(
+    "site_reliability_audit", ROOT / "scripts/site_reliability_audit.py"
+)
+assert spec and spec.loader
+mod = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = mod
+spec.loader.exec_module(mod)
+errors: list[str] = []
+
+checks = (
+    mod.check_links,
+    mod.check_required_docs,
+    mod.check_workflows,
+    mod.check_sitemap,
+    mod.check_pages_domain,
+    mod.check_seo_accessibility,
+)
+for check in checks:
+    for issue in check():
+        print(f"{issue.level}: {issue.message}")
+        if issue.level == "ERROR":
+            errors.append(issue.message)
+
+for py_file in list((ROOT / "scripts").glob("*.py")) + list((ROOT / "bots").glob("*.py")):
+    try:
+        ast.parse(py_file.read_text(encoding="utf-8", errors="ignore"))
+    except SyntaxError as exc:
+        errors.append(f"Python syntax: {py_file.relative_to(ROOT)}:{exc.lineno}: {exc.msg}")
+
+for json_file in [ROOT / "agents/company_system/agent_registry.json", ROOT / "bots/config/bot_registry.json"]:
+    if json_file.exists():
+        try:
+            json.loads(json_file.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            errors.append(f"JSON syntax: {json_file.relative_to(ROOT)}:{exc.lineno}: {exc.msg}")
+
+try:
+    import yaml  # type: ignore
+
+    for workflow_file in (ROOT / ".github/workflows").glob("*.yml"):
+        try:
+            yaml.safe_load(workflow_file.read_text(encoding="utf-8"))
+        except Exception as exc:  # noqa: BLE001 - report parser-specific YAML failures clearly.
+            errors.append(f"Workflow YAML: {workflow_file.relative_to(ROOT)}: {exc}")
+except Exception:  # noqa: BLE001 - PyYAML is optional outside CI.
+    print("WARN: PyYAML unavailable; install pyyaml for workflow syntax validation")
+
+if errors:
+    print("\nValidation failed:")
+    for error in errors:
+        print(f"ERROR: {error}")
+    sys.exit(1)
+print("ClearGlass validation passed: links, assets, SEO/a11y baseline, Python, JSON, workflows.")

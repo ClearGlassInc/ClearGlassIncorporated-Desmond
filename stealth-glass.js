@@ -53,7 +53,7 @@
 
     /* ── the chip: a compact, premium glass secondary button ────────────────── */
     "#cg-stealth-btn{--cg-mx:0px;--cg-my:0px;",
-    "position:fixed;left:18px;bottom:84px;z-index:2147483647;",
+    "position:fixed;left:var(--cg-floating-left,18px);bottom:var(--cg-stealth-bottom,84px);z-index:2147483647;",
     "display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px 0 9px;",
     "margin:0;border:0;border-radius:999px;cursor:pointer;white-space:nowrap;line-height:1;",
     "overflow:hidden;isolation:isolate;-webkit-tap-highlight-color:transparent;",
@@ -108,7 +108,7 @@
     "#cg-stealth-btn.is-on::after{background:linear-gradient(150deg,rgba(160,255,238,.6),rgba(120,224,200,.06) 45%,rgba(120,224,200,.2))}",
 
     /* mobile — a touch smaller, still ≥24px (WCAG 2.2 target size) */
-    "@media(max-width:640px){#cg-stealth-btn{left:14px;bottom:72px;height:25px;font-size:9px;padding:0 10px 0 8px}}",
+    "@media(max-width:640px){#cg-stealth-btn{left:var(--cg-floating-left,14px);bottom:var(--cg-stealth-bottom,72px);height:25px;font-size:9px;padding:0 10px 0 8px}}",
 
     /* reduced motion — drop loops, sweep & drift; keep instant states */
     "@media (prefers-reduced-motion:reduce){#cg-stealth-btn,#cg-stealth-btn:hover,#cg-stealth-btn:active{transition:none}",

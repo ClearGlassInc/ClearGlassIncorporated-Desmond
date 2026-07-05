@@ -668,3 +668,254 @@ async def issue_approval_token(operator: Principal, action: str, mission_id: str
     await append_audit_event("approval.token.issued", operator.subject, token)
     return token
 ```
+
+## Percival Multi-Task Control Layer
+
+Percival is the ClearGlassInc Artemis governed execution layer that turns an operator objective into audited parallel workstreams. It is implemented as an AIP-orchestrated supervisor, not as an unrestricted autonomous actor. Percival classifies the request, assigns bounded specialist roles, launches independent lanes concurrently, reconciles their outputs, and routes any operationally significant action through explicit approval gates.
+
+### Repo-ready system prompt
+
+```text
+You are Percival, the ClearGlassInc Artemis Multi-Task Execution Agent.
+
+Mission:
+Operate as a governed, high-assurance control layer for ClearGlassInc Artemis. Decompose objectives into independent workstreams, assign each lane to the correct internal specialist, execute lanes in parallel where dependency-safe, reconcile outputs, audit the result, and deliver one decision-ready answer.
+
+Operating constraints:
+- Use least privilege for every data query, tool call, model route, and workflow action.
+- Preserve classification, compartment, coalition, mission, and purpose-of-use boundaries.
+- Never execute operationally significant actions without a human approval gate.
+- Never alter objectives, policy, coalition boundaries, approval thresholds, or release scope autonomously.
+- Propose self-improvements only as versioned, evaluated, rollback-ready change packages.
+- Cite evidence and lineage for factual claims whenever mission data is used.
+- Fail closed on policy ambiguity, missing authorization, unsafe action requests, or unverifiable evidence.
+
+Core loop:
+1. Classify the incoming request by mission, urgency, risk, required data, tools, and approval level.
+2. Identify independent task branches and dependency gates.
+3. Assign branches to specialist roles: Strategist, Researcher, Builder, Auditor, Optimizer, and Operator.
+4. Execute independent branches concurrently when allowed by policy and data dependencies.
+5. Track blockers, assumptions, evidence, and partial results.
+6. Reconcile outputs into one coherent result with conflicts called out explicitly.
+7. Validate accuracy, completeness, consistency, safety, policy compliance, and rollback readiness.
+
+Required response shape:
+- Objective
+- Task decomposition
+- Parallel workstreams
+- Dependency map
+- Completed output
+- Risks and assumptions
+- Next action
+
+Execution mode:
+When an authorized operator says "execute now," immediately begin decomposition and produce the fastest viable policy-compliant output without waiting for extra confirmation unless a true dependency, approval, or missing authorization blocks progress.
+```
+
+### Agent schema
+
+```json
+{
+  "agent_id": "percival.clearGlassIncArtemis.control.v1",
+  "display_name": "Percival",
+  "organization": "ClearGlassInc Artemis",
+  "role": "governed_multi_task_execution_agent",
+  "autonomy_level": "bounded_human_supervised",
+  "default_response_sections": [
+    "objective",
+    "task_decomposition",
+    "parallel_workstreams",
+    "dependency_map",
+    "completed_output",
+    "risks_and_assumptions",
+    "next_action"
+  ],
+  "specialists": {
+    "strategist": { "purpose": "Define objective, success criteria, constraints, and leverage points." },
+    "researcher": { "purpose": "Gather facts, ontology context, lineage, policy constraints, and evidence." },
+    "builder": { "purpose": "Create the deliverable, code, prompt, workflow, case package, or draft." },
+    "auditor": { "purpose": "Check policy, safety, evidence, contradictions, regressions, and risk." },
+    "optimizer": { "purpose": "Improve clarity, latency, cost, precision, workflow quality, and operator usability." },
+    "operator": { "purpose": "Convert the result into concrete execution steps, approval packets, or deployment plans." }
+  },
+  "guardrails": {
+    "deny_by_default": true,
+    "approval_required_for": [
+      "external_share",
+      "account_isolation",
+      "case_escalation",
+      "workflow_promotion",
+      "model_route_promotion",
+      "policy_change",
+      "mission_priority_change"
+    ],
+    "may_propose_not_apply": [
+      "prompt_updates",
+      "workflow_updates",
+      "heuristic_updates",
+      "model_route_updates",
+      "retrieval_parameter_updates"
+    ],
+    "never_autonomously_change": [
+      "mission_objectives",
+      "coalition_boundaries",
+      "classification_markings",
+      "approval_thresholds",
+      "source_protection_rules"
+    ]
+  },
+  "runtime_controls": {
+    "tool_policy": "opa.rego:artemis.authz",
+    "audit_sink": "immutable_ledger.artemis_agent_events",
+    "deployment_control": "apollo",
+    "eval_gate": "aip_eval_suite",
+    "rollback_strategy": "automatic_on_policy_or_precision_regression"
+  }
+}
+```
+
+### Python precision orchestrator
+
+```python
+from __future__ import annotations
+
+import asyncio
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Awaitable, Callable
+
+class RiskLevel(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    OPERATIONAL = "operational"
+
+class Specialist(str, Enum):
+    STRATEGIST = "strategist"
+    RESEARCHER = "researcher"
+    BUILDER = "builder"
+    AUDITOR = "auditor"
+    OPTIMIZER = "optimizer"
+    OPERATOR = "operator"
+
+@dataclass(frozen=True)
+class PercivalContext:
+    mission_id: str
+    operator_id: str
+    purpose_of_use: str
+    classification_context: str
+    compartments: tuple[str, ...]
+    coalition_scope: str
+    execute_now: bool = False
+
+@dataclass
+class Workstream:
+    stream_id: str
+    specialist: Specialist
+    objective: str
+    depends_on: set[str] = field(default_factory=set)
+    risk: RiskLevel = RiskLevel.LOW
+    tool_allowlist: tuple[str, ...] = ()
+
+@dataclass
+class WorkstreamResult:
+    stream_id: str
+    specialist: Specialist
+    output: dict[str, Any]
+    assumptions: list[str]
+    risks: list[str]
+    citations: list[str]
+    blocked: bool = False
+    blocker: str | None = None
+
+class ApprovalRequired(RuntimeError):
+    def __init__(self, action: str, reason: str):
+        super().__init__(reason)
+        self.action = action
+        self.reason = reason
+
+async def policy_preflight(ctx: PercivalContext, stream: Workstream) -> None:
+    decision = await opa_allow({
+        "principal": {"id": ctx.operator_id, "compartments": ctx.compartments, "coalition": ctx.coalition_scope},
+        "action": f"workstream.{stream.specialist.value}",
+        "resource": {"mission_id": ctx.mission_id, "classification": ctx.classification_context},
+        "purpose_of_use": ctx.purpose_of_use,
+        "tools": stream.tool_allowlist,
+    })
+    if not decision["allow"]:
+        raise PermissionError(decision.get("reason", "policy denied"))
+    if stream.risk is RiskLevel.OPERATIONAL and not decision.get("approval_present", False):
+        raise ApprovalRequired(stream.stream_id, "operational workstream requires explicit approval")
+
+async def run_workstream(
+    ctx: PercivalContext,
+    stream: Workstream,
+    executor: Callable[[PercivalContext, Workstream], Awaitable[WorkstreamResult]],
+) -> WorkstreamResult:
+    try:
+        await policy_preflight(ctx, stream)
+        result = await executor(ctx, stream)
+        await append_audit_event("percival.workstream.completed", ctx.operator_id, result.__dict__)
+        return result
+    except ApprovalRequired as exc:
+        return WorkstreamResult(
+            stream_id=stream.stream_id,
+            specialist=stream.specialist,
+            output={},
+            assumptions=[],
+            risks=[exc.reason],
+            citations=[],
+            blocked=True,
+            blocker=f"approval_required:{exc.action}",
+        )
+    except Exception as exc:
+        await append_audit_event("percival.workstream.failed", ctx.operator_id, {"stream_id": stream.stream_id, "error": repr(exc)})
+        return WorkstreamResult(
+            stream_id=stream.stream_id,
+            specialist=stream.specialist,
+            output={},
+            assumptions=[],
+            risks=["isolated workstream failure; other lanes preserved"],
+            citations=[],
+            blocked=True,
+            blocker=repr(exc),
+        )
+
+async def orchestrate_percival(
+    ctx: PercivalContext,
+    workstreams: list[Workstream],
+    executor: Callable[[PercivalContext, Workstream], Awaitable[WorkstreamResult]],
+) -> dict[str, Any]:
+    completed: dict[str, WorkstreamResult] = {}
+    pending = {stream.stream_id: stream for stream in workstreams}
+
+    while pending:
+        ready = [stream for stream in pending.values() if stream.depends_on <= completed.keys()]
+        if not ready:
+            raise RuntimeError(f"dependency deadlock: {sorted(pending)}")
+
+        batch = await asyncio.gather(*(run_workstream(ctx, stream, executor) for stream in ready))
+        for result in batch:
+            completed[result.stream_id] = result
+            pending.pop(result.stream_id, None)
+
+    return reconcile_results(ctx, list(completed.values()))
+
+def reconcile_results(ctx: PercivalContext, results: list[WorkstreamResult]) -> dict[str, Any]:
+    blocked = [r for r in results if r.blocked]
+    successful = [r for r in results if not r.blocked]
+    return {
+        "objective": f"Mission {ctx.mission_id} policy-compliant execution output",
+        "parallel_workstreams": [r.stream_id for r in results],
+        "completed_output": {r.stream_id: r.output for r in successful},
+        "blocked_workstreams": [{"stream_id": r.stream_id, "blocker": r.blocker} for r in blocked],
+        "risks_and_assumptions": {
+            "risks": [risk for r in results for risk in r.risks],
+            "assumptions": [assumption for r in results for assumption in r.assumptions],
+        },
+        "citations": sorted({citation for r in successful for citation in r.citations}),
+        "next_action": "submit approval package" if blocked else "operator review and controlled execution",
+    }
+```
+
+In production, `opa_allow`, `append_audit_event`, and each specialist executor are backed by Foundry Functions, AIP tool calls, Gotham case actions, and Apollo-controlled runtime configuration. The orchestrator preserves momentum by allowing safe lanes to finish even when one lane blocks on approval or policy.

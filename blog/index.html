@@ -127,8 +127,9 @@ a{color:inherit}
 .intel-line code{font-family:var(--mono);color:var(--green)}
 
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 46px}
-.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:10px 13px;text-decoration:none;color:var(--soft);font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;transition:border-color .25s,box-shadow .25s,transform .3s var(--ease-liquid)}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:10px 13px;text-decoration:none;color:var(--soft);font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;transition:border-color .25s,box-shadow .25s,transform .3s var(--ease-liquid);cursor:pointer}
 .chip:hover{border-color:var(--cyan);box-shadow:var(--glow);transform:translateY(-2px)}
+.chip.active{border-color:var(--cyan);color:#031016;background:linear-gradient(135deg,var(--cyan),var(--green));box-shadow:var(--glow)}
 
 section{padding:42px 0}
 .section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:20px}
@@ -486,5 +487,6 @@ if(!reduceMotion){
 <script defer src="insights.js"></script>
 <script defer src="atlas.js"></script>
 <script defer src="/logo-badge.js"></script>
+<script defer src="assistant/writing-help.js"></script>
 </body>
 </html>

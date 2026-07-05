@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "16:18",
-    "timestamp": "2026-07-05T16:18:03Z"
+    "time": "18:16",
+    "timestamp": "2026-07-05T18:16:00Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #194",
-    "time": "16:17",
-    "timestamp": "2026-07-05T16:17:52Z"
+    "detail": "schedule on main \u00b7 run #195",
+    "time": "18:15",
+    "timestamp": "2026-07-05T18:15:48Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-53b9d518-4ba2-4c91-8c9d-f75792998928 \u00b7 run #577",
-    "time": "16:08",
-    "timestamp": "2026-07-05T16:08:03Z"
+    "title": "Agent OS Self-Check",
+    "status": "ok",
+    "detail": "pull_request on claude/agent-workflow-repair-i0rb6v \u00b7 run #1",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:48Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "pull_request on claude/clearglassinc-platform-architecture-gpti8l \u00b7 run #1060",
-    "time": "15:44",
-    "timestamp": "2026-07-05T15:44:15Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglassinc-platform-architecture-gpti8l \u00b7 run #763",
-    "time": "15:44",
-    "timestamp": "2026-07-05T15:44:15Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglassinc-platform-architecture-gpti8l \u00b7 run #404",
-    "time": "15:44",
-    "timestamp": "2026-07-05T15:44:15Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglassinc-platform-architecture-gpti8l \u00b7 run #315",
-    "time": "15:44",
-    "timestamp": "2026-07-05T15:44:15Z"
+    "detail": "pull_request on claude/agent-workflow-repair-i0rb6v \u00b7 run #1071",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:48Z"
   },
   {
     "title": "CI",
     "status": "ok",
-    "detail": "pull_request on claude/clearglassinc-platform-architecture-gpti8l \u00b7 run #1025",
-    "time": "15:44",
-    "timestamp": "2026-07-05T15:44:15Z"
+    "detail": "pull_request on claude/agent-workflow-repair-i0rb6v \u00b7 run #1036",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:48Z"
   },
   {
-    "title": "Security",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "pull_request on claude/clearglassinc-platform-architecture-gpti8l \u00b7 run #790",
-    "time": "15:44",
-    "timestamp": "2026-07-05T15:44:15Z"
-  },
-  {
-    "title": "Code Quality: PR #686",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/686/head \u00b7 run #1921",
-    "time": "15:44",
-    "timestamp": "2026-07-05T15:44:13Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #789",
-    "time": "15:40",
-    "timestamp": "2026-07-05T15:40:27Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #762",
-    "time": "15:40",
-    "timestamp": "2026-07-05T15:40:27Z"
+    "detail": "pull_request on claude/agent-workflow-repair-i0rb6v \u00b7 run #412",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:48Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "push on main \u00b7 run #314",
-    "time": "15:40",
-    "timestamp": "2026-07-05T15:40:27Z"
+    "detail": "pull_request on claude/agent-workflow-repair-i0rb6v \u00b7 run #326",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:48Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/agent-workflow-repair-i0rb6v \u00b7 run #774",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:48Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/agent-workflow-repair-i0rb6v \u00b7 run #801",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:48Z"
+  },
+  {
+    "title": "Code Quality: PR #692",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/692/head \u00b7 run #1933",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:47Z"
+  },
+  {
+    "title": "Workflow Doctor",
+    "status": "ok",
+    "detail": "push on claude/agent-workflow-repair-i0rb6v \u00b7 run #230",
+    "time": "18:11",
+    "timestamp": "2026-07-05T18:11:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-50f6828c-a60e-4647-ac86-5f698411b07c \u00b7 run #579",
+    "time": "18:08",
+    "timestamp": "2026-07-05T18:08:03Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/clearglass-marketing-bot-army-dt338p \u00b7 run #773",
+    "time": "18:04",
+    "timestamp": "2026-07-05T18:04:13Z"
   }
 ]

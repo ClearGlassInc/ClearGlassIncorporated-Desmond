@@ -171,6 +171,35 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 @media(max-width:980px){.nav-links{display:none}.nav-toggle{display:flex}}
 @media(max-width:768px){.nav{top:8px;width:calc(100% - 1rem);height:64px;padding:0 .85rem}.mobile-menu{top:84px;left:.5rem;right:.5rem}.cursor-glow{display:none}}
 
+
+/* ═══════════════════════════════════════════════════════
+   CLEARGLASSINC NEON GLASS NAVBAR — production override
+   Paste-ready block: HTML uses the existing nav below; CSS keeps all
+   links/content intact while upgrading the visual system.
+═══════════════════════════════════════════════════════ */
+:root{--nav-bg:rgba(6,12,28,.74);--nav-bg-strong:rgba(8,15,34,.9);--nav-stroke:rgba(125,211,252,.28);--nav-stroke-hot:rgba(167,139,250,.42);--nav-text:#eaf3ff;--nav-muted:#aab8d4;--nav-neon:#67e8f9;--nav-violet:#a78bfa;--nav-shadow:0 18px 70px rgba(2,8,23,.34),inset 0 1px 0 rgba(255,255,255,.12)}
+.nav{position:sticky;top:10px;isolation:isolate;width:min(1280px,calc(100% - 1.5rem));height:74px;margin-top:10px;background:linear-gradient(135deg,rgba(9,16,36,.86),rgba(10,17,38,.68));border:1px solid var(--nav-stroke);border-radius:24px;box-shadow:var(--nav-shadow),0 0 0 1px rgba(255,255,255,.03);backdrop-filter:blur(26px) saturate(1.55);-webkit-backdrop-filter:blur(26px) saturate(1.55);overflow:visible}
+.nav::before{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(110deg,rgba(103,232,249,.7),rgba(167,139,250,.35),rgba(103,232,249,.16));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.72}
+.nav::after{content:'';position:absolute;left:7%;right:7%;bottom:-18px;height:38px;background:radial-gradient(ellipse at center,rgba(103,232,249,.22),transparent 68%);filter:blur(14px);z-index:-1;pointer-events:none}
+.nav.scrolled{height:66px;background:linear-gradient(135deg,rgba(7,13,29,.92),rgba(10,16,34,.82));border-color:rgba(103,232,249,.34);box-shadow:0 14px 54px rgba(2,8,23,.4),0 0 28px rgba(103,232,249,.08),inset 0 1px 0 rgba(255,255,255,.11)}
+.nav-brand{gap:14px;color:var(--nav-text);min-width:max-content}
+.nav-mark{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,rgba(103,232,249,.95),rgba(167,139,250,.9));box-shadow:0 0 28px rgba(103,232,249,.22),0 10px 26px rgba(2,8,23,.42);border:1px solid rgba(255,255,255,.24)}
+.nav-brand:hover .nav-mark{box-shadow:0 0 34px rgba(103,232,249,.34),0 0 22px rgba(167,139,250,.2),0 12px 30px rgba(2,8,23,.45)}
+.nav-name{font-family:var(--sans);font-size:20px;font-weight:800;letter-spacing:.01em;text-transform:none;color:#f7fbff;text-shadow:0 0 18px rgba(103,232,249,.22)}
+.nav-links{gap:6px;padding:7px;border-radius:999px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.nav-cursor{border-radius:999px;background:linear-gradient(135deg,rgba(103,232,249,.14),rgba(167,139,250,.13));box-shadow:inset 0 0 0 1px rgba(125,211,252,.26),0 0 22px rgba(103,232,249,.13)}
+.nav-links a,.nav-drop-btn{color:var(--nav-muted);font-size:14px;font-weight:700;padding:11px 16px;border-radius:999px;text-shadow:none}
+.nav-links a:hover,.nav-drop-btn:hover,.nav-links a:focus-visible,.nav-drop-btn:focus-visible{color:var(--nav-text)}
+.nav-links a.is-active{color:#fff;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(103,232,249,.18)}
+.nav-links a.is-active::after{bottom:5px;width:22px;height:2px;background:linear-gradient(90deg,var(--nav-neon),var(--nav-violet));box-shadow:0 0 12px rgba(103,232,249,.7)}
+.nav-cta{background:linear-gradient(135deg,rgba(103,232,249,.95),rgba(167,139,250,.95))!important;color:#07111f!important;border-radius:999px!important;box-shadow:0 0 24px rgba(103,232,249,.2),inset 0 1px 0 rgba(255,255,255,.45)!important;text-shadow:none}
+.nav-cta:hover,.nav-cta:focus-visible{background:linear-gradient(135deg,#a5f3fc,#c4b5fd)!important;box-shadow:0 0 30px rgba(103,232,249,.28),0 10px 28px rgba(2,8,23,.28)!important}
+.nav-dropdown{background:rgba(8,15,34,.96);border:1px solid rgba(103,232,249,.2);box-shadow:0 18px 60px rgba(2,8,23,.45),0 0 32px rgba(103,232,249,.08);color:var(--nav-text)}
+.nav-dropdown a{color:var(--nav-muted)!important}.nav-dropdown a:hover{background:rgba(103,232,249,.08)!important;color:#fff!important}.nav-dd-icon{background:rgba(103,232,249,.1);box-shadow:inset 0 0 0 1px rgba(103,232,249,.14)}.nav-dd-label{color:#fff}.nav-dd-sub{color:#7dd3fc}.nav-dd-sep{background:rgba(125,211,252,.12)}
+.nav-toggle{border-color:rgba(103,232,249,.28);background:rgba(103,232,249,.08);color:#eaf3ff;box-shadow:0 0 20px rgba(103,232,249,.12)}.nav-toggle:hover{background:rgba(103,232,249,.14);border-color:rgba(103,232,249,.42)}
+.mobile-menu{background:rgba(8,15,34,.96);border:1px solid rgba(103,232,249,.24);box-shadow:0 22px 70px rgba(2,8,23,.55),0 0 34px rgba(103,232,249,.08)}.mobile-menu a{color:var(--nav-text)}.mobile-menu a:hover,.mobile-menu a:focus-visible{background:rgba(103,232,249,.08)}.mob-sep{background:rgba(125,211,252,.12)}.mob-label{color:#7dd3fc}
+@media(max-width:768px){.nav{top:8px;width:calc(100% - 1rem);height:66px;margin-top:8px}.nav-mark{width:44px;height:44px}.nav-name{font-size:18px}.mobile-menu{top:88px}}
+@media(prefers-reduced-motion:reduce){.nav,.nav *,.mobile-menu{transition:none!important;animation:none!important}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://clearglassinc.github.io/#org","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","logo":"https://clearglassinc.github.io/logo.png","foundingDate":"2024","founder":{"@id":"https://clearglassinc.github.io/#desmond"},"sameAs":["https://github.com/ClearGlassInc"],"address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"},"contactPoint":{"@type":"ContactPoint","telephone":"+1-289-707-0269","contactType":"sales","areaServed":"Worldwide","availableLanguage":"en"}},{"@type":"Person","@id":"https://clearglassinc.github.io/#desmond","name":"Desmond Otieno Odhiambo","jobTitle":"Founder & Chairman, Software Architect","worksFor":{"@id":"https://clearglassinc.github.io/#org"},"url":"https://clearglassinc.github.io/#founder","email":"mailto:desmondotieno@icloud.com","alumniOf":[{"@type":"EducationalOrganization","name":"University of Pennsylvania"},{"@type":"EducationalOrganization","name":"Macquarie University"}],"knowsAbout":["Cybersecurity","AI Automation","Autonomous Agents","Software Architecture","OSINT","Digital Investigations","Financial Crime Analysis","Zero Trust Architecture","Enterprise Workflow Automation"],"sameAs":["https://github.com/ClearGlassInc"]},{"@type":"ProfessionalService","@id":"https://clearglassinc.github.io/#service","name":"ClearGlass Inc","url":"https://clearglassinc.github.io","image":"https://clearglassinc.github.io/logo.png","telephone":"+1-289-707-0269","priceRange":"$$$","areaServed":"Worldwide","address":{"@type":"PostalAddress","addressLocality":"Burlington","addressRegion":"ON","addressCountry":"CA"},"parentOrganization":{"@id":"https://clearglassinc.github.io/#org"},"knowsAbout":["Cybersecurity Consulting","AI Engineering","Autonomous Systems","OSINT Tooling","Software Architecture","Investigative Automation","Enterprise Workflow Automation"]},{"@type":"WebSite","@id":"https://clearglassinc.github.io/#website","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io","publisher":{"@id":"https://clearglassinc.github.io/#org"},"hasPart":[{"@type":"WebPage","name":"Artemis IV Core","url":"https://clearglassinc.github.io/artemis-iv.html"},{"@type":"WebPage","name":"Guardian","url":"https://clearglassinc.github.io/guardian.html"},{"@type":"WebPage","name":"ClearGlass NEXUS v12","url":"https://clearglassinc.github.io/clearglass-nexus.html"},{"@type":"WebPage","name":"Services & Pricing","url":"https://clearglassinc.github.io/offers/index.html"}]}]}</script>
 <meta name="google-site-verification" content="23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM">
@@ -197,8 +226,8 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 <div class="cursor-glow" id="cursorGlow"></div>
 <nav class="nav" id="navbar" aria-label="Primary navigation">
   <a href="index.html" class="nav-brand">
-    <div class="nav-mark"><img src="assets/images/clearglass-logo.png" alt="ClearGlass logo"></div>
-    <div class="nav-name">ClearGlassInc. <em>2040</em></div>
+    <div class="nav-mark"><img src="assets/images/clearglass-logo.png" alt="" aria-hidden="true"></div>
+    <div class="nav-name">ClearGlassInc</div>
   </a>
   <div class="nav-links" id="navLinks">
     <span class="nav-cursor" id="navCursor" aria-hidden="true"></span>
@@ -212,7 +241,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
       <div class="nav-dropdown" id="navDropdown" role="menu">
         <a href="guardian.html" role="menuitem">
           <div class="nav-dd-icon">🌐</div>
-          <div class="nav-dd-meta"><span class="nav-dd-label">Guardian</span><span class="nav-dd-sub">ClearGlassInc.  INTELLIGENCE</span></div>
+          <div class="nav-dd-meta"><span class="nav-dd-label">Guardian</span><span class="nav-dd-sub">INTELLIGENCE OPS</span></div>
         </a>
         <a href="government.html" role="menuitem">
           <div class="nav-dd-icon">🏛️</div>

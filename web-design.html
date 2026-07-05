@@ -136,6 +136,40 @@
   @media(max-width:900px){.g-3{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.trust{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
   @media(max-width:600px){.g-2,.g-3{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card{transition:none}}
+
+  /* command-system capability upgrades */
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+    background-image:linear-gradient(rgba(56,189,248,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);
+    background-size:44px 44px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),rgba(0,0,0,.2));animation:gridDrift 28s linear infinite}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+    background:linear-gradient(to bottom,transparent 0,rgba(56,189,248,.035) 50%,transparent 100%);background-size:100% 10px;opacity:.45}
+  a:focus-visible,.cg-btn:focus-visible,.card:focus-visible{outline:2px solid #67e8f9;outline-offset:4px;border-radius:12px}
+  .command-shell{position:relative;border:1px solid rgba(103,232,249,.24);border-radius:28px;padding:clamp(22px,3vw,34px);
+    background:linear-gradient(145deg,rgba(8,14,28,.72),rgba(12,20,38,.46));box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 24px 90px rgba(0,0,0,.38),0 0 70px rgba(56,189,248,.08);overflow:hidden}
+  .command-shell::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 240px at 18% 0,rgba(56,189,248,.16),transparent 60%),radial-gradient(620px 260px at 85% 8%,rgba(167,139,250,.14),transparent 58%);pointer-events:none}
+  .command-shell::after{content:"";position:absolute;left:-20%;right:-20%;top:-1px;height:1px;background:linear-gradient(90deg,transparent,#67e8f9,transparent);animation:scanLine 5.5s ease-in-out infinite;opacity:.75}
+  .command-shell>*{position:relative;z-index:1}
+  .hud-label{font-family:var(--cg-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8bdcf6;display:inline-flex;gap:10px;align-items:center;border:1px solid rgba(103,232,249,.22);background:rgba(8,16,32,.68);border-radius:999px;padding:7px 12px;box-shadow:0 0 24px rgba(56,189,248,.08)}
+  .hud-label::before{content:"";width:7px;height:7px;border-radius:50%;background:#67e8f9;box-shadow:0 0 15px #67e8f9}
+  .command-intro{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:end;margin-bottom:26px}
+  .command-intro h3{font-size:clamp(1.8rem,3.6vw,3rem);margin:16px 0 0}.command-intro p{color:var(--dim);margin:0;font-size:1.02rem}
+  .command-card,.module-card,.dash-tile{background:linear-gradient(155deg,rgba(255,255,255,.085),rgba(255,255,255,.025));border:1px solid rgba(147,197,253,.18);box-shadow:0 1px 0 rgba(255,255,255,.08) inset;backdrop-filter:blur(16px)}
+  .command-card:hover,.module-card:hover,.dash-tile:hover{transform:translateY(-5px);border-color:rgba(103,232,249,.48);box-shadow:0 16px 44px rgba(0,0,0,.28),0 0 30px rgba(56,189,248,.12)}
+  .command-card h3,.module-card h3{font-family:var(--cg-sans);font-weight:700;letter-spacing:0;font-size:1.05rem}.command-card .tag{color:#67e8f9}
+  .dashboard{margin-top:30px;border-radius:24px;border:1px solid rgba(103,232,249,.22);background:rgba(2,8,23,.62);overflow:hidden}
+  .dash-top{display:flex;justify-content:space-between;gap:16px;padding:16px 18px;border-bottom:1px solid rgba(103,232,249,.16);font-family:var(--cg-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#cfe8ff;background:rgba(14,24,44,.55)}
+  .dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(103,232,249,.12)}
+  .dash-tile{border:0;border-radius:0;padding:20px;background:rgba(10,18,34,.72)}.dash-tile b{display:block;font-size:14px}.dash-tile span{display:inline-block;margin-top:12px;font-family:var(--cg-mono);font-size:10px;color:#67e8f9;letter-spacing:.1em}.dash-tile small{display:block;color:var(--dim-2);margin-top:6px}
+  .module-grid{margin-top:34px}.module-card{border-radius:18px;padding:24px;transition:transform .35s,border-color .35s,box-shadow .35s}.module-card .num{font-family:var(--cg-mono);font-size:11px;color:#67e8f9;letter-spacing:.15em}.module-card p{color:var(--dim);font-size:14px;margin:10px 0 0}
+  .command-steps{grid-template-columns:repeat(3,1fr);margin-top:28px}.command-step{min-height:185px}.command-step .num{font-size:12px;color:#67e8f9}.command-step h3{font-size:1.2rem}
+  .arch-flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.flow-node{border:1px solid rgba(103,232,249,.22);background:rgba(8,16,32,.68);border-radius:14px;padding:12px 14px;font-family:var(--cg-mono);font-size:12px;color:#dcecff}.flow-arrow{color:#67e8f9;font-family:var(--cg-mono)}
+  .premium-cta{margin-top:30px}.premium-cta .cta-actions{margin-top:28px}
+  [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}[data-reveal].is-visible{opacity:1;transform:none}
+  @keyframes gridDrift{to{background-position:44px 44px}}@keyframes scanLine{0%,100%{transform:translateY(0);opacity:.15}45%,55%{transform:translateY(120px);opacity:.8}}
+  @media(max-width:900px){.command-intro{grid-template-columns:1fr}.dash-grid{grid-template-columns:repeat(2,1fr)}.command-steps{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.dash-grid,.command-steps{grid-template-columns:1fr}.flow-arrow{transform:rotate(90deg)}}
+  @media(prefers-reduced-motion:reduce){body::before,.command-shell::after{animation:none}[data-reveal]{opacity:1;transform:none;transition:none}.command-card:hover,.module-card:hover,.dash-tile:hover{transform:none}}
+
 </style>
 <link rel="stylesheet" href="/assets/css/glass.css">
 
@@ -207,7 +241,58 @@
       <h2>A complete <strong>web engineering practice.</strong></h2>
       <p>One partner across the full lifecycle — architecture, front-end, performance, search, security, and the automation that keeps it shipping.</p>
     </div>
-    <div class="grid g-3">
+
+
+    <!-- ADVANCED CAPABILITY COMMAND LAYER -->
+    <div class="command-shell" data-reveal aria-labelledby="command-layer-title">
+      <div class="command-intro">
+        <div>
+          <span class="hud-label">Advanced research-inspired command layer</span>
+          <h3 id="command-layer-title">Mission-grade interface for operational web systems.</h3>
+        </div>
+        <p>ClearGlass builds websites as operational infrastructure — fast, secure, measurable, accessible, and automation-ready from day one.</p>
+      </div>
+      <div class="grid g-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+        <div class="card command-card"><div class="ic">▧</div><h3>Web Systems Architecture</h3><p>Enterprise intelligence architecture for content, routes, components, ownership, and scale.</p><span class="tag">SYSTEM READY</span></div>
+        <div class="card command-card"><div class="ic">⌁</div><h3>Conversion Infrastructure</h3><p>Decision-focused paths, CTA priority, trust signals, and friction reduction engineered as a flow.</p><span class="tag">BUILD VERIFIED</span></div>
+        <div class="card command-card"><div class="ic">◈</div><h3>Cyber-Resilient Front-End</h3><p>Security-minded implementation with no client secrets, dependency hygiene, and documented surface area.</p><span class="tag">SECURITY-MINDED</span></div>
+        <div class="card command-card"><div class="ic">◎</div><h3>SEO Intelligence Layer</h3><p>Metadata, semantic hierarchy, structured data, and crawl-ready information architecture.</p><span class="tag">SEO READY</span></div>
+        <div class="card command-card"><div class="ic">⌘</div><h3>Accessibility Engineering</h3><p>Semantic HTML, keyboard paths, visible focus, AA+ contrast, and motion-safe interactions.</p><span class="tag">WCAG-ALIGNED</span></div>
+        <div class="card command-card"><div class="ic">▣</div><h3>Static-First Deployment</h3><p>Fast, durable GitHub Pages-compatible delivery with CI validation and a clean rollback path.</p><span class="tag">STATIC-FIRST</span></div>
+        <div class="card command-card"><div class="ic">⟲</div><h3>Automation-Ready Operations</h3><p>Repository discipline, documented workflows, and maintainable systems that support future automation.</p><span class="tag">CI-VALIDATED</span></div>
+        <div class="card command-card"><div class="ic">▰</div><h3>Performance Governance</h3><p>Payload budgets, Core Web Vitals targets, image strategy, caching, and regression-aware delivery.</p><span class="tag">CORE WEB VITALS TARGETED</span></div>
+      </div>
+
+      <!-- MISSION DASHBOARD PREVIEW -->
+      <div class="dashboard" data-reveal aria-labelledby="dashboard-title">
+        <div class="dash-top"><span id="dashboard-title">Mission Dashboard Preview</span><span>Capability indicators · not live monitoring data</span></div>
+        <div class="dash-grid">
+          <div class="dash-tile"><b>Performance Budget</b><span>CORE WEB VITALS TARGETED</span><small>Payload and rendering discipline.</small></div>
+          <div class="dash-tile"><b>Accessibility Score</b><span>WCAG-ALIGNED</span><small>Keyboard, contrast, semantics.</small></div>
+          <div class="dash-tile"><b>SEO Readiness</b><span>SYSTEM READY</span><small>Metadata and crawl structure.</small></div>
+          <div class="dash-tile"><b>Security Surface</b><span>SECURITY-MINDED</span><small>No client secrets; documented controls.</small></div>
+          <div class="dash-tile"><b>Deployment Stability</b><span>STATIC-FIRST</span><small>Reproducible deployment path.</small></div>
+          <div class="dash-tile"><b>Conversion Path Clarity</b><span>BUILD VERIFIED</span><small>Focused CTAs and trust signals.</small></div>
+          <div class="dash-tile"><b>Mobile Responsiveness</b><span>SYSTEM READY</span><small>Mobile-first interaction targets.</small></div>
+          <div class="dash-tile"><b>Maintainability Index</b><span>CI-VALIDATED</span><small>Clean components and ownership.</small></div>
+        </div>
+      </div>
+
+      <!-- ADVANCED WEB ENGINEERING MODULES -->
+      <div class="module-grid grid g-3" data-reveal aria-label="Advanced web engineering modules">
+        <div class="module-card"><span class="num">01</span><h3>Architecture Intelligence</h3><p>Content models, routing logic, reusable components, scalable page structure, and clear ownership.</p></div>
+        <div class="module-card"><span class="num">02</span><h3>Performance Command</h3><p>Payload budgets, lazy loading, caching strategy, image optimization, Lighthouse targets, and Core Web Vitals tuning.</p></div>
+        <div class="module-card"><span class="num">03</span><h3>Security Surface Control</h3><p>No client secrets, hardened headers where hosting allows, least-privilege automation, dependency hygiene, and documented attack surface.</p></div>
+        <div class="module-card"><span class="num">04</span><h3>Accessibility Core</h3><p>Semantic HTML, keyboard navigation, visible focus, AA+ contrast, ARIA only where needed, and reduced-motion support.</p></div>
+        <div class="module-card"><span class="num">05</span><h3>Search Visibility Engine</h3><p>Semantic headings, structured data, metadata, sitemap alignment, and crawl-ready architecture.</p></div>
+        <div class="module-card"><span class="num">06</span><h3>Deployment Automation</h3><p>GitHub Actions-ready workflow, static-first deploys, rollback path, clean repository structure, and CI validation.</p></div>
+        <div class="module-card"><span class="num">07</span><h3>Conversion Operations</h3><p>CTA hierarchy, friction reduction, trust signals, proof blocks, decision-focused UX, and lead-generation flow.</p></div>
+        <div class="module-card"><span class="num">08</span><h3>Maintenance Protocol</h3><p>Documented code, component discipline, performance monitoring, content updates, and long-term optimization.</p></div>
+      </div>
+    </div>
+
+
+    <div class="grid g-3" data-reveal>
       <div class="card"><div class="ic">▦</div><h3>Website architecture</h3><p>Content models, routing, and reusable components designed for clarity and change — a system, not a stack of pages.</p></div>
       <div class="card"><div class="ic">⟨⟩</div><h3>Front-end development</h3><p>Hand-built, standards-based front-ends with clean, reviewable code and no framework lock-in where it isn't earned.</p></div>
       <div class="card"><div class="ic">▭</div><h3>Responsive design</h3><p>Mobile-first layouts that hold their hierarchy and touch targets from phone to ultrawide.</p></div>
@@ -236,6 +321,22 @@
       <div class="step"><div class="num">04</div><h3>Launch</h3><p>CI-validated deploy, security headers, analytics, and a tested rollback path.</p></div>
       <div class="step"><div class="num">05</div><h3>Optimize</h3><p>Measure, tune Core Web Vitals, iterate on conversion, and maintain.</p></div>
     </div>
+  
+
+    <!-- TACTICAL PROCESS UPGRADE -->
+    <div class="command-shell" data-reveal style="margin-top:28px" aria-labelledby="tactical-process-title">
+      <span class="hud-label">Tactical web engineering layer</span>
+      <h3 id="tactical-process-title" style="font-size:clamp(1.8rem,3vw,2.6rem);margin:16px 0 0">Command-sequence delivery protocol.</h3>
+      <div class="steps command-steps">
+        <div class="step command-step"><div class="num">01 — Discovery Intelligence</div><h3>Clarify the mission</h3><p>Audience, business objective, conversion path, constraints, risk areas, and success metrics.</p></div>
+        <div class="step command-step"><div class="num">02 — Architecture Blueprint</div><h3>Map the system</h3><p>Page hierarchy, content models, components, SEO structure, and technical foundation.</p></div>
+        <div class="step command-step"><div class="num">03 — Interface System</div><h3>Design the surface</h3><p>Glass-based UI tokens, responsive states, accessibility rules, and interaction patterns.</p></div>
+        <div class="step command-step"><div class="num">04 — Build &amp; Validate</div><h3>Ship clean code</h3><p>Semantic HTML, modern CSS, progressive JavaScript, performance checks, and accessibility validation.</p></div>
+        <div class="step command-step"><div class="num">05 — Launch &amp; Harden</div><h3>Verify production</h3><p>Static-first deployment, metadata verification, rollback test, security-surface documentation, and behavior validation.</p></div>
+        <div class="step command-step"><div class="num">06 — Optimize &amp; Scale</div><h3>Improve over time</h3><p>Core Web Vitals, conversion flow, content structure, search visibility, and maintainability.</p></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -260,6 +361,20 @@
       <span class="chip">WCAG 2.x</span>
       <span class="chip">Hardened security headers</span>
       <span class="chip">Edge CDN delivery</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- COMMAND ARCHITECTURE FLOW -->
+<section class="band" id="command-architecture">
+  <div class="wrap">
+    <div class="command-shell" data-reveal>
+      <span class="hud-label">Command Architecture Flow</span>
+      <h2 style="font-size:clamp(2rem,4vw,3rem);margin:18px 0 24px">From business objective to revenue conversion.</h2>
+      <div class="arch-flow" aria-label="Website command architecture flow">
+        <span class="flow-node">Business Objective</span><span class="flow-arrow">→</span><span class="flow-node">Information Architecture</span><span class="flow-arrow">→</span><span class="flow-node">Component System</span><span class="flow-arrow">→</span><span class="flow-node">Performance Budget</span><span class="flow-arrow">→</span><span class="flow-node">Accessibility Layer</span><span class="flow-arrow">→</span><span class="flow-node">SEO Schema</span><span class="flow-arrow">→</span><span class="flow-node">Security Controls</span><span class="flow-arrow">→</span><span class="flow-node">CI/CD Deployment</span><span class="flow-arrow">→</span><span class="flow-node">Analytics &amp; Optimization</span><span class="flow-arrow">→</span><span class="flow-node">Revenue Conversion</span>
+      </div>
     </div>
   </div>
 </section>
@@ -341,6 +456,20 @@
         <a class="cg-btn cg-btn--primary cg-btn--lg" href="mailto:desmondotieno@icloud.com?subject=Website%20engagement">Request a proposal</a>
         <a class="cg-btn cg-btn--secondary cg-btn--lg" href="index.html">Explore ClearGlass</a>
       </div>
+
+      <!-- PREMIUM CTA UPGRADE -->
+      <div class="command-shell premium-cta" data-reveal>
+        <span class="hud-label">Enter Command Surface</span>
+        <h2>Build the website like infrastructure — not decoration.</h2>
+        <p>ClearGlass designs web systems for organizations that need speed, trust, security, accessibility, and conversion discipline in one maintainable architecture.</p>
+        <div class="cta-actions">
+          <a class="cg-btn cg-btn--primary cg-btn--lg" href="mailto:desmondotieno@icloud.com?subject=Web%20Systems%20Build">Start a Web Systems Build</a>
+          <a class="cg-btn cg-btn--secondary cg-btn--lg" href="#capabilities">Explore Capabilities</a>
+          <a class="cg-btn cg-btn--ghost cg-btn--lg" href="mailto:desmondotieno@icloud.com?subject=Technical%20Website%20Review">Request Technical Review</a>
+          <a class="cg-btn cg-btn--ghost cg-btn--lg" href="#command-architecture">Enter Command Surface</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -377,6 +506,26 @@
     }, { threshold: 0.6 });
     nodes.forEach(function (n) { io.observe(n); });
   })();
+
+  // Lightweight scroll reveal for command-system panels; content remains visible when unsupported.
+  (function () {
+    var reduce = false;
+    try { reduce = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+    var nodes = document.querySelectorAll("[data-reveal]");
+    if (reduce || !("IntersectionObserver" in window)) {
+      nodes.forEach(function (n) { n.classList.add("is-visible"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add("is-visible");
+        io.unobserve(en.target);
+      });
+    }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
+    nodes.forEach(function (n) { io.observe(n); });
+  })();
+
 </script>
 <link rel="stylesheet" href="theme.css">
 <script defer src="control-surface.js"></script>

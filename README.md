@@ -141,7 +141,6 @@ This repository is a website and engineering monorepo. The active top-level entr
 | Path | Purpose | Primary checks |
 | --- | --- | --- |
 | `index.html`, `*.html`, `assets/` | Static GitHub Pages website and product pages. | `python scripts/site_reliability_audit.py` |
-| `data/platform/architecture.json`, `platform-architecture.html`, `PLATFORM_ARCHITECTURE.md` | Canonical ClearGlass Intelligence Platform taxonomy (executive layer, agent framework, hierarchy, product family, naming standard) and its data-driven page. | `python -m scripts.platform_registry --validate`; `python -m pytest tests/test_platform_registry.py` |
 | `artemis/` | Installable Artemis Python package and environmental risk module. | `python -m pytest artemis/tests` |
 | `deployment/artemis/` | Containerized Artemis FastAPI model-service deployment. | `uvicorn deployment.artemis.app.main:app` / Docker build |
 | `bots/`, `scripts/`, `tests/` | Operational automation bots, repository audits, release/content tooling. | `python -m pytest tests` |

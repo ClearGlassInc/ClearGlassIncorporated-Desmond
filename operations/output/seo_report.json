@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-05T09:41:15.126628+00:00",
+  "run_utc": "2026-07-04T09:21:22.649935+00:00",
   "files_audited": 59,
-  "average_score": 92.0,
+  "average_score": 92.2,
   "pages": [
     {
       "file": "404.html",
@@ -1115,9 +1115,9 @@
       "title": "Website Design & Development \u2014 Growth Infrastructure | ClearGlass Inc.",
       "title_length": 70,
       "title_ok": false,
-      "description": "ClearGlass designs and builds fast, secure, accessible websites engineered as business growth infrastructure \u2014 architecture, front-end development, performance, accessibility, SEO, and maintainable code.",
-      "description_length": 203,
-      "description_ok": false,
+      "description": "ClearGlass designs and builds fast, secure, accessible websites engineered as business growth infrastructure \u2014 architecture, front-end development.",
+      "description_length": 147,
+      "description_ok": true,
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
@@ -1125,15 +1125,14 @@
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 80,
+      "score": 90,
       "issues": [
-        "Title length 70 chars (ideal 30\u201360)",
-        "Description length 203 chars (ideal 120\u2013160)"
+        "Title length 70 chars (ideal 30\u201360)"
       ]
     }
   ],
   "top_issues": [
-    "14x \u2014 Description length N chars (ideal N\u2013N)",
+    "13x \u2014 Description length N chars (ideal N\u2013N)",
     "12x \u2014 Title length N chars (ideal N\u2013N)",
     "6x \u2014 Missing og:image",
     "3x \u2014 Multiple <hN> tags (N)",

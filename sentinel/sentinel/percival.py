@@ -18,6 +18,21 @@ Operating model (fail-closed):
   * Revenue pipeline is INBOUND-ONLY: PERCIVAL qualifies leads that contacted
     ClearGlass and drafts booking artifacts for human send. It does not hunt,
     profile, or target private individuals — the SENTINEL charter applies.
+
+Bridge to the wider PERCIVAL control plane: ``identity.py``, ``capability.py``,
+``governor.py``, and ``mission_memory.py`` in this package are the real,
+tested v7-v8 deny-by-default core (scoped identity -> capability broker ->
+sovereign policy governor -> durable memory). This agent now OPTIONALLY wires
+that core in: pass an ``AgentIdentity`` to ``Percival`` and every real write
+(``apply(allow_writes=True)``) is additionally gated by the sovereign
+``PolicyGovernor`` — a stopped or read-only identity blocks all writes; a
+CHANGE-scoped identity permits them; every decision lands on the shared audit
+chain. Without an identity, behaviour is unchanged (the self-contained
+``govern()``/AUTO_FIX policy remains the sole gate), so this stays the keyless,
+stdlib-only, fail-closed website-governance agent that actually runs.
+``PERCIVAL_V9_DEPLOYMENT.md`` and ``../../docs/PERCIVAL_V9_ARCHITECTURE.md``
+sketch how the core would be deployed as a distributed service
+(EKS/Temporal/LangGraph/OPA) — neither is provisioned.
 """
 from __future__ import annotations
 
@@ -29,6 +44,8 @@ from pathlib import Path
 from typing import Callable, Optional
 
 from .audit import AuditLog
+from .governor import PolicyGovernor
+from .identity import AgentIdentity
 
 # ───────────────────────────── findings ─────────────────────────────
 
@@ -55,6 +72,7 @@ SAFE_AUTO_FIXES = frozenset({
     "sitemap_dead_url",
     "missing_img_alt",
     "trailing_whitespace",
+    "missing_og_tags",
 })
 
 # Categories that must always escalate, regardless of severity.
@@ -125,6 +143,8 @@ _IMG = re.compile(r"<img\b[^>]*>", re.I)
 _ALT = re.compile(r"\balt=", re.I)
 _LOC = re.compile(r"<loc>(.*?)</loc>")
 _SCRIPT_STYLE = re.compile(r"<(script|style)\b[^>]*>.*?</\1>", re.I | re.S)
+_OG_TITLE = re.compile(r'<meta\s+property=["\']og:title["\']', re.I)
+_OG_DESC = re.compile(r'<meta\s+property=["\']og:description["\']', re.I)
 
 # pages that are intentionally excluded from indexing/audit noise
 EXEMPT = frozenset({
@@ -166,6 +186,10 @@ def audit_page(name: str, html: str) -> list[Finding]:
                                "img without alt text", Severity.LOW,
                                business_value=2, user_impact=4, technical_risk=1))
             break  # one finding per page is enough to act on
+    if not (_OG_TITLE.search(html) and _OG_DESC.search(html)):
+        out.append(Finding("missing_og_tags", "seo", name,
+                           "no og:title/og:description — weak social share preview",
+                           Severity.LOW, business_value=3, user_impact=2, technical_risk=1))
     return out
 
 
@@ -318,10 +342,38 @@ class Percival:
     SURFACE = "clearglassinc.github.io"
 
     def __init__(self, root: Path | str, *, audit_log: Optional[AuditLog] = None,
-                 clock: Callable[[], str] | None = None) -> None:
+                 clock: Callable[[], str] | None = None,
+                 identity: Optional[AgentIdentity] = None) -> None:
         self.root = Path(root)
         self.audit = audit_log or AuditLog()
         self._now = clock or (lambda: _dt.datetime.now(_dt.timezone.utc).isoformat())
+        # Optional control-plane wiring. When an identity is supplied, every real
+        # write is additionally gated by the sovereign PolicyGovernor (scoped
+        # identity -> capability broker -> deny-by-default -> audit), sharing this
+        # agent's audit chain. Without an identity, behaviour is unchanged: the
+        # self-contained govern()/AUTO_FIX policy remains the sole gate.
+        self.identity = identity
+        self.governor: Optional[PolicyGovernor] = (
+            PolicyGovernor(identity, audit=self.audit) if identity is not None else None
+        )
+
+    def _authorize_write(self, target: str) -> tuple[bool, str]:
+        """Ask the governor whether a write may proceed. A write is an internal,
+        reversible change on the 'operations' lane (CHANGE tier). Returns
+        (allowed, reason). With no governor wired, writes are permitted (the
+        existing AUTO_FIX policy already constrained them)."""
+        if self.governor is None:
+            return True, "no governor wired — legacy AUTO_FIX policy governs"
+        request = {
+            "request_context": {
+                "mission_id": f"percival-scan:{self._now()}",
+                "auth_token": self.identity.instance_id if self.identity else "",
+            },
+            "action_scope": "execute_internal",
+            "target_lane": ["operations"],
+        }
+        decision = self.governor.evaluate(request)
+        return decision.allowed, decision.reason
 
     # -- observation (always allowed) -------------------------------------
     def scan(self) -> PercivalReport:
@@ -366,6 +418,14 @@ class Percival:
             if dec.action is not Action.AUTO_FIX:
                 continue
             desc = f"{dec.finding.kind}@{dec.finding.page}"
+            # For real writes with a governor wired, the sovereign policy has the
+            # final say: a denied write is blocked and never applied, and the
+            # denial is on the audit chain via the governor.
+            if allow_writes:
+                ok, reason = self._authorize_write(desc)
+                if not ok:
+                    applied.append(f"BLOCKED {desc} — {reason}")
+                    continue
             self.audit.record(actor="PERCIVAL", action="percival.fix", detail={
                 "target": desc, "dry_run": not allow_writes,
                 "reason": dec.reason,

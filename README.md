@@ -212,3 +212,17 @@ Founder & Chairman **Desmond Otieno Odhiambo**. See `docs/Desmond_Otieno_Odhiamb
 ## Architecture Blueprints
 
 - [ClearGlassInc Artemis full-stack intelligence blueprint](CLEARGLASSINC_ARTEMIS_FULL_STACK_INTELLIGENCE_BLUEPRINT.md)
+
+## ClearGlass Growth Entity
+
+Run the local manual-review growth command system with PowerShell 7:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File .\ClearGlass-GrowthEntity.ps1 -Mode Sample -OpenFolder
+pwsh -ExecutionPolicy Bypass -File .\ClearGlass-GrowthEntity.ps1 -Mode Full -OpenFolder
+```
+
+The script creates `ClearGlassGrowthEntity/` with configuration, content scoring exports,
+daily posting briefs, finance action files, and logs. It is intentionally a planning and
+compliance-review system only; do not store passwords, tokens, cookies, or API secrets in it,
+and do not use it for fake engagement, mass DMs, scraping, or platform-bypass behavior.

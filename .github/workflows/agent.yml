@@ -1,4 +1,4 @@
-name: Workflow Repair Agent (Hardened)
+name: Workflow Repair Agent (Claude)
 
 # Manually-triggered agent that diagnoses (and optionally repairs) failing
 # GitHub Actions workflows in this repository.
@@ -58,7 +58,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Optional-secret convention (mirrors multi-repo-audit's CG_ORG_PAT):
+      # without an agent credential the run cannot do anything useful, so skip
+      # cleanly instead of hard-failing every manual dispatch. Adding either
+      # secret re-enables the agent.
+      - name: Check agent credentials
+        id: creds
+        env:
+          HAS_KEY: ${{ (secrets.CLAUDE_CODE_OAUTH_TOKEN != '' || secrets.ANTHROPIC_API_KEY != '') && 'true' || 'false' }}
+        run: |
+          if [[ "$HAS_KEY" != "true" ]]; then
+            echo "::warning::Neither CLAUDE_CODE_OAUTH_TOKEN nor ANTHROPIC_API_KEY is set — skipping repair agent. Add one under Settings → Secrets and variables → Actions."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run repair agent
+        if: steps.creds.outputs.skip != 'true'
         uses: anthropics/claude-code-action@v1
         with:
           # Prefer an OAuth token if present, otherwise fall back to API key.
@@ -66,8 +83,9 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: |
-            Read PROMPT.md at the repository root and follow it exactly as your
-            operating contract.
+            Read agents/workflow_repair/system_prompt.md and follow it exactly
+            as your operating contract. (PROMPT.md at the repository root is
+            the release commander's contract, not yours — ignore it.)
 
             Run parameters for this invocation:
               mode:  ${{ github.event.inputs.mode }}

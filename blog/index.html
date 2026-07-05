@@ -10,7 +10,6 @@
 <meta name="theme-color" content="#05070d"/>
 <link rel="canonical" href="https://clearglassinc.github.io/blog/"/>
 <link rel="alternate" type="application/rss+xml" title="ClearGlass Insights RSS" href="https://clearglassinc.github.io/blog/feed.xml"/>
-<link rel="alternate" type="application/json" title="ClearGlass Insights post index" href="https://clearglassinc.github.io/blog/posts.json"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="ClearGlass Inc."/>
 <meta property="og:title" content="ClearGlass Insights — Governed AI, Cybersecurity &amp; Autonomy"/>
@@ -24,20 +23,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="insights.css"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {"@type":"WebSite","@id":"https://clearglassinc.github.io/#website","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io/","publisher":{"@id":"https://clearglassinc.github.io/#org"},"potentialAction":{"@type":"SearchAction","target":"https://clearglassinc.github.io/blog/?q={search_term_string}","query-input":"required name=search_term_string"}},
     {"@type":"Organization","@id":"https://clearglassinc.github.io/#org","name":"ClearGlass Inc.","url":"https://clearglassinc.github.io/","logo":"https://clearglassinc.github.io/assets/images/clearglass-logo.png"},
-    {"@type":"Blog","@id":"https://clearglassinc.github.io/blog/#blog","name":"ClearGlass Insights","description":"Governed AI, cybersecurity, autonomy, OSINT, and high-trust software systems.","url":"https://clearglassinc.github.io/blog/","publisher":{"@id":"https://clearglassinc.github.io/#org"},"blogPost":[{"@id":"https://clearglassinc.github.io/blog/ai-agent-governance-governed-autonomy.html#article"},{"@id":"https://clearglassinc.github.io/blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html#article"},{"@id":"https://clearglassinc.github.io/blog/osint-workflow-that-survives-contact-with-reality.html#article"},{"@id":"https://clearglassinc.github.io/blog/cybersecurity-architecture-for-agentic-software.html#article"}]},
-    {"@type":"ItemList","@id":"https://clearglassinc.github.io/blog/#postlist","name":"ClearGlass Insights — latest briefs","itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[
-      {"@type":"ListItem","position":1,"name":"Cybersecurity Architecture for Agentic Software","url":"https://clearglassinc.github.io/blog/cybersecurity-architecture-for-agentic-software.html"},
-      {"@type":"ListItem","position":2,"name":"The OSINT Workflow That Survives Contact With Reality","url":"https://clearglassinc.github.io/blog/osint-workflow-that-survives-contact-with-reality.html"},
-      {"@type":"ListItem","position":3,"name":"ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform","url":"https://clearglassinc.github.io/blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"},
-      {"@type":"ListItem","position":4,"name":"AI Agent Governance: The Governed Autonomy Playbook","url":"https://clearglassinc.github.io/blog/ai-agent-governance-governed-autonomy.html"}
-    ]},
-    {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://clearglassinc.github.io/"},{"@type":"ListItem","position":2,"name":"Insights","item":"https://clearglassinc.github.io/blog/"}]}
+    {"@type":"Blog","@id":"https://clearglassinc.github.io/blog/#blog","name":"ClearGlass Insights","description":"Governed AI, cybersecurity, autonomy, OSINT, and high-trust software systems.","url":"https://clearglassinc.github.io/blog/","publisher":{"@id":"https://clearglassinc.github.io/#org"},"blogPost":[{"@id":"https://clearglassinc.github.io/blog/ai-agent-governance-governed-autonomy.html#article"},{"@id":"https://clearglassinc.github.io/blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html#article"},{"@id":"https://clearglassinc.github.io/blog/ai-agents-insider-threat.html#article"},{"@id":"https://clearglassinc.github.io/blog/zero-trust-is-outdated.html#article"}]},
+    {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://clearglassinc.github.io/"},{"@type":"ListItem","position":2,"name":"Insights","item":"https://clearglassinc.github.io/blog/"}]},
+    {"@type":"ItemList","@id":"https://clearglassinc.github.io/blog/#postlist","name":"ClearGlass Insights — latest briefs","itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://clearglassinc.github.io/blog/ai-agents-insider-threat.html"},{"@type":"ListItem","position":2,"url":"https://clearglassinc.github.io/blog/zero-trust-is-outdated.html"},{"@type":"ListItem","position":3,"url":"https://clearglassinc.github.io/blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"},{"@type":"ListItem","position":4,"url":"https://clearglassinc.github.io/blog/ai-agent-governance-governed-autonomy.html"}]}
   ]
 }
 </script>
@@ -212,14 +207,100 @@ section{padding:42px 0}
 
 @media(max-width:920px){.hero-grid,.feature,.two,.newsletter,.footer-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.nav-links a:not(.nav-cta){display:none}}
 @media(max-width:640px){.wrap{width:min(100% - 28px,var(--max))}.grid,.metrics{grid-template-columns:1fr}.hero{padding-top:46px}.nav-name{font-size:20px}.section-head{display:block}.command{padding:10px}.radar{height:190px}#field{opacity:.35}}
+
+/* insight atlas — living intelligence-graph panel */
+.atlas-shell{position:relative;height:clamp(500px,66vh,740px);border:1px solid rgba(255,214,150,.16);border-radius:36px;overflow:hidden;isolation:isolate;
+  background:radial-gradient(130% 120% at 50% -10%,#0b1526 0%,#050810 46%,#03040a 100%);
+  box-shadow:0 44px 130px rgba(0,0,0,.55),inset 0 0 140px rgba(3,6,14,.85),0 0 60px rgba(255,196,120,.05)}
+.atlas-shell::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.13;
+  background-image:linear-gradient(rgba(160,196,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(160,196,255,.08) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(80% 80% at 50% 50%,#000 30%,transparent 100%)}
+.atlas-shell::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,214,150,.09),transparent 22%,transparent 78%,rgba(57,216,255,.06));mix-blend-mode:screen}
+#atlasCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.atlas-hud{position:absolute;z-index:6;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);pointer-events:none}
+.atlas-brand{top:18px;left:22px;display:flex;align-items:center;gap:9px;color:#ffe3b0}
+.atlas-brand em{font-style:normal;color:var(--muted);letter-spacing:.14em}
+.atlas-dot{width:7px;height:7px;border-radius:50%;background:#ffd9a0;box-shadow:0 0 12px #ffcf8a;animation:pulse 1.8s ease-in-out infinite}
+.atlas-mode{top:20px;right:22px;text-align:right;color:#9fe8c8;max-width:44ch}
+.atlas-controls{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:7;display:flex;gap:8px}
+.atlas-btn{width:34px;height:30px;border-radius:10px;border:1px solid var(--line);background:rgba(10,18,32,.72);color:var(--soft);
+  font:700 12px var(--mono);cursor:pointer;backdrop-filter:blur(8px);transition:border-color .2s,color .2s}
+.atlas-btn:hover{border-color:rgba(255,214,150,.5);color:#ffe3b0}
+.atlas-timeline{position:absolute;left:16px;top:50%;transform:translateY(-50%);z-index:7;display:grid;gap:7px}
+.atlas-year{display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--muted);cursor:pointer;
+  font:700 10.5px var(--mono);letter-spacing:.12em;padding:5px 8px;border-radius:999px;transition:color .25s,background .25s}
+.atlas-year i{width:14px;height:1px;background:currentColor;opacity:.5;transition:width .25s}
+.atlas-year:hover{color:var(--soft)}
+.atlas-year.on{color:#ffd9a0;background:rgba(255,214,150,.08)}
+.atlas-year.on i{width:24px;opacity:1;box-shadow:0 0 8px rgba(255,214,150,.8)}
+.atlas-labels{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+.atlas-label{position:absolute;top:0;left:0;pointer-events:auto;display:flex;align-items:center;gap:7px;border:0;background:transparent;
+  color:#eef4ff;cursor:pointer;padding:2px 4px;font:700 11.5px/1.2 var(--sans);text-shadow:0 2px 14px rgba(0,0,0,.9),0 0 24px rgba(0,0,0,.6);
+  white-space:nowrap;transition:opacity .5s,color .2s;will-change:transform}
+.atlas-label:hover{color:#fff}
+.atlas-label.dim{opacity:.32}
+.atlas-label .pill{font:700 9px var(--mono);letter-spacing:.06em;color:var(--muted);border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;padding:1.5px 6px;background:rgba(6,10,20,.66)}
+.atlas-label.core{pointer-events:none;color:#ffe6b8;font-size:11px}
+.atlas-label.core .pill{border-color:rgba(255,214,150,.35);color:#e8c58a}
+.atlas-tip{position:absolute;top:0;left:0;z-index:9;pointer-events:none;max-width:240px;padding:11px 14px;border-radius:14px;
+  border:1px solid rgba(255,214,150,.28);background:rgba(7,11,20,.92);backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.6);
+  will-change:transform}
+.atlas-tip b{display:block;font-size:13px;color:#fff;margin-bottom:3px}
+.atlas-tip span{display:block;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.atlas-tip em{display:block;font:600 9.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#9fe8c8;margin-top:6px;font-style:normal}
+.atlas-legend{position:absolute;left:20px;bottom:18px;z-index:6;display:grid;gap:6px;padding:12px 14px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(6,10,20,.6);backdrop-filter:blur(8px)}
+.atlas-legend b{font:700 9px var(--mono);letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:2px}
+.atlas-legend span{display:flex;align-items:center;gap:8px;font:600 10.5px var(--mono);letter-spacing:.08em;color:var(--soft)}
+.atlas-legend i{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.atlas-console{position:absolute;right:18px;bottom:16px;z-index:7;width:min(430px,calc(100% - 36px))}
+.atlas-stats{display:flex;gap:8px;justify-content:flex-end}
+.atlas-stat{flex:1;text-align:center;padding:9px 6px;border-radius:12px;border:1px solid var(--line);background:rgba(8,13,24,.72);backdrop-filter:blur(8px)}
+.atlas-stat strong{display:block;font-size:17px;font-variant-numeric:tabular-nums;color:#fff}
+.atlas-stat span{font:600 8.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.atlas-ask{display:flex;align-items:center;gap:8px;margin-top:9px;padding:5px 5px 5px 16px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);background:rgba(9,14,26,.82);backdrop-filter:blur(10px)}
+.atlas-ask input{flex:1;min-width:0;border:0;background:transparent;color:#fff;font:600 12.5px var(--sans);outline:none}
+.atlas-ask input::placeholder{color:var(--muted)}
+.atlas-ask button{width:34px;height:34px;border-radius:50%;border:0;cursor:pointer;font:800 15px var(--sans);color:#031016;
+  background:linear-gradient(135deg,#ffd9a0,#ffb56b);box-shadow:0 0 20px rgba(255,196,120,.35);transition:transform .25s var(--ease-liquid)}
+.atlas-ask button:hover{transform:scale(1.08)}
+.atlas-noscript{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);padding:30px;text-align:center}
+@media(max-width:920px){.atlas-mode{display:none}.atlas-console{left:18px;width:auto}}
+@media(max-width:760px){.atlas-timeline{display:none}.atlas-shell{height:520px;border-radius:26px}}
+@media(max-width:560px){.atlas-legend{display:none}.atlas-stat span{font-size:7.5px}.atlas-label{font-size:10.5px}}
+@media(prefers-reduced-motion:reduce){.atlas-dot{animation:none}}
+
+/* desk signals — trending rail, author trust, proof of work */
+.trend{list-style:none;display:grid;gap:12px;margin-top:18px}
+.trend li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);transition:border-color .25s,transform .3s var(--ease-liquid)}
+.trend li:hover{border-color:rgba(157,123,255,.45);transform:translateX(4px)}
+.trend .rank{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--violet);text-align:center}
+.trend a{color:#fff;font-weight:800;text-decoration:none;line-height:1.35}
+.trend .why{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.author-card{display:flex;gap:16px;align-items:flex-start}
+.author-av{width:56px;height:56px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-family:var(--serif);font-size:26px;font-weight:700;color:#031016;background:linear-gradient(135deg,var(--cyan),var(--green));box-shadow:var(--glow)}
+.author-card b{font-size:17px}
+.author-card .role{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin:4px 0 10px}
+.author-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.author-links a{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 11px;transition:border-color .25s}
+.author-links a:hover{border-color:var(--cyan)}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.proof .panel{padding:18px}
+.proof h3{font-size:24px}
+.proof p{font-size:13.5px}
+@media(max-width:920px){.proof{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.proof{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
+<body data-ix-page="hub" data-ix-theme="dark">
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
 <nav class="nav" id="nav" aria-label="Primary navigation"><div class="wrap nav-inner">
   <a href="../index.html" class="nav-brand"><div class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"></div><div class="nav-name">ClearGlassInc. <em>Insights</em></div></a>
-  <div class="nav-links"><a href="#series">Series</a><a href="#latest">Latest</a><a href="#blueprint">Blueprint</a><a href="#power">Power User</a><a href="#access">Access</a><a href="../index.html#contact" class="nav-cta btn-magnet">Book a briefing →</a></div>
+  <div class="nav-links"><a href="#atlas">Atlas</a><a href="#series">Series</a><a href="#latest">Latest</a><a href="#blueprint">Blueprint</a><a href="#power">Power User</a><a href="#engine">Engine</a><a href="#access">Access</a><a href="../index.html#contact" class="nav-cta btn-magnet">Book a briefing →</a></div>
 </div></nav>
 <header class="hero wrap">
   <div class="hero-aura" id="aura"></div>
@@ -229,26 +310,53 @@ section{padding:42px 0}
       <h1>Where serious builders learn what is next in <span class="gradient">governed AI, cyber defense, autonomy, and OSINT.</span></h1>
       <p>ClearGlass Insights is the founder-led field journal for operators, engineers, and executives building high-trust intelligent systems. No hype cycles. Just architectures, threat models, playbooks, and research notes you can cite.</p>
       <div class="hero-actions"><a class="btn primary btn-magnet" href="#latest">Read the latest brief →</a><a class="btn btn-magnet" href="#newsletter">Join the intelligence list</a><a class="btn btn-magnet" href="../index.html#contact">Request advisory</a></div>
-      <div class="metrics" aria-label="Editorial promises"><div class="metric"><strong data-count="4">0</strong><span>Published briefs</span></div><div class="metric"><strong data-count="10">0</strong><span>Signal categories</span></div><div class="metric"><strong data-count="0">0</strong><span>Generic thought leadership</span></div></div>
+      <div class="metrics" aria-label="Editorial promises"><div class="metric"><strong data-count="10">0</strong><span>Core topic clusters</span></div><div class="metric"><strong data-count="12">0</strong><span>Advanced content blocks</span></div><div class="metric"><strong data-count="0">0</strong><span>Generic thought leadership</span></div></div>
     </div>
     <div class="command tilt-card" aria-label="Cinematic intelligence console"><div class="screen"><div class="screen-top"><span><i class="live-dot"></i>ARTEMIS//EDITORIAL_RADAR</span><span>LIVE</span></div><div class="radar"></div><div class="intel-line"><span>Governed autonomy</span><code>risk-router</code></div><div class="intel-line"><span>OSINT workflows</span><code>source-lineage</code></div><div class="intel-line"><span>High-trust software</span><code>audit-first</code></div></div></div>
   </div>
-  <div class="chips" id="topics" role="group" aria-label="Filter by topic cluster"><button class="chip active" data-cat="all">All briefs</button><button class="chip" data-cat="governed-ai">Governed AI</button><button class="chip" data-cat="agents">Autonomous agents</button><button class="chip" data-cat="cyber">Cybersecurity architecture</button><button class="chip" data-cat="osint">OSINT workflows</button><button class="chip" data-cat="automation">AI automation</button><button class="chip" data-cat="fincrime">Financial crime detection</button><button class="chip" data-cat="systems">High-trust engineering</button><button class="chip" data-cat="policy">Policy-as-code</button><button class="chip" data-cat="intel">Intelligence operations</button><button class="chip" data-cat="founder">Founder field notes</button></div>
+  <div class="chips" id="topics" role="toolbar" aria-label="Filter briefs by topic"><a class="chip on" href="?" data-topic="all">All briefs</a><a class="chip" href="?topic=governed-ai" data-topic="governed-ai">Governed AI</a><a class="chip" href="?topic=agents" data-topic="agents">Autonomous agents</a><a class="chip" href="?topic=cyber" data-topic="cyber">Cyber architecture</a><a class="chip" href="?topic=osint" data-topic="osint">OSINT workflows</a><a class="chip" href="?topic=automation" data-topic="automation">AI automation</a><a class="chip" href="?topic=fincrime" data-topic="fincrime">Financial crime detection</a><a class="chip" href="?topic=systems" data-topic="systems">High-trust systems</a><a class="chip" href="?topic=saved" data-topic="saved">★ Saved</a></div>
 </header>
 <main>
+  <section class="wrap" id="atlas">
+    <div class="section-head reveal"><div><div class="kicker">Insight atlas</div><h2>The desk, mapped as a living intelligence graph.</h2></div><p>Every cluster is a real topic on the desk, radiating from the governed editorial core. Hover a node to inspect it, click a cluster to filter the briefs below, or scrub the roadmap eras on the left. Editorial roadmap view — content structure, not measured telemetry.</p></div>
+    <div class="atlas-shell reveal" id="atlasStage">
+      <canvas id="atlasCanvas" role="img" aria-label="Animated constellation map: seven ClearGlass Insights topic clusters orbiting a golden governed editorial core, connected by luminous beams with travelling light pulses"></canvas>
+      <div class="atlas-hud atlas-brand"><span class="atlas-dot"></span>INSIGHT ATLAS <em>// governed-intelligence map</em></div>
+      <div class="atlas-hud atlas-mode" id="atlasMode">ROADMAP ERA 2026 — INSIGHTS DESK LIVE</div>
+      <div class="atlas-controls"><button class="atlas-btn" id="atlasPause" type="button" aria-label="Pause animation">❚❚</button><button class="atlas-btn" id="atlasSeed" type="button" aria-label="Reshuffle constellation">↻</button></div>
+      <div class="atlas-timeline" id="atlasTimeline" aria-label="Editorial roadmap timeline"></div>
+      <div class="atlas-labels" id="atlasLabels"></div>
+      <div class="atlas-tip" id="atlasTip" role="status" hidden></div>
+      <div class="atlas-legend" aria-label="Atlas legend">
+        <b>Legend</b>
+        <span><i style="background:#e9b95e;box-shadow:0 0 8px rgba(255,214,150,.8)"></i>Editorial core</span>
+        <span><i style="background:#ff9ec7;box-shadow:0 0 8px rgba(255,158,199,.7)"></i>Flagship cluster</span>
+        <span><i style="background:#b9a3ff;box-shadow:0 0 8px rgba(157,123,255,.7)"></i>Systems cluster</span>
+        <span><i style="background:#8bf0dc;box-shadow:0 0 8px rgba(85,242,166,.7)"></i>Forming series</span>
+        <span><i style="background:#ffecbe;box-shadow:0 0 10px rgba(255,214,150,.9)"></i>Live signal pulse</span>
+      </div>
+      <div class="atlas-console">
+        <div class="atlas-stats" id="atlasStats" aria-label="Desk statistics"></div>
+        <form class="atlas-ask" id="atlasAsk"><input type="search" placeholder="Ask the atlas: risk router, OSINT lineage, audit ledger…" aria-label="Search the insight atlas"/><button type="submit" aria-label="Search">→</button></form>
+      </div>
+      <noscript><p class="atlas-noscript">The interactive atlas needs JavaScript — browse the same topics with the filter chips above.</p></noscript>
+    </div>
+  </section>
   <section class="wrap" id="latest">
     <div class="section-head reveal"><div><div class="kicker">Featured spotlight</div><h2>Start with the playbooks that define the ClearGlass point of view.</h2></div><p>Each piece is designed to be shareable, quotable, and useful: a sharp thesis, a strong visual hierarchy, an implementation lens, and next-step reading paths.</p></div>
     <div class="feature stagger reveal">
-      <a class="article-card tilt-card" href="ai-agent-governance-governed-autonomy.html" data-title="AI Agent Governance The Governed Autonomy Playbook" data-tags="governed ai autonomous agents risk router policy approvals audit" data-cats="governed-ai agents policy"><div class="card-art"><div class="quote">"The bottleneck is not intelligence. It is accountability."</div></div><div class="card-body"><div class="meta"><span>Flagship</span><span>AI &amp; Autonomy</span><span>11 min</span></div><h3>AI Agent Governance: The Governed Autonomy Playbook</h3><p>Everyone is racing to make AI agents more autonomous. The winners of the agentic era will govern them first — with gates, routing, approvals, and measurable accountability.</p><span class="read">Read the playbook →</span></div></a>
+      <a class="article-card tilt-card" href="ai-agent-governance-governed-autonomy.html" data-title="AI Agent Governance The Governed Autonomy Playbook" data-tags="governed ai autonomous agents risk router policy" data-slug="ai-agent-governance-governed-autonomy" data-topics="governed-ai agents cyber"><div class="card-art"><div class="quote">"The bottleneck is not intelligence. It is accountability."</div></div><div class="card-body"><div class="meta"><span>Flagship</span><span>AI &amp; Autonomy</span><span>11 min</span></div><h3>AI Agent Governance: The Governed Autonomy Playbook</h3><p>Everyone is racing to make AI agents more autonomous. The winners of the agentic era will govern them first — with gates, routing, approvals, and measurable accountability.</p><span class="read">Read the playbook →</span></div></a>
       <div class="panel"><h3>Founder-led editorial promise</h3><p>ClearGlass Insights turns advanced AI, cybersecurity, and autonomy into repeatable mental models for buyers and builders.</p><ul class="list"><li><strong>Precise:</strong> every essay opens with a defensible thesis.</li><li><strong>Operational:</strong> frameworks are written like systems you can implement.</li><li><strong>Citable:</strong> concepts, diagrams, code blocks, and research notes are structured for reuse.</li><li><strong>Conversion-aware:</strong> advisory, demo, and newsletter paths appear only when contextually useful.</li></ul></div>
     </div>
   </section>
   <section class="wrap">
     <div class="search reveal" role="search"><input id="smartSearch" type="search" placeholder="Search the hub: governed AI, OSINT, agents, financial crime, policy-as-code…" aria-label="Search ClearGlass Insights"></div>
     <div class="grid stagger reveal" id="postGrid">
-      <a class="article-card tilt-card" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html" data-title="ClearGlassInc Artemis Self-Evolving AI Intelligence Platform" data-tags="palantir foundry aip apollo self improving agents governance evals ontology" data-cats="governed-ai intel systems"><div class="card-art"><div class="quote">Artemis systems blueprint</div></div><div class="card-body"><div class="meta"><span>Artemis Engineering Notes</span><span>16 min</span></div><h3>ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform</h3><p>A full-stack blueprint for mission-speed intelligence with ontology-driven agents, evals, policy-as-code, and safe self-improvement.</p><span class="read">Read the architecture →</span></div></a>
-      <a class="article-card tilt-card" href="osint-workflow-that-survives-contact-with-reality.html" data-title="The OSINT Workflow That Survives Contact With Reality" data-tags="osint workflows source grading admiralty entity resolution provenance claim lineage" data-cats="osint intel"><div class="card-art"><div class="quote">OSINT with provenance</div></div><div class="card-body"><div class="meta"><span>OSINT Tradecraft Briefs</span><span>OSINT</span><span>14 min</span></div><h3>The OSINT Workflow That Survives Contact With Reality</h3><p>How to design collection, source grading, entity resolution, and analyst review loops without drowning in noise.</p><span class="read">Read brief 01 →</span></div></a>
-      <a class="article-card tilt-card" href="cybersecurity-architecture-for-agentic-software.html" data-title="Cybersecurity Architecture for Agentic Software" data-tags="cybersecurity architecture agents zero trust audit kill switch prompt injection policy" data-cats="cyber agents policy systems"><div class="card-art"><div class="quote">Zero-trust agents</div></div><div class="card-body"><div class="meta"><span>High-Trust Systems Patterns</span><span>Cyber</span><span>15 min</span></div><h3>Cybersecurity Architecture for Agentic Software</h3><p>The command-control patterns, permissions, logs, and kill switches required before AI agents touch real infrastructure.</p><span class="read">Read brief 01 →</span></div></a>
+      <a class="article-card tilt-card" href="ai-agents-insider-threat.html" data-title="AI Agents Are the New Insider Threat AIRF" data-tags="ai agent security insider threat non-human identity blast radius ledger airf" data-slug="ai-agents-insider-threat" data-topics="agents cyber governed-ai"><div class="card-art"><div class="quote">"The newest insider isn't human."</div></div><div class="card-body"><div class="meta"><span>New</span><span>AI &amp; Security</span><span>12 min</span></div><h3>AI Agents Are the New Insider Threat</h3><p>Agents hold credentials, access, and goals — the textbook insider profile — and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.</p><span class="read">Read the framework →</span></div></a>
+      <a class="article-card tilt-card" href="zero-trust-is-outdated.html" data-title="Zero Trust Is Outdated Adaptive Trust Systems" data-tags="zero trust adaptive trust action trust intent verification learning policy trust economics" data-slug="zero-trust-is-outdated" data-topics="cyber systems agents"><div class="card-art"><div class="quote">"Authentication is not alignment."</div></div><div class="card-body"><div class="meta"><span>New</span><span>Cyber Architecture</span><span>12 min</span></div><h3>Zero Trust Is Outdated</h3><p>Zero trust answered "who are you?" The agentic era asks "should this action happen, and at what cost?" The Adaptive Trust Systems Model: action trust, intent, learning policy, trust economics.</p><span class="read">Read the doctrine →</span></div></a>
+      <a class="article-card tilt-card" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html" data-title="ClearGlassInc Artemis Self-Evolving AI Intelligence Platform" data-tags="palantir foundry aip apollo self improving agents governance" data-slug="clearglassinc-artemis-self-evolving-ai-intelligence-platform" data-topics="governed-ai automation systems"><div class="card-art"><div class="quote">Artemis systems blueprint</div></div><div class="card-body"><div class="meta"><span>AI Architecture</span><span>16 min</span></div><h3>ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform</h3><p>A full-stack blueprint for mission-speed intelligence with ontology-driven agents, evals, policy-as-code, safe self-improvement, copyable code, and a power-user prompt system.</p><span class="read">Read the architecture →</span></div></a>
+      <article class="article-card tilt-card" data-title="The OSINT Workflow That Survives Contact With Reality" data-tags="osint workflows source confidence lineage" data-slug="osint-workflow-that-survives-reality" data-topics="osint systems"><div class="card-art"><div class="quote">OSINT with provenance</div></div><div class="card-body"><div class="meta"><span>Coming series</span><span>OSINT</span></div><h3>The OSINT Workflow That Survives Contact With Reality</h3><p>How to design collection, source grading, entity resolution, and analyst review loops without drowning in noise.</p><span class="read">Follow this series →</span></div></article>
+      <article class="article-card tilt-card" data-title="Cybersecurity Architecture for Agentic Software" data-tags="cybersecurity architecture agents zero trust audit" data-slug="cybersecurity-architecture-for-agentic-software" data-topics="cyber agents systems"><div class="card-art"><div class="quote">Zero-trust agents</div></div><div class="card-body"><div class="meta"><span>Coming series</span><span>Cyber</span></div><h3>Cybersecurity Architecture for Agentic Software</h3><p>The command-control patterns, permissions, logs, and kill switches required before AI agents touch real infrastructure.</p><span class="read">Follow this series →</span></div></article>
     </div>
   </section>
   <section class="wrap" id="series"><div class="section-head reveal"><div><div class="kicker">Information architecture</div><h2>Topic clusters built for authority, return visits, and internal links.</h2></div><p>Top 10 categories: Governed AI, Autonomous Agents, Cybersecurity Architecture, OSINT Workflows, AI Automation, Financial Crime Detection, High-Trust Software Engineering, Policy-as-Code, Intelligence Operations, and Founder Field Notes.</p></div><div class="two stagger reveal"><div class="panel"><h3>Featured series labels</h3><ul class="list"><li>Governed Autonomy Playbooks</li><li>Artemis Engineering Notes</li><li>OSINT Tradecraft Briefs</li><li>Financial Crime Detection Lab</li><li>High-Trust Systems Patterns</li></ul></div><div class="panel"><h3>Viral headline system</h3><ul class="list"><li><strong>Contrarian thesis:</strong> "The AI Agent Problem Is Not Intelligence — It Is Accountability."</li><li><strong>Blueprint hook:</strong> "The Risk Router Pattern for Enterprise AI Agents."</li><li><strong>Save-worthy list:</strong> "12 Controls Every Autonomous Workflow Needs."</li><li><strong>Founder note:</strong> "What We Would Never Let an Agent Do Without Approval."</li></ul></div></div></section>
@@ -271,6 +379,23 @@ if action.impact >= HIGH or confidence < 0.82:
 else:
     execute_with_audit(action)
 ```</pre></div></div></section>
+  <section class="wrap" id="engine"><div class="power reveal"><div class="section-head"><div><div class="kicker">Editorial engine</div><h2>The system prompt that writes like the desk thinks.</h2></div><p>Every Insights post is generated against a version-controlled editorial contract: E-E-A-T voice rules, a viral headline system, mandatory content architecture, SEO and JSON-LD requirements, Artemis platform integration, a strict output protocol, and refusal rules. The full prompt is versioned in the repo.</p></div><div class="two"><div class="panel"><h3>Mandatory content architecture</h3><ul class="list"><li>Defensible thesis in the first two sentences; quotable TL;DR block.</li><li>At least one system diagram and one implementation block (code, config, schema, or checklist).</li><li>A governance lens: what must be gated, logged, approved, or refused.</li><li>Two citation-ready pull quotes; internal links to one pillar, one series, two related posts, exactly one conversion path.</li></ul></div><div class="panel"><h3>Output protocol &amp; refusal rules</h3><ul class="list"><li><strong>Strict order:</strong> front matter → TL;DR → body → pull quotes → JSON-LD → social pack → internal-link map.</li><li><strong>Refuse thin topics:</strong> if a request can't support deep technical value or clear governance implications, propose a stronger adjacent topic instead.</li><li><strong>Never fabricate</strong> benchmarks, incidents, customer stories, or statistics.</li><li><strong>Defensive framing only</strong>, consistent with the SENTINEL charter.</li></ul></div></div><div class="code"><pre>You are the ClearGlass Insights Editorial Engine — a research-led technical
+content system for ClearGlass Inc. Every claim must be defensible, sourced,
+and implementable.
+
+VIRAL HEADLINE SYSTEM (choose or blend ONE primary)
+  contrarian thesis · blueprint hook · save-worthy list · founder note
+
+ARTEMIS PLATFORM INTEGRATION
+  When relevant, connect the post to the Artemis Self-Evolving AI
+  Intelligence Platform: ontology-driven agents, continuous evals,
+  policy-as-code enforcement, safe self-improvement loops, and
+  mission-speed intelligence with provenance.
+
+You are building a permanent technical asset. Every post must be worthy
+of citation by other serious practitioners in 2027–2030.
+
+# full contract: prompts/clearglass_insights_editorial_system_prompt.md</pre></div></section>
   <section class="wrap" id="newsletter"><div class="newsletter reveal"><div><div class="kicker">Conversion layer</div><h2>Get the ClearGlass intelligence brief.</h2><p>Join the list for governed AI playbooks, OSINT workflows, cybersecurity architecture notes, and founder briefings. Built for enterprise buyers, engineers, and security leaders.</p><div class="section-actions"><a class="btn primary btn-magnet" href="../index.html#contact">Request a strategy briefing →</a><a class="btn btn-magnet" href="mailto:desmondotieno@icloud.com?subject=ClearGlass%20Insights%20newsletter">Subscribe by email</a></div></div><form class="form" action="mailto:desmondotieno@icloud.com" method="post" enctype="text/plain"><input name="email" type="email" placeholder="work email" aria-label="Email address"><input name="interest" type="text" placeholder="topic: governed AI, OSINT, cyber…" aria-label="Topic interest"><button class="btn primary" type="submit">Join the brief</button></form></div></section>
   <section class="wrap" id="access">
     <div class="finale reveal"><div class="finale-inner">
@@ -286,27 +411,7 @@ else:
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();
 
-/* combined search + category filter over the post cards */
-const search=document.getElementById('smartSearch');const cards=[...document.querySelectorAll('[data-title]')];
-const chips=[...document.querySelectorAll('.chip[data-cat]')];
-let activeCat='all';
-function applyFilter(){
-  const q=(search?.value||'').toLowerCase().trim();
-  cards.forEach(card=>{
-    const hay=(card.dataset.title+' '+(card.dataset.tags||'')).toLowerCase();
-    const cats=(card.dataset.cats||'').split(/\s+/);
-    const okQ=!q||hay.includes(q);
-    const okC=activeCat==='all'||cats.includes(activeCat);
-    card.style.display=okQ&&okC?'flex':'none';
-  });
-}
-search?.addEventListener('input',applyFilter);
-chips.forEach(chip=>chip.addEventListener('click',()=>{
-  activeCat=chip.dataset.cat;
-  chips.forEach(c=>c.classList.toggle('active',c===chip));
-  applyFilter();
-  document.getElementById('latest')?.scrollIntoView({behavior:'smooth',block:'start'});
-}));
+/* search + topic filtering is owned by insights.js (shared advanced layer) */
 
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const root=document.documentElement;
@@ -379,6 +484,8 @@ if(!reduceMotion){
   start();
 })();
 </script>
+<script defer src="insights.js"></script>
+<script defer src="atlas.js"></script>
 <script defer src="/logo-badge.js"></script>
 <script defer src="assistant/writing-help.js"></script>
 </body>

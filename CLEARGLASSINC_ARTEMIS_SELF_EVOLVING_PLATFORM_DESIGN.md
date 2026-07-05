@@ -1132,3 +1132,169 @@ AIP agents may enrich the band with Kp, scintillation, HF absorption, and GNSS-e
 6. **Publish** a dashboard tile and a 12-page pilot brief with evidence, confidence, limitations, and mitigation steps.
 
 This launch pack preserves the Artemis governance model: public/open data first, no offensive collection, no unsupported predictive certainty, and no operationally significant action without an authorized human approval token.
+
+---
+
+## Python Precision Reference Pack
+
+This appendix makes the self-evolving loop executable as a small, testable Python control plane before it is bound to Foundry Functions, AIP Logic, or Apollo release channels. It is intentionally deterministic at the boundary: agents can propose upgrades, but the promotion engine only accepts typed metrics, policy decisions, approval tokens, and rollback metadata.
+
+### Typed Improvement Contract
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
+from enum import Enum
+from typing import Any, Literal
+from uuid import UUID, uuid4
+
+
+class ProposalKind(str, Enum):
+    PROMPT_UPDATE = "prompt_update"
+    WORKFLOW_UPDATE = "workflow_update"
+    ROUTER_UPDATE = "router_update"
+    HEURISTIC_UPDATE = "heuristic_update"
+
+
+class PromotionState(str, Enum):
+    DRAFT = "draft"
+    SHADOW = "shadow"
+    PENDING_APPROVAL = "pending_approval"
+    CANARY = "canary"
+    PROMOTED = "promoted"
+    ROLLED_BACK = "rolled_back"
+    REJECTED = "rejected"
+
+
+@dataclass(frozen=True)
+class EvalMetric:
+    name: str
+    value: float
+    minimum: float | None = None
+    maximum: float | None = None
+
+    def passes(self) -> bool:
+        if self.minimum is not None and self.value < self.minimum:
+            return False
+        if self.maximum is not None and self.value > self.maximum:
+            return False
+        return True
+
+
+@dataclass(frozen=True)
+class ApprovalToken:
+    approver_id: str
+    role: Literal["mission_owner", "governance_reviewer", "security_officer"]
+    approved_at: datetime
+    policy_version: str
+
+
+@dataclass
+class ImprovementProposal:
+    proposal_id: UUID
+    kind: ProposalKind
+    baseline_version: str
+    candidate_version: str
+    mission_id: UUID
+    change_summary: str
+    diff: dict[str, Any]
+    eval_metrics: list[EvalMetric]
+    rollback_pointer: str
+    state: PromotionState = PromotionState.DRAFT
+    approvals: list[ApprovalToken] = field(default_factory=list)
+    created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+
+    def evals_pass(self) -> bool:
+        return all(metric.passes() for metric in self.eval_metrics)
+
+    def has_required_approvals(self) -> bool:
+        roles = {token.role for token in self.approvals}
+        return {"mission_owner", "governance_reviewer", "security_officer"}.issubset(roles)
+```
+
+### Promotion Gate
+
+```python
+class PolicyClient:
+    def allow_promotion(self, proposal: ImprovementProposal, subject: dict[str, Any]) -> bool:
+        return (
+            subject.get("purpose") == "governed_self_improvement"
+            and subject.get("compartment") in subject.get("allowed_compartments", [])
+            and proposal.evals_pass()
+            and proposal.has_required_approvals()
+            and bool(proposal.rollback_pointer)
+        )
+
+
+class ApolloReleaseClient:
+    def deploy_canary(self, product: str, version: str, ring: str) -> str:
+        # Production implementation calls Apollo release APIs and records the returned deployment id.
+        return f"apollo://{product}/{version}/rings/{ring}"
+
+    def rollback(self, deployment_id: str, rollback_pointer: str) -> None:
+        # Production implementation invokes Apollo rollback/recall for the affected ring.
+        print(f"rollback {deployment_id} -> {rollback_pointer}")
+
+
+def promote_candidate(
+    proposal: ImprovementProposal,
+    *,
+    subject: dict[str, Any],
+    policy: PolicyClient,
+    apollo: ApolloReleaseClient,
+) -> str:
+    if not proposal.evals_pass():
+        proposal.state = PromotionState.REJECTED
+        raise ValueError("candidate failed eval thresholds")
+    if not proposal.has_required_approvals():
+        proposal.state = PromotionState.PENDING_APPROVAL
+        raise PermissionError("candidate lacks required approval roles")
+    if not policy.allow_promotion(proposal, subject):
+        proposal.state = PromotionState.REJECTED
+        raise PermissionError("policy denied candidate promotion")
+
+    proposal.state = PromotionState.CANARY
+    return apollo.deploy_canary(
+        product="artemis-prompt-workflow-pack",
+        version=proposal.candidate_version,
+        ring="mission-cell-5pct",
+    )
+```
+
+### Feedback-to-Eval Compiler
+
+```python
+def compile_feedback_to_eval(signal: dict[str, Any]) -> dict[str, Any]:
+    """Convert operator behavior into a regression example without copying unauthorized fields."""
+    allowed = signal["policy_decision"]["allowed_fields"]
+    redacted_input = {k: v for k, v in signal["input_snapshot"].items() if k in allowed}
+    expected = {
+        "must_include": signal.get("operator_correction", {}).get("required_phrases", []),
+        "must_not_include": signal.get("operator_correction", {}).get("forbidden_phrases", []),
+        "minimum_citations": 2,
+        "requires_uncertainty_statement": signal.get("reason") == "overconfident_single_source",
+    }
+    return {
+        "eval_id": str(uuid4()),
+        "source_signal_ids": [signal["signal_id"]],
+        "task_type": signal["task_type"],
+        "input_snapshot": redacted_input,
+        "expected_behavior": expected,
+        "rubric": {
+            "citation_coverage": {"minimum": 0.95},
+            "policy_pass_rate": {"minimum": 1.0},
+            "unsafe_action_rate": {"maximum": 0.0},
+            "p95_latency_ms": {"maximum": signal.get("latency_budget_ms", 2500)},
+        },
+    }
+```
+
+### Deterministic Safety Invariants
+
+1. A candidate cannot enter canary if any required eval metric fails.
+2. A candidate cannot enter canary without mission-owner, governance-reviewer, and security-officer approvals.
+3. A candidate cannot modify mission goals, classification labels, coalition-release rules, or approval thresholds through a prompt-only change.
+4. A candidate must carry an Apollo rollback pointer and an immutable audit record before deployment.
+5. Operator feedback becomes training/eval material only after policy-filtered field minimization and provenance capture.

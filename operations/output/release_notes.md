@@ -1,9 +1,11 @@
-# Release Notes — 2026-07-01
+# Release Notes — 2026-07-04
 
-*419 commit(s) since v1.0.0*
+*457 commit(s) since v1.0.0*
 
 ## New Features
 
+- **content:** two field notes, Ultra Glass page, marketing bot ecosystem (`f2aee9a`)
+- **agents:** add ClearGlass Marketing Command orchestrator (`c261827`)
 - **percival:** v9 — fail-closed audit sync, prompt pack, deployment blueprint (`2593473`)
 - **percival:** v8 policy governor + capability schema + control-plane spec (`ee8e9ac`)
 - **percival:** v7 identity & authority — scoped, sponsor-owned instances (`1cf0dd8`)
@@ -91,6 +93,9 @@
 
 ## CI/CD
 
+- skip repair agent cleanly when no agent credential is set (`f2968c5`)
+- satisfy workflow doctor on regressed Pages check workflow (`1dc3913`)
+- disambiguate duplicate workflow display name (`1748802`)
 - add codex autofix workflow (`6c176e8`)
 - pin actions/checkout to v6 in agent.yml (#554) (`be44939`)
 - pin actions/checkout to v6 in agent.yml (workflow doctor) (`b60a059`)
@@ -108,6 +113,12 @@
 
 ## Maintenance
 
+- Add Artemis cyber defense matrix tool (`f928d05`)
+- Enhance Artemis blog advanced features (`03120dc`)
+- Add Artemis Python self-improvement control pack (`13c2115`)
+- Add Artemis blog content-engine system prompt (`19d9d17`)
+- Add Editorial Engine section + versioned Insights system prompt (`b7c97c3`)
+- Add missing_og_tags safe-autofix audit to PERCIVAL; document existing v7-v9 stack (`51a5f0d`)
 - Add Artemis Palantir implementation blueprint (`fa226ee`)
 - Add Artemis Palantir quantum AI platform blueprint (`bb63f9e`)
 - Expand Artemis AI platform blueprint (`1e2602e`)
@@ -274,6 +285,31 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`f7c3d30`)
+- refresh control-surface data feeds [skip ci] (`b49508f`)
+- refresh control-surface data feeds [skip ci] (`046c163`)
+- refresh control-surface data feeds [skip ci] (`ccd5db4`)
+- refresh control-surface data feeds [skip ci] (`c1960eb`)
+- refresh control-surface data feeds [skip ci] (`5ff4cac`)
+- refresh control-surface data feeds [skip ci] (`b2238e0`)
+- refresh control-surface data feeds [skip ci] (`9aafd6a`)
+- refresh control-surface data feeds [skip ci] (`643a2f3`)
+- update generated outputs — 2026-07-03 09:57 UTC [skip ci] (`1030bcd`)
+- refresh control-surface data feeds [skip ci] (`4ff498f`)
+- refresh control-surface data feeds [skip ci] (`86b79c0`)
+- refresh control-surface data feeds [skip ci] (`3fce7e8`)
+- refresh control-surface data feeds [skip ci] (`0c3611b`)
+- refresh control-surface data feeds [skip ci] (`e5cf40b`)
+- refresh control-surface data feeds [skip ci] (`99f6ce0`)
+- refresh control-surface data feeds [skip ci] (`1e09ea1`)
+- refresh control-surface data feeds [skip ci] (`2c536fe`)
+- refresh control-surface data feeds [skip ci] (`8638b90`)
+- update generated outputs — 2026-07-02 10:09 UTC [skip ci] (`df3083f`)
+- refresh control-surface data feeds [skip ci] (`276fef1`)
+- refresh control-surface data feeds [skip ci] (`07ae67e`)
+- refresh control-surface data feeds [skip ci] (`0392a88`)
+- refresh control-surface data feeds [skip ci] (`ce0b537`)
+- update generated outputs — 2026-07-01 23:17 UTC [skip ci] (`d88dd5c`)
 - refresh control-surface data feeds [skip ci] (`e006f27`)
 - refresh control-surface data feeds [skip ci] (`c92a114`)
 - refresh control-surface data feeds [skip ci] (`cc48e29`)
@@ -448,6 +484,8 @@
 
 ## Other
 
+- add advanced insights layer — filters, palette, TOC, related posts, feeds (`82d903f`)
+- executable v9 scaffold with fail-closed policy tests + workflow_call gate (`627c948`)
 - add ClearGlass Executive Intelligence Layer agent (`404809f`)
 - **ci:** make Codex Autofix dispatch-only, least-privilege, PR-based (`a213285`)
 - run governed payout/webhook tests in CI + repo orientation (`753f89d`)

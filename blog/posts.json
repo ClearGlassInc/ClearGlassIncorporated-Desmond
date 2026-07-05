@@ -1,0 +1,87 @@
+{
+  "site": "https://clearglassinc.github.io",
+  "hub": "/blog/",
+  "generated": "2026-07-05",
+  "categories": [
+    "Governed AI",
+    "Autonomous Agents",
+    "Cybersecurity Architecture",
+    "OSINT Workflows",
+    "AI Automation",
+    "Financial Crime Detection",
+    "High-Trust Software Engineering",
+    "Policy-as-Code",
+    "Intelligence Operations",
+    "Founder Field Notes"
+  ],
+  "series": [
+    "Governed Autonomy Playbooks",
+    "Artemis Engineering Notes",
+    "OSINT Tradecraft Briefs",
+    "Financial Crime Detection Lab",
+    "High-Trust Systems Patterns"
+  ],
+  "posts": [
+    {
+      "slug": "cybersecurity-architecture-for-agentic-software",
+      "url": "/blog/cybersecurity-architecture-for-agentic-software.html",
+      "title": "Cybersecurity Architecture for Agentic Software",
+      "description": "The command-control patterns, agent identity, permission scoping, append-only audit, egress boundaries, and kill switches required before AI agents touch real infrastructure.",
+      "date": "2026-07-03",
+      "readMinutes": 15,
+      "author": "Desmond Otieno Odhiambo",
+      "categories": ["Cybersecurity Architecture", "Autonomous Agents", "Policy-as-Code"],
+      "series": "High-Trust Systems Patterns",
+      "seriesPart": 1,
+      "tags": ["agentic security", "zero trust", "prompt injection", "tool allowlists", "kill switch", "audit ledger", "policy as code"],
+      "pullQuote": "Alignment is a probability. Architecture is a guarantee.",
+      "featured": true
+    },
+    {
+      "slug": "osint-workflow-that-survives-contact-with-reality",
+      "url": "/blog/osint-workflow-that-survives-contact-with-reality.html",
+      "title": "The OSINT Workflow That Survives Contact With Reality",
+      "description": "Collection planning, machine-enforceable source grading, entity resolution without hallucinated merges, claim lineage, and analyst review loops that don't drown in noise.",
+      "date": "2026-07-01",
+      "readMinutes": 14,
+      "author": "Desmond Otieno Odhiambo",
+      "categories": ["OSINT Workflows", "Intelligence Operations"],
+      "series": "OSINT Tradecraft Briefs",
+      "seriesPart": 1,
+      "tags": ["osint", "source grading", "admiralty code", "entity resolution", "provenance", "claim lineage", "tradecraft"],
+      "pullQuote": "The pipeline's job is not to find the truth. It is to make the analyst's disbelief cheap and the system's mistakes reversible.",
+      "featured": true
+    },
+    {
+      "slug": "clearglassinc-artemis-self-evolving-ai-intelligence-platform",
+      "url": "/blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html",
+      "title": "ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform",
+      "description": "A full-stack blueprint for mission-speed intelligence with ontology-driven agents, evals, policy-as-code, and safe self-improvement.",
+      "date": "2026-06-30",
+      "readMinutes": 16,
+      "author": "Desmond Otieno Odhiambo",
+      "categories": ["Governed AI", "Intelligence Operations", "High-Trust Software Engineering"],
+      "series": "Artemis Engineering Notes",
+      "seriesPart": 1,
+      "tags": ["clearglassinc artemis", "aip", "foundry", "gotham", "apollo", "ontology", "self-improving ai", "evals"],
+      "pullQuote": "The self-evolving intelligence platform is not the system that acts without humans. It is the system that learns exactly where humans add judgment.",
+      "featured": true
+    },
+    {
+      "slug": "ai-agent-governance-governed-autonomy",
+      "url": "/blog/ai-agent-governance-governed-autonomy.html",
+      "title": "AI Agent Governance: The Governed Autonomy Playbook",
+      "description": "The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned. Accountability, not intelligence, is the bottleneck.",
+      "date": "2026-06-26",
+      "readMinutes": 11,
+      "author": "Desmond Otieno Odhiambo",
+      "categories": ["Governed AI", "Autonomous Agents", "Policy-as-Code"],
+      "series": "Governed Autonomy Playbooks",
+      "seriesPart": 1,
+      "tags": ["ai governance", "risk router", "approvals", "governed autonomy", "audit", "agents"],
+      "pullQuote": "The bottleneck is not intelligence. It is accountability.",
+      "featured": true,
+      "pillar": true
+    }
+  ]
+}

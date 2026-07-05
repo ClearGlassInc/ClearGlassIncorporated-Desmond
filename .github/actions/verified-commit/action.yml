@@ -1,0 +1,114 @@
+name: Verified commit
+description: >
+  Commit already-staged changes to a branch through the GitHub API so the commit
+  is signed by GitHub and shows as "Verified". Falls back to a plain git commit +
+  push if the API path fails, so a bot never silently stops committing.
+
+inputs:
+  message:
+    description: Commit message (headline).
+    required: true
+  branch:
+    description: Branch to commit to. Defaults to the current branch.
+    required: false
+    default: ""
+  paths:
+    description: Space-separated pathspecs to stage before committing.
+    required: false
+    default: "."
+  token:
+    description: Token used for the API commit (needs contents:write).
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  committed:
+    description: "true if a commit was created, false if there was nothing to commit."
+    value: ${{ steps.commit.outputs.committed }}
+
+runs:
+  using: composite
+  steps:
+    - id: commit
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        INPUT_MESSAGE: ${{ inputs.message }}
+        INPUT_BRANCH: ${{ inputs.branch }}
+        INPUT_PATHS: ${{ inputs.paths }}
+      run: |
+        set -euo pipefail
+        branch="${INPUT_BRANCH:-$(git rev-parse --abbrev-ref HEAD)}"
+
+        # Stage requested paths and bail cleanly if nothing changed.
+        git add -- $INPUT_PATHS || true
+        if git diff --cached --quiet; then
+          echo "committed=false" >> "$GITHUB_OUTPUT"
+          echo "verified-commit: no staged changes — nothing to commit"
+          exit 0
+        fi
+
+        # git fallback keeps the bot committing even if the API path breaks.
+        fallback() {
+          echo "::warning::verified-commit falling back to plain git push (commit will be Unverified)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "$INPUT_MESSAGE"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:$branch"; then exit 0; fi
+            echo "push rejected (attempt $attempt/5) — rebasing onto latest $branch"
+            git pull --rebase origin "$branch" || break
+          done
+          echo "::error::verified-commit fallback push failed"
+          exit 1
+        }
+
+        # Build the GraphQL fileChanges payload from the staged diff.
+        additions="[]"; deletions="[]"
+        while IFS=$'\t' read -r status path rest; do
+          case "$status" in
+            D)
+              deletions=$(jq -c --arg p "$path" '. + [{"path":$p}]' <<<"$deletions") ;;
+            R*)
+              # rename: delete old path, add the new one (in $rest)
+              deletions=$(jq -c --arg p "$path" '. + [{"path":$p}]' <<<"$deletions")
+              b64=$(base64 -w0 "$rest")
+              additions=$(jq -c --arg p "$rest" --arg c "$b64" '. + [{"path":$p,"contents":$c}]' <<<"$additions") ;;
+            *)
+              b64=$(base64 -w0 "$path")
+              additions=$(jq -c --arg p "$path" --arg c "$b64" '. + [{"path":$p,"contents":$c}]' <<<"$additions") ;;
+          esac
+        done < <(git diff --cached --name-status)
+
+        query='mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid } } }'
+
+        # Retry on head-moved races (other bots push to the same branch).
+        for attempt in 1 2 3 4 5; do
+          git fetch origin "$branch" --quiet || true
+          head_oid=$(git rev-parse "origin/$branch" 2>/dev/null || git rev-parse HEAD)
+          input=$(jq -cn \
+            --arg repo "$GITHUB_REPOSITORY" \
+            --arg branch "$branch" \
+            --arg oid "$head_oid" \
+            --arg msg "$INPUT_MESSAGE" \
+            --argjson add "$additions" \
+            --argjson del "$deletions" \
+            '{repositoryNameWithOwner:$repo, branchName:$branch, expectedHeadOid:$oid, message:{headline:$msg}, fileChanges:{additions:$add, deletions:$del}}')
+          body=$(jq -cn --arg q "$query" --argjson v "{\"input\":$input}" '{query:$q, variables:$v}')
+          if echo "$body" | gh api graphql --input - >/tmp/vc_resp.json 2>/tmp/vc_err.json; then
+            if jq -e '.data.createCommitOnBranch.commit.oid' /tmp/vc_resp.json >/dev/null 2>&1; then
+              echo "committed=true" >> "$GITHUB_OUTPUT"
+              echo "verified-commit: created signed commit $(jq -r '.data.createCommitOnBranch.commit.oid' /tmp/vc_resp.json)"
+              # Align local checkout with the new remote commit.
+              git fetch origin "$branch" --quiet && git reset --hard "origin/$branch" || true
+              exit 0
+            fi
+            echo "verified-commit: GraphQL returned errors:"; cat /tmp/vc_resp.json || true
+          else
+            echo "verified-commit: gh api call failed:"; cat /tmp/vc_err.json || true
+          fi
+          echo "verified-commit: attempt $attempt/5 did not commit — retrying"
+          sleep 3
+        done
+
+        fallback

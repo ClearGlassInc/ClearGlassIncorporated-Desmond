@@ -252,3 +252,23 @@ No task is complete until:
 Observe → Analyze → Prioritize → Plan → Execute → Validate → Audit →
 Optimize → Learn → Repeat indefinitely, while respecting user authorization
 and governance constraints.
+
+---
+
+## Runtime
+
+This contract is backed by an executable, stdlib-only, fail-closed skeleton in
+the repository:
+
+- `agent_os/governance.py` — risk scoring + approval gate (the single
+  auto-execute vs. escalate decision point).
+- `agent_os/roster.py` — the thirteen sub-agents as data.
+- `agent_os/planning.py` — objective → executable DAG (waves + critical path).
+- `agent_os/orchestrator.py` — the executive loop; produces the `MissionReport`.
+- `agent_os/self_check.py` — governance + structural self-check; run with
+  `python -m agent_os.self_check [--json]`.
+
+The `Agent OS Self-Check` workflow (`.github/workflows/agent-os.yml`) runs the
+unit tests and the governance self-check and fails closed on any invariant
+violation. See `CLEARGLASS_AUTONOMOUS_AGENT_OS_V8_BLUEPRINT.md` for the full
+map.

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "clearglass.company_orchestrator",
+  "version": "1.0.0",
+  "status": "active-static-compatible",
+  "name": "ClearGlass Company Orchestrator",
+  "purpose": "Coordinate repository validation, workflow repair, deployment readiness, revenue-routing, marketing, compliance, and monitoring as one governed ClearGlass Inc. operating system.",
+  "runtime_model": "static-compatible",
+  "execution_boundary": "This manifest does not create an always-on backend. It coordinates committed configs, scripts, GitHub Actions, docs, and governed bot workflows.",
+  "primary_outputs": [
+    "validated repository state",
+    "clear workflow status",
+    "deployment readiness report",
+    "agent routing map",
+    "audit-safe operational logs"
+  ],
+  "safety_invariants": [
+    "Never expose secrets or environment values.",
+    "Never execute money movement, pricing changes, refunds, legal claims, or outbound campaigns without human approval.",
+    "Fail closed when required files, workflows, or validations are missing.",
+    "Prefer deterministic scripts over opaque autonomous behavior.",
+    "Preserve existing business content unless it is broken, duplicated, obsolete, or unsafe."
+  ],
+  "agents": [
+    {
+      "id": "intake",
+      "name": "Intake Agent",
+      "role": "Receive tasks, classify scope, identify risk level, and route work to the correct agent.",
+      "inputs": ["user request", "repo event", "workflow event"],
+      "outputs": ["task classification", "risk label", "routing decision"]
+    },
+    {
+      "id": "planner",
+      "name": "Planner Agent",
+      "role": "Break approved tasks into reversible, testable execution steps.",
+      "inputs": ["task classification", "repo state", "known constraints"],
+      "outputs": ["execution plan", "rollback notes", "validation checklist"]
+    },
+    {
+      "id": "executor",
+      "name": "Executor Agent",
+      "role": "Apply safe file, workflow, documentation, and configuration changes.",
+      "inputs": ["approved plan"],
+      "outputs": ["patch summary", "changed files", "commit evidence"]
+    },
+    {
+      "id": "auditor",
+      "name": "Auditor Agent",
+      "role": "Check workflows, links, assets, accessibility basics, secret patterns, and deployment blockers.",
+      "inputs": ["repository files", "workflow definitions"],
+      "outputs": ["audit findings", "error list", "warning list"]
+    },
+    {
+      "id": "logger",
+      "name": "Logger Agent",
+      "role": "Record actions, failures, validations, and next steps in workflow logs and reports.",
+      "inputs": ["agent outputs", "validation results"],
+      "outputs": ["audit log", "GitHub step summary", "release notes"]
+    },
+    {
+      "id": "deployment",
+      "name": "Deployment Agent",
+      "role": "Validate GitHub Pages readiness, artifact creation, workflow permissions, and rollback path.",
+      "inputs": ["site audit", "workflow audit", "Pages workflow"],
+      "outputs": ["deployment readiness score", "blocking issue list"]
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing Agent",
+      "role": "Prepare website, product, and social content while preserving ClearGlass positioning and technical credibility.",
+      "inputs": ["product pages", "brand rules", "campaign intent"],
+      "outputs": ["campaign copy", "page copy", "CTA recommendations"]
+    },
+    {
+      "id": "revenue",
+      "name": "Revenue Agent",
+      "role": "Map products, CTAs, pricing surfaces, lead capture paths, and licensing opportunities.",
+      "inputs": ["site pages", "product catalog", "conversion objectives"],
+      "outputs": ["revenue path map", "CTA audit", "lead capture recommendations"]
+    },
+    {
+      "id": "compliance",
+      "name": "Compliance Agent",
+      "role": "Review privacy, legal, employment, operational, and public-claim risk language.",
+      "inputs": ["public pages", "docs", "claims"],
+      "outputs": ["compliance flags", "safer wording", "approval requirements"]
+    },
+    {
+      "id": "monitoring",
+      "name": "Monitoring Agent",
+      "role": "Monitor workflow status, scheduled jobs, failed deploys, broken links, and security alerts.",
+      "inputs": ["GitHub Actions", "audit outputs", "site health"],
+      "outputs": ["status report", "incident note", "next action"]
+    }
+  ],
+  "validation_commands": [
+    "python scripts/validate-site",
+    "python scripts/check-links",
+    "python scripts/audit-assets",
+    "python scripts/workflow_doctor.py",
+    "python scripts/site_reliability_audit.py"
+  ],
+  "deployment_workflow": ".github/workflows/pages.yml",
+  "orchestration_workflow": ".github/workflows/company-orchestrator.yml",
+  "docs": {
+    "agents": "docs/agents.md",
+    "deployment": "docs/DEPLOYMENT.md",
+    "deployment_alias": "docs/deployment.md",
+    "secrets": "docs/secrets.md",
+    "rollback": "docs/rollback.md"
+  }
+}

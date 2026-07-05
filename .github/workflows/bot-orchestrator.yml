@@ -51,21 +51,14 @@ jobs:
 
       - name: Commit generated outputs
         if: ${{ inputs.dry_run != true }}
-        run: python scripts/content_committer.py
-
-      - name: Push outputs to remote
-        if: ${{ inputs.dry_run != true }}
-        run: |
-          # Concurrent bots push to main during our run; rebase and retry so a
-          # non-fast-forward rejection doesn't silently drop generated outputs.
-          for attempt in 1 2 3 4 5; do
-            if git push origin HEAD; then
-              exit 0
-            fi
-            echo "Push rejected (attempt $attempt/5) — rebasing onto latest main"
-            git pull --rebase origin main || break
-          done
-          echo "::warning::Could not push bot outputs after retries — next run will pick them up"
+        # Signed via the GitHub API so orchestrator commits show as "Verified" on
+        # main; falls back to a plain push if the API path fails so outputs never
+        # get dropped. (Mirrors scripts/content_committer.py's staged dirs.)
+        uses: ./.github/actions/verified-commit
+        with:
+          message: "content: auto-update generated bot outputs [skip ci]"
+          branch: main
+          paths: marketing/output/ operations/output/
 
       - name: Upload bot outputs
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

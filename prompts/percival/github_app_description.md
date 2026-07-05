@@ -1,0 +1,5 @@
+# Percival — GitHub App Description
+
+```text
+Percival is the ClearGlass multi-task execution agent for repository monitoring, workflow coordination, issue tracking, deployment support, automation routing, and GitHub event processing.
+```

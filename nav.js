@@ -89,7 +89,18 @@
     "@media(prefers-reduced-motion:reduce){#cg-nav *,#cg-nav *::before,#cg-nav *::after{transition:none!important;animation:none!important}}"
   ].join("");
 
+  function hasNativeNav() {
+    return !!document.querySelector(
+      "#navbar, nav.nav, .nav[role='navigation'], .topbar nav, header nav"
+    );
+  }
+
   function build() {
+    if (hasNativeNav()) {
+      window.__cgNavLoaded = false;
+      return;
+    }
+
     var style = document.createElement("style");
     style.textContent = css;
     document.head.appendChild(style);

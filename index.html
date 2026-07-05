@@ -118,6 +118,14 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 @media(max-width:768px){.nav{top:10px;width:calc(100% - 1.25rem);height:68px;padding:0 .9rem}.cursor-glow{display:none}.hero-profile{width:min(72vw,250px);margin-bottom:22px}.hero-domain-line{padding:12px 14px;border-radius:18px}.footer-top{gap:28px}.footer-cols{gap:20px}.footer-col{min-width:90px}.footer-bottom{flex-direction:column;align-items:flex-start}.footer-util{gap:12px}}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}.rv.vis{opacity:1;transform:translateY(0)}
 /* Homepage loader paused: Guardian-only boot overlay lives in guardian.html. */
+/* Adaptive company logo lockup for reusable hero branding */
+.hero-brand-lockup{position:relative;z-index:2;display:inline-flex;align-items:center;gap:12px;margin:0 auto 26px;padding:10px 18px 10px 10px;border-radius:999px;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.82);box-shadow:0 16px 44px rgba(10,12,16,.10),inset 0 1px 0 rgba(255,255,255,.86);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);animation:fadeUp 1s ease .08s both}
+.hero-brand-lockup img{width:58px;height:58px;border-radius:18px;object-fit:cover;display:block;box-shadow:0 10px 26px rgba(10,12,16,.13)}
+.hero-brand-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05;text-align:left}
+.hero-brand-text strong{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.20em;text-transform:uppercase;color:var(--text)}
+.hero-brand-text span{margin-top:5px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3)}
+@media(max-width:640px){.hero{padding-inline:clamp(1rem,5vw,1.4rem)}.hero-brand-lockup{width:min(100%,360px);justify-content:flex-start;margin-bottom:22px;padding:9px 14px 9px 9px}.hero-brand-lockup img{width:50px;height:50px;border-radius:15px}.hero-brand-text strong{font-size:11px;letter-spacing:.16em}.hero-brand-text span{font-size:9px;letter-spacing:.12em}.hero-actions{width:100%;gap:10px}.hero-actions .btn{width:min(100%,340px);justify-content:center;padding-inline:20px}.hero-domain-line{max-width:100%;word-break:break-word}}
+
 </style>
 <style>
 /* ═══════════════════════════════════════════════════════
@@ -284,6 +292,10 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 <section class="hero" id="hero" data-hero data-animate="blur-rise">
   <div class="hero-prism"></div><div class="cg-orb" aria-hidden="true" style="top:8%;right:8%;"></div>
   <div class="hero-lines"><div class="hero-line" style="top:25%;width:60%;left:20%;animation-delay:0s"></div><div class="hero-line" style="top:50%;width:45%;left:30%;animation-delay:4s"></div><div class="hero-line" style="top:75%;width:55%;left:15%;animation-delay:8s"></div></div>
+  <a class="hero-brand-lockup" href="index.html" aria-label="ClearGlass Inc home">
+    <img src="assets/images/clearglass-logo.png" alt="ClearGlass Inc. company logo" loading="eager" decoding="async">
+    <span class="hero-brand-text"><strong>ClearGlassInc Artemis</strong><span>Company intelligence platform</span></span>
+  </a>
   <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg" aria-label="ClearGlass Ontario" style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;box-shadow:0 20px 70px rgba(0,0,0,.12);margin-bottom:42px;position:relative;z-index:1;">
     <source src="assets/video/hero.mp4" type="video/mp4">
     <picture>

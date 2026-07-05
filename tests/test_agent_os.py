@@ -19,6 +19,14 @@ from agent_os.orchestrator import (  # noqa: E402
     AgentOS,
     ProposedAction,
 )
+from agent_os.marketing_os import (  # noqa: E402
+    CAMPAIGN_OUTPUT_FIELDS,
+    MARKETING_BOTS,
+    MARKETING_LOOP,
+    CampaignBrief,
+    MarketingMemory,
+    MarketingOS,
+)
 from agent_os.planning import CycleError, Task, critical_path_minutes, plan_waves  # noqa: E402
 from agent_os.roster import ROSTER  # noqa: E402
 from agent_os.self_check import governance_selfcheck, main, structural_selfcheck  # noqa: E402
@@ -134,3 +142,49 @@ class TestSelfCheck:
     def test_main_exits_zero(self) -> None:
         assert main([]) == 0
         assert main(["--json"]) == 0
+
+
+class TestMarketingOS:
+    def test_required_bot_roles_exist(self) -> None:
+        assert len(MARKETING_BOTS) == 9
+        for key in (
+            "market_intelligence", "strategy", "content", "seo", "distribution",
+            "lead", "analytics", "optimization", "compliance",
+        ):
+            assert key in MARKETING_BOTS
+            assert MARKETING_BOTS[key].outputs
+            assert MARKETING_BOTS[key].kpis
+
+    def test_loop_matches_required_cycle(self) -> None:
+        assert MARKETING_LOOP == (
+            "research", "strategy", "creation", "distribution", "measurement",
+            "optimization", "repeat",
+        )
+
+    def test_campaign_plan_has_required_outputs_and_gates_outbound(self) -> None:
+        plan = MarketingOS().build_campaign(
+            CampaignBrief(
+                objective="book executive demos",
+                product="ClearGlassInc Artemis",
+                audience="CISOs and intelligence leaders",
+                theme="governed AI intelligence operations",
+                evidence=("approved architecture brief",),
+            ),
+            MarketingMemory(conversion_data={"landing_conversion": 0.04}, content_inventory=["/artemis-os.html"]),
+        ).to_dict()
+        for field_name in CAMPAIGN_OUTPUT_FIELDS:
+            assert field_name in plan
+        send = [g for g in plan["governance"] if g["action"] == "send_outbound"][0]
+        assert send["requires_approval"] is True
+        assert plan["missing_inputs"] == []
+
+    def test_missing_evidence_is_explicit_not_invented(self) -> None:
+        plan = MarketingOS().build_campaign(
+            CampaignBrief(
+                objective="increase authority",
+                product="Artemis",
+                audience="security buyers",
+                theme="machine-speed operations",
+            )
+        )
+        assert "source evidence for technical, competitor, and demand claims" in plan.missing_inputs

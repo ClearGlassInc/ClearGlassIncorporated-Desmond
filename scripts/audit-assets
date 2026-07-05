@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""Audit asset references used by the static ClearGlass site.
+
+The check is deliberately conservative: it validates local asset references from
+HTML/CSS files and confirms the core brand asset inventory exists when referenced.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from pathlib import Path
+import re
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SKIP_DIRS = {".git", "node_modules", ".next", "dist", "build", ".venv", "venv"}
+LOCAL_SKIP_PREFIXES = ("http://", "https://", "//", "data:", "mailto:", "tel:", "#", "javascript:")
+HTML_REF = re.compile(r"\b(?:src|href)=['\"]([^'\"]+)['\"]", re.IGNORECASE)
+CSS_URL = re.compile(r"url\(([^)]+)\)", re.IGNORECASE)
+CORE_ASSET_HINTS = ("logo.png", "ClearGlass Logo.png", "favicon", "manifest.json")
+
+
+@dataclass(frozen=True)
+class Finding:
+    level: str
+    message: str
+
+
+def candidate_files() -> list[Path]:
+    files: list[Path] = []
+    for suffix in ("*.html", "*.css"):
+        for path in REPO_ROOT.rglob(suffix):
+            if any(part in SKIP_DIRS for part in path.parts):
+                continue
+            files.append(path)
+    return sorted(set(files))
+
+
+def is_local(value: str) -> bool:
+    value = value.strip().strip("'\"")
+    return bool(value) and not value.startswith(LOCAL_SKIP_PREFIXES)
+
+
+def normalize(value: str) -> str:
+    value = value.strip().strip("'\"")
+    return value.split("#", 1)[0].split("?", 1)[0]
+
+
+def resolve(source: Path, value: str) -> Path | None:
+    clean = normalize(value)
+    if not clean:
+        return None
+    if clean.startswith("/"):
+        return (REPO_ROOT / clean.lstrip("/")).resolve()
+    return (source.parent / clean).resolve()
+
+
+def extract_refs(path: Path) -> list[str]:
+    text = path.read_text(encoding="utf-8", errors="ignore")
+    refs = HTML_REF.findall(text)
+    refs.extend(match.strip().strip("'\"") for match in CSS_URL.findall(text))
+    return refs
+
+
+def main() -> int:
+    findings: list[Finding] = []
+    refs_checked = 0
+    asset_hints_seen: set[str] = set()
+
+    for file in candidate_files():
+        for raw_ref in extract_refs(file):
+            if not is_local(raw_ref):
+                continue
+            refs_checked += 1
+            clean = normalize(raw_ref)
+            for hint in CORE_ASSET_HINTS:
+                if hint.lower() in clean.lower():
+                    asset_hints_seen.add(hint)
+            target = resolve(file, raw_ref)
+            if target is None:
+                continue
+            try:
+                target.relative_to(REPO_ROOT.resolve())
+            except ValueError:
+                findings.append(
+                    Finding("ERROR", f"{file.relative_to(REPO_ROOT)} references outside repo -> {raw_ref}")
+                )
+                continue
+            if not target.exists():
+                findings.append(
+                    Finding("ERROR", f"{file.relative_to(REPO_ROOT)} missing asset/reference -> {raw_ref}")
+                )
+
+    if not asset_hints_seen:
+        findings.append(
+            Finding("WARN", "No core logo/favicon/manifest references detected by simple asset scan")
+        )
+
+    errors = [item for item in findings if item.level == "ERROR"]
+    warnings = [item for item in findings if item.level == "WARN"]
+
+    print("== ClearGlass Asset Audit ==")
+    print(f"Files scanned: {len(candidate_files())}")
+    print(f"Local references checked: {refs_checked}")
+    print(f"Errors: {len(errors)} | Warnings: {len(warnings)}")
+    for item in errors + warnings:
+        print(f"{item.level}: {item.message}")
+
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

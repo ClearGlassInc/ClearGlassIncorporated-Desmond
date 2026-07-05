@@ -7,8 +7,10 @@ absent).
 
 > **Core GitHub Pages deployment requires no secrets.** The `Deploy GitHub
 > Pages` workflow (`pages.yml`) runs entirely on the automatic `GITHUB_TOKEN`.
-> Everything below is for backend systems, bots, and integrations that deploy
-> independently.
+> The `ClearGlass Company Orchestrator` workflow (`company-orchestrator.yml`) also
+> requires no secrets; it validates committed files, links, assets, workflows, and
+> docs only. Everything below is for backend systems, bots, and integrations that
+> deploy independently.
 
 No secret values are committed to this repository — a supply-chain scan
 (`grep` for API-key / private-key patterns) returns clean. Secrets are injected

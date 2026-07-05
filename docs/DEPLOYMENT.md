@@ -14,7 +14,8 @@ guide, architecture overview, and incident runbook.
 | Shared design system | tokens → theme → buttons → interactions | `tokens.css`, `theme.css`, `buttons.css`, `ui.css`, `ui.js` |
 | Navigation | unified Control Surface (top cluster + command palette + drawer + mobile rail) | `control-surface.js` |
 | Live data (client-side) | USGS, NWS, OpenSky, weather/AQ, FX, crypto, threat intel, GitHub Actions status | `fetch()` in page scripts |
-| Tooling / bots | Python automation, health checks, agents | `bots/`, `sentinel/`, `apps/` |
+| Tooling / bots | Python automation, health checks, agents | `bots/`, `sentinel/`, `agents/`, `scripts/` |
+| Company orchestration | Static-compatible agent manifest, validation scripts, readiness workflow | `agents/company_orchestrator/`, `scripts/validate-site`, `.github/workflows/company-orchestrator.yml` |
 | CI | tests, policy gate, security, IP scan, Pages deploy | `.github/workflows/` |
 
 **Asset load order** (every content page): `tokens.css` (foundation) → `theme.css`
@@ -32,10 +33,15 @@ No build step. Serve the repo root with any static server:
 python3 -m http.server 8000     # then open http://localhost:8000
 ```
 
-Run the Python test suite (used by CI):
+Run the Python test suite and company-level validation:
 
 ```bash
 python3 -m pytest tests/ -q
+python scripts/validate-site
+python scripts/check-links
+python scripts/audit-assets
+python scripts/site_reliability_audit.py
+python scripts/workflow_doctor.py
 ```
 
 ---
@@ -46,7 +52,7 @@ Deploys are automatic: a merge to `main` triggers the **Deploy GitHub Pages**
 workflow (`.github/workflows/pages.yml`). There is no manual step.
 
 1. Branch from `main`, make changes.
-2. Open a PR → CI runs (`CI`, `Policy Gate`, `Security`, `IP Protection`).
+2. Open a PR → CI runs (`CI`, `ClearGlass Company Orchestrator`, `Policy Gate`, `Security`, `IP Protection`).
 3. Merge (squash) once green → Pages redeploys `main`.
 
 > **Production deployments show a red X but the site is live?** That red X is
@@ -74,8 +80,8 @@ git revert <merge-commit-sha>   # creates a clean inverse commit
 git push origin main            # (via PR if main is protected)
 ```
 
-GitHub Pages redeploys the reverted state automatically — typically live within
-a minute or two. There is no database or stateful migration to unwind.
+GitHub Pages redeploys the reverted state automatically. There is no database or
+stateful migration to unwind for the static site.
 
 ---
 
@@ -114,7 +120,8 @@ an "OFFLINE"/"Status offline" state on error or rate-limit. Note: unauthenticate
 |---|---|---|
 | Site 404 / not updating | Pages build failed | Check **Deploy GitHub Pages** run; re-run; verify `.nojekyll` present |
 | Production deploys red X (site still live) | Legacy "pages build and deployment" pipeline runs while Source = "Deploy from a branch" | Run `scripts/fix_pages_source.sh` (admin PAT) or set Settings → Pages → Source to "GitHub Actions" |
-| Deploy run fails with `Deployment cancelled` (status was `deployment_queued`) | Several merges to `main` landed close together; the `github-pages` environment publishes one deploy at a time, so a still-queued deploy is superseded by a newer one | **Benign** — confirm the **Deploy GitHub Pages** run for a *later* commit is green (the newest successful deploy is what's served). Permanently removed by the same Source → "GitHub Actions" fix above, which stops the racing legacy pipeline. Optionally space rapid back-to-back merges |
+| Deploy run fails with `Deployment cancelled` (status was `deployment_queued`) | Several merges to `main` landed close together; the `github-pages` environment publishes one deploy at a time, so a still-queued deploy is superseded by a newer one | **Benign** — confirm the **Deploy GitHub Pages** run for a later commit is green |
+| Company Orchestrator fails | Missing docs/scripts/agent manifest, broken local links/assets, or workflow-doctor failure | Open the workflow summary, fix listed file, run local validation commands, and push |
 | CI red on PR | test/lint failure | Open the failing job log; fix; the `CI` check is required to merge |
 | A data panel shows OFFLINE | upstream API down / CORS / rate limit | Expected degradation; confirm endpoint health; no deploy needed |
 | Status chip "Status offline" | GitHub API rate limit (60/hr/IP) | Transient; resets within the hour |
@@ -126,6 +133,11 @@ an "OFFLINE"/"Status offline" state on error or rate-limit. Note: unauthenticate
 ## 8. Quick checklist before merge
 
 - [ ] `python3 -m pytest tests/ -q` passes
+- [ ] `python scripts/validate-site` passes
+- [ ] `python scripts/check-links` passes
+- [ ] `python scripts/audit-assets` passes
+- [ ] `python scripts/site_reliability_audit.py` passes
+- [ ] `python scripts/workflow_doctor.py` passes
 - [ ] New pages in `sitemap.xml` (or exempt)
 - [ ] Reuses shared tokens; accessible (focus, contrast, reduced-motion)
 - [ ] No secrets client-side

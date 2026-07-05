@@ -19,10 +19,11 @@ safety model is described in `CLAUDE.md`.
 | `bots/`, `scripts/` | Python automation that runs the work (stdlib-first, testable) |
 | `sentinel/` | Keyless, stdlib-only, fail-closed named-agent index (PERCIVAL, SENTINEL, AEGIS, PFAS, Agent Mesh) — see `sentinel/PERCIVAL_AGENTS.md` |
 | `.github/workflows/` | Schedulers/triggers that invoke the bots and enforce gates |
-| `tests/` | 423 tests covering the bots and governance |
+| `tests/` | Test suite covering the bots and governance |
 
 ## Defined agents (`agents/`)
 
+- `company_orchestrator` — company-level coordination manifest for Intake, Planner, Executor, Auditor, Logger, Deployment, Marketing, Revenue, Compliance, and Monitoring roles
 - `clearglass_agent_os` — top-level operator OS prompt
 - `clearglass_executive` — executive briefing / decisioning
 - `clearglass_marketing_command` — marketing content (see `bot_ecosystem.md`)
@@ -39,16 +40,16 @@ than a new backend:
 
 | Role | Implemented by |
 |---|---|
-| **Intake** | `agent.yml` (Claude Code action) + `scripts/repo_audit.py` classify/route incoming tasks |
-| **Planner** | `agents/workflow_repair/` + `.github/workflows/workflow-repair-agent.yml` break work into safe steps |
+| **Intake** | `agents/company_orchestrator/agent.json` + `agent.yml` + `scripts/repo_audit.py` classify/route incoming tasks |
+| **Planner** | `agents/company_orchestrator/system_prompt.md`, `agents/workflow_repair/`, and `.github/workflows/workflow-repair-agent.yml` break work into safe steps |
 | **Executor** | Bots under `bots/`/`scripts/` invoked by their workflows; commerce actions gated by `clearglass-commerce/control-plane/app/governance.py` |
-| **Auditor** | `scripts/site_reliability_audit.py`, `scripts/workflow_doctor.py`, `scripts/access_control_audit.py`, `.github/workflows/repo-audit.yml`, `security.yml`, `ip-protection-scan.yml` |
-| **Logger** | Append-only `events` ledger (`clearglass-commerce/.../app/audit.py`); workflow run logs; `operations/` reports |
-| **Deployment** | `pages.yml` (site), `commerce-deploy.yml` (backend); readiness validated by CI |
+| **Auditor** | `scripts/validate-site`, `scripts/check-links`, `scripts/audit-assets`, `scripts/site_reliability_audit.py`, `scripts/workflow_doctor.py`, `.github/workflows/company-orchestrator.yml`, `security.yml`, `ip-protection-scan.yml` |
+| **Logger** | Append-only `events` ledger (`clearglass-commerce/.../app/audit.py`); workflow run logs; `operations/` reports; GitHub step summaries |
+| **Deployment** | `pages.yml` (site), `company-orchestrator.yml` (readiness), `commerce-deploy.yml` (backend); readiness validated by CI |
 | **Marketing** | `agents/clearglass_marketing_command/`, `scripts/marketing_command_layer.py`, `content-pipeline.yml` |
 | **Revenue** | `agents/clearglass_side_store/`, `scripts/store_sync.py`, `store.html`/`pricing.html` CTAs, commerce control plane |
 | **Compliance** | `compliance-evidence.yml`, `policy-gate.yml`, `percival-policy-gate.yml`, `legal/` pages |
-| **Monitoring** | `health-monitor.yml`, `defender-watch.yml`, `scripts/workflow_doctor.py` |
+| **Monitoring** | `health-monitor.yml`, `defender-watch.yml`, `scripts/workflow_doctor.py`, `company-orchestrator.yml` |
 
 ## Safety invariants
 
@@ -61,6 +62,9 @@ than a new backend:
   minimal CI and refuse rather than guess.
 - **Never fabricate** inventory, reviews, sales, or urgency. Log every material
   action.
+- **Static compatibility.** Public-site orchestration must work through committed
+  files, docs, scripts, and GitHub Actions; do not introduce an always-on backend
+  unless the repo already contains the supported service and governance layer.
 
 ## Extending the system
 
@@ -71,5 +75,7 @@ than a new backend:
 3. Wire a trigger in `.github/workflows/` with explicit least-privilege
    `permissions:` and a `workflow_dispatch` trigger.
 4. Keep money-movement / pricing / outbound behind the commerce governance layer.
-5. Run `pytest tests/ -q`, `ruff check .`, and
-   `python scripts/site_reliability_audit.py` before pushing.
+5. Run `python scripts/validate-site`, `python scripts/check-links`,
+   `python scripts/audit-assets`, `python scripts/site_reliability_audit.py`,
+   `python scripts/workflow_doctor.py`, `pytest tests/ -q`, and `ruff check .`
+   before pushing.

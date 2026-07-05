@@ -61,7 +61,7 @@
 
   function cap(s) { s = String(s || "").trim(); return s ? s[0].toUpperCase() + s.slice(1) : s; }
   function esc(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
-  function words(s) { return (String(s || "").toLowerCase().match(/[a-z0-9''-]+/g) || []); }
+  function words(s) { return (String(s || "").toLowerCase().match(/[a-z0-9'-]+/g) || []); }
   function sentences(s) { return String(s || "").split(/[.!?]+[\s$]/).filter(function (x) { return x.trim().length > 1; }); }
   function syllables(w) { w = w.toLowerCase().replace(/[^a-z]/g, ""); if (!w) return 0; var m = w.replace(/e$/, "").match(/[aeiouy]{1,2}/g); return Math.max(1, m ? m.length : 1); }
 

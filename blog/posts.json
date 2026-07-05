@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-07-04",
+  "updated": "2026-07-05",
   "site": "https://clearglassinc.github.io",
   "topics": {
     "governed-ai": "Governed AI",
@@ -19,8 +19,19 @@
       "description": "The bottleneck to deploying AI agents isn't intelligence — it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
       "category": "AI & Autonomy",
       "series": "Governed Autonomy Playbooks",
-      "topics": ["governed-ai", "agents", "cyber"],
-      "tags": ["governance", "risk-router", "approvals", "audit-ledger", "policy", "human-in-the-loop"],
+      "topics": [
+        "governed-ai",
+        "agents",
+        "cyber"
+      ],
+      "tags": [
+        "governance",
+        "risk-router",
+        "approvals",
+        "audit-ledger",
+        "policy",
+        "human-in-the-loop"
+      ],
       "author": "Desmond Otieno Odhiambo",
       "date": "2026-06-26",
       "readMinutes": 11,
@@ -35,8 +46,18 @@
       "description": "Agents hold credentials, access, and goals — the textbook insider profile — and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
       "category": "AI & Security",
       "series": "Field Notes",
-      "topics": ["agents", "cyber", "governed-ai"],
-      "tags": ["insider-threat", "non-human-identity", "blast-radius", "ledger", "airf"],
+      "topics": [
+        "agents",
+        "cyber",
+        "governed-ai"
+      ],
+      "tags": [
+        "insider-threat",
+        "non-human-identity",
+        "blast-radius",
+        "ledger",
+        "airf"
+      ],
       "author": "Desmond Otieno Odhiambo",
       "date": "2026-07-02",
       "readMinutes": 12,
@@ -51,8 +72,18 @@
       "description": "Zero trust answered \"who are you?\" The agentic era asks \"should this action happen, and at what cost?\" The Adaptive Trust Systems Model: action trust, intent verification, learning policy, trust economics.",
       "category": "Cyber Architecture",
       "series": "Field Notes",
-      "topics": ["cyber", "systems", "agents"],
-      "tags": ["zero-trust", "adaptive-trust", "action-trust", "intent-verification", "trust-economics"],
+      "topics": [
+        "cyber",
+        "systems",
+        "agents"
+      ],
+      "tags": [
+        "zero-trust",
+        "adaptive-trust",
+        "action-trust",
+        "intent-verification",
+        "trust-economics"
+      ],
       "author": "Desmond Otieno Odhiambo",
       "date": "2026-07-02",
       "readMinutes": 12,
@@ -67,8 +98,20 @@
       "description": "A full-stack blueprint for mission-speed intelligence with ontology-driven agents, continuous evals, policy-as-code, safe self-improvement, and a power-user prompt system.",
       "category": "AI Architecture",
       "series": "Artemis Engineering Notes",
-      "topics": ["governed-ai", "automation", "systems"],
-      "tags": ["artemis", "ontology", "evals", "policy-as-code", "apollo", "foundry", "self-improvement"],
+      "topics": [
+        "governed-ai",
+        "automation",
+        "systems"
+      ],
+      "tags": [
+        "artemis",
+        "ontology",
+        "evals",
+        "policy-as-code",
+        "apollo",
+        "foundry",
+        "self-improvement"
+      ],
       "author": "Desmond Otieno Odhiambo",
       "date": "2026-06-30",
       "readMinutes": 16,
@@ -77,36 +120,59 @@
       "status": "published"
     },
     {
-      "slug": "osint-workflow-that-survives-reality",
-      "url": null,
+      "slug": "osint-workflow-that-survives-contact-with-reality",
+      "url": "/blog/osint-workflow-that-survives-contact-with-reality.html",
       "title": "The OSINT Workflow That Survives Contact With Reality",
       "description": "How to design collection, source grading, entity resolution, and analyst review loops without drowning in noise.",
-      "category": "OSINT",
+      "category": "OSINT Workflows",
       "series": "OSINT Tradecraft Briefs",
-      "topics": ["osint", "systems"],
-      "tags": ["osint", "source-grading", "lineage", "entity-resolution"],
+      "topics": [
+        "osint",
+        "systems"
+      ],
+      "tags": [
+        "osint",
+        "source-grading",
+        "admiralty-code",
+        "entity-resolution",
+        "provenance",
+        "claim-lineage",
+        "tradecraft"
+      ],
       "author": "Desmond Otieno Odhiambo",
-      "date": null,
-      "readMinutes": null,
-      "featured": false,
+      "date": "2026-07-01",
+      "readMinutes": 14,
+      "featured": true,
       "deskRank": 3,
-      "status": "series"
+      "status": "published"
     },
     {
       "slug": "cybersecurity-architecture-for-agentic-software",
-      "url": null,
+      "url": "/blog/cybersecurity-architecture-for-agentic-software.html",
       "title": "Cybersecurity Architecture for Agentic Software",
       "description": "The command-control patterns, permissions, logs, and kill switches required before AI agents touch real infrastructure.",
-      "category": "Cyber",
+      "category": "Cybersecurity Architecture",
       "series": "High-Trust Systems Patterns",
-      "topics": ["cyber", "agents", "systems"],
-      "tags": ["zero-trust", "kill-switch", "permissions", "audit"],
+      "topics": [
+        "cyber",
+        "agents",
+        "systems"
+      ],
+      "tags": [
+        "agentic-security",
+        "zero-trust",
+        "prompt-injection",
+        "tool-allowlists",
+        "kill-switch",
+        "audit-ledger",
+        "policy-as-code"
+      ],
       "author": "Desmond Otieno Odhiambo",
-      "date": null,
-      "readMinutes": null,
-      "featured": false,
-      "deskRank": null,
-      "status": "series"
+      "date": "2026-07-03",
+      "readMinutes": 15,
+      "featured": true,
+      "deskRank": 3,
+      "status": "published"
     }
   ]
 }

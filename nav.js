@@ -22,6 +22,7 @@
       ["Event Control Surface", "saas-platform.html", "◆"]
     ]],
     ["Platforms", [
+      ["Platform Architecture", "platform-architecture.html", "🗂"],
       ["Artemis IV Core", "artemis-iv.html", "🧭"],
       ["ZEPHYR · Air Control", "air-control.html", "🜁"],
       ["Artemis VI", "artemis.html", "🛰"],

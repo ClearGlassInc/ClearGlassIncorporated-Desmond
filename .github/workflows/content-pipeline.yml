@@ -66,18 +66,22 @@ jobs:
             echo "Changed files: $CHANGED_FILES"
           fi
 
-      - name: Compose commit message
-        id: msg
-        if: steps.detect.outputs.changed == 'true'
-        run: |
-          echo "text=content: auto-update generated outputs — $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]" >> "$GITHUB_OUTPUT"
-
       - name: Commit content updates
         if: steps.detect.outputs.changed == 'true'
-        # Signed via the GitHub API so the commit shows as "Verified" on main;
-        # falls back to a plain push if the API path fails so content never stalls.
-        uses: ./.github/actions/verified-commit
-        with:
-          message: ${{ steps.msg.outputs.text }}
-          branch: main
-          paths: marketing/output/ operations/output/
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          TS=$(date -u "+%Y-%m-%d %H:%M UTC")
+          git commit -m "content: auto-update generated outputs — $TS [skip ci]"
+          # Concurrent bots push to main during our run; a plain push hits a
+          # non-fast-forward rejection. Rebase onto the latest main and retry.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD; then
+              echo "Content committed and pushed"
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt/5) — rebasing onto latest main"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push content updates after 5 attempts"
+          exit 1

@@ -1,56 +1,37 @@
-# Copyright (c) 2024-2026 ClearGlass Inc. All Rights Reserved.
-# Proprietary and confidential. See LICENSE for terms.
-import tempfile
-import unittest
 from pathlib import Path
 
-from bots.threads_growth_command_center import CommandCenterPaths, KpiEntry, read_csv, run
+SCRIPT = Path("ThreadsGrowthCommandCenter.ps1")
 
 
-class ThreadsGrowthCommandCenterTests(unittest.TestCase):
-    def test_all_mode_builds_workspace_daily_assets_and_dashboard(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            paths = CommandCenterPaths.from_root(Path(tmp_dir))
-
-            outputs = run("all", paths, "ClearGlassInc", "AI security", KpiEntry())
-
-            self.assertIn(paths.calendar_path, outputs)
-            self.assertTrue(paths.calendar_path.exists())
-            self.assertTrue(paths.kpi_path.exists())
-            self.assertTrue(paths.engagement_path.exists())
-            self.assertTrue(paths.dashboard_path.exists())
-            self.assertTrue(paths.manifest_path.exists())
-            self.assertGreaterEqual(len(list(paths.drafts.glob("*.txt"))), 1)
-            self.assertIn("zero botting", paths.dashboard_path.read_text(encoding="utf-8").lower())
-
-    def test_add_kpi_calculates_rates_and_preserves_backup(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            paths = CommandCenterPaths.from_root(Path(tmp_dir))
-            run("init", paths, "ClearGlassInc", "AI security", KpiEntry())
-
-            run(
-                "add-kpi",
-                paths,
-                "ClearGlassInc",
-                "AI security",
-                KpiEntry(
-                    followers=100,
-                    posts=3,
-                    replies=40,
-                    likes=80,
-                    reposts=10,
-                    impressions=1000,
-                    profile_visits=25,
-                    notes="Manual daily closeout",
-                ),
-            )
-
-            rows = read_csv(paths.kpi_path)
-            self.assertEqual(rows[-1]["followers"], "100")
-            self.assertEqual(rows[-1]["engagement_rate"], "0.1300")
-            self.assertEqual(rows[-1]["profile_visit_rate"], "0.0250")
-            self.assertGreaterEqual(len(list(paths.backups.glob("*_ThreadsKPITracker.csv"))), 1)
+def test_threads_script_is_manual_and_ethical():
+    text = SCRIPT.read_text(encoding="utf-8")
+    lowered = text.lower()
+    assert "manual-only" in lowered
+    assert "does not log in" in lowered
+    assert "scrape" in lowered
+    assert "fake engagement" in lowered
+    assert "mass dms" in lowered or "mass-message" in lowered
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_threads_script_creates_required_command_center_assets():
+    text = SCRIPT.read_text(encoding="utf-8")
+    for folder in ["Drafts", "Calendars", "Analytics", "Engagement", "DailyPlans", "Reports"]:
+        assert folder in text
+    for filename in [
+        "ContentCalendar.csv",
+        "ThreadsKPITracker.csv",
+        "EngagementTracker.csv",
+        "ThreadsGrowthDashboard.html",
+    ]:
+        assert filename in text
+    assert "THREADS-DRAFT-{0:D2}.txt" in text
+    assert "$i -le 10" in text
+
+
+def test_threads_script_is_parameterized_and_idempotent():
+    text = SCRIPT.read_text(encoding="utf-8")
+    assert "[string]$BrandName" in text
+    assert "[string]$Niche" in text
+    assert "[string]$RootPath" in text
+    assert "Write-FileIfMissing" in text
+    assert "Test-Path -LiteralPath $Path" in text

@@ -119,3 +119,13 @@ h2:hover .ix-anchor,.ix-anchor:focus{opacity:.9}
 @media(prefers-reduced-motion:reduce){
   .ix-toast,.ix-top,.ix-related-card,.ix-toc a{transition:none}
 }
+
+.neon-text-glow {
+  color: #ffffff;
+  text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
+}
+
+.neon-box-glow {
+  border: 1px solid #00ffff;
+  box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, inset 0 0 10px #00ffff;
+}

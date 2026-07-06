@@ -1,9 +1,21 @@
-# Release Notes — 2026-07-04
+# Release Notes — 2026-07-06
 
-*457 commit(s) since v1.0.0*
+*543 commit(s) since v1.0.0*
 
 ## New Features
 
+- **agents:** upgrade Marketing Command to Marketing Command OS v2.0 (`7ff4e26`)
+- **ui:** move corner controls to the right + site-wide neon glow (`9be02d5`)
+- **agent-os:** runnable v8.0 orchestration skeleton + governance gate, executor, blueprint (`ae23891`)
+- **scripts:** add company-level validation checklist (`7bd4944`)
+- **scripts:** add deterministic asset reference audit (`540ecb9`)
+- **scripts:** add deterministic local link checker (`c5d54a1`)
+- **agents:** add company orchestrator tool schema (`c3ea5dd`)
+- **agents:** document company orchestrator operating prompt (`86f742b`)
+- **agents:** add ClearGlass company orchestrator manifest (`e9aae2e`)
+- **agents:** add ClearGlass Autonomous Agent OS v8.0 orchestration layer (`13cefd2`)
+- **percival:** wire the governance core into the live agent's write path (`3ce1f37`)
+- **agents:** add Workflow Repair Agent definition + wire it into agent.yml (`27b6b88`)
 - **content:** two field notes, Ultra Glass page, marketing bot ecosystem (`f2aee9a`)
 - **agents:** add ClearGlass Marketing Command orchestrator (`c261827`)
 - **percival:** v9 — fail-closed audit sync, prompt pack, deployment blueprint (`2593473`)
@@ -41,6 +53,9 @@
 
 ## Bug Fixes
 
+- **lint:** drop unused os imports flagged by ruff (`17cbd59`)
+- **scripts:** make asset audit advisory for legacy references (`f5203bd`)
+- **scripts:** separate blocking HTML asset errors from CSS advisories (`04112c9`)
 - **site:** add ClearGlass logo badge to air-systems-control.html (`b19a348`)
 - **ci:** remove invalid strategic viral f-strings (`04d3a5e`)
 - **ci:** green the suite (env-safe crypto skip) + PERCIVAL sitemap sweep (#563) (`447e7ee`)
@@ -79,6 +94,11 @@
 
 ## Documentation
 
+- add company orchestrator deployment validation path (`d4354fb`)
+- document orchestrator workflow secret posture (`22a0765`)
+- connect company orchestrator to agent system (`2d7f063`)
+- add lowercase deployment runbook alias (`9c79aa1`)
+- **prompts:** add prompt & agent workflow repair pack (`ab2d1e6`)
 - add cross-repo GitHub Actions patterns & prompt pack (`dd4ea12`)
 - add Percival v9 governed orchestration architecture blueprint (`13ad5c8`)
 - honest reference for legitimate zero-cost online income (`463f600`)
@@ -93,6 +113,8 @@
 
 ## CI/CD
 
+- sign bot commits to main via GitHub API (Verified status) (`631a876`)
+- add ClearGlass company orchestrator validation workflow (`f11c077`)
 - skip repair agent cleanly when no agent credential is set (`f2968c5`)
 - satisfy workflow doctor on regressed Pages check workflow (`1dc3913`)
 - disambiguate duplicate workflow display name (`1748802`)
@@ -113,6 +135,44 @@
 
 ## Maintenance
 
+- Add ClearGlass Century visual asset (`8810e6e`)
+- Add APT threat intelligence visual asset (`0973f37`)
+- Retry transient GitHub Pages deploy failures (`320f431`)
+- Fix reliability audit and air control build issues (`d2a0d79`)
+- Add logo badge to artemis GTM blog page (`67568fd`)
+- Add Quantum Command Interface deck to Insights hub (`5cae8e5`)
+- Add Artemis GTM visual growth engine post (`bb9fa8f`)
+- Enhance agent audit tooling (`1fdff19`)
+- Expand Artemis intelligence platform blueprint (`701bf3c`)
+- Add revenue and marketing agent configs (`cb408be`)
+- Restore site to pre-July-5 state (`ecbd0ff`)
+- Improve adaptive ClearGlass branding (`0445580`)
+- Preserve native nav bars over injected overlay (`456bef4`)
+- Upgrade homepage neon glass navbar (`9418f89`)
+- Pause homepage loader for Guardian-only boot (`6634043`)
+- Add premium neon navbar across pages (`0d09424`)
+- Add premium neon command layer (`efc8af1`)
+- Add sitewide neon command layer (`b665845`)
+- Add Percival multitask control layer (`5915fc0`)
+- Add ClearGlass Marketing OS workflow (`942b5e1`)
+- Add ClearGlass Marketing OS workflow (`ec680e9`)
+- Update Percival prompt and GitHub app description (`c47f90e`)
+- Add governed ClearGlass Marketing OS (`82e571b`)
+- Add Artemis AI platform architecture blueprint (`ca82d8f`)
+- Upgrade GitHub Pages motion system (`9b98c03`)
+- Patch-bump Next.js in air-control prototypes to clear Dependabot advisories (`8e86f4f`)
+- Harden Pages check workflow + add agents/secrets/rollback docs (#687) (`f14c8b6`)
+- Harden Pages check workflow + add agents/secrets/rollback docs (`07adc11`)
+- Add ClearGlass Intelligence Platform architecture and naming taxonomy (`bfc19df`)
+- Add Redline Mission Command layer to guardian.html (`68e7a7a`)
+- Add glassmorphism command-system layer to web-design page (`93d4a5e`)
+- Upgrade web design command interface (`ce42c3b`)
+- Restore red web design page and remove extra nav overlays (`faa2e94`)
+- Add Artemis self-evolving intelligence system (`0c12f66`)
+- Publish OSINT and agentic-cyber briefs across hub, index, feed, and sitemap (`5c76d34`)
+- Build advanced blog: two new flagship posts, post index, RSS, filters, writing assistant (`b2b039a`)
+- Add ClearGlass growth entity script (`9c3ae95`)
+- Add Percival v10 policy recovery semantics (`8ec27ad`)
 - Add Artemis cyber defense matrix tool (`f928d05`)
 - Enhance Artemis blog advanced features (`03120dc`)
 - Add Artemis Python self-improvement control pack (`13c2115`)
@@ -285,6 +345,30 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`e577138`)
+- refresh control-surface data feeds [skip ci] (`2b6011f`)
+- refresh control-surface data feeds [skip ci] (`97060fb`)
+- refresh control-surface data feeds [skip ci] (`7a438bc`)
+- refresh control-surface data feeds [skip ci] (`5d15d60`)
+- refresh control-surface data feeds [skip ci] (`ca4ab22`)
+- refresh control-surface data feeds [skip ci] (`10ee833`)
+- refresh control-surface data feeds [skip ci] (`6fdfda0`)
+- refresh control-surface data feeds [skip ci] (`2c6e4af`)
+- refresh control-surface data feeds [skip ci] (`f66fd4b`)
+- update generated outputs — 2026-07-05 09:41 UTC [skip ci] (`b254b88`)
+- refresh control-surface data feeds [skip ci] (`cd29480`)
+- refresh control-surface data feeds [skip ci] (`146b016`)
+- refresh control-surface data feeds [skip ci] (`364203e`)
+- refresh control-surface data feeds [skip ci] (`42b879c`)
+- refresh control-surface data feeds [skip ci] (`b67ccaf`)
+- refresh control-surface data feeds [skip ci] (`4609b45`)
+- refresh control-surface data feeds [skip ci] (`c44ebd7`)
+- refresh control-surface data feeds [skip ci] (`a441e4e`)
+- refresh control-surface data feeds [skip ci] (`cc6e39c`)
+- refresh control-surface data feeds [skip ci] (`e8cd886`)
+- refresh control-surface data feeds [skip ci] (`5c74516`)
+- refresh control-surface data feeds [skip ci] (`d2adb9b`)
+- update generated outputs — 2026-07-04 09:21 UTC [skip ci] (`a542a39`)
 - refresh control-surface data feeds [skip ci] (`f7c3d30`)
 - refresh control-surface data feeds [skip ci] (`b49508f`)
 - refresh control-surface data feeds [skip ci] (`046c163`)
@@ -484,6 +568,8 @@
 
 ## Other
 
+- add Insight Atlas — living intelligence-graph panel + integrate new field notes (`d491d4b`)
+- remove unused variable in insights.js paletteEntries (`d1dd78b`)
 - add advanced insights layer — filters, palette, TOC, related posts, feeds (`82d903f`)
 - executable v9 scaffold with fail-closed policy tests + workflow_call gate (`627c948`)
 - add ClearGlass Executive Intelligence Layer agent (`404809f`)

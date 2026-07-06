@@ -3,12 +3,54 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "21:01",
-    "timestamp": "2026-07-06T21:01:07Z"
+    "time": "22:37",
+    "timestamp": "2026-07-06T22:37:26Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #205",
+    "time": "22:37",
+    "timestamp": "2026-07-06T22:37:16Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-96b7ffa0-4a77-49ab-a5be-94c3a9fe1795 \u00b7 run #607",
+    "time": "22:08",
+    "timestamp": "2026-07-06T22:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-efee50e0-393c-4667-b4d1-2dc3bcbb0d65 \u00b7 run #606",
+    "time": "21:08",
+    "timestamp": "2026-07-06T21:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #747",
+    "time": "21:01",
+    "timestamp": "2026-07-06T21:01:21Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1194",
+    "time": "21:01",
+    "timestamp": "2026-07-06T21:01:14Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2037",
+    "time": "21:01",
+    "timestamp": "2026-07-06T21:01:14Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #204",
     "time": "21:00",
     "timestamp": "2026-07-06T21:00:53Z"
@@ -47,47 +89,5 @@
     "detail": "push on main \u00b7 run #419",
     "time": "19:14",
     "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1125",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #863",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #207",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #746",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "Security",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #891",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1193",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:30Z"
   }
 ]

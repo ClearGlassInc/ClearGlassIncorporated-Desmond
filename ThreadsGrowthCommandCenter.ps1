@@ -20,6 +20,176 @@ param(
 )
 
 Set-StrictMode -Version Latest
+THREAT & GROWTH BRIEF - $today
+TARGET: $BrandName
+SECTOR: $Niche
+
+THE RULES OF HIGH-VELOCITY MANUAL GROWTH:
+1. PUBLISH 3X TODAY. Morning, Afternoon, Evening.
+2. 40 REPLIES MINIMUM. Target relevant big accounts manually. Be the best reply in their thread.
+3. RUTHLESS PRUNING. If yesterday's format tanked twice, kill it and rotate.
+
+EXECUTION BLOCKS:
+[ ] 08:00 - Post 1 (High-Signal / Contrarian) + 15 manual replies
+[ ] 13:00 - Post 2 (Proof / Screenshot / Result) + 15 manual replies
+[ ] 19:00 - Post 3 (Short insight / Lesson) + 10 manual replies
+
+ENGAGEMENT PROTOCOL:
+- Never say "Great post!"
+- Add missing context, politely disagree, or contribute a sharper useful truth.
+- Steal attention ethically by being useful, specific, and manually present.
+
+EVALUATE AND ADAPT:
+- What is the Engagement Rate (ER) of yesterday's top post?
+- If ER < 2%, the hook was weak. Fix it.
+- If the same format fails twice, mark it Killed in Analytics/FormatReview.csv.
+
+COMPLIANCE LINE:
+- Zero botting. Zero scraping. Zero fake engagement. Zero mass DMs. No credentials in this folder.
+"@
+}
+
+function Invoke-DailyWorkflow {
+    Initialize-Folders
+    if (-not (Test-Path -LiteralPath $CalendarPath)) { Initialize-Workspace }
+
+    $today = Get-Date -Format "yyyy-MM-dd"
+    $dailyPlanPath = Join-Path $Folders.DailyPlans "DailyPlan_$today.txt"
+    New-DailyPlan | Out-File -LiteralPath $dailyPlanPath -Encoding UTF8
+
+    $calendar = Import-Csv -LiteralPath $CalendarPath
+    $todayRows = @($calendar | Where-Object { $_.Date -eq $today })
+    if ($todayRows.Count -eq 0) { $todayRows = @($calendar | Select-Object -First 3) }
+
+    foreach ($row in $todayRows) {
+        $safeTopic = ConvertTo-SafeFileName -Text $row.Topic
+        $draftPath = Join-Path $Folders.Drafts "$today`_$safeTopic.txt"
+        if (-not (Test-Path -LiteralPath $draftPath)) {
+            New-PostDraft -Topic $row.Topic -Pillar $row.Pillar -Format $row.Format | Out-File -LiteralPath $draftPath -Encoding UTF8
+        }
+    }
+    Write-Status "War Room prepared for $today." "Green"
+}
+
+function Add-KpiEntry {
+    Initialize-Folders
+    if (-not (Test-Path -LiteralPath $KpiPath)) { Initialize-Workspace }
+    Backup-FileSafe -Path $KpiPath
+
+    $row = [pscustomobject]@{
+        Date = Get-Date -Format "yyyy-MM-dd"
+        Followers = $Followers
+        Posts = $Posts
+        Replies = $Replies
+        Likes = $Likes
+        Reposts = $Reposts
+        Impressions = $Impressions
+        ProfileVisits = $ProfileVisits
+        Notes = $Notes
+    }
+    Add-CsvRow -Path $KpiPath -Row $row
+    Write-Status "Telemetry logged." "Green"
+}
+
+function Convert-RowsToHtmlTable {
+    param([array]$Rows, [int]$MaxRows = 10)
+    if ($null -eq $Rows -or $Rows.Count -eq 0) { return "<p>No data available.</p>" }
+    $selectedRows = @($Rows | Select-Object -First $MaxRows)
+    $headers = $selectedRows[0].PSObject.Properties.Name
+    $html = "<table><thead><tr>"
+    foreach ($header in $headers) { $html += "<th>$(Encode-Html $header)</th>" }
+    $html += "</tr></thead><tbody>"
+    foreach ($row in $selectedRows) {
+        $html += "<tr>"
+        foreach ($header in $headers) { $html += "<td>$(Encode-Html $row.$header)</td>" }
+        $html += "</tr>"
+    }
+    $html += "</tbody></table>"
+    return $html
+}
+
+function New-Dashboard {
+    param([switch]$Launch)
+    Initialize-Folders
+    if (-not (Test-Path -LiteralPath $CalendarPath) -or -not (Test-Path -LiteralPath $KpiPath)) { Initialize-Workspace }
+
+    $calendar = @(Import-Csv -LiteralPath $CalendarPath)
+    $kpis = @(Import-Csv -LiteralPath $KpiPath)
+    $formats = @(Import-Csv -LiteralPath $FormatReviewPath)
+
+    $latestKpi = $kpis | Select-Object -Last 1
+    $upcoming = @($calendar | Where-Object { [datetime]$_.Date -ge (Get-Date).Date } | Select-Object -First 10)
+    $recentKpis = @($kpis | Select-Object -Last 10)
+
+    $totalPosts = ($kpis | ForEach-Object { [int]$_.Posts } | Measure-Object -Sum).Sum
+    $totalReplies = ($kpis | ForEach-Object { [int]$_.Replies } | Measure-Object -Sum).Sum
+    $totalImpressions = ($kpis | ForEach-Object { [int]$_.Impressions } | Measure-Object -Sum).Sum
+
+    $calendarTable = Convert-RowsToHtmlTable -Rows $upcoming -MaxRows 10
+    $kpiTable = Convert-RowsToHtmlTable -Rows $recentKpis -MaxRows 10
+    $formatTable = Convert-RowsToHtmlTable -Rows $formats -MaxRows 10
+    $safeBrand = Encode-Html $BrandName
+    $safeNiche = Encode-Html $Niche
+
+    $html = @"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>$safeBrand Command Center V3</title>
+    <style>
+        :root { --bg: #09090b; --card: #18181b; --accent: #dc2626; --text: #f4f4f5; --muted: #a1a1aa; --border: #27272a; }
+        body { font-family: Inter, Arial, sans-serif; background: var(--bg); color: var(--text); padding: 40px; margin: 0; }
+        h1, h2 { color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+        h1 { border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 24px; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .metric { font-size: 38px; font-weight: 900; margin-top: 10px; color: #fff; }
+        .label { color: var(--muted); font-size: 13px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; background: var(--card); }
+        th, td { border: 1px solid var(--border); padding: 12px; text-align: left; }
+        th { background: #202024; color: var(--muted); text-transform: uppercase; font-size: 12px; }
+        td { color: #e4e4e7; }
+        .truth { border-left: 4px solid var(--accent); padding-left: 16px; font-size: 18px; font-weight: bold; color: #fff; font-style: italic; }
+        .compliance { color: #fecaca; font-weight: 800; }
+    </style>
+</head>
+<body>
+    <h1>SYSTEM V3: $safeBrand</h1>
+    <p><strong>Sector:</strong> $safeNiche</p>
+    <p class="compliance">Manual-only: zero botting, zero scraping, zero fake engagement, zero mass DMs, zero credential storage.</p>
+    <div class="grid">
+        <div class="card"><div class="label">Total Followers</div><div class="metric">$(Encode-Html $latestKpi.Followers)</div></div>
+        <div class="card"><div class="label">Posts Fired</div><div class="metric">$totalPosts</div></div>
+        <div class="card"><div class="label">Replies Deployed</div><div class="metric">$totalReplies</div></div>
+        <div class="card"><div class="label">Total Impressions</div><div class="metric">$totalImpressions</div></div>
+    </div>
+    <h2>The Standard</h2>
+    <p class="truth">If it is not generating replies, reposts, saves, or profile visits, it is noise. Kill the format after two failures and try again tomorrow.</p>
+    <h2>Upcoming Firepower</h2>
+    $calendarTable
+    <h2>Telemetry Logs</h2>
+    $kpiTable
+    <h2>Format Kill List</h2>
+    $formatTable
+</body>
+</html>
+"@
+    $html | Out-File -LiteralPath $DashboardPath -Encoding UTF8
+    Write-Status "Aggressive UI Dashboard compiled: $DashboardPath" "Green"
+    if ($Launch) { Start-Process $DashboardPath }
+}
+
+switch ($Mode) {
+    "Init"      { Initialize-Workspace }
+    "Daily"     { Invoke-DailyWorkflow }
+    "AddKPI"    { Add-KpiEntry }
+    "Dashboard" { New-Dashboard -Launch:$OpenDashboard }
+    "All"       { Initialize-Workspace; Invoke-DailyWorkflow; New-Dashboard -Launch:$OpenDashboard }
+}
+Write-Host ""
+Write-Status "V3 Execution Complete. Go to work." "Red"
 $ErrorActionPreference = 'Stop'
 
 function New-DirectoryIfMissing {

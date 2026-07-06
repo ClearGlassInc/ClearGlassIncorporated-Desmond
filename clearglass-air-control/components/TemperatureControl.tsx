@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion-shim';
 import { Snowflake, ThermometerSun } from 'lucide-react';
 
 export function TemperatureControl({ value, onChange }: { value: number; onChange: (val: number) => void }) {

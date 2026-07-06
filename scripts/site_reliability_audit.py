@@ -23,6 +23,29 @@ import xml.etree.ElementTree as ET
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_DOMAIN = "clearglassinc.github.io"
+IGNORED_AUDIT_DIRS = {
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".next",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tox",
+    "__pycache__",
+    "coverage",
+    "dist",
+    "node_modules",
+}
+
+
+def iter_repo_html_files() -> list[Path]:
+    """Return repository-owned HTML files, excluding dependency/build output trees."""
+
+    return sorted(
+        path
+        for path in REPO_ROOT.rglob("*.html")
+        if not any(part in IGNORED_AUDIT_DIRS for part in path.relative_to(REPO_ROOT).parts)
+    )
 
 
 class LinkParser(HTMLParser):
@@ -51,7 +74,7 @@ def is_local_ref(ref: str) -> bool:
 
 def check_links() -> list[AuditIssue]:
     issues: list[AuditIssue] = []
-    html_files = sorted(REPO_ROOT.rglob("*.html"))
+    html_files = iter_repo_html_files()
 
     for html_file in html_files:
         parser = LinkParser()
@@ -191,7 +214,7 @@ def check_pages_domain() -> list[AuditIssue]:
 
 def check_seo_accessibility() -> list[AuditIssue]:
     issues: list[AuditIssue] = []
-    html_files = sorted(REPO_ROOT.rglob("*.html"))
+    html_files = iter_repo_html_files()
     script_block = re.compile(r"<script\b[^>]*>.*?</script>", re.IGNORECASE | re.DOTALL)
 
     for html_file in html_files:

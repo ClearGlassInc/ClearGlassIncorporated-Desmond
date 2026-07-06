@@ -1,226 +1,26 @@
 <#
 .SYNOPSIS
-    Threads Growth Command Center V3 - Aggressive Execution Model.
-
+    Builds an ethical, manual Threads growth command center for ClearGlassInc Artemis.
 .DESCRIPTION
-    High-velocity, compliant Threads growth system:
-    - 30-day accelerated content calendar
-    - Ruthless daily action plan
-    - Strict KPI tracking
-    - Dynamic HTML dashboard with high-contrast UI
-
-    RULES OF ENGAGEMENT:
-    - Zero botting. Zero scraping.
-    - Maximum manual volume.
-    - If a format fails twice, kill it.
-
-    This is a manual operating system only. It never logs in, auto-posts,
-    auto-likes, auto-comments, follows/unfollows, scrapes, mass-DMs, stores
-    credentials, or bypasses Threads/Instagram platform rules.
+    Creates local folders, CSV trackers, draft post templates, a daily operating plan,
+    and an HTML dashboard for a Threads/Instagram growth workflow. The script is
+    intentionally manual-only: it does not log in, scrape, auto-follow, auto-like,
+    auto-comment, auto-post, mass-message, or store credentials.
+.EXAMPLE
+    pwsh -ExecutionPolicy Bypass -File .\ThreadsGrowthCommandCenter.ps1 -OpenDashboard
+.EXAMPLE
+    pwsh -ExecutionPolicy Bypass -File .\ThreadsGrowthCommandCenter.ps1 -BrandName "MyBrand" -Niche "SaaS security" -RootPath "C:\Growth" -OpenDashboard
 #>
-
 [CmdletBinding()]
 param(
-    [ValidateSet("Init", "Daily", "AddKPI", "Dashboard", "All")]
-    [string]$Mode = "All",
-
-    [string]$BrandName = "ClearGlassInc",
-
-    [string]$Niche = "AI security, business systems, cryptocurrency, discipline, strategy",
-
-    [string]$RootPath = $(if ($env:USERPROFILE) { Join-Path $env:USERPROFILE "Desktop/ThreadsGrowthCommandCenter_V3" } else { Join-Path (Get-Location) "ThreadsGrowthCommandCenter_V3" }),
-
-    [int]$Followers = 0,
-    [int]$Posts = 0,
-    [int]$Replies = 0,
-    [int]$Likes = 0,
-    [int]$Reposts = 0,
-    [int]$Impressions = 0,
-    [int]$ProfileVisits = 0,
-    [string]$Notes = "Manual update",
+    [string]$BrandName = 'ClearGlassInc Artemis',
+    [string]$Niche = 'AI security, intelligence systems, crypto discipline, and operational sovereignty',
+    [string]$RootPath = (Join-Path (Get-Location) 'ThreadsGrowthCommandCenter'),
     [switch]$OpenDashboard
 )
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
-
-$Folders = @{
-    Drafts     = Join-Path $RootPath "Drafts"
-    Calendars  = Join-Path $RootPath "Calendars"
-    Analytics  = Join-Path $RootPath "Analytics"
-    Engagement = Join-Path $RootPath "Engagement"
-    Reports    = Join-Path $RootPath "Reports"
-    DailyPlans = Join-Path $RootPath "DailyPlans"
-    Backups    = Join-Path $RootPath "Backups"
-}
-
-$CalendarPath      = Join-Path $Folders.Calendars "ContentCalendar.csv"
-$KpiPath           = Join-Path $Folders.Analytics "ThreadsKPITracker.csv"
-$EngagementPath    = Join-Path $Folders.Engagement "EngagementTracker.csv"
-$FormatReviewPath  = Join-Path $Folders.Analytics "FormatReview.csv"
-$DashboardPath     = Join-Path $Folders.Reports "ThreadsGrowthDashboard.html"
-
-function Write-Status {
-    param([string]$Message, [string]$Color = "Cyan")
-    Write-Host "[►] $Message" -ForegroundColor $Color
-}
-
-function New-FolderSafe {
-    param([string]$Path)
-    if (-not (Test-Path -LiteralPath $Path)) {
-        New-Item -ItemType Directory -Path $Path -Force | Out-Null
-    }
-}
-
-function Initialize-Folders {
-    New-FolderSafe -Path $RootPath
-    foreach ($folder in $Folders.Values) { New-FolderSafe -Path $folder }
-}
-
-function Backup-FileSafe {
-    param([string]$Path)
-    if (Test-Path -LiteralPath $Path) {
-        New-FolderSafe -Path $Folders.Backups
-        $name = Split-Path $Path -Leaf
-        $stamp = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
-        $backupPath = Join-Path $Folders.Backups "$stamp`_$name"
-        Copy-Item -LiteralPath $Path -Destination $backupPath -Force
-    }
-}
-
-function Write-CsvIfMissing {
-    param([string]$Path, [array]$Rows)
-    if (-not (Test-Path -LiteralPath $Path)) {
-        $Rows | Export-Csv -LiteralPath $Path -NoTypeInformation -Encoding UTF8
-    }
-}
-
-function Add-CsvRow {
-    param([string]$Path, [pscustomobject]$Row)
-    if (-not (Test-Path -LiteralPath $Path)) {
-        $Row | Export-Csv -LiteralPath $Path -NoTypeInformation -Encoding UTF8
-    } else {
-        $Row | Export-Csv -LiteralPath $Path -NoTypeInformation -Append -Encoding UTF8
-    }
-}
-
-function ConvertTo-SafeFileName {
-    param([string]$Text)
-    $safe = $Text -replace '[^\w\s-]', ''
-    $safe = $safe -replace '\s+', '_'
-    $safe = $safe.Trim("_")
-    if ([string]::IsNullOrWhiteSpace($safe)) { return "Untitled" }
-    return $safe
-}
-
-function Encode-Html {
-    param([object]$Value)
-    if ($null -eq $Value) { return "" }
-    return [System.Net.WebUtility]::HtmlEncode([string]$Value)
-}
-
-function Get-RandomHook {
-    $hooks = @(
-        "You are being outworked by people with half your talent and twice your discipline.",
-        "Your business doesn't have a traffic problem. It has a trust problem.",
-        "Stop building in secret. Nobody cares about your launch if they didn't see the struggle.",
-        "90% of crypto accounts are wiped out by emotion. Here is the math behind survival:",
-        "If you rely on motivation to run your company, you are one bad day away from failing.",
-        "Most AI tools are liabilities disguised as assets. Here is what real security looks like:",
-        "Stop posting generic advice. Show the actual data, operating lesson, or scar tissue.",
-        "The market is ruthless. It only pays for systems, leverage, and undeniable proof."
-    )
-    return Get-Random -InputObject $hooks
-}
-
-function New-PostDraft {
-    param([string]$Topic, [string]$Pillar, [string]$Format)
-    $hook = Get-RandomHook
-@"
-[HOOK: COPY/PASTE OR REWRITE TO BE SHARPER]
-$hook
-
-[TARGET INTEL]
-Topic: $Topic
-Pillar: $Pillar
-Format: $Format
-
-[THE DIRECTIVE]
-1. Core Point: No fluff. Make the first sentence impossible to ignore.
-2. Proof: Give exact numbers, screenshots, code, lessons, or concrete evidence.
-3. Takeaway: What must they change today? Make it actionable.
-
-[CALL TO ACTION]
-Follow $BrandName for aggressive manual execution and $Niche systems.
-
-[RUTHLESS EDITING CHECKLIST]
-[ ] Did I remove every useless adjective?
-[ ] Is the hook impossible to scroll past?
-[ ] Does this build authority or just make noise?
-[ ] Is there zero botting, scraping, mass-DM, or fake-engagement behavior?
-[ ] Is this compliant, truthful, and manually posted?
-"@
-}
-
-function Get-ContentPlanRows {
-    $pillars = @("AI Security", "Business Systems", "Crypto Discipline", "Mindset", "Operations", "Financial Freedom")
-    $topics = @{
-        "AI Security"       = @("Exposing the silent data leaks in your AI wrappers", "Why AI automation without audit trails is corporate suicide", "The exact framework ClearGlassInc uses to lock down AI")
-        "Business Systems"  = @("Productize or die: Why service businesses stall at ten thousand per month", "The exact three-tool stack to replace a junior operations manager", "Licensing knowledge vs selling time")
-        "Crypto Discipline" = @("The cold math of risk management: Why one percent sizing wins", "Stop trading the five-minute chart. Here is the macro truth.", "How to build an iron stomach for thirty percent drawdowns")
-        "Mindset"           = @("Burn your plan B. It is distracting you.", "If you are not tracking it daily, you do not actually care about it.", "The ROI of saying no to almost every opportunity")
-        "Operations"        = @("Friction is the enemy of scale. Here is how to kill it.", "The weekly review system that forces execution", "Why your SOPs are useless and how to fix them")
-        "Financial Freedom" = @("Cash flow over vanity metrics, always.", "Building digital real estate vs renting algorithms", "The three-year timeline to exit velocity")
-    }
-    $formats = @("High-Signal Thread", "Raw Metric Screenshot", "Contrarian Opinion", "Tear-down / Analysis")
-    $rows = @()
-
-    for ($i = 0; $i -lt 30; $i++) {
-        $date = (Get-Date).Date.AddDays($i)
-        $pillar = $pillars[$i % $pillars.Count]
-        $topicList = $topics[$pillar]
-        $topic = $topicList[$i % $topicList.Count]
-        $format = $formats[$i % $formats.Count]
-
-        $rows += [pscustomobject]@{
-            Date   = $date.ToString("yyyy-MM-dd")
-            Pillar = $pillar
-            Topic  = $topic
-            Format = $format
-            Status = "Pending Manual Attack"
-        }
-    }
-    return $rows
-}
-
-function Initialize-Workspace {
-    Initialize-Folders
-    $calendarRows = Get-ContentPlanRows
-    $kpiRows = @(
-        [pscustomobject]@{ Date = (Get-Date -Format "yyyy-MM-dd"); Followers = 0; Posts = 0; Replies = 0; Likes = 0; Reposts = 0; Impressions = 0; ProfileVisits = 0; Notes = "Ground Zero" }
-    )
-    $engagementRows = @(
-        [pscustomobject]@{ Date = (Get-Date -Format "yyyy-MM-dd"); Creator = ""; CreatorTopic = ""; YourComment = ""; ResponseReceived = ""; FollowUpDate = ""; Outcome = ""; Notes = "Manual replies only" }
-    )
-    $formatRows = @(
-        [pscustomobject]@{ Format = "High-Signal Thread"; ConsecutiveFails = 0; Status = "Active"; DecisionRule = "If a format fails twice, kill it." }
-        [pscustomobject]@{ Format = "Raw Metric Screenshot"; ConsecutiveFails = 0; Status = "Active"; DecisionRule = "If a format fails twice, kill it." }
-        [pscustomobject]@{ Format = "Contrarian Opinion"; ConsecutiveFails = 0; Status = "Active"; DecisionRule = "If a format fails twice, kill it." }
-        [pscustomobject]@{ Format = "Tear-down / Analysis"; ConsecutiveFails = 0; Status = "Active"; DecisionRule = "If a format fails twice, kill it." }
-    )
-    Write-CsvIfMissing -Path $CalendarPath -Rows $calendarRows
-    Write-CsvIfMissing -Path $KpiPath -Rows $kpiRows
-    Write-CsvIfMissing -Path $EngagementPath -Rows $engagementRows
-    Write-CsvIfMissing -Path $FormatReviewPath -Rows $formatRows
-    Write-Status "Aggressive manual workspace initialized: $RootPath" "Green"
-}
-
-function New-DailyPlan {
-    $today = Get-Date -Format "yyyy-MM-dd"
-@"
-=========================================
 THREAT & GROWTH BRIEF - $today
-=========================================
 TARGET: $BrandName
 SECTOR: $Niche
 
@@ -246,7 +46,6 @@ EVALUATE AND ADAPT:
 
 COMPLIANCE LINE:
 - Zero botting. Zero scraping. Zero fake engagement. Zero mass DMs. No credentials in this folder.
-=========================================
 "@
 }
 
@@ -391,3 +190,195 @@ switch ($Mode) {
 }
 Write-Host ""
 Write-Status "V3 Execution Complete. Go to work." "Red"
+$ErrorActionPreference = 'Stop'
+
+function New-DirectoryIfMissing {
+    param([Parameter(Mandatory = $true)][string]$Path)
+    if (-not (Test-Path -LiteralPath $Path)) {
+        New-Item -ItemType Directory -Path $Path | Out-Null
+    }
+}
+
+function Write-FileIfMissing {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string]$Content
+    )
+    if (-not (Test-Path -LiteralPath $Path)) {
+        $Content | Set-Content -LiteralPath $Path -Encoding UTF8
+    }
+}
+
+function ConvertTo-HtmlEncodedText {
+    param([Parameter(Mandatory = $true)][string]$Value)
+    return [System.Net.WebUtility]::HtmlEncode($Value)
+}
+
+function New-ThreadsHookLibrary {
+    return @(
+        'Most brands do not need more noise. They need a system that compounds trust.',
+        'The fastest way to look serious online is to show proof of work before opinions.',
+        'A clean operating rhythm beats a viral post you cannot repeat.',
+        'Security, revenue, and reputation all break when nobody owns the checklist.',
+        'If your content cannot survive a compliance review, it is not an asset.',
+        'Discipline is the algorithm most people refuse to run.',
+        'Crypto rewards patience, records, and risk control more than adrenaline.',
+        'AI is only powerful when the workflow around it is measurable.',
+        'A founder with a documented system is harder to ignore.',
+        'The internet trusts receipts, not declarations.'
+    )
+}
+
+function New-DraftBody {
+    param(
+        [Parameter(Mandatory = $true)][string]$Hook,
+        [Parameter(Mandatory = $true)][string]$BrandName,
+        [Parameter(Mandatory = $true)][string]$Niche,
+        [Parameter(Mandatory = $true)][string]$Pillar,
+        [Parameter(Mandatory = $true)][int]$Index
+    )
+
+    return @"
+$Hook
+
+Core point:
+$BrandName is building around $Niche. The point is not to post randomly; the point is to publish proof, operating lessons, and decision frameworks that make the brand easier to trust.
+
+Proof:
+Today I am documenting pillar $Pillar with a repeatable workflow: idea -> evidence -> useful takeaway -> manual conversation.
+
+Takeaway:
+If the content cannot help a real operator think more clearly, it is not ready.
+
+CTA:
+If you are building in $Niche, save this and compare it against your own system today.
+
+Manual review checklist:
+[ ] No hype claim
+[ ] No guaranteed income language
+[ ] No spam, scraping, mass DM, or fake engagement tactic
+[ ] Includes one proof point or concrete lesson
+[ ] Ready to post manually on Threads
+
+Draft ID: THREADS-DRAFT-$('{0:D2}' -f $Index)
+"@
+}
+
+function Initialize-ThreadsGrowthCommandCenter {
+    param(
+        [Parameter(Mandatory = $true)][string]$BasePath,
+        [Parameter(Mandatory = $true)][string]$BrandName,
+        [Parameter(Mandatory = $true)][string]$Niche
+    )
+
+    foreach ($folder in @('Drafts', 'Calendars', 'Analytics', 'Engagement', 'DailyPlans', 'Reports')) {
+        New-DirectoryIfMissing -Path (Join-Path $BasePath $folder)
+    }
+
+    $calendarPath = Join-Path $BasePath 'Calendars/ContentCalendar.csv'
+    Write-FileIfMissing -Path $calendarPath -Content @'
+Date,Pillar,Topic,Format,CTA,Status,Notes
+2026-07-06,Authority,AI security operating checklist,Text post,Save this checklist,Draft,Manual post only
+2026-07-07,Business,ClearGlassInc proof-of-work update,Mini-thread,Reply with the system you are building,Draft,Add real proof before posting
+2026-07-08,Mindset,Discipline as infrastructure,Text post,Bookmark for daily review,Draft,Keep practical
+2026-07-09,Crypto,Risk control beats hype,Text post,Track your rules before your wins,Draft,No financial promises
+2026-07-10,Operations,Daily command rhythm,Checklist,Steal this operating rhythm,Draft,Manual engagement after posting
+'@
+
+    $kpiPath = Join-Path $BasePath 'Analytics/ThreadsKPITracker.csv'
+    Write-FileIfMissing -Path $kpiPath -Content 'Date,Followers,Posts,Replies,Likes,Reposts,Impressions,ProfileVisits,Notes'
+
+    $engagementPath = Join-Path $BasePath 'Engagement/EngagementTracker.csv'
+    Write-FileIfMissing -Path $engagementPath -Content 'Date,Creator,CreatorTopic,YourComment,ResponseReceived,FollowUpDate,Outcome,Notes'
+
+    $hooks = New-ThreadsHookLibrary
+    $pillars = @('Authority', 'Business', 'Mindset', 'Crypto', 'Operations')
+    for ($i = 1; $i -le 10; $i++) {
+        $hook = $hooks[($i - 1) % $hooks.Count]
+        $pillar = $pillars[($i - 1) % $pillars.Count]
+        $draftPath = Join-Path $BasePath ("Drafts/THREADS-DRAFT-{0:D2}.txt" -f $i)
+        Write-FileIfMissing -Path $draftPath -Content (New-DraftBody -Hook $hook -BrandName $BrandName -Niche $Niche -Pillar $pillar -Index $i)
+    }
+
+    $today = (Get-Date).ToString('yyyy-MM-dd')
+    $dailyPlanPath = Join-Path $BasePath "DailyPlans/DailyPlan_$today.txt"
+    Write-FileIfMissing -Path $dailyPlanPath -Content @"
+$BrandName Threads Daily Growth Plan — $today
+
+Niche:
+$Niche
+
+Non-negotiables:
+[ ] Publish 2 original manual posts from Drafts or Calendar
+[ ] Leave 15 thoughtful strategic replies by hand
+[ ] Study 5 competitor or peer posts and write one lesson each
+[ ] Update Analytics/ThreadsKPITracker.csv
+[ ] Update Engagement/EngagementTracker.csv
+[ ] Write one improvement note before ending the day
+
+Rules:
+- No bots, scraping, follow/unfollow, fake engagement, engagement pods, or mass DMs.
+- No passwords, cookies, API keys, or session tokens in this folder.
+- Use proof, useful thinking, and real replies. Manual review always wins.
+"@
+
+    $safeBrand = ConvertTo-HtmlEncodedText -Value $BrandName
+    $safeNiche = ConvertTo-HtmlEncodedText -Value $Niche
+    $dashboardPath = Join-Path $BasePath 'Reports/ThreadsGrowthDashboard.html'
+    Write-FileIfMissing -Path $dashboardPath -Content @"
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>$safeBrand Threads Growth Dashboard</title>
+  <style>
+    body { font-family: Inter, Segoe UI, Arial, sans-serif; margin: 0; background: #09090b; color: #f4f4f5; }
+    main { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+    .hero { border: 1px solid #27272a; border-radius: 24px; padding: 28px; background: linear-gradient(135deg, #111827, #18181b); }
+    h1 { margin-top: 0; font-size: 2.3rem; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 22px; }
+    .card { border: 1px solid #27272a; border-radius: 18px; padding: 18px; background: #111113; }
+    a { color: #67e8f9; }
+    code { color: #fde68a; }
+    .rule { color: #fca5a5; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>$safeBrand Threads Growth Command Center</h1>
+      <p><strong>Brand focus:</strong> $safeNiche</p>
+      <p class="rule">Manual-only system: no scraping, spam, fake engagement, credential storage, or automation.</p>
+    </section>
+    <section class="grid">
+      <article class="card"><h2>Drafts</h2><p>10 reusable templates using Hook -> Core point -> Proof -> Takeaway -> CTA.</p><p><code>../Drafts</code></p></article>
+      <article class="card"><h2>Calendar</h2><p>5 planned posts across Authority, Business, Mindset, Crypto, and Operations.</p><p><a href="../Calendars/ContentCalendar.csv">Open calendar</a></p></article>
+      <article class="card"><h2>Analytics</h2><p>Track followers, posts, replies, likes, reposts, impressions, and profile visits.</p><p><a href="../Analytics/ThreadsKPITracker.csv">Open KPI tracker</a></p></article>
+      <article class="card"><h2>Engagement</h2><p>Log manual replies, responses, follow-ups, and outcomes.</p><p><a href="../Engagement/EngagementTracker.csv">Open engagement tracker</a></p></article>
+      <article class="card"><h2>Daily Plan</h2><p>Run the daily checklist: 2 posts, 15 replies, 5 analyses, KPI update, improvement note.</p><p><code>../DailyPlans</code></p></article>
+      <article class="card"><h2>Operating Principle</h2><p>The script does not grow the account. Consistent proof, relevance, and real conversations do.</p></article>
+    </section>
+  </main>
+</body>
+</html>
+"@
+
+    return [PSCustomObject]@{
+        Root = $BasePath
+        Calendar = $calendarPath
+        KPITracker = $kpiPath
+        EngagementTracker = $engagementPath
+        DailyPlan = $dailyPlanPath
+        Dashboard = $dashboardPath
+    }
+}
+
+$result = Initialize-ThreadsGrowthCommandCenter -BasePath $RootPath -BrandName $BrandName -Niche $Niche
+$result | Format-List
+
+if ($OpenDashboard) {
+    if ($IsWindows) { Invoke-Item -LiteralPath $result.Dashboard }
+    elseif ($IsMacOS) { & open $result.Dashboard }
+    else { Write-Host "Open dashboard manually: $($result.Dashboard)" -ForegroundColor Yellow }
+}

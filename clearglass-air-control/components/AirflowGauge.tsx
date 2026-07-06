@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion-shim';
 import { Activity, Wind } from 'lucide-react';
 import { RingGauge } from './RingGauge';
 

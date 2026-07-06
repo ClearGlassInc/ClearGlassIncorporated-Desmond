@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion-shim';
 import { Compass, RotateCcw } from 'lucide-react';
 
 export function VentDial({ value, onChange }: { value: number; onChange: (val: number) => void }) {

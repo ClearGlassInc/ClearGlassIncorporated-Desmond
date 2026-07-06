@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion-shim';
 import { Gauge, Minus, Plus } from 'lucide-react';
 
 export function PressureGauge({ value, onChange }: { value: number; onChange: (val: number) => void }) {

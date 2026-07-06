@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion-shim';
 import { Building2, Users } from 'lucide-react';
 import { zones, ZoneId } from '@/lib/types';
 

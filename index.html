@@ -11,25 +11,6 @@
 <meta name="msapplication-TileColor" content="#07111f">
 <meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
 
-<script>
-/* ClearGlass loader gate — show cinematic loader once per session.
-   Opt out: ?noloader=1, prior session, reduced-motion, hash, or crawler.
-   SEO: never redirect search/AI crawlers — they must index the real page. */
-(function(){
-  try{
-    var ua = navigator.userAgent || '';
-    if (/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua)) return;
-    var q = window.location.search || '';
-    var h = window.location.hash || '';
-    if (/noloader|skip/i.test(q+h)) return;
-    if (sessionStorage.getItem('clearglass.loader.seen')) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (document.referrer && /clearglassinc\.github\.io/.test(document.referrer)) return;
-    sessionStorage.setItem('clearglass.loader.seen','1');
-    window.location.replace('cg-loader.html?next=index.html');
-  }catch(e){}
-})();
-</script>
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <meta charset="UTF-8"/>
 <script>

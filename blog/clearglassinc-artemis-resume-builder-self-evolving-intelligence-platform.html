@@ -163,12 +163,14 @@ article ul li::marker{color:var(--prism-2)}
 .cta-k{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#9aa6c8;position:relative}
 .cta h3{font-family:var(--serif);font-weight:600;font-size:clamp(26px,4.4vw,40px);line-height:1.12;margin:14px 0 12px;position:relative}
 .cta p{color:#cdd5ef;max-width:46ch;margin:0 auto 26px;position:relative;font-size:16.5px}
-.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:13px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .15s,box-shadow .2s}
+.cta-row{display:inline-flex;justify-content:center;flex-wrap:wrap;position:relative;border:1px solid rgba(255,255,255,.18);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.07);box-shadow:0 18px 46px -28px rgba(255,255,255,.36)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:0;font-weight:700;font-size:15px;text-decoration:none;transition:background .18s,color .18s,transform .15s,box-shadow .2s;min-height:50px}
+.btn+.btn{border-left:1px solid rgba(255,255,255,.18)}
 .btn-primary{background:#fff;color:#0a0c10}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px -16px rgba(255,255,255,.4)}
-.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.btn-primary:hover{background:#f4f7fb;box-shadow:inset 0 -2px 0 rgba(167,139,250,.35)}
+.btn-ghost{background:transparent;color:#fff}
 .btn-ghost:hover{background:rgba(255,255,255,.14)}
+@media(max-width:560px){.cta-row{display:flex;width:100%;flex-direction:column}.btn{width:100%}.btn+.btn{border-left:0;border-top:1px solid rgba(255,255,255,.18)}}
 
 /* related / share */
 .endbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin:44px 0;padding-top:26px;border-top:1px solid var(--line)}
@@ -205,13 +207,26 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
 @media(max-width:720px){.feature-grid,.metric-strip{grid-template-columns:1fr}.matrix-row{grid-template-columns:1fr}.matrix-head{display:none}.article-tools{top:60px}}
 </style>
 </head>
-<body class="article-page">
+<body data-ix-page="article" data-ix-slug="clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform" data-ix-theme="light" class="article-page">
 <div class="progress" id="progress"></div>
-<div class="class-banner">CLEARGLASS INSIGHTS <span>//</span> OPEN PUBLICATION</div>
-<nav class="nav"><a class="nav-brand" href="../index.html"><span class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"/></span><span class="nav-name">ClearGlass <em>Insights</em></span></a><div class="nav-links"><a href="index.html">Insights</a><a href="../index.html#contact" class="nav-cta">Contact</a></div></nav>
+<div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
+<nav class="nav"><a class="nav-brand" href="../index.html"><span class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"/></span><span class="nav-name">ClearGlassInc. <em>2040</em></span></a><div class="nav-links"><a href="index.html">Insights</a><a href="../ai-operator.html">AI Operator</a><a href="../guardian.html">Guardian</a><a href="../government.html">Government</a><a href="../index.html#contact" class="nav-cta">Book a briefing →</a></div></nav>
 <main class="wrap">
 <header class="hero"><div class="kicker">AI Architecture · Artemis Engineering Notes</div><h1 class="title">ClearGlassInc Artemis <em>Resume Builder</em>: Self-Evolving Intelligence Blueprint</h1><p class="dek">A mission-grade architecture and implementation document for a self-improving, agentic, audited AI intelligence platform built across Palantir Gotham, Foundry, AIP, and Apollo.</p><div class="byline"><div class="byline-av">D</div><div class="byline-meta"><b>Desmond Otieno Odhiambo</b><br/><span>Published July 6, 2026 · 28 min read</span></div></div></header>
+</main>
+
+<div class="article-tools" aria-label="Article tools">
+  <a class="tool-chip" href="#system-architecture">Architecture</a>
+  <a class="tool-chip" href="#data-ontology">Ontology</a>
+  <a class="tool-chip" href="#ai-agent-design">Agents</a>
+  <a class="tool-chip" href="#self-improvement-loop">Self-improvement</a>
+  <a class="tool-chip" href="#code-examples">Python code</a>
+  <button class="tool-chip" id="copyLink" type="button">Copy link</button>
+</div>
+
+<main class="wrap">
 <article id="article">
+<nav class="toc" aria-label="Article table of contents"><b>Blueprint navigation</b><a href="#system-architecture">System Architecture</a><a href="#data-ontology">Data and Ontology</a><a href="#ai-agent-design">AI and Agent Design</a><a href="#self-improvement-loop">Self-Improvement Loop</a><a href="#full-stack-implementation">Full-Stack Implementation</a><a href="#security-governance">Security and Governance</a><a href="#code-examples">Code Examples</a><a href="#scenario">Scenario Walkthrough</a></nav>
 <p class="lede"><strong>ClearGlassInc Artemis</strong> is designed as a self-evolving intelligence operating system: a governed platform that ingests live and historical data, grounds every assertion in an ontology, routes AI work through explicit policy gates, and improves prompts, workflows, heuristics, and model routing only after human-approved evaluation.</p>
 <div class="callout"><span class="callout-tag">Platform thesis</span><p><strong>Gotham</strong> is the operational intelligence workbench, <strong>Foundry</strong> is the data and ontology backbone, <strong>AIP</strong> is the governed AI execution layer, and <strong>Apollo</strong> is the secure deployment, rollback, and runtime-control plane.</p></div>
 <h2 id="system-architecture"><span class="num">01</span>System Architecture</h2>
@@ -428,6 +443,7 @@ function upd(){var h=document.documentElement;var sc=h.scrollTop||document.body.
 addEventListener('scroll',upd,{passive:true});upd();
 
 document.querySelectorAll('pre').forEach(pre=>{pre.classList.add('copyable');const btn=document.createElement('button');btn.className='copy-code';btn.type='button';btn.textContent='Copy';btn.addEventListener('click',async()=>{await navigator.clipboard.writeText(pre.innerText.replace(/^Copy\n/,''));btn.textContent='Copied';setTimeout(()=>btn.textContent='Copy',1200);});pre.appendChild(btn);});
+document.getElementById('copyLink')?.addEventListener('click',async e=>{await navigator.clipboard.writeText(location.href);e.currentTarget.textContent='Copied';setTimeout(()=>e.currentTarget.textContent='Copy link',1200);});
 </script>
 <script defer src="insights.js"></script>
 <script defer src="/logo-badge.js"></script>

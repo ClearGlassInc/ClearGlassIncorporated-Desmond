@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #205",
+    "title": "Control Surface Feeds #206",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:19",
+    "timestamp": "2026-07-07T00:19:40Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #609",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-54376c88-6b5b-4718-85b6-d0fd00cdaaf0",
+    "time": "00:08",
+    "timestamp": "2026-07-07T00:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #608",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-2bb0f402-04e9-45d2-bd65-35d80721f950",
+    "time": "23:08",
+    "timestamp": "2026-07-06T23:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #748",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:37",
+    "timestamp": "2026-07-06T22:37:37Z"
+  },
+  {
+    "title": "pages build and deployment #1195",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "22:37",
+    "timestamp": "2026-07-06T22:37:31Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2038",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:37",
+    "timestamp": "2026-07-06T22:37:31Z"
+  },
+  {
+    "title": "Control Surface Feeds #205",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:37",
     "timestamp": "2026-07-06T22:37:16Z"
   },
@@ -96,47 +138,5 @@
     "detail": "failure \u00b7 push on main",
     "time": "19:14",
     "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #207",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #746",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "Security #891",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:31Z"
-  },
-  {
-    "title": "pages build and deployment #1193",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:30Z"
-  },
-  {
-    "title": ".github/workflows/remove-homepage-crimson-loader.yml #12",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:30Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2036",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:14",
-    "timestamp": "2026-07-06T19:14:30Z"
   }
 ]

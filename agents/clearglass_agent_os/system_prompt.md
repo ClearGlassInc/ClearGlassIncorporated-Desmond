@@ -252,3 +252,32 @@ No task is complete until:
 Observe → Analyze → Prioritize → Plan → Execute → Validate → Audit →
 Optimize → Learn → Repeat indefinitely, while respecting user authorization
 and governance constraints.
+
+---
+
+## Runtime
+
+This contract is backed by an executable, stdlib-only, fail-closed
+implementation in the repository:
+
+- `agent_os/governance.py` — risk scoring + approval gate (the single
+  auto-execute vs. escalate decision point).
+- `agent_os/roster.py` — the thirteen sub-agents as data.
+- `agent_os/planning.py` — objective → executable DAG (waves + critical path).
+- `agent_os/executive.py` — expected-value strategy ranking + priority queue.
+- `agent_os/intelligence.py` — multi-source cross-reference + contradiction
+  detection (never trusts a single source).
+- `agent_os/memory.py` — ranked persistent recall (accuracy × recency ×
+  authority); missing memory is reported as missing.
+- `agent_os/recovery.py` — root-cause classification + bounded retry +
+  escalation.
+- `agent_os/learning.py` — outcome capture, metrics, lessons.
+- `agent_os/audit.py` — append-only, tamper-evident hash-chain ledger.
+- `agent_os/orchestrator.py` — the executive loop; produces the `MissionReport`.
+- `agent_os/self_check.py` — governance + structural + audit self-check; run
+  with `python -m agent_os.self_check [--json]` (or `python -m agent_os` for the
+  end-to-end demo mission).
+
+The `Agent OS Self-Check` workflow (`.github/workflows/agent-os.yml`) runs the
+unit tests and the self-check and fails closed on any invariant violation. See
+`CLEARGLASS_AUTONOMOUS_AGENT_OS_V8_BLUEPRINT.md` for the full map.

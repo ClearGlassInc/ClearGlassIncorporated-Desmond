@@ -14,38 +14,23 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - name: Remove crimson homepage redirect gate only
         run: |
           python3 - <<'PY'
+          import re
           from pathlib import Path
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
-          target = """<script>
-/* ClearGlass loader gate — show cinematic loader once per session.
-   Opt out: ?noloader=1, prior session, reduced-motion, hash, or crawler.
-   SEO: never redirect search/AI crawlers — they must index the real page. */
-(function(){
-  try{
-    var ua = navigator.userAgent || '';
-    if (/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua)) return;
-    var q = window.location.search || '';
-    var h = window.location.hash || '';
-    if (/noloader|skip/i.test(q+h)) return;
-    if (sessionStorage.getItem('clearglass.loader.seen')) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (document.referrer && /clearglassinc\.github\.io/.test(document.referrer)) return;
-    sessionStorage.setItem('clearglass.loader.seen','1');
-    window.location.replace('cg-loader.html?next=index.html');
-  }catch(e){}
-})();
-</script>
-"""
-          if target not in text:
+          # Remove exactly the loader-gate <script> block, anchored on its unique
+          # banner comment through the first following </script>. Nothing else matches.
+          pattern = re.compile(r"<script>\s*/\* ClearGlass loader gate.*?</script>\n?", re.DOTALL)
+          if not pattern.search(text):
               raise SystemExit('Crimson homepage redirect gate not found; no change applied.')
-          updated = text.replace(target, '', 1)
+          updated = pattern.sub('', text, count=1)
           path.write_text(updated, encoding='utf-8')
+          print('Removed crimson homepage loader gate.')
           PY
       - name: Verify primary loader remains and crimson redirect removed
         run: |

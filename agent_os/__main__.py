@@ -8,13 +8,11 @@ Delegates to the self-check so there is a single source of truth for the demo.
 from __future__ import annotations
 
 import json
-import sys
 
 from .self_check import demo_mission, governance_selfcheck
 
 
 def main(argv: list[str] | None = None) -> int:
-    argv = sys.argv[1:] if argv is None else argv
     failures = governance_selfcheck()
     if failures:
         print(json.dumps({"status": "FAIL", "failures": failures}, indent=2))

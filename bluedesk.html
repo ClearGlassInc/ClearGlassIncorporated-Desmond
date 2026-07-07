@@ -27,24 +27,26 @@
 <link rel="stylesheet" href="ui.css">
 <style>
   :root{
-    --bg:#070a14; --surf:rgba(17,22,40,.62); --surf2:rgba(12,16,32,.78); --line:rgba(124,150,255,.15);
-    --line2:rgba(124,150,255,.3); --txt:#e7ecff; --dim:#94a0c0; --dim2:#67718f;
-    --info:#38bdf8; --warn:#fbbf24; --crit:#f472b6; --good:#34d399; --neutral:#7c89a8;
+    --bg:#07030d; --surf:rgba(28,10,38,.66); --surf2:rgba(18,6,30,.82); --line:rgba(216,77,255,.18);
+    --line2:rgba(248,113,113,.36); --txt:#fff1ff; --dim:#c3a7d8; --dim2:#8c6aa8;
+    --info:#c084fc; --warn:#fb7185; --crit:#ff3d81; --good:#f43f5e; --neutral:#a855f7;
     --mono:'JetBrains Mono',ui-monospace,monospace; --sans:'Inter',system-ui,sans-serif;
   }
   *{box-sizing:border-box}
   body{margin:0;color:var(--txt);font-family:var(--sans);background:
-    radial-gradient(1100px 700px at 88% -12%,rgba(167,139,250,.1),transparent 55%),
-    radial-gradient(900px 650px at -10% 12%,rgba(56,189,248,.1),transparent 52%),var(--bg);
+    radial-gradient(1100px 700px at 88% -12%,rgba(168,85,247,.24),transparent 55%),
+    radial-gradient(820px 620px at -10% 14%,rgba(244,63,94,.22),transparent 52%),
+    radial-gradient(720px 560px at 50% 110%,rgba(126,34,206,.18),transparent 58%),
+    linear-gradient(135deg,#07030d 0%,#16051f 45%,#2a071d 100%);
     -webkit-font-smoothing:antialiased;line-height:1.5}
   .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
   .app{display:grid;grid-template-columns:228px 1fr;min-height:100vh}
 
   /* left rail */
   aside{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);
-    background:linear-gradient(180deg,rgba(10,13,26,.9),rgba(8,10,22,.82));backdrop-filter:blur(14px);padding:16px 12px}
+    background:linear-gradient(180deg,rgba(30,6,46,.92),rgba(16,5,28,.86));backdrop-filter:blur(14px);padding:16px 12px;box-shadow:inset -1px 0 24px rgba(244,63,94,.08)}
   .brand{display:flex;align-items:center;gap:10px;padding:6px 8px 16px;border-bottom:1px solid var(--line);margin-bottom:10px}
-  .brand img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 14px rgba(124,150,255,.45)}
+  .brand img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 18px rgba(244,63,94,.55),0 0 32px rgba(168,85,247,.25)}
   .brand .t{font-weight:800;font-size:14px;letter-spacing:.02em}
   .brand .t b{background:var(--cg-crystal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .brand .s{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2)}
@@ -52,14 +54,14 @@
   .nav{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:9px;color:var(--dim);
     font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid transparent;width:100%;background:none;text-align:left;font-family:inherit}
   .nav:hover{background:rgba(124,150,255,.08);color:#fff}
-  .nav[aria-current=true]{background:linear-gradient(100deg,rgba(96,165,250,.18),rgba(167,139,250,.06));
-    border-color:var(--line2);color:#fff}
+  .nav[aria-current=true]{background:linear-gradient(100deg,rgba(244,63,94,.22),rgba(126,34,206,.14));
+    border-color:var(--line2);color:#fff;box-shadow:0 0 24px rgba(168,85,247,.12)}
   .nav .d{width:6px;height:6px;border-radius:50%;background:var(--neutral);flex:0 0 auto}
 
   /* main */
   main{padding:0 0 60px}
   .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:13px 22px;
-    border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(9,12,24,.92),rgba(9,12,24,.74));backdrop-filter:blur(16px)}
+    border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(29,6,42,.94),rgba(16,5,28,.78));backdrop-filter:blur(16px);box-shadow:0 10px 40px rgba(244,63,94,.06)}
   .omni{flex:1;display:flex;align-items:center;gap:10px;background:var(--surf2);border:1px solid var(--line);
     border-radius:11px;padding:9px 14px}
   .omni input{flex:1;background:none;border:0;outline:0;color:#fff;font-family:var(--mono);font-size:12.5px}
@@ -81,7 +83,7 @@
   .card{background:var(--surf);border:1px solid var(--line);border-radius:15px;padding:16px 17px;backdrop-filter:blur(12px)}
   .card h3{margin:0 0 3px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);font-weight:600}
   .kpi{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.05}
-  .kpi.crystal{background:var(--cg-crystal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .kpi.crystal{background:linear-gradient(135deg,#fb7185,#f43f5e,#a855f7,#c084fc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .trend{font-size:11px;margin-top:5px}
   .up{color:var(--crit)} .dn{color:var(--good)} .flat{color:var(--dim)}
 

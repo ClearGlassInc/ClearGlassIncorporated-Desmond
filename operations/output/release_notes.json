@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-07-06T11:26:22.326390+00:00",
+  "run_utc": "2026-07-07T10:24:44.725141+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 543,
+  "commit_count": 575,
   "sections": {
     "New Features": [
       {
@@ -421,6 +421,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "0a99582",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "repair unparseable remove-homepage-crimson-loader workflow",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
       {
         "sha": "17cbd59",
         "type": "fix",
@@ -1034,6 +1043,204 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "92836e8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove crimson homepage loader gate",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "f0fb154",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove generated binary favicon assets",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "d65c169",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove generated binary favicon assets",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "46efda7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove generated binary favicon assets",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "b39440e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker n",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "f554864",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker l",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "b9d9d53",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker f",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "770bdd8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker c",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "386982a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker b",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "730c466",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "9d1c396",
+        "type": "chore",
+        "scope": null,
+        "subject": "test",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "9dc67e7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Document homepage crimson loader fix",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "6206389",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add workflow to remove homepage crimson loader gate",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "497b01f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis resume builder blog blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "50bcce5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Python Threads growth command center",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "31827a2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis extreme intelligence platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "d98e13c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade Threads command center to V3",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "92408ee",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add manual Threads growth command center",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "bd08c7b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis self-evolving intelligence blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "f1ca4c5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Refine Artemis self-evolving platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "fd4ae86",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix air control motion shim types",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "28497b5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add neon glow styling to Artemis article",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
       {
         "sha": "8810e6e",
         "type": "chore",
@@ -2899,6 +3106,87 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "10be911",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "de02ce2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "7a3285b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "b2411c8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "15ccc44",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "56477e2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "fa4e5f4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "6a1bb16",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "1fb1212",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-06 11:26 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
       {
         "sha": "e577138",
         "type": "bot",

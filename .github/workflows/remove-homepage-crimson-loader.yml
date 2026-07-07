@@ -1,0 +1,50 @@
+name: Remove homepage crimson loader
+
+on:
+  push:
+    paths:
+      - .github/workflows/remove-homepage-crimson-loader.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Remove crimson homepage redirect gate only
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          # Remove exactly the loader-gate <script> block, anchored on its unique
+          # banner comment through the first following </script>. Nothing else matches.
+          pattern = re.compile(r"<script>\s*/\* ClearGlass loader gate.*?</script>\n?", re.DOTALL)
+          if not pattern.search(text):
+              raise SystemExit('Crimson homepage redirect gate not found; no change applied.')
+          updated = pattern.sub('', text, count=1)
+          path.write_text(updated, encoding='utf-8')
+          print('Removed crimson homepage loader gate.')
+          PY
+      - name: Verify primary loader remains and crimson redirect removed
+        run: |
+          test "$(grep -c "window.location.replace('cg-loader.html?next=index.html')" index.html || true)" = "0"
+          grep -q 'id="cg-loader"' index.html
+          grep -q 'CLEARGLASS PREMIUM LOADER' index.html
+      - name: Commit patch
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Remove crimson homepage loader gate"
+          git push

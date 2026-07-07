@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion-shim';
 import { Droplets } from 'lucide-react';
 
 export function HumidityBar({ value, onChange }: { value: number; onChange: (val: number) => void }) {

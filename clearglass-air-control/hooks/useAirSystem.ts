@@ -56,10 +56,6 @@ export function useAirSystem() {
     [state.activeZone],
   );
 
-  const update = (key: keyof AirSystemState, value: number | string | boolean) => {
-    setState((prev) => ({ ...prev, [key]: value }));
-  };
-
   const riskIndex = useMemo(() => {
     const tempRisk = Math.abs(state.temperature - activeZoneProfile.targetTemperature) * 4.2;
     const humidityRisk = Math.abs(state.humidity - activeZoneProfile.targetHumidity) * 0.72;
@@ -71,9 +67,13 @@ export function useAirSystem() {
 
   const systemHealth = useMemo(() => Math.max(0, 100 - riskIndex), [riskIndex]);
 
-  const update = useCallback((patch: Partial<AirSystemState>) => {
+  const patchState = useCallback((patch: Partial<AirSystemState>) => {
     setState((current) => sanitizeState({ ...current, ...patch }));
   }, []);
+
+  const update = useCallback((key: keyof AirSystemState, value: AirSystemState[keyof AirSystemState]) => {
+    patchState({ [key]: value });
+  }, [patchState]);
 
   return {
     state,
@@ -82,13 +82,14 @@ export function useAirSystem() {
     riskIndex,
     systemHealth,
     resetSystem: () => setState(initialAirSystemState),
-    setAirflow: (airflow: number) => update({ airflow }),
-    setPressure: (pressure: number) => update({ pressure }),
-    setTemperature: (temperature: number) => update({ temperature }),
-    setHumidity: (humidity: number) => update({ humidity }),
-    setFiltration: (filtration: number) => update({ filtration }),
-    setVentAngle: (ventAngle: number) => update({ ventAngle }),
-    setActiveZone: (activeZone: ZoneId) => update({ activeZone }),
-    setAutonomousMode: (autonomousMode: boolean) => update({ autonomousMode }),
+    update,
+    setAirflow: (airflow: number) => patchState({ airflow }),
+    setPressure: (pressure: number) => patchState({ pressure }),
+    setTemperature: (temperature: number) => patchState({ temperature }),
+    setHumidity: (humidity: number) => patchState({ humidity }),
+    setFiltration: (filtration: number) => patchState({ filtration }),
+    setVentAngle: (ventAngle: number) => patchState({ ventAngle }),
+    setActiveZone: (activeZone: ZoneId) => patchState({ activeZone }),
+    setAutonomousMode: (autonomousMode: boolean) => patchState({ autonomousMode }),
   };
 }

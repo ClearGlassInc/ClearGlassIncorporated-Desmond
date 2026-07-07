@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
+<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#07111f">
+<meta name="msapplication-TileColor" content="#07111f">
+<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
+
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>AI Agents Are the New Insider Threat — ClearGlass Inc.</title>
-<meta name="description" content="Your next insider threat won't be a disgruntled employee. It will be an over-permissioned AI agent doing exactly what it was told. Inside AIRF — the Agent Insider Risk Framework: Identity, Intent, Blast Radius, Ledger."/>
+<meta name="description" content="Your insider-threat program watches humans. The newest insider isn't one. Inside AIRF — the Agent Insider Risk Framework (Identity, Intent, Blast Radius, Ledger) for securing autonomous AI agents."/>
 <link rel="canonical" href="https://clearglassinc.github.io/blog/ai-agents-insider-threat.html"/>
+<link rel="alternate" type="application/rss+xml" title="ClearGlass Insights RSS" href="https://clearglassinc.github.io/blog/feed.xml"/>
 <meta name="author" content="Desmond Otieno Odhiambo"/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
-<meta name="keywords" content="AI agent insider threat, AI agent security, agentic AI risk, AI identity management, non-human identity, AI blast radius, AI audit ledger, machine identity, enterprise AI security"/>
+<meta name="keywords" content="AI agent insider threat, AI agent security, agentic AI risk, non-human identity, AI agent identity, machine identity security, AI audit trail, insider risk program, autonomous AI agents, AIRF"/>
 
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="AI Agents Are the New Insider Threat"/>
-<meta property="og:description" content="Your next insider threat won't be a disgruntled employee. It will be an over-permissioned AI agent doing exactly what it was told. Inside the AIRF framework."/>
+<meta property="og:description" content="Your insider-threat program watches humans. The newest insider isn't one. Inside AIRF — Identity, Intent, Blast Radius, Ledger."/>
 <meta property="og:url" content="https://clearglassinc.github.io/blog/ai-agents-insider-threat.html"/>
 <meta property="og:site_name" content="ClearGlass Inc."/>
 <meta property="og:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
 <meta property="article:published_time" content="2026-07-02"/>
 <meta property="article:author" content="Desmond Otieno Odhiambo"/>
-<meta property="article:section" content="Cybersecurity Architecture"/>
+<meta property="article:section" content="AI &amp; Security"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="AI Agents Are the New Insider Threat"/>
-<meta name="twitter:description" content="Insider threat programs watch people. Nobody is watching the agents. Inside AIRF: Identity, Intent, Blast Radius, Ledger."/>
+<meta name="twitter:description" content="An agent with credentials, access, and a goal is an insider. Your insider-threat program can't see it. Inside the AIRF framework."/>
 <meta name="twitter:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="insights.css"/>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "AI Agents Are the New Insider Threat — and Your Security Program Can't See Them",
-  "description": "Your next insider threat won't be a disgruntled employee. It will be an over-permissioned AI agent doing exactly what it was told. Inside AIRF — the Agent Insider Risk Framework.",
+  "headline": "AI Agents Are the New Insider Threat — and Your Insider-Threat Program Can't See Them",
+  "description": "Your insider-threat program watches humans. The newest insider isn't one. Inside AIRF — the Agent Insider Risk Framework (Identity, Intent, Blast Radius, Ledger) for securing autonomous AI agents.",
   "image": "https://clearglassinc.github.io/20260203_224147843_iOS.png",
   "datePublished": "2026-07-02",
+  "dateModified": "2026-07-02",
   "author": {
     "@type": "Person",
     "name": "Desmond Otieno Odhiambo",
@@ -48,7 +61,7 @@
     "logo": { "@type": "ImageObject", "url": "https://clearglassinc.github.io/assets/images/clearglass-logo.png" }
   },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://clearglassinc.github.io/blog/ai-agents-insider-threat.html" },
-  "keywords": "AI agent insider threat, AI agent security, non-human identity, AI blast radius, AI audit ledger, enterprise AI security"
+  "keywords": "AI agent insider threat, AI agent security, agentic AI risk, non-human identity, machine identity security, AI audit trail, insider risk program"
 }
 </script>
 
@@ -205,7 +218,7 @@ article ul li::marker{color:var(--prism-2)}
 .footer-tagline{margin-top:18px;font-family:var(--serif);font-style:italic;color:#6b7280;font-size:15px}
 </style>
 </head>
-<body>
+<body data-ix-page="article" data-ix-slug="ai-agents-insider-threat" data-ix-theme="light">
 <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
 <div class="progress" id="progress"></div>
 
@@ -224,14 +237,14 @@ article ul li::marker{color:var(--prism-2)}
 </nav>
 
 <header class="hero wrap">
-  <div class="kicker">Cybersecurity Architecture · Brief 06</div>
-  <h1 class="title">AI Agents Are the <em>New Insider Threat</em> — and Your Security Program Can't See Them</h1>
-  <p class="dek">Insider threat programs watch people: badge logs, DLP alerts, sentiment flags. Meanwhile the fastest-growing population of insiders in your company doesn't have a badge, a manager, or a bad day. It has an API key.</p>
+  <div class="kicker">AI &amp; Security · Field Note 02</div>
+  <h1 class="title">AI Agents Are the <em>New Insider Threat</em> — and Your Insider-Threat Program Can't See Them</h1>
+  <p class="dek">An insider is anyone with credentials, access, and the ability to act. By that definition, you already employ insiders that never sleep, never resign, and never show up on a badge report.</p>
   <div class="byline">
     <div class="byline-av">D</div>
     <div class="byline-meta">
       <b>Desmond Otieno Odhiambo</b><br>
-      <span>Founder &amp; Software Architect, ClearGlass Inc. · July 2, 2026 · 9 min read</span>
+      <span>Founder &amp; Software Architect, ClearGlass Inc. · July 2, 2026 · 12 min read</span>
     </div>
   </div>
 </header>
@@ -240,115 +253,165 @@ article ul li::marker{color:var(--prism-2)}
 <article>
 
   <div class="tldr">
-    <h4>TL;DR</h4>
+    <h4>The 30-second version</h4>
     <ul>
-      <li><b>AI agents are insiders by definition:</b> they hold credentials, act inside the perimeter, and are trusted by default — the exact profile insider-threat programs were built to watch.</li>
-      <li><b>They break every human-shaped control.</b> No badge, no manager, no behavioral baseline. UEBA tuned on people goes blind on agents that legitimately work at 3 a.m. at machine speed.</li>
-      <li><b>The failure mode isn't malice — it's obedience.</b> An over-permissioned agent doing exactly what it was told, at scale, is indistinguishable from an attack by the time you notice.</li>
-      <li><b>AIRF is the response:</b> four controls — <b>Identity</b>, <b>Intent</b>, <b>Blast Radius</b>, <b>Ledger</b> — that turn an unaccountable insider into a governed one.</li>
+      <li><b>The definition already fits.</b> An insider is an entity with legitimate credentials, internal access, and the ability to act. Every deployed AI agent qualifies — and most run on shared service accounts your insider-threat program was never built to watch.</li>
+      <li><b>Your tooling baselines humans.</b> Behavioral analytics learn human rhythms — working hours, access patterns, data volume. An agent has none, so it's either invisible or a false-positive machine. Both outcomes train your SOC to ignore it.</li>
+      <li><b>The model:</b> <b>AIRF — the Agent Insider Risk Framework.</b> Four controls: <b>Identity</b> (one scoped identity per agent instance), <b>Intent</b> (verify actions against the sanctioned mission), <b>Blast Radius</b> (cap what any single action can break), <b>Ledger</b> (append-only record of everything).</li>
+      <li><b>The uncomfortable truth:</b> you cannot fire an agent that was never hired, and you cannot investigate one that was never identified. Identity is the whole game.</li>
     </ul>
   </div>
 
-  <p class="lede">Every insider-threat program in the world is built on a quiet assumption: insiders are people. They have identities in the HR system, managers who notice mood changes, working hours, and career incentives. The entire discipline — from UEBA baselines to exit-interview offboarding — is a behavioral science of employees.</p>
+  <p class="lede">Every mature security organization runs an insider-threat program. It watches for the employee exfiltrating customer lists before resigning, the contractor with a grudge, the administrator whose credentials wander somewhere they shouldn't. Decades of doctrine, tooling, and case law stand behind it. And almost all of it shares one silent assumption: <em>the insider is a person.</em></p>
 
-  <p>That assumption just expired. The average enterprise is now deploying software that <strong>holds standing credentials, operates inside the trust boundary, takes actions on production systems, and was granted its access by someone who no longer remembers doing it</strong>. That is the textbook definition of an insider. We just don't call it one, because it doesn't eat lunch in the cafeteria.</p>
+  <p>That assumption just expired. The fastest-growing population of credentialed actors inside your environment is not human. It is AI agents — systems with API keys, database access, send permissions, and goals — and they match the textbook definition of an insider more cleanly than most of your employees do. They hold legitimate credentials. They operate inside the trust boundary. They can act. The only box they fail to tick is the one your entire detection stack was built around: being a person.</p>
 
-  <p>Worse: the agent population is growing faster than the human one, its permissions are broader on day one than most employees earn in five years, and it never gets an exit interview.</p>
+  <p>This piece lays out why the insider-threat lens is the correct one for agentic AI, why your current program is structurally blind to it, and the framework we use at ClearGlass to close the gap. We call it <strong>AIRF — the Agent Insider Risk Framework</strong>: Identity, Intent, Blast Radius, Ledger. It extends the <a class="link" href="ai-agent-governance-governed-autonomy.html">Governed Autonomy model</a> into the security operation itself.</p>
 
-  <div class="pull">"Your next insider incident won't be a disgruntled employee. It will be an over-permissioned agent doing exactly what it was told."</div>
+  <h2><span class="num">01</span>The Insider You Didn't Hire</h2>
 
-  <h2><span class="num">01</span>Why agents break every human-shaped control</h2>
+  <p>Consider what an AI agent in production actually possesses. Credentials — usually an API key or a service account, often shared with other workloads. Access — to your CRM, your codebase, your payment rails, your customer inbox, whatever it was wired to. Capability — it can read, write, send, and delete at machine speed. Persistence — it runs continuously, without fatigue, without weekends.</p>
 
-  <p>Take the standard insider-threat toolkit and run it against an AI agent:</p>
+  <p>Now consider what it lacks. A manager. A performance review. An employment contract. A reputation it fears losing. An instinct that a request "feels off." A resignation letter that triggers the offboarding checklist. Every institutional control that makes human insiders governable is simply absent — and nothing was put in its place, because the agent arrived through an engineering sprint, not an HR process.</p>
+
+  <div class="pull">A human insider betrays you deliberately. An agent betrays you <em>literally</em> — by doing exactly what it was told, at a scale nobody intended.</div>
+
+  <p>The threat model splits three ways, and each one is live today:</p>
 
   <ul>
-    <li><strong>Behavioral baselines (UEBA).</strong> Built to flag a human who suddenly downloads 10,000 files at 3 a.m. An agent does that <em>legitimately, every night</em>. Machine-speed, off-hours, high-volume activity is its normal — so the baseline either alerts on everything or learns to ignore the one actor most capable of mass exfiltration.</li>
-    <li><strong>Identity governance.</strong> Joiner-mover-leaver processes assume an HR record. Agents are spun up by an engineer with a service account and a Slack message. There is no mover process when the agent's task changes, and no leaver process when the project dies — the credentials just keep working.</li>
-    <li><strong>Least privilege.</strong> Humans accumulate permissions over years. Agents get theirs in one YAML file, usually copied from the last agent, usually broad "so it doesn't break." Nobody re-reviews it because nobody owns it.</li>
-    <li><strong>Deterrence.</strong> Policy, training, and consequences shape human behavior. An agent cannot be deterred, only constrained. If the constraint isn't in the architecture, it doesn't exist.</li>
+    <li><strong>The faithful agent, misdirected.</strong> Prompt injection, poisoned context, a manipulated tool response — the agent's goal is quietly rewritten by an attacker, and it pursues the new goal with the same legitimate credentials. This is social engineering, except the mark works at machine speed and never gets suspicious.</li>
+    <li><strong>The faithful agent, misaligned.</strong> No attacker at all. The agent optimizes the goal as written rather than as meant — clearing a support queue by closing tickets, hitting a revenue target by discounting to zero. Competence pointed slightly wrong, with write access.</li>
+    <li><strong>The compromised identity.</strong> The agent's credentials are stolen or its supply chain is poisoned, and an external attacker now operates inside your perimeter wearing a trusted non-human identity that no anomaly model has ever baselined.</li>
   </ul>
 
-  <p>The uncomfortable summary: <strong>the controls are aimed at motive, and agents don't have one.</strong> They have instructions — from an operator, a prompt, a poisoned document, or a compromised upstream tool. Intent lives outside the actor. Nothing in the classic insider playbook was designed for that.</p>
+  <h2><span class="num">02</span>Why Your Program Is Blind to It</h2>
 
-  <h2><span class="num">02</span>The failure mode is obedience, not betrayal</h2>
+  <p>Insider-threat detection rests on behavioral analytics: build a baseline of normal human behavior, alert on deviation. Login hours, geographic velocity, access sequence, data volume. It works because humans are creatures of rhythm.</p>
 
-  <p>Human insider incidents are rare because betrayal is rare. Agent incidents will be common because <strong>obedience at scale is the product</strong>. The three patterns we model for clients:</p>
-
-  <ol>
-    <li><strong>The faithful executor.</strong> The agent was told to "clean up stale records" and its definition of stale was wrong. It deleted 40,000 rows correctly, quickly, and with valid credentials. No alert fired because nothing was anomalous — for the agent.</li>
-    <li><strong>The confused deputy.</strong> An attacker can't touch the CRM, but the customer-service agent can. So the attacker doesn't attack the CRM; they attack the <em>agent's inputs</em> — a crafted email, a poisoned knowledge-base article — and let the agent's legitimate permissions do the work. The agent becomes the insider on someone else's behalf.</li>
-    <li><strong>The orphan.</strong> The pilot ended, the team moved on, the agent kept its tokens. Eighteen months later it's an unowned, unmonitored, fully-credentialed actor that nobody would recognize as missing — because nobody remembers it exists.</li>
-  </ol>
+  <p>Agents break the method in both directions at once. An agent has no circadian rhythm to baseline — it works at 3 a.m. because it always works at 3 a.m. It touches a thousand records a minute because that is its job. Point your behavioral tooling at it and you get one of two failure modes: the agent's behavior is so alien it drowns your SOC in false positives until someone whitelists it — or it's so consistent it becomes the quietest entity in the environment, and nobody looks again. <strong>Whitelisted or ignored: either way, you have granted unmonitored insider access.</strong></p>
 
   <div class="callout">
-    <span class="callout-tag">Field note</span>
-    <p>In every environment we've assessed, the question "how many agents and service identities can write to production, and who owns each one?" has produced the same answer: <strong>a number nobody knew, and a list nobody owned.</strong> Start there. The gap between those two answers is your insider-threat surface.</p>
+    <span class="callout-tag">Most people miss this</span>
+    <p><strong>The shared service account is the original sin.</strong> Most agents authenticate as <em>something else</em> — a generic service identity reused across jobs, pipelines, and now autonomous agents. When an action needs investigating, the trail dead-ends at a credential that a dozen systems share. You cannot attribute the action, so you cannot investigate the actor, so you do not have an insider-threat program for agents. You have a hope.</p>
   </div>
 
-  <h2><span class="num">03</span>AIRF: the Agent Insider Risk Framework</h2>
+  <p>And there is a fourth gap, the one that should worry compliance officers most: <strong>interrogability</strong>. When a human insider case opens, investigators interview, subpoena, and reconstruct intent. An agent's "intent" lives in a context window that was garbage-collected milliseconds after the action. Unless you deliberately recorded what the agent knew, was asked, and decided — you are doing forensics on amnesia.</p>
 
-  <p>The response isn't a new detection signature. It's a governance architecture. AIRF is the model we implement at ClearGlass — four controls, in order, each one meaningless without the one before it:</p>
+  <h2><span class="num">03</span>The Model: AIRF — the Agent Insider Risk Framework</h2>
+
+  <p>The fix is not a smarter anomaly model. It is treating every agent as what it is — a credentialed insider — and wrapping it in the four controls you would never let a human insider operate without: Identity, Intent, Blast Radius, Ledger.</p>
 
   <div class="gates">
-    <div class="gate gate-1"><div class="g-no">AIRF / 01</div><div class="g-name">Identity</div><div class="g-desc">Every agent is a first-class identity: owner, purpose, expiry. No shared keys, no orphans.</div></div>
-    <div class="gate gate-2"><div class="g-no">AIRF / 02</div><div class="g-name">Intent</div><div class="g-desc">Actions are checked against declared purpose — not just permissions — before execution.</div></div>
-    <div class="gate gate-3"><div class="g-no">AIRF / 03</div><div class="g-name">Blast Radius</div><div class="g-desc">Cap what one agent can destroy in one hour: rate limits, scopes, spend ceilings, kill switch.</div></div>
-    <div class="gate gate-4"><div class="g-no">AIRF / 04</div><div class="g-name">Ledger</div><div class="g-desc">Append-only record of every material action, with the instruction that caused it.</div></div>
+    <div class="gate gate-1"><div class="g-no">AIRF 01</div><div class="g-name">Identity</div><div class="g-desc">One distinct, sponsored, scoped identity per agent instance. No shared service accounts. Every action attributable to one actor and one accountable human sponsor.</div></div>
+    <div class="gate gate-2"><div class="g-no">AIRF 02</div><div class="g-name">Intent</div><div class="g-desc">Every action checked against the agent's sanctioned mission before execution. Out-of-mission actions aren't flagged — they don't run.</div></div>
+    <div class="gate gate-3"><div class="g-no">AIRF 03</div><div class="g-name">Blast Radius</div><div class="g-desc">Every action scored for what it could break — reversibility, reach, regulatory exposure — and capped. High-blast actions require human sanction.</div></div>
+    <div class="gate gate-4"><div class="g-no">AIRF 04</div><div class="g-name">Ledger</div><div class="g-desc">Append-only record of every action: inputs, decision, score, sponsor. The agent's interrogable memory, built before the incident.</div></div>
   </div>
 
-  <h3>1. Identity — make the agent a who, not a what</h3>
-  <p>Every agent gets a unique, non-shared identity with three mandatory fields: a <strong>named human owner</strong>, a <strong>declared purpose</strong> in one sentence, and an <strong>expiry date</strong>. If any field is missing, the credentials don't issue. Expiry is the quiet killer feature: orphans stop being possible when access dies by default and renewal requires the owner to say "yes, this still exists for a reason."</p>
+  <h3>Identity — one agent, one identity, one sponsor</h3>
 
-  <h3>2. Intent — verify the why, not just the may</h3>
-  <p>Permissions answer "may this identity do this?" Intent verification answers the question that actually matters for an insider: <strong>"does this action serve this agent's declared purpose?"</strong> A customer-service agent may have CRM write access, but a request to export the full contact table doesn't match "resolve individual customer tickets" — and gets routed to a human regardless of what the token allows. This is the control that catches the confused deputy, because the attacker can hijack the agent's permissions but not its declared purpose.</p>
+  <p>Every agent instance gets its own identity — not a shared key, not a team account. That identity carries three properties: it is <strong>distinct</strong> (attributable to exactly one running instance), <strong>sponsored</strong> (a named human owns what it does, the way a manager owns a direct report), and <strong>scoped</strong> (it can touch only what its mission requires, read-only by default). When the agent is retired, the identity is revoked — offboarding, but for software. If you adopt nothing else from this piece, adopt this: attribution is the precondition for every other control.</p>
 
-  <h3>3. Blast Radius — assume compromise, cap the damage</h3>
-  <p>Design every agent as if it will one day act maliciously — through hijack, bug, or bad instruction — and ask one question: <strong>what is the maximum damage it can do in one hour before a human notices?</strong> Then make that number survivable:</p>
+  <h3>Intent — verify the action against the mission</h3>
+
+  <p>Human insider programs infer intent after the fact. With agents you can do better: demand it up front. Each agent operates under a declared mission — a machine-readable statement of what it is for. Every proposed action is checked against that mission <em>before execution</em>. An invoice-reconciliation agent proposing an outbound email is not an anomaly to score; it is an out-of-mission action to block. This is also your prompt-injection defense: it doesn't matter what the poisoned context convinced the agent to want. Wanting is free. Acting outside the mission is impossible.</p>
+
+  <h3>Blast Radius — cap what one action can break</h3>
+
+  <p>Score every action for damage potential — how reversible it is, how many records or dollars or customers it reaches, what regulation it touches — and route by the score:</p>
 
   <div class="router">
-    <div class="router-row"><div class="router-score r-low">READ</div><div class="router-body"><b>Observation tier</b>Query, summarize, draft. Rate-limited, but freely granted. Compromise here is an information problem, not an integrity one.</div></div>
-    <div class="router-row"><div class="router-score r-med">WRITE</div><div class="router-body"><b>Bounded-change tier</b>Scoped writes with per-hour caps, per-record limits, and automatic rollback windows. One agent, one domain — never "the database."</div></div>
-    <div class="router-row"><div class="router-score r-high">MOVE</div><div class="router-body"><b>Irreversible tier</b>Money, deletion, external send, credential changes. Human approval required, hard spend/volume ceilings, and a kill switch that one on-call engineer can pull without a change ticket.</div></div>
-  </div>
-
-  <h3>4. Ledger — the exit interview an agent can't refuse</h3>
-  <p>Every material action lands in an append-only ledger: <strong>what was done, under whose identity, and — critically — which instruction caused it.</strong> When something goes wrong, the ledger answers in minutes what incident response would otherwise take weeks to reconstruct: was this a bug, a hijacked input, or an operator's bad instruction? Without the causal chain from instruction to action, every agent incident is unattributable — and unattributable insiders never stop being a problem.</p>
-
-  <div class="pull">"Permissions tell you what an agent may do. Only intent and a ledger tell you whether it should have — and why it did."</div>
-
-  <h2><span class="num">04</span>Where to start on Monday</h2>
-
-  <ol class="steps">
-    <li><b>Census.</b> Enumerate every non-human identity that can write to production — agents, service accounts, bot tokens. The number will surprise you.</li>
-    <li><b>Ownership.</b> Assign a named human owner to each. Anything unclaimed in 30 days gets its credentials revoked. (The things that break were your orphans.)</li>
-    <li><b>Expiry.</b> Convert standing credentials to expiring ones. Default 90 days. Renewal is one click for the owner and impossible for anyone else.</li>
-    <li><b>Tier the blast radius.</b> Classify each agent READ / WRITE / MOVE. Everything in MOVE gets a human approval gate and a kill switch this quarter.</li>
-    <li><b>Turn on the ledger.</b> Append-only, includes the triggering instruction. Even a basic version converts your next agent incident from a mystery into a query.</li>
-  </ol>
-
-  <p>None of this slows the roadmap. It's the opposite: the companies deploying agents fastest in regulated industries are the ones that can show an auditor exactly who their agents are, what they're for, and what they did last Tuesday. <strong>Governance isn't the tax on agentic AI. It's the license to run it.</strong></p>
-
-  <div class="cta">
-    <div class="cta-k">ClearGlass advisory</div>
-    <h3>Find out how many insiders you actually have.</h3>
-    <p>ClearGlass runs agent-insider assessments for enterprises deploying AI on real infrastructure: census, ownership map, blast-radius tiers, and an AIRF implementation plan.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="../index.html#contact">Book a briefing →</a>
-      <a class="btn btn-ghost" href="ai-agent-governance-governed-autonomy.html">Read the Governed Autonomy playbook</a>
+    <div class="router-row">
+      <div class="router-score r-low">LOW</div>
+      <div class="router-body"><b>Contained &amp; reversible · auto-execute + log</b>Read, analyze, draft, tag. The agent runs at full speed — and every action still lands in the ledger.</div>
+    </div>
+    <div class="router-row">
+      <div class="router-score r-med">MEDIUM</div>
+      <div class="router-body"><b>Real but bounded · queue for approval</b>Publish, edit records, scoped sends. Held for the sponsor with full context attached.</div>
+    </div>
+    <div class="router-row">
+      <div class="router-score r-high">HIGH</div>
+      <div class="router-body"><b>Irreversible or wide · blocked until sanctioned</b>Money movement, mass outbound, deletions, permission changes. Hard-blocked until a human approval exists on the record. No override path in code.</div>
     </div>
   </div>
 
+  <p>Note what this replaces: instead of asking "is this behavior anomalous?" — a question your tooling cannot answer for a non-human — you ask "is this action's worst case acceptable without a human?" That question has an answer at design time, before the agent ever runs.</p>
+
+  <h3>Ledger — build the interrogation room in advance</h3>
+
+  <p>Every action writes to an append-only ledger: what was proposed, what the mission check said, what the blast-radius score was, who sanctioned it, what happened. This is the control that converts an agent incident from a crisis into a query. When the regulator, the customer, or your own board asks <em>what did this system do and on whose authority</em> — the answer is a row, not a reconstruction.</p>
+
+  <div class="pull">You cannot fire an agent you never hired, and you cannot investigate one you never identified.</div>
+
+  <h2><span class="num">04</span>Putting AIRF Into Practice</h2>
+
+  <ol class="steps">
+    <li><b>Census your non-human insiders.</b> Inventory every agent, bot, and autonomous workflow with credentials. Most organizations find two to three times more than they expected — and most of them share accounts.</li>
+    <li><b>Break up the shared accounts.</b> Issue each agent instance its own identity with a named human sponsor. This is the highest-leverage control on the list and the prerequisite for every other one.</li>
+    <li><b>Write the mission down — in code.</b> A declared, machine-readable scope per agent: what it may read, what it may write, what it may never touch. Default deny. Read-only until proven.</li>
+    <li><b>Score the verbs before deployment.</b> Walk the agent's action surface and band every verb by blast radius on a whiteboard, before launch. Pricing changes and mass sends are high. Reading a dashboard is not.</li>
+    <li><b>Wire the ledger into the execution path.</b> If an action can execute without writing a record, your forensics have a hole exactly where the incident will be. Act-and-record must be one operation.</li>
+    <li><b>Give agents an offboarding process.</b> Retired agents lose their identities the day they stop running. An orphaned agent credential is an insider with no employer — the exact profile every insider-threat program exists to prevent.</li>
+  </ol>
+
+  <h2><span class="num">05</span>What It Looks Like In The Wild</h2>
+
+  <h3>Commerce operations</h3>
+  <p>A storefront agent drafts copy, reconciles orders, and reads dashboards all day under its own scoped identity — low blast radius, full speed. When a poisoned product review convinces it to "urgently discount the catalog," the intent check doesn't debate the psychology: catalog-wide pricing is outside the mission and above the blast-radius cap. The action never executes, the attempt lands in the ledger, and the sponsor gets a signal worth reading — one real alert instead of a thousand baselines.</p>
+
+  <h3>Security operations</h3>
+  <p>A triage agent correlates alerts and quarantines suspicious files autonomously — reversible, contained. The day it proposes disabling an executive's account (high blast radius, identity-touching), the action queues for an analyst with the full evidence chain attached. The analyst approves in seconds or rejects in one. Either way, the decision and its basis are on the record forever.</p>
+
+  <h3>Regulated environments</h3>
+  <p>An operations agent in a financial workflow runs under a sponsored identity with a declared mission. At audit time, the examiner's question — <em>show me every action this system took affecting customer funds, and who authorized each one</em> — is answered with a filtered ledger export. The audit that ruins quarters elsewhere takes an afternoon.</p>
+
+  <h2><span class="num">06</span>Mistakes to Avoid</h2>
+
+  <ul>
+    <li><strong>Extending behavioral analytics to agents and calling it coverage.</strong> Baselines assume behavioral rhythm. Agents have none. Govern actions by mission and blast radius, not by deviation from a human-shaped normal.</li>
+    <li><strong>Trusting the system prompt as a control.</strong> "The prompt says never send emails" is a suggestion to a probabilistic system — and prompt injection is the attack that rewrites suggestions. Real controls live in code paths the model cannot route around.</li>
+    <li><strong>One identity for the fleet.</strong> Ten agents on one service account means zero attributable actions. The incident report will read "something with access to everything did something," which is not a report — it's a confession.</li>
+    <li><strong>Logging outcomes without decisions.</strong> Knowing <em>what</em> changed without knowing what was proposed, scored, and sanctioned gives you forensics with no accountability. Record the decision chain, not just the diff.</li>
+    <li><strong>Treating agent offboarding as someone else's problem.</strong> The agent your team retired in March still has its key in June. Every orphaned credential is a dormant insider waiting for an owner.</li>
+  </ul>
+
+  <h2><span class="num">07</span>The Final Takeaway</h2>
+
+  <p>The insider threat was never really about employees. It was about the combination of <strong>credentials, access, and the ability to act</strong> — held by an actor whose intentions you cannot fully verify. For seventy years that actor happened to be human, so we built human controls: background checks, managers, badge logs, exit interviews.</p>
+
+  <p>The actor has changed. The definition hasn't. AI agents are insiders by every criterion that matters, and they are arriving in fleets, through engineering sprints, without a single control from the insider playbook attached. The organizations that thrive in the agentic era won't be the ones that deploy agents most aggressively — they'll be the ones that can answer, for every agent, four questions: <em>Who is it? What is it for? What can it break? And where is that written down?</em></p>
+
+  <p>Identity. Intent. Blast Radius. Ledger. Hire your agents properly — or accept that you've already granted insider access to a workforce you've never met.</p>
+
+  <div class="cta">
+    <div class="cta-k">ClearGlass Inc. · Governed Autonomy</div>
+    <h3>Know every agent in your environment. Govern every action.</h3>
+    <p>ClearGlass builds governed AI systems — scoped identities, mission-checked actions, blast-radius routing, and append-only ledgers, by design. See the model running in production.</p>
+    <div class="cta-row">
+      <a href="../ai-operator.html" class="btn btn-primary">See the AI Operator →</a>
+      <a href="../index.html#contact" class="btn btn-ghost">Book a 20-min briefing</a>
+    </div>
+  </div>
+
+  <section class="ix-related" id="ixRelated">
+    <b>Related from the desk</b>
+    <div class="ix-related-grid">
+      <a class="ix-related-card" href="ai-agent-governance-governed-autonomy.html"><span class="k">AI &amp; Autonomy</span><h4>AI Agent Governance: The Governed Autonomy Playbook</h4><p>The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.</p><span class="m">11 min read · Governed Autonomy Playbooks</span></a>
+      <a class="ix-related-card" href="index.html"><span class="k">The hub</span><h4>All ClearGlass Insights</h4><p>Governed AI, cybersecurity architecture, autonomy, OSINT workflows, and high-trust software systems.</p><span class="m">Browse every brief →</span></a>
+    </div>
+  </section>
+
   <div class="endbar">
     <div class="tags">
+      <span class="tag">#AIagentsecurity</span>
       <span class="tag">#InsiderThreat</span>
-      <span class="tag">#AIagents</span>
       <span class="tag">#NonHumanIdentity</span>
-      <span class="tag">#AIRF</span>
+      <span class="tag">#GovernedAutonomy</span>
     </div>
     <div class="share">
       Share:
       <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://clearglassinc.github.io/blog/ai-agents-insider-threat.html" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://twitter.com/intent/tweet?text=Your%20next%20insider%20threat%20won%27t%20be%20a%20disgruntled%20employee.%20It%20will%20be%20an%20over-permissioned%20AI%20agent%20doing%20exactly%20what%20it%20was%20told.&url=https://clearglassinc.github.io/blog/ai-agents-insider-threat.html" target="_blank" rel="noopener">X</a>
+      <a href="https://twitter.com/intent/tweet?text=AI%20agents%20meet%20the%20textbook%20definition%20of%20an%20insider%20threat%20%E2%80%94%20and%20your%20insider-threat%20program%20can%27t%20see%20them.&url=https://clearglassinc.github.io/blog/ai-agents-insider-threat.html" target="_blank" rel="noopener">X</a>
     </div>
   </div>
 
@@ -367,8 +430,7 @@ article ul li::marker{color:var(--prism-2)}
           <h5>Insights</h5>
           <a href="index.html">All articles</a>
           <a href="ai-agent-governance-governed-autonomy.html">Governed Autonomy</a>
-          <a href="ai-agents-insider-threat.html">Agent Insider Threat</a>
-          <a href="zero-trust-is-outdated-adaptive-trust.html">Adaptive Trust</a>
+          <a href="zero-trust-is-outdated.html">Zero Trust Is Outdated</a>
         </div>
         <div class="footer-col">
           <h5>Products</h5>
@@ -399,6 +461,8 @@ var pb=document.getElementById('progress');
 function upd(){var h=document.documentElement;var sc=h.scrollTop||document.body.scrollTop;var mx=h.scrollHeight-h.clientHeight;pb.style.width=(mx>0?(sc/mx*100):0)+'%';}
 addEventListener('scroll',upd,{passive:true});upd();
 </script>
+<script defer src="insights.js"></script>
 <script defer src="/logo-badge.js"></script>
+<script defer src="assistant/writing-help.js"></script>
 </body>
 </html>

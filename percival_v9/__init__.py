@@ -9,16 +9,23 @@ runs in the minimal ``Python Tests`` CI environment.
 """
 
 from percival_v9.internal.audit import AuditLedger, LedgerError
+from percival_v9.internal.graph.plan import ExecutionGraph, PlanNode, RetryPolicy
 from percival_v9.internal.graph.state import EscalationError, WorkflowRun, WorkflowState
-from percival_v9.internal.policy.engine import Capability, Decision, PolicyGovernor
+from percival_v9.internal.observability import TraceContext
+from percival_v9.internal.policy.engine import Capability, Decision, PolicyGovernor, SignedApproval
 
 __all__ = [
     "AuditLedger",
     "Capability",
     "Decision",
+    "ExecutionGraph",
     "EscalationError",
     "LedgerError",
+    "PlanNode",
     "PolicyGovernor",
+    "RetryPolicy",
+    "SignedApproval",
+    "TraceContext",
     "WorkflowRun",
     "WorkflowState",
 ]

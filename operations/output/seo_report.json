@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-01T23:17:53.707421+00:00",
-  "files_audited": 58,
-  "average_score": 92.4,
+  "run_utc": "2026-07-07T10:24:44.742335+00:00",
+  "files_audited": 59,
+  "average_score": 92.2,
   "pages": [
     {
       "file": "404.html",
@@ -1090,6 +1090,27 @@
       ]
     },
     {
+      "file": "ultra-glass.html",
+      "title": "ClearGlass \u2014 Ultra Glass. Governed Intelligence, Rendered Visible.",
+      "title_length": 66,
+      "title_ok": false,
+      "description": "The ClearGlass Ultra Glass experience \u2014 ARTEMIS IV, WRAITH-OMEN, and AEGIS presented as one governed intelligence surface. See the visibility-to-control gap, then close it.",
+      "description_length": 172,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 80,
+      "issues": [
+        "Title length 66 chars (ideal 30\u201360)",
+        "Description length 172 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "web-design.html",
       "title": "Website Design & Development \u2014 Growth Infrastructure | ClearGlass Inc.",
       "title_length": 70,
@@ -1111,8 +1132,8 @@
     }
   ],
   "top_issues": [
-    "12x \u2014 Description length N chars (ideal N\u2013N)",
-    "11x \u2014 Title length N chars (ideal N\u2013N)",
+    "13x \u2014 Description length N chars (ideal N\u2013N)",
+    "12x \u2014 Title length N chars (ideal N\u2013N)",
     "6x \u2014 Missing og:image",
     "3x \u2014 Multiple <hN> tags (N)",
     "2x \u2014 Missing canonical link tag",

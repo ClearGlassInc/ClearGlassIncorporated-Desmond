@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
+<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#07111f">
+<meta name="msapplication-TileColor" content="#07111f">
+<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BLUEDESK — CISO Risk & Blue Team Console | ClearGlass Inc</title>
@@ -17,24 +27,26 @@
 <link rel="stylesheet" href="ui.css">
 <style>
   :root{
-    --bg:#070a14; --surf:rgba(17,22,40,.62); --surf2:rgba(12,16,32,.78); --line:rgba(124,150,255,.15);
-    --line2:rgba(124,150,255,.3); --txt:#e7ecff; --dim:#94a0c0; --dim2:#67718f;
-    --info:#38bdf8; --warn:#fbbf24; --crit:#f472b6; --good:#34d399; --neutral:#7c89a8;
+    --bg:#07030d; --surf:rgba(28,10,38,.66); --surf2:rgba(18,6,30,.82); --line:rgba(216,77,255,.18);
+    --line2:rgba(248,113,113,.36); --txt:#fff1ff; --dim:#c3a7d8; --dim2:#8c6aa8;
+    --info:#c084fc; --warn:#fb7185; --crit:#ff3d81; --good:#f43f5e; --neutral:#a855f7;
     --mono:'JetBrains Mono',ui-monospace,monospace; --sans:'Inter',system-ui,sans-serif;
   }
   *{box-sizing:border-box}
   body{margin:0;color:var(--txt);font-family:var(--sans);background:
-    radial-gradient(1100px 700px at 88% -12%,rgba(167,139,250,.1),transparent 55%),
-    radial-gradient(900px 650px at -10% 12%,rgba(56,189,248,.1),transparent 52%),var(--bg);
+    radial-gradient(1100px 700px at 88% -12%,rgba(168,85,247,.24),transparent 55%),
+    radial-gradient(820px 620px at -10% 14%,rgba(244,63,94,.22),transparent 52%),
+    radial-gradient(720px 560px at 50% 110%,rgba(126,34,206,.18),transparent 58%),
+    linear-gradient(135deg,#07030d 0%,#16051f 45%,#2a071d 100%);
     -webkit-font-smoothing:antialiased;line-height:1.5}
   .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
   .app{display:grid;grid-template-columns:228px 1fr;min-height:100vh}
 
   /* left rail */
   aside{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);
-    background:linear-gradient(180deg,rgba(10,13,26,.9),rgba(8,10,22,.82));backdrop-filter:blur(14px);padding:16px 12px}
+    background:linear-gradient(180deg,rgba(30,6,46,.92),rgba(16,5,28,.86));backdrop-filter:blur(14px);padding:16px 12px;box-shadow:inset -1px 0 24px rgba(244,63,94,.08)}
   .brand{display:flex;align-items:center;gap:10px;padding:6px 8px 16px;border-bottom:1px solid var(--line);margin-bottom:10px}
-  .brand img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 14px rgba(124,150,255,.45)}
+  .brand img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 18px rgba(244,63,94,.55),0 0 32px rgba(168,85,247,.25)}
   .brand .t{font-weight:800;font-size:14px;letter-spacing:.02em}
   .brand .t b{background:var(--cg-crystal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .brand .s{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2)}
@@ -42,14 +54,14 @@
   .nav{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:9px;color:var(--dim);
     font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid transparent;width:100%;background:none;text-align:left;font-family:inherit}
   .nav:hover{background:rgba(124,150,255,.08);color:#fff}
-  .nav[aria-current=true]{background:linear-gradient(100deg,rgba(96,165,250,.18),rgba(167,139,250,.06));
-    border-color:var(--line2);color:#fff}
+  .nav[aria-current=true]{background:linear-gradient(100deg,rgba(244,63,94,.22),rgba(126,34,206,.14));
+    border-color:var(--line2);color:#fff;box-shadow:0 0 24px rgba(168,85,247,.12)}
   .nav .d{width:6px;height:6px;border-radius:50%;background:var(--neutral);flex:0 0 auto}
 
   /* main */
   main{padding:0 0 60px}
   .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:13px 22px;
-    border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(9,12,24,.92),rgba(9,12,24,.74));backdrop-filter:blur(16px)}
+    border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(29,6,42,.94),rgba(16,5,28,.78));backdrop-filter:blur(16px);box-shadow:0 10px 40px rgba(244,63,94,.06)}
   .omni{flex:1;display:flex;align-items:center;gap:10px;background:var(--surf2);border:1px solid var(--line);
     border-radius:11px;padding:9px 14px}
   .omni input{flex:1;background:none;border:0;outline:0;color:#fff;font-family:var(--mono);font-size:12.5px}
@@ -71,7 +83,7 @@
   .card{background:var(--surf);border:1px solid var(--line);border-radius:15px;padding:16px 17px;backdrop-filter:blur(12px)}
   .card h3{margin:0 0 3px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);font-weight:600}
   .kpi{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.05}
-  .kpi.crystal{background:var(--cg-crystal);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .kpi.crystal{background:linear-gradient(135deg,#fb7185,#f43f5e,#a855f7,#c084fc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .trend{font-size:11px;margin-top:5px}
   .up{color:var(--crit)} .dn{color:var(--good)} .flat{color:var(--dim)}
 
@@ -129,6 +141,33 @@
   @media(max-width:1100px){.g5{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:1fr 1fr}.g3,.g2{grid-template-columns:1fr}}
   @media(max-width:780px){.app{grid-template-columns:1fr}aside{position:static;height:auto;display:flex;flex-wrap:wrap;gap:4px}
     .navgrp{width:100%}.nav{width:auto}}
+
+  /* next-generation command console enhancements */
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.82),transparent 86%)}
+  body::after{content:"";position:fixed;inset:-40%;pointer-events:none;z-index:-1;background:conic-gradient(from 90deg at 50% 50%,transparent,rgba(192,132,252,.08),transparent,rgba(244,63,94,.06),transparent);animation:orbitalSweep 20s linear infinite}
+  @keyframes orbitalSweep{to{transform:rotate(1turn)}}
+  .brand{position:relative}.brand::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--crit),var(--info),transparent);animation:scanline 3.8s ease-in-out infinite}
+  @keyframes scanline{50%{opacity:.35;transform:translateX(8px)}}
+  .nav{position:relative;overflow:hidden}.nav::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-120%);transition:transform .55s}.nav:hover::after,.nav[aria-current=true]::after{transform:translateX(120%)}
+  .topbar{overflow:hidden}.topbar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--crit),var(--info),transparent);animation:scanline 4.6s linear infinite}
+  .hero-command{position:relative;overflow:hidden;border:1px solid rgba(192,132,252,.28);border-radius:24px;padding:26px;margin-bottom:18px;background:linear-gradient(135deg,rgba(40,8,62,.82),rgba(11,6,28,.72) 55%,rgba(244,63,94,.12));box-shadow:0 24px 80px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.08)}
+  .hero-command::before{content:"";position:absolute;inset:-2px;background:radial-gradient(420px 220px at 84% 18%,rgba(244,63,94,.22),transparent 65%),radial-gradient(520px 260px at 12% 88%,rgba(192,132,252,.18),transparent 62%);pointer-events:none}
+  .hero-command::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.07),transparent 62%);transform:translateX(-120%);animation:heroGlint 7s ease-in-out infinite;pointer-events:none}
+  @keyframes heroGlint{55%,100%{transform:translateX(120%)}}
+  .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:18px;align-items:stretch}
+  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--info);display:flex;gap:8px;flex-wrap:wrap;align-items:center}.eyebrow .node{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 14px var(--good)}
+  .hero-command h1{font-size:clamp(32px,5.6vw,78px);line-height:.92;margin:14px 0 12px;letter-spacing:-.07em}.hero-command h1 span{display:block;background:linear-gradient(100deg,#fff,#fb7185 45%,#c084fc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero-copy{max-width:780px;color:var(--dim);font-size:14px}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.hero-actions a{min-height:42px}
+  .status-cloud{display:grid;gap:10px}.status-chip{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:14px;background:rgba(8,4,18,.52);padding:11px 12px;font-family:var(--mono);font-size:11px;color:var(--dim)}.status-chip b{color:#fff}.status-chip i{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 14px currentColor;color:var(--good);font-style:normal}.status-chip.warn i{color:var(--warn);background:var(--warn)}
+  .command-module{position:relative;overflow:hidden}.command-module:hover,.card:hover,.tbl-wrap:hover{border-color:rgba(192,132,252,.42);box-shadow:0 18px 50px rgba(0,0,0,.18),0 0 34px rgba(168,85,247,.08);transform:translateY(-1px)}.card,.tbl-wrap{transition:transform .2s,border-color .2s,box-shadow .2s}
+  .insight-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;margin-top:14px}.ai-panel,.timeline-panel,.viz-panel{border:1px solid var(--line);border-radius:16px;background:rgba(12,5,26,.62);backdrop-filter:blur(12px);padding:16px}.ai-panel h3,.timeline-panel h3,.viz-panel h3{margin:0 0 10px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim2)}
+  .ai-list{display:grid;gap:9px}.ai-item{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.05);font-size:12px;color:var(--dim)}.ai-item strong{color:#fff}.ai-item .rank{font-family:var(--mono);color:var(--info)}
+  .threat-orbit{position:relative;min-height:230px;border-radius:18px;background:radial-gradient(circle at center,rgba(192,132,252,.2),transparent 18%),repeating-radial-gradient(circle at center,rgba(255,255,255,.08) 0 1px,transparent 1px 42px)}.threat-orbit .core{position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:rgba(244,63,94,.18);border:1px solid var(--line2);font-family:var(--mono);font-size:10px;color:#fff;box-shadow:0 0 50px rgba(244,63,94,.24)}.orbit-dot{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--info);box-shadow:0 0 16px currentColor}.orbit-dot.crit{background:var(--crit)}.orbit-dot.warn{background:var(--warn)}
+  .incident-timeline{display:grid;gap:10px}.incident-step{display:grid;grid-template-columns:72px 1fr;gap:12px;position:relative;color:var(--dim);font-size:12px}.incident-step::before{content:"";position:absolute;left:64px;top:7px;width:8px;height:8px;border-radius:50%;background:var(--info);box-shadow:0 0 14px var(--info)}.incident-step time{font-family:var(--mono);font-size:10px;color:var(--dim2)}.incident-step b{color:#fff}
+  details.intel-fold{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);padding:12px 14px;margin:0 0 14px;color:var(--dim)}details.intel-fold summary{cursor:pointer;color:#fff;font-weight:700}details.intel-fold p{margin:10px 0 0;font-size:12px}
+  @media(max-width:900px){.hero-grid,.insight-grid{grid-template-columns:1fr}.hero-command{padding:20px}.topbar{flex-wrap:wrap}.omni{min-width:100%;order:2}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <link rel="stylesheet" href="/assets/css/glass.css">
@@ -155,6 +194,8 @@
     <div class="navgrp">Governance</div>
     <button class="nav" data-view="provenance"><span class="d" style="background:var(--neutral)"></span>Source Audit</button>
     <button class="nav" data-view="exceptions"><span class="d" style="background:var(--neutral)"></span>Risk Exceptions</button>
+    <div class="navgrp">Concepts</div>
+    <a class="nav" href="bluedesk-mobile.html" style="text-decoration:none"><span class="d" style="background:var(--info)"></span>Mobile Hero · 9:16</a>
   </aside>
 
   <main>
@@ -172,6 +213,27 @@
     <section class="view on" id="v-exec">
       <h1 class="vt">Executive Brief</h1>
       <div class="vsub">Enterprise risk posture · public-source verification + defensive telemetry correlation · audit-ready.</div>
+
+      <div class="hero-command" aria-label="BLUEDESK cyber command overview">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow"><span class="node" aria-hidden="true"></span> BLUEDESK // Defensive Command Fabric // Audit Ready</div>
+            <h1><span>CISO Risk</span><span>Blue Team Console</span></h1>
+            <p class="hero-copy">A premium ClearGlass command surface for risk intelligence, exposure linkage, detection coverage, control assurance, and human-approved defensive action. Existing BLUEDESK data remains intact; this layer adds live-style operational context, decision support, and future-tech depth.</p>
+            <div class="hero-actions">
+              <a class="cg-btn cg-btn--primary cg-btn--sm" href="#v-triage" data-jump="triage">Open triage workbench</a>
+              <a class="cg-btn cg-btn--secondary cg-btn--sm" href="#v-ioc" data-jump="ioc">Watch IOC feed</a>
+              <a class="cg-btn cg-btn--ghost cg-btn--sm" href="#v-provenance" data-jump="provenance">Review provenance</a>
+            </div>
+          </div>
+          <div class="status-cloud" aria-label="Live operational status">
+            <div class="status-chip"><span><i aria-hidden="true"></i> Feed mesh</span><b>LIVE</b></div>
+            <div class="status-chip"><span><i aria-hidden="true"></i> Evidence vault</span><b>94% READY</b></div>
+            <div class="status-chip warn"><span><i aria-hidden="true"></i> Attack surface</span><b>+6 Δ</b></div>
+            <div class="status-chip"><span><i aria-hidden="true"></i> Human approval gates</span><b>ENFORCED</b></div>
+          </div>
+        </div>
+      </div>
       <div class="grid g5">
         <div class="card"><h3>Risk posture</h3><div class="kpi crystal">72<span style="font-size:14px">/100</span></div><div class="trend dn">▼ 4 pts · 30d (improving)</div>
           <div class="meta"><span><b>Source</b> aggregate</span><span><b>Fresh</b> 4m ago</span></div></div>
@@ -183,6 +245,35 @@
           <div class="meta"><span><b>Source</b> EDR + SIEM</span><span><b>Verified</b> 1h ago</span></div></div>
         <div class="card"><h3>Evidence readiness</h3><div class="kpi" style="color:var(--good)">94<span style="font-size:14px">%</span></div><div class="trend dn">▼ SOC 2 / ISO ready</div>
           <div class="meta"><span><b>Source</b> Evidence vault</span><span><b>Fresh</b> 22m ago</span></div></div>
+      </div>
+
+      <div class="insight-grid">
+        <div class="ai-panel command-module">
+          <h3>AI insight panel · human-approved</h3>
+          <div class="ai-list">
+            <div class="ai-item"><span class="rank">01</span><span><strong>Prioritize edge-vpn-01:</strong> KEV match, internet exposure, and limited egress detection create the highest business-impact risk.</span><span class="badge b-crit">Critical</span></div>
+            <div class="ai-item"><span class="rank">02</span><span><strong>Close evidence gap:</strong> DMARC and patch SLA artifacts need fresh validation before the next executive assurance review.</span><span class="badge b-warn">Review</span></div>
+            <div class="ai-item"><span class="rank">03</span><span><strong>Recommended action:</strong> enrich related assets, confirm containment evidence, then export an audit package for CISO approval.</span><span class="badge b-good">Safe</span></div>
+          </div>
+        </div>
+        <div class="viz-panel command-module">
+          <h3>Threat/risk visualization · exposure orbit</h3>
+          <div class="threat-orbit" aria-label="Threat orbit visualization">
+            <div class="core">RISK<br>CORE</div>
+            <span class="orbit-dot crit" style="left:76%;top:18%"></span>
+            <span class="orbit-dot warn" style="left:18%;top:32%"></span>
+            <span class="orbit-dot" style="left:64%;top:72%"></span>
+            <span class="orbit-dot warn" style="left:34%;top:78%"></span>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-panel command-module" style="margin-top:14px">
+        <h3>Incident activity stream</h3>
+        <div class="incident-timeline">
+          <div class="incident-step"><time>00:04</time><span><b>KEV feed correlated</b> with edge exposure inventory and detection coverage.</span></div>
+          <div class="incident-step"><time>00:11</time><span><b>Analyst enrichment queued</b> for VPN firmware, business owner, and compensating controls.</span></div>
+          <div class="incident-step"><time>00:18</time><span><b>Approval gate active</b> before ticket creation, exception acceptance, or executive note export.</span></div>
+        </div>
       </div>
       <div class="sect">Top active risks · ranked by business impact</div>
       <div class="tbl-wrap"><table><thead><tr>
@@ -196,6 +287,11 @@
     <section class="view" id="v-intel">
       <h2 class="vt">Threat Intel</h2>
       <div class="vsub">Actor profiles, TTP mapping, and MITRE ATT&CK alignment — synthetic profiles for demonstration.</div>
+
+      <details class="intel-fold" open>
+        <summary>Command intelligence brief</summary>
+        <p>Collapsible intelligence modules keep dense SOC context readable: actor intent, ATT&amp;CK mapping, source confidence, and recommended defensive follow-up remain visible without overwhelming executives.</p>
+      </details>
       <div class="tbl-wrap"><table><thead><tr>
         <th>Actor</th><th>Sectors</th><th>ATT&CK</th><th>Confidence</th><th>Related CVEs</th><th>Status</th><th>Source</th></tr></thead>
         <tbody id="intelRows"></tbody></table></div>
@@ -287,12 +383,21 @@
   function metaCell(src,fresh,conf){return '<span class="conf">'+ring(conf)+conf+'%</span>';}
 
   /* ── nav routing ── */
-  $$(".nav").forEach(function(b){b.addEventListener("click",function(){
-    $$(".nav").forEach(function(n){n.setAttribute("aria-current","false");});
+  $$(".nav[data-view]").forEach(function(b){b.addEventListener("click",function(){
+    $$(".nav[data-view]").forEach(function(n){n.setAttribute("aria-current","false");});
     b.setAttribute("aria-current","true");
     $$(".view").forEach(function(v){v.classList.remove("on");});
-    $("#v-"+b.dataset.view).classList.add("on");
+    var next=$("#v-"+b.dataset.view);
+    if(next){next.classList.add("on");}
     window.scrollTo({top:0,behavior:"smooth"});
+  });});
+
+
+  $$('[data-jump]').forEach(function(a){a.addEventListener('click',function(e){
+    e.preventDefault();
+    var target=a.getAttribute('data-jump');
+    var nav=$$('.nav').filter(function(n){return n.dataset.view===target;})[0];
+    if(nav){nav.click();}
   });});
 
   /* ── synthetic, clearly-labeled SOC data (no real personal data, no exploit logic) ── */

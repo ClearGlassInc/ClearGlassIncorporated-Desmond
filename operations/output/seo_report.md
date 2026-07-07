@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-01T23:17:53.707421+00:00
-**Average Score:** 92.4/100
-**Files Audited:** 58
+**Run:** 2026-07-07T10:24:44.742335+00:00
+**Average Score:** 92.2/100
+**Files Audited:** 59
 
 ## Page Scores
 
@@ -17,6 +17,7 @@
 | `conduit.html` | 80/100 | 2 |
 | `control-surface.html` | 80/100 | 2 |
 | `systems.html` | 80/100 | 2 |
+| `ultra-glass.html` | 80/100 | 2 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
 | `air-systems-control.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
@@ -69,8 +70,8 @@
 
 ## Top Issues Across All Pages
 
-- 12x — Description length N chars (ideal N–N)
-- 11x — Title length N chars (ideal N–N)
+- 13x — Description length N chars (ideal N–N)
+- 12x — Title length N chars (ideal N–N)
 - 6x — Missing og:image
 - 3x — Multiple <hN> tags (N)
 - 2x — Missing canonical link tag

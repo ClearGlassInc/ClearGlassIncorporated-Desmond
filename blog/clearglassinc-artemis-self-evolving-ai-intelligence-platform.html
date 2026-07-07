@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
+<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#07111f">
+<meta name="msapplication-TileColor" content="#07111f">
+<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
+
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>ClearGlassInc Artemis: Self-Evolving AI Intelligence Platform — ClearGlass Inc.</title>
 <meta name="description" content="A production architecture for ClearGlassInc Artemis: a governed, self-evolving AI intelligence platform on Gotham, Foundry, AIP, and Apollo."/>
 <link rel="canonical" href="https://clearglassinc.github.io/blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"/>
+<link rel="alternate" type="application/rss+xml" title="ClearGlass Insights RSS" href="https://clearglassinc.github.io/blog/feed.xml"/>
 <meta name="author" content="Desmond Otieno Odhiambo"/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
 <meta name="keywords" content="ClearGlassInc Artemis, Palantir AIP, Palantir Foundry, Gotham, Apollo, self-improving AI, intelligence platform, ontology, AI agents, policy as code"/>
@@ -17,7 +28,7 @@
 <meta property="og:site_name" content="ClearGlass Inc."/>
 <meta property="og:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
 <meta property="article:published_time" content="2026-06-30"/>
-<meta property="article:modified_time" content="2026-07-01"/>
+<meta property="article:modified_time" content="2026-07-06"/>
 <meta property="article:author" content="Desmond Otieno Odhiambo"/>
 <meta property="article:section" content="AI Architecture"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -28,6 +39,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="insights.css"/>
 
 <script type="application/ld+json">
 {
@@ -37,7 +49,7 @@
   "description": "A production architecture for ClearGlassInc Artemis: a governed, self-evolving AI intelligence platform on Gotham, Foundry, AIP, and Apollo.",
   "image": "https://clearglassinc.github.io/20260203_224147843_iOS.png",
   "datePublished": "2026-06-30",
-  "dateModified": "2026-07-01",
+  "dateModified": "2026-07-06",
   "author": {
     "@type": "Person",
     "name": "Desmond Otieno Odhiambo",
@@ -219,7 +231,7 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
 @media(max-width:720px){.feature-grid,.metric-strip{grid-template-columns:1fr}.matrix-row{grid-template-columns:1fr}.matrix-head{display:none}.article-tools{top:60px}}
 </style>
 </head>
-<body>
+<body data-ix-page="article" data-ix-slug="clearglassinc-artemis-self-evolving-ai-intelligence-platform" data-ix-theme="light">
 <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
 <div class="progress" id="progress"></div>
 
@@ -239,13 +251,13 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
 
 <header class="hero wrap">
   <div class="kicker">AI Architecture · Field Note 02</div>
-  <h1 class="title">ClearGlassInc Artemis: The <em>Self-Evolving</em> AI Intelligence Platform</h1>
+  <h1 class="title neon-text-glow">ClearGlassInc Artemis: The <em>Self-Evolving</em> AI Intelligence Platform</h1>
   <p class="dek">ClearGlassInc Artemis is designed as a governed intelligence fabric: live data enters, the ontology gives it operational meaning, AIP agents reason over it, and Apollo ships safer improvements without surrendering control.</p>
   <div class="byline">
     <div class="byline-av">D</div>
     <div class="byline-meta">
       <b>Desmond Otieno Odhiambo</b><br>
-      <span>Founder &amp; Software Architect, ClearGlass Inc. · June 30, 2026 · 16 min read</span>
+      <span>Founder &amp; Software Architect, ClearGlass Inc. · June 30, 2026 · Updated July 6, 2026 · 24 min read</span>
     </div>
   </div>
 </header>
@@ -261,9 +273,9 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
 <main class="wrap">
 <article>
 
-  <nav class="toc" aria-label="Article table of contents"><b>Direct answer · production blueprint</b><a href="#architecture-map">Architecture</a><a href="#ontology">Ontology</a><a href="#agents">Agents</a><a href="#self-improvement">Self-improvement</a><a href="#system-prompt">Prompt system</a><a href="#precision-evals">Evals</a><a href="#scenario">Scenario</a></nav>
+  <nav class="toc" aria-label="Article table of contents"><b>Direct answer · production blueprint</b><a href="#architecture-map">Architecture</a><a href="#ontology">Ontology</a><a href="#agents">Agents</a><a href="#self-improvement">Self-improvement</a><a href="#system-prompt">Prompt system</a><a href="#precision-evals">Evals</a><a href="#implementation">Implementation</a><a href="#security-governance">Security</a><a href="#code-examples">Code</a><a href="#scenario">Scenario</a></nav>
 
-  <div class="tldr">
+  <div class="tldr neon-box-glow">
     <h4>Core thesis</h4>
     <ul>
       <li><b>ClearGlassInc Artemis</b> should be built less like a chatbot and more like a governed operational nervous system.</li>
@@ -279,7 +291,7 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
     <div class="feature-card"><h4>Ontology-driven agents</h4><p>Every tool call is constrained by typed objects, relationships, permissions, lineage, and mission context.</p></div>
     <div class="feature-card"><h4>Continuous evals</h4><p>Operator corrections become regression tests for prompts, retrieval, routes, and workflow thresholds.</p></div>
     <div class="feature-card"><h4>Policy-as-code</h4><p>OPA/Rego-style policies enforce clearance, compartments, coalition boundaries, and approval gates.</p></div>
-    <div class="feature-card"><h4>Safe self-improvement</h4><p>The system proposes better prompts, workflows, heuristics, and model routes; humans approve deployment.</p></div>
+    <div class="feature-card neon-box-glow"><h4>Safe self-improvement</h4><p>The system proposes better prompts, workflows, heuristics, and model routes; humans approve deployment.</p></div>
   </div>
 
   <div class="matrix" role="table" aria-label="ClearGlassInc Artemis full-stack architecture matrix">
@@ -466,8 +478,35 @@ def safe_to_promote(candidate: EvalMetrics, baseline: EvalMetrics) -> tuple[bool
         required_approvers=["mission_owner", "model_governance"]
     )</code></pre>
 
-  <h2>Full-Stack Implementation</h2>
+  <h2 id="implementation">Full-Stack Implementation</h2>
   <p>The frontend is a TypeScript application with a mission timeline, map, graph canvas, agent transcript, source panel, approval inbox, and eval dashboard. The API gateway handles authentication, request signing, tenancy, rate limits, and OpenTelemetry trace propagation. Backend services run in Python: ingestion, entity resolution, workflow orchestration, feedback capture, eval generation, model routing, and policy enforcement. Kafka or Redpanda carries event streams; Foundry pipelines clean and fuse data; vector and hybrid search index documents, entity summaries, and case memory; ontology actions write back through governed APIs.</p>
+
+  <h3>Implementation blueprint by layer</h3>
+  <div class="matrix" role="table" aria-label="Artemis deployable components">
+    <div class="matrix-row matrix-head" role="row"><div>Component</div><div>Concrete implementation</div><div>Operational contract</div></div>
+    <div class="matrix-row" role="row"><div><strong>Web UI</strong></div><div>React/TypeScript, graph canvas, geospatial map, case timeline, approval workbench, eval cockpit.</div><div>Never renders unlabelled data; every panel carries mission, classification, and provenance badges.</div></div>
+    <div class="matrix-row" role="row"><div><strong>API gateway</strong></div><div>FastAPI edge or Envoy front door with OIDC, mTLS, signed requests, quotas, WebSocket broker.</div><div>Creates a policy envelope before any tool, query, or workflow execution.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Event bus</strong></div><div>Kafka/Redpanda topics for raw, normalized, ontology, agent, approval, eval, and audit events.</div><div>Append-only event IDs support replay, eval generation, incident reconstruction, and Apollo rollback analysis.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Lakehouse</strong></div><div>Foundry datasets for bronze/silver/gold transforms, object storage for documents, feature tables for model routing.</div><div>Lineage joins every output to source, transform version, policy bundle, and actor.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Search/Retrieval</strong></div><div>Hybrid BM25 + vector + graph traversal over ontology objects, case memory, reports, and sensor summaries.</div><div>Retrieval returns snippets only through access-aware projections and source reliability filters.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Inference</strong></div><div>Model router with task classification, prompt registry, tool registry, caching, and eval-score-aware routing.</div><div>High-risk actions require deterministic policy checks and human approval regardless of model confidence.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Observability</strong></div><div>OpenTelemetry traces, structured logs, Prometheus metrics, eval dashboards, audit ledgers, drift monitors.</div><div>Every answer is reproducible by trace ID: prompt, tools, sources, model route, policy decision, and approval path.</div></div>
+  </div>
+
+  <h3>Production repository shape</h3>
+  <p>A production implementation should keep policy, prompts, workflows, evals, and services versioned together but independently deployable. The important rule is that every runtime artifact is addressable, signed, and rollback-capable.</p>
+
+<pre><code class="language-text">artemis/
+  apps/mission-console/              # React command UI, map, graph, approval inbox
+  services/api-gateway/              # AuthN/AuthZ envelope, request signing, trace roots
+  services/ontology-service/         # Object projections, actions, relationship queries
+  services/agent-orchestrator/       # AIP workflows, tool calls, model routing
+  services/eval-engine/              # Offline/online evals, drift detection, proposal generator
+  packages/policy/rego/              # Need-to-know, coalition, risk, approval policies
+  packages/prompts/                  # Versioned prompts with eval metadata
+  packages/workflows/                # State machines and approval definitions
+  foundry/pipelines/                 # Bronze/silver/gold transforms and ontology sync
+  apollo/releases/                   # Signed deployment manifests and rollback plans</code></pre>
 
   <h3>Service boundaries</h3>
   <ul>
@@ -499,8 +538,19 @@ async def ingest_live_event(event: LiveEvent, actor: Actor = Depends(authn)):
   &lt;/section&gt;
 }</code></pre>
 
-  <h2>Security and Governance</h2>
+  <h2 id="security-governance">Security and Governance</h2>
   <p>Artemis assumes zero trust. Need-to-know is enforced at row, column, object, link, action, and tool level. Coalition boundaries are encoded as policy, not etiquette. Compartments move with the data through ingestion, retrieval, prompts, tool outputs, generated briefs, and audit logs. An agent answering a coalition user receives only the ontology projection that user may see. Prompt governance prevents hidden policy drift: prompt changes require owners, tests, risk labels, and immutable history. Model governance records model identity, version, route, input classification, output disposition, and evaluation status.</p>
+
+
+
+  <h3>Governance control matrix</h3>
+  <ul>
+    <li><strong>Need-to-know:</strong> enforced at object, relationship, field, document chunk, generated paragraph, and tool-result level.</li>
+    <li><strong>Compartmentalization:</strong> every event carries classification, compartments, releasability, mission tenancy, caveats, and retention rules.</li>
+    <li><strong>Zero-trust execution:</strong> short-lived credentials, workload identity, mTLS, signed tool calls, egress allowlists, and no ambient database access.</li>
+    <li><strong>Immutable provenance:</strong> append-only audit events link actor, model, prompt, policy, sources, workflow state, approval decision, and deployment version.</li>
+    <li><strong>Model and prompt governance:</strong> prompt diffs, model cards, eval reports, red-team notes, blast-radius scoring, and Apollo release gates are required before promotion.</li>
+  </ul>
 
 <pre><code class="language-rego">package artemis.actions
 
@@ -531,6 +581,100 @@ denied_coalition if {
         and not obj.releasability.denies(actor.coalition)
     )</code></pre>
 
+
+
+
+  <h2 id="code-examples">Code Examples</h2>
+  <p>The following skeletons show the control surface that makes Artemis implementable: typed events, policy-wrapped retrieval, model routing, workflow execution, feedback-to-eval conversion, and Apollo-ready deployment manifests.</p>
+
+<pre><code class="language-python">from typing import Any, Literal
+from pydantic import BaseModel, Field
+
+class PolicyEnvelope(BaseModel):
+    actor_id: str
+    mission_id: str
+    clearance: int
+    compartments: set[str]
+    coalition: str
+    trace_id: str
+
+class RetrievalRequest(BaseModel):
+    query: str
+    object_types: list[str] = Field(default_factory=list)
+    max_results: int = 12
+    purpose: Literal["triage", "enrichment", "briefing", "eval"]
+
+async def governed_retrieve(envelope: PolicyEnvelope, request: RetrievalRequest) -> list[dict[str, Any]]:
+    audit.record("retrieval.requested", envelope.model_dump() | request.model_dump())
+    filters = policy.to_search_filters(envelope)
+    hits = await hybrid_index.search(request.query, filters=filters, limit=request.max_results)
+    visible = [h for h in hits if policy.can_view(envelope, h["label"])]
+    audit.record("retrieval.returned", {"trace_id": envelope.trace_id, "count": len(visible)})
+    return visible</code></pre>
+
+<pre><code class="language-python">class ModelRoute(BaseModel):
+    model: str
+    prompt_version: str
+    max_latency_ms: int
+    requires_human_review: bool
+    rationale: str
+
+def route_model(task: str, risk_band: str, classification: str, eval_scores: dict[str, float]) -> ModelRoute:
+    if risk_band in {"high", "critical"} or classification in {"S", "TS"}:
+        return ModelRoute(
+            model="high-assurance-reasoner",
+            prompt_version="commander_recommendation@3.2.1",
+            max_latency_ms=8000,
+            requires_human_review=True,
+            rationale="operationally significant or sensitive task",
+        )
+    if task == "summarize" and eval_scores.get("fast_summarizer", 0) >= 0.92:
+        return ModelRoute(model="fast-summarizer", prompt_version="brief_summary@1.8.0", max_latency_ms=1200, requires_human_review=False, rationale="low-risk summarization route")
+    return ModelRoute(model="balanced-reasoner", prompt_version="analyst_assist@2.6.0", max_latency_ms=3500, requires_human_review=False, rationale="default governed route")</code></pre>
+
+<pre><code class="language-python">async def feedback_to_eval_case(feedback: FeedbackRecord) -> dict:
+    return {
+        "eval_id": f"eval-{feedback.case_id}-{feedback.created_at.date()}",
+        "input": feedback.original_alert,
+        "expected": feedback.operator_correction,
+        "metadata": {
+            "mission_id": feedback.mission_id,
+            "failure_mode": feedback.failure_mode,
+            "prompt_version": feedback.prompt_version,
+            "model_route": feedback.model_route,
+            "policy_bundle": feedback.policy_bundle,
+        },
+    }
+
+async def nightly_eval_pipeline():
+    feedback = await warehouse.fetch_new_feedback(labels=["false_positive", "missed_link", "bad_escalation"])
+    eval_cases = [await feedback_to_eval_case(f) for f in feedback]
+    run = await eval_harness.run(dataset=eval_cases, candidates=prompt_registry.candidates("triage"))
+    proposal = propose_upgrade(run)
+    if proposal.status == "pending_human_review":
+        await approvals.open_upgrade_review(proposal)</code></pre>
+
+<pre><code class="language-yaml">apiVersion: apollo.clearglassinc.io/v1
+kind: ArtemisRelease
+metadata:
+  name: artemis-agent-orchestrator-2-5-0
+spec:
+  artifacts:
+    service: ghcr.io/clearglassinc/artemis-agent-orchestrator:2.5.0
+    prompts: packages/prompts/triage_prompt@2.5.0
+    policyBundle: packages/policy/rego@2026.07.06
+  rollout:
+    strategy: canary
+    firstWave: 5%
+    promoteAfter: 2h
+  healthGates:
+    criticalFailures: 0
+    p95LatencyMsMax: 4200
+    overrideRateMaxDelta: 0
+    precisionMinDelta: 0.015
+  rollback:
+    service: ghcr.io/clearglassinc/artemis-agent-orchestrator:2.4.0
+    prompts: packages/prompts/triage_prompt@2.4.0</code></pre>
 
   <h2 id="system-prompt">Advanced System Prompt for the ClearGlassInc Artemis Blog</h2>
   <p>This article also defines the reusable editorial prompt that powers future Artemis posts. It is engineered for search authority, technical depth, and practitioner credibility while keeping governance, provenance, and safe self-improvement at the center.</p>
@@ -592,6 +736,14 @@ Direct Answer → System Architecture → Data and Ontology → AI and Agent Des
   <p>The commander copilot drafts three options: monitor, request additional collection, or prepare an action package. Policy classifies the last option as operationally significant, so Artemis cannot execute it. It creates a pending approval with evidence, dissenting signals, confidence intervals, and provenance. The operator rejects the recommended escalation and annotates the reason: similar pattern, wrong seasonal baseline. That correction becomes a labeled eval example. Overnight, the eval pipeline identifies that the triage prompt overweighted stale route similarity. It proposes a threshold adjustment and retrieval feature for seasonal baselines. Reviewers approve the prompt update after offline evals improve precision without recall loss. Apollo canaries it to five percent of similar alerts, monitors override rate, and then promotes or rolls back.</p>
   <p>The strategic lesson is simple: the self-evolving intelligence platform is not the system that acts without humans. It is the system that learns exactly where humans add judgment, captures that judgment as governed evidence, and improves the machine around it. ClearGlassInc Artemis should make intelligence faster, but its deeper purpose is to make speed accountable.</p>
 
+  <section class="ix-related" id="ixRelated">
+    <b>Related from the desk</b>
+    <div class="ix-related-grid">
+      <a class="ix-related-card" href="ai-agent-governance-governed-autonomy.html"><span class="k">AI &amp; Autonomy</span><h4>AI Agent Governance: The Governed Autonomy Playbook</h4><p>The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.</p><span class="m">11 min read · Governed Autonomy Playbooks</span></a>
+      <a class="ix-related-card" href="index.html"><span class="k">The hub</span><h4>All ClearGlass Insights</h4><p>Governed AI, cybersecurity architecture, autonomy, OSINT workflows, and high-trust software systems.</p><span class="m">Browse every brief →</span></a>
+    </div>
+  </section>
+
   <div class="endbar">
     <div class="tags"><span class="tag">CLEARGLASSINC ARTEMIS</span><span class="tag">AIP</span><span class="tag">FOUNDRY</span><span class="tag">GOTHAM</span><span class="tag">APOLLO</span></div>
     <div class="share"><a href="index.html">← All insights</a></div>
@@ -612,6 +764,8 @@ Direct Answer → System Architecture → Data and Ontology → AI and Agent Des
           <h5>Insights</h5>
           <a href="index.html">All articles</a>
           <a href="ai-agent-governance-governed-autonomy.html">Governed Autonomy</a>
+          <a href="osint-workflow-that-survives-contact-with-reality.html">OSINT Tradecraft</a>
+          <a href="cybersecurity-architecture-for-agentic-software.html">Agentic Cyber Architecture</a>
         </div>
         <div class="footer-col">
           <h5>Products</h5>
@@ -646,6 +800,8 @@ document.querySelectorAll('pre').forEach(pre=>{pre.classList.add('copyable');con
 document.getElementById('copyLink')?.addEventListener('click',async e=>{await navigator.clipboard.writeText(location.href);e.currentTarget.textContent='Copied';setTimeout(()=>e.currentTarget.textContent='Copy link',1200);});
 document.getElementById('powerMode')?.addEventListener('click',e=>{document.body.classList.toggle('power-mode');e.currentTarget.classList.toggle('active');});
 </script>
+<script defer src="insights.js"></script>
 <script defer src="/logo-badge.js"></script>
+<script defer src="assistant/writing-help.js"></script>
 </body>
 </html>

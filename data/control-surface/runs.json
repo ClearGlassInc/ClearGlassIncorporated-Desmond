@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #215",
+    "title": "Control Surface Feeds #216",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "03:43",
+    "timestamp": "2026-07-08T03:43:30Z"
+  },
+  {
+    "title": "Defender Watch #458",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "03:31",
+    "timestamp": "2026-07-08T03:31:27Z"
+  },
+  {
+    "title": "Health Monitor #153",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "03:16",
+    "timestamp": "2026-07-08T03:16:30Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #636",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-520acde3-5f67-4b14-b46b-617ab12fe089",
+    "time": "03:08",
+    "timestamp": "2026-07-08T03:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #635",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-165f5fc6-3cc6-43c2-b23d-ff10b0cf681c",
+    "time": "02:08",
+    "timestamp": "2026-07-08T02:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #634",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-45cff98b-4a5d-46de-8e0f-8a9fa1d8d035",
+    "time": "01:08",
+    "timestamp": "2026-07-08T01:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #774",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "00:12",
+    "timestamp": "2026-07-08T00:12:37Z"
+  },
+  {
+    "title": "pages build and deployment #1222",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:12",
+    "timestamp": "2026-07-08T00:12:29Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2083",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:12",
+    "timestamp": "2026-07-08T00:12:28Z"
+  },
+  {
+    "title": "Control Surface Feeds #215",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "00:12",
     "timestamp": "2026-07-08T00:12:07Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "23:15",
     "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #772",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:47Z"
-  },
-  {
-    "title": "pages build and deployment #1220",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:40Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2081",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:40Z"
-  },
-  {
-    "title": "Security #923",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-blog-post-generation-prompt-for-clearglass-inc",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:25Z"
-  },
-  {
-    "title": "Defender Watch #456",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-blog-post-generation-prompt-for-clearglass-inc",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:25Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1194",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-blog-post-generation-prompt-for-clearglass-inc",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:25Z"
-  },
-  {
-    "title": "CI #1157",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/add-blog-post-generation-prompt-for-clearglass-inc",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:25Z"
-  },
-  {
-    "title": "Policy Gate #895",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-blog-post-generation-prompt-for-clearglass-inc",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:25Z"
-  },
-  {
-    "title": "PR Automation #467",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-blog-post-generation-prompt-for-clearglass-inc",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:25Z"
   }
 ]

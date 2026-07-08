@@ -3,12 +3,75 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "00:12",
-    "timestamp": "2026-07-08T00:12:22Z"
+    "time": "03:43",
+    "timestamp": "2026-07-08T03:43:39Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #216",
+    "time": "03:43",
+    "timestamp": "2026-07-08T03:43:30Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #458",
+    "time": "03:31",
+    "timestamp": "2026-07-08T03:31:27Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #153",
+    "time": "03:16",
+    "timestamp": "2026-07-08T03:16:30Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-520acde3-5f67-4b14-b46b-617ab12fe089 \u00b7 run #636",
+    "time": "03:08",
+    "timestamp": "2026-07-08T03:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-165f5fc6-3cc6-43c2-b23d-ff10b0cf681c \u00b7 run #635",
+    "time": "02:08",
+    "timestamp": "2026-07-08T02:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-45cff98b-4a5d-46de-8e0f-8a9fa1d8d035 \u00b7 run #634",
+    "time": "01:08",
+    "timestamp": "2026-07-08T01:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #774",
+    "time": "00:12",
+    "timestamp": "2026-07-08T00:12:37Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1222",
+    "time": "00:12",
+    "timestamp": "2026-07-08T00:12:29Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2083",
+    "time": "00:12",
+    "timestamp": "2026-07-08T00:12:28Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #215",
     "time": "00:12",
     "timestamp": "2026-07-08T00:12:07Z"
@@ -26,68 +89,5 @@
     "detail": "dynamic on main \u00b7 run #1221",
     "time": "23:15",
     "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #896",
-    "time": "23:15",
-    "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #924",
-    "time": "23:15",
-    "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #773",
-    "time": "23:15",
-    "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1195",
-    "time": "23:15",
-    "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1158",
-    "time": "23:15",
-    "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #457",
-    "time": "23:15",
-    "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #223",
-    "time": "23:15",
-    "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2082",
-    "time": "23:15",
-    "timestamp": "2026-07-07T23:15:19Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #772",
-    "time": "23:14",
-    "timestamp": "2026-07-07T23:14:47Z"
   }
 ]

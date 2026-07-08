@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-06T11:26:22.385955+00:00",
-  "files_audited": 59,
-  "average_score": 92.2,
+  "run_utc": "2026-07-08T09:24:39.746997+00:00",
+  "files_audited": 61,
+  "average_score": 91.6,
   "pages": [
     {
       "file": "404.html",
@@ -323,6 +323,28 @@
       "issues": []
     },
     {
+      "file": "bluedesk-mobile.html",
+      "title": "BLUE DESK Mobile \u2014 CISO Risk Console Hero (9:16) | ClearGlass Inc",
+      "title_length": 65,
+      "title_ok": false,
+      "description": "BLUE DESK mobile hero \u2014 minimalist, futuristic 9:16 CISO risk console concept with neon pulse: risk intelligence pills, blue team command, live search token, and executive stat cards.",
+      "description_length": 183,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 70,
+      "issues": [
+        "Title length 65 chars (ideal 30\u201360)",
+        "Description length 183 chars (ideal 120\u2013160)",
+        "No <h1> tag found"
+      ]
+    },
+    {
       "file": "bluedesk.html",
       "title": "BLUEDESK \u2014 CISO Risk & Blue Team Console | ClearGlass Inc",
       "title_length": 57,
@@ -331,14 +353,16 @@
       "description_length": 147,
       "description_ok": true,
       "canonical_present": true,
-      "h1_count": 1,
-      "h1_ok": true,
+      "h1_count": 2,
+      "h1_ok": false,
       "img_without_alt": 0,
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 90,
+      "issues": [
+        "Multiple <h1> tags (2)"
+      ]
     },
     {
       "file": "button-lab.html",
@@ -412,6 +436,26 @@
       "score": 90,
       "issues": [
         "Title length 68 chars (ideal 30\u201360)"
+      ]
+    },
+    {
+      "file": "clearglass-ultra.html",
+      "title": "ClearGlass Ultra \u2014 See Through Everything",
+      "title_length": 41,
+      "title_ok": true,
+      "description": "The ClearGlass intelligence stack: ARTEMIS IV, WRAITH-OMEN, and AEGIS. Governed autonomy, predictive defense, and mission-speed clarity for enterprises that refuse to be surprised.",
+      "description_length": 180,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 180 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -1132,15 +1176,15 @@
     }
   ],
   "top_issues": [
-    "13x \u2014 Description length N chars (ideal N\u2013N)",
-    "12x \u2014 Title length N chars (ideal N\u2013N)",
+    "15x \u2014 Description length N chars (ideal N\u2013N)",
+    "13x \u2014 Title length N chars (ideal N\u2013N)",
     "6x \u2014 Missing og:image",
-    "3x \u2014 Multiple <hN> tags (N)",
+    "4x \u2014 Multiple <hN> tags (N)",
     "2x \u2014 Missing canonical link tag",
     "2x \u2014 Missing og:title",
     "2x \u2014 Missing og:description",
+    "2x \u2014 No <hN> tag found",
     "1x \u2014 Missing <title>",
-    "1x \u2014 Missing meta description",
-    "1x \u2014 No <hN> tag found"
+    "1x \u2014 Missing meta description"
   ]
 }

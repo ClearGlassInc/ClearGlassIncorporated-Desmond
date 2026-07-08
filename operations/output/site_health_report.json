@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-06T11:26:22.871653+00:00",
+  "run_utc": "2026-07-08T09:24:40.803260+00:00",
   "site_url": "https://clearglassinc.github.io",
-  "overall_healthy": true,
+  "overall_healthy": false,
   "pages_checked": 6,
   "pages_healthy": 6,
   "pages_unreachable": 0,
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 115,
+      "response_ms": 214,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 74,
+      "response_ms": 119,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 76,
+      "response_ms": 183,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 57,
+      "response_ms": 137,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 87,
+      "response_ms": 248,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,16 +61,19 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 62,
+      "response_ms": 136,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
-  "local_issues": [],
+  "local_issues": [
+    "Page missing ClearGlass logo: blog/clearglass-agentops-microsoft-foundry-future-stack.html"
+  ],
   "local_warnings": [
     "HTML page not referenced in sitemap.xml: air-systems-control.html",
     "HTML page not referenced in sitemap.xml: artemis-2040.html",
+    "HTML page not referenced in sitemap.xml: clearglass-ultra.html",
     "HTML page not referenced in sitemap.xml: environmental-cyber-risk.html"
   ]
 }

@@ -190,15 +190,15 @@
   ".cgcs-dr a.cur{background:linear-gradient(100deg,rgba(96,165,250,.18),rgba(167,139,250,.05));border-color:rgba(124,150,255,.45);color:#fff}" +
   ".cgcs-dr a .ic{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:13px;background:rgba(124,150,255,.1);border:1px solid rgba(124,150,255,.2)}" +
   // mobile rail
-  ".cgcs-rail{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:2147483600;display:none;align-items:center;gap:4px;" +
-    "padding:6px;border-radius:16px;border:1px solid var(--ln);background:var(--g1);backdrop-filter:blur(14px);" +
-    "box-shadow:0 20px 50px -20px rgba(0,0,0,.7)}" +
-  ".cgcs-rail a,.cgcs-rail button{display:grid;place-items:center;gap:2px;width:58px;padding:7px 4px;border:0;background:none;color:#c7d0ea;" +
+  ".cgcs-rail{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:2147483600;display:none;align-items:center;justify-content:center;gap:4px;" +
+    "width:min(calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right)),360px);padding:6px;border-radius:16px;border:1px solid var(--ln);background:var(--g1);backdrop-filter:blur(14px);" +
+    "box-shadow:0 20px 50px -20px rgba(0,0,0,.7);overflow:hidden}" +
+  ".cgcs-rail a,.cgcs-rail button{display:grid;place-items:center;gap:2px;flex:1 1 0;min-width:0;padding:7px 4px;border:0;background:none;color:#c7d0ea;" +
     "text-decoration:none;font-size:9px;letter-spacing:.04em;cursor:pointer;border-radius:11px;font-family:inherit}" +
   ".cgcs-rail a .ic,.cgcs-rail button .ic{font-size:17px}" +
   ".cgcs-rail a.cur{color:#fff;background:linear-gradient(180deg,rgba(96,165,250,.22),rgba(167,139,250,.08))}" +
   ".cgcs-rail .cgcs-railcmd{color:#07112b;background:var(--cr)}" +
-  "@media(max-width:720px){.cgcs-rail{display:flex}.cgcs-bar .cgcs-chip .cgcs-st{display:none}.cgcs-bar{top:8px;right:8px}}" +
+  "@media(max-width:720px){.cgcs-rail{display:flex}.cgcs-bar .cgcs-chip .cgcs-st{display:none}.cgcs-bar{top:8px;right:max(8px,env(safe-area-inset-right))}}" +
   "@media(prefers-reduced-motion:reduce){#cgcs *{transition:none!important;animation:none!important}}";
 
   // ── helpers ───────────────────────────────────────────────────────────────

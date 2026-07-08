@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-07-06T11:26:22.894479+00:00",
+  "run_utc": "2026-07-08T09:24:40.823358+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
@@ -7,7 +7,7 @@
   "skipped": 0,
   "bots": [
     {
-      "bot_id": "growth",
+      "bot_id": "daily_priority",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
@@ -19,15 +19,15 @@
       "error": null
     },
     {
-      "bot_id": "daily_priority",
+      "bot_id": "growth",
       "status": "ok",
-      "duration_s": 0.02,
+      "duration_s": 0.01,
       "error": null
     },
     {
       "bot_id": "lead_draft",
       "status": "ok",
-      "duration_s": 0.02,
+      "duration_s": 0.03,
       "error": null
     },
     {
@@ -45,23 +45,23 @@
     {
       "bot_id": "seo_optimizer",
       "status": "ok",
-      "duration_s": 0.12,
+      "duration_s": 0.1,
       "error": null
     },
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 0.58,
+      "duration_s": 1.15,
       "error": null
     },
     {
-      "bot_id": "operations",
+      "bot_id": "campaign_reporter",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "campaign_reporter",
+      "bot_id": "operations",
       "status": "ok",
       "duration_s": 0.01,
       "error": null

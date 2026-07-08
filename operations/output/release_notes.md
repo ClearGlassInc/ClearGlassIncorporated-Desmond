@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-06
+# Release Notes — 2026-07-08
 
-*543 commit(s) since v1.0.0*
+*601 commit(s) since v1.0.0*
 
 ## New Features
 
+- **agent-os:** advanced sub-agents + Percival execution agent (`8c083c2`)
 - **agents:** upgrade Marketing Command to Marketing Command OS v2.0 (`7ff4e26`)
 - **ui:** move corner controls to the right + site-wide neon glow (`9be02d5`)
 - **agent-os:** runnable v8.0 orchestration skeleton + governance gate, executor, blueprint (`ae23891`)
@@ -53,6 +54,8 @@
 
 ## Bug Fixes
 
+- **agent-os:** drop dead argv assignment in __main__ CLI (`fbba061`)
+- **ci:** repair unparseable remove-homepage-crimson-loader workflow (`0a99582`)
 - **lint:** drop unused os imports flagged by ruff (`17cbd59`)
 - **scripts:** make asset audit advisory for legacy references (`f5203bd`)
 - **scripts:** separate blocking HTML asset errors from CSS advisories (`04112c9`)
@@ -135,6 +138,42 @@
 
 ## Maintenance
 
+- Add Microsoft Foundry AgentOps blog pack (`651ca69`)
+- Upgrade NEXUS operational command experience (`2124cfc`)
+- Enhance Guardian cyber command experience (`24bb4ea`)
+- Fix floating button flow (`551705f`)
+- Align Artemis resume blueprint page layout (`9335126`)
+- Publish Blog #6 + Blog #1 and the Ultra-Glassy ClearGlass page (`ec1e993`)
+- Enhance BLUEDESK cyber command console (`fa96d7d`)
+- Add Artemis intelligence platform blueprint (`f2104cb`)
+- Rework web-design page: light crimson-neon aesthetic + crystal video showcase (`96b5f1b`)
+- Add BLUE DESK mobile hero concept page (9:16 CISO risk console) (`3e86aff`)
+- Add BLUEDESK to site-wide product navigation with crimson–royal-purple accent (`8c0e3ed`)
+- Add System 2040 Skeleton Key blueprint (`a724a91`)
+- Add BLUEDESK to product navigation (`6d098de`)
+- Align Artemis resume blog page with site design (`ee76f0f`)
+- Remove crimson homepage loader gate (`92836e8`)
+- Remove generated binary favicon assets (`f0fb154`)
+- Remove generated binary favicon assets (`d65c169`)
+- Remove generated binary favicon assets (`46efda7`)
+- Add safe marker n (`b39440e`)
+- Add safe marker l (`f554864`)
+- Add safe marker f (`b9d9d53`)
+- Add safe marker c (`770bdd8`)
+- Add safe marker b (`386982a`)
+- Add safe marker (`730c466`)
+- test (`9d1c396`)
+- Document homepage crimson loader fix (`9dc67e7`)
+- Add workflow to remove homepage crimson loader gate (`6206389`)
+- Add Artemis resume builder blog blueprint (`497b01f`)
+- Add Python Threads growth command center (`50bcce5`)
+- Add Artemis extreme intelligence platform blueprint (`31827a2`)
+- Upgrade Threads command center to V3 (`d98e13c`)
+- Add manual Threads growth command center (`92408ee`)
+- Add Artemis self-evolving intelligence blueprint (`bd08c7b`)
+- Refine Artemis self-evolving platform blueprint (`f1ca4c5`)
+- Fix air control motion shim types (`fd4ae86`)
+- Add neon glow styling to Artemis article (`28497b5`)
 - Add ClearGlass Century visual asset (`8810e6e`)
 - Add APT threat intelligence visual asset (`0973f37`)
 - Retry transient GitHub Pages deploy failures (`320f431`)
@@ -345,6 +384,25 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`eabdffc`)
+- refresh control-surface data feeds [skip ci] (`739e411`)
+- refresh control-surface data feeds [skip ci] (`158bcea`)
+- refresh control-surface data feeds [skip ci] (`b66fe4e`)
+- refresh control-surface data feeds [skip ci] (`64904c7`)
+- refresh control-surface data feeds [skip ci] (`3db614d`)
+- refresh control-surface data feeds [skip ci] (`76ce6ad`)
+- refresh control-surface data feeds [skip ci] (`9f2fa6e`)
+- refresh control-surface data feeds [skip ci] (`58e248e`)
+- update generated outputs — 2026-07-07 10:24 UTC [skip ci] (`bf6e1bb`)
+- refresh control-surface data feeds [skip ci] (`10be911`)
+- refresh control-surface data feeds [skip ci] (`de02ce2`)
+- refresh control-surface data feeds [skip ci] (`7a3285b`)
+- refresh control-surface data feeds [skip ci] (`b2411c8`)
+- refresh control-surface data feeds [skip ci] (`15ccc44`)
+- refresh control-surface data feeds [skip ci] (`56477e2`)
+- refresh control-surface data feeds [skip ci] (`fa4e5f4`)
+- refresh control-surface data feeds [skip ci] (`6a1bb16`)
+- update generated outputs — 2026-07-06 11:26 UTC [skip ci] (`1fb1212`)
 - refresh control-surface data feeds [skip ci] (`e577138`)
 - refresh control-surface data feeds [skip ci] (`2b6011f`)
 - refresh control-surface data feeds [skip ci] (`97060fb`)

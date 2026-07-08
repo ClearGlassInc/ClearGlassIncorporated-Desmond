@@ -16,9 +16,11 @@ root `Python Tests` CI gate via `tests/test_percival_v9_policy.py`.
 | `policies/capabilities.json` | `deploy/policies` capability schema | Versioned, deny-by-default grants; loader rejects unknown schema versions |
 | `policies/authz.rego` | OPA rego bundle | Same allow/deny semantics as the Python governor, portable to the sidecar (not exercised in CI — no OPA binary in the minimal env) |
 
-Not yet implemented (each gated on approval, per the blueprint): Temporal
-workers, the Envoy/Istio gateway, and `deploy/terraform` (requires cloud
-credentials + explicit approval).
+Deploy layer authored under `deploy/` (K8s manifests, Terraform skeleton,
+governor-gated Temporal worker) — **authored, not applied**; see
+`deploy/README.md`. Provisioning (`terraform apply` / `kubectl apply`) remains
+gated on cloud credentials + explicit approval, per the blueprint's own
+Escalation Gate. The Envoy/Istio gateway is the one remaining unwritten piece.
 
 ```bash
 python -m pytest tests/test_percival_v9_policy.py tests/test_percival_v9_service.py -q

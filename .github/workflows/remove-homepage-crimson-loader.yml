@@ -27,7 +27,9 @@ jobs:
           # banner comment through the first following </script>. Nothing else matches.
           pattern = re.compile(r"<script>\s*/\* ClearGlass loader gate.*?</script>\n?", re.DOTALL)
           if not pattern.search(text):
-              raise SystemExit('Crimson homepage redirect gate not found; no change applied.')
+              # Already applied on a previous run — idempotent success, not a failure.
+              print('Crimson homepage redirect gate not found; nothing to do.')
+              raise SystemExit(0)
           updated = pattern.sub('', text, count=1)
           path.write_text(updated, encoding='utf-8')
           print('Removed crimson homepage loader gate.')

@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:39Z"
+    "time": "23:31",
+    "timestamp": "2026-07-08T23:31:37Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #225",
+    "time": "23:31",
+    "timestamp": "2026-07-08T23:31:24Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-c0131965-b6a1-4432-a6fe-3a6818db4c12 \u00b7 run #656",
+    "time": "23:08",
+    "timestamp": "2026-07-08T23:08:10Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #788",
+    "time": "22:16",
+    "timestamp": "2026-07-08T22:16:53Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1237",
+    "time": "22:16",
+    "timestamp": "2026-07-08T22:16:44Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2107",
+    "time": "22:16",
+    "timestamp": "2026-07-08T22:16:44Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #224",
     "time": "22:16",
     "timestamp": "2026-07-08T22:16:26Z"
@@ -52,41 +87,6 @@
     "title": "CI",
     "status": "ok",
     "detail": "push on main \u00b7 run #1171",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #909",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #787",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1209",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #228",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1236",
     "time": "21:57",
     "timestamp": "2026-07-08T21:57:59Z"
   }

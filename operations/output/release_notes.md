@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-07
+# Release Notes — 2026-07-08
 
-*575 commit(s) since v1.0.0*
+*601 commit(s) since v1.0.0*
 
 ## New Features
 
+- **agent-os:** advanced sub-agents + Percival execution agent (`8c083c2`)
 - **agents:** upgrade Marketing Command to Marketing Command OS v2.0 (`7ff4e26`)
 - **ui:** move corner controls to the right + site-wide neon glow (`9be02d5`)
 - **agent-os:** runnable v8.0 orchestration skeleton + governance gate, executor, blueprint (`ae23891`)
@@ -53,6 +54,7 @@
 
 ## Bug Fixes
 
+- **agent-os:** drop dead argv assignment in __main__ CLI (`fbba061`)
 - **ci:** repair unparseable remove-homepage-crimson-loader workflow (`0a99582`)
 - **lint:** drop unused os imports flagged by ruff (`17cbd59`)
 - **scripts:** make asset audit advisory for legacy references (`f5203bd`)
@@ -136,6 +138,20 @@
 
 ## Maintenance
 
+- Add Microsoft Foundry AgentOps blog pack (`651ca69`)
+- Upgrade NEXUS operational command experience (`2124cfc`)
+- Enhance Guardian cyber command experience (`24bb4ea`)
+- Fix floating button flow (`551705f`)
+- Align Artemis resume blueprint page layout (`9335126`)
+- Publish Blog #6 + Blog #1 and the Ultra-Glassy ClearGlass page (`ec1e993`)
+- Enhance BLUEDESK cyber command console (`fa96d7d`)
+- Add Artemis intelligence platform blueprint (`f2104cb`)
+- Rework web-design page: light crimson-neon aesthetic + crystal video showcase (`96b5f1b`)
+- Add BLUE DESK mobile hero concept page (9:16 CISO risk console) (`3e86aff`)
+- Add BLUEDESK to site-wide product navigation with crimson–royal-purple accent (`8c0e3ed`)
+- Add System 2040 Skeleton Key blueprint (`a724a91`)
+- Add BLUEDESK to product navigation (`6d098de`)
+- Align Artemis resume blog page with site design (`ee76f0f`)
 - Remove crimson homepage loader gate (`92836e8`)
 - Remove generated binary favicon assets (`f0fb154`)
 - Remove generated binary favicon assets (`d65c169`)
@@ -368,6 +384,16 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`eabdffc`)
+- refresh control-surface data feeds [skip ci] (`739e411`)
+- refresh control-surface data feeds [skip ci] (`158bcea`)
+- refresh control-surface data feeds [skip ci] (`b66fe4e`)
+- refresh control-surface data feeds [skip ci] (`64904c7`)
+- refresh control-surface data feeds [skip ci] (`3db614d`)
+- refresh control-surface data feeds [skip ci] (`76ce6ad`)
+- refresh control-surface data feeds [skip ci] (`9f2fa6e`)
+- refresh control-surface data feeds [skip ci] (`58e248e`)
+- update generated outputs — 2026-07-07 10:24 UTC [skip ci] (`bf6e1bb`)
 - refresh control-surface data feeds [skip ci] (`10be911`)
 - refresh control-surface data feeds [skip ci] (`de02ce2`)
 - refresh control-surface data feeds [skip ci] (`7a3285b`)

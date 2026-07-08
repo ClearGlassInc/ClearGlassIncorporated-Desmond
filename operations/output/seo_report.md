@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-07T10:24:44.742335+00:00
-**Average Score:** 92.2/100
-**Files Audited:** 59
+**Run:** 2026-07-08T09:24:39.746997+00:00
+**Average Score:** 91.6/100
+**Files Audited:** 61
 
 ## Page Scores
 
@@ -12,6 +12,7 @@
 | `artemis-2040.html` | 50/100 | 5 |
 | `flowsint.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
+| `bluedesk-mobile.html` | 70/100 | 3 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
 | `artemis-percival.html` | 80/100 | 2 |
 | `conduit.html` | 80/100 | 2 |
@@ -20,7 +21,9 @@
 | `ultra-glass.html` | 80/100 | 2 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
 | `air-systems-control.html` | 90/100 | 1 |
+| `bluedesk.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
+| `clearglass-ultra.html` | 90/100 | 1 |
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `environmental-cyber-risk.html` | 90/100 | 1 |
 | `futuristic.html` | 90/100 | 1 |
@@ -42,7 +45,6 @@
 | `artemis.html` | 100/100 | 0 |
 | `attack-prompt-core.html` | 100/100 | 0 |
 | `banking-law-advisor.html` | 100/100 | 0 |
-| `bluedesk.html` | 100/100 | 0 |
 | `button-lab.html` | 100/100 | 0 |
 | `button-system.html` | 100/100 | 0 |
 | `cg-loader.html` | 100/100 | 0 |
@@ -70,13 +72,13 @@
 
 ## Top Issues Across All Pages
 
-- 13x — Description length N chars (ideal N–N)
-- 12x — Title length N chars (ideal N–N)
+- 15x — Description length N chars (ideal N–N)
+- 13x — Title length N chars (ideal N–N)
 - 6x — Missing og:image
-- 3x — Multiple <hN> tags (N)
+- 4x — Multiple <hN> tags (N)
 - 2x — Missing canonical link tag
 - 2x — Missing og:title
 - 2x — Missing og:description
+- 2x — No <hN> tag found
 - 1x — Missing <title>
 - 1x — Missing meta description
-- 1x — No <hN> tag found

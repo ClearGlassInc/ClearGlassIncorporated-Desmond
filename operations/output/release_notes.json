@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-07-07T10:24:44.725141+00:00",
+  "run_utc": "2026-07-08T09:24:39.692016+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 575,
+  "commit_count": 601,
   "sections": {
     "New Features": [
+      {
+        "sha": "8c083c2",
+        "type": "feat",
+        "scope": "agent-os",
+        "subject": "advanced sub-agents + Percival execution agent",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
       {
         "sha": "7ff4e26",
         "type": "feat",
@@ -421,6 +430,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "fbba061",
+        "type": "fix",
+        "scope": "agent-os",
+        "subject": "drop dead argv assignment in __main__ CLI",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
       {
         "sha": "0a99582",
         "type": "fix",
@@ -1043,6 +1061,132 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "651ca69",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Microsoft Foundry AgentOps blog pack",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "2124cfc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade NEXUS operational command experience",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "24bb4ea",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Guardian cyber command experience",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "551705f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix floating button flow",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "9335126",
+        "type": "chore",
+        "scope": null,
+        "subject": "Align Artemis resume blueprint page layout",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "ec1e993",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish Blog #6 + Blog #1 and the Ultra-Glassy ClearGlass page",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "fa96d7d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance BLUEDESK cyber command console",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "f2104cb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis intelligence platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "96b5f1b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Rework web-design page: light crimson-neon aesthetic + crystal video showcase",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "3e86aff",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add BLUE DESK mobile hero concept page (9:16 CISO risk console)",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "8c0e3ed",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add BLUEDESK to site-wide product navigation with crimson\u2013royal-purple accent",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "a724a91",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add System 2040 Skeleton Key blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "6d098de",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add BLUEDESK to product navigation",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "ee76f0f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Align Artemis resume blog page with site design",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
       {
         "sha": "92836e8",
         "type": "chore",
@@ -3106,6 +3250,96 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "eabdffc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "739e411",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "158bcea",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "b66fe4e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "64904c7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "3db614d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "76ce6ad",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "9f2fa6e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "58e248e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "bf6e1bb",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-07 10:24 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
       {
         "sha": "10be911",
         "type": "bot",

@@ -1,8 +1,16 @@
 {
-  "run_utc": "2026-07-07T10:24:46.309205+00:00",
-  "total_alerts": 0,
+  "run_utc": "2026-07-08T09:24:40.822737+00:00",
+  "total_alerts": 1,
   "critical": 0,
-  "warnings": 0,
+  "warnings": 1,
   "github_issue_created": false,
-  "alerts": []
+  "alerts": [
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: blog/clearglass-agentops-microsoft-foundry-future-stack.html",
+      "detail": "",
+      "detected_utc": "2026-07-08T09:24:40.821461+00:00"
+    }
+  ]
 }

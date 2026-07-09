@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "15:33",
-    "timestamp": "2026-07-09T15:33:13Z"
+    "time": "18:08",
+    "timestamp": "2026-07-09T18:08:23Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #230",
+    "detail": "schedule on main \u00b7 run #231",
+    "time": "18:08",
+    "timestamp": "2026-07-09T18:08:11Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-47db6121-5322-4432-995b-36b95a7049fe \u00b7 run #676",
+    "time": "18:08",
+    "timestamp": "2026-07-09T18:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-392a7530-6bdf-47dd-9bd9-b37ad14f43a9 \u00b7 run #675",
+    "time": "17:08",
+    "timestamp": "2026-07-09T17:08:06Z"
+  },
+  {
+    "title": "npm_and_yarn in /apps/autostore/cockpit, /clearglass-agentops, /clearglass-commerce/admin, /clearglass-commerce/storefront - Update #1453944628",
+    "status": "warn",
+    "detail": "dynamic on main \u00b7 run #51",
+    "time": "17:04",
+    "timestamp": "2026-07-09T17:04:20Z"
+  },
+  {
+    "title": "pip in /., /apps/autostore/control_plane, /automation/v0.2, /clearglass-commerce/control-plane, /deployment/artemis/app, /products/opal-koboi, /sentinel, /services/clearglass_agent_service - Update #1453944266",
+    "status": "warn",
+    "detail": "dynamic on main \u00b7 run #50",
+    "time": "17:04",
+    "timestamp": "2026-07-09T17:04:14Z"
+  },
+  {
+    "title": "terraform in /infra - Update #1453944211",
+    "status": "warn",
+    "detail": "dynamic on main \u00b7 run #49",
+    "time": "17:04",
+    "timestamp": "2026-07-09T17:04:14Z"
+  },
+  {
+    "title": "Code Quality: Scheduled",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2126",
+    "time": "16:13",
+    "timestamp": "2026-07-09T16:13:27Z"
+  },
+  {
+    "title": "Agent OS Self-Check",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #7",
+    "time": "16:11",
+    "timestamp": "2026-07-09T16:11:02Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-824f1cf2-5de9-4667-a0fe-ef83ce53de59 \u00b7 run #674",
+    "time": "16:08",
+    "timestamp": "2026-07-09T16:08:05Z"
+  },
+  {
+    "title": "Commerce Daily Loop",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #31",
+    "time": "15:54",
+    "timestamp": "2026-07-09T15:54:43Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #799",
     "time": "15:33",
-    "timestamp": "2026-07-09T15:33:00Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #488",
-    "time": "15:26",
-    "timestamp": "2026-07-09T15:26:57Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #160",
-    "time": "15:18",
-    "timestamp": "2026-07-09T15:18:24Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-134fe0d0-6acd-4cbb-ace8-c33764118811 \u00b7 run #673",
-    "time": "15:08",
-    "timestamp": "2026-07-09T15:08:12Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #56",
-    "time": "14:42",
-    "timestamp": "2026-07-09T14:42:14Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-6eda9a9b-3cc8-4e42-8c17-791de89d5998 \u00b7 run #672",
-    "time": "14:08",
-    "timestamp": "2026-07-09T14:08:10Z"
-  },
-  {
-    "title": "Sales-Ops Briefing",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #16",
-    "time": "13:58",
-    "timestamp": "2026-07-09T13:58:51Z"
+    "timestamp": "2026-07-09T15:33:28Z"
   },
   {
     "title": "pages build and deployment",
     "status": "bad",
-    "detail": "dynamic on main \u00b7 run #1249",
-    "time": "13:12",
-    "timestamp": "2026-07-09T13:12:07Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2124",
-    "time": "13:12",
-    "timestamp": "2026-07-09T13:12:01Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #920",
-    "time": "13:12",
-    "timestamp": "2026-07-09T13:12:01Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #947",
-    "time": "13:12",
-    "timestamp": "2026-07-09T13:12:01Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1182",
-    "time": "13:12",
-    "timestamp": "2026-07-09T13:12:01Z"
+    "detail": "dynamic on main \u00b7 run #1250",
+    "time": "15:33",
+    "timestamp": "2026-07-09T15:33:20Z"
   }
 ]

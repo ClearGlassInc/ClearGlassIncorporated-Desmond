@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #233",
+    "title": "Control Surface Feeds #234",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:36",
+    "timestamp": "2026-07-09T23:36:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #681",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-d573441a-bea8-47a7-a7c5-66f43af6de7c",
+    "time": "23:08",
+    "timestamp": "2026-07-09T23:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #680",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-36aec300-fb56-4093-bb37-e0aa1b6d3d0e",
+    "time": "22:08",
+    "timestamp": "2026-07-09T22:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #802",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:43",
+    "timestamp": "2026-07-09T21:43:53Z"
+  },
+  {
+    "title": "pages build and deployment #1253",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:43",
+    "timestamp": "2026-07-09T21:43:46Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2133",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:43",
+    "timestamp": "2026-07-09T21:43:45Z"
+  },
+  {
+    "title": "Control Surface Feeds #233",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:43",
     "timestamp": "2026-07-09T21:43:29Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "20:03",
     "timestamp": "2026-07-09T20:03:54Z"
-  },
-  {
-    "title": "Control Surface Feeds #232",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "20:03",
-    "timestamp": "2026-07-09T20:03:30Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1222",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-platform-architecture-vahs0g",
-    "time": "20:02",
-    "timestamp": "2026-07-09T20:02:02Z"
-  },
-  {
-    "title": "Defender Watch #491",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-platform-architecture-vahs0g",
-    "time": "20:02",
-    "timestamp": "2026-07-09T20:02:02Z"
-  },
-  {
-    "title": "PR Automation #482",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-platform-architecture-vahs0g",
-    "time": "20:02",
-    "timestamp": "2026-07-09T20:02:02Z"
-  },
-  {
-    "title": "Policy Gate #922",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-platform-architecture-vahs0g",
-    "time": "20:02",
-    "timestamp": "2026-07-09T20:02:02Z"
-  },
-  {
-    "title": "Security #949",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-platform-architecture-vahs0g",
-    "time": "20:02",
-    "timestamp": "2026-07-09T20:02:02Z"
   }
 ]

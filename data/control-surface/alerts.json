@@ -1,17 +1,17 @@
 [
   {
     "status": "warn",
+    "title": "CI failing",
+    "detail": "Latest run #1178 concluded failure (2026-07-09)."
+  },
+  {
+    "status": "warn",
+    "title": "Codex Autofix (Hardened) failing",
+    "detail": "Latest run #53 concluded failure (2026-07-09)."
+  },
+  {
+    "status": "warn",
     "title": "Running Copilot cloud agent failing",
-    "detail": "Latest run #665 concluded failure (2026-07-09)."
-  },
-  {
-    "status": "warn",
-    "title": "Workflow Doctor failing",
-    "detail": "Latest run #255 concluded failure (2026-07-09)."
-  },
-  {
-    "status": "warn",
-    "title": "pages build and deployment failing",
-    "detail": "Latest run #1240 concluded failure (2026-07-09)."
+    "detail": "Latest run #668 concluded failure (2026-07-09)."
   }
 ]

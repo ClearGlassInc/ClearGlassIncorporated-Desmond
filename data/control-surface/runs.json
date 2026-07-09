@@ -1,8 +1,106 @@
 [
   {
-    "title": "Control Surface Feeds #232",
+    "title": "Control Surface Feeds #233",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:43",
+    "timestamp": "2026-07-09T21:43:29Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #679",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4d473595-4464-4512-bbf2-77e54c13422d",
+    "time": "21:08",
+    "timestamp": "2026-07-09T21:08:04Z"
+  },
+  {
+    "title": "Code Quality: PR #769 #2132",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/769/head",
+    "time": "20:08",
+    "timestamp": "2026-07-09T20:08:24Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #678",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9f456467-65b1-4df7-a9b4-dde4d1643cdb",
+    "time": "20:08",
+    "timestamp": "2026-07-09T20:08:03Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1223",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
+    "time": "20:04",
+    "timestamp": "2026-07-09T20:04:10Z"
+  },
+  {
+    "title": "Defender Watch #492",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
+    "time": "20:04",
+    "timestamp": "2026-07-09T20:04:10Z"
+  },
+  {
+    "title": "Security #950",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
+    "time": "20:04",
+    "timestamp": "2026-07-09T20:04:10Z"
+  },
+  {
+    "title": "PR Automation #483",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
+    "time": "20:04",
+    "timestamp": "2026-07-09T20:04:10Z"
+  },
+  {
+    "title": "CI #1185",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
+    "time": "20:04",
+    "timestamp": "2026-07-09T20:04:10Z"
+  },
+  {
+    "title": "Policy Gate #923",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
+    "time": "20:04",
+    "timestamp": "2026-07-09T20:04:10Z"
+  },
+  {
+    "title": "Code Quality: PR #767 #2131",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/767/head",
+    "time": "20:04",
+    "timestamp": "2026-07-09T20:04:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #801",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:04",
+    "timestamp": "2026-07-09T20:04:03Z"
+  },
+  {
+    "title": "pages build and deployment #1252",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "20:03",
+    "timestamp": "2026-07-09T20:03:54Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2130",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:03",
+    "timestamp": "2026-07-09T20:03:54Z"
+  },
+  {
+    "title": "Control Surface Feeds #232",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:03",
     "timestamp": "2026-07-09T20:03:30Z"
   },
@@ -40,103 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/clearglass-platform-architecture-vahs0g",
     "time": "20:02",
     "timestamp": "2026-07-09T20:02:02Z"
-  },
-  {
-    "title": "CI #1184",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-platform-architecture-vahs0g",
-    "time": "20:02",
-    "timestamp": "2026-07-09T20:02:02Z"
-  },
-  {
-    "title": "Code Quality: PR #768 #2129",
-    "status": "warn",
-    "detail": "in_progress \u00b7 dynamic on refs/pull/768/head",
-    "time": "20:02",
-    "timestamp": "2026-07-09T20:02:00Z"
-  },
-  {
-    "title": "Workflow Doctor #257",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/clearglass-platform-architecture-vahs0g",
-    "time": "20:01",
-    "timestamp": "2026-07-09T20:01:49Z"
-  },
-  {
-    "title": "Remove homepage crimson loader #24",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/clearglass-platform-architecture-vahs0g",
-    "time": "20:01",
-    "timestamp": "2026-07-09T20:01:49Z"
-  },
-  {
-    "title": "Defender Watch #490",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
-    "time": "20:00",
-    "timestamp": "2026-07-09T20:00:46Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1221",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
-    "time": "20:00",
-    "timestamp": "2026-07-09T20:00:46Z"
-  },
-  {
-    "title": "CI #1183",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
-    "time": "20:00",
-    "timestamp": "2026-07-09T20:00:46Z"
-  },
-  {
-    "title": "Security #948",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
-    "time": "20:00",
-    "timestamp": "2026-07-09T20:00:46Z"
-  },
-  {
-    "title": "PR Automation #481",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
-    "time": "20:00",
-    "timestamp": "2026-07-09T20:00:46Z"
-  },
-  {
-    "title": "Policy Gate #921",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-audit-repair-xinb4b",
-    "time": "20:00",
-    "timestamp": "2026-07-09T20:00:46Z"
-  },
-  {
-    "title": "Code Quality: PR #767 #2128",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/767/head",
-    "time": "20:00",
-    "timestamp": "2026-07-09T20:00:44Z"
-  },
-  {
-    "title": "Codex Autofix (Hardened) #54",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on claude/clearglass-audit-repair-xinb4b",
-    "time": "20:00",
-    "timestamp": "2026-07-09T20:00:21Z"
-  },
-  {
-    "title": "Defender Watch #489",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "19:56",
-    "timestamp": "2026-07-09T19:56:26Z"
-  },
-  {
-    "title": "Health Monitor #161",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "19:51",
-    "timestamp": "2026-07-09T19:51:33Z"
   }
 ]

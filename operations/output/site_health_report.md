@@ -1,21 +1,17 @@
 # Site Health Report
 
-**Run:** 2026-07-08T09:24:40.803260+00:00
-**Status:** ⚠️ Issues Detected
+**Run:** 2026-07-09T08:42:40.257639+00:00
+**Status:** ✅ Healthy
 **Pages:** 6/6 healthy
 
 ## Pages
 
-- ✅ `/` (214ms)
-- ✅ `/artemis.html` (119ms)
-- ✅ `/artemis-iv.html` (183ms)
-- ✅ `/guardian.html` (137ms)
-- ✅ `/clearglass-nexus.html` (248ms)
-- ✅ `/government.html` (136ms)
-
-## Local Issues
-
-- ❌ Page missing ClearGlass logo: blog/clearglass-agentops-microsoft-foundry-future-stack.html
+- ✅ `/` (172ms)
+- ✅ `/artemis.html` (77ms)
+- ✅ `/artemis-iv.html` (66ms)
+- ✅ `/guardian.html` (81ms)
+- ✅ `/clearglass-nexus.html` (84ms)
+- ✅ `/government.html` (169ms)
 
 ## Warnings (non-failing)
 

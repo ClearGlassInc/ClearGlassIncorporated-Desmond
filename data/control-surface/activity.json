@@ -3,12 +3,82 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:31",
-    "timestamp": "2026-07-08T23:31:37Z"
+    "time": "04:13",
+    "timestamp": "2026-07-09T04:13:05Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #226",
+    "time": "04:12",
+    "timestamp": "2026-07-09T04:12:54Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-9ddd0d31-49e8-45f7-85bc-423da86364eb \u00b7 run #661",
+    "time": "04:08",
+    "timestamp": "2026-07-09T04:08:08Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #475",
+    "time": "04:00",
+    "timestamp": "2026-07-09T04:00:04Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #157",
+    "time": "03:40",
+    "timestamp": "2026-07-09T03:40:48Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-37a69674-37f7-4a48-b2a5-981b66ae7f04 \u00b7 run #660",
+    "time": "03:08",
+    "timestamp": "2026-07-09T03:08:09Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-f752245f-ca69-43b6-b72d-4c140b02ef8a \u00b7 run #659",
+    "time": "02:08",
+    "timestamp": "2026-07-09T02:08:09Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-a64e7e64-fba8-4514-967f-2195b23a4abc \u00b7 run #658",
+    "time": "01:08",
+    "timestamp": "2026-07-09T01:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-54a17e42-0d2b-4efa-8072-67aabe03280f \u00b7 run #657",
+    "time": "00:08",
+    "timestamp": "2026-07-09T00:08:09Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1238",
+    "time": "23:31",
+    "timestamp": "2026-07-08T23:31:58Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2108",
+    "time": "23:31",
+    "timestamp": "2026-07-08T23:31:57Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #225",
     "time": "23:31",
     "timestamp": "2026-07-08T23:31:24Z"
@@ -19,75 +89,5 @@
     "detail": "dynamic on copilot/task-272290681-1196426665-c0131965-b6a1-4432-a6fe-3a6818db4c12 \u00b7 run #656",
     "time": "23:08",
     "timestamp": "2026-07-08T23:08:10Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #788",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:53Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1237",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:44Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2107",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:44Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #224",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:26Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-ee2232fb-57a7-43af-9400-726e7421099e \u00b7 run #655",
-    "time": "22:08",
-    "timestamp": "2026-07-08T22:08:09Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on claude/clearglass-marketing-bot-army-dt338p \u00b7 run #254",
-    "time": "22:01",
-    "timestamp": "2026-07-08T22:01:05Z"
-  },
-  {
-    "title": "Remove homepage crimson loader",
-    "status": "ok",
-    "detail": "push on claude/clearglass-marketing-bot-army-dt338p \u00b7 run #21",
-    "time": "22:01",
-    "timestamp": "2026-07-08T22:01:05Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #474",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #937",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1171",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
   }
 ]

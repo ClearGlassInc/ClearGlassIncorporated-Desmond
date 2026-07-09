@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-07-09T08:42:39.510154+00:00",
+  "run_utc": "2026-07-09T10:23:48.720020+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 620,
+  "commit_count": 624,
   "sections": {
     "New Features": [
       {
@@ -1088,6 +1088,24 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "ac0edc8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Intelligence Platform brand architecture",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "e0f6e8e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove mobile bottom nav rail from control surface",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
       {
         "sha": "76dab93",
         "type": "chore",
@@ -3304,6 +3322,24 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "c0c9484",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "4722a02",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-09 08:42 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
       {
         "sha": "2a8586c",
         "type": "bot",

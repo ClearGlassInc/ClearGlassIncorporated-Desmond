@@ -1,8 +1,16 @@
 {
-  "run_utc": "2026-07-09T08:42:40.279286+00:00",
-  "total_alerts": 0,
+  "run_utc": "2026-07-09T10:23:50.068402+00:00",
+  "total_alerts": 1,
   "critical": 0,
-  "warnings": 0,
+  "warnings": 1,
   "github_issue_created": false,
-  "alerts": []
+  "alerts": [
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: intelligence-platform.html",
+      "detail": "",
+      "detected_utc": "2026-07-09T10:23:50.067017+00:00"
+    }
+  ]
 }

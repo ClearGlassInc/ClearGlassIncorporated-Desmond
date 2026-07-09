@@ -1,6 +1,6 @@
 # Release Notes — 2026-07-09
 
-*620 commit(s) since v1.0.0*
+*624 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -141,6 +141,8 @@
 
 ## Maintenance
 
+- Add ClearGlass Intelligence Platform brand architecture (`ac0edc8`)
+- Remove mobile bottom nav rail from control surface (`e0f6e8e`)
 - Fix missing ClearGlass logo on master-investigator blog post (`76dab93`)
 - Add compliant Threads growth toolkit (official API) (`90b75f1`)
 - Add legal-tech OSINT investigator blog protocol (`58171e7`)
@@ -390,6 +392,8 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`c0c9484`)
+- update generated outputs — 2026-07-09 08:42 UTC [skip ci] (`4722a02`)
 - refresh control-surface data feeds [skip ci] (`2a8586c`)
 - refresh control-surface data feeds [skip ci] (`3401df5`)
 - refresh control-surface data feeds [skip ci] (`9d3a878`)

@@ -1,8 +1,13 @@
 [
   {
     "status": "warn",
+    "title": "Auto-Store failing",
+    "detail": "Latest run #56 concluded failure (2026-07-09)."
+  },
+  {
+    "status": "warn",
     "title": "CI failing",
-    "detail": "Latest run #1178 concluded failure (2026-07-09)."
+    "detail": "Latest run #1182 concluded failure (2026-07-09)."
   },
   {
     "status": "warn",
@@ -12,6 +17,11 @@
   {
     "status": "warn",
     "title": "Running Copilot cloud agent failing",
-    "detail": "Latest run #668 concluded failure (2026-07-09)."
+    "detail": "Latest run #673 concluded failure (2026-07-09)."
+  },
+  {
+    "status": "warn",
+    "title": "pages build and deployment failing",
+    "detail": "Latest run #1249 concluded failure (2026-07-09)."
   }
 ]

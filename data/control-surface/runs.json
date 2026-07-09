@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #226",
+    "title": "Control Surface Feeds #227",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "07:52",
+    "timestamp": "2026-07-09T07:52:44Z"
+  },
+  {
+    "title": "Multi-Repo Audit #22",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "07:51",
+    "timestamp": "2026-07-09T07:51:31Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #664",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-d468f622-371a-4904-996b-411f785ec63c",
+    "time": "07:08",
+    "timestamp": "2026-07-09T07:08:09Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1210",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:11",
+    "timestamp": "2026-07-09T06:11:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #663",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-46005c2e-f72b-4389-a524-30197f46b3d5",
+    "time": "06:08",
+    "timestamp": "2026-07-09T06:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #662",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-502ea078-3e39-4378-a9d2-aeb84cc76d01",
+    "time": "05:08",
+    "timestamp": "2026-07-09T05:08:09Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #789",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "04:13",
+    "timestamp": "2026-07-09T04:13:15Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2109",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "04:13",
+    "timestamp": "2026-07-09T04:13:10Z"
+  },
+  {
+    "title": "pages build and deployment #1239",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "04:13",
+    "timestamp": "2026-07-09T04:13:10Z"
+  },
+  {
+    "title": "Control Surface Feeds #226",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "04:12",
     "timestamp": "2026-07-09T04:12:54Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "23:31",
     "timestamp": "2026-07-08T23:31:24Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #656",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-c0131965-b6a1-4432-a6fe-3a6818db4c12",
-    "time": "23:08",
-    "timestamp": "2026-07-08T23:08:10Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #788",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:53Z"
-  },
-  {
-    "title": "pages build and deployment #1237",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:44Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2107",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:44Z"
-  },
-  {
-    "title": "Control Surface Feeds #224",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "22:16",
-    "timestamp": "2026-07-08T22:16:26Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #655",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-ee2232fb-57a7-43af-9400-726e7421099e",
-    "time": "22:08",
-    "timestamp": "2026-07-08T22:08:09Z"
-  },
-  {
-    "title": "Workflow Doctor #254",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/clearglass-marketing-bot-army-dt338p",
-    "time": "22:01",
-    "timestamp": "2026-07-08T22:01:05Z"
-  },
-  {
-    "title": "Remove homepage crimson loader #21",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/clearglass-marketing-bot-army-dt338p",
-    "time": "22:01",
-    "timestamp": "2026-07-08T22:01:05Z"
-  },
-  {
-    "title": "Defender Watch #474",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:57",
-    "timestamp": "2026-07-08T21:57:59Z"
   }
 ]

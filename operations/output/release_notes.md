@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-08
+# Release Notes — 2026-07-09
 
-*601 commit(s) since v1.0.0*
+*624 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -54,6 +54,9 @@
 
 ## Bug Fixes
 
+- add missing ClearGlass logo icons to master-investigator blog page (`87af066`)
+- **site:** add missing logo badge to AgentOps Foundry blog page (`ddb1f95`)
+- restore CI green — add missing logo icons + make loader-gate workflow idempotent (`9fda1ec`)
 - **agent-os:** drop dead argv assignment in __main__ CLI (`fbba061`)
 - **ci:** repair unparseable remove-homepage-crimson-loader workflow (`0a99582`)
 - **lint:** drop unused os imports flagged by ruff (`17cbd59`)
@@ -138,6 +141,11 @@
 
 ## Maintenance
 
+- Add ClearGlass Intelligence Platform brand architecture (`ac0edc8`)
+- Remove mobile bottom nav rail from control surface (`e0f6e8e`)
+- Fix missing ClearGlass logo on master-investigator blog post (`76dab93`)
+- Add compliant Threads growth toolkit (official API) (`90b75f1`)
+- Add legal-tech OSINT investigator blog protocol (`58171e7`)
 - Add Microsoft Foundry AgentOps blog pack (`651ca69`)
 - Upgrade NEXUS operational command experience (`2124cfc`)
 - Enhance Guardian cyber command experience (`24bb4ea`)
@@ -384,6 +392,19 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`c0c9484`)
+- update generated outputs — 2026-07-09 08:42 UTC [skip ci] (`4722a02`)
+- refresh control-surface data feeds [skip ci] (`2a8586c`)
+- refresh control-surface data feeds [skip ci] (`3401df5`)
+- refresh control-surface data feeds [skip ci] (`9d3a878`)
+- refresh control-surface data feeds [skip ci] (`fd248e6`)
+- refresh control-surface data feeds [skip ci] (`91a3c52`)
+- refresh control-surface data feeds [skip ci] (`26e4f52`)
+- refresh control-surface data feeds [skip ci] (`992757f`)
+- refresh control-surface data feeds [skip ci] (`fb11848`)
+- refresh control-surface data feeds [skip ci] (`7f3d696`)
+- refresh control-surface data feeds [skip ci] (`39e99cc`)
+- update generated outputs — 2026-07-08 09:24 UTC [skip ci] (`8d66d80`)
 - refresh control-surface data feeds [skip ci] (`eabdffc`)
 - refresh control-surface data feeds [skip ci] (`739e411`)
 - refresh control-surface data feeds [skip ci] (`158bcea`)
@@ -626,6 +647,8 @@
 
 ## Other
 
+- author deploy layer (k8s + terraform + governor-gated temporal worker) (`d329d49`)
+- governor service entry point + OPA rego bundle + capability schema (`0ef93b8`)
 - add Insight Atlas — living intelligence-graph panel + integrate new field notes (`d491d4b`)
 - remove unused variable in insights.js paletteEntries (`d1dd78b`)
 - add advanced insights layer — filters, palette, TOC, related posts, feeds (`82d903f`)

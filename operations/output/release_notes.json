@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-07-08T09:24:39.692016+00:00",
+  "run_utc": "2026-07-09T10:23:48.720020+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 601,
+  "commit_count": 624,
   "sections": {
     "New Features": [
       {
@@ -430,6 +430,33 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "87af066",
+        "type": "fix",
+        "scope": null,
+        "subject": "add missing ClearGlass logo icons to master-investigator blog page",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "ddb1f95",
+        "type": "fix",
+        "scope": "site",
+        "subject": "add missing logo badge to AgentOps Foundry blog page",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "9fda1ec",
+        "type": "fix",
+        "scope": null,
+        "subject": "restore CI green \u2014 add missing logo icons + make loader-gate workflow idempotent",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
       {
         "sha": "fbba061",
         "type": "fix",
@@ -1061,6 +1088,51 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "ac0edc8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Intelligence Platform brand architecture",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "e0f6e8e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove mobile bottom nav rail from control surface",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "76dab93",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix missing ClearGlass logo on master-investigator blog post",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "90b75f1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add compliant Threads growth toolkit (official API)",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "58171e7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add legal-tech OSINT investigator blog protocol",
+        "author": "Desmond Otieno",
+        "date": "2026-07-08",
+        "breaking": false
+      },
       {
         "sha": "651ca69",
         "type": "chore",
@@ -3251,6 +3323,123 @@
     ],
     "Automation": [
       {
+        "sha": "c0c9484",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "4722a02",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-09 08:42 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "2a8586c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "3401df5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "9d3a878",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "fd248e6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "91a3c52",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "26e4f52",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "992757f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "fb11848",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "7f3d696",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "39e99cc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "8d66d80",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-08 09:24 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
         "sha": "eabdffc",
         "type": "bot",
         "scope": null,
@@ -5353,6 +5542,24 @@
       }
     ],
     "Other": [
+      {
+        "sha": "d329d49",
+        "type": "percival",
+        "scope": null,
+        "subject": "author deploy layer (k8s + terraform + governor-gated temporal worker)",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "0ef93b8",
+        "type": "percival",
+        "scope": null,
+        "subject": "governor service entry point + OPA rego bundle + capability schema",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
       {
         "sha": "d491d4b",
         "type": "blog",

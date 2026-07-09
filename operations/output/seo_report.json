@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-08T09:24:39.746997+00:00",
-  "files_audited": 61,
-  "average_score": 91.6,
+  "run_utc": "2026-07-09T10:23:48.763522+00:00",
+  "files_audited": 62,
+  "average_score": 91.0,
   "pages": [
     {
       "file": "404.html",
@@ -810,6 +810,30 @@
       "issues": []
     },
     {
+      "file": "intelligence-platform.html",
+      "title": "ClearGlass Intelligence Platform \u2014 Brand & Platform Architecture | ClearGlass Inc.",
+      "title_length": 82,
+      "title_ok": false,
+      "description": "The ClearGlass Intelligence Platform: executive layer, 85-codename autonomous agent framework, enterprise multi-agent hierarchy under ClearGlass Nexus, premium product family, and the naming standard that binds them.",
+      "description_length": 216,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Title length 82 chars (ideal 30\u201360)",
+        "Description length 216 chars (ideal 120\u2013160)",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "intelligence.html",
       "title": "ClearGlass Market Dominance \u00b7 Intelligent Systems",
       "title_length": 49,
@@ -1176,13 +1200,13 @@
     }
   ],
   "top_issues": [
-    "15x \u2014 Description length N chars (ideal N\u2013N)",
-    "13x \u2014 Title length N chars (ideal N\u2013N)",
-    "6x \u2014 Missing og:image",
+    "16x \u2014 Description length N chars (ideal N\u2013N)",
+    "14x \u2014 Title length N chars (ideal N\u2013N)",
+    "7x \u2014 Missing og:image",
     "4x \u2014 Multiple <hN> tags (N)",
+    "3x \u2014 Missing og:title",
+    "3x \u2014 Missing og:description",
     "2x \u2014 Missing canonical link tag",
-    "2x \u2014 Missing og:title",
-    "2x \u2014 Missing og:description",
     "2x \u2014 No <hN> tag found",
     "1x \u2014 Missing <title>",
     "1x \u2014 Missing meta description"

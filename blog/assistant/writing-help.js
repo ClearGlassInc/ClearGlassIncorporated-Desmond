@@ -238,9 +238,18 @@
   /* ------------------------------------------------------------------ UI */
 
   var css = "" +
-    "#cgw-fab{position:fixed;right:18px;bottom:18px;z-index:9000;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;border:1px solid rgba(57,216,255,.45);background:linear-gradient(135deg,#0b1626,#101c30);color:#e8f6ff;font:700 13.5px/1 Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 12px 40px rgba(0,0,0,.45),0 0 24px rgba(57,216,255,.25);transition:transform .2s,box-shadow .2s}" +
-    "#cgw-fab:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(0,0,0,.5),0 0 34px rgba(57,216,255,.4)}" +
-    "#cgw-fab .dot{width:7px;height:7px;border-radius:50%;background:#55f2a6;box-shadow:0 0 8px #55f2a6}" +
+    /* Docked mode (default): the pill lives inside #cg-dock, flush against the
+       coin badge on its right. Negative right margin tucks the pill's rounded end
+       under the circular coin so the two fuse into one continuous control; the
+       extra right padding keeps the label clear of the overlap. Same dark glass +
+       blue/violet ring as the coin so they read as one material and glow. */
+    "#cgw-fab{position:relative;margin:0 -20px 0 0;display:inline-flex;align-items:center;gap:8px;padding:12px 34px 12px 18px;border-radius:999px;border:1px solid rgba(124,150,255,.5);border-right-color:rgba(124,150,255,.12);background:linear-gradient(180deg,rgba(18,20,42,.94),rgba(11,12,28,.94));color:#eaf3ff;font:700 13.5px/1 Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 22px rgba(0,0,0,.4),0 0 18px rgba(96,165,250,.32);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:box-shadow .2s ease,color .2s ease}" +
+    "#cgw-fab:hover{color:#fff;box-shadow:0 8px 26px rgba(0,0,0,.5),0 0 30px rgba(96,165,250,.55),0 0 46px rgba(167,139,250,.35)}" +
+    "#cgw-fab .dot{width:7px;height:7px;border-radius:50%;background:#55f2a6;box-shadow:0 0 8px #55f2a6;animation:cgwDot 2.4s ease-in-out infinite}" +
+    "@keyframes cgwDot{0%,100%{opacity:1}50%{opacity:.45}}" +
+    /* Fallback: if the shared dock isn't on the page, pin to the corner solo. */
+    "#cgw-fab.cgw-fab-float{position:fixed;right:18px;bottom:18px;z-index:9000;margin:0;padding:12px 18px;border-right-color:rgba(124,150,255,.5)}" +
+    "@media(max-width:640px){#cgw-fab{padding:11px 30px 11px 16px;font-size:12.5px}}" +
     "#cgw-panel{position:fixed;top:0;right:0;height:100dvh;width:min(430px,100vw);z-index:9001;background:#0a111e;color:#dbe7ff;border-left:1px solid rgba(180,214,255,.18);box-shadow:-24px 0 70px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:translateX(102%);transition:transform .32s cubic-bezier(.16,1,.3,1);font-family:Inter,system-ui,sans-serif}" +
     "#cgw-panel.open{transform:none}" +
     "#cgw-panel *{box-sizing:border-box}" +
@@ -278,7 +287,7 @@
     ".cgw-hist li{padding:7px 8px;border-radius:8px;font-size:12px;color:#aab8d8;cursor:pointer;display:flex;justify-content:space-between;gap:8px}" +
     ".cgw-hist li:hover{background:rgba(255,255,255,.06);color:#fff}" +
     ".cgw-hist .t{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#66739a;flex-shrink:0}" +
-    "@media(prefers-reduced-motion:reduce){#cgw-panel{transition:none}#cgw-fab{transition:none}}" +
+    "@media(prefers-reduced-motion:reduce){#cgw-panel{transition:none}#cgw-fab{transition:none}#cgw-fab .dot{animation:none}}" +
     "@media print{#cgw-fab,#cgw-panel{display:none!important}}";
 
   var style = document.createElement("style");
@@ -290,7 +299,12 @@
   fab.setAttribute("aria-haspopup", "dialog");
   fab.setAttribute("aria-expanded", "false");
   fab.innerHTML = '<span class="dot" aria-hidden="true"></span>Writing help';
-  document.body.appendChild(fab);
+  // Dock the pill into the shared corner cluster (left of the coin badge) so the
+  // two flow together as one control. Fall back to a solo fixed pill if the dock
+  // isn't present (e.g. the badge script didn't load).
+  var dock = document.getElementById("cg-dock");
+  if (dock) { dock.insertBefore(fab, dock.firstChild); }
+  else { fab.classList.add("cgw-fab-float"); document.body.appendChild(fab); }
 
   var panel = document.createElement("aside");
   panel.id = "cgw-panel";

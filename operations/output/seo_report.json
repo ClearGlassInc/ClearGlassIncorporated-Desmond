@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-09T10:23:48.763522+00:00",
-  "files_audited": 62,
-  "average_score": 91.0,
+  "run_utc": "2026-07-10T10:22:41.012896+00:00",
+  "files_audited": 63,
+  "average_score": 90.6,
   "pages": [
     {
       "file": "404.html",
@@ -1021,6 +1021,28 @@
       ]
     },
     {
+      "file": "side-store.html",
+      "title": "ClearGlass Side Store \u2014 Cheap Wires, Cables & Electronics | ClearGlass Inc",
+      "title_length": 74,
+      "title_ok": false,
+      "description": "ClearGlass Side Store: low-cost wires, cables, connectors, adapters, and basic electronics \u2014 all under CAD $10. Bundle 3+ items for 10% off (5+ for 15%), free shipping over $25. Burlington, Ontario.",
+      "description_length": 198,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Title length 74 chars (ideal 30\u201360)",
+        "Description length 198 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "smb-cyber-trust-kit.html",
       "title": "SMB Cyber Trust Kit \u2014 Plain-Language Cyber Resilience | ClearGlass Inc",
       "title_length": 70,
@@ -1200,9 +1222,9 @@
     }
   ],
   "top_issues": [
-    "16x \u2014 Description length N chars (ideal N\u2013N)",
-    "14x \u2014 Title length N chars (ideal N\u2013N)",
-    "7x \u2014 Missing og:image",
+    "17x \u2014 Description length N chars (ideal N\u2013N)",
+    "15x \u2014 Title length N chars (ideal N\u2013N)",
+    "8x \u2014 Missing og:image",
     "4x \u2014 Multiple <hN> tags (N)",
     "3x \u2014 Missing og:title",
     "3x \u2014 Missing og:description",

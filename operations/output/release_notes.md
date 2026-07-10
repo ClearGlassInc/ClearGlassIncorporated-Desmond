@@ -1,9 +1,11 @@
-# Release Notes — 2026-07-09
+# Release Notes — 2026-07-10
 
-*624 commit(s) since v1.0.0*
+*643 commit(s) since v1.0.0*
 
 ## New Features
 
+- **store:** ClearGlass Side Store storefront — catalog, cart, checkout core (`ed4ef78`)
+- Marketing Operating System v2.0 governance layer (`1bb65be`)
 - **agent-os:** advanced sub-agents + Percival execution agent (`8c083c2`)
 - **agents:** upgrade Marketing Command to Marketing Command OS v2.0 (`7ff4e26`)
 - **ui:** move corner controls to the right + site-wide neon glow (`9be02d5`)
@@ -54,6 +56,7 @@
 
 ## Bug Fixes
 
+- add missing ClearGlass logo icons to intelligence-platform.html (`d7c2d01`)
 - add missing ClearGlass logo icons to master-investigator blog page (`87af066`)
 - **site:** add missing logo badge to AgentOps Foundry blog page (`ddb1f95`)
 - restore CI green — add missing logo icons + make loader-gate workflow idempotent (`9fda1ec`)
@@ -141,8 +144,14 @@
 
 ## Maintenance
 
+- Redesign blog hub into a premium publishing system (homepage-matched) (`8c1735a`)
+- Add ClearGlass logo badge to intelligence-platform.html (`fe478d5`)
+- Add ClearGlass logo badge to intelligence-platform page (`ace3b5a`)
+- Upgrade BLUEDESK futuristic command UI (`73bc94c`)
+- Fix the two failing dispatched workflows (Workflow Doctor + Codex Autofix) (`b9158c6`)
 - Add ClearGlass Intelligence Platform brand architecture (`ac0edc8`)
 - Remove mobile bottom nav rail from control surface (`e0f6e8e`)
+- Merge corner Writing-help pill and logo badge into one glowing cluster (`f1e6bdc`)
 - Fix missing ClearGlass logo on master-investigator blog post (`76dab93`)
 - Add compliant Threads growth toolkit (official API) (`90b75f1`)
 - Add legal-tech OSINT investigator blog protocol (`58171e7`)
@@ -392,6 +401,15 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`e6c51b4`)
+- refresh control-surface data feeds [skip ci] (`e5a46a8`)
+- refresh control-surface data feeds [skip ci] (`0bc843b`)
+- refresh control-surface data feeds [skip ci] (`b3821e2`)
+- refresh control-surface data feeds [skip ci] (`e154d94`)
+- refresh control-surface data feeds [skip ci] (`f00f068`)
+- refresh control-surface data feeds [skip ci] (`54e5105`)
+- refresh control-surface data feeds [skip ci] (`5d5c42a`)
+- update generated outputs — 2026-07-09 10:23 UTC [skip ci] (`d244ea5`)
 - refresh control-surface data feeds [skip ci] (`c0c9484`)
 - update generated outputs — 2026-07-09 08:42 UTC [skip ci] (`4722a02`)
 - refresh control-surface data feeds [skip ci] (`2a8586c`)
@@ -647,6 +665,7 @@
 
 ## Other
 
+- author Envoy API gateway (JWT auth + rate limit + governor ext_authz) (`e2a93d7`)
 - author deploy layer (k8s + terraform + governor-gated temporal worker) (`d329d49`)
 - governor service entry point + OPA rego bundle + capability schema (`0ef93b8`)
 - add Insight Atlas — living intelligence-graph panel + integrate new field notes (`d491d4b`)

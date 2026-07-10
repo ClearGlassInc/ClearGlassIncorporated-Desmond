@@ -1,10 +1,28 @@
 {
-  "run_utc": "2026-07-09T10:23:48.720020+00:00",
+  "run_utc": "2026-07-10T10:22:40.961022+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 624,
+  "commit_count": 643,
   "sections": {
     "New Features": [
+      {
+        "sha": "ed4ef78",
+        "type": "feat",
+        "scope": "store",
+        "subject": "ClearGlass Side Store storefront \u2014 catalog, cart, checkout core",
+        "author": "Claude",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "1bb65be",
+        "type": "feat",
+        "scope": null,
+        "subject": "Marketing Operating System v2.0 governance layer",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
       {
         "sha": "8c083c2",
         "type": "feat",
@@ -430,6 +448,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "d7c2d01",
+        "type": "fix",
+        "scope": null,
+        "subject": "add missing ClearGlass logo icons to intelligence-platform.html",
+        "author": "Claude",
+        "date": "2026-07-10",
+        "breaking": false
+      },
       {
         "sha": "87af066",
         "type": "fix",
@@ -1089,6 +1116,51 @@
     ],
     "Maintenance": [
       {
+        "sha": "8c1735a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Redesign blog hub into a premium publishing system (homepage-matched)",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "fe478d5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass logo badge to intelligence-platform.html",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "ace3b5a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass logo badge to intelligence-platform page",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "73bc94c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade BLUEDESK futuristic command UI",
+        "author": "Desmond Otieno",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "b9158c6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix the two failing dispatched workflows (Workflow Doctor + Codex Autofix)",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
         "sha": "ac0edc8",
         "type": "chore",
         "scope": null,
@@ -1102,6 +1174,15 @@
         "type": "chore",
         "scope": null,
         "subject": "Remove mobile bottom nav rail from control surface",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "f1e6bdc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Merge corner Writing-help pill and logo badge into one glowing cluster",
         "author": "Claude",
         "date": "2026-07-09",
         "breaking": false
@@ -3323,6 +3404,87 @@
     ],
     "Automation": [
       {
+        "sha": "e6c51b4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "e5a46a8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "0bc843b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "b3821e2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "e154d94",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "f00f068",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "54e5105",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "5d5c42a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "d244ea5",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-09 10:23 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
         "sha": "c0c9484",
         "type": "bot",
         "scope": null,
@@ -5542,6 +5704,15 @@
       }
     ],
     "Other": [
+      {
+        "sha": "e2a93d7",
+        "type": "percival",
+        "scope": null,
+        "subject": "author Envoy API gateway (JWT auth + rate limit + governor ext_authz)",
+        "author": "Claude",
+        "date": "2026-07-10",
+        "breaking": false
+      },
       {
         "sha": "d329d49",
         "type": "percival",

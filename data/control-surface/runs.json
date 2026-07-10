@@ -1,8 +1,85 @@
 [
   {
-    "title": "Control Surface Feeds #237",
+    "title": "Control Surface Feeds #238",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "14:50",
+    "timestamp": "2026-07-10T14:50:38Z"
+  },
+  {
+    "title": "Defender Watch #505",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "14:44",
+    "timestamp": "2026-07-10T14:44:14Z"
+  },
+  {
+    "title": "Health Monitor #164",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "14:36",
+    "timestamp": "2026-07-10T14:36:29Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #696",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-19a676b4-e426-464f-bdda-f5e3ef69d060",
+    "time": "14:08",
+    "timestamp": "2026-07-10T14:08:06Z"
+  },
+  {
+    "title": "Auto-Store #59",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "14:07",
+    "timestamp": "2026-07-10T14:07:31Z"
+  },
+  {
+    "title": "Sales-Ops Briefing #17",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "13:19",
+    "timestamp": "2026-07-10T13:19:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #695",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9f065e76-adcc-455f-8862-9e31541e0afb",
+    "time": "13:08",
+    "timestamp": "2026-07-10T13:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #694",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-272a9ae4-4cbf-45cc-bae5-430ee366d61d",
+    "time": "12:08",
+    "timestamp": "2026-07-10T12:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #811",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "11:19",
+    "timestamp": "2026-07-10T11:19:07Z"
+  },
+  {
+    "title": "pages build and deployment #1263",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:18",
+    "timestamp": "2026-07-10T11:18:58Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2149",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:18",
+    "timestamp": "2026-07-10T11:18:58Z"
+  },
+  {
+    "title": "Control Surface Feeds #237",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "11:18",
     "timestamp": "2026-07-10T11:18:41Z"
   },
@@ -61,82 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/ai-agent-income-prompt-2j01fo",
     "time": "10:12",
     "timestamp": "2026-07-10T10:12:31Z"
-  },
-  {
-    "title": "Security #960",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:31Z"
-  },
-  {
-    "title": "Policy Gate #933",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:31Z"
-  },
-  {
-    "title": "Defender Watch #504",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:31Z"
-  },
-  {
-    "title": "PR Automation #488",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:31Z"
-  },
-  {
-    "title": "CI #1195",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:31Z"
-  },
-  {
-    "title": "Code Quality: PR #775 #2147",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/775/head",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:29Z"
-  },
-  {
-    "title": "Workflow Doctor #262",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:15Z"
-  },
-  {
-    "title": "Remove homepage crimson loader #28",
-    "status": "ok",
-    "detail": "success \u00b7 push on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:15Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #692",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-a354e272-e3f7-4ca9-9ae5-75f35fff8486",
-    "time": "10:08",
-    "timestamp": "2026-07-10T10:08:06Z"
-  },
-  {
-    "title": "Cert Bot #44",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "09:51",
-    "timestamp": "2026-07-10T09:51:31Z"
-  },
-  {
-    "title": "Defender Watch #503",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "09:48",
-    "timestamp": "2026-07-10T09:48:25Z"
   }
 ]

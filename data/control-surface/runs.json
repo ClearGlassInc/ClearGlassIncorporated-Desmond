@@ -1,8 +1,64 @@
 [
   {
-    "title": "Control Surface Feeds #238",
+    "title": "Control Surface Feeds #239",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "17:06",
+    "timestamp": "2026-07-10T17:06:42Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #698",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-ee0eab47-d9ca-4622-a2aa-3dcf0c99f7bd",
+    "time": "16:08",
+    "timestamp": "2026-07-10T16:08:06Z"
+  },
+  {
+    "title": "Agent OS Self-Check #8",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "15:42",
+    "timestamp": "2026-07-10T15:42:42Z"
+  },
+  {
+    "title": "Commerce Daily Loop #32",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "15:30",
+    "timestamp": "2026-07-10T15:30:26Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #697",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-c70eae27-1fec-46f9-97d5-e4f55330f390",
+    "time": "15:08",
+    "timestamp": "2026-07-10T15:08:06Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #812",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "14:51",
+    "timestamp": "2026-07-10T14:51:01Z"
+  },
+  {
+    "title": "pages build and deployment #1264",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:50",
+    "timestamp": "2026-07-10T14:50:54Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2150",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:50",
+    "timestamp": "2026-07-10T14:50:53Z"
+  },
+  {
+    "title": "Control Surface Feeds #238",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "14:50",
     "timestamp": "2026-07-10T14:50:38Z"
   },
@@ -82,61 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "11:18",
     "timestamp": "2026-07-10T11:18:41Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #693",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-a0bd75ed-e4b3-4867-832b-8b8a1493d6e3",
-    "time": "11:08",
-    "timestamp": "2026-07-10T11:08:07Z"
-  },
-  {
-    "title": "Burlington Release #30",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "10:29",
-    "timestamp": "2026-07-10T10:29:42Z"
-  },
-  {
-    "title": "Content Pipeline #63",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_run on main",
-    "time": "10:22",
-    "timestamp": "2026-07-10T10:22:50Z"
-  },
-  {
-    "title": "pages build and deployment #1262",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "10:22",
-    "timestamp": "2026-07-10T10:22:46Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2148",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "10:22",
-    "timestamp": "2026-07-10T10:22:45Z"
-  },
-  {
-    "title": "Bot Orchestrator #51",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "10:22",
-    "timestamp": "2026-07-10T10:22:29Z"
-  },
-  {
-    "title": "Percival Policy Gate #11",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:31Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1234",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/ai-agent-income-prompt-2j01fo",
-    "time": "10:12",
-    "timestamp": "2026-07-10T10:12:31Z"
   }
 ]

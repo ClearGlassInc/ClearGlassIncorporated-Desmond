@@ -51,6 +51,7 @@
       ["Home", "index.html", "⌂"],
       ["Web Design & Dev", "web-design.html", "💻"],
       ["Store · Buy", "store.html", "🛒"],
+      ["Side Store · Electronics", "side-store.html", "🔌"],
       ["Pricing", "pricing.html", "₵"],
       ["Button Lab", "button-lab.html", "◫"]
     ]]

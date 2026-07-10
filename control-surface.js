@@ -2,7 +2,7 @@
    ────────────────────────────────────────────────────────────────────────────
    One integrated operating layer for the portfolio: a compact top cluster
    (status + command pill + menu), a command-palette-first interaction model
-   (Cmd/Ctrl+K and /), a right-side systems drawer, and a mobile bottom rail.
+   (Cmd/Ctrl+K and /), and a right-side systems drawer.
 
    Engineering:
      • semantic + ARIA dialog, focus trap + restore, stable tab order
@@ -25,6 +25,7 @@
     ["Command", [
       ["Control Surface · v3.1", "control-surface.html", "◈"],
       ["Systems Control Surface", "systems.html", "▣"],
+      ["Air Systems Control", "air-systems-control.html", "◍"],
       ["AVALON · ARTEMIS ⊕ PERCIVAL", "artemis-percival.html", "⬣"],
       ["PERCIVAL OS", "percival-os.html", "◐"],
       ["SENTINEL · Live", "sentinel.html", "◉"],
@@ -67,6 +68,7 @@
   // ── actions (verbs, not just destinations) ──────────────────────────────
   var ACTIONS = [
     { label: "Open Systems Control Surface", sub: "Operations console", icon: "▣", href: "systems.html" },
+    { label: "Open Air Systems Control", sub: "Atmospheric glass console", icon: "◍", href: "air-systems-control.html" },
     { label: "Pricing & engagements", sub: "Book a fixed-fee engagement", icon: "◎", href: "pricing.html" },
     { label: "Website design & development", sub: "Engagement", icon: "◳", href: "web-design.html" },
     { label: "Open latest project", sub: "Artemis VI", icon: "🛰", href: "artemis.html" },
@@ -87,14 +89,6 @@
       ["Architecture", "#architecture", "🏗"], ["Live metrics", "#metrics", "📈"], ["Deployments", "#deploy", "🚀"], ["Docs", "#docs", "📚"]
     ]}
   };
-
-  var CORE = [
-    ["Home", "index.html", "⌂"],
-      ["Pricing & Engagements", "pricing.html", "◎"],
-    ["PERCIVAL", "percival-os.html", "◐"],
-    ["SENTINEL", "sentinel.html", "◉"],
-    ["Intel", "intelligence.html", "🧠"]
-  ];
 
   var here = (location.pathname.split("/").pop() || "index.html").toLowerCase();
   var flat = [];
@@ -187,16 +181,7 @@
   ".cgcs-dr a:hover{background:rgba(124,150,255,.12);border-color:rgba(124,150,255,.26);color:#fff}" +
   ".cgcs-dr a.cur{background:linear-gradient(100deg,rgba(96,165,250,.18),rgba(167,139,250,.05));border-color:rgba(124,150,255,.45);color:#fff}" +
   ".cgcs-dr a .ic{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:13px;background:rgba(124,150,255,.1);border:1px solid rgba(124,150,255,.2)}" +
-  // mobile rail
-  ".cgcs-rail{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:2147483600;display:none;align-items:center;gap:4px;" +
-    "padding:6px;border-radius:16px;border:1px solid var(--ln);background:var(--g1);backdrop-filter:blur(14px);" +
-    "box-shadow:0 20px 50px -20px rgba(0,0,0,.7)}" +
-  ".cgcs-rail a,.cgcs-rail button{display:grid;place-items:center;gap:2px;width:58px;padding:7px 4px;border:0;background:none;color:#c7d0ea;" +
-    "text-decoration:none;font-size:9px;letter-spacing:.04em;cursor:pointer;border-radius:11px;font-family:inherit}" +
-  ".cgcs-rail a .ic,.cgcs-rail button .ic{font-size:17px}" +
-  ".cgcs-rail a.cur{color:#fff;background:linear-gradient(180deg,rgba(96,165,250,.22),rgba(167,139,250,.08))}" +
-  ".cgcs-rail .cgcs-railcmd{color:#07112b;background:var(--cr)}" +
-  "@media(max-width:720px){.cgcs-rail{display:flex}.cgcs-bar .cgcs-chip .cgcs-st{display:none}.cgcs-bar{top:8px;right:8px}}" +
+  "@media(max-width:720px){.cgcs-bar .cgcs-chip .cgcs-st{display:none}.cgcs-bar{top:8px;right:max(8px,env(safe-area-inset-right))}}" +
   "@media(prefers-reduced-motion:reduce){#cgcs *{transition:none!important;animation:none!important}}";
 
   // ── helpers ───────────────────────────────────────────────────────────────
@@ -265,21 +250,11 @@
     });
     drOv.appendChild(dscrim); drOv.appendChild(dr);
 
-    // mobile rail
-    var rail = h("div", "cgcs-rail"); rail.setAttribute("role", "navigation"); rail.setAttribute("aria-label", "Primary");
-    CORE.forEach(function (it) {
-      var a = h("a"); if (it[1].toLowerCase() === here) a.className = "cur";
-      a.href = it[1]; a.setAttribute("aria-label", it[0]); a.innerHTML = '<span class="ic">' + it[2] + '</span>' + it[0]; rail.appendChild(a);
-    });
-    var rcmd = h("button", "cgcs-railcmd"); rcmd.setAttribute("aria-label", "Open command palette"); rcmd.innerHTML = '<span class="ic">⌘</span>Cmd';
-    rail.appendChild(rcmd);
-
-    root.appendChild(bar); root.appendChild(palOv); root.appendChild(drOv); root.appendChild(rail);
+    root.appendChild(bar); root.appendChild(palOv); root.appendChild(drOv);
     document.body.appendChild(root);
 
     // wiring
     cmd.addEventListener("click", openPalette);
-    rcmd.addEventListener("click", openPalette);
     menu.addEventListener("click", openDrawer);
     dx.addEventListener("click", closeDrawer);
     pscrim.addEventListener("click", closePalette);

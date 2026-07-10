@@ -6,6 +6,8 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
+from sentinel.capability import Tier
+from sentinel.identity import AgentIdentity
 from sentinel.percival import (
     Action,
     Finding,
@@ -22,9 +24,21 @@ from sentinel.percival import (
     rank,
 )
 
+
+def _ops_identity(default_tier: Tier) -> AgentIdentity:
+    return AgentIdentity(
+        instance_id="percival-live",
+        sponsor="Desmond",
+        purpose="governed website operations",
+        allowed_scopes={"operations"},
+        default_tier=default_tier,
+    )
+
 GOOD = ("<html lang='en'><head><title>T</title>"
         "<meta name='description' content='d'>"
-        "<link rel='canonical' href='x'></head>"
+        "<link rel='canonical' href='x'>"
+        "<meta property='og:title' content='T'>"
+        "<meta property='og:description' content='d'></head>"
         "<body><img src='a.png' alt='a'></body></html>")
 BARE = "<html><head></head><body><img src='a.png'></body></html>"
 
@@ -38,7 +52,18 @@ def test_audit_page_clean_on_good_html() -> None:
 def test_audit_page_flags_seo_and_a11y_gaps() -> None:
     kinds = {f.kind for f in audit_page("p.html", BARE)}
     assert {"missing_title", "missing_meta_description", "missing_canonical",
-            "missing_lang", "missing_img_alt"} <= kinds
+            "missing_lang", "missing_img_alt", "missing_og_tags"} <= kinds
+
+
+def test_audit_page_flags_partial_og_tags() -> None:
+    html = GOOD.replace("<meta property='og:description' content='d'>", "")
+    kinds = {f.kind for f in audit_page("p.html", html)}
+    assert "missing_og_tags" in kinds
+
+
+def test_missing_og_tags_is_safe_autofix() -> None:
+    f = Finding("missing_og_tags", "seo", "p.html", "", Severity.LOW, technical_risk=1)
+    assert govern(f).action is Action.AUTO_FIX
 
 
 def test_audit_sitemap_detects_drift_both_ways() -> None:
@@ -155,7 +180,7 @@ def test_percival_never_autofixes_escalated_items(tmp_path: pathlib.Path) -> Non
     auto = {d.finding.kind for d in report.decisions if d.action is Action.AUTO_FIX}
     assert auto <= {"missing_meta_description", "missing_canonical",
                     "missing_img_alt", "sitemap_missing_page", "sitemap_dead_url",
-                    "trailing_whitespace"}
+                    "trailing_whitespace", "missing_og_tags"}
 
 
 def test_audit_page_ignores_tags_inside_script() -> None:
@@ -163,9 +188,54 @@ def test_audit_page_ignores_tags_inside_script() -> None:
     # be read as a real image lacking alt text
     html = ("<html lang='en'><head><title>T</title>"
             "<meta name='description' content='d'>"
-            "<link rel='canonical' href='x'></head><body>"
+            "<link rel='canonical' href='x'>"
+            "<meta property='og:title' content='T'>"
+            "<meta property='og:description' content='d'></head><body>"
             "<script>var re=/<img\\b[^>]*>/gi;</script></body></html>")
     assert audit_page("p.html", html) == []
+
+
+# ── control-plane wiring (identity -> governor -> capability -> audit) ───────
+
+def test_governor_wired_change_identity_permits_writes(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    # A CHANGE-scoped, sponsored identity may perform internal writes.
+    s = Percival(tmp_path, identity=_ops_identity(Tier.CHANGE))
+    report = s.scan()
+    applied = s.apply(report, allow_writes=True)
+    assert applied and not any(a.startswith("BLOCKED") for a in applied)
+    assert s.audit.verify()
+
+
+def test_governor_wired_readonly_identity_blocks_writes(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    # A READ_ONLY identity cannot execute internal writes — every fix is blocked
+    # by the sovereign governor, and nothing is applied.
+    s = Percival(tmp_path, identity=_ops_identity(Tier.READ_ONLY))
+    report = s.scan()
+    applied = s.apply(report, allow_writes=True)
+    assert applied and all(a.startswith("BLOCKED") for a in applied)
+    assert s.audit.verify()
+
+
+def test_stopped_identity_blocks_all_writes(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    ident = _ops_identity(Tier.CHANGE)
+    ident.stop()  # halted instance may touch nothing
+    s = Percival(tmp_path, identity=ident)
+    report = s.scan()
+    applied = s.apply(report, allow_writes=True)
+    assert applied and all(a.startswith("BLOCKED") for a in applied)
+
+
+def test_no_identity_preserves_legacy_write_behavior(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    # Without an identity, real writes proceed under the legacy AUTO_FIX policy
+    # (no governor gating, no BLOCKED entries).
+    s = Percival(tmp_path)
+    report = s.scan()
+    applied = s.apply(report, allow_writes=True)
+    assert applied and not any(a.startswith("BLOCKED") for a in applied)
 
 
 def test_index_is_exempt_from_sitemap_drift() -> None:

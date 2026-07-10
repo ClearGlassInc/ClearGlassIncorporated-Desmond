@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-06-29T15:23:08.538437+00:00",
-  "files_audited": 54,
-  "average_score": 93.3,
+  "run_utc": "2026-07-09T10:23:48.763522+00:00",
+  "files_audited": 62,
+  "average_score": 91.0,
   "pages": [
     {
       "file": "404.html",
@@ -150,6 +150,50 @@
       "issues": []
     },
     {
+      "file": "air-systems-control.html",
+      "title": "Artemis Air Systems Control Surface | ClearGlass Inc.",
+      "title_length": 53,
+      "title_ok": true,
+      "description": "ClearGlassInc Artemis futuristic glass control surface for live airflow, pressure, temperature, humidity, filtration, vent, and zone management.",
+      "description_length": 144,
+      "description_ok": true,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 90,
+      "issues": [
+        "Missing og:image"
+      ]
+    },
+    {
+      "file": "artemis-2040.html",
+      "title": "ClearGlassInc Artemis 2040 Intelligence Platform",
+      "title_length": 48,
+      "title_ok": true,
+      "description": "ClearGlassInc Artemis 2040 blueprint: self-evolving AI intelligence platform spanning Gotham, Foundry, AIP, Apollo, secure agents, and human-approved self-improvement.",
+      "description_length": 167,
+      "description_ok": false,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Description length 167 chars (ideal 120\u2013160)",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "artemis-blue-team.html",
       "title": "ClearGlass Inc \u00b7 Artemis Blue Team OSINT Command Center",
       "title_length": 55,
@@ -279,6 +323,28 @@
       "issues": []
     },
     {
+      "file": "bluedesk-mobile.html",
+      "title": "BLUE DESK Mobile \u2014 CISO Risk Console Hero (9:16) | ClearGlass Inc",
+      "title_length": 65,
+      "title_ok": false,
+      "description": "BLUE DESK mobile hero \u2014 minimalist, futuristic 9:16 CISO risk console concept with neon pulse: risk intelligence pills, blue team command, live search token, and executive stat cards.",
+      "description_length": 183,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 70,
+      "issues": [
+        "Title length 65 chars (ideal 30\u201360)",
+        "Description length 183 chars (ideal 120\u2013160)",
+        "No <h1> tag found"
+      ]
+    },
+    {
       "file": "bluedesk.html",
       "title": "BLUEDESK \u2014 CISO Risk & Blue Team Console | ClearGlass Inc",
       "title_length": 57,
@@ -287,14 +353,16 @@
       "description_length": 147,
       "description_ok": true,
       "canonical_present": true,
-      "h1_count": 1,
-      "h1_ok": true,
+      "h1_count": 2,
+      "h1_ok": false,
       "img_without_alt": 0,
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 90,
+      "issues": [
+        "Multiple <h1> tags (2)"
+      ]
     },
     {
       "file": "button-lab.html",
@@ -368,6 +436,26 @@
       "score": 90,
       "issues": [
         "Title length 68 chars (ideal 30\u201360)"
+      ]
+    },
+    {
+      "file": "clearglass-ultra.html",
+      "title": "ClearGlass Ultra \u2014 See Through Everything",
+      "title_length": 41,
+      "title_ok": true,
+      "description": "The ClearGlass intelligence stack: ARTEMIS IV, WRAITH-OMEN, and AEGIS. Governed autonomy, predictive defense, and mission-speed clarity for enterprises that refuse to be surprised.",
+      "description_length": 180,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 180 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -523,6 +611,26 @@
       ]
     },
     {
+      "file": "environmental-cyber-risk.html",
+      "title": "Environmental Cyber-Risk | ClearGlassInc Artemis",
+      "title_length": 48,
+      "title_ok": true,
+      "description": "Artemis turns space-weather disruption into executive cyber-risk decisions for resilient infrastructure operations.",
+      "description_length": 115,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 115 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "flowsint.html",
       "title": "Flowsint \u00b7 OSINT Investigation Graph \u2014 Domains, IPs & Transforms | ClearGlass Inc.",
       "title_length": 82,
@@ -543,6 +651,26 @@
         "Description length 185 chars (ideal 120\u2013160)",
         "Multiple <h1> tags (2)",
         "Missing og:image"
+      ]
+    },
+    {
+      "file": "futuristic.html",
+      "title": "ClearGlass \u00b7 Aurora Glass \u2014 Futuristic Control Surface",
+      "title_length": 54,
+      "title_ok": true,
+      "description": "Aurora Glass: ClearGlass",
+      "description_length": 24,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 24 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -680,6 +808,30 @@
       "og_image": true,
       "score": 100,
       "issues": []
+    },
+    {
+      "file": "intelligence-platform.html",
+      "title": "ClearGlass Intelligence Platform \u2014 Brand & Platform Architecture | ClearGlass Inc.",
+      "title_length": 82,
+      "title_ok": false,
+      "description": "The ClearGlass Intelligence Platform: executive layer, 85-codename autonomous agent framework, enterprise multi-agent hierarchy under ClearGlass Nexus, premium product family, and the naming standard that binds them.",
+      "description_length": 216,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Title length 82 chars (ideal 30\u201360)",
+        "Description length 216 chars (ideal 120\u2013160)",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
     },
     {
       "file": "intelligence.html",
@@ -1006,6 +1158,27 @@
       ]
     },
     {
+      "file": "ultra-glass.html",
+      "title": "ClearGlass \u2014 Ultra Glass. Governed Intelligence, Rendered Visible.",
+      "title_length": 66,
+      "title_ok": false,
+      "description": "The ClearGlass Ultra Glass experience \u2014 ARTEMIS IV, WRAITH-OMEN, and AEGIS presented as one governed intelligence surface. See the visibility-to-control gap, then close it.",
+      "description_length": 172,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 80,
+      "issues": [
+        "Title length 66 chars (ideal 30\u201360)",
+        "Description length 172 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "web-design.html",
       "title": "Website Design & Development \u2014 Growth Infrastructure | ClearGlass Inc.",
       "title_length": 70,
@@ -1027,15 +1200,15 @@
     }
   ],
   "top_issues": [
-    "11x \u2014 Title length N chars (ideal N\u2013N)",
-    "9x \u2014 Description length N chars (ideal N\u2013N)",
-    "4x \u2014 Missing og:image",
-    "3x \u2014 Multiple <hN> tags (N)",
+    "16x \u2014 Description length N chars (ideal N\u2013N)",
+    "14x \u2014 Title length N chars (ideal N\u2013N)",
+    "7x \u2014 Missing og:image",
+    "4x \u2014 Multiple <hN> tags (N)",
+    "3x \u2014 Missing og:title",
+    "3x \u2014 Missing og:description",
+    "2x \u2014 Missing canonical link tag",
+    "2x \u2014 No <hN> tag found",
     "1x \u2014 Missing <title>",
-    "1x \u2014 Missing meta description",
-    "1x \u2014 Missing canonical link tag",
-    "1x \u2014 No <hN> tag found",
-    "1x \u2014 Missing og:title",
-    "1x \u2014 Missing og:description"
+    "1x \u2014 Missing meta description"
   ]
 }

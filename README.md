@@ -212,3 +212,32 @@ Founder & Chairman **Desmond Otieno Odhiambo**. See `docs/Desmond_Otieno_Odhiamb
 ## Architecture Blueprints
 
 - [ClearGlassInc Artemis full-stack intelligence blueprint](CLEARGLASSINC_ARTEMIS_FULL_STACK_INTELLIGENCE_BLUEPRINT.md)
+
+## ClearGlass Growth Entity
+
+Run the local manual-review growth command system with PowerShell 7:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File .\ClearGlass-GrowthEntity.ps1 -Mode Sample -OpenFolder
+pwsh -ExecutionPolicy Bypass -File .\ClearGlass-GrowthEntity.ps1 -Mode Full -OpenFolder
+```
+
+The script creates `ClearGlassGrowthEntity/` with configuration, content scoring exports,
+daily posting briefs, finance action files, and logs. It is intentionally a planning and
+compliance-review system only; do not store passwords, tokens, cookies, or API secrets in it,
+and do not use it for fake engagement, mass DMs, scraping, or platform-bypass behavior.
+
+## Threads Growth Command Center V3
+
+Run the Python-first, compliant Threads growth command center locally:
+
+```bash
+python -m bots.threads_growth_command_center --mode all --brand-name ClearGlassInc --root-path ./ThreadsGrowthCommandCenter_V3
+python -m bots.threads_growth_command_center --mode add-kpi --root-path ./ThreadsGrowthCommandCenter_V3 --followers 100 --posts 3 --replies 40 --likes 80 --reposts 10 --impressions 1000 --profile-visits 25 --notes "Manual daily closeout"
+```
+
+The system creates a 30-day content calendar, daily manual execution brief,
+copy-editing draft files, KPI tracker, engagement tracker, backups, and a
+self-contained HTML dashboard. It is intentionally a planning, drafting, and
+measurement system only: zero botting, zero scraping, no automated follows,
+likes, comments, reposts, DMs, or storage of platform cookies/session tokens.

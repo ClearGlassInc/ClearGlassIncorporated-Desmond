@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-06-20T10:08:07.454538+00:00",
+  "run_utc": "2026-07-09T10:23:50.046360+00:00",
   "site_url": "https://clearglassinc.github.io",
   "overall_healthy": false,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://clearglassinc.github.io/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 152,
+      "response_ms": 174,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://clearglassinc.github.io/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 113,
+      "response_ms": 201,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://clearglassinc.github.io/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 140,
+      "response_ms": 410,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://clearglassinc.github.io/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 104,
+      "response_ms": 149,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://clearglassinc.github.io/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 126,
+      "response_ms": 155,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,16 +61,19 @@
       "url": "https://clearglassinc.github.io/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 124,
+      "response_ms": 144,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
   "local_issues": [
-    "Page missing ClearGlass logo: smb-cyber-trust-kit.html"
+    "Page missing ClearGlass logo: intelligence-platform.html"
   ],
   "local_warnings": [
-    "HTML page not referenced in sitemap.xml: loader.html"
+    "HTML page not referenced in sitemap.xml: air-systems-control.html",
+    "HTML page not referenced in sitemap.xml: artemis-2040.html",
+    "HTML page not referenced in sitemap.xml: clearglass-ultra.html",
+    "HTML page not referenced in sitemap.xml: environmental-cyber-risk.html"
   ]
 }

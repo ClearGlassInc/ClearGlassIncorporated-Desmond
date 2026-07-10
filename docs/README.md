@@ -19,6 +19,8 @@ Long-form blueprints, platform designs, and corporate documentation supporting t
 - `clearglassinc_artemis_quantum_neural_smart_glass_unified_roadmap.md`
 
 ## Self-evolving platform designs
+- `clearglassinc_artemis_self_evolving_ai_intelligence_platform_blueprint.md`
+- `clearglassinc_artemis_global_net_self_evolving_intelligence_platform_2026-06-29.md`
 - `clearglassinc_artemis_self_evolving_platform.md`
 - `clearglassinc_artemis_self_evolving_intelligence_platform_design.md`
 - `clearglassinc_artemis_extreme_self_evolving_platform_design.md`
@@ -28,6 +30,7 @@ Long-form blueprints, platform designs, and corporate documentation supporting t
 - `clearglassinc_artemis_coo_self_improving_platform_blueprint.md`
 - `clearglassinc_artemis_gotham_foundry_aip_apollo_self_evolving_blueprint.md`
 - `clearglassinc_artemis_gotham_foundry_aip_apollo_extreme_blueprint.md`
+- `clearglassinc_artemis_palantir_self_evolving_intelligence_platform_2040.md`
 - `CLEARGLASSINC_ARTEMIS_SELF_EVOLVING_AI_PLATFORM_DESIGN_2026-05-06.md`
 
 ## Revenue, intelligence, and automation

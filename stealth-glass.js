@@ -24,6 +24,17 @@
   if (window.__cgStealthGlass) return;
   window.__cgStealthGlass = true;
 
+  /* Load the site-wide analytics loader once. It is config-gated in
+     /analytics.js and does nothing (no network, no cookies) until a provider is
+     set there, so this is safe to ship on every page. */
+  if (!window.__cgAnalytics && !document.querySelector("script[data-cg-analytics]")) {
+    var _cgA = document.createElement("script");
+    _cgA.src = "/analytics.js";
+    _cgA.defer = true;
+    _cgA.setAttribute("data-cg-analytics", "");
+    (document.head || document.documentElement).appendChild(_cgA);
+  }
+
   var KEY = "cg-stealth"; // localStorage flag: "on" | "off"
   var ON = "on", OFF = "off";
   var reduce = false;
@@ -33,6 +44,21 @@
   function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
 
   var CSS = [
+    /* ── universal NEON AURA: a soft edge-glow + corner bloom on every page ──── */
+    "#cg-neon-aura{position:fixed;inset:0;z-index:2147483000;pointer-events:none;will-change:opacity;",
+    "box-shadow:inset 0 0 130px rgba(96,165,250,.10),inset 0 0 46px rgba(167,139,250,.08);",
+    "animation:cgNeonAura 6s ease-in-out infinite}",
+    /* the bloom sits at the bottom-right, anchoring the control cluster */
+    "#cg-neon-aura::after{content:'';position:absolute;right:-46px;bottom:-46px;width:340px;height:340px;",
+    "border-radius:50%;background:radial-gradient(circle,rgba(96,165,250,.16),rgba(167,139,250,.09) 46%,transparent 72%);",
+    "filter:blur(6px)}",
+    "@keyframes cgNeonAura{0%,100%{opacity:.65}50%{opacity:1}}",
+    "@media(max-width:640px){#cg-neon-aura::after{width:240px;height:240px;right:-40px;bottom:-40px}}",
+    "@media (prefers-reduced-motion:reduce){#cg-neon-aura{animation:none;opacity:.8}}",
+    /* stealth ON deepens the aura toward teal to match the engaged control */
+    "[data-skin='stealth'] #cg-neon-aura{box-shadow:inset 0 0 150px rgba(120,224,200,.12),inset 0 0 50px rgba(96,165,250,.08)}",
+    "[data-skin='stealth'] #cg-neon-aura::after{background:radial-gradient(circle,rgba(120,224,200,.18),rgba(96,165,250,.08) 46%,transparent 72%)}",
+
     /* ── universal stealth veil: one light, blur-free desaturate pass ───────── */
     "#cg-stealth-veil{position:fixed;inset:0;z-index:2147483646;pointer-events:none;",
     "background:rgba(5,8,12,.26);will-change:opacity;",
@@ -42,7 +68,7 @@
 
     /* ── the chip: a compact, premium glass secondary button ────────────────── */
     "#cg-stealth-btn{--cg-mx:0px;--cg-my:0px;",
-    "position:fixed;left:18px;bottom:84px;z-index:2147483647;",
+    "position:fixed;right:18px;bottom:84px;z-index:2147483647;",
     "display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px 0 9px;",
     "margin:0;border:0;border-radius:999px;cursor:pointer;white-space:nowrap;line-height:1;",
     "overflow:hidden;isolation:isolate;-webkit-tap-highlight-color:transparent;",
@@ -97,7 +123,7 @@
     "#cg-stealth-btn.is-on::after{background:linear-gradient(150deg,rgba(160,255,238,.6),rgba(120,224,200,.06) 45%,rgba(120,224,200,.2))}",
 
     /* mobile — a touch smaller, still ≥24px (WCAG 2.2 target size) */
-    "@media(max-width:640px){#cg-stealth-btn{left:14px;bottom:72px;height:25px;font-size:9px;padding:0 10px 0 8px}}",
+    "@media(max-width:640px){#cg-stealth-btn{right:14px;bottom:72px;height:25px;font-size:9px;padding:0 10px 0 8px}}",
 
     /* reduced motion — drop loops, sweep & drift; keep instant states */
     "@media (prefers-reduced-motion:reduce){#cg-stealth-btn,#cg-stealth-btn:hover,#cg-stealth-btn:active{transition:none}",
@@ -171,6 +197,14 @@
     var style = document.createElement("style");
     style.textContent = CSS;
     document.head.appendChild(style);
+
+    /* site-wide neon aura — one element, present on every page (incl. home) */
+    if (!document.getElementById("cg-neon-aura")) {
+      var aura = document.createElement("div");
+      aura.id = "cg-neon-aura";
+      aura.setAttribute("aria-hidden", "true");
+      document.body.appendChild(aura);
+    }
 
     var btn = document.createElement("button");
     btn.id = "cg-stealth-btn";

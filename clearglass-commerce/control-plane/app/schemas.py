@@ -50,6 +50,20 @@ class CheckoutSessionOut(BaseModel):
     currency: str
 
 
+class PayoutOut(BaseModel):
+    id: int
+    stripe_payout_id: str
+    amount: float
+    currency: str
+    status: str
+    destination: str | None
+    tenant_id: str | None
+    arrival_date: datetime | None
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
 class RefundRequest(BaseModel):
     order_id: int
     amount: int | None = Field(default=None, description="Cents to refund; None = full refund")

@@ -1,918 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ClearGlass · Event-Driven Control Surface | PERCIVAL</title>
-    <meta name="description" content="ClearGlass Event-Driven Control Surface — PERCIVAL command surface with a crystal-glass dropdown linking every platform, console, and intelligence product.">
-    <link rel="canonical" href="https://clearglassinc.github.io/control-surface.html"/>
-    <meta name="theme-color" content="#fafbfc">
-    <meta property="og:title" content="ClearGlass · Event-Driven Control Surface"/>
-    <meta property="og:description" content="PERCIVAL command surface — navigate every ClearGlass platform from one crystal-glass dropdown."/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="https://clearglassinc.github.io/control-surface.html"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-    <style>
-        :root{
-            /* ClearGlass homepage palette */
-            --white:#fafbfc; --off:#f3f5f8;
-            --glass:rgba(255,255,255,0.55); --glass-border:rgba(0,0,0,0.06); --glass-strong:rgba(255,255,255,0.8);
-            --dark:#0a0c10; --dark-2:#1a1d25; --dark-3:#2a2d35;
-            --text:#0a0c10; --text-2:#3a3f4a; --text-3:#6b7280; --text-4:#9ca3af;
-            --prism-1:#38bdf8; --prism-2:#a78bfa; --prism-3:#f472b6; --prism-4:#34d399; --prism-5:#fbbf24; --prism-6:#60a5fa;
-            --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);
-            --serif:'Cormorant Garamond',Georgia,serif;
-            --sans:'Urbanist',system-ui,-apple-system,sans-serif;
-            --mono:'IBM Plex Mono',monospace;
-        }
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
+<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#07111f">
+<meta name="msapplication-TileColor" content="#07111f">
+<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Systems Control Surface v3.1 — Command Dashboard | ClearGlass Inc</title>
+<meta name="description" content="ClearGlass Systems Control Surface v3.1 — a next-gen light glass command dashboard unifying COMMAND, PLATFORMS, and INTELLIGENCE with a live AI Operator, a ⌘K command palette, an animated constellation field, and luminous blue-cyan accents.">
+<link rel="canonical" href="https://clearglassinc.github.io/control-surface.html"/>
+<meta property="og:title" content="Systems Control Surface v3.1 | ClearGlass Inc"/>
+<meta property="og:description" content="A next-gen light glass command dashboard: COMMAND · PLATFORMS · INTELLIGENCE, a live AI Operator, and a ⌘K command palette."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://clearglassinc.github.io/control-surface.html"/>
+<meta property="og:image" content="https://clearglassinc.github.io/logo.png"/>
+<link rel="icon" type="image/svg+xml" href="icon.svg"/>
+<link rel="apple-touch-icon" href="logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Urbanist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --white:#f8fbff; --off:#eef3fa; --off-2:#e3eaf4; --off-3:#dbe4f1;
+    --ink:#1e2a3a; --ink-2:#52617a; --ink-3:#8c99b0; --deep:#143a6b;
+    --prism-1:#38bdf8; --prism-2:#a78bfa; --prism-3:#f472b6; --prism-4:#34d399; --prism-5:#fbbf24; --prism-6:#60a5fa;
+    --blue:#2563eb; --sky:#38bdf8; --cyan:#06b6d4; --indigo:#6366f1;
+    --crystal:linear-gradient(135deg,#38bdf8 0%,#a78bfa 25%,#f472b6 50%,#fbbf24 75%,#34d399 100%);
+    --glass:rgba(255,255,255,.60); --glass-2:rgba(255,255,255,.42); --glass-strong:rgba(255,255,255,.80);
+    --silver:rgba(226,233,244,.66); --hair:rgba(120,141,173,.22); --hair-2:rgba(120,141,173,.34);
+    --glow-cyan:rgba(56,189,248,.55); --glow-blue:rgba(37,99,235,.40);
+    --ok:#10b981; --warn:#f59e0b; --bad:#ef4476; --live:#06b6d4;
+    --r-lg:24px; --r-md:18px; --r-sm:13px; --pill:999px;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --sans:'Urbanist',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;color:var(--ink);font-family:var(--sans);line-height:1.55;min-height:100vh;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
+    padding-bottom:60px;position:relative;
+    background:
+      radial-gradient(1200px 760px at 84% -8%, rgba(56,189,248,.16), transparent 56%),
+      radial-gradient(980px 680px at -10% 12%, rgba(99,102,241,.13), transparent 54%),
+      radial-gradient(900px 720px at 50% 120%, rgba(37,99,235,.10), transparent 60%),
+      linear-gradient(165deg, var(--white) 0%, var(--off) 42%, var(--off-2) 78%, var(--off-3) 100%);
+    background-attachment:fixed;
+  }
+  .shell{width:min(1180px,92vw);margin:0 auto;position:relative;z-index:5}
 
-        body {
-            min-height: 100vh;
-            background:
-                radial-gradient(ellipse 60% 50% at 20% 25%, rgba(56,189,248,0.08), transparent 60%),
-                radial-gradient(ellipse 50% 45% at 80% 70%, rgba(167,139,250,0.07), transparent 60%),
-                radial-gradient(circle at 50% 50%, var(--white), var(--off));
-            font-family: var(--sans);
-            color: var(--text);
-            overflow-x: hidden;
-            position: relative;
-            -webkit-font-smoothing: antialiased;
-        }
+  /* ── animated constellation canvas + cursor spotlight ─────────────────── */
+  #bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.9}
+  #spot{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .5s ease;
+    background:radial-gradient(360px circle at var(--mx,-200px) var(--my,-200px),
+      rgba(56,189,248,.10), rgba(99,102,241,.05) 42%, transparent 64%)}
+  .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.42;
+    background-image:linear-gradient(rgba(99,124,165,.07) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(99,124,165,.07) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(circle at 50% 26%,#000,transparent 76%);
+            mask-image:radial-gradient(circle at 50% 26%,#000,transparent 76%);
+    animation:gridPan 44s linear infinite}
+  @keyframes gridPan{to{background-position:54px 54px}}
 
-        /* animated canvas background (prism particle field + neon grid) */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.55;
-        }
+  /* ── floating HUD header ──────────────────────────────────────────────── */
+  header.hud{position:sticky;top:14px;z-index:60;margin-top:18px}
+  .hud-glass{position:relative;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    padding:14px 20px;border-radius:var(--r-lg);
+    background:linear-gradient(180deg,var(--glass-strong),var(--glass));
+    border:1px solid rgba(255,255,255,.8);
+    backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);
+    box-shadow:0 18px 50px -22px rgba(31,52,96,.42),0 2px 0 rgba(255,255,255,.7) inset;overflow:hidden}
+  .hud-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.55) 48%,transparent 60%);
+    transform:translateX(-120%);animation:sheen 7.5s ease-in-out 1.2s infinite}
+  @keyframes sheen{0%{transform:translateX(-120%)}26%,100%{transform:translateX(120%)}}
+  .hud-glass::after{content:"";position:absolute;left:18px;right:18px;bottom:0;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,transparent,var(--sky),var(--cyan),var(--blue),transparent);
+    background-size:220% 100%;box-shadow:0 0 16px var(--glow-cyan);animation:accent 6s linear infinite}
+  @keyframes accent{to{background-position:220% 0}}
 
-        /* main glass container */
-        .dashboard {
-            position: relative;
-            z-index: 10;
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 1.5rem 2rem;
-        }
+  .mark{width:46px;height:46px;border-radius:13px;flex:0 0 auto;position:relative;display:grid;place-items:center;
+    background:conic-gradient(from 140deg,#38bdf8,#6366f1,#06b6d4,#a78bfa,#38bdf8);
+    box-shadow:0 8px 22px -8px var(--glow-blue),0 0 0 1px rgba(255,255,255,.6) inset;animation:spin 14s linear infinite}
+  .mark::after{content:"";position:absolute;inset:3px;border-radius:10px;
+    background:linear-gradient(160deg,rgba(255,255,255,.95),rgba(255,255,255,.55));
+    box-shadow:0 1px 6px rgba(31,52,96,.18) inset}
+  .mark svg{position:relative;z-index:1;width:24px;height:24px;animation:spin 14s linear infinite reverse}
+  @keyframes spin{to{transform:rotate(360deg)}}
 
-        /* glassmorphic cards */
-        .glass-card {
-            background: var(--glass-strong);
-            backdrop-filter: blur(22px) saturate(160%);
-            -webkit-backdrop-filter: blur(22px) saturate(160%);
-            border-radius: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.84);
-            box-shadow: 0 20px 50px rgba(10,12,16,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
-            transition: all 0.3s ease;
-        }
+  .id .t{font-weight:800;font-size:17px;letter-spacing:.01em;color:var(--deep);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .id .t .ver{font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--blue);
+    padding:3px 8px;border-radius:var(--pill);background:rgba(37,99,235,.10);
+    border:1px solid rgba(37,99,235,.22);box-shadow:0 0 12px rgba(37,99,235,.16)}
+  .id .s{font:600 9.5px/1.4 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin-top:5px}
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.62);
-            backdrop-filter: blur(20px) saturate(140%);
-            -webkit-backdrop-filter: blur(20px) saturate(140%);
-            border-radius: 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 16px 40px rgba(10,12,16,0.05);
-        }
+  .hud-status{margin-left:auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 13px;border-radius:var(--pill);
+    background:var(--glass-2);border:1px solid var(--hair);color:var(--ink-2);
+    font:600 11.5px var(--sans);backdrop-filter:blur(8px);
+    box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 6px 16px -10px rgba(31,52,96,.4);
+    transition:transform .25s var(--ease),border-color .25s}
+  .chip:hover{transform:translateY(-1px);border-color:var(--hair-2)}
+  .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-3);flex:0 0 auto;position:relative}
+  .chip .dot.ok{background:var(--ok);color:var(--ok)} .chip .dot.warn{background:var(--warn)}
+  .chip .dot.bad{background:var(--bad)} .chip .dot.live{background:var(--live);color:var(--live)}
+  .chip .dot.sync{background:var(--sky);color:var(--sky)}
+  .chip .dot.ok::after,.chip .dot.live::after,.chip .dot.sync::after{content:"";position:absolute;inset:-4px;
+    border-radius:50%;border:1.5px solid currentColor;opacity:0;animation:ring 1.9s ease-out infinite}
+  @keyframes ring{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.95);opacity:0}}
+  .chip.cmdk{cursor:pointer;color:var(--deep);font-weight:700}
+  .chip.cmdk kbd{font:600 10px/1 var(--mono);background:rgba(37,99,235,.10);border:1px solid rgba(37,99,235,.2);
+    border-radius:5px;padding:2px 6px;color:var(--blue)}
+  .chip.clock{font-family:var(--mono);font-size:11px;letter-spacing:.06em}
 
-        /* header section */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+  main{padding:30px 0 0}
 
-        .title-section h1 {
-            font-family: var(--serif);
-            font-size: 2.6rem;
-            font-weight: 500;
-            line-height: 1;
-            letter-spacing: -0.02em;
-            color: var(--text);
-        }
+  /* ── AI OPERATOR core ─────────────────────────────────────────────────── */
+  .operator{position:relative;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;
+    padding:26px 30px;border-radius:var(--r-lg);overflow:hidden;
+    background:linear-gradient(135deg,var(--glass-strong),var(--glass) 60%,rgba(224,238,255,.55));
+    border:1px solid rgba(255,255,255,.82);
+    backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);
+    box-shadow:0 30px 70px -34px rgba(31,52,96,.5),0 2px 0 rgba(255,255,255,.75) inset}
+  .operator::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+    background:linear-gradient(180deg,rgba(255,255,255,.5),transparent 30%)}
+  .operator::after{content:"";position:absolute;left:0;right:0;height:34%;top:-34%;pointer-events:none;
+    background:linear-gradient(180deg,rgba(56,189,248,.10),transparent);animation:scan 6.5s linear infinite}
+  @keyframes scan{to{top:120%}}
 
-        .title-section h1 .crystal-text {
-            background: var(--crystal);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
+  .orb-wrap{position:relative;width:132px;height:132px;display:grid;place-items:center;flex:0 0 auto}
+  .halo{position:absolute;inset:6px;border-radius:50%;
+    background:conic-gradient(from 0deg,transparent,rgba(56,189,248,.5),transparent 40%,rgba(99,102,241,.45),transparent 70%);
+    filter:blur(7px);animation:spin 8s linear infinite}
+  .orb{width:82px;height:82px;border-radius:50%;position:relative;z-index:2;
+    background:radial-gradient(circle at 34% 30%,#ffffff,#bfe6ff 38%,#6aa6ff 70%,#3f7bf0 100%);
+    box-shadow:0 0 0 1px rgba(255,255,255,.7) inset,0 10px 30px -8px rgba(37,99,235,.6),0 0 30px var(--glow-cyan);
+    animation:breathe 3.4s ease-in-out infinite}
+  .orb::after{content:"";position:absolute;left:20%;top:14%;width:34%;height:24%;border-radius:50%;
+    background:linear-gradient(180deg,rgba(255,255,255,.95),transparent);filter:blur(1px)}
+  @keyframes breathe{50%{transform:scale(1.06)}}
+  .pulse{position:absolute;inset:0;border-radius:50%;border:2px solid var(--cyan);opacity:0;z-index:1}
+  .pulse:nth-child(2){animation:pulse 3s ease-out infinite}
+  .pulse:nth-child(3){animation:pulse 3s ease-out infinite 1s}
+  .pulse:nth-child(4){animation:pulse 3s ease-out infinite 2s}
+  @keyframes pulse{0%{transform:scale(.6);opacity:.55;border-color:var(--sky)}100%{transform:scale(1.28);opacity:0;border-color:var(--blue)}}
 
-        .badge {
-            margin-top: 0.6rem;
-            display: inline-block;
-            background: rgba(255,255,255,0.7);
-            border-radius: 999px;
-            padding: 0.3rem 0.9rem;
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--glass-border);
-            color: var(--text-3);
-        }
+  .op-body{position:relative;z-index:2;min-width:0}
+  .op-eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 10px/1 var(--mono);
+    letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+  .op-eyebrow .lv{width:7px;height:7px;border-radius:50%;background:var(--live);animation:ring 1.6s ease-out infinite;
+    box-shadow:0 0 0 0 var(--live)}
+  .op-title{margin:0;font-size:clamp(1.6rem,3vw,2.1rem);font-weight:800;letter-spacing:-.01em;color:var(--deep)}
+  .op-status{margin:4px 0 0;height:20px;font-size:13.5px;color:var(--ink-2);font-family:var(--mono)}
+  .op-status b{color:var(--blue);font-weight:600}
+  .op-wave{margin:12px 0 2px;width:100%;max-width:380px;height:34px;display:block;overflow:visible}
+  .op-wave path{fill:none;stroke:url(#wgrad);stroke-width:2.4;stroke-linecap:round;filter:drop-shadow(0 0 5px var(--glow-cyan))}
+  .op-wave .trace{stroke-dasharray:540;stroke-dashoffset:540;animation:trace 3.2s linear infinite}
+  @keyframes trace{to{stroke-dashoffset:0}}
+  .op-metrics{display:flex;gap:22px;flex-wrap:wrap;margin-top:12px}
+  .metric .mv{font:700 19px/1 var(--sans);color:var(--deep);letter-spacing:.01em}
+  .metric .mv small{font-size:11px;color:var(--ink-3);font-weight:600}
+  .metric .ml{font:600 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-top:5px}
+  .op-cta{position:absolute;top:22px;right:24px;z-index:3}
+  .ghost-btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:var(--pill);
+    text-decoration:none;font:700 12px var(--sans);letter-spacing:.02em;color:#fff;
+    background:linear-gradient(120deg,var(--blue),var(--cyan));
+    box-shadow:0 10px 24px -10px var(--glow-blue),0 1px 0 rgba(255,255,255,.4) inset;
+    transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+  .ghost-btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -12px var(--glow-blue)}
 
-        .time-particle {
-            font-family: var(--mono);
-            font-weight: 500;
-            font-size: 1.1rem;
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            padding: 0.5rem 1.1rem;
-            border-radius: 999px;
-            letter-spacing: 2px;
-            color: var(--text-2);
-        }
+  /* ── luminous section dividers ────────────────────────────────────────── */
+  .divider{display:flex;align-items:center;gap:16px;margin:38px 2px 18px}
+  .divider .lbl{font:700 11px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--deep);
+    white-space:nowrap;display:inline-flex;align-items:center;gap:10px}
+  .divider .lbl i{width:8px;height:8px;border-radius:2px;transform:rotate(45deg);
+    background:linear-gradient(135deg,var(--sky),var(--blue));box-shadow:0 0 10px var(--glow-cyan)}
+  .divider .ln{flex:1;height:1px;position:relative;background:linear-gradient(90deg,var(--hair-2),transparent)}
+  .divider .ln::before{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,var(--sky),var(--cyan),transparent);
+    background-size:50% 100%;background-repeat:no-repeat;box-shadow:0 0 12px var(--glow-cyan);animation:flow 4.5s linear infinite}
+  @keyframes flow{0%{background-position:-60% 0}100%{background-position:160% 0}}
+  .divider .cnt{font:600 10px var(--mono);color:var(--ink-3);letter-spacing:.1em}
 
-        /* main grid layout */
-        .grid-main {
-            display: grid;
-            grid-template-columns: 1fr 0.9fr;
-            gap: 1.8rem;
-            margin-bottom: 2rem;
-        }
+  /* ── tile grid ────────────────────────────────────────────────────────── */
+  .tiles{display:grid;gap:16px;grid-template-columns:repeat(4,1fr)}
+  .tile{position:relative;display:flex;align-items:center;gap:14px;padding:17px 18px;border-radius:var(--r-md);
+    text-decoration:none;color:var(--ink);overflow:hidden;isolation:isolate;transform-style:preserve-3d;
+    background:linear-gradient(160deg,var(--glass),var(--glass-2));border:1px solid rgba(255,255,255,.7);
+    backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
+    box-shadow:0 14px 34px -22px rgba(31,52,96,.45),0 1px 0 rgba(255,255,255,.7) inset;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+  .tile::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;z-index:1;
+    background:radial-gradient(220px circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.5),transparent 60%);
+    opacity:0;transition:opacity .3s}
+  .tile:hover::before{opacity:1}
+  .tile::after{content:"";position:absolute;left:16px;right:16px;bottom:0;height:2px;border-radius:2px;z-index:2;
+    background:linear-gradient(90deg,transparent,var(--sky),var(--cyan),transparent);background-size:200% 100%;
+    opacity:0;transform:translateY(2px);transition:opacity .3s,transform .3s;box-shadow:0 0 14px var(--glow-cyan)}
+  .tile:hover{transform:translateY(-4px);border-color:rgba(56,189,248,.5);
+    box-shadow:0 26px 50px -24px rgba(37,99,235,.5),0 1px 0 rgba(255,255,255,.85) inset}
+  .tile:hover::after{opacity:1;transform:none;animation:accent 5s linear infinite}
+  .tile:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+  .tile>*{position:relative;z-index:3}
+  .tile .tic{width:42px;height:42px;flex:0 0 auto;border-radius:12px;display:grid;place-items:center;font-size:19px;
+    color:var(--deep);background:linear-gradient(160deg,rgba(255,255,255,.9),var(--silver));border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 6px 16px -10px rgba(31,52,96,.5);transition:transform .3s var(--ease),box-shadow .3s}
+  .tile:hover .tic{transform:scale(1.06) rotate(-3deg);box-shadow:0 10px 22px -10px var(--glow-blue)}
+  .tile .tbody{min-width:0;flex:1}
+  .tile .tlabel{display:block;font-weight:700;font-size:13.5px;color:var(--ink);line-height:1.3;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tile .tsub{display:block;font:600 9.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-top:6px}
+  .tile .tgo{margin-left:auto;flex:0 0 auto;color:var(--blue);font-size:15px;opacity:.5;transition:transform .3s var(--ease),opacity .3s}
+  .tile:hover .tgo{opacity:1;transform:translateX(3px)}
+  .tile .tag{position:absolute;top:12px;right:14px;z-index:3;display:inline-flex;align-items:center;gap:5px;
+    font:700 8px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--live);
+    padding:3px 7px;border-radius:var(--pill);background:rgba(6,182,212,.10);border:1px solid rgba(6,182,212,.28)}
+  .tile.bd{background:linear-gradient(160deg,rgba(190,18,60,.08),rgba(126,34,206,.09) 55%,var(--glass-2));border-color:rgba(168,85,247,.35)}
+  .tile.bd::after{background:linear-gradient(90deg,transparent,#e11d48,#a855f7,transparent);background-size:200% 100%;box-shadow:0 0 14px rgba(168,85,247,.5)}
+  .tile.bd:hover{border-color:rgba(168,85,247,.6);box-shadow:0 26px 50px -24px rgba(126,34,206,.5),0 1px 0 rgba(255,255,255,.85) inset}
+  .tile.bd .tic{background:linear-gradient(160deg,rgba(255,228,235,.95),rgba(233,213,255,.9));border-color:rgba(225,29,72,.35)}
+  .tile.bd:hover .tic{box-shadow:0 10px 22px -10px rgba(168,85,247,.7)}
+  .tile.bd .tlabel{background:linear-gradient(90deg,#be123c,#7e22ce);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .tile.bd .tsub{color:#9333ea}
+  .tile.bd .tgo{color:#a855f7}
+  .tile .tag i{width:5px;height:5px;border-radius:50%;background:var(--live);animation:ring 1.6s ease-out infinite}
 
-        @media (max-width: 900px) {
-            .grid-main { grid-template-columns: 1fr; }
-            .dashboard { padding: 1rem; }
-            .title-section h1 { font-size: 2rem; }
-        }
+  .reveal{opacity:0;transform:translateY(18px)}
+  .reveal.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
 
-        /* Command Surface Dropdown Hub */
-        .dropdown-hub {
-            padding: 1.8rem;
-        }
+  /* ── ⌘K command palette ───────────────────────────────────────────────── */
+  .pal-ov{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center}
+  .pal-ov.open{display:flex}
+  .pal-scrim{position:absolute;inset:0;background:radial-gradient(120% 120% at 50% 0,rgba(180,200,230,.35),rgba(120,140,180,.45));
+    backdrop-filter:blur(5px);opacity:0;transition:opacity .22s ease}
+  .pal-ov.open .pal-scrim{opacity:1}
+  .pal{position:relative;margin-top:13vh;width:min(600px,92vw);border-radius:var(--r-lg);overflow:hidden;
+    background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.82));border:1px solid rgba(255,255,255,.9);
+    backdrop-filter:blur(26px) saturate(1.6);-webkit-backdrop-filter:blur(26px) saturate(1.6);
+    box-shadow:0 40px 100px -30px rgba(31,52,96,.5);transform:translateY(-10px) scale(.98);opacity:0;
+    transition:transform .26s var(--ease),opacity .2s ease}
+  .pal-ov.open .pal{transform:none;opacity:1}
+  .pal-top{display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid var(--hair)}
+  .pal-top .pic{color:var(--blue);font-size:15px}
+  .pal-top input{flex:1;background:none;border:0;outline:0;color:var(--ink);font:600 15px var(--sans)}
+  .pal-top input::placeholder{color:var(--ink-3);font-weight:500}
+  .pal-top .esc{font:600 10px var(--mono);color:var(--ink-3);border:1px solid var(--hair);border-radius:5px;padding:2px 7px}
+  .pal-list{max-height:min(56vh,440px);overflow-y:auto;padding:8px}
+  .pal-gl{font:700 9px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);padding:10px 10px 4px}
+  .pal-opt{display:flex;align-items:center;gap:12px;padding:9px 11px;border-radius:11px;cursor:pointer;border:1px solid transparent;text-decoration:none;color:var(--ink)}
+  .pal-opt .pi{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:15px;flex:0 0 auto;
+    background:linear-gradient(160deg,rgba(255,255,255,.9),var(--silver));border:1px solid rgba(255,255,255,.8);color:var(--deep)}
+  .pal-opt .pl{font-size:13.5px;font-weight:600}.pal-opt .pm{margin-left:auto;font:600 10px var(--mono);color:var(--ink-3)}
+  .pal-opt[aria-selected=true]{background:linear-gradient(100deg,rgba(56,189,248,.16),rgba(99,102,241,.08));border-color:rgba(56,189,248,.4)}
+  .pal-empty{padding:24px;text-align:center;color:var(--ink-3);font-size:13px}
 
-        .dropdown-trigger {
-            width: 100%;
-            background: rgba(255,255,255,0.75);
-            backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(255,255,255,0.9);
-            border-radius: 1.6rem;
-            padding: 1rem 1.5rem;
-            font-family: var(--sans);
-            font-size: 1.25rem;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(.4,0,.2,1);
-            color: var(--text);
-            box-shadow: 0 6px 18px rgba(10,12,16,0.05);
-        }
+  footer{margin-top:46px;padding:22px 0;text-align:center;color:var(--ink-3);font-size:12px}
+  footer a{color:var(--blue);text-decoration:none;font-weight:600}
+  footer a:hover{text-decoration:underline}
+  footer .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;margin-top:6px}
 
-        .dropdown-trigger:hover {
-            background: rgba(255,255,255,0.95);
-            transform: translateY(-2px);
-            border-color: rgba(56,189,248,0.6);
-            box-shadow: 0 14px 30px -12px rgba(56,189,248,0.4);
-        }
-
-        .dropdown-trigger .trigger-sub {
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--text-4);
-            letter-spacing: 0.08em;
-        }
-
-        .dropdown-icon {
-            font-size: 1rem;
-            color: var(--prism-1);
-            transition: transform 0.3s ease;
-        }
-
-        /* crystal glass dropdown menu */
-        .dropdown-menu {
-            margin-top: 1rem;
-            border-radius: 1.6rem;
-            background: rgba(252,253,254,0.82);
-            backdrop-filter: blur(28px) saturate(160%);
-            -webkit-backdrop-filter: blur(28px) saturate(160%);
-            border: 1px solid rgba(255,255,255,0.92);
-            box-shadow: 0 25px 50px -12px rgba(10,12,16,0.18), inset 0 1px 0 rgba(255,255,255,0.7);
-            overflow: hidden;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            transform-origin: top center;
-        }
-
-        .dropdown-menu::before {
-            content: '';
-            display: block;
-            height: 3px;
-            background: var(--crystal);
-            background-size: 200% 200%;
-            animation: crystalShift 6s ease infinite;
-        }
-        @keyframes crystalShift {
-            0%{background-position:0% 50%}
-            50%{background-position:100% 50%}
-            100%{background-position:0% 50%}
-        }
-
-        .dropdown-menu.hidden {
-            display: none;
-        }
-
-        .search-area {
-            padding: 1rem 1.2rem;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .search-input {
-            width: 100%;
-            background: rgba(255,255,255,0.85);
-            border: 1px solid var(--glass-border);
-            border-radius: 999px;
-            padding: 0.8rem 1.2rem;
-            font-size: 0.88rem;
-            font-family: var(--mono);
-            color: var(--text);
-            outline: none;
-            backdrop-filter: blur(6px);
-            transition: all 0.2s;
-        }
-
-        .search-input::placeholder { color: var(--text-4); }
-
-        .search-input:focus {
-            border-color: var(--prism-1);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(56,189,248,0.18);
-        }
-
-        .commands-list {
-            max-height: 480px;
-            overflow-y: auto;
-            padding: 0.8rem;
-        }
-
-        .command-category {
-            margin-bottom: 1rem;
-        }
-
-        .cat-title {
-            font-family: var(--mono);
-            font-size: 0.66rem;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            font-weight: 600;
-            color: var(--text-3);
-            padding: 0.4rem 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            margin-bottom: 0.4rem;
-        }
-        .cat-title::before {
-            content: '';
-            width: 16px;
-            height: 1px;
-            background: var(--text-4);
-        }
-
-        .command-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.7rem 1rem;
-            margin: 0.25rem 0;
-            border-radius: 1rem;
-            background: rgba(255,255,255,0.45);
-            backdrop-filter: blur(4px);
-            transition: all 0.18s ease;
-            cursor: pointer;
-            border: 1px solid transparent;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .command-item:hover {
-            background: #fff;
-            border-color: rgba(56,189,248,0.45);
-            transform: translateX(5px);
-            box-shadow: 0 8px 18px rgba(56,189,248,0.1);
-        }
-
-        .cmd-icon {
-            font-size: 1.25rem;
-            width: 1.6rem;
-            text-align: center;
-            filter: drop-shadow(0 2px 3px rgba(10,12,16,0.12));
-        }
-
-        .cmd-name {
-            font-weight: 600;
-            color: var(--text);
-            flex: 1;
-            font-family: var(--sans);
-            font-size: 0.95rem;
-            letter-spacing: -0.01em;
-        }
-
-        .cmd-tag {
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            background: rgba(56,189,248,0.1);
-            padding: 0.22rem 0.6rem;
-            border-radius: 999px;
-            color: var(--prism-1);
-            border: 1px solid rgba(56,189,248,0.16);
-        }
-
-        /* Right panel - advanced telemetry & AI Core */
-        .neuro-panel {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.4rem;
-        }
-
-        .status-ring {
-            display: flex;
-            justify-content: space-between;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
-
-        .metric {
-            background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 1.2rem;
-            padding: 0.8rem 1rem;
-            flex: 1;
-            min-width: 90px;
-            text-align: center;
-            border: 1px solid var(--glass-border);
-        }
-
-        .metric .label {
-            font-family: var(--mono);
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-4);
-        }
-
-        .metric .value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            font-family: var(--mono);
-            color: var(--text);
-            margin-top: 0.2rem;
-        }
-
-        .shield-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255,255,255,0.6);
-            border: 1px solid var(--glass-border);
-            border-radius: 1.4rem;
-            padding: 0.7rem 1.2rem;
-            font-weight: 600;
-            font-size: 0.92rem;
-        }
-
-        .toggle-switch {
-            width: 48px;
-            height: 24px;
-            background: #cbd5e1;
-            border-radius: 40px;
-            position: relative;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .toggle-switch.active {
-            background: var(--prism-1);
-            box-shadow: 0 0 10px rgba(56,189,248,0.6);
-        }
-
-        .toggle-knob {
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            top: 2px;
-            left: 3px;
-            transition: 0.2s;
-        }
-
-        .toggle-switch.active .toggle-knob {
-            left: 25px;
-        }
-
-        .pulse-label {
-            font-family: var(--mono);
-            font-size: 0.66rem;
-            letter-spacing: 0.08em;
-            color: var(--text-3);
-        }
-
-        /* Console log */
-        .console-log {
-            margin-top: 0.4rem;
-            background: linear-gradient(160deg, rgba(10,12,16,0.92), rgba(15,28,50,0.9));
-            backdrop-filter: blur(12px);
-            border-radius: 1.2rem;
-            padding: 1rem;
-            border: 1px solid rgba(255,255,255,0.12);
-        }
-
-        .log-header {
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            font-weight: 600;
-            margin-bottom: 0.7rem;
-            letter-spacing: 0.06em;
-            display: flex;
-            justify-content: space-between;
-            color: rgba(226,232,240,0.7);
-        }
-        .log-header #logGlow { color: var(--prism-4); }
-
-        .log-area {
-            height: 120px;
-            overflow-y: auto;
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            padding-right: 0.5rem;
-        }
-
-        .log-entry {
-            padding: 0.3rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            color: rgba(219,234,254,0.85);
-        }
-
-        /* Platforms micro grid */
-        .platform-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .platform-pill {
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(4px);
-            border-radius: 999px;
-            padding: 0.3rem 0.9rem;
-            font-size: 0.68rem;
-            font-weight: 600;
-            color: var(--text-2);
-            border: 1px solid var(--glass-border);
-        }
-
-        /* footer */
-        .footer {
-            text-align: center;
-            margin-top: 2.5rem;
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            letter-spacing: 0.08em;
-            color: var(--text-4);
-        }
-
-        @keyframes pulse-glow {
-            0% { text-shadow: 0 0 0px rgba(56,189,248,0);}
-            100% { text-shadow: 0 0 6px rgba(56,189,248,0.6);}
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(10,12,16,0.05); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--prism-1), var(--prism-2)); border-radius: 10px; }
-    </style>
-<link rel="stylesheet" href="/assets/css/glass.css">
-
-  <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
+  @media(max-width:980px){.tiles{grid-template-columns:repeat(2,1fr)}
+    .operator{grid-template-columns:1fr}.orb-wrap{margin:0 auto}.op-cta{position:static;margin-top:14px}}
+  @media(max-width:560px){.tiles{grid-template-columns:1fr}.hud-status .clock,.hud-status .cmdk{display:none}.id .t{font-size:15px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1!important;transform:none!important}.op-wave .trace{stroke-dashoffset:0}#bg{display:none}}
+</style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="spot" aria-hidden="true"></div>
+<div class="grid-bg" aria-hidden="true"></div>
 
-<div class="dashboard">
-    <div class="header">
-        <div class="title-section">
-            <h1>Event-Driven <span class="crystal-text">Control Surface</span></h1>
-            <div class="badge">AVALON · ARTEMIS ⊕ PERCIVAL OS // SENTINEL · LIVE</div>
+<div class="shell">
+
+  <header class="hud">
+    <div class="hud-glass">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 8.5 12 4l7 4.5-7 4.5z" fill="#143a6b" opacity=".92"/><path d="M5 8.5v7L12 20l7-4.5v-7L12 13z" fill="#2563eb" opacity=".55"/></svg>
+      </div>
+      <div class="id">
+        <div class="t">Systems Control Surface <span class="ver">v3.1</span></div>
+        <div class="s">PERCIVAL Operations Console · clearglassinc</div>
+      </div>
+      <div class="hud-status">
+        <button class="chip cmdk" id="openPal" aria-label="Open command palette"><span class="pic">⌘</span>Search <kbd id="kHint">⌘K</kbd></button>
+        <span class="chip"><span class="dot sync" id="dDeploy"></span><span id="tDeploy">Deploy · checking</span></span>
+        <span class="chip"><span class="dot ok"></span>Estate · Nominal</span>
+        <span class="chip"><span class="dot live"></span>Agent Mesh · Online</span>
+        <span class="chip clock mono" id="clock" aria-label="Coordinated Universal Time">—:—:— UTC</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- AI OPERATOR -->
+    <section class="operator reveal" aria-label="AI Operator status">
+      <a class="ghost-btn op-cta" href="ai-operator.html">Open Operator <span aria-hidden="true">→</span></a>
+      <div class="orb-wrap" aria-hidden="true">
+        <span class="halo"></span><span class="pulse"></span><span class="pulse"></span><span class="pulse"></span>
+        <span class="orb"></span>
+      </div>
+      <div class="op-body">
+        <span class="op-eyebrow"><span class="lv"></span>AI Operator · Live</span>
+        <h1 class="op-title">AI Operator</h1>
+        <p class="op-status">Status: <b id="opStatus">Orchestrating mission graph…</b></p>
+        <svg class="op-wave" viewBox="0 0 380 34" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="wgrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#38bdf8"/><stop offset=".5" stop-color="#06b6d4"/><stop offset="1" stop-color="#2563eb"/>
+          </linearGradient></defs>
+          <path class="trace" d="M0 17 L40 17 L52 6 L64 28 L78 17 L120 17 L132 9 L146 25 L160 17 L210 17 L222 4 L236 30 L250 17 L300 17 L312 11 L326 23 L340 17 L380 17"/>
+        </svg>
+        <div class="op-metrics">
+          <div class="metric"><div class="mv"><span id="mLat" data-count="42">0</span><small>ms</small></div><div class="ml">Latency</div></div>
+          <div class="metric"><div class="mv"><span data-count="1284">0</span></div><div class="ml">Tasks / 24h</div></div>
+          <div class="metric"><div class="mv"><span data-count="99">0</span><small>.98%</small></div><div class="ml">Uptime</div></div>
+          <div class="metric"><div class="mv"><span data-count="7">0</span></div><div class="ml">Agents Active</div></div>
         </div>
-        <div class="time-particle" id="quantumClock">--:--:--</div>
+      </div>
+    </section>
+
+    <!-- COMMAND -->
+    <div class="divider reveal"><span class="lbl"><i></i>Command</span><span class="ln"></span><span class="cnt">07 modules</span></div>
+    <div class="tiles" data-section="Command">
+      <a class="tile reveal" href="systems.html" data-label="Systems Control Surface"><span class="tic">▣</span><span class="tbody"><span class="tlabel">Systems Control Surface</span><span class="tsub">Operations Console</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="artemis-percival.html" data-label="AVALON ARTEMIS PERCIVAL"><span class="tic">⬣</span><span class="tbody"><span class="tlabel">AVALON · ARTEMIS ⊕ PERCIVAL</span><span class="tsub">Flagship Core</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="percival-os.html" data-label="PERCIVAL OS"><span class="tic">◐</span><span class="tbody"><span class="tlabel">PERCIVAL OS</span><span class="tsub">Governance</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="sentinel.html" data-label="SENTINEL Live"><span class="tag"><i></i>Live</span><span class="tic">◉</span><span class="tbody"><span class="tlabel">SENTINEL · Live</span><span class="tsub">Security Research</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="aegis.html" data-label="AEGIS Legal Shield"><span class="tic">⚖</span><span class="tbody"><span class="tlabel">AEGIS · Legal Shield</span><span class="tsub">Compliance</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="agentmesh.html" data-label="Agent Mesh"><span class="tic">⌗</span><span class="tbody"><span class="tlabel">Agent Mesh</span><span class="tsub">Orchestration</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="command-console.html" data-label="Command Console"><span class="tic">▤</span><span class="tbody"><span class="tlabel">Command Console</span><span class="tsub">Control</span></span><span class="tgo">→</span></a>
     </div>
 
-    <div class="grid-main">
-        <!-- LEFT: Command Surface Dropdown Area (main focus) -->
-        <div class="glass-card dropdown-hub">
-            <div class="dropdown-trigger" id="dropdownTrigger">
-                <span>🌀 Command Surface <span class="trigger-sub">[Neural Nexus]</span></span>
-                <span class="dropdown-icon" id="dropdownIcon">▼</span>
-            </div>
-
-            <div id="dropdownMenu" class="dropdown-menu hidden">
-                <div class="search-area">
-                    <input type="text" id="commandSearch" class="search-input" placeholder="🔍 search command surface… (filter every platform)">
-                </div>
-                <div class="commands-list" id="commandsListContainer">
-                    <!-- dynamic commands injected via js -->
-                </div>
-            </div>
-
-            <div style="margin-top: 1.2rem; display: flex; gap: 12px; align-items: center; flex-wrap:wrap;">
-                <div style="font-family:var(--mono); font-size: 0.66rem; letter-spacing:0.06em; color:var(--text-3); background: rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.16); border-radius: 999px; padding: 0.25rem 0.8rem;">⚡ AGENT MESH ACTIVE</div>
-                <div style="font-family:var(--mono); font-size: 0.66rem; letter-spacing:0.06em; color:var(--text-3); background: rgba(167,139,250,0.1); border:1px solid rgba(167,139,250,0.16); border-radius: 999px; padding: 0.25rem 0.8rem;">🧠 PERCIVAL NEURO-LINK</div>
-            </div>
-        </div>
-
-        <!-- RIGHT PANEL: telemetry + AI Operator / ClearPulse -->
-        <div class="glass-panel neuro-panel">
-            <div class="status-ring">
-                <div class="metric"><div class="label">AI OPERATOR</div><div class="value" id="aiStatus">SYNAPSE</div></div>
-                <div class="metric"><div class="label">RELIABILITY</div><div class="value" id="quantumRel">99.98%</div></div>
-                <div class="metric"><div class="label">SENTINEL</div><div class="value" id="sentinelVal">ACTIVE</div></div>
-            </div>
-            <div class="shield-toggle">
-                <span>🛡️ AEGIS · Legal Shield</span>
-                <div id="shieldToggleBtn" class="toggle-switch active">
-                    <div class="toggle-knob"></div>
-                </div>
-            </div>
-            <div>
-                <div class="pulse-label">📡 CLEARPULSE · Neural Bandwidth</div>
-                <div style="height: 6px; background: rgba(10,12,16,0.08); border-radius: 999px; margin-top: 8px; overflow:hidden;">
-                    <div id="bandwidthFill" style="width: 87%; height: 100%; background: var(--crystal); border-radius: 999px;"></div>
-                </div>
-            </div>
-            <div class="platform-grid">
-                <span class="platform-pill">Artemis IV Core</span>
-                <span class="platform-pill">Artemis OS</span>
-                <span class="platform-pill">Guardian</span>
-                <span class="platform-pill">ClearGlass NEXUS</span>
-                <span class="platform-pill">Government</span>
-                <span class="platform-pill">ClearPulse</span>
-                <span class="platform-pill">BLUEDESK</span>
-            </div>
-            <div class="console-log">
-                <div class="log-header"><span>📟 COMMAND LOG [NEURAL FEED]</span><span id="logGlow">●</span></div>
-                <div class="log-area" id="logArea">
-                    <div class="log-entry">&gt; SYSTEM_READY // PERCIVAL OS · Control Surface</div>
-                    <div class="log-entry">&gt; AEGIS legal shield engaged // mesh stable</div>
-                    <div class="log-entry">&gt; await command surface input…</div>
-                </div>
-            </div>
-        </div>
+    <!-- PLATFORMS -->
+    <div class="divider reveal"><span class="lbl"><i></i>Platforms</span><span class="ln"></span><span class="cnt">08 systems</span></div>
+    <div class="tiles" data-section="Platforms">
+      <a class="tile reveal" href="artemis-iv.html" data-label="Artemis IV Core"><span class="tic">🧭</span><span class="tbody"><span class="tlabel">Artemis IV Core</span><span class="tsub">Intelligence Engine</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="artemis.html" data-label="Artemis VI"><span class="tic">🛰</span><span class="tbody"><span class="tlabel">Artemis VI</span><span class="tsub">Latest Platform</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="guardian.html" data-label="Guardian"><span class="tic">🌐</span><span class="tbody"><span class="tlabel">Guardian</span><span class="tsub">Secure Browser</span></span><span class="tgo">→</span></a>
+      <a class="tile bd reveal" href="bluedesk.html" data-label="BLUEDESK CISO Console"><span class="tic">🛡</span><span class="tbody"><span class="tlabel">BLUEDESK</span><span class="tsub">CISO Risk Console</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="clearglass-nexus.html" data-label="ClearGlass NEXUS"><span class="tic">🛡</span><span class="tbody"><span class="tlabel">ClearGlass NEXUS</span><span class="tsub">Command Nexus</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="government.html" data-label="Government"><span class="tic">🏛</span><span class="tbody"><span class="tlabel">Government</span><span class="tsub">Public Sector</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="clearpulse.html" data-label="ClearPulse"><span class="tic">📡</span><span class="tbody"><span class="tlabel">ClearPulse</span><span class="tsub">Live Telemetry</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="traffic-enforcement.html" data-label="Traffic Enforcement"><span class="tic">🚦</span><span class="tbody"><span class="tlabel">Traffic Enforcement</span><span class="tsub">Speed Vision AI</span></span><span class="tgo">→</span></a>
     </div>
 
-    <!-- intelligence strip + footer -->
-    <div class="glass-card" style="padding: 1rem 1.5rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:0.6rem;">
-        <div><span style="font-weight: 700;">🧠 Intelligence Stream</span> <span style="font-family: var(--mono); font-size:0.8rem; color:var(--text-3);">ClearGlass · AVALON ARTEMIS</span></div>
-        <div style="font-family:var(--mono); font-size:0.78rem; color:var(--text-3);">🌐 PERCIVAL · Agent Mesh: 12 active nodes</div>
-        <div style="font-family: var(--mono); font-size:0.78rem; color:var(--text-3);">clearglassinc.github.io</div>
+    <!-- INTELLIGENCE -->
+    <div class="divider reveal"><span class="lbl"><i></i>Intelligence</span><span class="ln"></span><span class="cnt">04 surfaces</span></div>
+    <div class="tiles" data-section="Intelligence">
+      <a class="tile reveal" href="intelligence.html" data-label="Intelligence"><span class="tic">🧠</span><span class="tbody"><span class="tlabel">Intelligence</span><span class="tsub">Signal Core</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="intelligence-command-surface.html" data-label="Command Surface"><span class="tic">🗺</span><span class="tbody"><span class="tlabel">Command Surface</span><span class="tsub">Mission Map</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="intelligence-interface.html" data-label="Interface"><span class="tic">🖥</span><span class="tbody"><span class="tlabel">Interface</span><span class="tsub">Operator View</span></span><span class="tgo">→</span></a>
+      <a class="tile reveal" href="revenue-engine.html" data-label="Revenue Engine"><span class="tic">💹</span><span class="tbody"><span class="tlabel">Revenue Engine</span><span class="tsub">Growth Ops</span></span><span class="tgo">→</span></a>
     </div>
-    <div class="footer">⚡ CRYSTAL INTERFACE · GLASS CONTROL SURFACE · CLEARGLASS INC</div>
+
+  </main>
+
+  <footer>
+    <div><a href="index.html">ClearGlass Inc</a> · Systems Control Surface v3.1 — next-gen command dashboard</div>
+    <div class="meta">Governed by PERCIVAL · light glass build · press <b>⌘K</b> / <b>/</b> to command</div>
+  </footer>
+
+</div>
+
+<!-- command palette -->
+<div class="pal-ov" id="palOv" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="pal-scrim" id="palScrim"></div>
+  <div class="pal">
+    <div class="pal-top"><span class="pic">⌕</span>
+      <input id="palInput" type="text" placeholder="Search the control surface…" aria-label="Search destinations" autocomplete="off">
+      <span class="esc">ESC</span></div>
+    <div class="pal-list" id="palList" role="listbox" aria-label="Results"></div>
+  </div>
 </div>
 
 <script>
-    // =================== COMMAND SURFACE DATASET — every item links to its real page ===================
-    const commandsDataset = {
-        "COMMAND": [
-            { name: "Systems Control Surface", icon: "🎛️", tag: "CORE", link: "systems.html" },
-            { name: "AVALON · ARTEMIS ⊕ PERCIVAL", icon: "⚙️", tag: "PRIME", link: "artemis-percival.html" },
-            { name: "PERCIVAL OS", icon: "🧬", tag: "OS", link: "percival-os.html" },
-            { name: "PERCIVAL Build", icon: "🏗️", tag: "BUILD", link: "percival-build.html" },
-            { name: "SENTINEL · Live", icon: "👁️", tag: "ACTIVE", link: "sentinel.html" },
-            { name: "AEGIS · Legal Shield", icon: "🛡️", tag: "PROTECT", link: "aegis.html" },
-            { name: "Agent Mesh", icon: "🕸️", tag: "MESH", link: "agentmesh.html" },
-            { name: "BLUEDESK · CISO Console", icon: "📊", tag: "SEC", link: "bluedesk.html" },
-            { name: "AI Operator", icon: "🤖", tag: "NEURAL", link: "ai-operator.html" },
-            { name: "Command Console", icon: "⌨️", tag: "TERM", link: "command-console.html" },
-            { name: "Event Control Surface", icon: "🌊", tag: "EVENT", link: "control-surface.html" }
-        ],
-        "PLATFORMS": [
-            { name: "Artemis IV Core", icon: "💠", tag: "PLATFORM", link: "artemis-iv.html" },
-            { name: "Artemis OS", icon: "🔮", tag: "OS", link: "artemis-os.html" },
-            { name: "Artemis Blue Team", icon: "🔵", tag: "OSINT", link: "artemis-blue-team.html" },
-            { name: "ClearGlass NEXUS", icon: "🔷", tag: "HUB", link: "clearglass-nexus.html" },
-            { name: "Guardian", icon: "🛰️", tag: "DEFENSE", link: "guardian.html" },
-            { name: "Government", icon: "🏛️", tag: "FEDERAL", link: "government.html" },
-            { name: "ClearPulse", icon: "📡", tag: "HEALTH", link: "clearpulse.html" },
-            { name: "ClearPulse Architecture", icon: "📐", tag: "WHITEPAPER", link: "clearpulse-architecture.html" },
-            { name: "CG OS · Command HUD", icon: "🦾", tag: "HUD", link: "CG-os.html" },
-            { name: "StegoForge", icon: "🔐", tag: "CYBER", link: "stegoforge.html" },
-            { name: "ATT&CK Prompt Core", icon: "🎯", tag: "OFFENSE", link: "attack-prompt-core.html" },
-            { name: "SaaS Platform", icon: "☁️", tag: "SAAS", link: "saas-platform.html" },
-            { name: "Revenue Engine", icon: "⚡", tag: "AUTOMATION", link: "revenue-engine.html" },
-            { name: "Satellite Map", icon: "🛰️", tag: "GEOINT", link: "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13" }
-        ],
-        "LEGAL & FINANCE": [
-            { name: "ClearBank Legal AI", icon: "🏦", tag: "BANKING", link: "banking-law-advisor.html" },
-            { name: "ClearCounsel Corporate Legal", icon: "⚖️", tag: "CORPORATE", link: "corporate-legal-advisor.html" },
-            { name: "ClearTax AI", icon: "🧾", tag: "TAX", link: "tax.html" }
-        ],
-        "INTELLIGENCE": [
-            { name: "Intelligence", icon: "🧠", tag: "ANALYSIS", link: "intelligence.html" },
-            { name: "Intelligence Command Surface", icon: "🛰️", tag: "COMMAND", link: "intelligence-command-surface.html" },
-            { name: "Ontario OSINT Deck", icon: "🛰️", tag: "OSINT", link: "Ontario-osint.html" }
-        ],
-        "NAVIGATE": [
-            { name: "Home", icon: "🏠", tag: "HOME", link: "index.html" },
-            { name: "Pricing & Engagements", icon: "💎", tag: "PRICING", link: "pricing.html" }
-        ]
-    };
+(function(){
+  "use strict";
+  var REPO="ClearGlassInc/ClearGlassInc.github.io";
+  var reduce=false; try{reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;}catch(e){}
+  var fine=false; try{fine=matchMedia("(hover:hover) and (pointer:fine)").matches;}catch(e){}
+  var $=function(id){return document.getElementById(id);};
 
-    const CATEGORY_ORDER = ["COMMAND", "PLATFORMS", "LEGAL & FINANCE", "INTELLIGENCE", "NAVIGATE"];
+  /* clock */
+  var clk=$("clock");
+  (function t(){ if(clk) clk.textContent=new Date().toISOString().slice(11,19)+" UTC"; setTimeout(t,1000); })();
 
-    let allCommandsFlat = [];
-    for (let cat in commandsDataset) {
-        commandsDataset[cat].forEach(cmd => {
-            allCommandsFlat.push({ ...cmd, category: cat });
-        });
-    }
+  /* count-up + reveal */
+  function countUp(el){
+    var target=parseFloat(el.getAttribute("data-count"))||0,dur=1100,t0=null;
+    if(reduce){el.textContent=target;return;}
+    requestAnimationFrame(function s(ts){if(t0===null)t0=ts;var p=Math.min((ts-t0)/dur,1);
+      el.textContent=Math.round(target*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(s);});
+  }
+  var counted=false;function fireCounts(){if(counted)return;counted=true;
+    document.querySelectorAll("[data-count]").forEach(countUp);}
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){
+      en.target.classList.add("in");
+      if(en.target.querySelector&&en.target.querySelector("[data-count]"))fireCounts();
+      io.unobserve(en.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+    document.querySelectorAll(".reveal").forEach(function(el,i){el.style.transitionDelay=(Math.min(i,8)*45)+"ms";io.observe(el);});
+    setTimeout(fireCounts,1500);
+  } else { document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in");});fireCounts(); }
 
-    function escapeAttr(str) {
-        return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
+  /* AI Operator: live latency + cycling status */
+  var mLat=$("mLat");
+  if(mLat && !reduce){ setInterval(function(){ if(!counted)return;
+    var v=38+Math.round(Math.random()*12); mLat.textContent=v; },2600); }
+  var opStatus=$("opStatus");
+  var phrases=["Orchestrating mission graph…","Routing intelligence signals…","Governing the agent mesh…",
+    "Verifying AEGIS legal shield…","Synthesizing ClearPulse telemetry…","Holding the line · nominal"];
+  if(opStatus && !reduce){ var pi=0; setInterval(function(){ pi=(pi+1)%phrases.length;
+    opStatus.style.opacity="0"; setTimeout(function(){opStatus.textContent=phrases[pi];opStatus.style.opacity="1";},260);
+  },3400); opStatus.style.transition="opacity .26s ease"; }
 
-    function buildCommandList(filterText = "") {
-        const container = document.getElementById("commandsListContainer");
-        if (!container) return;
-        const filterLower = filterText.toLowerCase();
-        let filtered = allCommandsFlat.filter(item => item.name.toLowerCase().includes(filterLower));
-        const grouped = {};
-        filtered.forEach(item => {
-            if (!grouped[item.category]) grouped[item.category] = [];
-            grouped[item.category].push(item);
-        });
-
-        let html = "";
-        for (let cat of CATEGORY_ORDER) {
-            if (grouped[cat] && grouped[cat].length) {
-                html += `<div class="command-category"><div class="cat-title">${escapeAttr(cat)}</div>`;
-                grouped[cat].forEach(cmd => {
-                    html += `
-                        <a class="command-item" href="${escapeAttr(cmd.link)}" data-cmddisplay="${escapeAttr(cmd.name)}" data-cmdlink="${escapeAttr(cmd.link)}">
-                            <span class="cmd-icon">${cmd.icon}</span>
-                            <span class="cmd-name">${escapeAttr(cmd.name)}</span>
-                            <span class="cmd-tag">${escapeAttr(cmd.tag)}</span>
-                        </a>
-                    `;
-                });
-                html += `</div>`;
-            }
-        }
-        if (filtered.length === 0) html = `<div style="padding:1rem; text-align:center; color:var(--text-3); font-family:var(--mono); font-size:0.8rem;">⛔ no command found</div>`;
-        container.innerHTML = html;
-
-        // attach handlers: log the command, then navigate to its real page
-        document.querySelectorAll('.command-item').forEach(el => {
-            el.addEventListener('click', (e) => {
-                e.preventDefault();
-                const cmdName = el.getAttribute('data-cmddisplay') || "unknown";
-                const link = el.getAttribute('data-cmdlink');
-                executeCommand(cmdName);
-                document.getElementById("dropdownMenu").classList.add("hidden");
-                document.getElementById("dropdownIcon").innerHTML = "▼";
-                dropdownVisible = false;
-                if (link) {
-                    const ext = /^https?:/i.test(link);
-                    setTimeout(() => { if (ext) window.open(link, "_blank", "noopener"); else window.location.href = link; }, 260);
-                }
-            });
-        });
-    }
-
-    // Command execution with log + AI operator response
-    function executeCommand(cmdName) {
-        const logArea = document.getElementById("logArea");
-        const timestamp = new Date().toLocaleTimeString();
-        const logEntry = document.createElement("div");
-        logEntry.className = "log-entry";
-        logEntry.innerHTML = `[${timestamp}] &gt; ROUTE:: ${cmdName}  // neural handshake OK`;
-        logArea.appendChild(logEntry);
-        logEntry.scrollIntoView({ behavior: "smooth", block: "nearest" });
-
-        const aiResponses = [
-            "🌀 PERCIVAL orchestrating", "🔮 predictive path active", "⚡ latency 0.4ms",
-            "🧠 neural mesh integrated", "🛡️ AEGIS integrity verified", "📡 ClearPulse analyzing"
-        ];
-        const extra = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-        setTimeout(() => {
-            const respLog = document.createElement("div");
-            respLog.className = "log-entry";
-            respLog.innerHTML = `   ↳ AI Operator: ${extra}  // → ${cmdName.substring(0, 24)}`;
-            logArea.appendChild(respLog);
-            respLog.scrollIntoView({ behavior: "smooth" });
-            const sentinelSpan = document.getElementById("sentinelVal");
-            if (sentinelSpan) {
-                sentinelSpan.style.opacity = "0.7";
-                setTimeout(() => { sentinelSpan.style.opacity = "1"; }, 200);
-            }
-            let quantumSpan = document.getElementById("quantumRel");
-            let newVal = (99.92 + Math.random() * 0.07).toFixed(2);
-            quantumSpan.innerText = `${newVal}%`;
-        }, 120);
-    }
-
-    // dropdown logic
-    let dropdownVisible = false;
-    const trigger = document.getElementById("dropdownTrigger");
-    const dropdownMenu = document.getElementById("dropdownMenu");
-    const dropdownIconSpan = document.getElementById("dropdownIcon");
-
-    function toggleDropdown(show) {
-        if (show === undefined) dropdownVisible = !dropdownVisible;
-        else dropdownVisible = show;
-        if (dropdownVisible) {
-            dropdownMenu.classList.remove("hidden");
-            dropdownIconSpan.innerHTML = "▲";
-            const searchInput = document.getElementById("commandSearch");
-            if (searchInput) {
-                searchInput.value = "";
-                buildCommandList("");
-            } else buildCommandList("");
-        } else {
-            dropdownMenu.classList.add("hidden");
-            dropdownIconSpan.innerHTML = "▼";
-        }
-    }
-
-    trigger.addEventListener("click", (e) => {
-        e.stopPropagation();
-        toggleDropdown();
+  /* pointer-tracked glare + 3D tilt on tiles, + cursor spotlight */
+  var spot=$("spot");
+  if(fine && !reduce){
+    window.addEventListener("pointermove",function(e){
+      spot.style.opacity="1";spot.style.setProperty("--mx",e.clientX+"px");spot.style.setProperty("--my",e.clientY+"px");
+    },{passive:true});
+    document.querySelectorAll(".tile").forEach(function(t){
+      var raf=0,rx=0,ry=0;
+      t.addEventListener("pointermove",function(e){
+        var r=t.getBoundingClientRect();
+        var px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+        t.style.setProperty("--gx",(px*100)+"%");t.style.setProperty("--gy",(py*100)+"%");
+        ry=Math.max(-1,Math.min(1,px*2-1))*4; rx=Math.max(-1,Math.min(1,py*2-1))*-4;
+        if(!raf)raf=requestAnimationFrame(function(){raf=0;
+          t.style.transform="translateY(-4px) perspective(720px) rotateX("+rx+"deg) rotateY("+ry+"deg)";});
+      });
+      t.addEventListener("pointerleave",function(){if(raf){cancelAnimationFrame(raf);raf=0;}t.style.transform="";});
     });
+  }
 
-    document.addEventListener("click", function(e) {
-        if (dropdownVisible && !trigger.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            toggleDropdown(false);
-        }
+  /* ── ⌘K command palette (indexes the real tiles) ── */
+  var palOv=$("palOv"),palInput=$("palInput"),palList=$("palList"),palScrim=$("palScrim");
+  var isMac=/Mac|iPhone|iPad/i.test(navigator.platform||navigator.userAgent);
+  var kh=$("kHint"); if(kh) kh.textContent=isMac?"⌘K":"Ctrl K";
+  var DATA=[{label:"AI Operator",sub:"Live core",href:"ai-operator.html",icon:"🜂",section:"Command"}];
+  document.querySelectorAll(".tiles").forEach(function(grid){
+    var section=grid.getAttribute("data-section")||"";
+    grid.querySelectorAll(".tile").forEach(function(t){
+      DATA.push({label:t.querySelector(".tlabel").textContent.trim(),
+        sub:(t.querySelector(".tsub")||{}).textContent||"",href:t.getAttribute("href"),
+        icon:t.querySelector(".tic").textContent.trim(),section:section,
+        key:(t.getAttribute("data-label")||"")+" "+t.querySelector(".tlabel").textContent});
     });
-
-    const searchField = document.getElementById("commandSearch");
-    if (searchField) {
-        searchField.addEventListener("input", (e) => {
-            buildCommandList(e.target.value);
-        });
-    }
-
-    // AEGIS shield toggle + bandwidth simulation + clock
-    const shieldToggle = document.getElementById("shieldToggleBtn");
-    let shieldActive = true;
-    shieldToggle.addEventListener("click", () => {
-        shieldActive = !shieldActive;
-        if (shieldActive) {
-            shieldToggle.classList.add("active");
-            addLogEntry("🛡️ AEGIS Legal Shield REACTIVATED · protection nominal");
-        } else {
-            shieldToggle.classList.remove("active");
-            addLogEntry("⚠️ AEGIS Legal Shield PAUSED · regulatory override standby");
-        }
+  });
+  var opts=[],active=-1;
+  function render(q){
+    q=(q||"").trim().toLowerCase();palList.innerHTML="";opts=[];active=-1;
+    var rows=DATA.filter(function(d){return !q||((d.key||d.label)+" "+d.sub+" "+d.section).toLowerCase().indexOf(q)>-1;});
+    if(!rows.length){palList.innerHTML='<div class="pal-empty">No matches for “'+q+'”</div>';return;}
+    var lastSec=null;
+    rows.forEach(function(d,i){
+      if(d.section!==lastSec&&!q){var gl=document.createElement("div");gl.className="pal-gl";gl.textContent=d.section;palList.appendChild(gl);lastSec=d.section;}
+      var a=document.createElement("a");a.className="pal-opt";a.href=d.href;a.setAttribute("role","option");a.setAttribute("aria-selected","false");
+      a.innerHTML='<span class="pi"></span><span class="pl"></span><span class="pm">↵</span>';
+      a.querySelector(".pi").textContent=d.icon;a.querySelector(".pl").textContent=d.label;
+      a.addEventListener("mousemove",function(){setActive(i);});
+      a.addEventListener("click",function(e){e.preventDefault();go(d.href);});
+      palList.appendChild(a);opts.push(a);
     });
+    setActive(0);
+  }
+  function setActive(i){ if(!opts.length)return; if(opts[active])opts[active].setAttribute("aria-selected","false");
+    active=(i+opts.length)%opts.length; var el=opts[active]; el.setAttribute("aria-selected","true");
+    var r=el.getBoundingClientRect(),pr=palList.getBoundingClientRect();
+    if(r.bottom>pr.bottom)palList.scrollTop+=r.bottom-pr.bottom; else if(r.top<pr.top)palList.scrollTop-=pr.top-r.top; }
+  function go(href){ if(href) window.location.href=href; }
+  function openPal(){palOv.classList.add("open");palInput.value="";render("");setTimeout(function(){palInput.focus();},30);}
+  function closePal(){palOv.classList.remove("open");}
+  $("openPal").addEventListener("click",openPal);
+  palScrim.addEventListener("click",closePal);
+  palInput.addEventListener("input",function(){render(palInput.value);});
+  palInput.addEventListener("keydown",function(e){
+    if(e.key==="ArrowDown"){e.preventDefault();setActive(active+1);}
+    else if(e.key==="ArrowUp"){e.preventDefault();setActive(active-1);}
+    else if(e.key==="Enter"){e.preventDefault();if(opts[active])go(opts[active].getAttribute("href"));}
+  });
+  document.addEventListener("keydown",function(e){
+    if((e.metaKey||e.ctrlKey)&&(e.key==="k"||e.key==="K")){e.preventDefault();palOv.classList.contains("open")?closePal():openPal();}
+    else if(e.key==="/"&&!/INPUT|TEXTAREA/.test((e.target||{}).tagName)&&!palOv.classList.contains("open")){e.preventDefault();openPal();}
+    else if(e.key==="Escape"&&palOv.classList.contains("open")){closePal();}
+  },true);
 
-    function addLogEntry(msg) {
-        const logArea = document.getElementById("logArea");
-        const entry = document.createElement("div");
-        entry.className = "log-entry";
-        entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${msg}`;
-        logArea.appendChild(entry);
-        entry.scrollIntoView({ behavior: "smooth" });
+  /* live deploy telemetry (keyless GitHub Actions; degrades to offline) */
+  function setDeploy(cls,txt){var d=$("dDeploy"),t=$("tDeploy");if(d)d.className="dot "+cls;if(t)t.textContent="Deploy · "+txt;}
+  fetch("https://api.github.com/repos/"+REPO+"/actions/runs?per_page=10",{headers:{Accept:"application/vnd.github+json"}})
+    .then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(function(d){var runs=(d&&d.workflow_runs)||[];
+      if(!runs.length){setDeploy("warn","no runs");return;}
+      if(runs.some(function(r){return r.status!=="completed";})){setDeploy("sync","pipeline running");return;}
+      var c=runs[0].conclusion;
+      if(c==="success")setDeploy("ok","build healthy");
+      else if(c==="failure"||c==="timed_out"||c==="startup_failure")setDeploy("bad","pipeline failure");
+      else setDeploy("warn","degraded");})
+    .catch(function(){setDeploy("","offline");});
+
+  /* ── animated constellation canvas (light theme) ── */
+  var cv=$("bg"); if(cv && !reduce){
+    var ctx=cv.getContext("2d"),W,H,DPR=Math.min(window.devicePixelRatio||1,2),pts=[],N=0,mx=-999,my=-999,raf;
+    var COLORS=["56,189,248","99,102,241","6,182,212","167,139,250"];
+    function size(){W=cv.width=innerWidth*DPR;H=cv.height=innerHeight*DPR;cv.style.width=innerWidth+"px";cv.style.height=innerHeight+"px";
+      N=Math.min(72,Math.round(innerWidth*innerHeight/26000));init();}
+    function init(){pts=[];for(var i=0;i<N;i++)pts.push({x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.16*DPR,vy:(Math.random()-.5)*.16*DPR,r:(Math.random()*1.6+.8)*DPR,c:COLORS[i%COLORS.length]});}
+    window.addEventListener("pointermove",function(e){mx=e.clientX*DPR;my=e.clientY*DPR;},{passive:true});
+    function frame(){raf=requestAnimationFrame(frame);ctx.clearRect(0,0,W,H);
+      var link=120*DPR;
+      for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+        var dmx=p.x-mx,dmy=p.y-my,dm=Math.sqrt(dmx*dmx+dmy*dmy);
+        if(dm<150*DPR){p.x+=dmx/dm*.4;p.y+=dmy/dm*.4;}
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.2832);ctx.fillStyle="rgba("+p.c+",.5)";ctx.fill();
+        for(var j=i+1;j<pts.length;j++){var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+          if(d<link){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+            ctx.strokeStyle="rgba("+p.c+","+(.16*(1-d/link)).toFixed(3)+")";ctx.lineWidth=DPR;ctx.stroke();}}}
     }
-
-    let bandwidthInterval = setInterval(() => {
-        const bandwidthFill = document.getElementById("bandwidthFill");
-        if (bandwidthFill) {
-            let newWidth = 65 + Math.random() * 30;
-            bandwidthFill.style.width = `${newWidth}%`;
-            let aiStatusSpan = document.getElementById("aiStatus");
-            const statuses = ["SYNAPSE", "NEURAL LINK", "QUANTUM AI", "PERCIVAL CORE"];
-            aiStatusSpan.innerText = statuses[Math.floor(Math.random() * statuses.length)];
-        }
-        const sentinelLive = document.getElementById("sentinelVal");
-        if (sentinelLive) {
-            sentinelLive.innerText = shieldActive ? "ACTIVE" : "STANDBY";
-        }
-    }, 3200);
-
-    function updateClock() {
-        const now = new Date();
-        let hours = now.getHours().toString().padStart(2,'0');
-        let minutes = now.getMinutes().toString().padStart(2,'0');
-        let seconds = now.getSeconds().toString().padStart(2,'0');
-        document.getElementById("quantumClock").innerHTML = `${hours}:${minutes}:${seconds}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    buildCommandList("");
-
-    setTimeout(() => {
-        addLogEntry("🤖 AI Operator online · ClearGlass Control Surface");
-        addLogEntry("🌀 Command Surface ready — search any platform");
-    }, 500);
-
-    // ========== CANVAS BACKGROUND: PRISM PARTICLE FIELD + NEON GRID ==========
-    const canvas = document.getElementById("bg-canvas");
-    const ctx = canvas.getContext("2d");
-    let width, height;
-    let particles = [];
-    const PARTICLE_COUNT = 70;
-    const PRISM = ["56,189,248", "167,139,250", "244,114,182", "52,211,153", "96,165,250"];
-
-    function resizeCanvas() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-    }
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.3;
-            this.vy = (Math.random() - 0.5) * 0.2;
-            this.size = Math.random() * 2 + 1.2;
-            this.alpha = Math.random() * 0.4 + 0.2;
-            this.color = PRISM[Math.floor(Math.random() * PRISM.length)];
-        }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x < 0) this.x = width;
-            if (this.x > width) this.x = 0;
-            if (this.y < 0) this.y = height;
-            if (this.y > height) this.y = 0;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${this.color}, ${this.alpha * 0.55})`;
-            ctx.fill();
-        }
-    }
-
-    function initParticles() {
-        particles = [];
-        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
-    }
-
-    function drawGrid() {
-        ctx.strokeStyle = "rgba(56, 189, 248, 0.08)";
-        ctx.lineWidth = 1;
-        const step = 56;
-        for (let x = 0; x < width; x += step) {
-            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
-        }
-        for (let y = 0; y < height; y += step) {
-            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
-        }
-        let time = Date.now() / 1500;
-        for (let i = 0; i < 3; i++) {
-            ctx.beginPath();
-            ctx.arc(width * 0.2 + Math.sin(time) * 30, height * 0.7, 80 + Math.sin(time) * 15, 0, Math.PI*2);
-            ctx.strokeStyle = `rgba(167, 139, 250, 0.10)`;
-            ctx.stroke();
-        }
-    }
-
-    function animateBackground() {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, width, height);
-        drawGrid();
-        particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animateBackground);
-    }
-
-    window.addEventListener("resize", () => { resizeCanvas(); initParticles(); });
-    resizeCanvas();
-    initParticles();
-    animateBackground();
-
-    console.log("⚡ ClearGlass Control Surface · Crystal Glass Dropdown · Linked Navigation");
+    window.addEventListener("resize",size);
+    document.addEventListener("visibilitychange",function(){if(document.hidden){cancelAnimationFrame(raf);}else{frame();}});
+    size();frame();
+  }
+})();
 </script>
-  <script defer src="/logo-badge.js"></script>
+<script defer src="/logo-badge.js"></script>
 <script defer src="/stealth-glass.js"></script>
 </body>
 </html>

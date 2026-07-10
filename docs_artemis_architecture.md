@@ -486,3 +486,553 @@ def authorize(subject: Subject, action: Action) -> tuple[bool, str]:
         return False, "compartment_block"
     return True, "allow"
 ```
+
+---
+
+## Production Implementation Blueprint — ClearGlassInc Artemis Reference Build
+
+This section turns the platform concept into an implementation-ready build plan for a secure, coalition-aware deployment that uses **Gotham** for investigations and operational entity tracking, **Foundry** for data integration and ontology-backed applications, **AIP** for governed copilots and agents, and **Apollo** for controlled deployment, rollback, and runtime operations.
+
+### System Architecture
+
+#### Layered Reference Architecture
+
+```text
+[Secure Web UI]
+  ├─ Analyst Workbench: graph, map, timeline, evidence, notebook
+  ├─ Commander Console: risk posture, COA comparison, approval queue
+  ├─ PromptOps Console: prompt diffs, eval scorecards, release approvals
+  └─ Governance Console: policy simulation, audit replay, coalition visibility
+        │
+        ▼
+[API Gateway / BFF]
+  ├─ OAuth2/OIDC + hardware-backed MFA
+  ├─ tenant/mission/compartment context injection
+  ├─ request signing, rate limits, payload validation
+  └─ GraphQL + REST + WebSocket fanout
+        │
+        ▼
+[Domain Services]
+  ├─ ingest-service        ├─ ontology-query-service
+  ├─ fusion-service        ├─ agent-runtime-service
+  ├─ case-service          ├─ approval-service
+  ├─ feedback-service      ├─ evalops-service
+  └─ release-control-service
+        │
+        ├──────────────► [Foundry: data products, ontology, actions, transforms]
+        ├──────────────► [Gotham: investigations, entities, links, operational workflows]
+        ├──────────────► [AIP: copilots, agents, tools, evals, model routing]
+        └──────────────► [Apollo: deployment rings, health gates, rollback]
+```
+
+#### Production Service Boundaries
+
+| Service | Responsibility | Critical APIs | Data Owned |
+|---|---|---|---|
+| `ingest-service` | Normalize live and historical feeds into bronze/silver data products. | `/v1/intake`, `/v1/connectors/{id}/poll` | raw events, connector checkpoints |
+| `fusion-service` | Entity resolution, correlation, confidence scoring, link creation. | `/v1/fusion/run`, `/v1/correlation/explain` | entity candidates, merge decisions |
+| `ontology-query-service` | Policy-filtered reads against Foundry ontology/Gotham graph. | `/v1/ontology/search`, `/v1/entities/{id}` | read projections, cached query plans |
+| `agent-runtime-service` | AIP-backed planning, tool invocation, agent state, citations. | `/v1/agents/runs`, `/v1/agents/{id}/events` | agent traces, tool calls |
+| `approval-service` | Human gates, dual control, state transitions, action packages. | `/v1/actions/{id}/approve` | approvals, action state |
+| `feedback-service` | Operator feedback, corrections, labels, trust signals. | `/v1/feedback`, `/v1/outcomes` | feedback events, outcome labels |
+| `evalops-service` | Offline replays, A/B tests, prompt/model/workflow evaluations. | `/v1/evals/run`, `/v1/evals/scorecards` | eval datasets, scorecards |
+| `release-control-service` | Prompt/workflow/router/policy release proposals and Apollo promotion. | `/v1/releases/propose`, `/v1/releases/promote` | release manifest, rollback pointer |
+
+### Data and Ontology
+
+#### Ontology Objects
+
+```yaml
+ontology:
+  objects:
+    Actor:
+      properties: [name, aliases, actor_type, country, confidence, classification]
+    Organization:
+      properties: [legal_name, sector, subsidiaries, external_ids]
+    CyberAsset:
+      properties: [asset_type, hostname, ip, domain, software, owner_org, exposure]
+    Event:
+      properties: [event_type, event_time, severity, summary, source_reliability]
+    Signal:
+      properties: [signal_type, raw_payload_hash, normalized_fields, extraction_model]
+    Case:
+      properties: [case_status, mission_id, lead_analyst, priority, sla_deadline]
+    ActionPackage:
+      properties: [recommended_action, risk, required_approval, state, rollback_plan]
+    PromptRelease:
+      properties: [family, version, candidate_id, eval_score, approval_state]
+  links:
+    - OBSERVED_AT: {from: Event, to: GeoAsset}
+    - TARGETS: {from: Actor, to: CyberAsset}
+    - INDICATES: {from: Signal, to: Event}
+    - DERIVED_FROM: {from: ActionPackage, to: Event}
+    - PART_OF_CASE: {from: Event, to: Case}
+    - USED_PROMPT: {from: ActionPackage, to: PromptRelease}
+```
+
+#### Bitemporal, Lineage-Aware Entity Model
+
+```sql
+create table ontology_object_state (
+  object_id uuid not null,
+  object_type text not null,
+  state jsonb not null,
+  confidence numeric(5,4) not null,
+  classification text not null,
+  releasability text[] not null,
+  compartments text[] not null,
+  valid_from timestamptz not null,
+  valid_to timestamptz,
+  transaction_from timestamptz not null default now(),
+  transaction_to timestamptz,
+  lineage jsonb not null,
+  primary key (object_id, transaction_from)
+);
+
+create index ontology_object_state_gin on ontology_object_state using gin (state);
+create index ontology_object_state_policy on ontology_object_state (classification, compartments);
+```
+
+The ontology drives human workflows by determining what appears in Gotham investigations, Foundry operational applications, case boards, and commander briefings. It drives agent behavior by constraining the tools an AIP agent can call, the rows it can retrieve, the relationships it may traverse, and the operational actions it may prepare.
+
+### AI and Agent Design
+
+#### Agent Runtime Contract
+
+```python
+from enum import Enum
+from pydantic import BaseModel, Field
+from typing import Any
+
+class RiskTier(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    OPERATIONAL = "operational"
+
+class AgentToolCall(BaseModel):
+    tool_name: str
+    args: dict[str, Any]
+    purpose: str
+    expected_artifact: str
+
+class AgentPlan(BaseModel):
+    mission_id: str
+    run_id: str
+    objective: str
+    risk_tier: RiskTier
+    tool_calls: list[AgentToolCall]
+    approval_required: bool = True
+    citations_required: bool = True
+    max_latency_ms: int = Field(default=1500, ge=100)
+```
+
+#### Mission Agent Workflow
+
+```mermaid
+stateDiagram-v2
+  [*] --> Intake
+  Intake --> Triage
+  Triage --> Enrichment
+  Enrichment --> Correlation
+  Correlation --> Recommendation
+  Recommendation --> HumanApproval: operational impact
+  Recommendation --> IntelProduct: informational only
+  HumanApproval --> ExecutionPrep: approved
+  HumanApproval --> Rework: rejected/corrected
+  ExecutionPrep --> OutcomeCapture
+  IntelProduct --> OutcomeCapture
+  Rework --> FeedbackCapture
+  OutcomeCapture --> EvalDatasetUpdate
+  FeedbackCapture --> EvalDatasetUpdate
+  EvalDatasetUpdate --> CandidateGeneration
+  CandidateGeneration --> HumanReleaseReview
+  HumanReleaseReview --> ApolloCanary: approved
+  HumanReleaseReview --> Archive: rejected
+```
+
+### Self-Improvement Loop
+
+ClearGlassInc Artemis improves by treating every operator interaction as governed telemetry, not as permission for uncontrolled autonomous behavior.
+
+#### Signal-to-Upgrade Pipeline
+
+```text
+operator feedback + corrections + outcomes + latency + policy denials
+  → normalized feedback.events stream
+  → stratified eval dataset builder
+  → candidate prompt/workflow/router generation
+  → offline replay against gold cases and adversarial policy tests
+  → scorecard: precision, recall, citation coverage, latency, cost, trust, violations
+  → human release board approval
+  → signed release manifest
+  → Apollo ringed canary
+  → automatic rollback on regression
+```
+
+#### Upgrade Candidate Schema
+
+```python
+from datetime import datetime
+from pydantic import BaseModel
+
+class UpgradeCandidate(BaseModel):
+    candidate_id: str
+    artifact_type: str  # prompt | workflow | router | heuristic | policy
+    artifact_family: str
+    base_version: str
+    proposed_version: str
+    rationale: str
+    generated_from_signals: list[str]
+    offline_metrics: dict[str, float]
+    safety_tests: dict[str, bool]
+    created_at: datetime
+    requires_human_approval: bool = True
+```
+
+#### Safe Release Decision Logic
+
+```python
+MINIMUMS = {
+    "precision": 0.90,
+    "recall": 0.84,
+    "citation_coverage": 0.98,
+    "policy_violations": 0.0,
+    "p95_latency_ms": 1200,
+}
+
+def is_release_candidate(champion: dict[str, float], challenger: dict[str, float]) -> tuple[bool, list[str]]:
+    reasons: list[str] = []
+    if challenger["precision"] < MINIMUMS["precision"]:
+        reasons.append("precision_floor")
+    if challenger["recall"] < MINIMUMS["recall"]:
+        reasons.append("recall_floor")
+    if challenger["citation_coverage"] < MINIMUMS["citation_coverage"]:
+        reasons.append("citation_floor")
+    if challenger["policy_violations"] > MINIMUMS["policy_violations"]:
+        reasons.append("policy_violation")
+    if challenger["p95_latency_ms"] > MINIMUMS["p95_latency_ms"]:
+        reasons.append("latency_regression")
+    if challenger["precision"] - champion["precision"] < 0.015:
+        reasons.append("insufficient_precision_lift")
+    return len(reasons) == 0, reasons
+```
+
+### Full-Stack Implementation
+
+#### Web UI Route Map
+
+```text
+/app
+  /dashboard              mission status, alerts, trust metrics
+  /cases/[caseId]         entity graph, timeline, evidence, agent transcript
+  /approvals              operational action queue with dual-control signing
+  /evals                  champion/challenger scorecards and drift charts
+  /governance/policies    Rego bundle viewer and policy simulator
+  /governance/releases    prompt/workflow/router release board
+```
+
+#### TypeScript API Client
+
+```ts
+export type ActionState = "draft" | "pending_approval" | "approved" | "rejected" | "executed" | "rolled_back";
+
+export interface ActionPackage {
+  id: string;
+  missionId: string;
+  summary: string;
+  risk: number;
+  state: ActionState;
+  citations: string[];
+  rollbackPlan: string;
+}
+
+export async function approveAction(id: string, reason: string, mfaToken: string): Promise<ActionPackage> {
+  const res = await fetch(`/v1/actions/${id}/approve`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-mfa-token": mfaToken },
+    body: JSON.stringify({ reason }),
+  });
+  if (!res.ok) throw new Error(`approval failed: ${res.status}`);
+  return res.json();
+}
+```
+
+#### Python Event Consumer
+
+```python
+import json
+from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
+
+async def consume_raw_events() -> None:
+    consumer = AIOKafkaConsumer("intel.raw", bootstrap_servers="redpanda:9092", group_id="fusion-service")
+    producer = AIOKafkaProducer(bootstrap_servers="redpanda:9092")
+    await consumer.start()
+    await producer.start()
+    try:
+        async for msg in consumer:
+            raw = json.loads(msg.value)
+            enriched = await enrich_and_resolve(raw)
+            await producer.send_and_wait("intel.enriched", json.dumps(enriched).encode())
+    finally:
+        await consumer.stop()
+        await producer.stop()
+```
+
+#### Ontology-Driven Query Tool
+
+```python
+class OntologyQueryRequest(BaseModel):
+    mission_id: str
+    user_id: str
+    query_text: str
+    object_types: list[str]
+    limit: int = 25
+
+async def ontology_search(req: OntologyQueryRequest) -> list[dict]:
+    decision = await opa.evaluate("artemis/read", req.model_dump())
+    if not decision["allow"]:
+        raise PermissionError(decision.get("reason", "policy_denied"))
+    sql = """
+      select object_id, object_type, state, confidence, lineage
+      from ontology_object_state
+      where object_type = any($1)
+        and classification <= $2
+        and compartments && $3
+        and transaction_to is null
+      order by confidence desc
+      limit $4
+    """
+    return await db.fetch(sql, req.object_types, decision["max_classification"], decision["allowed_compartments"], req.limit)
+```
+
+#### Eval Dataset Builder
+
+```python
+async def build_eval_dataset(window_hours: int = 168) -> list[dict]:
+    rows = await db.fetch(
+        """
+        select f.event_id, f.operator_label, f.correction, a.prompt_version,
+               a.workflow_version, a.model_route, a.latency_ms, a.citations
+        from feedback_event f
+        join agent_run a on a.run_id = f.run_id
+        where f.created_at > now() - ($1 || ' hours')::interval
+          and f.operator_label is not null
+        """,
+        window_hours,
+    )
+    return [dict(row) for row in rows]
+```
+
+### Security and Governance
+
+#### Policy Model
+
+```rego
+package artemis.read
+
+default allow = false
+
+allow {
+  input.mission_id == data.user_missions[input.user_id][_]
+  every c in input.required_compartments { c in data.user_compartments[input.user_id] }
+  input.requested_classification <= data.user_clearance[input.user_id]
+}
+```
+
+Security controls are enforced at multiple layers: API gateway context binding, service-level OPA checks, Foundry/Gotham ontology permissions, database row/column/entity filters, AIP tool contracts, and Apollo runtime controls. Agents never receive raw unrestricted datasets; they receive policy-filtered tool outputs with citations and lineage.
+
+#### Immutable Audit Events
+
+```json
+{
+  "event_type": "action_approval_decision",
+  "actor": "user:commander-17",
+  "mission_id": "mission:artemis-2026-06-29",
+  "action_id": "action:segmentation-8841",
+  "decision": "approved",
+  "policy_bundle": "artemis-policy@2.4.1",
+  "prompt_version": "triage@3.18.0",
+  "workflow_version": "intel-response@4.2.0",
+  "timestamp": "2026-06-29T14:11:23Z",
+  "hash_prev": "b4b7...",
+  "hash_self": "7df2..."
+}
+```
+
+### Scenario Walkthrough
+
+1. A live cyber signal enters `intel.raw` from a connector and is written to a Foundry bronze data product with source hash, connector version, and receipt time.
+2. The fusion service normalizes it, links it to a `CyberAsset`, raises confidence through corroborating evidence, and writes ontology links visible in Gotham.
+3. AIP starts an `intel-response-v3` workflow. The triage agent queries only the mission-authorized ontology slice, summarizes the event, and cites lineage IDs.
+4. The enrichment and correlation agents identify a likely operational impact and prepare an `ActionPackage` with risk, confidence, expected impact, and rollback plan.
+5. The commander sees the recommendation in the approval console. The action cannot execute until a human supplies reason code, MFA, and—if risk is high—dual authorization.
+6. The operator approves a constrained response. Apollo confirms the target runtime and canary ring, applies the change, and streams health metrics back to the case.
+7. Outcome labels flow into `feedback.events`: true positive, low collateral impact, commander accepted with minor wording correction, p95 decision latency under target.
+8. EvalOps turns the correction into a regression test. A learning agent proposes a prompt update that improves citation density and reduces over-warning.
+9. The candidate passes offline evals and policy adversarial tests, but it remains inert until the human release board approves it.
+10. Apollo deploys the signed prompt manifest to Ring0. If precision, latency, citation coverage, or rejection rate regresses beyond thresholds, Artemis automatically rolls back to the previous prompt version and logs the decision.
+
+### Implementation Sequencing
+
+```text
+Phase 0: governance baseline — identity, policy-as-code, audit ledger, ontology permissions
+Phase 1: ingestion/fusion — connectors, event streams, Foundry data products, entity resolution
+Phase 2: operator workflows — Gotham cases, analyst workbench, approval service, commander console
+Phase 3: AIP copilots — tool registry, agent runtime, citations, model router, guarded recommendations
+Phase 4: EvalOps — feedback capture, gold datasets, offline replay, A/B testing, drift detection
+Phase 5: self-improvement — candidate generation, release board, Apollo canary, automated rollback
+```
+
+---
+
+## Mission Research Domain Extension — Ionospheric / Space-Weather Intelligence
+
+ClearGlassInc Artemis can also operate as a research intelligence fabric for ionospheric physics, space weather, radio-wave propagation, and the operational effects of ionospheric variability on communication, radar, and navigation systems. In this mode, Gotham represents facilities, campaigns, transmitters, receivers, radar tracks, observations, hypotheses, and investigation cases; Foundry integrates live and historical science data into governed data products and ontology objects; AIP assists researchers with correlation, experiment design, summarization, and reproducible analysis; and Apollo controls secure deployment of models, pipelines, prompts, and edge collectors across research sites.
+
+### Research Mission Objectives
+
+* Advance understanding of natural ionospheric processes influenced by solar activity, geomagnetic storms, neutral atmosphere coupling, and seasonal/diurnal variability.
+* Study small-scale artificial effects with strict governance, bounded experiments, transparent provenance, and explicit human approval gates.
+* Improve models of high-frequency radio propagation, radar over-the-horizon behavior, GNSS scintillation, and communication outages.
+* Support international researchers through coalition-aware workspaces, open-house education modes, publishable provenance bundles, and releasability-aware collaboration.
+
+### Research Data Products
+
+| Foundry Data Product | Example Sources | Update Mode | Primary Consumers |
+|---|---|---:|---|
+| `space_weather_bronze` | NOAA SWPC, solar wind, Kp/Dst/F10.7, GOES X-ray flux | streaming + batch | triage agents, dashboards |
+| `ionogram_silver` | ionosondes, ISR, digisonde traces, autoscaled foF2/hmF2 | near real time | propagation models |
+| `gnss_scintillation_silver` | receiver networks, S4, sigma-phi, TEC | streaming | navigation-risk scoring |
+| `radar_link_gold` | radar path metadata, link budgets, observed fades | batch + event | mission planners |
+| `experiment_campaign_gold` | campaign plans, approved windows, observations, outcomes | workflow-driven | researchers, governance board |
+
+### Research Ontology Additions
+
+```yaml
+ontology_extensions:
+  objects:
+    ResearchFacility:
+      properties: [name, location, operator, capabilities, releasability]
+    Instrument:
+      properties: [instrument_type, frequency_range, calibration_state, owner, site]
+    IonosphericObservation:
+      properties: [timestamp, latitude, longitude, altitude_km, parameter, value, uncertainty]
+    SpaceWeatherEvent:
+      properties: [event_class, start_time, peak_time, end_time, kp, dst, f107, source_region]
+    PropagationPath:
+      properties: [tx_site, rx_site, frequency_mhz, path_length_km, mode, expected_loss_db]
+    ResearchCampaign:
+      properties: [campaign_id, hypothesis, approved_window, principal_investigator, ethics_review]
+    ExperimentAction:
+      properties: [action_type, bounded_parameters, approval_state, rollback_plan, observed_effect]
+  links:
+    - MEASURED_BY: {from: IonosphericObservation, to: Instrument}
+    - OBSERVED_DURING: {from: IonosphericObservation, to: SpaceWeatherEvent}
+    - AFFECTS_PATH: {from: SpaceWeatherEvent, to: PropagationPath}
+    - PART_OF_CAMPAIGN: {from: ExperimentAction, to: ResearchCampaign}
+    - VALIDATES_HYPOTHESIS: {from: IonosphericObservation, to: ResearchCampaign}
+```
+
+### Python Precision Model for Propagation Risk
+
+```python
+from dataclasses import dataclass
+from math import exp
+
+@dataclass(frozen=True)
+class IonoFeatures:
+    kp_index: float
+    dst_nt: float
+    f107_sfu: float
+    tec_tecu: float
+    scintillation_s4: float
+    solar_zenith_deg: float
+    frequency_mhz: float
+
+
+def sigmoid(x: float) -> float:
+    return 1.0 / (1.0 + exp(-x))
+
+
+def propagation_disruption_probability(x: IonoFeatures) -> float:
+    """Deterministic, auditable baseline scorer used before ML calibration.
+
+    The coefficients are intentionally transparent. AIP can propose new coefficients
+    or feature transforms, but promotion requires offline evals, policy checks, and
+    human approval before Apollo deploys the model artifact.
+    """
+    storm_pressure = 0.34 * x.kp_index + 0.018 * max(0.0, -x.dst_nt)
+    ionization_pressure = 0.006 * x.f107_sfu + 0.027 * x.tec_tecu
+    scintillation_pressure = 2.15 * x.scintillation_s4
+    hf_penalty = 0.55 if 3.0 <= x.frequency_mhz <= 30.0 else 0.15
+    daylight_term = max(0.0, 1.0 - x.solar_zenith_deg / 120.0)
+    logit = -5.25 + storm_pressure + ionization_pressure + scintillation_pressure + hf_penalty + daylight_term
+    return round(sigmoid(logit), 4)
+```
+
+### Research Agent Workflow
+
+```python
+from pydantic import BaseModel, Field
+from typing import Literal
+
+class ResearchQuestion(BaseModel):
+    question: str
+    campaign_id: str
+    allowed_data_products: list[str]
+    max_classification: str
+    require_publishable_sources: bool = True
+
+class ResearchFinding(BaseModel):
+    claim: str
+    confidence: float = Field(ge=0, le=1)
+    evidence_object_ids: list[str]
+    caveats: list[str]
+    recommended_next_experiment: str | None
+
+async def answer_research_question(q: ResearchQuestion) -> ResearchFinding:
+    policy = await opa.evaluate("artemis/research_read", q.model_dump())
+    if not policy["allow"]:
+        raise PermissionError(policy.get("reason", "research_policy_denied"))
+
+    observations = await query_foundry_ontology(
+        object_types=["IonosphericObservation", "SpaceWeatherEvent", "PropagationPath"],
+        data_products=q.allowed_data_products,
+        filters={"campaign_id": q.campaign_id, "classification_lte": q.max_classification},
+    )
+    correlation = await run_reproducible_notebook("iono_correlation_v2", observations)
+    return ResearchFinding(
+        claim=correlation.summary,
+        confidence=correlation.confidence,
+        evidence_object_ids=correlation.evidence_ids,
+        caveats=correlation.limitations,
+        recommended_next_experiment=correlation.next_experiment,
+    )
+```
+
+### Governance for Research and Public Education Modes
+
+* **Research mode** exposes only approved, need-to-know datasets and records every query, notebook run, model route, and generated finding.
+* **Coalition collaboration mode** adds releasability filters, export review, data minimization, and object-level provenance bundles.
+* **Open-house education mode** uses sanitized synthetic data, public-source space-weather feeds, non-sensitive visualizations, and disabled operational action tools.
+* **Experiment mode** requires campaign approval, bounded parameters, real-time safety monitors, stop conditions, and immutable after-action records.
+
+```rego
+package artemis.research_action
+
+default allow = false
+
+allow {
+  input.action.type == "analysis_only"
+  input.user.id in data.campaign_members[input.campaign_id]
+  input.dataset.releasability[_] == input.user.coalition
+}
+
+allow {
+  input.action.type == "experiment_prepare"
+  input.campaign.approval_state == "approved"
+  input.user.role == "principal_investigator"
+  input.action.requires_execution == false
+}
+```

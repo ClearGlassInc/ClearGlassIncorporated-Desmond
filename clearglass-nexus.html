@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
+<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#07111f">
+<meta name="msapplication-TileColor" content="#07111f">
+<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform |</title>
+<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform | ClearGlass Inc.</title>
 <meta name="description" content="ClearGlass NEXUS v12 — a live intelligence platform fusing geospatial, threat, market, and space-weather feeds into one operations center.">
 <link rel="canonical" href="https://clearglassinc.github.io/clearglass-nexus.html">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -506,6 +516,37 @@ body::after{
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes sweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+
+
+/* ═══════════════════════════════════════════════════════════
+   NEXUS v12.4 — OPERATIONAL INTELLIGENCE EXPERIENCE UPGRADE
+   Adds mission cockpit, anchor navigation, AI insight surfaces,
+   collapsible intel modules, timeline, and premium motion layers.
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --nx-panel:rgba(3,6,18,.68);
+  --nx-panel-2:rgba(10,18,36,.52);
+  --nx-line:rgba(0,221,255,.18);
+  --nx-glow:0 0 22px rgba(0,221,255,.16),0 0 42px rgba(55,10,245,.12);
+  --nx-hot:rgba(247,59,239,.82);
+  --nx-ok:rgba(0,255,136,.86);
+  --nx-info:rgba(0,221,255,.86);
+}
+#cmd-nav{position:sticky;top:99px;z-index:398;display:flex;gap:6px;align-items:center;overflow-x:auto;padding:7px 16px;background:linear-gradient(180deg,rgba(3,6,18,.92),rgba(2,0,8,.78));border-bottom:1px solid var(--nx-line);backdrop-filter:blur(12px)}
+.nav-chip{flex:0 0 auto;text-decoration:none;color:var(--wt2);font-size:6px;letter-spacing:1.8px;border:1px solid rgba(0,221,255,.16);border-radius:999px;padding:5px 10px;background:rgba(0,221,255,.025);transition:all .2s ease}
+.nav-chip:hover,.nav-chip:focus{color:var(--cy);border-color:rgba(0,221,255,.44);box-shadow:0 0 14px rgba(0,221,255,.12);outline:none;transform:translateY(-1px)}
+.command-hero{position:relative;overflow:hidden;border:1px solid rgba(0,221,255,.16);background:radial-gradient(circle at 12% 0%,rgba(0,221,255,.14),transparent 30%),radial-gradient(circle at 88% 15%,rgba(247,59,239,.12),transparent 28%),linear-gradient(135deg,rgba(6,10,26,.9),rgba(0,0,0,.62));box-shadow:var(--nx-glow);border-radius:6px;padding:16px;isolation:isolate}
+.command-hero::before{content:'';position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 38%,rgba(0,221,255,.08) 48%,transparent 58%);animation:nxShimmer 6s linear infinite;z-index:-1}.command-hero::after{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--cy),var(--rd),transparent);animation:nxScan 3.8s ease-in-out infinite}
+@keyframes nxShimmer{to{transform:translateX(35%)}}@keyframes nxScan{0%,100%{opacity:.2;transform:translateY(0)}50%{opacity:.9;transform:translateY(150px)}}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;align-items:stretch}.hero-eyebrow{font-size:6px;letter-spacing:3px;color:var(--cy);margin-bottom:8px}.hero-title{font-size:clamp(20px,4vw,48px);line-height:1;letter-spacing:4px;color:var(--wt);text-shadow:0 0 24px rgba(0,221,255,.28)}.hero-copy{max-width:850px;color:var(--wt2);font-size:9px;line-height:1.8;margin:10px 0 12px}.hero-actions{display:flex;gap:8px;flex-wrap:wrap}.nx-btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid rgba(0,221,255,.34);border-radius:3px;padding:8px 12px;color:var(--cy);background:rgba(0,221,255,.05);font-size:7px;letter-spacing:2px;box-shadow:0 0 18px rgba(0,221,255,.08);transition:all .2s}.nx-btn:hover{transform:translateY(-1px);background:rgba(0,221,255,.1);box-shadow:0 0 26px rgba(0,221,255,.16)}.nx-btn.hot{color:#050112;background:linear-gradient(90deg,var(--cy),var(--am2));border-color:transparent;font-weight:700}
+.mission-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.metric-card{position:relative;overflow:hidden;padding:10px;border-radius:4px;border:1px solid rgba(0,221,255,.13);background:linear-gradient(180deg,rgba(0,221,255,.055),rgba(55,10,245,.025));min-height:74px}.metric-card::after{content:'';position:absolute;inset:auto 0 0;height:2px;background:linear-gradient(90deg,var(--cy),var(--am),var(--rd));opacity:.55}.metric-label{font-size:5px;color:var(--al);letter-spacing:2px}.metric-value{font-size:20px;color:var(--cy);font-weight:700;line-height:1.1;margin:7px 0 2px}.metric-note{font-size:5.5px;color:var(--wt3);line-height:1.5}.metric-card.alert .metric-value{color:var(--rd)}.metric-card.safe .metric-value{color:var(--gn)}
+.ops-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:7px}.intel-panel{border:1px solid rgba(0,221,255,.12);background:var(--nx-panel);border-radius:4px;overflow:hidden;box-shadow:var(--sh)}.intel-panel-h{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid rgba(0,221,255,.12);background:rgba(0,221,255,.035)}.intel-panel-t{font-size:7px;letter-spacing:2.5px;color:var(--cy)}.status-chip{font-size:5px;letter-spacing:1.5px;border:1px solid currentColor;border-radius:999px;padding:3px 7px;color:var(--gn);background:rgba(0,255,136,.04);white-space:nowrap}.status-chip.hot{color:var(--rd);background:rgba(247,59,239,.05)}.status-chip.watch{color:var(--or);background:rgba(95,10,245,.05)}.intel-panel-b{padding:10px}.triage-row{display:grid;grid-template-columns:82px 1fr 45px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(0,221,255,.06);font-size:7px}.triage-src{color:var(--wt2)}.triage-bar{height:5px;background:rgba(255,255,255,.05);border-radius:999px;overflow:hidden}.triage-fill{height:100%;background:linear-gradient(90deg,var(--gn),var(--cy),var(--rd));border-radius:999px;animation:nxPulseBar 2.8s ease-in-out infinite}.triage-val{color:var(--cy);text-align:right}@keyframes nxPulseBar{50%{filter:brightness(1.45)}}
+.ai-card{padding:8px;border:1px solid rgba(55,10,245,.12);border-radius:3px;background:rgba(55,10,245,.035);margin-bottom:7px}.ai-card strong{display:block;font-size:7px;letter-spacing:1.5px;color:var(--am);margin-bottom:4px}.ai-card p{font-size:6.5px;line-height:1.75;color:var(--wt2)}.timeline{position:relative;padding-left:12px}.timeline::before{content:'';position:absolute;left:3px;top:4px;bottom:4px;width:1px;background:linear-gradient(var(--cy),var(--rd))}.tl-item{position:relative;padding:0 0 10px 8px}.tl-item::before{content:'';position:absolute;left:-12px;top:2px;width:7px;height:7px;border-radius:50%;background:var(--cy);box-shadow:0 0 8px var(--cy)}.tl-time{font-size:5px;letter-spacing:1.5px;color:var(--al)}.tl-title{font-size:7px;color:var(--wt);margin:2px 0}.tl-desc{font-size:6px;color:var(--wt3);line-height:1.6}
+details.intel-detail{border:1px solid rgba(0,221,255,.1);border-radius:3px;background:rgba(0,0,0,.28);margin-top:7px}details.intel-detail summary{cursor:pointer;list-style:none;padding:8px 10px;color:var(--cy);font-size:7px;letter-spacing:2px}details.intel-detail summary::-webkit-details-marker{display:none}details.intel-detail summary::after{content:'EXPAND +';float:right;color:var(--al);font-size:5px}details.intel-detail[open] summary::after{content:'COLLAPSE −'}.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 10px 10px}.microviz{height:38px;border:1px solid rgba(0,221,255,.08);border-radius:2px;background:repeating-linear-gradient(90deg,rgba(0,221,255,.08) 0 2px,transparent 2px 8px),linear-gradient(180deg,transparent,rgba(0,221,255,.04));position:relative;overflow:hidden}.microviz::after{content:'';position:absolute;inset:auto 0 0;height:55%;background:linear-gradient(135deg,transparent 0 20%,rgba(0,221,255,.16) 20% 28%,transparent 28% 42%,rgba(247,59,239,.12) 42% 50%,transparent 50%)}
+section{scroll-margin-top:140px}
+@media(max-width:900px){#cmd-nav{top:48px}.hero-grid,.ops-grid{grid-template-columns:1fr}.mission-strip{grid-template-columns:repeat(2,1fr)}.detail-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.mission-strip{grid-template-columns:1fr}.command-hero{padding:12px}.hero-title{letter-spacing:2px}.triage-row{grid-template-columns:70px 1fr 38px}}
 
 /* ── RESPONSIVE ── */
 @media(max-width:1400px){.g5{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(2,1fr)}}
@@ -1322,16 +1363,81 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
   <button class="cb" onclick="toggleSett()">⚙ SETTINGS</button>
   <button class="cb solid" onclick="toggleAria()">◈ ARIA</button>
 </div>
+<nav id="cmd-nav" aria-label="NEXUS section navigation">
+  <a class="nav-chip" href="#ops-cockpit">OPS COCKPIT</a>
+  <a class="nav-chip" href="#location-intelligence">LOCATION</a>
+  <a class="nav-chip" href="#sky-intelligence">SKY</a>
+  <a class="nav-chip" href="#orbital-maritime-grid">ORBITAL·GRID</a>
+  <a class="nav-chip" href="#financial-intelligence">FINANCIAL</a>
+  <a class="nav-chip" href="#news-intelligence">NEWS</a>
+  <a class="nav-chip" href="#intelligence-brief-events">BRIEF</a>
+  <a class="nav-chip" href="#cam-section">CAMERAS</a>
+</nav>
 
 <!-- ═══════════════════════════════════════════════════
      MAIN CONTENT
 ════════════════════════════════════════════════════ -->
 <div id="main">
 
+<section id="ops-cockpit" aria-labelledby="ops-title">
+  <div class="command-hero">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">CLEARGLASSINC ARTEMIS · MACHINE-SPEED INTELLIGENCE FUSION</div>
+        <h2 class="hero-title" id="ops-title">NEXUS v12 OPERATIONAL COMMAND FABRIC</h2>
+        <p class="hero-copy">A live intelligence cockpit layering geospatial, cyber, financial, environmental, orbital, maritime, and camera feeds into one auditable mission-control surface. This upgrade preserves the original NEXUS content while adding higher-density analysis, AI-style reasoning cues, and command-ready decision surfaces.</p>
+        <div class="hero-actions">
+          <a class="nx-btn hot" href="#intelligence-brief-events">GENERATE SITREP PATH</a>
+          <a class="nx-btn" href="#cam-section">OPEN SENSOR GRID</a>
+          <a class="nx-btn" href="#news-intelligence">REVIEW SIGNALS</a>
+        </div>
+      </div>
+      <div class="mission-strip" aria-label="Operational mission metrics">
+        <div class="metric-card safe"><div class="metric-label">MISSION STATE</div><div class="metric-value">LIVE</div><div class="metric-note">continuous feed arbitration</div></div>
+        <div class="metric-card"><div class="metric-label">FUSION LAYERS</div><div class="metric-value">12</div><div class="metric-note">OSINT · GEO · CYBER · GRID</div></div>
+        <div class="metric-card alert"><div class="metric-label">WATCHLIST</div><div class="metric-value">σ2.5</div><div class="metric-note">anomaly threshold active</div></div>
+        <div class="metric-card"><div class="metric-label">HUMAN GATE</div><div class="metric-value">ON</div><div class="metric-note">approval required for action</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ops-grid" style="margin-top:7px">
+    <div class="intel-panel">
+      <div class="intel-panel-h"><span class="intel-panel-t">SIGNAL TRIAGE · MULTI-DOMAIN RISK POSTURE</span><span class="status-chip">LIVE STYLE</span></div>
+      <div class="intel-panel-b">
+        <div class="triage-row"><span class="triage-src">CYBER</span><span class="triage-bar"><span class="triage-fill" style="display:block;width:68%"></span></span><span class="triage-val">68%</span></div>
+        <div class="triage-row"><span class="triage-src">GEO</span><span class="triage-bar"><span class="triage-fill" style="display:block;width:51%"></span></span><span class="triage-val">51%</span></div>
+        <div class="triage-row"><span class="triage-src">SPACE WX</span><span class="triage-bar"><span class="triage-fill" style="display:block;width:42%"></span></span><span class="triage-val">42%</span></div>
+        <div class="triage-row"><span class="triage-src">INFRA</span><span class="triage-bar"><span class="triage-fill" style="display:block;width:74%"></span></span><span class="triage-val">74%</span></div>
+        <details class="intel-detail">
+          <summary>COLLAPSIBLE ANALYTIC DETAIL · MODEL ROUTING AND CONFIDENCE</summary>
+          <div class="detail-grid">
+            <div><div class="metric-label">ROUTER</div><div class="microviz" aria-hidden="true"></div><div class="metric-note">fast path for low-risk summaries</div></div>
+            <div><div class="metric-label">EVALS</div><div class="microviz" aria-hidden="true"></div><div class="metric-note">precision / recall telemetry placeholder</div></div>
+            <div><div class="metric-label">LINEAGE</div><div class="microviz" aria-hidden="true"></div><div class="metric-note">operator-reviewed provenance chain</div></div>
+          </div>
+        </details>
+      </div>
+    </div>
+    <div class="intel-panel">
+      <div class="intel-panel-h"><span class="intel-panel-t">AI INSIGHT CARDS · HUMAN APPROVAL LOOP</span><span class="status-chip watch">REVIEW</span></div>
+      <div class="intel-panel-b">
+        <div class="ai-card"><strong>ARIA ANALYST NOTE</strong><p>Prioritize correlated infrastructure and cyber anomalies before issuing any operational recommendation. All escalations remain operator-approved.</p></div>
+        <div class="ai-card"><strong>WORKFLOW SELF-IMPROVEMENT</strong><p>Capture accepted/rejected recommendations as eval signals; propose prompt, routing, and threshold changes only as reviewable diffs.</p></div>
+        <div class="timeline" aria-label="Incident timeline">
+          <div class="tl-item"><div class="tl-time">T+00</div><div class="tl-title">Event Ingested</div><div class="tl-desc">Feed normalization, confidence scoring, and ontology linking.</div></div>
+          <div class="tl-item"><div class="tl-time">T+03</div><div class="tl-title">Agent Correlates</div><div class="tl-desc">Signals mapped against mission context and permissions.</div></div>
+          <div class="tl-item"><div class="tl-time">T+07</div><div class="tl-title">Operator Gate</div><div class="tl-desc">Action packages require explicit human approval and audit capture.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ╔══════════════════════════════════
      § 1 — LOCATION INTELLIGENCE
 ═══════════════════════════════════════ -->
-<section>
+<section id="location-intelligence">
   <div class="sh"><span class="sh-t">LOCATION INTELLIGENCE</span><span class="sh-c" id="loc-coords">ACQUIRING FIX…</span></div>
   <div class="gmap">
     <!-- MAP -->
@@ -1368,7 +1474,7 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 <!-- ╔══════════════════════════════════
      § 2 — SKY INTELLIGENCE
 ═══════════════════════════════════════ -->
-<section>
+<section id="sky-intelligence">
   <div class="sh"><span class="sh-t">SKY INTELLIGENCE</span><span class="sh-c">AIRSPACE · SEISMIC · SPACE WEATHER</span></div>
   <div class="g3">
     <!-- AIRSPACE -->
@@ -1419,7 +1525,7 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 <!-- ╔══════════════════════════════════
      § 3 — ORBITAL, MARITIME & GRID
 ═══════════════════════════════════════ -->
-<section>
+<section id="orbital-maritime-grid">
   <div class="sh"><span class="sh-t">ORBITAL · MARITIME · POWER GRID</span><span class="sh-c">ISS · LAKE ONTARIO · IESO</span></div>
   <div class="g3">
     <!-- ISS -->
@@ -1462,7 +1568,7 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 <!-- ╔══════════════════════════════════
      § 4 — FINANCIAL INTELLIGENCE
 ═══════════════════════════════════════ -->
-<section>
+<section id="financial-intelligence">
   <div class="sh"><span class="sh-t">FINANCIAL INTELLIGENCE</span><span class="sh-c">CRYPTO · FX · SENTIMENT</span></div>
   <div class="gfin">
     <!-- CRYPTO -->
@@ -1511,7 +1617,7 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 <!-- ╔══════════════════════════════════
      § 5 — NEWS INTELLIGENCE
 ═══════════════════════════════════════ -->
-<section>
+<section id="news-intelligence">
   <div class="sh"><span class="sh-t">NEWS INTELLIGENCE</span><span class="sh-c">CBC · ENVIRONMENT CANADA · WORLD · TECHNOLOGY · SECURITY</span></div>
   <div class="g2">
     <div class="win">
@@ -1589,7 +1695,7 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 <!-- ╔══════════════════════════════════
      § 6 — INTEL BRIEF & EVENTS
 ═══════════════════════════════════════ -->
-<section>
+<section id="intelligence-brief-events">
   <div class="sh"><span class="sh-t">INTELLIGENCE BRIEF</span><span class="sh-c">AUTO-GENERATED FROM LIVE FEEDS</span></div>
   <div class="g3">
     <div class="win">

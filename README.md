@@ -136,76 +136,59 @@ Includes:
 
 # Repository Structure
 
-```bash
-.
-├── ai/
-├── automation/
-├── blockchain/
-├── infrastructure/
-├── scripts/
-├── research/
-├── products/
-├── docs/
-└── README.md
-```
+This repository is a website and engineering monorepo. The active top-level entry points are:
 
----
+| Path | Purpose | Primary checks |
+| --- | --- | --- |
+| `index.html`, `*.html`, `assets/` | Static GitHub Pages website and product pages. | `python scripts/site_reliability_audit.py` |
+| `artemis/` | Installable Artemis Python package and environmental risk module. | `python -m pytest artemis/tests` |
+| `deployment/artemis/` | Containerized Artemis FastAPI model-service deployment. | `uvicorn deployment.artemis.app.main:app` / Docker build |
+| `bots/`, `scripts/`, `tests/` | Operational automation bots, repository audits, release/content tooling. | `python -m pytest tests` |
+| `sentinel/` | Sentinel defensive intelligence package and tests. | `python -m pytest sentinel/tests` |
+| `clearglass-commerce/` | Commerce control plane plus Storefront/Admin Next.js apps. | `pytest control-plane/tests`; `npm ci && npm run build` in each frontend |
+| `apps/autostore/` | Autostore control plane, cockpit UI, and Docker Compose deployment. | `docker compose`; `npm ci && npm run build` in `cockpit` |
+| `services/clearglass_agent_service/` | Render-deployed lawful risk-intelligence API service. | Docker build / `/health` |
+| `.github/workflows/` | CI/CD workflows for tests, audits, Pages, commerce, policy, security, and scheduled bots. | GitHub Actions |
+| `docs/`, top-level `*.md` | Long-form architecture, governance, and product documentation. | Markdown review |
 
-# ClearGlass Inc — Website & Engineering Monorepo
-
-Public website, governance documentation, and supporting automation for **ClearGlass Inc** — enterprise cybersecurity, secure software architecture, AI automation, and intelligence operations. Founded by **Desmond Otieno Odhiambo** (Founder & Chairman, Software Architect).
-
-The site is published via GitHub Pages from the `main` branch.
-
-## Repository structure
-
-| Path | Purpose |
-| --- | --- |
-| `index.html`, `*.html` | Top-level pages of the public site (`/`, product pages, legal hub). |
-| `assets/` | Site images and static media. |
-| `legal/` | Legal pages and policy templates (privacy, terms, NDAs, IP assignment). |
-| `investors/` | Investor-facing pages and briefing material. |
-| `docs/` | Long-form blueprints, platform designs, and corporate documentation. See `docs/README.md`. |
-| `bots/` | Python automation modules used by scheduled workflows. |
-| `scripts/` | Operational scripts (site integrity, reliability audits, intel automation). |
-| `tests/` | `pytest` suite covering `bots/` and `scripts/`. |
-| `prompts/` | System and agent prompts referenced by the bots. |
-| `infra/` | Terraform configuration for supporting infrastructure. |
-| `runner/` | Self-hosted GitHub Actions runner setup notes. |
-| `.github/workflows/` | CI: Pages build, CodeQL, site integrity/reliability, Python tests, scheduled bots. |
-| `SECURITY.md` | Vulnerability reporting and disclosure policy. |
-| `sitemap.xml`, `robots.txt`, `schema.json` | SEO and discovery metadata. |
-| `.nojekyll` | Disables Jekyll processing on GitHub Pages; the site is served as static HTML. |
+## Local static-site run
 
 ```bash
 python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-A Jekyll build is exercised in CI (`.github/workflows/jekyll-docker.yml`) as a structural check; it is not used to produce the deployed artifact.
-
 ## Python tooling
 
-The bots and scripts target Python 3.11. Tests run on every push and pull request that touches Python sources.
+The Python packages and bots target Python 3.11+ unless a package-specific README says otherwise. The root pytest configuration now includes the major Python test roots.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt   # if present
-pip install pytest
-python -m pytest tests/ -v
+python -m pip install -e .[test]
+python -m pip install -r requirements.txt
+python -m pytest -q
+```
+
+## Frontend tooling
+
+Each Next.js app is intentionally self-contained. Install dependencies in the app directory before building.
+
+```bash
+cd clearglass-commerce/storefront && npm ci && npm run build
+cd ../admin && npm ci && npm run build
+cd ../../apps/autostore/cockpit && npm ci && npm run build
 ```
 
 ## Continuous integration
 
-Workflows in `.github/workflows/` cover:
+Workflows in `.github/workflows/` cover the active CI/CD paths, including:
 
-- `pages-deploy.yml` — publish the site to GitHub Pages.
-- `jekyll-docker.yml` — Jekyll build smoke test on HTML changes.
-- `python-tests.yml` — `pytest` against `bots/` and `scripts/`.
-- `codeql.yml` — CodeQL static analysis.
-- `site-integrity.yml`, `site-reliability.yml`, `server-test.yml` — site health checks.
-- `clearglassinc-coo-bot.yml`, `github-ceo-bot.yml`, `marketing-bot.yml`, `operations-finance-bot.yml` — scheduled automation.
-- `self-hosted-deploy.yml` — self-hosted runner deployment path.
+- `ci.yml` — Python tests, Ruff lint, site reliability audit, workflow doctor, and OSINT deck validation.
+- `pages.yml` — GitHub Pages deployment for the static site.
+- `commerce-frontend-ci.yml` and `commerce-deploy.yml` — commerce frontend validation and deployment.
+- `auto-store.yml` — Autostore validation/deployment path.
+- `security.yml`, `api-security-audit.yml`, `policy-gate.yml`, `release-supply-chain.yml`, and `ip-protection-scan.yml` — security, policy, and supply-chain checks.
+- Scheduled automation workflows such as `bot-orchestrator.yml`, `content-pipeline.yml`, `control-surface-feeds.yml`, `defender-watch.yml`, and `health-monitor.yml`.
 
 ## Documentation
 
@@ -225,3 +208,36 @@ Report vulnerabilities privately to **clearglass369@gmail.com**. Scope, response
 ## Leadership
 
 Founder & Chairman **Desmond Otieno Odhiambo**. See `docs/Desmond_Otieno_Odhiambo_executive_profile.md`.
+
+## Architecture Blueprints
+
+- [ClearGlassInc Artemis full-stack intelligence blueprint](CLEARGLASSINC_ARTEMIS_FULL_STACK_INTELLIGENCE_BLUEPRINT.md)
+
+## ClearGlass Growth Entity
+
+Run the local manual-review growth command system with PowerShell 7:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File .\ClearGlass-GrowthEntity.ps1 -Mode Sample -OpenFolder
+pwsh -ExecutionPolicy Bypass -File .\ClearGlass-GrowthEntity.ps1 -Mode Full -OpenFolder
+```
+
+The script creates `ClearGlassGrowthEntity/` with configuration, content scoring exports,
+daily posting briefs, finance action files, and logs. It is intentionally a planning and
+compliance-review system only; do not store passwords, tokens, cookies, or API secrets in it,
+and do not use it for fake engagement, mass DMs, scraping, or platform-bypass behavior.
+
+## Threads Growth Command Center V3
+
+Run the Python-first, compliant Threads growth command center locally:
+
+```bash
+python -m bots.threads_growth_command_center --mode all --brand-name ClearGlassInc --root-path ./ThreadsGrowthCommandCenter_V3
+python -m bots.threads_growth_command_center --mode add-kpi --root-path ./ThreadsGrowthCommandCenter_V3 --followers 100 --posts 3 --replies 40 --likes 80 --reposts 10 --impressions 1000 --profile-visits 25 --notes "Manual daily closeout"
+```
+
+The system creates a 30-day content calendar, daily manual execution brief,
+copy-editing draft files, KPI tracker, engagement tracker, backups, and a
+self-contained HTML dashboard. It is intentionally a planning, drafting, and
+measurement system only: zero botting, zero scraping, no automated follows,
+likes, comments, reposts, DMs, or storage of platform cookies/session tokens.

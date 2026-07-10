@@ -8,7 +8,7 @@
    Bump VERSION to invalidate all caches on deploy. */
 "use strict";
 
-var VERSION = "cg-v11";
+var VERSION = "cg-v13";
 var PRECACHE = [
   "/",
   "/index.html",

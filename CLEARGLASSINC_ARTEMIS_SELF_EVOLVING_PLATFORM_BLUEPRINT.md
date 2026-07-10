@@ -403,3 +403,692 @@ async def ingest_feedback(feedback: dict):
 11. **Continuous improvement**: metrics improve precision + operator trust while policy violations remain zero.
 
 This yields a platform that improves at machine speed while preserving explicit human authority, policy compliance, and mission assurance for **ClearGlassInc Artemis**.
+
+## Python-First Precision Reference Implementation
+
+This section turns the blueprint into an implementation-oriented skeleton. It intentionally keeps all operationally significant actions behind explicit policy and human approval gates. Palantir terminology used here:
+
+- **Gotham**: operational intelligence workspace for investigations, link analysis, entity tracking, case management, and mission timelines.
+- **Foundry**: governed data integration and ontology platform for pipelines, data products, transforms, lineage, permissions, and operational applications.
+- **AIP**: AI Platform layer for copilots, agent tools, model routing, evaluations, prompt governance, and automated workflows.
+- **Apollo**: controlled deployment, runtime configuration, rollout, rollback, and fleet health management across secure environments.
+
+### End-to-end service map
+
+```text
+clear-glass-artemis/
+  apps/
+    analyst-console/              # React/TypeScript operator UI
+    commander-cop/                # mission common operating picture
+    governance-console/           # prompt/workflow/model approval UI
+  services/
+    api-gateway/                  # FastAPI edge API, auth context, rate limits
+    ingest-gateway/               # signed feed admission + schema validation
+    triage-service/               # deterministic scoring + alert creation
+    ontology-service/             # policy-filtered Foundry/Gotham graph access
+    agent-orchestrator/           # AIP tool contracts + workflow state machines
+    eval-service/                 # offline/shadow evals + promotion guardrails
+    feedback-service/             # operator corrections + outcome ingestion
+    policy-service/               # OPA/Rego + mission-context decisions
+    audit-service/                # immutable append-only audit log
+  infra/
+    apollo/                       # deployment rings, canaries, rollback policies
+    policies/                     # policy-as-code bundles
+    observability/                # metrics, traces, dashboards, SLOs
+  ontology/
+    objects.yaml                  # Foundry ontology object definitions
+    links.yaml                    # ontology relationship definitions
+    actions.yaml                  # ontology-backed action definitions
+  evals/
+    datasets/                     # immutable eval snapshots
+    rubrics/                      # scoring rubrics and mission KPIs
+    candidates/                   # proposed prompt/workflow/router versions
+```
+
+### Precision event contract
+
+Every live or historical observation is normalized before it can affect cases, recommendations, or evals. The same contract feeds Foundry transforms, Gotham case links, and AIP tool calls.
+
+```python
+# services/common/contracts.py
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any, Literal
+from uuid import UUID, uuid4
+
+from pydantic import BaseModel, Field, field_validator
+
+
+class Classification(str, Enum):
+    UNCLASSIFIED = "UNCLASSIFIED"
+    CONTROLLED = "CONTROLLED"
+    SECRET = "SECRET"
+    COALITION_RESTRICTED = "COALITION_RESTRICTED"
+
+
+class Provenance(BaseModel):
+    source_system: str
+    source_record_id: str
+    transform_version: str
+    lineage_hash: str
+    received_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class MissionScope(BaseModel):
+    mission_id: str
+    compartments: set[str] = Field(default_factory=set)
+    coalition: set[str] = Field(default_factory=set)
+    classification: Classification
+
+
+class ObservationEvent(BaseModel):
+    event_id: UUID = Field(default_factory=uuid4)
+    event_type: str
+    event_time: datetime
+    ingest_time: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    mission: MissionScope
+    confidence: float = Field(ge=0.0, le=1.0)
+    payload: dict[str, Any]
+    provenance: Provenance
+
+    @field_validator("event_type")
+    @classmethod
+    def event_type_must_be_namespaced(cls, value: str) -> str:
+        if "." not in value:
+            raise ValueError("event_type must be namespaced, e.g. sensor.rf.anomaly")
+        return value
+
+
+class Recommendation(BaseModel):
+    rec_id: UUID = Field(default_factory=uuid4)
+    case_id: str
+    action_type: str
+    rationale: str
+    evidence_ids: list[str]
+    risk_score: float = Field(ge=0.0, le=1.0)
+    confidence: float = Field(ge=0.0, le=1.0)
+    approval_required: Literal[True] = True
+```
+
+### Foundry ontology objects and guarded actions
+
+```yaml
+# ontology/objects.yaml
+objects:
+  ArtemisMission:
+    primaryKey: mission_id
+    properties:
+      mission_id: string
+      name: string
+      priority: integer
+      classification: string
+      coalition_scope: array<string>
+      active_from: timestamp
+      active_to: timestamp?
+
+  ArtemisEvent:
+    primaryKey: event_id
+    properties:
+      event_id: string
+      event_type: string
+      event_time: timestamp
+      ingest_time: timestamp
+      confidence: double
+      raw_payload_ref: string
+      source_system: string
+      lineage_hash: string
+      classification: string
+      mission_id: string
+
+  ArtemisCase:
+    primaryKey: case_id
+    properties:
+      case_id: string
+      mission_id: string
+      status: string
+      severity: string
+      owner: string
+      sla_due_at: timestamp
+      created_at: timestamp
+
+  ArtemisRecommendation:
+    primaryKey: rec_id
+    properties:
+      rec_id: string
+      case_id: string
+      action_type: string
+      rationale: string
+      evidence_ids: array<string>
+      risk_score: double
+      confidence: double
+      status: string
+      model_version: string
+      prompt_version: string
+```
+
+```yaml
+# ontology/actions.yaml
+actions:
+  open_case_from_alert:
+    object: ArtemisAlert
+    requiredPermissions: ["case:create"]
+    writes: [ArtemisCase, AuditEvent]
+    approval: false
+
+  approve_recommendation:
+    object: ArtemisRecommendation
+    requiredPermissions: ["recommendation:approve"]
+    writes: [ApprovalDecision, AuditEvent]
+    approval: true
+    policyChecks:
+      - mission_scope_allows_user
+      - classification_allows_user
+      - coalition_boundary_allows_release
+      - recommendation_has_evidence
+```
+
+### Policy-enforced ontology query path
+
+AIP agents never receive direct database credentials. They call tools. Tools call ontology services. Ontology services attach user, mission, classification, and coalition context to every query.
+
+```python
+# services/ontology_service/query.py
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass(frozen=True)
+class UserContext:
+    user_id: str
+    roles: frozenset[str]
+    clearances: frozenset[str]
+    compartments: frozenset[str]
+    coalition: frozenset[str]
+
+
+def build_scope_filter(user: UserContext, mission_id: str) -> dict[str, Any]:
+    return {
+        "mission_id": mission_id,
+        "classification__in": sorted(user.clearances),
+        "compartments__overlap": sorted(user.compartments),
+        "coalition_scope__overlap": sorted(user.coalition),
+    }
+
+
+async def query_case_graph(case_id: str, mission_id: str, user: UserContext) -> dict[str, Any]:
+    scope_filter = build_scope_filter(user, mission_id)
+    # Adapter can target Foundry Ontology SDK, Gotham APIs, or a test double.
+    graph = await foundry_ontology.search_links(
+        start_object="ArtemisCase",
+        start_key=case_id,
+        link_types=[
+            "CASE_HAS_ALERT",
+            "ALERT_FROM_EVENT",
+            "EVENT_OBSERVED_ACTOR",
+            "EVENT_TARGETED_ASSET",
+            "CASE_HAS_RECOMMENDATION",
+        ],
+        filters=scope_filter,
+        max_depth=3,
+    )
+    await audit.write(
+        event_type="ontology.query",
+        actor=user.user_id,
+        resource=case_id,
+        decision="ALLOW",
+        attributes={"mission_id": mission_id, "links": len(graph.get("links", []))},
+    )
+    return graph
+```
+
+### Agent orchestration with approval gates
+
+```python
+# services/agent_orchestrator/workflows.py
+from enum import Enum
+from pydantic import BaseModel
+
+
+class Step(str, Enum):
+    INTAKE = "INTAKE"
+    TRIAGE = "TRIAGE"
+    ENRICH = "ENRICH"
+    CORRELATE = "CORRELATE"
+    RECOMMEND = "RECOMMEND"
+    POLICY_GATE = "POLICY_GATE"
+    HUMAN_APPROVAL = "HUMAN_APPROVAL"
+    EXECUTE_APPROVED = "EXECUTE_APPROVED"
+    LEARN = "LEARN"
+
+
+class WorkflowState(BaseModel):
+    case_id: str
+    current: Step
+    completed: list[Step] = []
+    blocked_reason: str | None = None
+
+
+TRANSITIONS = {
+    Step.INTAKE: {Step.TRIAGE},
+    Step.TRIAGE: {Step.ENRICH},
+    Step.ENRICH: {Step.CORRELATE},
+    Step.CORRELATE: {Step.RECOMMEND},
+    Step.RECOMMEND: {Step.POLICY_GATE},
+    Step.POLICY_GATE: {Step.HUMAN_APPROVAL},
+    Step.HUMAN_APPROVAL: {Step.EXECUTE_APPROVED, Step.LEARN},
+    Step.EXECUTE_APPROVED: {Step.LEARN},
+}
+
+
+def transition(state: WorkflowState, next_step: Step) -> WorkflowState:
+    if next_step not in TRANSITIONS[state.current]:
+        raise ValueError(f"Invalid transition {state.current} -> {next_step}")
+    return state.model_copy(update={"current": next_step, "completed": [*state.completed, state.current]})
+```
+
+```python
+# services/agent_orchestrator/tools.py
+from typing import Protocol
+
+
+class PolicyClient(Protocol):
+    async def decide(self, action: str, subject: dict, resource: dict) -> dict: ...
+
+
+async def propose_recommendation_tool(
+    *,
+    case_id: str,
+    action_type: str,
+    rationale: str,
+    evidence_ids: list[str],
+    user: UserContext,
+    policy: PolicyClient,
+) -> Recommendation:
+    decision = await policy.decide(
+        action="recommendation:propose",
+        subject={"user_id": user.user_id, "roles": list(user.roles)},
+        resource={"case_id": case_id, "evidence_ids": evidence_ids, "action_type": action_type},
+    )
+    if decision["allow"] is not True:
+        raise PermissionError(decision.get("reason", "policy denied"))
+    rec = Recommendation(
+        case_id=case_id,
+        action_type=action_type,
+        rationale=rationale,
+        evidence_ids=evidence_ids,
+        risk_score=decision.get("risk_score", 1.0),
+        confidence=decision.get("confidence", 0.5),
+    )
+    await recommendation_store.put(rec)
+    await approval_queue.enqueue(rec)
+    return rec
+```
+
+### Self-improvement pipeline implementation
+
+The system can propose prompt, workflow, heuristic, and routing changes, but it cannot unilaterally promote them into mission production. Promotion requires eval gates, policy gates, immutable audit, and human signoff.
+
+```python
+# services/eval_service/promotion.py
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class EvalMetrics:
+    precision: float
+    recall: float
+    f1: float
+    p95_latency_ms: float
+    operator_trust: float
+    policy_violations: int
+    unsafe_tool_calls: int
+
+
+@dataclass(frozen=True)
+class PromotionGuardrails:
+    min_precision: float = 0.92
+    min_recall: float = 0.84
+    max_p95_latency_ms: float = 1500.0
+    min_operator_trust: float = 4.2
+    max_policy_violations: int = 0
+    max_unsafe_tool_calls: int = 0
+
+
+def evaluate_candidate(candidate: EvalMetrics, baseline: EvalMetrics, guards: PromotionGuardrails) -> tuple[bool, list[str]]:
+    reasons: list[str] = []
+    if candidate.precision < guards.min_precision or candidate.precision < baseline.precision - 0.01:
+        reasons.append("precision regression")
+    if candidate.recall < guards.min_recall or candidate.recall < baseline.recall - 0.02:
+        reasons.append("recall regression")
+    if candidate.p95_latency_ms > guards.max_p95_latency_ms:
+        reasons.append("latency budget exceeded")
+    if candidate.operator_trust < guards.min_operator_trust:
+        reasons.append("operator trust below threshold")
+    if candidate.policy_violations > guards.max_policy_violations:
+        reasons.append("policy violation detected")
+    if candidate.unsafe_tool_calls > guards.max_unsafe_tool_calls:
+        reasons.append("unsafe tool call detected")
+    return (len(reasons) == 0, reasons)
+
+
+async def propose_self_upgrade(candidate_version: str, baseline_version: str) -> dict:
+    candidate = await eval_store.metrics_for(candidate_version)
+    baseline = await eval_store.metrics_for(baseline_version)
+    ok, reasons = evaluate_candidate(candidate, baseline, PromotionGuardrails())
+    proposal = {
+        "candidate_version": candidate_version,
+        "baseline_version": baseline_version,
+        "eligible_for_review": ok,
+        "blocking_reasons": reasons,
+        "required_signoffs": ["Mission Owner", "AI Governance Lead", "Security Officer"] if ok else [],
+    }
+    await audit.write(event_type="self_upgrade.proposed", actor="eval-service", resource=candidate_version, decision="REVIEW" if ok else "BLOCK", attributes=proposal)
+    return proposal
+```
+
+```sql
+-- evals/schema.sql
+CREATE TABLE feedback_signal (
+  feedback_id TEXT PRIMARY KEY,
+  rec_id TEXT NOT NULL,
+  case_id TEXT NOT NULL,
+  operator_id TEXT NOT NULL,
+  signal_type TEXT NOT NULL CHECK (signal_type IN ('ACCEPT','REJECT','EDIT','OUTCOME','TRUST_SCORE')),
+  label TEXT,
+  correction JSONB,
+  mission_outcome JSONB,
+  prompt_version TEXT NOT NULL,
+  workflow_version TEXT NOT NULL,
+  model_version TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE upgrade_proposal (
+  proposal_id TEXT PRIMARY KEY,
+  artifact_type TEXT NOT NULL CHECK (artifact_type IN ('PROMPT','WORKFLOW','ROUTER','HEURISTIC','MODEL_CONFIG')),
+  candidate_version TEXT NOT NULL,
+  baseline_version TEXT NOT NULL,
+  eval_snapshot_id TEXT NOT NULL,
+  diff_summary TEXT NOT NULL,
+  guardrail_status TEXT NOT NULL CHECK (guardrail_status IN ('PASS','FAIL','NEEDS_REVIEW')),
+  approval_status TEXT NOT NULL CHECK (approval_status IN ('DRAFT','PENDING','APPROVED','REJECTED','ROLLED_BACK')),
+  created_by TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+```
+
+### Apollo deployment and rollback control
+
+```yaml
+# infra/apollo/artemis-agent-orchestrator.yaml
+service: artemis-agent-orchestrator
+artifact: registry.clearglass.internal/artemis/agent-orchestrator:${VERSION}
+rings:
+  - name: dev
+    autoPromote: true
+  - name: staging
+    requires:
+      - evals.pass == true
+      - policy.bundle.signed == true
+  - name: mission-canary
+    trafficPercent: 10
+    requires:
+      - approvals.mission_owner == true
+      - approvals.ai_governance_lead == true
+    rollbackOn:
+      - metric: policy_violations
+        op: ">"
+        value: 0
+      - metric: p95_latency_ms
+        op: ">"
+        value: 1500
+      - metric: operator_rejection_rate
+        op: ">"
+        value: 0.35
+  - name: production
+    requires:
+      - canary.health == "GREEN"
+      - audit.exported == true
+```
+
+### Observability and eval dashboard metrics
+
+```python
+# services/common/telemetry.py
+from opentelemetry import metrics, trace
+
+tracer = trace.get_tracer("clearglass.artemis")
+meter = metrics.get_meter("clearglass.artemis")
+
+recommendation_latency = meter.create_histogram("recommendation_latency_ms")
+policy_denials = meter.create_counter("policy_denials_total")
+operator_overrides = meter.create_counter("operator_overrides_total")
+self_upgrade_rollbacks = meter.create_counter("self_upgrade_rollbacks_total")
+
+
+def record_recommendation_metrics(*, latency_ms: float, accepted: bool, prompt_version: str) -> None:
+    recommendation_latency.record(latency_ms, {"prompt_version": prompt_version})
+    if not accepted:
+        operator_overrides.add(1, {"prompt_version": prompt_version})
+```
+
+### Cinematic operational walkthrough
+
+1. A live, coalition-tagged event enters the ingest gateway with a signed provenance bundle and a `COALITION_RESTRICTED` mission scope. The ingest gateway validates schema, stamps lineage, and writes the normalized event to the streaming bus and Foundry raw dataset.
+2. The triage service computes deterministic features, attaches prior case context from Gotham, and creates an alert only after confidence, source reliability, and mission priority thresholds are met.
+3. AIP launches the intake, enrichment, correlation, and recommender agents. Each agent uses policy-enforced tools, not raw data credentials.
+4. The recommender creates an evidence-backed action package with linked ontology facts, confidence intervals, uncertainty notes, and an explicit `approval_required=true` flag.
+5. The policy service blocks any cross-coalition data exposure and requires a commander approval because the recommendation could alter operational posture.
+6. The commander approves the low-risk monitoring action and rejects the escalation branch, adding a structured correction: “evidence supports watch, not escalation.”
+7. The feedback service converts the correction into eval labels: accepted monitoring = positive label, rejected escalation = negative label, rationale quality = partial credit.
+8. The eval service generates a candidate prompt that raises the escalation evidence threshold and improves uncertainty language. Offline evals pass, shadow deployment shows lower false positives, and an upgrade proposal is sent to the governance console.
+9. Human approvers sign the change. Apollo deploys to the mission-canary ring. If policy violations, latency, or rejection rate regress, Apollo rolls back automatically and records the rollback in immutable audit.
+10. The platform gets better by learning decision boundaries, evidence presentation, routing latency, and workflow sequencing while never changing mission goals or executing significant actions without human approval.
+
+
+---
+
+## Priority Sequence Alpha Execution Addendum — 2026-06-30
+
+### System Architecture
+
+This addendum binds the ClearGlassInc Artemis self-evolving platform blueprint to the approved Priority Sequence Alpha operating record. The runtime remains a full-stack, Python-first, evidence-gated system built on Gotham for investigations and entity tracking, Foundry for ontology and pipelines, AIP for copilots and agents, and Apollo for signed deployment, rollback, and runtime control.
+
+```mermaid
+flowchart LR
+  WAF[Cloudflare WAF Event Export] --> FOUNDRY[Foundry Evidence Pipeline]
+  GW[Gateway Access Logs] --> FOUNDRY
+  APP[Staging Application Logs] --> FOUNDRY
+  AUTH[Authentication Failure Logs] --> FOUNDRY
+  DB[Backend Datastore Logs] --> FOUNDRY
+  EDR[AEGIS EDR Correlation] --> FOUNDRY
+  FOUNDRY --> ONTO[Artemis Security Ontology]
+  ONTO --> GOTHAM[Gotham Case SEC-20260630-0014]
+  ONTO --> AIP[AIP Security Triage Agents]
+  AIP --> APPROVAL[Human Approval Gate]
+  APPROVAL --> APOLLO[Apollo-Controlled Policy + Detection Rollout]
+```
+
+### Data and Ontology
+
+Priority Sequence Alpha extends the Artemis ontology with concrete security, vendor-risk, and executive-priority objects:
+
+```yaml
+objectTypes:
+  SecurityEvent:
+    key: event_id
+    properties:
+      - classification
+      - environment
+      - observed_at
+      - escalation_level
+      - containment_status
+      - preliminary_exposure_assessment
+  EvidenceAttachment:
+    key: evidence_id
+    properties:
+      - attachment_type
+      - source_system
+      - retained_uri
+      - hash
+      - validation_status
+      - collected_at
+  VendorRiskAssessment:
+    key: assessment_id
+    properties:
+      - vendor_name
+      - decision_deadline
+      - signoff_status
+      - mandatory_criteria_passed
+      - escalation_reason
+  CalendarPriorityDecision:
+    key: decision_id
+    properties:
+      - selected_event
+      - delegated_event
+      - rationale
+      - operator
+      - decision_time
+relationships:
+  - SecurityEvent REQUIRES EvidenceAttachment
+  - VendorRiskAssessment REQUIRES EvidenceAttachment
+  - VendorRiskAssessment BLOCKS ExecutiveSignoff
+  - CalendarPriorityDecision PRIORITIZES MissionActivity
+```
+
+### AI and Agent Design
+
+The `SecurityTriageAgent` treats SEC-20260630-0014 as blocked and contained until contradictory application, datastore, or backend evidence is validated. It may recommend WAF source-range blocking, staging mTLS/VPN/IP allow-listing, authentication-failure burst detection, enhanced logging, and JWT validation review, but it cannot execute a block, change access policy, or close the event without a human approval token.
+
+```python
+from dataclasses import dataclass
+from enum import Enum
+
+class ClosureState(str, Enum):
+    OPEN_PENDING_EVIDENCE = "open_pending_evidence"
+    CONTAINED_NOT_CLOSED = "contained_not_closed"
+    CLOSED_NO_EXPOSURE = "closed_no_exposure"
+    ESCALATED = "escalated"
+
+REQUIRED_SECURITY_EVIDENCE = {
+    "cloudflare_waf_event_export",
+    "gateway_access_logs",
+    "staging_application_access_logs",
+    "authentication_failure_logs",
+    "backend_datastore_access_logs",
+    "aegis_edr_correlation_output",
+    "source_ip_asn_24h_recurrence_review",
+}
+
+@dataclass(frozen=True)
+class SecurityClosureDecision:
+    event_id: str
+    state: ClosureState
+    missing_evidence: set[str]
+    preliminary_finding: str
+
+
+def evaluate_security_closure(event_id: str, evidence_types: set[str]) -> SecurityClosureDecision:
+    missing = REQUIRED_SECURITY_EVIDENCE - evidence_types
+    if missing:
+        return SecurityClosureDecision(
+            event_id=event_id,
+            state=ClosureState.CONTAINED_NOT_CLOSED,
+            missing_evidence=missing,
+            preliminary_finding="No data exposure indicated by edge telemetry; final closure blocked pending full log validation.",
+        )
+    return SecurityClosureDecision(
+        event_id=event_id,
+        state=ClosureState.CLOSED_NO_EXPOSURE,
+        missing_evidence=set(),
+        preliminary_finding="Required edge, application, datastore, and EDR evidence reviewed with no exposure indicated.",
+    )
+```
+
+### Self-Improvement Loop
+
+The self-improvement loop now captures three operator judgment classes from Priority Sequence Alpha:
+
+1. **Security evidence validation:** missing evidence prevents premature closure; future prompts must preserve the distinction between edge containment and final exposure confirmation.
+2. **Vendor-risk signoff:** Apex Infrastructure signoff is approved only if all mandatory criteria pass with retained evidence.
+3. **Calendar prioritization:** engineering architecture wins over budget review because the Q3 migration is 15% behind schedule and creates downstream Q4 freeze risk.
+
+```python
+MANDATORY_APEX_CRITERIA = {
+    "data_access_scope_limited_to_non_production_telemetry",
+    "no_unapproved_production_customer_data_or_pii",
+    "subprocessors_disclosed_and_equivalently_controlled",
+    "current_compliance_evidence_within_validity_period",
+    "contractual_incident_notification_and_deletion_obligations",
+}
+
+
+def apex_signoff_decision(passed_criteria: set[str], evidence_retained: bool) -> tuple[str, list[str]]:
+    missing = sorted(MANDATORY_APEX_CRITERIA - passed_criteria)
+    if missing or not evidence_retained:
+        reasons = missing + ([] if evidence_retained else ["required evidence not retained"])
+        return "suspend_and_escalate", reasons
+    return "approved_for_executive_signoff", ["all mandatory criteria satisfied before 16:30 EDT"]
+```
+
+### Full-Stack Implementation
+
+Priority Sequence Alpha is implemented as a case/workflow package:
+
+```text
+frontend:
+  /command/priority-alpha            # executive sequence board
+  /security/events/SEC-20260630-0014 # localized threat report and evidence checklist
+  /vendors/apex-risk-assessment      # five-criteria signoff gate
+backend:
+  security-evidence-validator        # evidence completeness and closure state
+  vendor-risk-gate                   # Apex signoff/elevation logic
+  priority-router                    # compliance/architecture/security scheduling logic
+streaming:
+  artemis.security.evidence.v1
+  artemis.vendor.risk.v1
+  artemis.operator.priority.v1
+```
+
+### Security and Governance
+
+All generated recommendations are constrained by ClearGlassInc zero-trust, OSINT-only, evidence-gated operating policy. Artemis records immutable audit entries for evidence retention, signoff decisions, calendar delegation, and any proposed staging-control update. Row/entity-level policy prevents a vendor-risk agent from accessing security telemetry unless the same operator, mission, classification, and purpose-of-use grants are present.
+
+### Code Examples
+
+```rego
+package artemis.priority_alpha
+
+default allow_security_closure := false
+
+allow_security_closure if {
+  input.event_id == "SEC-20260630-0014"
+  count(input.missing_evidence) == 0
+  input.datastore_access_exposure == false
+  input.application_access_established == false
+  input.approver.role in {"COO", "CISO", "SecurityLead"}
+}
+
+default allow_apex_signoff := false
+
+allow_apex_signoff if {
+  input.vendor == "Apex Infrastructure"
+  input.evidence_retained == true
+  input.criteria.data_scope == "non-production-telemetry-only"
+  input.criteria.production_pii_access == false
+  input.criteria.subprocessors_disclosed == true
+  input.criteria.compliance_evidence_current == true
+  input.criteria.incident_notification_defined == true
+  input.criteria.deletion_survives_termination == true
+}
+```
+
+### Scenario Walkthrough
+
+At 14:12 EDT on June 30, 2026, Cloudflare edge telemetry reports an external POST attempt against `staging.clearglassinc.com`. Artemis ingests the event, creates `SecurityEvent(SEC-20260630-0014)`, marks it blocked/contained, and opens an evidence checklist. The Security Copilot recommends a source-range WAF block pending validation, an ASN recurrence review, stronger staging access controls, AEGIS burst detection, and JWT validation checks. The operator approves evidence validation and narrow containment, while Artemis prevents final closure until WAF, gateway, application, authentication, datastore, EDR, and 24-hour source-IP/ASN recurrence evidence are attached.
+
+In parallel, the Vendor Risk Copilot opens the Apex Infrastructure assessment. It blocks executive signoff unless the Data Processing Agreement, subprocessor list, SOC 2 Type II or equivalent evidence, incident notification clause, termination/deletion clause, certificate-of-destruction obligation, and audit-rights language are reviewed and retained. If all five mandatory criteria pass before 16:30 EDT, Artemis prepares the signoff language for Desmond Otieno; otherwise it escalates.
+
+The Priority Router resolves the 15:30 calendar conflict by prioritizing the Engineering Architecture Sync because the Q3 infrastructure migration is 15% behind schedule. The Q3 Budget Review is delegated with a request for notes and decision items before EOD. Feedback from these choices becomes eval data for future priority-routing prompts, improving evidence discipline and executive scheduling precision without autonomous changes to ClearGlassInc Artemis goals.

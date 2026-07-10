@@ -1,8 +1,64 @@
 [
   {
-    "title": "Control Surface Feeds #240",
+    "title": "Control Surface Feeds #241",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "20:42",
+    "timestamp": "2026-07-10T20:42:31Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #702",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-276ab1a1-d67e-4162-b10f-5f506e9287c1",
+    "time": "20:08",
+    "timestamp": "2026-07-10T20:08:04Z"
+  },
+  {
+    "title": "Defender Watch #506",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:43",
+    "timestamp": "2026-07-10T19:43:32Z"
+  },
+  {
+    "title": "Health Monitor #165",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:38",
+    "timestamp": "2026-07-10T19:38:22Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #701",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-b1c7e9bf-4825-4b15-94d4-88dce4b8558a",
+    "time": "19:08",
+    "timestamp": "2026-07-10T19:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #814",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "18:44",
+    "timestamp": "2026-07-10T18:44:41Z"
+  },
+  {
+    "title": "pages build and deployment #1266",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:44",
+    "timestamp": "2026-07-10T18:44:34Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2152",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:44",
+    "timestamp": "2026-07-10T18:44:33Z"
+  },
+  {
+    "title": "Control Surface Feeds #240",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "18:44",
     "timestamp": "2026-07-10T18:44:12Z"
   },
@@ -82,61 +138,5 @@
     "detail": "success \u00b7 workflow_dispatch on main",
     "time": "14:51",
     "timestamp": "2026-07-10T14:51:01Z"
-  },
-  {
-    "title": "pages build and deployment #1264",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "14:50",
-    "timestamp": "2026-07-10T14:50:54Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2150",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "14:50",
-    "timestamp": "2026-07-10T14:50:53Z"
-  },
-  {
-    "title": "Control Surface Feeds #238",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:50",
-    "timestamp": "2026-07-10T14:50:38Z"
-  },
-  {
-    "title": "Defender Watch #505",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:44",
-    "timestamp": "2026-07-10T14:44:14Z"
-  },
-  {
-    "title": "Health Monitor #164",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:36",
-    "timestamp": "2026-07-10T14:36:29Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #696",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-19a676b4-e426-464f-bdda-f5e3ef69d060",
-    "time": "14:08",
-    "timestamp": "2026-07-10T14:08:06Z"
-  },
-  {
-    "title": "Auto-Store #59",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:07",
-    "timestamp": "2026-07-10T14:07:31Z"
-  },
-  {
-    "title": "Sales-Ops Briefing #17",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "13:19",
-    "timestamp": "2026-07-10T13:19:06Z"
   }
 ]

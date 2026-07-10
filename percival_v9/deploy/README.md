@@ -12,6 +12,7 @@
 | `k8s/governor-configmap.yaml` | Policy bundle mounted read-only into the sidecar | Kept **in sync** with `policies/capabilities.json` (test-enforced) |
 | `temporal/worker.py` | Durable workflow worker, governor-gated | Import-guarded: no-ops if `temporalio` absent, so CI stays green |
 | `terraform/` | EKS + IAM + RDS skeleton | `terraform fmt/validate` are **manual** (no binary in CI) |
+| `gateway/envoy.yaml` | Envoy API gateway: OIDC JWT auth, rate limit, `ext_authz`→governor (fail-closed) | YAML well-formedness + security-invariant test |
 
 ## Provisioning path (each step gated on approval)
 

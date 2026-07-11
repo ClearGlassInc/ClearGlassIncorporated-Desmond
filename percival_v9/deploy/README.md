@@ -13,6 +13,18 @@
 | `temporal/worker.py` | Durable workflow worker, governor-gated | Import-guarded: no-ops if `temporalio` absent, so CI stays green |
 | `terraform/` | EKS + IAM + RDS skeleton | `terraform fmt/validate` are **manual** (no binary in CI) |
 | `gateway/envoy.yaml` | Envoy API gateway: OIDC JWT auth, rate limit, `ext_authz`→governor (fail-closed) | YAML well-formedness + security-invariant test |
+| `docker-compose.yml` + `Dockerfile.governor` | **Local, credential-free** run of governor + gateway | Compose structure test (no Docker in CI) |
+
+## Run it locally (no cloud, no credentials)
+
+```bash
+cd percival_v9/deploy && docker compose up --build
+```
+
+Brings up the real stdlib Policy Governor behind Envoy so you can exercise the
+`JWT → rate-limit → ext_authz(governor) → route` path and the fail-closed
+behaviour on a laptop — the pre-provisioning validation step before any of the
+gated cloud actions below.
 
 ## Provisioning path (each step gated on approval)
 

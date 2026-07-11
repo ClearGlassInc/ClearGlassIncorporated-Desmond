@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #251",
+    "title": "Control Surface Feeds #252",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "16:11",
+    "timestamp": "2026-07-11T16:11:01Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #722",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4e5a1ff4-0746-43b1-a10b-08dea73d5ec8",
+    "time": "16:08",
+    "timestamp": "2026-07-11T16:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #831",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "15:15",
+    "timestamp": "2026-07-11T15:15:10Z"
+  },
+  {
+    "title": "pages build and deployment #1284",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "15:15",
+    "timestamp": "2026-07-11T15:15:03Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2177",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "15:15",
+    "timestamp": "2026-07-11T15:15:02Z"
+  },
+  {
+    "title": "Control Surface Feeds #251",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "15:14",
     "timestamp": "2026-07-11T15:14:46Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 pull_request on codex/design-hyper-advanced-neon-glass-ui-yxl40y",
     "time": "14:23",
     "timestamp": "2026-07-11T14:23:08Z"
-  },
-  {
-    "title": "Policy Gate #943",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/design-hyper-advanced-neon-glass-ui-yxl40y",
-    "time": "14:23",
-    "timestamp": "2026-07-11T14:23:08Z"
-  },
-  {
-    "title": "PR Automation #493",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/design-hyper-advanced-neon-glass-ui-yxl40y",
-    "time": "14:23",
-    "timestamp": "2026-07-11T14:23:08Z"
-  },
-  {
-    "title": "CI #1205",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/design-hyper-advanced-neon-glass-ui-yxl40y",
-    "time": "14:23",
-    "timestamp": "2026-07-11T14:23:08Z"
-  },
-  {
-    "title": "Code Quality: PR #781 #2175",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/781/head",
-    "time": "14:23",
-    "timestamp": "2026-07-11T14:23:06Z"
-  },
-  {
-    "title": "Code Quality: PR #781 #2174",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/781/head",
-    "time": "14:22",
-    "timestamp": "2026-07-11T14:22:12Z"
   }
 ]

@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "08:59",
-    "timestamp": "2026-07-11T08:59:00Z"
+    "time": "10:33",
+    "timestamp": "2026-07-11T10:33:38Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #248",
+    "time": "10:33",
+    "timestamp": "2026-07-11T10:33:26Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-33e3b98f-2eed-40b2-bb81-06a3a3e6f6c4 \u00b7 run #716",
+    "time": "10:08",
+    "timestamp": "2026-07-11T10:08:03Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-1625fa88-89b5-49c5-b17f-2bbd9ef0dbb9 \u00b7 run #715",
+    "time": "09:08",
+    "timestamp": "2026-07-11T09:08:02Z"
+  },
+  {
+    "title": "Burlington Release",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #31",
+    "time": "08:59",
+    "timestamp": "2026-07-11T08:59:30Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #821",
+    "time": "08:59",
+    "timestamp": "2026-07-11T08:59:13Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1274",
+    "time": "08:59",
+    "timestamp": "2026-07-11T08:59:06Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2160",
+    "time": "08:59",
+    "timestamp": "2026-07-11T08:59:06Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #247",
     "time": "08:58",
     "timestamp": "2026-07-11T08:58:44Z"
@@ -40,54 +89,5 @@
     "detail": "schedule on main \u00b7 run #52",
     "time": "08:45",
     "timestamp": "2026-07-11T08:45:20Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #45",
-    "time": "08:13",
-    "timestamp": "2026-07-11T08:13:18Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-3cbe5a58-7a45-44d1-855e-f445b3cddecb \u00b7 run #714",
-    "time": "08:08",
-    "timestamp": "2026-07-11T08:08:02Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #508",
-    "time": "08:06",
-    "timestamp": "2026-07-11T08:06:37Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #167",
-    "time": "08:02",
-    "timestamp": "2026-07-11T08:02:05Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-242cac89-715d-476a-bbbb-b947e65a2a2e \u00b7 run #713",
-    "time": "07:08",
-    "timestamp": "2026-07-11T07:08:03Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #820",
-    "time": "06:26",
-    "timestamp": "2026-07-11T06:26:03Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1272",
-    "time": "06:25",
-    "timestamp": "2026-07-11T06:25:55Z"
   }
 ]

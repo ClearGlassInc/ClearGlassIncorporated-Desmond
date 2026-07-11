@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #257",
+    "title": "Control Surface Feeds #258",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:10",
+    "timestamp": "2026-07-11T23:10:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #729",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9717c36b-c7e2-4e93-bb79-d0b225b2944e",
+    "time": "23:08",
+    "timestamp": "2026-07-11T23:08:03Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #728",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-a1c0a33f-e29b-4520-ae9b-349661632fb6",
+    "time": "22:08",
+    "timestamp": "2026-07-11T22:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #844",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:07",
+    "timestamp": "2026-07-11T22:07:36Z"
+  },
+  {
+    "title": "pages build and deployment #1297",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:07",
+    "timestamp": "2026-07-11T22:07:29Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2201",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:07",
+    "timestamp": "2026-07-11T22:07:28Z"
+  },
+  {
+    "title": "Control Surface Feeds #257",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:07",
     "timestamp": "2026-07-11T22:07:08Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "21:30",
     "timestamp": "2026-07-11T21:30:41Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #251",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:30",
-    "timestamp": "2026-07-11T21:30:41Z"
-  },
-  {
-    "title": "Defender Watch #537",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:30",
-    "timestamp": "2026-07-11T21:30:41Z"
-  },
-  {
-    "title": "CI #1222",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:30",
-    "timestamp": "2026-07-11T21:30:41Z"
-  },
-  {
-    "title": "pages build and deployment #1295",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on main",
-    "time": "21:30",
-    "timestamp": "2026-07-11T21:30:41Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2199",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "21:30",
-    "timestamp": "2026-07-11T21:30:40Z"
-  },
-  {
-    "title": "PR Automation #504",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-advanced-design-gyeowl",
-    "time": "21:27",
-    "timestamp": "2026-07-11T21:27:26Z"
   }
 ]

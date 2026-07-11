@@ -222,6 +222,7 @@
       <div class="vsub">Enterprise risk posture · public-source verification + defensive telemetry correlation · audit-ready.</div>
 
       <div class="hero-command" aria-label="BLUEDESK cyber command overview">
+        <span class="spectral-plane one"></span><span class="spectral-plane two"></span><span class="spectral-plane three"></span>
         <div class="hero-grid">
           <div>
             <div class="eyebrow"><span class="node" aria-hidden="true"></span> BLUEDESK // Defensive Command Fabric // Audit Ready</div>
@@ -400,6 +401,8 @@
 <script>
 (function(){
   "use strict";
+  var aura=document.getElementById("cursorAura");
+  if(aura){document.addEventListener("pointermove",function(e){aura.style.setProperty("--mx",e.clientX+"px");aura.style.setProperty("--my",e.clientY+"px");},{passive:true});}
   var $=function(s,r){return (r||document).querySelector(s);};
   var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
   function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}

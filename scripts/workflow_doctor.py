@@ -158,6 +158,11 @@ def ensure_timeouts(data: dict[str, Any]) -> list[str]:
     for job_name, job in jobs.items():
         if not isinstance(job, dict):
             continue
+        # A job that calls a reusable workflow (`uses:`) cannot carry
+        # timeout-minutes — the timeout lives in the called workflow's own jobs.
+        # Adding it here would produce a schema-invalid workflow, so skip it.
+        if "uses" in job:
+            continue
         if "timeout-minutes" not in job:
             default_timeout = 60 if any(k in str(job).lower() for k in ["deploy", "scan", "audit", "build"]) else 30
             job["timeout-minutes"] = default_timeout
@@ -165,14 +170,40 @@ def ensure_timeouts(data: dict[str, Any]) -> list[str]:
     return changes
 
 
+def _needs_contents_write(data: dict[str, Any]) -> bool:
+    """True when the workflow legitimately needs write access to repo contents.
+
+    Some workflows must push commits or open branches (e.g. a bot that patches a
+    file and commits it, or one that uses create-pull-request). Forcing those to
+    ``contents: read`` would break their push step, so the doctor must not
+    downgrade them. Detection is intentionally conservative: an explicit
+    ``git push``/``git commit`` in a run step, the create-pull-request action, or
+    a job that already declares job-level ``contents: write``.
+    """
+    blob = str(data)
+    if "git push" in blob or "git commit" in blob or "create-pull-request" in blob:
+        return True
+    jobs = data.get("jobs") or {}
+    if isinstance(jobs, dict):
+        for job in jobs.values():
+            if isinstance(job, dict):
+                perms = job.get("permissions")
+                if isinstance(perms, dict) and perms.get("contents") == "write":
+                    return True
+    return False
+
+
 def ensure_permissions(data: dict[str, Any]) -> list[str]:
     changes: list[str] = []
     text_needs_pages = "deploy-pages" in str(data) or "upload-pages-artifact" in str(data)
+    needs_write = _needs_contents_write(data)
     permissions = data.get("permissions")
     if permissions is None or permissions == "read-all":
-        permissions = {"contents": "read"}
+        permissions = {"contents": "write" if needs_write else "read"}
     if isinstance(permissions, dict):
-        if permissions.get("contents") != "read":
+        # Least privilege: downgrade to read — but never for workflows that must
+        # push/commit, or their write step would fail at runtime.
+        if permissions.get("contents") != "read" and not needs_write:
             permissions["contents"] = "read"
             changes.append("normalized contents permission to read")
         if text_needs_pages and not _pages_perms_at_job_level(data):

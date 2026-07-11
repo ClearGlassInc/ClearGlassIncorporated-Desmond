@@ -1,21 +1,17 @@
 # Site Health Report
 
-**Run:** 2026-07-09T10:23:50.046360+00:00
-**Status:** ⚠️ Issues Detected
+**Run:** 2026-07-11T08:45:31.250093+00:00
+**Status:** ✅ Healthy
 **Pages:** 6/6 healthy
 
 ## Pages
 
-- ✅ `/` (174ms)
-- ✅ `/artemis.html` (201ms)
-- ✅ `/artemis-iv.html` (410ms)
-- ✅ `/guardian.html` (149ms)
-- ✅ `/clearglass-nexus.html` (155ms)
-- ✅ `/government.html` (144ms)
-
-## Local Issues
-
-- ❌ Page missing ClearGlass logo: intelligence-platform.html
+- ✅ `/` (64ms)
+- ✅ `/artemis.html` (43ms)
+- ✅ `/artemis-iv.html` (54ms)
+- ✅ `/guardian.html` (37ms)
+- ✅ `/clearglass-nexus.html` (51ms)
+- ✅ `/government.html` (46ms)
 
 ## Warnings (non-failing)
 

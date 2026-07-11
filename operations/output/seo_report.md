@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-09T10:23:48.763522+00:00
-**Average Score:** 91.0/100
-**Files Audited:** 62
+**Run:** 2026-07-11T08:45:30.914045+00:00
+**Average Score:** 90.6/100
+**Files Audited:** 63
 
 ## Page Scores
 
@@ -14,6 +14,7 @@
 | `flowsint.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
 | `bluedesk-mobile.html` | 70/100 | 3 |
+| `side-store.html` | 70/100 | 3 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
 | `artemis-percival.html` | 80/100 | 2 |
 | `conduit.html` | 80/100 | 2 |
@@ -73,9 +74,9 @@
 
 ## Top Issues Across All Pages
 
-- 16x — Description length N chars (ideal N–N)
-- 14x — Title length N chars (ideal N–N)
-- 7x — Missing og:image
+- 17x — Description length N chars (ideal N–N)
+- 15x — Title length N chars (ideal N–N)
+- 8x — Missing og:image
 - 4x — Multiple <hN> tags (N)
 - 3x — Missing og:title
 - 3x — Missing og:description

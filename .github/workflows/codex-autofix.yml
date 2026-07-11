@@ -55,19 +55,29 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Verify OPENAI_API_KEY is configured
+      # Optional integration: Codex autofix only runs when OPENAI_API_KEY is
+      # configured. When it is absent the job is a clean, green no-op (a skip),
+      # not a red failure — the LLM still never runs without a key, so the
+      # fail-safe posture is preserved; we just don't paint the Actions tab red
+      # for an unconfigured optional secret (see docs/secrets.md).
+      - name: Check OPENAI_API_KEY availability
+        id: guard
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           if [ -z "${OPENAI_API_KEY:-}" ]; then
-            echo "::error::OPENAI_API_KEY secret is not set — cannot run Codex autofix. Failing closed."
-            exit 1
+            echo "::warning::OPENAI_API_KEY secret is not set — skipping Codex autofix (optional integration)."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Install Codex
+        if: steps.guard.outputs.configured == 'true'
         run: npm install -g @openai/codex
 
       - name: Run Codex autofix
+        if: steps.guard.outputs.configured == 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           EXTRA_INSTRUCTIONS: ${{ github.event.inputs.instructions }}
@@ -90,9 +100,11 @@ jobs:
           "
 
       - name: Show git status
+        if: steps.guard.outputs.configured == 'true'
         run: git status --short
 
       - name: Open pull request with proposed fixes
+        if: steps.guard.outputs.configured == 'true'
         uses: peter-evans/create-pull-request@v7 # major tag; promote to SHA once resolvable (matches workflow-repair-agent convention)
         with:
           commit-message: "fix(ci): Codex autofix for failing checks"

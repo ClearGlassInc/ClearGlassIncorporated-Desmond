@@ -174,17 +174,13 @@
   .readiness-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}.readiness-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:rgba(4,17,33,.62);padding:16px;transition:transform .2s,border-color .2s,box-shadow .2s}.readiness-card:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.55);box-shadow:0 20px 60px rgba(2,132,199,.13)}.readiness-card::after{content:"";position:absolute;inset:auto 12px 0;height:2px;background:linear-gradient(90deg,transparent,var(--info),transparent);animation:scanline 3s ease-in-out infinite}.readiness-card h3{margin:0 0 8px}.readiness-card .num{font-size:30px;font-weight:800}.api-badge{display:inline-flex;gap:7px;align-items:center;margin-top:10px;font-family:var(--mono);font-size:9px;color:var(--good)}.api-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 12px var(--good)}
   @media(max-width:1100px){.readiness-grid{grid-template-columns:1fr 1fr}}@media(max-width:620px){.readiness-grid{grid-template-columns:1fr}.boot-sequence{display:none}}
 
-
-  .cursor-aura{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;pointer-events:none;z-index:5;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,.18),rgba(124,58,237,.08) 38%,transparent 68%);mix-blend-mode:screen;filter:blur(18px);opacity:.72;transform:translate3d(var(--mx,50vw),var(--my,50vh),0);transition:transform .18s ease-out,opacity .3s}.spectral-plane{position:absolute;border:1px solid rgba(56,189,248,.23);border-radius:22px;background:linear-gradient(135deg,rgba(125,249,255,.12),rgba(124,58,237,.08));box-shadow:0 0 44px rgba(56,189,248,.14),inset 0 0 32px rgba(255,255,255,.035);backdrop-filter:blur(22px);pointer-events:none;animation:planeDrift 9s ease-in-out infinite}.spectral-plane.one{width:210px;height:92px;right:22%;top:18px;transform:rotate(-2deg)}.spectral-plane.two{width:180px;height:120px;right:34px;bottom:42px;animation-delay:-2.8s}.spectral-plane.three{width:230px;height:86px;left:34%;bottom:12px;animation-delay:-5.1s}.hero-command{isolation:isolate}.hero-command>*{position:relative;z-index:2}.hero-command .spectral-plane{z-index:1}.command-bridge{position:relative;display:grid;grid-template-columns:1fr minmax(250px,1.15fr) 1fr;gap:12px;align-items:center;min-height:360px;perspective:1100px}.bridge-panel{border:1px solid rgba(56,189,248,.24);border-radius:18px;background:linear-gradient(145deg,rgba(5,25,48,.72),rgba(3,8,22,.48));box-shadow:0 20px 70px rgba(0,0,0,.22),inset 0 0 40px rgba(125,249,255,.035);backdrop-filter:blur(24px);padding:13px;font-family:var(--mono);font-size:10px;color:var(--dim);animation:floatPanel 6.5s ease-in-out infinite}.bridge-panel:nth-child(3){animation-delay:-2s}.bridge-title{display:flex;justify-content:space-between;color:#dff8ff;margin-bottom:10px}.telemetry-row{display:flex;justify-content:space-between;border-top:1px solid rgba(56,189,248,.12);padding:8px 0}.telemetry-row b{color:var(--info);font-weight:600}.engine-core{position:relative;display:grid;place-items:center;min-height:330px;filter:drop-shadow(0 0 34px rgba(56,189,248,.24))}.engine-ring{position:absolute;border-radius:50%;border:1px solid rgba(56,189,248,.28);box-shadow:inset 0 0 28px rgba(56,189,248,.08),0 0 28px rgba(124,58,237,.14);animation:engineSpin 18s linear infinite}.engine-ring.r1{width:300px;height:300px;background:conic-gradient(from 30deg,transparent 0 18%,rgba(56,189,248,.9) 18% 22%,transparent 22% 43%,rgba(217,70,239,.8) 43% 47%,transparent 47% 100%)}.engine-ring.r2{width:230px;height:230px;animation-direction:reverse;animation-duration:13s;background:conic-gradient(transparent,rgba(56,189,248,.3),transparent,rgba(217,70,239,.36),transparent)}.engine-ring.r3{width:156px;height:156px;animation-duration:9s;background:repeating-conic-gradient(rgba(56,189,248,.7) 0 4deg,transparent 4deg 16deg)}.engine-label{position:relative;width:112px;height:112px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle,rgba(3,16,31,.96),rgba(14,165,233,.16));border:1px solid rgba(125,249,255,.48);box-shadow:0 0 60px rgba(56,189,248,.32),inset 0 0 32px rgba(217,70,239,.12);font-family:var(--mono);color:#fff}.vector{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--info);box-shadow:0 0 18px var(--info);animation:vectorPulse 2.4s ease-in-out infinite}.vector.v1{left:14%;top:24%}.vector.v2{right:18%;top:28%;background:#d946ef}.vector.v3{right:23%;bottom:18%;background:var(--warn)}.vector.v4{left:24%;bottom:20%;background:var(--good)}.vector::after{content:"";position:absolute;left:50%;top:50%;width:82px;height:1px;background:linear-gradient(90deg,currentColor,transparent);transform-origin:left center}.json-block{white-space:pre-line;color:#bdefff;line-height:1.55}.pipeline{display:flex;gap:6px;align-items:center;margin-top:10px}.pipeline i{height:6px;flex:1;border-radius:99px;background:linear-gradient(90deg,var(--info),#d946ef);box-shadow:0 0 14px rgba(56,189,248,.4);animation:pulseLine 2s ease-in-out infinite}.halo-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(56,189,248,.28);border-radius:999px;background:rgba(56,189,248,.07);padding:5px 8px;color:#dff8ff}.halo-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 12px var(--good)}@keyframes engineSpin{to{transform:rotate(1turn)}}@keyframes vectorPulse{50%{transform:scale(1.55);opacity:.62}}@keyframes planeDrift{50%{transform:translateY(-12px) rotate(1.5deg)}}@media(max-width:1200px){.command-bridge{grid-template-columns:1fr}.bridge-panel{transform:none!important}.engine-core{min-height:300px}.spectral-plane{display:none}}
-
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.boot-sequence,.cursor-aura{display:none!important}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.boot-sequence{display:none!important}}
 </style>
 <link rel="stylesheet" href="/assets/css/glass.css">
 
   <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
 </head>
 <body>
-<div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
 <div class="boot-sequence" aria-hidden="true"><div class="boot-card"><div class="boot-line"><b>BLUEDESK systems online</b><span>ClearGlass secure fabric</span></div><div class="boot-line"><span>risk telemetry</span><b>calibrating</b></div><div class="boot-line"><span>policy gates</span><b>enforced</b></div><div class="boot-line"><span>evidence vault</span><b>verified</b></div><div class="boot-progress"><i></i></div></div></div>
 <div class="app">
 
@@ -239,27 +235,14 @@
             </div>
           </div>
           <div class="status-cloud" aria-label="Live operational status">
-            <div class="console-shell command-bridge" aria-label="Animated holographic command bridge">
-              <div class="bridge-panel" style="transform:rotateY(10deg) translateZ(18px)">
-                <div class="bridge-title"><span>LIVE THREAT STREAM</span><span class="halo-chip">clean</span></div>
-                <div class="telemetry-row"><span>KEV correlation</span><b>99%</b></div>
-                <div class="telemetry-row"><span>policy gate</span><b>human:true</b></div>
-                <div class="telemetry-row"><span>containment SLA</span><b>03:24</b></div>
-                <div class="pipeline"><i></i><i></i><i></i><i></i></div>
-              </div>
-              <div class="engine-core" aria-label="Central luminous risk engine">
-                <span class="engine-ring r1"></span><span class="engine-ring r2"></span><span class="engine-ring r3"></span>
-                <span class="vector v1"></span><span class="vector v2"></span><span class="vector v3"></span><span class="vector v4"></span>
-                <div class="engine-label">Risk<br>Engine<br><small>72/100</small></div>
-              </div>
-              <div class="bridge-panel" style="transform:rotateY(-10deg) translateZ(18px)">
-                <div class="bridge-title"><span>AI DECISION OVERLAY</span><span>18ms</span></div>
-                <div class="json-block">{
-  "route":"blue-team",
-  "confidence":0.91,
-  "action":"enrich_then_approve",
-  "rollback":"apollo_ready"
-}</div>
+            <div class="console-shell" aria-label="Animated command-console visualization">
+              <div class="console-top"><span>console://bluedesk.risk_posture</span><span>SYS ONLINE</span></div>
+              <div class="risk-meter"><span>72<small>RISK SCORE</small></span></div>
+              <div class="mini-panels">
+                <div class="mini-panel">policy.status { approved: true }<div class="spark"></div></div>
+                <div class="mini-panel">api.health /aip/router 18ms<div class="spark"></div></div>
+                <div class="mini-panel">incident.timeline +3 correlated<div class="spark"></div></div>
+                <div class="mini-panel">automation.gates human:true<div class="spark"></div></div>
               </div>
             </div>
             <div class="status-chip"><span><i aria-hidden="true"></i> Feed mesh</span><b>LIVE</b></div>

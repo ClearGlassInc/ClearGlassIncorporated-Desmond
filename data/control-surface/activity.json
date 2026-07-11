@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "13:53",
-    "timestamp": "2026-07-11T13:53:49Z"
+    "time": "17:15",
+    "timestamp": "2026-07-11T17:15:06Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #250",
-    "time": "13:53",
-    "timestamp": "2026-07-11T13:53:35Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #514",
-    "time": "13:42",
-    "timestamp": "2026-07-11T13:42:45Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #168",
-    "time": "13:35",
-    "timestamp": "2026-07-11T13:35:52Z"
+    "detail": "schedule on main \u00b7 run #253",
+    "time": "17:14",
+    "timestamp": "2026-07-11T17:14:54Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-5ae7cd68-b1bf-4510-8185-887f697031f7 \u00b7 run #719",
-    "time": "13:08",
-    "timestamp": "2026-07-11T13:08:02Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #60",
-    "time": "13:03",
-    "timestamp": "2026-07-11T13:03:54Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #513",
-    "time": "12:37",
-    "timestamp": "2026-07-11T12:37:11Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #242",
-    "time": "12:37",
-    "timestamp": "2026-07-11T12:37:11Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1200",
-    "time": "12:37",
-    "timestamp": "2026-07-11T12:37:11Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1240",
-    "time": "12:37",
-    "timestamp": "2026-07-11T12:37:11Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #938",
-    "time": "12:37",
-    "timestamp": "2026-07-11T12:37:11Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #826",
-    "time": "12:37",
-    "timestamp": "2026-07-11T12:37:11Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-0da65a74-e6c2-4f6b-a507-5ee37293ef39 \u00b7 run #723",
+    "time": "17:08",
+    "timestamp": "2026-07-11T17:08:03Z"
   },
   {
     "title": "Security",
     "status": "ok",
-    "detail": "push on main \u00b7 run #965",
-    "time": "12:37",
-    "timestamp": "2026-07-11T12:37:11Z"
+    "detail": "pull_request on claude/dependabot-next-critical \u00b7 run #972",
+    "time": "16:12",
+    "timestamp": "2026-07-11T16:12:09Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "pull_request on claude/dependabot-next-critical \u00b7 run #1207",
+    "time": "16:12",
+    "timestamp": "2026-07-11T16:12:09Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/dependabot-next-critical \u00b7 run #945",
+    "time": "16:12",
+    "timestamp": "2026-07-11T16:12:09Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/dependabot-next-critical \u00b7 run #494",
+    "time": "16:12",
+    "timestamp": "2026-07-11T16:12:09Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "pull_request on claude/dependabot-next-critical \u00b7 run #1247",
+    "time": "16:12",
+    "timestamp": "2026-07-11T16:12:09Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "pull_request on claude/dependabot-next-critical \u00b7 run #521",
+    "time": "16:12",
+    "timestamp": "2026-07-11T16:12:09Z"
+  },
+  {
+    "title": "Code Quality: PR #782",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/782/head \u00b7 run #2179",
+    "time": "16:12",
+    "timestamp": "2026-07-11T16:12:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #832",
+    "time": "16:11",
+    "timestamp": "2026-07-11T16:11:27Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1285",
+    "time": "16:11",
+    "timestamp": "2026-07-11T16:11:20Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2178",
+    "time": "16:11",
+    "timestamp": "2026-07-11T16:11:19Z"
   }
 ]

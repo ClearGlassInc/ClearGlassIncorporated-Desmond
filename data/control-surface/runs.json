@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #245",
+    "title": "Control Surface Feeds #246",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "06:25",
+    "timestamp": "2026-07-11T06:25:38Z"
+  },
+  {
+    "title": "Multi-Repo Audit #25",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:24",
+    "timestamp": "2026-07-11T06:24:48Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #712",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9d08b877-b959-4b9e-85ce-ec0b561e2a96",
+    "time": "06:08",
+    "timestamp": "2026-07-11T06:08:03Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1235",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "05:18",
+    "timestamp": "2026-07-11T05:18:13Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #711",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-53307aa1-1c08-4271-87ec-4c15755357ea",
+    "time": "05:08",
+    "timestamp": "2026-07-11T05:08:03Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #710",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-23699d36-4197-4f83-8282-b47236fd8e13",
+    "time": "04:08",
+    "timestamp": "2026-07-11T04:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #819",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "03:41",
+    "timestamp": "2026-07-11T03:41:59Z"
+  },
+  {
+    "title": "pages build and deployment #1271",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:41",
+    "timestamp": "2026-07-11T03:41:52Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2157",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:41",
+    "timestamp": "2026-07-11T03:41:51Z"
+  },
+  {
+    "title": "Control Surface Feeds #245",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "03:41",
     "timestamp": "2026-07-11T03:41:37Z"
   },
@@ -75,68 +138,5 @@
     "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-7b90c038-ae34-48b0-8cdd-a807512be3da",
     "time": "00:08",
     "timestamp": "2026-07-11T00:08:15Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #817",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "23:14",
-    "timestamp": "2026-07-10T23:14:21Z"
-  },
-  {
-    "title": "pages build and deployment #1269",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "23:14",
-    "timestamp": "2026-07-10T23:14:14Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2155",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "23:14",
-    "timestamp": "2026-07-10T23:14:13Z"
-  },
-  {
-    "title": "Control Surface Feeds #243",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "23:13",
-    "timestamp": "2026-07-10T23:13:54Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #705",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-0d6a610b-90b9-405c-af77-e0727a6c35c7",
-    "time": "23:08",
-    "timestamp": "2026-07-10T23:08:03Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #816",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "22:15",
-    "timestamp": "2026-07-10T22:15:27Z"
-  },
-  {
-    "title": "pages build and deployment #1268",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "22:15",
-    "timestamp": "2026-07-10T22:15:21Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2154",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "22:15",
-    "timestamp": "2026-07-10T22:15:20Z"
-  },
-  {
-    "title": "Control Surface Feeds #242",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "22:15",
-    "timestamp": "2026-07-10T22:15:01Z"
   }
 ]

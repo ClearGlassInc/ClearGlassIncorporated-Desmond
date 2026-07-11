@@ -27,7 +27,9 @@ that core in: pass an ``AgentIdentity`` to ``Percival`` and every real write
 (``apply(allow_writes=True)``) is additionally gated by the sovereign
 ``PolicyGovernor`` — a stopped or read-only identity blocks all writes; a
 CHANGE-scoped identity permits them; every decision lands on the shared audit
-chain. Without an identity, behaviour is unchanged (the self-contained
+chain. Pass a ``MissionMemory`` too and each scan records one compact summary to
+durable ``decision_history`` for real cross-run continuity (``recent_scans()``).
+Without an identity or memory, behaviour is unchanged (the self-contained
 ``govern()``/AUTO_FIX policy remains the sole gate), so this stays the keyless,
 stdlib-only, fail-closed website-governance agent that actually runs.
 ``PERCIVAL_V9_DEPLOYMENT.md`` and ``../../docs/PERCIVAL_V9_ARCHITECTURE.md``
@@ -46,6 +48,7 @@ from typing import Callable, Optional
 from .audit import AuditLog
 from .governor import PolicyGovernor
 from .identity import AgentIdentity
+from .mission_memory import MissionMemory
 
 # ───────────────────────────── findings ─────────────────────────────
 
@@ -343,7 +346,8 @@ class Percival:
 
     def __init__(self, root: Path | str, *, audit_log: Optional[AuditLog] = None,
                  clock: Callable[[], str] | None = None,
-                 identity: Optional[AgentIdentity] = None) -> None:
+                 identity: Optional[AgentIdentity] = None,
+                 memory: Optional[MissionMemory] = None) -> None:
         self.root = Path(root)
         self.audit = audit_log or AuditLog()
         self._now = clock or (lambda: _dt.datetime.now(_dt.timezone.utc).isoformat())
@@ -356,6 +360,11 @@ class Percival:
         self.governor: Optional[PolicyGovernor] = (
             PolicyGovernor(identity, audit=self.audit) if identity is not None else None
         )
+        # Optional durable memory. When supplied, each scan writes ONE compact
+        # summary to decision_history so the agent has real cross-run continuity
+        # (what it saw last time) without accumulating per-finding noise. Without
+        # it, the agent is stateless across runs, exactly as before.
+        self.memory = memory
 
     def _authorize_write(self, target: str) -> tuple[bool, str]:
         """Ask the governor whether a write may proceed. A write is an internal,
@@ -407,7 +416,32 @@ class Percival:
             "pages": len(pages), "findings": len(findings),
             "escalations": len(report.escalations),
         })
+        self._remember_scan(report)
         return report
+
+    def _remember_scan(self, report: PercivalReport) -> None:
+        """Record one compact summary of this scan to durable decision history,
+        for cross-run continuity. Selective by design: a single line per scan,
+        never per-finding, so memory stays useful and non-noisy."""
+        if self.memory is None:
+            return
+        auto = sum(1 for d in report.decisions if d.action is Action.AUTO_FIX)
+        summary = (f"scan {report.sitrep.get('scanned_utc', '?')}: "
+                   f"{len(report.findings)} findings, {auto} auto-fixable, "
+                   f"{len(report.escalations)} escalated")
+        self.memory.remember(
+            "decision_history", summary,
+            source="percival.scan", confidence="stated",
+            tags=[self.SURFACE],
+        )
+
+    def recent_scans(self, limit: int = 5) -> list[str]:
+        """Return the most recent scan summaries (newest last) for continuity.
+        Empty when no memory is wired — the agent does not fabricate history."""
+        if self.memory is None:
+            return []
+        items = self.memory.items("decision_history")
+        return [i.content for i in items[-limit:]]
 
     # -- execution (policy-explicit, reversible only) ----------------------
     def apply(self, report: PercivalReport, *, allow_writes: bool = False) -> list[str]:

@@ -8,6 +8,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 from sentinel.capability import Tier
 from sentinel.identity import AgentIdentity
+from sentinel.mission_memory import MissionMemory
 from sentinel.percival import (
     Action,
     Finding,
@@ -226,6 +227,46 @@ def test_stopped_identity_blocks_all_writes(tmp_path: pathlib.Path) -> None:
     report = s.scan()
     applied = s.apply(report, allow_writes=True)
     assert applied and all(a.startswith("BLOCKED") for a in applied)
+
+
+def test_scan_records_one_summary_to_memory(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    mem = MissionMemory()
+    s = Percival(tmp_path, clock=lambda: "2026-06-10T00:00:00Z", memory=mem)
+    s.scan()
+    hist = mem.items("decision_history")
+    assert len(hist) == 1                                  # one summary, not per-finding
+    assert hist[0].source == "percival.scan"
+    assert "findings" in hist[0].content
+
+
+def test_recent_scans_gives_cross_run_continuity(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    mem = MissionMemory()
+    clock = iter(["2026-06-10T00:00:00Z", "2026-06-11T00:00:00Z", "2026-06-12T00:00:00Z"])
+    s = Percival(tmp_path, clock=lambda: next(clock), memory=mem)
+    for _ in range(3):
+        s.scan()
+    recent = s.recent_scans(limit=2)
+    assert len(recent) == 2                                # newest window
+    assert "2026-06-12" in recent[-1]                      # most recent last
+
+
+def test_memory_persists_across_agent_instances(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    path = tmp_path / "mission.json"
+    Percival(tmp_path, clock=lambda: "2026-06-10T00:00:00Z",
+             memory=MissionMemory(path)).scan()
+    # A fresh agent over the same store recalls the prior run — no fabrication.
+    revived = Percival(tmp_path, memory=MissionMemory(path))
+    assert len(revived.recent_scans()) == 1
+
+
+def test_no_memory_means_no_history(tmp_path: pathlib.Path) -> None:
+    (tmp_path / "bare.html").write_text(BARE)
+    s = Percival(tmp_path)
+    s.scan()
+    assert s.recent_scans() == []                          # stateless, does not fabricate
 
 
 def test_no_identity_preserves_legacy_write_behavior(tmp_path: pathlib.Path) -> None:

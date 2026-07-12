@@ -2,7 +2,7 @@
   "name": "clearglass-side-store-storefront",
   "version": "0.1.0",
   "private": true,
-  "description": "ClearGlass Side Store — customer-facing storefront (Next.js + Stripe Checkout).",
+  "description": "ClearGlass Side Store \u2014 customer-facing storefront (Next.js + Stripe Checkout).",
   "type": "module",
   "scripts": {
     "dev": "next dev -p 3001",
@@ -12,7 +12,7 @@
     "test": "node --test lib/store.test.mjs"
   },
   "dependencies": {
-    "next": "15.5.18",
+    "next": "^16.2.10",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "stripe": "16.12.0"

@@ -44,9 +44,10 @@ jobs:
         env:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
+          set -euo pipefail
           if [ -z "$HOOK" ]; then
-            echo "RENDER_DEPLOY_HOOK_URL secret not set — skipping deploy."
-            echo "Add a Render Deploy Hook URL as a repo secret to enable auto-deploy."
-            exit 0
+            echo "::error::RENDER_DEPLOY_HOOK_URL is required for Commerce production deploys."
+            echo "Add a Render Deploy Hook URL as a repo secret before dispatching this deploy."
+            exit 1
           fi
           curl -fsS -X POST "$HOOK" >/dev/null && echo "Render deploy triggered."

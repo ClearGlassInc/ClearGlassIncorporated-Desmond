@@ -1298,3 +1298,74 @@ def compile_feedback_to_eval(signal: dict[str, Any]) -> dict[str, Any]:
 3. A candidate cannot modify mission goals, classification labels, coalition-release rules, or approval thresholds through a prompt-only change.
 4. A candidate must carry an Apollo rollback pointer and an immutable audit record before deployment.
 5. Operator feedback becomes training/eval material only after policy-filtered field minimization and provenance capture.
+
+---
+
+## 2050 Operational Readiness Ledger
+
+This ledger binds the Artemis architecture to the repository-level evidence that must be reviewed before any production promotion. It is intentionally concrete: each domain has an owner, a validation gate, an approval boundary, and a rollback artifact so the self-evolving platform can improve safely without unbounded autonomous change.
+
+### Repository Gate Matrix
+
+| Domain | Production role | Required validation evidence | Human approval gate | Rollback artifact |
+|---|---|---|---|---|
+| Static website and investor portals | Public ClearGlassInc presence, lead capture, investor documentation | Static asset/link audit, storefront smoke test, catalog sync check, Pages workflow result | Content owner approval for brand/product changes | Git revert plus Pages redeploy from previous commit |
+| Artemis intelligence layer | Agentic intelligence APIs, policy checks, eval loop, operational briefs | Python unit suite, ruff, workflow doctor, prompt/eval regression report | Mission owner approval for prompt, routing, or tool-permission changes | Versioned prompt pack, policy bundle, and workflow bundle |
+| Sentinel / Percival agent mesh | Bounded public-source collection, approvals, mission memory, governance demos | Agent tests, collector tests, policy tests, secret scan, capability manifest review | Security owner approval before enabling new external tools | Previous agent manifest and capability registry |
+| Commerce / Auto-store | Storefront, control-plane trust loop, checkout-health guard | Store smoke test, catalog hash check, payment provider initialized only in safe mode | Commerce owner approval before deploy or rollback hook execution | `data/store/last-known-good.json` plus platform rollback |
+| GitHub Actions control plane | Build, test, audit, deploy, repair, and scheduled automation workflows | YAML parse, workflow doctor, least-privilege permission review, missing-file scan | Maintainer approval for write-token workflows and auto-repair PRs | Previous workflow commit and disabled schedule if needed |
+
+### Promotion Invariants
+
+1. **No autonomous production mutation**: agents may propose code, prompts, workflow routing, or deployment changes, but production mutation requires a recorded approval object linked to the mission, owner, and policy version.
+2. **No evidence-free success states**: every green status must cite a command, workflow run, eval suite, or signed operator approval.
+3. **No silent degradation**: optional external integrations may skip safely when credentials are absent, but must emit explicit notices and preserve core read-only validation.
+4. **No unbounded agents**: every bot/agent workflow must define a timeout, retry limit, concurrency key, and human boundary for money, access, data, deployment, or irreversible actions.
+5. **No deployment without rollback**: Pages, Render, Apollo, or other deploy targets require a rollback anchor before promotion.
+
+### Evidence Capture Contract
+
+Every validation loop should write an immutable record with this shape before a release candidate is approved:
+
+```json
+{
+  "system": "ClearGlassInc Artemis",
+  "repository": "ClearGlassInc.github.io",
+  "commit": "<git-sha>",
+  "branch": "<branch>",
+  "validated_at_utc": "<iso-8601>",
+  "checks": [
+    {
+      "name": "python-tests",
+      "command": "python -m pytest -q",
+      "result": "pass",
+      "evidence": "828 passed, 4 skipped"
+    },
+    {
+      "name": "workflow-doctor",
+      "command": "python scripts/workflow_doctor.py",
+      "result": "pass",
+      "evidence": "Workflow doctor clean."
+    },
+    {
+      "name": "storefront-smoke",
+      "command": "python bots/store_smoke_bot.py",
+      "result": "pass",
+      "evidence": "Storefront smoke PASS"
+    }
+  ],
+  "external_blockers": [],
+  "approval_required_for": ["production deployment", "prompt promotion", "workflow write-token changes"],
+  "rollback": {
+    "type": "git-revert-or-platform-rollback",
+    "artifact": "previous commit plus last-known-good store catalog"
+  }
+}
+```
+
+### Digital-Twin Dependency Notes
+
+- The static site and commerce catalog are coupled through `store.html`, `data/store/catalog.json`, `data/store/last-known-good.json`, and the store smoke bot. A catalog repair is incomplete until both the catalog sync check and checkout smoke test pass.
+- The agent mesh and intelligence architecture are coupled through policy, approval, and audit concepts. A new autonomous tool must be represented in the capability manifest, covered by policy tests, and visible in audit logs before it can be used by a copilot or scheduled bot.
+- Workflow repair automation is a privileged subsystem. It must remain manual or scheduled, run with the minimum write scopes required to open repair PRs, and must never push directly to a protected production branch.
+- Apollo-managed runtime bundles, Foundry Ontology changes, and AIP prompt packs should be promoted independently but validated together through mission-level evals so a safe code release cannot accidentally activate unsafe agent behavior.

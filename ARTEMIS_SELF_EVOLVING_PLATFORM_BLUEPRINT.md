@@ -647,3 +647,126 @@ class TechniqueSignal:
 ```
 
 The same technique catalog drives UI education, AIP agent grounding, SIEM correlation labels, operator feedback capture, and eval slices for precision/recall measurement.
+
+## Python Precision Implementation Appendix
+
+ClearGlassInc Artemis uses Python as the precision control plane for deterministic scoring, eval generation, and guarded self-upgrade proposals. The implementation below is intentionally side-effect free until an approved Apollo rollout receives a signed change ticket.
+
+### Precision-first package layout
+
+```text
+artemis_precision/
+  api.py                  # FastAPI read/write boundary with policy checks
+  events.py               # Typed event ingestion contracts
+  ontology.py             # Foundry/Gotham object and relationship adapters
+  policy.py               # OPA/ABAC authorization client
+  evals.py                # Golden-set and live-shadow eval runners
+  optimizer.py            # Prompt/workflow/model-route proposal engine
+  approvals.py            # Human approval ticket state machine
+  apollo.py               # Signed deployment, canary, and rollback adapter
+  observability.py        # OpenTelemetry spans, metrics, redacted logs
+```
+
+### Deterministic self-upgrade proposal model
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
+from enum import StrEnum
+from typing import Literal
+from uuid import uuid4
+
+
+class ChangeKind(StrEnum):
+    PROMPT = "prompt"
+    WORKFLOW = "workflow"
+    MODEL_ROUTE = "model_route"
+    HEURISTIC = "heuristic"
+
+
+@dataclass(frozen=True)
+class EvalMetrics:
+    precision: float
+    recall: float
+    latency_p95_ms: int
+    policy_violations: int
+    citation_accuracy: float
+    operator_trust_delta: float
+
+    def is_safe_regression_free(self, baseline: "EvalMetrics") -> bool:
+        return (
+            self.policy_violations == 0
+            and self.precision >= baseline.precision
+            and self.recall >= baseline.recall * 0.995
+            and self.citation_accuracy >= baseline.citation_accuracy
+            and self.latency_p95_ms <= int(baseline.latency_p95_ms * 1.10)
+        )
+
+
+@dataclass(frozen=True)
+class UpgradeProposal:
+    proposal_id: str
+    kind: ChangeKind
+    mission_context: str
+    root_cause: str
+    diff_summary: str
+    baseline: EvalMetrics
+    candidate: EvalMetrics
+    created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+    status: Literal["draft", "blocked", "review", "approved", "rejected", "rolled_back"] = "draft"
+
+
+def propose_upgrade(
+    *,
+    kind: ChangeKind,
+    mission_context: str,
+    root_cause: str,
+    diff_summary: str,
+    baseline: EvalMetrics,
+    candidate: EvalMetrics,
+) -> UpgradeProposal:
+    """Create a human-reviewable proposal; never deploy directly from this path."""
+    status: Literal["blocked", "review"] = (
+        "review" if candidate.is_safe_regression_free(baseline) else "blocked"
+    )
+    return UpgradeProposal(
+        proposal_id=f"artemis-upgrade-{uuid4()}",
+        kind=kind,
+        mission_context=mission_context,
+        root_cause=root_cause,
+        diff_summary=diff_summary,
+        baseline=baseline,
+        candidate=candidate,
+        status=status,
+    )
+```
+
+### Human-approved Apollo rollout contract
+
+```python
+@dataclass(frozen=True)
+class ApprovalTicket:
+    ticket_id: str
+    proposal_id: str
+    approver: str
+    decision: Literal["approved", "rejected"]
+    reason: str
+    signed_at: datetime
+
+
+class ApolloRolloutClient:
+    def deploy_canary(self, proposal: UpgradeProposal, approval: ApprovalTicket) -> str:
+        if proposal.status != "review" or approval.decision != "approved":
+            raise PermissionError("Apollo rollout requires explicit human approval")
+        # Real implementation signs the artifact, pins the exact prompt/workflow/model-route
+        # version, deploys to ring-0, and emits immutable provenance to Foundry/Apollo logs.
+        return f"apollo-rollout://{proposal.proposal_id}/ring-0"
+
+    def rollback(self, rollout_id: str, reason: str) -> str:
+        # Real implementation restores the previous signed artifact and records the reason.
+        return f"apollo-rollback://{rollout_id}?reason={reason}"
+```
+
+This appendix turns the architecture into an implementable Python control plane: feedback becomes typed evidence, evidence becomes evals, evals become reviewable proposals, and only signed human approval can trigger Apollo canaries or rollback.

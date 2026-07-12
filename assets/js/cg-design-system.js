@@ -44,11 +44,15 @@
 
   function mountAmbient() {
     var frag = document.createDocumentFragment();
+    frag.appendChild(el('div', 'cg-fx-neon-grid'));
     frag.appendChild(el('div', 'cg-fx-aurora'));
     frag.appendChild(el('div', 'cg-fx-orb o1'));
     frag.appendChild(el('div', 'cg-fx-orb o2'));
     frag.appendChild(el('div', 'cg-fx-orb o3'));
-    if (!reduceMotion) frag.appendChild(el('div', 'cg-fx-scan'));
+    if (!reduceMotion) {
+      frag.appendChild(el('div', 'cg-fx-scan'));
+      frag.appendChild(el('div', 'cg-fx-neon-thread'));
+    }
     document.body.appendChild(frag);
   }
 
@@ -315,6 +319,7 @@
 
   function init() {
     if (optedOut()) return;
+    if (document.body) document.body.classList.add('cg-neon-ready');
     ensureFonts();
     mountTopbar();
     mountAmbient();

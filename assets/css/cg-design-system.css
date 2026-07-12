@@ -565,3 +565,84 @@ a:hover { color: #0369a1 !important; }
   .cg-fx-cursor { display: none !important; }
   .cg-fx-orb { filter: blur(30px); opacity: .4; }
 }
+
+/* ── 9. ARTEMIS NEON COMMAND BLOOM — additive site-wide enhancement layer ── */
+:root{
+  --cg-neon-cyan:#38e8ff;
+  --cg-neon-blue:#4f8cff;
+  --cg-neon-purple:#a855f7;
+  --cg-neon-magenta:#ff5bd6;
+  --cg-neon-line:linear-gradient(90deg,rgba(56,232,255,.78),rgba(79,140,255,.62),rgba(168,85,247,.65),rgba(255,91,214,.58));
+  --cg-neon-bloom:0 0 18px rgba(56,232,255,.20),0 0 42px rgba(168,85,247,.12);
+  --cg-neon-bloom-strong:0 0 22px rgba(56,232,255,.34),0 0 58px rgba(168,85,247,.20),0 0 90px rgba(255,91,214,.10);
+}
+
+.cg-fx-neon-grid{
+  position:fixed;inset:0;z-index:-4;pointer-events:none;opacity:.22;
+  background-image:
+    linear-gradient(rgba(56,232,255,.14) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(168,85,247,.12) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(circle at 50% 35%,#000 0 45%,transparent 82%);
+  animation:cgGridDrift 28s linear infinite;
+}
+@keyframes cgGridDrift{to{background-position:72px 144px}}
+
+.cg-fx-neon-thread{
+  position:fixed;inset:auto -10vw 8vh -10vw;height:2px;z-index:-1;pointer-events:none;opacity:.42;
+  background:linear-gradient(90deg,transparent,rgba(56,232,255,.75),rgba(168,85,247,.62),rgba(255,91,214,.55),transparent);
+  filter:blur(.25px) drop-shadow(0 0 18px rgba(56,232,255,.46));
+  animation:cgThreadFloat 13s ease-in-out infinite alternate;
+}
+@keyframes cgThreadFloat{0%{transform:translateY(0) rotate(-1.2deg)}100%{transform:translateY(-18vh) rotate(1deg)}}
+
+/* animated edge lighting for common cards/panels without changing layout */
+:is(.card,.panel,.prompt,.mini,.nav,.footer,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.glass,.tile,.module,.console,.terminal,.metric,.feature,.service-card,.case-card){
+  position:relative;
+  transition:box-shadow .28s var(--cg-ease),border-color .28s var(--cg-ease),transform .28s var(--cg-ease),filter .28s var(--cg-ease);
+}
+:is(.card,.panel,.prompt,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.glass,.tile,.module,.console,.terminal,.metric,.feature,.service-card,.case-card)::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;opacity:.48;
+  background:linear-gradient(120deg,rgba(56,232,255,.0),rgba(56,232,255,.72),rgba(168,85,247,.55),rgba(255,91,214,.0));
+  background-size:240% 240%;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  animation:cgNeonEdge 9s ease-in-out infinite;
+}
+@keyframes cgNeonEdge{0%,100%{background-position:0% 50%;opacity:.30}50%{background-position:100% 50%;opacity:.72}}
+:is(.card,.panel,.prompt,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.glass,.tile,.module,.console,.terminal,.metric,.feature,.service-card,.case-card):hover{
+  border-color:rgba(56,232,255,.36)!important;
+  box-shadow:var(--cg-neon-bloom),0 24px 80px rgba(0,0,0,.18);
+  transform:translateY(-2px);
+}
+
+/* premium command typography glow */
+:is(h1,h2,h3,.brand,.nav-name,.cg-tb-name,.hero-title,.title,.section-title) {
+  text-shadow:0 0 18px rgba(56,232,255,.13),0 0 30px rgba(168,85,247,.08);
+}
+:is(h1,h2,.hero-title,.section-title)::selection{background:rgba(255,91,214,.24)}
+
+/* links, buttons, chips, icons: soft bloom and pulse */
+:is(a,button,.btn,.primary,.ghost,.navlinks a,.nav-links a,.cg-tb-link,.cg-tb-cta,.pill,.badge,.chip,.tag,.kicker,.eyebrow){
+  transition:color .22s var(--cg-ease),background .22s var(--cg-ease),border-color .22s var(--cg-ease),box-shadow .22s var(--cg-ease),transform .22s var(--cg-ease),text-shadow .22s var(--cg-ease);
+}
+a:hover,a:focus-visible,
+:is(button,.btn,.primary,.ghost,.navlinks a,.nav-links a,.cg-tb-link,.cg-tb-cta,.pill,.badge,.chip,.tag):hover{
+  text-shadow:0 0 14px rgba(56,232,255,.36),0 0 26px rgba(255,91,214,.16);
+  box-shadow:var(--cg-neon-bloom);
+}
+:is(.mark,.nav-mark,.cg-mk,.ic,[class*="icon"],[class*="Icon"]){
+  box-shadow:inset 0 0 0 1px rgba(56,232,255,.18),0 0 22px rgba(56,232,255,.14),0 0 36px rgba(168,85,247,.08);
+}
+
+/* subtle life: only opt-in pages get floating after JS tags body */
+body.cg-neon-ready :is(.card,.panel,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.tile,.module):nth-of-type(3n+1){animation:cgSoftFloat 12s ease-in-out infinite}
+body.cg-neon-ready :is(.card,.panel,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.tile,.module):nth-of-type(3n+2){animation:cgSoftFloat 14s ease-in-out -4s infinite}
+body.cg-neon-ready :is(.card,.panel,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.tile,.module):nth-of-type(3n){animation:cgSoftFloat 16s ease-in-out -8s infinite}
+@keyframes cgSoftFloat{0%,100%{translate:0 0}50%{translate:0 -4px}}
+
+@media(prefers-reduced-motion:reduce){
+  .cg-fx-neon-grid,.cg-fx-neon-thread{animation:none!important}
+  :is(.card,.panel,.prompt,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.glass,.tile,.module,.console,.terminal,.metric,.feature,.service-card,.case-card)::before{animation:none!important}
+  body.cg-neon-ready :is(.card,.panel,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.tile,.module){animation:none!important;translate:none!important}
+}

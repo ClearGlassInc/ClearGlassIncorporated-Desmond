@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="ClearGlass Inc."/>
 <meta property="og:image" content="https://clearglassinc.github.io/20260203_224147843_iOS.png"/>
 <meta property="article:published_time" content="2026-06-30"/>
-<meta property="article:modified_time" content="2026-07-06"/>
+<meta property="article:modified_time" content="2026-07-12"/>
 <meta property="article:author" content="Desmond Otieno Odhiambo"/>
 <meta property="article:section" content="AI Architecture"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -49,7 +49,7 @@
   "description": "A production architecture for ClearGlassInc Artemis: a governed, self-evolving AI intelligence platform on Gotham, Foundry, AIP, and Apollo.",
   "image": "https://clearglassinc.github.io/20260203_224147843_iOS.png",
   "datePublished": "2026-06-30",
-  "dateModified": "2026-07-06",
+  "dateModified": "2026-07-12",
   "author": {
     "@type": "Person",
     "name": "Desmond Otieno Odhiambo",
@@ -261,7 +261,7 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
     <div class="byline-av">D</div>
     <div class="byline-meta">
       <b>Desmond Otieno Odhiambo</b><br>
-      <span>Founder &amp; Software Architect, ClearGlass Inc. · June 30, 2026 · Updated July 6, 2026 · 24 min read</span>
+      <span>Founder &amp; Software Architect, ClearGlass Inc. · June 30, 2026 · Updated July 12, 2026 · 31 min read</span>
     </div>
   </div>
 </header>
@@ -270,6 +270,7 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
   <a class="tool-chip" href="#architecture-map">Architecture map</a>
   <a class="tool-chip" href="#system-prompt">System prompt</a>
   <a class="tool-chip" href="#precision-evals">Python precision</a>
+  <a class="tool-chip" href="#legal-intelligence-core">Legal core</a>
   <button class="tool-chip" id="copyLink" type="button">Copy link</button>
   <button class="tool-chip" id="powerMode" type="button">Power user mode</button>
 </div>
@@ -277,7 +278,7 @@ pre{margin:24px 0;padding:18px 20px;border-radius:14px;background:#0a0c10;color:
 <main class="wrap">
 <article>
 
-  <nav class="toc" aria-label="Article table of contents"><b>Direct answer · production blueprint</b><a href="#architecture-map">Architecture</a><a href="#ontology">Ontology</a><a href="#agents">Agents</a><a href="#self-improvement">Self-improvement</a><a href="#system-prompt">Prompt system</a><a href="#precision-evals">Evals</a><a href="#implementation">Implementation</a><a href="#security-governance">Security</a><a href="#code-examples">Code</a><a href="#scenario">Scenario</a></nav>
+  <nav class="toc" aria-label="Article table of contents"><b>Direct answer · production blueprint</b><a href="#architecture-map">Architecture</a><a href="#ontology">Ontology</a><a href="#agents">Agents</a><a href="#self-improvement">Self-improvement</a><a href="#system-prompt">Prompt system</a><a href="#precision-evals">Evals</a><a href="#implementation">Implementation</a><a href="#security-governance">Security</a><a href="#legal-intelligence-core">Legal core</a><a href="#code-examples">Code</a><a href="#scenario">Scenario</a></nav>
 
   <div class="tldr neon-box-glow">
     <h4>Core thesis</h4>
@@ -585,6 +586,106 @@ denied_coalition if {
         and not obj.releasability.denies(actor.coalition)
     )</code></pre>
 
+
+
+  <h2 id="legal-intelligence-core">Supreme Legal Intelligence Core</h2>
+  <p>ClearGlassInc Artemis needs a legal control plane that behaves like a command hierarchy, not a policy memo. The legal core governs contracts, employment, privacy, intellectual property, investigations, litigation risk, regulatory compliance, tax, administrative law, evidence handling, and corporate governance. It does not replace retained counsel or claim to be a licensed lawyer; it produces the strongest legally supportable analysis available, preserves uncertainty, and escalates matters requiring authorized legal review.</p>
+
+  <h3>Universal legal command hierarchy</h3>
+  <p>The legal core ranks authority before reasoning. It never elevates guidance above legislation, persuasive authority above binding authority, or a contractual term above applicable legal limits. Every legal output separates confirmed facts, assumptions, binding authority, persuasive authority, unsettled law, operational judgment, negotiation strategy, privilege risk, and counsel-review requirements.</p>
+
+<pre><code class="language-yaml">legal_core:
+  prime_directive: "Produce the strongest legally supportable answer possible."
+  authority_hierarchy:
+    - controlling_constitutional_statutory_regulatory_contractual_authority
+    - binding_judicial_decisions
+    - binding_procedural_and_evidentiary_rules
+    - official_regulator_court_tribunal_tax_or_government_guidance
+    - persuasive_judicial_authority
+    - recognized_secondary_sources
+    - industry_standards_and_established_practice
+    - general_legal_reasoning_only_if_stronger_authority_does_not_resolve
+  mandatory_status:
+    - LEGALLY_SUPPORTED
+    - CONDITIONALLY_SUPPORTED
+    - LEGALLY_UNCERTAIN
+    - COUNSEL_AUTHORIZATION_REQUIRED
+    - PROHIBITED_OR_HIGH_RISK_ACTION_IDENTIFIED
+    - INSUFFICIENT_RELIABLE_AUTHORITY
+  disclaimers:
+    - "Do not claim to be licensed counsel."
+    - "Do not replace retained counsel."
+    - "Do not invent citations, deadlines, facts, rules, or quotations."</code></pre>
+
+  <h3>Modular legal operating system</h3>
+  <div class="matrix" role="table" aria-label="Artemis legal intelligence module map">
+    <div class="matrix-row matrix-head" role="row"><div>Module</div><div>Primary execution rule</div><div>Required output</div></div>
+    <div class="matrix-row" role="row"><div><strong>Universal core</strong></div><div>Identify objective, jurisdiction, governing law, forum, posture, parties, deadlines, evidence, burdens, remedies, and uncertainty before answering.</div><div>Executive conclusion, confirmed facts, assumptions, authority, analysis, risks, recommendation, sources, counsel notice, final legal status.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Contracts</strong></div><div>Extract terms, dependencies, remedies, risk allocation, enforceability limits, and negotiation leverage.</div><div>Critical/high/medium/low issue list plus fallback language.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Litigation</strong></div><div>Map claims, defenses, elements, burdens, limitations, venue, admissibility, discovery, damages, and injunction risk.</div><div>Immediate arguments separated from discovery-dependent issues.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Compliance</strong></div><div>Map obligations to owner, control, evidence, frequency, status, deficiency, remediation, deadline, and authority.</div><div>Control matrix with escalation and regulator-notification triggers.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Investigations</strong></div><div>Build verified chronology, entity map, communications chain, money flow, contradictions, corroboration, and chain-of-custody record.</div><div>Evidence-preserving investigative plan that never modifies originals.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Privacy/AI</strong></div><div>Identify legal basis, consent, notice, minimization, retention, transfers, processor duties, breach response, automated-decision obligations, and model-training restrictions.</div><div>Risk-rated privacy and AI governance assessment.</div></div>
+    <div class="matrix-row" role="row"><div><strong>Corporate/governance</strong></div><div>Verify entity status, authority, approvals, fiduciary duties, conflicts, securities implications, beneficial ownership, insolvency, and board oversight.</div><div>Approval path and governance defect register.</div></div>
+  </div>
+
+  <h3>Legal control over technical execution</h3>
+  <p>Before any autonomous repair, deployment, data migration, workflow execution, repository change, user-data processing, or production modification, Artemis runs a legal restriction check. If a credible restriction touches privilege, litigation hold, privacy, IP, evidence preservation, customer rights, employee rights, platform terms, licensing, tax, consent, or disclosure duties, the affected action stops while unrelated safe work continues.</p>
+
+<pre><code class="language-python">from enum import Enum
+from pydantic import BaseModel
+
+class LegalStatus(str, Enum):
+    LEGALLY_SUPPORTED = "LEGALLY_SUPPORTED"
+    CONDITIONALLY_SUPPORTED = "CONDITIONALLY_SUPPORTED"
+    LEGALLY_UNCERTAIN = "LEGALLY_UNCERTAIN"
+    COUNSEL_AUTHORIZATION_REQUIRED = "COUNSEL_AUTHORIZATION_REQUIRED"
+    PROHIBITED_OR_HIGH_RISK_ACTION_IDENTIFIED = "PROHIBITED_OR_HIGH_RISK_ACTION_IDENTIFIED"
+    INSUFFICIENT_RELIABLE_AUTHORITY = "INSUFFICIENT_RELIABLE_AUTHORITY"
+
+class TechnicalAction(BaseModel):
+    action_id: str
+    action_type: str
+    touches_user_data: bool = False
+    touches_evidence: bool = False
+    touches_privileged_material: bool = False
+    changes_production: bool = False
+    contractual_dependency: str | None = None
+    jurisdiction: str | None = None
+
+class LegalExecutionDecision(BaseModel):
+    allowed: bool
+    status: LegalStatus
+    risk_level: str
+    required_escalation: list[str]
+    least_disruptive_path: str
+
+def legal_preflight(action: TechnicalAction) -> LegalExecutionDecision:
+    blockers = []
+    if action.touches_privileged_material:
+        blockers.append("privilege_waiver_review")
+    if action.touches_evidence:
+        blockers.append("litigation_hold_chain_of_custody_review")
+    if action.touches_user_data:
+        blockers.append("privacy_notice_consent_retention_review")
+    if action.changes_production:
+        blockers.append("contract_platform_terms_and_change_approval_review")
+
+    if blockers:
+        return LegalExecutionDecision(
+            allowed=False,
+            status=LegalStatus.COUNSEL_AUTHORIZATION_REQUIRED,
+            risk_level="high",
+            required_escalation=blockers,
+            least_disruptive_path="pause affected action, preserve state, document authority gap, continue unrelated safe work",
+        )
+    return LegalExecutionDecision(
+        allowed=True,
+        status=LegalStatus.CONDITIONALLY_SUPPORTED,
+        risk_level="low",
+        required_escalation=[],
+        least_disruptive_path="proceed with audit logging and rollback readiness",
+    )</code></pre>
 
 
 

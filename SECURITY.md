@@ -10,7 +10,14 @@ This policy applies to the public ClearGlassInc Artemis GitHub Pages and support
 | Legacy snapshots and archived exports | ⚠️ Best effort |
 
 ## Reporting a vulnerability
-Report vulnerabilities privately 
+Report vulnerabilities privately by opening a GitHub private vulnerability report:
+
+https://github.com/ClearGlassInc/ClearGlassInc.github.io/security/advisories/new
+
+If GitHub private vulnerability reporting is unavailable, email the security owner at
+`security@clearglassinc.com` with the subject prefix `[SECURITY] ClearGlassInc Artemis`.
+Do not open a public issue for suspected vulnerabilities, secrets, authentication bypasses,
+or exploit details.
 
 Please include:
 - impacted file, endpoint, or feature;

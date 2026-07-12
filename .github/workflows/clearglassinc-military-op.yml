@@ -112,9 +112,21 @@ jobs:
 
       - name: Dependency Audit
         run: |
-          if [ -f package-lock.json ]; then
-            npm audit --audit-level=high || true
-            npm audit --json > audit-report.json || true
+          set -euo pipefail
+          if find . -path '*/node_modules' -prune -o -name package-lock.json -print -quit | grep -q .; then
+            printf '{"audits":[' > audit-report.json
+            first=1
+            while IFS= read -r -d '' lockfile; do
+              dir="$(dirname "$lockfile")"
+              echo "Auditing ${dir}"
+              tmp="$(mktemp)"
+              (cd "$dir" && npm audit --audit-level=high --json > "$tmp")
+              [ "$first" -eq 1 ] || printf ',' >> audit-report.json
+              first=0
+              python3 -c 'import json, sys; dir_path, report_path = sys.argv[1], sys.argv[2]; report = json.load(open(report_path, encoding="utf-8")); print(json.dumps({"directory": dir_path, "report": report}, separators=(",", ":")), end="")' "$dir" "$tmp" >> audit-report.json
+              rm -f "$tmp"
+            done < <(find . -path '*/node_modules' -prune -o -name package-lock.json -print0)
+            printf ']}' >> audit-report.json
           else
             echo '{"note":"static site — no npm dependency tree to audit"}' > audit-report.json
           fi

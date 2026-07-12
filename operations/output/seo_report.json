@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-11T08:45:30.914045+00:00",
-  "files_audited": 63,
-  "average_score": 90.6,
+  "run_utc": "2026-07-12T09:01:01.617504+00:00",
+  "files_audited": 64,
+  "average_score": 90.2,
   "pages": [
     {
       "file": "404.html",
@@ -608,6 +608,29 @@
       "score": 90,
       "issues": [
         "Description length 243 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "cyber-defense-console.html",
+      "title": "ClearGlass Command Center \u00b7 Cyber Defense Console \u2014 ClearGlass Inc.",
+      "title_length": 67,
+      "title_ok": false,
+      "description": "ClearGlass Command Center \u2014 a next-generation cyber defense console. Risk Intelligence, Control Plane Visibility, Defensive Automation, and Executive Assurance in one mission-critical command platform.",
+      "description_length": 201,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": false,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Title length 67 chars (ideal 30\u201360)",
+        "Description length 201 chars (ideal 120\u2013160)",
+        "Missing og:description",
+        "Missing og:image"
       ]
     },
     {
@@ -1222,12 +1245,12 @@
     }
   ],
   "top_issues": [
-    "17x \u2014 Description length N chars (ideal N\u2013N)",
-    "15x \u2014 Title length N chars (ideal N\u2013N)",
-    "8x \u2014 Missing og:image",
+    "18x \u2014 Description length N chars (ideal N\u2013N)",
+    "16x \u2014 Title length N chars (ideal N\u2013N)",
+    "9x \u2014 Missing og:image",
+    "4x \u2014 Missing og:description",
     "4x \u2014 Multiple <hN> tags (N)",
     "3x \u2014 Missing og:title",
-    "3x \u2014 Missing og:description",
     "2x \u2014 Missing canonical link tag",
     "2x \u2014 No <hN> tag found",
     "1x \u2014 Missing <title>",

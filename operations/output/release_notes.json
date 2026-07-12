@@ -1,10 +1,46 @@
 {
-  "run_utc": "2026-07-11T08:45:30.870008+00:00",
+  "run_utc": "2026-07-12T09:01:01.567615+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 654,
+  "commit_count": 687,
   "sections": {
     "New Features": [
+      {
+        "sha": "10cfa1a",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "command-center atmosphere layer on percival-os + side-store",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "ea90adb",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "v10 signed single-use approvals + trace IDs",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "c917594",
+        "type": "feat",
+        "scope": "nav",
+        "subject": "surface SMB Cyber Trust Kit + Side Store in homepage Products menu",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "ec1f788",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "wire mission_memory for cross-run continuity",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
       {
         "sha": "ed4ef78",
         "type": "feat",
@@ -448,6 +484,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "92d60a3",
+        "type": "fix",
+        "scope": "security",
+        "subject": "bump apps/air-control next 14.2.5 -> ^14.2.25 (CVE-2025-29927)",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
       {
         "sha": "d7c2d01",
         "type": "fix",
@@ -1115,6 +1160,105 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "1d0f7b5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Apply homepage design system site-wide; web-design page exempt",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "7d49606",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add live AI command-center layer to ClearGlass Store",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "73a4bf9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Elevate ClearGlass Store into ultra-futuristic glassmorphism experience",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "8d9b6ef",
+        "type": "chore",
+        "scope": "deps",
+        "subject": "watch all npm app dirs in dependabot (close coverage gap)",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "8e405e2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Command Center blog post to ClearGlass Insights",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "1e6f29d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Command Center cyber defense console page",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "b7063ce",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance BLUEDESK holographic command bridge",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "809e786",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add defensive posture glass console section",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "08d9fcc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Intensify Side Store command bridge visuals",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "940810a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Transform side store into neon glass command console",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "f3e08a3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Intensify BLUEDESK holographic command bridge",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
       {
         "sha": "8c1735a",
         "type": "chore",
@@ -3403,6 +3547,150 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "6921d70",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "f8269d9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "88721cd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "6c10037",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "29c8669",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "8a26ffd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "9190f6a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "bf8f3d8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "4c1a853",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "b1ec339",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "2005d9a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "d240f30",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "6515fbe",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "1be8373",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "729f6bb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "65bb615",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-11 08:45 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
       {
         "sha": "9c77db7",
         "type": "bot",
@@ -5803,6 +6091,15 @@
       }
     ],
     "Other": [
+      {
+        "sha": "27a8497",
+        "type": "percival",
+        "scope": null,
+        "subject": "add local docker-compose stack (governor + envoy gateway)",
+        "author": "Claude",
+        "date": "2026-07-10",
+        "breaking": false
+      },
       {
         "sha": "e2a93d7",
         "type": "percival",

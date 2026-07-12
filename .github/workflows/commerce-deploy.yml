@@ -34,9 +34,33 @@ jobs:
         working-directory: clearglass-commerce/control-plane
         run: python -m pytest tests/ -q
 
+  frontend-build:
+    name: Frontend build gate (${{ matrix.app }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [storefront, admin]
+    defaults:
+      run:
+        working-directory: clearglass-commerce/${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: clearglass-commerce/${{ matrix.app }}/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - name: Typecheck (tsc --noEmit)
+        run: npx tsc --noEmit
+      - name: Production build (next build)
+        run: npm run build
+
   deploy:
     name: Deploy control plane (Render)
-    needs: gate
+    needs: [gate, frontend-build]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -45,8 +69,8 @@ jobs:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           if [ -z "$HOOK" ]; then
-            echo "RENDER_DEPLOY_HOOK_URL secret not set — skipping deploy."
-            echo "Add a Render Deploy Hook URL as a repo secret to enable auto-deploy."
-            exit 0
+            echo "::error::RENDER_DEPLOY_HOOK_URL secret is required for main-branch commerce deploys."
+            echo "::error::Add a Render Deploy Hook URL as a repo secret, or run the validation-only CI workflows instead."
+            exit 1
           fi
           curl -fsS -X POST "$HOOK" >/dev/null && echo "Render deploy triggered."

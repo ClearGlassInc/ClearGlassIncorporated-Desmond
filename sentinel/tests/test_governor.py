@@ -162,6 +162,28 @@ def test_every_decision_is_audited_and_chain_verifies():
 # --------------------------------------------------------------------------- #
 # v9 fail-closed audit sync
 # --------------------------------------------------------------------------- #
+def test_evaluate_generates_trace_id_when_absent():
+    gov = PolicyGovernor(_identity())
+    d = gov.evaluate(_request())
+    assert d.trace_id.startswith("tr_")
+
+
+def test_evaluate_propagates_inbound_trace_id():
+    gov = PolicyGovernor(_identity())
+    d = gov.evaluate(_request(), trace_id="tr_inbound")
+    assert d.trace_id == "tr_inbound"
+    # and the trace id is on the audit entry, so events stitch across the boundary
+    assert gov.audit.entries[-1].detail["trace_id"] == "tr_inbound"
+
+
+def test_trace_id_present_on_denied_and_escalated_decisions():
+    gov = PolicyGovernor(_identity(default_tier=Tier.DEPLOY))
+    denied = gov.evaluate(_request(target_lane=["marketing"]), trace_id="tr_a")  # invalid lane
+    assert denied.allowed is False and denied.trace_id == "tr_a"
+    esc = gov.evaluate(_request(action_scope="modify_system", target_lane=["security"]), trace_id="tr_b")
+    assert esc.escalate is True and esc.trace_id == "tr_b"
+
+
 class _BrokenAudit:
     """Audit ledger that fails on write, simulating a ledger outage."""
 

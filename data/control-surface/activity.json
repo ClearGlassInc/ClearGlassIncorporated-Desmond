@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "12:07",
-    "timestamp": "2026-07-12T12:07:24Z"
+    "time": "13:55",
+    "timestamp": "2026-07-12T13:55:29Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #264",
-    "time": "12:07",
-    "timestamp": "2026-07-12T12:07:10Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on claude/futuristic-header-topbar-or7s3h \u00b7 run #966",
-    "time": "11:32",
-    "timestamp": "2026-07-12T11:32:14Z"
+    "detail": "schedule on main \u00b7 run #265",
+    "time": "13:55",
+    "timestamp": "2026-07-12T13:55:18Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "pull_request on claude/futuristic-header-topbar-or7s3h \u00b7 run #545",
-    "time": "11:32",
-    "timestamp": "2026-07-12T11:32:14Z"
+    "detail": "schedule on main \u00b7 run #550",
+    "time": "13:43",
+    "timestamp": "2026-07-12T13:43:33Z"
   },
   {
-    "title": "PR Automation",
+    "title": "Health Monitor",
     "status": "ok",
-    "detail": "pull_request on claude/futuristic-header-topbar-or7s3h \u00b7 run #507",
-    "time": "11:32",
-    "timestamp": "2026-07-12T11:32:14Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "pull_request on claude/futuristic-header-topbar-or7s3h \u00b7 run #1269",
-    "time": "11:32",
-    "timestamp": "2026-07-12T11:32:14Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on claude/futuristic-header-topbar-or7s3h \u00b7 run #993",
-    "time": "11:32",
-    "timestamp": "2026-07-12T11:32:14Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "pull_request on claude/futuristic-header-topbar-or7s3h \u00b7 run #1228",
-    "time": "11:32",
-    "timestamp": "2026-07-12T11:32:14Z"
-  },
-  {
-    "title": "Code Quality: PR #793",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/793/head \u00b7 run #2213",
-    "time": "11:32",
-    "timestamp": "2026-07-12T11:32:13Z"
+    "detail": "schedule on main \u00b7 run #172",
+    "time": "13:35",
+    "timestamp": "2026-07-12T13:35:33Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-bd3dcb4d-53ef-4013-92b7-ead3299d37c0 \u00b7 run #741",
-    "time": "11:08",
-    "timestamp": "2026-07-12T11:08:03Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-e59c1ab0-dd51-44b7-b665-d0fc65ef03c0 \u00b7 run #743",
+    "time": "13:08",
+    "timestamp": "2026-07-12T13:08:03Z"
+  },
+  {
+    "title": "Auto-Store",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #63",
+    "time": "13:04",
+    "timestamp": "2026-07-12T13:04:36Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "bad",
+    "detail": "dynamic on main \u00b7 run #1310",
+    "time": "12:49",
+    "timestamp": "2026-07-12T12:49:30Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #970",
+    "time": "12:49",
+    "timestamp": "2026-07-12T12:49:30Z"
   },
   {
     "title": "Deploy GitHub Pages",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #852",
-    "time": "10:44",
-    "timestamp": "2026-07-12T10:44:25Z"
+    "detail": "push on main \u00b7 run #856",
+    "time": "12:49",
+    "timestamp": "2026-07-12T12:49:30Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "CI",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1306",
-    "time": "10:44",
-    "timestamp": "2026-07-12T10:44:18Z"
+    "detail": "push on main \u00b7 run #1232",
+    "time": "12:49",
+    "timestamp": "2026-07-12T12:49:30Z"
   },
   {
-    "title": "Code Quality: Push on main",
+    "title": "ClearGlass GitHub Pages Check",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2212",
-    "time": "10:44",
-    "timestamp": "2026-07-12T10:44:18Z"
+    "detail": "push on main \u00b7 run #257",
+    "time": "12:49",
+    "timestamp": "2026-07-12T12:49:30Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #1273",
+    "time": "12:49",
+    "timestamp": "2026-07-12T12:49:30Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #997",
+    "time": "12:49",
+    "timestamp": "2026-07-12T12:49:30Z"
   }
 ]

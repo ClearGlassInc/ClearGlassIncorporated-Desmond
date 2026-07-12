@@ -1,0 +1,324 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CLEARGLASS GLOBAL DESIGN SYSTEM — homepage-derived, site-wide layer
+   Source of truth: index.html (light premium glassmorphism, prism glow).
+   Load order: page styles → assets/css/glass.css → THIS FILE (last).
+   Pairs with assets/js/cg-design-system.js, which mounts the ambient
+   FX layers (aurora, depth orbs, scan-line sweep, cursor glow).
+   web-design.html and loader.html are intentionally exempt.
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. TOKENS — restore the homepage prism/glow identity on top of
+       glass.css's monochrome mapping ── */
+:root {
+  --cg-serif: 'Cormorant Garamond', Georgia, serif;
+  --cg-sans: 'Urbanist', system-ui, -apple-system, sans-serif;
+  --cg-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* prism accents (homepage :root) */
+  --prism-1: #38bdf8;
+  --prism-2: #a78bfa;
+  --prism-3: #f472b6;
+  --prism-4: #34d399;
+  --prism-5: #fbbf24;
+  --prism-6: #60a5fa;
+  --crystal: linear-gradient(135deg, #38bdf8 0%, #a78bfa 25%, #f472b6 50%, #fbbf24 75%, #34d399 100%);
+  --cg-crystal: linear-gradient(135deg, #38bdf8 0%, #a78bfa 25%, #f472b6 50%, #fbbf24 75%, #34d399 100%);
+  --crystal-soft: linear-gradient(135deg, rgba(56,189,248,.14), rgba(167,139,250,.12));
+
+  /* neon glow intensities (cyan / electric blue) */
+  --cg-glow-cyan: rgba(56, 189, 248, .16);
+  --cg-glow-blue: rgba(96, 165, 250, .14);
+  --cg-glow-violet: rgba(167, 139, 250, .12);
+  --cg-glow-mint: rgba(52, 211, 153, .12);
+
+  /* light premium glass surfaces */
+  --cg-glass: rgba(255, 255, 255, .62);
+  --cg-glass-strong: rgba(255, 255, 255, .86);
+  --cg-glass-border: rgba(255, 255, 255, .75);
+  --cg-line: rgba(10, 12, 16, .07);
+  --cg-text: #0a0c10;
+  --cg-text-2: #3a3f4a;
+  --cg-text-3: #6b7280;
+  --cg-text-4: #9ca3af;
+
+  --cg-radius: 20px;
+  --cg-radius-sm: 12px;
+  --cg-blur: 20px;
+  --cg-shadow: 0 8px 28px rgba(10, 12, 16, .05);
+  --cg-shadow-lift: 0 18px 45px rgba(10, 12, 16, .08);
+  --cg-ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ── 2. BASE — high-contrast readable typography, unified rhythm ── */
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  font-family: var(--cg-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+code, pre, kbd, samp { font-family: var(--cg-mono); }
+
+/* homepage focus + selection signature */
+::selection { background: rgba(56, 189, 248, .22); color: var(--cg-text); }
+:focus-visible { outline: 2px solid rgba(56, 189, 248, .65); outline-offset: 2px; }
+
+/* scrollbar with a hint of prism */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f0f2f5; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #bfdbfe, #c4b5fd);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #93c5fd, #a78bfa); }
+
+/* ── 3. AMBIENT FX LAYERS (mounted by cg-design-system.js) ── */
+
+/* animated gradient background — slow aurora drift behind everything */
+.cg-fx-aurora {
+  position: fixed;
+  inset: -20vmax;
+  z-index: -3;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 42% 38% at 18% 22%, var(--cg-glow-cyan), transparent 70%),
+    radial-gradient(ellipse 38% 42% at 82% 18%, var(--cg-glow-violet), transparent 70%),
+    radial-gradient(ellipse 44% 40% at 74% 82%, var(--cg-glow-blue), transparent 70%),
+    radial-gradient(ellipse 36% 36% at 22% 78%, var(--cg-glow-mint), transparent 70%);
+  animation: cgAurora 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes cgAurora {
+  0%   { transform: translate3d(-2%, -1%, 0) scale(1) rotate(0deg); }
+  50%  { transform: translate3d(2%, 2%, 0) scale(1.06) rotate(1.2deg); }
+  100% { transform: translate3d(-1%, 1%, 0) scale(1.03) rotate(-1deg); }
+}
+
+/* floating depth orbs — spectral layers with parallax (JS drives --cg-par) */
+.cg-fx-orb {
+  position: fixed;
+  z-index: -2;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(42px);
+  opacity: .55;
+  animation: cgOrbFloat 18s ease-in-out infinite alternate;
+  transform: translate3d(0, calc(var(--cg-par, 0) * 1px), 0);
+  will-change: transform;
+}
+.cg-fx-orb.o1 { width: 46vmin; height: 46vmin; top: 6%; left: -8%; background: radial-gradient(circle, rgba(56,189,248,.20), transparent 65%); }
+.cg-fx-orb.o2 { width: 38vmin; height: 38vmin; top: 46%; right: -6%; background: radial-gradient(circle, rgba(167,139,250,.18), transparent 65%); animation-delay: -6s; animation-duration: 22s; }
+.cg-fx-orb.o3 { width: 32vmin; height: 32vmin; bottom: -4%; left: 24%; background: radial-gradient(circle, rgba(96,165,250,.16), transparent 65%); animation-delay: -12s; animation-duration: 26s; }
+@keyframes cgOrbFloat {
+  0%   { margin-top: 0; margin-left: 0; }
+  50%  { margin-top: -3vmin; margin-left: 2vmin; }
+  100% { margin-top: 2vmin; margin-left: -2vmin; }
+}
+
+/* scan-line sweep — periodic thin light band sweeping the viewport */
+.cg-fx-scan {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -12%;
+  height: 22vh;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(56, 189, 248, .045) 38%,
+    rgba(167, 139, 250, .06) 50%,
+    rgba(56, 189, 248, .045) 62%,
+    transparent);
+  animation: cgScan 11s var(--cg-ease) infinite;
+}
+@keyframes cgScan {
+  0%, 12%  { transform: translateY(-30vh); opacity: 0; }
+  18%      { opacity: 1; }
+  55%      { transform: translateY(130vh); opacity: 1; }
+  62%,100% { transform: translateY(130vh); opacity: 0; }
+}
+
+/* cursor-reactive glow — homepage .cursor-glow, re-enabled site-wide */
+.cg-fx-cursor {
+  position: fixed;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle,
+    rgba(56, 189, 248, .07) 0%,
+    rgba(167, 139, 250, .045) 30%,
+    transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: left .45s ease, top .45s ease;
+}
+/* glass.css force-hides the homepage's own cursor glow; restore both */
+.cursor-glow, .cg-fx-cursor { display: block !important; }
+
+/* ── 4. COMPONENT LANGUAGE — homepage card / capsule / chip system ── */
+
+/* glass capsule (homepage .hero-domain-line language) */
+.cg-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--cg-glass-strong);
+  border: 1px solid var(--cg-line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: var(--cg-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--cg-text-2);
+}
+
+/* glowing status chip + pulse indicator */
+.cg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: var(--cg-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: rgba(56, 189, 248, .08);
+  border: 1px solid rgba(56, 189, 248, .22);
+  color: #0369a1;
+  box-shadow: 0 0 14px rgba(56, 189, 248, .12);
+}
+.cg-chip.ok    { background: rgba(52,211,153,.10); border-color: rgba(52,211,153,.25); color: #047857; box-shadow: 0 0 14px rgba(52,211,153,.14); }
+.cg-chip.warn  { background: rgba(251,191,36,.12); border-color: rgba(251,191,36,.30); color: #92400e; box-shadow: 0 0 14px rgba(251,191,36,.14); }
+.cg-chip.viol  { background: rgba(167,139,250,.10); border-color: rgba(167,139,250,.25); color: #5b21b6; box-shadow: 0 0 14px rgba(167,139,250,.14); }
+
+.cg-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--prism-1);
+  box-shadow: 0 0 0 0 rgba(56, 189, 248, .5);
+  animation: cgPulse 2.1s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.cg-pulse.ok { background: var(--prism-4); }
+.cg-pulse.warn { background: var(--prism-5); }
+@keyframes cgPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, .35); }
+  50%      { box-shadow: 0 0 0 7px rgba(56, 189, 248, 0); }
+}
+
+/* premium glass card utility (homepage .product-card language) */
+.cg-glass-card {
+  border-radius: var(--cg-radius);
+  border: 1px solid var(--cg-line);
+  background: var(--cg-glass-strong);
+  backdrop-filter: blur(var(--cg-blur)) saturate(1.2);
+  -webkit-backdrop-filter: blur(var(--cg-blur)) saturate(1.2);
+  box-shadow: var(--cg-shadow);
+  transition: transform .35s var(--cg-ease), box-shadow .35s var(--cg-ease), border-color .35s var(--cg-ease);
+}
+.cg-glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--cg-shadow-lift);
+  border-color: rgba(56, 189, 248, .25);
+}
+
+/* crystal gradient text (homepage h1 accent) */
+.cg-crystal-text, .crystal-text {
+  background: var(--crystal) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* ── 5. SHARED-SELECTOR ACCENTS — reintroduce the prism edge glow that
+       glass.css flattened, on the class names the site already uses ── */
+.nav-links a::after {
+  background: linear-gradient(90deg, rgba(56,189,248,.85), rgba(167,139,250,.85)) !important;
+}
+.nav-links a.is-active::after {
+  background: linear-gradient(90deg, var(--prism-1), var(--prism-2)) !important;
+}
+.value-card::after { background: var(--crystal) !important; }
+.sh-tag::before { background: linear-gradient(90deg, var(--prism-1), var(--prism-2)) !important; }
+.pc-era, [class*="-era"] { color: var(--prism-1) !important; }
+.founder-role { color: var(--prism-1) !important; }
+.hero-line, .hero-lines .hero-line {
+  background: linear-gradient(90deg, transparent, rgba(56,189,248,.12), rgba(167,139,250,.08), transparent) !important;
+}
+.hero-lines { opacity: 1 !important; }
+.hero-prism { display: block !important; }
+.scroll-line { background: linear-gradient(180deg, #93c5fd, transparent) !important; }
+
+/* buttons: keep the dark premium base, add reactive neon bloom on hover */
+.btn-dark:hover, .btn-primary:hover, .nav-cta:hover,
+[class*="btn-dark"]:hover, [class*="btn-primary"]:hover {
+  box-shadow: 0 6px 24px rgba(56, 189, 248, .28) !important;
+}
+.btn-glass:hover, [class*="btn-glass"]:hover {
+  border-color: rgba(56, 189, 248, .35) !important;
+  box-shadow: 0 4px 18px rgba(56, 189, 248, .16) !important;
+}
+.btn-crystal, [class*="btn-crystal"] {
+  background: var(--crystal) !important;
+  background-size: 200% 200% !important;
+  color: #fff !important;
+  animation: cgCrystalShift 6s ease infinite !important;
+  box-shadow: 0 4px 25px rgba(56, 189, 248, .2) !important;
+}
+@keyframes cgCrystalShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* form focus: homepage signature ring */
+input:focus, textarea:focus, select:focus {
+  border-color: rgba(56, 189, 248, .7) !important;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, .14) !important;
+}
+
+/* links: subtle electric hover instead of flat gray */
+a:hover { color: #0369a1 !important; }
+.nav-cta, a.nav-cta, .btn-dark, .btn-crystal,
+[class*="btn-dark"], [class*="btn-primary"], [class*="btn-crystal"],
+.btn-dark:hover, .btn-crystal:hover, .nav-cta:hover { color: #f7f8fa !important; }
+
+/* status dots regain their pulse (glass.css freezes them) */
+.hdot, .cg-status-dot, [class*="status-dot"] {
+  background: var(--prism-1) !important;
+  box-shadow: 0 0 0 0 rgba(56, 189, 248, .4) !important;
+  animation: cgPulse 2.1s ease-in-out infinite !important;
+}
+
+/* ── 6. SCROLL-REVEAL MOTION (classes applied by JS; no-JS unaffected) ── */
+.cg-rv {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .8s var(--cg-ease), transform .8s var(--cg-ease);
+}
+.cg-rv.cg-vis { opacity: 1; transform: translateY(0); }
+
+/* ── 7. ACCESSIBILITY — motion opt-out ── */
+@media (prefers-reduced-motion: reduce) {
+  .cg-fx-aurora, .cg-fx-orb, .cg-fx-scan { animation: none !important; }
+  .cg-fx-scan { display: none !important; }
+  .cg-fx-cursor { display: none !important; }
+  .cg-pulse, .hdot, .cg-status-dot, [class*="status-dot"] { animation: none !important; }
+  .btn-crystal, [class*="btn-crystal"] { animation: none !important; }
+  .cg-rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* mobile: lighter FX for performance */
+@media (max-width: 768px) {
+  .cg-fx-cursor { display: none !important; }
+  .cg-fx-orb { filter: blur(30px); opacity: .4; }
+}

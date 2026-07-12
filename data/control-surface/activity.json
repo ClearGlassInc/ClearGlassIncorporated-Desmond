@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "00:10",
-    "timestamp": "2026-07-12T00:10:31Z"
+    "time": "03:56",
+    "timestamp": "2026-07-12T03:56:41Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #259",
-    "time": "00:10",
-    "timestamp": "2026-07-12T00:10:17Z"
+    "detail": "schedule on main \u00b7 run #260",
+    "time": "03:56",
+    "timestamp": "2026-07-12T03:56:27Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-11e9fee3-fc06-4f46-a75f-e8d92a2cb774 \u00b7 run #730",
-    "time": "00:08",
-    "timestamp": "2026-07-12T00:08:02Z"
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #543",
+    "time": "03:38",
+    "timestamp": "2026-07-12T03:38:29Z"
   },
   {
-    "title": "npm_and_yarn in /apps/air-control, /apps/autostore/cockpit, /apps/autostore/storefront, /clearglass-agentops, /clearglass-air-control, /clearglass-commerce/admin, /clearglass-commerce/storefront - Update #1456735161",
-    "status": "warn",
-    "detail": "dynamic on main \u00b7 run #55",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:48Z"
-  },
-  {
-    "title": "github_actions in /. - Update #1456735158",
-    "status": "warn",
-    "detail": "dynamic on main \u00b7 run #56",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:48Z"
-  },
-  {
-    "title": "terraform in /infra - Update #1456735160",
-    "status": "warn",
-    "detail": "dynamic on main \u00b7 run #54",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:48Z"
-  },
-  {
-    "title": "pip in /., /apps/autostore/control_plane, /automation/v0.2, /clearglass-commerce/control-plane, /deployment/artemis/app, /products/opal-koboi, /sentinel, /services/clearglass_agent_service - Update #1456735159",
-    "status": "warn",
-    "detail": "dynamic on main \u00b7 run #53",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:48Z"
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #170",
+    "time": "03:21",
+    "timestamp": "2026-07-12T03:21:47Z"
   },
   {
     "title": "CI",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1224",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:43Z"
+    "detail": "pull_request on claude/influence-ops-poster-vtwe57 \u00b7 run #1227",
+    "time": "03:14",
+    "timestamp": "2026-07-12T03:14:47Z"
   },
   {
-    "title": "IP Protection Bot - Risk Assessment",
+    "title": "Defender Watch",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1264",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:43Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #253",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:43Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #846",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:43Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #962",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:43Z"
+    "detail": "pull_request on claude/influence-ops-poster-vtwe57 \u00b7 run #542",
+    "time": "03:14",
+    "timestamp": "2026-07-12T03:14:47Z"
   },
   {
     "title": "Security",
     "status": "ok",
-    "detail": "push on main \u00b7 run #989",
-    "time": "00:06",
-    "timestamp": "2026-07-12T00:06:43Z"
+    "detail": "pull_request on claude/influence-ops-poster-vtwe57 \u00b7 run #992",
+    "time": "03:14",
+    "timestamp": "2026-07-12T03:14:47Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/influence-ops-poster-vtwe57 \u00b7 run #506",
+    "time": "03:14",
+    "timestamp": "2026-07-12T03:14:47Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "pull_request on claude/influence-ops-poster-vtwe57 \u00b7 run #1267",
+    "time": "03:14",
+    "timestamp": "2026-07-12T03:14:47Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/influence-ops-poster-vtwe57 \u00b7 run #965",
+    "time": "03:14",
+    "timestamp": "2026-07-12T03:14:47Z"
+  },
+  {
+    "title": "Code Quality: PR #791",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/791/head \u00b7 run #2207",
+    "time": "03:14",
+    "timestamp": "2026-07-12T03:14:46Z"
+  },
+  {
+    "title": "ClearGlass GitHub Pages Check",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #254",
+    "time": "03:09",
+    "timestamp": "2026-07-12T03:09:38Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #848",
+    "time": "03:09",
+    "timestamp": "2026-07-12T03:09:38Z"
   }
 ]

@@ -1,9 +1,13 @@
-# Release Notes — 2026-07-11
+# Release Notes — 2026-07-12
 
-*654 commit(s) since v1.0.0*
+*687 commit(s) since v1.0.0*
 
 ## New Features
 
+- **ui:** command-center atmosphere layer on percival-os + side-store (`10cfa1a`)
+- **percival:** v10 signed single-use approvals + trace IDs (`ea90adb`)
+- **nav:** surface SMB Cyber Trust Kit + Side Store in homepage Products menu (`c917594`)
+- **percival:** wire mission_memory for cross-run continuity (`ec1f788`)
 - **store:** ClearGlass Side Store storefront — catalog, cart, checkout core (`ed4ef78`)
 - Marketing Operating System v2.0 governance layer (`1bb65be`)
 - **agent-os:** advanced sub-agents + Percival execution agent (`8c083c2`)
@@ -56,6 +60,7 @@
 
 ## Bug Fixes
 
+- **security:** bump apps/air-control next 14.2.5 -> ^14.2.25 (CVE-2025-29927) (`92d60a3`)
 - add missing ClearGlass logo icons to intelligence-platform.html (`d7c2d01`)
 - add missing ClearGlass logo icons to master-investigator blog page (`87af066`)
 - **site:** add missing logo badge to AgentOps Foundry blog page (`ddb1f95`)
@@ -144,6 +149,17 @@
 
 ## Maintenance
 
+- Apply homepage design system site-wide; web-design page exempt (`1d0f7b5`)
+- Add live AI command-center layer to ClearGlass Store (`7d49606`)
+- Elevate ClearGlass Store into ultra-futuristic glassmorphism experience (`73a4bf9`)
+- **deps:** watch all npm app dirs in dependabot (close coverage gap) (`8d9b6ef`)
+- Add Command Center blog post to ClearGlass Insights (`8e405e2`)
+- Add ClearGlass Command Center cyber defense console page (`1e6f29d`)
+- Enhance BLUEDESK holographic command bridge (`b7063ce`)
+- Add defensive posture glass console section (`809e786`)
+- Intensify Side Store command bridge visuals (`08d9fcc`)
+- Transform side store into neon glass command console (`940810a`)
+- Intensify BLUEDESK holographic command bridge (`f3e08a3`)
 - Redesign blog hub into a premium publishing system (homepage-matched) (`8c1735a`)
 - Add ClearGlass logo badge to intelligence-platform.html (`fe478d5`)
 - Add ClearGlass logo badge to intelligence-platform page (`ace3b5a`)
@@ -401,6 +417,22 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`6921d70`)
+- refresh control-surface data feeds [skip ci] (`f8269d9`)
+- refresh control-surface data feeds [skip ci] (`88721cd`)
+- refresh control-surface data feeds [skip ci] (`6c10037`)
+- refresh control-surface data feeds [skip ci] (`29c8669`)
+- refresh control-surface data feeds [skip ci] (`8a26ffd`)
+- refresh control-surface data feeds [skip ci] (`9190f6a`)
+- refresh control-surface data feeds [skip ci] (`bf8f3d8`)
+- refresh control-surface data feeds [skip ci] (`4c1a853`)
+- refresh control-surface data feeds [skip ci] (`b1ec339`)
+- refresh control-surface data feeds [skip ci] (`2005d9a`)
+- refresh control-surface data feeds [skip ci] (`d240f30`)
+- refresh control-surface data feeds [skip ci] (`6515fbe`)
+- refresh control-surface data feeds [skip ci] (`1be8373`)
+- refresh control-surface data feeds [skip ci] (`729f6bb`)
+- update generated outputs — 2026-07-11 08:45 UTC [skip ci] (`65bb615`)
 - refresh control-surface data feeds [skip ci] (`9c77db7`)
 - refresh control-surface data feeds [skip ci] (`417653a`)
 - refresh control-surface data feeds [skip ci] (`96c92cc`)
@@ -676,6 +708,7 @@
 
 ## Other
 
+- add local docker-compose stack (governor + envoy gateway) (`27a8497`)
 - author Envoy API gateway (JWT auth + rate limit + governor ext_authz) (`e2a93d7`)
 - author deploy layer (k8s + terraform + governor-gated temporal worker) (`d329d49`)
 - governor service entry point + OPA rego bundle + capability schema (`0ef93b8`)

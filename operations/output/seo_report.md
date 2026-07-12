@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-11T08:45:30.914045+00:00
-**Average Score:** 90.6/100
-**Files Audited:** 63
+**Run:** 2026-07-12T09:01:01.617504+00:00
+**Average Score:** 90.2/100
+**Files Audited:** 64
 
 ## Page Scores
 
@@ -11,6 +11,7 @@
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
 | `artemis-2040.html` | 50/100 | 5 |
 | `intelligence-platform.html` | 50/100 | 5 |
+| `cyber-defense-console.html` | 60/100 | 4 |
 | `flowsint.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
 | `bluedesk-mobile.html` | 70/100 | 3 |
@@ -74,12 +75,12 @@
 
 ## Top Issues Across All Pages
 
-- 17x — Description length N chars (ideal N–N)
-- 15x — Title length N chars (ideal N–N)
-- 8x — Missing og:image
+- 18x — Description length N chars (ideal N–N)
+- 16x — Title length N chars (ideal N–N)
+- 9x — Missing og:image
+- 4x — Missing og:description
 - 4x — Multiple <hN> tags (N)
 - 3x — Missing og:title
-- 3x — Missing og:description
 - 2x — Missing canonical link tag
 - 2x — No <hN> tag found
 - 1x — Missing <title>

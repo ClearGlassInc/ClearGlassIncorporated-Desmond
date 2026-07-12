@@ -8,7 +8,7 @@ counsel-review gates for AI-assisted legal analysis.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import StrEnum
 
 class LegalStatus(StrEnum):

@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
+<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#07111f">
+<meta name="msapplication-TileColor" content="#07111f">
+<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
+
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>ClearGlassInc Artemis Resume Builder: Self-Evolving AI Intelligence Platform Blueprint — ClearGlass Inc.</title>
@@ -9,6 +19,7 @@
 <link rel="alternate" type="application/rss+xml" title="ClearGlass Insights RSS" href="https://clearglassinc.github.io/blog/feed.xml"/>
 <meta name="author" content="Desmond Otieno Odhiambo"/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
+<meta name="keywords" content="ClearGlassInc Artemis, Palantir AIP, Palantir Foundry, Gotham, Apollo, self-improving AI, intelligence platform, ontology, AI agents, policy as code, resume builder"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="ClearGlassInc Artemis Resume Builder: Self-Evolving AI Intelligence Platform Blueprint"/>
 <meta property="og:description" content="A production full-stack design document for ClearGlassInc Artemis: Gotham, Foundry, AIP, Apollo, ontology-driven agents, safe self-improvement loops, policy-as-code, evals, and mission-grade deployment."/>
@@ -28,14 +39,408 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="insights.css"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"ClearGlassInc Artemis Resume Builder: Self-Evolving AI Intelligence Platform Blueprint","description":"A production full-stack design document for ClearGlassInc Artemis: Gotham, Foundry, AIP, Apollo, ontology-driven agents, safe self-improvement loops, policy-as-code, evals, and mission-grade deployment.","image":"https://clearglassinc.github.io/20260203_224147843_iOS.png","datePublished":"2026-07-06","dateModified":"2026-07-06","author":{"@type":"Person","name":"Desmond Otieno Odhiambo"},"publisher":{"@type":"Organization","name":"ClearGlass Inc.","logo":{"@type":"ImageObject","url":"https://clearglassinc.github.io/assets/images/clearglass-logo.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://clearglassinc.github.io/blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html"}}</script>
+
+<style>
+/* ===== shared blog feature system (aligned with sibling Artemis posts) ===== */
+.article-tools{position:sticky;top:72px;z-index:80;background:rgba(250,251,252,.86);backdrop-filter:blur(18px);border-block:1px solid var(--line);padding:10px clamp(20px,5vw,28px);display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.tool-chip{border:1px solid var(--line);background:#fff;color:var(--text-2);border-radius:999px;padding:8px 12px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:none;box-shadow:0 10px 24px -20px rgba(6,8,18,.45);transition:color .18s,border-color .18s,background .18s,transform .18s}
+.tool-chip:hover,.tool-chip.active{color:var(--text);border-color:rgba(167,139,250,.42);background:linear-gradient(135deg,rgba(56,189,248,.08),rgba(167,139,250,.08));transform:translateY(-1px)}
+.toc{margin:0 0 34px;padding:18px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.toc b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px}
+.toc a{display:inline-block;margin:6px 10px 6px 0;color:var(--text-2);font-size:14px;text-decoration:none;border-bottom:1px solid rgba(167,139,250,.35)}
+.toc a:hover{color:var(--text);border-bottom-color:var(--prism-2)}
+.power-mode pre{max-height:none}
+.copyable{position:relative}
+.copy-code{position:absolute;right:10px;top:10px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#dbeafe;border-radius:9px;padding:6px 9px;font:700 11px var(--mono);cursor:pointer}
+.endbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin:44px 0;padding-top:26px;border-top:1px solid var(--line)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--text-3);background:var(--off);border:1px solid var(--line);padding:6px 11px;border-radius:8px}
+.share a{font-size:13px;font-weight:600;color:var(--text-3);text-decoration:none;margin-left:14px}
+.share a:hover{color:var(--text)}
+.footer-in{max-width:1100px;margin:0 auto}
+.footer-top{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-start}
+.footer-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.footer-mark{width:38px;height:38px;border-radius:10px;overflow:hidden;background:#fff}
+.footer-mark img{width:100%;height:100%;object-fit:cover}
+.footer-brand b{color:#fff;font-family:var(--serif);font-size:20px;font-weight:600;display:block}
+.footer-brand span{font-size:12px;color:#6b7280}
+.footer-cols{display:flex;flex-wrap:wrap;gap:36px}
+.footer-col h5{color:#e7ecff;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;font-family:var(--mono);font-weight:600}
+.footer-col a{display:block;color:#9aa6c8;text-decoration:none;font-size:14px;margin-bottom:9px;transition:color .15s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);font-size:12.5px}
+.footer-tagline{margin-top:18px;font-family:var(--serif);font-style:italic;color:#6b7280;font-size:15px}
+.unclass-banner{background:#0d1f17;color:#4ade80;text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;font-weight:700;padding:6px 16px}
+
+/* ===== whisper-subtle page ambience (keeps article fully readable) ===== */
+.page-fx{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+.page-fx .grid{position:absolute;inset:-2px;background-image:linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(167,139,250,.05) 1px,transparent 1px);background-size:46px 46px;animation:gridDrift 26s linear infinite;will-change:transform}
+.page-fx .aura{position:absolute;width:60vmax;height:60vmax;border-radius:50%;filter:blur(80px);opacity:.28;mix-blend-mode:multiply}
+.page-fx .aura.a{top:-18vmax;left:-12vmax;background:radial-gradient(circle,rgba(56,189,248,.5),transparent 62%);animation:auraFloat1 34s ease-in-out infinite}
+.page-fx .aura.b{bottom:-20vmax;right:-14vmax;background:radial-gradient(circle,rgba(167,139,250,.45),transparent 62%);animation:auraFloat2 40s ease-in-out infinite}
+body{position:relative}
+.class-banner,.progress,.nav,.article-tools,main,.footer,.unclass-banner,.deck{position:relative;z-index:1}
+@keyframes gridDrift{to{transform:translate3d(-46px,-46px,0)}}
+@keyframes auraFloat1{50%{transform:translate3d(6vmax,4vmax,0) scale(1.1)}}
+@keyframes auraFloat2{50%{transform:translate3d(-5vmax,-6vmax,0) scale(1.12)}}
+
+/* ===== ARTEMIS COMMAND DECK — ultra-premium mission-control layer ===== */
+.deck{--energy:#ff3b4e;--cyan:#38bdf8;--vio:#a78bfa;--grn:#34d399;--amb:#fbbf24;
+  margin:8px 0 4px;padding:clamp(30px,5vw,58px) 0;color:#e9f2ff;
+  background:radial-gradient(140% 120% at 12% 0%,#141824 0%,#0a0c12 46%,#06070b 100%);
+  border-block:1px solid rgba(120,150,255,.14);position:relative;overflow:hidden;isolation:isolate}
+.deck *{box-sizing:border-box}
+.deck-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.deck-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:.9}
+.deck-grid{position:absolute;inset:-2px;background-image:linear-gradient(rgba(90,140,255,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(90,140,255,.10) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(120% 90% at 50% 0%,#000 40%,transparent 82%);-webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000 40%,transparent 82%);animation:gridDrift 18s linear infinite;will-change:transform}
+.deck-energy{position:absolute;left:50%;top:58%;width:120%;height:70%;transform:translate(-50%,0);background:radial-gradient(60% 60% at 50% 100%,rgba(255,59,78,.30),rgba(255,59,78,.08) 40%,transparent 70%);filter:blur(24px);animation:energyPulse 6.5s ease-in-out infinite;will-change:opacity,transform}
+.deck-glow{position:absolute;width:640px;height:640px;border-radius:50%;left:var(--mx,50%);top:var(--my,32%);transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(56,189,248,.16),rgba(167,139,250,.08) 38%,transparent 66%);filter:blur(20px);transition:opacity .4s;mix-blend-mode:screen;will-change:left,top}
+.deck-scan{position:absolute;left:0;right:0;height:180px;top:-180px;background:linear-gradient(180deg,transparent,rgba(120,180,255,.10) 45%,rgba(120,180,255,.16) 50%,transparent);animation:scanSweep 9s linear infinite;mix-blend-mode:screen}
+@keyframes energyPulse{50%{opacity:.55;transform:translate(-50%,-4%) scale(1.04)}}
+@keyframes scanSweep{0%{top:-180px}100%{top:110%}}
+.deck-inner{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 clamp(18px,5vw,34px)}
+
+.deck-head{text-align:center;margin-bottom:clamp(24px,4vw,40px)}
+.deck-tag{display:inline-flex;align-items:center;gap:8px;font:700 11px/1 var(--mono);letter-spacing:.22em;color:#9fe0ff;padding:7px 14px;border:1px solid rgba(120,180,255,.28);border-radius:999px;background:rgba(20,28,44,.6);backdrop-filter:blur(8px)}
+.deck-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--energy);box-shadow:0 0 10px var(--energy);animation:blip 1.6s ease-in-out infinite}
+@keyframes blip{50%{opacity:.35;transform:scale(.7)}}
+.deck-title{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5vw,50px);line-height:1.05;letter-spacing:-.02em;margin:16px 0 10px;background:linear-gradient(100deg,#eaf3ff,#8fd0ff 40%,#c3a9ff 70%,#eaf3ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:220% auto;animation:sheen 8s linear infinite}
+@keyframes sheen{to{background-position:220% center}}
+.deck-sub{max-width:60ch;margin:0 auto;color:#a9b8d6;font-size:clamp(14.5px,1.9vw,17px);line-height:1.55}
+
+/* glass surfaces */
+.glass{position:relative;border-radius:18px;border:1px solid rgba(140,170,255,.16);
+  background:linear-gradient(180deg,rgba(30,38,58,.62),rgba(12,16,26,.72));
+  backdrop-filter:blur(14px) saturate(1.15);
+  box-shadow:0 24px 60px -34px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06);
+  overflow:hidden}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(120deg,transparent 30%,rgba(180,210,255,.10) 48%,transparent 62%);
+  background-size:220% 100%;background-position:200% 0;transition:background-position .7s ease}
+.glass:hover::before{background-position:-40% 0}
+/* carbon-fibre micro-texture */
+.carbon{background-image:
+  linear-gradient(180deg,rgba(30,38,58,.62),rgba(12,16,26,.72)),
+  repeating-linear-gradient(45deg,rgba(255,255,255,.022) 0 2px,transparent 2px 4px),
+  repeating-linear-gradient(-45deg,rgba(0,0,0,.20) 0 2px,transparent 2px 4px)}
+
+/* metric tiles */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:16px}
+.tile{padding:18px 16px 16px;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.tile:hover{transform:translateY(-5px)}
+.tile:hover{box-shadow:0 34px 70px -34px rgba(0,0,0,.9),0 0 0 1px rgba(120,180,255,.28),inset 0 1px 0 rgba(255,255,255,.08)}
+.tile .k{font:700 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#7f90b6}
+.tile .v{font-family:var(--serif);font-weight:600;font-size:clamp(26px,3.4vw,36px);line-height:1;margin-top:10px;color:#eaf3ff;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.tile .v .u{font-family:var(--mono);font-size:.4em;color:#8fd0ff;margin-left:4px;letter-spacing:0}
+.tile .spark{margin-top:10px;height:26px;width:100%;display:block}
+.tile .spark polyline{fill:none;stroke-width:2;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.tile.c1{border-top:2px solid var(--cyan)}.tile.c1 .spark polyline{stroke:var(--cyan)}
+.tile.c2{border-top:2px solid var(--vio)}.tile.c2 .spark polyline{stroke:var(--vio)}
+.tile.c3{border-top:2px solid var(--grn)}.tile.c3 .spark polyline{stroke:var(--grn)}
+.tile.c4{border-top:2px solid var(--amb)}.tile.c4 .spark polyline{stroke:var(--amb)}
+.tile.c5{border-top:2px solid var(--energy)}.tile.c5 .spark polyline{stroke:var(--energy)}
+
+/* resource bars */
+.bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px 22px;padding:18px 20px;margin-bottom:16px}
+.bar .bl{display:flex;justify-content:space-between;font:600 12px var(--mono);color:#b7c6e6;letter-spacing:.05em;margin-bottom:7px}
+.bar .bl span{color:#8fd0ff}
+.bar .track{height:7px;border-radius:6px;background:rgba(120,150,255,.12);overflow:hidden}
+.bar .fill{height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--cyan),var(--vio));transition:width 1.1s cubic-bezier(.2,.7,.2,1);box-shadow:0 0 12px rgba(120,180,255,.5)}
+.bar.warn .fill{background:linear-gradient(90deg,var(--amb),var(--energy))}
+
+/* command modules */
+.modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+.mod{padding:16px 16px;display:flex;flex-direction:column;gap:8px;transition:transform .3s,box-shadow .3s}
+.mod:hover{transform:translateY(-4px);box-shadow:0 30px 60px -34px rgba(0,0,0,.9),inset 0 0 0 1px rgba(120,180,255,.22)}
+.mod .mh{display:flex;align-items:center;gap:9px}
+.mod .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--grn);box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:ring 2.4s ease-out infinite}
+.mod.amber .dot{background:var(--amb);box-shadow:0 0 0 0 rgba(251,191,36,.6);animation-name:ringA}
+.mod.cyan .dot{background:var(--cyan);box-shadow:0 0 0 0 rgba(56,189,248,.6);animation-name:ringC}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}100%{box-shadow:0 0 0 12px rgba(52,211,153,0)}}
+@keyframes ringA{0%{box-shadow:0 0 0 0 rgba(251,191,36,.5)}100%{box-shadow:0 0 0 12px rgba(251,191,36,0)}}
+@keyframes ringC{0%{box-shadow:0 0 0 0 rgba(56,189,248,.5)}100%{box-shadow:0 0 0 12px rgba(56,189,248,0)}}
+.mod .mn{font:700 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#9fb0d4}
+.mod .ms{font-family:var(--serif);font-size:22px;font-weight:600;color:#eaf3ff;letter-spacing:.01em}
+.mod .mt{font:600 10.5px var(--mono);color:#7f90b6;letter-spacing:.08em}
+
+/* charts grid */
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.chart{padding:18px 18px 14px}
+.chart h4{font:700 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#9fb0d4;margin:0 0 12px;display:flex;justify-content:space-between;align-items:center}
+.chart h4 em{font-style:normal;color:#8fd0ff;font-size:11px}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.grid-lines{stroke:rgba(120,150,255,.14);stroke-width:1}
+.axis{stroke:rgba(120,150,255,.28);stroke-width:1}
+.line-main{fill:none;stroke:var(--cyan);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(56,189,248,.55))}
+.line-area{fill:url(#areaFill);opacity:.5}
+.ring-bg{fill:none;stroke:rgba(120,150,255,.14);stroke-width:9}
+.ring-fg{fill:none;stroke-width:9;stroke-linecap:round;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset 1.1s cubic-bezier(.2,.7,.2,1)}
+.gauge-arc{fill:none;stroke-width:12;stroke-linecap:round}
+.radar-web{fill:none;stroke:rgba(120,150,255,.18);stroke-width:1}
+.radar-area{fill:rgba(56,189,248,.16);stroke:var(--cyan);stroke-width:2;transition:all 1s ease;filter:drop-shadow(0 0 6px rgba(56,189,248,.4))}
+.node-dot{fill:var(--cyan)}
+.attack{stroke:var(--energy);stroke-width:1.4;opacity:.75;stroke-linecap:round}
+.map-dot{fill:#8fd0ff}
+.map-hot{fill:var(--energy)}
+
+/* premium buttons that merge & flow */
+.deck-actions{display:flex;flex-wrap:wrap;gap:0;justify-content:center;margin-top:clamp(22px,4vw,34px)}
+.seg{display:inline-flex;border-radius:14px;padding:5px;gap:5px;background:linear-gradient(180deg,rgba(30,38,58,.7),rgba(12,16,26,.8));border:1px solid rgba(140,170,255,.18);box-shadow:0 20px 50px -30px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.06)}
+.seg-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;border:0;cursor:pointer;font:700 13.5px var(--sans);letter-spacing:.01em;color:#cdd9f4;background:transparent;text-decoration:none;transition:color .2s,background .25s,transform .12s}
+.seg-btn:hover{color:#fff;background:rgba(120,180,255,.12)}
+.seg-btn.primary{color:#06070b;background:linear-gradient(135deg,#8fd0ff,#c3a9ff);box-shadow:0 14px 30px -14px rgba(120,180,255,.6)}
+.seg-btn.primary:hover{filter:brightness(1.06)}
+.seg-btn .rip{position:absolute;border-radius:50%;transform:translate(-50%,-50%) scale(0);background:radial-gradient(circle,rgba(255,255,255,.55),transparent 68%);pointer-events:none;animation:rip .6s ease-out forwards}
+@keyframes rip{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+
+/* thinking notifications */
+.deck-notify{position:absolute;right:clamp(12px,3vw,26px);bottom:18px;z-index:5;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none;max-width:min(86vw,320px)}
+.note{display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:12px;font:600 12.5px var(--sans);color:#dbe6ff;
+  background:linear-gradient(180deg,rgba(28,36,56,.9),rgba(12,16,26,.92));border:1px solid rgba(120,180,255,.24);
+  box-shadow:0 20px 44px -22px rgba(0,0,0,.85);backdrop-filter:blur(10px);
+  opacity:0;transform:translateY(10px) scale(.98);animation:noteIn .5s forwards}
+.note.out{animation:noteOut .5s forwards}
+.note::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);flex-shrink:0;animation:blip 1.4s infinite}
+@keyframes noteIn{to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes noteOut{to{opacity:0;transform:translateY(-8px) scale(.98)}}
+
+@media(max-width:640px){
+  .deck-notify{position:static;max-width:100%;align-items:stretch;margin-top:18px}
+  .deck-scan{display:none}
+}
+
+/* persistent operational status rail */
+.statusrail{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px}
+.st{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:11px;font:600 11.5px var(--mono);letter-spacing:.06em;color:#c3d2ef;
+  background:linear-gradient(180deg,rgba(26,34,52,.7),rgba(12,16,26,.8));border:1px solid rgba(120,170,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.st b{color:#eaf3ff;font-weight:700}
+.st i{width:7px;height:7px;border-radius:50%;background:var(--grn);box-shadow:0 0 8px var(--grn);font-style:normal;animation:blip 1.8s infinite}
+.st.warn i{background:var(--amb);box-shadow:0 0 8px var(--amb)}
+.st.cy i{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+
+/* mission activity log + AI command console */
+.deck-ops{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;margin-top:16px}
+@media(max-width:760px){.deck-ops{grid-template-columns:1fr}}
+.opslog{padding:16px 18px;min-height:186px}
+.opslog h4,.console h4{font:700 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#9fb0d4;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.opslog h4::before,.console h4::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--grn);box-shadow:0 0 8px var(--grn)}
+.logfeed{font:500 12.5px/1.7 var(--mono);color:#9db2d6;max-height:150px;overflow:hidden;display:flex;flex-direction:column;gap:3px}
+.logfeed .row{display:flex;gap:9px;opacity:0;transform:translateY(6px);animation:noteIn .45s forwards}
+.logfeed .t{color:#5f7098;flex-shrink:0}
+.logfeed .m{color:#c3d2ef}
+.logfeed .m b{color:#8fd0ff;font-weight:600}
+.console{padding:16px 18px;display:flex;flex-direction:column}
+.console h4::before{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.console .body{flex:1;font:500 13.5px/1.55 var(--sans);color:#c3d2ef}
+.console .body .lead{color:#eaf3ff;font-weight:600;margin-bottom:6px}
+.console .body em{font-style:normal;color:#8fd0ff}
+.console .cur{display:inline-block;width:8px;height:15px;background:var(--cyan);vertical-align:-2px;margin-left:2px;animation:caret 1.05s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.console .promptbar{display:flex;gap:8px;align-items:center;margin-top:14px;padding:9px 12px;border-radius:11px;background:rgba(10,14,24,.7);border:1px solid rgba(120,170,255,.18)}
+.console .promptbar .chev{color:var(--cyan);font:700 13px var(--mono)}
+.console .promptbar input{flex:1;background:transparent;border:0;outline:0;color:#eaf3ff;font:500 13px var(--sans)}
+.console .promptbar input::placeholder{color:#6f80a6}
+.console .promptbar button{border:0;cursor:pointer;border-radius:8px;padding:7px 12px;font:700 11px var(--mono);letter-spacing:.06em;color:#06070b;background:linear-gradient(135deg,#8fd0ff,#c3a9ff)}
+.console .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.console .chips button{border:1px solid rgba(120,170,255,.2);background:rgba(20,28,44,.6);color:#a9b8d6;border-radius:999px;padding:5px 10px;font:600 10.5px var(--mono);letter-spacing:.05em;cursor:pointer;transition:color .18s,border-color .18s}
+.console .chips button:hover{color:#eaf3ff;border-color:rgba(120,180,255,.4)}
+
+/* ===== accessibility: respect reduced motion — freeze all deck/page motion ===== */
+@media(prefers-reduced-motion:reduce){
+  .page-fx .grid,.page-fx .aura,.deck-grid,.deck-energy,.deck-scan,.deck-title,.deck-tag::before,
+  .mod .dot,.note,.note::before,.seg-btn .rip{animation:none!important}
+  .deck-title{-webkit-text-fill-color:#eaf3ff;background:none}
+  .deck-glow{display:none}
+  .tile,.mod{transition:none}
+}
+</style>
 </head>
-<body class="article-page">
+<body class="article-page" data-ix-page="article" data-ix-slug="clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform" data-ix-theme="light">
+
+<div class="page-fx" aria-hidden="true"><div class="grid"></div><div class="aura a"></div><div class="aura b"></div></div>
+
 <div class="progress" id="progress"></div>
-<div class="class-banner">CLEARGLASS INSIGHTS <span>//</span> OPEN PUBLICATION</div>
-<nav class="nav"><a class="nav-brand" href="../index.html"><span class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"/></span><span class="nav-name">ClearGlass <em>Insights</em></span></a><div class="nav-links"><a href="index.html">Insights</a><a href="../index.html#contact" class="nav-cta">Contact</a></div></nav>
+<div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
+
+<nav class="nav">
+  <a href="../index.html" class="nav-brand">
+    <span class="nav-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"/></span>
+    <span class="nav-name">ClearGlass <em>Insights</em></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Insights</a>
+    <a href="../ai-operator.html">AI Operator</a>
+    <a href="../guardian.html">Guardian</a>
+    <a href="../government.html">Government</a>
+    <a href="../index.html#contact" class="nav-cta">Book a briefing →</a>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="kicker">AI Architecture · Artemis Engineering Notes</div>
+  <h1 class="title">ClearGlassInc Artemis <em>Resume Builder</em>: Self-Evolving Intelligence Blueprint</h1>
+  <p class="dek">A mission-grade architecture and implementation document for a self-improving, agentic, audited AI intelligence platform built across Palantir Gotham, Foundry, AIP, and Apollo.</p>
+  <div class="byline">
+    <div class="byline-av">D</div>
+    <div class="byline-meta"><b>Desmond Otieno Odhiambo</b><br/><span>Published July 6, 2026 · 28 min read</span></div>
+  </div>
+</header>
+
+<!-- ===================== ARTEMIS COMMAND DECK ===================== -->
+<section class="deck" id="deck" aria-label="Artemis live command deck">
+  <div class="deck-bg" aria-hidden="true">
+    <canvas class="deck-canvas" id="deckCanvas"></canvas>
+    <div class="deck-grid"></div>
+    <div class="deck-energy"></div>
+    <div class="deck-glow" id="deckGlow"></div>
+    <div class="deck-scan"></div>
+  </div>
+
+  <div class="deck-inner">
+    <div class="deck-head">
+      <span class="deck-tag">LIVE · CLEARGLASS GLOBAL OPERATIONS</span>
+      <h2 class="deck-title">Artemis Command Deck</h2>
+      <p class="deck-sub">A live telemetry surface for the governed intelligence mesh described below — every figure is simulated, every action still routes through human-approved policy gates.</p>
+    </div>
+
+    <!-- persistent operational status rail -->
+    <div class="statusrail" id="statusrail" aria-label="Operational status">
+      <span class="st"><i></i>Mission&nbsp;<b>ONLINE</b></span>
+      <span class="st"><i></i>Infrastructure&nbsp;<b>HEALTHY</b></span>
+      <span class="st"><i></i>Threat Level&nbsp;<b>LOW</b></span>
+      <span class="st cy"><i></i>AI Cluster&nbsp;<b>ACTIVE</b></span>
+      <span class="st"><i></i>Zero Trust&nbsp;<b>ENFORCED</b></span>
+      <span class="st cy"><i></i>Agent Network&nbsp;<b>CONNECTED</b></span>
+      <span class="st"><i></i>Compliance&nbsp;<b>PASSED</b></span>
+      <span class="st"><i></i>Encryption&nbsp;<b>AES-256</b></span>
+      <span class="st warn"><i></i>Monitoring&nbsp;<b>LIVE</b></span>
+      <span class="st cy"><i></i>Telemetry&nbsp;<b>STREAMING</b></span>
+      <span class="st"><i></i>Inference&nbsp;<b>READY</b></span>
+    </div>
+
+    <!-- metric tiles (CountUp on view) -->
+    <div class="metrics" id="metrics">
+      <div class="glass carbon tile c5"><div class="k">Threat Level</div><div class="v" data-count="98.7" data-dec="1" data-suffix="%">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+      <div class="glass carbon tile c1"><div class="k">Global Nodes Protected</div><div class="v" data-count="18492">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+      <div class="glass carbon tile c2"><div class="k">Active AI Agents</div><div class="v" data-count="243">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+      <div class="glass carbon tile c3"><div class="k">Requests Processed</div><div class="v" data-count="17.8" data-dec="1" data-suffix="M">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+      <div class="glass carbon tile c4"><div class="k">Security Events Today</div><div class="v" data-count="1298">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+      <div class="glass carbon tile c1"><div class="k">Response Time</div><div class="v" data-count="12" data-suffix=" ms">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+      <div class="glass carbon tile c2"><div class="k">Model Confidence</div><div class="v" data-count="99.92" data-dec="2" data-suffix="%">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+      <div class="glass carbon tile c4"><div class="k">Automation Savings</div><div class="v" data-count="4820" data-suffix=" hrs">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+      <div class="glass carbon tile c3"><div class="k">Detection Accuracy</div><div class="v" data-count="99.98" data-dec="2" data-suffix="%">0</div><svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none"><polyline points=""/></svg></div>
+    </div>
+
+    <!-- resource bars -->
+    <div class="glass bars" id="bars" aria-label="Infrastructure utilisation">
+      <div class="bar" data-base="34"><div class="bl">CPU <span>34%</span></div><div class="track"><div class="fill"></div></div></div>
+      <div class="bar" data-base="52"><div class="bl">GPU <span>52%</span></div><div class="track"><div class="fill"></div></div></div>
+      <div class="bar" data-base="61"><div class="bl">Memory <span>61%</span></div><div class="track"><div class="fill"></div></div></div>
+      <div class="bar" data-base="47"><div class="bl">Network <span>47%</span></div><div class="track"><div class="fill"></div></div></div>
+      <div class="bar" data-base="28"><div class="bl">Storage <span>28%</span></div><div class="track"><div class="fill"></div></div></div>
+      <div class="bar warn" data-base="12"><div class="bl">Latency <span>12ms</span></div><div class="track"><div class="fill"></div></div></div>
+      <div class="bar" data-base="99"><div class="bl">API Health <span>99%</span></div><div class="track"><div class="fill"></div></div></div>
+    </div>
+
+    <!-- command modules -->
+    <div class="modules" id="modules">
+      <div class="glass carbon mod"><div class="mh"><span class="dot"></span><span class="mn">Mission Status</span></div><div class="ms">ONLINE</div><div class="mt">uptime 99.998%</div></div>
+      <div class="glass carbon mod"><div class="mh"><span class="dot"></span><span class="mn">AI Cluster</span></div><div class="ms">ACTIVE</div><div class="mt">243 agents scheduled</div></div>
+      <div class="glass carbon mod"><div class="mh"><span class="dot"></span><span class="mn">Security Mesh</span></div><div class="ms">ENABLED</div><div class="mt">zero-trust enforced</div></div>
+      <div class="glass carbon mod"><div class="mh"><span class="dot"></span><span class="mn">Zero Trust</span></div><div class="ms">VERIFIED</div><div class="mt">mTLS · signed calls</div></div>
+      <div class="glass carbon mod cyan"><div class="mh"><span class="dot"></span><span class="mn">Automation Engine</span></div><div class="ms">RUNNING</div><div class="mt">low-risk auto-execute</div></div>
+      <div class="glass carbon mod amber"><div class="mh"><span class="dot"></span><span class="mn">OSINT Scanner</span></div><div class="ms">COLLECTING</div><div class="mt">feeds normalising</div></div>
+      <div class="glass carbon mod"><div class="mh"><span class="dot"></span><span class="mn">Forensics</span></div><div class="ms">READY</div><div class="mt">replay index warm</div></div>
+      <div class="glass carbon mod cyan"><div class="mh"><span class="dot"></span><span class="mn">Neural Engine</span></div><div class="ms">LEARNING</div><div class="mt">evals in progress</div></div>
+    </div>
+
+    <!-- charts -->
+    <div class="charts">
+      <div class="glass chart"><h4>Requests / sec <em id="rpsNow">—</em></h4>
+        <svg viewBox="0 0 300 120" preserveAspectRatio="none" id="lineChart">
+          <defs><linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.5"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></linearGradient></defs>
+          <line class="grid-lines" x1="0" y1="30" x2="300" y2="30"/><line class="grid-lines" x1="0" y1="60" x2="300" y2="60"/><line class="grid-lines" x1="0" y1="90" x2="300" y2="90"/>
+          <path class="line-area" id="lineArea" d=""/><path class="line-main" id="linePath" d=""/>
+        </svg>
+      </div>
+
+      <div class="glass chart"><h4>Confidence Gauges</h4>
+        <svg viewBox="0 0 300 120" id="ringChart">
+          <g transform="translate(60,64)"><circle class="ring-bg" r="34"/><circle class="ring-fg" r="34" stroke="#38bdf8" id="ring1"/><text x="0" y="5" text-anchor="middle" fill="#eaf3ff" font-family="IBM Plex Mono,monospace" font-size="15" font-weight="600" id="ring1t">0%</text><text x="0" y="58" text-anchor="middle" fill="#7f90b6" font-family="IBM Plex Mono,monospace" font-size="9">DETECT</text></g>
+          <g transform="translate(150,64)"><circle class="ring-bg" r="34"/><circle class="ring-fg" r="34" stroke="#a78bfa" id="ring2"/><text x="0" y="5" text-anchor="middle" fill="#eaf3ff" font-family="IBM Plex Mono,monospace" font-size="15" font-weight="600" id="ring2t">0%</text><text x="0" y="58" text-anchor="middle" fill="#7f90b6" font-family="IBM Plex Mono,monospace" font-size="9">MODEL</text></g>
+          <g transform="translate(240,64)"><circle class="ring-bg" r="34"/><circle class="ring-fg" r="34" stroke="#34d399" id="ring3"/><text x="0" y="5" text-anchor="middle" fill="#eaf3ff" font-family="IBM Plex Mono,monospace" font-size="15" font-weight="600" id="ring3t">0%</text><text x="0" y="58" text-anchor="middle" fill="#7f90b6" font-family="IBM Plex Mono,monospace" font-size="9">UPTIME</text></g>
+        </svg>
+      </div>
+
+      <div class="glass chart"><h4>Posture Radar</h4>
+        <svg viewBox="0 0 300 120" id="radarChart">
+          <g transform="translate(150,60)">
+            <polygon class="radar-web" points="0,-46 40,-23 40,23 0,46 -40,23 -40,-23"/>
+            <polygon class="radar-web" points="0,-30 26,-15 26,15 0,30 -26,15 -26,-15"/>
+            <polygon class="radar-web" points="0,-15 13,-8 13,8 0,15 -13,8 -13,-8"/>
+            <polygon class="radar-area" id="radarArea" points="0,-40 34,-19 30,18 0,38 -32,17 -33,-18"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="glass chart"><h4>Live Threat Map <em>real-time</em></h4>
+        <svg viewBox="0 0 300 120" id="mapChart">
+          <g id="mapDots"></g><g id="mapArcs"></g>
+        </svg>
+      </div>
+
+      <div class="glass chart"><h4>Network Topology</h4>
+        <svg viewBox="0 0 300 120" id="topoChart"><g id="topoEdges"></g><g id="topoNodes"></g></svg>
+      </div>
+
+      <div class="glass chart"><h4>Agent Workload</h4>
+        <svg viewBox="0 0 300 120" id="barChart"><g id="barGroup"></g></svg>
+      </div>
+    </div>
+
+    <!-- simulated mission activity log + embedded AI command console -->
+    <div class="deck-ops">
+      <div class="glass carbon opslog"><h4>Autonomous Activity Log</h4>
+        <div class="logfeed" id="logfeed" role="log" aria-live="off" aria-label="Simulated mission activity"></div>
+      </div>
+      <div class="glass carbon console"><h4>Artemis Command Console</h4>
+        <div class="body">
+          <div class="lead">Executive summary <em>· 02:14 UTC</em></div>
+          <div id="consoleText">Governed mesh nominal. <b>243</b> agents scheduled, zero critical failures in the last 24h. One high-risk action package is <em>awaiting human approval</em>; two prompt candidates cleared offline evals and are queued for Apollo canary.<span class="cur"></span></div>
+          <div class="chips" aria-label="Example queries (illustrative)">
+            <button type="button">Explain current threat level</button>
+            <button type="button">Summarize agent workload</button>
+            <button type="button">Risk of promoting eval #2</button>
+          </div>
+        </div>
+        <div class="promptbar"><span class="chev">&gt;_</span><input id="consoleInput" type="text" placeholder="Ask the command console… (illustrative)" aria-label="Command console input (illustrative, not networked)"/><button type="button" id="consoleSend">Run</button></div>
+      </div>
+    </div>
+
+    <div class="deck-actions">
+      <div class="seg">
+        <a class="seg-btn primary" href="#article">Read the blueprint</a>
+        <a class="seg-btn" href="../ai-operator.html">AI Operator</a>
+        <a class="seg-btn" href="../index.html#contact">Book a briefing</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="deck-notify" id="deckNotify" aria-live="polite"></div>
+</section>
+<!-- =================== END ARTEMIS COMMAND DECK =================== -->
+
+<div class="article-tools" aria-label="Article tools">
+  <a class="tool-chip" href="#system-architecture">Architecture</a>
+  <a class="tool-chip" href="#self-improvement-loop">Self-improvement</a>
+  <a class="tool-chip" href="#code-examples">Code</a>
+  <button class="tool-chip" id="copyLink" type="button">Copy link</button>
+  <button class="tool-chip" id="powerMode" type="button">Power user mode</button>
+</div>
+
 <main class="wrap">
-<header class="hero"><div class="kicker">AI Architecture · Artemis Engineering Notes</div><h1 class="title">ClearGlassInc Artemis <em>Resume Builder</em>: Self-Evolving Intelligence Blueprint</h1><p class="dek">A mission-grade architecture and implementation document for a self-improving, agentic, audited AI intelligence platform built across Palantir Gotham, Foundry, AIP, and Apollo.</p><div class="byline"><div class="byline-av">D</div><div class="byline-meta"><b>Desmond Otieno Odhiambo</b><br/><span>Published July 6, 2026 · 28 min read</span></div></div></header>
 <article id="article">
+<nav class="toc" aria-label="Article table of contents"><b>On this page · production blueprint</b><a href="#system-architecture">Architecture</a><a href="#data-ontology">Ontology</a><a href="#ai-agent-design">Agents</a><a href="#self-improvement-loop">Self-improvement</a><a href="#full-stack-implementation">Implementation</a><a href="#security-governance">Security</a><a href="#code-examples">Code</a><a href="#scenario">Scenario</a></nav>
 <p class="lede"><strong>ClearGlassInc Artemis</strong> is designed as a self-evolving intelligence operating system: a governed platform that ingests live and historical data, grounds every assertion in an ontology, routes AI work through explicit policy gates, and improves prompts, workflows, heuristics, and model routing only after human-approved evaluation.</p>
 <div class="callout"><span class="callout-tag">Platform thesis</span><p><strong>Gotham</strong> is the operational intelligence workbench, <strong>Foundry</strong> is the data and ontology backbone, <strong>AIP</strong> is the governed AI execution layer, and <strong>Apollo</strong> is the secure deployment, rollback, and runtime-control plane.</p></div>
 <h2 id="system-architecture"><span class="num">01</span>System Architecture</h2>
@@ -181,8 +586,265 @@ requires_approval {
 <p>A live event enters Artemis from a streaming source. Foundry normalizes it, attaches source lineage, and maps it onto the ontology as an alert connected to entities, locations, and prior cases. Gotham surfaces the graph to the analyst. AIP triage agents enrich the event, compare it to historical patterns, and draft a recommendation with confidence, evidence, and dissenting hypotheses.</p>
 <p>The commander sees an action package: why the alert matters, what evidence supports it, what the model is uncertain about, and which policy gates apply. The commander approves enrichment and rejects an operational recommendation because one source is stale. Artemis records the correction, builds an eval case, tests the relevant prompt and heuristic, proposes a routing update that penalizes stale-source recommendations, and sends it to human review. Apollo promotes the approved change to staging, measures precision and latency, and only then rolls it into production.</p>
 <div class="pull">The system gets better by learning the shape of good judgment, not by granting itself new authority.</div>
+
+<section class="ix-related" id="ixRelated">
+  <b>Related from the desk</b>
+  <div class="ix-related-grid">
+    <a class="ix-related-card" href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"><span class="k">AI Architecture</span><h4>ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform</h4><p>The full-stack blueprint that fuses Gotham, Foundry, AIP, and Apollo into one audited operating loop.</p><span class="m">24 min read · Field Note 02</span></a>
+    <a class="ix-related-card" href="index.html"><span class="k">The hub</span><h4>All ClearGlass Insights</h4><p>Governed AI, cybersecurity architecture, autonomy, OSINT workflows, and high-trust software systems.</p><span class="m">Browse every brief →</span></a>
+  </div>
+</section>
+
+<div class="endbar">
+  <div class="tags"><span class="tag">CLEARGLASSINC ARTEMIS</span><span class="tag">AIP</span><span class="tag">FOUNDRY</span><span class="tag">GOTHAM</span><span class="tag">APOLLO</span></div>
+  <div class="share"><a href="index.html">← All insights</a></div>
+</div>
 </article>
 </main>
-<footer class="footer"><div class="wrap"><a href="index.html">← Back to ClearGlass Insights</a><p>© 2026 ClearGlass Inc. · Clarity Is Power.</p></div></footer>
-<script src="insights.js" defer></script>
-</body></html>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div class="footer-top">
+      <a href="../index.html" class="footer-brand">
+        <div class="footer-mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass logo"></div>
+        <div><b>ClearGlassInc</b><span>See Through Everything</span></div>
+      </a>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Insights</h5>
+          <a href="index.html">All articles</a>
+          <a href="clearglassinc-artemis-self-evolving-ai-intelligence-platform.html">Artemis Platform</a>
+          <a href="ai-agent-governance-governed-autonomy.html">Governed Autonomy</a>
+          <a href="cybersecurity-architecture-for-agentic-software.html">Agentic Cyber Architecture</a>
+        </div>
+        <div class="footer-col">
+          <h5>Products</h5>
+          <a href="../ai-operator.html">AI Operator</a>
+          <a href="../guardian.html">Guardian</a>
+          <a href="../artemis-iv.html">Artemis IV Core</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="../index.html#vision">Vision</a>
+          <a href="../government.html">Government</a>
+          <a href="../index.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> ClearGlass Inc. All rights reserved. Ontario, Canada</span>
+      <span>Clarity Is Power</span>
+    </div>
+    <div class="footer-tagline">"The truth is transparent. The truth is dangerous."</div>
+  </div>
+</footer>
+<div class="unclass-banner">UNCLASSIFIED / NON-CLASSIFIÉ — END OF DOCUMENT</div>
+
+<script>
+/* year + reading progress */
+document.getElementById('year').textContent=new Date().getFullYear();
+(function(){var pb=document.getElementById('progress');function upd(){var h=document.documentElement;var sc=h.scrollTop||document.body.scrollTop;var mx=h.scrollHeight-h.clientHeight;pb.style.width=(mx>0?(sc/mx*100):0)+'%';}addEventListener('scroll',upd,{passive:true});upd();})();
+
+/* copy-to-clipboard on code blocks + tools */
+document.querySelectorAll('pre').forEach(function(pre){pre.classList.add('copyable');var btn=document.createElement('button');btn.className='copy-code';btn.type='button';btn.textContent='Copy';btn.addEventListener('click',async function(){try{await navigator.clipboard.writeText(pre.innerText.replace(/^Copy\n/,''));btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy';},1200);}catch(e){}});pre.appendChild(btn);});
+document.getElementById('copyLink')&&document.getElementById('copyLink').addEventListener('click',async function(e){try{await navigator.clipboard.writeText(location.href);e.currentTarget.textContent='Copied';setTimeout(function(){e.currentTarget.textContent='Copy link';},1200);}catch(err){}});
+document.getElementById('powerMode')&&document.getElementById('powerMode').addEventListener('click',function(e){document.body.classList.toggle('power-mode');e.currentTarget.classList.toggle('active');});
+
+/* ===================== COMMAND DECK ENGINE ===================== */
+(function(){
+  var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var deck = document.getElementById('deck');
+  if(!deck) return;
+  var rand=function(a,b){return a+Math.random()*(b-a);};
+  var clamp=function(v,a,b){return Math.max(a,Math.min(b,v));};
+
+  /* ---- metric CountUp (fires when the deck scrolls into view) ---- */
+  var counted=false;
+  function fmt(v,dec){return dec?v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g,','):Math.round(v).toLocaleString('en-US');}
+  function countUp(){
+    if(counted) return; counted=true;
+    document.querySelectorAll('#metrics .v').forEach(function(elm){
+      var target=parseFloat(elm.dataset.count||'0'),dec=parseInt(elm.dataset.dec||'0',10),suf=elm.dataset.suffix||'';
+      var render=function(val){elm.innerHTML=fmt(val,dec)+(suf?'<span class="u">'+suf.trim()+'</span>':'');};
+      if(REDUCE){render(target);return;}
+      var t0=performance.now(),dur=1500;
+      (function step(now){var p=clamp((now-t0)/dur,0,1);var e=1-Math.pow(1-p,3);render(target*e);if(p<1)requestAnimationFrame(step);})(t0);
+    });
+    fillBars();drawRings();
+  }
+  function fillBars(){document.querySelectorAll('#bars .bar').forEach(function(b){var base=parseFloat(b.dataset.base||'0');b.querySelector('.fill').style.width=clamp(base+rand(-4,4),3,100)+'%';});}
+
+  /* ---- sparklines on tiles ---- */
+  document.querySelectorAll('#metrics .spark polyline').forEach(function(pl){
+    var pts=[];for(var i=0;i<20;i++)pts.push(rand(4,22));pl._d=pts;
+    pl.setAttribute('points',pts.map(function(y,i){return (i*(100/19)).toFixed(1)+','+y.toFixed(1);}).join(' '));
+  });
+  function stepSparks(){document.querySelectorAll('#metrics .spark polyline').forEach(function(pl){var d=pl._d;d.shift();d.push(clamp(d[d.length-1]+rand(-5,5),4,22));pl.setAttribute('points',d.map(function(y,i){return (i*(100/19)).toFixed(1)+','+y.toFixed(1);}).join(' '));});}
+
+  /* ---- confidence rings ---- */
+  var R=34,C=2*Math.PI*R;
+  document.querySelectorAll('.ring-fg').forEach(function(r){r.style.strokeDasharray=C;r.style.strokeDashoffset=C;});
+  function setRing(id,tid,pct){var r=document.getElementById(id);if(r)r.style.strokeDashoffset=C*(1-pct/100);var t=document.getElementById(tid);if(t)t.textContent=pct.toFixed(1)+'%';}
+  function drawRings(){setRing('ring1','ring1t',99.98);setRing('ring2','ring2t',99.92);setRing('ring3','ring3t',99.99);}
+
+  /* ---- live line chart ---- */
+  var lineData=[];for(var i=0;i<40;i++)lineData.push(rand(30,90));
+  function drawLine(){
+    var w=300,h=120,step=w/(lineData.length-1);
+    var pts=lineData.map(function(v,i){return [i*step,h-(v/100*h)];});
+    var d=pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1);}).join(' ');
+    var lp=document.getElementById('linePath');if(lp)lp.setAttribute('d',d);
+    var la=document.getElementById('lineArea');if(la)la.setAttribute('d',d+' L'+w+' '+h+' L0 '+h+' Z');
+    var rps=document.getElementById('rpsNow');if(rps)rps.textContent=Math.round(lineData[lineData.length-1]*38)+'/s';
+  }
+  function stepLine(){lineData.shift();lineData.push(clamp(lineData[lineData.length-1]+rand(-14,14),22,96));drawLine();}
+  drawLine();
+
+  /* ---- radar posture ---- */
+  var radarAxes=[[0,-1],[.87,-.5],[.87,.5],[0,1],[-.87,.5],[-.87,-.5]];
+  function stepRadar(){var el=document.getElementById('radarArea');if(!el)return;var pts=radarAxes.map(function(a){var r=rand(24,44);return (a[0]*r).toFixed(0)+','+(a[1]*r).toFixed(0);});el.setAttribute('points',pts.join(' '));}
+
+  /* ---- threat map (dots + arcs) ---- */
+  var mapDots=document.getElementById('mapDots'),mapArcs=document.getElementById('mapArcs'),NS='http://www.w3.org/2000/svg';
+  var dots=[];
+  if(mapDots){for(var i=0;i<26;i++){var c=document.createElementNS(NS,'circle');var x=rand(10,290),y=rand(12,108);c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',rand(.8,2));c.setAttribute('class',Math.random()>.8?'map-hot':'map-dot');c.setAttribute('opacity',rand(.4,.95));mapDots.appendChild(c);dots.push([x,y]);}}
+  function stepMap(){
+    if(!mapArcs)return;mapArcs.innerHTML='';
+    for(var k=0;k<3;k++){var a=dots[(Math.random()*dots.length)|0],b=dots[(Math.random()*dots.length)|0];if(!a||!b)continue;
+      var mx=(a[0]+b[0])/2,my=Math.min(a[1],b[1])-rand(12,30);
+      var p=document.createElementNS(NS,'path');p.setAttribute('d','M'+a[0]+' '+a[1]+' Q'+mx+' '+my+' '+b[0]+' '+b[1]);p.setAttribute('class','attack');p.setAttribute('fill','none');
+      var L=200;p.setAttribute('stroke-dasharray',L);p.setAttribute('stroke-dashoffset',L);mapArcs.appendChild(p);
+      if(!REDUCE)p.animate([{strokeDashoffset:L},{strokeDashoffset:0}],{duration:900,fill:'forwards'});
+      else p.setAttribute('stroke-dashoffset',0);
+    }
+  }
+
+  /* ---- topology + workload bars (drawn once, workload animates) ---- */
+  (function(){var edges=document.getElementById('topoEdges'),nodes=document.getElementById('topoNodes');if(!nodes)return;
+    var N=[[40,60],[100,26],[100,94],[165,52],[165,88],[230,32],[230,80],[280,60]];
+    N.forEach(function(a,i){N.slice(i+1).forEach(function(b){if(Math.random()>.6){var l=document.createElementNS(NS,'line');l.setAttribute('x1',a[0]);l.setAttribute('y1',a[1]);l.setAttribute('x2',b[0]);l.setAttribute('y2',b[1]);l.setAttribute('class','grid-lines');edges.appendChild(l);}});});
+    N.forEach(function(a){var c=document.createElementNS(NS,'circle');c.setAttribute('cx',a[0]);c.setAttribute('cy',a[1]);c.setAttribute('r',3.4);c.setAttribute('class','node-dot');nodes.appendChild(c);if(!REDUCE){var an=c.animate([{opacity:.4},{opacity:1},{opacity:.4}],{duration:rand(1800,3200),iterations:Infinity});}});
+  })();
+  var bg=document.getElementById('barGroup');var barEls=[];
+  if(bg){for(var i=0;i<8;i++){var x=8+i*36;var rc=document.createElementNS(NS,'rect');rc.setAttribute('x',x);rc.setAttribute('width',22);rc.setAttribute('rx',4);rc.setAttribute('fill',i%2?'#a78bfa':'#38bdf8');rc.setAttribute('opacity','.9');bg.appendChild(rc);barEls.push(rc);}}
+  function stepBars(){barEls.forEach(function(rc){var hh=rand(16,104);rc.setAttribute('height',hh);rc.setAttribute('y',114-hh);if(!REDUCE)rc.style.transition='all .8s cubic-bezier(.2,.7,.2,1)';});}
+  stepBars();
+
+  /* ---- cursor-adaptive glow ---- */
+  var glow=document.getElementById('deckGlow'),gx=50,gy=32,tx=50,ty=32,glowRAF=0;
+  if(!REDUCE){
+    deck.addEventListener('pointermove',function(e){var r=deck.getBoundingClientRect();tx=((e.clientX-r.left)/r.width)*100;ty=((e.clientY-r.top)/r.height)*100;if(!glowRAF)glowRAF=requestAnimationFrame(moveGlow);},{passive:true});
+    function moveGlow(){gx+=(tx-gx)*.12;gy+=(ty-gy)*.12;if(glow){glow.style.left=gx.toFixed(2)+'%';glow.style.top=gy.toFixed(2)+'%';}if(Math.abs(tx-gx)>.2||Math.abs(ty-gy)>.2){glowRAF=requestAnimationFrame(moveGlow);}else glowRAF=0;}
+  }
+
+  /* ---- background canvas: neural net + data packets + particles ---- */
+  var cv=document.getElementById('deckCanvas'),ctx=cv&&cv.getContext('2d'),cw=0,ch=0,dpr=Math.min(devicePixelRatio||1,2);
+  var nodes=[],packets=[],parts=[];
+  function sizeCanvas(){if(!cv)return;var r=deck.getBoundingClientRect();cw=r.width;ch=deck.offsetHeight;cv.width=cw*dpr;cv.height=ch*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);buildScene();}
+  function buildScene(){
+    nodes=[];packets=[];parts=[];
+    var n=Math.round(clamp(cw/60,10,26));
+    for(var i=0;i<n;i++)nodes.push({x:rand(0,cw),y:rand(0,ch),vx:rand(-.12,.12),vy:rand(-.12,.12),z:rand(.4,1)});
+    for(var i=0;i<Math.round(n/2);i++)packets.push({a:(Math.random()*n)|0,b:(Math.random()*n)|0,t:Math.random(),sp:rand(.004,.012)});
+    for(var i=0;i<Math.round(clamp(cw/26,18,46));i++)parts.push({x:rand(0,cw),y:rand(0,ch),r:rand(.4,1.6),vy:rand(-.25,-.05),vx:rand(-.06,.06),a:rand(.15,.6)});
+  }
+  function frame(){
+    if(!ctx){return;}
+    ctx.clearRect(0,0,cw,ch);
+    /* links */
+    for(var i=0;i<nodes.length;i++){var a=nodes[i];
+      for(var j=i+1;j<nodes.length;j++){var b=nodes[j];var dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
+        if(d<140){ctx.strokeStyle='rgba(120,170,255,'+(0.14*(1-d/140))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}
+    }
+    /* nodes */
+    for(var i=0;i<nodes.length;i++){var a=nodes[i];a.x+=a.vx*a.z;a.y+=a.vy*a.z;
+      if(a.x<0||a.x>cw)a.vx*=-1;if(a.y<0||a.y>ch)a.vy*=-1;
+      ctx.fillStyle='rgba(143,208,255,'+(0.5*a.z)+')';ctx.beginPath();ctx.arc(a.x,a.y,1.6*a.z,0,7);ctx.fill();}
+    /* data packets travelling along links */
+    for(var i=0;i<packets.length;i++){var p=packets[i],a=nodes[p.a],b=nodes[p.b];if(!a||!b)continue;p.t+=p.sp;if(p.t>1){p.t=0;p.a=(Math.random()*nodes.length)|0;p.b=(Math.random()*nodes.length)|0;}
+      var x=a.x+(b.x-a.x)*p.t,y=a.y+(b.y-a.y)*p.t;ctx.fillStyle='rgba(195,169,255,.9)';ctx.beginPath();ctx.arc(x,y,1.7,0,7);ctx.fill();}
+    /* ambient particles rising */
+    for(var i=0;i<parts.length;i++){var q=parts[i];q.y+=q.vy;q.x+=q.vx;if(q.y<-4){q.y=ch+4;q.x=rand(0,cw);}
+      ctx.fillStyle='rgba(160,200,255,'+q.a+')';ctx.beginPath();ctx.arc(q.x,q.y,q.r,0,7);ctx.fill();}
+    rafId=requestAnimationFrame(frame);
+  }
+
+  /* ---- notifications (page "thinking") ---- */
+  var notifyBox=document.getElementById('deckNotify');
+  var messages=['AI detected 14 optimization opportunities.','Threat intelligence synchronized.','Agent cluster deployed.','Security verification complete.','Analytics updated.','Neural engine promoted eval candidate.','OSINT feed normalized · lineage stamped.','Zero-trust posture re-verified.'];
+  var mi=0;
+  function notify(){if(!notifyBox||document.hidden)return;var n=document.createElement('div');n.className='note';n.textContent=messages[mi%messages.length];mi++;notifyBox.appendChild(n);
+    setTimeout(function(){n.classList.add('out');setTimeout(function(){n.remove();},500);},3800);
+    while(notifyBox.children.length>3)notifyBox.firstChild.remove();
+  }
+
+  /* ---- ripple on segmented buttons ---- */
+  document.querySelectorAll('.seg-btn').forEach(function(b){b.addEventListener('pointerdown',function(e){if(REDUCE)return;var r=b.getBoundingClientRect();var s=document.createElement('span');s.className='rip';var size=Math.max(r.width,r.height)*1.6;s.style.width=s.style.height=size+'px';s.style.left=(e.clientX-r.left)+'px';s.style.top=(e.clientY-r.top)+'px';b.appendChild(s);setTimeout(function(){s.remove();},650);});});
+
+  /* ---- simulated mission activity log ---- */
+  var logfeed=document.getElementById('logfeed');
+  var logMsgs=['Scanning infrastructure','Correlating intelligence','Evaluating risk posture','Deploying agent cluster','Updating governance policies','Refreshing embeddings','Learning behavioral patterns','Verifying compliance controls','Synchronizing mesh nodes','Generating executive insights','Normalizing OSINT feed','Re-verifying zero-trust posture'];
+  var logTargets=['edge-fabric','GOTHAM case graph','mission corridor 7','triage pool','policy bundle 2026.07','vector index','override signals','SOC2 · ISO 27001','12 regions','commander brief','source lineage','workload identity'];
+  function tstamp(){var d=new Date();return d.toISOString().slice(11,19)+'Z';}
+  function logStep(){
+    if(!logfeed||document.hidden)return;var i=(Math.random()*logMsgs.length)|0;
+    var row=document.createElement('div');row.className='row';
+    row.innerHTML='<span class="t">'+tstamp()+'</span><span class="m">'+logMsgs[i]+' <b>'+logTargets[i]+'</b> …</span>';
+    logfeed.appendChild(row);while(logfeed.children.length>6)logfeed.firstChild.remove();
+  }
+  function seedLog(){if(!logfeed)return;logfeed.innerHTML='';for(var i=0;i<5;i++)logStep();}
+
+  /* ---- status rail subtle flicker ---- */
+  function statusFlicker(){if(document.hidden)return;var rail=document.getElementById('statusrail');if(!rail)return;var items=rail.children;var el=items[(Math.random()*items.length)|0];if(!el)return;el.style.transition='opacity .2s';el.style.opacity='.45';setTimeout(function(){el.style.opacity='1';},220);}
+
+  /* ---- embedded command console (local / illustrative — no network) ---- */
+  (function(){
+    var input=document.getElementById('consoleInput'),send=document.getElementById('consoleSend'),out=document.getElementById('consoleText');
+    if(!out)return;
+    var canned=[
+      'Threat level is <b>LOW</b>: 1,298 events triaged today, 0 escalations breached SLA. Detection accuracy holding at <em>99.98%</em>; stale-source penalty from the last eval is suppressing 14 low-confidence recommendations.',
+      'Agent workload is balanced across <b>243</b> scheduled agents. Triage and enrichment carry ~62% of load; correlation is the current bottleneck at p95 3.4s. No queue starvation detected.',
+      'Promoting eval candidate #2 is <em>low risk</em>: +1.8% precision, recall within guardrail, latency ratio 1.04, override delta 0. It still requires human approval before Apollo canary — routed to mission_owner + model_governance.',
+      'Zero-trust posture re-verified: mTLS active, signed tool calls, no ambient database access. Encryption AES-256 at rest and in transit. Compliance checks passed (SOC2 · ISO 27001).'
+    ];
+    var ci=0;
+    function respond(q){
+      var lead=out.previousElementSibling; // .lead
+      var pick=q?canned[(Math.abs(hash(q))%canned.length)]:canned[ci++%canned.length];
+      out.innerHTML=pick+'<span class="cur"></span>';
+      if(lead&&lead.classList&&lead.classList.contains('lead'))lead.innerHTML='Response <em>· '+tstamp()+' · illustrative</em>';
+    }
+    function hash(s){var h=0;for(var i=0;i<s.length;i++){h=(h<<5)-h+s.charCodeAt(i)|0;}return h;}
+    send&&send.addEventListener('click',function(){respond(input&&input.value.trim());if(input)input.value='';});
+    input&&input.addEventListener('keydown',function(e){if(e.key==='Enter'){respond(input.value.trim());input.value='';}});
+    document.querySelectorAll('.console .chips button').forEach(function(b){b.addEventListener('click',function(){if(input)input.value=b.textContent;respond(b.textContent);});});
+  })();
+
+  /* ---- master timers, gated by reduced-motion + visibility + on-screen ---- */
+  var rafId=0,onScreen=false,timers=[];
+  function startLoops(){
+    if(REDUCE){drawLine();stepRadar();stepMap();seedLog();return;}
+    if(!rafId&&ctx)rafId=requestAnimationFrame(frame);
+    if(timers.length)return;
+    if(logfeed&&!logfeed.children.length)seedLog();
+    timers.push(setInterval(function(){if(document.hidden)return;stepLine();stepSparks();statusFlicker();},1300));
+    timers.push(setInterval(function(){if(document.hidden)return;stepBars();stepRadar();fillBars();},2600));
+    timers.push(setInterval(function(){if(document.hidden)return;stepMap();logStep();},2100));
+    timers.push(setInterval(function(){if(document.hidden)return;notify();},4200));
+  }
+  function stopLoops(){if(rafId){cancelAnimationFrame(rafId);rafId=0;}timers.forEach(clearInterval);timers=[];}
+
+  if(cv&&!REDUCE){sizeCanvas();addEventListener('resize',function(){clearTimeout(cv._t);cv._t=setTimeout(sizeCanvas,180);});}
+
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){onScreen=en.isIntersecting;if(en.isIntersecting){countUp();startLoops();}else{stopLoops();}});},{threshold:.08});
+  io.observe(deck);
+  document.addEventListener('visibilitychange',function(){if(document.hidden)stopLoops();else if(onScreen)startLoops();});
+  /* draw static states immediately so nothing is blank before first tick */
+  if(REDUCE){countUp();drawLine();stepRadar();stepMap();stepBars();seedLog();}
+})();
+</script>
+<script defer src="insights.js"></script>
+<script defer src="/logo-badge.js"></script>
+<script defer src="assistant/writing-help.js"></script>
+</body>
+</html>

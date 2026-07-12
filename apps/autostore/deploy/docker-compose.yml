@@ -1,13 +1,16 @@
 version: "3.9"
 
 services:
+  # Local-development compose file only. Demo database credentials and approval
+  # tokens below are intentionally non-production placeholders; production must
+  # provide secrets through a managed secret store and keep service ports private.
   postgres:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: autostore
       POSTGRES_PASSWORD: autostore
       POSTGRES_DB: autostore
-    ports: ["5432:5432"]
+    ports: ["127.0.0.1:5432:5432"]
     volumes:
       - autostore_pg:/var/lib/postgresql/data
       - ../db/migrations:/docker-entrypoint-initdb.d:ro
@@ -19,7 +22,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    ports: ["6379:6379"]
+    ports: ["127.0.0.1:6379:6379"]
 
   control_plane:
     build:
@@ -32,7 +35,7 @@ services:
     depends_on:
       postgres: { condition: service_healthy }
       redis:    { condition: service_started }
-    ports: ["8000:8000"]
+    ports: ["127.0.0.1:8000:8000"]
     command: uvicorn autostore.app:app --host 0.0.0.0 --port 8000
 
   worker:
@@ -56,7 +59,7 @@ services:
       NODE_ENV: production
     depends_on:
       control_plane: { condition: service_started }
-    ports: ["3000:3000"]
+    ports: ["127.0.0.1:3000:3000"]
 
 volumes:
   autostore_pg:

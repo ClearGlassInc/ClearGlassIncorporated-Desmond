@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-06T11:26:22.385955+00:00",
-  "files_audited": 59,
-  "average_score": 92.2,
+  "run_utc": "2026-07-12T09:01:01.617504+00:00",
+  "files_audited": 64,
+  "average_score": 90.2,
   "pages": [
     {
       "file": "404.html",
@@ -323,6 +323,28 @@
       "issues": []
     },
     {
+      "file": "bluedesk-mobile.html",
+      "title": "BLUE DESK Mobile \u2014 CISO Risk Console Hero (9:16) | ClearGlass Inc",
+      "title_length": 65,
+      "title_ok": false,
+      "description": "BLUE DESK mobile hero \u2014 minimalist, futuristic 9:16 CISO risk console concept with neon pulse: risk intelligence pills, blue team command, live search token, and executive stat cards.",
+      "description_length": 183,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 0,
+      "h1_ok": false,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 70,
+      "issues": [
+        "Title length 65 chars (ideal 30\u201360)",
+        "Description length 183 chars (ideal 120\u2013160)",
+        "No <h1> tag found"
+      ]
+    },
+    {
       "file": "bluedesk.html",
       "title": "BLUEDESK \u2014 CISO Risk & Blue Team Console | ClearGlass Inc",
       "title_length": 57,
@@ -331,14 +353,16 @@
       "description_length": 147,
       "description_ok": true,
       "canonical_present": true,
-      "h1_count": 1,
-      "h1_ok": true,
+      "h1_count": 2,
+      "h1_ok": false,
       "img_without_alt": 0,
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 90,
+      "issues": [
+        "Multiple <h1> tags (2)"
+      ]
     },
     {
       "file": "button-lab.html",
@@ -412,6 +436,26 @@
       "score": 90,
       "issues": [
         "Title length 68 chars (ideal 30\u201360)"
+      ]
+    },
+    {
+      "file": "clearglass-ultra.html",
+      "title": "ClearGlass Ultra \u2014 See Through Everything",
+      "title_length": 41,
+      "title_ok": true,
+      "description": "The ClearGlass intelligence stack: ARTEMIS IV, WRAITH-OMEN, and AEGIS. Governed autonomy, predictive defense, and mission-speed clarity for enterprises that refuse to be surprised.",
+      "description_length": 180,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 180 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -564,6 +608,29 @@
       "score": 90,
       "issues": [
         "Description length 243 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "cyber-defense-console.html",
+      "title": "ClearGlass Command Center \u00b7 Cyber Defense Console \u2014 ClearGlass Inc.",
+      "title_length": 67,
+      "title_ok": false,
+      "description": "ClearGlass Command Center \u2014 a next-generation cyber defense console. Risk Intelligence, Control Plane Visibility, Defensive Automation, and Executive Assurance in one mission-critical command platform.",
+      "description_length": 201,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": false,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Title length 67 chars (ideal 30\u201360)",
+        "Description length 201 chars (ideal 120\u2013160)",
+        "Missing og:description",
+        "Missing og:image"
       ]
     },
     {
@@ -766,6 +833,30 @@
       "issues": []
     },
     {
+      "file": "intelligence-platform.html",
+      "title": "ClearGlass Intelligence Platform \u2014 Brand & Platform Architecture | ClearGlass Inc.",
+      "title_length": 82,
+      "title_ok": false,
+      "description": "The ClearGlass Intelligence Platform: executive layer, 85-codename autonomous agent framework, enterprise multi-agent hierarchy under ClearGlass Nexus, premium product family, and the naming standard that binds them.",
+      "description_length": 216,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Title length 82 chars (ideal 30\u201360)",
+        "Description length 216 chars (ideal 120\u2013160)",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "intelligence.html",
       "title": "ClearGlass Market Dominance \u00b7 Intelligent Systems",
       "title_length": 49,
@@ -953,6 +1044,28 @@
       ]
     },
     {
+      "file": "side-store.html",
+      "title": "ClearGlass Side Store \u2014 Cheap Wires, Cables & Electronics | ClearGlass Inc",
+      "title_length": 74,
+      "title_ok": false,
+      "description": "ClearGlass Side Store: low-cost wires, cables, connectors, adapters, and basic electronics \u2014 all under CAD $10. Bundle 3+ items for 10% off (5+ for 15%), free shipping over $25. Burlington, Ontario.",
+      "description_length": 198,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Title length 74 chars (ideal 30\u201360)",
+        "Description length 198 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "smb-cyber-trust-kit.html",
       "title": "SMB Cyber Trust Kit \u2014 Plain-Language Cyber Resilience | ClearGlass Inc",
       "title_length": 70,
@@ -1132,15 +1245,15 @@
     }
   ],
   "top_issues": [
-    "13x \u2014 Description length N chars (ideal N\u2013N)",
-    "12x \u2014 Title length N chars (ideal N\u2013N)",
-    "6x \u2014 Missing og:image",
-    "3x \u2014 Multiple <hN> tags (N)",
+    "18x \u2014 Description length N chars (ideal N\u2013N)",
+    "16x \u2014 Title length N chars (ideal N\u2013N)",
+    "9x \u2014 Missing og:image",
+    "4x \u2014 Missing og:description",
+    "4x \u2014 Multiple <hN> tags (N)",
+    "3x \u2014 Missing og:title",
     "2x \u2014 Missing canonical link tag",
-    "2x \u2014 Missing og:title",
-    "2x \u2014 Missing og:description",
+    "2x \u2014 No <hN> tag found",
     "1x \u2014 Missing <title>",
-    "1x \u2014 Missing meta description",
-    "1x \u2014 No <hN> tag found"
+    "1x \u2014 Missing meta description"
   ]
 }

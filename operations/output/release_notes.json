@@ -1,10 +1,73 @@
 {
-  "run_utc": "2026-07-06T11:26:22.326390+00:00",
+  "run_utc": "2026-07-12T09:01:01.567615+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 543,
+  "commit_count": 687,
   "sections": {
     "New Features": [
+      {
+        "sha": "10cfa1a",
+        "type": "feat",
+        "scope": "ui",
+        "subject": "command-center atmosphere layer on percival-os + side-store",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "ea90adb",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "v10 signed single-use approvals + trace IDs",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "c917594",
+        "type": "feat",
+        "scope": "nav",
+        "subject": "surface SMB Cyber Trust Kit + Side Store in homepage Products menu",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "ec1f788",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "wire mission_memory for cross-run continuity",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "ed4ef78",
+        "type": "feat",
+        "scope": "store",
+        "subject": "ClearGlass Side Store storefront \u2014 catalog, cart, checkout core",
+        "author": "Claude",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "1bb65be",
+        "type": "feat",
+        "scope": null,
+        "subject": "Marketing Operating System v2.0 governance layer",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "8c083c2",
+        "type": "feat",
+        "scope": "agent-os",
+        "subject": "advanced sub-agents + Percival execution agent",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
       {
         "sha": "7ff4e26",
         "type": "feat",
@@ -421,6 +484,69 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "92d60a3",
+        "type": "fix",
+        "scope": "security",
+        "subject": "bump apps/air-control next 14.2.5 -> ^14.2.25 (CVE-2025-29927)",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "d7c2d01",
+        "type": "fix",
+        "scope": null,
+        "subject": "add missing ClearGlass logo icons to intelligence-platform.html",
+        "author": "Claude",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "87af066",
+        "type": "fix",
+        "scope": null,
+        "subject": "add missing ClearGlass logo icons to master-investigator blog page",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "ddb1f95",
+        "type": "fix",
+        "scope": "site",
+        "subject": "add missing logo badge to AgentOps Foundry blog page",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "9fda1ec",
+        "type": "fix",
+        "scope": null,
+        "subject": "restore CI green \u2014 add missing logo icons + make loader-gate workflow idempotent",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "fbba061",
+        "type": "fix",
+        "scope": "agent-os",
+        "subject": "drop dead argv assignment in __main__ CLI",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "0a99582",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "repair unparseable remove-homepage-crimson-loader workflow",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
       {
         "sha": "17cbd59",
         "type": "fix",
@@ -1034,6 +1160,528 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "1d0f7b5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Apply homepage design system site-wide; web-design page exempt",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "7d49606",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add live AI command-center layer to ClearGlass Store",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "73a4bf9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Elevate ClearGlass Store into ultra-futuristic glassmorphism experience",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "8d9b6ef",
+        "type": "chore",
+        "scope": "deps",
+        "subject": "watch all npm app dirs in dependabot (close coverage gap)",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "8e405e2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Command Center blog post to ClearGlass Insights",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "1e6f29d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Command Center cyber defense console page",
+        "author": "Claude",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "b7063ce",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance BLUEDESK holographic command bridge",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "809e786",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add defensive posture glass console section",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "08d9fcc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Intensify Side Store command bridge visuals",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "940810a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Transform side store into neon glass command console",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "f3e08a3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Intensify BLUEDESK holographic command bridge",
+        "author": "Desmond Otieno",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "8c1735a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Redesign blog hub into a premium publishing system (homepage-matched)",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "fe478d5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass logo badge to intelligence-platform.html",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "ace3b5a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass logo badge to intelligence-platform page",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "73bc94c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade BLUEDESK futuristic command UI",
+        "author": "Desmond Otieno",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "b9158c6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix the two failing dispatched workflows (Workflow Doctor + Codex Autofix)",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "ac0edc8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Intelligence Platform brand architecture",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "e0f6e8e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove mobile bottom nav rail from control surface",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "f1e6bdc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Merge corner Writing-help pill and logo badge into one glowing cluster",
+        "author": "Claude",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "76dab93",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix missing ClearGlass logo on master-investigator blog post",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "90b75f1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add compliant Threads growth toolkit (official API)",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "58171e7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add legal-tech OSINT investigator blog protocol",
+        "author": "Desmond Otieno",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "651ca69",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Microsoft Foundry AgentOps blog pack",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "2124cfc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade NEXUS operational command experience",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "24bb4ea",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Guardian cyber command experience",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "551705f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix floating button flow",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "9335126",
+        "type": "chore",
+        "scope": null,
+        "subject": "Align Artemis resume blueprint page layout",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "ec1e993",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish Blog #6 + Blog #1 and the Ultra-Glassy ClearGlass page",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "fa96d7d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance BLUEDESK cyber command console",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "f2104cb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis intelligence platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "96b5f1b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Rework web-design page: light crimson-neon aesthetic + crystal video showcase",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "3e86aff",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add BLUE DESK mobile hero concept page (9:16 CISO risk console)",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "8c0e3ed",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add BLUEDESK to site-wide product navigation with crimson\u2013royal-purple accent",
+        "author": "Claude",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "a724a91",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add System 2040 Skeleton Key blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "6d098de",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add BLUEDESK to product navigation",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "ee76f0f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Align Artemis resume blog page with site design",
+        "author": "Desmond Otieno",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "92836e8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove crimson homepage loader gate",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "f0fb154",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove generated binary favicon assets",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "d65c169",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove generated binary favicon assets",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "46efda7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove generated binary favicon assets",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "b39440e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker n",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "f554864",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker l",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "b9d9d53",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker f",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "770bdd8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker c",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "386982a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker b",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "730c466",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safe marker",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "9d1c396",
+        "type": "chore",
+        "scope": null,
+        "subject": "test",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "9dc67e7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Document homepage crimson loader fix",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "6206389",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add workflow to remove homepage crimson loader gate",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "497b01f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis resume builder blog blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "50bcce5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Python Threads growth command center",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "31827a2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis extreme intelligence platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "d98e13c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade Threads command center to V3",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "92408ee",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add manual Threads growth command center",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "bd08c7b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis self-evolving intelligence blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "f1ca4c5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Refine Artemis self-evolving platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "fd4ae86",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix air control motion shim types",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "28497b5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add neon glow styling to Artemis article",
+        "author": "Desmond Otieno",
+        "date": "2026-07-06",
+        "breaking": false
+      },
       {
         "sha": "8810e6e",
         "type": "chore",
@@ -2899,6 +3547,618 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "6921d70",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "f8269d9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "88721cd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "6c10037",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "29c8669",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "8a26ffd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "9190f6a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "bf8f3d8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "4c1a853",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "b1ec339",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "2005d9a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "d240f30",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "6515fbe",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "1be8373",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "729f6bb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "65bb615",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-11 08:45 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "9c77db7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "417653a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "96c92cc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-11",
+        "breaking": false
+      },
+      {
+        "sha": "9cc11f0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "d94b72d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "c28d830",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "c74c686",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "e2fea34",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "4c965a2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "aaf4cba",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "c56dc4a",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-10 10:22 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "e6c51b4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "e5a46a8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "0bc843b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "b3821e2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "e154d94",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "f00f068",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "54e5105",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "5d5c42a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "d244ea5",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-09 10:23 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "c0c9484",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "4722a02",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-09 08:42 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "2a8586c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "3401df5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-09",
+        "breaking": false
+      },
+      {
+        "sha": "9d3a878",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "fd248e6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "91a3c52",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "26e4f52",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "992757f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "fb11848",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "7f3d696",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "39e99cc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "8d66d80",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-08 09:24 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "eabdffc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "739e411",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "158bcea",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "b66fe4e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "64904c7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "3db614d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "76ce6ad",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "9f2fa6e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "58e248e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "bf6e1bb",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-07 10:24 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "10be911",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "de02ce2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "7a3285b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-07",
+        "breaking": false
+      },
+      {
+        "sha": "b2411c8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "15ccc44",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "56477e2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "fa4e5f4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "6a1bb16",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
+      {
+        "sha": "1fb1212",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-06 11:26 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-06",
+        "breaking": false
+      },
       {
         "sha": "e577138",
         "type": "bot",
@@ -4831,6 +6091,42 @@
       }
     ],
     "Other": [
+      {
+        "sha": "27a8497",
+        "type": "percival",
+        "scope": null,
+        "subject": "add local docker-compose stack (governor + envoy gateway)",
+        "author": "Claude",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "e2a93d7",
+        "type": "percival",
+        "scope": null,
+        "subject": "author Envoy API gateway (JWT auth + rate limit + governor ext_authz)",
+        "author": "Claude",
+        "date": "2026-07-10",
+        "breaking": false
+      },
+      {
+        "sha": "d329d49",
+        "type": "percival",
+        "scope": null,
+        "subject": "author deploy layer (k8s + terraform + governor-gated temporal worker)",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
+      {
+        "sha": "0ef93b8",
+        "type": "percival",
+        "scope": null,
+        "subject": "governor service entry point + OPA rego bundle + capability schema",
+        "author": "Claude",
+        "date": "2026-07-08",
+        "breaking": false
+      },
       {
         "sha": "d491d4b",
         "type": "blog",

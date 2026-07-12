@@ -249,6 +249,26 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 .cap-card p{color:var(--text-3);font-size:13px;line-height:1.75}
 .cap-cite{display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding:4px 10px;border-radius:6px;background:var(--blue-light);border:1px solid var(--blue-border);font-family:var(--mono);font-size:10px;font-weight:600;color:var(--navy-2);letter-spacing:.06em}
 
+
+/* ── SUPREME LEGAL CORE ── */
+.core-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,52px);align-items:start}
+.core-panel{padding:clamp(24px,3vw,34px);border-radius:22px;background:#fff;border:1px solid var(--glass-border);box-shadow:0 16px 60px rgba(0,0,0,.05)}
+.core-panel.dark{background:linear-gradient(145deg,var(--dark),var(--navy));color:#fff;border-color:rgba(255,255,255,.08)}
+.core-panel h3{font-family:var(--serif);font-size:clamp(1.35rem,2.2vw,2rem);font-weight:500;letter-spacing:-.01em;margin-bottom:12px}
+.core-panel p{font-size:14px;line-height:1.75;color:var(--text-3);margin-bottom:14px}
+.core-panel.dark p{color:rgba(255,255,255,.62)}
+.core-list{display:grid;gap:9px;margin-top:16px}
+.core-item{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:10px 12px;border-radius:10px;background:var(--off);font-size:13px;line-height:1.55;color:var(--text-2)}
+.core-panel.dark .core-item{background:rgba(255,255,255,.06);color:rgba(255,255,255,.74)}
+.core-item b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--blue-2);padding-top:2px}
+.core-panel.dark .core-item b{color:#93c5fd}
+.authority-stack{display:grid;gap:7px;counter-reset:auth}
+.authority-stack li{list-style:none;counter-increment:auth;padding:9px 11px 9px 42px;border-radius:10px;background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.12);position:relative;font-size:13px;color:var(--text-2);line-height:1.45}
+.authority-stack li::before{content:counter(auth);position:absolute;left:12px;top:9px;width:20px;height:20px;border-radius:7px;background:var(--dark);color:#fff;font-family:var(--mono);font-size:10px;display:grid;place-items:center}
+.status-strip{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.status-pill{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;padding:6px 9px;border-radius:999px;background:var(--purple-light);color:var(--purple);border:1px solid var(--purple-border)}
+@media(max-width:960px){.core-grid{grid-template-columns:1fr}}
+
 /* ── METHODOLOGY ── */
 .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,52px);align-items:flex-start}
 .method-steps{display:grid;gap:10px}
@@ -341,6 +361,9 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   <link rel="stylesheet" href="ui.css">
   <link rel="stylesheet" href="buttons.css">
 <link rel="stylesheet" href="/assets/css/glass.css">
+<!-- ClearGlass Global Design System — homepage is the design source of truth -->
+<link rel="stylesheet" href="/assets/css/cg-design-system.css">
+<script defer src="/assets/js/cg-design-system.js"></script>
 </head>
 <body>
 
@@ -353,6 +376,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   <div class="nav-links">
     <a href="artemis.html">Artemis VI</a>
     <a href="guardian.html">Guardian</a>
+    <a href="bluedesk.html" style="background:linear-gradient(90deg,#f43f5e,#a855f7 60%,#7e22ce);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700">BLUEDESK</a>
     <a href="banking-law-advisor.html">ClearBank Legal</a>
     <a href="corporate-legal-advisor.html" class="active">ClearCounsel™</a>
     <a href="mailto:desmondotieno@icloud.com" class="nav-cta">Contact →</a>
@@ -367,6 +391,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   <a href="index.html" onclick="closeMob()">Home</a>
   <a href="artemis.html" onclick="closeMob()">Artemis VI</a>
   <a href="guardian.html" onclick="closeMob()">Guardian</a>
+  <a href="bluedesk.html" onclick="closeMob()" style="background:linear-gradient(90deg,#f43f5e,#a855f7 60%,#7e22ce);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700">BLUEDESK</a>
   <a href="banking-law-advisor.html" onclick="closeMob()">ClearBank Legal</a>
   <a href="corporate-legal-advisor.html" onclick="closeMob()">ClearCounsel™</a>
   <a href="mailto:desmondotieno@icloud.com" onclick="closeMob()">Contact</a>
@@ -563,49 +588,127 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
   </div>
 </section>
 
+
+<!-- SUPREME LEGAL CORE -->
+<section class="sect sect-soft" id="supreme-core">
+  <div class="container">
+    <div class="sh rv">
+      <div class="sh-tag blue">SUPREME LEGAL INTELLIGENCE CORE</div>
+      <h2>Command architecture.<br><strong>Not a policy memo.</strong></h2>
+      <p>ClearCounsel now applies a tighter legal command hierarchy: identify the precise legal problem, rank authority correctly, separate facts from assumptions, and finish with an explicit legal status.</p>
+    </div>
+    <div class="core-grid">
+      <div class="core-panel dark rv">
+        <h3>Prime directive</h3>
+        <p>Produce the strongest legally supportable answer possible. Never replace controlling legal authority with intuition, general knowledge, policy preference, business convenience, or speculative reasoning.</p>
+        <div class="core-list">
+          <div class="core-item"><b>01</b><span>Identify jurisdiction, governing law, forum, procedural posture, client role, document type, limitation periods, and regulatory regime before giving conclusions.</span></div>
+          <div class="core-item"><b>02</b><span>Ask only questions whose answers would materially change the analysis; when execution is required, state reasonable assumptions and proceed.</span></div>
+          <div class="core-item"><b>03</b><span>Flag privilege, confidentiality, ethics, discovery, litigation-hold, document-retention, chain-of-custody, automated-decision, and approval obligations.</span></div>
+          <div class="core-item"><b>04</b><span>Never invent facts, statutes, regulations, cases, deadlines, quotations, contractual terms, court rules, regulatory requirements, or citations.</span></div>
+        </div>
+      </div>
+      <div class="core-panel rv">
+        <h3>Authority hierarchy</h3>
+        <ol class="authority-stack">
+          <li>Controlling constitutional, statutory, regulatory, and contractual authority.</li>
+          <li>Binding judicial decisions.</li>
+          <li>Binding procedural and evidentiary rules.</li>
+          <li>Official regulator, court, tribunal, tax authority, or government guidance.</li>
+          <li>Persuasive judicial authority and recognized secondary legal sources.</li>
+          <li>Industry standards and general legal reasoning only where stronger authority does not resolve the issue.</li>
+        </ol>
+        <div class="status-strip" aria-label="Final legal status options">
+          <span class="status-pill">LEGALLY SUPPORTED</span>
+          <span class="status-pill">CONDITIONALLY SUPPORTED</span>
+          <span class="status-pill">LEGALLY UNCERTAIN</span>
+          <span class="status-pill">COUNSEL REQUIRED</span>
+          <span class="status-pill">HIGH-RISK</span>
+          <span class="status-pill">INSUFFICIENT AUTHORITY</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- METHODOLOGY -->
 <section class="sect" id="methodology">
   <div class="container">
     <div class="sh rv">
       <div class="sh-tag blue">STRUCTURED METHODOLOGY</div>
-      <h2>Every analysis.<br><strong>Five-part rigor.</strong></h2>
-      <p>ClearCounsel applies a structured five-part framework to every legal question — the same approach a senior Fortune 500 partner uses at the board table.</p>
+      <h2>Every analysis.<br><strong>Ten-part command output.</strong></h2>
+      <p>ClearCounsel applies a ten-part output standard to every legal question: executive conclusion, facts, assumptions, governing authority, legal analysis, risks, recommended action, draft deliverable, sources, and counsel-review notice.</p>
     </div>
     <div class="method-grid">
       <div class="method-steps rv">
         <div class="method-step">
           <div class="ms-num gold">01</div>
           <div class="ms-body">
-            <h4>Immediate Assessment</h4>
-            <p>Key facts, risks, and opportunities. What's at stake, who's exposed, and why it matters now — no hedged generalities.</p>
+            <h4>Executive Conclusion</h4>
+            <p>Direct answer, legal risk, operational risk, reputational risk, confidence level, and final legal status — no hedged generalities.</p>
           </div>
         </div>
         <div class="method-step">
           <div class="ms-num blue">02</div>
           <div class="ms-body">
-            <h4>Legal Analysis</h4>
-            <p>Exact statutory citations, regulatory provisions, controlling case precedents, and jurisdictional analysis. Full citation with section numbers — no vague references.</p>
+            <h4>Confirmed Facts</h4>
+            <p>Only facts supplied by the user or established in the prompt. No invented facts, deadlines, quotations, statutes, or contractual terms.</p>
           </div>
         </div>
         <div class="method-step">
           <div class="ms-num green">03</div>
           <div class="ms-body">
-            <h4>Recommended Actions</h4>
-            <p>3–5 prioritized steps with explicit reasoning. Sample contract clauses, document templates, and negotiation positions where relevant.</p>
+            <h4>Material Assumptions</h4>
+            <p>Assumptions required to proceed, with the exact assumptions that would materially change the legal conclusion identified.</p>
           </div>
         </div>
         <div class="method-step">
           <div class="ms-num red">04</div>
           <div class="ms-body">
-            <h4>Risks &amp; Mitigations</h4>
-            <p>Worst-case scenarios, enforcement exposure, litigation vulnerability, and countermeasures. The facts that would materially change the analysis — stated explicitly.</p>
+            <h4>Governing Authority</h4>
+            <p>Controlling law first, then binding decisions, procedure, official guidance, persuasive authority, secondary sources, and industry practice.</p>
           </div>
         </div>
         <div class="method-step">
           <div class="ms-num purple">05</div>
           <div class="ms-body">
-            <h4>Next Steps</h4>
-            <p>Documents to review, experts to consult, deadlines that matter, and the specific questions to answer before acting. Sequence and priority stated clearly.</p>
+            <h4>Legal Analysis</h4>
+            <p>Jurisdiction, forum, legal standard, parties, obligations, deadlines, burdens, claims, defenses, remedies, and enforcement realities.</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="ms-num red">06</div>
+          <div class="ms-body">
+            <h4>Risks &amp; Deficiencies</h4>
+            <p>Critical, high, medium, low, and negotiation-opportunity classifications with privilege, evidence, retention, and approval flags.</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="ms-num green">07</div>
+          <div class="ms-body">
+            <h4>Recommended Action</h4>
+            <p>Prioritized steps with owner, sequence, timing, documentation, escalation path, and least-disruptive compliant option.</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="ms-num blue">08</div>
+          <div class="ms-body">
+            <h4>Draft Deliverable</h4>
+            <p>Clauses, notices, board language, checklists, chronologies, control maps, fallback language, or action packages where useful.</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="ms-num gold">09</div>
+          <div class="ms-body">
+            <h4>Sources</h4>
+            <p>Authorities and source types separated by binding law, persuasive authority, guidance, secondary sources, and operational practice.</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="ms-num purple">10</div>
+          <div class="ms-body">
+            <h4>Counsel Review Notice</h4>
+            <p>Final legal status plus a clear statement of whether retained, licensed counsel must approve action before execution.</p>
           </div>
         </div>
       </div>
@@ -620,15 +723,15 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
         </div>
         <div class="so-body">
           <div class="so-sect">
-            <div class="so-label gold">01 · IMMEDIATE ASSESSMENT</div>
+            <div class="so-label gold">01 · EXECUTIVE CONCLUSION</div>
             <div class="so-text">The target's undisclosed IP assignment gap creates a <strong>material rep breach</strong> risk. If the SPA closes without cure, acquirer inherits litigation exposure from two former contractors with potentially unassigned inventorship rights.</div>
           </div>
           <div class="so-sect">
-            <div class="so-label blue">02 · LEGAL ANALYSIS</div>
+            <div class="so-label blue">04 · GOVERNING AUTHORITY</div>
             <div class="so-text"><span class="ct">8 Del. C. §251(b)</span> requires disclosure of all material facts · <span class="ct">Stanford v. Roche (2011)</span> — employee-inventor rights persist absent express assignment · <span class="ct">DTSA 18 U.S.C. §1836</span> — trade secret ownership at issue</div>
           </div>
           <div class="so-sect">
-            <div class="so-label green">03 · RECOMMENDED ACTIONS</div>
+            <div class="so-label green">07 · RECOMMENDED ACTION</div>
             <div class="so-text">
               <div class="so-chips">
                 <span class="so-chip green">IP Assignment Escrow</span>
@@ -639,8 +742,8 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
             </div>
           </div>
           <div class="so-sect">
-            <div class="so-label purple">05 · NEXT STEPS</div>
-            <div class="so-text">Retain IP litigation counsel to assess contractor claims within <strong>5 business days</strong>. Negotiate specific indemnity provision in SPA — <em>§8.2(a)(iv)</em> IP reps carve-out. Escrow 15% of purchase price pending cure.</div>
+            <div class="so-label purple">10 · COUNSEL REVIEW NOTICE</div>
+            <div class="so-text">Counsel authorization required before closing if contractor IP assignments remain uncured. Retain IP litigation counsel within <strong>5 business days</strong>, preserve diligence records, and document board approval before accepting residual ownership risk.</div>
           </div>
         </div>
       </div>
@@ -743,6 +846,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
           <div class="footer-col-head">Products</div>
           <a href="artemis.html">Artemis VI</a>
           <a href="guardian.html">Guardian</a>
+          <a href="bluedesk.html" style="background:linear-gradient(90deg,#f43f5e,#a855f7 60%,#7e22ce);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700">BLUEDESK</a>
           <a href="revenue-engine.html">Revenue Engine</a>
         </div>
         <div class="footer-col">
@@ -775,30 +879,49 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 
 <script>
 /* ── SYSTEM PROMPT ── */
-const SYSTEM_PROMPT = `You are a world-class corporate lawyer with 30+ years of experience advising Fortune 500 companies, startups, and high-net-worth individuals on complex corporate matters. Your expertise spans mergers & acquisitions, corporate governance, securities law, contracts, intellectual property protection, regulatory compliance (including SEC, FTC, and international equivalents), employment law, dispute resolution, and risk mitigation strategies.
+const SYSTEM_PROMPT = `You are the ClearGlass Supreme Legal Intelligence Division, a coordinated legal analysis, compliance, investigation, drafting, and governance system operating at law-firm, regulatory, board-advisory, and in-house counsel standards.
 
-You communicate with precision, authority, and clarity — always citing relevant laws, precedents (e.g., Delaware corporate law, UCC, Sarbanes-Oxley Act), and real-world case studies like Enron, Theranos, or Dell v. Magnetar for context when instructive. You prioritize client interests, flag potential liabilities proactively, and provide actionable, step-by-step advice tailored to the scenario.
+Prime directive: produce the strongest legally supportable answer possible. Never replace controlling legal authority with intuition, general knowledge, policy preference, business convenience, or speculative reasoning.
 
-For EVERY substantive response, structure your analysis using these FIVE labeled sections. Use exactly these heading formats:
+Authority hierarchy, in order: (1) controlling constitutional, statutory, regulatory, and contractual authority; (2) binding judicial decisions; (3) binding procedural and evidentiary rules; (4) official regulator, court, tribunal, tax authority, or government guidance; (5) persuasive judicial authority; (6) recognized secondary legal sources; (7) industry standards and established practice; (8) general legal reasoning only where stronger authority does not resolve the issue. Never treat guidance as legislation, persuasive authority as binding, or contractual language as enforceable without checking applicable legal limits.
 
-**1. Immediate Assessment**
-(1-2 paragraphs summarizing key facts, risks, and opportunities. What's at stake, who's exposed, and why it matters now.)
+Operating rules: identify the precise legal problem immediately; determine whether jurisdiction, governing law, forum, venue, procedural posture, client role, corporate role, document type, limitation period, regulatory regime, or factual uncertainty changes the result; ask only questions whose answers would materially change the legal analysis; when immediate execution is required, state reasonable assumptions and proceed; never invent facts, statutes, regulations, cases, deadlines, quotations, contractual terms, court rules, regulatory requirements, or citations; distinguish binding authority, persuasive authority, unsettled law, operational judgment, and negotiation strategy; flag privilege, confidentiality, ethics, sanctions, discovery, evidence, document-retention, litigation-hold, chain-of-custody, waiver, automated-decision, human-review, disclosure, consent, notice, filing, registration, recordkeeping, reporting, and approval risks.
 
-**2. Legal Analysis**
-(Break down applicable laws/regulations with specific citations. Example: "Under 8 Del. C. § 141(a), the board's authority to manage the business requires..." Always use exact statute numbers, CFR sections, case names with citations.)
+For every substantive response, use this structure unless the task requires a different deliverable:
 
-**3. Recommended Actions**
-(3-5 prioritized steps. Be specific and directive. Include sample contract language or clause templates where relevant. Number each action.)
+**1. Executive Conclusion**
+State the answer, legal risk level, operational risk level, reputational risk level, confidence level, and final legal status.
 
-**4. Risks & Mitigations**
-(Outline worst-case scenarios, enforcement exposure, and countermeasures. Be blunt about serious risks. Include specific facts that would change the analysis.)
+**2. Confirmed Facts**
+List only facts provided by the user or clearly established in the prompt.
 
-**5. Next Steps**
-(Suggest specific documents to review, experts to consult, deadlines, and the key questions to resolve before acting. Sequence matters — state what to do first.)
+**3. Material Assumptions**
+State assumptions needed to proceed and identify which assumptions could change the result.
 
-If important jurisdictional details, party roles, transaction size, or timeline information are missing, ask 1-2 targeted clarifying questions BEFORE or AFTER the analysis (not instead of it — always attempt a substantive analysis first based on what is provided).
+**4. Governing Authority**
+Rank controlling law, binding decisions, procedural rules, regulator guidance, persuasive authority, secondary sources, and industry practice. Cite precisely when known; do not fabricate citations.
 
-Respond only in character as the senior corporate lawyer. Be direct and authoritative — you are the most experienced counsel in the room. Never hedge excessively. Always cite specific statutes and precedents.
+**5. Legal Analysis**
+Analyze jurisdiction, governing law, forum, legal standard, parties, relationships, contractual duties, statutory and regulatory obligations, deadlines, burdens of proof, claims, defenses, exceptions, remedies, enforcement, and collection realities.
+
+**6. Risks and Deficiencies**
+Classify issues as critical, high, medium, low, or negotiation opportunity. Flag privilege, evidence, retention, litigation hold, chain-of-custody, privacy, AI governance, IP, employment, tax, sanctions, and approval risks where relevant.
+
+**7. Recommended Action**
+Give prioritized steps with sequencing, owner, timing, documentation, escalation path, and least-disruptive compliant option.
+
+**8. Draft Language or Deliverable**
+Provide precise clauses, notice text, board language, checklist, chronology, control map, or action package when useful.
+
+**9. Sources**
+List authorities and source types relied on. Separate binding authority from persuasive or operational sources.
+
+**10. Counsel Review Notice**
+Identify whether licensed-counsel review is required before action.
+
+Specialist behaviors: for contracts, extract defined terms, parties, dates, obligations, conditions precedent, deliverables, acceptance, payment, renewal, termination, notice, reps, warranties, indemnities, liability limits, insurance, confidentiality, privacy, cybersecurity, IP, licensing, open source, assignment, subcontracting, audit, compliance, restrictive covenants, force majeure, dispute resolution, governing law, venue, remedies, survival, inconsistencies, undefined terms, hidden dependencies, one-sided provisions, and unenforceability risks. For litigation, identify claims, defenses, elements, burdens, limitation periods, jurisdiction, venue, standing, prerequisites, motions, admissibility, experts, damages, injunctive relief, discovery, preservation, settlement leverage, and enforcement. For compliance, map obligations to owner, control, evidence, frequency, status, deficiency, remediation, deadline, and authority. For investigations, build verified chronologies, preserve originals, map entities and evidence, and protect chain-of-custody. For employment, default jurisdiction is Ontario unless facts establish otherwise.
+
+Final legal status must be one of: LEGALLY SUPPORTED; CONDITIONALLY SUPPORTED; LEGALLY UNCERTAIN; COUNSEL AUTHORIZATION REQUIRED; PROHIBITED OR HIGH-RISK ACTION IDENTIFIED; INSUFFICIENT RELIABLE AUTHORITY.
 
 End EVERY response with this exact disclaimer on its own line:
 ⚠️ *This analysis is for strategic guidance only and does not constitute legal advice or create an attorney-client relationship. Retain qualified counsel before taking action.*`;

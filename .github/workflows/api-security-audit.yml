@@ -15,6 +15,11 @@ on:
         description: "Path to endpoint definitions JSON"
         required: false
         default: "security/endpoints_example.json"
+      allow_empty_report:
+        description: "Allow scanner/no-report runs for connectivity dry-runs only"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -38,13 +43,35 @@ jobs:
           python-version: "3.11"
 
       - name: Validate target is not production
+        env:
+          INPUT_TARGET_ENV: ${{ github.event.inputs.target_env || 'https://staging-api.clearglassinc.com' }}
+          INPUT_ENDPOINTS_FILE: ${{ github.event.inputs.endpoints_file || 'security/endpoints_example.json' }}
         run: |
-          TARGET="${{ github.event.inputs.target_env || 'https://staging-api.clearglassinc.com' }}"
-          if echo "$TARGET" | grep -qiE "(prod|production)"; then
-            echo "::error::Refusing to audit a production target. Use staging or dev."
+          set -euo pipefail
+          TARGET="$INPUT_TARGET_ENV"
+          ENDPOINTS="$INPUT_ENDPOINTS_FILE"
+
+          case "$TARGET" in
+            https://staging-api.clearglassinc.com|https://dev-api.clearglassinc.com)
+              ;;
+            *)
+              echo "::error::Refusing to audit unapproved API target '$TARGET'. Use the staging or dev allowlist."
+              exit 1
+              ;;
+          esac
+
+          if [[ "$ENDPOINTS" = /* || "$ENDPOINTS" = *".."* || "$ENDPOINTS" != *.json ]]; then
+            echo "::error::endpoints_file must be a repo-relative JSON path without '..'."
             exit 1
           fi
-          echo "TARGET_URL=$TARGET" >> $GITHUB_ENV
+          if [ ! -f "$ENDPOINTS" ]; then
+            echo "::error::Endpoint definition file '$ENDPOINTS' was not found."
+            exit 1
+          fi
+          {
+            echo "TARGET_URL=$TARGET"
+            echo "ENDPOINTS_FILE=$ENDPOINTS"
+          } >> "$GITHUB_ENV"
 
       - name: Run API Security Scanner
         env:
@@ -54,15 +81,15 @@ jobs:
         run: |
           python scripts/api_security_scanner.py \
             --base-url "$TARGET_URL" \
-            --endpoints "${{ github.event.inputs.endpoints_file || 'security/endpoints_example.json' }}" \
+            --endpoints "$ENDPOINTS_FILE" \
             --valid-token "$AUDIT_VALID_TOKEN" \
             --low-priv-token "$AUDIT_LOW_PRIV_TOKEN" \
             --other-user-id "$AUDIT_OTHER_USER_ID" \
             --output-dir audit-reports \
             --timeout 12
-        continue-on-error: true  # always upload artifacts even on failure
 
       - name: Upload JSON report
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: api-audit-report-${{ github.run_id }}
@@ -70,6 +97,7 @@ jobs:
           retention-days: 90
 
       - name: Upload CSV report
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: api-audit-csv-${{ github.run_id }}
@@ -81,11 +109,16 @@ jobs:
         run: |
           REPORT=$(ls audit-reports/api_audit_*.json 2>/dev/null | head -1 || true)
           if [ -z "$REPORT" ]; then
-            # No report means the scanner could not run (target unreachable or
-            # required staging secrets unset — common on manual dispatch). That
-            # is not an audit failure, so skip parsing rather than failing the
-            # job; real findings are still gated by the steps below.
-            echo "::warning::No audit report produced — scanner could not reach the target or required secrets are unset. Skipping result parsing."
+            # No report means the scanner did not complete or could not reach
+            # the target. Fail closed unless the run was explicitly dispatched
+            # as a connectivity dry-run.
+            if [ "${{ github.event.inputs.allow_empty_report || 'false' }}" = "true" ]; then
+              echo "::warning::No audit report produced; allow_empty_report=true, so this manual dry-run will not fail."
+              echo "failures=0" >> "$GITHUB_OUTPUT"
+              echo "risk=UNKNOWN" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "::error::No audit report produced — scanner did not complete or required staging secrets are unset."
             echo "failures=0" >> $GITHUB_OUTPUT
             echo "risk=UNKNOWN" >> $GITHUB_OUTPUT
             {
@@ -93,7 +126,7 @@ jobs:
               echo;
               echo "⚠️ No report generated (target unreachable or secrets unset). Nothing to assess.";
             } >> $GITHUB_STEP_SUMMARY
-            exit 0
+            exit 1
           fi
           FAILURES=$(python3 -c "import json,sys; d=json.load(open('$REPORT')); print(d['summary']['failed'])")
           RISK=$(python3 -c "import json,sys; d=json.load(open('$REPORT')); print(d['summary']['risk_rating'])")

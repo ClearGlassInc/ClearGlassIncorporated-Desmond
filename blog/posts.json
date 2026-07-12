@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-07-06",
+  "updated": "2026-07-12",
   "site": "https://clearglassinc.github.io",
   "topics": {
     "governed-ai": "Governed AI",
@@ -9,9 +9,104 @@
     "osint": "OSINT workflows",
     "automation": "AI automation",
     "fincrime": "Financial crime detection",
-    "systems": "High-trust systems"
+    "systems": "High-trust systems",
+    "growth": "Revenue growth systems"
   },
   "posts": [
+    {
+      "slug": "ethical-sales-system-100k-revenue-prompt",
+      "url": "/blog/ethical-sales-system-100k-revenue-prompt.html",
+      "title": "Ethical Sales Psychology: A 100K Revenue System Prompt for ClearGlassInc Artemis",
+      "description": "A ClearGlassInc Artemis-ready prompt and operating system for building persuasive, ethical sales funnels using reciprocity, proof, authority, urgency, risk reversal, follow-up, KPIs, and human-trust guardrails.",
+      "category": "Revenue Architecture",
+      "series": "Artemis Growth Systems",
+      "topics": [
+        "automation",
+        "systems",
+        "governed-ai",
+        "growth"
+      ],
+      "tags": [
+        "sales-psychology",
+        "ethical-persuasion",
+        "revenue-engine",
+        "conversion",
+        "prompt-system",
+        "clear-glass-artemis",
+        "kpis",
+        "follow-up",
+        "positioning"
+      ],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-07-12",
+      "readMinutes": 14,
+      "featured": true,
+      "deskRank": 2,
+      "status": "published"
+    },
+    {
+      "slug": "clearglass-command-center-cyber-defense-console",
+      "url": "/blog/clearglass-command-center-cyber-defense-console.html",
+      "title": "Inside the ClearGlass Command Center: Designing a Cyber Defense Console That Earns Trust",
+      "description": "The design and engineering decisions behind the ClearGlass Command Center \u2014 a cinematic cyber defense console where every animation supports evidence: live telemetry, risk gauges, governed pipelines, and human-in-the-loop approval gates.",
+      "category": "Cyber Defense Design",
+      "series": "Command Center Field Notes",
+      "topics": [
+        "governed-ai",
+        "cyber",
+        "automation",
+        "systems"
+      ],
+      "tags": [
+        "command-center",
+        "cyber-defense-console",
+        "risk-intelligence",
+        "control-plane-visibility",
+        "defensive-automation",
+        "executive-assurance",
+        "glassmorphism",
+        "motion-design",
+        "governance"
+      ],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-07-11",
+      "readMinutes": 9,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
+    {
+      "slug": "clearglass-agentops-microsoft-foundry-future-stack",
+      "url": "/blog/clearglass-agentops-microsoft-foundry-future-stack.html",
+      "title": "ClearGlass AgentOps: Microsoft Foundry Future Stack",
+      "description": "Twelve enterprise-grade briefs for secure agent deployment with Microsoft Foundry Agent Service, Microsoft Agent Framework, Copilot Studio, Entra identity, tracing, governance, and ClearGlass AgentOps.",
+      "category": "AgentOps Architecture",
+      "series": "Microsoft-Aligned AgentOps Briefs",
+      "topics": [
+        "governed-ai",
+        "agents",
+        "cyber",
+        "automation",
+        "systems"
+      ],
+      "tags": [
+        "microsoft-foundry",
+        "foundry-agent-service",
+        "microsoft-agent-framework",
+        "copilot-studio",
+        "entra-id",
+        "observability",
+        "zero-trust",
+        "agentops",
+        "governance"
+      ],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-07-07",
+      "readMinutes": 22,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
     {
       "slug": "clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform",
       "url": "/blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html",
@@ -75,7 +170,7 @@
       "slug": "ai-agent-governance-governed-autonomy",
       "url": "/blog/ai-agent-governance-governed-autonomy.html",
       "title": "AI Agent Governance: The Governed Autonomy Playbook",
-      "description": "The bottleneck to deploying AI agents isn't intelligence — it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
+      "description": "The bottleneck to deploying AI agents isn't intelligence \u2014 it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
       "category": "AI & Autonomy",
       "series": "Governed Autonomy Playbooks",
       "topics": [
@@ -102,7 +197,7 @@
       "slug": "ai-agents-insider-threat",
       "url": "/blog/ai-agents-insider-threat.html",
       "title": "AI Agents Are the New Insider Threat",
-      "description": "Agents hold credentials, access, and goals — the textbook insider profile — and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
+      "description": "Agents hold credentials, access, and goals \u2014 the textbook insider profile \u2014 and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
       "category": "AI & Security",
       "series": "Field Notes",
       "topics": [
@@ -154,7 +249,7 @@
       "slug": "clearglassinc-artemis-self-evolving-ai-intelligence-platform",
       "url": "/blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html",
       "title": "ClearGlassInc Artemis: The Self-Evolving AI Intelligence Platform",
-      "description": "A full-stack blueprint for mission-speed intelligence with ontology-driven agents, continuous evals, policy-as-code, safe self-improvement, Apollo deployment control, and code-level implementation patterns.",
+      "description": "A production full-stack blueprint for ClearGlassInc Artemis: Gotham, Foundry, AIP, Apollo, ontology-driven agents, legal intelligence governance, safe self-improvement loops, policy-as-code, evals, and mission-grade deployment.",
       "category": "AI Architecture",
       "series": "Artemis Engineering Notes",
       "topics": [
@@ -169,11 +264,13 @@
         "policy-as-code",
         "apollo",
         "foundry",
-        "self-improvement"
+        "self-improvement",
+        "legal-intelligence",
+        "governance"
       ],
       "author": "Desmond Otieno Odhiambo",
-      "date": "2026-06-30",
-      "readMinutes": 24,
+      "date": "2026-07-12",
+      "readMinutes": 31,
       "featured": false,
       "deskRank": 2,
       "status": "published"

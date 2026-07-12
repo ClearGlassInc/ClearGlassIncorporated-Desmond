@@ -165,9 +165,9 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${HOOK:-}" ]; then
-            echo "::notice::RENDER_DEPLOY_HOOK_URL not set — control-plane auto-deploy skipped."
-            echo "Add a Render Deploy Hook URL as a repo secret to enable auto-deploy."
-            exit 0
+            echo "::error::RENDER_DEPLOY_HOOK_URL is required for production deploys."
+            echo "Add a Render Deploy Hook URL as a repo secret, or run validation without deploy=true."
+            exit 1
           fi
           curl -fsS -X POST "$HOOK" >/dev/null && echo "Control-plane deploy triggered."
 

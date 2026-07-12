@@ -26,6 +26,7 @@
       ["ZEPHYR · Air Control", "air-control.html", "🜁"],
       ["Artemis VI", "artemis.html", "🛰"],
       ["Guardian", "guardian.html", "🌐"],
+      ["BLUEDESK · CISO Console", "bluedesk.html", "🛡", "bd"],
       ["ClearGlass NEXUS", "clearglass-nexus.html", "🛡"],
       ["Government", "government.html", "🏛"],
       ["ClearPulse", "clearpulse.html", "📡"],
@@ -53,6 +54,7 @@
       ["Home", "index.html", "⌂"],
       ["Web Design & Dev", "web-design.html", "💻"],
       ["Store · Buy", "store.html", "🛒"],
+      ["Side Store · Electronics", "side-store.html", "🔌"],
       ["Pricing", "pricing.html", "₵"],
       ["Button Lab", "button-lab.html", "◫"]
     ]]
@@ -83,6 +85,9 @@
     "#cg-nav a.cg-link .ic{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:13px;background:rgba(124,150,255,.1);border:1px solid rgba(124,150,255,.2);flex:0 0 auto}",
     "#cg-nav a.cg-link.cur{background:linear-gradient(100deg,rgba(96,165,250,.2),rgba(167,139,250,.06));border-color:rgba(124,150,255,.5);color:#fff}",
     "#cg-nav a.cg-link.cur .ic{background:rgba(124,150,255,.24)}",
+    "#cg-nav a.cg-link.bd{background:linear-gradient(100deg,rgba(190,18,60,.16),rgba(126,34,206,.15) 60%,rgba(88,28,135,.1));border-color:rgba(168,85,247,.35);color:#f3e8ff}",
+    "#cg-nav a.cg-link.bd .ic{background:linear-gradient(135deg,rgba(225,29,72,.26),rgba(126,34,206,.3));border-color:rgba(225,29,72,.4);box-shadow:0 0 10px rgba(168,85,247,.4)}",
+    "#cg-nav a.cg-link.bd:hover{background:linear-gradient(100deg,rgba(225,29,72,.26),rgba(147,51,234,.24));border-color:rgba(232,121,249,.65);color:#fff;box-shadow:0 0 18px rgba(168,85,247,.35),inset 0 0 12px rgba(190,18,60,.14)}",
     "#cg-nav .cg-foot{font-size:8.5px;letter-spacing:.1em;color:#595e8c;text-align:center;padding:14px 0 2px}",
     "@media(max-width:640px){#cg-nav .cg-tab{padding:11px 6px;font-size:10px;letter-spacing:.2em}}"
   ].join("");
@@ -112,8 +117,9 @@
       html += '<div class="cg-grp">' + g[0] + "</div>";
       g[1].forEach(function (it) {
         var cur = it[1].toLowerCase() === here ? " cur" : "";
+        var acc = it[3] ? " " + it[3] : "";
         var ext = /^https?:/i.test(it[1]);
-        html += '<a class="cg-link' + cur + '" href="' + it[1] + '"' +
+        html += '<a class="cg-link' + cur + acc + '" href="' + it[1] + '"' +
           (ext ? ' target="_blank" rel="noopener noreferrer"' : "") + '>' +
           '<span class="ic">' + it[2] + "</span>" + it[0] +
           (cur ? ' <span style="margin-left:auto;font-family:monospace;font-size:9px;color:#8a90c4">● here</span>' : "") +

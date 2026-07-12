@@ -516,6 +516,53 @@ h1.h-head{font-size:64px;}
 .spec-grid{grid-template-columns:1fr;}
 }
 
+
+
+/* ════════════════════════════════
+ADVANCED COMMAND CONSOLE ENHANCEMENTS
+════════════════════════════════ */
+.hero-stack{display:flex;flex-direction:column;gap:16px;min-width:0;}
+.hero-kpi-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:26px;opacity:0;animation:fadeUp .7s var(--ease) 1.32s forwards;}
+.hero-kpi{padding:14px;border:1px solid var(--crimson-line);background:linear-gradient(180deg,rgba(124,150,255,.08),rgba(255,255,255,.018));border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05);}
+.hk-label,.hero-kpi small{display:block;font-family:var(--M);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash-d);}
+.hero-kpi strong{display:block;margin:5px 0 3px;font-family:var(--M);font-size:22px;color:var(--green);text-shadow:0 0 16px rgba(16,185,129,.25);}
+.hero-kpi strong.warn{color:var(--amber);}
+.guardian-picture{position:relative;margin:0;min-height:335px;padding:16px;border:1px solid rgba(124,150,255,.26);border-radius:22px;background:linear-gradient(145deg,rgba(3,7,15,.94),rgba(18,6,18,.76)),radial-gradient(circle at 75% 25%,rgba(96,165,250,.18),transparent 35%);box-shadow:0 38px 90px rgba(0,0,0,.58),0 0 0 1px rgba(255,255,255,.035) inset;overflow:hidden;opacity:0;transform:translateX(24px);animation:fadeLeft .9s var(--ease) .55s forwards;}
+.guardian-picture::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(96,165,250,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.035) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(#000,transparent 92%);animation:scanDrift 18s linear infinite;}
+.guardian-picture::after{content:'';position:absolute;left:-40%;top:0;width:35%;height:100%;background:linear-gradient(90deg,transparent,rgba(96,165,250,.12),transparent);transform:skewX(-18deg);animation:consoleSheen 7s ease-in-out infinite;}
+@keyframes consoleSheen{0%,60%{left:-45%}100%{left:120%}}
+.gp-topline,.gp-brand,.gp-grid{position:relative;z-index:1;}
+.gp-topline{display:flex;justify-content:space-between;gap:10px;font-family:var(--M);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--ash-d);padding-bottom:12px;border-bottom:1px solid var(--crimson-dim);}
+.live-chip{color:var(--crimson-2);text-shadow:0 0 14px var(--crimson-glow);}
+.gp-brand{display:flex;align-items:center;gap:12px;margin:18px 0;font-family:var(--M);letter-spacing:.22em;font-size:15px;}
+.gp-brand strong{margin-left:auto;font-size:28px;color:#fff;letter-spacing:.08em;}
+.gp-mark{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--crimson-line);background:rgba(255,255,255,.035);border-radius:8px;}
+.gp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.gp-card,.gp-terminal,.gp-script{border:1px solid rgba(124,150,255,.16);background:rgba(0,0,0,.34);padding:14px;min-height:86px;}
+.gp-card.wide{grid-column:span 3;display:grid;grid-template-columns:1fr auto;align-items:center;}
+.gp-card.active{background:linear-gradient(135deg,rgba(96,165,250,.18),rgba(244,114,182,.09));border-color:rgba(244,114,182,.28);}
+.gp-card span,.gp-terminal span,.gp-script span,.panel-title{font-family:var(--M);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--ash-d);}
+.gp-card strong{display:block;margin-top:8px;font-size:21px;letter-spacing:.05em;color:var(--bone);}
+.gp-card em{display:block;margin-top:4px;font-family:var(--M);font-style:normal;font-size:9px;color:var(--ash-d);}
+.gp-terminal{grid-column:span 2;min-height:138px;}
+.gp-terminal code{display:block;margin-top:12px;white-space:pre-line;font-family:var(--M);font-size:10px;line-height:1.8;color:#dce7ff;}
+.gp-script p{font-size:12px;line-height:1.6;color:var(--ash);margin-top:12px;}
+.command-nexus{padding-top:110px;}
+.command-head{max-width:760px;}
+.command-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:54px;}
+.command-card{position:relative;padding:22px;border:1px solid var(--crimson-line);border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.018));box-shadow:0 24px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.055);overflow:hidden;transition:transform .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease);}
+.command-card:hover{transform:translateY(-4px);border-color:rgba(96,165,250,.5);background:linear-gradient(145deg,rgba(96,165,250,.11),rgba(255,255,255,.025));}
+.kpi-card small{display:block;margin:16px 0 8px;font-family:var(--M);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash-d);}
+.kpi-card strong{font-family:var(--M);font-size:38px;color:var(--bone);}
+.status-chip,.sev{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-family:var(--M);font-size:8px;letter-spacing:.16em;text-transform:uppercase;border:1px solid;}
+.status-chip.green{color:var(--green);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.06)}.status-chip.blue{color:var(--crimson);border-color:rgba(96,165,250,.32);background:rgba(96,165,250,.07)}.status-chip.amber{color:var(--amber);border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.07)}
+.metric-line{height:3px;margin-top:16px;background:rgba(124,150,255,.1);border-radius:999px;overflow:hidden}.metric-line i{display:block;height:100%;background:linear-gradient(90deg,var(--crimson-deep),var(--green));box-shadow:0 0 16px rgba(96,165,250,.4)}.metric-line.amber i{background:linear-gradient(90deg,var(--crimson),var(--crimson-2));}
+.threat-map{grid-column:span 1;}.radar{height:240px;margin:14px 0;border-radius:50%;border:1px solid rgba(96,165,250,.22);background:radial-gradient(circle,transparent 0 20%,rgba(96,165,250,.06) 21% 22%,transparent 23% 45%,rgba(96,165,250,.08) 46% 47%,transparent 48%),linear-gradient(90deg,transparent 49.6%,rgba(96,165,250,.18) 50%,transparent 50.4%),linear-gradient(0deg,transparent 49.6%,rgba(96,165,250,.18) 50%,transparent 50.4%);position:relative;overflow:hidden}.radar span{position:absolute;inset:50% 0 0 50%;transform-origin:0 0;background:linear-gradient(45deg,rgba(96,165,250,.35),transparent 55%);animation:radarSpin 4.8s linear infinite}.radar b{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--crimson-2);box-shadow:0 0 18px var(--crimson-glow);}.radar .p1{left:64%;top:28%}.radar .p2{left:28%;top:62%}.radar .p3{left:73%;top:70%}@keyframes radarSpin{to{transform:rotate(360deg)}}
+.ai-panel,.activity-panel{grid-column:span 1;}.ai-panel p,.threat-map p{margin-top:14px;color:var(--ash);line-height:1.7;font-size:14px}.intel-toggle{margin-top:16px;padding:11px 14px;border-radius:999px;border:1px solid var(--crimson-line);background:var(--crimson-soft);color:var(--bone);font-family:var(--M);font-size:10px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}.intel-more{margin-top:12px;padding:14px;border-left:2px solid var(--crimson);background:rgba(0,0,0,.24);color:var(--ash);font-size:13px;line-height:1.65}.activity-list{list-style:none;display:grid;gap:12px;margin-top:16px}.activity-list li{display:grid;grid-template-columns:54px 56px 1fr;gap:10px;align-items:center;color:var(--ash);font-size:13px}.activity-list time{font-family:var(--M);font-size:10px;color:var(--ash-d)}.sev.high{color:#ff8ba0;border-color:rgba(251,113,133,.35);background:rgba(251,113,133,.08)}.sev.med{color:var(--amber);border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.07)}.sev.low{color:var(--green);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.06)}
+@media(max-width:1100px){.hero-stack{max-width:760px}.command-grid{grid-template-columns:repeat(2,1fr)}.gp-brand strong{font-size:22px}}
+@media(max-width:768px){.hero-kpi-strip,.command-grid,.gp-grid{grid-template-columns:1fr}.gp-card.wide,.gp-terminal{grid-column:auto}.guardian-picture{min-height:auto}.activity-list li{grid-template-columns:1fr}.hero-in{gap:32px}.nav-wrap{top:10px}.nav-inner{border-radius:24px;flex-wrap:wrap}.nav-back{padding:7px 10px}.command-nexus{padding-top:80px}}
+@media(max-width:480px){.hero-kpi-strip{grid-template-columns:1fr}.gp-brand{align-items:flex-start;flex-direction:column}.gp-brand strong{margin-left:0}.gp-topline{flex-direction:column}.hero-stack{width:100%}}
+
 @media(prefers-reduced-motion:reduce){
 *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important;}
 }
@@ -538,6 +585,106 @@ h1.h-head{font-size:64px;}
 <link rel="stylesheet" href="/assets/css/glass.css">
 
   <meta property="og:image" content="https://clearglassinc.github.io/logo.png">
+<!-- ClearGlass Global Design System — homepage is the design source of truth -->
+<link rel="stylesheet" href="/assets/css/cg-design-system.css">
+<script defer src="/assets/js/cg-design-system.js"></script>
+<!-- ═══ CLEARGLASS EXECUTIVE AI DESIGN EVOLUTION — additive enhancement layer.
+     Loaded after glass.css so it can only refine what is already here: no
+     markup, wording, hierarchy, navigation, or existing rules are removed.
+     It also repairs a latent defect: .h-grad's `animation:gradFlow` shorthand
+     replaced the .h-line `lineUp` entrance, leaving the GUARDIAN wordmark
+     line permanently stuck at opacity:0. GPU-only motion (transform/opacity,
+     plus background-position confined to the wordmark glyphs), paused while
+     the hero is off-screen, fully static under prefers-reduced-motion. ═══ -->
+<style id="cg-evo-css">
+:root{
+  --evo-a1:.80; /* cyan energy amplitude    — JS-drifted, bounded */
+  --evo-a2:.70; /* violet energy amplitude  — JS-drifted, bounded */
+  --evo-a3:.55; /* crimson security energy  — JS-drifted, bounded */
+}
+
+/* ── Wordmark material: engineered liquid glass ─────────────────────────
+   Three fill layers clipped into the letters — nano-circuit micro detail
+   (visible on close inspection), a traveling photon sheen, and a slow
+   liquid-glass caustic gradient — plus a layered photon halo (white core,
+   plasma blue, violet bloom) as static drop-shadows. Every gradient stop
+   stays dark enough for WCAG AA large-text contrast on the light theme. */
+h1.h-head{position:relative;z-index:1}
+h1.h-head .h-line{
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='rgba(150,215,255,.17)' stroke-width='1'%3E%3Cpath d='M10 10h42v28h34M62 110V72h36M110 22H82v26M10 84h26v26M36 10v22M88 98h22'/%3E%3C/g%3E%3Cg fill='rgba(150,215,255,.26)'%3E%3Ccircle cx='52' cy='10' r='2'/%3E%3Ccircle cx='86' cy='38' r='2'/%3E%3Ccircle cx='98' cy='72' r='2'/%3E%3Ccircle cx='36' cy='32' r='2'/%3E%3Ccircle cx='36' cy='84' r='2'/%3E%3Ccircle cx='62' cy='110' r='2'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(115deg,transparent 40%,rgba(255,255,255,.42) 50%,rgba(190,240,255,.20) 54%,transparent 62%),
+    linear-gradient(160deg,#0a0f18 6%,#1c2634 24%,#0c4a5e 42%,#131a2a 56%,#371c66 74%,#701a34 88%,#0a0f18 100%);
+  background-size:120px 120px,240% 100%,220% 220%;
+  background-position:0 0,-160% 0,50% 42%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  filter:
+    drop-shadow(0 1px 0 rgba(255,255,255,.50))
+    drop-shadow(0 0 16px rgba(56,189,248,.16))
+    drop-shadow(0 0 46px rgba(124,58,237,.12));
+}
+/* Preserve each line's original entrance exactly, then add the slow flow.
+   Co-prime durations (19s/27s/37s) keep the composite from visibly looping. */
+h1.h-head .h-line:nth-child(1){animation:lineUp .8s var(--ease) .4s forwards,cgEvoFlow 19s ease-in-out 2.4s infinite}
+h1.h-head .h-line:nth-child(2){animation:lineUp .8s var(--ease) .55s forwards,cgEvoFlow 27s ease-in-out 3.1s infinite}
+h1.h-head .h-line:nth-child(3){animation:lineUp .8s var(--ease) .7s forwards,cgEvoFlow 37s ease-in-out 3.9s infinite}
+@keyframes cgEvoFlow{
+  0%  {background-position:0 0,-160% 0,50% 42%}
+  55% {background-position:0 0,-160% 0,46% 58%}
+  70% {background-position:0 0, 240% 0,44% 62%}
+  100%{background-position:0 0, 240% 0,50% 42%}
+}
+/* Evolution runs only while the hero is on screen (JS toggles the class);
+   the entrance animation itself always runs. */
+body:not(.cg-evo-live) h1.h-head .h-line{animation-play-state:running,paused}
+
+/* ── GUARDIAN line: entrance restored + security-energy material ─────── */
+h1.h-head .h-line.h-grad{
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='rgba(255,190,205,.15)' stroke-width='1'%3E%3Cpath d='M10 10h42v28h34M62 110V72h36M110 22H82v26M10 84h26v26M36 10v22M88 98h22'/%3E%3C/g%3E%3Cg fill='rgba(255,190,205,.22)'%3E%3Ccircle cx='52' cy='10' r='2'/%3E%3Ccircle cx='86' cy='38' r='2'/%3E%3Ccircle cx='98' cy='72' r='2'/%3E%3Ccircle cx='36' cy='84' r='2'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(115deg,transparent 40%,rgba(255,255,255,.34) 50%,transparent 60%),
+    linear-gradient(135deg,#7f1230 0%,#be123c 26%,#6d28d9 62%,#155e75 100%);
+  background-size:120px 120px,240% 100%,220% 100%;
+  background-position:0 0,-160% 0,0% 50%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:lineUp .8s var(--ease) .85s forwards,cgEvoGrad 16s ease-in-out 2s infinite;
+  filter:
+    drop-shadow(0 1px 0 rgba(255,255,255,.50))
+    drop-shadow(0 0 18px rgba(190,18,60,.16))
+    drop-shadow(0 0 46px rgba(109,40,217,.12));
+}
+@keyframes cgEvoGrad{
+  0%  {background-position:0 0,-160% 0,0% 50%}
+  50% {background-position:0 0,-160% 0,100% 50%}
+  62% {background-position:0 0, 240% 0,84% 50%}
+  100%{background-position:0 0, 240% 0,0% 50%}
+}
+
+/* ── Ambient photon aura (JS-injected, aria-hidden) ─────────────────────
+   Volumetric light pools behind the wordmark whose spill reaches the
+   badge, version line, and hero actions — the environment breathes with
+   the typography. Amplitudes are read from the JS-drifted variables
+   inside the keyframes, so the light keeps re-balancing organically.  */
+.cg-evo-aura{position:absolute;left:-22%;top:-8%;width:130%;height:110%;z-index:-1;pointer-events:none;transition:transform 1.6s cubic-bezier(.22,1,.36,1);will-change:transform}
+.cg-evo-aura i{position:absolute;border-radius:50%;display:block}
+.cg-evo-aura .a1{left:-2%;top:4%;width:56%;aspect-ratio:1;background:radial-gradient(circle,rgba(34,211,238,.36),rgba(34,211,238,0) 66%);animation:cgPoolA 13s ease-in-out infinite alternate}
+.cg-evo-aura .a2{right:2%;top:22%;width:52%;aspect-ratio:1;background:radial-gradient(circle,rgba(139,92,246,.32),rgba(139,92,246,0) 66%);animation:cgPoolB 21s ease-in-out infinite alternate}
+.cg-evo-aura .a3{left:14%;bottom:-4%;width:48%;aspect-ratio:1;background:radial-gradient(circle,rgba(190,18,60,.22),rgba(190,18,60,0) 66%);animation:cgPoolC 34s ease-in-out infinite alternate}
+.cg-evo-aura .a4{left:26%;top:12%;width:30%;aspect-ratio:1;background:radial-gradient(circle,rgba(255,255,255,.55),rgba(255,255,255,0) 60%);animation:cgPoolA 17s ease-in-out -6s infinite alternate}
+@keyframes cgPoolA{from{opacity:calc(var(--evo-a1)*.30);transform:scale(.92)}to{opacity:calc(var(--evo-a1)*.62);transform:scale(1.06) translate(3%,4%)}}
+@keyframes cgPoolB{from{opacity:calc(var(--evo-a2)*.26);transform:scale(1.04)}to{opacity:calc(var(--evo-a2)*.55);transform:scale(.94) translate(-3%,-2%)}}
+@keyframes cgPoolC{from{opacity:calc(var(--evo-a3)*.18);transform:scale(.96)}to{opacity:calc(var(--evo-a3)*.42);transform:scale(1.05) translate(2%,-3%)}}
+body:not(.cg-evo-live) .cg-evo-aura i{animation-play-state:paused}
+
+/* ── Reduced motion: the engineered material stays, all motion stops ──── */
+@media(prefers-reduced-motion:reduce){
+  h1.h-head{overflow:visible}
+  h1.h-head .h-line,h1.h-head .h-line.h-grad{animation:none;opacity:1;transform:none}
+  .cg-evo-aura{transition:none}
+  .cg-evo-aura i{animation:none;opacity:.28}
+}
+</style>
 </head>
 <body>
 
@@ -564,6 +711,8 @@ h1.h-head{font-size:64px;}
     </a>
     <div style="display:flex;gap:12px;align-items:center">
       <a href="index.html" class="nav-back">← <span>Main Site</span></a>
+      <a href="#modules" class="nav-back"><span>Modules</span></a>
+      <a href="#command" class="nav-back"><span>Command</span></a>
       <a href="#contact" class="nav-cta">Request Demo</a>
     </div>
   </div>
@@ -593,7 +742,7 @@ h1.h-head{font-size:64px;}
     <h1 class="h-head">
       <span class="h-line">CLEAR</span>
       <span class="h-line">GLASS</span>
-      <span class="h-lines">Inc.</span>
+      <span class="h-line">Inc.</span>
       <span class="h-line h-grad">GUARDIAN</span>
     </h1>
     <p class="h-version">Platform Version 5.0 · 2026 · Operational</p>
@@ -601,8 +750,31 @@ h1.h-head{font-size:64px;}
     <div class="h-actions">
       <a href="#contact" class="btn-p">Request Demo <span class="arr">→</span></a>
       <a href="#modules" class="btn-g">Explore Platform</a>
+      <a href="#command" class="btn-g">View Command Layer</a>
+    </div>
+
+    <div class="hero-kpi-strip" aria-label="Live Guardian operational metrics">
+      <div class="hero-kpi"><span class="hk-label">Trust Score</span><strong data-count="98.4">98.4%</strong><small>AI confidence</small></div>
+      <div class="hero-kpi"><span class="hk-label">Risk Delta</span><strong class="warn">-72%</strong><small>forecasted exposure</small></div>
+      <div class="hero-kpi"><span class="hk-label">Signals</span><strong>140+</strong><small>intel sources</small></div>
     </div>
   </div>
+
+  <div class="hero-stack">
+    <figure class="guardian-picture" aria-label="Animated Guardian cyber command console visualization">
+      <div class="gp-topline"><span class="live-chip">● LIVE</span><span>BLUEDESK / SOC NEXUS</span><span>QOS 10S</span></div>
+      <div class="gp-brand"><span class="gp-mark">CG</span><span>CLEARGLASS INC.</span><strong id="heroClock">00:00:00</strong></div>
+      <div class="gp-grid">
+        <div class="gp-card wide"><span>NETWORK OPS</span><strong>ONLINE</strong><em>iOS · Win · Mac · Linux</em></div>
+        <div class="gp-card"><span>LATENCY</span><strong>&lt;4ms</strong><em>detected</em></div>
+        <div class="gp-card active"><span>OPTIMIZE</span><strong>⚡</strong><em>QoS tuned</em></div>
+        <div class="gp-terminal"><span>TERMINAL</span><code>&gt; ClearGlass Guardian online
+&gt; Reading threat graph...
+&gt; Correlating identity telemetry...
+&gt; Optimization complete — analyst review ready.</code></div>
+        <div class="gp-script"><span>AI INSIGHT</span><p>Severity contained. Recommend zero-trust challenge for anomalous endpoint cluster.</p></div>
+      </div>
+    </figure>
 
   <div class="spec-panel">
     <div class="bracket br-tl"></div>
@@ -631,8 +803,47 @@ h1.h-head{font-size:64px;}
       <div class="sb-track"><div class="sb-fill"></div></div>
     </div>
   </div>
+  </div>
 </div>
 
+  </div>
+</section>
+
+<div class="line-sep shell"></div>
+<!-- COMMAND NEXUS -->
+
+<section class="sec command-nexus" id="command" aria-labelledby="command-title">
+  <div class="shell">
+    <div class="rv command-head">
+      <span class="sec-kicker">◈ Live Command Nexus</span>
+      <h2 class="sec-h2" id="command-title">Cyber Command<br><span>Operating Picture</span></h2>
+      <p class="sec-p">A premium executive SOC layer added on top of the existing GUARDIAN message: live-style KPIs, risk visualization, AI guidance, and incident activity without changing the platform content below.</p>
+    </div>
+
+    <div class="command-grid">
+      <article class="command-card kpi-card rv d1"><span class="status-chip green">● Stable</span><small>Detection Pipeline</small><strong>98.4%</strong><div class="metric-line"><i style="width:98%"></i></div></article>
+      <article class="command-card kpi-card rv d2"><span class="status-chip blue">● Learning</span><small>Model Drift</small><strong>0.7%</strong><div class="metric-line"><i style="width:18%"></i></div></article>
+      <article class="command-card kpi-card rv d3"><span class="status-chip amber">● Watch</span><small>Active Incidents</small><strong>07</strong><div class="metric-line amber"><i style="width:54%"></i></div></article>
+      <article class="command-card threat-map rv d1">
+        <div class="panel-title">Threat/Risk Visualization</div>
+        <div class="radar" aria-hidden="true"><span></span><b class="p1"></b><b class="p2"></b><b class="p3"></b></div>
+        <p>Ontario enterprise telemetry is fused into a rotating risk picture with severity labels, confidence scores, and operator-ready triage.</p>
+      </article>
+      <article class="command-card ai-panel rv d2">
+        <div class="panel-title">AI Insight Panel</div>
+        <p><strong>Guardian Copilot:</strong> suspicious identity velocity has dropped after policy tightening. Keep enhanced authentication active for privileged sessions.</p>
+        <button class="intel-toggle" type="button" aria-expanded="false">Show rationale</button>
+        <div class="intel-more" hidden>Evidence: anomalous session fan-out, short-lived token reuse, and endpoint posture mismatch. Recommended action remains analyst-approved only.</div>
+      </article>
+      <article class="command-card activity-panel rv d3">
+        <div class="panel-title">Incident Activity</div>
+        <ol class="activity-list">
+          <li><time>15:08Z</time><span class="sev high">High</span>Credential replay contained</li>
+          <li><time>15:04Z</time><span class="sev med">Med</span>Endpoint risk elevated</li>
+          <li><time>14:58Z</time><span class="sev low">Low</span>Compliance evidence sealed</li>
+        </ol>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -963,6 +1174,13 @@ function tick(){
   if(el) el.textContent = t;
 }
 tick(); setInterval(tick, 1000);
+function tickHeroClock(){
+  const d = new Date();
+  const t = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+  const el = document.getElementById('heroClock');
+  if(el) el.textContent = t;
+}
+tickHeroClock(); setInterval(tickHeroClock, 1000);
 
 // ── Year ──
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -972,6 +1190,17 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));
     if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+
+// ── Collapsible intelligence rationale ──
+document.querySelectorAll('.intel-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const more = btn.nextElementSibling;
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    if(more) more.hidden = open;
+    btn.textContent = open ? 'Show rationale' : 'Hide rationale';
   });
 });
 
@@ -1017,5 +1246,55 @@ document.querySelectorAll('.btn-p,.nav-cta').forEach(btn => {
   <script defer src="platform.js"></script>
   <script defer src="/logo-badge.js"></script>
 <script defer src="/stealth-glass.js"></script>
+<script id="cg-evo-js">
+/* CLEARGLASS EXECUTIVE AI EVOLUTION — behaviour layer (additive).
+   Injects the ambient photon aura behind the wordmark, drifts the energy
+   amplitudes in a bounded random walk so the lighting keeps refining
+   itself without ever looping, leans the aura gently toward the pointer
+   (compositor-only transforms), and pauses all evolution while the hero
+   is off-screen or the tab is hidden. Exits early — leaving the static
+   engineered material — under prefers-reduced-motion. */
+(function(){
+  "use strict";
+  var reduce=false;try{reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;}catch(e){}
+  var head=document.querySelector("h1.h-head");
+  if(!head)return;
+  var col=head.parentElement;
+  if(col&&getComputedStyle(col).position==="static")col.style.position="relative";
+  var aura=document.createElement("div");
+  aura.className="cg-evo-aura";aura.setAttribute("aria-hidden","true");
+  aura.innerHTML='<i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i>';
+  if(col)col.insertBefore(aura,col.firstChild);
+  if(reduce)return;
+  // free the photon halo from the entrance clip once the lines have risen
+  setTimeout(function(){head.style.overflow="visible";},2000);
+  var hero=document.getElementById("hero")||head.closest("section")||head;
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(en){
+      en.forEach(function(x){document.body.classList.toggle("cg-evo-live",x.isIntersecting);});
+    },{threshold:.05}).observe(hero);
+  }else{document.body.classList.add("cg-evo-live");}
+  // bounded random walk over the energy amplitudes — organic, non-repeating
+  var amps={"--evo-a1":.80,"--evo-a2":.70,"--evo-a3":.55};
+  setInterval(function(){
+    if(document.hidden||!document.body.classList.contains("cg-evo-live"))return;
+    Object.keys(amps).forEach(function(k){
+      amps[k]=Math.min(1,Math.max(.4,amps[k]+(Math.random()-.5)*.12));
+      document.documentElement.style.setProperty(k,amps[k].toFixed(3));
+    });
+  },8000);
+  // adaptive lighting — the aura leans toward the cursor
+  var pending=false;
+  document.addEventListener("pointermove",function(e){
+    if(pending||!document.body.classList.contains("cg-evo-live"))return;
+    pending=true;
+    requestAnimationFrame(function(){
+      pending=false;
+      var dx=(e.clientX/innerWidth-.5)*22,dy=(e.clientY/innerHeight-.5)*16;
+      aura.style.transform="translate3d("+dx.toFixed(1)+"px,"+dy.toFixed(1)+"px,0)";
+    });
+  },{passive:true});
+})();
+</script>
 </body>
 </html>

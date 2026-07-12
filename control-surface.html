@@ -225,6 +225,14 @@
   .tile .tag{position:absolute;top:12px;right:14px;z-index:3;display:inline-flex;align-items:center;gap:5px;
     font:700 8px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--live);
     padding:3px 7px;border-radius:var(--pill);background:rgba(6,182,212,.10);border:1px solid rgba(6,182,212,.28)}
+  .tile.bd{background:linear-gradient(160deg,rgba(190,18,60,.08),rgba(126,34,206,.09) 55%,var(--glass-2));border-color:rgba(168,85,247,.35)}
+  .tile.bd::after{background:linear-gradient(90deg,transparent,#e11d48,#a855f7,transparent);background-size:200% 100%;box-shadow:0 0 14px rgba(168,85,247,.5)}
+  .tile.bd:hover{border-color:rgba(168,85,247,.6);box-shadow:0 26px 50px -24px rgba(126,34,206,.5),0 1px 0 rgba(255,255,255,.85) inset}
+  .tile.bd .tic{background:linear-gradient(160deg,rgba(255,228,235,.95),rgba(233,213,255,.9));border-color:rgba(225,29,72,.35)}
+  .tile.bd:hover .tic{box-shadow:0 10px 22px -10px rgba(168,85,247,.7)}
+  .tile.bd .tlabel{background:linear-gradient(90deg,#be123c,#7e22ce);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .tile.bd .tsub{color:#9333ea}
+  .tile.bd .tgo{color:#a855f7}
   .tile .tag i{width:5px;height:5px;border-radius:50%;background:var(--live);animation:ring 1.6s ease-out infinite}
 
   .reveal{opacity:0;transform:translateY(18px)}
@@ -267,6 +275,10 @@
   @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}
     .reveal{opacity:1!important;transform:none!important}.op-wave .trace{stroke-dashoffset:0}#bg{display:none}}
 </style>
+<!-- ClearGlass Global Design System — homepage is the design source of truth -->
+<link rel="stylesheet" href="/assets/css/glass.css">
+<link rel="stylesheet" href="/assets/css/cg-design-system.css">
+<script defer src="/assets/js/cg-design-system.js"></script>
 </head>
 <body>
 
@@ -336,11 +348,12 @@
     </div>
 
     <!-- PLATFORMS -->
-    <div class="divider reveal"><span class="lbl"><i></i>Platforms</span><span class="ln"></span><span class="cnt">07 systems</span></div>
+    <div class="divider reveal"><span class="lbl"><i></i>Platforms</span><span class="ln"></span><span class="cnt">08 systems</span></div>
     <div class="tiles" data-section="Platforms">
       <a class="tile reveal" href="artemis-iv.html" data-label="Artemis IV Core"><span class="tic">🧭</span><span class="tbody"><span class="tlabel">Artemis IV Core</span><span class="tsub">Intelligence Engine</span></span><span class="tgo">→</span></a>
       <a class="tile reveal" href="artemis.html" data-label="Artemis VI"><span class="tic">🛰</span><span class="tbody"><span class="tlabel">Artemis VI</span><span class="tsub">Latest Platform</span></span><span class="tgo">→</span></a>
       <a class="tile reveal" href="guardian.html" data-label="Guardian"><span class="tic">🌐</span><span class="tbody"><span class="tlabel">Guardian</span><span class="tsub">Secure Browser</span></span><span class="tgo">→</span></a>
+      <a class="tile bd reveal" href="bluedesk.html" data-label="BLUEDESK CISO Console"><span class="tic">🛡</span><span class="tbody"><span class="tlabel">BLUEDESK</span><span class="tsub">CISO Risk Console</span></span><span class="tgo">→</span></a>
       <a class="tile reveal" href="clearglass-nexus.html" data-label="ClearGlass NEXUS"><span class="tic">🛡</span><span class="tbody"><span class="tlabel">ClearGlass NEXUS</span><span class="tsub">Command Nexus</span></span><span class="tgo">→</span></a>
       <a class="tile reveal" href="government.html" data-label="Government"><span class="tic">🏛</span><span class="tbody"><span class="tlabel">Government</span><span class="tsub">Public Sector</span></span><span class="tgo">→</span></a>
       <a class="tile reveal" href="clearpulse.html" data-label="ClearPulse"><span class="tic">📡</span><span class="tbody"><span class="tlabel">ClearPulse</span><span class="tsub">Live Telemetry</span></span><span class="tgo">→</span></a>

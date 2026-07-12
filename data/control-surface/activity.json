@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "15:15",
-    "timestamp": "2026-07-12T15:15:34Z"
+    "time": "16:14",
+    "timestamp": "2026-07-12T16:14:02Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #267",
+    "time": "16:13",
+    "timestamp": "2026-07-12T16:13:50Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-67c6bb05-77ec-4b4f-ba7f-304f922d85cd \u00b7 run #746",
+    "time": "16:08",
+    "timestamp": "2026-07-12T16:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #866",
+    "time": "15:15",
+    "timestamp": "2026-07-12T15:15:48Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1320",
+    "time": "15:15",
+    "timestamp": "2026-07-12T15:15:40Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2240",
+    "time": "15:15",
+    "timestamp": "2026-07-12T15:15:40Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #266",
     "time": "15:15",
     "timestamp": "2026-07-12T15:15:24Z"
@@ -54,40 +89,5 @@
     "detail": "pull_request on codex/audit-and-repair-clearglass-github-ecosystem-47ltdw \u00b7 run #1014",
     "time": "15:08",
     "timestamp": "2026-07-12T15:08:53Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on codex/audit-and-repair-clearglass-github-ecosystem-47ltdw \u00b7 run #273",
-    "time": "15:08",
-    "timestamp": "2026-07-12T15:08:51Z"
-  },
-  {
-    "title": "Code Quality: PR #804",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/804/head \u00b7 run #2239",
-    "time": "15:08",
-    "timestamp": "2026-07-12T15:08:51Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on codex/audit-and-repair-clearglass-github-ecosystem-47ltdw \u00b7 run #272",
-    "time": "15:08",
-    "timestamp": "2026-07-12T15:08:11Z"
-  },
-  {
-    "title": "Code Quality: PR #804",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/804/head \u00b7 run #2238",
-    "time": "15:08",
-    "timestamp": "2026-07-12T15:08:10Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-2cc163c4-a7e3-4eaa-a1c4-efe13a6dffe8 \u00b7 run #745",
-    "time": "15:08",
-    "timestamp": "2026-07-12T15:08:02Z"
   }
 ]

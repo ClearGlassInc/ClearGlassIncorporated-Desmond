@@ -1,8 +1,106 @@
 [
   {
-    "title": "Control Surface Feeds #261",
+    "title": "Control Surface Feeds #262",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "09:15",
+    "timestamp": "2026-07-12T09:15:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #739",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-fc07f7b2-d1e2-43f5-a80b-a298eb8e709b",
+    "time": "09:08",
+    "timestamp": "2026-07-12T09:08:03Z"
+  },
+  {
+    "title": "Content Pipeline #65",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_run on main",
+    "time": "09:01",
+    "timestamp": "2026-07-12T09:01:13Z"
+  },
+  {
+    "title": "pages build and deployment #1304",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "09:01",
+    "timestamp": "2026-07-12T09:01:06Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2210",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "09:01",
+    "timestamp": "2026-07-12T09:01:06Z"
+  },
+  {
+    "title": "Bot Orchestrator #53",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "09:00",
+    "timestamp": "2026-07-12T09:00:44Z"
+  },
+  {
+    "title": "Cert Bot #46",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "08:30",
+    "timestamp": "2026-07-12T08:30:13Z"
+  },
+  {
+    "title": "Defender Watch #544",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "08:27",
+    "timestamp": "2026-07-12T08:27:41Z"
+  },
+  {
+    "title": "Health Monitor #171",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "08:23",
+    "timestamp": "2026-07-12T08:23:12Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #738",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-629b3df8-82bb-4f19-bb66-4f235d24942c",
+    "time": "08:08",
+    "timestamp": "2026-07-12T08:08:03Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #737",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-0a438275-0373-4495-811a-3b3a552c7432",
+    "time": "07:08",
+    "timestamp": "2026-07-12T07:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #850",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "06:46",
+    "timestamp": "2026-07-12T06:46:01Z"
+  },
+  {
+    "title": "pages build and deployment #1303",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "06:45",
+    "timestamp": "2026-07-12T06:45:54Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2209",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "06:45",
+    "timestamp": "2026-07-12T06:45:53Z"
+  },
+  {
+    "title": "Control Surface Feeds #261",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "06:45",
     "timestamp": "2026-07-12T06:45:34Z"
   },
@@ -40,103 +138,5 @@
     "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-3d5dea04-ef87-4823-94e1-61c34dde0bc6",
     "time": "04:08",
     "timestamp": "2026-07-12T04:08:03Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #849",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "03:56",
-    "timestamp": "2026-07-12T03:56:56Z"
-  },
-  {
-    "title": "pages build and deployment #1302",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "03:56",
-    "timestamp": "2026-07-12T03:56:48Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2208",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "03:56",
-    "timestamp": "2026-07-12T03:56:48Z"
-  },
-  {
-    "title": "Control Surface Feeds #260",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "03:56",
-    "timestamp": "2026-07-12T03:56:27Z"
-  },
-  {
-    "title": "Defender Watch #543",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "03:38",
-    "timestamp": "2026-07-12T03:38:29Z"
-  },
-  {
-    "title": "Health Monitor #170",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "03:21",
-    "timestamp": "2026-07-12T03:21:47Z"
-  },
-  {
-    "title": "CI #1227",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/influence-ops-poster-vtwe57",
-    "time": "03:14",
-    "timestamp": "2026-07-12T03:14:47Z"
-  },
-  {
-    "title": "Defender Watch #542",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/influence-ops-poster-vtwe57",
-    "time": "03:14",
-    "timestamp": "2026-07-12T03:14:47Z"
-  },
-  {
-    "title": "Security #992",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/influence-ops-poster-vtwe57",
-    "time": "03:14",
-    "timestamp": "2026-07-12T03:14:47Z"
-  },
-  {
-    "title": "PR Automation #506",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/influence-ops-poster-vtwe57",
-    "time": "03:14",
-    "timestamp": "2026-07-12T03:14:47Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1267",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/influence-ops-poster-vtwe57",
-    "time": "03:14",
-    "timestamp": "2026-07-12T03:14:47Z"
-  },
-  {
-    "title": "Policy Gate #965",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/influence-ops-poster-vtwe57",
-    "time": "03:14",
-    "timestamp": "2026-07-12T03:14:47Z"
-  },
-  {
-    "title": "Code Quality: PR #791 #2207",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/791/head",
-    "time": "03:14",
-    "timestamp": "2026-07-12T03:14:46Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #254",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "03:09",
-    "timestamp": "2026-07-12T03:09:38Z"
   }
 ]

@@ -1,19 +1,16 @@
 name: Workflow Repair Agent (Hardened)
 
 on:
-  issue_comment:
-    types: [created]
   workflow_dispatch:
     inputs:
       mode:
-        description: "Mode: inspect-only | fix-and-pr | force-apply"
+        description: "Mode: inspect-only | fix-and-pr"
         required: true
         default: "inspect-only"
         type: choice
         options:
           - inspect-only
           - fix-and-pr
-          - force-apply
       scope:
         description: "Scope: all | specific"
         required: false
@@ -254,7 +251,7 @@ jobs:
       - name: Fix workflows (if fix-and-pr)
         if: |
           github.event_name == 'workflow_dispatch' &&
-          (inputs.mode == 'fix-and-pr' || inputs.mode == 'force-apply')
+          inputs.mode == 'fix-and-pr'
         run: |
           python - <<'PYTHON'
           # Minimal deterministic fix layer:
@@ -281,16 +278,6 @@ jobs:
           # - Add `pytest-cov` install step if `--cov` used
           # - Normalize permissions to read-only default + job-scoped elevations
           PYTHON
-
-      - name: Commit fixes (if force-apply)
-        if: |
-          github.event_name == 'workflow_dispatch' &&
-          inputs.mode == 'force-apply'
-        run: |
-          git config user.name "workflow-repair-agent"
-          git config user.email "workflow-repair-agent@actions.github.com"
-          git add .github/workflows audit/ || true
-          git diff --cached --quiet || git commit -m "fix(ci): repair GitHub workflows and validation [agent]"
 
       - name: Create pull request (if fix-and-pr)
         if: |

@@ -27,6 +27,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Optional
 
+from .approvals import new_trace_id
 from .audit import AuditLog
 from .capability import CapabilityBroker, Tier
 from .identity import AgentIdentity
@@ -58,6 +59,7 @@ class GovernorDecision:
     action_scope: str = ""
     required_tier: Optional[Tier] = None
     lanes: list[str] = field(default_factory=list)
+    trace_id: str = ""            # correlation id stitched across the boundary
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -67,6 +69,7 @@ class GovernorDecision:
             "action_scope": self.action_scope,
             "required_tier": self.required_tier.name if self.required_tier is not None else None,
             "lanes": list(self.lanes),
+            "trace_id": self.trace_id,
         }
 
 
@@ -134,8 +137,15 @@ class PolicyGovernor:
     # ------------------------------------------------------------------ #
     # The gate
     # ------------------------------------------------------------------ #
-    def evaluate(self, request: dict[str, Any], *, confidence: float = 1.0) -> GovernorDecision:
-        """Decide a request. Deny-all default; deny overrides allow; fail closed."""
+    def evaluate(self, request: dict[str, Any], *, confidence: float = 1.0,
+                 trace_id: Optional[str] = None) -> GovernorDecision:
+        """Decide a request. Deny-all default; deny overrides allow; fail closed.
+
+        A correlation/trace id is stitched onto the decision and its audit entry.
+        Pass an inbound `trace_id` to continue a caller's trace across the
+        boundary; one is generated when absent (never fabricated data — it is an
+        opaque correlation handle)."""
+        tid = trace_id or new_trace_id()
         # Fail-closed audit sync: once the ledger is unreachable, deny everything
         # until it recovers. This decision itself cannot be audited, so return it
         # directly without attempting another (failing) write.
@@ -143,12 +153,12 @@ class PolicyGovernor:
             return GovernorDecision(
                 False, True,
                 "DENY: audit ledger unavailable — governor degraded to deny-all (incident)",
-                str(request.get("action_scope", "")),
+                str(request.get("action_scope", "")), trace_id=tid,
             )
 
         err = self.validate_request(request)
         if err is not None:
-            return self._deny(f"schema violation: {err}", request.get("action_scope", ""))
+            return self._deny(f"schema violation: {err}", request.get("action_scope", ""), trace_id=tid)
 
         scope = str(request["action_scope"])
         required = _SCOPE_TIER[scope]
@@ -157,30 +167,31 @@ class PolicyGovernor:
 
         # Identity must be active.
         if not self.identity.active:
-            return self._deny("identity is stopped (fail-closed)", scope, required, lanes)
+            return self._deny("identity is stopped (fail-closed)", scope, required, lanes, trace_id=tid)
 
         # EvalOps: confidence below the request's threshold downgrades — never
         # ship a low-confidence answer as if it were execution-grade.
         if confidence < threshold:
             return self._deny(
                 f"confidence {confidence:.2f} below threshold {threshold:.2f} — downgraded to verification",
-                scope, required, lanes,
+                scope, required, lanes, trace_id=tid,
             )
 
         # Every lane must be an allowed (non-denied) scope for this identity, and
         # the broker must authorize it at the required tier. Deny wins.
         for lane in lanes:
             if not self.identity.may_touch(lane):
-                return self._deny(f"lane {lane!r} not in identity scope (deny-by-default)", scope, required, lanes)
+                return self._deny(f"lane {lane!r} not in identity scope (deny-by-default)",
+                                  scope, required, lanes, trace_id=tid)
             decision = self.broker.check(lane, required)
             if not decision.allowed:
-                return self._deny(f"lane {lane!r}: {decision.reason}", scope, required, lanes)
+                return self._deny(f"lane {lane!r}: {decision.reason}", scope, required, lanes, trace_id=tid)
 
         # High-power scopes are blocked pending human escalation, never auto-run.
         if scope in _ESCALATION_SCOPES:
-            return self._escalate(scope, required, lanes)
+            return self._escalate(scope, required, lanes, trace_id=tid)
 
-        return self._allow(scope, required, lanes)
+        return self._allow(scope, required, lanes, trace_id=tid)
 
     # ------------------------------------------------------------------ #
     # Decision helpers (each writes an audit entry)
@@ -200,18 +211,22 @@ class PolicyGovernor:
                 False, True,
                 "DENY: audit write failed — governor degraded to deny-all (incident)",
                 decision.action_scope, decision.required_tier, decision.lanes,
+                trace_id=decision.trace_id,
             )
         return decision
 
-    def _deny(self, reason: str, scope: str, tier: Optional[Tier] = None, lanes: Optional[list[str]] = None) -> GovernorDecision:
-        return self._record(GovernorDecision(False, False, f"DENY: {reason}", scope, tier, lanes or []))
+    def _deny(self, reason: str, scope: str, tier: Optional[Tier] = None,
+              lanes: Optional[list[str]] = None, *, trace_id: str = "") -> GovernorDecision:
+        return self._record(GovernorDecision(False, False, f"DENY: {reason}", scope, tier, lanes or [], trace_id))
 
-    def _escalate(self, scope: str, tier: Tier, lanes: list[str]) -> GovernorDecision:
+    def _escalate(self, scope: str, tier: Tier, lanes: list[str], *, trace_id: str = "") -> GovernorDecision:
         return self._record(GovernorDecision(
-            False, True, f"ESCALATE: {scope} requires human approval before execution", scope, tier, lanes))
+            False, True, f"ESCALATE: {scope} requires human approval before execution",
+            scope, tier, lanes, trace_id))
 
-    def _allow(self, scope: str, tier: Tier, lanes: list[str]) -> GovernorDecision:
-        return self._record(GovernorDecision(True, False, f"ALLOW: within scope at {tier.name}", scope, tier, lanes))
+    def _allow(self, scope: str, tier: Tier, lanes: list[str], *, trace_id: str = "") -> GovernorDecision:
+        return self._record(GovernorDecision(
+            True, False, f"ALLOW: within scope at {tier.name}", scope, tier, lanes, trace_id))
 
     def verify(self) -> bool:
         """True if the audit chain is intact."""

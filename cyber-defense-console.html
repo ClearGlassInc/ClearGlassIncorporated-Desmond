@@ -274,6 +274,68 @@ footer a{color:var(--dim);text-decoration:none}
 footer a:hover{color:var(--cyan)}
 footer .spacer{flex:1}
 
+/* ---------- threat radar ---------- */
+#radar{width:100%;height:118px;display:block}
+
+/* ---------- approval queue (human gate) ---------- */
+.appr-item{border:1px solid rgba(255,77,94,.28);background:rgba(255,77,94,.05);border-radius:10px;padding:10px 11px;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.appr-item .a-title{font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+.appr-item .risk{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--alert);border:1px solid rgba(255,77,94,.4);padding:2px 7px;border-radius:10px;text-transform:uppercase;white-space:nowrap}
+.appr-item .a-desc{font-size:10.5px;color:var(--dim);margin-top:5px;line-height:1.5}
+.a-btns{display:flex;gap:8px;margin-top:10px}
+.a-btns button{flex:1;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:7px 0;border-radius:8px;cursor:pointer;transition:box-shadow .2s,transform .2s}
+.a-btns button:hover{transform:translateY(-1px)}
+.a-approve{color:#04170e;font-weight:700;border:1px solid rgba(52,211,153,.6);background:linear-gradient(90deg,#34d399,#5eead4)}
+.a-approve:hover{box-shadow:0 0 16px rgba(52,211,153,.45)}
+.a-deny{color:var(--alert);border:1px solid rgba(255,77,94,.45);background:rgba(255,77,94,.07)}
+.a-deny:hover{box-shadow:0 0 14px rgba(255,77,94,.3)}
+.appr-empty{font-family:var(--mono);font-size:10px;color:var(--dim-2);letter-spacing:.08em;padding:18px 4px;text-align:center;line-height:1.7}
+.appr-empty b{color:var(--ok)}
+
+/* ---------- console status bar ---------- */
+.statusbar{display:flex;align-items:center;gap:16px;margin-top:12px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;
+  background:rgba(4,7,16,.7);font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--dim-2);text-transform:uppercase;flex-wrap:wrap}
+.statusbar b{color:var(--cyan);font-weight:600}
+.statusbar .sb-ok{color:var(--ok)}
+.statusbar .spacer{flex:1}
+.kbd{font-family:var(--mono);font-size:9px;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--dim)}
+
+/* ---------- header controls ---------- */
+.hbtn{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+  border:1px solid var(--line);background:rgba(13,20,42,.5);padding:6px 11px;border-radius:18px;cursor:pointer;transition:border-color .2s,color .2s}
+.hbtn:hover{border-color:var(--cyan-line);color:var(--cyan)}
+.hbtn[aria-pressed="true"]{color:var(--warn);border-color:rgba(251,191,36,.4)}
+@media(max-width:640px){.hbtn{display:none}}
+
+/* ---------- command palette ---------- */
+#pal{position:fixed;inset:0;z-index:90;display:none;align-items:flex-start;justify-content:center;padding-top:14vh;background:rgba(3,6,14,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#pal.open{display:flex}
+.pal-box{width:min(560px,92vw);background:rgba(9,14,30,.94);border:1px solid var(--line-2);border-radius:16px;overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 40px rgba(56,232,255,.08)}
+.pal-box input{width:100%;background:transparent;border:0;outline:0;color:var(--txt);font-family:var(--mono);font-size:13px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.pal-box input::placeholder{color:var(--dim-2)}
+.pal-list{max-height:300px;overflow-y:auto;padding:6px}
+.pal-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:12.5px;color:var(--txt)}
+.pal-item .pi-ic{font-size:14px;width:22px;text-align:center}
+.pal-item .pi-k{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;color:var(--dim-2);text-transform:uppercase}
+.pal-item.sel{background:rgba(56,232,255,.09);outline:1px solid var(--cyan-line)}
+.pal-hint{padding:9px 14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;color:var(--dim-2);text-transform:uppercase;display:flex;gap:14px}
+
+/* ---------- toast ---------- */
+#toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);z-index:95;opacity:0;pointer-events:none;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--txt);text-transform:uppercase;
+  border:1px solid var(--cyan-line);background:rgba(9,14,30,.94);padding:11px 18px;border-radius:12px;box-shadow:0 0 30px rgba(56,232,255,.25);
+  transition:opacity .3s,transform .3s;max-width:92vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast b{color:var(--ok)}
+
+/* motion paused via header toggle */
+body.motion-off .mesh i,body.motion-off .gridlines,body.motion-off .streaks i,body.motion-off .sweep,
+body.motion-off .flow::after,body.motion-off .cta.primary::after,body.motion-off .dot,body.motion-off .cursor{animation-play-state:paused}
+
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:4px}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
@@ -314,6 +376,8 @@ footer .spacer{flex:1}
     <a href="#assurance">Executive Assurance</a>
   </nav>
   <div class="sysline"><span class="dot"></span>Systems Online</div>
+  <button class="hbtn" id="palOpen" type="button" title="Open command palette"><span class="kbd">⌘K</span> Command</button>
+  <button class="hbtn" id="motionBtn" type="button" aria-pressed="false" title="Pause ambient motion">❚❚ Motion</button>
   <a class="back" href="index.html">← ClearGlass</a>
 </header>
 
@@ -375,7 +439,7 @@ footer .spacer{flex:1}
                 <li><b>ZT-EDGE-04</b> egress guard <span class="st pass">Pass</span></li>
                 <li><b>IAM-CTL-11</b> least privilege <span class="st pass">Pass</span></li>
                 <li><b>DLP-CORE-2</b> data boundary <span class="st pass">Pass</span></li>
-                <li><b>PRC-GOV-9</b> change approval <span class="st hold">Review</span></li>
+                <li><b>PRC-GOV-9</b> change approval <span class="st hold" id="polGov">Review</span></li>
               </ul>
             </div>
             <div class="tile">
@@ -390,6 +454,21 @@ footer .spacer{flex:1}
               <h3><span class="dot"></span>Blue-Team Intel Feed</h3>
               <div class="feed" id="feed"></div>
             </div>
+            <div class="tile">
+              <h3><span class="dot"></span>Threat Radar · Perimeter</h3>
+              <canvas id="radar" aria-hidden="true"></canvas>
+            </div>
+            <div class="tile">
+              <h3><span class="dot"></span>Approval Queue · Human Gate</h3>
+              <div id="apprList" aria-live="polite"></div>
+            </div>
+          </div>
+          <div class="statusbar">
+            <span>ledger <b id="sbLedger">#8841</b></span>
+            <span>approvals <b id="sbAppr">1 pending</b></span>
+            <span class="sb-ok">self-check: pass</span>
+            <span class="spacer"></span>
+            <span>press <span class="kbd">⌘K</span> for commands</span>
           </div>
         </div>
       </div>
@@ -531,8 +610,18 @@ footer .spacer{flex:1}
   <a href="index.html">Home</a>
   <a href="clearglass.html">Platform</a>
   <div class="spacer"></div>
-  <span>CG-CDC · Build 26.07 · All actions logged</span>
+  <span>CG-CDC · Build 26.07.2 · All actions logged</span>
 </footer>
+
+<!-- command palette -->
+<div id="pal" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="pal-box">
+    <input id="palInput" type="text" placeholder="Type a command or search…" autocomplete="off" spellcheck="false"/>
+    <div class="pal-list" id="palList"></div>
+    <div class="pal-hint"><span>↑↓ navigate</span><span>↵ run</span><span>esc close</span></div>
+  </div>
+</div>
+<div id="toast" role="status"></div>
 
 <script>
 (function(){
@@ -582,6 +671,7 @@ for (var k = 0; k < N; k++) nodes.push({
   r:(Math.random()*1.6+.6)*devicePixelRatio
 });
 function net(){
+  if (document.hidden || motionOff){ if (!reduce) requestAnimationFrame(net); return; }
   cx.clearRect(0,0,W,H);
   var linkD = 150*devicePixelRatio;
   for (var a = 0; a < nodes.length; a++){
@@ -634,47 +724,242 @@ function drawChart(){
 }
 drawChart();
 setInterval(function(){
+  if (document.hidden) return;
   var last = pts[pts.length-1];
-  var nextV = Math.max(8, Math.min(92, last + (Math.random()-.5)*16 + (Math.random()<.06 ? 26 : 0)));
+  // SOC event engine injects spikes so the chart reflects the feed
+  var bump = spike > 0 ? spike : (Math.random() < .05 ? 20 : 0);
+  spike = 0;
+  var nextV = Math.max(8, Math.min(92, last + (Math.random()-.5)*14 + bump));
   pts.push(nextV); pts.shift();
   drawChart();
 }, reduce ? 4000 : 700);
 addEventListener("resize", drawChart);
 
-/* ---------- risk gauge ---------- */
-setTimeout(function(){
+/* ---------- risk gauge (re-runnable: boot + operator self-check) ---------- */
+function runGauge(){
   var target = 18; // risk index (lower = better) → arc shows containment
-  document.getElementById("gaugeVal").style.strokeDashoffset = String(212 - 212*((100-target)/100)*0.79);
+  var g = document.getElementById("gaugeVal");
+  g.style.transition = "none"; g.style.strokeDashoffset = "212";
+  void g.getBoundingClientRect();
+  g.style.transition = ""; g.style.strokeDashoffset = String(212 - 212*((100-target)/100)*0.79);
   var n = document.getElementById("gaugeNum"), c = 0;
   var iv = setInterval(function(){
     c++; n.textContent = (c<10?"0":"")+c;
     if (c >= target) clearInterval(iv);
   }, 45);
-}, reduce ? 0 : 1400);
+}
+setTimeout(runGauge, reduce ? 0 : 1400);
 
-/* ---------- intel feed ---------- */
+/* ---------- unified SOC event engine ----------
+   One generator drives the feed, the chart spikes, the ledger counter,
+   and the approval queue — so every widget tells the same story. */
 var feedEl = document.getElementById("feed");
-var feedLines = [
-  '<span class="ky">[intel]</span> IOC sweep complete · 0 matches',
-  '<span class="ok">[auto]</span> stale token revoked · logged #8841',
-  '<span class="ky">[mesh]</span> node us-e2 rotated certs · mTLS ok',
-  '<span class="wr">[watch]</span> login velocity ↑ region EU-C',
-  '<span class="ok">[auto]</span> quarantine lifted · sandbox clean',
-  '<span class="al">[gate]</span> high-risk action → approval queue',
-  '<span class="ok">[ok]</span> ledger checkpoint sealed · h=…f3a9',
-  '<span class="ky">[scan]</span> attack-surface diff: no new ports'
-];
-var fi = 0;
-function pushFeed(){
+var ledgerN = 8841, sbLedger = document.getElementById("sbLedger");
+var spike = 0; // consumed by the chart tick
+
+function feedLog(cls, tag, msg){
   var d = document.createElement("div");
-  d.innerHTML = feedLines[fi % feedLines.length] + (fi % 3 === 0 ? ' <span class="cursor"></span>' : '');
+  d.innerHTML = '<span class="' + cls + '">[' + tag + ']</span> ' + msg;
   var old = feedEl.querySelector(".cursor"); if (old) old.remove();
+  d.innerHTML += ' <span class="cursor"></span>';
   feedEl.prepend(d);
   while (feedEl.children.length > 6) feedEl.lastChild.remove();
-  fi++;
 }
-pushFeed(); pushFeed(); pushFeed();
-setInterval(pushFeed, reduce ? 6000 : 2200);
+function ledger(){
+  ledgerN++;
+  sbLedger.textContent = "#" + ledgerN;
+  return ledgerN;
+}
+
+var lowEvents = [
+  ['ky','intel','IOC sweep complete · 0 matches'],
+  ['ky','mesh','node us-e2 rotated certs · mTLS ok'],
+  ['ok','auto','stale token revoked · logged #%L'],
+  ['ok','auto','quarantine lifted · sandbox clean'],
+  ['ok','ok','ledger checkpoint sealed · h=…f3a9'],
+  ['ky','scan','attack-surface diff: no new ports']
+];
+var midEvents = [
+  ['wr','watch','login velocity ↑ region EU-C'],
+  ['wr','watch','TLS downgrade attempt · blocked at edge'],
+  ['wr','watch','impossible-travel flag · MFA step-up sent']
+];
+function fireEvent(){
+  if (document.hidden) return;
+  var roll = Math.random();
+  if (roll < 0.62){
+    var e = lowEvents[Math.floor(Math.random()*lowEvents.length)];
+    feedLog(e[0], e[1], e[2].replace('%L', ledger()));
+  } else if (roll < 0.9){
+    var m = midEvents[Math.floor(Math.random()*midEvents.length)];
+    feedLog(m[0], m[1], m[2]);
+    spike = Math.max(spike, 18);
+  } else {
+    feedLog('al', 'gate', 'high-risk action → approval queue');
+    spike = Math.max(spike, 34);
+    enqueueApproval();
+  }
+}
+feedLog('ok','ok','ledger checkpoint sealed · h=…f3a9');
+feedLog('ky','mesh','node us-e2 rotated certs · mTLS ok');
+feedLog('ky','intel','IOC sweep complete · 0 matches');
+setInterval(fireEvent, reduce ? 6000 : 2400);
+
+/* ---------- approval queue (human gate) ---------- */
+var apprList = document.getElementById("apprList"), sbAppr = document.getElementById("sbAppr");
+var polGov = document.getElementById("polGov");
+var pendingActions = [
+  { name: "Rotate edge certs fleet-wide", desc: "312 nodes · brief mTLS renegotiation window", risk: 78 },
+  { name: "Block ASN 20473 at perimeter", desc: "possible collateral: 2 partner integrations", risk: 81 },
+  { name: "Force-expire all EU-C sessions", desc: "4,209 active sessions · re-auth required", risk: 74 }
+];
+var pending = null, apIdx = 0;
+
+function renderAppr(){
+  if (!pending){
+    apprList.innerHTML = '<div class="appr-empty">queue clear — <b>0 pending</b><br/>low-risk actions auto-execute + log</div>';
+    sbAppr.textContent = "0 pending";
+    polGov.textContent = "Pass"; polGov.classList.remove("hold"); polGov.classList.add("pass");
+    return;
+  }
+  sbAppr.textContent = "1 pending";
+  polGov.textContent = "Review"; polGov.classList.remove("pass"); polGov.classList.add("hold");
+  apprList.innerHTML =
+    '<div class="appr-item">' +
+      '<div class="a-title">' + pending.name + '<span class="risk">risk ' + pending.risk + '</span></div>' +
+      '<div class="a-desc">' + pending.desc + '</div>' +
+      '<div class="a-btns">' +
+        '<button class="a-approve" type="button">Approve</button>' +
+        '<button class="a-deny" type="button">Deny</button>' +
+      '</div>' +
+    '</div>';
+  apprList.querySelector(".a-approve").addEventListener("click", function(){ resolveAppr(true); });
+  apprList.querySelector(".a-deny").addEventListener("click", function(){ resolveAppr(false); });
+}
+function enqueueApproval(){
+  if (pending) return; // one live decision at a time
+  pending = pendingActions[apIdx % pendingActions.length]; apIdx++;
+  renderAppr();
+}
+function resolveAppr(approved){
+  var name = pending.name; pending = null;
+  if (approved){
+    feedLog('ok','human','approval #' + ledger() + ' recorded → executing: ' + name.toLowerCase());
+    spike = Math.max(spike, 22);
+    toast('Approved · action executing · <b>ledger #' + ledgerN + '</b>');
+  } else {
+    feedLog('al','human','denied · rolled back: ' + name.toLowerCase() + ' · logged #' + ledger());
+    toast('Denied · action rolled back · <b>ledger #' + ledgerN + '</b>');
+  }
+  renderAppr();
+}
+pending = pendingActions[0]; apIdx = 1;
+renderAppr();
+
+/* ---------- threat radar ---------- */
+var rc = document.getElementById("radar"), r2 = rc.getContext("2d");
+var blips = [], sweepA = 0;
+function drawRadar(){
+  var w = rc.clientWidth * devicePixelRatio, h = 118 * devicePixelRatio;
+  if (rc.width !== w) rc.width = w;
+  if (rc.height !== h) rc.height = h;
+  var cxp = w/2, cyp = h*0.92, R = Math.min(w*0.46, h*0.88);
+  r2.clearRect(0,0,w,h);
+  // range rings + spokes
+  r2.strokeStyle = "rgba(88,150,255,.16)"; r2.lineWidth = devicePixelRatio;
+  for (var ring = 1; ring <= 3; ring++){
+    r2.beginPath(); r2.arc(cxp, cyp, R*ring/3, Math.PI, 2*Math.PI); r2.stroke();
+  }
+  for (var s = 0; s <= 4; s++){
+    var sa = Math.PI + s*Math.PI/4;
+    r2.beginPath(); r2.moveTo(cxp, cyp); r2.lineTo(cxp + Math.cos(sa)*R, cyp + Math.sin(sa)*R); r2.stroke();
+  }
+  // sweep wedge
+  var a = Math.PI + (sweepA % Math.PI);
+  r2.fillStyle = "rgba(56,232,255,.10)";
+  r2.beginPath(); r2.moveTo(cxp, cyp); r2.arc(cxp, cyp, R, a - 0.5, a); r2.closePath(); r2.fill();
+  r2.strokeStyle = "rgba(56,232,255,.85)"; r2.lineWidth = 1.6*devicePixelRatio;
+  r2.beginPath(); r2.moveTo(cxp, cyp); r2.lineTo(cxp + Math.cos(a)*R, cyp + Math.sin(a)*R); r2.stroke();
+  // blips: spawn occasionally, fade out
+  if (Math.random() < 0.02 && blips.length < 5){
+    var ba = Math.PI + Math.random()*Math.PI, br = R*(0.3 + Math.random()*0.65);
+    blips.push({ x: cxp + Math.cos(ba)*br, y: cyp + Math.sin(ba)*br, life: 1, hot: Math.random() < 0.25 });
+  }
+  blips = blips.filter(function(b){
+    b.life -= 0.006;
+    if (b.life <= 0) return false;
+    r2.fillStyle = (b.hot ? "rgba(255,77,94," : "rgba(56,232,255,") + (b.life*0.9) + ")";
+    r2.beginPath(); r2.arc(b.x, b.y, (b.hot?3.2:2.4)*devicePixelRatio, 0, 7); r2.fill();
+    return true;
+  });
+  sweepA += 0.016;
+}
+(function radarLoop(){
+  if (!document.hidden) drawRadar();
+  if (!reduce) requestAnimationFrame(radarLoop);
+})();
+
+/* ---------- command palette ---------- */
+var pal = document.getElementById("pal"), palInput = document.getElementById("palInput"), palList = document.getElementById("palList");
+var toastEl = document.getElementById("toast"), toastT;
+function toast(html){
+  toastEl.innerHTML = html;
+  toastEl.classList.add("show");
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ toastEl.classList.remove("show"); }, 2600);
+}
+var motionOff = false, motionBtn = document.getElementById("motionBtn");
+function setMotion(off){
+  motionOff = off;
+  document.body.classList.toggle("motion-off", off);
+  motionBtn.setAttribute("aria-pressed", String(off));
+  motionBtn.innerHTML = off ? "▶ Motion" : "❚❚ Motion";
+}
+motionBtn.addEventListener("click", function(){ setMotion(!motionOff); });
+
+function selfCheck(){
+  feedLog('ky','check','governance self-check requested by operator');
+  setTimeout(function(){ feedLog('ok','check','412 controls attested · ledger verified · PASS'); }, 700);
+  runGauge();
+  toast('Governance self-check · <b>PASS</b> · 412 controls attested');
+}
+var commands = [
+  { ic: "🛰", name: "Go to Risk Posture", k: "nav", run: function(){ location.hash = "#posture"; } },
+  { ic: "🧬", name: "Go to Control Plane", k: "nav", run: function(){ location.hash = "#architecture"; } },
+  { ic: "📜", name: "Go to Executive Assurance", k: "nav", run: function(){ location.hash = "#assurance"; } },
+  { ic: "⬆", name: "Back to top", k: "nav", run: function(){ scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); } },
+  { ic: "✅", name: "Run governance self-check", k: "action", run: selfCheck },
+  { ic: "⏯", name: "Toggle ambient motion", k: "action", run: function(){ setMotion(!motionOff); } },
+  { ic: "🏠", name: "Exit to ClearGlass home", k: "nav", run: function(){ location.href = "index.html"; } }
+];
+var palSel = 0, palShown = commands;
+function renderPal(){
+  var q = palInput.value.trim().toLowerCase();
+  palShown = commands.filter(function(c){ return !q || c.name.toLowerCase().indexOf(q) !== -1; });
+  if (palSel >= palShown.length) palSel = 0;
+  palList.innerHTML = palShown.map(function(c, i){
+    return '<div class="pal-item' + (i === palSel ? ' sel' : '') + '" data-i="' + i + '">' +
+      '<span class="pi-ic">' + c.ic + '</span>' + c.name + '<span class="pi-k">' + c.k + '</span></div>';
+  }).join("") || '<div class="pal-item">No matching command</div>';
+  palList.querySelectorAll(".pal-item[data-i]").forEach(function(el){
+    el.addEventListener("click", function(){ runPal(parseInt(el.dataset.i, 10)); });
+    el.addEventListener("mousemove", function(){ palSel = parseInt(el.dataset.i, 10); renderPal(); });
+  });
+}
+function openPal(){ pal.classList.add("open"); palInput.value = ""; palSel = 0; renderPal(); palInput.focus(); }
+function closePal(){ pal.classList.remove("open"); }
+function runPal(i){ var c = palShown[i]; closePal(); if (c && c.run) c.run(); }
+document.getElementById("palOpen").addEventListener("click", openPal);
+pal.addEventListener("click", function(e){ if (e.target === pal) closePal(); });
+palInput.addEventListener("input", function(){ palSel = 0; renderPal(); });
+addEventListener("keydown", function(e){
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"){ e.preventDefault(); pal.classList.contains("open") ? closePal() : openPal(); return; }
+  if (!pal.classList.contains("open")) return;
+  if (e.key === "Escape") closePal();
+  else if (e.key === "ArrowDown"){ e.preventDefault(); palSel = Math.min(palSel + 1, palShown.length - 1); renderPal(); }
+  else if (e.key === "ArrowUp"){ e.preventDefault(); palSel = Math.max(palSel - 1, 0); renderPal(); }
+  else if (e.key === "Enter") runPal(palSel);
+});
 
 /* ---------- counters ---------- */
 function animateCount(el){

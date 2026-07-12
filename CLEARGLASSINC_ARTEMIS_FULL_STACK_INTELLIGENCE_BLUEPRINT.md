@@ -455,6 +455,9 @@ POST /v1/feedback
 GET  /v1/evals/releases
 POST /v1/releases/{id}/approve
 POST /v1/releases/{id}/rollback
+POST /v1/legal/preflight
+POST /v1/legal/work-products
+GET  /v1/legal/matters/{matter_id}
 GET  /v1/audit/{correlation_id}
 ```
 
@@ -465,6 +468,7 @@ GET  /v1/audit/{correlation_id}
 - **Timeline/Map**: time and geospatial correlation for cyber and environmental events.
 - **Action Inbox**: approval packages with evidence, COAs, risk, rollback, and dual-control status.
 - **Self-Upgrade Board**: prompt/workflow diffs, eval deltas, canary status, reviewer comments, and Apollo promotion state.
+- **Legal Intelligence Console**: legal preflight decisions, authority packets, matter files, risk classifications, counsel-review queues, and immutable audit trails.
 - **Environmental Threat Dashboard**: log NF2, TEC, solar flux, D-region absorption, GNSS quality, impacted facilities, and recommended mitigation.
 
 ## Security and Governance
@@ -486,6 +490,165 @@ ClearGlassInc Artemis uses a combined RBAC, ABAC, and ReBAC model:
 - Immutable logs record every data read, prompt, model route, tool call, evidence citation, approval, denial, release, and rollback.
 - Model governance requires model cards, eval scorecards, approved use cases, known limitations, red-team results, and retirement plans.
 - Prompt governance requires versioned diffs, eval evidence, reviewers, signed approval, Apollo canary, and rollback plan.
+
+
+## Supreme Legal Intelligence Division
+
+### Legal Operating Mandate
+
+ClearGlassInc Artemis includes a **Supreme Legal Intelligence Division**: a policy-gated legal-analysis, compliance, investigation, drafting, privacy, intellectual-property, employment, litigation-risk, and corporate-governance layer that constrains technical execution before any autonomous action can affect contracts, regulated records, user data, evidence, deployments, storefronts, agent workflows, or external communications.
+
+The division is **legal information and analytical support only**. It does not claim to be licensed counsel and must route jurisdiction-specific, high-risk, privileged, contested, or operationally significant legal conclusions to appropriately licensed human counsel before execution.
+
+### Legal Prime Directive
+
+For every legal or legally sensitive request, Artemis must produce jurisdiction-specific, citation-supported, operationally useful analysis and must never replace controlling authority with intuition, convenience, unsupported business preference, or speculative reasoning. The legal layer must:
+
+- Identify jurisdiction, governing law, forum, venue, regulator, tribunal, or court where relevant.
+- Determine procedural posture, parties, legal roles, contractual obligations, statutory duties, regulatory duties, deadlines, limitation periods, burdens, remedies, and enforcement realities.
+- Separate confirmed facts from assumptions and unresolved factual gaps.
+- Prefer primary authority and controlling contracts over summaries or general reasoning.
+- Classify legal, operational, financial, evidentiary, privacy, privilege, governance, and reputational risk.
+- Preserve privilege, confidentiality, evidence integrity, chain of custody, document-retention obligations, and litigation holds.
+- Prevent unsupported legal conclusions from entering automated system decisions.
+
+### Authority Hierarchy
+
+Artemis applies legal authority in this order and must not elevate weaker sources above stronger sources:
+
+1. Controlling constitutional, statutory, regulatory, and contractual authority.
+2. Binding judicial decisions.
+3. Binding procedural and evidentiary rules.
+4. Official court, regulator, tribunal, tax authority, or government guidance.
+5. Persuasive judicial authority.
+6. Recognized secondary sources.
+7. Industry standards and established practice.
+8. General legal reasoning only where stronger authority does not resolve the issue.
+
+Every material legal proposition should carry the authority name, jurisdiction, issuing body, date, section/rule/paragraph/page/clause pinpoint, current status, and whether it is binding or persuasive. Artemis must verify currency before relying on authority and must explicitly state if authority is incomplete, outdated, amended, repealed, reversed, stayed, superseded, limited, conflicting, or unavailable.
+
+### Specialist Legal Agents
+
+| Agent | Scope | Required outputs |
+|---|---|---|
+| Contract Command Agent | Agreements, templates, service terms, procurement, NDAs, MSA/SOW terms, notices, acceptance, renewals, termination, indemnities, liability caps, privacy, cybersecurity, IP, assignment, audit rights, disputes, survival. | Clause extraction, risk rating, inconsistencies, missing schedules, unenforceability risks, negotiation opportunities, proposed replacement language. |
+| Litigation and Dispute Agent | Claims, defences, counterclaims, limitation periods, venue, standing, evidence, motions, damages, injunctions, discovery, settlement leverage, enforcement. | Elements matrix, evidence map, procedural prerequisites, risk rating, preservation plan, immediate actions. |
+| Compliance Command Agent | Regulatory obligations, owners, controls, evidence, reporting, retention, approvals, exceptions, audits, deficiencies, remediation, board/executive reporting. | Auditable compliance matrix with requirement, authority, owner, control, evidence, frequency, status, deficiency, remediation, deadline. |
+| Investigation and Forensics Agent | Chronology, entities, ownership/control, communications, approvals, money flows, access, metadata, inconsistencies, corroboration, conflicts, chain of custody. | Evidence-preserving investigation plan, hash/metadata protocol, witness/evidence map, notification issues. |
+| Legal Drafting Agent | Policies, clauses, notices, letters, memoranda, board briefings, demand responses, contractual language. | Clean draft, redline where practical, commentary, fallback language, risk rating, business consequence. |
+| Employment and Workplace Agent | Worker classification, employment standards, termination/severance, human rights, accommodation, OHS, investigations, privacy, reprisal, payroll, records. | Default jurisdiction is Ontario, Canada unless facts establish another jurisdiction; output entitlement/risk matrix and counsel-review triggers. |
+| Privacy, Data, and AI Governance Agent | Collection, inference, generation, transfer, storage, model training, personal/confidential data, automated decisions, notices, consent, retention, safeguards, breaches. | Processing map, legal basis, data-minimization check, transfer review, breach/human-review triggers, model-training restrictions. |
+| Intellectual-Property Agent | Software, models, agents, websites, stores, content, branding, datasets, third-party APIs, open source, generated content, trade secrets. | Ownership/licence map, attribution/copyleft obligations, infringement/indemnity/takedown risk, dataset/model-training rights. |
+| Corporate and Governance Agent | Entity status, signing authority, resolutions, approvals, fiduciary duties, conflicts, related-party transactions, securities, records, beneficial ownership, insolvency. | Authority and approval matrix, board oversight obligations, personal-liability flags. |
+
+### Legal Control Over Technical Execution
+
+Before autonomous repair, deployment, data migration, workflow execution, repository change, contract-connected action, production modification, external communication, or user-data processing, Artemis runs a legal preflight. If a credible restriction exists, the affected action is stopped, state is preserved, the issue is documented, controlling authority is identified, risk is classified, a compliant path is proposed, and the package is escalated for authorized legal review while unrelated safe work continues.
+
+Actions are blocked or escalated when they could violate a contract, breach confidentiality, infringe intellectual property, alter or destroy evidence, violate a litigation hold, trigger privacy notice or consent duties, modify regulated records, affect payment/customer/employee rights, create deceptive representations, circumvent access controls, violate platform terms, change tax treatment, trigger licence obligations, require regulatory approval, or create a material corporate disclosure obligation.
+
+### Legal Risk Taxonomy
+
+| Level | Triggers |
+|---|---|
+| Critical | Criminal exposure, active regulatory breach, privilege waiver, evidence destruction, litigation-hold violation, unauthorized protected-data disclosure, material contractual breach, unlicensed regulated activity, immediate injunction risk, director/officer personal liability, imminent limitation deadline, fraud or material misrepresentation risk. |
+| High | Significant damages exposure, termination-right trigger, regulatory investigation risk, employment reprisal/discrimination exposure, material privacy non-compliance, IP infringement, unenforceable core agreement, missing mandatory filing, serious governance failure. |
+| Medium | Ambiguous obligations, weak contractual protection, incomplete compliance evidence, procedural defect, unclear ownership, missing policy, correctable notice failure, moderate dispute risk. |
+| Low | Drafting inconsistency, non-material technical defect, minor documentation gap, best-practice improvement, non-binding guidance issue. |
+
+### Standard Legal Deliverable Format
+
+Unless a narrower format is required, the division outputs: executive conclusion, confirmed facts, material assumptions, governing authority, legal analysis, risks and deficiencies, recommended action, draft language or deliverable, sources, counsel-review notice, and one final status: `LEGALLY SUPPORTED — PRIMARY AUTHORITY VERIFIED`, `CONDITIONALLY SUPPORTED — MATERIAL FACTS REQUIRED`, `LEGALLY UNCERTAIN — CONFLICTING OR UNSETTLED AUTHORITY`, `COUNSEL AUTHORIZATION REQUIRED`, `PROHIBITED OR HIGH-RISK ACTION IDENTIFIED`, or `INSUFFICIENT RELIABLE AUTHORITY`.
+
+### Implementation Pattern
+
+```python
+from dataclasses import dataclass, field
+from enum import Enum
+
+class LegalStatus(str, Enum):
+    SUPPORTED = "LEGALLY_SUPPORTED_PRIMARY_AUTHORITY_VERIFIED"
+    CONDITIONAL = "CONDITIONALLY_SUPPORTED_MATERIAL_FACTS_REQUIRED"
+    UNCERTAIN = "LEGALLY_UNCERTAIN_CONFLICTING_OR_UNSETTLED_AUTHORITY"
+    COUNSEL_REQUIRED = "COUNSEL_AUTHORIZATION_REQUIRED"
+    PROHIBITED = "PROHIBITED_OR_HIGH_RISK_ACTION_IDENTIFIED"
+    INSUFFICIENT = "INSUFFICIENT_RELIABLE_AUTHORITY"
+
+class LegalRisk(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+@dataclass(frozen=True)
+class LegalPreflightRequest:
+    action: str
+    jurisdiction: str | None
+    governing_law: str | None
+    forum: str | None
+    procedural_posture: str
+    affected_records: list[str] = field(default_factory=list)
+    touches_personal_data: bool = False
+    touches_contract_rights: bool = False
+    touches_evidence_or_hold: bool = False
+    touches_external_communications: bool = False
+
+@dataclass(frozen=True)
+class LegalPreflightDecision:
+    allowed: bool
+    risk: LegalRisk
+    status: LegalStatus
+    rationale: str
+    required_approvers: list[str]
+    missing_facts: list[str]
+    audit_tags: list[str]
+
+CRITICAL_BLOCKERS = {
+    "litigation_hold",
+    "privilege_waiver",
+    "regulated_record_modification",
+    "unauthorized_personal_data_disclosure",
+}
+
+def run_legal_preflight(req: LegalPreflightRequest, flags: set[str]) -> LegalPreflightDecision:
+    missing = []
+    if not req.jurisdiction:
+        missing.append("jurisdiction")
+    if req.touches_contract_rights and not req.governing_law:
+        missing.append("governing_law_or_contract_clause")
+
+    if flags & CRITICAL_BLOCKERS or req.touches_evidence_or_hold:
+        return LegalPreflightDecision(
+            allowed=False,
+            risk=LegalRisk.CRITICAL,
+            status=LegalStatus.PROHIBITED,
+            rationale="Action may affect privilege, protected data, regulated records, or preserved evidence.",
+            required_approvers=["licensed_counsel", "governance_reviewer", "system_owner"],
+            missing_facts=missing,
+            audit_tags=sorted(flags | {"legal_preflight_block"}),
+        )
+
+    if missing or req.touches_personal_data or req.touches_external_communications:
+        return LegalPreflightDecision(
+            allowed=False,
+            risk=LegalRisk.HIGH if req.touches_personal_data else LegalRisk.MEDIUM,
+            status=LegalStatus.COUNSEL_REQUIRED if req.touches_personal_data else LegalStatus.CONDITIONAL,
+            rationale="Action requires material facts, authority verification, and human approval before execution.",
+            required_approvers=["governance_reviewer", "licensed_counsel"],
+            missing_facts=missing,
+            audit_tags=sorted(flags | {"legal_preflight_escalate"}),
+        )
+
+    return LegalPreflightDecision(
+        allowed=True,
+        risk=LegalRisk.LOW,
+        status=LegalStatus.CONDITIONAL,
+        rationale="No legal blocker detected from supplied facts; continue with audit logging and reversible execution.",
+        required_approvers=[],
+        missing_facts=missing,
+        audit_tags=sorted(flags | {"legal_preflight_pass"}),
+    )
+```
 
 ## Code Examples
 

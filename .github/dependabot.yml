@@ -49,8 +49,11 @@ updates:
   # every Node app directory and group updates into one PR per app per week.
   - package-ecosystem: npm
     directories:
+      - "/apps/air-control"
       - "/apps/autostore/cockpit"
+      - "/apps/autostore/storefront"
       - "/clearglass-agentops"
+      - "/clearglass-air-control"
       - "/clearglass-commerce/admin"
       - "/clearglass-commerce/storefront"
     schedule:

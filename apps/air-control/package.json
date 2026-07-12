@@ -2,7 +2,7 @@
   "name": "clearglass-air-control",
   "version": "0.2.0",
   "private": true,
-  "description": "ClearGlass Air Systems Control Surface — Next.js + Tailwind prototype (glassmorphism HVAC digital twin).",
+  "description": "ClearGlass Air Systems Control Surface \u2014 Next.js + Tailwind prototype (glassmorphism HVAC digital twin).",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^14.2.25",
+    "next": "^16.2.10",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
@@ -20,7 +20,10 @@
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "tailwindcss": "3.4.7",
-    "postcss": "8.4.40",
+    "postcss": "^8.5.10",
     "autoprefixer": "10.4.19"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
   }
 }

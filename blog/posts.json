@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-07-11",
+  "updated": "2026-07-13",
   "site": "https://clearglassinc.github.io",
   "topics": {
     "governed-ai": "Governed AI",
@@ -138,7 +138,7 @@
       "slug": "ai-agent-governance-governed-autonomy",
       "url": "/blog/ai-agent-governance-governed-autonomy.html",
       "title": "AI Agent Governance: The Governed Autonomy Playbook",
-      "description": "The bottleneck to deploying AI agents isn't intelligence \u2014 it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
+      "description": "The bottleneck to deploying AI agents isn't intelligence — it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
       "category": "AI & Autonomy",
       "series": "Governed Autonomy Playbooks",
       "topics": [
@@ -165,7 +165,7 @@
       "slug": "ai-agents-insider-threat",
       "url": "/blog/ai-agents-insider-threat.html",
       "title": "AI Agents Are the New Insider Threat",
-      "description": "Agents hold credentials, access, and goals \u2014 the textbook insider profile \u2014 and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
+      "description": "Agents hold credentials, access, and goals — the textbook insider profile — and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
       "category": "AI & Security",
       "series": "Field Notes",
       "topics": [
@@ -295,6 +295,144 @@
       "featured": true,
       "deskRank": 3,
       "status": "published"
+    }
+  ],
+  "pipeline": [
+    {
+      "slug": "illusion-of-ai-security",
+      "plannedTitle": "The Illusion of AI Security: Why Most “Secure” Systems Are Already Compromised",
+      "primaryKeyword": "AI security",
+      "angle": "Contrarian — exposes false confidence in AI defenses",
+      "coreIdea": "Most AI systems are vulnerable at the orchestration layer, not the model layer.",
+      "hook": "Your AI isn’t secure. It just hasn’t been tested properly.",
+      "topics": [
+        "cyber",
+        "governed-ai",
+        "agents"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "zero-trust-is-not-enough-autonomous-threat-environments",
+      "plannedTitle": "Zero-Trust Is Not Enough: The Rise of Autonomous Threat Environments",
+      "primaryKeyword": "zero trust security",
+      "angle": "Challenges the industry standard",
+      "coreIdea": "Zero-trust architectures fail against adaptive, AI-driven attackers. Trust boundaries are static; attackers are not.",
+      "framework": "Autonomous Defense Stack (ADS)",
+      "topics": [
+        "cyber",
+        "systems"
+      ],
+      "relatedPublished": [
+        "zero-trust-is-outdated"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "death-of-manual-cybersecurity",
+      "plannedTitle": "The Death of Manual Cybersecurity: Why Human-Led Defense Cannot Scale",
+      "primaryKeyword": "cybersecurity automation",
+      "angle": "Inevitable shift",
+      "coreIdea": "Humans cannot keep pace with machine-speed threats.",
+      "hook": "If your defense requires human reaction time, you’ve already lost.",
+      "topics": [
+        "cyber",
+        "automation"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "ai-agents-new-workforce-attack-surface",
+      "plannedTitle": "AI Agents Are the New Workforce: But They’re Also Your Biggest Attack Surface",
+      "primaryKeyword": "AI agents security",
+      "angle": "Duality — opportunity plus risk",
+      "coreIdea": "Every AI agent is both a productivity multiplier and a vulnerability node.",
+      "framework": "Agent Attack Surface Index (AASI)",
+      "topics": [
+        "agents",
+        "cyber",
+        "governed-ai"
+      ],
+      "relatedPublished": [
+        "ai-agents-insider-threat"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "workflow-automation-new-exploit-vector",
+      "plannedTitle": "The Hidden Layer of Cyber Risk: Workflow Automation Is the New Exploit Vector",
+      "primaryKeyword": "workflow automation security",
+      "angle": "Overlooked risk",
+      "coreIdea": "Zapier-style automation, APIs, and pipelines are massively under-secured. The system isn’t hacked — the workflow is.",
+      "topics": [
+        "automation",
+        "cyber"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "from-code-to-control-software-architecture-power",
+      "plannedTitle": "From Code to Control: Why Software Architecture Now Defines Organizational Power",
+      "primaryKeyword": "software architecture strategy",
+      "angle": "Executive-level positioning",
+      "coreIdea": "Architecture decisions now directly impact revenue, security, and dominance.",
+      "hook": "Your architecture is your strategy — whether you designed it that way or not.",
+      "topics": [
+        "systems"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "osint-ai-new-intelligence-stack",
+      "plannedTitle": "OSINT + AI: The New Intelligence Stack Reshaping Government and Finance",
+      "primaryKeyword": "OSINT AI",
+      "angle": "High-authority, geopolitical relevance",
+      "coreIdea": "AI-powered intelligence pipelines are redefining investigations — fraud detection, sanctions tracking, network analysis.",
+      "topics": [
+        "osint",
+        "fincrime",
+        "governed-ai"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "automation-divide-scale-vs-stall",
+      "plannedTitle": "The Automation Divide: Companies That Scale vs. Companies That Stall",
+      "primaryKeyword": "business automation strategy",
+      "angle": "Competitive gap",
+      "coreIdea": "Automation maturity is becoming the #1 differentiator in growth.",
+      "framework": "Automation Maturity Curve (AMC)",
+      "topics": [
+        "automation",
+        "systems"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "why-most-ai-implementations-fail",
+      "plannedTitle": "Why Most AI Implementations Fail Before They Start (And How to Fix It)",
+      "primaryKeyword": "AI implementation strategy",
+      "angle": "Pain-driven, widely relatable",
+      "coreIdea": "Failure happens at system design, not model choice. AI is not a tool — it’s an ecosystem.",
+      "topics": [
+        "automation",
+        "governed-ai",
+        "systems"
+      ],
+      "status": "planned"
+    },
+    {
+      "slug": "new-cyber-battlefield-apis-agents-invisible-infrastructure",
+      "plannedTitle": "The New Cyber Battlefield: APIs, Agents, and Invisible Infrastructure",
+      "primaryKeyword": "API security",
+      "angle": "Modern threat landscape",
+      "coreIdea": "Traditional perimeter security is obsolete. The attack surface is now composable and dynamic.",
+      "topics": [
+        "cyber",
+        "agents",
+        "systems"
+      ],
+      "status": "planned"
     }
   ]
 }

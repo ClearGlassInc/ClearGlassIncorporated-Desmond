@@ -1092,3 +1092,86 @@ At 14:12 EDT on June 30, 2026, Cloudflare edge telemetry reports an external POS
 In parallel, the Vendor Risk Copilot opens the Apex Infrastructure assessment. It blocks executive signoff unless the Data Processing Agreement, subprocessor list, SOC 2 Type II or equivalent evidence, incident notification clause, termination/deletion clause, certificate-of-destruction obligation, and audit-rights language are reviewed and retained. If all five mandatory criteria pass before 16:30 EDT, Artemis prepares the signoff language for Desmond Otieno; otherwise it escalates.
 
 The Priority Router resolves the 15:30 calendar conflict by prioritizing the Engineering Architecture Sync because the Q3 infrastructure migration is 15% behind schedule. The Q3 Budget Review is delegated with a request for notes and decision items before EOD. Feedback from these choices becomes eval data for future priority-routing prompts, improving evidence discipline and executive scheduling precision without autonomous changes to ClearGlassInc Artemis goals.
+
+---
+
+## Defense-Grade Python Reference Hardening — 2026-07-13
+
+### System Architecture
+
+The executable reference implementation in `artemis/intelligence/platform.py` models the core ClearGlassInc Artemis control plane as dependency-light Python components that can be tested locally and adapted behind Foundry, Gotham, AIP, and Apollo SDK adapters. The hardening layer adds three production-critical controls:
+
+1. **Tamper-evident audit chain** for operator approvals, policy decisions, and self-upgrade proposals.
+2. **Policy-aware model routing** so restricted mission data is forced onto a hardened AIP execution path regardless of latency pressure.
+3. **Human approval gate** that rejects operationally significant actions when policy, evidence, mission assignment, or commander authority is missing.
+
+```python
+# artemis/intelligence/platform.py
+class ImmutableAuditLog:
+    """Append-only hash chain suitable for WORM export or ledger anchoring."""
+
+    def append(self, *, actor: str, action: str, resource: str, decision: str, payload: dict[str, Any]) -> AuditRecord:
+        previous_hash = self.records[-1].chain_hash if self.records else "GENESIS"
+        payload_hash = sha256(repr(sorted(payload.items())).encode("utf-8")).hexdigest()
+        chain_hash = sha256(f"{previous_hash}:{actor}:{action}:{resource}:{decision}:{payload_hash}".encode("utf-8")).hexdigest()
+        ...
+```
+
+### AI and Agent Design
+
+The AIP model router is deterministic by design. Restricted or coalition-marked missions are never routed to convenience or low-latency paths; they use an isolated secure reasoner. Non-restricted tasks can select frontier or mini models based on latency budget and reasoning depth.
+
+```python
+# artemis/intelligence/platform.py
+class ModelRouter:
+    """Deterministic, policy-aware model routing for latency-sensitive missions."""
+
+    def route(self, *, task_type: str, classification: str, latency_budget_ms: int, requires_deep_reasoning: bool) -> ModelRoute:
+        if classification in {"SECRET", "COALITION_RESTRICTED"}:
+            return ModelRoute(task_type, "aip-secure-reasoner", "isolated", "restricted classification requires hardened AIP path")
+        if requires_deep_reasoning or latency_budget_ms >= 1_200:
+            return ModelRoute(task_type, "aip-frontier-reasoner", "standard", "deep reasoning or relaxed latency budget")
+        return ModelRoute(task_type, "aip-fast-mini", "low-latency", "tight latency budget")
+```
+
+### Security and Governance
+
+The approval gate records every allow/deny decision into the audit hash chain and preserves the policy reason. A human approval cannot override missing mission assignment, missing evidence, or insufficient commander authority for high-risk actions.
+
+```python
+# artemis/intelligence/platform.py
+class ApprovalGate:
+    """Records human approval decisions before any significant action can execute."""
+
+    def approve(self, context: AccessContext, action: AgentAction, decision: str, reason: str) -> PolicyDecision:
+        if decision not in {"approve", "reject"}:
+            raise ValueError("decision must be approve or reject")
+        policy_decision = self.policy.authorize_action(context, action)
+        final_decision = "REJECT" if decision == "reject" or not policy_decision.allowed else "APPROVE"
+        self.audit_log.append(...)
+        return policy_decision
+```
+
+### Regression Coverage
+
+The Python tests verify that:
+
+- High-risk operational posture changes are rejected when the operator is not a commander, even if the operator attempts approval.
+- Approval decisions are written to the tamper-evident audit chain and the chain verifies cleanly.
+- Coalition-restricted model routing always selects the isolated secure AIP path.
+
+```python
+# tests/test_artemis_intelligence_platform.py
+def test_approval_gate_blocks_high_risk_non_commander_and_audits() -> None:
+    ...
+    assert decision.allowed is False
+    assert decision.reason == "high-risk action requires commander role"
+    assert audit_log.verify() is True
+    assert audit_log.records[0].decision == "REJECT"
+
+
+def test_model_router_uses_hardened_path_for_restricted_data() -> None:
+    ...
+    assert route.model_id == "aip-secure-reasoner"
+    assert route.execution_tier == "isolated"
+```

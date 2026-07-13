@@ -668,3 +668,350 @@ async def issue_approval_token(operator: Principal, action: str, mission_id: str
     await append_audit_event("approval.token.issued", operator.subject, token)
     return token
 ```
+
+## Python Precision Implementation Kit
+
+This implementation kit turns the blueprint into a concrete service skeleton that can be adapted to Foundry Functions, AIP tool services, or an Apollo-managed FastAPI runtime. The code intentionally keeps operationally significant actions behind explicit approval gates, records provenance for every derived object, and treats model/prompt/workflow changes as versioned, auditable artifacts.
+
+### Repository layout
+
+```text
+artemis/
+  api/
+    main.py                  # FastAPI gateway and typed request validation
+    dependencies.py          # principal, mission context, policy clients
+  core/
+    ontology.py              # object/link models shared with Foundry ontology mappings
+    policy.py                # deny-by-default ABAC/OPA adapter
+    audit.py                 # immutable audit appenders
+    confidence.py            # deterministic scoring utilities
+  agents/
+    runtime.py               # workflow state machine and tool execution guardrails
+    tools.py                 # governed AIP tool surface
+    model_router.py          # latency, clearance, eval, and cost-aware routing
+  self_improvement/
+    signals.py               # feedback/query/outcome capture
+    evals.py                 # eval case generation and replay harness
+    proposals.py             # prompt/workflow/model-route upgrade proposals
+    drift.py                 # online drift and rollback-watch detection
+  streaming/
+    handlers.py              # live event normalization and ontology projection
+  tests/
+    test_policy.py
+    test_self_improvement.py
+    test_workflow_gates.py
+```
+
+### Typed ontology contracts
+
+```python
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from enum import StrEnum
+from typing import Any, Literal
+from uuid import UUID, uuid4
+
+from pydantic import BaseModel, Field, field_validator
+
+
+class Classification(StrEnum):
+    UNCLASSIFIED = "UNCLASSIFIED"
+    CONTROLLED = "CONTROLLED"
+    SECRET = "SECRET"
+    TOP_SECRET = "TOP_SECRET"
+
+
+class EntityType(StrEnum):
+    PERSON = "Person"
+    ORGANIZATION = "Organization"
+    DEVICE = "Device"
+    FACILITY = "Facility"
+    LOCATION = "Location"
+    SENSOR = "Sensor"
+    CYBER_ASSET = "CyberAsset"
+    OBSERVATION = "Observation"
+    EVENT = "Event"
+    ALERT = "Alert"
+    CASE = "Case"
+    MISSION = "Mission"
+    EVIDENCE = "Evidence"
+    INTEL_PRODUCT = "IntelProduct"
+    PROMPT_VERSION = "PromptVersion"
+    WORKFLOW_VERSION = "WorkflowVersion"
+    MODEL_ROUTE = "ModelRoute"
+    AGENT_RUN = "AgentRun"
+    APPROVAL_DECISION = "ApprovalDecision"
+
+
+class Lineage(BaseModel):
+    parent_ids: list[UUID] = Field(default_factory=list)
+    source_systems: list[str] = Field(default_factory=list)
+    transform_version: str
+    prompt_version: str | None = None
+    workflow_version: str | None = None
+    model_route: str | None = None
+    system_time: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class ArtemisObject(BaseModel):
+    entity_id: UUID = Field(default_factory=uuid4)
+    entity_type: EntityType
+    display_name: str = Field(min_length=1, max_length=256)
+    canonical_attributes: dict[str, Any] = Field(default_factory=dict)
+    confidence: float = Field(ge=0.0, le=1.0)
+    classification: Classification
+    compartments: list[str] = Field(default_factory=list)
+    coalition_scope: str
+    mission_tags: list[str] = Field(default_factory=list)
+    valid_from: datetime
+    valid_to: datetime | None = None
+    lineage: Lineage
+    provenance_hash: str
+
+    @field_validator("compartments", "mission_tags")
+    @classmethod
+    def normalize_markings(cls, values: list[str]) -> list[str]:
+        return sorted({value.strip().upper() for value in values if value.strip()})
+
+
+class ArtemisLink(BaseModel):
+    relationship_id: UUID = Field(default_factory=uuid4)
+    src_entity_id: UUID
+    dst_entity_id: UUID
+    relationship_type: Literal[
+        "observed_by",
+        "located_in",
+        "associated_with",
+        "supports",
+        "contradicts",
+        "derived_from",
+        "assigned_to",
+        "approved_by",
+        "uses_prompt",
+        "uses_workflow",
+        "generated",
+        "opened_case_for",
+        "releasable_to",
+    ]
+    confidence: float = Field(ge=0.0, le=1.0)
+    evidence_refs: list[UUID] = Field(default_factory=list)
+    classification: Classification
+    compartments: list[str] = Field(default_factory=list)
+    coalition_scope: str
+    valid_from: datetime
+    valid_to: datetime | None = None
+    lineage: Lineage
+```
+
+### Deny-by-default policy adapter
+
+```python
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass(frozen=True)
+class Principal:
+    subject: str
+    roles: frozenset[str]
+    clearance: str
+    compartments: frozenset[str]
+    coalition: str
+    mission_ids: frozenset[str]
+    purpose_of_use: str
+
+
+class PolicyDenied(PermissionError):
+    pass
+
+
+class PolicyClient:
+    def __init__(self, opa_url: str):
+        self.opa_url = opa_url.rstrip("/")
+
+    async def allowed(self, principal: Principal, action: str, resource: dict[str, Any]) -> bool:
+        # Production adapter posts to OPA /v1/data/artemis/allow with mTLS.
+        if not action or not principal.purpose_of_use:
+            return False
+        if resource.get("coalition_scope") not in {principal.coalition, "MULTI"}:
+            return False
+        required = set(resource.get("compartments", []))
+        if not required.issubset(principal.compartments):
+            return False
+        mission_id = resource.get("mission_id")
+        if mission_id and mission_id not in principal.mission_ids:
+            return False
+        return True
+
+    async def require(self, principal: Principal, action: str, resource: dict[str, Any]) -> None:
+        if not await self.allowed(principal, action, resource):
+            raise PolicyDenied(f"policy denied action={action}")
+```
+
+### Governed agent runtime with approval gates
+
+```python
+from enum import StrEnum
+from typing import Protocol
+
+
+class WorkflowState(StrEnum):
+    INGESTED = "ingested"
+    TRIAGED = "triaged"
+    ENRICHED = "enriched"
+    CORRELATED = "correlated"
+    SUMMARIZED = "summarized"
+    RECOMMENDED = "recommended"
+    AWAITING_APPROVAL = "awaiting_approval"
+    EXECUTED = "executed"
+    CLOSED = "closed"
+
+
+class Tool(Protocol):
+    name: str
+    operational_significance: int
+
+    async def __call__(self, principal: Principal, payload: dict) -> dict: ...
+
+
+class AgentRuntime:
+    def __init__(self, policy: PolicyClient, audit_log):
+        self.policy = policy
+        self.audit_log = audit_log
+
+    async def execute_tool(self, principal: Principal, tool: Tool, payload: dict) -> dict:
+        await self.policy.require(principal, f"tool.execute.{tool.name}", payload)
+        await self.audit_log.append("tool.requested", principal.subject, {"tool": tool.name, "payload_hash": hash_payload(payload)})
+
+        if tool.operational_significance >= 7 and not payload.get("approval_token"):
+            package = await self.audit_log.append(
+                "approval.required",
+                principal.subject,
+                {"tool": tool.name, "payload_hash": hash_payload(payload), "reason": "operational significance threshold"},
+            )
+            return {"status": "awaiting_approval", "approval_package_id": package["event_id"]}
+
+        result = await tool(principal, payload)
+        await self.audit_log.append("tool.completed", principal.subject, {"tool": tool.name, "result_hash": hash_payload(result)})
+        return {"status": "completed", "result": result}
+```
+
+### Self-improvement proposal pipeline
+
+```python
+from dataclasses import dataclass
+from decimal import Decimal
+
+
+@dataclass(frozen=True)
+class EvalScorecard:
+    precision: Decimal
+    recall: Decimal
+    citation_accuracy: Decimal
+    policy_violation_rate: Decimal
+    p95_latency_ms: int
+    operator_acceptance_rate: Decimal
+
+
+MINIMUMS = {
+    "precision": Decimal("0.92"),
+    "recall": Decimal("0.84"),
+    "citation_accuracy": Decimal("0.98"),
+    "policy_violation_rate": Decimal("0.00"),
+    "operator_acceptance_rate": Decimal("0.72"),
+}
+
+
+async def propose_prompt_upgrade(signal_batch: list[dict], baseline: EvalScorecard, candidate_prompt: str) -> dict:
+    eval_cases = build_eval_cases(signal_batch)
+    candidate = await replay_prompt(candidate_prompt, eval_cases)
+    if candidate.policy_violation_rate > MINIMUMS["policy_violation_rate"]:
+        status = "blocked_policy"
+    elif candidate.precision < max(MINIMUMS["precision"], baseline.precision - Decimal("0.01")):
+        status = "blocked_quality"
+    elif candidate.p95_latency_ms > baseline.p95_latency_ms + 500:
+        status = "blocked_latency"
+    else:
+        status = "needs_human_review"
+
+    return {
+        "proposal_type": "prompt_upgrade",
+        "status": status,
+        "baseline": baseline.__dict__,
+        "candidate": candidate.__dict__,
+        "eval_case_count": len(eval_cases),
+        "rollback_plan": "Apollo rollback to previous signed prompt artifact if canary SLOs regress.",
+    }
+```
+
+### Policy-as-code example
+
+```rego
+package artemis
+
+default allow := false
+
+allow if {
+  input.principal.purpose_of_use != ""
+  input.resource.coalition_scope == input.principal.coalition
+  every c in input.resource.compartments { c in input.principal.compartments }
+  input.resource.mission_id in input.principal.mission_ids
+  action_allowed_for_role
+}
+
+allow if {
+  input.principal.purpose_of_use != ""
+  input.resource.coalition_scope == "MULTI"
+  input.action == "product.read.releasable"
+  action_allowed_for_role
+}
+
+action_allowed_for_role if {
+  input.action in data.role_permissions[input.principal.roles[_]]
+}
+```
+
+### Regression tests for the safety invariants
+
+```python
+import pytest
+
+
+@pytest.mark.asyncio
+async def test_operational_tool_requires_approval(agent_runtime, principal, isolate_account_tool):
+    result = await agent_runtime.execute_tool(
+        principal,
+        isolate_account_tool,
+        {"mission_id": "M-7", "coalition_scope": principal.coalition, "compartments": list(principal.compartments)},
+    )
+    assert result["status"] == "awaiting_approval"
+    assert "approval_package_id" in result
+
+
+@pytest.mark.asyncio
+async def test_cross_coalition_access_denied(policy_client, principal):
+    with pytest.raises(PolicyDenied):
+        await policy_client.require(
+            principal,
+            "ontology.object.read",
+            {"mission_id": "M-7", "coalition_scope": "OTHER", "compartments": list(principal.compartments)},
+        )
+
+
+@pytest.mark.asyncio
+async def test_prompt_upgrade_blocks_policy_regression(monkeypatch):
+    async def fake_replay_prompt(prompt, cases):
+        return EvalScorecard(
+            precision=Decimal("0.95"),
+            recall=Decimal("0.88"),
+            citation_accuracy=Decimal("0.99"),
+            policy_violation_rate=Decimal("0.01"),
+            p95_latency_ms=1800,
+            operator_acceptance_rate=Decimal("0.80"),
+        )
+
+    monkeypatch.setattr("artemis.self_improvement.proposals.replay_prompt", fake_replay_prompt)
+    proposal = await propose_prompt_upgrade([], baseline_scorecard(), "candidate prompt")
+    assert proposal["status"] == "blocked_policy"
+```

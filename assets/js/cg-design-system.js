@@ -118,35 +118,16 @@
     } catch (e) { /* reveal is progressive enhancement only */ }
   }
 
-  /* ── Global top bar — the homepage nav menu, futurized, on every page.
-     Skips pages that already ship the homepage nav (#navbar / nav.nav).
-     Opt out per page with data-cg-no-topbar on <html> or <body>.
-     Pages can dock their own controls into the bar by tagging them with
+  /* ── Global top bar — the ClearGlassInc. 2040 identity and menu on every page.
+     It is additive: existing page navigation remains intact and is nudged below
+     the global bar when necessary. Opt out only with data-cg-no-topbar on
+     <html> or <body>. Pages can dock their own controls into the bar with
      [data-cg-topbar-slot], and rebrand the left side with
      data-cg-topbar-title / data-cg-topbar-sub on <body>. ── */
-  // True when the page already ships its own top navigation — a wide
-  // fixed/sticky element pinned to the top of the viewport (e.g. the
-  // homepage #navbar or guardian.html's .nav-wrap). Those pages keep
-  // their bespoke bar instead of getting a second one stacked on top.
-  function hasOwnTopBar() {
-    if (document.getElementById('navbar') || document.querySelector('nav.nav')) return true;
-    var els = document.querySelectorAll('body header, body nav, body [class*="nav"], body [class*="bar"], body [class*="header"]');
-    var vw = window.innerWidth || 1;
-    for (var i = 0; i < els.length && i < 400; i++) {
-      var cs = getComputedStyle(els[i]);
-      if (cs.position !== 'fixed' && cs.position !== 'sticky') continue;
-      if (cs.display === 'none' || cs.visibility === 'hidden') continue;
-      var r = els[i].getBoundingClientRect();
-      if (r.top <= 90 && r.height >= 30 && r.height <= 170 && r.width >= vw * 0.55) return true;
-    }
-    return false;
-  }
-
   function mountTopbar() {
     if (document.querySelector('.cg-topbar')) return;
     if (document.documentElement.hasAttribute('data-cg-no-topbar') ||
         (document.body && document.body.hasAttribute('data-cg-no-topbar'))) return;
-    if (hasOwnTopBar()) return;
 
     var PRODUCTS = [
       ['Guardian', '/guardian.html', '🌐', 'ClearGlassInc. Intelligence'],
@@ -250,22 +231,22 @@
       if (!bar.contains(slots[i])) cta.parentNode.insertBefore(slots[i], cta);
     }
 
-    // Nudge the page's own small fixed top widgets (command buttons,
-    // status chips) below the bar so they don't sit underneath it.
+    // Nudge existing fixed navigation and compact top widgets below the
+    // global bar without deleting, restyling, or replacing page content.
     function nudgeFixedWidgets() {
       var barH = bar.offsetHeight || 64;
       var cands = document.querySelectorAll('body > *, body > * > *');
       for (var j = 0; j < cands.length && j < 600; j++) {
-        var el = cands[j];
-        if (el === bar || bar.contains(el) || el.id === 'cg-nav') continue;
-        if (el.hasAttribute('data-cg-tb-nudged')) continue;
-        var cs = getComputedStyle(el);
-        if (cs.position !== 'fixed') continue;
-        var r = el.getBoundingClientRect();
+        var item = cands[j];
+        if (item === bar || bar.contains(item) || item.id === 'cg-nav') continue;
+        if (item.hasAttribute('data-cg-tb-nudged')) continue;
+        var cs = getComputedStyle(item);
+        if (cs.position !== 'fixed' && cs.position !== 'sticky') continue;
+        var r = item.getBoundingClientRect();
         if (r.height < 18 || r.height > 170 || r.width < 1) continue;
         if (r.top >= barH || r.bottom <= 0) continue;
-        el.setAttribute('data-cg-tb-nudged', '1');
-        el.style.top = (r.top + barH) + 'px';
+        item.setAttribute('data-cg-tb-nudged', '1');
+        item.style.top = (r.top + barH) + 'px';
       }
     }
     nudgeFixedWidgets();

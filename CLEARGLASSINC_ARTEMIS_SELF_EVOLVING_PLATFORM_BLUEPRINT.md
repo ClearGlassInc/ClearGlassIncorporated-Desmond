@@ -1,223 +1,480 @@
-# ClearGlassInc Artemis — Self-Evolving Intelligence Platform Blueprint
+# ClearGlassInc Artemis — Self-Evolving AI Intelligence Platform Blueprint
+
+## Executive Intent
+ClearGlassInc Artemis is a secure, coalition-aware, latency-sensitive intelligence platform built on **Palantir Gotham**, **Foundry**, **AIP**, and **Apollo**. The platform fuses live and historical data, reasons over a governed ontology, coordinates agentic workflows, and proposes evidence-backed improvements to prompts, workflows, heuristics, and model routing under explicit human-approved guardrails.
+
+Palantir terms used precisely:
+- **Gotham**: operational intelligence, investigations, entity tracking, link analysis, mission casework, and investigative timelines.
+- **Foundry**: data integration, transformation pipelines, operational applications, Ontology, lineage, and governed data products.
+- **Foundry Ontology**: the shared operational model of objects, links, actions, permissions, temporal state, and business logic used by humans and agents.
+- **AIP**: AI copilots, agent orchestration, tool execution, evaluations, model governance, and workflow automation over governed data/actions.
+- **Apollo**: secure deployment, canarying, runtime controls, rollback, policy distribution, and release telemetry across environments.
+
+Non-negotiable operating constraints:
+1. Artemis may recommend operational actions and self-upgrades, but cannot execute operationally significant actions or promote self-upgrades without explicit approval.
+2. Every answer, tool call, recommendation, model route, and self-improvement proposal is permission-filtered, provenance-linked, auditable, and reversible.
+3. The platform optimizes for precision, recall, latency, operator trust, mission impact, and policy compliance without autonomously changing mission objectives.
+
+---
 
 ## System Architecture
 
-### 1) Platform topology (Gotham + Foundry + AIP + Apollo)
+### End-to-End Architecture
 
 ```text
-[Sensors/Feeds/Partner APIs/SIGINT HUMINT OSINT ERP CRM Billing]
-                 |
-          [Ingestion Gateway]
-      (schema registry, trust scoring, PKI)
-                 |
-      [Streaming Bus: Kafka/Pulsar]
-        |                 |
-[Hot Path Triage]    [Cold Path Lakehouse]
-(Flink/Spark Str)    (Foundry datasets)
-        |                 |
-    [Foundry Ontology + Data Products + Pipelines]
-                 |
-  [AIP Agent Runtime + Copilots + Eval Engine + Model Router]
-                 |
-   [Mission APIs / Case Services / Recommendation Services]
-                 |
- [Gotham Case Mgmt + Link Analysis + Investigative Timelines]
-                 |
-[Apollo Deployment Rings + Runtime Policy + Rollback Controller]
-                 |
-[Operator UI: Analyst Console + Commander COP + Governance Console]
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Operator Surfaces                                                           │
+│ React/TypeScript Analyst Workbench • Commander Console • Governance Console │
+│ Gotham investigative views • Foundry apps • AIP copilot panels              │
+└─────────────────────┬───────────────────────────────────────────────────────┘
+                      │ OIDC/JWT, mission context, request provenance
+┌─────────────────────▼───────────────────────────────────────────────────────┐
+│ API Gateway / Backend-for-Frontend                                          │
+│ FastAPI • GraphQL • WebSockets • schema validation • idempotency • OPA check │
+└──────────────┬───────────────┬─────────────────┬────────────────────────────┘
+               │               │                 │
+┌──────────────▼───────┐ ┌─────▼──────────┐ ┌────▼────────────────────────────┐
+│ Mission Services     │ │ Event Services │ │ AI Orchestration Services       │
+│ cases, alerts,       │ │ Kafka/Pulsar,   │ │ AIP agents, tools, model router │
+│ approvals, products  │ │ Flink/Ray, CQRS │ │ eval harness, prompt registry   │
+└──────────────┬───────┘ └─────┬──────────┘ └────┬────────────────────────────┘
+               │               │                 │
+┌──────────────▼───────────────▼─────────────────▼────────────────────────────┐
+│ Foundry + Gotham Operational Data Plane                                      │
+│ Bronze/Silver/Gold datasets • Ontology • Actions • Functions • lineage       │
+│ Gotham case graph • investigative timeline • link analysis • entity tracking │
+└──────────────┬───────────────┬─────────────────┬────────────────────────────┘
+               │               │                 │
+┌──────────────▼───────┐ ┌─────▼──────────┐ ┌────▼────────────────────────────┐
+│ Retrieval Layer      │ │ Policy Layer   │ │ Observability + Audit           │
+│ hybrid search, graph │ │ ABAC/RBAC,     │ │ traces, metrics, evals,         │
+│ expansion, vectors   │ │ OPA, policy    │ │ immutable append-only log        │
+│ geotemporal indexes  │ │ as code        │ │                                 │
+└──────────────┬───────┘ └─────┬──────────┘ └────┬────────────────────────────┘
+               │               │                 │
+┌──────────────▼───────────────▼─────────────────▼────────────────────────────┐
+│ Apollo Runtime Control                                                       │
+│ signed releases • policy bundles • deployment rings • canary gates • recall  │
+│ rollback • runtime feature flags • environment-specific controls             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 2) Layer-by-layer design
-- **Frontend**: TypeScript React + GraphQL subscriptions for live incident streams, approval inbox, ontology graph explorer.
-- **Backend**: Python microservices (FastAPI + asyncio) for deterministic mission logic and AI orchestration.
-- **Data**: Foundry as source-of-truth data plane (batch + streaming transforms, lineage, ontology).
-- **Ontology**: Entities + links + confidence + bitemporal facts + coalition partitions.
-- **AI Orchestration**: AIP copilots, tool-using agents, prompt/workflow registries, eval gates.
-- **Policy**: ABAC + RBAC + mission context constraints via policy-as-code.
-- **Observability**: OTel traces, model telemetry, eval dashboards, immutable audit stream.
-- **Deployment**: Apollo rings (dev→staging→mission-canary→prod), health SLO gates, automated rollback.
+### Layer Responsibilities
+
+| Layer | Production responsibility | Failure-safe behavior |
+| --- | --- | --- |
+| Frontend | Mission views, graph exploration, approvals, copilot interactions, eval dashboards | Hide unauthorized data, show uncertainty, require explicit approval for actions |
+| API gateway | AuthN/AuthZ context, request validation, policy preflight, rate limits, idempotency | Reject malformed/unauthorized requests, preserve audit trail |
+| Backend services | Deterministic mission logic, case lifecycle, alerts, feedback, recommendations | State-machine guarded transitions and replayable event handling |
+| Data layer | Foundry pipelines, source lineage, normalized operational datasets | Quarantine malformed records and maintain raw payload references |
+| Ontology layer | Mission entities, relationships, permissions, actions, temporal state | Enforce object/action permissions before read/write/tool use |
+| AI orchestration | AIP copilots, agents, tool calls, model routing, eval capture | Tool allowlists, constrained JSON schemas, policy-gated execution |
+| Policy layer | Need-to-know, coalition boundaries, prompt/tool/model governance | Default deny, immutable decision logs, break-glass with approval only |
+| Observability | Metrics, traces, model telemetry, eval quality, drift, trust signals | Alert on SLO/policy/eval regressions; block promotion when thresholds fail |
+| Deployment | Apollo releases, signed artifacts, progressive delivery, rollback | Auto-recall unsafe releases; pin known-good prompt/workflow/model versions |
+
+### Frontend Applications
+
+1. **Analyst Workbench**
+   - Live alert stream with severity, uncertainty, lineage, deduplication status, and SLA.
+   - Ontology graph explorer with bitemporal state playback and source drill-down.
+   - Evidence tray for documents, events, images, logs, and human annotations.
+   - AIP Copilot with mission-scoped tool permissions and transcript diff viewer.
+
+2. **Commander Console**
+   - Common operating picture, mission risk posture, pending approvals, and recommended action packages.
+   - Latency, readiness, and confidence heatmaps.
+   - “Why this recommendation?” panels showing evidence, assumptions, policy constraints, and alternatives.
+
+3. **Governance Console**
+   - Prompt/workflow/model-router version registry.
+   - Eval scorecards, A/B tests, drift reports, regression failures, and approval workflows.
+   - Policy-as-code bundle viewer and Apollo release channel status.
 
 ---
 
 ## Data and Ontology
 
-### 1) Ontology model (Foundry Ontology)
+### Core Ontology
 
 ```yaml
-entities:
+ontology: ClearGlassIncArtemis
+version: 1.0
+classification_strategy: entity_and_attribute_level
+objects:
   Mission:
-    fields: [mission_id, name, priority, status, coalition_scope, classification]
+    primary_key: mission_id
+    fields:
+      mission_id: string
+      name: string
+      priority: enum[P0,P1,P2,P3]
+      status: enum[planning, active, paused, closed]
+      coalition_scope: list[string]
+      classification: string
+      objectives_ref: string
+      created_at: timestamp
   Actor:
-    fields: [actor_id, actor_type, aliases, confidence, country, watchlist_status]
-  Event:
-    fields: [event_id, ts_event, ts_ingest, source, event_type, raw_payload_ref, confidence]
+    primary_key: actor_id
+    fields:
+      actor_id: string
+      actor_type: enum[person, organization, device, service_account, unknown]
+      aliases: list[string]
+      confidence: float
+      country: string
+      watchlist_status: enum[none, candidate, confirmed, retired]
+      pii_handling: enum[none, restricted, masked]
   Asset:
-    fields: [asset_id, asset_type, owner, location, criticality, lifecycle_state]
+    primary_key: asset_id
+    fields:
+      asset_id: string
+      asset_type: enum[facility, system, endpoint, dataset, application, network]
+      owner_org: string
+      location: geopoint
+      criticality: enum[low, medium, high, mission_critical]
+      lifecycle_state: enum[planned, active, degraded, decommissioned]
+  Event:
+    primary_key: event_id
+    fields:
+      event_id: string
+      event_type: string
+      ts_event: timestamp
+      ts_ingest: timestamp
+      source_system: string
+      raw_payload_ref: string
+      normalized_payload_hash: string
+      confidence: float
+      lineage_refs: list[string]
   Alert:
-    fields: [alert_id, rule_id, severity, score, rationale, state]
+    primary_key: alert_id
+    fields:
+      alert_id: string
+      event_id: string
+      rule_id: string
+      severity: enum[info, low, medium, high, critical]
+      score: float
+      rationale: string
+      state: enum[new, triaged, escalated, suppressed, resolved]
+      sla_due_at: timestamp
   Case:
-    fields: [case_id, mission_id, opened_at, status, owner, sla_due_at]
+    primary_key: case_id
+    fields:
+      case_id: string
+      mission_id: string
+      title: string
+      status: enum[open, investigating, pending_approval, actioned, closed]
+      owner_user_id: string
+      opened_at: timestamp
+      closed_at: timestamp?
   Recommendation:
-    fields: [rec_id, case_id, action_type, expected_impact, risk_score, status]
+    primary_key: rec_id
+    fields:
+      rec_id: string
+      case_id: string
+      action_type: string
+      expected_impact: string
+      risk_score: float
+      confidence: float
+      status: enum[draft, proposed, approved, rejected, executed, rolled_back]
+      prompt_version: string
+      workflow_version: string
+      model_route: string
   ApprovalDecision:
-    fields: [decision_id, rec_id, approver, decision, reason, decided_at]
+    primary_key: decision_id
+    fields:
+      decision_id: string
+      rec_id: string
+      approver_user_id: string
+      decision: enum[approve, reject, request_changes]
+      reason: string
+      decided_at: timestamp
+      policy_version: string
   FeedbackSignal:
-    fields: [feedback_id, source, label, correction, confidence_delta, outcome]
-
-relationships:
-  - EVENT_OBSERVED_ACTOR: Event -> Actor
-  - EVENT_TARGETED_ASSET: Event -> Asset
-  - EVENT_TRIGGERED_ALERT: Event -> Alert
-  - ALERT_ESCALATED_TO_CASE: Alert -> Case
-  - CASE_HAS_RECOMMENDATION: Case -> Recommendation
-  - RECOMMENDATION_REQUIRES_DECISION: Recommendation -> ApprovalDecision
-  - FEEDBACK_ON_RECOMMENDATION: FeedbackSignal -> Recommendation
-  - MISSION_CONTAINS_CASE: Mission -> Case
+    primary_key: feedback_id
+    fields:
+      feedback_id: string
+      source: enum[operator_correction, edited_summary, alert_outcome, mission_result, eval_failure]
+      target_type: enum[prompt, workflow, model_route, entity, alert, recommendation]
+      target_id: string
+      label: string
+      correction_json: json
+      confidence_delta: float
+      outcome: string
+      captured_at: timestamp
 ```
 
-### 2) Bitemporal + lineage + confidence
+### Relationships
+
+```yaml
+relationships:
+  - name: EVENT_OBSERVED_ACTOR
+    from: Event
+    to: Actor
+    fields: [confidence, extractor_version, observed_at]
+  - name: EVENT_TARGETED_ASSET
+    from: Event
+    to: Asset
+    fields: [confidence, impact_estimate]
+  - name: EVENT_TRIGGERED_ALERT
+    from: Event
+    to: Alert
+    fields: [rule_version, score_components]
+  - name: ALERT_ESCALATED_TO_CASE
+    from: Alert
+    to: Case
+    fields: [escalated_by, escalation_reason]
+  - name: CASE_HAS_RECOMMENDATION
+    from: Case
+    to: Recommendation
+    fields: [rank, rationale_hash]
+  - name: RECOMMENDATION_REQUIRES_DECISION
+    from: Recommendation
+    to: ApprovalDecision
+    fields: [approval_gate, min_authority]
+  - name: FEEDBACK_ON_RECOMMENDATION
+    from: FeedbackSignal
+    to: Recommendation
+    fields: [signal_weight, adjudication_status]
+  - name: MISSION_CONTAINS_CASE
+    from: Mission
+    to: Case
+    fields: [mission_relevance, tasking_ref]
+```
+
+### Temporal State, Confidence, and Lineage
+
+Foundry stores raw, normalized, and curated records with immutable lineage. Artemis uses bitemporal facts so operators can ask both “what was true at event time?” and “what did we know at decision time?”
+
 ```sql
-CREATE TABLE ontology_event_fact (
+CREATE TABLE ontology_fact_history (
   fact_id TEXT PRIMARY KEY,
-  event_id TEXT NOT NULL,
+  subject_type TEXT NOT NULL,
+  subject_id TEXT NOT NULL,
   predicate TEXT NOT NULL,
-  object_id TEXT NOT NULL,
+  object_type TEXT,
+  object_id TEXT,
+  value_json JSONB,
   confidence DOUBLE PRECISION NOT NULL CHECK (confidence BETWEEN 0 AND 1),
+  source_refs TEXT[] NOT NULL,
+  classification TEXT NOT NULL,
+  coalition_scope TEXT[] NOT NULL,
   valid_from TIMESTAMPTZ NOT NULL,
   valid_to TIMESTAMPTZ,
-  observed_at TIMESTAMPTZ NOT NULL,
-  ingested_at TIMESTAMPTZ NOT NULL,
-  source_system TEXT NOT NULL,
-  source_record_id TEXT NOT NULL,
+  recorded_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  recorded_by TEXT NOT NULL,
   transform_version TEXT NOT NULL,
-  lineage_hash TEXT NOT NULL,
-  classification TEXT NOT NULL,
-  coalition_scope TEXT[] NOT NULL
+  policy_version TEXT NOT NULL
 );
+
+CREATE INDEX idx_fact_subject_time
+  ON ontology_fact_history(subject_type, subject_id, valid_from, recorded_at);
+
+CREATE INDEX idx_fact_policy_scope
+  ON ontology_fact_history(classification, coalition_scope);
 ```
 
-### 3) How ontology drives behavior
-- Human workflow: analysts pivot from `Event -> Alert -> Case -> Recommendation` with full provenance.
-- AI workflow: agent tools receive ontology-constrained query views filtered by mission scope and clearance.
-- Every recommendation must cite supporting ontology edges + confidence + lineage.
+The ontology drives human and AI behavior by making actions object-aware. An agent cannot “open a case” generically; it must call an ontology action such as `Case.open_from_alert(alert_id, mission_id)` and pass policy checks tied to the mission, alert, actor, asset, and user context.
 
 ---
 
 ## AI and Agent Design
 
-### 1) Copilot roles (AIP)
-- **Analyst Copilot**: explain anomalies, suggest triage paths, generate evidence-backed briefs.
-- **Commander Copilot**: compare COAs (courses of action), mission impact simulation, risk tradeoffs.
-- **Governance Copilot**: explains policy blocks, required approvals, and compliance rationale.
+### Copilots
 
-### 2) Multi-agent orchestration
+- **Analyst Copilot**: performs evidence summarization, entity expansion, timeline generation, anomaly explanation, case drafting, and uncertainty analysis.
+- **Commander Copilot**: summarizes mission posture, compares courses of action, highlights approval queues, and explains tradeoffs.
+- **Governance Copilot**: reviews proposed prompt/workflow/router updates, compares eval deltas, checks policy impacts, and prepares approval packets.
+
+### Multi-Agent Workflows
+
 ```text
-IntakeAgent
-  -> TriageAgent
-  -> EnrichmentAgent
-  -> CorrelationAgent
-  -> RecommenderAgent
-  -> PolicyGateAgent
-  -> ApprovalAgent
-  -> ExecutionAgent
-  -> AfterActionLearningAgent
+Incoming Event
+  └─ Triage Agent
+      ├─ Deduplication Tool
+      ├─ Policy Filter Tool
+      └─ Severity Scorer
+          └─ Enrichment Agent
+              ├─ Entity Resolver
+              ├─ Graph Correlator
+              ├─ Retrieval Tool
+              └─ Source Reliability Estimator
+                  └─ Synthesis Agent
+                      ├─ Timeline Builder
+                      ├─ Hypothesis Generator
+                      └─ Intel Product Drafter
+                          └─ Recommendation Agent
+                              ├─ Risk/Impact Estimator
+                              ├─ Approval Gate Classifier
+                              └─ Action Package Builder
 ```
 
-### 3) Tool-using agents (strict contracts)
-```python
-from pydantic import BaseModel
+### Tool Contract Rules
 
-class QueryOntologyInput(BaseModel):
-    mission_id: str
-    entity_type: str
-    filters: dict
+1. Tools are registered with JSON schemas, ownership metadata, required scopes, side-effect level, and approval gate.
+2. Read-only tools may execute after policy checks and audit logging.
+3. Mutating tools require state-machine validation and may require human approval depending on action criticality.
+4. Operationally significant actions always require approval and cannot be chained behind hidden autonomous decisions.
+5. Every tool result is stored with input hash, output hash, policy version, model version, prompt version, and lineage references.
 
-class CreateCaseInput(BaseModel):
-    mission_id: str
-    alert_id: str
-    reason: str
+### Human Approval Gates
 
-class ProposeActionInput(BaseModel):
-    case_id: str
-    action_type: str
-    evidence_ids: list[str]
-
-ALLOWED_TOOLS = {
-    "query_ontology": QueryOntologyInput,
-    "create_case": CreateCaseInput,
-    "propose_action": ProposeActionInput,
-    "request_approval": dict,
-}
-```
-
-### 4) Approval gates
-- Operationally significant actions (`asset quarantine`, `task force dispatch`, `external notification`) are **never auto-executed**.
-- Required: policy evaluation + human approval + mission audit record.
+| Action | Side effect | Approval |
+| --- | --- | --- |
+| Summarize evidence | none | no approval, policy-filtered |
+| Expand graph neighborhood | none | no approval, policy-filtered |
+| Draft case | reversible write | analyst confirmation |
+| Open case | workflow write | analyst confirmation; commander for high severity |
+| Generate action package | recommendation only | no execution without approval |
+| Execute operational action | external side effect | explicit authorized human approval |
+| Promote prompt/workflow/router update | platform behavior change | governance approval + Apollo canary |
 
 ---
 
 ## Self-Improvement Loop
 
-### 1) Signal collection
-- Operator edits, rejected recommendations, accepted recommendations, SLA outcomes.
-- Query logs (intent, context window, tool usage, hallucination reports).
-- Mission KPIs (precision, recall, false positive burden, response latency, trust rating).
+### Signal Capture
 
-### 2) Improvement pipeline
+Artemis captures improvement signals without collecting unnecessary sensitive data:
+
 ```text
-feedback_stream
-  -> label_normalizer
-  -> eval_set_builder
-  -> candidate_generator(prompt/workflow/router)
-  -> offline_eval_harness
-  -> shadow_deploy
-  -> human change board approval
-  -> Apollo canary rollout
-  -> full rollout or rollback
+Operator edits summary  ─┐
+Rejected recommendation ─┤
+Accepted recommendation ─┤
+Alert true/false outcome ├─► FeedbackSignal dataset
+Case closure result      ┤       └─► eval examples
+Latency/error telemetry  ┤       └─► prompt/workflow proposals
+Drift detector alerts    ┘       └─► router threshold proposals
 ```
 
-### 3) Guardrails + drift detection
-```python
-SAFETY_GUARDS = {
-    "min_precision_delta": -0.01,
-    "min_recall_delta": -0.02,
-    "max_p95_latency_delta_ms": 120,
-    "operator_trust_delta": 0.0,
-    "policy_violation_count": 0,
-}
+### Improvement Lifecycle
 
-def eligible_for_promotion(metrics: dict, baseline: dict) -> bool:
-    return (
-        metrics["precision"] - baseline["precision"] >= SAFETY_GUARDS["min_precision_delta"]
-        and metrics["recall"] - baseline["recall"] >= SAFETY_GUARDS["min_recall_delta"]
-        and metrics["p95_latency_ms"] - baseline["p95_latency_ms"] <= SAFETY_GUARDS["max_p95_latency_delta_ms"]
-        and metrics["operator_trust"] - baseline["operator_trust"] >= SAFETY_GUARDS["operator_trust_delta"]
-        and metrics["policy_violations"] <= SAFETY_GUARDS["policy_violation_count"]
-    )
+```text
+1. Capture signal
+2. Normalize and redact sensitive fields
+3. Convert to eval example with lineage and permission constraints
+4. Run offline evals against current and candidate prompt/workflow/model routes
+5. Generate improvement proposal with diff, metrics, risks, rollback plan
+6. Governance review approves/rejects/requests changes
+7. Apollo deploys to shadow or canary channel
+8. Monitor precision, recall, latency, trust, safety, and policy violations
+9. Promote, hold, or rollback
+10. Immutable audit entry links every decision and artifact version
 ```
 
-### 4) Versioning and rollback
-- Version all prompts/workflows/router policies as immutable artifacts (`prompt:vX`, `workflow:vY`, `router:vZ`).
-- Apollo maintains deployment manifests with one-click rollback + automated rollback triggers.
+### Drift Detection and Rollback
+
+- **Data drift**: population stability index, embedding distribution distance, source mix changes, missing-field rates.
+- **Concept drift**: precision/recall decay, label disagreement, operator correction spikes, false-positive clusters.
+- **Policy drift**: new coalition-sharing rule, compartment change, new restricted attribute, tool manifest change.
+- **Operational drift**: latency SLO breaches, tool timeouts, case backlog, alert storms.
+
+Rollback is version-addressed:
+
+```yaml
+rollback_unit:
+  prompt_version: artemis-triage-v18
+  workflow_version: alert-triage-sm-v7
+  model_route_version: router-2026-07-13.2
+  policy_bundle_version: opa-bundle-44f3a
+  deployment_channel: mission-canary
+  rollback_to:
+    prompt_version: artemis-triage-v17
+    workflow_version: alert-triage-sm-v6
+    model_route_version: router-2026-07-12.1
+```
+
+### Safe “Gets Better and Better” Mechanism
+
+Artemis improves only within bounded, reviewable dimensions:
+
+- Prompt text, retrieval templates, and structured output schemas.
+- Workflow thresholds, ordering, retries, and escalation heuristics.
+- Model routing based on task type, sensitivity, latency budget, and eval performance.
+- Entity-resolution confidence calibration.
+- Alert scoring calibration.
+
+Artemis never self-modifies:
+
+- Mission objectives.
+- Legal/policy constraints.
+- Approval requirements.
+- User permissions or coalition boundaries.
+- External side-effect permissions.
 
 ---
 
 ## Full-Stack Implementation
 
-### 1) Web UI (TypeScript)
+### Repository Blueprint
+
+```text
+artemis/
+  apps/
+    web-console/                 # React/TypeScript operator UI
+    governance-console/          # prompt/eval/deployment review UI
+  services/
+    api-gateway/                 # FastAPI BFF and GraphQL facade
+    alert-service/               # alert lifecycle and triage state
+    case-service/                # case state machine and approvals
+    ai-orchestrator/             # AIP agent runtime integration
+    feedback-service/            # learning signal capture
+    improvement-service/         # evals and self-upgrade proposals
+  packages/
+    ontology-client/             # typed Foundry/Gotham ontology access
+    policy-client/               # OPA/ABAC helpers
+    schemas/                     # JSON Schema, Protobuf, OpenAPI
+  infra/
+    apollo/                      # release channels and rollback config
+    foundry/                     # pipeline specs, dataset contracts
+    policies/                    # Rego policy-as-code
+  evals/
+    datasets/                    # permission-filtered eval examples
+    suites/                      # prompt/workflow/model eval definitions
+```
+
+### Web UI Blueprint
+
 ```tsx
-// web/src/features/cases/ApprovalQueue.tsx
-export function ApprovalQueue({ items, onDecision }) {
+// apps/web-console/src/components/ApprovalInbox.tsx
+import { useEffect, useState } from "react";
+
+type Recommendation = {
+  recId: string;
+  caseId: string;
+  actionType: string;
+  expectedImpact: string;
+  riskScore: number;
+  confidence: number;
+  rationale: string;
+};
+
+export function ApprovalInbox({ missionId }: { missionId: string }) {
+  const [items, setItems] = useState<Recommendation[]>([]);
+
+  useEffect(() => {
+    const ws = new WebSocket(`/ws/missions/${missionId}/approvals`);
+    ws.onmessage = event => setItems(JSON.parse(event.data));
+    return () => ws.close();
+  }, [missionId]);
+
+  async function decide(recId: string, decision: "approve" | "reject", reason: string) {
+    const response = await fetch(`/api/recommendations/${recId}/decision`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ decision, reason, idempotencyKey: crypto.randomUUID() })
+    });
+    if (!response.ok) throw new Error("Decision was not accepted");
+  }
+
   return (
-    <section>
-      <h2>Operational Approvals</h2>
-      {items.map((it) => (
-        <article key={it.recId}>
-          <h3>{it.actionType}</h3>
-          <p>Risk: {it.riskScore}</p>
-          <button onClick={() => onDecision(it.recId, "APPROVE")}>Approve</button>
-          <button onClick={() => onDecision(it.recId, "REJECT")}>Reject</button>
+    <section aria-label="Approval inbox">
+      {items.map(item => (
+        <article key={item.recId} className="approval-card">
+          <h3>{item.actionType}</h3>
+          <p>{item.expectedImpact}</p>
+          <p>Risk: {item.riskScore.toFixed(2)} • Confidence: {item.confidence.toFixed(2)}</p>
+          <details><summary>Rationale</summary>{item.rationale}</details>
+          <button onClick={() => decide(item.recId, "approve", "Meets mission intent")}>Approve</button>
+          <button onClick={() => decide(item.recId, "reject", "Insufficient evidence")}>Reject</button>
         </article>
       ))}
     </section>
@@ -225,953 +482,566 @@ export function ApprovalQueue({ items, onDecision }) {
 }
 ```
 
-### 2) API gateway + backend services (Python)
+### API Gateway Pattern
+
 ```python
-# api/main.py
-from fastapi import FastAPI, Depends
-from services.policy import authorize
-from services.case_service import create_case_from_alert
+# services/api_gateway/main.py
+from pydantic import BaseModel, Field
+from fastapi import FastAPI, Depends, HTTPException, Header
+from uuid import UUID
 
-app = FastAPI(title="ClearGlassInc Artemis Mission API")
+app = FastAPI(title="ClearGlassInc Artemis API Gateway")
 
-@app.post("/v1/alerts/{alert_id}/cases")
-async def open_case(alert_id: str, user=Depends(authorize("case:create"))):
-    return await create_case_from_alert(alert_id=alert_id, user=user)
+class AuthContext(BaseModel):
+    user_id: str
+    roles: list[str]
+    compartments: list[str]
+    coalition: list[str]
+    mission_ids: list[str]
 
-@app.post("/v1/recommendations/{rec_id}/decision")
-async def decide(rec_id: str, decision: dict, user=Depends(authorize("approval:decide"))):
-    # decision = {"value":"APPROVE|REJECT", "reason":"..."}
-    return {"rec_id": rec_id, "status": "recorded", "by": user["id"]}
+class DecisionRequest(BaseModel):
+    decision: str = Field(pattern="^(approve|reject|request_changes)$")
+    reason: str = Field(min_length=3, max_length=4000)
+    idempotency_key: UUID
+
+async def auth_context(authorization: str = Header()) -> AuthContext:
+    # Production implementation validates OIDC/JWT, extracts claims, and rejects stale tokens.
+    return AuthContext(
+        user_id="operator-123",
+        roles=["analyst"],
+        compartments=["alpha"],
+        coalition=["CLEARGLASSINC"],
+        mission_ids=["mission-7"],
+    )
+
+async def policy_allow(ctx: AuthContext, action: str, resource: dict) -> bool:
+    # Calls OPA/Foundry policy service with full request provenance.
+    return action == "recommendation.decide" and "analyst" in ctx.roles
+
+@app.post("/api/recommendations/{rec_id}/decision")
+async def recommendation_decision(rec_id: str, body: DecisionRequest, ctx: AuthContext = Depends(auth_context)):
+    resource = {"type": "Recommendation", "id": rec_id}
+    if not await policy_allow(ctx, "recommendation.decide", resource):
+        raise HTTPException(status_code=403, detail="Not authorized for this recommendation")
+
+    # Idempotent command forwarded to approval service.
+    return {
+        "status": "accepted",
+        "rec_id": rec_id,
+        "decision": body.decision,
+        "decision_by": ctx.user_id,
+        "idempotency_key": str(body.idempotency_key),
+    }
 ```
 
-### 3) Event bus handler
+### Event Bus and Streaming
+
 ```python
-# services/triage_consumer.py
+# services/alert_service/triage_consumer.py
+from dataclasses import dataclass
+from datetime import datetime, timezone
+import hashlib
 import json
-from aiokafka import AIOKafkaConsumer
 
-async def consume_events():
-    consumer = AIOKafkaConsumer("mission.events", bootstrap_servers="kafka:9092")
-    await consumer.start()
-    try:
-      async for msg in consumer:
-          event = json.loads(msg.value)
-          # score, correlate, emit alert candidate
-          # write provenance + telemetry
-    finally:
-      await consumer.stop()
+@dataclass(frozen=True)
+class RawEvent:
+    event_id: str
+    source_system: str
+    payload: dict
+    ts_event: datetime
+    classification: str
+    coalition_scope: list[str]
+
+@dataclass(frozen=True)
+class AlertCandidate:
+    alert_id: str
+    event_id: str
+    severity: str
+    score: float
+    rationale: str
+
+SUSPICIOUS_EVENT_TYPES = {"credential_anomaly", "unexpected_data_transfer", "watchlist_match"}
+
+def stable_id(prefix: str, value: dict) -> str:
+    digest = hashlib.sha256(json.dumps(value, sort_keys=True).encode()).hexdigest()[:20]
+    return f"{prefix}_{digest}"
+
+def triage_event(event: RawEvent) -> AlertCandidate | None:
+    event_type = event.payload.get("event_type")
+    source_reliability = float(event.payload.get("source_reliability", 0.5))
+    impact = float(event.payload.get("impact_estimate", 0.0))
+
+    if event_type not in SUSPICIOUS_EVENT_TYPES:
+        return None
+
+    score = min(1.0, 0.55 * source_reliability + 0.45 * impact)
+    severity = "critical" if score >= 0.9 else "high" if score >= 0.75 else "medium"
+    return AlertCandidate(
+        alert_id=stable_id("alert", {"event_id": event.event_id, "event_type": event_type}),
+        event_id=event.event_id,
+        severity=severity,
+        score=score,
+        rationale=f"{event_type} scored {score:.2f} from reliability and impact signals",
+    )
 ```
 
-### 4) Search/RAG layer
+### Ontology-Driven Query
+
 ```python
-# services/retrieval.py
-async def retrieve_case_context(case_id: str, user_scope: dict) -> dict:
-    graph_hits = await query_graph(case_id=case_id, scope=user_scope)
-    vector_hits = await query_vector(index="intel-briefs", query=case_id, scope=user_scope)
-    return {"graph": graph_hits, "vector": vector_hits}
+# packages/ontology_client/client.py
+from dataclasses import dataclass
+from datetime import datetime
+
+@dataclass(frozen=True)
+class QueryContext:
+    user_id: str
+    mission_id: str
+    compartments: list[str]
+    coalition: list[str]
+    as_of: datetime
+
+class OntologyClient:
+    def __init__(self, foundry_session):
+        self.session = foundry_session
+
+    async def alert_context(self, alert_id: str, ctx: QueryContext) -> dict:
+        # The Foundry query/action layer enforces row, column, entity, and action permissions.
+        return await self.session.query("""
+            SELECT a.alert_id, a.severity, a.score, e.event_type, e.ts_event,
+                   asset.asset_id, asset.criticality, actor.actor_id, actor.confidence
+            FROM Alert a
+            JOIN Event e ON a.event_id = e.event_id
+            LEFT JOIN EVENT_TARGETED_ASSET eta ON eta.event_id = e.event_id
+            LEFT JOIN Asset asset ON asset.asset_id = eta.asset_id
+            LEFT JOIN EVENT_OBSERVED_ACTOR eoa ON eoa.event_id = e.event_id
+            LEFT JOIN Actor actor ON actor.actor_id = eoa.actor_id
+            WHERE a.alert_id = :alert_id
+              AND :mission_id = ANY(a.allowed_missions)
+              AND a.classification <= current_user_clearance()
+              AND overlaps(a.coalition_scope, :coalition)
+        """, {"alert_id": alert_id, "mission_id": ctx.mission_id, "coalition": ctx.coalition})
 ```
 
-### 5) Model router
+### Model Router
+
 ```python
-# services/model_router.py
-ROUTES = {
-    "summarization": ["gpt-4.1-mini", "fallback-local-llm"],
-    "high_risk_reasoning": ["gpt-4.1", "fallback-gpt-4.1-mini"],
+# services/ai_orchestrator/model_router.py
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class InferenceRequest:
+    task: str
+    classification: str
+    latency_budget_ms: int
+    requires_reasoning: bool
+    pii_present: bool
+    mission_critical: bool
+
+@dataclass(frozen=True)
+class ModelRoute:
+    provider: str
+    model: str
+    max_tokens: int
+    temperature: float
+    route_reason: str
+
+class ModelRouter:
+    def route(self, request: InferenceRequest) -> ModelRoute:
+        if request.pii_present or request.classification not in {"public", "internal"}:
+            return ModelRoute("aip-private", "mission-secure-reasoner", 4096, 0.0, "sensitive_data_private_route")
+        if request.latency_budget_ms < 800 and not request.requires_reasoning:
+            return ModelRoute("aip-low-latency", "fast-summarizer", 1024, 0.0, "latency_budget")
+        if request.mission_critical or request.requires_reasoning:
+            return ModelRoute("aip-governed", "high-precision-reasoner", 8192, 0.0, "mission_critical_reasoning")
+        return ModelRoute("aip-standard", "balanced-reasoner", 4096, 0.1, "default_balanced")
+```
+
+### Workflow State Machine
+
+```python
+# services/case_service/state_machine.py
+from enum import StrEnum
+
+class CaseState(StrEnum):
+    OPEN = "open"
+    INVESTIGATING = "investigating"
+    PENDING_APPROVAL = "pending_approval"
+    ACTIONED = "actioned"
+    CLOSED = "closed"
+
+ALLOWED_TRANSITIONS = {
+    CaseState.OPEN: {CaseState.INVESTIGATING, CaseState.CLOSED},
+    CaseState.INVESTIGATING: {CaseState.PENDING_APPROVAL, CaseState.CLOSED},
+    CaseState.PENDING_APPROVAL: {CaseState.INVESTIGATING, CaseState.ACTIONED, CaseState.CLOSED},
+    CaseState.ACTIONED: {CaseState.CLOSED},
+    CaseState.CLOSED: set(),
 }
 
-def route_task(task_type: str, latency_budget_ms: int, classification: str) -> str:
-    candidates = ROUTES[task_type]
-    if classification in {"TOP_SECRET", "COALITION_RESTRICTED"}:
-        return candidates[0]  # approved hardened path
-    return candidates[0] if latency_budget_ms > 400 else candidates[-1]
+def transition_case(current: CaseState, desired: CaseState, *, approval_present: bool) -> CaseState:
+    if desired not in ALLOWED_TRANSITIONS[current]:
+        raise ValueError(f"Invalid transition from {current} to {desired}")
+    if desired == CaseState.ACTIONED and not approval_present:
+        raise PermissionError("Human approval is required before actioned state")
+    return desired
 ```
 
-### 6) Workflow state machine
-```python
-# services/workflow.py
-from enum import Enum
+### Policy-as-Code
 
-class CaseState(str, Enum):
-    NEW = "NEW"
-    TRIAGED = "TRIAGED"
-    RECOMMENDED = "RECOMMENDED"
-    PENDING_APPROVAL = "PENDING_APPROVAL"
-    EXECUTED = "EXECUTED"
-    CLOSED = "CLOSED"
+```rego
+package artemis.authz
 
-ALLOWED = {
-    CaseState.NEW: {CaseState.TRIAGED},
-    CaseState.TRIAGED: {CaseState.RECOMMENDED},
-    CaseState.RECOMMENDED: {CaseState.PENDING_APPROVAL},
-    CaseState.PENDING_APPROVAL: {CaseState.EXECUTED, CaseState.CLOSED},
-    CaseState.EXECUTED: {CaseState.CLOSED},
+default allow := false
+
+allow if {
+  input.action == "ontology.read"
+  input.user.clearance >= input.resource.classification_rank
+  some c
+  c := input.resource.coalition_scope[_]
+  c == input.user.coalition[_]
+  input.resource.mission_id == input.request.mission_id
+}
+
+allow if {
+  input.action == "recommendation.decide"
+  "analyst" in input.user.roles
+  input.resource.status == "proposed"
+  input.resource.mission_id in input.user.mission_ids
+  not input.resource.requires_commander_approval
+}
+
+allow if {
+  input.action == "recommendation.decide"
+  "commander" in input.user.roles
+  input.resource.status == "proposed"
+  input.resource.mission_id in input.user.mission_ids
+}
+
+deny_reason contains "operational actions require explicit approval" if {
+  input.action == "external.execute"
+  not input.request.human_approval_id
 }
 ```
 
-### 7) Evals pipeline
-```sql
-CREATE TABLE eval_run (
-  eval_run_id TEXT PRIMARY KEY,
-  candidate_version TEXT NOT NULL,
-  baseline_version TEXT NOT NULL,
-  dataset_snapshot_id TEXT NOT NULL,
-  precision DOUBLE PRECISION,
-  recall DOUBLE PRECISION,
-  f1 DOUBLE PRECISION,
-  p95_latency_ms DOUBLE PRECISION,
-  trust_score DOUBLE PRECISION,
-  policy_violations INTEGER,
-  created_at TIMESTAMPTZ NOT NULL
-);
+### Eval Pipeline
+
+```python
+# services/improvement_service/evals.py
+from dataclasses import dataclass
+from statistics import mean
+
+@dataclass(frozen=True)
+class EvalExample:
+    example_id: str
+    prompt_input: dict
+    expected_label: str
+    policy_context: dict
+    lineage_refs: list[str]
+
+@dataclass(frozen=True)
+class EvalResult:
+    candidate_version: str
+    precision: float
+    recall: float
+    latency_p95_ms: int
+    policy_violations: int
+    passed: bool
+
+class CandidateWorkflow:
+    def __init__(self, version: str):
+        self.version = version
+
+    async def run(self, example: EvalExample) -> tuple[str, int, bool]:
+        # Returns predicted label, latency, policy_violation.
+        return "escalate", 420, False
+
+async def run_eval_suite(candidate: CandidateWorkflow, examples: list[EvalExample]) -> EvalResult:
+    tp = fp = fn = 0
+    latencies: list[int] = []
+    policy_violations = 0
+
+    for example in examples:
+        predicted, latency_ms, policy_violation = await candidate.run(example)
+        latencies.append(latency_ms)
+        policy_violations += int(policy_violation)
+        if predicted == "escalate" and example.expected_label == "escalate":
+            tp += 1
+        elif predicted == "escalate":
+            fp += 1
+        elif example.expected_label == "escalate":
+            fn += 1
+
+    precision = tp / max(1, tp + fp)
+    recall = tp / max(1, tp + fn)
+    latency_p95 = sorted(latencies)[int(0.95 * (len(latencies) - 1))] if latencies else 0
+    passed = precision >= 0.92 and recall >= 0.88 and latency_p95 <= 1500 and policy_violations == 0
+
+    return EvalResult(candidate.version, precision, recall, latency_p95, policy_violations, passed)
+```
+
+### Improvement Proposal Object
+
+```json
+{
+  "proposal_id": "upgrade_2026_07_13_triage_prompt_v19",
+  "proposal_type": "prompt_update",
+  "target": "alert_triage_agent",
+  "current_version": "triage_prompt_v18",
+  "candidate_version": "triage_prompt_v19",
+  "evidence": {
+    "eval_suite": "alert_triage_regression_2026_07_13",
+    "precision_delta": 0.031,
+    "recall_delta": 0.018,
+    "latency_delta_ms": 42,
+    "policy_violations": 0,
+    "operator_rejection_rate_delta": -0.07
+  },
+  "risk_assessment": {
+    "blast_radius": "mission-canary only",
+    "rollback_seconds": 45,
+    "known_risks": ["slightly longer rationale text"]
+  },
+  "approval_gate": "governance_review",
+  "apollo_channel": "mission-canary"
+}
 ```
 
 ---
 
 ## Security and Governance
 
-### 1) Need-to-know and coalition controls
-- AuthN: enterprise IdP + hardware-backed MFA + short-lived tokens.
-- AuthZ: ABAC (`mission`, `classification`, `compartment`, `role`) + RBAC overlays.
-- Data enforcement: row/column/entity-level filters in query services and Foundry policy layers.
+### Access Control
 
-### 2) Zero-trust execution
-- Every service call mTLS + SPIFFE identities.
-- Tool execution sandboxed with signed tool manifests.
-- No direct model-to-database access; all access via policy-enforced tool layer.
+- **AuthN**: OIDC, phishing-resistant MFA, hardware-backed workload identities, short-lived tokens.
+- **AuthZ**: RBAC for broad duties, ABAC for mission/clearance/compartment/coalition/context, relationship-based checks for object ownership and case assignment.
+- **Entity-level permissions**: each object has classification, compartments, allowed missions, coalition scope, and restricted attributes.
+- **Row/column controls**: Foundry datasets expose only permitted rows and mask restricted columns such as PII, sources, or partner caveats.
+- **Action controls**: ontology actions are policy-checked before execution and classified by side-effect level.
 
-### 3) Model/prompt governance
-- Prompt registry with approvals, diff history, and deprecation windows.
-- Model allowlist by mission classification.
-- Policy-as-code (OPA/Rego) checks before tool invocation.
+### Coalition Boundaries
 
-### 4) Immutable provenance and audit
-- Append-only audit stream (WORM storage).
-- Every recommendation includes: `evidence_ids`, `lineage_hash`, `policy_decision_id`, `model_version`.
+- Coalition cells are represented as policy attributes on users, data, prompts, tools, and generated products.
+- Agents receive only retrieval results permitted for the active coalition context.
+- Generated products carry derivative classification and dissemination constraints computed from source lineage.
+- Cross-coalition sharing requires explicit downgrade/release workflow and human review.
+
+### Zero-Trust Execution
+
+- Every service authenticates every call with workload identity.
+- Tool execution runs in constrained sandboxes with egress controls, timeouts, resource quotas, and signed tool manifests.
+- Prompts and model calls are treated as untrusted transformations: inputs are minimized, outputs are validated, and side effects are mediated by deterministic services.
+- Secrets are never embedded in prompts, logs, eval examples, or generated products.
+
+### Immutable Audit
+
+Audit entries include:
+
+```json
+{
+  "audit_id": "audit_01JZZ...",
+  "ts": "2026-07-13T12:00:00Z",
+  "actor_type": "agent",
+  "actor_id": "triage-agent-v7",
+  "human_supervisor": "operator-123",
+  "action": "tool.call",
+  "resource": { "type": "Alert", "id": "alert_abc" },
+  "input_hash": "sha256:...",
+  "output_hash": "sha256:...",
+  "policy_version": "opa-bundle-44f3a",
+  "prompt_version": "triage_prompt_v18",
+  "workflow_version": "alert-triage-sm-v7",
+  "model_route_version": "router-2026-07-13.2",
+  "decision": "allow",
+  "lineage_refs": ["dataset:events_silver@2026-07-13"]
+}
+```
+
+### Governance Boards and SLOs
+
+- **Prompt governance**: prompt diffs, eval results, red-team notes, injection tests, rollback plans.
+- **Model governance**: model cards, sensitivity routes, latency/cost/SLO profiles, retirement plans.
+- **Workflow governance**: state-machine diffs, action-gate impacts, concurrency/race analysis.
+- **Policy governance**: Rego tests, change impact analysis, signed bundle rollout.
+
+Target SLOs:
+
+| Metric | Target |
+| --- | --- |
+| Hot-path alert triage p95 | < 1.5 seconds |
+| Critical approval notification p95 | < 3 seconds |
+| Unauthorized data exposure | 0 tolerated |
+| Policy violation in eval/canary | 0 tolerated |
+| Prompt rollback time | < 60 seconds |
+| Operator trust score | > 4.3 / 5 |
+| Recommendation precision | > 0.92 for high-impact recommendations |
 
 ---
 
 ## Code Examples
 
-```python
-# services/policy.py
-from fastapi import HTTPException
-
-def authorize(permission: str):
-    async def _dep(user=...):
-        # evaluate ABAC/RBAC against mission context
-        allowed = True
-        if not allowed:
-            raise HTTPException(status_code=403, detail=f"Denied: {permission}")
-        return {"id": "operator-123", "perms": [permission]}
-    return _dep
-```
+### AI Tool Registration
 
 ```python
-# services/self_improvement.py
-async def propose_upgrade(candidate: dict, eval_metrics: dict, baseline: dict):
-    if not eligible_for_promotion(eval_metrics, baseline):
-        return {"status": "rejected", "reason": "guardrails"}
-    return {
-      "status": "pending_human_review",
-      "candidate": candidate,
-      "required_signoffs": ["AI Governance Lead", "Mission Owner"],
+# services/ai_orchestrator/tools.py
+from pydantic import BaseModel, Field
+from typing import Literal
+
+class ToolManifest(BaseModel):
+    name: str
+    version: str
+    side_effect: Literal["none", "reversible_write", "external_effect"]
+    required_action: str
+    approval_required: bool
+    input_schema: dict
+
+OPEN_CASE_TOOL = ToolManifest(
+    name="case.open_from_alert",
+    version="1.0.0",
+    side_effect="reversible_write",
+    required_action="case.open",
+    approval_required=True,
+    input_schema={
+        "type": "object",
+        "required": ["alert_id", "mission_id", "title"],
+        "properties": {
+            "alert_id": {"type": "string"},
+            "mission_id": {"type": "string"},
+            "title": {"type": "string", "minLength": 5, "maxLength": 160},
+            "rationale": {"type": "string", "maxLength": 4000}
+        },
+        "additionalProperties": False
     }
+)
 ```
 
+### Tool Execution Guard
+
 ```python
-# services/feedback_ingest.py
-async def ingest_feedback(feedback: dict):
-    # feedback = {rec_id, operator_id, label, correction, outcome}
-    # write feedback event, recalculate trust metrics, enqueue eval refresh
-    return {"ok": True, "queued_eval_refresh": True}
+# services/ai_orchestrator/executor.py
+import jsonschema
+
+class ToolExecutionDenied(Exception):
+    pass
+
+async def execute_tool(manifest, payload, ctx, policy_client, audit_writer, tool_impl):
+    jsonschema.validate(payload, manifest.input_schema)
+
+    allowed = await policy_client.allow(
+        user=ctx.user,
+        action=manifest.required_action,
+        resource=payload,
+        request={"mission_id": payload.get("mission_id"), "approval_id": ctx.approval_id},
+    )
+    if not allowed:
+        await audit_writer.write_denied(manifest.name, payload, ctx)
+        raise ToolExecutionDenied(f"Policy denied tool {manifest.name}")
+
+    if manifest.approval_required and not ctx.approval_id:
+        raise ToolExecutionDenied(f"Tool {manifest.name} requires approval")
+
+    result = await tool_impl(payload, ctx)
+    await audit_writer.write_allowed(manifest.name, payload, result, ctx)
+    return result
+```
+
+### Feedback Capture
+
+```python
+# services/feedback_service/capture.py
+from pydantic import BaseModel, Field
+from typing import Literal
+
+class FeedbackRequest(BaseModel):
+    source: Literal["operator_correction", "edited_summary", "alert_outcome", "mission_result"]
+    target_type: Literal["prompt", "workflow", "model_route", "entity", "alert", "recommendation"]
+    target_id: str
+    label: str = Field(max_length=200)
+    correction_json: dict = Field(default_factory=dict)
+    outcome: str = Field(max_length=2000)
+
+async def capture_feedback(body: FeedbackRequest, ctx, redactor, dataset_writer):
+    safe_correction = redactor.minimize_and_mask(body.correction_json, ctx.policy_context)
+    record = {
+        "source": body.source,
+        "target_type": body.target_type,
+        "target_id": body.target_id,
+        "label": body.label,
+        "correction_json": safe_correction,
+        "outcome": body.outcome,
+        "captured_by": ctx.user.user_id,
+        "policy_version": ctx.policy_version,
+        "lineage_refs": ctx.lineage_refs,
+    }
+    await dataset_writer.append("feedback_signals_bronze", record)
+    return {"status": "captured"}
+```
+
+### Drift Detector
+
+```python
+# services/improvement_service/drift.py
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class DriftReport:
+    metric: str
+    value: float
+    threshold: float
+    status: str
+
+class DriftDetector:
+    def missing_field_rate(self, records: list[dict], field: str) -> DriftReport:
+        if not records:
+            return DriftReport(f"missing_{field}", 1.0, 0.05, "alert")
+        rate = sum(1 for record in records if record.get(field) in (None, "")) / len(records)
+        return DriftReport(f"missing_{field}", rate, 0.05, "alert" if rate > 0.05 else "ok")
+
+    def correction_spike(self, current_rate: float, baseline_rate: float) -> DriftReport:
+        ratio = current_rate / max(0.001, baseline_rate)
+        return DriftReport("operator_correction_ratio", ratio, 1.5, "alert" if ratio > 1.5 else "ok")
 ```
 
 ---
 
 ## Scenario Walkthrough
 
-1. **Live event arrival**: a coalition sensor emits anomalous movement; stream lands on `mission.events` with classification and mission tags.
-2. **Triage**: TriageAgent scores severity 0.91, links to known Actor and critical Asset in ontology.
-3. **Enrichment/correlation**: EnrichmentAgent pulls historical pattern matches + Gotham case links.
-4. **Recommendation**: RecommenderAgent proposes `ACTION: increase surveillance + create priority case`, cites 7 ontology evidence edges.
-5. **Policy gate**: PolicyGateAgent validates coalition sharing boundary and need-to-know.
-6. **Human decision**: Commander approves surveillance increase, rejects escalation action due to collateral risk.
-7. **Execution**: approved action is executed, case status transitions to `EXECUTED`.
-8. **Outcome feedback**: after 6 hours, mission result indicates true positive, but escalation rejection also validated.
-9. **Learning loop**: feedback updates eval dataset; candidate prompt adjusts escalation threshold explanation format.
-10. **Safe promotion**: candidate passes offline + shadow evals, then awaits governance signoff; Apollo canaries to 10% ring.
-11. **Continuous improvement**: metrics improve precision + operator trust while policy violations remain zero.
+### 1. Live Event Enters
+At 12:00:00Z, a partner telemetry feed sends an `unexpected_data_transfer` event involving a mission-critical dataset. The ingestion gateway validates schema, verifies source signature, assigns lineage references, and publishes to `events.raw.mission-7.alpha`.
 
-This yields a platform that improves at machine speed while preserving explicit human authority, policy compliance, and mission assurance for **ClearGlassInc Artemis**.
+### 2. Hot-Path Triage
+The alert service consumes the event, normalizes it into the Foundry silver dataset, and runs deterministic scoring. The event score is high because source reliability is strong and impacted asset criticality is mission-critical. AIP triage receives only policy-filtered context and calls read-only tools for deduplication, related actor lookup, and graph expansion.
 
-## Python-First Precision Reference Implementation
+### 3. Agent Recommendation
+The enrichment agent finds two prior related events and a weak actor association. The synthesis agent drafts a concise timeline with confidence labels. The recommendation agent proposes: open an investigation case, notify the mission cell, and request additional collection. It cannot execute those actions directly. It creates a `Recommendation` object in `proposed` state with risk, confidence, evidence, policy constraints, and required approval gate.
 
-This section turns the blueprint into an implementation-oriented skeleton. It intentionally keeps all operationally significant actions behind explicit policy and human approval gates. Palantir terminology used here:
+### 4. Operator Approval or Rejection
+The Analyst Workbench shows the recommendation in the approval inbox. The operator inspects lineage, graph links, and uncertainty. If approved, the case service transitions the case to `pending_approval` or `actioned` only when state-machine and policy checks pass. If rejected, the operator must provide a reason such as “actor association too weak” or “duplicate of known benign transfer.”
 
-- **Gotham**: operational intelligence workspace for investigations, link analysis, entity tracking, case management, and mission timelines.
-- **Foundry**: governed data integration and ontology platform for pipelines, data products, transforms, lineage, permissions, and operational applications.
-- **AIP**: AI Platform layer for copilots, agent tools, model routing, evaluations, prompt governance, and automated workflows.
-- **Apollo**: controlled deployment, runtime configuration, rollout, rollback, and fleet health management across secure environments.
+### 5. Learning Signal
+The feedback service captures the approval/rejection, edited rationale, final alert outcome, and case closure label. Sensitive content is minimized, masked, and stored as a `FeedbackSignal` with lineage and policy metadata.
 
-### End-to-end service map
+### 6. Eval Generation
+The improvement service converts the signal into an eval example: given similar source reliability, asset criticality, and actor-confidence conditions, should the triage workflow escalate, suppress, or ask for more evidence? The eval example is permission-scoped and cannot expose restricted raw data to unauthorized reviewers.
 
-```text
-clear-glass-artemis/
-  apps/
-    analyst-console/              # React/TypeScript operator UI
-    commander-cop/                # mission common operating picture
-    governance-console/           # prompt/workflow/model approval UI
-  services/
-    api-gateway/                  # FastAPI edge API, auth context, rate limits
-    ingest-gateway/               # signed feed admission + schema validation
-    triage-service/               # deterministic scoring + alert creation
-    ontology-service/             # policy-filtered Foundry/Gotham graph access
-    agent-orchestrator/           # AIP tool contracts + workflow state machines
-    eval-service/                 # offline/shadow evals + promotion guardrails
-    feedback-service/             # operator corrections + outcome ingestion
-    policy-service/               # OPA/Rego + mission-context decisions
-    audit-service/                # immutable append-only audit log
-  infra/
-    apollo/                       # deployment rings, canaries, rollback policies
-    policies/                     # policy-as-code bundles
-    observability/                # metrics, traces, dashboards, SLOs
-  ontology/
-    objects.yaml                  # Foundry ontology object definitions
-    links.yaml                    # ontology relationship definitions
-    actions.yaml                  # ontology-backed action definitions
-  evals/
-    datasets/                     # immutable eval snapshots
-    rubrics/                      # scoring rubrics and mission KPIs
-    candidates/                   # proposed prompt/workflow/router versions
-```
+### 7. Self-Upgrade Proposal
+After enough examples accumulate, Artemis generates a prompt/workflow proposal: increase the requirement for actor-confidence before recommending commander notification, but preserve case-opening behavior for mission-critical assets. Offline evals show improved precision with no recall regression and zero policy violations.
 
-### Precision event contract
+### 8. Human Review and Apollo Canary
+The Governance Console shows a diff, eval metrics, sample failures, risk assessment, and rollback plan. A human governance reviewer approves canary deployment. Apollo releases the candidate to a mission-canary channel with feature flags and live telemetry.
 
-Every live or historical observation is normalized before it can affect cases, recommendations, or evals. The same contract feeds Foundry transforms, Gotham case links, and AIP tool calls.
-
-```python
-# services/common/contracts.py
-from __future__ import annotations
-
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Literal
-from uuid import UUID, uuid4
-
-from pydantic import BaseModel, Field, field_validator
-
-
-class Classification(str, Enum):
-    UNCLASSIFIED = "UNCLASSIFIED"
-    CONTROLLED = "CONTROLLED"
-    SECRET = "SECRET"
-    COALITION_RESTRICTED = "COALITION_RESTRICTED"
-
-
-class Provenance(BaseModel):
-    source_system: str
-    source_record_id: str
-    transform_version: str
-    lineage_hash: str
-    received_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-
-class MissionScope(BaseModel):
-    mission_id: str
-    compartments: set[str] = Field(default_factory=set)
-    coalition: set[str] = Field(default_factory=set)
-    classification: Classification
-
-
-class ObservationEvent(BaseModel):
-    event_id: UUID = Field(default_factory=uuid4)
-    event_type: str
-    event_time: datetime
-    ingest_time: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    mission: MissionScope
-    confidence: float = Field(ge=0.0, le=1.0)
-    payload: dict[str, Any]
-    provenance: Provenance
-
-    @field_validator("event_type")
-    @classmethod
-    def event_type_must_be_namespaced(cls, value: str) -> str:
-        if "." not in value:
-            raise ValueError("event_type must be namespaced, e.g. sensor.rf.anomaly")
-        return value
-
-
-class Recommendation(BaseModel):
-    rec_id: UUID = Field(default_factory=uuid4)
-    case_id: str
-    action_type: str
-    rationale: str
-    evidence_ids: list[str]
-    risk_score: float = Field(ge=0.0, le=1.0)
-    confidence: float = Field(ge=0.0, le=1.0)
-    approval_required: Literal[True] = True
-```
-
-### Foundry ontology objects and guarded actions
-
-```yaml
-# ontology/objects.yaml
-objects:
-  ArtemisMission:
-    primaryKey: mission_id
-    properties:
-      mission_id: string
-      name: string
-      priority: integer
-      classification: string
-      coalition_scope: array<string>
-      active_from: timestamp
-      active_to: timestamp?
-
-  ArtemisEvent:
-    primaryKey: event_id
-    properties:
-      event_id: string
-      event_type: string
-      event_time: timestamp
-      ingest_time: timestamp
-      confidence: double
-      raw_payload_ref: string
-      source_system: string
-      lineage_hash: string
-      classification: string
-      mission_id: string
-
-  ArtemisCase:
-    primaryKey: case_id
-    properties:
-      case_id: string
-      mission_id: string
-      status: string
-      severity: string
-      owner: string
-      sla_due_at: timestamp
-      created_at: timestamp
-
-  ArtemisRecommendation:
-    primaryKey: rec_id
-    properties:
-      rec_id: string
-      case_id: string
-      action_type: string
-      rationale: string
-      evidence_ids: array<string>
-      risk_score: double
-      confidence: double
-      status: string
-      model_version: string
-      prompt_version: string
-```
-
-```yaml
-# ontology/actions.yaml
-actions:
-  open_case_from_alert:
-    object: ArtemisAlert
-    requiredPermissions: ["case:create"]
-    writes: [ArtemisCase, AuditEvent]
-    approval: false
-
-  approve_recommendation:
-    object: ArtemisRecommendation
-    requiredPermissions: ["recommendation:approve"]
-    writes: [ApprovalDecision, AuditEvent]
-    approval: true
-    policyChecks:
-      - mission_scope_allows_user
-      - classification_allows_user
-      - coalition_boundary_allows_release
-      - recommendation_has_evidence
-```
-
-### Policy-enforced ontology query path
-
-AIP agents never receive direct database credentials. They call tools. Tools call ontology services. Ontology services attach user, mission, classification, and coalition context to every query.
-
-```python
-# services/ontology_service/query.py
-from dataclasses import dataclass
-from typing import Any
-
-
-@dataclass(frozen=True)
-class UserContext:
-    user_id: str
-    roles: frozenset[str]
-    clearances: frozenset[str]
-    compartments: frozenset[str]
-    coalition: frozenset[str]
-
-
-def build_scope_filter(user: UserContext, mission_id: str) -> dict[str, Any]:
-    return {
-        "mission_id": mission_id,
-        "classification__in": sorted(user.clearances),
-        "compartments__overlap": sorted(user.compartments),
-        "coalition_scope__overlap": sorted(user.coalition),
-    }
-
-
-async def query_case_graph(case_id: str, mission_id: str, user: UserContext) -> dict[str, Any]:
-    scope_filter = build_scope_filter(user, mission_id)
-    # Adapter can target Foundry Ontology SDK, Gotham APIs, or a test double.
-    graph = await foundry_ontology.search_links(
-        start_object="ArtemisCase",
-        start_key=case_id,
-        link_types=[
-            "CASE_HAS_ALERT",
-            "ALERT_FROM_EVENT",
-            "EVENT_OBSERVED_ACTOR",
-            "EVENT_TARGETED_ASSET",
-            "CASE_HAS_RECOMMENDATION",
-        ],
-        filters=scope_filter,
-        max_depth=3,
-    )
-    await audit.write(
-        event_type="ontology.query",
-        actor=user.user_id,
-        resource=case_id,
-        decision="ALLOW",
-        attributes={"mission_id": mission_id, "links": len(graph.get("links", []))},
-    )
-    return graph
-```
-
-### Agent orchestration with approval gates
-
-```python
-# services/agent_orchestrator/workflows.py
-from enum import Enum
-from pydantic import BaseModel
-
-
-class Step(str, Enum):
-    INTAKE = "INTAKE"
-    TRIAGE = "TRIAGE"
-    ENRICH = "ENRICH"
-    CORRELATE = "CORRELATE"
-    RECOMMEND = "RECOMMEND"
-    POLICY_GATE = "POLICY_GATE"
-    HUMAN_APPROVAL = "HUMAN_APPROVAL"
-    EXECUTE_APPROVED = "EXECUTE_APPROVED"
-    LEARN = "LEARN"
-
-
-class WorkflowState(BaseModel):
-    case_id: str
-    current: Step
-    completed: list[Step] = []
-    blocked_reason: str | None = None
-
-
-TRANSITIONS = {
-    Step.INTAKE: {Step.TRIAGE},
-    Step.TRIAGE: {Step.ENRICH},
-    Step.ENRICH: {Step.CORRELATE},
-    Step.CORRELATE: {Step.RECOMMEND},
-    Step.RECOMMEND: {Step.POLICY_GATE},
-    Step.POLICY_GATE: {Step.HUMAN_APPROVAL},
-    Step.HUMAN_APPROVAL: {Step.EXECUTE_APPROVED, Step.LEARN},
-    Step.EXECUTE_APPROVED: {Step.LEARN},
-}
-
-
-def transition(state: WorkflowState, next_step: Step) -> WorkflowState:
-    if next_step not in TRANSITIONS[state.current]:
-        raise ValueError(f"Invalid transition {state.current} -> {next_step}")
-    return state.model_copy(update={"current": next_step, "completed": [*state.completed, state.current]})
-```
-
-```python
-# services/agent_orchestrator/tools.py
-from typing import Protocol
-
-
-class PolicyClient(Protocol):
-    async def decide(self, action: str, subject: dict, resource: dict) -> dict: ...
-
-
-async def propose_recommendation_tool(
-    *,
-    case_id: str,
-    action_type: str,
-    rationale: str,
-    evidence_ids: list[str],
-    user: UserContext,
-    policy: PolicyClient,
-) -> Recommendation:
-    decision = await policy.decide(
-        action="recommendation:propose",
-        subject={"user_id": user.user_id, "roles": list(user.roles)},
-        resource={"case_id": case_id, "evidence_ids": evidence_ids, "action_type": action_type},
-    )
-    if decision["allow"] is not True:
-        raise PermissionError(decision.get("reason", "policy denied"))
-    rec = Recommendation(
-        case_id=case_id,
-        action_type=action_type,
-        rationale=rationale,
-        evidence_ids=evidence_ids,
-        risk_score=decision.get("risk_score", 1.0),
-        confidence=decision.get("confidence", 0.5),
-    )
-    await recommendation_store.put(rec)
-    await approval_queue.enqueue(rec)
-    return rec
-```
-
-### Self-improvement pipeline implementation
-
-The system can propose prompt, workflow, heuristic, and routing changes, but it cannot unilaterally promote them into mission production. Promotion requires eval gates, policy gates, immutable audit, and human signoff.
-
-```python
-# services/eval_service/promotion.py
-from dataclasses import dataclass
-
-
-@dataclass(frozen=True)
-class EvalMetrics:
-    precision: float
-    recall: float
-    f1: float
-    p95_latency_ms: float
-    operator_trust: float
-    policy_violations: int
-    unsafe_tool_calls: int
-
-
-@dataclass(frozen=True)
-class PromotionGuardrails:
-    min_precision: float = 0.92
-    min_recall: float = 0.84
-    max_p95_latency_ms: float = 1500.0
-    min_operator_trust: float = 4.2
-    max_policy_violations: int = 0
-    max_unsafe_tool_calls: int = 0
-
-
-def evaluate_candidate(candidate: EvalMetrics, baseline: EvalMetrics, guards: PromotionGuardrails) -> tuple[bool, list[str]]:
-    reasons: list[str] = []
-    if candidate.precision < guards.min_precision or candidate.precision < baseline.precision - 0.01:
-        reasons.append("precision regression")
-    if candidate.recall < guards.min_recall or candidate.recall < baseline.recall - 0.02:
-        reasons.append("recall regression")
-    if candidate.p95_latency_ms > guards.max_p95_latency_ms:
-        reasons.append("latency budget exceeded")
-    if candidate.operator_trust < guards.min_operator_trust:
-        reasons.append("operator trust below threshold")
-    if candidate.policy_violations > guards.max_policy_violations:
-        reasons.append("policy violation detected")
-    if candidate.unsafe_tool_calls > guards.max_unsafe_tool_calls:
-        reasons.append("unsafe tool call detected")
-    return (len(reasons) == 0, reasons)
-
-
-async def propose_self_upgrade(candidate_version: str, baseline_version: str) -> dict:
-    candidate = await eval_store.metrics_for(candidate_version)
-    baseline = await eval_store.metrics_for(baseline_version)
-    ok, reasons = evaluate_candidate(candidate, baseline, PromotionGuardrails())
-    proposal = {
-        "candidate_version": candidate_version,
-        "baseline_version": baseline_version,
-        "eligible_for_review": ok,
-        "blocking_reasons": reasons,
-        "required_signoffs": ["Mission Owner", "AI Governance Lead", "Security Officer"] if ok else [],
-    }
-    await audit.write(event_type="self_upgrade.proposed", actor="eval-service", resource=candidate_version, decision="REVIEW" if ok else "BLOCK", attributes=proposal)
-    return proposal
-```
-
-```sql
--- evals/schema.sql
-CREATE TABLE feedback_signal (
-  feedback_id TEXT PRIMARY KEY,
-  rec_id TEXT NOT NULL,
-  case_id TEXT NOT NULL,
-  operator_id TEXT NOT NULL,
-  signal_type TEXT NOT NULL CHECK (signal_type IN ('ACCEPT','REJECT','EDIT','OUTCOME','TRUST_SCORE')),
-  label TEXT,
-  correction JSONB,
-  mission_outcome JSONB,
-  prompt_version TEXT NOT NULL,
-  workflow_version TEXT NOT NULL,
-  model_version TEXT NOT NULL,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-
-CREATE TABLE upgrade_proposal (
-  proposal_id TEXT PRIMARY KEY,
-  artifact_type TEXT NOT NULL CHECK (artifact_type IN ('PROMPT','WORKFLOW','ROUTER','HEURISTIC','MODEL_CONFIG')),
-  candidate_version TEXT NOT NULL,
-  baseline_version TEXT NOT NULL,
-  eval_snapshot_id TEXT NOT NULL,
-  diff_summary TEXT NOT NULL,
-  guardrail_status TEXT NOT NULL CHECK (guardrail_status IN ('PASS','FAIL','NEEDS_REVIEW')),
-  approval_status TEXT NOT NULL CHECK (approval_status IN ('DRAFT','PENDING','APPROVED','REJECTED','ROLLED_BACK')),
-  created_by TEXT NOT NULL,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
-
-### Apollo deployment and rollback control
-
-```yaml
-# infra/apollo/artemis-agent-orchestrator.yaml
-service: artemis-agent-orchestrator
-artifact: registry.clearglass.internal/artemis/agent-orchestrator:${VERSION}
-rings:
-  - name: dev
-    autoPromote: true
-  - name: staging
-    requires:
-      - evals.pass == true
-      - policy.bundle.signed == true
-  - name: mission-canary
-    trafficPercent: 10
-    requires:
-      - approvals.mission_owner == true
-      - approvals.ai_governance_lead == true
-    rollbackOn:
-      - metric: policy_violations
-        op: ">"
-        value: 0
-      - metric: p95_latency_ms
-        op: ">"
-        value: 1500
-      - metric: operator_rejection_rate
-        op: ">"
-        value: 0.35
-  - name: production
-    requires:
-      - canary.health == "GREEN"
-      - audit.exported == true
-```
-
-### Observability and eval dashboard metrics
-
-```python
-# services/common/telemetry.py
-from opentelemetry import metrics, trace
-
-tracer = trace.get_tracer("clearglass.artemis")
-meter = metrics.get_meter("clearglass.artemis")
-
-recommendation_latency = meter.create_histogram("recommendation_latency_ms")
-policy_denials = meter.create_counter("policy_denials_total")
-operator_overrides = meter.create_counter("operator_overrides_total")
-self_upgrade_rollbacks = meter.create_counter("self_upgrade_rollbacks_total")
-
-
-def record_recommendation_metrics(*, latency_ms: float, accepted: bool, prompt_version: str) -> None:
-    recommendation_latency.record(latency_ms, {"prompt_version": prompt_version})
-    if not accepted:
-        operator_overrides.add(1, {"prompt_version": prompt_version})
-```
-
-### Cinematic operational walkthrough
-
-1. A live, coalition-tagged event enters the ingest gateway with a signed provenance bundle and a `COALITION_RESTRICTED` mission scope. The ingest gateway validates schema, stamps lineage, and writes the normalized event to the streaming bus and Foundry raw dataset.
-2. The triage service computes deterministic features, attaches prior case context from Gotham, and creates an alert only after confidence, source reliability, and mission priority thresholds are met.
-3. AIP launches the intake, enrichment, correlation, and recommender agents. Each agent uses policy-enforced tools, not raw data credentials.
-4. The recommender creates an evidence-backed action package with linked ontology facts, confidence intervals, uncertainty notes, and an explicit `approval_required=true` flag.
-5. The policy service blocks any cross-coalition data exposure and requires a commander approval because the recommendation could alter operational posture.
-6. The commander approves the low-risk monitoring action and rejects the escalation branch, adding a structured correction: “evidence supports watch, not escalation.”
-7. The feedback service converts the correction into eval labels: accepted monitoring = positive label, rejected escalation = negative label, rationale quality = partial credit.
-8. The eval service generates a candidate prompt that raises the escalation evidence threshold and improves uncertainty language. Offline evals pass, shadow deployment shows lower false positives, and an upgrade proposal is sent to the governance console.
-9. Human approvers sign the change. Apollo deploys to the mission-canary ring. If policy violations, latency, or rejection rate regress, Apollo rolls back automatically and records the rollback in immutable audit.
-10. The platform gets better by learning decision boundaries, evidence presentation, routing latency, and workflow sequencing while never changing mission goals or executing significant actions without human approval.
-
+### 9. Promote or Rollback
+If canary precision, latency, operator trust, and policy metrics meet thresholds, Apollo promotes the update to production. If rejection rate spikes or policy tests fail, Apollo rolls back to the prior prompt/workflow/router bundle in under 60 seconds. The audit log records every artifact version, approval, deployment event, and rollback decision.
 
 ---
 
-## Priority Sequence Alpha Execution Addendum — 2026-06-30
+## Remaining Engineering Risks and Mitigations
 
-### System Architecture
+| Risk | Mitigation |
+| --- | --- |
+| Prompt injection through retrieved documents | content isolation, instruction hierarchy, retrieval sanitization, tool-call schemas, policy mediation |
+| Overfitting to operator behavior | holdout evals, cross-mission validation, governance review, drift monitoring |
+| Coalition data leakage through generated summaries | derivative classification, source-aware output filtering, redaction and release workflow |
+| Alert storms causing latency spikes | backpressure, priority queues, bounded retries, autoscaling, circuit breakers |
+| Silent model regression | continuous evals, shadow mode, canary, rollback, model cards |
+| Unsafe autonomy creep | hard-coded approval gates, policy-as-code, immutable audit, no autonomous mission-goal changes |
 
-This addendum binds the ClearGlassInc Artemis self-evolving platform blueprint to the approved Priority Sequence Alpha operating record. The runtime remains a full-stack, Python-first, evidence-gated system built on Gotham for investigations and entity tracking, Foundry for ontology and pipelines, AIP for copilots and agents, and Apollo for signed deployment, rollback, and runtime control.
-
-```mermaid
-flowchart LR
-  WAF[Cloudflare WAF Event Export] --> FOUNDRY[Foundry Evidence Pipeline]
-  GW[Gateway Access Logs] --> FOUNDRY
-  APP[Staging Application Logs] --> FOUNDRY
-  AUTH[Authentication Failure Logs] --> FOUNDRY
-  DB[Backend Datastore Logs] --> FOUNDRY
-  EDR[AEGIS EDR Correlation] --> FOUNDRY
-  FOUNDRY --> ONTO[Artemis Security Ontology]
-  ONTO --> GOTHAM[Gotham Case SEC-20260630-0014]
-  ONTO --> AIP[AIP Security Triage Agents]
-  AIP --> APPROVAL[Human Approval Gate]
-  APPROVAL --> APOLLO[Apollo-Controlled Policy + Detection Rollout]
-```
-
-### Data and Ontology
-
-Priority Sequence Alpha extends the Artemis ontology with concrete security, vendor-risk, and executive-priority objects:
-
-```yaml
-objectTypes:
-  SecurityEvent:
-    key: event_id
-    properties:
-      - classification
-      - environment
-      - observed_at
-      - escalation_level
-      - containment_status
-      - preliminary_exposure_assessment
-  EvidenceAttachment:
-    key: evidence_id
-    properties:
-      - attachment_type
-      - source_system
-      - retained_uri
-      - hash
-      - validation_status
-      - collected_at
-  VendorRiskAssessment:
-    key: assessment_id
-    properties:
-      - vendor_name
-      - decision_deadline
-      - signoff_status
-      - mandatory_criteria_passed
-      - escalation_reason
-  CalendarPriorityDecision:
-    key: decision_id
-    properties:
-      - selected_event
-      - delegated_event
-      - rationale
-      - operator
-      - decision_time
-relationships:
-  - SecurityEvent REQUIRES EvidenceAttachment
-  - VendorRiskAssessment REQUIRES EvidenceAttachment
-  - VendorRiskAssessment BLOCKS ExecutiveSignoff
-  - CalendarPriorityDecision PRIORITIZES MissionActivity
-```
-
-### AI and Agent Design
-
-The `SecurityTriageAgent` treats SEC-20260630-0014 as blocked and contained until contradictory application, datastore, or backend evidence is validated. It may recommend WAF source-range blocking, staging mTLS/VPN/IP allow-listing, authentication-failure burst detection, enhanced logging, and JWT validation review, but it cannot execute a block, change access policy, or close the event without a human approval token.
-
-```python
-from dataclasses import dataclass
-from enum import Enum
-
-class ClosureState(str, Enum):
-    OPEN_PENDING_EVIDENCE = "open_pending_evidence"
-    CONTAINED_NOT_CLOSED = "contained_not_closed"
-    CLOSED_NO_EXPOSURE = "closed_no_exposure"
-    ESCALATED = "escalated"
-
-REQUIRED_SECURITY_EVIDENCE = {
-    "cloudflare_waf_event_export",
-    "gateway_access_logs",
-    "staging_application_access_logs",
-    "authentication_failure_logs",
-    "backend_datastore_access_logs",
-    "aegis_edr_correlation_output",
-    "source_ip_asn_24h_recurrence_review",
-}
-
-@dataclass(frozen=True)
-class SecurityClosureDecision:
-    event_id: str
-    state: ClosureState
-    missing_evidence: set[str]
-    preliminary_finding: str
-
-
-def evaluate_security_closure(event_id: str, evidence_types: set[str]) -> SecurityClosureDecision:
-    missing = REQUIRED_SECURITY_EVIDENCE - evidence_types
-    if missing:
-        return SecurityClosureDecision(
-            event_id=event_id,
-            state=ClosureState.CONTAINED_NOT_CLOSED,
-            missing_evidence=missing,
-            preliminary_finding="No data exposure indicated by edge telemetry; final closure blocked pending full log validation.",
-        )
-    return SecurityClosureDecision(
-        event_id=event_id,
-        state=ClosureState.CLOSED_NO_EXPOSURE,
-        missing_evidence=set(),
-        preliminary_finding="Required edge, application, datastore, and EDR evidence reviewed with no exposure indicated.",
-    )
-```
-
-### Self-Improvement Loop
-
-The self-improvement loop now captures three operator judgment classes from Priority Sequence Alpha:
-
-1. **Security evidence validation:** missing evidence prevents premature closure; future prompts must preserve the distinction between edge containment and final exposure confirmation.
-2. **Vendor-risk signoff:** Apex Infrastructure signoff is approved only if all mandatory criteria pass with retained evidence.
-3. **Calendar prioritization:** engineering architecture wins over budget review because the Q3 migration is 15% behind schedule and creates downstream Q4 freeze risk.
-
-```python
-MANDATORY_APEX_CRITERIA = {
-    "data_access_scope_limited_to_non_production_telemetry",
-    "no_unapproved_production_customer_data_or_pii",
-    "subprocessors_disclosed_and_equivalently_controlled",
-    "current_compliance_evidence_within_validity_period",
-    "contractual_incident_notification_and_deletion_obligations",
-}
-
-
-def apex_signoff_decision(passed_criteria: set[str], evidence_retained: bool) -> tuple[str, list[str]]:
-    missing = sorted(MANDATORY_APEX_CRITERIA - passed_criteria)
-    if missing or not evidence_retained:
-        reasons = missing + ([] if evidence_retained else ["required evidence not retained"])
-        return "suspend_and_escalate", reasons
-    return "approved_for_executive_signoff", ["all mandatory criteria satisfied before 16:30 EDT"]
-```
-
-### Full-Stack Implementation
-
-Priority Sequence Alpha is implemented as a case/workflow package:
-
-```text
-frontend:
-  /command/priority-alpha            # executive sequence board
-  /security/events/SEC-20260630-0014 # localized threat report and evidence checklist
-  /vendors/apex-risk-assessment      # five-criteria signoff gate
-backend:
-  security-evidence-validator        # evidence completeness and closure state
-  vendor-risk-gate                   # Apex signoff/elevation logic
-  priority-router                    # compliance/architecture/security scheduling logic
-streaming:
-  artemis.security.evidence.v1
-  artemis.vendor.risk.v1
-  artemis.operator.priority.v1
-```
-
-### Security and Governance
-
-All generated recommendations are constrained by ClearGlassInc zero-trust, OSINT-only, evidence-gated operating policy. Artemis records immutable audit entries for evidence retention, signoff decisions, calendar delegation, and any proposed staging-control update. Row/entity-level policy prevents a vendor-risk agent from accessing security telemetry unless the same operator, mission, classification, and purpose-of-use grants are present.
-
-### Code Examples
-
-```rego
-package artemis.priority_alpha
-
-default allow_security_closure := false
-
-allow_security_closure if {
-  input.event_id == "SEC-20260630-0014"
-  count(input.missing_evidence) == 0
-  input.datastore_access_exposure == false
-  input.application_access_established == false
-  input.approver.role in {"COO", "CISO", "SecurityLead"}
-}
-
-default allow_apex_signoff := false
-
-allow_apex_signoff if {
-  input.vendor == "Apex Infrastructure"
-  input.evidence_retained == true
-  input.criteria.data_scope == "non-production-telemetry-only"
-  input.criteria.production_pii_access == false
-  input.criteria.subprocessors_disclosed == true
-  input.criteria.compliance_evidence_current == true
-  input.criteria.incident_notification_defined == true
-  input.criteria.deletion_survives_termination == true
-}
-```
-
-### Scenario Walkthrough
-
-At 14:12 EDT on June 30, 2026, Cloudflare edge telemetry reports an external POST attempt against `staging.clearglassinc.com`. Artemis ingests the event, creates `SecurityEvent(SEC-20260630-0014)`, marks it blocked/contained, and opens an evidence checklist. The Security Copilot recommends a source-range WAF block pending validation, an ASN recurrence review, stronger staging access controls, AEGIS burst detection, and JWT validation checks. The operator approves evidence validation and narrow containment, while Artemis prevents final closure until WAF, gateway, application, authentication, datastore, EDR, and 24-hour source-IP/ASN recurrence evidence are attached.
-
-In parallel, the Vendor Risk Copilot opens the Apex Infrastructure assessment. It blocks executive signoff unless the Data Processing Agreement, subprocessor list, SOC 2 Type II or equivalent evidence, incident notification clause, termination/deletion clause, certificate-of-destruction obligation, and audit-rights language are reviewed and retained. If all five mandatory criteria pass before 16:30 EDT, Artemis prepares the signoff language for Desmond Otieno; otherwise it escalates.
-
-The Priority Router resolves the 15:30 calendar conflict by prioritizing the Engineering Architecture Sync because the Q3 infrastructure migration is 15% behind schedule. The Q3 Budget Review is delegated with a request for notes and decision items before EOD. Feedback from these choices becomes eval data for future priority-routing prompts, improving evidence discipline and executive scheduling precision without autonomous changes to ClearGlassInc Artemis goals.
-
----
-
-## Defense-Grade Python Reference Hardening — 2026-07-13
-
-### System Architecture
-
-The executable reference implementation in `artemis/intelligence/platform.py` models the core ClearGlassInc Artemis control plane as dependency-light Python components that can be tested locally and adapted behind Foundry, Gotham, AIP, and Apollo SDK adapters. The hardening layer adds three production-critical controls:
-
-1. **Tamper-evident audit chain** for operator approvals, policy decisions, and self-upgrade proposals.
-2. **Policy-aware model routing** so restricted mission data is forced onto a hardened AIP execution path regardless of latency pressure.
-3. **Human approval gate** that rejects operationally significant actions when policy, evidence, mission assignment, or commander authority is missing.
-
-```python
-# artemis/intelligence/platform.py
-class ImmutableAuditLog:
-    """Append-only hash chain suitable for WORM export or ledger anchoring."""
-
-    def append(self, *, actor: str, action: str, resource: str, decision: str, payload: dict[str, Any]) -> AuditRecord:
-        previous_hash = self.records[-1].chain_hash if self.records else "GENESIS"
-        payload_hash = sha256(repr(sorted(payload.items())).encode("utf-8")).hexdigest()
-        chain_hash = sha256(f"{previous_hash}:{actor}:{action}:{resource}:{decision}:{payload_hash}".encode("utf-8")).hexdigest()
-        ...
-```
-
-### AI and Agent Design
-
-The AIP model router is deterministic by design. Restricted or coalition-marked missions are never routed to convenience or low-latency paths; they use an isolated secure reasoner. Non-restricted tasks can select frontier or mini models based on latency budget and reasoning depth.
-
-```python
-# artemis/intelligence/platform.py
-class ModelRouter:
-    """Deterministic, policy-aware model routing for latency-sensitive missions."""
-
-    def route(self, *, task_type: str, classification: str, latency_budget_ms: int, requires_deep_reasoning: bool) -> ModelRoute:
-        if classification in {"SECRET", "COALITION_RESTRICTED"}:
-            return ModelRoute(task_type, "aip-secure-reasoner", "isolated", "restricted classification requires hardened AIP path")
-        if requires_deep_reasoning or latency_budget_ms >= 1_200:
-            return ModelRoute(task_type, "aip-frontier-reasoner", "standard", "deep reasoning or relaxed latency budget")
-        return ModelRoute(task_type, "aip-fast-mini", "low-latency", "tight latency budget")
-```
-
-### Security and Governance
-
-The approval gate records every allow/deny decision into the audit hash chain and preserves the policy reason. A human approval cannot override missing mission assignment, missing evidence, or insufficient commander authority for high-risk actions.
-
-```python
-# artemis/intelligence/platform.py
-class ApprovalGate:
-    """Records human approval decisions before any significant action can execute."""
-
-    def approve(self, context: AccessContext, action: AgentAction, decision: str, reason: str) -> PolicyDecision:
-        if decision not in {"approve", "reject"}:
-            raise ValueError("decision must be approve or reject")
-        policy_decision = self.policy.authorize_action(context, action)
-        final_decision = "REJECT" if decision == "reject" or not policy_decision.allowed else "APPROVE"
-        self.audit_log.append(...)
-        return policy_decision
-```
-
-### Regression Coverage
-
-The Python tests verify that:
-
-- High-risk operational posture changes are rejected when the operator is not a commander, even if the operator attempts approval.
-- Approval decisions are written to the tamper-evident audit chain and the chain verifies cleanly.
-- Coalition-restricted model routing always selects the isolated secure AIP path.
-
-```python
-# tests/test_artemis_intelligence_platform.py
-def test_approval_gate_blocks_high_risk_non_commander_and_audits() -> None:
-    ...
-    assert decision.allowed is False
-    assert decision.reason == "high-risk action requires commander role"
-    assert audit_log.verify() is True
-    assert audit_log.records[0].decision == "REJECT"
-
-
-def test_model_router_uses_hardened_path_for_restricted_data() -> None:
-    ...
-    assert route.model_id == "aip-secure-reasoner"
-    assert route.execution_tier == "isolated"
-```
+ClearGlassInc Artemis therefore becomes more capable over time by converting real operational evidence into governed, tested, human-approved upgrades while preserving accountability, coalition boundaries, and operator command authority.

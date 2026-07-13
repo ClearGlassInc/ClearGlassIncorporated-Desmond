@@ -44,7 +44,6 @@
 
   function mountAmbient() {
     var frag = document.createDocumentFragment();
-    frag.appendChild(el('div', 'cg-fx-pearl-flow'));
     frag.appendChild(el('div', 'cg-fx-neon-grid'));
     frag.appendChild(el('div', 'cg-fx-aurora'));
     frag.appendChild(el('div', 'cg-fx-orb o1'));

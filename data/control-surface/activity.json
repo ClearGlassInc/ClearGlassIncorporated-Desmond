@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:08",
-    "timestamp": "2026-07-12T23:08:43Z"
+    "time": "00:10",
+    "timestamp": "2026-07-13T00:10:31Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #273",
+    "time": "00:10",
+    "timestamp": "2026-07-13T00:10:21Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-8c95f831-ceb0-4233-9d98-d31b8158ce82 \u00b7 run #754",
+    "time": "00:08",
+    "timestamp": "2026-07-13T00:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #886",
+    "time": "23:08",
+    "timestamp": "2026-07-12T23:08:56Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2279",
+    "time": "23:08",
+    "timestamp": "2026-07-12T23:08:49Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1340",
+    "time": "23:08",
+    "timestamp": "2026-07-12T23:08:49Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #272",
     "time": "23:08",
     "timestamp": "2026-07-12T23:08:33Z"
@@ -54,40 +89,5 @@
     "detail": "pull_request on claude/clearglass-revenue-os-gphytm \u00b7 run #534",
     "time": "22:38",
     "timestamp": "2026-07-12T22:38:13Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-revenue-os-gphytm \u00b7 run #598",
-    "time": "22:38",
-    "timestamp": "2026-07-12T22:38:13Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-revenue-os-gphytm \u00b7 run #1044",
-    "time": "22:38",
-    "timestamp": "2026-07-12T22:38:13Z"
-  },
-  {
-    "title": "Code Quality: PR #818",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/818/head \u00b7 run #2277",
-    "time": "22:38",
-    "timestamp": "2026-07-12T22:38:10Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-revenue-os-gphytm \u00b7 run #1016",
-    "time": "22:35",
-    "timestamp": "2026-07-12T22:35:59Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-revenue-os-gphytm \u00b7 run #1319",
-    "time": "22:35",
-    "timestamp": "2026-07-12T22:35:59Z"
   }
 ]

@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #272",
+    "title": "Control Surface Feeds #273",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:10",
+    "timestamp": "2026-07-13T00:10:21Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #754",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-8c95f831-ceb0-4233-9d98-d31b8158ce82",
+    "time": "00:08",
+    "timestamp": "2026-07-13T00:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #886",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "23:08",
+    "timestamp": "2026-07-12T23:08:56Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2279",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:08",
+    "timestamp": "2026-07-12T23:08:49Z"
+  },
+  {
+    "title": "pages build and deployment #1340",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:08",
+    "timestamp": "2026-07-12T23:08:49Z"
+  },
+  {
+    "title": "Control Surface Feeds #272",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:08",
     "timestamp": "2026-07-12T23:08:33Z"
   },
@@ -103,40 +138,5 @@
     "detail": "failure \u00b7 pull_request on claude/clearglass-revenue-os-gphytm",
     "time": "22:35",
     "timestamp": "2026-07-12T22:35:59Z"
-  },
-  {
-    "title": "Security #1043",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglass-revenue-os-gphytm",
-    "time": "22:35",
-    "timestamp": "2026-07-12T22:35:59Z"
-  },
-  {
-    "title": "Code Quality: PR #818 #2276",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/818/head",
-    "time": "22:35",
-    "timestamp": "2026-07-12T22:35:57Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #279",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "22:32",
-    "timestamp": "2026-07-12T22:32:22Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #885",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "22:32",
-    "timestamp": "2026-07-12T22:32:22Z"
-  },
-  {
-    "title": "CI #1277",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "22:32",
-    "timestamp": "2026-07-12T22:32:22Z"
   }
 ]

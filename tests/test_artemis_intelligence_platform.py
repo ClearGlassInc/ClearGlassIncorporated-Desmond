@@ -1,7 +1,11 @@
 from artemis.intelligence import (
     AccessContext,
+    AgentAction,
+    ApprovalGate,
     Alert,
     FeedbackEvent,
+    ImmutableAuditLog,
+    ModelRouter,
     OntologyEntity,
     SelfImprovementEngine,
     WorkflowState,
@@ -70,3 +74,47 @@ def test_self_improvement_requires_eval_gates() -> None:
     assert proposal is not None
     assert proposal.requires_human_approval is True
     assert proposal.candidate_version.startswith("triage.v1+")
+
+
+
+def test_approval_gate_blocks_high_risk_non_commander_and_audits() -> None:
+    context = AccessContext(
+        operator_id="analyst-1",
+        roles=frozenset({"analyst"}),
+        mission_ids=frozenset({"mission-1"}),
+        compartments=frozenset({"ARTEMIS"}),
+        coalition="internal",
+        purpose="triage",
+    )
+    action = AgentAction(
+        action_id="act-1",
+        action_type="operational_posture_change",
+        mission_id="mission-1",
+        risk_tier="critical",
+        summary="Increase monitoring posture.",
+        required_approval=True,
+        evidence_refs=("obs-1",),
+        parameters={},
+    )
+    audit_log = ImmutableAuditLog()
+
+    decision = ApprovalGate(PolicyEngine(), audit_log).approve(
+        context, action, decision="approve", reason="operator requested posture change"
+    )
+
+    assert decision.allowed is False
+    assert decision.reason == "high-risk action requires commander role"
+    assert audit_log.verify() is True
+    assert audit_log.records[0].decision == "REJECT"
+
+
+def test_model_router_uses_hardened_path_for_restricted_data() -> None:
+    route = ModelRouter().route(
+        task_type="correlation",
+        classification="COALITION_RESTRICTED",
+        latency_budget_ms=250,
+        requires_deep_reasoning=False,
+    )
+
+    assert route.model_id == "aip-secure-reasoner"
+    assert route.execution_tier == "isolated"

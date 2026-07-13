@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "22:09",
-    "timestamp": "2026-07-13T22:09:04Z"
+    "time": "23:12",
+    "timestamp": "2026-07-13T23:12:37Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #282",
+    "time": "23:12",
+    "timestamp": "2026-07-13T23:12:21Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-9fc2de04-e747-4049-9467-ad79eeafbf91 \u00b7 run #777",
+    "time": "23:08",
+    "timestamp": "2026-07-13T23:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #906",
+    "time": "22:09",
+    "timestamp": "2026-07-13T22:09:15Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "bad",
+    "detail": "dynamic on main \u00b7 run #1361",
+    "time": "22:09",
+    "timestamp": "2026-07-13T22:09:10Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2311",
+    "time": "22:09",
+    "timestamp": "2026-07-13T22:09:10Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #281",
     "time": "22:08",
     "timestamp": "2026-07-13T22:08:55Z"
@@ -54,40 +89,5 @@
     "detail": "dynamic on copilot/task-272290681-1196426665-52e8eada-4e03-44c4-be18-18e6bd07ad9c \u00b7 run #775",
     "time": "21:08",
     "timestamp": "2026-07-13T21:08:03Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-6497473e-7e6c-4779-bb2d-e1dd4f0dceb3 \u00b7 run #774",
-    "time": "20:08",
-    "timestamp": "2026-07-13T20:08:07Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #904",
-    "time": "19:48",
-    "timestamp": "2026-07-13T19:48:38Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1359",
-    "time": "19:48",
-    "timestamp": "2026-07-13T19:48:31Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2309",
-    "time": "19:48",
-    "timestamp": "2026-07-13T19:48:31Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #279",
-    "time": "19:48",
-    "timestamp": "2026-07-13T19:48:11Z"
   }
 ]

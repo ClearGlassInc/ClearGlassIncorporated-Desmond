@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #281",
+    "title": "Control Surface Feeds #282",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:12",
+    "timestamp": "2026-07-13T23:12:21Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #777",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9fc2de04-e747-4049-9467-ad79eeafbf91",
+    "time": "23:08",
+    "timestamp": "2026-07-13T23:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #906",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:09",
+    "timestamp": "2026-07-13T22:09:15Z"
+  },
+  {
+    "title": "pages build and deployment #1361",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "22:09",
+    "timestamp": "2026-07-13T22:09:10Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2311",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:09",
+    "timestamp": "2026-07-13T22:09:10Z"
+  },
+  {
+    "title": "Control Surface Feeds #281",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:08",
     "timestamp": "2026-07-13T22:08:55Z"
   },
@@ -103,40 +138,5 @@
     "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-b648b86f-9ebc-4e5c-bdba-712afe8b38bd",
     "time": "19:08",
     "timestamp": "2026-07-13T19:08:09Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #772",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-c2ec0009-9006-4ff6-a043-a4c67f9f92da",
-    "time": "18:08",
-    "timestamp": "2026-07-13T18:08:10Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #903",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "17:22",
-    "timestamp": "2026-07-13T17:22:57Z"
-  },
-  {
-    "title": "pages build and deployment #1358",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on main",
-    "time": "17:22",
-    "timestamp": "2026-07-13T17:22:51Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2308",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "17:22",
-    "timestamp": "2026-07-13T17:22:50Z"
-  },
-  {
-    "title": "Control Surface Feeds #278",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "17:22",
-    "timestamp": "2026-07-13T17:22:28Z"
   }
 ]

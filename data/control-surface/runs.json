@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #280",
+    "title": "Control Surface Feeds #281",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:08",
+    "timestamp": "2026-07-13T22:08:55Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #776",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-22ad1921-28eb-4e8b-b943-23ffa77442fd",
+    "time": "22:08",
+    "timestamp": "2026-07-13T22:08:03Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #905",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:12",
+    "timestamp": "2026-07-13T21:12:42Z"
+  },
+  {
+    "title": "pages build and deployment #1360",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on main",
+    "time": "21:12",
+    "timestamp": "2026-07-13T21:12:36Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2310",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:12",
+    "timestamp": "2026-07-13T21:12:35Z"
+  },
+  {
+    "title": "Control Surface Feeds #280",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:12",
     "timestamp": "2026-07-13T21:12:19Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "17:22",
     "timestamp": "2026-07-13T17:22:28Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #771",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-aab7e999-df2e-4f71-b055-5de56de4e3ab",
-    "time": "17:08",
-    "timestamp": "2026-07-13T17:08:09Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #770",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-7749709b-f284-4262-8b02-35608866b8ba",
-    "time": "16:08",
-    "timestamp": "2026-07-13T16:08:04Z"
-  },
-  {
-    "title": "Agent OS Self-Check #11",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "16:01",
-    "timestamp": "2026-07-13T16:01:31Z"
-  },
-  {
-    "title": "Commerce Daily Loop #35",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:40",
-    "timestamp": "2026-07-13T15:40:24Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #902",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "15:11",
-    "timestamp": "2026-07-13T15:11:09Z"
   }
 ]

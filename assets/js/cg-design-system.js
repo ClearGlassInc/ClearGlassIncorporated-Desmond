@@ -120,14 +120,16 @@
 
   /* ── Global top bar — the ClearGlassInc. 2040 identity and menu on every page.
      It is additive: existing page navigation remains intact and is nudged below
-     the global bar when necessary. Opt out only with data-cg-no-topbar on
-     <html> or <body>. Pages can dock their own controls into the bar with
-     [data-cg-topbar-slot], and rebrand the left side with
-     data-cg-topbar-title / data-cg-topbar-sub on <body>. ── */
+     the global bar when necessary. The homepage keeps its original single nav.
+     Opt out only with data-cg-no-topbar on <html> or <body>. Pages can dock
+     their own controls into the bar with [data-cg-topbar-slot], and rebrand the
+     left side with data-cg-topbar-title / data-cg-topbar-sub on <body>. ── */
   function mountTopbar() {
     if (document.querySelector('.cg-topbar')) return;
     if (document.documentElement.hasAttribute('data-cg-no-topbar') ||
         (document.body && document.body.hasAttribute('data-cg-no-topbar'))) return;
+    var pagePath = location.pathname.replace(/\/+$/, '').toLowerCase();
+    if (pagePath === '' || pagePath === '/index.html') return;
 
     var PRODUCTS = [
       ['Guardian', '/guardian.html', '🌐', 'ClearGlassInc. Intelligence'],

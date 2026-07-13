@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-07-12T09:01:01.567615+00:00",
+  "run_utc": "2026-07-13T10:24:25.885353+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 687,
+  "commit_count": 735,
   "sections": {
     "New Features": [
+      {
+        "sha": "3beebfa",
+        "type": "feat",
+        "scope": "percival",
+        "subject": "thread correlation/trace IDs through the policy governor",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
       {
         "sha": "10cfa1a",
         "type": "feat",
@@ -485,6 +494,24 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "4bdc03f",
+        "type": "fix",
+        "scope": "security",
+        "subject": "bump next to 16.2.10 across apps \u2014 clear Next.js advisory batch",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "8200f34",
+        "type": "fix",
+        "scope": "actions",
+        "subject": "harden commerce deployment gate",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
         "sha": "92d60a3",
         "type": "fix",
         "scope": "security",
@@ -867,6 +894,33 @@
     ],
     "Documentation": [
       {
+        "sha": "30cf9bf",
+        "type": "docs",
+        "scope": "artemis",
+        "subject": "add 2050 readiness ledger",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "b1e97c9",
+        "type": "docs",
+        "scope": null,
+        "subject": "add Artemis Palantir self-evolving platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "8f24249",
+        "type": "docs",
+        "scope": null,
+        "subject": "add Artemis Python precision control plane",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
         "sha": "d4354fb",
         "type": "docs",
         "scope": null,
@@ -1160,6 +1214,222 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "6747d88",
+        "type": "chore",
+        "scope": null,
+        "subject": "Create CNAME",
+        "author": "Desmond Otieno",
+        "date": "2026-07-13",
+        "breaking": false
+      },
+      {
+        "sha": "e16dfda",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add universal ClearGlassInc 2040 topbar and logo",
+        "author": "Desmond Otieno",
+        "date": "2026-07-13",
+        "breaking": false
+      },
+      {
+        "sha": "e8751ae",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add 10-topic flagship editorial pipeline to ClearGlass Insights",
+        "author": "Claude",
+        "date": "2026-07-13",
+        "breaking": false
+      },
+      {
+        "sha": "7a61e1a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add bright pearl glow design layer",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "eee31ac",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove unused dataclasses.field import flagged by ruff",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "c64f552",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis ClearGlass Ontario Dominance Plan with Liquid Glass automation division",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "886cd7a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add sitewide neon motion enhancements",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "bee9b07",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove unused `an` variable in Command Deck topology loop",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "826dfba",
+        "type": "chore",
+        "scope": null,
+        "subject": "Align Artemis resume-builder post with blog template + add live Command Deck",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "cae8b64",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearPulse to homepage products navigation",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "5030d9b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ethical sales system blog post",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "42fdf4c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add supreme legal intelligence core",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "8ee1125",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis legal intelligence core",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "b7078c4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis legal intelligence core",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "ae6490a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance ClearCounsel legal command hierarchy",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "0949d3a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis legal intelligence core",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "aa41d58",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Supreme Legal Intelligence Division blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "ab22494",
+        "type": "chore",
+        "scope": null,
+        "subject": "Evolve Guardian hero wordmark into layered executive-glass typography",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "b5d0bf1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Redesign Side Store into a premium, conversion-focused storefront",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "624391a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix air control deterministic font loading",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "bb7e3fc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Repair Next.js dependency reproducibility",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "b93d3d2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add BLUEDESK premium style directive",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "8820af4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add site-wide futuristic top bar matching the homepage nav",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "d33ccd4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade Command Center console with interactive governance demo",
+        "author": "Claude",
+        "date": "2026-07-12",
+        "breaking": false
+      },
       {
         "sha": "1d0f7b5",
         "type": "chore",
@@ -3547,6 +3817,141 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "a6fb5e5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-13",
+        "breaking": false
+      },
+      {
+        "sha": "d597dc5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-13",
+        "breaking": false
+      },
+      {
+        "sha": "4d010b2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-13",
+        "breaking": false
+      },
+      {
+        "sha": "ce21e4f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "c9efb6e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "5a04c1c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "0c94b45",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "cdd55dc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "463b89e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "61a7403",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "1c907bd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "dc92b1e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "c5c1a57",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "44db389",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "1f93976",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-12 09:01 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-12",
+        "breaking": false
+      },
       {
         "sha": "6921d70",
         "type": "bot",
@@ -6069,6 +6474,33 @@
       }
     ],
     "Security": [
+      {
+        "sha": "6a1db72",
+        "type": "security",
+        "scope": null,
+        "subject": "enforce dependency audit failures",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "66fe6b2",
+        "type": "security",
+        "scope": null,
+        "subject": "harden ClearGlass Artemis audit controls",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
+      {
+        "sha": "7f83166",
+        "type": "security",
+        "scope": null,
+        "subject": "harden workflow deployment gates",
+        "author": "Desmond Otieno",
+        "date": "2026-07-12",
+        "breaking": false
+      },
       {
         "sha": "a0517df",
         "type": "security",

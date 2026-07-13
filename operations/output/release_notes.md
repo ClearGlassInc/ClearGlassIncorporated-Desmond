@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-12
+# Release Notes — 2026-07-13
 
-*687 commit(s) since v1.0.0*
+*735 commit(s) since v1.0.0*
 
 ## New Features
 
+- **percival:** thread correlation/trace IDs through the policy governor (`3beebfa`)
 - **ui:** command-center atmosphere layer on percival-os + side-store (`10cfa1a`)
 - **percival:** v10 signed single-use approvals + trace IDs (`ea90adb`)
 - **nav:** surface SMB Cyber Trust Kit + Side Store in homepage Products menu (`c917594`)
@@ -60,6 +61,8 @@
 
 ## Bug Fixes
 
+- **security:** bump next to 16.2.10 across apps — clear Next.js advisory batch (`4bdc03f`)
+- **actions:** harden commerce deployment gate (`8200f34`)
 - **security:** bump apps/air-control next 14.2.5 -> ^14.2.25 (CVE-2025-29927) (`92d60a3`)
 - add missing ClearGlass logo icons to intelligence-platform.html (`d7c2d01`)
 - add missing ClearGlass logo icons to master-investigator blog page (`87af066`)
@@ -108,6 +111,9 @@
 
 ## Documentation
 
+- **artemis:** add 2050 readiness ledger (`30cf9bf`)
+- add Artemis Palantir self-evolving platform blueprint (`b1e97c9`)
+- add Artemis Python precision control plane (`8f24249`)
 - add company orchestrator deployment validation path (`d4354fb`)
 - document orchestrator workflow secret posture (`22a0765`)
 - connect company orchestrator to agent system (`2d7f063`)
@@ -149,6 +155,30 @@
 
 ## Maintenance
 
+- Create CNAME (`6747d88`)
+- Add universal ClearGlassInc 2040 topbar and logo (`e16dfda`)
+- Add 10-topic flagship editorial pipeline to ClearGlass Insights (`e8751ae`)
+- Add bright pearl glow design layer (`7a61e1a`)
+- Remove unused dataclasses.field import flagged by ruff (`eee31ac`)
+- Add Artemis ClearGlass Ontario Dominance Plan with Liquid Glass automation division (`c64f552`)
+- Add sitewide neon motion enhancements (`886cd7a`)
+- Remove unused `an` variable in Command Deck topology loop (`bee9b07`)
+- Align Artemis resume-builder post with blog template + add live Command Deck (`826dfba`)
+- Add ClearPulse to homepage products navigation (`cae8b64`)
+- Add ethical sales system blog post (`5030d9b`)
+- Add supreme legal intelligence core (`42fdf4c`)
+- Add Artemis legal intelligence core (`8ee1125`)
+- Add Artemis legal intelligence core (`b7078c4`)
+- Enhance ClearCounsel legal command hierarchy (`ae6490a`)
+- Add Artemis legal intelligence core (`0949d3a`)
+- Add Supreme Legal Intelligence Division blueprint (`aa41d58`)
+- Evolve Guardian hero wordmark into layered executive-glass typography (`ab22494`)
+- Redesign Side Store into a premium, conversion-focused storefront (`b5d0bf1`)
+- Fix air control deterministic font loading (`624391a`)
+- Repair Next.js dependency reproducibility (`bb7e3fc`)
+- Add BLUEDESK premium style directive (`b93d3d2`)
+- Add site-wide futuristic top bar matching the homepage nav (`8820af4`)
+- Upgrade Command Center console with interactive governance demo (`d33ccd4`)
 - Apply homepage design system site-wide; web-design page exempt (`1d0f7b5`)
 - Add live AI command-center layer to ClearGlass Store (`7d49606`)
 - Elevate ClearGlass Store into ultra-futuristic glassmorphism experience (`73a4bf9`)
@@ -417,6 +447,21 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`a6fb5e5`)
+- refresh control-surface data feeds [skip ci] (`d597dc5`)
+- refresh control-surface data feeds [skip ci] (`4d010b2`)
+- refresh control-surface data feeds [skip ci] (`ce21e4f`)
+- refresh control-surface data feeds [skip ci] (`c9efb6e`)
+- refresh control-surface data feeds [skip ci] (`5a04c1c`)
+- refresh control-surface data feeds [skip ci] (`0c94b45`)
+- refresh control-surface data feeds [skip ci] (`cdd55dc`)
+- refresh control-surface data feeds [skip ci] (`463b89e`)
+- refresh control-surface data feeds [skip ci] (`61a7403`)
+- refresh control-surface data feeds [skip ci] (`1c907bd`)
+- refresh control-surface data feeds [skip ci] (`dc92b1e`)
+- refresh control-surface data feeds [skip ci] (`c5c1a57`)
+- refresh control-surface data feeds [skip ci] (`44db389`)
+- update generated outputs — 2026-07-12 09:01 UTC [skip ci] (`1f93976`)
 - refresh control-surface data feeds [skip ci] (`6921d70`)
 - refresh control-surface data feeds [skip ci] (`f8269d9`)
 - refresh control-surface data feeds [skip ci] (`88721cd`)
@@ -700,6 +745,9 @@
 
 ## Security
 
+- enforce dependency audit failures (`6a1db72`)
+- harden ClearGlass Artemis audit controls (`66fe6b2`)
+- harden workflow deployment gates (`7f83166`)
 - harden untrusted-XML parsing and add URL scheme allowlist (`a0517df`)
 
 ## Style

@@ -232,6 +232,43 @@
     background:rgba(20,24,44,.97);border:1px solid var(--line2);border-radius:11px;padding:11px 18px;font-size:12.5px;
     color:#fff;pointer-events:none;transition:.25s;z-index:90;font-family:var(--mono)}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ── premium product framing (v2) ──────────────────────────────────── */
+  .summary-band{max-width:770px;margin:24px auto 0;text-align:center;color:var(--dim);font-size:14.5px;line-height:1.75}
+  .summary-band b{color:#e7ecff;font-weight:600}
+  .trust-strip{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}
+  .trust-strip .ti{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--dim);
+    font-family:var(--mono);background:rgba(124,150,255,.06);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+  .trust-strip .ti b{color:#fff;font-weight:600}
+  .arch{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:820px){.arch{grid-template-columns:1fr}}
+  .arch-card{position:relative;background:var(--surf);border:1px solid var(--line);border-radius:16px;
+    padding:22px 20px;backdrop-filter:blur(12px);overflow:hidden;transition:.16s}
+  .arch-card:hover{border-color:var(--line2);transform:translateY(-2px)}
+  .arch-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:var(--cg-crystal);opacity:.85}
+  .arch-card .tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sky)}
+  .arch-card h3{margin:9px 0 6px;font-size:19px;font-weight:800}
+  .arch-card .sub{margin:0 0 13px;color:var(--dim);font-size:13.5px;line-height:1.6}
+  .arch-card ul{margin:0;padding-left:18px;color:var(--dim);font-size:13px;line-height:1.8}
+  .arch-card ul b{color:#fff;font-weight:600}
+  .arch-flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:center;margin-top:20px;
+    font-family:var(--mono);font-size:12px;color:var(--dim)}
+  .arch-flow .step{background:rgba(124,150,255,.07);border:1px solid var(--line);border-radius:999px;padding:8px 15px;color:#dbe4ff}
+  .arch-flow .arrow{color:var(--violet);font-weight:700}
+  .maturity{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:820px){.maturity{grid-template-columns:1fr}}
+  .mat-panel{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:20px;backdrop-filter:blur(12px)}
+  .mat-lbl{font-size:11px;color:var(--dim2);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;margin:0 0 9px}
+  .mat-opts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .mat-opt{font-size:12.5px;font-family:var(--sans);color:#cdd6f5;background:rgba(124,150,255,.07);
+    border:1px solid var(--line);border-radius:10px;padding:9px 13px;cursor:pointer;transition:.14s;text-align:left}
+  .mat-opt:hover{background:rgba(124,150,255,.15);color:#fff}
+  .mat-opt.on{background:linear-gradient(100deg,rgba(56,189,248,.22),rgba(167,139,250,.12));border-color:var(--line2);color:#fff}
+  .mat-rec{min-height:170px;display:flex;flex-direction:column;justify-content:center}
+  .mat-rec .pre{font-size:11px;color:var(--dim2);font-family:var(--mono);letter-spacing:.09em;text-transform:uppercase}
+  .mat-rec h4{margin:9px 0 7px;font-size:20px;font-weight:800;background:var(--cg-crystal);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .mat-rec p{margin:0 0 15px;color:var(--dim);font-size:13.5px;line-height:1.65}
 </style>
 <!-- ClearGlass Global Design System — homepage is the design source of truth -->
 <link rel="stylesheet" href="/assets/css/glass.css">
@@ -277,6 +314,83 @@
         <h3>Incident comms script</h3><p>What to say — to staff, customers, regulators — and when.</p></a>
       <a class="dcard" href="#guide"><div class="n">04</div><div class="ic">💬</div>
         <h3>Talk without jargon</h3><p>Translate cyber risk into plain words leaders act on.</p></a>
+    </div>
+    <p class="summary-band">The SMB Cyber Trust Kit is a practical cyber-trust system for small and mid-sized
+      businesses. It helps you <b>assess</b> your risk, <b>organize</b> the right policies, <b>present</b> your
+      posture with confidence, and <b>operationalize</b> good security habits — in language a non-technical owner
+      understands and a technical stakeholder respects.</p>
+    <div class="trust-strip">
+      <span class="ti">🛡 <b>Governed</b> — read-only, human-approved</span>
+      <span class="ti">🇨🇦 <b>PIPEDA / PHIPA</b> aware</span>
+      <span class="ti">⚡ <b>Deploy today</b> — copy &amp; go templates</span>
+      <span class="ti">🔍 <b>No fabrication</b> — kit-grounded answers</span>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE: AGENT + ENGINE -->
+  <section class="blk" id="architecture">
+    <div class="sec-head"><span class="num">◆</span><h2>Two connected layers: the Agent and the Engine</h2>
+      <p>The kit is more than documents. An adaptive <b>Agent</b> guides you to the right next step; a deterministic
+        <b>Engine</b> turns that into structured, repeatable output. Same source of truth, every time.</p></div>
+    <div class="arch">
+      <div class="arch-card">
+        <div class="tag">Layer 01 · Adaptive</div>
+        <h3>The Agent</h3>
+        <p class="sub">Analysis, guidance, and adaptive recommendations — the layer a person talks to.</p>
+        <ul>
+          <li><b>Reads your situation</b> — business size, maturity, and the pain point you name.</li>
+          <li><b>Recommends the next move</b> — which policy, which risk to fix first, what to say in an incident.</li>
+          <li><b>Explains in plain language</b> — no jargon, one clear action, backed by the kit.</li>
+          <li><b>Stays honest</b> — never invents controls, prices, or legal thresholds.</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <div class="tag">Layer 02 · Deterministic</div>
+        <h3>The Engine</h3>
+        <p class="sub">Orchestration, repeatable generation, and structured output — the layer that produces the deliverables.</p>
+        <ul>
+          <li><b>Scores risk</b> — likelihood × impact, banded Low → Critical, the same way every run.</li>
+          <li><b>Renders policies</b> — eight templates personalised to your business name.</li>
+          <li><b>Assembles comms</b> — incident scripts by phase and audience, with approval gates.</li>
+          <li><b>One source of truth</b> — the page, the advisor, and the backend all read the same kit.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="arch-flow">
+      <span class="step">① Assess</span><span class="arrow">→</span>
+      <span class="step">② Generate</span><span class="arrow">→</span>
+      <span class="step">③ Present</span><span class="arrow">→</span>
+      <span class="step">④ Operationalize</span>
+    </div>
+  </section>
+
+  <!-- GUIDED START CONSOLE -->
+  <section class="blk" id="start">
+    <div class="sec-head"><span class="num">▶</span><h2>Guided start — find your first move in 10 seconds</h2>
+      <p>Tell the console where you are and what's on your mind. It recommends the deliverable to open first, then
+        drops you straight into it.</p></div>
+    <div class="maturity">
+      <div class="mat-panel">
+        <p class="mat-lbl">1 · Where is your business?</p>
+        <div class="mat-opts" id="matStage">
+          <button class="mat-opt" data-stage="0">Just getting started</button>
+          <button class="mat-opt" data-stage="1">Growing team</button>
+          <button class="mat-opt" data-stage="2">Established / being audited</button>
+        </div>
+        <p class="mat-lbl">2 · What's the biggest concern right now?</p>
+        <div class="mat-opts" id="matPain">
+          <button class="mat-opt" data-pain="policies">We have no written security rules</button>
+          <button class="mat-opt" data-pain="heatmap">Not sure what our biggest risks are</button>
+          <button class="mat-opt" data-pain="incident">Worried about a breach — what would we say?</button>
+          <button class="mat-opt" data-pain="guide">Need to explain risk to owners / the board</button>
+        </div>
+      </div>
+      <div class="mat-panel mat-rec" id="matRec">
+        <span class="pre">Your recommended starting point</span>
+        <h4>Pick a stage and a concern</h4>
+        <p>The console will point you to the deliverable that moves the needle fastest for a business like yours.</p>
+        <div class="cta-row" style="margin:0"><a class="btn ghost" href="#architecture">See how it works ↑</a></div>
+      </div>
     </div>
   </section>
 
@@ -418,9 +532,12 @@
     <p>Download the templates and use them today. When you're ready to put the controls in place, ClearGlass runs
       fixed-scope hardening, posture reviews, and PHIPA-readiness work for Ontario businesses.</p>
     <div class="cta-row">
-      <button class="btn primary" id="dlKit2">⤓ Download the whole kit</button>
+      <button class="btn primary" id="dlKit2">⤓ Get the whole kit — free</button>
       <a class="btn ghost" href="offers/security-quick-audit.html">Start with a $249 Quick-Audit →</a>
+      <a class="btn ghost" href="pricing.html">See plans &amp; pricing</a>
     </div>
+    <p style="font-size:12px;color:var(--dim2);margin-top:14px;font-family:var(--mono);letter-spacing:.04em">
+      Trusted by Ontario operators · Fixed scope · Written authorization · Evidence you can hand to an auditor</p>
     <p class="disclaimer">The ClearGlass SMB Cyber Trust Kit provides practical guidance, not legal advice.
       Breach-notification obligations under PIPEDA and PHIPA depend on the facts — confirm specifics with a
       qualified privacy or legal advisor before notifying regulators or individuals.</p>
@@ -772,6 +889,52 @@
     fetch("assets/data/smb-cyber-trust-kit.json").then(function(r){return r.ok?r.json():Promise.reject();})
       .then(function(d){boot(d);}).catch(function(){var f=fallback();if(f)boot(f);});
   }else{var f=fallback();if(f)boot(f);}
+})();
+</script>
+<script>
+/* Guided-start console — isolated recommender; maps stage + concern to a deliverable. */
+(function(){
+  "use strict";
+  var stage=null, pain=null;
+  var STAGES=["a business just getting started","a growing team","an established, audited business"];
+  var REC={
+    policies:{a:"#policies",t:"Simple Policy Templates",
+      d:"Adopt eight plain-language policies this week — acceptable use, passwords/MFA, data protection and more, personalised to your business name.",
+      cta:"Open the policy templates"},
+    heatmap:{a:"#heatmap",t:"Risk Heat-Map",
+      d:"Score your risks on a 5×5 grid and get a worst-first to-do list, so you fix what actually threatens the business first.",
+      cta:"Open the risk heat-map"},
+    incident:{a:"#incident",t:"Incident Communication Script",
+      d:"Ready-to-send holding statements for staff, customers, and regulators — so a bad day doesn't become a trust crisis.",
+      cta:"Open the incident scripts"},
+    guide:{a:"#guide",t:"Plain-Language Guide",
+      d:"Turn cyber risk into business language that gets a yes from owners and boards — analogies, translations, and what-to-say scripts.",
+      cta:"Open the plain-language guide"}
+  };
+  var STAGE_NOTE=[
+    "Since you're just starting, this gives you a credible baseline fast — no security team required.",
+    "For a growing team, this is where informal habits become written, repeatable discipline.",
+    "For an audited business, this is the documented evidence reviewers and clients ask to see."
+  ];
+  var $=function(s){return document.querySelector(s);};
+  function setActive(sel,attr,val){
+    document.querySelectorAll(sel+" .mat-opt").forEach(function(b){
+      b.classList.toggle("on", b.getAttribute(attr)===String(val));
+    });
+  }
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  function render(){
+    var box=$("#matRec"); if(!box||pain===null) return;
+    var r=REC[pain], note=stage!==null?" "+STAGE_NOTE[stage]:"";
+    box.innerHTML='<span class="pre">Recommended for '+esc(stage!==null?STAGES[stage]:"your business")+'</span>'+
+      '<h4>'+esc(r.t)+'</h4><p>'+esc(r.d+note)+'</p>'+
+      '<div class="cta-row" style="margin:0"><a class="btn primary" href="'+r.a+'">'+esc(r.cta)+' →</a></div>';
+  }
+  var sw=$("#matStage"), pw=$("#matPain");
+  if(sw)sw.addEventListener("click",function(e){var b=e.target.closest(".mat-opt");if(!b)return;
+    stage=+b.getAttribute("data-stage");setActive("#matStage","data-stage",stage);render();});
+  if(pw)pw.addEventListener("click",function(e){var b=e.target.closest(".mat-opt");if(!b)return;
+    pain=b.getAttribute("data-pain");setActive("#matPain","data-pain",pain);render();});
 })();
 </script>
 <script defer src="nav.js"></script>

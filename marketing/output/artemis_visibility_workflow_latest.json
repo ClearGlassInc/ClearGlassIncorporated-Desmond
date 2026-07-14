@@ -1,0 +1,87 @@
+{
+  "run_utc": "2026-07-14T12:07:53.156945+00:00",
+  "organization": "ClearGlassInc Artemis",
+  "priority": "P2 Medium \u2014 personal brand, web visibility, SEO, threat-intel mapping, energy",
+  "social_post": {
+    "platform_targets": [
+      "LinkedIn",
+      "X"
+    ],
+    "hook": "Your next cyber incident will not wait for your weekly meeting.",
+    "body": "AI has compressed the attack timeline. Phishing is more personalized. Vulnerability discovery is faster. Adversaries can chain recon, lure generation, and exploitation attempts with less human labor than ever.\n\nThe defender response cannot be another passive dashboard. The winning pattern is governed AI automation: live intel, asset context, safe recommendations, human approval, and continuous evals from operator feedback.\n\nThat is the architecture behind ClearGlassInc Artemis: agentic AI for triage, enrichment, correlation, and executive-grade cyber decisions \u2014 wrapped in zero-trust policy, audit, and rollback.",
+    "hashtags": [
+      "Cybersecurity",
+      "AIAutomation",
+      "AgenticAI",
+      "ThreatIntelligence",
+      "ZeroTrust",
+      "ClearGlassIncArtemis"
+    ],
+    "engagement_drivers": [
+      {
+        "kind": "question",
+        "text": "Where would AI automation create the highest leverage in your SOC today?"
+      },
+      {
+        "kind": "poll",
+        "text": "Alert triage, vulnerability prioritization, phishing defense, or executive risk reporting?"
+      },
+      {
+        "kind": "comment_cta",
+        "text": "Comment with one workflow you would automate first."
+      },
+      {
+        "kind": "save_share",
+        "text": "Save this as a human-in-the-loop AI security design pattern."
+      }
+    ],
+    "status": "operator_review_required"
+  },
+  "seo_pack": {
+    "title": "AI Cyber Intelligence Platform | ClearGlassInc Artemis",
+    "description": "ClearGlassInc Artemis blueprint for AI automation, cybersecurity operations, agentic intelligence, and self-improving secure workflows.",
+    "keywords": [
+      "AI automation cybersecurity",
+      "agentic AI platform",
+      "self improving intelligence platform",
+      "cyber threat intelligence automation",
+      "zero trust AI agents"
+    ],
+    "canonical": "https://clearglassinc.github.io/artemis-ai-cyber-intelligence-platform.html",
+    "internal_links": [
+      "intelligence-interface.html",
+      "SYSTEM_2040_ARTEMIS_INTELLIGENCE_BLUEPRINT.md",
+      "ai-operator.html",
+      "guardian.html",
+      "bluedesk.html"
+    ],
+    "schema_type": "TechArticle"
+  },
+  "threat_mapping": {
+    "signal": "Active exploitation pressure on edge infrastructure, AI-enhanced phishing, and KEV-listed vulnerabilities.",
+    "mitigation": "Launch KEV-to-asset exposure triage with compensating controls, owner routing, and approved action packages.",
+    "clear_glass_value_add": "Convert public threat intel into prioritized client remediation queues by combining business criticality, asset exposure, exploit evidence, and human-approved containment playbooks.",
+    "client_offerings": [
+      "Guardian",
+      "BLUEDESK",
+      "AI Operator",
+      "Artemis risk brief"
+    ],
+    "evidence_links": [
+      "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+      "https://www.cisa.gov/news-events/alerts/2026/07/07/cisa-adds-three-known-exploited-vulnerabilities-catalog"
+    ]
+  },
+  "energy_log": {
+    "workout_protocol": "45-minute high-intensity training block",
+    "cold_exposure_protocol": "10-minute cold exposure block",
+    "completion_status": "operator_event_required",
+    "required_eod_metric": "energy_level_1_to_10 must be logged; target > 8/10"
+  },
+  "approval_gates": [
+    "Operator must approve social post before publishing.",
+    "Operator must confirm workout/cold exposure completion before status changes.",
+    "Client-facing threat brief requires human review before delivery.",
+    "No autonomous production security action without explicit authorization."
+  ]
+}

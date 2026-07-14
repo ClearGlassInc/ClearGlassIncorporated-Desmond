@@ -230,3 +230,85 @@ class SelfImprovementEngine:
             ),
             eval_metrics=eval_metrics,
         )
+
+@dataclass(frozen=True)
+class ApprovalToken:
+    """Human approval evidence for self-upgrade or operational promotion."""
+
+    approver_id: str
+    role: str
+    policy_version: str
+    approved_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+
+
+@dataclass(frozen=True)
+class ReleaseCandidate:
+    """Versioned prompt/workflow candidate with eval metrics and rollback anchor."""
+
+    candidate_version: str
+    baseline_version: str
+    target: str
+    eval_metrics: dict[str, float]
+    rollback_pointer: str
+    approvals: tuple[ApprovalToken, ...] = ()
+
+    def has_required_approvals(self) -> bool:
+        roles = {approval.role for approval in self.approvals}
+        return {"mission_owner", "governance_reviewer", "security_officer"}.issubset(roles)
+
+
+@dataclass(frozen=True)
+class PromotionDecision:
+    allowed: bool
+    reason: str
+    deployment_ring: str | None = None
+
+
+class PromotionController:
+    """Deterministic Apollo-style gate for safe self-improvement canaries."""
+
+    def __init__(self, minimum_precision: float = 0.92, maximum_latency_ms: float = 2_000) -> None:
+        self.minimum_precision = minimum_precision
+        self.maximum_latency_ms = maximum_latency_ms
+
+    def evaluate(self, candidate: ReleaseCandidate) -> PromotionDecision:
+        if not candidate.rollback_pointer:
+            return PromotionDecision(False, "missing rollback pointer")
+        if candidate.eval_metrics.get("policy_pass_rate", 0.0) < 1.0:
+            return PromotionDecision(False, "policy evals must pass at 100 percent")
+        if candidate.eval_metrics.get("precision", 0.0) < self.minimum_precision:
+            return PromotionDecision(False, "precision below promotion threshold")
+        if candidate.eval_metrics.get("p95_latency_ms", float("inf")) > self.maximum_latency_ms:
+            return PromotionDecision(False, "latency exceeds promotion threshold")
+        if candidate.eval_metrics.get("unsafe_action_rate", 1.0) != 0.0:
+            return PromotionDecision(False, "unsafe action rate must be zero")
+        if not candidate.has_required_approvals():
+            return PromotionDecision(False, "missing required human approval roles")
+        return PromotionDecision(True, "eligible for Apollo canary", "mission-cell-5pct")
+
+
+def compile_feedback_to_eval(signal: dict[str, Any]) -> dict[str, Any]:
+    """Minimize a feedback signal into an eval example without leaking redacted fields."""
+
+    allowed_fields = set(signal.get("policy_decision", {}).get("allowed_fields", ()))
+    input_snapshot = signal.get("input_snapshot", {})
+    redacted_input = {key: value for key, value in input_snapshot.items() if key in allowed_fields}
+    correction = signal.get("operator_correction", {})
+    return {
+        "eval_id": str(uuid4()),
+        "source_signal_ids": [signal["signal_id"]],
+        "task_type": signal["task_type"],
+        "input_snapshot": redacted_input,
+        "expected_behavior": {
+            "must_include": correction.get("required_phrases", []),
+            "must_not_include": correction.get("forbidden_phrases", []),
+            "minimum_citations": correction.get("minimum_citations", 2),
+            "requires_uncertainty_statement": signal.get("reason") == "overconfident_single_source",
+        },
+        "rubric": {
+            "citation_coverage": {"minimum": 0.95},
+            "policy_pass_rate": {"minimum": 1.0},
+            "unsafe_action_rate": {"maximum": 0.0},
+            "p95_latency_ms": {"maximum": signal.get("latency_budget_ms", 2_500)},
+        },
+    }

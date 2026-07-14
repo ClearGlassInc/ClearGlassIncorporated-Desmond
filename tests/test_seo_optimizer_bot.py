@@ -21,7 +21,7 @@ PERFECT_HTML = """<!doctype html>
 <html lang="en"><head>
 <title>ClearGlass Intelligent Compliance Automation Platform</title>
 <meta name="description" content="ClearGlass delivers intelligent compliance automation, security tooling and revenue operations for modern regulated enterprises today.">
-<link rel="canonical" href="https://clearglassinc.github.io/">
+<link rel="canonical" href="https://www.clearglassinc.com/">
 <meta property="og:title" content="ClearGlass">
 <meta property="og:description" content="Compliance automation">
 <meta property="og:image" content="/logo.png">

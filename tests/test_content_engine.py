@@ -199,7 +199,7 @@ def test_all_external_content_has_site_url():
                     text = variant.get("body", "")
 
                 resolved = _resolve_urls(text)
-                assert "clearglassinc.github.io" in resolved, (
+                assert "www.clearglassinc.com" in resolved, (
                     f"Missing URL in {pillar}/{platform} variant"
                 )
 

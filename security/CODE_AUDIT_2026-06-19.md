@@ -36,7 +36,7 @@ the health probe into a `file://`/`ftp://` read (CWE-22 / SSRF).
 
 | Finding | Location(s) | Rationale |
 |---------|-------------|-----------|
-| B310 urlopen | `bots/alert_dispatcher_bot.py`, `bots/site_health_bot.py`, `scripts/{repo_audit,api_security_scanner,access_control_audit,control_surface_feeds(gh_api)}.py`, `automation/v0.2/clearglass_agent_runtime.py` | URLs are built from **hardcoded/trusted bases** (GitHub API, the project's own `https://clearglassinc.github.io`), not attacker input. No SSRF path. |
+| B310 urlopen | `bots/alert_dispatcher_bot.py`, `bots/site_health_bot.py`, `scripts/{repo_audit,api_security_scanner,access_control_audit,control_surface_feeds(gh_api)}.py`, `automation/v0.2/clearglass_agent_runtime.py` | URLs are built from **hardcoded/trusted bases** (GitHub API, the project's own `https://www.clearglassinc.com`), not attacker input. No SSRF path. |
 | B318/B314 XML | `scripts/osint_deck_release.py`, `scripts/site_reliability_audit.py` | Parse the repo's **own committed `sitemap.xml`** (trusted, generated in-repo). These scripts run in CI with stdlib only; adding a dependency would expand CI blast radius for no real-world gain. |
 | B104 bind 0.0.0.0 | `clearglass-commerce/control-plane/app/main.py` | Intentional for a containerized service listening on all interfaces. |
 | B105 "hardcoded password" | various | False positives — string literals `"PASS"`, `"FAIL"`, `"tok"` are status/label values, not credentials. |

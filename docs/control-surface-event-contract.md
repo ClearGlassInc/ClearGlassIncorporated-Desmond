@@ -129,7 +129,7 @@ interface AlertItem { status: Status; title: string; detail: string }
   for page render.
 
 **Transport requirements**
-- `Access-Control-Allow-Origin: https://clearglassinc.github.io` (no `*` once live).
+- `Access-Control-Allow-Origin: https://www.clearglassinc.com` (no `*` once live).
 - `Cache-Control: public, max-age=15` recommended at the edge to absorb polling.
 - Rate limit by IP at the ingress proxy; the dashboard generates ≤ 12 req/min.
 

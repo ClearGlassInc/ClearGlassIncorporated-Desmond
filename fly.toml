@@ -8,7 +8,7 @@ primary_region = "iad"
   PORT = "8080"
   CLEARGLASS_AGENT_VERSION = "0.1.0"
   CLEARGLASS_ALLOWED_ORGS = "ClearGlassInc"
-  CLEARGLASS_ALLOWED_ORIGINS = "https://clearglassinc.github.io"
+  CLEARGLASS_ALLOWED_ORIGINS = "https://www.clearglassinc.com"
 
 [http_service]
   internal_port = 8080

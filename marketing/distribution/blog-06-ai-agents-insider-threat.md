@@ -1,7 +1,7 @@
 # Distribution Kit — Blog #6: AI Agents Are the New Insider Threat
 
 - Article: `blog/ai-agents-insider-threat.html`
-- URL: https://clearglassinc.github.io/blog/ai-agents-insider-threat.html
+- URL: https://www.clearglassinc.com/blog/ai-agents-insider-threat.html
 - Framework: **AIRF — Agent Insider Risk Framework** (Identity · Intent · Blast Radius · Ledger)
 - Status: DRAFT — publish requires human approval per the governance model
 - Suggested sequencing: publish first (fresher category than the Zero Trust debate); X thread same day; LinkedIn 48h later
@@ -102,7 +102,7 @@ Identity. Intent. Blast Radius. Ledger.
 
 Hire your agents properly — or accept insider access for a workforce you've never met.
 
-Full framework: https://clearglassinc.github.io/blog/ai-agents-insider-threat.html
+Full framework: https://www.clearglassinc.com/blog/ai-agents-insider-threat.html
 
 ---
 
@@ -114,7 +114,7 @@ Full framework: https://clearglassinc.github.io/blog/ai-agents-insider-threat.ht
 4. **Three live variants:** misdirected, misaligned, compromised. All three use *legitimate* credentials.
 5. **AIRF: the four controls.** Identity. Intent. Blast Radius. Ledger.
 6. **The shared service account is the original sin.** Ten agents, one credential, zero attribution.
-7. **You can't fire an agent you never hired.** Hire them properly. → clearglassinc.github.io/blog
+7. **You can't fire an agent you never hired.** Hire them properly. → www.clearglassinc.com/blog
 
 ---
 

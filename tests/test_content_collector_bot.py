@@ -28,7 +28,7 @@ RICH_HTML = """<!doctype html>
 <meta property="og:title" content="ClearGlass">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
-<link rel="canonical" href="https://clearglassinc.github.io/">
+<link rel="canonical" href="https://www.clearglassinc.com/">
 <script type="application/ld+json">{"@type": "Organization", "name": "ClearGlass"}</script>
 <style>.x{color:red}</style>
 </head><body>
@@ -58,7 +58,7 @@ class TestPageExtractor:
         assert p.lang == "en"
         assert p.meta["description"] == "Compliance automation platform."
         assert p.meta["og:title"] == "ClearGlass"
-        assert p.canonical == "https://clearglassinc.github.io/"
+        assert p.canonical == "https://www.clearglassinc.com/"
 
     def test_extracts_headings_links_images(self) -> None:
         p = _PageExtractor()
@@ -95,7 +95,7 @@ class TestCollectPage:
             record = collect_page(f)
         assert isinstance(record, PageRecord)
         assert record.path == "index.html"
-        assert record.url == "https://clearglassinc.github.io/"
+        assert record.url == "https://www.clearglassinc.com/"
         assert record.title == "ClearGlass Platform"
         assert record.word_count > 0
         assert len(record.content_hash) == 16

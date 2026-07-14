@@ -7,6 +7,6 @@ ClearGlass Inc was founded on the belief that transparent intelligence is the ul
 
 Our products — Artemis and Guardian — are built from a single principle: surface what matters, strip what doesn't, deliver a clean signal to the people responsible for acting on it.
 
-If you're evaluating your security posture this quarter, start here: https://clearglassinc.github.io/
+If you're evaluating your security posture this quarter, start here: https://www.clearglassinc.com/
 
 — The ClearGlass Team

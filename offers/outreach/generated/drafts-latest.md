@@ -17,7 +17,7 @@ Hi {{First name}},
 
 Our Microsoft 365 + Windows Hardening Sprint is fixed-scope (1–2 weeks): we bring your tenant and endpoints to CIS-aligned baselines and hand you a prioritized, plain-language remediation report, with quick wins applied on your sign-off. Tiers run $2,500 / $4,500 / $7,500 CAD by environment size. All work is under written authorization.
 
-Open to a short scoping call to confirm fit and a fixed price? Details: https://clearglassinc.github.io/store.html
+Open to a short scoping call to confirm fit and a fixed price? Details: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -38,7 +38,7 @@ Hi {{First name}},
 
 Our Microsoft 365 + Windows Hardening Sprint is fixed-scope (1–2 weeks): we bring your tenant and endpoints to CIS-aligned baselines and hand you a prioritized, plain-language remediation report, with quick wins applied on your sign-off. Tiers run $2,500 / $4,500 / $7,500 CAD by environment size. All work is under written authorization.
 
-Open to a short scoping call to confirm fit and a fixed price? Details: https://clearglassinc.github.io/store.html
+Open to a short scoping call to confirm fit and a fixed price? Details: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -59,7 +59,7 @@ I came across Taxory — {{specific public observation — e.g. from Taxory's pu
 
 Our Security Quick-Audit (CAD $249) is a read-only review of your email security (SPF/DKIM/DMARC), public exposure, and Microsoft 365 baseline. You get a branded findings report with the top 10 risk-ranked items within 3 business days. It changes nothing and needs only your written authorization for the domain in scope.
 
-Worth a look? You can review or book it here: https://clearglassinc.github.io/store.html
+Worth a look? You can review or book it here: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -80,7 +80,7 @@ I came across S+D Accounting — {{specific public observation — e.g. from S+D
 
 Our Security Quick-Audit (CAD $249) is a read-only review of your email security (SPF/DKIM/DMARC), public exposure, and Microsoft 365 baseline. You get a branded findings report with the top 10 risk-ranked items within 3 business days. It changes nothing and needs only your written authorization for the domain in scope.
 
-Worth a look? You can review or book it here: https://clearglassinc.github.io/store.html
+Worth a look? You can review or book it here: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -101,7 +101,7 @@ Hi {{First name}},
 
 Our Microsoft 365 + Windows Hardening Sprint is fixed-scope (1–2 weeks): we bring your tenant and endpoints to CIS-aligned baselines and hand you a prioritized, plain-language remediation report, with quick wins applied on your sign-off. Tiers run $2,500 / $4,500 / $7,500 CAD by environment size. All work is under written authorization.
 
-Open to a short scoping call to confirm fit and a fixed price? Details: https://clearglassinc.github.io/store.html
+Open to a short scoping call to confirm fit and a fixed price? Details: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -122,7 +122,7 @@ Hi {{First name}},
 
 Our Microsoft 365 + Windows Hardening Sprint is fixed-scope (1–2 weeks): we bring your tenant and endpoints to CIS-aligned baselines and hand you a prioritized, plain-language remediation report, with quick wins applied on your sign-off. Tiers run $2,500 / $4,500 / $7,500 CAD by environment size. All work is under written authorization.
 
-Open to a short scoping call to confirm fit and a fixed price? Details: https://clearglassinc.github.io/store.html
+Open to a short scoping call to confirm fit and a fixed price? Details: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -143,7 +143,7 @@ Hi {{First name}},
 
 Our Microsoft 365 + Windows Hardening Sprint is fixed-scope (1–2 weeks): we bring your tenant and endpoints to CIS-aligned baselines and hand you a prioritized, plain-language remediation report, with quick wins applied on your sign-off. Tiers run $2,500 / $4,500 / $7,500 CAD by environment size. All work is under written authorization.
 
-Open to a short scoping call to confirm fit and a fixed price? Details: https://clearglassinc.github.io/store.html
+Open to a short scoping call to confirm fit and a fixed price? Details: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -164,7 +164,7 @@ Hi {{First name}},
 
 Our Microsoft 365 + Windows Hardening Sprint is fixed-scope (1–2 weeks): we bring your tenant and endpoints to CIS-aligned baselines and hand you a prioritized, plain-language remediation report, with quick wins applied on your sign-off. Tiers run $2,500 / $4,500 / $7,500 CAD by environment size. All work is under written authorization.
 
-Open to a short scoping call to confirm fit and a fixed price? Details: https://clearglassinc.github.io/store.html
+Open to a short scoping call to confirm fit and a fixed price? Details: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -185,7 +185,7 @@ Hi {{First name}},
 
 Our Microsoft 365 + Windows Hardening Sprint is fixed-scope (1–2 weeks): we bring your tenant and endpoints to CIS-aligned baselines and hand you a prioritized, plain-language remediation report, with quick wins applied on your sign-off. Tiers run $2,500 / $4,500 / $7,500 CAD by environment size. All work is under written authorization.
 
-Open to a short scoping call to confirm fit and a fixed price? Details: https://clearglassinc.github.io/store.html
+Open to a short scoping call to confirm fit and a fixed price? Details: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 
@@ -206,7 +206,7 @@ Hi {{First name}},
 
 We pair a fixed-scope hardening pass with light workflow automation so the routine work runs itself and access stays tidy. Scoped, fixed-fee, under written authorization.
 
-Worth a short call to see if it fits? Details: https://clearglassinc.github.io/store.html
+Worth a short call to see if it fits? Details: https://www.clearglassinc.com/store.html
 
 — Desmond, ClearGlass Inc.
 

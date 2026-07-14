@@ -25,7 +25,7 @@ I offer a fixed-fee **$249 Security Quick-Audit**: read-only, nothing touched, a
 risk-ranked findings report in 3–5 business days plus a 30-minute readout call.
 It's the no-pressure way to find out where you actually stand.
 
-Worth a quick look? You can see the scope here: {{https://clearglassinc.github.io/store.html}}
+Worth a quick look? You can see the scope here: {{https://www.clearglassinc.com/store.html}}
 
 Either way, happy to share the free PHIPA/ security checklist — just say the word.
 

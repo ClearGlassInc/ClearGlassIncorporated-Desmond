@@ -42,7 +42,7 @@ WORKFLOWS_DIR = ROOT / ".github" / "workflows"
 PIPELINE_SOURCE = OUT_DIR / "pipeline-source.json"
 
 API = "https://api.github.com"
-SITE = "https://clearglassinc.github.io"
+SITE = "https://www.clearglassinc.com"
 PROBE_PATHS = ["/", "/saas-platform.html", "/artemis-percival.html", "/percival-os.html"]
 
 ACTIVITY_LIMIT = 12

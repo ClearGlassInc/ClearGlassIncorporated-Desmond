@@ -50,7 +50,7 @@ concurrency:
 env:
   NODE_VERSION: '20.14'
   PYTHON_VERSION: '3.12'
-  STOREFRONT_URL: 'https://clearglassinc.github.io'  # Update to custom domain if active
+  STOREFRONT_URL: 'https://www.clearglassinc.com'  # Update to custom domain if active
   # Add more env as needed, e.g. NEXT_PUBLIC_*
 
 jobs:

@@ -3,12 +3,12 @@
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://clearglassinc.github.io/#org",
+      "@id": "https://www.clearglassinc.com/#org",
       "name": "ClearGlass Inc",
-      "url": "https://clearglassinc.github.io",
-      "logo": "https://clearglassinc.github.io/logo.png",
+      "url": "https://www.clearglassinc.com",
+      "logo": "https://www.clearglassinc.com/logo.png",
       "foundingDate": "2024",
-      "founder": { "@id": "https://clearglassinc.github.io/#desmond" },
+      "founder": { "@id": "https://www.clearglassinc.com/#desmond" },
       "sameAs": ["https://github.com/ClearGlassInc"],
       "address": {
         "@type": "PostalAddress",
@@ -26,11 +26,11 @@
     },
     {
       "@type": "Person",
-      "@id": "https://clearglassinc.github.io/#desmond",
+      "@id": "https://www.clearglassinc.com/#desmond",
       "name": "Desmond Otieno Odhiambo",
       "jobTitle": "Founder & Chairman, Software Architect",
-      "worksFor": { "@id": "https://clearglassinc.github.io/#org" },
-      "url": "https://clearglassinc.github.io/#founder",
+      "worksFor": { "@id": "https://www.clearglassinc.com/#org" },
+      "url": "https://www.clearglassinc.com/#founder",
       "email": "mailto:desmondotieno@icloud.com",
       "knowsAbout": [
         "Cybersecurity",
@@ -47,14 +47,14 @@
     },
     {
       "@type": "ProfessionalService",
-      "@id": "https://clearglassinc.github.io/#service",
+      "@id": "https://www.clearglassinc.com/#service",
       "name": "ClearGlass Inc",
-      "url": "https://clearglassinc.github.io",
-      "image": "https://clearglassinc.github.io/logo.png",
+      "url": "https://www.clearglassinc.com",
+      "image": "https://www.clearglassinc.com/logo.png",
       "telephone": "+1-289-707-0269",
       "priceRange": "$$$",
       "areaServed": "Worldwide",
-      "parentOrganization": { "@id": "https://clearglassinc.github.io/#org" },
+      "parentOrganization": { "@id": "https://www.clearglassinc.com/#org" },
       "knowsAbout": [
         "Cybersecurity Consulting",
         "AI Engineering",
@@ -67,17 +67,17 @@
     },
     {
       "@type": "WebSite",
-      "@id": "https://clearglassinc.github.io/#website",
+      "@id": "https://www.clearglassinc.com/#website",
       "name": "ClearGlass Inc.",
-      "url": "https://clearglassinc.github.io",
-      "publisher": { "@id": "https://clearglassinc.github.io/#org" },
+      "url": "https://www.clearglassinc.com",
+      "publisher": { "@id": "https://www.clearglassinc.com/#org" },
       "hasPart": [
-        {"@type": "WebPage", "name": "Artemis IV Core", "url": "https://clearglassinc.github.io/artemis-iv.html"},
-        {"@type": "WebPage", "name": "Guardian", "url": "https://clearglassinc.github.io/guardian.html"},
-        {"@type": "WebPage", "name": "ClearGlass NEXUS v12", "url": "https://clearglassinc.github.io/clearglass-nexus.html"},
-        {"@type": "WebPage", "name": "Services & Pricing", "url": "https://clearglassinc.github.io/offers/index.html"},
-        {"@type": "Blog", "name": "ClearGlass Insights", "url": "https://clearglassinc.github.io/blog/"},
-        {"@type": "BlogPosting", "name": "AI Agent Governance: The Governed Autonomy Playbook", "url": "https://clearglassinc.github.io/blog/ai-agent-governance-governed-autonomy.html", "author": {"@id": "https://clearglassinc.github.io/#desmond"}}
+        {"@type": "WebPage", "name": "Artemis IV Core", "url": "https://www.clearglassinc.com/artemis-iv.html"},
+        {"@type": "WebPage", "name": "Guardian", "url": "https://www.clearglassinc.com/guardian.html"},
+        {"@type": "WebPage", "name": "ClearGlass NEXUS v12", "url": "https://www.clearglassinc.com/clearglass-nexus.html"},
+        {"@type": "WebPage", "name": "Services & Pricing", "url": "https://www.clearglassinc.com/offers/index.html"},
+        {"@type": "Blog", "name": "ClearGlass Insights", "url": "https://www.clearglassinc.com/blog/"},
+        {"@type": "BlogPosting", "name": "AI Agent Governance: The Governed Autonomy Playbook", "url": "https://www.clearglassinc.com/blog/ai-agent-governance-governed-autonomy.html", "author": {"@id": "https://www.clearglassinc.com/#desmond"}}
       ]
     }
   ]

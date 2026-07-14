@@ -203,7 +203,7 @@ function Invoke-PushAndPR {
 function Invoke-DeployCheck {
     try {
         Assert-ProtectedUnchanged
-        $response = Invoke-External -Command "curl -sS -o /dev/null -w '%{http_code}' https://clearglassinc.github.io"
+        $response = Invoke-External -Command "curl -sS -o /dev/null -w '%{http_code}' https://www.clearglassinc.com"
         $httpCode = ($response.Output | Select-Object -Last 1).ToString().Trim()
         if ($httpCode -ne "200") {
             throw "Deployment check failed. HTTP status code: $httpCode"

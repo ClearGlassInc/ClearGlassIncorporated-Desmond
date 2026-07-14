@@ -13,7 +13,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-BASE_URL = "https://clearglassinc.com"
+BASE_URL = "https://www.clearglassinc.com"
 
 PILLARS = {
     "ai_risk": {

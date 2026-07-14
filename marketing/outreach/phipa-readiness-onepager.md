@@ -33,7 +33,7 @@ can't answer after the fact.
 Ontario-based (Burlington), CIS-aligned, written authorization before any work,
 read-only by default. No funds are ever auto-charged.
 
-**Start free:** {{https://clearglassinc.github.io/offers/phipa-readiness-checklist.html}}
-**Book the assessment:** {{https://clearglassinc.github.io/store.html}}
+**Start free:** {{https://www.clearglassinc.com/offers/phipa-readiness-checklist.html}}
+**Book the assessment:** {{https://www.clearglassinc.com/store.html}}
 
 ClearGlass Inc. · Burlington, Ontario · {{your-reply-email}}

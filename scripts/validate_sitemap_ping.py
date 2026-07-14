@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SITEMAP = ROOT / "sitemap.xml"
 ROBOTS = ROOT / "robots.txt"
 PING_SCRIPT = ROOT / "scripts" / "Invoke-SitemapPing.ps1"
-SITEMAP_URL = "https://clearglassinc.github.io/sitemap.xml"
+SITEMAP_URL = "https://www.clearglassinc.com/sitemap.xml"
 BING_ENDPOINT = "https://www.bing.com/ping?sitemap="
 PROHIBITED_TERMS = ("forum", "comment", "directory", "backlink", "blast", "spam")
 

@@ -26,7 +26,7 @@ Edit the `CONFIG` block at the top of [`analytics.js`](../analytics.js):
    ⚠️ GA4 sets cookies — add a line to your privacy policy.
 
 ### Option B — Plausible (paid, cookieless, simpler/privacy-first)
-1. Add `clearglassinc.github.io` at <https://plausible.io>.
+1. Add `www.clearglassinc.com` at <https://plausible.io>.
 2. Set `provider: "plausible"` (the domain is already filled in).
 3. Commit. No cookie banner needed.
 

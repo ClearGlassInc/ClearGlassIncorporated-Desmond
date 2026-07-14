@@ -12,7 +12,7 @@
 param(
     [Parameter()]
     [ValidatePattern('^https://')]
-    [string]$SitemapUrl = 'https://clearglassinc.github.io/sitemap.xml',
+    [string]$SitemapUrl = 'https://www.clearglassinc.com/sitemap.xml',
 
     [Parameter()]
     [int]$TimeoutSec = 20
@@ -44,6 +44,6 @@ try {
     Write-Host ''
     Write-Host 'IMPORTANT GOOGLE UPDATE:' -ForegroundColor Yellow
     Write-Host 'Google retired its automated sitemap ping service in 2024.' -ForegroundColor Gray
-    Write-Host 'Use Google Search Console to submit https://clearglassinc.github.io/sitemap.xml manually.' -ForegroundColor Gray
+    Write-Host 'Use Google Search Console to submit https://www.clearglassinc.com/sitemap.xml manually.' -ForegroundColor Gray
     Write-Host 'This script supports indexing discovery only; it does not guarantee ranking.' -ForegroundColor Gray
 }

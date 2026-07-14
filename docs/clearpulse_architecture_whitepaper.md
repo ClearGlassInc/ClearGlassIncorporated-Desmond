@@ -525,7 +525,7 @@ explain:
 
 ```yaml
 $schema: https://json-schema.org/draft/2020-12/schema
-$id:     https://clearglassinc.github.io/schemas/risk-envelope-2026.06.json
+$id:     https://www.clearglassinc.com/schemas/risk-envelope-2026.06.json
 type: object
 required: [trace_id, envelope_version, source, subject, score, severity,
            factors, rule_version, audit]

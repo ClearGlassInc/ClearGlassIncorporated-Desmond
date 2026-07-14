@@ -369,6 +369,7 @@ feedback.signals topic
 - **Dual approval for high-risk changes**: governance owner + mission owner approve before Apollo promotion.
 - **Rollback by design**: every candidate has a previous release pointer, kill switch, and metric-based abort condition.
 - **Drift detection**: feature drift, label drift, embedding drift, prompt behavior drift, operator trust drift, and policy denial drift.
+- **Deterministic promotion gates**: every self-upgrade candidate is checked by an auditable Python gate before Apollo canary. The gate blocks candidates that miss precision, recall, latency, policy-regression, or explicit human-approval requirements; it also records the rollback version used if the canary fails.
 
 ### A/B and Canary Strategy
 - Offline replay must pass before live exposure.
@@ -383,6 +384,7 @@ feedback.signals topic
 - **Citation coverage**: percent of claims linked to evidence.
 - **Operator trust**: accept rate, edit distance, rejection reasons, satisfaction score.
 - **Mission impact**: time-to-assessment, time-to-brief, avoided duplicate work, quality of action package.
+- **Policy safety delta**: change in deny/allow decisions between the baseline and candidate. Any unexpected increase in denied reads, exports, or tool calls must be triaged before promotion because it can signal broken mission access assumptions or unsafe data-routing changes.
 
 ---
 

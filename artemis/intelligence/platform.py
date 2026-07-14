@@ -271,9 +271,51 @@ class TriageAgent:
 class SelfImprovementEngine:
     """Converts feedback into eval-backed, human-approved upgrade proposals."""
 
-    def __init__(self, minimum_precision: float = 0.92, maximum_latency_ms: float = 2_000) -> None:
+    def __init__(
+        self,
+        minimum_precision: float = 0.92,
+        maximum_latency_ms: float = 2_000,
+        minimum_recall: float = 0.85,
+        maximum_policy_denials_delta: float = 0.0,
+    ) -> None:
         self.minimum_precision = minimum_precision
         self.maximum_latency_ms = maximum_latency_ms
+        self.minimum_recall = minimum_recall
+        self.maximum_policy_denials_delta = maximum_policy_denials_delta
+
+    def evaluate_candidate(
+        self,
+        *,
+        current_version: str,
+        candidate_version: str,
+        eval_metrics: dict[str, float],
+        human_approved: bool,
+    ) -> EvalGateResult:
+        """Return an auditable gate result before Apollo canary or promotion.
+
+        The gate is intentionally strict: Artemis may propose prompt, workflow, or
+        routing upgrades, but a candidate cannot pass unless offline evals meet
+        quality/latency/policy thresholds and a human has approved the change.
+        """
+
+        reasons: list[str] = []
+        if eval_metrics.get("precision", 0.0) < self.minimum_precision:
+            reasons.append("precision below required threshold")
+        if eval_metrics.get("recall", 0.0) < self.minimum_recall:
+            reasons.append("recall below required threshold")
+        if eval_metrics.get("p95_latency_ms", float("inf")) > self.maximum_latency_ms:
+            reasons.append("p95 latency exceeds budget")
+        if eval_metrics.get("policy_denials_delta", 0.0) > self.maximum_policy_denials_delta:
+            reasons.append("policy denial rate regressed")
+        if not human_approved:
+            reasons.append("human approval is required")
+
+        return EvalGateResult(
+            passed=not reasons,
+            reasons=tuple(reasons),
+            rollback_version=current_version,
+            candidate_version=candidate_version if not reasons else None,
+        )
 
     def proposal_from_feedback(
         self,
@@ -288,9 +330,13 @@ class SelfImprovementEngine:
         rejected_or_corrected = [item for item in feedback if item.rating <= 2 or item.correction]
         if not rejected_or_corrected:
             return None
-        if eval_metrics.get("precision", 0.0) < self.minimum_precision:
-            return None
-        if eval_metrics.get("p95_latency_ms", float("inf")) > self.maximum_latency_ms:
+        gate = self.evaluate_candidate(
+            current_version=current_version,
+            candidate_version="candidate-pre-approval",
+            eval_metrics=eval_metrics,
+            human_approved=True,
+        )
+        if not gate.passed:
             return None
 
         candidate_hash = sha256(candidate_prompt.encode("utf-8")).hexdigest()[:12]

@@ -3,12 +3,75 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "03:32",
-    "timestamp": "2026-07-14T03:32:37Z"
+    "time": "06:24",
+    "timestamp": "2026-07-14T06:24:07Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #285",
+    "time": "06:23",
+    "timestamp": "2026-07-14T06:23:55Z"
+  },
+  {
+    "title": "Multi-Repo Audit",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #28",
+    "time": "06:22",
+    "timestamp": "2026-07-14T06:22:50Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-5e58955b-8a4a-4c9d-8497-3313d81e3212 \u00b7 run #784",
+    "time": "06:08",
+    "timestamp": "2026-07-14T06:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-1f619a99-fbca-44eb-b35e-3314a5e1670b \u00b7 run #783",
+    "time": "05:08",
+    "timestamp": "2026-07-14T05:08:04Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #1344",
+    "time": "04:55",
+    "timestamp": "2026-07-14T04:55:52Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-e71ca8bd-b865-402a-98e4-5a542ffec738 \u00b7 run #782",
+    "time": "04:08",
+    "timestamp": "2026-07-14T04:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #910",
+    "time": "03:32",
+    "timestamp": "2026-07-14T03:32:52Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1365",
+    "time": "03:32",
+    "timestamp": "2026-07-14T03:32:45Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2316",
+    "time": "03:32",
+    "timestamp": "2026-07-14T03:32:44Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #284",
     "time": "03:32",
     "timestamp": "2026-07-14T03:32:26Z"
@@ -26,68 +89,5 @@
     "detail": "dynamic on copilot/task-272290681-1196426665-b0fb7b12-ec93-4dbf-b22e-debbdf28a311 \u00b7 run #781",
     "time": "03:08",
     "timestamp": "2026-07-14T03:08:03Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #178",
-    "time": "02:48",
-    "timestamp": "2026-07-14T02:48:30Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-3df59197-064e-4259-99dd-e3d5e2113924 \u00b7 run #780",
-    "time": "02:08",
-    "timestamp": "2026-07-14T02:08:04Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "bad",
-    "detail": "dynamic on main \u00b7 run #1364",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #909",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #624",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1343",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1039",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #291",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1067",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
   }
 ]

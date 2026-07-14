@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #284",
+    "title": "Control Surface Feeds #285",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "06:23",
+    "timestamp": "2026-07-14T06:23:55Z"
+  },
+  {
+    "title": "Multi-Repo Audit #28",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:22",
+    "timestamp": "2026-07-14T06:22:50Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #784",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-5e58955b-8a4a-4c9d-8497-3313d81e3212",
+    "time": "06:08",
+    "timestamp": "2026-07-14T06:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #783",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-1f619a99-fbca-44eb-b35e-3314a5e1670b",
+    "time": "05:08",
+    "timestamp": "2026-07-14T05:08:04Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1344",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "04:55",
+    "timestamp": "2026-07-14T04:55:52Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #782",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-e71ca8bd-b865-402a-98e4-5a542ffec738",
+    "time": "04:08",
+    "timestamp": "2026-07-14T04:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #910",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "03:32",
+    "timestamp": "2026-07-14T03:32:52Z"
+  },
+  {
+    "title": "pages build and deployment #1365",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:32",
+    "timestamp": "2026-07-14T03:32:45Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2316",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:32",
+    "timestamp": "2026-07-14T03:32:44Z"
+  },
+  {
+    "title": "Control Surface Feeds #284",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "03:32",
     "timestamp": "2026-07-14T03:32:26Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "01:38",
     "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "Security #1067",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "CI #1301",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:29Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2315",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:28Z"
-  },
-  {
-    "title": "CI #1300",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/smb-trust-kit-header-neon",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:22Z"
-  },
-  {
-    "title": "Defender Watch #623",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/smb-trust-kit-header-neon",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:22Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1342",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/smb-trust-kit-header-neon",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:22Z"
-  },
-  {
-    "title": "PR Automation #544",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/smb-trust-kit-header-neon",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:22Z"
-  },
-  {
-    "title": "Policy Gate #1038",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/smb-trust-kit-header-neon",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:22Z"
-  },
-  {
-    "title": "Security #1066",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/smb-trust-kit-header-neon",
-    "time": "01:38",
-    "timestamp": "2026-07-14T01:38:22Z"
   }
 ]

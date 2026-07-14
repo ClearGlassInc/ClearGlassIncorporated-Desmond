@@ -255,6 +255,86 @@ class ArtemisAgentMesh:
 
 
 @dataclass(frozen=True)
+class PolicyDecision:
+    """Auditable, redacted tool authorization result for AIP tool calls."""
+
+    audit_id: str
+    allowed: bool
+    tool_name: str
+    gate: ApprovalGate
+    recommendation_id: str
+    approved_by: str | None
+    redacted_reason: str
+
+
+class ToolExecutionBroker:
+    """Policy gate between agent recommendations and side-effecting tools.
+
+    The broker deliberately separates model output from execution. Read-only
+    tools may run when mission policy allows them; case writeback, operational
+    effects, external release, and self-upgrade actions additionally require a
+    human approval identifier so unsafe autonomous execution fails closed.
+    """
+
+    _human_gated = {
+        ApprovalGate.CASE_WRITEBACK,
+        ApprovalGate.EXTERNAL_RELEASE,
+        ApprovalGate.OPERATIONAL_EFFECT,
+        ApprovalGate.SELF_UPGRADE,
+    }
+
+    def __init__(self, policy_engine: PolicyEngine) -> None:
+        self.policy_engine = policy_engine
+
+    def evaluate(
+        self,
+        principal: Principal,
+        mission: MissionContext,
+        recommendation: AgentRecommendation,
+        approved_by: str | None = None,
+    ) -> PolicyDecision:
+        audit_id = str(uuid4())
+        if not self.policy_engine.can_execute(principal, recommendation.tool_name, recommendation.gate, mission):
+            return PolicyDecision(
+                audit_id=audit_id,
+                allowed=False,
+                tool_name=recommendation.tool_name,
+                gate=recommendation.gate,
+                recommendation_id=recommendation.recommendation_id,
+                approved_by=None,
+                redacted_reason="Tool is not authorized for this mission context.",
+            )
+        if recommendation.gate in self._human_gated and not approved_by:
+            return PolicyDecision(
+                audit_id=audit_id,
+                allowed=False,
+                tool_name=recommendation.tool_name,
+                gate=recommendation.gate,
+                recommendation_id=recommendation.recommendation_id,
+                approved_by=None,
+                redacted_reason="Human approval is required before execution.",
+            )
+        return PolicyDecision(
+            audit_id=audit_id,
+            allowed=True,
+            tool_name=recommendation.tool_name,
+            gate=recommendation.gate,
+            recommendation_id=recommendation.recommendation_id,
+            approved_by=approved_by,
+            redacted_reason="allowed",
+        )
+
+    def dispatch(self, decision: PolicyDecision) -> dict[str, str]:
+        if not decision.allowed:
+            raise PermissionError(decision.redacted_reason)
+        return {
+            "audit_id": decision.audit_id,
+            "tool_name": decision.tool_name,
+            "status": "queued_for_adapter_dispatch",
+        }
+
+
+@dataclass(frozen=True)
 class OperatorFeedback:
     recommendation_id: str
     decision: Decision

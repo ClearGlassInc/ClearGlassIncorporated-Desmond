@@ -137,6 +137,21 @@ class ImprovementProposal:
     requires_human_approval: bool = True
 
 
+@dataclass(frozen=True)
+class EvalGateResult:
+    """Auditable result of the pre-promotion evaluation gate.
+
+    A candidate upgrade may only carry a ``candidate_version`` when it passed
+    every quality/latency/policy check and a human approved it; otherwise the
+    gate records why it was blocked and the version to roll back to.
+    """
+
+    passed: bool
+    reasons: tuple[str, ...]
+    rollback_version: str
+    candidate_version: str | None = None
+
+
 class ImmutableAuditLog:
     """Append-only hash chain suitable for WORM export or ledger anchoring."""
 

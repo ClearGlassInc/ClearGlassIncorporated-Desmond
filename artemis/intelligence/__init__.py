@@ -6,7 +6,6 @@ from .platform import (
     ApprovalGate,
     AuditRecord,
     Alert,
-    ApprovalToken,
     ArtemisEventBus,
     EvalGateResult,
     FeedbackEvent,
@@ -15,12 +14,8 @@ from .platform import (
     ModelRouter,
     OntologyEntity,
     PolicyDecision,
-    PromotionController,
-    PromotionDecision,
-    ReleaseCandidate,
     SelfImprovementEngine,
     WorkflowState,
-    compile_feedback_to_eval,
 )
 
 __all__ = [
@@ -29,7 +24,6 @@ __all__ = [
     "ApprovalGate",
     "AuditRecord",
     "Alert",
-    "ApprovalToken",
     "ArtemisEventBus",
     "EvalGateResult",
     "FeedbackEvent",
@@ -38,10 +32,6 @@ __all__ = [
     "ModelRouter",
     "OntologyEntity",
     "PolicyDecision",
-    "PromotionController",
-    "PromotionDecision",
-    "ReleaseCandidate",
     "SelfImprovementEngine",
     "WorkflowState",
-    "compile_feedback_to_eval",
 ]

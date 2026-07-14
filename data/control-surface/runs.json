@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #294",
+    "title": "Control Surface Feeds #295",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:11",
+    "timestamp": "2026-07-14T23:11:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #801",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-2b559705-d328-426d-a32d-79556b119932",
+    "time": "23:08",
+    "timestamp": "2026-07-14T23:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #942",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:13",
+    "timestamp": "2026-07-14T22:13:43Z"
+  },
+  {
+    "title": "pages build and deployment #1398",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:13",
+    "timestamp": "2026-07-14T22:13:37Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2375",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:13",
+    "timestamp": "2026-07-14T22:13:36Z"
+  },
+  {
+    "title": "Control Surface Feeds #294",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:13",
     "timestamp": "2026-07-14T22:13:16Z"
   },
@@ -103,40 +138,5 @@
     "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-00fa93b7-38ea-4e0c-add8-152654bfe5c3",
     "time": "19:08",
     "timestamp": "2026-07-14T19:08:04Z"
-  },
-  {
-    "title": "CI #1347",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/procurement-legal-tech-redesign-ejc9kn",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "Security #1113",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/procurement-legal-tech-redesign-ejc9kn",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1390",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/procurement-legal-tech-redesign-ejc9kn",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "PR Automation #569",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/procurement-legal-tech-redesign-ejc9kn",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "Policy Gate #1085",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/procurement-legal-tech-redesign-ejc9kn",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
   }
 ]

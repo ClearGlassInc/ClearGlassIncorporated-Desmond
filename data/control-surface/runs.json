@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #293",
+    "title": "Control Surface Feeds #294",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:13",
+    "timestamp": "2026-07-14T22:13:16Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #800",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-c582f0a6-3e13-41c3-a16f-347b00ebb194",
+    "time": "22:08",
+    "timestamp": "2026-07-14T22:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #941",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:42Z"
+  },
+  {
+    "title": "pages build and deployment #1397",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:36Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2374",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:35Z"
+  },
+  {
+    "title": "Control Surface Feeds #293",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:14",
     "timestamp": "2026-07-14T21:14:19Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/procurement-legal-tech-redesign-ejc9kn",
     "time": "18:36",
     "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "Defender Watch #673",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/procurement-legal-tech-redesign-ejc9kn",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "Code Quality: PR #853 #2372",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/853/head",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:49Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #939",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:22Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1389",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:22Z"
-  },
-  {
-    "title": "Security #1112",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:21Z"
   }
 ]

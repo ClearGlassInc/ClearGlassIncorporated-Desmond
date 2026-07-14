@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "21:14",
-    "timestamp": "2026-07-14T21:14:29Z"
+    "time": "22:13",
+    "timestamp": "2026-07-14T22:13:30Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #294",
+    "time": "22:13",
+    "timestamp": "2026-07-14T22:13:16Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-c582f0a6-3e13-41c3-a16f-347b00ebb194 \u00b7 run #800",
+    "time": "22:08",
+    "timestamp": "2026-07-14T22:08:07Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #941",
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:42Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1397",
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:36Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2374",
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:35Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #293",
     "time": "21:14",
     "timestamp": "2026-07-14T21:14:19Z"
@@ -54,40 +89,5 @@
     "detail": "schedule on main \u00b7 run #292",
     "time": "19:45",
     "timestamp": "2026-07-14T19:45:28Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #674",
-    "time": "19:36",
-    "timestamp": "2026-07-14T19:36:56Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #181",
-    "time": "19:24",
-    "timestamp": "2026-07-14T19:24:53Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-00fa93b7-38ea-4e0c-add8-152654bfe5c3 \u00b7 run #797",
-    "time": "19:08",
-    "timestamp": "2026-07-14T19:08:04Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "pull_request on claude/procurement-legal-tech-redesign-ejc9kn \u00b7 run #1347",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on claude/procurement-legal-tech-redesign-ejc9kn \u00b7 run #1113",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
   }
 ]

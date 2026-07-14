@@ -127,6 +127,50 @@ class ModelRoute:
 
 
 @dataclass(frozen=True)
+class EvalGateResult:
+    """Deterministic gate result for candidate prompt/workflow/model-route changes."""
+
+    passed: bool
+    reasons: tuple[str, ...]
+    rollback_version: str
+    candidate_version: str | None
+
+
+@dataclass(frozen=True)
+class ApprovalToken:
+    """Short-lived human approval token bound to a specific action package."""
+
+    token_id: str
+    operator_id: str
+    action_id: str
+    package_hash: str
+    issued_at: datetime
+
+
+@dataclass(frozen=True)
+class ReleaseCandidate:
+    """Apollo-promotable artifact bundle for a self-improvement proposal."""
+
+    candidate_id: str
+    proposal_id: str
+    artifact_type: str
+    baseline_version: str
+    candidate_version: str
+    rollback_version: str
+    eval_metrics: dict[str, float]
+    human_approved: bool
+
+
+@dataclass(frozen=True)
+class PromotionDecision:
+    """Final promotion decision with explicit rollback target and denial reasons."""
+
+    safe_to_review: bool
+    canary_allowed: bool
+    rollback_version: str
+    reasons: tuple[str, ...]
+
+@dataclass(frozen=True)
 class ImprovementProposal:
     proposal_id: str
     target: str
@@ -350,6 +394,72 @@ class SelfImprovementEngine:
                 "and coalition checks before severity escalation."
             ),
             eval_metrics=eval_metrics,
+        )
+
+
+def compile_feedback_to_eval(feedback: FeedbackEvent) -> dict[str, Any]:
+    """Freeze operator feedback into an eval case without exposing secrets.
+
+    The eval payload keeps only stable identifiers and operator-provided correction
+    text. Production deployments should replace IDs with Foundry snapshot refs and
+    apply field-level redaction before storage.
+    """
+
+    return {
+        "eval_id": f"eval-{feedback.feedback_id}",
+        "artifact_id": feedback.artifact_id,
+        "workflow_version": feedback.workflow_version,
+        "expected_behavior": {
+            "correction": feedback.correction,
+            "outcome": feedback.outcome,
+            "rating": feedback.rating,
+        },
+        "source_feedback_ids": [feedback.feedback_id],
+        "created_at": feedback.created_at.isoformat(),
+    }
+
+
+class PromotionController:
+    """Blocks unsafe self-upgrades before Apollo canary deployment."""
+
+    def __init__(self, engine: SelfImprovementEngine, audit_log: ImmutableAuditLog) -> None:
+        self.engine = engine
+        self.audit_log = audit_log
+
+    def review_for_canary(
+        self, context: AccessContext, candidate: ReleaseCandidate
+    ) -> PromotionDecision:
+        gate = self.engine.evaluate_candidate(
+            current_version=candidate.baseline_version,
+            candidate_version=candidate.candidate_version,
+            eval_metrics=candidate.eval_metrics,
+            human_approved=candidate.human_approved,
+        )
+        reasons = list(gate.reasons)
+        if candidate.rollback_version == candidate.candidate_version:
+            reasons.append("rollback version must differ from candidate version")
+        if candidate.rollback_version != candidate.baseline_version:
+            reasons.append("rollback version must match the last stable baseline")
+
+        canary_allowed = gate.passed and not reasons
+        self.audit_log.append(
+            actor=context.operator_id,
+            action="apollo.canary.review",
+            resource=candidate.candidate_id,
+            decision="ALLOW" if canary_allowed else "DENY",
+            payload={
+                "artifact_type": candidate.artifact_type,
+                "proposal_id": candidate.proposal_id,
+                "candidate_version": candidate.candidate_version,
+                "rollback_version": candidate.rollback_version,
+                "reasons": tuple(reasons),
+            },
+        )
+        return PromotionDecision(
+            safe_to_review=candidate.human_approved,
+            canary_allowed=canary_allowed,
+            rollback_version=candidate.rollback_version,
+            reasons=tuple(reasons),
         )
 
 

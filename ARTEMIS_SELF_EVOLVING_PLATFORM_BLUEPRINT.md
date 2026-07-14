@@ -770,3 +770,358 @@ class ApolloRolloutClient:
 ```
 
 This appendix turns the architecture into an implementable Python control plane: feedback becomes typed evidence, evidence becomes evals, evals become reviewable proposals, and only signed human approval can trigger Apollo canaries or rollback.
+
+## Production Implementation Addendum
+
+This addendum makes the ClearGlassInc Artemis blueprint directly implementable by defining concrete service contracts, Python-first control-plane modules, TypeScript UI boundaries, SQL schemas, and deployment guardrails. The design assumes Gotham, Foundry, AIP, and Apollo are the system-of-record platforms, while Artemis-owned services provide narrowly scoped orchestration, policy checks, event normalization, and operator experience.
+
+### Full-stack reference architecture
+
+```text
+[Browser / Mission Console]
+  ├─ Next.js app router
+  ├─ WebSocket event stream
+  ├─ Copilot panel with cited answers
+  └─ Approval queue with signed decisions
+        │
+        ▼
+[API Gateway / FastAPI]
+  ├─ mTLS + JWT/SPIFFE identity validation
+  ├─ schema validation and request signing
+  ├─ OPA policy pre-checks
+  ├─ audit envelope writer
+  └─ OpenTelemetry trace root
+        │
+        ├──────────────► [AIP Agent Runtime]
+        │                  ├─ model router
+        │                  ├─ prompt registry
+        │                  ├─ tool executor
+        │                  └─ eval harness
+        │
+        ├──────────────► [Foundry Ontology]
+        │                  ├─ object search
+        │                  ├─ Actions
+        │                  ├─ Functions
+        │                  └─ lineage graph
+        │
+        ├──────────────► [Gotham Operational Graph]
+        │                  ├─ investigations
+        │                  ├─ entity tracking
+        │                  └─ commander picture
+        │
+        └──────────────► [Event Bus]
+                           ├─ normalized.event.created
+                           ├─ alert.dispositioned
+                           ├─ operator.feedback.created
+                           ├─ eval.case.created
+                           └─ deployment.rollout.observed
+```
+
+### Python service modules
+
+```python
+# artemis_precision/events.py
+from __future__ import annotations
+
+from datetime import UTC, datetime
+from enum import StrEnum
+from typing import Any, Literal
+from uuid import uuid4
+
+from pydantic import BaseModel, Field, field_validator
+
+
+class Classification(StrEnum):
+    UNCLASSIFIED = "U"
+    CONTROLLED = "CUI"
+    SECRET = "S"
+    TOP_SECRET = "TS"
+
+
+class NormalizedEvent(BaseModel):
+    event_id: str = Field(default_factory=lambda: f"evt_{uuid4().hex}")
+    mission_id: str
+    source_system: str
+    event_type: str
+    occurred_at: datetime
+    detected_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    classification: Classification
+    coalition_tags: list[str] = Field(default_factory=list)
+    payload_hash: str
+    attributes: dict[str, Any]
+
+    @field_validator("payload_hash")
+    @classmethod
+    def require_sha256(cls, value: str) -> str:
+        if len(value) != 64 or any(c not in "0123456789abcdef" for c in value.lower()):
+            raise ValueError("payload_hash must be a lowercase SHA-256 hex digest")
+        return value.lower()
+
+
+class FeedbackSignal(BaseModel):
+    feedback_id: str = Field(default_factory=lambda: f"fb_{uuid4().hex}")
+    mission_id: str
+    case_id: str
+    operator_id: str
+    target_ref: str
+    correction_type: Literal[
+        "true_positive",
+        "false_positive",
+        "missed_correlation",
+        "bad_summary",
+        "unsafe_recommendation",
+        "policy_overblock",
+    ]
+    label: str
+    rationale: str
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+```
+
+```python
+# artemis_precision/policy.py
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any
+
+
+@dataclass(frozen=True)
+class Principal:
+    subject: str
+    clearance_level: int
+    assigned_missions: frozenset[str]
+    coalition_tags: frozenset[str]
+    compartments: frozenset[str]
+    allowed_actions: frozenset[str]
+    allowed_purposes: frozenset[str]
+
+
+@dataclass(frozen=True)
+class ResourceRef:
+    resource_id: str
+    mission_id: str
+    classification_level: int
+    coalition_tags: frozenset[str]
+    compartments: frozenset[str]
+
+
+def authorize(principal: Principal, action: str, purpose: str, resource: ResourceRef) -> bool:
+    return (
+        principal.clearance_level >= resource.classification_level
+        and resource.mission_id in principal.assigned_missions
+        and resource.coalition_tags.issubset(principal.coalition_tags)
+        and resource.compartments.issubset(principal.compartments)
+        and action in principal.allowed_actions
+        and purpose in principal.allowed_purposes
+    )
+
+
+def redact_for_principal(record: dict[str, Any], principal: Principal) -> dict[str, Any]:
+    redacted: dict[str, Any] = {}
+    for key, value in record.items():
+        policy = record.get("_field_policy", {}).get(key, {})
+        min_clearance = int(policy.get("clearance_level", 0))
+        required_tags = set(policy.get("coalition_tags", []))
+        if principal.clearance_level >= min_clearance and required_tags.issubset(principal.coalition_tags):
+            redacted[key] = value
+        else:
+            redacted[key] = "<REDACTED>"
+    redacted.pop("_field_policy", None)
+    return redacted
+```
+
+```python
+# artemis_precision/workflows.py
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from enum import StrEnum
+from typing import Awaitable, Callable
+
+
+class WorkflowState(StrEnum):
+    INGESTED = "ingested"
+    TRIAGED = "triaged"
+    ENRICHED = "enriched"
+    CORRELATED = "correlated"
+    PACKAGED = "packaged"
+    PENDING_APPROVAL = "pending_approval"
+    EXECUTED = "executed"
+    CLOSED = "closed"
+
+
+@dataclass
+class MissionWorkflowContext:
+    mission_id: str
+    event_id: str
+    case_id: str | None = None
+    confidence: float = 0.0
+    significance: float = 0.0
+    citations: list[str] = field(default_factory=list)
+    approval_token: str | None = None
+
+
+Transition = Callable[[MissionWorkflowContext], Awaitable[WorkflowState]]
+
+
+class WorkflowRunner:
+    def __init__(self, transitions: dict[WorkflowState, Transition], max_steps: int = 12) -> None:
+        self.transitions = transitions
+        self.max_steps = max_steps
+
+    async def run(self, ctx: MissionWorkflowContext) -> WorkflowState:
+        state = WorkflowState.INGESTED
+        for _ in range(self.max_steps):
+            if state in {WorkflowState.EXECUTED, WorkflowState.CLOSED}:
+                return state
+            transition = self.transitions[state]
+            state = await transition(ctx)
+        raise RuntimeError("workflow exceeded max_steps; refusing silent partial execution")
+```
+
+### Ontology and warehouse schema
+
+```sql
+create table artemis_events (
+  event_id text primary key,
+  mission_id text not null,
+  event_type text not null,
+  occurred_at timestamptz not null,
+  detected_at timestamptz not null,
+  source_system text not null,
+  confidence numeric(5,4) not null check (confidence between 0 and 1),
+  classification_level integer not null,
+  coalition_tags text[] not null default '{}',
+  lineage jsonb not null,
+  tx_time timestamptz not null default now()
+);
+
+create table artemis_feedback (
+  feedback_id text primary key,
+  mission_id text not null,
+  case_id text not null,
+  operator_id text not null,
+  target_ref text not null,
+  correction_type text not null,
+  label text not null,
+  rationale text not null,
+  created_at timestamptz not null default now(),
+  immutable_hash text not null unique
+);
+
+create table artemis_upgrade_proposals (
+  proposal_id text primary key,
+  target_kind text not null check (target_kind in ('prompt', 'workflow', 'model_route', 'heuristic')),
+  target_name text not null,
+  version_from text not null,
+  version_to text not null,
+  diff_summary text not null,
+  eval_metrics jsonb not null,
+  risk_score numeric(5,4) not null check (risk_score between 0 and 1),
+  approval_state text not null check (approval_state in ('draft', 'blocked', 'review', 'approved', 'rejected', 'deployed', 'rolled_back')),
+  created_at timestamptz not null default now()
+);
+```
+
+### TypeScript operator console boundary
+
+```tsx
+// apps/web/components/CopilotActionPackage.tsx
+import { useMemo } from "react";
+
+type Citation = { evidenceId: string; label: string; allowed: boolean };
+type ActionPackage = {
+  caseId: string;
+  recommendation: string;
+  riskScore: number;
+  requiresApproval: boolean;
+  citations: Citation[];
+};
+
+export function CopilotActionPackage({ pkg, onApprove, onReject }: {
+  pkg: ActionPackage;
+  onApprove: (caseId: string) => Promise<void>;
+  onReject: (caseId: string, reason: string) => Promise<void>;
+}) {
+  const blockedCitationCount = useMemo(
+    () => pkg.citations.filter((citation) => !citation.allowed).length,
+    [pkg.citations],
+  );
+
+  return (
+    <section aria-label="Copilot action package" className="rounded-xl border border-cyan-400/40 p-4">
+      <header className="flex items-center justify-between">
+        <h2 className="text-lg font-semibold">Commander Recommendation</h2>
+        <span className="font-mono text-sm">risk={pkg.riskScore.toFixed(3)}</span>
+      </header>
+      <p className="mt-3 whitespace-pre-wrap">{pkg.recommendation}</p>
+      {blockedCitationCount > 0 && (
+        <p className="mt-3 text-amber-300">Some citations are hidden by need-to-know policy.</p>
+      )}
+      <ul className="mt-3 text-sm">
+        {pkg.citations.map((citation) => (
+          <li key={citation.evidenceId}>{citation.allowed ? citation.label : "<REDACTED>"}</li>
+        ))}
+      </ul>
+      {pkg.requiresApproval && (
+        <div className="mt-4 flex gap-3">
+          <button onClick={() => onApprove(pkg.caseId)}>Approve signed action</button>
+          <button onClick={() => onReject(pkg.caseId, "operator rejected recommendation")}>Reject</button>
+        </div>
+      )}
+    </section>
+  );
+}
+```
+
+### Self-improvement control flow
+
+```python
+# artemis_precision/self_improvement.py
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+from artemis_precision.events import FeedbackSignal
+
+
+@dataclass(frozen=True)
+class EvalThresholds:
+    min_precision: float = 0.92
+    min_recall: float = 0.86
+    min_citation_accuracy: float = 0.98
+    max_policy_violations: int = 0
+    max_latency_p95_ms: int = 8000
+
+
+@dataclass(frozen=True)
+class CandidateScores:
+    precision: float
+    recall: float
+    citation_accuracy: float
+    policy_violations: int
+    latency_p95_ms: int
+    operator_trust_delta: float
+
+
+def candidate_passes(scores: CandidateScores, thresholds: EvalThresholds) -> bool:
+    return (
+        scores.precision >= thresholds.min_precision
+        and scores.recall >= thresholds.min_recall
+        and scores.citation_accuracy >= thresholds.min_citation_accuracy
+        and scores.policy_violations <= thresholds.max_policy_violations
+        and scores.latency_p95_ms <= thresholds.max_latency_p95_ms
+    )
+
+
+def feedback_to_eval_slice(feedback: FeedbackSignal) -> str:
+    if feedback.correction_type == "unsafe_recommendation":
+        return "safety_operational_action"
+    if feedback.correction_type == "missed_correlation":
+        return "correlation_recall"
+    if feedback.correction_type == "policy_overblock":
+        return "authorization_precision"
+    return "triage_precision"
+```
+
+The self-improvement loop is deliberately asymmetric: feedback can create evals and proposals automatically, but deployment is impossible without review-board approval, signed artifacts, Apollo ring deployment, and live rollback criteria.

@@ -854,6 +854,13 @@ Direct Answer → System Architecture → Data and Ontology → AI and Agent Des
     <div class="share"><a href="index.html">← All insights</a></div>
   </div>
 
+
+<section class="insight-section">
+  <h2>Production Implementation Addendum</h2>
+  <p>ClearGlassInc Artemis is implemented as a Python-first precision control plane around Gotham, Foundry, AIP, and Apollo. The web console streams mission events, the FastAPI gateway enforces zero-trust policy checks, Foundry owns the ontology and lineage, AIP runs governed agents and evals, and Apollo performs signed canaries, promotion, and rollback.</p>
+  <pre><code>feedback -> eval cases -> candidate patch -> offline eval -> human approval -> Apollo canary -> monitored promotion or rollback</code></pre>
+  <p>The platform can propose prompt, workflow, heuristic, and model-route improvements, but it cannot alter mission objectives, policy, permissions, or operational action authority without explicit human approval and immutable audit evidence.</p>
+</section>
 </article>
 </main>
 

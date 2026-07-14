@@ -576,6 +576,97 @@ ADVANCED COMMAND CONSOLE ENHANCEMENTS
 .guardian-loader-rail{margin-top:18px;height:2px;background:rgba(124,150,255,.14);position:relative;overflow:hidden;}
 .guardian-loader-fill{height:100%;width:0;background:linear-gradient(90deg,var(--crimson-deep),var(--crimson),var(--crimson-2));box-shadow:0 0 18px var(--crimson-glow);transition:width .2s linear;}
 .guardian-loader-meta{margin-top:10px;display:flex;justify-content:space-between;font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash-d);}
+
+/* ════════════════════════════════
+   GUARDIAN MISSION LETTER — elite neon-glow founder's dispatch (guardian.html only)
+   ════════════════════════════════ */
+.gl-sec{padding:130px 0;position:relative;z-index:2;}
+.gl-wrap{position:relative;max-width:900px;margin:0 auto;}
+/* Neon halo behind the document */
+.gl-wrap::before{
+  content:'';position:absolute;inset:-40px -20px;z-index:0;pointer-events:none;
+  background:radial-gradient(60% 55% at 30% 12%,rgba(96,165,250,.20),transparent 62%),
+             radial-gradient(55% 55% at 82% 88%,rgba(244,114,182,.16),transparent 60%);
+  filter:blur(24px);opacity:.9;
+}
+/* The letter document */
+.gl-doc{
+  position:relative;z-index:1;padding:clamp(30px,5vw,64px) clamp(24px,5vw,68px);
+  border:1px solid var(--crimson-line);border-radius:22px;
+  background:linear-gradient(150deg,rgba(14,8,16,.96),rgba(20,11,20,.86)),
+             radial-gradient(120% 90% at 88% 8%,rgba(96,165,250,.10),transparent 46%);
+  box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 1px rgba(124,150,255,.10) inset,0 0 60px rgba(124,150,255,.10);
+  overflow:hidden;
+}
+/* Circuit-grid watermark + slow scan drift */
+.gl-doc::before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background:linear-gradient(rgba(96,165,250,.05) 1px,transparent 1px),
+            linear-gradient(90deg,rgba(96,165,250,.04) 1px,transparent 1px);
+  background-size:38px 38px;mask-image:radial-gradient(120% 120% at 50% 0%,#000,transparent 78%);
+  animation:scanDrift 22s linear infinite;
+}
+/* Roaming neon sheen across the paper */
+.gl-doc::after{
+  content:'';position:absolute;top:0;left:-45%;width:40%;height:100%;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(124,150,255,.09),transparent);
+  transform:skewX(-16deg);animation:consoleSheen 9s ease-in-out infinite;
+}
+.gl-doc>*{position:relative;z-index:1;}
+/* Mission motif — corner brackets */
+.gl-corner{position:absolute;width:26px;height:26px;z-index:2;border:1.5px solid var(--crimson);opacity:.6;box-shadow:0 0 12px var(--crimson-glow);}
+.gl-corner.tl{top:16px;left:16px;border-right:0;border-bottom:0;border-top-left-radius:6px;}
+.gl-corner.tr{top:16px;right:16px;border-left:0;border-bottom:0;border-top-right-radius:6px;}
+.gl-corner.bl{bottom:16px;left:16px;border-right:0;border-top:0;border-bottom-left-radius:6px;}
+.gl-corner.br{bottom:16px;right:16px;border-left:0;border-top:0;border-bottom-right-radius:6px;}
+/* Classified header bar */
+.gl-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding-bottom:18px;margin-bottom:30px;border-bottom:1px solid var(--crimson-dim);
+  font-family:var(--M);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--ash-d);}
+.gl-class{color:var(--crimson-2);text-shadow:0 0 14px var(--crimson-glow);
+  border:1px solid var(--crimson-line);border-radius:100px;padding:5px 12px;background:var(--crimson-dim);}
+.gl-code{color:var(--bone);}
+/* Mission crest / seal */
+.gl-crest-row{display:flex;align-items:center;gap:22px;margin-bottom:30px;flex-wrap:wrap;}
+.gl-crest{position:relative;width:82px;height:82px;flex:0 0 auto;display:grid;place-items:center;border-radius:50%;
+  border:1px solid var(--crimson-line);
+  background:radial-gradient(circle,rgba(96,165,250,.14),transparent 68%);
+  box-shadow:0 0 26px var(--crimson-glow),0 0 0 1px rgba(124,150,255,.10) inset;}
+.gl-crest::before{content:'';position:absolute;inset:-7px;border-radius:50%;
+  border:1px dashed rgba(124,150,255,.34);animation:radarSpin 26s linear infinite;}
+.gl-crest span{font-family:var(--D);font-weight:800;font-size:30px;color:var(--bone);
+  text-shadow:0 0 20px var(--crimson-glow);}
+.gl-kicker{display:block;font-family:var(--M);font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--crimson-2);margin-bottom:10px;}
+.gl-title{font-family:var(--D);font-size:clamp(30px,4.4vw,52px);font-weight:800;letter-spacing:-.03em;line-height:.98;color:var(--bone);}
+.gl-title span{background:linear-gradient(135deg,var(--crimson),var(--crimson-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+/* Letter body */
+.gl-body{max-width:66ch;}
+.gl-body p{font-size:16.5px;line-height:1.82;color:var(--ash);margin-bottom:20px;}
+.gl-body p strong{color:var(--bone);font-weight:600;}
+.gl-lead::first-letter{float:left;font-family:var(--D);font-weight:800;font-size:62px;line-height:.8;
+  padding:6px 14px 0 0;color:var(--crimson);text-shadow:0 0 24px var(--crimson-glow);}
+/* Mission tenets */
+.gl-tenets{list-style:none;display:grid;gap:12px;margin:6px 0 26px;padding:0;}
+.gl-tenets li{position:relative;padding:12px 16px 12px 46px;border:1px solid var(--crimson-dim);border-radius:12px;
+  background:rgba(0,0,0,.24);color:var(--ash);font-size:14.5px;line-height:1.6;}
+.gl-tenets li::before{content:attr(data-k);position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-family:var(--M);font-size:9px;letter-spacing:.14em;color:var(--crimson-2);
+  border:1px solid var(--crimson-line);border-radius:6px;padding:3px 5px;text-shadow:0 0 10px var(--crimson-glow);}
+.gl-tenets li b{color:var(--bone);font-weight:600;}
+/* Signature block */
+.gl-sign{margin-top:34px;padding-top:26px;border-top:1px solid var(--crimson-dim);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.gl-sign-name{font-family:var(--D);font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--bone);
+  text-shadow:0 0 22px var(--crimson-glow);margin-bottom:4px;}
+.gl-sign-role{font-family:var(--M);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ash-d);}
+.gl-seal{font-family:var(--M);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson-2);
+  text-align:right;line-height:1.9;opacity:.85;}
+.gl-seal b{display:block;color:var(--bone);letter-spacing:.16em;}
+@media(max-width:640px){
+  .gl-sec{padding:80px 0;}
+  .gl-sign{flex-direction:column;align-items:flex-start;}
+  .gl-seal{text-align:left;}
+}
 </style>
 
   <link rel="stylesheet" href="tokens.css">
@@ -1079,6 +1170,65 @@ body:not(.cg-evo-live) .cg-evo-aura i{animation-play-state:paused}
   </div>
 </div>
 
+  </div>
+</section>
+
+<div class="line-sep shell"></div>
+
+<!-- MISSION LETTER -->
+
+<section class="gl-sec" id="mission-letter" aria-labelledby="gl-title">
+  <div class="shell">
+    <div class="gl-wrap rv">
+      <article class="gl-doc">
+        <span class="gl-corner tl"></span>
+        <span class="gl-corner tr"></span>
+        <span class="gl-corner bl"></span>
+        <span class="gl-corner br"></span>
+
+        <div class="gl-head">
+          <span class="gl-class">◈ Classified · Eyes Only</span>
+          <span class="gl-code">DISPATCH GRD-01 · MISSION MANDATE</span>
+          <span>Burlington · Ontario</span>
+        </div>
+
+        <div class="gl-crest-row">
+          <div class="gl-crest" aria-hidden="true"><span>G</span></div>
+          <div>
+            <span class="gl-kicker">◈ From the Founder</span>
+            <h2 class="gl-title" id="gl-title">The GUARDIAN<br><span>Mandate</span></h2>
+          </div>
+        </div>
+
+        <div class="gl-body">
+          <p class="gl-lead">To the organizations of Ontario and the leaders who defend them — I built GUARDIAN because the threat landscape stopped waiting for anyone to catch up. Nation-state tooling, ransomware syndicates, and AI-accelerated intrusion are no longer reserved for the Fortune 500. They are at the municipal gate, the clinic, the credit union, the family enterprise.</p>
+
+          <p>GUARDIAN is my answer: a single intelligence console where <strong>neural threat detection</strong>, zero-trust enforcement, and post-quantum cryptography operate as one governed system — hardened for Canadian data residency and Canadian law. Not a dashboard of alerts you cannot action, but a command surface built to end the incident before it becomes a headline.</p>
+
+          <p>This is the standard I hold every deployment to:</p>
+
+          <ul class="gl-tenets">
+            <li data-k="01"><b>Defend without compromise.</b> Defence-in-depth across eight independently hardened layers — no single point of failure, no theatre.</li>
+            <li data-k="02"><b>Prove every claim.</b> Every detection, action, and compliance control is logged, auditable, and evidence-backed. We never fabricate a threat or a metric.</li>
+            <li data-k="03"><b>Sovereignty first.</b> Your data stays Canadian, your compliance stays automated — PIPEDA, MFIPPA, ISO 27001, NIST CSF 2.0.</li>
+            <li data-k="04"><b>Human in command.</b> The machine advises at machine speed; the decision to act stays with you.</li>
+          </ul>
+
+          <p>If your organization matters — and it does — then its defence is not a line item. It is a mandate. Bring me your threat landscape and I will show you exactly how GUARDIAN holds the line.</p>
+        </div>
+
+        <div class="gl-sign">
+          <div>
+            <div class="gl-sign-name">Desmond Otieno Odhiambo</div>
+            <div class="gl-sign-role">Founder &amp; Chairman · ClearGlass Inc</div>
+          </div>
+          <div class="gl-seal">
+            <b>GUARDIAN v5.0</b>
+            Mission-Sealed · Verified
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 

@@ -72,7 +72,7 @@ must live server-side. Example Cloudflare Worker proxy:
 
 ```js
 // wrangler secret put ANTHROPIC_API_KEY
-const ALLOWED_ORIGIN = "https://clearglassinc.github.io";
+const ALLOWED_ORIGIN = "https://www.clearglassinc.com";
 const TASKS = new Set(["rewrite", "polish", "summarize", "cta"]);
 
 export default {

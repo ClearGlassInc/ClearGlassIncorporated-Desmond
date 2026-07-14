@@ -12,11 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "marketing" / "output"
 ARCHIVE_DIR = OUTPUT_DIR / "archive"
 
-SITE_URL = "https://clearglassinc.github.io/"
+SITE_URL = "https://www.clearglassinc.com/"
 PRODUCT_URLS = {
     "home": SITE_URL,
-    "artemis": "https://clearglassinc.github.io/artemis.html",
-    "guardian": "https://clearglassinc.github.io/guardian.html",
+    "artemis": "https://www.clearglassinc.com/artemis.html",
+    "guardian": "https://www.clearglassinc.com/guardian.html",
 }
 
 PILLARS: dict[str, dict[str, str]] = {

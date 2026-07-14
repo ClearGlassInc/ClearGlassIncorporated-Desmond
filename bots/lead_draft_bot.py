@@ -25,7 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUTREACH_DIR = ROOT / "offers" / "outreach"
 OUT_DIR = OUTREACH_DIR / "generated"
-STORE_URL = "https://clearglassinc.github.io/store.html"
+STORE_URL = "https://www.clearglassinc.com/store.html"
 SENDER = "Desmond, ClearGlass Inc."
 
 CASL_FOOTER = (
@@ -118,7 +118,7 @@ def render(template: str, company: str, sector: str) -> tuple[str, str]:
         f"Hi {{{{First name}}}},\n\n"
         f"{obs}. We help Ontario teams find privacy & security gaps before they become problems.\n\n"
         f"To start with zero commitment, here's our free PHIPA Readiness Checklist: "
-        f"https://clearglassinc.github.io/offers/phipa-readiness-checklist.html . If useful, our "
+        f"https://www.clearglassinc.com/offers/phipa-readiness-checklist.html . If useful, our "
         f"PHIPA Readiness Assessment (from $3,000 CAD) maps your gaps to PHIPA obligations and delivers "
         f"a risk-ranked roadmap. This is readiness/advisory — not legal advice or a certification.\n\n"
         f"Would the checklist be helpful?",

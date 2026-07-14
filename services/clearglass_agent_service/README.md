@@ -34,7 +34,7 @@ Optional:
 
 ```bash
 export CLEARGLASS_ALLOWED_ORGS="ClearGlassInc"
-export CLEARGLASS_ALLOWED_ORIGINS="https://clearglassinc.github.io"
+export CLEARGLASS_ALLOWED_ORIGINS="https://www.clearglassinc.com"
 export CLEARGLASS_AGENT_VERSION="0.1.0"
 export PORT=8080
 ```

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://clearglassinc.github.io/jarvis-os/connectors/_manifest.schema.json",
+  "$id": "https://www.clearglassinc.com/jarvis-os/connectors/_manifest.schema.json",
   "title": "JARVIS OS MCP Connector Manifest",
   "description": "Schema every JARVIS OS connector manifest must satisfy. A connector is an MCP server exposing tools to the swarm. Each tool declares a risk class, scopes, and reversibility so the policy layer can gate it.",
   "type": "object",

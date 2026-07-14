@@ -25,7 +25,7 @@ That is the architecture behind ClearGlassInc Artemis: agentic AI for triage, en
 - Title: AI Cyber Intelligence Platform | ClearGlassInc Artemis
 - Description: ClearGlassInc Artemis blueprint for AI automation, cybersecurity operations, agentic intelligence, and self-improving secure workflows.
 - Keywords: AI automation cybersecurity, agentic AI platform, self improving intelligence platform, cyber threat intelligence automation, zero trust AI agents
-- Canonical: https://clearglassinc.github.io/artemis-ai-cyber-intelligence-platform.html
+- Canonical: https://www.clearglassinc.com/artemis-ai-cyber-intelligence-platform.html
 - Internal links: intelligence-interface.html, SYSTEM_2040_ARTEMIS_INTELLIGENCE_BLUEPRINT.md, ai-operator.html, guardian.html, bluedesk.html
 
 ## Threat Intel → Client Value Add

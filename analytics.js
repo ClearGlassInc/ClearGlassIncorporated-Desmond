@@ -27,7 +27,7 @@
   var CONFIG = {
     provider: "",                          // "ga4" | "plausible" | "" (off)
     measurementId: "",                     // GA4 only, e.g. "G-XXXXXXXXXX"
-    domain: "clearglassinc.github.io"      // Plausible only — already correct
+    domain: "www.clearglassinc.com"      // Plausible only — already correct
   };
 
   var provider = (CONFIG.provider || "").toLowerCase().trim();

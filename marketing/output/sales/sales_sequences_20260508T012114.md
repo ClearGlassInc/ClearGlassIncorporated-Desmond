@@ -30,7 +30,7 @@ Request a 20-minute classified-architecture briefing?
 
 — {{sender_name}}
 ClearGlassInc | Clarity Is Power
-clearglassinc.github.io
+www.clearglassinc.com
 ```
 ### Variant B
 
@@ -50,7 +50,7 @@ Worth 20 minutes to see it on your environment?
 Request a 20-minute classified-architecture briefing.
 
 — {{sender_name}}
-ClearGlassInc | clearglassinc.github.io
+ClearGlassInc | www.clearglassinc.com
 ```
 
 ### Follow-Up Sequence
@@ -105,7 +105,7 @@ Request a 20-minute classified-architecture briefing? I'll send a calendar link,
 Either way — appreciate your time, and hope to connect when the moment is right.
 
 — {{sender_name}}
-ClearGlassInc | clearglassinc.github.io
+ClearGlassInc | www.clearglassinc.com
 ```
 #### Day 30 — EMAIL
 
@@ -183,7 +183,7 @@ Book a risk exposure assessment (no obligation, 30 minutes)?
 
 — {{sender_name}}
 ClearGlassInc | Clarity Is Power
-clearglassinc.github.io
+www.clearglassinc.com
 ```
 ### Variant B
 
@@ -203,7 +203,7 @@ Worth 20 minutes to see it on your environment?
 Book a risk exposure assessment (no obligation, 30 minutes).
 
 — {{sender_name}}
-ClearGlassInc | clearglassinc.github.io
+ClearGlassInc | www.clearglassinc.com
 ```
 
 ### Follow-Up Sequence
@@ -258,7 +258,7 @@ Book a risk exposure assessment (no obligation, 30 minutes)? I'll send a calenda
 Either way — appreciate your time, and hope to connect when the moment is right.
 
 — {{sender_name}}
-ClearGlassInc | clearglassinc.github.io
+ClearGlassInc | www.clearglassinc.com
 ```
 #### Day 30 — EMAIL
 
@@ -336,7 +336,7 @@ Schedule a pipeline security walkthrough (your stack, live demo)?
 
 — {{sender_name}}
 ClearGlassInc | Clarity Is Power
-clearglassinc.github.io
+www.clearglassinc.com
 ```
 ### Variant B
 
@@ -356,7 +356,7 @@ Worth 20 minutes to see it on your environment?
 Schedule a pipeline security walkthrough (your stack, live demo).
 
 — {{sender_name}}
-ClearGlassInc | clearglassinc.github.io
+ClearGlassInc | www.clearglassinc.com
 ```
 
 ### Follow-Up Sequence
@@ -411,7 +411,7 @@ Schedule a pipeline security walkthrough (your stack, live demo)? I'll send a ca
 Either way — appreciate your time, and hope to connect when the moment is right.
 
 — {{sender_name}}
-ClearGlassInc | clearglassinc.github.io
+ClearGlassInc | www.clearglassinc.com
 ```
 #### Day 30 — EMAIL
 

@@ -22,4 +22,4 @@
 
 *Maintained for production use across ClearGlass Inc. operations and client deliverables.*
 
-[Back to main site](https://clearglassinc.github.io)
+[Back to main site](https://www.clearglassinc.com)

@@ -37,7 +37,7 @@ For Ontario health-sector organizations: a privacy and security readiness review
 Monthly retainer to build and maintain PowerShell and workflow automation for reporting, onboarding and offboarding, alerting, backups, and repetitive security operations.
 **From CAD $600 / month**
 
-**ClearGlass Inc. · Ontario, Canada · clearglassinc.github.io**
+**ClearGlass Inc. · Ontario, Canada · www.clearglassinc.com**
 All engagements are performed only with written authorization. Outreach complies with Canada's Anti-Spam Legislation (CASL).
 
 ### DARPA-like Mission Opening (use as the introduction line)

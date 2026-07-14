@@ -164,7 +164,7 @@ def test_percival_scan_and_dry_run_apply(tmp_path: pathlib.Path) -> None:
     assert "sitemap_dead_url" in kinds and "missing_title" in kinds
     # sitrep brief is human-readable and locates the surface
     brief = report.brief()
-    assert "PERCIVAL SITREP" in brief and "clearglassinc.github.io" in brief
+    assert "PERCIVAL SITREP" in brief and "www.clearglassinc.com" in brief
 
     # default apply is a DRY RUN — no silent writes
     applied = s.apply(report)

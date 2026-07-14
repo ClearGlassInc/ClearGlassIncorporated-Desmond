@@ -4,7 +4,7 @@ ClearGlass Intelligence is positioned as a premium briefing hub for governed AI,
 
 ## Head Implementation
 
-Every HTML page includes browser tab icons, Apple touch icon, Safari pinned tab support, a web manifest, theme color, and Microsoft tile metadata. The canonical public domain remains `https://clearglassinc.github.io/`.
+Every HTML page includes browser tab icons, Apple touch icon, Safari pinned tab support, a web manifest, theme color, and Microsoft tile metadata. The canonical public domain remains `https://www.clearglassinc.com/`.
 
 ## Favicon Implementation Checklist
 

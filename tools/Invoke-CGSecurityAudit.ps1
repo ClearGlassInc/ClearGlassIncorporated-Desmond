@@ -27,7 +27,7 @@
     .\Invoke-CGSecurityAudit.ps1 -Domain example.com -Confirmed
 
 .NOTES
-    ClearGlass Inc. · Clarity is power · clearglassinc.github.io
+    ClearGlass Inc. · Clarity is power · www.clearglassinc.com
     Lawful, consent-based use only. Assess only assets you own or are authorized to assess.
 #>
 [CmdletBinding()]
@@ -152,7 +152,7 @@ footer{margin-top:20px;color:#5b6b7a;font-size:12px}
 $rows
 </tbody></table>
 <div class='note'>Read-only assessment — no configuration was changed. <b>Review</b> items warrant a closer look; <b>Gap</b> items are recommended for remediation. This automated collection is a starting point; a ClearGlass Hardening Sprint provides full analysis and prioritized remediation.</div>
-<footer>© ClearGlass Inc., Ontario, Canada. Performed under authorization for the assessed system/domain. clearglassinc.github.io/offers/</footer>
+<footer>© ClearGlass Inc., Ontario, Canada. Performed under authorization for the assessed system/domain. www.clearglassinc.com/offers/</footer>
 </body></html>
 "@
 

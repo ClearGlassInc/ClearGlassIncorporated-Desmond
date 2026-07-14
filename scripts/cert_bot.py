@@ -10,13 +10,13 @@ so a soon-to-expire certificate is surfaced long before it breaks the site.
 
 Configuration (environment variables):
   CERT_BOT_HOSTS     Comma-separated hosts to check.
-                     Default: "clearglassinc.github.io".
+                     Default: "www.clearglassinc.com".
   CERT_BOT_MIN_DAYS  Minimum acceptable days until expiry. Default: 21.
   CERT_BOT_STRICT    If "1", an unreachable host is a failure. Default: "1".
 
 Run locally:
   python scripts/cert_bot.py
-  CERT_BOT_HOSTS="clearglassinc.github.io,clearglassinc.ca" python scripts/cert_bot.py
+  CERT_BOT_HOSTS="www.clearglassinc.com,www.clearglassinc.com" python scripts/cert_bot.py
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from urllib.parse import urlparse
 
-DEFAULT_HOSTS = "clearglassinc.github.io"
+DEFAULT_HOSTS = "www.clearglassinc.com"
 DEFAULT_MIN_DAYS = 21
 DEFAULT_PORT = 443
 DEFAULT_TIMEOUT = 10.0

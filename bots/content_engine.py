@@ -26,7 +26,7 @@ PLATFORMS_DIR = OUTPUT_DIR / "platforms"
 ARCHIVE_DIR = OUTPUT_DIR / "archive"
 METRICS_DIR = OUTPUT_DIR / "metrics"
 
-SITE_URL = "https://clearglassinc.github.io/"
+SITE_URL = "https://www.clearglassinc.com/"
 URLS = {
     "home": SITE_URL,
     "artemis": f"{SITE_URL}artemis.html",
@@ -96,7 +96,7 @@ CONTENT: dict[str, dict[str, list[dict[str, Any]]]] = {
                     "Most security tools add complexity and call it capability. ClearGlass removes complexity to reveal what's real.",
                     "The organizations that survive breaches aren't the ones with the most alerts — they're the ones who acted on the right signal.",
                     "That's what we build at ClearGlass: the lens, not the noise.",
-                    "→ clearglassinc.github.io",
+                    "→ www.clearglassinc.com",
                 ],
             },
             {
@@ -105,7 +105,7 @@ CONTENT: dict[str, dict[str, list[dict[str, Any]]]] = {
                     "ClearGlass was built for operators who need to act — not analyze dashboards for 40 minutes.",
                     "Every product we ship passes one test: does it make the right decision obvious?",
                     "If it doesn't, it doesn't ship.",
-                    "→ clearglassinc.github.io",
+                    "→ www.clearglassinc.com",
                 ],
             },
         ],
@@ -186,7 +186,7 @@ CONTENT: dict[str, dict[str, list[dict[str, Any]]]] = {
                     "Artemis doesn't add another integration layer. It replaces the signal architecture.",
                     "Connect telemetry → normalize → model threats continuously → surface a prioritized operational picture.",
                     "Your analysts act on signal. Not on alert volume.",
-                    "→ clearglassinc.github.io/artemis.html",
+                    "→ www.clearglassinc.com/artemis.html",
                 ],
             },
             {
@@ -195,7 +195,7 @@ CONTENT: dict[str, dict[str, list[dict[str, Any]]]] = {
                     "Instead of querying your environment reactively, Artemis builds a living model of it.",
                     "System state, active vectors, exposure drift — updated continuously, not at report time.",
                     "Detection latency: hours, not days. Reporting: operational reality, not lagging metrics.",
-                    "→ clearglassinc.github.io/artemis.html",
+                    "→ www.clearglassinc.com/artemis.html",
                 ],
             },
         ],
@@ -278,7 +278,7 @@ CONTENT: dict[str, dict[str, list[dict[str, Any]]]] = {
                     "Most tools optimize for audit paperwork. Guardian optimizes for your actual threat surface.",
                     "AI-assisted hardening prioritized by risk-adjusted impact — continuously, not quarterly.",
                     "You get a stronger posture and the documentation to prove it.",
-                    "→ clearglassinc.github.io/guardian.html",
+                    "→ www.clearglassinc.com/guardian.html",
                 ],
             },
             {
@@ -287,7 +287,7 @@ CONTENT: dict[str, dict[str, list[dict[str, Any]]]] = {
                     "Zero-trust posture enforcement. AI-driven threat surface reduction. Deployment in hours.",
                     "The gap between 'we passed the audit' and 'we're actually secure' is where breaches live.",
                     "Guardian operates in that gap.",
-                    "→ clearglassinc.github.io/guardian.html",
+                    "→ www.clearglassinc.com/guardian.html",
                 ],
             },
         ],
@@ -372,7 +372,7 @@ CONTENT: dict[str, dict[str, list[dict[str, Any]]]] = {
                     "Not the feature list. Not the compliance certifications.",
                     "Operational clarity — showing a CISO their actual environment, not a template dashboard.",
                     "When the picture is clean and accurate, they stop evaluating and start deploying.",
-                    "→ clearglassinc.github.io",
+                    "→ www.clearglassinc.com",
                 ],
             },
             {
@@ -381,12 +381,12 @@ CONTENT: dict[str, dict[str, list[dict[str, Any]]]] = {
                     "It's convincing organizations the risk is real before the incident that makes it obvious.",
                     "We work with orgs at the edge of acceptable risk — gov, finance, enterprise tech.",
                     "What earns their trust? Clarity. Every time.",
-                    "→ clearglassinc.github.io",
+                    "→ www.clearglassinc.com",
                 ],
             },
         ],
         "x": [
-            {"text": "The hardest part of building a security company: convincing orgs the risk is real before the incident that makes it obvious. clearglassinc.github.io"},
+            {"text": "The hardest part of building a security company: convincing orgs the risk is real before the incident that makes it obvious. www.clearglassinc.com"},
             {"text": "Show a CISO their actual environment — not a template dashboard — and they stop evaluating vendors and start deploying. That's the only credibility that matters. {home}"},
         ],
         "email": [

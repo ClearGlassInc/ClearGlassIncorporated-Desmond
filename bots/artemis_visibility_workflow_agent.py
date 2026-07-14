@@ -126,7 +126,7 @@ def build_bundle() -> ArtemisWorkflowBundle:
                 "cyber threat intelligence automation",
                 "zero trust AI agents",
             ],
-            canonical="https://clearglassinc.github.io/artemis-ai-cyber-intelligence-platform.html",
+            canonical="https://www.clearglassinc.com/artemis-ai-cyber-intelligence-platform.html",
             internal_links=[
                 "intelligence-interface.html",
                 "SYSTEM_2040_ARTEMIS_INTELLIGENCE_BLUEPRINT.md",

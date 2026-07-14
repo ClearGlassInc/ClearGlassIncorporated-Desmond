@@ -16,6 +16,6 @@ services:
       - key: CLEARGLASS_ALLOWED_ORGS
         value: "ClearGlassInc"
       - key: CLEARGLASS_ALLOWED_ORIGINS
-        value: "https://clearglassinc.github.io"
+        value: "https://www.clearglassinc.com"
       - key: CLEARGLASS_AGENT_API_KEYS
         sync: false

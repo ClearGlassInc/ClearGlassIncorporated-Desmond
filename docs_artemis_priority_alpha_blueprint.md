@@ -241,3 +241,36 @@ At 14:12 EDT, a blocked external staging-server access attempt arrives through t
 At 15:30 EDT, the Calendar Resolution Agent attempts to resolve the stated Q3 Budget Review and Engineering Architecture Sync conflict. Because no matching primary-calendar events are found, it refuses to reschedule anything and writes `BLOCKED_UNRESOLVED_SOURCE` to the audit ledger. The operator receives a manual packet: authorize the security report, open the Apex assessment, verify five controls, sign or escalate before 16:30 EDT, attend the Architecture Sync, and send the Budget Review delegation note.
 
 After the mission window, the operator labels the calendar failure as correct behavior. Artemis converts that label into an eval requiring future workflow versions to block calendar mutation when exact source events are missing. A prompt candidate that better asks for event IDs passes offline replay, runs in shadow mode, receives human approval, and deploys through Apollo canary with rollback ready.
+
+## Legal-Tech Automation MVP Demo Lane
+
+The July 14, 2026 critical AI/automation block adds a demo-ready legal-tech lane at `tools/legal_tech_multi_agent_mvp.py`. It prototypes an OSINT plus document-processing pipeline with four collaborating agents and deterministic quality measurement:
+
+1. **Document Processing Agent** extracts parties, obligations, notice windows, source hashes, and document lineage from uploaded matter text.
+2. **OSINT Enrichment Agent** attaches approved public-record signals as provenance-bearing sources; the demo is offline and deterministic, while production adapters can point to approved OSINT APIs behind Foundry policy controls.
+3. **Risk Correlation Agent** joins document obligations with OSINT signals, emits severity-rated findings, and sets human approval gates.
+4. **Counsel Review Gate Agent** blocks autonomous legal action and produces a counsel-review packet whenever high-risk findings exist.
+
+The lane is intentionally counsel-safe: it does not provide legal advice, file documents, contact counterparties, or execute operational actions. It produces a structured review packet with source hashes, confidence, audit events, and quality metrics. The bundled fixture expects two entities, two obligations, and one material finding; the demo reports `0.0` extraction error rate for the fixture, satisfying the MVP target of less than 5% error on the controlled demonstration corpus.
+
+```bash
+python3 tools/legal_tech_multi_agent_mvp.py --json-out automation/legal-tech-mvp-demo.json
+```
+
+Production integration path:
+
+```text
+Legal document upload
+  -> Foundry document-ingest dataset
+  -> Document Processing Agent
+  -> Foundry-approved OSINT adapter
+  -> OSINT Enrichment Agent
+  -> ontology entity/object resolution
+  -> Risk Correlation Agent
+  -> AIP counsel-review copilot
+  -> Gotham/Foundry matter packet
+  -> human approval and feedback signal
+  -> eval example for future prompt/workflow calibration
+```
+
+Self-improvement for this lane is bounded to extraction prompts, field validators, OSINT source reliability weights, and risk-threshold calibration. The system may propose updates only when offline evals improve precision/recall and no policy violations occur; Apollo canary and rollback govern any promotion.

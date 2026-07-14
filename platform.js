@@ -81,4 +81,18 @@
       document.head.appendChild(st);
     }
   } catch (e) { /* inert */ }
+
+  /* ── 4) founder profile link ─────────────────────────────────────────────── */
+  var founderActions = document.querySelector("#founder .founder-actions");
+  if (founderActions && !founderActions.querySelector('a[data-founder-linkedin]')) {
+    var linkedin = document.createElement("a");
+    linkedin.href = "https://www.linkedin.com/in/desmondotieno?utm_source=share_via&utm_content=profile&utm_medium=member_ios";
+    linkedin.className = "btn btn-glass";
+    linkedin.target = "_blank";
+    linkedin.rel = "noopener noreferrer me";
+    linkedin.setAttribute("data-founder-linkedin", "true");
+    linkedin.setAttribute("aria-label", "View Desmond Otieno Odhiambo on LinkedIn");
+    linkedin.textContent = "LinkedIn Profile ↗";
+    founderActions.appendChild(linkedin);
+  }
 })();

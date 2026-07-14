@@ -477,14 +477,14 @@
 
     function loop(now) {
       if (!hidden()) {
-        if (tickClock) tickClock();
+        tickClock();
         if (!reduce && now - lastTele >= telePeriod) { tickTelemetry(); lastTele = now; }
         if (now - lastEmit >= emitPeriod) { emit(); lastEmit = now; }
       }
       raf(loop);
     }
     // Prime once so the surface is populated immediately, then animate.
-    if (tickClock) tickClock();
+    tickClock();
     tickTelemetry();
     raf(loop);
 

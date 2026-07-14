@@ -3,12 +3,54 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "19:45",
-    "timestamp": "2026-07-14T19:45:41Z"
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:29Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #293",
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:19Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-4e99b0b9-50b7-4102-912c-acfebbc4915d \u00b7 run #799",
+    "time": "21:08",
+    "timestamp": "2026-07-14T21:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-6659c011-cd20-423f-ba50-f9a90f7d0c4c \u00b7 run #798",
+    "time": "20:08",
+    "timestamp": "2026-07-14T20:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #940",
+    "time": "19:45",
+    "timestamp": "2026-07-14T19:45:55Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1396",
+    "time": "19:45",
+    "timestamp": "2026-07-14T19:45:48Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2373",
+    "time": "19:45",
+    "timestamp": "2026-07-14T19:45:48Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #292",
     "time": "19:45",
     "timestamp": "2026-07-14T19:45:28Z"
@@ -47,47 +89,5 @@
     "detail": "pull_request on claude/procurement-legal-tech-redesign-ejc9kn \u00b7 run #1113",
     "time": "18:36",
     "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "pull_request on claude/procurement-legal-tech-redesign-ejc9kn \u00b7 run #1390",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "ok",
-    "detail": "pull_request on claude/procurement-legal-tech-redesign-ejc9kn \u00b7 run #569",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on claude/procurement-legal-tech-redesign-ejc9kn \u00b7 run #1085",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "pull_request on claude/procurement-legal-tech-redesign-ejc9kn \u00b7 run #673",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:51Z"
-  },
-  {
-    "title": "Code Quality: PR #853",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/853/head \u00b7 run #2372",
-    "time": "18:36",
-    "timestamp": "2026-07-14T18:36:49Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #939",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:22Z"
   }
 ]

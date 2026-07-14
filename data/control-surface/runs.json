@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #292",
+    "title": "Control Surface Feeds #293",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:14",
+    "timestamp": "2026-07-14T21:14:19Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #799",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4e99b0b9-50b7-4102-912c-acfebbc4915d",
+    "time": "21:08",
+    "timestamp": "2026-07-14T21:08:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #798",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-6659c011-cd20-423f-ba50-f9a90f7d0c4c",
+    "time": "20:08",
+    "timestamp": "2026-07-14T20:08:04Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #940",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:45",
+    "timestamp": "2026-07-14T19:45:55Z"
+  },
+  {
+    "title": "pages build and deployment #1396",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:45",
+    "timestamp": "2026-07-14T19:45:48Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2373",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:45",
+    "timestamp": "2026-07-14T19:45:48Z"
+  },
+  {
+    "title": "Control Surface Feeds #292",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "19:45",
     "timestamp": "2026-07-14T19:45:28Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "18:23",
     "timestamp": "2026-07-14T18:23:21Z"
-  },
-  {
-    "title": "Policy Gate #1084",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:21Z"
-  },
-  {
-    "title": "Defender Watch #672",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:21Z"
-  },
-  {
-    "title": "CI #1346",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:21Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #313",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:21Z"
-  },
-  {
-    "title": "pages build and deployment #1395",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:21Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2371",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "18:23",
-    "timestamp": "2026-07-14T18:23:20Z"
   }
 ]

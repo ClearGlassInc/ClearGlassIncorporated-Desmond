@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:12",
-    "timestamp": "2026-07-13T23:12:37Z"
+    "time": "00:07",
+    "timestamp": "2026-07-14T00:07:01Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #283",
+    "time": "00:06",
+    "timestamp": "2026-07-14T00:06:51Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #907",
+    "time": "23:12",
+    "timestamp": "2026-07-13T23:12:56Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1362",
+    "time": "23:12",
+    "timestamp": "2026-07-13T23:12:47Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2312",
+    "time": "23:12",
+    "timestamp": "2026-07-13T23:12:46Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #282",
     "time": "23:12",
     "timestamp": "2026-07-13T23:12:21Z"
@@ -61,33 +89,5 @@
     "detail": "workflow_dispatch on main \u00b7 run #905",
     "time": "21:12",
     "timestamp": "2026-07-13T21:12:42Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "bad",
-    "detail": "dynamic on main \u00b7 run #1360",
-    "time": "21:12",
-    "timestamp": "2026-07-13T21:12:36Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2310",
-    "time": "21:12",
-    "timestamp": "2026-07-13T21:12:35Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #280",
-    "time": "21:12",
-    "timestamp": "2026-07-13T21:12:19Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-52e8eada-4e03-44c4-be18-18e6bd07ad9c \u00b7 run #775",
-    "time": "21:08",
-    "timestamp": "2026-07-13T21:08:03Z"
   }
 ]

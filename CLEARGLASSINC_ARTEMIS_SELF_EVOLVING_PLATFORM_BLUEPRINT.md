@@ -1002,6 +1002,108 @@ class DriftDetector:
 
 ---
 
+### Python Precision Runtime Contract
+
+ClearGlassInc Artemis uses Python for precision-critical backend paths where determinism, typed validation, and reproducible evaluation matter more than UI ergonomics. The production services should keep AI behavior behind typed contracts: inputs are validated with Pydantic, tool outputs are normalized into ontology objects, and every probabilistic recommendation is paired with deterministic policy and state-machine checks.
+
+```text
+services/
+  artemis_api/
+    main.py                 # FastAPI gateway and request provenance
+    auth.py                 # OIDC claims, mission context, coalition scopes
+    policy.py               # OPA client and fail-closed policy checks
+  artemis_ontology/
+    objects.py              # Pydantic ontology objects and relationships
+    permissions.py          # entity/row/column authorization helpers
+    lineage.py              # provenance and temporal validity utilities
+  artemis_agents/
+    router.py               # model and tool routing under policy constraints
+    tools.py                # read/write tools with approval gates
+    workflows.py            # deterministic workflow state machines
+  artemis_improvement/
+    feedback.py             # operator correction capture and minimization
+    evals.py                # regression eval generation and scoring
+    proposals.py            # prompt/workflow/router upgrade proposals
+    drift.py                # distribution and outcome drift detectors
+```
+
+Precision-critical rules:
+
+1. **No untyped tool I/O**: every AIP tool request and response must have a schema, policy context, lineage reference, and audit identifier.
+2. **No direct autonomous writes for consequential actions**: agents may create proposed actions, but state changes that affect operations require approval objects and policy checks.
+3. **No hidden self-upgrades**: prompt, workflow, heuristic, and model-router changes are versioned artifacts promoted only through eval gates and Apollo release channels.
+4. **No lossy evidence chains**: summaries must retain source references, confidence, temporal validity, and derivative classification metadata.
+
+```python
+# services/artemis_ontology/objects.py
+from datetime import datetime
+from enum import Enum
+from pydantic import BaseModel, Field, field_validator
+
+class ConfidenceBand(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+
+class LineageRef(BaseModel):
+    source_system: str
+    dataset_rid: str
+    record_id: str
+    observed_at: datetime
+    transform_version: str
+
+class MissionEntity(BaseModel):
+    entity_id: str = Field(pattern=r"^[A-Z0-9:_-]{8,128}$")
+    entity_type: str
+    mission_id: str
+    coalition_scope: list[str]
+    confidence: float = Field(ge=0.0, le=1.0)
+    confidence_band: ConfidenceBand
+    valid_from: datetime
+    valid_to: datetime | None = None
+    lineage: list[LineageRef]
+
+    @field_validator("coalition_scope")
+    @classmethod
+    def non_empty_scope(cls, value: list[str]) -> list[str]:
+        if not value:
+            raise ValueError("coalition_scope is required for every mission entity")
+        return sorted(set(value))
+```
+
+```python
+# services/artemis_agents/risk.py
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class TriageInputs:
+    source_reliability: float
+    asset_criticality: float
+    actor_confidence: float
+    corroboration_count: int
+    policy_sensitivity: float
+
+def deterministic_triage_score(inputs: TriageInputs) -> float:
+    corroboration = min(inputs.corroboration_count, 5) / 5
+    raw = (
+        0.30 * inputs.source_reliability
+        + 0.25 * inputs.asset_criticality
+        + 0.20 * inputs.actor_confidence
+        + 0.15 * corroboration
+        - 0.10 * inputs.policy_sensitivity
+    )
+    return max(0.0, min(1.0, round(raw, 4)))
+
+def escalation_band(score: float) -> str:
+    if score >= 0.80:
+        return "commander_review"
+    if score >= 0.55:
+        return "analyst_review"
+    return "monitor"
+```
+
+---
+
 ## Scenario Walkthrough
 
 ### 1. Live Event Enters

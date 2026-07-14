@@ -1038,6 +1038,230 @@ def classify_environmental_risk(t: EnvironmentalTelemetry) -> EnvironmentalAsses
 - The self-improvement loop may propose threshold tuning, retrieval-order changes, or mitigation wording updates only after offline evals and governance approval; it may not autonomously expand mission scope or downgrade policy.
 - Dashboard and brief generation must distinguish observed telemetry, modeled inference, and business-impact inference so operators can challenge the chain of reasoning.
 
+
+## Code Examples
+
+The following Python-first skeletons turn the blueprint into implementation units that can be tested without live Palantir credentials. In production, each adapter boundary is replaced with Foundry Object API, Gotham case APIs, AIP tool runtime calls, and Apollo release APIs while preserving the same typed contracts.
+
+### Backend Event Handler
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from typing import Any
+from uuid import uuid4
+
+@dataclass(frozen=True)
+class NormalizedIntelEvent:
+    event_id: str
+    mission_id: str
+    source_system: str
+    occurred_at: datetime
+    payload: dict[str, Any]
+    classification: str
+    compartments: tuple[str, ...]
+    lineage_refs: tuple[str, ...]
+
+class IntakeService:
+    def __init__(self, ontology_writer, event_bus, audit_writer) -> None:
+        self.ontology_writer = ontology_writer
+        self.event_bus = event_bus
+        self.audit_writer = audit_writer
+
+    async def handle_raw_event(self, raw: dict[str, Any]) -> NormalizedIntelEvent:
+        event = NormalizedIntelEvent(
+            event_id=raw.get("event_id", f"evt-{uuid4()}"),
+            mission_id=raw["mission_id"],
+            source_system=raw["source_system"],
+            occurred_at=raw.get("occurred_at", datetime.now(UTC)),
+            payload={k: v for k, v in raw.items() if k not in {"secret", "token", "password"}},
+            classification=raw.get("classification", "CUI"),
+            compartments=tuple(raw.get("compartments", [])),
+            lineage_refs=tuple(raw.get("lineage_refs", [])),
+        )
+        object_rid = await self.ontology_writer.upsert_event(event)
+        await self.audit_writer.write("intel.normalized", event.event_id, {"object_rid": object_rid})
+        await self.event_bus.publish("intel.normalized", event)
+        return event
+```
+
+### Ontology-Driven Query With Need-To-Know Filtering
+
+```python
+@dataclass(frozen=True)
+class Principal:
+    subject: str
+    clearance_rank: int
+    mission_ids: frozenset[str]
+    compartments: frozenset[str]
+    coalition_tags: frozenset[str]
+    purpose: str
+
+@dataclass(frozen=True)
+class ObjectPolicyEnvelope:
+    object_rid: str
+    mission_id: str
+    classification_rank: int
+    compartments: frozenset[str]
+    coalition_tags: frozenset[str]
+    allowed_purposes: frozenset[str]
+
+
+def can_read(principal: Principal, envelope: ObjectPolicyEnvelope) -> bool:
+    return (
+        principal.clearance_rank >= envelope.classification_rank
+        and envelope.mission_id in principal.mission_ids
+        and envelope.compartments.issubset(principal.compartments)
+        and envelope.coalition_tags.issubset(principal.coalition_tags)
+        and principal.purpose in envelope.allowed_purposes
+    )
+
+async def query_case_context(case_id: str, principal: Principal, ontology_client) -> dict[str, Any]:
+    graph = await ontology_client.get_case_graph(case_id, include=["alerts", "events", "evidence", "entities"])
+    visible_nodes = [node for node in graph["nodes"] if can_read(principal, node["policy"])]
+    visible_ids = {node["object_rid"] for node in visible_nodes}
+    visible_edges = [
+        edge for edge in graph["edges"]
+        if edge["source"] in visible_ids and edge["target"] in visible_ids
+    ]
+    return {"nodes": visible_nodes, "edges": visible_edges, "redacted_count": len(graph["nodes"]) - len(visible_nodes)}
+```
+
+### Model Router And Tool-Using Agent Call
+
+```python
+@dataclass(frozen=True)
+class ModelRoute:
+    route_id: str
+    model_name: str
+    max_classification: str
+    p95_latency_ms: int
+    eval_score: float
+    cost_weight: float
+
+class ModelRouter:
+    def __init__(self, routes: list[ModelRoute]) -> None:
+        self.routes = routes
+
+    def choose(self, *, classification: str, latency_budget_ms: int, min_eval_score: float) -> ModelRoute:
+        candidates = [
+            route for route in self.routes
+            if route.max_classification == classification
+            and route.p95_latency_ms <= latency_budget_ms
+            and route.eval_score >= min_eval_score
+        ]
+        if not candidates:
+            raise RuntimeError("no approved model route satisfies mission policy")
+        return sorted(candidates, key=lambda route: (-route.eval_score, route.cost_weight))[0]
+
+async def run_recommendation_agent(case_id: str, principal: Principal, router: ModelRouter, tools) -> dict[str, Any]:
+    context = await tools.ontology.query_case_context(case_id, principal)
+    route = router.choose(classification="SECRET", latency_budget_ms=1_200, min_eval_score=0.94)
+    draft = await tools.aip.complete(
+        route=route.route_id,
+        task="commander_action_package",
+        context=context,
+        guardrails={"require_citations": True, "forbid_execution": True, "approval_gate": "operational_effect"},
+    )
+    return await tools.action_packages.create_draft(case_id=case_id, draft=draft, created_by=principal.subject)
+```
+
+### Workflow State Machine With Approval Gates
+
+```python
+from enum import StrEnum
+
+class WorkflowState(StrEnum):
+    RECEIVED = "received"
+    TRIAGED = "triaged"
+    ENRICHED = "enriched"
+    RECOMMENDED = "recommended"
+    WAITING_FOR_APPROVAL = "waiting_for_approval"
+    EXECUTED = "executed"
+    CLOSED = "closed"
+
+@dataclass
+class WorkflowRun:
+    run_id: str
+    case_id: str
+    state: WorkflowState
+    confidence: float
+    operational_effect: bool
+    approval_token: str | None = None
+
+async def advance(run: WorkflowRun, agents, action_executor) -> WorkflowRun:
+    if run.state is WorkflowState.RECEIVED:
+        run.confidence = await agents.triage(run.case_id)
+        run.state = WorkflowState.TRIAGED
+    elif run.state is WorkflowState.TRIAGED:
+        await agents.enrich(run.case_id)
+        run.state = WorkflowState.ENRICHED
+    elif run.state is WorkflowState.ENRICHED:
+        run.operational_effect = await agents.recommend(run.case_id)
+        run.state = WorkflowState.WAITING_FOR_APPROVAL if run.operational_effect else WorkflowState.CLOSED
+    elif run.state is WorkflowState.WAITING_FOR_APPROVAL:
+        if not run.approval_token:
+            raise PermissionError("human approval token required before operational execution")
+        await action_executor.execute(run.case_id, run.approval_token)
+        run.state = WorkflowState.EXECUTED
+    return run
+```
+
+### Eval Pipeline And Safe Self-Upgrade Proposal
+
+```python
+@dataclass(frozen=True)
+class EvalMetrics:
+    precision: float
+    recall: float
+    citation_accuracy: float
+    policy_violations: int
+    p95_latency_ms: int
+    operator_trust_delta: float
+
+@dataclass(frozen=True)
+class ChangeProposal:
+    proposal_id: str
+    target: str
+    current_version: str
+    candidate_version: str
+    diff_summary: str
+    metrics: EvalMetrics
+    rollback_pointer: str
+    requires_human_approval: bool = True
+
+
+def safe_to_review(baseline: EvalMetrics, candidate: EvalMetrics) -> bool:
+    return (
+        candidate.policy_violations == 0
+        and candidate.precision >= baseline.precision
+        and candidate.recall >= baseline.recall - 0.005
+        and candidate.citation_accuracy >= max(0.97, baseline.citation_accuracy)
+        and candidate.p95_latency_ms <= int(baseline.p95_latency_ms * 1.10)
+        and candidate.operator_trust_delta >= 0
+    )
+
+async def propose_self_upgrade(feedback_batch, baseline: EvalMetrics, eval_runner) -> ChangeProposal | None:
+    eval_cases = [item.to_eval_case() for item in feedback_batch if item.is_correction]
+    if len(eval_cases) < 25:
+        return None
+    candidate_diff = await eval_runner.generate_candidate_diff(eval_cases)
+    candidate_metrics = await eval_runner.score(candidate_diff, eval_cases)
+    if not safe_to_review(baseline, candidate_metrics):
+        return None
+    return ChangeProposal(
+        proposal_id=f"chg-{uuid4()}",
+        target="triage_prompt_and_workflow",
+        current_version="triage_workflow.v1",
+        candidate_version="triage_workflow.v2-candidate",
+        diff_summary=candidate_diff.summary,
+        metrics=candidate_metrics,
+        rollback_pointer="triage_workflow.v1",
+    )
+```
+
 ## Scenario Walkthrough
 
 1. **Live event enters**: a Burlington facility reports GNSS positioning drift while the environmental connector receives elevated log NF2 and TEC readings. The intake service validates schemas, records lineage, and emits `intel.raw` and `intel.normalized` events.

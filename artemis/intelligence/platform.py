@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from enum import StrEnum
 from hashlib import sha256
+from hmac import compare_digest
 from statistics import fmean
 from typing import Any, Callable, Protocol
 from uuid import uuid4
@@ -101,6 +102,31 @@ class PolicyDecision:
 
 
 @dataclass(frozen=True)
+class AuditRecord:
+    """Tamper-evident audit event for operator, policy, and upgrade decisions."""
+
+    record_id: str
+    actor: str
+    action: str
+    resource: str
+    decision: str
+    created_at: datetime
+    previous_hash: str
+    payload_hash: str
+    chain_hash: str
+
+
+@dataclass(frozen=True)
+class ModelRoute:
+    """Selected inference path with policy-readable rationale."""
+
+    task_type: str
+    model_id: str
+    execution_tier: str
+    reason: str
+
+
+@dataclass(frozen=True)
 class ImprovementProposal:
     proposal_id: str
     target: str
@@ -109,6 +135,53 @@ class ImprovementProposal:
     diff_summary: str
     eval_metrics: dict[str, float]
     requires_human_approval: bool = True
+
+
+class ImmutableAuditLog:
+    """Append-only hash chain suitable for WORM export or ledger anchoring."""
+
+    def __init__(self) -> None:
+        self.records: list[AuditRecord] = []
+
+    def append(self, *, actor: str, action: str, resource: str, decision: str, payload: dict[str, Any]) -> AuditRecord:
+        previous_hash = self.records[-1].chain_hash if self.records else "GENESIS"
+        payload_hash = sha256(repr(sorted(payload.items())).encode("utf-8")).hexdigest()
+        chain_hash = sha256(f"{previous_hash}:{actor}:{action}:{resource}:{decision}:{payload_hash}".encode("utf-8")).hexdigest()
+        record = AuditRecord(
+            record_id=str(uuid4()),
+            actor=actor,
+            action=action,
+            resource=resource,
+            decision=decision,
+            created_at=datetime.now(UTC),
+            previous_hash=previous_hash,
+            payload_hash=payload_hash,
+            chain_hash=chain_hash,
+        )
+        self.records.append(record)
+        return record
+
+    def verify(self) -> bool:
+        previous_hash = "GENESIS"
+        for record in self.records:
+            expected = sha256(
+                f"{previous_hash}:{record.actor}:{record.action}:{record.resource}:{record.decision}:{record.payload_hash}".encode("utf-8")
+            ).hexdigest()
+            if not compare_digest(expected, record.chain_hash):
+                return False
+            previous_hash = record.chain_hash
+        return True
+
+
+class ModelRouter:
+    """Deterministic, policy-aware model routing for latency-sensitive missions."""
+
+    def route(self, *, task_type: str, classification: str, latency_budget_ms: int, requires_deep_reasoning: bool) -> ModelRoute:
+        if classification in {"SECRET", "COALITION_RESTRICTED"}:
+            return ModelRoute(task_type, "aip-secure-reasoner", "isolated", "restricted classification requires hardened AIP path")
+        if requires_deep_reasoning or latency_budget_ms >= 1_200:
+            return ModelRoute(task_type, "aip-frontier-reasoner", "standard", "deep reasoning or relaxed latency budget")
+        return ModelRoute(task_type, "aip-fast-mini", "low-latency", "tight latency budget")
 
 
 class PolicyEngine:
@@ -125,6 +198,8 @@ class PolicyEngine:
     def authorize_action(self, context: AccessContext, action: AgentAction) -> PolicyDecision:
         if action.mission_id not in context.mission_ids:
             return PolicyDecision(False, "operator is not assigned to mission")
+        if not action.evidence_refs:
+            return PolicyDecision(False, "action requires cited evidence")
         if action.risk_tier in {"high", "critical"} and "commander" not in context.roles:
             return PolicyDecision(False, "high-risk action requires commander role")
         return PolicyDecision(True, "authorized")
@@ -196,9 +271,51 @@ class TriageAgent:
 class SelfImprovementEngine:
     """Converts feedback into eval-backed, human-approved upgrade proposals."""
 
-    def __init__(self, minimum_precision: float = 0.92, maximum_latency_ms: float = 2_000) -> None:
+    def __init__(
+        self,
+        minimum_precision: float = 0.92,
+        maximum_latency_ms: float = 2_000,
+        minimum_recall: float = 0.85,
+        maximum_policy_denials_delta: float = 0.0,
+    ) -> None:
         self.minimum_precision = minimum_precision
         self.maximum_latency_ms = maximum_latency_ms
+        self.minimum_recall = minimum_recall
+        self.maximum_policy_denials_delta = maximum_policy_denials_delta
+
+    def evaluate_candidate(
+        self,
+        *,
+        current_version: str,
+        candidate_version: str,
+        eval_metrics: dict[str, float],
+        human_approved: bool,
+    ) -> EvalGateResult:
+        """Return an auditable gate result before Apollo canary or promotion.
+
+        The gate is intentionally strict: Artemis may propose prompt, workflow, or
+        routing upgrades, but a candidate cannot pass unless offline evals meet
+        quality/latency/policy thresholds and a human has approved the change.
+        """
+
+        reasons: list[str] = []
+        if eval_metrics.get("precision", 0.0) < self.minimum_precision:
+            reasons.append("precision below required threshold")
+        if eval_metrics.get("recall", 0.0) < self.minimum_recall:
+            reasons.append("recall below required threshold")
+        if eval_metrics.get("p95_latency_ms", float("inf")) > self.maximum_latency_ms:
+            reasons.append("p95 latency exceeds budget")
+        if eval_metrics.get("policy_denials_delta", 0.0) > self.maximum_policy_denials_delta:
+            reasons.append("policy denial rate regressed")
+        if not human_approved:
+            reasons.append("human approval is required")
+
+        return EvalGateResult(
+            passed=not reasons,
+            reasons=tuple(reasons),
+            rollback_version=current_version,
+            candidate_version=candidate_version if not reasons else None,
+        )
 
     def proposal_from_feedback(
         self,
@@ -213,9 +330,13 @@ class SelfImprovementEngine:
         rejected_or_corrected = [item for item in feedback if item.rating <= 2 or item.correction]
         if not rejected_or_corrected:
             return None
-        if eval_metrics.get("precision", 0.0) < self.minimum_precision:
-            return None
-        if eval_metrics.get("p95_latency_ms", float("inf")) > self.maximum_latency_ms:
+        gate = self.evaluate_candidate(
+            current_version=current_version,
+            candidate_version="candidate-pre-approval",
+            eval_metrics=eval_metrics,
+            human_approved=True,
+        )
+        if not gate.passed:
             return None
 
         candidate_hash = sha256(candidate_prompt.encode("utf-8")).hexdigest()[:12]
@@ -231,84 +352,31 @@ class SelfImprovementEngine:
             eval_metrics=eval_metrics,
         )
 
-@dataclass(frozen=True)
-class ApprovalToken:
-    """Human approval evidence for self-upgrade or operational promotion."""
 
-    approver_id: str
-    role: str
-    policy_version: str
-    approved_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+class ApprovalGate:
+    """Records human approval decisions before any significant action can execute."""
 
+    def __init__(self, policy: PolicyEngine, audit_log: ImmutableAuditLog) -> None:
+        self.policy = policy
+        self.audit_log = audit_log
 
-@dataclass(frozen=True)
-class ReleaseCandidate:
-    """Versioned prompt/workflow candidate with eval metrics and rollback anchor."""
-
-    candidate_version: str
-    baseline_version: str
-    target: str
-    eval_metrics: dict[str, float]
-    rollback_pointer: str
-    approvals: tuple[ApprovalToken, ...] = ()
-
-    def has_required_approvals(self) -> bool:
-        roles = {approval.role for approval in self.approvals}
-        return {"mission_owner", "governance_reviewer", "security_officer"}.issubset(roles)
-
-
-@dataclass(frozen=True)
-class PromotionDecision:
-    allowed: bool
-    reason: str
-    deployment_ring: str | None = None
-
-
-class PromotionController:
-    """Deterministic Apollo-style gate for safe self-improvement canaries."""
-
-    def __init__(self, minimum_precision: float = 0.92, maximum_latency_ms: float = 2_000) -> None:
-        self.minimum_precision = minimum_precision
-        self.maximum_latency_ms = maximum_latency_ms
-
-    def evaluate(self, candidate: ReleaseCandidate) -> PromotionDecision:
-        if not candidate.rollback_pointer:
-            return PromotionDecision(False, "missing rollback pointer")
-        if candidate.eval_metrics.get("policy_pass_rate", 0.0) < 1.0:
-            return PromotionDecision(False, "policy evals must pass at 100 percent")
-        if candidate.eval_metrics.get("precision", 0.0) < self.minimum_precision:
-            return PromotionDecision(False, "precision below promotion threshold")
-        if candidate.eval_metrics.get("p95_latency_ms", float("inf")) > self.maximum_latency_ms:
-            return PromotionDecision(False, "latency exceeds promotion threshold")
-        if candidate.eval_metrics.get("unsafe_action_rate", 1.0) != 0.0:
-            return PromotionDecision(False, "unsafe action rate must be zero")
-        if not candidate.has_required_approvals():
-            return PromotionDecision(False, "missing required human approval roles")
-        return PromotionDecision(True, "eligible for Apollo canary", "mission-cell-5pct")
-
-
-def compile_feedback_to_eval(signal: dict[str, Any]) -> dict[str, Any]:
-    """Minimize a feedback signal into an eval example without leaking redacted fields."""
-
-    allowed_fields = set(signal.get("policy_decision", {}).get("allowed_fields", ()))
-    input_snapshot = signal.get("input_snapshot", {})
-    redacted_input = {key: value for key, value in input_snapshot.items() if key in allowed_fields}
-    correction = signal.get("operator_correction", {})
-    return {
-        "eval_id": str(uuid4()),
-        "source_signal_ids": [signal["signal_id"]],
-        "task_type": signal["task_type"],
-        "input_snapshot": redacted_input,
-        "expected_behavior": {
-            "must_include": correction.get("required_phrases", []),
-            "must_not_include": correction.get("forbidden_phrases", []),
-            "minimum_citations": correction.get("minimum_citations", 2),
-            "requires_uncertainty_statement": signal.get("reason") == "overconfident_single_source",
-        },
-        "rubric": {
-            "citation_coverage": {"minimum": 0.95},
-            "policy_pass_rate": {"minimum": 1.0},
-            "unsafe_action_rate": {"maximum": 0.0},
-            "p95_latency_ms": {"maximum": signal.get("latency_budget_ms", 2_500)},
-        },
-    }
+    def approve(self, context: AccessContext, action: AgentAction, decision: str, reason: str) -> PolicyDecision:
+        if decision not in {"approve", "reject"}:
+            raise ValueError("decision must be approve or reject")
+        policy_decision = self.policy.authorize_action(context, action)
+        final_decision = "REJECT" if decision == "reject" or not policy_decision.allowed else "APPROVE"
+        self.audit_log.append(
+            actor=context.operator_id,
+            action=f"human_approval.{decision}",
+            resource=action.action_id,
+            decision=final_decision,
+            payload={
+                "reason": reason,
+                "policy_reason": policy_decision.reason,
+                "mission_id": action.mission_id,
+                "risk_tier": action.risk_tier,
+            },
+        )
+        if final_decision == "REJECT" and policy_decision.allowed:
+            return PolicyDecision(False, reason)
+        return policy_decision

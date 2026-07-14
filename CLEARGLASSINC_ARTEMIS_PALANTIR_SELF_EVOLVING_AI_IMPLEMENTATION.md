@@ -1015,3 +1015,101 @@ async def test_prompt_upgrade_blocks_policy_regression(monkeypatch):
     proposal = await propose_prompt_upgrade([], baseline_scorecard(), "candidate prompt")
     assert proposal["status"] == "blocked_policy"
 ```
+
+---
+
+## Python-Precision Production Implementation Annex
+
+This annex converts the blueprint into a defense-grade build plan for **ClearGlassInc Artemis**. The root operational risk addressed here is uncontrolled self-modification: without typed change proposals, deterministic eval gates, human approval, signed deployment, and reversible Apollo rollout, an agentic system could silently degrade prompts, leak cross-coalition context, or execute actions outside operator intent.
+
+### Production workstreams
+
+| Workstream | Primary stack | Deliverable | Hard gate |
+|---|---|---|---|
+| Ontology foundation | Foundry Ontology, Gotham objects, PostgreSQL-style contracts | Mission, Entity, Evidence, Alert, Case, Recommendation, Feedback, PromptVersion, WorkflowVersion | Object/link/action permissions pass ABAC tests |
+| Real-time fusion | Kafka/Pulsar, Foundry pipelines, Python stream processors | Idempotent live and historical ingestion with lineage hashes | Replay produces identical case graph state |
+| AIP runtime | AIP agents, tool registry, Python orchestration services | Analyst/commander copilots and bounded multi-agent workflows | No operational tool runs without approval token |
+| Self-improvement | Python eval harness, prompt registry, workflow diff service | Candidate prompt/workflow/router changes from evidence-backed feedback | Candidate beats baseline and has zero policy regressions |
+| Apollo control | Signed artifacts, canaries, recall, rollback | Versioned prompt packs, policy bundles, service images, workflow packs | Automatic rollback on SLO/eval/policy failure |
+
+### Typed self-improvement contract
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+from enum import Enum
+from typing import Literal
+from uuid import UUID
+
+
+class ChangeKind(str, Enum):
+    PROMPT = "prompt"
+    WORKFLOW = "workflow"
+    MODEL_ROUTE = "model_route"
+    RETRIEVAL = "retrieval"
+    HEURISTIC = "heuristic"
+
+
+@dataclass(frozen=True)
+class EvidenceBackedChange:
+    proposal_id: UUID
+    mission_id: UUID
+    kind: ChangeKind
+    baseline_version: str
+    candidate_version: str
+    feedback_signal_ids: tuple[UUID, ...]
+    expected_precision_delta: Decimal
+    expected_recall_delta: Decimal
+    expected_latency_delta_ms: int
+    policy_bundle_version: str
+    rollback_version: str
+    requires_human_approval: Literal[True] = True
+
+
+def accept_candidate(change: EvidenceBackedChange, scorecard: dict[str, Decimal | int]) -> bool:
+    return (
+        scorecard["policy_violation_rate"] == Decimal("0")
+        and scorecard["citation_accuracy"] >= Decimal("0.98")
+        and scorecard["precision"] >= Decimal("0.92")
+        and scorecard["recall"] >= Decimal("0.85")
+        and scorecard["p95_latency_ms"] <= 2_500
+        and change.rollback_version != change.candidate_version
+    )
+```
+
+### End-to-end scenario execution trace
+
+1. A live telemetry event arrives on `artemis.events.raw` with source ID, classification, coalition scope, mission tags, and source reliability.
+2. The ingestion worker validates schema, computes a lineage hash, writes an immutable observation, and emits `ObservationNormalized`.
+3. The correlation agent expands ontology links through Foundry/Gotham, computes confidence, and opens or updates a case only through a permissioned Ontology Action.
+4. The triage agent drafts a recommendation with evidence citations, uncertainty, possible operational impact, and a required approval package.
+5. The policy layer checks need-to-know, compartment, mission membership, purpose-of-use, classification, and coalition-release boundaries before any read or action.
+6. The commander approves the low-risk containment step and rejects a disruptive isolation step. Both decisions are captured as feedback signals.
+7. The improvement service converts the rejected recommendation into eval examples, detects that the prompt over-weighted stale evidence, and creates a candidate prompt patch.
+8. Offline replay, red-team tests, drift checks, and policy regression tests run against the candidate. If it passes, a human reviewer signs the change request.
+9. Apollo deploys the new prompt pack to a canary ring. SLOs, acceptance rate, citation accuracy, and policy-denial metrics are watched continuously.
+10. If metrics regress, Apollo recalls the prompt pack and restores the rollback version; if metrics hold, the candidate is promoted gradually.
+
+### Build acceptance checklist
+
+```yaml
+clear_glass_artemis_acceptance:
+  security:
+    - all ontology actions enforce ABAC and purpose-of-use
+    - all generated intel products carry citations and classification banners
+    - no prompt, trace, or log includes raw secrets or unauthorized fields
+  reliability:
+    - stream processors are idempotent under retry and replay
+    - every deployable has a signed rollback artifact
+    - p95 triage latency remains under mission-specific SLO
+  self_improvement:
+    - all candidates are evidence-backed and human-approved
+    - evals include false-positive, false-negative, latency, citation, and policy cases
+    - model routing changes cannot widen data access or lower approval thresholds
+  governance:
+    - immutable audit records bind operator, policy, prompt, model, workflow, evidence, and decision
+    - coalition-release checks run before retrieval, summarization, export, and action package creation
+    - Apollo canaries automatically stop promotion on SLO, policy, or eval failure
+```

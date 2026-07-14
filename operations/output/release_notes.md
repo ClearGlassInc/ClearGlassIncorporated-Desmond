@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-13
+# Release Notes — 2026-07-14
 
-*735 commit(s) since v1.0.0*
+*755 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -155,6 +155,15 @@
 
 ## Maintenance
 
+- Add files via upload (`0c73675`)
+- Add LinkedIn profile to founder section (`db0c061`)
+- Enhance SMB Cyber Trust Kit neon UI and remove duplicate local header (`5c10090`)
+- Harden Artemis intelligence blueprint controls (`d8fd503`)
+- Add Artemis self-evolving platform blueprint (`dfe10b6`)
+- Expand Artemis self-evolving platform blueprint (`dbc9ac3`)
+- Expand Artemis blueprint implementation examples (`109b6cd`)
+- Expand Artemis implementation blueprint (`87554cd`)
+- Keep homepage original single navigation bar (`0d666c7`)
 - Create CNAME (`6747d88`)
 - Add universal ClearGlassInc 2040 topbar and logo (`e16dfda`)
 - Add 10-topic flagship editorial pipeline to ClearGlass Insights (`e8751ae`)
@@ -447,6 +456,17 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`04ab0c7`)
+- refresh control-surface data feeds [skip ci] (`445f085`)
+- refresh control-surface data feeds [skip ci] (`0ea113a`)
+- refresh control-surface data feeds [skip ci] (`b90bcdc`)
+- refresh control-surface data feeds [skip ci] (`2d0c67e`)
+- refresh control-surface data feeds [skip ci] (`305faef`)
+- refresh control-surface data feeds [skip ci] (`667e6dc`)
+- refresh control-surface data feeds [skip ci] (`b8cf653`)
+- refresh control-surface data feeds [skip ci] (`5802a00`)
+- refresh control-surface data feeds [skip ci] (`9ba6ed2`)
+- update generated outputs — 2026-07-13 10:24 UTC [skip ci] (`3de1b0b`)
 - refresh control-surface data feeds [skip ci] (`a6fb5e5`)
 - refresh control-surface data feeds [skip ci] (`d597dc5`)
 - refresh control-surface data feeds [skip ci] (`4d010b2`)

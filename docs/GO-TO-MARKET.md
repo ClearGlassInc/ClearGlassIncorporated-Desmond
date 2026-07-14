@@ -27,7 +27,7 @@ You currently cannot tell if anyone visits. Fix that first.
 ### 2. Be findable — confirm search indexing
 The sitemap, `robots.txt`, and page meta are in place (all money pages included).
 The remaining step is yours:
-- [ ] Verify the site in [Google Search Console](https://search.google.com/search-console) and submit `https://clearglassinc.github.io/sitemap.xml`
+- [ ] Verify the site in [Google Search Console](https://search.google.com/search-console) and submit `https://www.clearglassinc.com/sitemap.xml`
 - [ ] Verify in [Bing Webmaster Tools](https://www.bing.com/webmasters) (the repo already ships a `BingSiteAuth.xml`)
 
 ### 3. Be able to charge — turn payments on

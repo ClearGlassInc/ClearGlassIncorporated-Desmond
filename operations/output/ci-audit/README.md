@@ -39,7 +39,7 @@ re-firing and failing hourly.
 
 Prior run reported the **Cert Bot** failing at **Check certificate
 expirations**. This session's GitHub access is scoped to
-`clearglassinc.github.io` only; `Gaurdian` returns *access denied* and the
+`www.clearglassinc.com` only; `Gaurdian` returns *access denied* and the
 `list_repos`/`add_repo` tooling was not available, so this could **not be
 independently re-verified.** Treat as carried-over, not confirmed.
 

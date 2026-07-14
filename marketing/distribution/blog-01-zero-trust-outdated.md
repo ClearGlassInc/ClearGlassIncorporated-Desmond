@@ -1,7 +1,7 @@
 # Distribution Kit — Blog #1: Zero Trust Is Outdated
 
 - Article: `blog/zero-trust-is-outdated.html`
-- URL: https://clearglassinc.github.io/blog/zero-trust-is-outdated.html
+- URL: https://www.clearglassinc.com/blog/zero-trust-is-outdated.html
 - Framework: **Adaptive Trust Systems Model** (Action Trust · Intent Verification · Learning Policy · Trust Economics)
 - Status: DRAFT — publish requires human approval per the governance model
 - Suggested sequencing: publish the week after Blog #6 as the doctrinal follow-up
@@ -104,7 +104,7 @@ But the lesson has moved:
 Zero trust: stop trusting locations, verify actors.
 Adaptive trust: stop trusting actors, govern actions.
 
-Full model: https://clearglassinc.github.io/blog/zero-trust-is-outdated.html
+Full model: https://www.clearglassinc.com/blog/zero-trust-is-outdated.html
 
 ---
 
@@ -116,7 +116,7 @@ Full model: https://clearglassinc.github.io/blog/zero-trust-is-outdated.html
 4. **Authentication is not alignment.** The uniform checked out. The payload walked through.
 5. **Adaptive Trust:** score the action, verify the intent, let policy learn on the record.
 6. **Trust is a budget.** Routine = cheap. Catastrophic = priced beyond any solo actor. A human co-signs.
-7. **Stop trusting actors. Start governing actions.** → clearglassinc.github.io/blog
+7. **Stop trusting actors. Start governing actions.** → www.clearglassinc.com/blog
 
 ---
 

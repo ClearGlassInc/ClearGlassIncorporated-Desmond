@@ -174,7 +174,7 @@ I'd like to show you a 20-minute live view of what your exposure looks like righ
 
 — {{{{sender_name}}}}
 ClearGlassInc | Clarity Is Power
-clearglassinc.github.io
+www.clearglassinc.com
 """,
     )
 
@@ -194,7 +194,7 @@ Worth 20 minutes to see it on your environment?
 {cta}.
 
 — {{{{sender_name}}}}
-ClearGlassInc | clearglassinc.github.io
+ClearGlassInc | www.clearglassinc.com
 """,
     )
 
@@ -258,7 +258,7 @@ But if it is, I'd hate for you to navigate that without seeing what Artemis can 
 Either way — appreciate your time, and hope to connect when the moment is right.
 
 — {{{{sender_name}}}}
-ClearGlassInc | clearglassinc.github.io
+ClearGlassInc | www.clearglassinc.com
 """,
         ),
         FollowUpStep(

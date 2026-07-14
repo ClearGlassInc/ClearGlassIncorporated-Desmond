@@ -1,6 +1,6 @@
 # Distribution Kit — Blog #6: AI Agents Are the New Insider Threat
 
-Article: https://clearglassinc.github.io/blog/ai-agents-insider-threat.html
+Article: https://www.clearglassinc.com/blog/ai-agents-insider-threat.html
 Publish first (fresher category than the Zero Trust debate). X thread same day;
 LinkedIn long-form 48h later.
 
@@ -104,7 +104,7 @@ That gap is your insider-threat surface.
 7/ Governance isn't the tax on agentic AI. It's the license to run it.
 
 Full AIRF framework here:
-https://clearglassinc.github.io/blog/ai-agents-insider-threat.html
+https://www.clearglassinc.com/blog/ai-agents-insider-threat.html
 
 ---
 
@@ -130,7 +130,7 @@ https://clearglassinc.github.io/blog/ai-agents-insider-threat.html
 - Primary keyword: AI agent insider threat
 - Secondary: non-human identity, AI agent security, AI blast radius, AI audit
   ledger, machine identity governance
-- Canonical: https://clearglassinc.github.io/blog/ai-agents-insider-threat.html
+- Canonical: https://www.clearglassinc.com/blog/ai-agents-insider-threat.html
 - Schema: BlogPosting (embedded in page)
 
 ## Honest note

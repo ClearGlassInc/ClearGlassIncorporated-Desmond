@@ -34,7 +34,7 @@ jobs:
           python-version: "3.11"
       - name: Check TLS certificate expiry
         env:
-          CERT_BOT_HOSTS: ${{ inputs.hosts || vars.CERT_BOT_HOSTS || 'clearglassinc.github.io' }}
+          CERT_BOT_HOSTS: ${{ inputs.hosts || vars.CERT_BOT_HOSTS || 'www.clearglassinc.com' }}
           CERT_BOT_MIN_DAYS: ${{ inputs.min_days || '21' }}
           CERT_BOT_STRICT: "1"
         run: python scripts/cert_bot.py

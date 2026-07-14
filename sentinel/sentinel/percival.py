@@ -342,7 +342,7 @@ class Percival:
     happen ONLY through ``apply`` and only for AUTO_FIX decisions, and only
     when ``allow_writes=True`` (policy-explicit, never silent)."""
 
-    SURFACE = "clearglassinc.github.io"
+    SURFACE = "www.clearglassinc.com"
 
     def __init__(self, root: Path | str, *, audit_log: Optional[AuditLog] = None,
                  clock: Callable[[], str] | None = None,

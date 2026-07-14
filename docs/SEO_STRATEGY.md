@@ -1,6 +1,6 @@
 # ClearGlass Inc — Full-Spectrum Search Visibility Strategy
 
-**Property:** `https://clearglassinc.github.io` (GitHub Pages, served static via `.nojekyll`)
+**Property:** `https://www.clearglassinc.com` (GitHub Pages, served static via `.nojekyll`)
 **Entity:** Desmond Otieno Odhiambo — Founder & Chairman, Software Architect
 **Positioning:** Enterprise cybersecurity · AI automation · autonomous agents · OSINT · digital investigations · financial-crime analysis
 **Prepared:** 2026-06-18
@@ -70,7 +70,7 @@ ClearGlass already has the hard parts most GitHub Pages sites skip: a sitemap (6
 > Clarity is power. We build zero-trust security platforms, autonomous AI agents, and
 > investigative automation for organizations that cannot afford to guess.
 
-**Founder & Chairman:** [Desmond Otieno Odhiambo](https://clearglassinc.github.io/#founder) —
+**Founder & Chairman:** [Desmond Otieno Odhiambo](https://www.clearglassinc.com/#founder) —
 software architect working across cybersecurity, AI engineering, OSINT, and financial-crime analysis.
 
 ### What we build
@@ -83,13 +83,13 @@ software architect working across cybersecurity, AI engineering, OSINT, and fina
 ### Flagship systems
 | System | Focus |
 |--------|-------|
-| [Artemis IV Core](https://clearglassinc.github.io/artemis-iv.html) | Self-evolving intelligence platform |
-| [Guardian](https://clearglassinc.github.io/guardian.html) | Zero-trust security command center |
-| [Sentinel](https://clearglassinc.github.io/sentinel.html) | Live geospatial intelligence |
-| [Conduit](https://clearglassinc.github.io/conduit.html) | Enterprise workflow automation |
+| [Artemis IV Core](https://www.clearglassinc.com/artemis-iv.html) | Self-evolving intelligence platform |
+| [Guardian](https://www.clearglassinc.com/guardian.html) | Zero-trust security command center |
+| [Sentinel](https://www.clearglassinc.com/sentinel.html) | Live geospatial intelligence |
+| [Conduit](https://www.clearglassinc.com/conduit.html) | Enterprise workflow automation |
 
-🌐 **Website:** https://clearglassinc.github.io
-📩 **Work with us:** https://clearglassinc.github.io/offers/
+🌐 **Website:** https://www.clearglassinc.com
+📩 **Work with us:** https://www.clearglassinc.com/offers/
 
 <!-- Topics to set on key repos: cybersecurity, ai-automation, autonomous-agents,
      osint, software-architecture, zero-trust, threat-detection, llm, fraud-detection -->
@@ -162,7 +162,7 @@ software architect working across cybersecurity, AI engineering, OSINT, and fina
 - **Topics/tags** (set on each repo): `cybersecurity ai-automation autonomous-agents osint software-architecture zero-trust threat-detection llm fraud-detection`.
 - **README headings** → one `# H1` per repo with the primary keyword; `## H2` sections matching search intent (Features, Architecture, Usage, Security).
 - **Profile bio** → `Software Architect & Founder @ClearGlassInc · Cybersecurity · AI automation · OSINT · autonomous agents`.
-- **Website link** → set to `https://clearglassinc.github.io` on profile + every flagship repo.
+- **Website link** → set to `https://www.clearglassinc.com` on profile + every flagship repo.
 - **CONTRIBUTING/docs** → keep `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md` (all present ✅); add `docs/` index linking cornerstone content.
 - **Commit/activity strategy** → consistent public commits build the contribution graph (a soft trust signal); ship the blog as markdown commits so each article is a public artifact.
 
@@ -203,14 +203,14 @@ jobs:
       - uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            https://clearglassinc.github.io/
-            https://clearglassinc.github.io/offers/
+            https://www.clearglassinc.com/
+            https://www.clearglassinc.com/offers/
           uploadArtifacts: true
 ```
 
 **IndexNow (instant indexation for Bing, DuckDuckGo, Yandex, Brave):** generate a key, host `<key>.txt` at root, and ping on publish:
 ```bash
-curl "https://api.indexnow.org/indexnow?url=https://clearglassinc.github.io/&key=YOUR_KEY"
+curl "https://api.indexnow.org/indexnow?url=https://www.clearglassinc.com/&key=YOUR_KEY"
 ```
 
 ---
@@ -237,7 +237,7 @@ curl "https://api.indexnow.org/indexnow?url=https://clearglassinc.github.io/&key
 ## 8. Authority & Backlink Plan
 
 1. **LinkedIn** — Desmond posts 2–3×/week on cybersecurity/AI/OSINT; link to cornerstone articles. Optimize the profile headline with the same entity keywords as the `Person` schema (factual consistency feeds AI knowledge graphs).
-2. **dev.to / Hashnode / Medium** — republish cornerstone articles with `rel=canonical` back to `clearglassinc.github.io/blog/...` (canonical keeps ranking on your domain, gains the referral link).
+2. **dev.to / Hashnode / Medium** — republish cornerstone articles with `rel=canonical` back to `www.clearglassinc.com/blog/...` (canonical keeps ranking on your domain, gains the referral link).
 3. **GitHub** — Discussions on flagship repos; answer issues in adjacent OSS (OSINT/security tooling) with a profile link; get listed in `awesome-osint` / `awesome-security` lists.
 4. **Substack newsletter** — "ClearGlass Intelligence Brief"; each issue links 2–3 site pages.
 5. **Communities** — r/netsec, r/OSINT, OSINT Curious, MITRE/ATT&CK adjacent forums; contribute, don't spam.
@@ -282,10 +282,10 @@ curl "https://api.indexnow.org/indexnow?url=https://clearglassinc.github.io/&key
 > Founded by Desmond Otieno Odhiambo (Software Architect, Founder & Chairman).
 
 ## Core pages
-- Home: https://clearglassinc.github.io/
-- Services & pricing: https://clearglassinc.github.io/offers/
-- Artemis IV (autonomous security platform): https://clearglassinc.github.io/artemis-iv.html
-- Guardian (zero-trust command center): https://clearglassinc.github.io/guardian.html
+- Home: https://www.clearglassinc.com/
+- Services & pricing: https://www.clearglassinc.com/offers/
+- Artemis IV (autonomous security platform): https://www.clearglassinc.com/artemis-iv.html
+- Guardian (zero-trust command center): https://www.clearglassinc.com/guardian.html
 
 ## Contact
 - Email: Desmondotieno@icloud.com

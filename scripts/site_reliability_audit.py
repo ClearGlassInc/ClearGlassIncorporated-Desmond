@@ -22,7 +22,7 @@ from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_DOMAIN = "clearglassinc.github.io"
+EXPECTED_DOMAIN = "www.clearglassinc.com"
 IGNORED_AUDIT_DIRS = {
     ".git",
     ".hg",
@@ -175,17 +175,28 @@ def check_pages_domain() -> list[AuditIssue]:
         issues.append(AuditIssue("ERROR", "Missing index.html at repository root"))
 
     cname_file = REPO_ROOT / "CNAME"
-    if cname_file.exists():
-        cname_value = cname_file.read_text(encoding="utf-8", errors="ignore").strip()
+    if not cname_file.exists():
         issues.append(
             AuditIssue(
                 "WARN",
                 (
-                    "CNAME file present while repository is configured for default GitHub Pages domain "
-                    f"('{EXPECTED_DOMAIN}'). Current CNAME value: '{cname_value or '(empty)'}'"
+                    "CNAME file missing while repository is configured for the custom domain "
+                    f"('{EXPECTED_DOMAIN}')."
                 ),
             )
         )
+    else:
+        cname_value = cname_file.read_text(encoding="utf-8", errors="ignore").strip()
+        if cname_value != EXPECTED_DOMAIN:
+            issues.append(
+                AuditIssue(
+                    "WARN",
+                    (
+                        f"CNAME value does not match the expected custom domain ('{EXPECTED_DOMAIN}'). "
+                        f"Current CNAME value: '{cname_value or '(empty)'}'"
+                    ),
+                )
+            )
 
     searchable_files = (
         sorted(REPO_ROOT.glob("*.html"))

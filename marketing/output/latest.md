@@ -20,7 +20,7 @@ We built this company for CISOs, CTOs, and founders who understand that security
 
 If your team spends more time managing the security stack than acting on its intelligence, something is wrong with the stack. We fix that.
 
-→ https://clearglassinc.github.io/
+→ https://www.clearglassinc.com/
 
 
 ## Threads (294 chars)
@@ -29,12 +29,12 @@ If your team spends more time managing the security stack than acting on its int
 2. ClearGlass was built for operators who need to act — not analyze dashboards for 40 minutes.
 3. Every product we ship passes one test: does it make the right decision obvious?
 4. If it doesn't, it doesn't ship.
-5. → clearglassinc.github.io
+5. → www.clearglassinc.com
 
 
 ## X (122 chars)
 
-Most security tools add complexity. ClearGlass strips it. Signal over noise — every time. https://clearglassinc.github.io/
+Most security tools add complexity. ClearGlass strips it. Signal over noise — every time. https://www.clearglassinc.com/
 
 
 ## Email (644 chars)
@@ -48,7 +48,7 @@ ClearGlass Inc was founded on the belief that transparent intelligence is the ul
 
 Our products — Artemis and Guardian — are built from a single principle: surface what matters, strip what doesn't, deliver a clean signal to the people responsible for acting on it.
 
-If you're evaluating your security posture this quarter, start here: https://clearglassinc.github.io/
+If you're evaluating your security posture this quarter, start here: https://www.clearglassinc.com/
 
 — The ClearGlass Team
 

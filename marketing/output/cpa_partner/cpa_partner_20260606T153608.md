@@ -1,6 +1,6 @@
 # ClearGlass CPA Partner Program
 **Generated:** 2026-06-06T15:36:08+00:00  
-**Trial CTA:** Start a 14-day partner trial → https://clearglassinc.github.io/revenue-engine.html
+**Trial CTA:** Start a 14-day partner trial → https://www.clearglassinc.com/revenue-engine.html
 
 > Compliance positioning is non-negotiable: Legal AI is assistive only (not legal advice); PIPEDA-aligned explicit consent; API-based access, no screen scraping.
 
@@ -144,7 +144,7 @@ _Turn your client base into recurring revenue with real-time financial intellige
 - Guided setup
 - No commitment
 
-👉 Start a 14-day partner trial: https://clearglassinc.github.io/revenue-engine.html
+👉 Start a 14-day partner trial: https://www.clearglassinc.com/revenue-engine.html
 
 ---
 

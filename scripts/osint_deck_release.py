@@ -40,7 +40,7 @@ INTEL = ROOT / "data" / "Ontario-osint" / "intel.json"
 SITEMAP = ROOT / "sitemap.xml"
 NAV = ROOT / "nav.js"
 SW = ROOT / "sw.js"
-DECK_URL = "https://clearglassinc.github.io/Ontario-osint.html"
+DECK_URL = "https://www.clearglassinc.com/Ontario-osint.html"
 
 
 def check(results: list[tuple[str, bool, str]], name: str, ok: bool, detail: str) -> None:

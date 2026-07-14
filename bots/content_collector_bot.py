@@ -26,7 +26,7 @@ OUTPUT_DIR = ROOT / "operations" / "output"
 STORE_FILE = OUTPUT_DIR / "site_content_store.json"
 INDEX_FILE = OUTPUT_DIR / "site_content_collection.md"
 
-SITE_URL = "https://clearglassinc.github.io"
+SITE_URL = "https://www.clearglassinc.com"
 
 # Directories we never crawl for page content (build artifacts, deps, assets).
 SKIP_DIRS = {

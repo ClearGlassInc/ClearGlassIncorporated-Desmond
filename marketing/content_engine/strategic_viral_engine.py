@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlencode
 
-BASE_URL = "https://clearglassinc.com"
+BASE_URL = "https://www.clearglassinc.com"
 WEEK_ID = "20260701"
 
 PILLARS = {

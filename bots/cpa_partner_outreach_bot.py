@@ -28,7 +28,7 @@ OUTPUT_DIR = ROOT / "marketing" / "output" / "cpa_partner"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 TRIAL_CTA = "Start a 14-day partner trial"
-LANDING_LINK = "https://clearglassinc.github.io/revenue-engine.html"
+LANDING_LINK = "https://www.clearglassinc.com/revenue-engine.html"
 
 COMPLIANCE_NOTES = [
     "PIPEDA-aligned explicit consent flows",

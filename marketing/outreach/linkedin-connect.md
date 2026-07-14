@@ -19,7 +19,7 @@ Thanks for connecting, {{first_name}}. Genuinely no sales pitch — I just publi
 free, practical stuff for teams handling sensitive data.
 
 If it's useful, here's our free {{PHIPA / M365 hardening}} checklist:
-{{https://clearglassinc.github.io/offers/}}
+{{https://www.clearglassinc.com/offers/}}
 
 If you ever want a second set of eyes on your security posture, we do a fixed-fee
 $249 read-only Quick-Audit — but no rush, and no obligation.

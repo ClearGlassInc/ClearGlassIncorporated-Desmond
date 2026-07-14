@@ -3,7 +3,7 @@ const path = 'index.html';
 let html = fs.readFileSync(path, 'utf8');
 
 const logoPath = '/assets/clearglass-logo.png';
-const logoUrl = 'https://clearglassinc.github.io/assets/clearglass-logo.png';
+const logoUrl = 'https://www.clearglassinc.com/assets/clearglass-logo.png';
 
 html = html.replace(/https:\/\/clearglassinc\.github\.io\/logo\.png/g, logoUrl);
 html = html.replace(/https:\/\/clearglassinc\.github\.io\/(?:logo\.png|clear-glass-logo\.png|ClearGlassLogo\.png|0A141920-C68E-4DFD-9E7A-449AEC7D16D7\.jpeg|EBBD4D0A-D16F-418D-BC5E-45D13786A705\.jpeg|105D406B-3960-4B07-BF0C-82ED7425B658\.jpeg|a_clean_mobile_website_app_ui_screenshot_smartpho\.png)/g, logoUrl);

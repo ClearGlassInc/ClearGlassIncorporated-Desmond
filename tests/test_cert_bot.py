@@ -20,14 +20,14 @@ NOW = datetime(2026, 6, 5, tzinfo=timezone.utc)
 # ── parse_hosts ───────────────────────────────────────────────────────────────
 
 def test_parse_hosts_basic():
-    assert parse_hosts("clearglassinc.github.io") == ["clearglassinc.github.io"]
+    assert parse_hosts("www.clearglassinc.com") == ["www.clearglassinc.com"]
 
 
 def test_parse_hosts_strips_scheme_port_path_and_blanks():
-    raw = "https://clearglassinc.github.io/path, clearglassinc.ca:443 , ,api.clearglassinc.com"
+    raw = "https://www.clearglassinc.com/path, www.clearglassinc.com:443 , ,api.clearglassinc.com"
     assert parse_hosts(raw) == [
-        "clearglassinc.github.io",
-        "clearglassinc.ca",
+        "www.clearglassinc.com",
+        "www.clearglassinc.com",
         "api.clearglassinc.com",
     ]
 
@@ -97,7 +97,7 @@ def test_annotate_unreachable_respects_strict_flag():
 
 def test_annotate_auto_managed_expiring_is_advisory():
     # *.github.io auto-renews: a still-valid but soon cert warns, never fails.
-    result = CertResult(host="clearglassinc.github.io", days_left=19,
+    result = CertResult(host="www.clearglassinc.com", days_left=19,
                         expiry=NOW + timedelta(days=19))
     line, failed = annotate(result, 21, strict=True)
     assert not failed
@@ -106,7 +106,7 @@ def test_annotate_auto_managed_expiring_is_advisory():
 
 def test_annotate_auto_managed_expired_still_fails():
     # An actually-expired managed cert is a real outage and still errors.
-    result = CertResult(host="clearglassinc.github.io", days_left=-1,
+    result = CertResult(host="www.clearglassinc.com", days_left=-1,
                         expiry=NOW - timedelta(days=1))
     line, failed = annotate(result, 21, strict=True)
     assert failed and "::error" in line

@@ -38,5 +38,5 @@ git commit -m "Add NEXUS V12 FINAL page to main navigation"
 git push origin main
 
 echo "DONE! Your main website is updated and live."
-echo "The new page is accessible at: https://clearglassinc.github.io/ClearGlass-NEXUS-v12-FINAL.html"
+echo "The new page is accessible at: https://www.clearglassinc.com/ClearGlass-NEXUS-v12-FINAL.html"
 echo "And linked from the main navigation bar."

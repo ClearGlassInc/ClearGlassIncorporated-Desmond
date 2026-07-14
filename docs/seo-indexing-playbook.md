@@ -7,7 +7,7 @@ damage trust, and can suppress discovery instead of improving it.
 
 ## Supported indexing workflow
 
-1. Keep `sitemap.xml` current and reachable at `https://clearglassinc.github.io/sitemap.xml`.
+1. Keep `sitemap.xml` current and reachable at `https://www.clearglassinc.com/sitemap.xml`.
 2. Keep `robots.txt` advertising the sitemap with a `Sitemap:` directive.
 3. Run `scripts/Invoke-SitemapPing.ps1` after meaningful site updates to notify Bing.
 4. Submit the same sitemap manually in Google Search Console because Google's public ping endpoint was retired in 2024.

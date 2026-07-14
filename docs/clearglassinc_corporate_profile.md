@@ -46,5 +46,5 @@ Enable trusted, real-time intelligence fusion where analysts, operators, and AI 
 ## Contact
 **ClearGlassInc**  
 Burlington, Ontario, Canada  
-Email: legal@clearglassinc.ca  
-Web: https://clearglassinc.ca
+Email: legal@clearglassinc.com  
+Web: https://www.clearglassinc.com

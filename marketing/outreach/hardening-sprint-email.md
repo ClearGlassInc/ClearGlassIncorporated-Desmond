@@ -31,7 +31,7 @@ Nothing is touched without your written authorization, and changes go in on your
 sign-off.
 
 Worth a 20-minute scope call this week? Details here:
-{{https://clearglassinc.github.io/store.html#hardening}}
+{{https://www.clearglassinc.com/store.html#hardening}}
 
 Best,
 {{Your name}}

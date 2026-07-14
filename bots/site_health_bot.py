@@ -27,7 +27,7 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "operations" / "output"
 
-SITE_URL = "https://clearglassinc.github.io"
+SITE_URL = "https://www.clearglassinc.com"
 REQUEST_TIMEOUT = 15
 USER_AGENT = "ClearGlass-HealthBot/1.0"
 

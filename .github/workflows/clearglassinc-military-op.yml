@@ -162,7 +162,7 @@ jobs:
     timeout-minutes: 60
     environment:
       name: production
-      url: https://clearglassinc.github.io
+      url: https://www.clearglassinc.com
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.RELEASE == 'true' && github.event.inputs.DRY_RUN == 'false' }}
 
     steps:

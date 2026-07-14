@@ -1,6 +1,6 @@
 # Distribution Kit — Blog #1: Zero Trust Is Outdated
 
-Article: https://clearglassinc.github.io/blog/zero-trust-is-outdated-adaptive-trust.html
+Article: https://www.clearglassinc.com/blog/zero-trust-is-outdated-adaptive-trust.html
 Publish the week after Blog #6, as the doctrinal follow-up.
 
 ---
@@ -102,7 +102,7 @@ You have a permissions file.
 7/ Keep Zero Trust as the floor. Build Adaptive Trust above it.
 
 Full migration path (5 steps, nothing ripped out):
-https://clearglassinc.github.io/blog/zero-trust-is-outdated-adaptive-trust.html
+https://www.clearglassinc.com/blog/zero-trust-is-outdated-adaptive-trust.html
 
 ---
 
@@ -128,7 +128,7 @@ https://clearglassinc.github.io/blog/zero-trust-is-outdated-adaptive-trust.html
 - Primary keyword: zero trust outdated
 - Secondary: adaptive trust, action trust, intent verification, trust
   economics, post-zero-trust architecture
-- Canonical: https://clearglassinc.github.io/blog/zero-trust-is-outdated-adaptive-trust.html
+- Canonical: https://www.clearglassinc.com/blog/zero-trust-is-outdated-adaptive-trust.html
 - Schema: BlogPosting (embedded in page)
 
 ## Honest note

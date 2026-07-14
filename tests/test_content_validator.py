@@ -19,7 +19,7 @@ def _good_linkedin() -> dict:
         "body": (
             "ClearGlass builds the intelligence layer that security teams need. "
             "Our platform — Artemis — turns noisy telemetry into a clean operational signal. "
-            "Visit clearglassinc.github.io for the full architecture overview. "
+            "Visit www.clearglassinc.com for the full architecture overview. "
             "This is enterprise cybersecurity designed for CISOs who need to act, not analyze. "
             "The difference between compliant and secure is the posture you maintain continuously. "
             "ClearGlass Guardian enforces that posture at the infrastructure layer."
@@ -35,7 +35,7 @@ def test_validate_platform_passes_good_content():
 
 
 def test_validate_platform_fails_too_short():
-    content = {"headline": "Short.", "body": "ClearGlass. clearglassinc.github.io"}
+    content = {"headline": "Short.", "body": "ClearGlass. www.clearglassinc.com"}
     result = validate_platform("linkedin", content, 10)
     assert not result.passed
     assert any("Too short" in f for f in result.failures)
@@ -44,7 +44,7 @@ def test_validate_platform_fails_too_short():
 def test_validate_platform_fails_too_long():
     content = {
         "headline": "A" * 100,
-        "body": "ClearGlass clearglassinc.github.io " + "word " * 600,
+        "body": "ClearGlass www.clearglassinc.com " + "word " * 600,
     }
     char_count = 3100
     result = validate_platform("linkedin", content, char_count)
@@ -55,7 +55,7 @@ def test_validate_platform_fails_too_long():
 def test_validate_platform_flags_weak_phrases():
     content = {
         "headline": "A game-changer for security",
-        "body": "ClearGlass is a cutting-edge, industry-leading, revolutionary solution. clearglassinc.github.io",
+        "body": "ClearGlass is a cutting-edge, industry-leading, revolutionary solution. www.clearglassinc.com",
     }
     char_count = 500
     result = validate_platform("linkedin", content, char_count)
@@ -66,7 +66,7 @@ def test_validate_platform_flags_weak_phrases():
 def test_validate_platform_fails_no_brand_keyword():
     content = {
         "headline": "Strong security posture",
-        "body": "Organizations that operate at the edge must maintain continuous hardening. clearglassinc.github.io",
+        "body": "Organizations that operate at the edge must maintain continuous hardening. www.clearglassinc.com",
     }
     # Remove all brand keywords — this should fail the brand keyword gate
     text = content["headline"] + " " + content["body"]
@@ -75,12 +75,12 @@ def test_validate_platform_fails_no_brand_keyword():
     content = {"headline": "Strong protection posture", "body": safe_body}
     validate_platform("linkedin", content, 400)
     # The URL itself doesn't count as a brand keyword; keywords are: clearglass, artemis, guardian, cybersecurity, security, intelligence
-    # 'clearglassinc.github.io' doesn't match any keyword directly — but 'clearglassinc' contains 'clearglass'
+    # 'www.clearglassinc.com' doesn't match any keyword directly — but 'clearglassinc' contains 'clearglass'
     # Our check is text_lower contains kw — 'clearglassinc' does contain 'clearglass', so this would pass.
     # Adjust: use a body with no brand keywords at all
     content = {
         "headline": "Strong posture matters",
-        "body": "Organizations that operate at the edge must maintain continuous hardening. clearglassinc.github.io",
+        "body": "Organizations that operate at the edge must maintain continuous hardening. www.clearglassinc.com",
     }
     validate_platform("linkedin", content, 400)
     # 'clearglassinc' includes 'clearglass' which is in BRAND_KEYWORDS, so it passes
@@ -107,11 +107,11 @@ def test_validate_platform_fails_missing_url():
 
 
 def test_validate_platform_x_character_limit():
-    good = {"text": "ClearGlass Artemis: intelligence, not alerts. clearglassinc.github.io"}
+    good = {"text": "ClearGlass Artemis: intelligence, not alerts. www.clearglassinc.com"}
     result = validate_platform("x", good, len(good["text"]))
     assert result.passed
 
-    long_text = "word " * 60 + "clearglassinc.github.io ClearGlass security"
+    long_text = "word " * 60 + "www.clearglassinc.com ClearGlass security"
     bad = {"text": long_text}
     result2 = validate_platform("x", bad, len(long_text))
     assert not result2.passed
@@ -123,7 +123,7 @@ def test_validate_platform_threads_format():
         "posts": [
             "ClearGlass surfaces intelligence from your security stack.",
             "Not more alerts. A clean operational signal.",
-            "Visit clearglassinc.github.io for architecture details.",
+            "Visit www.clearglassinc.com for architecture details.",
         ]
     }
     text = " ".join(good["posts"])

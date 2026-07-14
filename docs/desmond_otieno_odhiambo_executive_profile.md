@@ -41,6 +41,6 @@ A policy enforcement and mission assurance framework for approvals, provenance, 
 | Channel | Value |
 |---|---|
 | Organization | ClearGlassInc |
-| Email | desmond@clearglassinc.ca |
-| Legal/Commercial | legal@clearglassinc.ca |
-| Website | https://clearglassinc.ca |
+| Email | desmond@clearglassinc.com |
+| Legal/Commercial | legal@clearglassinc.com |
+| Website | https://www.clearglassinc.com |

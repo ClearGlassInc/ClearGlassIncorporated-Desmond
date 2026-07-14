@@ -152,7 +152,7 @@ def validate_platform(platform: str, content: dict, char_count: int) -> Platform
 
     # CTA / URL presence (website platform is the site itself — exempt)
     if platform not in URL_CHECK_EXEMPT_PLATFORMS and not REQUIRED_URL_PATTERN.search(text):
-        failures.append("Missing clearglassinc.github.io URL")
+        failures.append("Missing www.clearglassinc.com URL")
 
     return PlatformResult(
         platform=platform,

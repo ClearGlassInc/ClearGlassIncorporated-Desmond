@@ -16,7 +16,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>HubSpot Connection Handoff | ClearGlass Inc.</title>
 <meta name="description" content="Founder handoff scaffold for connecting HubSpot to ClearGlass Inc. — portal access, private app token, pipeline mapping, and lifecycle sync."/>
-<link rel="canonical" href="https://clearglassinc.github.io/operations/hubspot-handoff.html"/>
+<link rel="canonical" href="https://www.clearglassinc.com/operations/hubspot-handoff.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -113,7 +113,7 @@ code{font-family:var(--mono);font-size:12.5px;padding:2px 6px;border-radius:6px;
     <div class="section">
       <div class="section-eyebrow">WHY THIS REQUIRES A HUMAN</div>
       <h2 class="section-title">HubSpot portal access, private app creation, and DNS verification require founder authentication.</h2>
-      <p class="lead">A HubSpot portal can only be claimed and configured by an authenticated super-admin. Private app tokens are issued inside the portal and scoped manually. Email domain authentication requires DNS records on <code>clearglassinc.com</code> that only the domain owner can publish.</p>
+      <p class="lead">A HubSpot portal can only be claimed and configured by an authenticated super-admin. Private app tokens are issued inside the portal and scoped manually. Email domain authentication requires DNS records on <code>www.clearglassinc.com</code> that only the domain owner can publish.</p>
     </div>
 
     <div class="section">
@@ -132,7 +132,7 @@ code{font-family:var(--mono);font-size:12.5px;padding:2px 6px;border-radius:6px;
         <div class="step">
           <div>
             <h3>Authenticate the sending domain</h3>
-            <p>Add the DKIM, SPF, and return-path CNAME records published by HubSpot to the <code>clearglassinc.com</code> DNS zone. Confirm authentication is green before any sequence sends.</p>
+            <p>Add the DKIM, SPF, and return-path CNAME records published by HubSpot to the <code>www.clearglassinc.com</code> DNS zone. Confirm authentication is green before any sequence sends.</p>
             <div class="who">OWNER · FOUNDER · DOMAIN ADMIN</div>
           </div>
         </div>

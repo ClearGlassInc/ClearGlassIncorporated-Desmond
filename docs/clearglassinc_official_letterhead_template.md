@@ -9,7 +9,7 @@
 **CLEARGLASS INC.**  
 *CLEARGLASS: See Through Everything*  
 Burlington, Ontario, Canada  
-Email: legal@clearglassinc.ca | Web: https://clearglassinc.ca
+Email: legal@clearglassinc.com | Web: https://www.clearglassinc.com
 
 ---
 

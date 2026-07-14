@@ -10,7 +10,7 @@ A clear, concise description of the bug.
 
 ## Where
 - Page / file (e.g. `sentinel.html`, `bots/site_health_bot.py`):
-- URL (if live): https://clearglassinc.github.io/...
+- URL (if live): https://www.clearglassinc.com/...
 
 ## Steps to reproduce
 1.

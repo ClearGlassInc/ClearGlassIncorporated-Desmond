@@ -14,8 +14,12 @@ from .platform import (
     ModelRouter,
     OntologyEntity,
     PolicyDecision,
+    PromotionController,
+    PromotionDecision,
+    ReleaseCandidate,
     SelfImprovementEngine,
     WorkflowState,
+    compile_feedback_to_eval,
 )
 
 __all__ = [
@@ -32,6 +36,10 @@ __all__ = [
     "ModelRouter",
     "OntologyEntity",
     "PolicyDecision",
+    "PromotionController",
+    "PromotionDecision",
+    "ReleaseCandidate",
     "SelfImprovementEngine",
     "WorkflowState",
+    "compile_feedback_to_eval",
 ]

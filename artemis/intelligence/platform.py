@@ -127,16 +127,6 @@ class ModelRoute:
 
 
 @dataclass(frozen=True)
-class EvalGateResult:
-    """Deterministic gate result for candidate prompt/workflow/model-route changes."""
-
-    passed: bool
-    reasons: tuple[str, ...]
-    rollback_version: str
-    candidate_version: str | None
-
-
-@dataclass(frozen=True)
 class ApprovalToken:
     """Short-lived human approval token bound to a specific action package."""
 

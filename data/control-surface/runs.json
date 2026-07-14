@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #289",
+    "title": "Control Surface Feeds #290",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "16:38",
+    "timestamp": "2026-07-14T16:38:25Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #794",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-47d76d62-ba8f-496f-bc12-25599292623c",
+    "time": "16:08",
+    "timestamp": "2026-07-14T16:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #793",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-6f37e952-330e-4c61-ad97-7668466fe44c",
+    "time": "15:08",
+    "timestamp": "2026-07-14T15:08:04Z"
+  },
+  {
+    "title": "Agent OS Self-Check #12",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "15:05",
+    "timestamp": "2026-07-14T15:05:58Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #935",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "15:05",
+    "timestamp": "2026-07-14T15:05:11Z"
+  },
+  {
+    "title": "pages build and deployment #1391",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "15:05",
+    "timestamp": "2026-07-14T15:05:03Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2362",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "15:05",
+    "timestamp": "2026-07-14T15:05:03Z"
+  },
+  {
+    "title": "Control Surface Feeds #289",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "15:02",
     "timestamp": "2026-07-14T15:02:37Z"
   },
@@ -87,55 +136,6 @@
     "title": "pages build and deployment #1389",
     "status": "ok",
     "detail": "success \u00b7 dynamic on main",
-    "time": "12:21",
-    "timestamp": "2026-07-14T12:21:09Z"
-  },
-  {
-    "title": "Workflow Doctor #279",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:21",
-    "timestamp": "2026-07-14T12:21:09Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1383",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:21",
-    "timestamp": "2026-07-14T12:21:09Z"
-  },
-  {
-    "title": "Auto-Store #72",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "12:21",
-    "timestamp": "2026-07-14T12:21:09Z"
-  },
-  {
-    "title": "Security #1106",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:21",
-    "timestamp": "2026-07-14T12:21:09Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #311",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:21",
-    "timestamp": "2026-07-14T12:21:09Z"
-  },
-  {
-    "title": "Defender Watch #665",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:21",
-    "timestamp": "2026-07-14T12:21:09Z"
-  },
-  {
-    "title": "CI #1340",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
     "time": "12:21",
     "timestamp": "2026-07-14T12:21:09Z"
   }

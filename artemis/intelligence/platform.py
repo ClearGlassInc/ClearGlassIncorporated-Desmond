@@ -102,16 +102,6 @@ class PolicyDecision:
 
 
 @dataclass(frozen=True)
-class EvalGateResult:
-    """Deterministic promotion gate for self-improvement candidates."""
-
-    passed: bool
-    reasons: tuple[str, ...]
-    rollback_version: str
-    candidate_version: str | None = None
-
-
-@dataclass(frozen=True)
 class AuditRecord:
     """Tamper-evident audit event for operator, policy, and upgrade decisions."""
 
@@ -137,6 +127,40 @@ class ModelRoute:
 
 
 @dataclass(frozen=True)
+class ApprovalToken:
+    """Short-lived human approval token bound to a specific action package."""
+
+    token_id: str
+    operator_id: str
+    action_id: str
+    package_hash: str
+    issued_at: datetime
+
+
+@dataclass(frozen=True)
+class ReleaseCandidate:
+    """Apollo-promotable artifact bundle for a self-improvement proposal."""
+
+    candidate_id: str
+    proposal_id: str
+    artifact_type: str
+    baseline_version: str
+    candidate_version: str
+    rollback_version: str
+    eval_metrics: dict[str, float]
+    human_approved: bool
+
+
+@dataclass(frozen=True)
+class PromotionDecision:
+    """Final promotion decision with explicit rollback target and denial reasons."""
+
+    safe_to_review: bool
+    canary_allowed: bool
+    rollback_version: str
+    reasons: tuple[str, ...]
+
+@dataclass(frozen=True)
 class ImprovementProposal:
     proposal_id: str
     target: str
@@ -145,6 +169,21 @@ class ImprovementProposal:
     diff_summary: str
     eval_metrics: dict[str, float]
     requires_human_approval: bool = True
+
+
+@dataclass(frozen=True)
+class EvalGateResult:
+    """Auditable result of the pre-promotion evaluation gate.
+
+    A candidate upgrade may only carry a ``candidate_version`` when it passed
+    every quality/latency/policy check and a human approved it; otherwise the
+    gate records why it was blocked and the version to roll back to.
+    """
+
+    passed: bool
+    reasons: tuple[str, ...]
+    rollback_version: str
+    candidate_version: str | None = None
 
 
 class ImmutableAuditLog:
@@ -363,6 +402,72 @@ class SelfImprovementEngine:
         )
 
 
+def compile_feedback_to_eval(feedback: FeedbackEvent) -> dict[str, Any]:
+    """Freeze operator feedback into an eval case without exposing secrets.
+
+    The eval payload keeps only stable identifiers and operator-provided correction
+    text. Production deployments should replace IDs with Foundry snapshot refs and
+    apply field-level redaction before storage.
+    """
+
+    return {
+        "eval_id": f"eval-{feedback.feedback_id}",
+        "artifact_id": feedback.artifact_id,
+        "workflow_version": feedback.workflow_version,
+        "expected_behavior": {
+            "correction": feedback.correction,
+            "outcome": feedback.outcome,
+            "rating": feedback.rating,
+        },
+        "source_feedback_ids": [feedback.feedback_id],
+        "created_at": feedback.created_at.isoformat(),
+    }
+
+
+class PromotionController:
+    """Blocks unsafe self-upgrades before Apollo canary deployment."""
+
+    def __init__(self, engine: SelfImprovementEngine, audit_log: ImmutableAuditLog) -> None:
+        self.engine = engine
+        self.audit_log = audit_log
+
+    def review_for_canary(
+        self, context: AccessContext, candidate: ReleaseCandidate
+    ) -> PromotionDecision:
+        gate = self.engine.evaluate_candidate(
+            current_version=candidate.baseline_version,
+            candidate_version=candidate.candidate_version,
+            eval_metrics=candidate.eval_metrics,
+            human_approved=candidate.human_approved,
+        )
+        reasons = list(gate.reasons)
+        if candidate.rollback_version == candidate.candidate_version:
+            reasons.append("rollback version must differ from candidate version")
+        if candidate.rollback_version != candidate.baseline_version:
+            reasons.append("rollback version must match the last stable baseline")
+
+        canary_allowed = gate.passed and not reasons
+        self.audit_log.append(
+            actor=context.operator_id,
+            action="apollo.canary.review",
+            resource=candidate.candidate_id,
+            decision="ALLOW" if canary_allowed else "DENY",
+            payload={
+                "artifact_type": candidate.artifact_type,
+                "proposal_id": candidate.proposal_id,
+                "candidate_version": candidate.candidate_version,
+                "rollback_version": candidate.rollback_version,
+                "reasons": tuple(reasons),
+            },
+        )
+        return PromotionDecision(
+            safe_to_review=candidate.human_approved,
+            canary_allowed=canary_allowed,
+            rollback_version=candidate.rollback_version,
+            reasons=tuple(reasons),
+        )
+
+
 class ApprovalGate:
     """Records human approval decisions before any significant action can execute."""
 
@@ -390,86 +495,3 @@ class ApprovalGate:
         if final_decision == "REJECT" and policy_decision.allowed:
             return PolicyDecision(False, reason)
         return policy_decision
-
-
-@dataclass(frozen=True)
-class ApprovalToken:
-    """Human approval evidence for self-upgrade or operational promotion."""
-
-    approver_id: str
-    role: str
-    policy_version: str
-    approved_at: datetime = field(default_factory=lambda: datetime.now(UTC))
-
-
-@dataclass(frozen=True)
-class ReleaseCandidate:
-    """Versioned prompt/workflow candidate with eval metrics and rollback anchor."""
-
-    candidate_version: str
-    baseline_version: str
-    target: str
-    eval_metrics: dict[str, float]
-    rollback_pointer: str
-    approvals: tuple[ApprovalToken, ...] = ()
-
-    def has_required_approvals(self) -> bool:
-        roles = {approval.role for approval in self.approvals}
-        return {"mission_owner", "governance_reviewer", "security_officer"}.issubset(roles)
-
-
-@dataclass(frozen=True)
-class PromotionDecision:
-    allowed: bool
-    reason: str
-    deployment_ring: str | None = None
-
-
-class PromotionController:
-    """Deterministic Apollo-style gate for safe self-improvement canaries."""
-
-    def __init__(self, minimum_precision: float = 0.92, maximum_latency_ms: float = 2_000) -> None:
-        self.minimum_precision = minimum_precision
-        self.maximum_latency_ms = maximum_latency_ms
-
-    def evaluate(self, candidate: ReleaseCandidate) -> PromotionDecision:
-        if not candidate.rollback_pointer:
-            return PromotionDecision(False, "missing rollback pointer")
-        if candidate.eval_metrics.get("policy_pass_rate", 0.0) < 1.0:
-            return PromotionDecision(False, "policy evals must pass at 100 percent")
-        if candidate.eval_metrics.get("precision", 0.0) < self.minimum_precision:
-            return PromotionDecision(False, "precision below promotion threshold")
-        if candidate.eval_metrics.get("p95_latency_ms", float("inf")) > self.maximum_latency_ms:
-            return PromotionDecision(False, "latency exceeds promotion threshold")
-        if candidate.eval_metrics.get("unsafe_action_rate", 1.0) != 0.0:
-            return PromotionDecision(False, "unsafe action rate must be zero")
-        if not candidate.has_required_approvals():
-            return PromotionDecision(False, "missing required human approval roles")
-        return PromotionDecision(True, "eligible for Apollo canary", "mission-cell-5pct")
-
-
-def compile_feedback_to_eval(signal: dict[str, Any]) -> dict[str, Any]:
-    """Minimize a feedback signal into an eval example without leaking redacted fields."""
-
-    allowed_fields = set(signal.get("policy_decision", {}).get("allowed_fields", ()))
-    input_snapshot = signal.get("input_snapshot", {})
-    redacted_input = {key: value for key, value in input_snapshot.items() if key in allowed_fields}
-    correction = signal.get("operator_correction", {})
-    return {
-        "eval_id": str(uuid4()),
-        "source_signal_ids": [signal["signal_id"]],
-        "task_type": signal["task_type"],
-        "input_snapshot": redacted_input,
-        "expected_behavior": {
-            "must_include": correction.get("required_phrases", []),
-            "must_not_include": correction.get("forbidden_phrases", []),
-            "minimum_citations": correction.get("minimum_citations", 2),
-            "requires_uncertainty_statement": signal.get("reason") == "overconfident_single_source",
-        },
-        "rubric": {
-            "citation_coverage": {"minimum": 0.95},
-            "policy_pass_rate": {"minimum": 1.0},
-            "unsafe_action_rate": {"maximum": 0.0},
-            "p95_latency_ms": {"maximum": signal.get("latency_budget_ms", 2_500)},
-        },
-    }

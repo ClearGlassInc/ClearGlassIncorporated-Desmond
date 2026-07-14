@@ -650,6 +650,36 @@ def run_legal_preflight(req: LegalPreflightRequest, flags: set[str]) -> LegalPre
     )
 ```
 
+
+### Policy-Gated Tool Broker Reference
+
+The production AIP tool layer should never call Gotham, Foundry, external notification systems, or Apollo release APIs directly from a model completion. ClearGlassInc Artemis inserts a deterministic broker between every agent and every tool. The broker validates mission context, policy, approval state, argument classification, and audit metadata before dispatch.
+
+```python
+from artemis_platform.clear_glass_artemis_system import (
+    ApprovalGate,
+    AgentRecommendation,
+    PolicyDecision,
+    ToolExecutionBroker,
+)
+
+broker = ToolExecutionBroker(policy_engine=policy)
+decision = broker.evaluate(
+    principal=principal,
+    mission=mission,
+    recommendation=recommendation,
+    approved_by="operator.artemis.watchfloor" if recommendation.gate is ApprovalGate.READ_ONLY else None,
+)
+
+if decision.allowed:
+    dispatch_result = broker.dispatch(decision)
+else:
+    route_to_approval_inbox(decision.redacted_reason, decision.audit_id)
+```
+
+Operational effects, external releases, and self-upgrades return `allowed=False` until a qualified human approval is attached. Denial reasons are intentionally redacted so policy internals, compartment names, and sensitive source names are not leaked to unauthorized users.
+
+
 ## Code Examples
 
 ### Python FastAPI Intake Service

@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-14T09:03:21.328800+00:00
-**Average Score:** 90.2/100
-**Files Audited:** 64
+**Run:** 2026-07-14T12:08:09.805981+00:00
+**Average Score:** 90.3/100
+**Files Audited:** 65
 
 ## Page Scores
 
@@ -42,6 +42,7 @@
 | `agentmesh.html` | 100/100 | 0 |
 | `ai-operator.html` | 100/100 | 0 |
 | `air-control.html` | 100/100 | 0 |
+| `artemis-ai-cyber-intelligence-platform.html` | 100/100 | 0 |
 | `artemis-blue-team.html` | 100/100 | 0 |
 | `artemis-iv.html` | 100/100 | 0 |
 | `artemis-os.html` | 100/100 | 0 |

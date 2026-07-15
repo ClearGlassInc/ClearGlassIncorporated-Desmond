@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "03:33",
-    "timestamp": "2026-07-15T03:33:14Z"
+    "time": "06:27",
+    "timestamp": "2026-07-15T06:27:34Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #297",
-    "time": "03:33",
-    "timestamp": "2026-07-15T03:33:04Z"
+    "detail": "schedule on main \u00b7 run #298",
+    "time": "06:27",
+    "timestamp": "2026-07-15T06:27:21Z"
+  },
+  {
+    "title": "Multi-Repo Audit",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #29",
+    "time": "06:26",
+    "timestamp": "2026-07-15T06:26:38Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-6cf98e0e-d892-42c6-94f1-fd06c0abc78d \u00b7 run #808",
+    "time": "06:08",
+    "timestamp": "2026-07-15T06:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-bc9dba04-0ba2-4f65-aff5-4dc5680888db \u00b7 run #807",
+    "time": "05:08",
+    "timestamp": "2026-07-15T05:08:08Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #1400",
+    "time": "04:56",
+    "timestamp": "2026-07-15T04:56:04Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #1399",
+    "time": "04:50",
+    "timestamp": "2026-07-15T04:50:30Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #680",
-    "time": "03:15",
-    "timestamp": "2026-07-15T03:15:21Z"
+    "detail": "push on main \u00b7 run #684",
+    "time": "04:50",
+    "timestamp": "2026-07-15T04:50:30Z"
   },
   {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-b4c9a76f-bfb4-449a-9f1f-365467cc8232 \u00b7 run #805",
-    "time": "03:08",
-    "timestamp": "2026-07-15T03:08:10Z"
-  },
-  {
-    "title": "Health Monitor",
+    "title": "Security",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #182",
-    "time": "02:46",
-    "timestamp": "2026-07-15T02:46:47Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-edc2848a-10d8-40a7-9688-3dfa41687150 \u00b7 run #804",
-    "time": "02:08",
-    "timestamp": "2026-07-15T02:08:09Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-53e2ad9c-9048-4520-83cd-e5353290f089 \u00b7 run #803",
-    "time": "01:08",
-    "timestamp": "2026-07-15T01:08:08Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-cfbcf987-6af8-451e-b542-c392e1361643 \u00b7 run #802",
-    "time": "00:08",
-    "timestamp": "2026-07-15T00:08:08Z"
+    "detail": "push on main \u00b7 run #1122",
+    "time": "04:50",
+    "timestamp": "2026-07-15T04:50:30Z"
   },
   {
     "title": "Deploy GitHub Pages",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #946",
-    "time": "00:05",
-    "timestamp": "2026-07-15T00:05:00Z"
+    "detail": "push on main \u00b7 run #949",
+    "time": "04:50",
+    "timestamp": "2026-07-15T04:50:30Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "ClearGlass GitHub Pages Check",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1402",
-    "time": "00:04",
-    "timestamp": "2026-07-15T00:04:53Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2382",
-    "time": "00:04",
-    "timestamp": "2026-07-15T00:04:53Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #296",
-    "time": "00:04",
-    "timestamp": "2026-07-15T00:04:38Z"
+    "detail": "push on main \u00b7 run #317",
+    "time": "04:50",
+    "timestamp": "2026-07-15T04:50:30Z"
   },
   {
     "title": "Policy Gate",
     "status": "ok",
-    "detail": "pull_request on claude/procurement-legal-tech-redesign-ejc9kn \u00b7 run #1090",
-    "time": "23:38",
-    "timestamp": "2026-07-14T23:38:40Z"
+    "detail": "push on main \u00b7 run #1094",
+    "time": "04:50",
+    "timestamp": "2026-07-15T04:50:30Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #1356",
+    "time": "04:50",
+    "timestamp": "2026-07-15T04:50:30Z"
   }
 ]

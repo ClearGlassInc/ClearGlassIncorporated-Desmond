@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #304",
+    "title": "Control Surface Feeds #305",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:14",
+    "timestamp": "2026-07-15T21:14:27Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #823",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-dbfb42c2-9f8e-4863-88d5-66b81a5e66eb",
+    "time": "21:08",
+    "timestamp": "2026-07-15T21:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #822",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-1b27d1f4-c842-4fc7-803a-5b4058fbb633",
+    "time": "20:08",
+    "timestamp": "2026-07-15T20:08:05Z"
+  },
+  {
+    "title": "Deploy GitHub Pages #956",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:36",
+    "timestamp": "2026-07-15T19:36:14Z"
+  },
+  {
+    "title": "pages build and deployment #1413",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:36",
+    "timestamp": "2026-07-15T19:36:07Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2396",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:36",
+    "timestamp": "2026-07-15T19:36:06Z"
+  },
+  {
+    "title": "Control Surface Feeds #304",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "19:35",
     "timestamp": "2026-07-15T19:35:49Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "15:49",
     "timestamp": "2026-07-15T15:49:38Z"
-  },
-  {
-    "title": "Control Surface Feeds #302",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:49",
-    "timestamp": "2026-07-15T15:49:20Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #817",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-bdd3f0f9-fe92-4fa8-80eb-e942adaa86e2",
-    "time": "15:08",
-    "timestamp": "2026-07-15T15:08:11Z"
-  },
-  {
-    "title": "Agent OS Self-Check #13",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:04",
-    "timestamp": "2026-07-15T15:04:38Z"
-  },
-  {
-    "title": "Commerce Daily Loop #37",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:47",
-    "timestamp": "2026-07-15T14:47:44Z"
-  },
-  {
-    "title": "Deploy GitHub Pages #953",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "14:08",
-    "timestamp": "2026-07-15T14:08:47Z"
-  },
-  {
-    "title": "pages build and deployment #1410",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "14:08",
-    "timestamp": "2026-07-15T14:08:41Z"
   }
 ]

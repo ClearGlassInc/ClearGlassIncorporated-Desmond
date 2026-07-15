@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-14T12:08:09.805981+00:00
+**Run:** 2026-07-15T09:07:57.357634+00:00
 **Average Score:** 90.3/100
-**Files Audited:** 65
+**Files Audited:** 66
 
 ## Page Scores
 
@@ -31,6 +31,7 @@
 | `environmental-cyber-risk.html` | 90/100 | 1 |
 | `futuristic.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
+| `procurement-legal-tech.html` | 90/100 | 1 |
 | `sentinel.html` | 90/100 | 1 |
 | `tax.html` | 90/100 | 1 |
 | `traffic-enforcement.html` | 90/100 | 1 |
@@ -76,7 +77,7 @@
 
 ## Top Issues Across All Pages
 
-- 18x — Description length N chars (ideal N–N)
+- 19x — Description length N chars (ideal N–N)
 - 16x — Title length N chars (ideal N–N)
 - 9x — Missing og:image
 - 4x — Missing og:description

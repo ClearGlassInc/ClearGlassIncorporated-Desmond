@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-07-14T09:03:23.228715+00:00",
+  "run_utc": "2026-07-15T09:07:57.990126+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
@@ -13,51 +13,45 @@
       "error": null
     },
     {
-      "bot_id": "marketing",
-      "status": "ok",
-      "duration_s": 0.01,
-      "error": null
-    },
-    {
       "bot_id": "growth",
       "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 0.02,
       "error": null
     },
     {
-      "bot_id": "lead_draft",
+      "bot_id": "marketing",
       "status": "ok",
       "duration_s": 0.03,
       "error": null
     },
     {
+      "bot_id": "lead_draft",
+      "status": "ok",
+      "duration_s": 0.04,
+      "error": null
+    },
+    {
       "bot_id": "wealth_ladder",
       "status": "ok",
-      "duration_s": 0.06,
+      "duration_s": 0.04,
       "error": null
     },
     {
       "bot_id": "release_notes",
       "status": "ok",
-      "duration_s": 0.13,
+      "duration_s": 0.19,
       "error": null
     },
     {
       "bot_id": "seo_optimizer",
       "status": "ok",
-      "duration_s": 0.14,
+      "duration_s": 0.23,
       "error": null
     },
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 2.01,
-      "error": null
-    },
-    {
-      "bot_id": "operations",
-      "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 0.79,
       "error": null
     },
     {
@@ -70,6 +64,12 @@
       "bot_id": "sales",
       "status": "ok",
       "duration_s": 0.01,
+      "error": null
+    },
+    {
+      "bot_id": "operations",
+      "status": "ok",
+      "duration_s": 0.02,
       "error": null
     },
     {

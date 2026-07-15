@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-14
+# Release Notes — 2026-07-15
 
-*755 commit(s) since v1.0.0*
+*795 commit(s) since v1.0.0*
 
 ## New Features
 
+- **smb:** premium product experience for the SMB Cyber Trust Kit (`9f77153`)
 - **percival:** thread correlation/trace IDs through the policy governor (`3beebfa`)
 - **ui:** command-center atmosphere layer on percival-os + side-store (`10cfa1a`)
 - **percival:** v10 signed single-use approvals + trace IDs (`ea90adb`)
@@ -61,6 +62,7 @@
 
 ## Bug Fixes
 
+- **artemis:** define missing EvalGateResult, repair intelligence package imports (`86df0e3`)
 - **security:** bump next to 16.2.10 across apps — clear Next.js advisory batch (`4bdc03f`)
 - **actions:** harden commerce deployment gate (`8200f34`)
 - **security:** bump apps/air-control next 14.2.5 -> ^14.2.25 (CVE-2025-29927) (`92d60a3`)
@@ -111,6 +113,7 @@
 
 ## Documentation
 
+- add engineering guidelines (`3c68483`)
 - **artemis:** add 2050 readiness ledger (`30cf9bf`)
 - add Artemis Palantir self-evolving platform blueprint (`b1e97c9`)
 - add Artemis Python precision control plane (`8f24249`)
@@ -155,6 +158,27 @@
 
 ## Maintenance
 
+- Procurement page contrast fix + www.clearglassinc.com CI repairs (#854) (`bffc58e`)
+- Fix domain-migration regressions in content validator and cert-bot tests (`dd20e52`)
+- Add procurement & legal-tech command surface page (`b8f14e2`)
+- Fix main CI: export missing Artemis symbols, dedupe EvalGateResult, complete page coverage (#850) (`91ad815`)
+- Fix pre-existing CI failures (ruff + tests) (`2c0aa71`)
+- Migrate all domain references to www.clearglassinc.com (`4c3d54a`)
+- Redesign homepage footer to GitHub-style layout (`1defb18`)
+- Fix production deploy gate without Render hook (`a7ada75`)
+- Add Artemis AI cyber intelligence workflow (`72fc30f`)
+- Add Artemis legal-tech multi-agent blueprint (`36984a7`)
+- Add legal-tech multi-agent MVP (`ea61731`)
+- Add Artemis legal-tech agentic platform blueprint (`f2d301f`)
+- Add Artemis legal-tech multi-agent MVP (`7969820`)
+- Add Artemis policy-gated tool broker (`8542aab`)
+- Expand Artemis Python precision blueprint (`e6f718e`)
+- Fix Artemis self-improvement exports (`eaf8821`)
+- Add elite neon-glow mission letter to Guardian page (`538f6cc`)
+- Harden Artemis self-improvement gates (`3f51eaf`)
+- Add Artemis self-improvement promotion gates (`1c815e3`)
+- Expand Artemis implementation blueprint (`d507070`)
+- Expand Artemis self-evolving platform blueprint (`e306cb1`)
 - Add files via upload (`0c73675`)
 - Add LinkedIn profile to founder section (`db0c061`)
 - Enhance SMB Cyber Trust Kit neon UI and remove duplicate local header (`5c10090`)
@@ -456,6 +480,20 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`f94dd4c`)
+- refresh control-surface data feeds [skip ci] (`370e5bb`)
+- refresh control-surface data feeds [skip ci] (`ee9a6a8`)
+- refresh control-surface data feeds [skip ci] (`a45a58a`)
+- refresh control-surface data feeds [skip ci] (`6259719`)
+- refresh control-surface data feeds [skip ci] (`eba234c`)
+- refresh control-surface data feeds [skip ci] (`5ad67f6`)
+- refresh control-surface data feeds [skip ci] (`11ecbde`)
+- refresh control-surface data feeds [skip ci] (`e28cab0`)
+- refresh control-surface data feeds [skip ci] (`ab4e5d5`)
+- refresh control-surface data feeds [skip ci] (`6cfab4d`)
+- refresh control-surface data feeds [skip ci] (`09e2622`)
+- refresh control-surface data feeds [skip ci] (`a9f7713`)
+- update generated outputs — 2026-07-14 09:03 UTC [skip ci] (`2101b24`)
 - refresh control-surface data feeds [skip ci] (`04ab0c7`)
 - refresh control-surface data feeds [skip ci] (`445f085`)
 - refresh control-surface data feeds [skip ci] (`0ea113a`)
@@ -776,6 +814,8 @@
 
 ## Other
 
+- drop redundant tickClock truthiness guards (`bf6669d`)
+- add live command-surface behaviors (streaming feed, explainable drill-down, animated telemetry) (`f302445`)
 - add local docker-compose stack (governor + envoy gateway) (`27a8497`)
 - author Envoy API gateway (JWT auth + rate limit + governor ext_authz) (`e2a93d7`)
 - author deploy layer (k8s + terraform + governor-gated temporal worker) (`d329d49`)

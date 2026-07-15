@@ -3,12 +3,68 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "17:38",
-    "timestamp": "2026-07-15T17:38:18Z"
+    "time": "19:36",
+    "timestamp": "2026-07-15T19:36:00Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #304",
+    "time": "19:35",
+    "timestamp": "2026-07-15T19:35:49Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #687",
+    "time": "19:22",
+    "timestamp": "2026-07-15T19:22:48Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #185",
+    "time": "19:17",
+    "timestamp": "2026-07-15T19:17:18Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-37de1112-a01d-4925-8bd1-c79e98b0ab89 \u00b7 run #821",
+    "time": "19:08",
+    "timestamp": "2026-07-15T19:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-3d81b46a-eae5-42ef-8873-ec6f11404bd3 \u00b7 run #820",
+    "time": "18:08",
+    "timestamp": "2026-07-15T18:08:10Z"
+  },
+  {
+    "title": "Deploy GitHub Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #955",
+    "time": "17:38",
+    "timestamp": "2026-07-15T17:38:32Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1412",
+    "time": "17:38",
+    "timestamp": "2026-07-15T17:38:25Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2395",
+    "time": "17:38",
+    "timestamp": "2026-07-15T17:38:24Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #303",
     "time": "17:38",
     "timestamp": "2026-07-15T17:38:07Z"
@@ -33,61 +89,5 @@
     "detail": "workflow_dispatch on main \u00b7 run #954",
     "time": "15:49",
     "timestamp": "2026-07-15T15:49:46Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1411",
-    "time": "15:49",
-    "timestamp": "2026-07-15T15:49:38Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2394",
-    "time": "15:49",
-    "timestamp": "2026-07-15T15:49:38Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #302",
-    "time": "15:49",
-    "timestamp": "2026-07-15T15:49:20Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-bdd3f0f9-fe92-4fa8-80eb-e942adaa86e2 \u00b7 run #817",
-    "time": "15:08",
-    "timestamp": "2026-07-15T15:08:11Z"
-  },
-  {
-    "title": "Agent OS Self-Check",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #13",
-    "time": "15:04",
-    "timestamp": "2026-07-15T15:04:38Z"
-  },
-  {
-    "title": "Commerce Daily Loop",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #37",
-    "time": "14:47",
-    "timestamp": "2026-07-15T14:47:44Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #953",
-    "time": "14:08",
-    "timestamp": "2026-07-15T14:08:47Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1410",
-    "time": "14:08",
-    "timestamp": "2026-07-15T14:08:41Z"
   }
 ]

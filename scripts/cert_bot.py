@@ -36,12 +36,17 @@ DEFAULT_TIMEOUT = 10.0
 # Platform-managed domains issue and auto-renew their own TLS certificates, so a
 # soon-to-expire (but still valid) cert is not actionable by this repo and should
 # be advisory rather than a build failure. An already-expired one still errors.
-AUTO_MANAGED_SUFFIXES = (".github.io", ".pages.dev")
+# The primary site now serves from the GitHub Pages custom domain
+# clearglassinc.com (and www), whose certificate GitHub provisions and renews
+# automatically — so it is auto-managed just like the *.github.io Pages URL was.
+AUTO_MANAGED_SUFFIXES = (".github.io", ".pages.dev", ".clearglassinc.com")
+AUTO_MANAGED_HOSTS = ("clearglassinc.com",)
 
 
 def is_auto_managed(host: str) -> bool:
     """True for platform-managed (auto-renewing) certificate hosts."""
-    return host.lower().endswith(AUTO_MANAGED_SUFFIXES)
+    h = host.lower()
+    return h.endswith(AUTO_MANAGED_SUFFIXES) or h in AUTO_MANAGED_HOSTS
 
 
 @dataclass

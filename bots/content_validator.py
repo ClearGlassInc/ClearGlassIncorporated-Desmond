@@ -65,7 +65,9 @@ BRAND_KEYWORDS: list[str] = [
 
 # Every external-facing platform output must contain a URL pointing to the ClearGlass site.
 # Website copy is exempt: it IS the site and updating it doesn't require a self-referential URL.
-REQUIRED_URL_PATTERN = re.compile(r"clearglassinc\.github\.io", re.IGNORECASE)
+# Matches the primary domain www.clearglassinc.com (and the bare apex) after the migration
+# off the clearglassinc.github.io Pages URL.
+REQUIRED_URL_PATTERN = re.compile(r"clearglassinc\.com", re.IGNORECASE)
 URL_CHECK_EXEMPT_PLATFORMS = {"website"}
 
 # How many recent hashes to check for repetition.

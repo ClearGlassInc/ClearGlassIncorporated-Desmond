@@ -35,7 +35,7 @@
   --mono:'IBM Plex Mono',monospace;--display:'Orbitron','Inter',sans-serif;--sans:'Inter',system-ui,sans-serif}
 html,body{height:100%}
 body{font-family:var(--sans);color:var(--txt);min-height:100vh;
-  background:radial-gradient(130% 100% at 50% -10%,#0c1330 0%,#070a1c 48%,#04050d 100%);-webkit-font-smoothing:antialiased}
+  background:radial-gradient(130% 100% at 50% -10%,#0c1330 0%,#070a1c 48%,#04050d 100%);-webkit-font-smoothing:antialiased;isolation:isolate}
 
 /* top bar */
 .top{display:flex;align-items:center;gap:13px;padding:13px 22px;border-bottom:1px solid var(--line);background:rgba(7,10,28,.72);backdrop-filter:blur(8px);position:sticky;top:0;z-index:40}
@@ -199,6 +199,37 @@ footer b{color:var(--dim)}
 .spec-list{list-style:none;display:grid;gap:9px;margin-top:14px}.spec-list li{color:var(--dim);font-size:13px;line-height:1.5;display:flex;gap:9px}.spec-list li::before{content:'✓';color:var(--ok);font-weight:700}
 .cta-stack{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}.cta-stack .btn{padding:11px 16px;font-size:10px}
 .system-rail{margin-top:20px;border:1px solid var(--line);border-radius:18px;background:rgba(6,8,15,.58);overflow:hidden}.rail-row{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid var(--line)}.rail-row:last-child{border-bottom:0}.rail-k{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#9fc4ff;padding:14px;border-right:1px solid var(--line);background:rgba(124,150,255,.05)}.rail-v{padding:14px;color:var(--dim);font-size:13px;line-height:1.55}@media(max-width:680px){.rail-row{grid-template-columns:1fr}.rail-k{border-right:0;border-bottom:1px solid var(--line)}}
+
+
+
+/* DARPA-2040 command-interface motion layer */
+body::before,body::after{content:"";position:fixed;inset:-20%;pointer-events:none;z-index:0;opacity:.75;will-change:transform;background:
+  radial-gradient(circle at 18% 22%,rgba(54,182,255,.18),transparent 26%),
+  radial-gradient(circle at 82% 12%,rgba(167,139,250,.13),transparent 24%),
+  linear-gradient(115deg,transparent 0 42%,rgba(47,212,192,.055) 48%,transparent 54%)}
+body::before{animation:orbitalDrift 24s cubic-bezier(.45,0,.25,1) infinite alternate}
+body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0 34px,rgba(159,196,255,.16) 35px,transparent 36px),repeating-linear-gradient(0deg,transparent 0 34px,rgba(159,196,255,.12) 35px,transparent 36px);mask-image:radial-gradient(circle at 50% 20%,#000,transparent 68%);animation:gridDrift 18s linear infinite}
+@keyframes orbitalDrift{to{transform:translate3d(2.5%,-1.5%,0) rotate(.8deg) scale(1.04)}}
+@keyframes gridDrift{to{transform:translate3d(-36px,36px,0)}}
+.top,section,footer{position:relative;z-index:1}
+.top{box-shadow:0 1px 0 rgba(255,255,255,.04),0 18px 44px -34px rgba(54,182,255,.9)}
+.hero{position:relative;min-height:76vh;display:grid;align-content:center;isolation:isolate}
+.hero::before{content:"";position:absolute;left:50%;top:50%;width:min(860px,92vw);aspect-ratio:1.9;transform:translate(-50%,-50%);z-index:-1;border:1px solid rgba(96,165,250,.16);border-radius:999px;background:radial-gradient(ellipse at center,rgba(96,165,250,.12),transparent 64%);filter:blur(.2px);animation:commandHalo 9s ease-in-out infinite alternate}
+.hero::after{content:"SECURE AUTOMATION DOSSIER // CONDUIT";position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:.32em;color:rgba(188,212,255,.3);white-space:nowrap}
+@keyframes commandHalo{to{transform:translate(-50%,-51.5%) scale(1.035);border-color:rgba(52,211,153,.22)}}
+.tagchip,.hero h1,.lede,.deep-copy,.hero-ops,.cta-row,.stats,.builder,.fcard,.why-card,.arch-card,.gov-card,.deploy-card,.ptier,.final,.system-rail,.term,.deploy li,.intg{will-change:transform,opacity}
+[data-motion]{opacity:0;transform:translate3d(0,26px,0);filter:blur(8px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),filter .9s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0ms)}
+[data-motion].is-visible{opacity:1;transform:none;filter:blur(0)}
+[data-motion="left"]{transform:translate3d(-28px,0,0)}
+[data-motion="right"]{transform:translate3d(28px,0,0)}
+.hero h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom}.hero h1 .word>span{display:inline-block;transform:translateY(110%) rotateX(-35deg);transform-origin:50% 100%;animation:wordDeploy .9s cubic-bezier(.16,1,.3,1) forwards;animation-delay:var(--wd,0ms)}
+@keyframes wordDeploy{to{transform:translateY(0) rotateX(0)}}
+.btn,.pbtn,.mini{position:relative;overflow:hidden;transform:translate3d(0,0,0)}
+.btn::after,.pbtn::after,.mini::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.22),transparent 65%);transform:translateX(-80%);transition:transform .55s cubic-bezier(.16,1,.3,1);pointer-events:none}.btn:hover::after,.pbtn:hover::after,.mini:hover::after{transform:translateX(80%)}
+.fcard,.why-card,.arch-card,.gov-card,.deploy-card,.ptier,.stat,.ops-pill{position:relative;overflow:hidden}.fcard::before,.why-card::before,.arch-card::before,.gov-card::before,.deploy-card::before,.ptier::before,.stat::before,.ops-pill::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(96,165,250,.22),transparent 34%,rgba(52,211,153,.1));opacity:0;transition:opacity .25s;pointer-events:none}.fcard:hover::before,.why-card:hover::before,.arch-card:hover::before,.gov-card:hover::before,.deploy-card:hover::before,.ptier:hover::before,.stat:hover::before,.ops-pill:hover::before{opacity:1}
+.motion-brief{border:1px solid var(--line);border-radius:22px;padding:26px;background:linear-gradient(180deg,rgba(12,16,38,.76),rgba(6,8,15,.68));box-shadow:0 30px 90px -55px rgba(54,182,255,.65)}
+.motion-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:18px}.motion-cell{border:1px solid rgba(96,165,250,.18);background:rgba(96,165,250,.045);border-radius:14px;padding:15px}.motion-cell b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9fc4ff;margin-bottom:7px}.motion-cell p{color:var(--dim);font-size:13px;line-height:1.55}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}.hero h1 .word>span,[data-motion]{opacity:1!important;transform:none!important;filter:none!important}body::before,body::after{display:none!important}}
 
 </style>
   <link rel="stylesheet" href="tokens.css">
@@ -559,6 +590,26 @@ footer b{color:var(--dim)}
 })();
 </script>
 
+
+<!-- MOTION DOCTRINE -->
+<section id="motion-doctrine">
+  <div class="motion-brief" data-motion>
+    <div class="sec-head" style="margin-bottom:0">
+      <div class="sec-kicker">DARPA-2040 motion doctrine</div>
+      <h2 class="sec-title">Classified-command motion with enterprise restraint</h2>
+      <p class="sec-sub">The interface uses purposeful cinematic reveal, kinetic typography, scroll-based dossier progression, glass-layer depth, magnetic hardware-like controls, and reduced-motion fallbacks so the product feels advanced without sacrificing trust or readability.</p>
+    </div>
+    <div class="motion-grid">
+      <div class="motion-cell"><b>Hero reveal</b><p>Ambient grid initializes first, headline deploys word-by-word, copy and operator pills follow in a calibrated sequence, then CTAs become available as command decisions.</p></div>
+      <div class="motion-cell"><b>Section pacing</b><p>Workflow, architecture, governance, integrations, deployment, pricing, and final CTA reveal as secure dossier modules using transform and opacity only.</p></div>
+      <div class="motion-cell"><b>Micro feedback</b><p>Buttons, cards, nodes, plan tiers, and integration chips respond with subtle lift, luminous edge scans, and pointer-aware magnetic translation.</p></div>
+      <div class="motion-cell"><b>Background system</b><p>Slow orbital light fields and grid drift create infrastructure depth while remaining fixed, low-frequency, and independent of layout.</p></div>
+      <div class="motion-cell"><b>Performance rules</b><p>No layout-thrashing animation: motion stays on transform, opacity, and lightweight filters; observers activate content only near viewport.</p></div>
+      <div class="motion-cell"><b>Accessibility</b><p>prefers-reduced-motion disables ambient drift, shimmer, split text transforms, smooth transitions, and magnetic pointer effects.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- FINAL CTA -->
 <section>
   <div class="final">
@@ -576,6 +627,38 @@ footer b{color:var(--dim)}
 </section>
 
 <footer>CONDUIT · ClearGlass Inc. — <b>Clarity Is Power.</b> · Self-hosted workflow automation · Open source</footer>
+
+
+<script>
+(function(){
+  "use strict";
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.documentElement.classList.add("conduit-command-motion");
+  var h1=document.querySelector(".hero h1");
+  if(h1&&!h1.dataset.split){
+    h1.dataset.split="true";
+    var wi=0;
+    h1.innerHTML=h1.innerHTML.replace(/([^<\s][^<]*?)(?=<|$)/g,function(txt){
+      return txt.replace(/\S+/g,function(w){var d=(wi++*70);return '<span class="word" style="--wd:'+d+'ms"><span>'+w+'</span></span>';});
+    });
+  }
+  var staged=[".tagchip",".hero h1",".lede",".deep-copy",".hero-ops",".cta-row",".stats",".builder",".fcard",".why-card",".arch-card",".gov-card",".deploy-card",".ptier",".final",".system-rail",".term",".deploy li",".intg"];
+  document.querySelectorAll(staged.join(',')).forEach(function(el,i){if(!el.hasAttribute('data-motion'))el.setAttribute('data-motion','up');el.style.setProperty('--d',Math.min(i%12*55,420)+'ms');});
+  if(!reduce&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('[data-motion]').forEach(function(el){io.observe(el);});
+  }else{document.querySelectorAll('[data-motion]').forEach(function(el){el.classList.add('is-visible');});}
+  if(!reduce){
+    document.addEventListener('pointermove',function(e){
+      document.querySelectorAll('.btn:hover,.pbtn:hover,.mini:hover').forEach(function(el){
+        var r=el.getBoundingClientRect(),x=(e.clientX-r.left-r.width/2)/r.width,y=(e.clientY-r.top-r.height/2)/r.height;
+        el.style.transform='translate3d('+(x*7).toFixed(2)+'px,'+(y*4-1).toFixed(2)+'px,0)';
+      });
+    },{passive:true});
+    document.addEventListener('pointerout',function(e){if(e.target.closest){var el=e.target.closest('.btn,.pbtn,.mini');if(el)el.style.transform='';}},true);
+  }
+})();
+</script>
 
 <script>
 "use strict";

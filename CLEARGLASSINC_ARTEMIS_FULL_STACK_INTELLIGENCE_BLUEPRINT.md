@@ -1071,6 +1071,18 @@ def classify_environmental_risk(t: EnvironmentalTelemetry) -> EnvironmentalAsses
 
 ## Code Examples
 
+### Python Precision Implementation Contract
+
+ClearGlassInc Artemis treats Python as the reference implementation language for deterministic mission logic. TypeScript may render and orchestrate UI flows, SQL may materialize Foundry data products, and Rego may enforce policy, but Python owns precision-critical normalization, triage scoring, eval generation, release gates, and self-improvement proposal validation. Every Python service boundary must use typed request/response schemas, reject unknown operational actions by default, scrub sensitive fields before persistence, and emit correlation IDs for audit replay.
+
+Required Python service invariants:
+
+- **Typed contracts**: Pydantic or dataclass schemas for all intake, ontology-query, feedback, eval, and release-gate payloads.
+- **Fail-closed policy**: missing classification, mission scope, compartment, or approval token blocks the operation.
+- **Deterministic evals**: candidate prompts/workflows are scored against versioned fixtures before governance review.
+- **Secret hygiene**: raw tokens, passwords, API keys, private keys, and bearer credentials are never logged or copied into prompts.
+- **Replayability**: each state transition stores input hash, prompt/workflow/model versions, policy version, and rollback pointer.
+
 The following Python-first skeletons turn the blueprint into implementation units that can be tested without live Palantir credentials. In production, each adapter boundary is replaced with Foundry Object API, Gotham case APIs, AIP tool runtime calls, and Apollo release APIs while preserving the same typed contracts.
 
 ### Backend Event Handler

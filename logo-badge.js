@@ -37,8 +37,10 @@
     var css = [
       /* shared corner dock — a flex row other corner controls can join */
       "#cg-dock{position:fixed;right:18px;bottom:18px;z-index:2147483000;",
-      "display:inline-flex;align-items:center;pointer-events:none}",
+      "display:inline-flex;align-items:center;gap:8px;pointer-events:none}",
       "#cg-dock>*{pointer-events:auto}",
+      /* Keep docked controls adjacent without visually covering one another. */
+      "#cg-dock>#cgw-fab{margin-right:0!important}",
       /* one neon halo wrapping the whole cluster (coin alone, or pill + coin) */
       "#cg-dock::before{content:'';position:absolute;inset:-16px -16px -16px -22px;",
       "border-radius:999px;pointer-events:none;z-index:-1;will-change:opacity;",
@@ -59,7 +61,7 @@
       "box-shadow:0 8px 26px rgba(0,0,0,.46),0 0 26px rgba(96,165,250,.6),0 0 44px rgba(167,139,250,.45)}",
       "#cg-logo-badge img{width:100%;height:100%;object-fit:cover;display:block}",
       "#cg-logo-badge:focus-visible{outline:2px solid #a78bfa;outline-offset:3px}",
-      "@media(max-width:640px){#cg-dock{right:14px;bottom:14px}#cg-logo-badge{width:46px;height:46px}}",
+      "@media(max-width:640px){#cg-dock{right:14px;bottom:14px;gap:6px}#cg-logo-badge{width:46px;height:46px}}",
       /* honour reduced motion — freeze the halo at a steady mid glow */
       "@media (prefers-reduced-motion:reduce){#cg-dock::before{animation:none;opacity:.7}}"
     ].join("");

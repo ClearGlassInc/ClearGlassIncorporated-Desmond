@@ -27,6 +27,9 @@ def test_full_stack_blueprint_contains_requested_sections_and_controls():
         "Need-to-know",
         "ModelRouter",
         "safe_to_review",
+        "Python Precision Implementation Contract",
+        "Secret hygiene",
+        "Replayability",
     ]
     for control in required_controls:
         assert control in markdown

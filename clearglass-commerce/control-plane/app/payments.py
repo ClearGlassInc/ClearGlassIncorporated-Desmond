@@ -95,6 +95,59 @@ def create_checkout_session(
     }
 
 
+def payout_bank_info() -> dict[str, Any]:
+    """Return the non-sensitive payout bank configuration exposed to operators.
+
+    Real bank wiring is configured in Stripe/Apollo-managed secrets, not committed to this
+    repository and not accepted over the API. The control plane only surfaces masked metadata
+    so operators can confirm earned revenue is settling to the intended external account.
+    """
+    external_account_id = os.environ.get("PAYOUT_EXTERNAL_ACCOUNT_ID", "")
+    last4 = os.environ.get("PAYOUT_BANK_LAST4", "")
+    routing_hint = os.environ.get("PAYOUT_BANK_ROUTING_HINT", "")
+    bank_name = os.environ.get("PAYOUT_BANK_NAME", "")
+    country = os.environ.get("PAYOUT_BANK_COUNTRY", "CA")
+    currencies = [
+        c.strip().upper()
+        for c in os.environ.get("PAYOUT_BANK_CURRENCIES", "CAD,USD").split(",")
+        if c.strip()
+    ]
+
+    warnings: list[str] = []
+    if not external_account_id:
+        warnings.append(
+            "PAYOUT_EXTERNAL_ACCOUNT_ID is not configured; "
+            "payouts cannot be matched to a destination token."
+        )
+    elif not external_account_id.startswith(("ba_", "card_")):
+        warnings.append(
+            "PAYOUT_EXTERNAL_ACCOUNT_ID should be Stripe's opaque external-account token, "
+            "not raw bank digits."
+        )
+
+    if last4 and (not last4.isdigit() or len(last4) != 4):
+        warnings.append("PAYOUT_BANK_LAST4 must contain only the final four account digits.")
+    if any(ch.isdigit() for ch in routing_hint):
+        warnings.append(
+            "PAYOUT_BANK_ROUTING_HINT must be a non-sensitive label, "
+            "never a routing/transit number."
+        )
+
+    configured = bool(external_account_id and not warnings)
+    return {
+        "configured": configured,
+        "processor": "stripe",
+        "settlement_mode": "automatic_stripe_payouts",
+        "external_account_id": external_account_id or None,
+        "bank_name": bank_name or None,
+        "account_last4": last4 or None,
+        "routing_hint": routing_hint or None,
+        "country": country,
+        "currencies": currencies,
+        "warnings": warnings,
+    }
+
+
 def parse_payout(obj: dict[str, Any]) -> dict[str, Any]:
     """Normalize a Stripe ``payout`` object into the fields we persist.
 

@@ -15,6 +15,7 @@ from ..schemas import (
     ActionResult,
     CheckoutRequest,
     CheckoutSessionOut,
+    PayoutBankInfoOut,
     PayoutOut,
     RefundRequest,
 )
@@ -134,6 +135,16 @@ def _upsert_payout(session: Session, obj: dict, *, tenant_id: str | None) -> Pay
         existing.tenant_id = tenant_id
     session.flush()
     return existing
+
+
+@router.get("/payments/payout-account", response_model=PayoutBankInfoOut)
+def payout_account() -> PayoutBankInfoOut:
+    """Return masked bank/payout routing metadata for earned revenue settlement.
+
+    This endpoint never accepts or returns raw bank account/routing numbers. Stripe remains the
+    system of record for the actual external bank account and performs the money movement.
+    """
+    return PayoutBankInfoOut(**payments.payout_bank_info())
 
 
 @router.get("/payouts", response_model=list[PayoutOut])

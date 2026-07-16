@@ -53,3 +53,34 @@ def test_webhook_unverified_without_secret(monkeypatch) -> None:
     result = payments.verify_webhook(body, "t=1,v1=deadbeef")
     assert result["verified"] is False
     assert result["event"]["type"] == "ping"
+
+
+def test_payout_bank_info_is_masked_and_configured(monkeypatch) -> None:
+    monkeypatch.setenv("PAYOUT_EXTERNAL_ACCOUNT_ID", "ba_test_123")
+    monkeypatch.setenv("PAYOUT_BANK_NAME", "EQ Bank")
+    monkeypatch.setenv("PAYOUT_BANK_LAST4", "6789")
+    monkeypatch.setenv("PAYOUT_BANK_ROUTING_HINT", "primary-settlement-account")
+    monkeypatch.setenv("PAYOUT_BANK_CURRENCIES", "CAD,USD")
+
+    info = payments.payout_bank_info()
+
+    assert info["configured"] is True
+    assert info["processor"] == "stripe"
+    assert info["settlement_mode"] == "automatic_stripe_payouts"
+    assert info["external_account_id"] == "ba_test_123"
+    assert info["account_last4"] == "6789"
+    assert info["currencies"] == ["CAD", "USD"]
+    assert info["warnings"] == []
+
+
+def test_payout_bank_info_rejects_raw_routing_hints(monkeypatch) -> None:
+    monkeypatch.setenv("PAYOUT_EXTERNAL_ACCOUNT_ID", "123456789")
+    monkeypatch.setenv("PAYOUT_BANK_LAST4", "67890")
+    monkeypatch.setenv("PAYOUT_BANK_ROUTING_HINT", "routing-000111222")
+
+    info = payments.payout_bank_info()
+
+    assert info["configured"] is False
+    assert any("opaque external-account token" in warning for warning in info["warnings"])
+    assert any("final four" in warning for warning in info["warnings"])
+    assert any("non-sensitive label" in warning for warning in info["warnings"])

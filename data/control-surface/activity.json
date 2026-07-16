@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "21:15",
-    "timestamp": "2026-07-16T21:15:18Z"
+    "time": "22:16",
+    "timestamp": "2026-07-16T22:16:27Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #318",
+    "time": "22:16",
+    "timestamp": "2026-07-16T22:16:12Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-60aeff2f-fc6c-4624-9480-678b41bcff80 \u00b7 run #848",
+    "time": "22:08",
+    "timestamp": "2026-07-16T22:08:04Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #991",
+    "time": "21:15",
+    "timestamp": "2026-07-16T21:15:31Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1449",
+    "time": "21:15",
+    "timestamp": "2026-07-16T21:15:24Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2457",
+    "time": "21:15",
+    "timestamp": "2026-07-16T21:15:24Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #317",
     "time": "21:15",
     "timestamp": "2026-07-16T21:15:07Z"
@@ -54,40 +89,5 @@
     "detail": "push on main \u00b7 run #1446",
     "time": "20:33",
     "timestamp": "2026-07-16T20:33:13Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1167",
-    "time": "20:33",
-    "timestamp": "2026-07-16T20:33:13Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #339",
-    "time": "20:33",
-    "timestamp": "2026-07-16T20:33:13Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #736",
-    "time": "20:33",
-    "timestamp": "2026-07-16T20:33:13Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1448",
-    "time": "20:33",
-    "timestamp": "2026-07-16T20:33:13Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2456",
-    "time": "20:33",
-    "timestamp": "2026-07-16T20:33:12Z"
   }
 ]

@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #317",
+    "title": "Control Surface Feeds #318",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:16",
+    "timestamp": "2026-07-16T22:16:12Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #848",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-60aeff2f-fc6c-4624-9480-678b41bcff80",
+    "time": "22:08",
+    "timestamp": "2026-07-16T22:08:04Z"
+  },
+  {
+    "title": "Deploy Pages #991",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:15",
+    "timestamp": "2026-07-16T21:15:31Z"
+  },
+  {
+    "title": "pages build and deployment #1449",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:15",
+    "timestamp": "2026-07-16T21:15:24Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2457",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:15",
+    "timestamp": "2026-07-16T21:15:24Z"
+  },
+  {
+    "title": "Control Surface Feeds #317",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:15",
     "timestamp": "2026-07-16T21:15:07Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 pull_request on codex/add-blog-expansion-strategy-for-seo",
     "time": "20:32",
     "timestamp": "2026-07-16T20:32:49Z"
-  },
-  {
-    "title": "Security #1166",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-blog-expansion-strategy-for-seo",
-    "time": "20:32",
-    "timestamp": "2026-07-16T20:32:49Z"
-  },
-  {
-    "title": "PR Automation #598",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-blog-expansion-strategy-for-seo",
-    "time": "20:32",
-    "timestamp": "2026-07-16T20:32:49Z"
-  },
-  {
-    "title": "Policy Gate #1138",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-blog-expansion-strategy-for-seo",
-    "time": "20:32",
-    "timestamp": "2026-07-16T20:32:49Z"
-  },
-  {
-    "title": "Code Quality: PR #879 #2455",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/879/head",
-    "time": "20:32",
-    "timestamp": "2026-07-16T20:32:47Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #338",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "20:25",
-    "timestamp": "2026-07-16T20:25:40Z"
   }
 ]

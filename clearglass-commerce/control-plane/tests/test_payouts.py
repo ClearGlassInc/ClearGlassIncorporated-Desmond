@@ -142,3 +142,19 @@ def test_payout_webhook_rejects_bad_signature(client) -> None:
     resp = client.post("/webhooks/stripe", content=body, headers={"stripe-signature": "t=1,v1=bad"})
     assert resp.status_code == 400
     assert client.get("/payouts").json() == []   # nothing written on rejection
+
+
+def test_payout_account_endpoint_returns_masked_metadata(client, monkeypatch) -> None:
+    monkeypatch.setenv("PAYOUT_EXTERNAL_ACCOUNT_ID", "ba_test_endpoint")
+    monkeypatch.setenv("PAYOUT_BANK_NAME", "EQ Bank")
+    monkeypatch.setenv("PAYOUT_BANK_LAST4", "6789")
+    monkeypatch.setenv("PAYOUT_BANK_ROUTING_HINT", "primary-settlement-account")
+
+    resp = client.get("/payments/payout-account")
+
+    assert resp.status_code == 200
+    payload = resp.json()
+    assert payload["configured"] is True
+    assert payload["bank_name"] == "EQ Bank"
+    assert payload["account_last4"] == "6789"
+    assert "routing_number" not in json.dumps(payload)

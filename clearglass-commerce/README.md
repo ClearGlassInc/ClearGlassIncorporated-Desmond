@@ -80,12 +80,20 @@ Nothing in the high/critical tier executes without an `approvals` row reaching `
 | `POST` | `/checkout/session` | customer revenue (logged) |
 | `POST` | `/webhooks/stripe` | signed ingest → writes paid orders |
 | `POST` | `/payments/refund` | **critical → approval** |
+| `GET`  | `/payments/payout-account` | low masked bank metadata |
+| `GET`  | `/payouts` | low settlement records |
 | `POST` | `/orders/reconcile` | low |
 | `POST` | `/inventory/check` | low (reorder = high) |
 | `GET`  | `/metrics/overview` | low |
 | `GET`  | `/events` | low |
 | `POST` | `/approvals/{id}/approve` | human |
 | `POST` | `/approvals/{id}/reject` | human |
+
+## Revenue settlement / bank wiring
+
+Earned revenue is collected through Stripe Checkout and settled by Stripe automatic payouts to the external bank account configured in Stripe. The repository stores only masked payout metadata (`PAYOUT_EXTERNAL_ACCOUNT_ID`, `PAYOUT_BANK_NAME`, `PAYOUT_BANK_LAST4`, `PAYOUT_BANK_ROUTING_HINT`) so operators can verify the destination without exposing account/routing/transit numbers.
+
+The control plane exposes `GET /payments/payout-account` for masked destination status and `GET /payouts` for webhook-recorded settlement events. It does **not** accept bank credentials or initiate arbitrary wires; actual money movement stays inside Stripe's payout controls and requires dashboard/API-secret configuration outside git.
 
 ## Operating rules (enforced by code + prompt)
 

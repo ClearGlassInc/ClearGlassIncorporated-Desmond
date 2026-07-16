@@ -50,6 +50,19 @@ class CheckoutSessionOut(BaseModel):
     currency: str
 
 
+class PayoutBankInfoOut(BaseModel):
+    configured: bool
+    processor: str
+    settlement_mode: str
+    external_account_id: str | None
+    bank_name: str | None
+    account_last4: str | None
+    routing_hint: str | None
+    country: str
+    currencies: list[str]
+    warnings: list[str] = Field(default_factory=list)
+
+
 class PayoutOut(BaseModel):
     id: int
     stripe_payout_id: str

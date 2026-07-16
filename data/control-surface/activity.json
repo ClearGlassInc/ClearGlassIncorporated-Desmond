@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "03:36",
-    "timestamp": "2026-07-16T03:36:04Z"
+    "time": "06:30",
+    "timestamp": "2026-07-16T06:30:53Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #309",
-    "time": "03:35",
-    "timestamp": "2026-07-16T03:35:49Z"
+    "detail": "schedule on main \u00b7 run #310",
+    "time": "06:30",
+    "timestamp": "2026-07-16T06:30:41Z"
+  },
+  {
+    "title": "Multi-Repo Audit",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #30",
+    "time": "06:29",
+    "timestamp": "2026-07-16T06:29:50Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-ae87d9a7-5c4b-4e61-a6e5-10760c84a9aa \u00b7 run #832",
+    "time": "06:08",
+    "timestamp": "2026-07-16T06:08:06Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/domain-update-clearglassinc-8bgrc1 \u00b7 run #1095",
+    "time": "05:31",
+    "timestamp": "2026-07-16T05:31:52Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/domain-update-clearglassinc-8bgrc1 \u00b7 run #1123",
+    "time": "05:31",
+    "timestamp": "2026-07-16T05:31:52Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "pull_request on claude/domain-update-clearglassinc-8bgrc1 \u00b7 run #1402",
+    "time": "05:31",
+    "timestamp": "2026-07-16T05:31:52Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #688",
-    "time": "03:22",
-    "timestamp": "2026-07-16T03:22:02Z"
+    "detail": "pull_request on claude/domain-update-clearglassinc-8bgrc1 \u00b7 run #689",
+    "time": "05:31",
+    "timestamp": "2026-07-16T05:31:52Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "pull_request on claude/domain-update-clearglassinc-8bgrc1 \u00b7 run #1357",
+    "time": "05:31",
+    "timestamp": "2026-07-16T05:31:52Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/domain-update-clearglassinc-8bgrc1 \u00b7 run #575",
+    "time": "05:31",
+    "timestamp": "2026-07-16T05:31:52Z"
+  },
+  {
+    "title": "Code Quality: PR #858",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/858/head \u00b7 run #2402",
+    "time": "05:31",
+    "timestamp": "2026-07-16T05:31:50Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #1401",
+    "time": "05:15",
+    "timestamp": "2026-07-16T05:15:47Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-ee8e6cd0-9b0b-4f27-ba6c-5c65fee4d307 \u00b7 run #829",
-    "time": "03:08",
-    "timestamp": "2026-07-16T03:08:06Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #186",
-    "time": "02:53",
-    "timestamp": "2026-07-16T02:53:22Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-cf7fff52-66cc-4960-9a06-4d1926bdecc4 \u00b7 run #828",
-    "time": "02:08",
-    "timestamp": "2026-07-16T02:08:04Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-977342c5-076f-4001-ae08-b3b32d034f43 \u00b7 run #827",
-    "time": "01:08",
-    "timestamp": "2026-07-16T01:08:06Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #960",
-    "time": "00:10",
-    "timestamp": "2026-07-16T00:10:13Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1417",
-    "time": "00:10",
-    "timestamp": "2026-07-16T00:10:07Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2400",
-    "time": "00:10",
-    "timestamp": "2026-07-16T00:10:06Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #308",
-    "time": "00:09",
-    "timestamp": "2026-07-16T00:09:44Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-119ba1a4-ad08-488f-8596-0a5661bf33a9 \u00b7 run #826",
-    "time": "00:08",
-    "timestamp": "2026-07-16T00:08:04Z"
-  },
-  {
-    "title": "Deploy GitHub Pages",
-    "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #959",
-    "time": "23:12",
-    "timestamp": "2026-07-15T23:12:49Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-8f164f77-8434-4e8b-9f9f-b9aed7b222ba \u00b7 run #831",
+    "time": "05:08",
+    "timestamp": "2026-07-16T05:08:05Z"
   }
 ]

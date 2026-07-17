@@ -135,6 +135,17 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
 .cta-sect{padding:clamp(100px,15vw,160px) 0;text-align:center;position:relative}.cta-sect::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(16,185,129,.05),transparent)}.cta-sect h2{font-family:var(--serif);font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:300;line-height:1.05;letter-spacing:-.03em;max-width:700px;margin:0 auto 20px;position:relative}.cta-sect h2 strong{font-weight:600}.cta-sect p{color:var(--text-3);max-width:500px;margin:0 auto 36px;line-height:1.75;position:relative}.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
 /* Footer */
 .footer{padding:56px 0 32px;border-top:1px solid var(--glass-border)}.footer-top{display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;margin-bottom:48px}.footer-brand-block{display:flex;flex-direction:column;gap:10px;max-width:220px}.footer-mark{width:36px;height:36px;border-radius:10px;overflow:hidden;background:#fff;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.08)}.footer-mark img{width:100%;height:100%;object-fit:cover;display:block}.footer-brand-name{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--text);letter-spacing:-.01em;display:block;margin-top:4px}.footer-brand-sub{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-4);display:block}.footer-cols{display:flex;gap:40px;flex-wrap:wrap}.footer-col{display:flex;flex-direction:column;gap:10px;min-width:110px}.footer-col-head{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);font-weight:600;margin-bottom:4px}.footer-col a{color:var(--text-4);text-decoration:none;font-size:13px;line-height:1.4;transition:color .25s}.footer-col a:hover{color:var(--text)}.footer-div{height:1px;background:var(--glass-border);margin:0 0 22px}.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:16px}.footer-copy{font-size:12px;color:var(--text-4)}.footer-util{display:flex;gap:20px;flex-wrap:wrap}.footer-util a{color:var(--text-4);text-decoration:none;font-size:12px;transition:color .25s}.footer-util a:hover{color:var(--text)}.footer-cookie{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:26px;padding-top:14px;border-top:1px solid var(--glass-border)}.footer-cookie a{font-size:11px;color:var(--text-4);text-decoration:none;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}.footer-cookie a:hover{color:var(--text);border-bottom-color:var(--text)}.footer-cookie-sep{color:var(--text-4);font-size:11px}.footer-tagline{text-align:center;padding-top:22px;border-top:1px solid var(--glass-border);font-family:var(--serif);font-size:clamp(1rem,1.4vw,1.15rem);font-style:italic;font-weight:300;color:var(--text-4)}
+
+/* Currency OS */
+.currency-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:24px;align-items:stretch}
+.currency-panel{border-radius:24px;border:1px solid var(--glass-border);background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.64));backdrop-filter:blur(22px);box-shadow:0 18px 60px rgba(10,12,16,.06);padding:clamp(24px,3.5vw,42px);position:relative;overflow:hidden}
+.currency-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 0%,rgba(16,185,129,.12),transparent 36%),radial-gradient(circle at 90% 10%,rgba(14,165,233,.1),transparent 35%);pointer-events:none}
+.currency-panel>*{position:relative;z-index:1}.currency-kicker{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;color:var(--revenue-1);text-transform:uppercase;margin-bottom:12px}
+.currency-panel h3{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:500;line-height:1.05;letter-spacing:-.02em;margin-bottom:14px}.currency-panel p{color:var(--text-3);line-height:1.75;font-size:15px}
+.currency-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:26px}.currency-stat{border-radius:16px;background:rgba(10,12,16,.04);border:1px solid var(--glass-border);padding:16px}.currency-stat strong{display:block;font-family:var(--mono);font-size:clamp(1.15rem,2vw,1.65rem);color:var(--text);letter-spacing:-.04em}.currency-stat span{display:block;margin-top:6px;font-size:11px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.workflow-rail{display:grid;gap:12px}.workflow-node{display:grid;grid-template-columns:46px 1fr auto;gap:14px;align-items:center;padding:16px;border-radius:16px;background:rgba(255,255,255,.72);border:1px solid var(--glass-border);transition:all .3s}.workflow-node:hover{transform:translateX(4px);border-color:rgba(16,185,129,.32)}.workflow-node-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(16,185,129,.14),rgba(14,165,233,.1));font-size:20px}.workflow-node h4{font-size:15px;margin-bottom:4px}.workflow-node p{font-size:12px;line-height:1.45;color:var(--text-3)}.workflow-node-badge{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--revenue-1);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.16);border-radius:999px;padding:5px 9px}
+.calculator{margin-top:28px;border-top:1px solid var(--glass-border);padding-top:24px}.calc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.calc-field label{display:block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}.calc-field input{width:100%;border:1px solid var(--glass-border);border-radius:12px;padding:12px 14px;font:600 15px var(--sans);background:rgba(255,255,255,.8);color:var(--text);outline:none}.calc-field input:focus{border-color:rgba(16,185,129,.55);box-shadow:0 0 0 4px rgba(16,185,129,.08)}.calc-output{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.calc-card{border-radius:16px;background:var(--dark);color:#fff;padding:16px}.calc-card span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:7px}.calc-card strong{font-family:var(--mono);font-size:clamp(1.15rem,2vw,1.6rem);color:var(--revenue-1)}
+@media(max-width:900px){.currency-grid,.currency-stats,.calc-grid,.calc-output{grid-template-columns:1fr}.workflow-node{grid-template-columns:46px 1fr}}
 @media(max-width:900px){.funnel-wrap,.bot-inner,.lanes-grid{grid-template-columns:1fr}}
 @media(max-width:768px){.nav-links{display:none}.nav-toggle{display:block}.cursor-glow{display:none}.footer-top{gap:28px}.footer-cols{gap:20px}.footer-col{min-width:90px}.footer-bottom{flex-direction:column;align-items:flex-start}.footer-util{gap:12px}}
 </style>
@@ -303,6 +314,53 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-
             <div class="fv-row-label">Conversion loop</div>
             <div class="fv-row-val">COMPOUNDING</div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Currency operating system -->
+<section class="sect" id="currency-os">
+  <div class="container">
+    <div class="sh sh-center rv">
+      <div class="sh-tag revenue-tag" style="justify-content:center">ADVANCED CURRENCY WORKFLOW</div>
+      <h2>Turn daily actions into <strong>earned currency.</strong></h2>
+      <p>The upgraded engine adds an operator-grade workflow: score opportunities, launch assets, automate follow-up, measure revenue, and reinvest attention into the highest-return lane.</p>
+    </div>
+    <div class="currency-grid">
+      <div class="currency-panel rv">
+        <div class="currency-kicker">ClearGlass Currency OS</div>
+        <h3>Revenue is routed like a mission queue.</h3>
+        <p>Every lead, product idea, post, and proposal becomes a scored work item. The engine ranks each move by expected cash impact, confidence, effort, and time-to-close — then generates the next workflow step instead of leaving revenue to memory.</p>
+        <div class="currency-stats">
+          <div class="currency-stat"><strong>92</strong><span>Lead score</span></div>
+          <div class="currency-stat"><strong>$2.4K</strong><span>Pipeline value</span></div>
+          <div class="currency-stat"><strong>18h</strong><span>Next close</span></div>
+          <div class="currency-stat"><strong>4.7x</strong><span>ROI signal</span></div>
+        </div>
+        <div class="calculator" aria-label="Revenue projection calculator">
+          <div class="currency-kicker">Precision Calculator</div>
+          <div class="calc-grid">
+            <div class="calc-field"><label for="leadsInput">Qualified leads / week</label><input id="leadsInput" type="number" min="0" value="24"></div>
+            <div class="calc-field"><label for="closeInput">Close rate %</label><input id="closeInput" type="number" min="0" max="100" value="12"></div>
+            <div class="calc-field"><label for="priceInput">Avg offer $</label><input id="priceInput" type="number" min="0" value="750"></div>
+          </div>
+          <div class="calc-output">
+            <div class="calc-card"><span>Weekly projection</span><strong id="weeklyRevenue">$2,160</strong></div>
+            <div class="calc-card"><span>Monthly projection</span><strong id="monthlyRevenue">$9,360</strong></div>
+            <div class="calc-card"><span>Daily target</span><strong id="dailyTarget">4 leads</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="currency-panel rv">
+        <div class="workflow-rail">
+          <div class="workflow-node"><div class="workflow-node-icon">🛰️</div><div><h4>Signal Intake</h4><p>Capture leads from forms, GitHub, content replies, referrals, and public business triggers.</p></div><span class="workflow-node-badge">AUTO</span></div>
+          <div class="workflow-node"><div class="workflow-node-icon">🧮</div><div><h4>Opportunity Scoring</h4><p>Rank by pain intensity, budget proxy, urgency, fit, trust path, and expected value.</p></div><span class="workflow-node-badge">AI</span></div>
+          <div class="workflow-node"><div class="workflow-node-icon">✍️</div><div><h4>Offer Assembly</h4><p>Generate a product, audit, sprint, or retainer package matched to the buyer's context.</p></div><span class="workflow-node-badge">DRAFT</span></div>
+          <div class="workflow-node"><div class="workflow-node-icon">🔁</div><div><h4>Follow-Up Cadence</h4><p>Schedule ethical reminders, proof assets, case studies, and close prompts until outcome.</p></div><span class="workflow-node-badge">CRM</span></div>
+          <div class="workflow-node"><div class="workflow-node-icon">💸</div><div><h4>Currency Capture</h4><p>Route paid work into Stripe/Gumroad, fulfillment tasks, testimonials, and upsell paths.</p></div><span class="workflow-node-badge">EARN</span></div>
         </div>
       </div>
     </div>
@@ -536,6 +594,18 @@ document.getElementById('year').textContent=new Date().getFullYear();
 var nb=document.getElementById('navbar');window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>40)});
 var toggle=document.getElementById('navToggle');var mobMenu=document.getElementById('mobileMenu');toggle.addEventListener('click',function(){mobMenu.classList.toggle('open')});function closeMob(){mobMenu.classList.remove('open')}
 var glow=document.getElementById('cursorGlow');if(window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';});};
+
+function formatCurrency(value){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(value)}
+function updateRevenueCalc(){
+  var leads=Number(document.getElementById('leadsInput').value||0);
+  var closeRate=Number(document.getElementById('closeInput').value||0)/100;
+  var price=Number(document.getElementById('priceInput').value||0);
+  var weekly=leads*closeRate*price;
+  document.getElementById('weeklyRevenue').textContent=formatCurrency(weekly);
+  document.getElementById('monthlyRevenue').textContent=formatCurrency(weekly*4.333);
+  document.getElementById('dailyTarget').textContent=Math.max(1,Math.ceil(leads/6))+' leads';
+}
+['leadsInput','closeInput','priceInput'].forEach(function(id){var el=document.getElementById(id);if(el){el.addEventListener('input',updateRevenueCalc)}});updateRevenueCalc();
 var rvEls=document.querySelectorAll('.rv');var rvObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)entry.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});rvEls.forEach(function(el){rvObs.observe(el)});
 </script>
 <script defer src="control-surface.js"></script>

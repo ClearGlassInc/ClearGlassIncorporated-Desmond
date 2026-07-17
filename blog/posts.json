@@ -15,6 +15,40 @@
   },
   "posts": [
     {
+      "slug": "clearglass-secure-deployment-agent",
+      "url": "/blog/clearglass-secure-deployment-agent.html",
+      "title": "The Secure Deployment Agent: Governed Authorization for Every Production Change",
+      "description": "A deploy button is a loaded verb. The ClearGlass Secure Deployment Agent turns shipping software into a governed, authorization-bound process: five operating states, a scope contract, a permission matrix, least-privilege secrets, pinned supply chain, and a rollback plan for every change.",
+      "category": "Secure Deployment",
+      "series": "High-Trust Systems Patterns",
+      "topics": [
+        "cyber",
+        "agents",
+        "automation",
+        "systems",
+        "governed-ai"
+      ],
+      "tags": [
+        "secure-deployment",
+        "authorization-boundary",
+        "least-privilege",
+        "scope-contract",
+        "permission-matrix",
+        "oidc",
+        "short-lived-credentials",
+        "rollback",
+        "secret-management",
+        "supply-chain",
+        "audit-log"
+      ],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-07-17",
+      "readMinutes": 13,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
+    {
       "slug": "clearglassinc-0-to-1m-corporate-execution-plan",
       "url": "/blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
       "title": "ClearGlassInc: The $0-to-$1,000,000 Corporate Execution Plan",

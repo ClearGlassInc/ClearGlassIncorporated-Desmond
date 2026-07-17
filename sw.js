@@ -8,7 +8,7 @@
    Bump VERSION to invalidate all caches on deploy. */
 "use strict";
 
-var VERSION = "cg-v13";
+var VERSION = "cg-v14";
 var PRECACHE = [
   "/",
   "/index.html",
@@ -21,6 +21,7 @@ var PRECACHE = [
   "/control-surface.js",
   "/platform.js",
   "/nav.js",
+  "/asset-protection.js",
   "/Ontario-osint.html",
   "/data/Ontario-osint/intel.json",
   "/icon.svg",

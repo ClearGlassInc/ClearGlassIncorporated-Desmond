@@ -1367,6 +1367,296 @@ body:not(.cg-evo-live) .cg-evo-aura i{animation-play-state:paused}
   </div>
 </section>
 
+<!-- ════════════════════════════════════════════════════
+     THE CRYSTAL KNOWLEDGE VAULT — Second Brain infographic
+     Fully self-contained + scoped (.ckv-*); adds only.
+════════════════════════════════════════════════════ -->
+<style>
+.ckv-sec{position:relative;z-index:2;
+  --ckv-blue:#3b82f6;--ckv-blue-lt:#60a5fa;--ckv-purple:#8b5cf6;--ckv-purple-lt:#a855f7;
+  --ckv-pink:#f472b6;--ckv-text:#eef2ff;--ckv-dim:rgba(230,235,255,.62);--ckv-faint:rgba(230,235,255,.4);
+  --ckv-line:rgba(139,120,255,.28);--ckv-glass:rgba(120,110,220,.10);
+  --ckv-M:'IBM Plex Mono',ui-monospace,monospace;--ckv-D:'Syne',system-ui,sans-serif;
+}
+.ckv-sec::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 18% 8%,rgba(59,130,246,.16),transparent 60%),
+    radial-gradient(ellipse 55% 55% at 85% 30%,rgba(139,92,246,.18),transparent 62%),
+    radial-gradient(ellipse 70% 60% at 50% 110%,rgba(168,85,247,.12),transparent 60%);}
+.ckv-head{max-width:820px;margin:0 auto 44px;text-align:center;}
+.ckv-kicker{display:inline-block;font-family:var(--ckv-M);font-size:10px;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--ckv-purple-lt);margin-bottom:18px;
+  padding:6px 14px;border:1px solid var(--ckv-line);border-radius:100px;
+  background:rgba(139,92,246,.08);}
+.ckv-h2{font-family:var(--ckv-D);font-weight:800;letter-spacing:-.03em;line-height:1.02;
+  font-size:clamp(30px,4.6vw,58px);color:var(--ckv-text);margin-bottom:22px;
+  text-shadow:0 0 40px rgba(139,92,246,.25);}
+.ckv-h2 span{background:linear-gradient(100deg,var(--ckv-blue-lt),var(--ckv-purple-lt) 55%,var(--ckv-pink));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.ckv-sub{display:inline-block;max-width:660px;margin:0 auto;padding:16px 24px;border-radius:18px;
+  font-size:16px;line-height:1.7;color:var(--ckv-dim);
+  background:var(--ckv-glass);border:1px solid var(--ckv-line);
+  -webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 20px 50px rgba(6,4,20,.4),0 0 40px rgba(139,92,246,.08);}
+
+/* glass card system */
+.ckv-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-bottom:26px;}
+.ckv-card{position:relative;grid-column:span 2;border-radius:22px;padding:22px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(120,110,220,.13),rgba(60,80,180,.05));
+  border:1px solid var(--ckv-line);
+  -webkit-backdrop-filter:blur(22px) saturate(1.6);backdrop-filter:blur(22px) saturate(1.6);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 24px 60px rgba(6,4,20,.5);
+  transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s cubic-bezier(.16,1,.3,1),border-color .5s;}
+.ckv-card:hover{transform:translateY(-5px);border-color:rgba(139,120,255,.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 30px 70px rgba(6,4,20,.6),0 0 50px rgba(139,92,246,.22);}
+.ckv-card::after{content:'';position:absolute;top:-40%;left:-30%;width:60%;height:80%;pointer-events:none;
+  background:radial-gradient(ellipse,rgba(96,165,250,.16),transparent 70%);}
+.ckv-c-tag{display:block;font-family:var(--ckv-M);font-size:8.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--ckv-purple-lt);margin-bottom:9px;}
+.ckv-c-title{font-family:var(--ckv-D);font-weight:700;font-size:18px;letter-spacing:-.01em;
+  color:var(--ckv-text);margin-bottom:14px;}
+.ckv-card.span3{grid-column:span 3;}
+.ckv-card.span6{grid-column:span 6;}
+
+/* folder tree */
+.ckv-tree{font-family:var(--ckv-M);font-size:13px;line-height:1.5;color:var(--ckv-dim);}
+.ckv-tree span{display:block;padding:3px 0;}
+.ckv-tree b{color:var(--ckv-blue-lt);font-weight:500;}
+.ckv-tree .lvl1{padding-left:20px;}
+.ckv-tree .lvl2{padding-left:40px;color:var(--ckv-faint);}
+.ckv-tree .fdr::before{content:'▸ ';color:var(--ckv-purple-lt);}
+
+/* neural crystal */
+.ckv-crystal{position:relative;display:grid;place-items:center;min-height:210px;}
+.ckv-blob{position:relative;width:150px;height:150px;z-index:2;
+  background:conic-gradient(from 120deg,var(--ckv-blue),var(--ckv-purple),var(--ckv-pink),var(--ckv-blue));
+  border-radius:42% 58% 63% 37%/45% 42% 58% 55%;filter:blur(.4px) saturate(1.25);
+  box-shadow:0 0 60px rgba(139,92,246,.55),inset 0 0 40px rgba(255,255,255,.28);
+  animation:ckvMorph 9s ease-in-out infinite;}
+.ckv-blob::before{content:'';position:absolute;inset:14px;border-radius:inherit;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),transparent 55%);mix-blend-mode:screen;}
+@keyframes ckvMorph{0%,100%{border-radius:42% 58% 63% 37%/45% 42% 58% 55%;transform:rotate(0) scale(1)}
+  50%{border-radius:60% 40% 38% 62%/58% 55% 45% 42%;transform:rotate(12deg) scale(1.06)}}
+.ckv-nodes{position:absolute;inset:0;z-index:1;pointer-events:none;}
+.ckv-nodes circle{fill:var(--ckv-blue-lt);}
+.ckv-nodes line{stroke:rgba(139,120,255,.35);stroke-width:1;}
+.ckv-nodes .pu{fill:var(--ckv-pink);}
+
+/* particle demo */
+.ckv-demo{position:relative;min-height:150px;border-radius:16px;overflow:hidden;
+  background:radial-gradient(circle at 50% 50%,rgba(59,130,246,.08),transparent 70%);}
+.ckv-demo i{position:absolute;width:5px;height:5px;border-radius:50%;
+  background:var(--ckv-blue-lt);box-shadow:0 0 8px var(--ckv-purple-lt);
+  animation:ckvFloat 6s ease-in-out infinite;}
+@keyframes ckvFloat{0%,100%{transform:translateY(0);opacity:.85}50%{transform:translateY(-12px);opacity:1}}
+
+/* rule list */
+.ckv-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+.ckv-list li{position:relative;padding-left:22px;font-size:14px;line-height:1.55;color:var(--ckv-dim);}
+.ckv-list li::before{content:'◆';position:absolute;left:0;top:1px;font-size:10px;color:var(--ckv-purple-lt);}
+.ckv-note{font-size:14.5px;line-height:1.7;color:var(--ckv-dim);}
+.ckv-note strong{color:var(--ckv-text);}
+
+/* PARA grid */
+.ckv-para{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.ckv-para div{padding:12px 14px;border-radius:14px;background:rgba(139,92,246,.09);
+  border:1px solid var(--ckv-line);}
+.ckv-para strong{display:block;font-family:var(--ckv-D);font-size:15px;color:var(--ckv-blue-lt);margin-bottom:2px;}
+.ckv-para span{font-family:var(--ckv-M);font-size:10px;letter-spacing:.06em;color:var(--ckv-faint);}
+
+/* code blocks */
+.ckv-code{font-family:var(--ckv-M);font-size:12px;line-height:1.7;color:var(--ckv-dim);
+  background:rgba(8,6,22,.6);border:1px solid var(--ckv-line);border-radius:14px;
+  padding:14px 16px;margin-bottom:10px;white-space:pre-wrap;}
+.ckv-code .cm{color:var(--ckv-purple-lt);}
+.ckv-code:last-child{margin-bottom:0;}
+
+/* step list */
+.ckv-steps{list-style:none;margin:0;padding:0;counter-reset:ckv;display:flex;flex-direction:column;gap:12px;}
+.ckv-steps li{counter-increment:ckv;position:relative;padding-left:40px;font-size:14px;line-height:1.5;color:var(--ckv-dim);}
+.ckv-steps li::before{content:counter(ckv);position:absolute;left:0;top:-2px;width:26px;height:26px;
+  display:grid;place-items:center;border-radius:50%;font-family:var(--ckv-M);font-size:12px;color:var(--ckv-text);
+  background:linear-gradient(135deg,var(--ckv-blue),var(--ckv-purple));box-shadow:0 0 14px rgba(139,92,246,.5);}
+
+/* pill tags */
+.ckv-pills{display:flex;flex-wrap:wrap;gap:9px;}
+.ckv-pills span{font-family:var(--ckv-M);font-size:11.5px;letter-spacing:.03em;color:var(--ckv-text);
+  padding:8px 14px;border-radius:100px;background:rgba(96,165,250,.12);border:1px solid var(--ckv-line);
+  transition:all .3s ease;}
+.ckv-pills span:hover{background:rgba(139,92,246,.2);border-color:var(--ckv-purple-lt);
+  box-shadow:0 0 16px rgba(139,92,246,.35);}
+
+/* weekly review loop */
+.ckv-loop{position:relative;border-radius:22px;padding:24px;
+  background:linear-gradient(160deg,rgba(120,110,220,.12),rgba(60,80,180,.04));
+  border:1px solid var(--ckv-line);
+  -webkit-backdrop-filter:blur(22px) saturate(1.6);backdrop-filter:blur(22px) saturate(1.6);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 24px 60px rgba(6,4,20,.5);}
+.ckv-loop-tag{display:block;text-align:center;font-family:var(--ckv-M);font-size:9px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--ckv-purple-lt);margin-bottom:18px;}
+.ckv-flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;}
+.ckv-flow b{font-family:var(--ckv-D);font-weight:600;font-size:15px;color:var(--ckv-text);
+  padding:12px 20px;border-radius:14px;background:rgba(139,92,246,.1);border:1px solid var(--ckv-line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);}
+.ckv-flow em{font-style:normal;color:var(--ckv-purple-lt);font-size:18px;}
+
+@media(max-width:900px){
+  .ckv-grid{grid-template-columns:repeat(2,1fr);}
+  .ckv-card,.ckv-card.span3{grid-column:span 1;}
+  .ckv-card.span6{grid-column:span 2;}
+}
+@media(max-width:560px){
+  .ckv-grid{grid-template-columns:1fr;}
+  .ckv-card,.ckv-card.span3,.ckv-card.span6{grid-column:span 1;}
+  .ckv-para{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce){
+  .ckv-blob{animation:none;}.ckv-demo i{animation:none;}
+}
+</style>
+
+<section class="sec ckv-sec" id="second-brain" aria-labelledby="ckv-title">
+  <div class="shell">
+    <div class="rv ckv-head">
+      <span class="ckv-kicker">The Crystal Knowledge Vault</span>
+      <h2 class="ckv-h2" id="ckv-title">How to Build Your <span>Second Brain</span> with Claude + Obsidian</h2>
+      <p class="ckv-sub">An AI-powered knowledge system that turns scattered notes into a connected, searchable mind — Obsidian for structure, Claude for intelligence, and a repeatable loop that compounds what you know.</p>
+    </div>
+
+    <div class="ckv-grid">
+      <!-- Vault structure -->
+      <article class="rv ckv-card span3">
+        <span class="ckv-c-tag">◈ Obsidian Vault Structure</span>
+        <div class="ckv-c-title">A home for every thought</div>
+        <div class="ckv-tree">
+<span class="fdr"><b>Second Brain/</b></span>
+<span class="lvl1 fdr">Projects</span>
+<span class="lvl1 fdr">Areas</span>
+<span class="lvl1 fdr">Resources</span>
+<span class="lvl1 fdr">Archive</span>
+<span class="lvl1 fdr">Templates</span>
+<span class="lvl1 fdr">Maps</span>
+<span class="lvl1 fdr">Reviews</span>
+        </div>
+      </article>
+
+      <!-- Neural crystal -->
+      <article class="rv ckv-card span3">
+        <span class="ckv-c-tag">◈ Knowledge Graph</span>
+        <div class="ckv-crystal">
+          <svg class="ckv-nodes" viewBox="0 0 240 210" aria-hidden="true">
+            <line x1="120" y1="105" x2="40" y2="40"/><line x1="120" y1="105" x2="205" y2="55"/>
+            <line x1="120" y1="105" x2="30" y2="160"/><line x1="120" y1="105" x2="210" y2="165"/>
+            <line x1="120" y1="105" x2="120" y2="18"/><line x1="40" y1="40" x2="30" y2="160"/>
+            <line x1="205" y1="55" x2="210" y2="165"/>
+            <circle cx="40" cy="40" r="4"/><circle class="pu" cx="205" cy="55" r="4"/>
+            <circle cx="30" cy="160" r="3.5"/><circle class="pu" cx="210" cy="165" r="4"/>
+            <circle cx="120" cy="18" r="3.5"/>
+          </svg>
+          <div class="ckv-blob" aria-hidden="true"></div>
+        </div>
+      </article>
+
+      <!-- Demo -->
+      <article class="rv ckv-card span6">
+        <span class="ckv-c-tag">◈ Second Brain Demo</span>
+        <div class="ckv-c-title">Ideas cluster, connect, and surface on demand</div>
+        <div class="ckv-demo" id="ckvDemo" aria-hidden="true"></div>
+      </article>
+
+      <!-- Core files Claude should read -->
+      <article class="rv ckv-card span3">
+        <span class="ckv-c-tag">◈ Core Files Claude Should Read</span>
+        <div class="ckv-c-title">Give the model its bearings</div>
+        <ul class="ckv-list">
+          <li><strong>00 – Index / Home</strong> — the vault map and current focus</li>
+          <li><strong>Maps of Content</strong> — topic hubs that link related notes</li>
+          <li><strong>Active project notes</strong> — only what's in flight</li>
+          <li><strong>Templates</strong> — so output matches your format</li>
+        </ul>
+      </article>
+
+      <!-- Avoid overload -->
+      <article class="rv ckv-card span3">
+        <span class="ckv-c-tag">◈ Avoid Information Overload</span>
+        <div class="ckv-c-title">Less, but connected</div>
+        <p class="ckv-note">Capture <strong>atomic notes</strong> — one idea each. Link generously, archive ruthlessly, and let Maps of Content do the remembering. A smaller vault you trust beats a large one you avoid.</p>
+      </article>
+
+      <!-- PARA -->
+      <article class="rv ckv-card span3">
+        <span class="ckv-c-tag">◈ Use PARA to Organize Notes</span>
+        <div class="ckv-c-title">Four buckets, zero guesswork</div>
+        <div class="ckv-para">
+          <div><strong>Projects</strong><span>Active · deadline</span></div>
+          <div><strong>Areas</strong><span>Ongoing · standards</span></div>
+          <div><strong>Resources</strong><span>Reference · topics</span></div>
+          <div><strong>Archive</strong><span>Done · inactive</span></div>
+        </div>
+      </article>
+
+      <!-- Claude prompts -->
+      <article class="rv ckv-card span3">
+        <span class="ckv-c-tag">◈ Claude Prompts for Obsidian</span>
+        <div class="ckv-c-title">Copy, paste, think faster</div>
+        <div class="ckv-code"><span class="cm"># Summarize + link</span>
+Summarize this note in 3 bullets and
+suggest 5 [[wikilinks]] to related ideas.</div>
+        <div class="ckv-code"><span class="cm"># Weekly synthesis</span>
+Read my Reviews folder and surface the
+themes I keep returning to.</div>
+      </article>
+
+      <!-- How to connect -->
+      <article class="rv ckv-card span3">
+        <span class="ckv-c-tag">◈ How to Connect Claude to Obsidian</span>
+        <div class="ckv-c-title">Bridge in four steps</div>
+        <ol class="ckv-steps">
+          <li>Point Claude (via MCP filesystem) at your vault folder.</li>
+          <li>Expose read access to Projects, Resources & Maps.</li>
+          <li>Add a system note defining your linking conventions.</li>
+          <li>Ask Claude to draft, link, and file notes back in.</li>
+        </ol>
+      </article>
+
+      <!-- Plugins -->
+      <article class="rv ckv-card span3">
+        <span class="ckv-c-tag">◈ Best Obsidian Plugins</span>
+        <div class="ckv-c-title">Power-ups for the vault</div>
+        <div class="ckv-pills">
+          <span>Dataview</span><span>Templater</span><span>Excalidraw</span>
+          <span>Graph Analysis</span><span>Omnisearch</span><span>Periodic Notes</span>
+          <span>QuickAdd</span><span>Kanban</span><span>Smart Connections</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- Weekly review loop -->
+    <div class="rv ckv-loop">
+      <span class="ckv-loop-tag">Weekly Review Loop</span>
+      <div class="ckv-flow">
+        <b>Capture</b><em>→</em><b>Process</b><em>→</em><b>Connect</b><em>→</em><b>Review</b><em>→</em><b>Create</b>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+// Crystal Knowledge Vault — populate the Second Brain particle demo (scoped, additive)
+(function(){
+  var d=document.getElementById('ckvDemo');
+  if(!d||window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var n=22,html='';
+  for(var i=0;i<n;i++){
+    var x=Math.round(Math.random()*94)+3,y=Math.round(Math.random()*80)+8,
+        s=(Math.random()*4+3).toFixed(1),dl=(Math.random()*4).toFixed(1),
+        pink=Math.random()>0.62;
+    html+='<i style="left:'+x+'%;top:'+y+'%;animation-duration:'+s+'s;animation-delay:'+dl+'s;'
+        +(pink?'background:#f472b6;box-shadow:0 0 8px #a855f7;':'')+'"></i>';
+  }
+  d.innerHTML=html;
+})();
+</script>
+
 <!-- CTA -->
 
 <section class="cta" id="contact">

@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "14:02",
-    "timestamp": "2026-07-17T14:02:19Z"
+    "time": "19:32",
+    "timestamp": "2026-07-17T19:32:06Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #325",
-    "time": "14:02",
-    "timestamp": "2026-07-17T14:02:01Z"
+    "detail": "schedule on main \u00b7 run #328",
+    "time": "19:31",
+    "timestamp": "2026-07-17T19:31:51Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #763",
-    "time": "13:54",
-    "timestamp": "2026-07-17T13:54:21Z"
+    "detail": "schedule on main \u00b7 run #770",
+    "time": "19:20",
+    "timestamp": "2026-07-17T19:20:47Z"
   },
   {
     "title": "Health Monitor",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #192",
-    "time": "13:46",
-    "timestamp": "2026-07-17T13:46:30Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #83",
-    "time": "13:13",
-    "timestamp": "2026-07-17T13:13:50Z"
+    "detail": "schedule on main \u00b7 run #193",
+    "time": "19:15",
+    "timestamp": "2026-07-17T19:15:58Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-52e6e19c-1acb-4f8f-bcd3-73d756fea927 \u00b7 run #863",
-    "time": "13:08",
-    "timestamp": "2026-07-17T13:08:12Z"
-  },
-  {
-    "title": "Sales-Ops Briefing",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #24",
-    "time": "12:20",
-    "timestamp": "2026-07-17T12:20:30Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-7017b72b-4a27-45d1-9efe-13feb0b2d70d \u00b7 run #869",
+    "time": "19:08",
+    "timestamp": "2026-07-17T19:08:05Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-35b14ff0-7373-4597-9a8c-d8396ce1489e \u00b7 run #862",
-    "time": "12:08",
-    "timestamp": "2026-07-17T12:08:09Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-b2c8bab9-3081-4515-ae14-931b253edd8d \u00b7 run #868",
+    "time": "18:08",
+    "timestamp": "2026-07-17T18:08:06Z"
   },
   {
-    "title": "Deploy Pages",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #1008",
-    "time": "11:40",
-    "timestamp": "2026-07-17T11:40:33Z"
+    "detail": "pull_request on claude/personal-authority-strategy-3a2xk2 \u00b7 run #616",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:48Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "CI",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1467",
-    "time": "11:40",
-    "timestamp": "2026-07-17T11:40:26Z"
+    "detail": "pull_request on claude/personal-authority-strategy-3a2xk2 \u00b7 run #1431",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:48Z"
   },
   {
-    "title": "Code Quality: Push on main",
+    "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2488",
-    "time": "11:40",
-    "timestamp": "2026-07-17T11:40:25Z"
+    "detail": "pull_request on claude/personal-authority-strategy-3a2xk2 \u00b7 run #1477",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:47Z"
   },
   {
-    "title": "Control Surface Feeds",
+    "title": "Defender Watch",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #324",
-    "time": "11:40",
-    "timestamp": "2026-07-17T11:40:06Z"
+    "detail": "pull_request on claude/personal-authority-strategy-3a2xk2 \u00b7 run #769",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:47Z"
   },
   {
-    "title": "Deploy Pages",
+    "title": "Policy Gate",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1007",
-    "time": "11:11",
-    "timestamp": "2026-07-17T11:11:40Z"
+    "detail": "pull_request on claude/personal-authority-strategy-3a2xk2 \u00b7 run #1169",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:47Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/personal-authority-strategy-3a2xk2 \u00b7 run #1197",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:47Z"
+  },
+  {
+    "title": "Code Quality: PR #897",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/897/head \u00b7 run #2497",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:45Z"
   }
 ]

@@ -17,13 +17,22 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout site source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Build site
+
+      - name: Build site artifact
+        shell: bash
         run: |
+          set -euo pipefail
           rm -rf dist
+
           if [ -f package.json ]; then
             if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then
               npm ci
@@ -43,9 +52,19 @@ jobs:
               --exclude node_modules/ \
               --exclude dist/
           fi
+
+          if [ ! -s dist/index.html ]; then
+            echo "::error file=dist/index.html::GitHub Pages artifact is missing a non-empty index.html"
+            exit 1
+          fi
+
           touch dist/.nojekyll
-      - name: Fix permissions
-        run: chmod -R +rX dist
+          chmod -R +rX dist
+
+          echo "Pages artifact validated:"
+          du -sh dist
+          find dist -maxdepth 2 -type f | sort | head -100
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
@@ -53,6 +72,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: build
     environment:
       name: github-pages
@@ -61,3 +81,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Record deployment URL
+        run: echo "Published ${{ steps.deployment.outputs.page_url }}"

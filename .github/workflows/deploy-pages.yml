@@ -15,8 +15,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
       - name: Build site
-        run: npm ci && npm run build
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -f package-lock.json && -f package.json ]]; then
+            npm ci
+            npm run build
+            test -d dist
+          else
+            mkdir -p dist
+            rsync -av \
+              --exclude='.git/' \
+              --exclude='.github/' \
+              --exclude='node_modules/' \
+              --exclude='dist/' \
+              --exclude='package.json' \
+              --exclude='package-lock.json' \
+              ./ dist/
+          fi
       - name: Fix permissions
         run: chmod -R +rX dist
       - name: Upload Pages artifact

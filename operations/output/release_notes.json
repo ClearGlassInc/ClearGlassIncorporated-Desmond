@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-07-16T09:12:04.304987+00:00",
+  "run_utc": "2026-07-17T09:07:48.345421+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 808,
+  "commit_count": 852,
   "sections": {
     "New Features": [
+      {
+        "sha": "365b247",
+        "type": "feat",
+        "scope": "bluedesk",
+        "subject": "add multi-domain dominance Executive Summary to brief",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
       {
         "sha": "9f77153",
         "type": "feat",
@@ -912,6 +921,15 @@
     ],
     "Documentation": [
       {
+        "sha": "b9e2248",
+        "type": "docs",
+        "scope": null,
+        "subject": "record www.clearglassinc.com domain migration + verification",
+        "author": "Claude",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
         "sha": "3c68483",
         "type": "docs",
         "scope": null,
@@ -1068,6 +1086,24 @@
       }
     ],
     "CI/CD": [
+      {
+        "sha": "b7e5117",
+        "type": "ci",
+        "scope": null,
+        "subject": "pin GitHub Pages artifact name",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "fcec60c",
+        "type": "ci",
+        "scope": null,
+        "subject": "restore daily marketing content issues",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
       {
         "sha": "631a876",
         "type": "ci",
@@ -1241,6 +1277,204 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "9263b6b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove unused variables flagged by CodeQL in dashboard JS",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "7cb2e42",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ALMACH Scalp Engine AI trading dashboard page",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "ce66cd9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Label all images with copyright metadata and add site-wide asset protection",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "f5649f6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add animated Frontier Intelligence briefing blog post",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "4da4f6e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass content strategy prompts",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "3afc9d6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update Pages deployment workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "b87fcf9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix mobile writing-help button flow",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "6b25db8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Deploy Pages workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "fbad284",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance homepage command intelligence layers",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "e54310e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Artemis 2040 blueprint page",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "980c32e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Artemis 2040 blueprint page",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "8eb4684",
+        "type": "chore",
+        "scope": null,
+        "subject": "Improve GitHub Pages workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "2b9ff5c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add bulk workflow dispatch automation",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "4284c14",
+        "type": "chore",
+        "scope": null,
+        "subject": "Refine CONDUIT production motion strategy",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "bb759c8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance CONDUIT command motion experience",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "e577426",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance CONDUIT platform narrative",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "c343da5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Artemis AI platform blueprint page",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "02ffddb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add masked payout account configuration",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "d03c358",
+        "type": "chore",
+        "scope": null,
+        "subject": "Strengthen Artemis Python implementation blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "7d2b753",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Conduit to flagship product lists",
+        "author": "Desmond Otieno",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "7182dda",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add premium cyber command-center hero visual to SMB Cyber Trust Kit",
+        "author": "Claude",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "201fd13",
+        "type": "chore",
+        "scope": null,
+        "subject": "Re-skin Side Store to dark command-center aesthetic, keeping every storefront feature",
+        "author": "Claude",
+        "date": "2026-07-16",
+        "breaking": false
+      },
       {
         "sha": "bffc58e",
         "type": "chore",
@@ -4114,6 +4348,114 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "f81b352",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "6c09721",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "0c8ad37",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "59b06dc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "21875c5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "e2875ca",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "8822fc8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "9f7fe23",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "8163b23",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "b034e89",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "d6fc1d2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
+      {
+        "sha": "7bfe517",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-16 09:12 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-16",
+        "breaking": false
+      },
       {
         "sha": "5944c0e",
         "type": "bot",
@@ -7162,6 +7504,60 @@
       }
     ],
     "Other": [
+      {
+        "sha": "c4e810e",
+        "type": "prompts",
+        "scope": null,
+        "subject": "patch CEO Bot system prompt to v1.1.0 with evidence and secrets guardrails",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "bbf1532",
+        "type": "bluedesk",
+        "scope": null,
+        "subject": "add ARTEMIS FAWL Autonomous AI Operations charter view",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "abd42f5",
+        "type": "bluedesk",
+        "scope": null,
+        "subject": "add Founder Authority Strategy console view",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "ca79127",
+        "type": "guardian",
+        "scope": null,
+        "subject": "add Crystal Knowledge Vault second-brain infographic section",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "0cce1a0",
+        "type": "guardian",
+        "scope": null,
+        "subject": "add cinematic Guardian brand film with interactive player",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "4bb9e33",
+        "type": "pages",
+        "scope": null,
+        "subject": "back off before Pages deploy retry to absorb transient artifact-metadata hiccup",
+        "author": "Claude",
+        "date": "2026-07-16",
+        "breaking": false
+      },
       {
         "sha": "bf6669d",
         "type": "clearpulse",

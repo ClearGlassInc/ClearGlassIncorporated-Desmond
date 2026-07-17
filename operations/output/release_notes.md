@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-16
+# Release Notes — 2026-07-17
 
-*808 commit(s) since v1.0.0*
+*852 commit(s) since v1.0.0*
 
 ## New Features
 
+- **bluedesk:** add multi-domain dominance Executive Summary to brief (`365b247`)
 - **smb:** premium product experience for the SMB Cyber Trust Kit (`9f77153`)
 - **percival:** thread correlation/trace IDs through the policy governor (`3beebfa`)
 - **ui:** command-center atmosphere layer on percival-os + side-store (`10cfa1a`)
@@ -113,6 +114,7 @@
 
 ## Documentation
 
+- record www.clearglassinc.com domain migration + verification (`b9e2248`)
 - add engineering guidelines (`3c68483`)
 - **artemis:** add 2050 readiness ledger (`30cf9bf`)
 - add Artemis Palantir self-evolving platform blueprint (`b1e97c9`)
@@ -136,6 +138,8 @@
 
 ## CI/CD
 
+- pin GitHub Pages artifact name (`b7e5117`)
+- restore daily marketing content issues (`fcec60c`)
 - sign bot commits to main via GitHub API (Verified status) (`631a876`)
 - add ClearGlass company orchestrator validation workflow (`f11c077`)
 - skip repair agent cleanly when no agent credential is set (`f2968c5`)
@@ -158,6 +162,28 @@
 
 ## Maintenance
 
+- Remove unused variables flagged by CodeQL in dashboard JS (`9263b6b`)
+- Add ALMACH Scalp Engine AI trading dashboard page (`7cb2e42`)
+- Label all images with copyright metadata and add site-wide asset protection (`ce66cd9`)
+- Add animated Frontier Intelligence briefing blog post (`f5649f6`)
+- Add ClearGlass content strategy prompts (`4da4f6e`)
+- Update Pages deployment workflow (`3afc9d6`)
+- Fix mobile writing-help button flow (`b87fcf9`)
+- Add Deploy Pages workflow (`6b25db8`)
+- Enhance homepage command intelligence layers (`fbad284`)
+- Enhance Artemis 2040 blueprint page (`e54310e`)
+- Enhance Artemis 2040 blueprint page (`980c32e`)
+- Improve GitHub Pages workflow (`8eb4684`)
+- Add bulk workflow dispatch automation (`2b9ff5c`)
+- Refine CONDUIT production motion strategy (`4284c14`)
+- Enhance CONDUIT command motion experience (`bb759c8`)
+- Enhance CONDUIT platform narrative (`e577426`)
+- Enhance Artemis AI platform blueprint page (`c343da5`)
+- Add masked payout account configuration (`02ffddb`)
+- Strengthen Artemis Python implementation blueprint (`d03c358`)
+- Add Conduit to flagship product lists (`7d2b753`)
+- Add premium cyber command-center hero visual to SMB Cyber Trust Kit (`7182dda`)
+- Re-skin Side Store to dark command-center aesthetic, keeping every storefront feature (`201fd13`)
 - Procurement page contrast fix + www.clearglassinc.com CI repairs (#854) (`bffc58e`)
 - Fix domain-migration regressions in content validator and cert-bot tests (`dd20e52`)
 - Add procurement & legal-tech command surface page (`b8f14e2`)
@@ -480,6 +506,18 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`f81b352`)
+- refresh control-surface data feeds [skip ci] (`6c09721`)
+- refresh control-surface data feeds [skip ci] (`0c8ad37`)
+- refresh control-surface data feeds [skip ci] (`59b06dc`)
+- refresh control-surface data feeds [skip ci] (`21875c5`)
+- refresh control-surface data feeds [skip ci] (`e2875ca`)
+- refresh control-surface data feeds [skip ci] (`8822fc8`)
+- refresh control-surface data feeds [skip ci] (`9f7fe23`)
+- refresh control-surface data feeds [skip ci] (`8163b23`)
+- refresh control-surface data feeds [skip ci] (`b034e89`)
+- refresh control-surface data feeds [skip ci] (`d6fc1d2`)
+- update generated outputs — 2026-07-16 09:12 UTC [skip ci] (`7bfe517`)
 - refresh control-surface data feeds [skip ci] (`5944c0e`)
 - refresh control-surface data feeds [skip ci] (`b6bbab8`)
 - refresh control-surface data feeds [skip ci] (`8a1b7fb`)
@@ -827,6 +865,12 @@
 
 ## Other
 
+- patch CEO Bot system prompt to v1.1.0 with evidence and secrets guardrails (`c4e810e`)
+- add ARTEMIS FAWL Autonomous AI Operations charter view (`bbf1532`)
+- add Founder Authority Strategy console view (`abd42f5`)
+- add Crystal Knowledge Vault second-brain infographic section (`ca79127`)
+- add cinematic Guardian brand film with interactive player (`0cce1a0`)
+- back off before Pages deploy retry to absorb transient artifact-metadata hiccup (`4bb9e33`)
 - drop redundant tickClock truthiness guards (`bf6669d`)
 - add live command-surface behaviors (streaming feed, explainable drill-down, animated telemetry) (`f302445`)
 - add local docker-compose stack (governor + envoy gateway) (`27a8497`)

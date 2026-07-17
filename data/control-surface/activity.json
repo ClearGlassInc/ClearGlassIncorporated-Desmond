@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "22:06",
-    "timestamp": "2026-07-17T22:06:03Z"
+    "time": "23:07",
+    "timestamp": "2026-07-17T23:07:26Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #331",
+    "time": "23:07",
+    "timestamp": "2026-07-17T23:07:16Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-856ef936-f81f-4e93-8519-b657033bb6cc \u00b7 run #872",
+    "time": "22:08",
+    "timestamp": "2026-07-17T22:08:07Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1025",
+    "time": "22:06",
+    "timestamp": "2026-07-17T22:06:15Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1485",
+    "time": "22:06",
+    "timestamp": "2026-07-17T22:06:09Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2519",
+    "time": "22:06",
+    "timestamp": "2026-07-17T22:06:09Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #330",
     "time": "22:05",
     "timestamp": "2026-07-17T22:05:53Z"
@@ -54,40 +89,5 @@
     "detail": "push on main \u00b7 run #361",
     "time": "21:34",
     "timestamp": "2026-07-17T21:34:00Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1496",
-    "time": "21:34",
-    "timestamp": "2026-07-17T21:34:00Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1188",
-    "time": "21:34",
-    "timestamp": "2026-07-17T21:34:00Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2518",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:59Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "ok",
-    "detail": "pull_request on codex/add-ultimate-windows-gpu-optimization-script \u00b7 run #626",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:23Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "pull_request on codex/add-ultimate-windows-gpu-optimization-script \u00b7 run #1449",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:23Z"
   }
 ]

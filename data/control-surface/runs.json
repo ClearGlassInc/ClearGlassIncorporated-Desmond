@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #330",
+    "title": "Control Surface Feeds #331",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:07",
+    "timestamp": "2026-07-17T23:07:16Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #872",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-856ef936-f81f-4e93-8519-b657033bb6cc",
+    "time": "22:08",
+    "timestamp": "2026-07-17T22:08:07Z"
+  },
+  {
+    "title": "Deploy Pages #1025",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "22:06",
+    "timestamp": "2026-07-17T22:06:15Z"
+  },
+  {
+    "title": "pages build and deployment #1485",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:06",
+    "timestamp": "2026-07-17T22:06:09Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2519",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:06",
+    "timestamp": "2026-07-17T22:06:09Z"
+  },
+  {
+    "title": "Control Surface Feeds #330",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:05",
     "timestamp": "2026-07-17T22:05:53Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 pull_request on codex/add-ultimate-windows-gpu-optimization-script",
     "time": "21:33",
     "timestamp": "2026-07-17T21:33:23Z"
-  },
-  {
-    "title": "Policy Gate #1187",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-ultimate-windows-gpu-optimization-script",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:23Z"
-  },
-  {
-    "title": "Code Quality: PR #905 #2517",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/905/head",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:21Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1494",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:20",
-    "timestamp": "2026-07-17T21:20:43Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #360",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:20",
-    "timestamp": "2026-07-17T21:20:43Z"
-  },
-  {
-    "title": "Security #1214",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:20",
-    "timestamp": "2026-07-17T21:20:43Z"
   }
 ]

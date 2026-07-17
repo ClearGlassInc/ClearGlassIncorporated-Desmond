@@ -553,3 +553,117 @@ Six hours later, the case is confirmed as a true positive. The edited commander-
 ### 7. Self-Improvement
 
 The eval builder turns the incident into a versioned eval case. The candidate generator proposes a prompt update that softens unsupported risk language and a workflow update that checks for redundant collection before recommendation. Offline evals improve precision and operator trust without increasing latency or policy violations. A human review board approves a limited Apollo canary. Online shadow evaluation confirms improvement, and Apollo promotes the new prompt/workflow bundle. If precision, latency, or policy safety had regressed, Apollo would roll back automatically and preserve the failed candidate for review.
+
+---
+
+## Secure Workflow Deployment Plan
+
+### Approved Scope Register
+
+Artemis must not link accounts, repositories, clouds, or external APIs until a deployment ticket names the exact target. Every workflow starts with this register and fails closed when any field is unknown.
+
+| Scope item | Required value before deployment | Control |
+|---|---|---|
+| GitHub organization | `ClearGlassInc` or explicit approved org | Organization-level allowlist and CODEOWNERS review. |
+| Repository | Exact repo name, branch protection profile, and environment list | Repository allowlist in deployment manifest. |
+| Palantir tenant | Exact Foundry/Gotham/AIP/Apollo stack and region | Tenant-scoped service account with named purpose. |
+| Environments | `dev`, `staging`, `production`, and any coalition compartments | Separate secrets, approvals, model routes, and data policies. |
+| Credentials | Secret name, owner, rotation date, scope, and expiry | GitHub environment secrets, Palantir secrets, or external vault references only. |
+| Human approvers | Named review group for production and sensitive actions | Required reviewers and immutable approval event. |
+
+### Workflow Map
+
+| Workflow | Trigger | What it does | Production gate |
+|---|---|---|---|
+| `ontology-ci` | Pull request to ontology or transform code | Validates schema migrations, object action contracts, lineage, and permission tests. | No direct production write; blocks merge on failure. |
+| `agent-eval-ci` | Prompt, tool, router, or workflow change | Runs golden evals, adversarial prompts, policy checks, regression tests, and latency budgets. | Requires AIP governance approval before promotion. |
+| `apollo-canary-release` | Approved release tag | Signs bundle, deploys to ring 0, watches KPIs, then promotes or rolls back. | Manual approval plus automated KPI gates. |
+| `incident-response-package` | Operator-approved mission action | Generates case package, evidence bundle, notification draft, and audit trail. | Human approval for operationally significant actions. |
+| `secret-rotation-audit` | Schedule and manual dispatch | Finds stale secrets, validates expiry metadata, and opens remediation tickets. | Security owner approval before replacing production credentials. |
+
+### Secrets and Permission Matrix
+
+| Principal | Dev permissions | Staging permissions | Production permissions | Notes |
+|---|---|---|---|---|
+| `artemis-ci-bot` | Read repo, write checks, upload artifacts | Read staging config, run staging evals | No production secrets | Cannot deploy. |
+| `artemis-release-bot` | Read signed artifacts | Deploy to staging | Deploy via Apollo only after approval | Uses short-lived OIDC federation. |
+| `aip-eval-service` | Read sanitized eval sets | Read staging ontology projections | Read approved production eval projections only | No raw secret access. |
+| `operator-copilot` | Dev sandbox objects | Staging mission objects by role | Production objects by need-to-know policy | Tool calls require policy trace. |
+| `security-auditor` | Read logs | Read logs and config | Read immutable audit ledger; no data mutation | Separation of duties. |
+
+### Deployment Checklist
+
+1. Confirm exact systems, accounts, repos, Palantir tenant, environments, and approvers are named in the deployment ticket.
+2. Confirm no hardcoded credentials exist in workflow YAML, code, prompts, notebooks, or config bundles.
+3. Pin third-party GitHub Actions to reviewed versions or commit SHAs, and prefer first-party or internally mirrored actions.
+4. Set `permissions:` blocks to minimum scope per job, with read-only defaults and job-level escalation only where required.
+5. Create separate environment secrets for `dev`, `staging`, and `production`; require production reviewers.
+6. Run ontology tests, policy tests, eval harnesses, red-team prompt tests, dependency scans, and dry-run Apollo deployment.
+7. Deploy ring 0 canary, monitor KPIs, and automatically roll back on policy violation, latency regression, precision drop, or secret exposure signal.
+8. Record release metadata: artifact hash, prompt versions, model routes, policy bundle version, approver, deployment window, and rollback plan.
+
+### Operational KPIs
+
+| KPI | Target | Measurement source |
+|---|---:|---|
+| Deployment success rate | `>= 99%` non-emergency releases | Apollo deployment telemetry. |
+| Failed-run count | `0` production-blocking failures per release | GitHub Actions and Apollo run history. |
+| Secret exposure risk | `0` plaintext secrets in logs/artifacts | Log scanner, artifact scanner, secret scanning alerts. |
+| Approval compliance | `100%` for production and operationally significant actions | Environment protection rules and audit ledger. |
+| Eval regression escape rate | `< 1%` candidate bundles promoted with missed regression | AIP eval dashboard and post-deploy monitoring. |
+| Rollback time objective | `< 5 minutes` for runtime bundle rollback | Apollo rollback telemetry. |
+
+### Python Deployment Guardrail Skeleton
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from enum import StrEnum
+from typing import Iterable
+
+
+class Environment(StrEnum):
+    DEV = "dev"
+    STAGING = "staging"
+    PRODUCTION = "production"
+
+
+@dataclass(frozen=True)
+class DeploymentScope:
+    organization: str
+    repository: str
+    palantir_tenant: str
+    environment: Environment
+    approver_groups: tuple[str, ...]
+    secret_names: tuple[str, ...]
+    action_sha_pins: tuple[str, ...]
+
+
+class ScopeError(ValueError):
+    pass
+
+
+def validate_explicit_scope(scope: DeploymentScope, approved_repos: Iterable[str]) -> None:
+    missing = [
+        name
+        for name, value in scope.__dict__.items()
+        if value in (None, "", (), [])
+    ]
+    if missing:
+        raise ScopeError(f"deployment scope incomplete: {', '.join(missing)}")
+    if scope.repository not in set(approved_repos):
+        raise ScopeError(f"repository is not approved for Artemis deployment: {scope.repository}")
+    if scope.environment is Environment.PRODUCTION and not scope.approver_groups:
+        raise ScopeError("production deployment requires named approver group")
+    if any(not pin.startswith("sha256:") and len(pin) < 40 for pin in scope.action_sha_pins):
+        raise ScopeError("third-party actions must be pinned to reviewed immutable identifiers")
+
+
+def redact_event(event: dict[str, object]) -> dict[str, object]:
+    sensitive_markers = ("secret", "token", "password", "private_key", "credential")
+    redacted: dict[str, object] = {}
+    for key, value in event.items():
+        redacted[key] = "***REDACTED***" if any(marker in key.lower() for marker in sensitive_markers) else value
+    return redacted
+```

@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #321",
+    "title": "Control Surface Feeds #322",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "06:26",
+    "timestamp": "2026-07-17T06:26:46Z"
+  },
+  {
+    "title": "Multi-Repo Audit #31",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:25",
+    "timestamp": "2026-07-17T06:25:49Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #856",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-5aaca389-f46f-45a7-8d6c-70f939ced38f",
+    "time": "06:08",
+    "timestamp": "2026-07-17T06:08:07Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1450",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "05:18",
+    "timestamp": "2026-07-17T05:18:33Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #855",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-755334de-6d08-4d09-b72d-bc282b2a8bd3",
+    "time": "05:08",
+    "timestamp": "2026-07-17T05:08:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #854",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-b4562309-db9d-48a5-8772-628a1a0c4c51",
+    "time": "04:08",
+    "timestamp": "2026-07-17T04:08:06Z"
+  },
+  {
+    "title": "Deploy Pages #995",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "03:36",
+    "timestamp": "2026-07-17T03:36:43Z"
+  },
+  {
+    "title": "pages build and deployment #1453",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:36",
+    "timestamp": "2026-07-17T03:36:36Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2463",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:36",
+    "timestamp": "2026-07-17T03:36:35Z"
+  },
+  {
+    "title": "Control Surface Feeds #321",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "03:36",
     "timestamp": "2026-07-17T03:36:15Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "01:12",
     "timestamp": "2026-07-17T01:12:02Z"
-  },
-  {
-    "title": "Security #1170",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:12",
-    "timestamp": "2026-07-17T01:12:02Z"
-  },
-  {
-    "title": "CI #1404",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:12",
-    "timestamp": "2026-07-17T01:12:02Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #340",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:12",
-    "timestamp": "2026-07-17T01:12:02Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2462",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "01:12",
-    "timestamp": "2026-07-17T01:12:01Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #851",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-23bc8135-9f1b-496c-9695-3df7df6378a3",
-    "time": "01:08",
-    "timestamp": "2026-07-17T01:08:03Z"
-  },
-  {
-    "title": "Policy Gate #1141",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/guardian-page-animation-x2kvg8",
-    "time": "00:19",
-    "timestamp": "2026-07-17T00:19:50Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1448",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/guardian-page-animation-x2kvg8",
-    "time": "00:19",
-    "timestamp": "2026-07-17T00:19:50Z"
-  },
-  {
-    "title": "PR Automation #600",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/guardian-page-animation-x2kvg8",
-    "time": "00:19",
-    "timestamp": "2026-07-17T00:19:50Z"
-  },
-  {
-    "title": "Security #1169",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/guardian-page-animation-x2kvg8",
-    "time": "00:19",
-    "timestamp": "2026-07-17T00:19:50Z"
   }
 ]

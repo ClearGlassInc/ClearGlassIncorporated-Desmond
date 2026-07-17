@@ -429,15 +429,7 @@ section{padding:26px 0}
 
   /* ---- profit curve (noisy uptrend) ---- */
   (function(){
-    var W=720,H=220,base=200,n=64,pts=[],v=0.15;
-    for(var i=0;i<n;i++){
-      var t=i/(n-1);
-      v += (Math.sin(i*0.5)*0.012) + 0.014 + (Math.random()-0.42)*0.02;
-      var val=Math.max(0.05,Math.min(0.98, 0.15 + t*0.72 + Math.sin(i*0.35)*0.05*(1-t) + (v-0.15)*0.0));
-      pts.push([t*W, base-(val*(base-16))]);
-    }
-    // enforce clean upward drift
-    pts=[]; var acc=0.12;
+    var W=720,base=200,n=64,pts=[],acc=0.12;
     for(var j=0;j<n;j++){ acc += 0.013 + Math.max(-0.02,(Math.random()-0.45)*0.045); acc=Math.min(0.97,Math.max(0.06,acc)); pts.push([ (j/(n-1))*W, base-acc*(base-16) ]); }
     document.getElementById('profitLine').setAttribute('d',linePath(pts));
     document.getElementById('profitArea').setAttribute('d',areaPath(pts,base));
@@ -447,7 +439,7 @@ section{padding:26px 0}
 
   /* ---- multiplier curve (accelerating to 4.1x) ---- */
   (function(){
-    var W=320,H=150,base=140,n=42,pts=[];
+    var W=320,base=140,n=42,pts=[];
     for(var i=0;i<n;i++){ var t=i/(n-1); var val=0.08+Math.pow(t,1.7)*0.86 + Math.sin(i*0.6)*0.02*(1-t); pts.push([t*W, base-val*(base-10)]); }
     document.getElementById('multLine').setAttribute('d',linePath(pts));
     document.getElementById('multArea').setAttribute('d',areaPath(pts,base));
@@ -468,7 +460,7 @@ section{padding:26px 0}
   /* ---- bell curve histogram ---- */
   (function(){
     var g=document.getElementById('histBars'); if(!g) return;
-    var bars=26,W=480,cx=240,H=200,bw=W/bars, html='';
+    var bars=26,W=480,H=200,bw=W/bars, html='';
     for(var i=0;i<bars;i++){
       var x=i*bw, mid=(i+0.5)/bars, z=(mid-0.5)*6;
       var h=Math.exp(-0.5*z*z)*180 * (0.82+Math.random()*0.3);
@@ -485,7 +477,7 @@ section{padding:26px 0}
 
   /* ---- fair value deviation (mean-reverting) ---- */
   var fvState=(function(){
-    var W=480,H=240,mid=120,n=80,pts=[],val=0;
+    var W=480,mid=120,n=80,pts=[],val=0;
     function gen(){ pts=[]; val=0; for(var i=0;i<n;i++){ val += (Math.random()-0.5)*22 - val*0.14; val=Math.max(-95,Math.min(95,val)); pts.push([ (i/(n-1))*W, mid+val ]); } return pts; }
     function draw(){ var p=gen();
       document.getElementById('fvLine').setAttribute('d',linePath(p));
@@ -501,7 +493,7 @@ section{padding:26px 0}
   (function(){
     var svg=document.getElementById('treeSvg'); if(!svg) return;
     // root at top center, fan to row2 (3 nodes), row2 to row3 (4 nodes)
-    var W=1000, root=[500,44];
+    var root=[500,44];
     var r2=[[190,215],[500,215],[810,215]];
     var r3=[[130,395],[380,395],[630,395],[880,395]];
     var frag='';

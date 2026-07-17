@@ -197,6 +197,7 @@ The canonical index of long-form documentation lives in `docs/README.md`. Notabl
 - Corporate and governance: `docs/clearglassinc_artemis_enterprise_corporate_layer.md`
 - Platform architecture: `docs/clearglassinc_artemis_palantir_aip_blueprint.md`
 - Self-evolving platform spec: `docs/clearglassinc_artemis_self_evolving_platform.md`
+- Secure deployment agent prompt: `CLEARGLASS_SECURE_DEPLOYMENT_AGENT_PROMPT.md`
 - Executive profile: `docs/desmond_otieno_odhiambo_executive_profile.md`
 
 Top-level `*.md` blueprints (e.g. `ARTEMIS_INTELLIGENCE_PLATFORM_BLUEPRINT.md`, `CLEARGLASSINC_ARTEMIS_PRODUCTION_ARCHITECTURE.md`) are historical snapshots kept for reference.

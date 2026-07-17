@@ -1,8 +1,113 @@
 [
   {
-    "title": "Control Surface Feeds #327",
+    "title": "Control Surface Feeds #328",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "19:31",
+    "timestamp": "2026-07-17T19:31:51Z"
+  },
+  {
+    "title": "Defender Watch #770",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:20",
+    "timestamp": "2026-07-17T19:20:47Z"
+  },
+  {
+    "title": "Health Monitor #193",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:15",
+    "timestamp": "2026-07-17T19:15:58Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #869",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-7017b72b-4a27-45d1-9efe-13feb0b2d70d",
+    "time": "19:08",
+    "timestamp": "2026-07-17T19:08:05Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #868",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-b2c8bab9-3081-4515-ae14-931b253edd8d",
+    "time": "18:08",
+    "timestamp": "2026-07-17T18:08:06Z"
+  },
+  {
+    "title": "PR Automation #616",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/personal-authority-strategy-3a2xk2",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:48Z"
+  },
+  {
+    "title": "CI #1431",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/personal-authority-strategy-3a2xk2",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:48Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1477",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/personal-authority-strategy-3a2xk2",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:47Z"
+  },
+  {
+    "title": "Defender Watch #769",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/personal-authority-strategy-3a2xk2",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:47Z"
+  },
+  {
+    "title": "Policy Gate #1169",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/personal-authority-strategy-3a2xk2",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:47Z"
+  },
+  {
+    "title": "Security #1197",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on claude/personal-authority-strategy-3a2xk2",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:47Z"
+  },
+  {
+    "title": "Code Quality: PR #897 #2497",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/897/head",
+    "time": "17:46",
+    "timestamp": "2026-07-17T17:46:45Z"
+  },
+  {
+    "title": "Deploy Pages #1013",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "17:30",
+    "timestamp": "2026-07-17T17:30:33Z"
+  },
+  {
+    "title": "pages build and deployment #1473",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "17:30",
+    "timestamp": "2026-07-17T17:30:25Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2496",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "17:30",
+    "timestamp": "2026-07-17T17:30:24Z"
+  },
+  {
+    "title": "Control Surface Feeds #327",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "17:30",
     "timestamp": "2026-07-17T17:30:03Z"
   },
@@ -33,110 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "17:09",
     "timestamp": "2026-07-17T17:09:50Z"
-  },
-  {
-    "title": "Policy Gate #1168",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "17:09",
-    "timestamp": "2026-07-17T17:09:50Z"
-  },
-  {
-    "title": "Auto-Store #85",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "17:09",
-    "timestamp": "2026-07-17T17:09:50Z"
-  },
-  {
-    "title": "CI #1430",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "17:09",
-    "timestamp": "2026-07-17T17:09:50Z"
-  },
-  {
-    "title": "Defender Watch #768",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "17:09",
-    "timestamp": "2026-07-17T17:09:50Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2495",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "17:09",
-    "timestamp": "2026-07-17T17:09:48Z"
-  },
-  {
-    "title": "pages build and deployment #1472",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "17:09",
-    "timestamp": "2026-07-17T17:09:48Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #867",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-a68ad95a-36dd-4b4e-92ec-da0e967f79cf",
-    "time": "17:08",
-    "timestamp": "2026-07-17T17:08:04Z"
-  },
-  {
-    "title": "Security #1195",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-07-17T16:57:06Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1475",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-07-17T16:57:06Z"
-  },
-  {
-    "title": "Policy Gate #1167",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-07-17T16:57:04Z"
-  },
-  {
-    "title": "Deploy Pages #1011",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-07-17T16:57:04Z"
-  },
-  {
-    "title": "CI #1429",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-07-17T16:57:04Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #351",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-07-17T16:57:04Z"
-  },
-  {
-    "title": "Defender Watch #767",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-07-17T16:57:04Z"
-  },
-  {
-    "title": "pages build and deployment #1471",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:57",
-    "timestamp": "2026-07-17T16:57:02Z"
   }
 ]

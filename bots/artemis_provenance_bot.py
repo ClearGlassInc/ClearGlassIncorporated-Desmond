@@ -37,6 +37,7 @@ ARTIFACT_GLOBS = [
     "bots/artemis_ip_guardian_bot.py",
     "bots/artemis_provenance_bot.py",
     ".github/workflows/artemis-deploy.yml",
+    "prompts/general_assistant_system_prompt.md",
     "NOTICE",
     "TRADEMARKS.md",
     "docs/PROVENANCE.md",

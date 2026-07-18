@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "16:10",
-    "timestamp": "2026-07-18T16:10:59Z"
+    "time": "17:14",
+    "timestamp": "2026-07-18T17:14:01Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #340",
-    "time": "16:10",
-    "timestamp": "2026-07-18T16:10:45Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1236",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:10Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #383",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:10Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1545",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:10Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1264",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:10Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1498",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:10Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #840",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:10Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1056",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:10Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1518",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:10Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2580",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:09Z"
+    "detail": "schedule on main \u00b7 run #341",
+    "time": "17:13",
+    "timestamp": "2026-07-18T17:13:51Z"
   },
   {
     "title": "Running Copilot cloud agent",
     "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-33a5948f-9c84-4e19-87d0-1dcea52176e7 \u00b7 run #890",
-    "time": "16:08",
-    "timestamp": "2026-07-18T16:08:07Z"
+    "detail": "dynamic on copilot/task-272290681-1196426665-c9ca0c62-4b25-4c85-86e5-8c7f68406212 \u00b7 run #891",
+    "time": "17:08",
+    "timestamp": "2026-07-18T17:08:07Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/sats-digital-twin-tools-qwtbhs \u00b7 run #1267",
+    "time": "17:00",
+    "timestamp": "2026-07-18T17:00:50Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "pull_request on claude/sats-digital-twin-tools-qwtbhs \u00b7 run #843",
+    "time": "17:00",
+    "timestamp": "2026-07-18T17:00:50Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/sats-digital-twin-tools-qwtbhs \u00b7 run #1239",
+    "time": "17:00",
+    "timestamp": "2026-07-18T17:00:50Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "pull_request on claude/sats-digital-twin-tools-qwtbhs \u00b7 run #1548",
+    "time": "17:00",
+    "timestamp": "2026-07-18T17:00:50Z"
   },
   {
     "title": "PR Automation",
     "status": "ok",
-    "detail": "pull_request on codex/create-logo-system-for-clearglass-inc-0m34nn \u00b7 run #652",
-    "time": "16:07",
-    "timestamp": "2026-07-18T16:07:59Z"
+    "detail": "pull_request on claude/sats-digital-twin-tools-qwtbhs \u00b7 run #654",
+    "time": "17:00",
+    "timestamp": "2026-07-18T17:00:50Z"
+  },
+  {
+    "title": "Internal Link Authority",
+    "status": "ok",
+    "detail": "pull_request on claude/sats-digital-twin-tools-qwtbhs \u00b7 run #19",
+    "time": "17:00",
+    "timestamp": "2026-07-18T17:00:50Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "pull_request on claude/sats-digital-twin-tools-qwtbhs \u00b7 run #1501",
+    "time": "17:00",
+    "timestamp": "2026-07-18T17:00:50Z"
+  },
+  {
+    "title": "Code Quality: PR #931",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/931/head \u00b7 run #2584",
+    "time": "17:00",
+    "timestamp": "2026-07-18T17:00:48Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #1238",
+    "time": "16:13",
+    "timestamp": "2026-07-18T16:13:40Z"
+  },
+  {
+    "title": "Internal Link Authority",
+    "status": "bad",
+    "detail": "push on main \u00b7 run #18",
+    "time": "16:13",
+    "timestamp": "2026-07-18T16:13:40Z"
   }
 ]

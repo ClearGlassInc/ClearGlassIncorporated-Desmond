@@ -51,6 +51,9 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Install focused test dependency
+        run: python3 -m pip install "pytest>=8,<9"
+
       - name: Verify legacy generated blocks remain current
         run: python3 tools/internal_links.py --check
 

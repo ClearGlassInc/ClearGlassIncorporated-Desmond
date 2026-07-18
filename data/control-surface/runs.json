@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #331",
+    "title": "Control Surface Feeds #332",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:08",
+    "timestamp": "2026-07-18T00:08:20Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #874",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-8f38a1d0-4860-43c9-b0f8-df76b2f35d01",
+    "time": "00:08",
+    "timestamp": "2026-07-18T00:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #873",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-6da7e7d6-187d-4268-a3b3-6e11d45a47cb",
+    "time": "23:08",
+    "timestamp": "2026-07-17T23:08:06Z"
+  },
+  {
+    "title": "Deploy Pages #1026",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "23:07",
+    "timestamp": "2026-07-17T23:07:37Z"
+  },
+  {
+    "title": "pages build and deployment #1486",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:07",
+    "timestamp": "2026-07-17T23:07:32Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2520",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:07",
+    "timestamp": "2026-07-17T23:07:32Z"
+  },
+  {
+    "title": "Control Surface Feeds #331",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:07",
     "timestamp": "2026-07-17T23:07:16Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "21:34",
     "timestamp": "2026-07-17T21:34:00Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2518",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:59Z"
-  },
-  {
-    "title": "PR Automation #626",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-ultimate-windows-gpu-optimization-script",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:23Z"
-  },
-  {
-    "title": "CI #1449",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-ultimate-windows-gpu-optimization-script",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:23Z"
-  },
-  {
-    "title": "Security #1215",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-ultimate-windows-gpu-optimization-script",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:23Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1495",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-ultimate-windows-gpu-optimization-script",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:23Z"
-  },
-  {
-    "title": "Defender Watch #788",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-ultimate-windows-gpu-optimization-script",
-    "time": "21:33",
-    "timestamp": "2026-07-17T21:33:23Z"
   }
 ]

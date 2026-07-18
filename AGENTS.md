@@ -128,3 +128,123 @@ Work is done only when:
 - Documentation is updated where behavior or operation changed.
 - The final diff contains no unrelated removals or regressions.
 - Deployment and rollback paths are understood for production-impacting changes.
+
+
+## High-assurance engineering doctrine
+
+Apply this doctrine to security-sensitive, safety-critical, privacy-impacting, financial, infrastructure, autonomous-agent, and mission-critical work. It draws on established public high-assurance and advanced-research engineering practices. It does not imply endorsement by, access to, or affiliation with NSA, DARPA, the United States Government, or any defense organization.
+
+### Mission assurance
+
+- Translate objectives into explicit system invariants, threat assumptions, failure tolerances, and measurable success criteria.
+- Decompose critical systems into small trust domains with narrow, authenticated interfaces.
+- Minimize the trusted computing base and isolate privileged operations from presentation, orchestration, and untrusted data handling.
+- Design graceful degradation so a partial failure cannot silently become an unsafe or unauthorized state.
+- Define recovery-time, recovery-point, availability, integrity, and data-retention objectives where the system warrants them.
+- Require deterministic, auditable decision paths for security, governance, finance, and autonomous actions.
+- Keep human authorization at consequential decision boundaries; automation must not manufacture its own authority.
+
+### Zero-trust architecture
+
+- Authenticate and authorize every actor, workload, service, device, and request at the boundary where trust is asserted.
+- Use least privilege, short-lived credentials, workload identity, explicit egress policy, and default-deny access control.
+- Separate control plane, data plane, management plane, and audit plane where practical.
+- Prevent confused-deputy behavior with audience-restricted credentials and resource-scoped authorization.
+- Treat repository content, prompts, model output, webhooks, artifacts, dependencies, telemetry, and retrieved documents as untrusted until validated.
+- Never expose secrets through logs, errors, build artifacts, browser bundles, model context, or generated documentation.
+- Make authorization checks server-side and adjacent to the protected action; UI restrictions are not security boundaries.
+
+### Secure-by-construction development
+
+- Use memory-safe languages or memory-safe subsets for new security-sensitive components when ecosystem and operational constraints permit.
+- Prefer strongly typed contracts, schemas, exhaustive state handling, immutable data, and explicit error types.
+- Model critical workflows as state machines with validated transitions and forbidden-state tests.
+- Use canonical parsing and serialization. Reject ambiguous, duplicate, malformed, oversized, or unexpected inputs.
+- Apply cryptography only through maintained, reviewed libraries and documented protocols; never invent cryptographic primitives.
+- Protect sensitive data in transit and at rest, define key rotation and revocation, and minimize collection and retention.
+- Design multi-tenant systems with enforceable tenant isolation at storage, cache, queue, search, and authorization layers.
+- Use parameterized queries, safe output encoding, content security policy, anti-CSRF controls, and SSRF-resistant outbound request policy where applicable.
+
+### Threat-informed engineering
+
+Before implementing a sensitive feature:
+
+1. Identify assets, actors, entry points, trust boundaries, dependencies, and administrative paths.
+2. Enumerate abuse cases, attacker goals, insider risks, supply-chain risks, privacy harms, and unsafe automation paths.
+3. Rank threats by likelihood, impact, detectability, and recovery cost.
+4. Map each material threat to a preventive, detective, and recovery control.
+5. Convert controls into testable acceptance criteria.
+6. Record accepted residual risk and the accountable decision-maker.
+
+Use recognized public frameworks when helpful, including NIST SSDF and Cybersecurity Framework, MITRE ATT&CK, CWE, OWASP ASVS, SLSA, and CISA Secure by Design. Apply them proportionately rather than as ceremonial checklists.
+
+### Verification and adversarial testing
+
+- Require unit, integration, contract, system, and regression tests appropriate to the risk.
+- Add property-based, fuzz, mutation, concurrency, load, fault-injection, and chaos tests when they can expose classes of failure ordinary examples miss.
+- Verify negative requirements: unauthorized actions fail, invalid states remain unreachable, secrets stay undisclosed, and denied operations leave no partial side effects.
+- Use static analysis, type checking, dependency scanning, secret scanning, infrastructure-policy checks, and artifact verification in CI.
+- Independently reproduce security-critical defects and fixes with a minimal regression test.
+- For critical algorithms and protocols, consider formal specifications, model checking, symbolic execution, or proof-oriented review.
+- Red-team only systems the operator owns or is explicitly authorized to test. Keep testing scoped, rate-limited, logged, reversible, and non-destructive.
+- Never add malware, credential theft, persistence, evasion, unauthorized access, destructive payloads, or covert surveillance capability.
+
+### Software supply-chain integrity
+
+- Pin dependencies and actions to reviewed versions or immutable digests where practical.
+- Minimize dependencies and verify provenance, maintenance health, licence compatibility, and known vulnerabilities before adoption.
+- Generate and retain software bills of materials for release artifacts when supported.
+- Produce reproducible or attestable builds, sign release artifacts, and verify signatures before deployment where the platform permits.
+- Isolate untrusted build steps, restrict CI token permissions, protect environments, and require approval for production releases.
+- Prevent pull-request code from accessing production secrets.
+- Track the source commit, builder identity, dependency graph, test evidence, and deployment record for each release.
+- Define rapid dependency revocation and rollback procedures before a supply-chain incident occurs.
+
+### Resilience and observability
+
+- Instrument security-relevant and business-critical transitions with structured, privacy-aware logs, metrics, and traces.
+- Use correlation identifiers without placing secrets or sensitive personal data in telemetry.
+- Alert on invariant violations, authorization failures, unexpected privilege use, integrity failures, drift, and degraded safeguards.
+- Make health checks distinguish liveness, readiness, dependency health, and functional correctness.
+- Define bounded queues, backpressure, circuit breakers, load shedding, and safe retry behavior for distributed components.
+- Test backup restoration, disaster recovery, credential rotation, failover, and rollback—not merely backup creation.
+- Ensure audit records are tamper-evident, time-correlated, access-controlled, retained appropriately, and independently queryable.
+
+### Advanced research discipline
+
+- Separate hypotheses, prototypes, experiments, pilots, and production capabilities.
+- State technology-readiness level, evidence quality, unresolved assumptions, and operational constraints.
+- Build the smallest experiment capable of falsifying the key hypothesis.
+- Predefine metrics, baselines, evaluation datasets, stopping criteria, and safety limits.
+- Preserve experiment configuration, seeds, environment, artifacts, and results for reproducibility.
+- Compare against credible baselines; do not mistake novelty, model fluency, or demo quality for operational effectiveness.
+- Gate promotion to production on repeatable evidence, security review, operational ownership, and rollback capability.
+- Label simulations and synthetic data clearly. Never present a target-state design or experimental result as deployed fact.
+
+### AI and autonomous-system assurance
+
+- Treat model output as untrusted data, not authority.
+- Constrain agents with typed tools, allowlisted resources, bounded budgets, timeouts, explicit scopes, and policy enforcement outside the model.
+- Separate planning, approval, execution, and audit roles for consequential operations.
+- Require provenance for retrieved evidence and record model, prompt or policy version, tool calls, approvals, and material outputs.
+- Defend against prompt injection, data exfiltration, tool misuse, poisoned retrieval, unsafe recursion, and cross-tenant context leakage.
+- Use deterministic validation and conventional code for permissions, financial calculations, policy gates, and other hard invariants.
+- Define escalation, abstention, shutdown, and recovery behavior before enabling autonomy.
+- Evaluate task success alongside hallucination, security, privacy, bias, robustness, cost, latency, and operator workload.
+- Do not permit autonomous self-expansion of tools, privileges, persistence, deployment targets, or mission scope.
+
+### Operational review gates
+
+A high-risk change may proceed only when the applicable evidence exists:
+
+- Architecture and trust-boundary review.
+- Threat model and abuse-case review.
+- Data classification and privacy review.
+- Security test evidence and unresolved-finding disposition.
+- Dependency and supply-chain review.
+- Performance, capacity, and failure-mode evidence.
+- Deployment, monitoring, incident-response, and rollback plans.
+- Named operational owner and approval authority.
+- Post-deployment verification criteria and observation window.
+
+If a required gate cannot be completed, report the precise limitation and keep the capability disabled, isolated, or in a non-production state.

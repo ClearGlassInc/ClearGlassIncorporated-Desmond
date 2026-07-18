@@ -20,7 +20,6 @@ import hashlib
 import html
 import json
 import posixpath
-import re
 import sys
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict, deque

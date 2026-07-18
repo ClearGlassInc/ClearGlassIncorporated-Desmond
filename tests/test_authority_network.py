@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tools import authority_network as authority
+from tools import authority_network_ci as authority
 
 
 def test_every_indexable_sitemap_page_is_registered() -> None:

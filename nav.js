@@ -16,6 +16,7 @@
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
       ["Agent Mesh", "agentmesh.html", "⌗"],
       ["CONDUIT · Automation", "conduit.html", "⟿"],
+      ["AutoMap · Orchestration", "automap.html", "⌘"],
       ["PostLoop · Content Engine", "postloop.html", "⟲"],
       ["AI Operator", "ai-operator.html", "🜂"],
       ["Command Console", "command-console.html", "▤"],

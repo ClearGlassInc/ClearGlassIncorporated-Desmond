@@ -84,6 +84,23 @@ are documented in `clearglass-commerce/DEPLOY.md` (Render blueprint recommended)
 - **Commerce Daily Loop** (`commerce-daily-loop.yml`): storefront smoke test +
   governance self‑check + executive report (scheduled 13:00 UTC).
 
+## Internal linking system (static site)
+
+Every indexable page carries a generated "Continue exploring" block (marked
+`<!-- cg-related:start/end -->`) that implements the site's pillar-and-cluster
+internal linking: breadcrumb → topic pillar, rotated sibling links, curated
+cross-cluster bridges, and a per-cluster CTA path. The site graph and generator
+live in `tools/internal_links.py` (stdlib only).
+
+- **Adding/renaming a page?** Add it to `PAGES` and a cluster in
+  `tools/internal_links.py`, then run `python3 tools/internal_links.py`
+  (idempotent; `--check` verifies freshness). Add the URL to `sitemap.xml`.
+- Don't hand-edit the generated blocks — regenerate them.
+- Full-viewport HUD pages (`body{overflow:hidden}`) are listed in
+  `FIXED_VIEWPORT` and get a fixed corner chip instead of a footer block.
+- When many pages change, bump `VERSION` in `sw.js` so returning visitors'
+  service-worker caches refresh.
+
 ## Conventions
 
 - Match the style of surrounding code; the commerce control plane is typed

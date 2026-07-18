@@ -1,0 +1,621 @@
+#!/usr/bin/env python3
+"""ClearGlass internal-linking generator.
+
+Injects a compact, self-styled "Continue exploring" block into every indexable
+static page, turning the site into a deliberate pillar-and-cluster link network:
+
+  - every page carries a breadcrumb to Home and to its topic pillar
+  - every page links to a rotated window of cluster siblings, so inbound link
+    equity is distributed across the whole cluster instead of pooling on the
+    first few pages
+  - curated cross-cluster links (EXTRA_LINKS) bridge related topics
+  - every page ends with a two-link CTA path chosen per cluster
+
+The block is static HTML (crawlable without JS execution), delimited by
+`cg-related` marker comments, and regenerated in place — safe to re-run any
+time the map below changes:
+
+    python3 tools/internal_links.py          # rewrite blocks on all pages
+    python3 tools/internal_links.py --check  # exit 1 if any page is stale
+
+stdlib only. The site graph lives in PAGES / CLUSTERS / EXTRA_LINKS below;
+to add a page, give it a title + description in PAGES and append it to a
+cluster's members.
+"""
+from __future__ import annotations
+
+import html
+import posixpath
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+
+START = "<!-- cg-related:start -->"
+END = "<!-- cg-related:end -->"
+
+# --------------------------------------------------------------------------
+# Site graph: every indexable page, with descriptive anchor text.
+# path -> (short title, description used to build the anchor)
+# --------------------------------------------------------------------------
+PAGES: dict[str, tuple[str, str]] = {
+    # Company / hub
+    "index.html": ("ClearGlass Inc.", "governed intelligent systems — home"),
+    "investors/index.html": ("Investor Data Room", "corporate documents and diligence materials"),
+    "operations/client-onboarding.html": ("Client Onboarding", "how engagements start at ClearGlass"),
+    "operations/hubspot-handoff.html": ("HubSpot Handoff", "CRM connection runbook"),
+    "operations/ontario-incorporation-handoff.html": ("Ontario Incorporation Handoff", "corporate filing runbook"),
+    "operations/stripe-handoff.html": ("Stripe Handoff", "payments connection runbook"),
+
+    # Cyber defense & security operations
+    "cyber-defense-console.html": ("Cyber Defense Console", "the ClearGlass command center for defensive operations"),
+    "sentinel.html": ("SENTINEL", "live geospatial security command center"),
+    "guardian.html": ("GUARDIAN", "intelligence command interface"),
+    "bluedesk.html": ("BLUEDESK", "CISO risk and blue-team console"),
+    "bluedesk-mobile.html": ("BLUEDESK Mobile", "the CISO risk console on a phone-first canvas"),
+    "artemis-blue-team.html": ("Artemis Blue Team", "OSINT-driven defense command center"),
+    "stegoforge.html": ("STEGOFORGE", "steganography and covert-channel analysis terminal"),
+    "attack-prompt-core.html": ("ATT&CK Prompt Integrator", "MITRE ATT&CK-aligned analysis prompts"),
+    "environmental-cyber-risk.html": ("Environmental Cyber-Risk", "OT and environmental threat monitoring"),
+    "docs/guardian_command_nexus_spec.html": ("Guardian Command Nexus Spec", "the technical specification behind GUARDIAN"),
+
+    # Intelligence & OSINT
+    "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
+    "flowsint.html": ("Flowsint", "OSINT investigation graph for domains, IPs and transforms"),
+    "Ontario-osint.html": ("Ontario OSINT Deck", "regional open-source intelligence control deck"),
+    "clearglass.html": ("Network Flow Intelligence", "see network traffic as living structure"),
+    "clearglass-nexus.html": ("ClearGlass NEXUS", "full-spectrum intelligence platform"),
+    "ClearGlass-NEXUS-v12-FINAL.html": ("NEXUS v12", "the flagship intelligence platform build"),
+    "artemis.html": ("NEXUS v12 · Ontario", "intelligence platform deployment profile"),
+    "intelligence-command-surface.html": ("Intelligence Command Surface", "one unified operational picture"),
+    "intelligence-interface.html": ("Intelligence Interface 2027", "next-generation analyst workspace"),
+    "intelligence-platform.html": ("Intelligence Platform Architecture", "brand and platform blueprint"),
+
+    # Artemis platform
+    "artemis-os.html": ("Artemis OS", "the Artemis intelligence operating system"),
+    "artemis-iv.html": ("ARTEMIS IV", "tactical intelligence core"),
+    "artemis-2040.html": ("Artemis 2040", "long-horizon intelligence platform"),
+    "artemis-ai-cyber-intelligence-platform.html": ("AI Cyber Intelligence Platform", "Artemis applied to cyber intelligence"),
+    "artemis-self-evolving-platform.html": ("Self-Evolving Platform", "Artemis's autonomous improvement loop"),
+    "air-control.html": ("ZEPHYR", "air systems control surface"),
+    "air-systems-control.html": ("Air Systems Control", "the Artemis airspace control surface"),
+
+    # Command & autonomous operations
+    "percival-os.html": ("PERCIVAL OS", "mission-ready governed command center"),
+    "artemis-percival.html": ("AVALON", "the ARTEMIS ⊕ PERCIVAL unified fusion core"),
+    "agentmesh.html": ("Agent Mesh", "multi-agent OSINT orchestration"),
+    "ai-operator.html": ("AI Operator Workspace", "human-in-the-loop agent operations"),
+    "command-console.html": ("Command Console", "cyber intelligence operations hub"),
+    "conduit.html": ("CONDUIT", "self-hosted open-source workflow automation"),
+    "postloop.html": ("PostLoop", "autonomous multi-account content engine"),
+    "saas-platform.html": ("Event Control Surface", "event-driven platform operations"),
+    "CG-os.html": ("CG OS", "the ClearGlass command HUD"),
+    "systems.html": ("Systems Console", "PERCIVAL operations console"),
+    "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
+    "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
+
+    # Legal, tax & compliance
+    "legal/index.html": ("Legal Infrastructure", "the ClearGlass corporate legal stack"),
+    "aegis.html": ("AEGIS", "legal process shield"),
+    "corporate-legal-advisor.html": ("ClearCounsel", "corporate legal AI at senior-partner depth"),
+    "banking-law-advisor.html": ("ClearBank Legal AI", "banking law and regulatory intelligence"),
+    "tax.html": ("ClearTax AI", "U.S. and Canadian tax intelligence"),
+    "procurement-legal-tech.html": ("Procurement & Legal-Tech Surface", "public-sector procurement intelligence"),
+    "legal/privacy.html": ("Privacy Policy", "how ClearGlass handles data"),
+    "legal/terms.html": ("Terms of Service", "the terms governing ClearGlass services"),
+    "legal/ai-liability.html": ("AI Liability Framework", "how ClearGlass governs AI risk"),
+    "legal/legal-council.html": ("AI Legal Council Framework", "structured multi-advisor legal review"),
+    "legal/articles.html": ("Articles of Incorporation", "ClearGlass founding articles"),
+    "legal/bylaws.html": ("Corporate Bylaws", "how the corporation is governed"),
+    "legal/nda.html": ("Founder NDA & Non-Compete", "confidentiality framework"),
+    "legal/ip-assignment.html": ("IP Assignment Agreement", "how IP is assigned to the company"),
+    "legal/directors-resolution.html": ("Directors' Resolution", "initial board resolutions"),
+    "legal/banking-resolution.html": ("Banking Resolution", "officer and banking authority"),
+    "legal/share-subscription.html": ("Share Subscription Agreement", "founder share issuance"),
+
+    # Healthcare
+    "clearpulse.html": ("ClearPulse", "healthcare intelligence pipeline"),
+    "clearpulse-architecture.html": ("ClearPulse Architecture", "the forensic-AI whitepaper"),
+    "offers/phipa-readiness.html": ("PHIPA Readiness", "free checklist and assessment for Ontario health data"),
+    "offers/phipa-readiness-checklist.html": ("PHIPA Readiness Checklist", "the printable compliance checklist"),
+
+    # Government & procurement
+    "government.html": ("Government Solutions", "federal and public-sector systems"),
+    "operations/procurement-readiness.html": ("Procurement Readiness", "verified supplier-registration status"),
+    "operations/federal-supplier-handoff.html": ("Federal Supplier Handoff", "supplier registration runbook"),
+    "counter-uas-commercialization-os.html": ("Counter-UAS OS", "counter-drone commercialization platform"),
+    "traffic-enforcement.html": ("Speed Vision AI", "AI traffic-enforcement platform"),
+
+    # Services & conversion
+    "offers/index.html": ("Services & Engagements", "every ClearGlass offer in one place"),
+    "store.html": ("ClearGlass Store", "book a security engagement"),
+    "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
+    "smb-cyber-trust-kit.html": ("SMB Cyber Trust Kit", "plain-language cyber resilience for small business"),
+    "smb.html": ("SMB Suite", "intelligent systems for small business"),
+    "side-store.html": ("Side Store", "electronics, cables and components"),
+    "offers/hardening-sprint.html": ("Hardening Sprint", "Microsoft 365 + Windows hardening engagement"),
+    "offers/security-quick-audit.html": ("Security Quick-Audit", "a focused $249 security review"),
+    "revenue-engine.html": ("Revenue Engine", "AI-driven business growth system"),
+
+    # Design & UI engineering
+    "web-design.html": ("Web Design & Development", "growth infrastructure built by ClearGlass"),
+    "ultra-glass.html": ("Ultra Glass", "governed intelligence, rendered visible"),
+    "clearglass-ultra.html": ("ClearGlass Ultra", "see through everything"),
+    "futuristic.html": ("Aurora Glass", "futuristic control-surface design study"),
+    "button-lab.html": ("Button Lab", "machined-glass control components"),
+    "button-system.html": ("Button System", "the ClearGlass glass-UI component set"),
+    "hover-menu.html": ("Hover Menu", "elegant navigation component study"),
+
+    # Opal-Koboi product assets
+    "opal/index.html": ("Opal-Koboi", "advanced automation assets"),
+    "products/opal-koboi/index.html": ("Opal-Koboi Assets", "the product asset library"),
+    "products/opal-koboi/artemis-iv-core.html": ("Artemis IV Core · Asset", "product sheet"),
+    "products/opal-koboi/artemis-vi.html": ("Artemis VI · Asset", "product sheet"),
+    "products/opal-koboi/guardian.html": ("Guardian · Asset", "product sheet"),
+    "products/opal-koboi/revenue-engine.html": ("Revenue Engine · Asset", "product sheet"),
+    "products/opal-koboi/smb-suite.html": ("SMB Suite · Asset", "product sheet"),
+
+    # Insights / blog
+    "blog/index.html": ("ClearGlass Intelligence", "essays on governed AI, cyber defense and OSINT"),
+    "blog/ai-agent-governance-governed-autonomy.html": ("AI Agent Governance", "the governed-autonomy playbook"),
+    "blog/ai-agents-insider-threat.html": ("AI Agents Are the New Insider Threat", "why agent identity is a security boundary"),
+    "blog/almach-scalp-engine.html": ("ALMACH Scalp Engine", "a directional neural-mesh trading study"),
+    "blog/artemis-governed-ai-gtm-visual-growth-engine.html": ("Governed AI Threat Modeling", "the Artemis GTM visual growth engine"),
+    "blog/clearglass-agentops-microsoft-foundry-future-stack.html": ("ClearGlass AgentOps", "the Microsoft Foundry future stack"),
+    "blog/clearglass-command-center-cyber-defense-console.html": ("Inside the Command Center", "designing a cyber defense console"),
+    "blog/clearglass-secure-deployment-agent.html": ("The Secure Deployment Agent", "governed authorization for every production push"),
+    "blog/clearglassinc-0-to-1m-corporate-execution-plan.html": ("$0-to-$1M Execution Plan", "the corporate build-out playbook"),
+    "blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html": ("Artemis Resume Builder", "a self-evolving intelligence platform case study"),
+    "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html": ("Self-Evolving AI Platforms", "how Artemis improves itself safely"),
+    "blog/cybersecurity-architecture-for-agentic-software.html": ("Security Architecture for Agentic Software", "designing defenses for autonomous systems"),
+    "blog/ethical-sales-system-100k-revenue-prompt.html": ("Ethical Sales Psychology", "a 100K revenue system prompt"),
+    "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html": ("Frontier Intelligence Briefing", "quantum gravity, ASI timelines, biosecurity"),
+    "blog/master-investigator-legal-tech-osint-government-accountability.html": ("Master Investigator", "legal-tech OSINT for government accountability"),
+    "blog/osint-workflow-that-survives-contact-with-reality.html": ("The OSINT Workflow That Survives Contact With Reality", "field-tested investigation practice"),
+    "blog/resume-builder.html": ("Resume Builder", "PDF-export resume tool"),
+    "blog/zero-trust-is-outdated.html": ("Zero Trust Is Outdated", "the original argument"),
+    "blog/zero-trust-is-outdated-adaptive-trust.html": ("The Case for Adaptive Trust", "zero trust, revisited for agentic systems"),
+}
+
+# --------------------------------------------------------------------------
+# Pillar-and-cluster structure. Member order matters: sibling links rotate
+# through this order so every page receives inbound links.
+# cluster id -> {name, pillar, members, cta: [(path, label), ...]}
+# --------------------------------------------------------------------------
+CTA_STORE = ("store.html", "Book a security engagement")
+CTA_PRICING = ("pricing.html", "See pricing & plans")
+CTA_OFFERS = ("offers/index.html", "Browse services & engagements")
+
+CLUSTERS: dict[str, dict] = {
+    "security": {
+        "name": "Cyber Defense & Security Operations",
+        "pillar": "cyber-defense-console.html",
+        "members": [
+            "sentinel.html", "bluedesk.html", "guardian.html",
+            "artemis-blue-team.html", "stegoforge.html",
+            "attack-prompt-core.html", "environmental-cyber-risk.html",
+            "bluedesk-mobile.html", "docs/guardian_command_nexus_spec.html",
+        ],
+        "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")],
+    },
+    "intelligence": {
+        "name": "Intelligence & OSINT",
+        "pillar": "intelligence.html",
+        "members": [
+            "flowsint.html", "clearglass-nexus.html", "Ontario-osint.html",
+            "clearglass.html", "intelligence-command-surface.html",
+            "intelligence-interface.html", "intelligence-platform.html",
+            "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "artemis": {
+        "name": "Artemis Platform",
+        "pillar": "artemis-os.html",
+        "members": [
+            "artemis-iv.html", "artemis-ai-cyber-intelligence-platform.html",
+            "artemis-self-evolving-platform.html", "artemis-2040.html",
+            "air-control.html", "air-systems-control.html",
+        ],
+        "cta": [CTA_PRICING, CTA_STORE],
+    },
+    "command": {
+        "name": "Command & Autonomous Operations",
+        "pillar": "percival-os.html",
+        "members": [
+            "artemis-percival.html", "agentmesh.html", "ai-operator.html",
+            "conduit.html", "postloop.html", "command-console.html",
+            "control-surface.html", "systems.html", "saas-platform.html",
+            "CG-os.html", "percival-build.html",
+        ],
+        "cta": [CTA_OFFERS, CTA_PRICING],
+    },
+    "legal": {
+        "name": "Legal, Tax & Compliance",
+        "pillar": "legal/index.html",
+        "members": [
+            "aegis.html", "corporate-legal-advisor.html",
+            "banking-law-advisor.html", "tax.html",
+            "procurement-legal-tech.html", "legal/ai-liability.html",
+            "legal/legal-council.html", "legal/privacy.html",
+            "legal/terms.html", "legal/articles.html", "legal/bylaws.html",
+            "legal/nda.html", "legal/ip-assignment.html",
+            "legal/directors-resolution.html", "legal/banking-resolution.html",
+            "legal/share-subscription.html",
+        ],
+        "cta": [CTA_STORE, CTA_OFFERS],
+    },
+    "healthcare": {
+        "name": "Healthcare Intelligence",
+        "pillar": "clearpulse.html",
+        "members": [
+            "clearpulse-architecture.html", "offers/phipa-readiness.html",
+            "offers/phipa-readiness-checklist.html",
+        ],
+        "cta": [("offers/phipa-readiness.html", "Get the free PHIPA readiness checklist"), CTA_STORE],
+    },
+    "government": {
+        "name": "Government & Procurement",
+        "pillar": "government.html",
+        "members": [
+            "operations/procurement-readiness.html",
+            "operations/federal-supplier-handoff.html",
+            "counter-uas-commercialization-os.html",
+            "traffic-enforcement.html",
+        ],
+        "cta": [CTA_STORE, ("operations/procurement-readiness.html", "Check our procurement readiness")],
+    },
+    "services": {
+        "name": "Services & Engagements",
+        "pillar": "offers/index.html",
+        "members": [
+            "store.html", "pricing.html", "smb-cyber-trust-kit.html",
+            "smb.html", "offers/security-quick-audit.html",
+            "offers/hardening-sprint.html", "revenue-engine.html",
+            "side-store.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "design": {
+        "name": "Web Design & UI Engineering",
+        "pillar": "web-design.html",
+        "members": [
+            "ultra-glass.html", "clearglass-ultra.html", "futuristic.html",
+            "button-lab.html", "button-system.html", "hover-menu.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "opal": {
+        "name": "Opal-Koboi Automation",
+        "pillar": "opal/index.html",
+        "members": [
+            "products/opal-koboi/index.html",
+            "products/opal-koboi/artemis-iv-core.html",
+            "products/opal-koboi/artemis-vi.html",
+            "products/opal-koboi/guardian.html",
+            "products/opal-koboi/revenue-engine.html",
+            "products/opal-koboi/smb-suite.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "blog": {
+        "name": "ClearGlass Intelligence · Insights",
+        "pillar": "blog/index.html",
+        "members": [
+            "blog/ai-agent-governance-governed-autonomy.html",
+            "blog/ai-agents-insider-threat.html",
+            "blog/cybersecurity-architecture-for-agentic-software.html",
+            "blog/zero-trust-is-outdated-adaptive-trust.html",
+            "blog/zero-trust-is-outdated.html",
+            "blog/clearglass-secure-deployment-agent.html",
+            "blog/clearglass-command-center-cyber-defense-console.html",
+            "blog/clearglass-agentops-microsoft-foundry-future-stack.html",
+            "blog/osint-workflow-that-survives-contact-with-reality.html",
+            "blog/master-investigator-legal-tech-osint-government-accountability.html",
+            "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html",
+            "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html",
+            "blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html",
+            "blog/resume-builder.html",
+            "blog/artemis-governed-ai-gtm-visual-growth-engine.html",
+            "blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
+            "blog/ethical-sales-system-100k-revenue-prompt.html",
+            "blog/almach-scalp-engine.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "company": {
+        "name": "Company & Operations",
+        "pillar": "index.html",
+        "members": [
+            "investors/index.html", "operations/client-onboarding.html",
+            "operations/hubspot-handoff.html",
+            "operations/ontario-incorporation-handoff.html",
+            "operations/stripe-handoff.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+}
+
+# Curated cross-cluster bridges: page -> extra related targets.
+# Blog posts point at the product page their topic sells; product pages point
+# at the essay or adjacent cluster that deepens the topic.
+EXTRA_LINKS: dict[str, list[str]] = {
+    "sentinel.html": ["intelligence.html"],
+    "cyber-defense-console.html": ["blog/clearglass-command-center-cyber-defense-console.html", "smb-cyber-trust-kit.html"],
+    "bluedesk.html": ["blog/ai-agents-insider-threat.html"],
+    "guardian.html": ["docs/guardian_command_nexus_spec.html"],
+    "percival-os.html": ["blog/ai-agent-governance-governed-autonomy.html"],
+    "agentmesh.html": ["blog/cybersecurity-architecture-for-agentic-software.html", "flowsint.html"],
+    "conduit.html": ["blog/clearglass-agentops-microsoft-foundry-future-stack.html"],
+    "flowsint.html": ["blog/osint-workflow-that-survives-contact-with-reality.html"],
+    "intelligence.html": ["blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html"],
+    "artemis-os.html": ["artemis-percival.html", "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
+    "artemis-self-evolving-platform.html": ["blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
+    "revenue-engine.html": ["postloop.html", "blog/ethical-sales-system-100k-revenue-prompt.html"],
+    "government.html": ["procurement-legal-tech.html"],
+    "counter-uas-commercialization-os.html": ["air-control.html"],
+    "traffic-enforcement.html": ["air-control.html"],
+    "procurement-legal-tech.html": ["government.html", "blog/master-investigator-legal-tech-osint-government-accountability.html"],
+    "clearpulse.html": ["environmental-cyber-risk.html"],
+    "web-design.html": ["offers/index.html"],
+    "smb-cyber-trust-kit.html": ["offers/hardening-sprint.html"],
+    "store.html": ["smb-cyber-trust-kit.html"],
+    "opal/index.html": ["conduit.html"],
+    "products/opal-koboi/artemis-iv-core.html": ["artemis-iv.html"],
+    "products/opal-koboi/artemis-vi.html": ["artemis-os.html"],
+    "products/opal-koboi/guardian.html": ["guardian.html"],
+    "products/opal-koboi/revenue-engine.html": ["revenue-engine.html"],
+    "products/opal-koboi/smb-suite.html": ["smb.html"],
+    # blog -> product conversion bridges
+    "blog/ai-agent-governance-governed-autonomy.html": ["percival-os.html", "ai-operator.html"],
+    "blog/ai-agents-insider-threat.html": ["bluedesk.html", "cyber-defense-console.html"],
+    "blog/cybersecurity-architecture-for-agentic-software.html": ["agentmesh.html", "cyber-defense-console.html"],
+    "blog/zero-trust-is-outdated-adaptive-trust.html": ["cyber-defense-console.html"],
+    "blog/zero-trust-is-outdated.html": ["blog/zero-trust-is-outdated-adaptive-trust.html", "cyber-defense-console.html"],
+    "blog/clearglass-secure-deployment-agent.html": ["percival-os.html"],
+    "blog/clearglass-command-center-cyber-defense-console.html": ["cyber-defense-console.html"],
+    "blog/clearglass-agentops-microsoft-foundry-future-stack.html": ["conduit.html", "agentmesh.html"],
+    "blog/osint-workflow-that-survives-contact-with-reality.html": ["flowsint.html", "intelligence.html"],
+    "blog/master-investigator-legal-tech-osint-government-accountability.html": ["flowsint.html", "procurement-legal-tech.html"],
+    "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html": ["intelligence.html"],
+    "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html": ["artemis-self-evolving-platform.html", "artemis-os.html"],
+    "blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html": ["blog/resume-builder.html", "artemis-self-evolving-platform.html"],
+    "blog/resume-builder.html": ["blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html"],
+    "blog/artemis-governed-ai-gtm-visual-growth-engine.html": ["artemis-os.html", "revenue-engine.html"],
+    "blog/clearglassinc-0-to-1m-corporate-execution-plan.html": ["revenue-engine.html", "legal/index.html"],
+    "blog/ethical-sales-system-100k-revenue-prompt.html": ["revenue-engine.html"],
+    "blog/almach-scalp-engine.html": ["revenue-engine.html"],
+}
+
+SIBLING_WINDOW = 4     # rotated sibling links per member page
+PILLAR_MAX_MEMBERS = 10  # member links shown on a pillar page
+
+# Full-viewport HUD pages whose body{overflow:hidden} would strand a normal
+# bottom block; these get a fixed corner chip that expands the same panel on
+# hover/focus (pure CSS), mirroring the site's existing nav.js edge-tab pattern.
+FIXED_VIEWPORT = {
+    "sentinel.html", "clearglass.html", "air-control.html",
+    "percival-os.html", "artemis-percival.html", "percival-build.html",
+}
+
+CSS = (
+    "#cg-related{margin:48px auto 0;max-width:1080px;padding:0 18px 34px;"
+    "font-family:'Inter',system-ui,-apple-system,sans-serif}"
+    "#cg-related .cgr-box{background:linear-gradient(165deg,rgba(15,17,34,.96),rgba(9,10,24,.96));"
+    "border:1px solid rgba(124,150,255,.26);border-radius:14px;padding:22px 24px;"
+    "color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35)}"
+    "#cg-related .cgr-crumb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;"
+    "color:#8a90c4;margin:0 0 10px}"
+    "#cg-related .cgr-crumb a{color:#a5b4fc;text-decoration:none}"
+    "#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:underline}"
+    "#cg-related h2{margin:0 0 12px;font-size:15px;letter-spacing:.04em;color:#e7ecff}"
+    "#cg-related ul{list-style:none;margin:0;padding:0;display:grid;"
+    "grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}"
+    "#cg-related li a{display:block;padding:7px 10px;border-radius:8px;font-size:13.5px;"
+    "line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;transition:.13s}"
+    "#cg-related li a:hover{background:rgba(124,150,255,.12);border-color:rgba(124,150,255,.3);color:#fff}"
+    "#cg-related li a b{color:#bcd0ff;font-weight:600}"
+    "#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(124,150,255,.16);"
+    "font-size:13.5px;color:#9aa3d0}"
+    "#cg-related .cgr-cta a{color:#93c5fd;font-weight:600;text-decoration:none}"
+    "#cg-related .cgr-cta a:hover{color:#fff;text-decoration:underline}"
+)
+
+DOCK_CSS = (
+    "#cg-related.cgr-dock{position:fixed;left:14px;bottom:14px;margin:0;padding:0;"
+    "max-width:none;z-index:2147483000}"
+    "#cg-related.cgr-dock .cgr-tab{display:inline-block;cursor:pointer;font-size:10.5px;"
+    "letter-spacing:.22em;text-transform:uppercase;color:#dbe4ff;padding:8px 12px;"
+    "border-radius:9px;border:1px solid rgba(124,150,255,.42);"
+    "background:linear-gradient(180deg,rgba(18,20,42,.92),rgba(11,12,28,.92));"
+    "box-shadow:0 6px 22px rgba(0,0,0,.4);backdrop-filter:blur(6px);user-select:none}"
+    "#cg-related.cgr-dock .cgr-tab:hover{color:#fff;border-color:rgba(124,150,255,.85)}"
+    "#cg-related.cgr-dock .cgr-box{display:none;position:absolute;bottom:calc(100% + 8px);"
+    "left:0;width:min(400px,92vw);max-height:62vh;overflow-y:auto}"
+    "#cg-related.cgr-dock:hover .cgr-box,#cg-related.cgr-dock:focus-within .cgr-box{display:block}"
+    "#cg-related.cgr-dock ul{grid-template-columns:1fr}"
+)
+
+
+def rel(from_page: str, to_page: str) -> str:
+    """Relative href from one site path to another."""
+    start = posixpath.dirname(from_page) or "."
+    return posixpath.relpath(to_page, start)
+
+
+def anchor(from_page: str, to_page: str) -> str:
+    title, desc = PAGES[to_page]
+    return (
+        f'<li><a href="{html.escape(rel(from_page, to_page), quote=True)}">'
+        f"<b>{html.escape(title)}</b> — {html.escape(desc)}</a></li>"
+    )
+
+
+def cluster_of(page: str) -> str:
+    for cid, c in CLUSTERS.items():
+        if page == c["pillar"] or page in c["members"]:
+            return cid
+    raise KeyError(f"page not in any cluster: {page}")
+
+
+def related_targets(page: str) -> tuple[list[str], list[tuple[str, str]], str]:
+    """Return (related pages, cta pairs, crumb-pillar path) for a page."""
+    cid = cluster_of(page)
+    c = CLUSTERS[cid]
+    ids = list(CLUSTERS)
+
+    if page == "index.html":  # site hub: link every pillar
+        targets = [CLUSTERS[i]["pillar"] for i in ids if CLUSTERS[i]["pillar"] != page]
+        return targets, c["cta"], ""
+
+    if page == c["pillar"]:
+        targets = list(c["members"][:PILLAR_MAX_MEMBERS])
+        # two sibling pillars, rotated by this cluster's position
+        k = ids.index(cid)
+        for off in (1, 2):
+            targets.append(CLUSTERS[ids[(k + off) % len(ids)]]["pillar"])
+    else:
+        members = c["members"]
+        i = members.index(page)
+        n = len(members)
+        window = min(SIBLING_WINDOW, n - 1)
+        targets = [members[(i + off) % n] for off in range(1, window + 1)]
+
+    seen, out = {page}, []
+    for t in EXTRA_LINKS.get(page, []) + targets:
+        if t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out, c["cta"], c["pillar"] if page != c["pillar"] else ""
+
+
+def build_block(page: str) -> str:
+    targets, cta, pillar = related_targets(page)
+    cid = cluster_of(page)
+    name = CLUSTERS[cid]["name"]
+
+    crumb = f'<a href="{html.escape(rel(page, "index.html"), quote=True)}">ClearGlass Inc.</a>'
+    if page == "index.html":
+        crumb += " · Site network"
+        heading = "Explore the ClearGlass network"
+    elif pillar:
+        crumb += (
+            f' › <a href="{html.escape(rel(page, pillar), quote=True)}">{html.escape(name)}</a>'
+        )
+        heading = "Continue exploring"
+    else:
+        crumb += f" › {html.escape(name)}"
+        heading = f"Inside {name}"
+
+    items = "\n      ".join(anchor(page, t) for t in targets)
+    cta_html = " · ".join(
+        f'<a href="{html.escape(rel(page, path), quote=True)}">{html.escape(label)}</a>'
+        for path, label in cta
+    )
+
+    docked = page in FIXED_VIEWPORT
+    css = CSS + DOCK_CSS if docked else CSS
+    cls = ' class="cgr-dock"' if docked else ""
+    tab = (
+        '  <div class="cgr-tab" tabindex="0" role="button" '
+        'aria-label="Show related ClearGlass pages">⌁ Explore ClearGlass</div>\n'
+        if docked else ""
+    )
+
+    return (
+        f"{START}\n"
+        f'<aside id="cg-related"{cls}>\n'
+        f"  <style>{css}</style>\n"
+        f'  <nav class="cgr-box" aria-label="Related ClearGlass pages">\n'
+        f'    <p class="cgr-crumb">{crumb}</p>\n'
+        f"    <h2>{html.escape(heading)}</h2>\n"
+        f"    <ul>\n      {items}\n    </ul>\n"
+        f'    <p class="cgr-cta">Next step: {cta_html}</p>\n'
+        f"  </nav>\n"
+        f"{tab}"
+        f"</aside>\n"
+        f"{END}"
+    )
+
+
+BLOCK_RE = re.compile(re.escape(START) + r".*?" + re.escape(END), re.DOTALL)
+
+
+def inject(page: str) -> tuple[bool, str]:
+    """Insert or refresh the block in a page. Returns (changed, status)."""
+    path = ROOT / page
+    text = path.read_text(encoding="utf-8", errors="surrogateescape")
+    block = build_block(page)
+
+    if BLOCK_RE.search(text):
+        new = BLOCK_RE.sub(lambda _: block, text, count=1)
+        status = "refreshed"
+    else:
+        idx = text.lower().rfind("</body>")
+        if idx == -1:
+            return False, "SKIP: no </body>"
+        new = text[:idx] + block + "\n" + text[idx:]
+        status = "injected"
+
+    if new == text:
+        return False, "unchanged"
+    path.write_text(new, encoding="utf-8", errors="surrogateescape")
+    return True, status
+
+
+def validate() -> list[str]:
+    errors = []
+    clustered = set()
+    for cid, c in CLUSTERS.items():
+        for p in [c["pillar"], *c["members"]]:
+            if p in clustered and p != "index.html":
+                errors.append(f"{p}: in more than one cluster")
+            clustered.add(p)
+            if p not in PAGES:
+                errors.append(f"{cid}: {p} missing from PAGES")
+    for p in PAGES:
+        if p not in clustered:
+            errors.append(f"{p}: in PAGES but no cluster")
+        if not (ROOT / p).is_file():
+            errors.append(f"{p}: file not found")
+    for src, targets in EXTRA_LINKS.items():
+        for t in [src, *targets]:
+            if t not in PAGES:
+                errors.append(f"EXTRA_LINKS: unknown page {t}")
+    return errors
+
+
+def main() -> int:
+    check = "--check" in sys.argv
+    errors = validate()
+    if errors:
+        print("site map errors:")
+        for e in errors:
+            print("  -", e)
+        return 1
+
+    changed = 0
+    for page in PAGES:
+        if check:
+            text = (ROOT / page).read_text(encoding="utf-8", errors="surrogateescape")
+            m = BLOCK_RE.search(text)
+            if not m or m.group(0) != build_block(page):
+                print(f"stale: {page}")
+                changed += 1
+        else:
+            did, status = inject(page)
+            if did:
+                changed += 1
+            if status.startswith("SKIP"):
+                print(f"{status}: {page}")
+
+    if check:
+        print(f"{changed} page(s) stale" if changed else f"all {len(PAGES)} pages current")
+        return 1 if changed else 0
+    print(f"{changed} page(s) updated, {len(PAGES) - changed} already current")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

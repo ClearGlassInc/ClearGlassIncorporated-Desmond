@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "21:05",
-    "timestamp": "2026-07-18T21:05:41Z"
+    "time": "22:06",
+    "timestamp": "2026-07-18T22:06:45Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #345",
+    "time": "22:06",
+    "timestamp": "2026-07-18T22:06:31Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-d1db87c2-7f4f-4a71-b193-94a64ce44e7d \u00b7 run #895",
+    "time": "21:08",
+    "timestamp": "2026-07-18T21:08:07Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1073",
+    "time": "21:05",
+    "timestamp": "2026-07-18T21:05:53Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1536",
+    "time": "21:05",
+    "timestamp": "2026-07-18T21:05:46Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2607",
+    "time": "21:05",
+    "timestamp": "2026-07-18T21:05:46Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #344",
     "time": "21:05",
     "timestamp": "2026-07-18T21:05:31Z"
@@ -54,40 +89,5 @@
     "detail": "push on main \u00b7 run #25",
     "time": "21:00",
     "timestamp": "2026-07-18T21:00:11Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1520",
-    "time": "21:00",
-    "timestamp": "2026-07-18T21:00:11Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1286",
-    "time": "21:00",
-    "timestamp": "2026-07-18T21:00:11Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1535",
-    "time": "21:00",
-    "timestamp": "2026-07-18T21:00:11Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2606",
-    "time": "21:00",
-    "timestamp": "2026-07-18T21:00:10Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on content/autonomous-threat-modeling-authority-cluster \u00b7 run #1285",
-    "time": "20:59",
-    "timestamp": "2026-07-18T20:59:03Z"
   }
 ]

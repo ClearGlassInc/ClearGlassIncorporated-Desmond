@@ -51,8 +51,31 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install focused test dependency
-        run: python3 -m pip install "pytest>=8,<9"
+      - name: Install focused validation dependencies
+        run: python3 -m pip install "pytest>=8,<9" "ruff>=0.12,<1"
+
+      - name: Capture focused authority-network lint
+        id: authority_lint
+        shell: bash
+        run: |
+          set +e
+          ruff check tools/authority_network.py tools/authority_network_ci.py tests/test_authority_network.py > authority-lint.txt 2>&1
+          status=$?
+          cat authority-lint.txt
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload focused lint diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: authority-network-lint-diagnostics
+          path: authority-lint.txt
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Enforce focused authority-network lint
+        run: test "${{ steps.authority_lint.outputs.status }}" = "0"
 
       - name: Verify legacy generated blocks remain current
         run: python3 tools/internal_links.py --check

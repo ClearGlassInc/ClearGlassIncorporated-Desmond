@@ -222,7 +222,14 @@ def environmental_risk_score(signal: EnvironmentalCyberRiskSignal) -> float:
     hf_component = _clamp_probability(signal.hf_absorption_db / 20.0) * 0.3
     gnss_component = _clamp_probability(signal.gnss_error_m / 25.0) * 0.4
     return round(
-        min(10.0, band_base + kp_component + scintillation_component + hf_component + gnss_component),
+        min(
+            10.0,
+            band_base
+            + kp_component
+            + scintillation_component
+            + hf_component
+            + gnss_component,
+        ),
         2,
     )
 
@@ -509,6 +516,7 @@ def drift_zscore(current_window: list[float], baseline_window: list[float]) -> f
     baseline_sigma = pstdev(baseline_window) or 1e-6
     return abs(fmean(current_window) - fmean(baseline_window)) / baseline_sigma
 
+
 ElectricalDefectSeverity = Literal[
     "immediate_danger",
     "critical_repair",
@@ -614,9 +622,15 @@ def classify_electrical_finding(finding: ElectricalFinding) -> ElectricalDefectS
         return "immediate_danger"
     if finding.observed_hazards & _CRITICAL_REPAIR_HAZARDS:
         return "critical_repair"
-    if "missing_label" in finding.observed_hazards or "incorrect_panel_directory" in finding.observed_hazards:
+    if (
+        "missing_label" in finding.observed_hazards
+        or "incorrect_panel_directory" in finding.observed_hazards
+    ):
         return "code_correction"
-    if "unsupported_cable" in finding.observed_hazards or "missing_cover" in finding.observed_hazards:
+    if (
+        "unsupported_cable" in finding.observed_hazards
+        or "missing_cover" in finding.observed_hazards
+    ):
         return "reliability_improvement"
     if "obsolete_monitoring" in finding.observed_hazards:
         return "future_upgrade"
@@ -648,3 +662,131 @@ def build_electrical_work_order(finding: ElectricalFinding) -> ElectricalWorkOrd
         ),
         final_report_sections=_FINAL_ELECTRICAL_REPORT_SECTIONS,
     )
+
+
+MetricName = Literal[
+    "precision",
+    "recall",
+    "citation_accuracy",
+    "policy_violation_rate",
+    "operator_trust",
+    "p95_latency_ms",
+]
+
+
+@dataclass(frozen=True)
+class EvaluationResult:
+    """Auditable scorecard for a candidate prompt, workflow, or route."""
+
+    candidate_version: str
+    baseline_version: str
+    metrics: dict[MetricName, float]
+    sample_count: int
+    drift_zscore: float
+    policy_bundle_version: str
+    passed: bool
+    failure_reasons: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class SelfUpgradeGuardrails:
+    """Human-approved bounds that self-improvement proposals cannot relax."""
+
+    min_precision: float = 0.92
+    min_recall: float = 0.85
+    min_citation_accuracy: float = 0.98
+    max_policy_violation_rate: float = 0.0
+    min_operator_trust: float = 0.80
+    max_p95_latency_ms: float = 2500.0
+    max_drift_zscore: float = 3.0
+    min_eval_samples: int = 30
+
+
+class PrecisionEvaluationHarness:
+    """Deterministic promotion gate for Artemis self-evolving artifacts.
+
+    AIP may generate candidates, but this harness decides whether a proposal is
+    eligible for human review. It never changes objectives, widens access, lowers
+    approval gates, or promotes artifacts by itself.
+    """
+
+    def __init__(self, guardrails: SelfUpgradeGuardrails | None = None) -> None:
+        self.guardrails = guardrails or SelfUpgradeGuardrails()
+
+    def evaluate_candidate(
+        self,
+        candidate_version: str,
+        baseline_version: str,
+        metrics: dict[MetricName, float],
+        sample_count: int,
+        live_window: list[float],
+        baseline_window: list[float],
+        policy_bundle_version: str,
+    ) -> EvaluationResult:
+        failures: list[str] = []
+        zscore = drift_zscore(live_window, baseline_window)
+
+        checks = {
+            "precision below guardrail": metrics.get("precision", 0.0)
+            >= self.guardrails.min_precision,
+            "recall below guardrail": metrics.get("recall", 0.0)
+            >= self.guardrails.min_recall,
+            "citation accuracy below guardrail": metrics.get("citation_accuracy", 0.0)
+            >= self.guardrails.min_citation_accuracy,
+            "policy violation rate above guardrail": metrics.get(
+                "policy_violation_rate", 1.0
+            )
+            <= self.guardrails.max_policy_violation_rate,
+            "operator trust below guardrail": metrics.get("operator_trust", 0.0)
+            >= self.guardrails.min_operator_trust,
+            "p95 latency above guardrail": metrics.get("p95_latency_ms", float("inf"))
+            <= self.guardrails.max_p95_latency_ms,
+            "drift above guardrail": zscore <= self.guardrails.max_drift_zscore,
+            "insufficient eval samples": sample_count
+            >= self.guardrails.min_eval_samples,
+        }
+        failures.extend(reason for reason, ok in checks.items() if not ok)
+        return EvaluationResult(
+            candidate_version=candidate_version,
+            baseline_version=baseline_version,
+            metrics=metrics,
+            sample_count=sample_count,
+            drift_zscore=round(zscore, 4),
+            policy_bundle_version=policy_bundle_version,
+            passed=not failures,
+            failure_reasons=tuple(failures),
+        )
+
+
+def build_apollo_promotion_manifest(
+    proposal: UpgradeProposal,
+    evaluation: EvaluationResult,
+    approver_id: str,
+) -> dict[str, Any]:
+    """Create a signed-artifact-ready manifest for Apollo progressive delivery."""
+
+    if not evaluation.passed:
+        raise ValueError("candidate failed evaluation and cannot be promoted")
+    if proposal.candidate_version != evaluation.candidate_version:
+        raise ValueError("proposal and evaluation candidate versions do not match")
+    manifest = {
+        "artifact": proposal.target,
+        "candidate_version": proposal.candidate_version,
+        "rollback_version": proposal.rollback_pointer,
+        "baseline_version": evaluation.baseline_version,
+        "policy_bundle_version": evaluation.policy_bundle_version,
+        "approval_gate": proposal.requires_gate.value,
+        "approver_id": approver_id,
+        "canary_rings": ["lab", "mission-shadow", "limited-operators", "production"],
+        "stop_promotion_on": [
+            "policy_violation_rate > 0",
+            "citation_accuracy < 0.98",
+            "precision < 0.92",
+            "p95_latency_ms > 2500",
+            "operator_trust < 0.80",
+        ],
+    }
+    manifest["manifest_hash"] = sha256(
+        repr(sorted(manifest.items())).encode("utf-8")
+    ).hexdigest()
+    return manifest

@@ -1620,6 +1620,94 @@ for step in assessment.mitigation_playbook:
 | Self-improvement | Operator corrections become eval cases; candidate threshold, workflow, and wording changes remain proposals until approved and Apollo-promoted. |
 | Rollback | The prior classifier/workflow/prompt pointer is retained as the rollback target for every candidate. |
 
+
+## Quantum and Post-Quantum Security Product Wedge
+
+ClearGlassInc Artemis treats post-quantum security as the commercially immediate wedge and quantum intelligence as the strategic expansion path. The platform does **not** need to wait for broadly available fault-tolerant quantum hardware: it can sell cryptographic inventory, RSA/ECC exposure analysis, crypto-agility planning, and migration governance now, then extend the same ontology and AIP workflow system into quantum market intelligence as hardware and algorithms mature.
+
+### Four-Module Product Architecture
+
+| Module | Primary buyer | Immediate value | Primary data products | Artemis implementation |
+|---|---|---|---|---|
+| Quantum Intelligence Engine | Executives, strategists, innovation teams | Converts noisy research, patents, grants, and vendor announcements into mission-relevant executive intelligence. | Research feeds, standards updates, funding awards, patents, vendor roadmaps. | Foundry ingestion + ontology-linked AIP summarization agents + Gotham executive timelines. |
+| Quantum Readiness Scanner | CISOs, platform teams, infrastructure owners | Finds RSA, ECC, DH, DSA, TLS, PKI, code-signing, VPN, SSH, and dependency exposure. | Certificate transparency logs, TLS scans, SBOMs, service mesh config, IAM/PKI inventories. | Foundry crypto inventory pipelines + ontology `CryptographicAsset` objects + risk scoring. |
+| Post-Quantum Security Advisor | Security architecture, compliance, IT operations | Produces a prioritized remediation roadmap toward NIST-standardized PQC and crypto agility. | Readiness scores, business criticality, data lifetime, exposure, vendor support, policy exceptions. | AIP advisor agent + policy-gated action packages + Apollo-promoted workflow versions. |
+| Quantum Opportunity Predictor | Strategy, product, R&D | Forecasts early markets where quantum-enabled simulation, optimization, or sensing may change advantage. | Industry workloads, hardware maturity signals, algorithm fit, adoption signals, partner ecosystem. | Feature store + transparent scoring models + human-reviewed strategy briefs. |
+
+### PQC Ontology Extension
+
+```sql
+create table cryptographic_asset (
+  asset_id uuid primary key,
+  owner text not null,
+  algorithm text not null check (algorithm in ('RSA','ECC','DH','DSA','ML-KEM','ML-DSA','SLH-DSA','AES')),
+  key_size_bits integer not null,
+  protocol text not null,
+  data_classification text not null,
+  stores_long_lived_secrets boolean not null,
+  external_exposure boolean not null,
+  business_criticality numeric(5,4) not null check (business_criticality between 0 and 1),
+  certificate_expires_at timestamptz,
+  evidence_refs text[] not null default '{}',
+  lineage jsonb not null,
+  policy_labels text[] not null default '{}'
+);
+
+create table post_quantum_finding (
+  finding_id uuid primary key,
+  asset_id uuid not null references cryptographic_asset(asset_id),
+  urgency text not null check (urgency in ('inventory','plan','migrate','monitor')),
+  risk_score numeric(5,4) not null check (risk_score between 0 and 1),
+  recommended_target text not null,
+  rationale text not null,
+  evidence_sources text[] not null,
+  confidence_drivers text[] not null,
+  approval_gate text not null default 'case_writeback',
+  workflow_version text not null,
+  created_at timestamptz not null default now()
+);
+```
+
+### Advisor Decision Logic
+
+The executable reference implementation adds a deterministic `CryptographicAsset` model, `post_quantum_readiness_score`, and `advise_post_quantum_migration` function. Legacy public-key cryptography, long-lived data sensitivity, external exposure, and business criticality dominate the score; standardized PQC algorithms route to monitoring instead of emergency migration. This gives security leaders a transparent and defensible basis for remediation planning before deeper ML or AIP model routing is introduced.
+
+```python
+asset = CryptographicAsset(
+    asset_id="api-gateway-cert-1",
+    owner="platform-security",
+    algorithm="RSA",
+    key_size_bits=2048,
+    protocol="TLS",
+    data_classification="CUI",
+    stores_long_lived_secrets=True,
+    external_exposure=True,
+    business_criticality=0.94,
+    evidence_refs=("foundry.crypto_inventory.api_gateway", "ct-log:leaf-42"),
+)
+
+finding = advise_post_quantum_migration(asset)
+# finding.urgency == "migrate"
+# finding.recommended_target includes a hybrid TLS/PKI pilot toward ML-KEM/ML-DSA profiles
+```
+
+### Safe Self-Improvement for PQC Workflows
+
+PQC recommendations become better through the same guarded Artemis loop used by the broader intelligence platform:
+
+1. Foundry captures crypto inventory deltas, operator corrections, exception approvals, false positives, certificate rotation outcomes, and vendor readiness notes.
+2. AIP converts those signals into eval cases for scoring, prompt wording, evidence citation quality, and action-package completeness.
+3. Candidate changes can adjust scoring weights, checklist ordering, retrieval prompts, or model routes, but cannot lower need-to-know policy, hide evidence, skip approvals, or expand mission scope.
+4. Precision, recall, citation accuracy, latency, policy violation rate, operator trust, and rollback stability are evaluated before human review.
+5. Apollo promotes approved advisor versions through canary rings and retains rollback pointers for every scoring model, prompt, workflow graph, and policy bundle.
+
+### Commercial Build Sequence
+
+1. **Quantum Readiness Scanner**: ship crypto inventory ingestion, TLS/PKI/SBOM scanners, ontology objects, and dashboards.
+2. **Post-Quantum Security Advisor**: ship remediation roadmaps, owner assignment, evidence-backed action packages, and migration governance.
+3. **Quantum Intelligence Engine**: ship research-to-executive translation and standards/vendor watchlists.
+4. **Quantum Opportunity Predictor**: ship transparent opportunity scoring once hardware maturity signals are more stable.
+
 ### Tactical Launch Assets
 
 - **LinkedIn lead-generation post**: position the capability as Environmental Cyber-Risk for Canadian GNSS, HF communications, OTH radar, 5G reliability, logistics, surveying, aviation support, and utilities.

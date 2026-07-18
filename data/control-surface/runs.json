@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #333",
+    "title": "Control Surface Feeds #334",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "06:17",
+    "timestamp": "2026-07-18T06:17:46Z"
+  },
+  {
+    "title": "Multi-Repo Audit #32",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:16",
+    "timestamp": "2026-07-18T06:16:37Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #880",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-8a4d8a76-cae8-4f9c-8c6e-53f4463c53c9",
+    "time": "06:08",
+    "timestamp": "2026-07-18T06:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #879",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-4e02be88-c8a6-4623-bb0c-23d3c5f5cf47",
+    "time": "05:08",
+    "timestamp": "2026-07-18T05:08:06Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1500",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "04:53",
+    "timestamp": "2026-07-18T04:53:00Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #878",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-e8019d03-26d0-442e-bbca-6ef614673f73",
+    "time": "04:08",
+    "timestamp": "2026-07-18T04:08:07Z"
+  },
+  {
+    "title": "Deploy Pages #1029",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "03:30",
+    "timestamp": "2026-07-18T03:30:38Z"
+  },
+  {
+    "title": "pages build and deployment #1489",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:30",
+    "timestamp": "2026-07-18T03:30:32Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2525",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:30",
+    "timestamp": "2026-07-18T03:30:32Z"
+  },
+  {
+    "title": "Control Surface Feeds #333",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "03:30",
     "timestamp": "2026-07-18T03:30:16Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/clearglass-internal-linking-a8b3hr",
     "time": "02:28",
     "timestamp": "2026-07-18T02:28:57Z"
-  },
-  {
-    "title": "Code Quality: PR #907 #2524",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/907/head",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:56Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #876",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-01e3e6d3-a745-4794-93f0-a1717ec62097",
-    "time": "02:08",
-    "timestamp": "2026-07-18T02:08:07Z"
-  },
-  {
-    "title": "Policy Gate #1190",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:58",
-    "timestamp": "2026-07-18T01:58:04Z"
-  },
-  {
-    "title": "Deploy Pages #1028",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "01:58",
-    "timestamp": "2026-07-18T01:58:04Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1498",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:58",
-    "timestamp": "2026-07-18T01:58:04Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #362",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:58",
-    "timestamp": "2026-07-18T01:58:04Z"
-  },
-  {
-    "title": "CI #1452",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:58",
-    "timestamp": "2026-07-18T01:58:04Z"
-  },
-  {
-    "title": "Defender Watch #791",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:58",
-    "timestamp": "2026-07-18T01:58:04Z"
-  },
-  {
-    "title": "Security #1218",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "01:58",
-    "timestamp": "2026-07-18T01:58:04Z"
   }
 ]

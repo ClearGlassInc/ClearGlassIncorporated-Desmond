@@ -3,12 +3,75 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "03:30",
-    "timestamp": "2026-07-18T03:30:26Z"
+    "time": "06:17",
+    "timestamp": "2026-07-18T06:17:58Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #334",
+    "time": "06:17",
+    "timestamp": "2026-07-18T06:17:46Z"
+  },
+  {
+    "title": "Multi-Repo Audit",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #32",
+    "time": "06:16",
+    "timestamp": "2026-07-18T06:16:37Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-8a4d8a76-cae8-4f9c-8c6e-53f4463c53c9 \u00b7 run #880",
+    "time": "06:08",
+    "timestamp": "2026-07-18T06:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-4e02be88-c8a6-4623-bb0c-23d3c5f5cf47 \u00b7 run #879",
+    "time": "05:08",
+    "timestamp": "2026-07-18T05:08:06Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #1500",
+    "time": "04:53",
+    "timestamp": "2026-07-18T04:53:00Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-e8019d03-26d0-442e-bbca-6ef614673f73 \u00b7 run #878",
+    "time": "04:08",
+    "timestamp": "2026-07-18T04:08:07Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1029",
+    "time": "03:30",
+    "timestamp": "2026-07-18T03:30:38Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1489",
+    "time": "03:30",
+    "timestamp": "2026-07-18T03:30:32Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2525",
+    "time": "03:30",
+    "timestamp": "2026-07-18T03:30:32Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #333",
     "time": "03:30",
     "timestamp": "2026-07-18T03:30:16Z"
@@ -26,68 +89,5 @@
     "detail": "dynamic on copilot/task-272290681-1196426665-25044eda-7ad6-4f30-a070-fff3bc09b350 \u00b7 run #877",
     "time": "03:08",
     "timestamp": "2026-07-18T03:08:07Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #194",
-    "time": "02:48",
-    "timestamp": "2026-07-18T02:48:10Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-internal-linking-a8b3hr \u00b7 run #1219",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:57Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-internal-linking-a8b3hr \u00b7 run #1453",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:57Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-internal-linking-a8b3hr \u00b7 run #1499",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:57Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-internal-linking-a8b3hr \u00b7 run #86",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:57Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-internal-linking-a8b3hr \u00b7 run #1191",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:57Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-internal-linking-a8b3hr \u00b7 run #792",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:57Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "ok",
-    "detail": "pull_request on claude/clearglass-internal-linking-a8b3hr \u00b7 run #628",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:57Z"
-  },
-  {
-    "title": "Code Quality: PR #907",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/907/head \u00b7 run #2524",
-    "time": "02:28",
-    "timestamp": "2026-07-18T02:28:56Z"
   }
 ]

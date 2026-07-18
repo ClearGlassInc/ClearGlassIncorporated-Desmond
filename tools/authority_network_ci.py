@@ -14,9 +14,16 @@ release adapter records that reviewed global-navigation edge explicitly.
 from __future__ import annotations
 
 import sys
+from pathlib import Path
 
-from tools import authority_network as core
-from tools.authority_network import *  # noqa: F403
+# Support both ``python -m tools.authority_network_ci`` and direct execution as
+# ``python tools/authority_network_ci.py`` from the repository root.
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools import authority_network as core  # noqa: E402
+from tools.authority_network import *  # noqa: E402,F403
 
 _ALIAS_DIAGNOSTIC = ": duplicate loc entries inside sitemap set"
 _BASE_VALIDATE = core.validate

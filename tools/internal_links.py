@@ -126,6 +126,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "operations/federal-supplier-handoff.html": ("Federal Supplier Handoff", "supplier registration runbook"),
     "counter-uas-commercialization-os.html": ("Counter-UAS OS", "counter-drone commercialization platform"),
     "traffic-enforcement.html": ("Speed Vision AI", "AI traffic-enforcement platform"),
+    "sats-digital-twin.html": ("SATS Digital Twin", "storm-adaptive transit simulation with governed operations"),
 
     # Services & conversion
     "offers/index.html": ("Services & Engagements", "every ClearGlass offer in one place"),
@@ -177,6 +178,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/resume-builder.html": ("Resume Builder", "PDF-export resume tool"),
     "blog/zero-trust-is-outdated.html": ("Zero Trust Is Outdated", "the original argument"),
     "blog/zero-trust-is-outdated-adaptive-trust.html": ("The Case for Adaptive Trust", "zero trust, revisited for agentic systems"),
+    "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ("Digital Twin Tools for Storm-Adaptive Transit", "the 2026 platform comparison and hybrid architecture"),
 }
 
 # --------------------------------------------------------------------------
@@ -264,6 +266,7 @@ CLUSTERS: dict[str, dict] = {
             "operations/federal-supplier-handoff.html",
             "counter-uas-commercialization-os.html",
             "traffic-enforcement.html",
+            "sats-digital-twin.html",
         ],
         "cta": [CTA_STORE, ("operations/procurement-readiness.html", "Check our procurement readiness")],
     },
@@ -323,6 +326,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
             "blog/ethical-sales-system-100k-revenue-prompt.html",
             "blog/almach-scalp-engine.html",
+            "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -358,6 +362,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "government.html": ["procurement-legal-tech.html"],
     "counter-uas-commercialization-os.html": ["air-control.html"],
     "traffic-enforcement.html": ["air-control.html"],
+    "sats-digital-twin.html": ["blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html", "environmental-cyber-risk.html"],
     "procurement-legal-tech.html": ["government.html", "blog/master-investigator-legal-tech-osint-government-accountability.html"],
     "clearpulse.html": ["environmental-cyber-risk.html"],
     "web-design.html": ["offers/index.html"],
@@ -389,6 +394,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/clearglassinc-0-to-1m-corporate-execution-plan.html": ["revenue-engine.html", "legal/index.html"],
     "blog/ethical-sales-system-100k-revenue-prompt.html": ["revenue-engine.html"],
     "blog/almach-scalp-engine.html": ["revenue-engine.html"],
+    "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ["sats-digital-twin.html", "environmental-cyber-risk.html"],
 }
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page

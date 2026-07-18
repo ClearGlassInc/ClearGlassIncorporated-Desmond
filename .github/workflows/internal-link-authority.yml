@@ -9,6 +9,7 @@ on:
       - "nav.js"
       - "tools/internal_links.py"
       - "tools/authority_network.py"
+      - "tools/authority_network_ci.py"
       - "tests/test_authority_network.py"
       - "docs/**authority-network*.md"
       - "llms*.txt"
@@ -22,6 +23,7 @@ on:
       - "nav.js"
       - "tools/internal_links.py"
       - "tools/authority_network.py"
+      - "tools/authority_network_ci.py"
       - "tests/test_authority_network.py"
       - "docs/**authority-network*.md"
       - "llms*.txt"
@@ -53,7 +55,7 @@ jobs:
         run: python3 tools/internal_links.py --check
 
       - name: Verify self-evolving authority graph
-        run: python3 tools/authority_network.py --check --report
+        run: python3 tools/authority_network_ci.py --check --report
 
       - name: Run focused authority-network tests
         run: python3 -m pytest -q tests/test_authority_network.py

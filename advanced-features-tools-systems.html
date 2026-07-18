@@ -154,24 +154,69 @@
   .afx-rung--med   .afx-rung__route{color:var(--afx-amber);border:1px solid var(--afx-amber)}
   .afx-rung--high  .afx-rung__score{color:var(--afx-red)}
   .afx-rung--high  .afx-rung__route{color:var(--afx-red);border:1px solid var(--afx-red)}
-  .afx-rung p{margin:0;color:var(--ag-on-dim);font-size:.9rem}
-  .afx-rung strong{color:var(--ag-on)}
+  .afx-rung p{margin:0;color:#c8d3f0 !important;font-size:.9rem}
+  .afx-rung strong{color:var(--ag-on,#eaf0ff) !important}
 
   /* ── Tools registry table ─────────────────────────────────────────────── */
   .afx-registry{width:100%;border-collapse:collapse;font-size:.9rem}
   .afx-registry th,.afx-registry td{text-align:left;padding:12px 14px;border-bottom:1px solid rgba(150,175,255,.12)}
+  .afx-registry td{color:#c8d3f0 !important}
   .afx-registry th{font-family:var(--cg-mono,monospace);font-size:.7rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--ag-on-faint,rgba(230,238,255,.55))}
-  .afx-registry td:first-child{font-family:var(--cg-mono,monospace);color:var(--afx-term);white-space:nowrap}
+    text-transform:uppercase;color:rgba(230,238,255,.62) !important}
+  .afx-registry td:first-child{font-family:var(--cg-mono,monospace);color:var(--afx-term) !important;white-space:nowrap}
   .afx-registry tr:hover td{background:rgba(57,255,182,.04)}
   .afx-registry .st{font-family:var(--cg-mono,monospace);font-size:.72rem;letter-spacing:.06em}
-  .afx-registry .st--live{color:var(--afx-term)}
-  .afx-registry .st--gate{color:var(--afx-amber)}
+  .afx-registry .st--live{color:var(--afx-term) !important}
+  .afx-registry .st--gate{color:var(--afx-amber) !important}
 
   @media (max-width:640px){
     .afx-rung{grid-template-columns:1fr;gap:8px;text-align:left}
     .afx-registry{display:block;overflow-x:auto;white-space:nowrap}
   }
+
+  /* ── Readability on the dark command surface ──────────────────────────────
+     The shared global design system is a light theme — it forces text dark
+     with !important (headings #0c0e12, body ~#374151). This page is a dark
+     command surface, so text sitting on the dark backdrop/glass would render
+     dark-on-dark. Restore light text there, while keeping the WHITE glass
+     cards' text dark. Prism-gradient spans set their own text-fill, so they
+     keep their gradient regardless of `color`. */
+
+  /* give the hero panel a defined dark glass so its light text always reads,
+     independent of how the fixed backdrop happens to paint */
+  .ag-shell .ag-hero__panel{
+    background:rgba(16,22,44,.55);
+    border:1px solid rgba(150,175,255,.16);
+    border-radius:var(--ag-r-lg,24px);
+    padding:clamp(26px,4vw,52px);
+    -webkit-backdrop-filter:blur(14px) saturate(1.2);
+    backdrop-filter:blur(14px) saturate(1.2);
+    box-shadow:var(--ag-sh-2,0 20px 60px -24px rgba(4,7,20,.85));
+  }
+
+  /* text directly on the dark surface → light */
+  .ag-shell .ag-display,
+  .ag-shell .ag-h2,
+  .ag-shell .ag-lede{ color:var(--ag-on,#eaf0ff) !important; }
+  .ag-shell .ag-eyebrow{ color:var(--ag-hi-sky,#38bdf8) !important; }
+  .ag-shell .ag-prism-text{ color:transparent !important; }
+  /* two-column intro paragraphs (console, governance) sit on the backdrop */
+  .ag-shell .ag-grid--2 > div > p{ color:var(--ag-on-dim,#9fabce) !important; }
+  /* chips on the backdrop (not inside a card) */
+  .ag-shell .ag-hero__panel .ag-chip,
+  .ag-shell #console .ag-chip,
+  .ag-shell #governance .ag-chip{ color:#c8d3f0 !important; }
+
+  /* WHITE glass cards → keep their text dark for contrast */
+  .ag-shell .ag-card .ag-card__title{ color:#0c0e12 !important; }
+  .ag-shell .ag-card .ag-card__body,
+  .ag-shell .ag-card .afx-card__list li{ color:#2b3240 !important; }
+  .ag-shell .ag-card .afx-card__code{ color:#5a6172 !important; }
+  .ag-shell .ag-card .ag-card__body code{ color:#7c2d92 !important; }
+
+  /* schema entity headers sit on bright bars */
+  .ag-shell .afx-entity__h{ color:#04121a !important; }
+  .ag-shell .afx-entity--r .afx-entity__h{ color:#fff !important; }
 </style>
 </head>
 
@@ -663,12 +708,38 @@
       });
     }
 
+    var reveals = document.querySelectorAll("[data-ag-reveal],[data-ag-stagger]");
+    var reveal = function (el) { el.classList.add("is-in"); };
+
+    if (!("IntersectionObserver" in window)) {
+      /* no observer support — never leave content invisible */
+      reveals.forEach(reveal);
+      return;
+    }
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+        if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); }
       });
-    }, { threshold: .12, rootMargin: "0px 0px -8% 0px" });
-    document.querySelectorAll("[data-ag-reveal],[data-ag-stagger]").forEach(function (el) { io.observe(el); });
+    }, { threshold: 0, rootMargin: "0px 0px -6% 0px" });
+    reveals.forEach(function (el) { io.observe(el); });
+
+    /* initial sweep: reveal anything already within the viewport on load
+       (covers tall panels the observer can miss on programmatic/instant scroll) */
+    var sweep = function () {
+      reveals.forEach(function (el) {
+        if (el.classList.contains("is-in")) return;
+        var r = el.getBoundingClientRect();
+        if (r.top < innerHeight && r.bottom > 0) { reveal(el); io.unobserve(el); }
+      });
+    };
+    sweep();
+    addEventListener("scroll", sweep, { passive: true });
+
+    /* absolute failsafe — no section may stay permanently hidden */
+    addEventListener("load", function () {
+      setTimeout(function () { reveals.forEach(reveal); }, 2600);
+    });
   })();
   </script>
 

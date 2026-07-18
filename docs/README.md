@@ -12,6 +12,7 @@ Long-form blueprints, platform designs, and corporate documentation supporting t
 - `artemis-intelligence-platform-blueprint.md`
 - `clearglassinc_artemis_palantir_aip_blueprint.md`
 - `clearglassinc_artemis_palantir_gotham_foundry_aip_apollo_production_design.md`
+- `clearglassinc_artemis_palantir_self_evolving_intelligence_platform_blueprint_2026-07-18.md`
 - `clearglassinc_artemis_palantir_self_improving_fullstack_design.md`
 - `clearglassinc_artemis_palantir_self_evolving_ai_platform_2026.md`
 - `clearglassinc_artemis_legal_tech_multi_agent_blueprint.md`

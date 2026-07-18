@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-07-17T09:07:48.930054+00:00",
+  "run_utc": "2026-07-18T08:47:17.657777+00:00",
   "site_url": "https://www.clearglassinc.com",
   "overall_healthy": true,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://www.clearglassinc.com/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 136,
+      "response_ms": 140,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://www.clearglassinc.com/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 72,
+      "response_ms": 64,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://www.clearglassinc.com/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 81,
+      "response_ms": 87,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://www.clearglassinc.com/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 75,
+      "response_ms": 73,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://www.clearglassinc.com/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 88,
+      "response_ms": 247,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,17 +61,12 @@
       "url": "https://www.clearglassinc.com/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 65,
+      "response_ms": 60,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
   "local_issues": [],
-  "local_warnings": [
-    "HTML page not referenced in sitemap.xml: air-systems-control.html",
-    "HTML page not referenced in sitemap.xml: artemis-2040.html",
-    "HTML page not referenced in sitemap.xml: clearglass-ultra.html",
-    "HTML page not referenced in sitemap.xml: environmental-cyber-risk.html"
-  ]
+  "local_warnings": []
 }

@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-17
+# Release Notes — 2026-07-18
 
-*852 commit(s) since v1.0.0*
+*889 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -114,6 +114,7 @@
 
 ## Documentation
 
+- add Kimi K3 AI coding-agent tech radar note (#898) (`6474968`)
 - record www.clearglassinc.com domain migration + verification (`b9e2248`)
 - add engineering guidelines (`3c68483`)
 - **artemis:** add 2050 readiness ledger (`30cf9bf`)
@@ -162,6 +163,24 @@
 
 ## Maintenance
 
+- Add safer Windows GPU tuning utility (`6ef4ff8`)
+- Add authority-network guardrails and AI-readable site map (`3c3a388`)
+- Rebuild advanced systems page as a cohesive dark command surface (`a8b2ec3`)
+- Fix contrast and reveal robustness on advanced systems page (`adc1bbf`)
+- Harden blog system prompt v2.1: portable guardrails + mode selection (#909) (`7913edb`)
+- Add Advanced Features, Tools & Systems catalog page (`d4fb9d4`)
+- Add site-wide pillar-and-cluster internal linking system (`e53f390`)
+- Patch blog system prompt with v2 Authority Engine master prompt (`24d1975`)
+- Add Windows GPU optimization utility (`24180e7`)
+- Add Artemis defensive algorithm prompt (`4278b32`)
+- Add secure deployment agent prompt (`4c2950a`)
+- Add Secure Deployment Agent post to sitemap.xml (`61bab93`)
+- Add blog post: The Secure Deployment Agent (`0a33355`)
+- Add Artemis secure deployment plan (`6a9ed82`)
+- Add advanced revenue workflow (`0dac545`)
+- Restore and harden GitHub Pages deployment (`236a8bf`)
+- Publish Artemis self-evolving platform blueprint (`de6b3cc`)
+- Fix GitHub Pages static deployment (`b67219e`)
 - Remove unused variables flagged by CodeQL in dashboard JS (`9263b6b`)
 - Add ALMACH Scalp Engine AI trading dashboard page (`7cb2e42`)
 - Label all images with copyright metadata and add site-wide asset protection (`ce66cd9`)
@@ -506,6 +525,19 @@
 
 ## Automation
 
+- refresh control-surface data feeds [skip ci] (`6e1ec65`)
+- refresh control-surface data feeds [skip ci] (`e7e0ed2`)
+- refresh control-surface data feeds [skip ci] (`22ab0b9`)
+- refresh control-surface data feeds [skip ci] (`0abab1d`)
+- refresh control-surface data feeds [skip ci] (`9d6331a`)
+- refresh control-surface data feeds [skip ci] (`d63435e`)
+- refresh control-surface data feeds [skip ci] (`98c17fd`)
+- refresh control-surface data feeds [skip ci] (`fc17288`)
+- refresh control-surface data feeds [skip ci] (`08cfb44`)
+- refresh control-surface data feeds [skip ci] (`edbaa55`)
+- refresh control-surface data feeds [skip ci] (`9a6b5d5`)
+- refresh control-surface data feeds [skip ci] (`dbd020e`)
+- update generated outputs — 2026-07-17 09:07 UTC [skip ci] (`7ab6de4`)
 - refresh control-surface data feeds [skip ci] (`f81b352`)
 - refresh control-surface data feeds [skip ci] (`6c09721`)
 - refresh control-surface data feeds [skip ci] (`0c8ad37`)
@@ -865,9 +897,14 @@
 
 ## Other
 
+- add ClearGlass logo badge to artemis-self-evolving-platform.html (`e097f76`)
+- add Second Brain System guide card to store and offers lists (`343166e`)
+- publish $0-to-$1M Corporate Execution Plan post (`0a052f6`)
+- add $0-to-$1M Corporate Execution Plan console view (`e621e25`)
 - patch CEO Bot system prompt to v1.1.0 with evidence and secrets guardrails (`c4e810e`)
 - add ARTEMIS FAWL Autonomous AI Operations charter view (`bbf1532`)
 - add Founder Authority Strategy console view (`abd42f5`)
+- add Second Brain System card to products grid (`da89683`)
 - add Crystal Knowledge Vault second-brain infographic section (`ca79127`)
 - add cinematic Guardian brand film with interactive player (`0cce1a0`)
 - back off before Pages deploy retry to absorb transient artifact-metadata hiccup (`4bb9e33`)

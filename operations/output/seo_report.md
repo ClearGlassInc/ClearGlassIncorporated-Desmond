@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-17T09:07:48.404115+00:00
-**Average Score:** 90.3/100
-**Files Audited:** 66
+**Run:** 2026-07-18T08:47:17.004399+00:00
+**Average Score:** 90.0/100
+**Files Audited:** 68
 
 ## Page Scores
 
@@ -14,6 +14,7 @@
 | `cyber-defense-console.html` | 60/100 | 4 |
 | `flowsint.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
+| `artemis-self-evolving-platform.html` | 70/100 | 3 |
 | `bluedesk-mobile.html` | 70/100 | 3 |
 | `side-store.html` | 70/100 | 3 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
@@ -23,6 +24,7 @@
 | `systems.html` | 80/100 | 2 |
 | `ultra-glass.html` | 80/100 | 2 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
+| `advanced-features-tools-systems.html` | 90/100 | 1 |
 | `air-systems-control.html` | 90/100 | 1 |
 | `bluedesk.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
@@ -77,9 +79,9 @@
 
 ## Top Issues Across All Pages
 
-- 19x — Description length N chars (ideal N–N)
-- 16x — Title length N chars (ideal N–N)
-- 9x — Missing og:image
+- 21x — Description length N chars (ideal N–N)
+- 17x — Title length N chars (ideal N–N)
+- 10x — Missing og:image
 - 4x — Missing og:description
 - 4x — Multiple <hN> tags (N)
 - 3x — Missing og:title

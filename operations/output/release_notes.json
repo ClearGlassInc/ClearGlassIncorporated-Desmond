@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-07-17T09:07:48.345421+00:00",
+  "run_utc": "2026-07-18T08:47:16.918494+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 852,
+  "commit_count": 889,
   "sections": {
     "New Features": [
       {
@@ -921,6 +921,15 @@
     ],
     "Documentation": [
       {
+        "sha": "6474968",
+        "type": "docs",
+        "scope": null,
+        "subject": "add Kimi K3 AI coding-agent tech radar note (#898)",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
         "sha": "b9e2248",
         "type": "docs",
         "scope": null,
@@ -1277,6 +1286,168 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "6ef4ff8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add safer Windows GPU tuning utility",
+        "author": "Desmond Otieno",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "3c3a388",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add authority-network guardrails and AI-readable site map",
+        "author": "Desmond Otieno",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "a8b2ec3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Rebuild advanced systems page as a cohesive dark command surface",
+        "author": "Claude",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "adc1bbf",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix contrast and reveal robustness on advanced systems page",
+        "author": "Claude",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "7913edb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Harden blog system prompt v2.1: portable guardrails + mode selection (#909)",
+        "author": "Desmond Otieno",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "d4fb9d4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Advanced Features, Tools & Systems catalog page",
+        "author": "Claude",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "e53f390",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add site-wide pillar-and-cluster internal linking system",
+        "author": "Claude",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "24d1975",
+        "type": "chore",
+        "scope": null,
+        "subject": "Patch blog system prompt with v2 Authority Engine master prompt",
+        "author": "Claude",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "24180e7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Windows GPU optimization utility",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "4278b32",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis defensive algorithm prompt",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "4c2950a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add secure deployment agent prompt",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "61bab93",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Secure Deployment Agent post to sitemap.xml",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "0a33355",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add blog post: The Secure Deployment Agent",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "6a9ed82",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis secure deployment plan",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "0dac545",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add advanced revenue workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "236a8bf",
+        "type": "chore",
+        "scope": null,
+        "subject": "Restore and harden GitHub Pages deployment",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "de6b3cc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish Artemis self-evolving platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "b67219e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix GitHub Pages static deployment",
+        "author": "Desmond Otieno",
+        "date": "2026-07-17",
+        "breaking": false
+      },
       {
         "sha": "9263b6b",
         "type": "chore",
@@ -4348,6 +4519,123 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "6e1ec65",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "e7e0ed2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "22ab0b9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-18",
+        "breaking": false
+      },
+      {
+        "sha": "0abab1d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "9d6331a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "d63435e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "98c17fd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "fc17288",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "08cfb44",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "edbaa55",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "9a6b5d5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "dbd020e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "7ab6de4",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-17 09:07 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-17",
+        "breaking": false
+      },
       {
         "sha": "f81b352",
         "type": "bot",
@@ -7505,6 +7793,42 @@
     ],
     "Other": [
       {
+        "sha": "e097f76",
+        "type": "site",
+        "scope": null,
+        "subject": "add ClearGlass logo badge to artemis-self-evolving-platform.html",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "343166e",
+        "type": "site",
+        "scope": null,
+        "subject": "add Second Brain System guide card to store and offers lists",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "0a052f6",
+        "type": "blog",
+        "scope": null,
+        "subject": "publish $0-to-$1M Corporate Execution Plan post",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "e621e25",
+        "type": "bluedesk",
+        "scope": null,
+        "subject": "add $0-to-$1M Corporate Execution Plan console view",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
         "sha": "c4e810e",
         "type": "prompts",
         "scope": null,
@@ -7527,6 +7851,15 @@
         "type": "bluedesk",
         "scope": null,
         "subject": "add Founder Authority Strategy console view",
+        "author": "Claude",
+        "date": "2026-07-17",
+        "breaking": false
+      },
+      {
+        "sha": "da89683",
+        "type": "site",
+        "scope": null,
+        "subject": "add Second Brain System card to products grid",
         "author": "Claude",
         "date": "2026-07-17",
         "breaking": false

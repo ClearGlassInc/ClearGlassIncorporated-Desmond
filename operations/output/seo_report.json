@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-17T09:07:48.404115+00:00",
-  "files_audited": 66,
-  "average_score": 90.3,
+  "run_utc": "2026-07-18T08:47:17.004399+00:00",
+  "files_audited": 68,
+  "average_score": 90.0,
   "pages": [
     {
       "file": "404.html",
@@ -76,6 +76,26 @@
       "og_image": true,
       "score": 100,
       "issues": []
+    },
+    {
+      "file": "advanced-features-tools-systems.html",
+      "title": "ClearGlass \u00b7 Advanced Features, Tools &amp; Systems",
+      "title_length": 51,
+      "title_ok": true,
+      "description": "The ClearGlass advanced systems command surface \u2014 governed autonomous operators, the PERCIVAL agent stack, SENTINEL / AEGIS defenders, Agent Mesh, and the append-only audit architecture behind every platform.",
+      "description_length": 208,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 208 chars (ideal 120\u2013160)"
+      ]
     },
     {
       "file": "aegis.html",
@@ -287,6 +307,28 @@
       ]
     },
     {
+      "file": "artemis-self-evolving-platform.html",
+      "title": "ClearGlassInc Artemis \u2014 Self-Evolving AI Intelligence Platform",
+      "title_length": 62,
+      "title_ok": false,
+      "description": "A full-stack implementation blueprint for ClearGlassInc Artemis: a secure, coalition-aware, self-improving AI intelligence platform built on Palantir Gotham, Foundry, AIP, and Apollo.",
+      "description_length": 183,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 70,
+      "issues": [
+        "Title length 62 chars (ideal 30\u201360)",
+        "Description length 183 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "artemis.html",
       "title": "ClearGlass NEXUS v12 \u2014 Intelligence Platform | Ontario",
       "title_length": 54,
@@ -371,7 +413,7 @@
       "description_length": 147,
       "description_ok": true,
       "canonical_present": true,
-      "h1_count": 6,
+      "h1_count": 8,
       "h1_ok": false,
       "img_without_alt": 0,
       "og_title": true,
@@ -379,7 +421,7 @@
       "og_image": true,
       "score": 90,
       "issues": [
-        "Multiple <h1> tags (6)"
+        "Multiple <h1> tags (8)"
       ]
     },
     {
@@ -1283,9 +1325,9 @@
     }
   ],
   "top_issues": [
-    "19x \u2014 Description length N chars (ideal N\u2013N)",
-    "16x \u2014 Title length N chars (ideal N\u2013N)",
-    "9x \u2014 Missing og:image",
+    "21x \u2014 Description length N chars (ideal N\u2013N)",
+    "17x \u2014 Title length N chars (ideal N\u2013N)",
+    "10x \u2014 Missing og:image",
     "4x \u2014 Missing og:description",
     "4x \u2014 Multiple <hN> tags (N)",
     "3x \u2014 Missing og:title",

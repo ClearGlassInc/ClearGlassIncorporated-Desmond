@@ -501,6 +501,22 @@ async def submit_upgrade_proposal(proposal: UpgradeProposal) -> UpgradeProposal:
     return proposal
 ```
 
+
+### Reference Implementation Module
+
+A dependency-light Python reference module now captures Artemis primitives for classification dominance, need-to-know checks, workflow transition validation, signal hashing, eval gate enforcement, and human-reviewed upgrade proposal submission. The module is designed as an executable blueprint for production services that integrate Foundry ontology records, AIP evals, Gotham case actions, and Apollo canary releases.
+
+```bash
+python -m py_compile platform/artemis_reference/self_evolving_platform.py
+```
+
+Core implementation artifacts:
+
+- `Principal`, `MissionContext`, and `PolicyDecision` model coalition-aware access decisions.
+- `OntologyEnvelope` and `SignalObserved` preserve confidence, lineage, temporal state, mission scope, and security metadata.
+- `transition()` enforces deterministic workflow movement before any agent can advance a mission package.
+- `passes_eval_gates()` and `submit_upgrade_proposal()` prevent self-upgrades unless metrics pass and a human reviewer approves Apollo canary eligibility.
+
 ### TypeScript Approval Card Sketch
 
 ```tsx

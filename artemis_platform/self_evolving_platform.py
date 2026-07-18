@@ -508,3 +508,143 @@ def drift_zscore(current_window: list[float], baseline_window: list[float]) -> f
         raise ValueError("drift windows require at least five samples")
     baseline_sigma = pstdev(baseline_window) or 1e-6
     return abs(fmean(current_window) - fmean(baseline_window)) / baseline_sigma
+
+ElectricalDefectSeverity = Literal[
+    "immediate_danger",
+    "critical_repair",
+    "code_correction",
+    "reliability_improvement",
+    "preventive_maintenance",
+    "cosmetic_organization",
+    "future_upgrade",
+]
+
+
+@dataclass(frozen=True)
+class ElectricalFinding:
+    """Evidence-backed electrical-system finding for maintenance planning.
+
+    This object is deliberately documentation-only. It must not be used as an
+    instruction to contact, move, terminate, test, or repair exposed energized
+    conductors. Physical electrical work remains a licensed-electrician,
+    permit-and-inspection workflow with lockout/tagout and verified absence of
+    voltage before contact.
+    """
+
+    finding_id: str
+    asset_id: str
+    description: str
+    evidence_refs: tuple[str, ...]
+    observed_hazards: frozenset[str]
+    circuit_status: Literal["unknown", "isolated", "restricted", "restored"] = "unknown"
+
+
+@dataclass(frozen=True)
+class ElectricalWorkOrder:
+    work_order_id: str
+    finding_id: str
+    severity: ElectricalDefectSeverity
+    required_controls: tuple[str, ...]
+    repair_objective: str
+    approval_gates: tuple[str, ...]
+    final_report_sections: tuple[str, ...]
+
+
+_IMMEDIATE_DANGER_HAZARDS = frozenset(
+    {
+        "arcing",
+        "burning_odour",
+        "active_overheating",
+        "water_intrusion",
+        "damaged_service_equipment",
+        "exposed_live_parts",
+        "evidence_of_fire",
+    }
+)
+
+_CRITICAL_REPAIR_HAZARDS = frozenset(
+    {
+        "aluminium_wiring_defect",
+        "knob_and_tube_wiring",
+        "damaged_insulation",
+        "double_tapped_breaker",
+        "overheated_conductor",
+        "open_neutral",
+        "improper_grounding",
+        "unapproved_modification",
+        "bootleg_ground",
+        "neutral_ground_fault",
+    }
+)
+
+_REQUIRED_ELECTRICAL_CONTROLS = (
+    "qualified licensed electrician",
+    "required AHJ permits and inspections",
+    "de-energize before physical contact",
+    "lockout/tagout",
+    "approved meter live-dead-live absence-of-voltage verification",
+    "appropriate PPE, insulated tools, barriers, and safe approach distances",
+    "re-energize only after covers, guards, protective devices, testing, and approvals are restored",
+)
+
+_FINAL_ELECTRICAL_REPORT_SECTIONS = (
+    "Immediate hazards",
+    "Circuits that must remain isolated",
+    "Existing system condition",
+    "Defects found",
+    "Root causes",
+    "Repairs required",
+    "Materials required",
+    "Technology upgrades recommended",
+    "Applicable permit and inspection requirements",
+    "Testing performed",
+    "Exact test results",
+    "Circuits safely restored",
+    "Circuits still restricted",
+    "Final code-compliance status",
+    "Remaining owner actions",
+    "Preventive-maintenance schedule",
+)
+
+
+def classify_electrical_finding(finding: ElectricalFinding) -> ElectricalDefectSeverity:
+    """Risk-rank a finding without guessing conductor identity or code status."""
+
+    if finding.observed_hazards & _IMMEDIATE_DANGER_HAZARDS:
+        return "immediate_danger"
+    if finding.observed_hazards & _CRITICAL_REPAIR_HAZARDS:
+        return "critical_repair"
+    if "missing_label" in finding.observed_hazards or "incorrect_panel_directory" in finding.observed_hazards:
+        return "code_correction"
+    if "unsupported_cable" in finding.observed_hazards or "missing_cover" in finding.observed_hazards:
+        return "reliability_improvement"
+    if "obsolete_monitoring" in finding.observed_hazards:
+        return "future_upgrade"
+    return "preventive_maintenance"
+
+
+def build_electrical_work_order(finding: ElectricalFinding) -> ElectricalWorkOrder:
+    """Create an audit-ready electrical remediation workflow for Artemis."""
+
+    severity = classify_electrical_finding(finding)
+    if severity == "immediate_danger":
+        objective = "isolate the affected circuit/equipment and stop work until qualified evaluation approves the next step"
+    elif severity == "critical_repair":
+        objective = "trace, document, repair root cause, test, inspect, and restore only when safe"
+    else:
+        objective = "schedule documentation, correction, verification, and preventive maintenance without bypassing safety controls"
+
+    return ElectricalWorkOrder(
+        work_order_id=f"ewo-{finding.finding_id}",
+        finding_id=finding.finding_id,
+        severity=severity,
+        required_controls=_REQUIRED_ELECTRICAL_CONTROLS,
+        repair_objective=objective,
+        approval_gates=(
+            "licensed_electrician_acceptance",
+            "permit_or_AHJ_requirement_review",
+            "pre_energization_test_record",
+            "owner_or_operator_restore_authorization",
+        ),
+        final_report_sections=_FINAL_ELECTRICAL_REPORT_SECTIONS,
+    )

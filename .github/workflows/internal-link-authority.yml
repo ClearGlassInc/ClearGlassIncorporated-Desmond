@@ -1,0 +1,98 @@
+name: Internal Link Authority
+
+on:
+  pull_request:
+    paths:
+      - "**/*.html"
+      - "sitemap.xml"
+      - "tools/internal_links.py"
+      - "llms*.txt"
+      - ".github/workflows/internal-link-authority.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "sitemap.xml"
+      - "tools/internal_links.py"
+      - "llms*.txt"
+      - ".github/workflows/internal-link-authority.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: internal-link-authority-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-authority-network:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Verify generated page blocks are current
+        run: python3 tools/internal_links.py --check
+
+      - name: Verify graph integrity and inbound coverage
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from collections import Counter
+          from tools import internal_links as graph
+
+          errors = graph.validate()
+          if errors:
+              raise SystemExit("\n".join(errors))
+
+          inbound = Counter()
+          for page in graph.PAGES:
+              related, ctas, pillar = graph.related_targets(page)
+              targets = list(related) + [path for path, _ in ctas]
+              if pillar:
+                  targets.append(pillar)
+              targets.append("index.html")
+              for target in targets:
+                  if target not in graph.PAGES:
+                      raise SystemExit(f"{page}: unknown internal target {target}")
+                  if target != page:
+                      inbound[target] += 1
+
+          orphans = sorted(page for page in graph.PAGES if page != "index.html" and inbound[page] == 0)
+          if orphans:
+              raise SystemExit("Orphan pages: " + ", ".join(orphans))
+
+          print(f"Validated {len(graph.PAGES)} pages across {len(graph.CLUSTERS)} clusters.")
+          print(f"Minimum inbound coverage: {min(inbound[p] for p in graph.PAGES if p != 'index.html')}")
+          PY
+
+      - name: Verify sitemap covers every mapped page
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          from urllib.parse import urlparse, unquote
+          from tools import internal_links as graph
+
+          root = ET.parse("sitemap.xml").getroot()
+          urls = set()
+          for loc in root.findall(".//{*}loc"):
+              path = unquote(urlparse((loc.text or "").strip()).path).lstrip("/")
+              if not path or path.endswith("/"):
+                  path += "index.html"
+              urls.add(path)
+
+          missing = sorted(set(graph.PAGES) - urls)
+          if missing:
+              raise SystemExit("Pages missing from sitemap.xml: " + ", ".join(missing))
+
+          print(f"sitemap.xml covers all {len(graph.PAGES)} mapped pages.")
+          PY

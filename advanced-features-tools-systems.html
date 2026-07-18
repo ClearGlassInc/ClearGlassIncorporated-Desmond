@@ -7,232 +7,320 @@
 <link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#05070f">
-<meta name="msapplication-TileColor" content="#05070f">
+<meta name="theme-color" content="#04060d">
+<meta name="msapplication-TileColor" content="#04060d">
 <meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
 
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>ClearGlass · Advanced Features, Tools &amp; Systems</title>
-<meta name="description" content="The ClearGlass advanced systems catalog — governed autonomous operators, the PERCIVAL agent stack, SENTINEL / AEGIS defenders, Agent Mesh, and the append-only audit architecture behind every platform."/>
+<meta name="description" content="The ClearGlass advanced systems command surface — governed autonomous operators, the PERCIVAL agent stack, SENTINEL / AEGIS defenders, Agent Mesh, and the append-only audit architecture behind every platform."/>
 <link rel="canonical" href="https://www.clearglassinc.com/advanced-features-tools-systems.html"/>
 
 <!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="ClearGlass · Advanced Features, Tools &amp; Systems"/>
-<meta property="og:description" content="A command-surface catalog of ClearGlass's advanced systems: governed autonomous operators, the PERCIVAL agent stack, named defenders, Agent Mesh, and the audit architecture behind them."/>
+<meta property="og:description" content="A command-surface catalog of ClearGlass's advanced systems: governed operators, the PERCIVAL agent stack, named defenders, Agent Mesh, and the audit architecture behind them."/>
 <meta property="og:url" content="https://www.clearglassinc.com/advanced-features-tools-systems.html"/>
 <meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png"/>
 
 <!-- Fonts (brand stack) -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Urbanist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Urbanist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 
-<!-- Design tokens → theme remap → Aurora Glass system -->
+<!-- Design tokens → theme remap → Aurora Glass (nav + shared behaviours) -->
 <link rel="stylesheet" href="tokens.css"/>
 <link rel="stylesheet" href="futuristic-ui.css"/>
 <link rel="stylesheet" href="theme.css"/>
-<!-- ClearGlass Global Design System -->
 <link rel="stylesheet" href="/assets/css/glass.css">
 <link rel="stylesheet" href="/assets/css/cg-design-system.css">
 <script defer src="/assets/js/cg-design-system.js"></script>
 <script defer src="/asset-protection.js"></script>
 
 <style>
-  /* ══════════════════════════════════════════════════════════════════════
-     Scoped layer for this page: a terminal / schematic command surface that
-     sits on top of Aurora Glass. Namespaced --afx-* so it never collides.
-     ══════════════════════════════════════════════════════════════════════ */
-  :root{
-    --afx-term:#39ffb6;          /* phosphor green */
-    --afx-term-dim:#1f8f66;
-    --afx-amber:#ffb347;
-    --afx-red:#ff5964;
-    --afx-grid:rgba(57,255,182,.10);
-    --afx-scan:rgba(57,255,182,.04);
-  }
+/* ══════════════════════════════════════════════════════════════════════════
+   ADVANCED FEATURES, TOOLS & SYSTEMS — page-owned dark command surface.
+   Everything is namespaced --afx-* / .afx-* and fully self-contained: this
+   page renders as one cohesive cinematic control room regardless of the shared
+   (light-leaning) global design system, which it deliberately overrides only
+   inside .ag-shell. No global files are touched.
+   ══════════════════════════════════════════════════════════════════════════ */
+:root{
+  --afx-void:#04060d; --afx-void-2:#070b16;
+  --afx-panel:rgba(13,20,36,.72); --afx-panel-2:rgba(19,28,48,.86); --afx-panel-3:rgba(24,34,58,.94);
+  --afx-edge:rgba(122,158,255,.14); --afx-edge-2:rgba(122,158,255,.28); --afx-edge-hair:rgba(122,158,255,.08);
+  --afx-text:#e9eefc; --afx-dim:#a4b4d6; --afx-faint:#6f7fa4;
+  --afx-term:#39ffb6; --afx-term-dim:#1f9d6d;
+  --afx-sky:#4cc4ff; --afx-violet:#a78bfa; --afx-pink:#f472b6; --afx-mint:#34d399; --afx-amber:#ffb743; --afx-red:#ff5d6c;
+  --afx-mono:var(--cg-mono,'IBM Plex Mono',ui-monospace,monospace);
+  --afx-sans:'Urbanist',system-ui,sans-serif;
+  --afx-serif:'Cormorant Garamond',Georgia,serif;
+  --afx-r:18px; --afx-r-lg:26px;
+  --afx-glow:0 0 34px -10px rgba(76,196,255,.5);
+}
 
-  /* ── Console / terminal panel ─────────────────────────────────────────── */
-  .afx-console{
-    font-family:var(--cg-mono,'IBM Plex Mono',monospace);
-    background:linear-gradient(180deg,rgba(4,10,8,.92),rgba(3,7,6,.96));
-    border:1px solid rgba(57,255,182,.28);
-    border-radius:var(--ag-r-md,18px);
-    box-shadow:inset 0 0 60px -20px rgba(57,255,182,.35),0 30px 80px -40px rgba(0,0,0,.9);
-    padding:22px 24px;
-    position:relative;overflow:hidden;
-    color:var(--afx-term);
-  }
-  .afx-console::after{  /* scanlines */
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:repeating-linear-gradient(0deg,var(--afx-scan) 0 1px,transparent 1px 3px);
-    mix-blend-mode:screen;opacity:.6;
-  }
-  .afx-console__bar{
-    display:flex;align-items:center;gap:8px;margin-bottom:16px;
-    font-size:.72rem;letter-spacing:.18em;color:var(--afx-term-dim);text-transform:uppercase;
-  }
-  .afx-dot{width:10px;height:10px;border-radius:50%;background:var(--afx-red);box-shadow:0 0 8px var(--afx-red)}
-  .afx-dot--y{background:var(--afx-amber);box-shadow:0 0 8px var(--afx-amber)}
-  .afx-dot--g{background:var(--afx-term);box-shadow:0 0 8px var(--afx-term)}
-  .afx-console__title{margin-left:auto;color:var(--afx-term-dim)}
-  .afx-line{font-size:.9rem;line-height:1.95;white-space:pre-wrap}
-  .afx-line .k{color:var(--afx-term-dim)}
-  .afx-line .v{color:var(--afx-term)}
-  .afx-line .w{color:var(--afx-amber)}
-  .afx-line .b{color:var(--afx-red)}
-  .afx-caret{display:inline-block;width:9px;height:1.05em;vertical-align:-2px;
-    background:var(--afx-term);box-shadow:0 0 10px var(--afx-term);animation:afxBlink 1.05s steps(1) infinite}
-  @keyframes afxBlink{50%{opacity:0}}
+/* ── Fixed dark stage: guarantees the cohesive dark surface for this page ── */
+.afx-stage{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(120% 90% at 50% -8%, rgba(76,196,255,.12), transparent 46%),
+  radial-gradient(90% 70% at 88% 8%, rgba(167,139,250,.12), transparent 50%),
+  radial-gradient(80% 60% at 6% 96%, rgba(57,255,182,.08), transparent 55%),
+  linear-gradient(180deg,var(--afx-void-2),var(--afx-void) 60%);}
+.afx-stage::before{content:"";position:absolute;inset:0;opacity:.5;background:
+  linear-gradient(var(--afx-edge-hair) 1px,transparent 1px) 0 0/44px 44px,
+  linear-gradient(90deg,var(--afx-edge-hair) 1px,transparent 1px) 0 0/44px 44px;
+  -webkit-mask-image:radial-gradient(120% 100% at 50% 0%,#000,transparent 78%);
+          mask-image:radial-gradient(120% 100% at 50% 0%,#000,transparent 78%);}
+.afx-stage::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(130% 120% at 50% 40%,transparent 60%,rgba(0,0,0,.55));}
 
-  /* ── HEX array chips (image 1: A_ARRAY / B_ARRAY / C_ARRAY) ───────────── */
-  .afx-arrays{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-  .afx-arr{display:inline-flex;align-items:center;gap:0;font-family:var(--cg-mono,monospace);
-    font-size:.82rem;border:1px solid rgba(57,255,182,.30);border-radius:6px;overflow:hidden}
-  .afx-arr__k{background:rgba(57,255,182,.16);color:var(--afx-term);padding:5px 9px;font-weight:600;letter-spacing:.08em}
-  .afx-arr__v{padding:5px 11px;color:var(--afx-term);letter-spacing:.14em}
+/* keep the page content above the stage, and let the dark stage show through
+   (the global design system paints bare header/section elements white) */
+.ag-root{background:#04060d !important}
+.ag-shell{position:relative;z-index:1;background:transparent !important}
+.ag-shell .afx-section,
+.ag-shell header,
+.ag-shell .afx-hero{background:transparent !important;box-shadow:none}
+/* structural wrappers must never inherit the global white glass */
+.ag-shell .afx-card__head,.ag-shell .afx-card__code,.ag-shell .afx-shead,
+.ag-shell .afx-shead__top,.ag-shell .afx-cta,.ag-shell .afx-metrics,
+.ag-shell .afx-hero__grid,.ag-shell .afx-flow,.ag-shell .afx-branch,
+.ag-shell .afx-pipe,.ag-shell .afx-gov,.ag-shell .afx-schema,
+.ag-shell .afx-ladder,.ag-shell .afx-cards{background:transparent !important}
 
-  /* ── Systems grid cards get a corner-cut schematic look ───────────────── */
-  .afx-card{position:relative}
-  .afx-card__code{font-family:var(--cg-mono,monospace);font-size:.7rem;letter-spacing:.16em;
-    color:var(--ag-on-faint,rgba(230,238,255,.55));text-transform:uppercase}
-  .afx-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--cg-mono,monospace);
-    font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
-    padding:3px 9px;border-radius:999px;border:1px solid currentColor}
-  .afx-tag--gov{color:var(--afx-red)}
-  .afx-tag--auto{color:var(--afx-term)}
-  .afx-tag--queue{color:var(--afx-amber)}
-  .afx-card__list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:7px}
-  .afx-card__list li{position:relative;padding-left:18px;color:var(--ag-on-dim);font-size:.92rem;line-height:1.5}
-  .afx-card__list li::before{content:"▸";position:absolute;left:0;color:var(--ag-hi-mint,#34d399)}
+/* ── Typography, scoped & overriding the global light theme ─────────────── */
+.ag-shell{font-family:var(--afx-sans);color:var(--afx-text)}
+.ag-shell ::selection{background:rgba(57,255,182,.28);color:#eafff6}
+.ag-shell h1,.ag-shell h2,.ag-shell h3,.ag-shell h4{font-family:var(--afx-sans);color:var(--afx-text) !important;letter-spacing:-.01em}
+.ag-shell p{color:var(--afx-dim) !important}
+.ag-shell a{color:inherit}
 
-  /* ── Architecture / schema board (image 2) ────────────────────────────── */
-  .afx-board{
-    position:relative;border-radius:var(--ag-r-lg,24px);padding:clamp(18px,3vw,34px);
-    background:
-      linear-gradient(rgba(57,255,182,.05) 1px,transparent 1px) 0 0/32px 32px,
-      linear-gradient(90deg,rgba(57,255,182,.05) 1px,transparent 1px) 0 0/32px 32px,
-      radial-gradient(120% 120% at 50% 0%,rgba(10,16,28,.9),rgba(4,7,15,.96));
-    border:1px solid rgba(150,175,255,.18);
-    box-shadow:var(--ag-sh-2,0 20px 60px -24px rgba(4,7,20,.85));
-  }
-  .afx-schema{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-  .afx-entity{
-    font-family:var(--cg-mono,monospace);border-radius:12px;overflow:hidden;
-    border:1px solid rgba(150,175,255,.22);background:rgba(12,18,34,.75);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
-  }
-  .afx-entity__h{padding:9px 12px;font-weight:600;font-size:.82rem;letter-spacing:.06em;color:#04121a;
-    background:var(--afx-term)}
-  .afx-entity--a .afx-entity__h{background:#38bdf8}
-  .afx-entity--v .afx-entity__h{background:#a78bfa}
-  .afx-entity--p .afx-entity__h{background:var(--afx-amber)}
-  .afx-entity--r .afx-entity__h{background:var(--afx-red);color:#fff}
-  .afx-entity__b{padding:10px 12px;display:grid;gap:5px}
-  .afx-entity__b span{font-size:.74rem;color:var(--ag-on-dim);display:flex;gap:8px}
-  .afx-entity__b span i{color:var(--ag-on-faint,rgba(230,238,255,.5));font-style:normal;min-width:22px}
-  .afx-entity__b .pk{color:var(--ag-hi-amber,#fbbf24)}
-  .afx-flow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px;
-    font-family:var(--cg-mono,monospace);font-size:.8rem}
-  .afx-flow span{padding:7px 14px;border:1px solid rgba(150,175,255,.25);border-radius:999px;
-    color:var(--ag-on-dim);background:rgba(12,18,34,.6)}
-  .afx-flow b{color:var(--afx-term);font-weight:600}
-  .afx-flow em{color:var(--ag-hi-violet,#a78bfa);font-style:normal;padding:0 4px}
+.afx-wrap{width:min(1240px,92vw);margin-inline:auto}
+.afx-section{padding:clamp(64px,9vw,132px) 0;position:relative}
 
-  /* ── Governance risk ladder ───────────────────────────────────────────── */
-  .afx-ladder{display:grid;gap:12px}
-  .afx-rung{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;
-    padding:14px 18px;border-radius:14px;border:1px solid rgba(150,175,255,.16);
-    background:rgba(12,18,34,.55)}
-  .afx-rung__score{font-family:var(--cg-mono,monospace);font-weight:600;font-size:.95rem;min-width:64px}
-  .afx-rung__route{font-family:var(--cg-mono,monospace);font-size:.74rem;letter-spacing:.1em;
-    text-transform:uppercase;padding:5px 12px;border-radius:999px;white-space:nowrap}
-  .afx-rung--low   .afx-rung__score{color:var(--afx-term)}
-  .afx-rung--low   .afx-rung__route{color:var(--afx-term);border:1px solid var(--afx-term)}
-  .afx-rung--med   .afx-rung__score{color:var(--afx-amber)}
-  .afx-rung--med   .afx-rung__route{color:var(--afx-amber);border:1px solid var(--afx-amber)}
-  .afx-rung--high  .afx-rung__score{color:var(--afx-red)}
-  .afx-rung--high  .afx-rung__route{color:var(--afx-red);border:1px solid var(--afx-red)}
-  .afx-rung p{margin:0;color:#c8d3f0 !important;font-size:.9rem}
-  .afx-rung strong{color:var(--ag-on,#eaf0ff) !important}
+/* section header: index number · mono eyebrow · display title */
+.afx-shead{display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(34px,5vw,62px)}
+.afx-shead__top{display:flex;align-items:center;gap:16px}
+.afx-idx{font-family:var(--afx-mono);font-size:.78rem;color:var(--afx-term);
+  border:1px solid var(--afx-term-dim);border-radius:7px;padding:3px 9px;letter-spacing:.1em;
+  box-shadow:inset 0 0 14px -6px rgba(57,255,182,.5)}
+.afx-eyebrow{font-family:var(--afx-mono);font-size:.74rem;letter-spacing:.32em;text-transform:uppercase;color:var(--afx-faint)}
+.afx-title{font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.06;font-weight:800;color:var(--afx-text);max-width:20ch}
+.afx-title .g{background:linear-gradient(100deg,var(--afx-sky),var(--afx-violet) 46%,var(--afx-pink));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.afx-title .t{color:var(--afx-term)}
+.afx-sub{color:var(--afx-dim) !important;max-width:60ch;font-size:1.06rem;line-height:1.65}
 
-  /* ── Tools registry table ─────────────────────────────────────────────── */
-  .afx-registry{width:100%;border-collapse:collapse;font-size:.9rem}
-  .afx-registry th,.afx-registry td{text-align:left;padding:12px 14px;border-bottom:1px solid rgba(150,175,255,.12)}
-  .afx-registry td{color:#c8d3f0 !important}
-  .afx-registry th{font-family:var(--cg-mono,monospace);font-size:.7rem;letter-spacing:.14em;
-    text-transform:uppercase;color:rgba(230,238,255,.62) !important}
-  .afx-registry td:first-child{font-family:var(--cg-mono,monospace);color:var(--afx-term) !important;white-space:nowrap}
-  .afx-registry tr:hover td{background:rgba(57,255,182,.04)}
-  .afx-registry .st{font-family:var(--cg-mono,monospace);font-size:.72rem;letter-spacing:.06em}
-  .afx-registry .st--live{color:var(--afx-term) !important}
-  .afx-registry .st--gate{color:var(--afx-amber) !important}
+/* HUD corner brackets for feature panels */
+.afx-hud{position:relative}
+.afx-hud::before,.afx-hud::after{content:"";position:absolute;width:16px;height:16px;pointer-events:none;opacity:.6}
+.afx-hud::before{top:10px;left:10px;border-top:1.5px solid var(--afx-term);border-left:1.5px solid var(--afx-term)}
+.afx-hud::after{bottom:10px;right:10px;border-bottom:1.5px solid var(--afx-term);border-right:1.5px solid var(--afx-term)}
 
-  @media (max-width:640px){
-    .afx-rung{grid-template-columns:1fr;gap:8px;text-align:left}
-    .afx-registry{display:block;overflow-x:auto;white-space:nowrap}
-  }
+/* ── Glass panel base ──────────────────────────────────────────────────── */
+.afx-glass{background:var(--afx-panel);border:1px solid var(--afx-edge);border-radius:var(--afx-r-lg);
+  -webkit-backdrop-filter:blur(16px) saturate(1.25);backdrop-filter:blur(16px) saturate(1.25);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 30px 70px -40px rgba(0,0,0,.9)}
 
-  /* ── Readability on the dark command surface ──────────────────────────────
-     The shared global design system is a light theme — it forces text dark
-     with !important (headings #0c0e12, body ~#374151). This page is a dark
-     command surface, so text sitting on the dark backdrop/glass would render
-     dark-on-dark. Restore light text there, while keeping the WHITE glass
-     cards' text dark. Prism-gradient spans set their own text-fill, so they
-     keep their gradient regardless of `color`. */
+/* ══ HERO ══════════════════════════════════════════════════════════════ */
+.afx-hero{padding-top:clamp(120px,15vw,190px)}
+.afx-hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(26px,4vw,56px);align-items:center}
+.afx-badge{display:inline-flex;align-items:center;gap:9px;font-family:var(--afx-mono);font-size:.74rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--afx-dim);
+  border:1px solid var(--afx-edge-2);border-radius:999px;padding:7px 15px;background:rgba(10,16,30,.6)}
+.afx-badge b{width:7px;height:7px;border-radius:50%;background:var(--afx-term);box-shadow:0 0 10px var(--afx-term);animation:afxPulse 2.4s ease-in-out infinite}
+.afx-hero h1{font-size:clamp(2.7rem,6.4vw,5.1rem);line-height:1.01;font-weight:800;letter-spacing:-.025em;margin:22px 0 0}
+.afx-hero h1 .g{background:linear-gradient(100deg,var(--afx-sky),var(--afx-violet) 45%,var(--afx-pink));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.afx-hero .afx-sub{margin-top:22px;font-size:1.16rem}
+.afx-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.afx-btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--afx-sans);font-weight:700;font-size:.98rem;
+  padding:13px 24px;border-radius:14px;cursor:pointer;text-decoration:none;transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,border-color .25s}
+.afx-btn--primary{color:#04121a;background:linear-gradient(100deg,var(--afx-term),#7ef7c9);box-shadow:0 0 30px -8px rgba(57,255,182,.6)}
+.afx-btn--primary:hover{transform:translateY(-2px);box-shadow:0 0 44px -6px rgba(57,255,182,.75)}
+.afx-btn--ghost{color:var(--afx-text);background:rgba(16,24,44,.7);border:1px solid var(--afx-edge-2)}
+.afx-btn--ghost:hover{transform:translateY(-2px);border-color:var(--afx-term);box-shadow:var(--afx-glow)}
+.afx-btn:focus-visible{outline:2px solid var(--afx-term);outline-offset:3px}
 
-  /* give the hero panel a defined dark glass so its light text always reads,
-     independent of how the fixed backdrop happens to paint */
-  .ag-shell .ag-hero__panel{
-    background:rgba(16,22,44,.55);
-    border:1px solid rgba(150,175,255,.16);
-    border-radius:var(--ag-r-lg,24px);
-    padding:clamp(26px,4vw,52px);
-    -webkit-backdrop-filter:blur(14px) saturate(1.2);
-    backdrop-filter:blur(14px) saturate(1.2);
-    box-shadow:var(--ag-sh-2,0 20px 60px -24px rgba(4,7,20,.85));
-  }
+.afx-metrics{display:flex;gap:26px;flex-wrap:wrap;margin-top:40px}
+.afx-metric{display:flex;flex-direction:column;gap:2px}
+.afx-metric b{font-family:var(--afx-mono);font-size:1.5rem;font-weight:600;
+  background:linear-gradient(100deg,var(--afx-sky),var(--afx-violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.afx-metric span{font-family:var(--afx-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--afx-faint)}
 
-  /* text directly on the dark surface → light */
-  .ag-shell .ag-display,
-  .ag-shell .ag-h2,
-  .ag-shell .ag-lede{ color:var(--ag-on,#eaf0ff) !important; }
-  .ag-shell .ag-eyebrow{ color:var(--ag-hi-sky,#38bdf8) !important; }
-  .ag-shell .ag-prism-text{ color:transparent !important; }
-  /* two-column intro paragraphs (console, governance) sit on the backdrop */
-  .ag-shell .ag-grid--2 > div > p{ color:var(--ag-on-dim,#9fabce) !important; }
-  /* chips on the backdrop (not inside a card) */
-  .ag-shell .ag-hero__panel .ag-chip,
-  .ag-shell #console .ag-chip,
-  .ag-shell #governance .ag-chip{ color:#c8d3f0 !important; }
+/* ── Live console terminal (image 1) ───────────────────────────────────── */
+.afx-term{font-family:var(--afx-mono);position:relative;overflow:hidden;padding:0;
+  border:1px solid rgba(57,255,182,.3);border-radius:var(--afx-r-lg);
+  background:linear-gradient(180deg,rgba(4,12,10,.95),rgba(3,8,7,.98));
+  box-shadow:inset 0 0 70px -26px rgba(57,255,182,.4),0 40px 90px -46px rgba(0,0,0,.95),var(--afx-glow)}
+.afx-term::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(57,255,182,.05) 0 1px,transparent 1px 3px);mix-blend-mode:screen;opacity:.55}
+.afx-term__bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid rgba(57,255,182,.16);
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--afx-term-dim)}
+.afx-dot{width:10px;height:10px;border-radius:50%}
+.afx-dot--r{background:var(--afx-red);box-shadow:0 0 8px var(--afx-red)}
+.afx-dot--y{background:var(--afx-amber);box-shadow:0 0 8px var(--afx-amber)}
+.afx-dot--g{background:var(--afx-term);box-shadow:0 0 8px var(--afx-term)}
+.afx-term__title{margin-left:auto;display:flex;align-items:center;gap:12px}
+.afx-eq{display:inline-flex;align-items:flex-end;gap:2px;height:14px}
+.afx-eq i{width:3px;height:5px;background:var(--afx-term);border-radius:1px;animation:afxEq 1.1s ease-in-out infinite}
+.afx-eq i:nth-child(2){animation-delay:.15s}.afx-eq i:nth-child(3){animation-delay:.3s}
+.afx-eq i:nth-child(4){animation-delay:.45s}.afx-eq i:nth-child(5){animation-delay:.6s}
+.afx-term__body{padding:18px 20px 20px;color:var(--afx-term);font-size:.92rem;line-height:2}
+.afx-l{display:block;white-space:pre-wrap;opacity:0}
+.afx-l.on{opacity:1}
+.afx-l .k{color:var(--afx-term-dim)}.afx-l .v{color:var(--afx-term)}
+.afx-l .w{color:var(--afx-amber)}.afx-l .b{color:var(--afx-red);font-weight:600}
+.afx-caret{display:inline-block;width:9px;height:1.05em;vertical-align:-2px;background:var(--afx-term);
+  box-shadow:0 0 10px var(--afx-term);animation:afxBlink 1.05s steps(1) infinite}
+.afx-arrays{display:flex;flex-wrap:wrap;gap:9px;padding:0 20px 20px}
+.afx-arr{display:inline-flex;font-family:var(--afx-mono);font-size:.8rem;border:1px solid rgba(57,255,182,.32);border-radius:6px;overflow:hidden}
+.afx-arr b{background:rgba(57,255,182,.16);color:var(--afx-term);padding:5px 9px;font-weight:600;letter-spacing:.06em}
+.afx-arr span{padding:5px 11px;color:var(--afx-term);letter-spacing:.14em}
 
-  /* WHITE glass cards → keep their text dark for contrast */
-  .ag-shell .ag-card .ag-card__title{ color:#0c0e12 !important; }
-  .ag-shell .ag-card .ag-card__body,
-  .ag-shell .ag-card .afx-card__list li{ color:#2b3240 !important; }
-  .ag-shell .ag-card .afx-card__code{ color:#5a6172 !important; }
-  .ag-shell .ag-card .ag-card__body code{ color:#7c2d92 !important; }
+/* ══ SYSTEMS CARDS ═════════════════════════════════════════════════════ */
+.afx-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.afx-card{position:relative;padding:26px 24px 24px;border-radius:var(--afx-r);overflow:hidden;
+  background:var(--afx-panel-2) !important;border:1px solid var(--afx-edge);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 24px 54px -36px rgba(0,0,0,.9);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .3s}
+.afx-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--ac,var(--afx-term));opacity:.85}
+.afx-card::after{content:"";position:absolute;inset:0;opacity:0;transition:opacity .3s;pointer-events:none;
+  background:radial-gradient(120% 80% at 50% -10%,rgba(76,196,255,.14),transparent 60%)}
+.afx-card:hover{transform:translateY(-6px);border-color:var(--afx-edge-2);box-shadow:0 34px 70px -34px rgba(0,0,0,.95),var(--afx-glow)}
+.afx-card:hover::after{opacity:1}
+.afx-card__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.afx-ico{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;font-size:1.3rem;
+  color:var(--ac,var(--afx-term));border:1px solid var(--afx-edge-2);background:rgba(10,16,30,.7)}
+.afx-tag{font-family:var(--afx-mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;border:1px solid currentColor;color:var(--ac,var(--afx-term))}
+.afx-card__code{font-family:var(--afx-mono);font-size:.68rem;letter-spacing:.1em;color:var(--afx-faint);text-transform:uppercase}
+.afx-card h3{font-size:1.24rem;font-weight:700;margin:5px 0 10px;color:var(--afx-text) !important}
+.afx-card p{font-size:.94rem;line-height:1.55;color:var(--afx-dim) !important}
+.afx-card ul{list-style:none;margin:15px 0 0;padding:14px 0 0;border-top:1px solid var(--afx-edge-hair);display:grid;gap:8px}
+.afx-card li{position:relative;padding-left:20px;font-size:.9rem;color:var(--afx-dim) !important;line-height:1.45}
+.afx-card li::before{content:"▸";position:absolute;left:0;color:var(--ac,var(--afx-term))}
+.afx-card code{font-family:var(--afx-mono);font-size:.85em;color:var(--afx-sky) !important;background:rgba(76,196,255,.1);padding:1px 5px;border-radius:4px}
 
-  /* schema entity headers sit on bright bars */
-  .ag-shell .afx-entity__h{ color:#04121a !important; }
-  .ag-shell .afx-entity--r .afx-entity__h{ color:#fff !important; }
+/* ══ ARCHITECTURE — data model + governed pipeline ═════════════════════ */
+.afx-board{padding:clamp(20px,3vw,36px)}
+.afx-schema{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:15px}
+.afx-entity{font-family:var(--afx-mono);border-radius:12px;overflow:hidden;
+  border:1px solid var(--afx-edge-2);background:rgba(10,16,30,.8);transition:transform .25s,box-shadow .25s}
+.afx-entity:hover{transform:translateY(-4px);box-shadow:0 20px 40px -26px rgba(0,0,0,.9)}
+.afx-entity__h{padding:9px 13px;font-weight:600;font-size:.82rem;letter-spacing:.04em;color:#04121a}
+.afx-entity--u .afx-entity__h{background:var(--afx-sky)}
+.afx-entity--o .afx-entity__h{background:var(--afx-mint)}
+.afx-entity--p .afx-entity__h{background:var(--afx-mint)}
+.afx-entity--y .afx-entity__h{background:var(--afx-amber)}
+.afx-entity--v .afx-entity__h{background:var(--afx-violet)}
+.afx-entity--r .afx-entity__h{background:var(--afx-red);color:#fff}
+.afx-entity__b{padding:11px 13px;display:grid;gap:6px}
+.afx-entity__b span{font-size:.75rem;color:var(--afx-dim);display:flex;gap:9px}
+.afx-entity__b i{color:var(--afx-faint);font-style:normal;min-width:22px}
+.afx-entity__b .pk{color:var(--afx-amber)}
+
+.afx-pipe{margin-top:30px;padding-top:26px;border-top:1px solid var(--afx-edge-hair)}
+.afx-pipe__lab{font-family:var(--afx-mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--afx-faint);margin-bottom:16px}
+.afx-flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.afx-node{display:flex;flex-direction:column;justify-content:center;gap:3px;font-family:var(--afx-mono);
+  padding:11px 15px;border-radius:12px;border:1px solid var(--afx-edge-2);background:rgba(12,18,34,.75);min-width:118px}
+.afx-node small{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--afx-faint)}
+.afx-node b{font-size:.9rem;color:var(--afx-text);font-weight:600}
+.afx-node--gate{border-color:var(--afx-term);background:linear-gradient(180deg,rgba(57,255,182,.14),rgba(12,18,34,.8));
+  box-shadow:inset 0 0 30px -12px rgba(57,255,182,.6);animation:afxGate 3s ease-in-out infinite}
+.afx-node--gate b{color:var(--afx-term)}
+.afx-arrow{align-self:center;color:var(--afx-faint);font-family:var(--afx-mono)}
+.afx-branch{display:flex;flex-direction:column;gap:8px}
+.afx-pill{font-family:var(--afx-mono);font-size:.78rem;padding:7px 13px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.afx-pill--low{color:var(--afx-term)}.afx-pill--med{color:var(--afx-amber)}.afx-pill--high{color:var(--afx-red)}
+.afx-ledger{display:flex;align-items:center;gap:8px;font-family:var(--afx-mono);font-size:.82rem;color:var(--afx-text);
+  padding:11px 16px;border-radius:12px;border:1px dashed var(--afx-edge-2);background:rgba(12,18,34,.6)}
+
+/* ══ GOVERNANCE LADDER ═════════════════════════════════════════════════ */
+.afx-gov{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,54px);align-items:center}
+.afx-ladder{display:grid;gap:12px}
+.afx-rung{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding:16px 18px;
+  border-radius:14px;border:1px solid var(--afx-edge);background:var(--afx-panel);transition:transform .25s,border-color .25s}
+.afx-rung:hover{transform:translateX(4px)}
+.afx-rung b{font-family:var(--afx-mono);font-weight:600;font-size:.98rem;min-width:66px}
+.afx-rung p{margin:0;color:var(--afx-dim) !important;font-size:.92rem}
+.afx-rung p strong{color:var(--afx-text) !important;font-weight:700}
+.afx-route{font-family:var(--afx-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 13px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.afx-rung--low b,.afx-rung--low .afx-route{color:var(--afx-term)} .afx-rung--low{border-left:3px solid var(--afx-term)}
+.afx-rung--med b,.afx-rung--med .afx-route{color:var(--afx-amber)} .afx-rung--med{border-left:3px solid var(--afx-amber)}
+.afx-rung--high b,.afx-rung--high .afx-route{color:var(--afx-red)} .afx-rung--high{border-left:3px solid var(--afx-red)}
+.afx-quote{font-family:var(--afx-serif);font-size:clamp(1.5rem,2.6vw,2.15rem);line-height:1.3;color:var(--afx-text);font-weight:500}
+.afx-quote em{font-style:italic;color:var(--afx-term)}
+.afx-rules{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px}
+.afx-rules li{position:relative;padding-left:26px;color:var(--afx-dim) !important;font-size:.96rem;line-height:1.5}
+.afx-rules li::before{content:"✕";position:absolute;left:0;top:1px;color:var(--afx-red);font-family:var(--afx-mono);font-size:.85rem}
+
+/* ══ TOOLS REGISTRY ════════════════════════════════════════════════════ */
+.afx-reg-wrap{padding:clamp(10px,2vw,22px) clamp(14px,2.5vw,26px)}
+.afx-reg{width:100%;border-collapse:collapse;font-size:.92rem}
+.afx-reg th,.afx-reg td{text-align:left;padding:14px 14px;border-bottom:1px solid var(--afx-edge-hair)}
+.afx-reg th{font-family:var(--afx-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#8b9bc6 !important}
+.afx-reg td{color:var(--afx-dim) !important}
+.afx-reg tr:last-child td{border-bottom:0}
+.afx-reg td:first-child{font-family:var(--afx-mono);color:var(--afx-term);white-space:nowrap}
+.afx-reg tbody tr{transition:background .2s}
+.afx-reg tbody tr:hover td{background:rgba(57,255,182,.04)}
+.afx-st{display:inline-flex;align-items:center;gap:7px;font-family:var(--afx-mono);font-size:.74rem;letter-spacing:.04em}
+.afx-st b{width:7px;height:7px;border-radius:50%}
+.afx-st--live{color:var(--afx-term)} .afx-st--live b{background:var(--afx-term);box-shadow:0 0 7px var(--afx-term)}
+.afx-st--gate{color:var(--afx-amber)} .afx-st--gate b{background:var(--afx-amber);box-shadow:0 0 7px var(--afx-amber)}
+
+/* ══ FINALE ════════════════════════════════════════════════════════════ */
+.afx-finale{text-align:center;padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px);border-radius:var(--afx-r-lg)}
+.afx-finale h2{font-size:clamp(2rem,4.6vw,3.6rem);font-weight:800;letter-spacing:-.02em;margin-bottom:18px}
+.afx-finale h2 .g{background:linear-gradient(100deg,var(--afx-sky),var(--afx-violet) 50%,var(--afx-pink));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.afx-footer{padding:44px 0 60px;text-align:center;font-family:var(--afx-mono);font-size:.8rem;color:var(--afx-faint);letter-spacing:.04em}
+
+/* ── Reveal (JS-driven, with hard failsafe) ────────────────────────────── */
+.afx-rise{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.afx-rise.in{opacity:1;transform:none}
+[data-stag]>*{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+[data-stag].in>*{opacity:1;transform:none}
+[data-stag].in>*:nth-child(2){transition-delay:.07s}
+[data-stag].in>*:nth-child(3){transition-delay:.14s}
+[data-stag].in>*:nth-child(4){transition-delay:.21s}
+[data-stag].in>*:nth-child(5){transition-delay:.28s}
+[data-stag].in>*:nth-child(6){transition-delay:.35s}
+
+/* ── Motion ────────────────────────────────────────────────────────────── */
+@keyframes afxBlink{50%{opacity:0}}
+@keyframes afxPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.55}}
+@keyframes afxEq{0%,100%{height:4px}50%{height:14px}}
+@keyframes afxGate{0%,100%{box-shadow:inset 0 0 30px -12px rgba(57,255,182,.5)}50%{box-shadow:inset 0 0 34px -8px rgba(57,255,182,.85)}}
+
+@media (max-width:960px){
+  .afx-hero__grid,.afx-gov{grid-template-columns:1fr}
+  .afx-cards{grid-template-columns:1fr 1fr}
+}
+@media (max-width:620px){
+  .afx-cards{grid-template-columns:1fr}
+  .afx-rung{grid-template-columns:auto 1fr;gap:10px}
+  .afx-rung .afx-route{grid-column:1/-1;justify-self:start}
+  .afx-reg-wrap{overflow-x:auto}.afx-reg{min-width:560px}
+}
+@media (prefers-reduced-motion:reduce){
+  .afx-rise,[data-stag]>*{opacity:1 !important;transform:none !important;transition:none !important}
+  .afx-l{opacity:1 !important}
+  .afx-badge b,.afx-eq i,.afx-node--gate,.afx-caret{animation:none !important}
+}
 </style>
 </head>
 
 <body class="ag-root">
+  <div class="afx-stage" aria-hidden="true"></div>
 
-  <!-- ══ AMBIENT BACKDROP ══ -->
-  <div class="ag-backdrop" aria-hidden="true"></div>
-  <div class="ag-aurora ag-aurora--a" aria-hidden="true"></div>
-  <div class="ag-aurora ag-aurora--b" aria-hidden="true"></div>
-  <div class="ag-cursor-field" id="agCursor" aria-hidden="true"></div>
-
-  <!-- ══ FLOATING GLASS NAV ══ -->
+  <!-- ══ SHARED FLOATING GLASS NAV ══ -->
   <nav class="ag-nav" id="agNav" aria-label="Primary">
     <a class="ag-nav__brand" href="index.html">
-      <span class="ag-nav__mark" aria-hidden="true">◈</span>
-      <span>ClearGlass</span>
+      <span class="ag-nav__mark" aria-hidden="true">◈</span><span>ClearGlass</span>
     </a>
     <div class="ag-nav__links" id="agLinks">
       <span class="ag-nav__glide" id="agGlide" aria-hidden="true"></span>
@@ -248,498 +336,285 @@
 
   <main class="ag-shell">
 
-    <!-- ══ HERO ══ -->
-    <header class="ag-hero ag-wrap" id="top">
-      <div class="ag-hero__aura" aria-hidden="true"></div>
-      <div class="ag-hero__panel" data-ag-reveal>
-        <span class="ag-chip" style="margin-bottom:20px"><span class="ag-chip__dot"></span>Systems catalog · live index</span>
-        <h1 class="ag-display">Advanced features, tools &amp; <span class="ag-prism-text">systems</span>.</h1>
-        <p class="ag-lede" style="margin-top:20px;max-width:680px;margin-inline:auto">
-          One command surface for everything ClearGlass runs autonomously — governed operators,
-          named defenders, the PERCIVAL agent stack, and the append-only audit spine underneath
-          them. Read-only by default, human-approved by design.
-        </p>
-        <div class="ag-hero__cta">
-          <a class="ag-btn ag-btn--primary cg-magnetic" href="#systems">Browse the systems</a>
-          <a class="ag-btn ag-btn--ghost ag-btn--luminous cg-magnetic" href="#console">Open console</a>
+    <!-- ══ HERO + LIVE CONSOLE ══ -->
+    <header class="afx-section afx-hero afx-wrap" id="console">
+      <div class="afx-hero__grid">
+        <div class="afx-rise">
+          <span class="afx-badge"><b></b>Systems catalog · live index</span>
+          <h1>Advanced features,<br>tools &amp; <span class="g">systems</span>.</h1>
+          <p class="afx-sub">One command surface for everything ClearGlass runs autonomously — governed
+            operators, named defenders, the PERCIVAL agent stack, and the append-only audit spine
+            underneath them. Read-only by default, human-approved by design.</p>
+          <div class="afx-cta">
+            <a class="afx-btn afx-btn--primary cg-magnetic" href="#systems">Browse the systems</a>
+            <a class="afx-btn afx-btn--ghost cg-magnetic" href="#architecture">See the architecture</a>
+          </div>
+          <div class="afx-metrics">
+            <div class="afx-metric"><b>6</b><span>Named agent systems</span></div>
+            <div class="afx-metric"><b>0–100</b><span>Risk score / action</span></div>
+            <div class="afx-metric"><b>100%</b><span>Material changes logged</span></div>
+          </div>
         </div>
-        <div class="ag-hero__stats" data-ag-stagger>
-          <div class="ag-stat"><span class="ag-stat__num">6</span><span class="ag-stat__label">Named agent systems</span></div>
-          <div class="ag-stat"><span class="ag-stat__num">0–100</span><span class="ag-stat__label">Risk score per action</span></div>
-          <div class="ag-stat"><span class="ag-stat__num">100%</span><span class="ag-stat__label">Material changes logged</span></div>
+
+        <div class="afx-term afx-hud afx-rise" data-tilt role="img"
+             aria-label="Simulated ClearGlass control-plane console: a governance self-check passing, live money paths approval-gated, and three risk/audit/state hex arrays.">
+          <div class="afx-term__bar">
+            <span class="afx-dot afx-dot--r"></span><span class="afx-dot afx-dot--y"></span><span class="afx-dot afx-dot--g"></span>
+            <span class="afx-term__title">
+              <span class="afx-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+              control-plane · daily_loop
+            </span>
+          </div>
+          <div class="afx-term__body" id="afxTerm">
+            <span class="afx-l"><span class="k">›</span> clearglass control-plane <span class="k">::</span> <span class="v">boot</span></span>
+            <span class="afx-l"><span class="k">›</span> governance ............ <span class="v">self-check PASS</span></span>
+            <span class="afx-l"><span class="k">›</span> ledger ............... <span class="v">append-only · verified</span></span>
+            <span class="afx-l"><span class="k">›</span> operators ............ <span class="v">6 online</span> <span class="k">/</span> queue <span class="w">2 pending</span></span>
+            <span class="afx-l"><span class="k">›</span> risk_router .......... <span class="v">scoring 0–100</span></span>
+            <span class="afx-l"><span class="k">›</span> live_money_paths ..... <span class="b">APPROVAL-GATED</span></span>
+            <span class="afx-l"><span class="k">›</span> mock_mode ............ <span class="v">true</span> <span class="k">(no key)</span></span>
+            <span class="afx-l"><span class="k">›</span> report ............... <span class="v">executive · ok</span> <span class="afx-caret" aria-hidden="true"></span></span>
+          </div>
+          <div class="afx-arrays" aria-hidden="true">
+            <span class="afx-arr"><b>A_RISK</b><span>2EC96/1BAF</span></span>
+            <span class="afx-arr"><b>B_AUDIT</b><span>ADE2B/EA0C</span></span>
+            <span class="afx-arr"><b>C_STATE</b><span>D75235F/7B</span></span>
+          </div>
         </div>
       </div>
-      <div class="ag-scroll-cue" aria-hidden="true">scroll ↓</div>
     </header>
 
-    <!-- ══ COMMAND CONSOLE (image 1: hex arrays + phosphor terminal) ══ -->
-    <section class="ag-section ag-wrap" id="console">
-      <div class="ag-grid ag-grid--2" style="align-items:center;gap:var(--ag-sp-5)" data-ag-reveal>
-        <div>
-          <span class="ag-eyebrow">Command surface</span>
-          <h2 class="ag-h2" style="margin-top:12px">A control plane you can watch think.</h2>
-          <p style="color:var(--ag-on-dim)">
-            Every system reports into a single governed loop: it reads the world, drafts an action,
-            scores the risk, and either executes-and-logs or holds for human approval. Nothing
-            material moves without leaving a trace on the ledger.
-          </p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px">
-            <span class="ag-chip">Read-only analysis</span>
-            <span class="ag-chip">Draft → approve → execute</span>
-            <span class="ag-chip">Append-only audit</span>
-            <span class="ag-chip">Fail-closed</span>
-          </div>
-        </div>
-
-        <div class="afx-console ag-e2" data-tilt role="img"
-             aria-label="Simulated ClearGlass control-plane console showing a governance self-check passing and three risk-tier hex arrays.">
-          <div class="afx-console__bar">
-            <span class="afx-dot"></span><span class="afx-dot afx-dot--y"></span><span class="afx-dot afx-dot--g"></span>
-            <span class="afx-console__title">clearglass · control-plane · daily_loop</span>
-          </div>
-          <div class="afx-line"><span class="k">›</span> boot ..................... <span class="v">governance self-check</span>
-<span class="k">›</span> ledger ................... <span class="v">append-only · verified</span>
-<span class="k">›</span> operators ................ <span class="v">6 online</span>  <span class="k">/</span> queue <span class="w">2 pending</span>
-<span class="k">›</span> live_money_paths ......... <span class="b">approval-gated</span>
-<span class="k">›</span> mock_mode ................ <span class="v">true</span> <span class="k">(no key)</span>
-<span class="k">›</span> report ................... <span class="v">executive · ok</span> <span class="afx-caret" aria-hidden="true"></span></div>
-
-          <div class="afx-arrays" aria-hidden="true">
-            <span class="afx-arr"><span class="afx-arr__k">A_RISK</span><span class="afx-arr__v">2EC96/1BAF</span></span>
-            <span class="afx-arr"><span class="afx-arr__k">B_AUDIT</span><span class="afx-arr__v">ADE2B/EA0C</span></span>
-            <span class="afx-arr"><span class="afx-arr__k">C_STATE</span><span class="afx-arr__v">D75235F/7B</span></span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ SYSTEMS GRID (image 3: card cheatsheet dashboard) ══ -->
-    <section class="ag-section ag-wrap" id="systems">
-      <div style="text-align:center;margin-bottom:var(--ag-sp-5)" data-ag-reveal>
-        <span class="ag-eyebrow">The catalog</span>
-        <h2 class="ag-h2" style="margin-top:12px">Systems that run themselves — safely</h2>
-        <p class="ag-lede" style="max-width:640px;margin:14px auto 0">
-          Each is an independent subtree with its own gate. All of them fail closed and log.
-        </p>
+    <!-- ══ SYSTEMS ══ -->
+    <section class="afx-section afx-wrap" id="systems">
+      <div class="afx-shead afx-rise">
+        <div class="afx-shead__top"><span class="afx-idx">01</span><span class="afx-eyebrow">The catalog</span></div>
+        <h2 class="afx-title">Systems that run themselves — <span class="t">safely</span></h2>
+        <p class="afx-sub">Each is an independent subtree with its own CI gate. All of them fail closed, and all of them log.</p>
       </div>
 
-      <div class="ag-grid ag-grid--3" data-ag-stagger>
-
-        <article class="ag-glass ag-card afx-card" data-tilt>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="ag-card__icon">◈</div>
-            <span class="afx-tag afx-tag--gov">Governed</span>
-          </div>
+      <div class="afx-cards" data-stag>
+        <article class="afx-card" data-tilt style="--ac:var(--afx-red)">
+          <div class="afx-card__head"><span class="afx-ico">◈</span><span class="afx-tag">Governed</span></div>
           <div class="afx-card__code">clearglass-commerce/</div>
-          <h3 class="ag-card__title" style="margin-top:6px">Autonomous Commerce Operator</h3>
-          <p class="ag-card__body">A governed commerce engine: FastAPI control plane + Next.js storefront/admin. Pricing, payments, refunds and fulfillment are blocked until a human approves.</p>
-          <ul class="afx-card__list">
-            <li>Risk-scored action router (0–100)</li>
-            <li>Approvals queue for money-moving paths</li>
-            <li>Safe mock mode with no live key</li>
-          </ul>
+          <h3>Autonomous Commerce Operator</h3>
+          <p>A governed commerce engine — FastAPI control plane + Next.js storefront/admin. Pricing, payments, refunds and fulfillment stay blocked until a human approves.</p>
+          <ul><li>Risk-scored action router (0–100)</li><li>Approvals queue for money-moving paths</li><li>Safe <code>mock mode</code> with no live key</li></ul>
         </article>
 
-        <article class="ag-glass ag-card afx-card ag-glass--holo" data-tilt>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="ag-card__icon">⟠</div>
-            <span class="afx-tag afx-tag--auto">Autonomous</span>
-          </div>
+        <article class="afx-card" data-tilt style="--ac:var(--afx-violet)">
+          <div class="afx-card__head"><span class="afx-ico">⟠</span><span class="afx-tag">Autonomous</span></div>
           <div class="afx-card__code">sentinel/ · PERCIVAL</div>
-          <h3 class="ag-card__title" style="margin-top:6px">PERCIVAL Agent Stack</h3>
-          <p class="ag-card__body">The keyless governor/identity/capability/mission-memory core — stdlib-only, fail-closed Python agents that reason under strict capability scoping.</p>
-          <ul class="afx-card__list">
-            <li>Governor + identity + capability layers</li>
-            <li>Mission-memory continuity</li>
-            <li>No external keys, deterministic</li>
-          </ul>
+          <h3>PERCIVAL Agent Stack</h3>
+          <p>The keyless governor / identity / capability / mission-memory core — stdlib-only, fail-closed Python agents that reason under strict capability scoping.</p>
+          <ul><li>Governor + identity + capability layers</li><li>Mission-memory continuity</li><li>No external keys, deterministic</li></ul>
         </article>
 
-        <article class="ag-glass ag-card afx-card" data-tilt>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="ag-card__icon">❖</div>
-            <span class="afx-tag afx-tag--auto">Defender</span>
-          </div>
+        <article class="afx-card" data-tilt style="--ac:var(--afx-sky)">
+          <div class="afx-card__head"><span class="afx-ico">❖</span><span class="afx-tag">Defender</span></div>
           <div class="afx-card__code">sentinel/ · SENTINEL · AEGIS</div>
-          <h3 class="ag-card__title" style="margin-top:6px">SENTINEL &amp; AEGIS Defenders</h3>
-          <p class="ag-card__body">Named-agent defenders in the keyless sentinel index — continuous posture checks that surface risk without ever taking a destructive action on their own.</p>
-          <ul class="afx-card__list">
-            <li>Continuous posture &amp; health signals</li>
-            <li>Read-first, escalate-second</li>
-            <li>Feeds the defender handoff reports</li>
-          </ul>
+          <h3>SENTINEL &amp; AEGIS Defenders</h3>
+          <p>Named-agent defenders in the keyless sentinel index — continuous posture checks that surface risk without ever taking a destructive action on their own.</p>
+          <ul><li>Continuous posture &amp; health signals</li><li>Read-first, escalate-second</li><li>Feeds the defender handoff reports</li></ul>
         </article>
 
-        <article class="ag-glass ag-card afx-card" data-tilt>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="ag-card__icon">◇</div>
-            <span class="afx-tag afx-tag--auto">Mesh</span>
-          </div>
+        <article class="afx-card" data-tilt style="--ac:var(--afx-mint)">
+          <div class="afx-card__head"><span class="afx-ico">◇</span><span class="afx-tag">Mesh</span></div>
           <div class="afx-card__code">sentinel/ · Agent Mesh</div>
-          <h3 class="ag-card__title" style="margin-top:6px">Agent Mesh</h3>
-          <p class="ag-card__body">The coordination fabric that lets named agents pass missions, share memory, and hand off work while every step stays inside the same governance envelope.</p>
-          <ul class="afx-card__list">
-            <li>Mission routing between agents</li>
-            <li>Shared, auditable context</li>
-            <li>Target-state v9 architecture docs</li>
-          </ul>
+          <h3>Agent Mesh</h3>
+          <p>The coordination fabric that lets named agents pass missions, share memory, and hand off work while every step stays inside the same governance envelope.</p>
+          <ul><li>Mission routing between agents</li><li>Shared, auditable context</li><li>Target-state v9 architecture docs</li></ul>
         </article>
 
-        <article class="ag-glass ag-card afx-card ag-glass--holo" data-tilt>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="ag-card__icon">◐</div>
-            <span class="afx-tag afx-tag--queue">Queue</span>
-          </div>
+        <article class="afx-card" data-tilt style="--ac:var(--afx-amber)">
+          <div class="afx-card__head"><span class="afx-ico">◐</span><span class="afx-tag">Queue</span></div>
           <div class="afx-card__code">control-plane/app/audit.py</div>
-          <h3 class="ag-card__title" style="margin-top:6px">Audit Ledger &amp; Approvals</h3>
-          <p class="ag-card__body">An append-only <code>events</code> ledger records every material change with its risk score; the <code>approvals</code> table is the only door high-risk actions can pass through.</p>
-          <ul class="afx-card__list">
-            <li>Immutable event trail</li>
-            <li>Per-event risk annotation</li>
-            <li>Human-in-the-loop gating</li>
-          </ul>
+          <h3>Audit Ledger &amp; Approvals</h3>
+          <p>An append-only <code>events</code> ledger records every material change with its risk score; the <code>approvals</code> table is the only door high-risk actions can pass through.</p>
+          <ul><li>Immutable event trail</li><li>Per-event risk annotation</li><li>Human-in-the-loop gating</li></ul>
         </article>
 
-        <article class="ag-glass ag-card afx-card" data-tilt>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="ag-card__icon">✧</div>
-            <span class="afx-tag afx-tag--auto">Scheduled</span>
-          </div>
+        <article class="afx-card" data-tilt style="--ac:var(--afx-term)">
+          <div class="afx-card__head"><span class="afx-ico">✧</span><span class="afx-tag">Scheduled</span></div>
           <div class="afx-card__code">bots/ · .github/workflows/</div>
-          <h3 class="ag-card__title" style="margin-top:6px">Scheduled Bot Loops</h3>
-          <p class="ag-card__body">Standalone automation bots (e.g. the store smoke bot) run on scheduled workflows — daily governance self-checks and executive reports that keep the CI gates green.</p>
-          <ul class="afx-card__list">
-            <li>Storefront smoke + health checks</li>
-            <li>Daily governance self-check</li>
-            <li>Generated executive report</li>
-          </ul>
+          <h3>Scheduled Bot Loops</h3>
+          <p>Standalone automation bots (like the store smoke bot) run on scheduled workflows — daily governance self-checks and executive reports that keep the CI gates green.</p>
+          <ul><li>Storefront smoke + health checks</li><li>Daily governance self-check</li><li>Generated executive report</li></ul>
         </article>
-
       </div>
     </section>
 
-    <!-- ══ ARCHITECTURE / SCHEMA BOARD (image 2: ER diagram) ══ -->
-    <section class="ag-section ag-wrap" id="architecture">
-      <div style="text-align:center;margin-bottom:var(--ag-sp-5)" data-ag-reveal>
-        <span class="ag-eyebrow">Architecture</span>
-        <h2 class="ag-h2" style="margin-top:12px">The governed data model</h2>
-        <p class="ag-lede" style="max-width:660px;margin:14px auto 0">
-          The commerce control plane is a small, typed schema — but the important edge isn't a
-          foreign key. It's the one that routes a proposed action through governance before it
-          ever touches money.
-        </p>
+    <!-- ══ ARCHITECTURE ══ -->
+    <section class="afx-section afx-wrap" id="architecture">
+      <div class="afx-shead afx-rise">
+        <div class="afx-shead__top"><span class="afx-idx">02</span><span class="afx-eyebrow">Architecture</span></div>
+        <h2 class="afx-title">The <span class="g">governed</span> data model</h2>
+        <p class="afx-sub">A small, typed schema — but the load-bearing edge isn't a foreign key. It's the one that routes every proposed action through governance before it can ever touch money.</p>
       </div>
 
-      <div class="afx-board" data-ag-reveal>
+      <div class="afx-glass afx-board afx-hud afx-rise" data-tilt>
         <div class="afx-schema">
-          <div class="afx-entity afx-entity--a">
-            <div class="afx-entity__h">Users</div>
-            <div class="afx-entity__b">
-              <span class="pk"><i>PK</i>user_id</span>
-              <span><i>&nbsp;</i>email</span>
-              <span><i>&nbsp;</i>role</span>
-              <span><i>&nbsp;</i>created_at</span>
-            </div>
-          </div>
-          <div class="afx-entity">
-            <div class="afx-entity__h">Orders</div>
-            <div class="afx-entity__b">
-              <span class="pk"><i>PK</i>order_id</span>
-              <span><i>FK</i>user_id</span>
-              <span><i>&nbsp;</i>status</span>
-              <span><i>&nbsp;</i>total</span>
-            </div>
-          </div>
-          <div class="afx-entity">
-            <div class="afx-entity__h">Products</div>
-            <div class="afx-entity__b">
-              <span class="pk"><i>PK</i>product_id</span>
-              <span><i>&nbsp;</i>name</span>
-              <span><i>&nbsp;</i>price</span>
-              <span><i>&nbsp;</i>stock_level</span>
-            </div>
-          </div>
-          <div class="afx-entity afx-entity--p">
-            <div class="afx-entity__h">Payments</div>
-            <div class="afx-entity__b">
-              <span class="pk"><i>PK</i>payment_id</span>
-              <span><i>FK</i>order_id</span>
-              <span><i>&nbsp;</i>amount</span>
-              <span><i>&nbsp;</i>method</span>
-            </div>
-          </div>
-          <div class="afx-entity afx-entity--v">
-            <div class="afx-entity__h">Approvals</div>
-            <div class="afx-entity__b">
-              <span class="pk"><i>PK</i>approval_id</span>
-              <span><i>FK</i>event_id</span>
-              <span><i>&nbsp;</i>state</span>
-              <span><i>&nbsp;</i>approver</span>
-            </div>
-          </div>
-          <div class="afx-entity afx-entity--r">
-            <div class="afx-entity__h">Events (ledger)</div>
-            <div class="afx-entity__b">
-              <span class="pk"><i>PK</i>event_id</span>
-              <span><i>&nbsp;</i>action</span>
-              <span><i>&nbsp;</i>risk_score</span>
-              <span><i>&nbsp;</i>ts</span>
-            </div>
-          </div>
+          <div class="afx-entity afx-entity--u"><div class="afx-entity__h">Users</div><div class="afx-entity__b"><span class="pk"><i>PK</i>user_id</span><span><i></i>email</span><span><i></i>role</span><span><i></i>created_at</span></div></div>
+          <div class="afx-entity afx-entity--o"><div class="afx-entity__h">Orders</div><div class="afx-entity__b"><span class="pk"><i>PK</i>order_id</span><span><i>FK</i>user_id</span><span><i></i>status</span><span><i></i>total</span></div></div>
+          <div class="afx-entity afx-entity--p"><div class="afx-entity__h">Products</div><div class="afx-entity__b"><span class="pk"><i>PK</i>product_id</span><span><i></i>name</span><span><i></i>price</span><span><i></i>stock_level</span></div></div>
+          <div class="afx-entity afx-entity--y"><div class="afx-entity__h">Payments</div><div class="afx-entity__b"><span class="pk"><i>PK</i>payment_id</span><span><i>FK</i>order_id</span><span><i></i>amount</span><span><i></i>method</span></div></div>
+          <div class="afx-entity afx-entity--v"><div class="afx-entity__h">Approvals</div><div class="afx-entity__b"><span class="pk"><i>PK</i>approval_id</span><span><i>FK</i>event_id</span><span><i></i>state</span><span><i></i>approver</span></div></div>
+          <div class="afx-entity afx-entity--r"><div class="afx-entity__h">Events (ledger)</div><div class="afx-entity__b"><span class="pk"><i>PK</i>event_id</span><span><i></i>action</span><span><i></i>risk_score</span><span><i></i>ts</span></div></div>
         </div>
 
-        <div class="afx-flow" aria-hidden="true">
-          <span><b>observe</b></span>
-          <em>→</em>
-          <span><b>draft</b></span>
-          <em>→</em>
-          <span>governance <b>score 0–100</b></span>
-          <em>→</em>
-          <span>low <b>auto-execute</b></span>
-          <em>·</em>
-          <span>medium <b>queue</b></span>
-          <em>·</em>
-          <span>high/critical <b>approval</b></span>
-          <em>→</em>
-          <span><b>audit ledger</b></span>
-        </div>
-      </div>
-    </section>
-
-    <hr class="ag-divider ag-wrap"/>
-
-    <!-- ══ GOVERNANCE RISK LADDER ══ -->
-    <section class="ag-section ag-wrap" id="governance">
-      <div class="ag-grid ag-grid--2" style="align-items:center;gap:var(--ag-sp-5)" data-ag-reveal>
-        <div>
-          <span class="ag-eyebrow">The safety model</span>
-          <h2 class="ag-h2" style="margin-top:12px">Every action earns its route</h2>
-          <p style="color:var(--ag-on-dim)">
-            <code>governance.py</code> scores each proposed action from 0 to 100 and routes it by
-            tier. The invariant is simple and enforced in code: no high or critical action can
-            execute until an <code>approvals</code> row reaches <em>approved</em>. The self-check
-            in <code>daily_loop.py</code> — and the governance tests — fail by design if that door
-            is ever left open.
-          </p>
-          <p style="color:var(--ag-on-dim)">
-            Operating rules the agents can't override: never fabricate inventory, reviews, sales,
-            or urgency; never move live pricing, tax, payment, refund or fulfillment without
-            approval; log every action.
-          </p>
-        </div>
-
-        <div class="afx-ladder" data-ag-stagger>
-          <div class="afx-rung afx-rung--low">
-            <span class="afx-rung__score">0–30</span>
-            <p><strong>Low.</strong> Generate copy, read metrics, reconcile.</p>
-            <span class="afx-rung__route">auto + log</span>
-          </div>
-          <div class="afx-rung afx-rung--med">
-            <span class="afx-rung__score">31–70</span>
-            <p><strong>Medium.</strong> Content publish, non-price catalog edits.</p>
-            <span class="afx-rung__route">queue approval</span>
-          </div>
-          <div class="afx-rung afx-rung--high">
-            <span class="afx-rung__score">71–100</span>
-            <p><strong>High / critical.</strong> Pricing, payments, refunds, fulfillment, reorders, mass outbound.</p>
-            <span class="afx-rung__route">blocked · approve</span>
+        <div class="afx-pipe">
+          <div class="afx-pipe__lab">Every material action travels this path</div>
+          <div class="afx-flow">
+            <div class="afx-node"><small>step 01</small><b>observe</b></div>
+            <span class="afx-arrow">→</span>
+            <div class="afx-node"><small>step 02</small><b>draft</b></div>
+            <span class="afx-arrow">→</span>
+            <div class="afx-node afx-node--gate"><small>governance</small><b>score 0–100</b></div>
+            <span class="afx-arrow">→</span>
+            <div class="afx-branch">
+              <span class="afx-pill afx-pill--low">low · auto-execute</span>
+              <span class="afx-pill afx-pill--med">medium · queue</span>
+              <span class="afx-pill afx-pill--high">high / critical · approval</span>
+            </div>
+            <span class="afx-arrow">→</span>
+            <div class="afx-ledger">▤ audit ledger</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ══ TOOLS REGISTRY ══ -->
-    <section class="ag-section ag-wrap" id="tools">
-      <div style="text-align:center;margin-bottom:var(--ag-sp-5)" data-ag-reveal>
-        <span class="ag-eyebrow">Tools</span>
-        <h2 class="ag-h2" style="margin-top:12px">The operator toolchain</h2>
+    <!-- ══ GOVERNANCE ══ -->
+    <section class="afx-section afx-wrap" id="governance">
+      <div class="afx-shead afx-rise">
+        <div class="afx-shead__top"><span class="afx-idx">03</span><span class="afx-eyebrow">The safety model</span></div>
+        <h2 class="afx-title">Every action earns its <span class="t">route</span></h2>
       </div>
 
-      <div class="ag-glass ag-glass--reflective ag-e2" data-ag-reveal style="padding:clamp(14px,2.5vw,28px)">
-        <table class="afx-registry">
-          <thead>
-            <tr><th>Tool</th><th>Surface</th><th>What it does</th><th>Status</th></tr>
-          </thead>
+      <div class="afx-gov">
+        <div class="afx-ladder afx-rise" data-stag>
+          <div class="afx-rung afx-rung--low"><b>0–30</b><p><strong>Low.</strong> Generate copy, read metrics, reconcile.</p><span class="afx-route">auto + log</span></div>
+          <div class="afx-rung afx-rung--med"><b>31–70</b><p><strong>Medium.</strong> Content publish, non-price catalog edits.</p><span class="afx-route">queue approval</span></div>
+          <div class="afx-rung afx-rung--high"><b>71–100</b><p><strong>High / critical.</strong> Pricing, payments, refunds, fulfillment, reorders, mass outbound.</p><span class="afx-route">blocked · approve</span></div>
+        </div>
+
+        <div class="afx-rise">
+          <p class="afx-quote">No high or critical action executes until an <em>approvals</em> row reaches <em>approved</em>. The self-check fails, by design, if that door is ever left open.</p>
+          <ul class="afx-rules">
+            <li>Never fabricate inventory, reviews, sales, or urgency</li>
+            <li>Never move live pricing, tax, payment, refund or fulfillment without approval</li>
+            <li>Log every material action to the append-only ledger</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TOOLS ══ -->
+    <section class="afx-section afx-wrap" id="tools">
+      <div class="afx-shead afx-rise">
+        <div class="afx-shead__top"><span class="afx-idx">04</span><span class="afx-eyebrow">Tools</span></div>
+        <h2 class="afx-title">The operator toolchain</h2>
+      </div>
+
+      <div class="afx-glass afx-reg-wrap afx-rise">
+        <table class="afx-reg">
+          <thead><tr><th>Tool</th><th>Surface</th><th>What it does</th><th>Status</th></tr></thead>
           <tbody>
-            <tr>
-              <td>daily_loop</td><td>control-plane</td>
-              <td>Governance self-check + executive report (stdlib only)</td>
-              <td class="st st--live">● live</td>
-            </tr>
-            <tr>
-              <td>governance</td><td>control-plane</td>
-              <td>Scores every action 0–100 and routes it by risk tier</td>
-              <td class="st st--live">● live</td>
-            </tr>
-            <tr>
-              <td>audit</td><td>control-plane</td>
-              <td>Writes every material change to the append-only ledger</td>
-              <td class="st st--live">● live</td>
-            </tr>
-            <tr>
-              <td>payments</td><td>control-plane</td>
-              <td>Governed money movement — mock mode until a key is present</td>
-              <td class="st st--gate">◐ gated</td>
-            </tr>
-            <tr>
-              <td>store_smoke_bot</td><td>bots/</td>
-              <td>Storefront smoke test run on scheduled workflows</td>
-              <td class="st st--live">● live</td>
-            </tr>
-            <tr>
-              <td>PERCIVAL</td><td>sentinel/</td>
-              <td>Keyless governor/identity/capability/mission-memory stack</td>
-              <td class="st st--live">● live</td>
-            </tr>
-            <tr>
-              <td>Agent Mesh</td><td>sentinel/</td>
-              <td>Mission routing &amp; shared memory between named agents</td>
-              <td class="st st--gate">◐ target-state</td>
-            </tr>
+            <tr><td>daily_loop</td><td>control-plane</td><td>Governance self-check + executive report (stdlib only)</td><td><span class="afx-st afx-st--live"><b></b>live</span></td></tr>
+            <tr><td>governance</td><td>control-plane</td><td>Scores every action 0–100 and routes it by risk tier</td><td><span class="afx-st afx-st--live"><b></b>live</span></td></tr>
+            <tr><td>audit</td><td>control-plane</td><td>Writes every material change to the append-only ledger</td><td><span class="afx-st afx-st--live"><b></b>live</span></td></tr>
+            <tr><td>payments</td><td>control-plane</td><td>Governed money movement — mock mode until a key is present</td><td><span class="afx-st afx-st--gate"><b></b>gated</span></td></tr>
+            <tr><td>store_smoke_bot</td><td>bots/</td><td>Storefront smoke test run on scheduled workflows</td><td><span class="afx-st afx-st--live"><b></b>live</span></td></tr>
+            <tr><td>PERCIVAL</td><td>sentinel/</td><td>Keyless governor/identity/capability/mission-memory stack</td><td><span class="afx-st afx-st--live"><b></b>live</span></td></tr>
+            <tr><td>Agent Mesh</td><td>sentinel/</td><td>Mission routing &amp; shared memory between named agents</td><td><span class="afx-st afx-st--gate"><b></b>target-state</span></td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- ══ FINALE / LAUNCH ══ -->
-    <section class="ag-section ag-wrap" id="launch">
-      <div class="ag-finale" data-ag-reveal>
-        <span class="ag-eyebrow">Explore</span>
-        <h2 class="ag-display" style="font-size:clamp(2.2rem,5vw,4rem);margin:16px 0">
-          Governed autonomy, <span class="ag-prism-text">on the record</span>.
-        </h2>
-        <p class="ag-lede" style="max-width:620px;margin:0 auto var(--ag-sp-4)">
-          Advanced doesn't mean unchecked. Every ClearGlass system reads first, drafts second,
-          asks a human before it moves anything that matters — and logs all of it.
-        </p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-          <a class="ag-btn ag-btn--primary cg-magnetic" href="index.html">Back to ClearGlass</a>
-          <a class="ag-btn ag-btn--ghost ag-btn--luminous cg-magnetic" href="ai-operator.html">See the AI Operator</a>
+    <!-- ══ FINALE ══ -->
+    <section class="afx-section afx-wrap" id="launch">
+      <div class="afx-glass afx-finale afx-hud afx-rise">
+        <span class="afx-eyebrow">Explore</span>
+        <h2 style="margin-top:14px">Governed autonomy, <span class="g">on the record</span>.</h2>
+        <p class="afx-sub" style="margin:0 auto 30px">Advanced doesn't mean unchecked. Every ClearGlass system reads first, drafts second, asks a human before it moves anything that matters — and logs all of it.</p>
+        <div class="afx-cta" style="justify-content:center">
+          <a class="afx-btn afx-btn--primary cg-magnetic" href="index.html">Back to ClearGlass</a>
+          <a class="afx-btn afx-btn--ghost cg-magnetic" href="ai-operator.html">See the AI Operator</a>
         </div>
       </div>
+      <div class="afx-footer">ClearGlass Inc. · Advanced features, tools &amp; systems · read-only by default, human-approved by design.</div>
     </section>
-
-    <footer class="ag-footer">
-      <p>ClearGlass Inc. · Advanced features, tools &amp; systems · read-only by default, human-approved by design.</p>
-    </footer>
   </main>
 
   <!-- ══ INTERACTION LAYER — progressive enhancement, reduced-motion aware ══ -->
   <script>
-  (function () {
+  (function(){
     "use strict";
     var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     var fine   = matchMedia("(pointer: fine)").matches;
 
-    var nav = document.getElementById("agNav");
-    addEventListener("scroll", function () {
-      nav.classList.toggle("is-scrolled", scrollY > 24);
-    }, { passive: true });
+    /* nav: scroll compression + mobile toggle + glide */
+    var nav=document.getElementById("agNav");
+    addEventListener("scroll",function(){nav.classList.toggle("is-scrolled",scrollY>24);},{passive:true});
+    var toggle=document.getElementById("agToggle"), links=document.getElementById("agLinks");
+    toggle.addEventListener("click",function(){var o=links.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded",String(o));toggle.setAttribute("aria-label",o?"Close menu":"Open menu");});
+    links.addEventListener("click",function(e){if(e.target.closest("a")){links.classList.remove("is-open");toggle.setAttribute("aria-expanded","false");}});
+    var glide=document.getElementById("agGlide");
+    if(glide&&fine){links.querySelectorAll(".ag-nav__link").forEach(function(el){el.addEventListener("mouseenter",function(){
+      var pr=links.getBoundingClientRect(),r=el.getBoundingClientRect();glide.style.opacity="1";
+      glide.style.left=(r.left-pr.left)+"px";glide.style.top=(r.top-pr.top)+"px";glide.style.width=r.width+"px";glide.style.height=r.height+"px";});});
+      links.addEventListener("mouseleave",function(){glide.style.opacity="0";});}
 
-    var toggle = document.getElementById("agToggle");
-    var links  = document.getElementById("agLinks");
-    toggle.addEventListener("click", function () {
-      var open = links.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", String(open));
-      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    });
-    links.addEventListener("click", function (e) {
-      if (e.target.closest("a")) {
-        links.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
+    /* smooth anchor scrolling */
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener("click",function(e){
+      var t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();t.scrollIntoView({behavior:reduce?"auto":"smooth"});}});});
+
+    /* reveal on scroll — with initial sweep, no-IO fallback, and a hard failsafe */
+    var rises=document.querySelectorAll(".afx-rise,[data-stag]");
+    var show=function(el){el.classList.add("in");};
+    if(!("IntersectionObserver" in window)){rises.forEach(show);}
+    else{
+      var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){show(e.target);io.unobserve(e.target);}});},
+        {threshold:0,rootMargin:"0px 0px -6% 0px"});
+      rises.forEach(function(el){io.observe(el);});
+      var sweep=function(){rises.forEach(function(el){if(el.classList.contains("in"))return;
+        var r=el.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0){show(el);io.unobserve(el);}});};
+      sweep();addEventListener("scroll",sweep,{passive:true});
+      addEventListener("load",function(){setTimeout(function(){rises.forEach(show);},2400);});
+    }
+
+    /* console: sequential line reveal (typing feel), reduced-motion shows all */
+    var term=document.getElementById("afxTerm");
+    if(term){
+      var lines=term.querySelectorAll(".afx-l");
+      if(reduce){lines.forEach(function(l){l.classList.add("on");});}
+      else{
+        var start=function(){lines.forEach(function(l,i){setTimeout(function(){l.classList.add("on");},280+i*260);});};
+        if("IntersectionObserver" in window){
+          var t=new IntersectionObserver(function(en){if(en[0].isIntersecting){start();t.disconnect();}},{threshold:.4});
+          t.observe(term);
+        } else start();
+        /* failsafe */
+        addEventListener("load",function(){setTimeout(function(){lines.forEach(function(l){l.classList.add("on");});},3000);});
       }
-    });
-
-    var glide = document.getElementById("agGlide");
-    if (glide && fine) {
-      links.querySelectorAll(".ag-nav__link").forEach(function (el) {
-        el.addEventListener("mouseenter", function () {
-          var pr = links.getBoundingClientRect(), r = el.getBoundingClientRect();
-          glide.style.opacity = "1";
-          glide.style.left = (r.left - pr.left) + "px";
-          glide.style.top = (r.top - pr.top) + "px";
-          glide.style.width = r.width + "px";
-          glide.style.height = r.height + "px";
-        });
-      });
-      links.addEventListener("mouseleave", function () { glide.style.opacity = "0"; });
     }
 
-    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-      a.addEventListener("click", function (e) {
-        var t = document.querySelector(a.getAttribute("href"));
-        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); }
+    if(reduce) return;
+
+    /* pointer polish: tilt + magnetic (fine pointers only) */
+    if(fine){
+      document.querySelectorAll("[data-tilt]").forEach(function(el){
+        el.addEventListener("pointermove",function(e){var r=el.getBoundingClientRect();
+          var px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+          el.style.transform="perspective(1000px) rotateX("+((py-.5)*-3.5)+"deg) rotateY("+((px-.5)*4.5)+"deg)";});
+        el.addEventListener("pointerleave",function(){el.style.transform="";});
       });
-    });
-
-    if (reduce) return;
-
-    if (fine) {
-      var cx = -200, cy = -200, tx = -200, ty = -200;
-      addEventListener("pointermove", function (e) { tx = e.clientX; ty = e.clientY; });
-      (function loop() {
-        cx += (tx - cx) * 0.14; cy += (ty - cy) * 0.14;
-        document.documentElement.style.setProperty("--ag-mx", cx + "px");
-        document.documentElement.style.setProperty("--ag-my", cy + "px");
-        requestAnimationFrame(loop);
-      })();
-
-      document.querySelectorAll("[data-tilt]").forEach(function (el) {
-        el.addEventListener("pointermove", function (e) {
-          var r = el.getBoundingClientRect();
-          var px = (e.clientX - r.left) / r.width;
-          var py = (e.clientY - r.top) / r.height;
-          el.style.setProperty("--ag-tilt-x", px);
-          el.style.transform = "perspective(900px) rotateX(" + ((py - .5) * -4) +
-            "deg) rotateY(" + ((px - .5) * 5) + "deg)";
-        });
-        el.addEventListener("pointerleave", function () {
-          el.style.transform = ""; el.style.setProperty("--ag-tilt-x", .5);
-        });
-      });
-
-      document.querySelectorAll(".cg-magnetic").forEach(function (el) {
-        el.addEventListener("pointermove", function (e) {
-          var r = el.getBoundingClientRect();
-          el.style.transform = "translate(" + ((e.clientX - r.left - r.width / 2) * .18) +
-            "px," + ((e.clientY - r.top - r.height / 2) * .3) + "px)";
-        });
-        el.addEventListener("pointerleave", function () { el.style.transform = ""; });
+      document.querySelectorAll(".cg-magnetic").forEach(function(el){
+        el.addEventListener("pointermove",function(e){var r=el.getBoundingClientRect();
+          el.style.transform="translate("+((e.clientX-r.left-r.width/2)*.16)+"px,"+((e.clientY-r.top-r.height/2)*.28)+"px)";});
+        el.addEventListener("pointerleave",function(){el.style.transform="";});
       });
     }
-
-    var reveals = document.querySelectorAll("[data-ag-reveal],[data-ag-stagger]");
-    var reveal = function (el) { el.classList.add("is-in"); };
-
-    if (!("IntersectionObserver" in window)) {
-      /* no observer support — never leave content invisible */
-      reveals.forEach(reveal);
-      return;
-    }
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { reveal(en.target); io.unobserve(en.target); }
-      });
-    }, { threshold: 0, rootMargin: "0px 0px -6% 0px" });
-    reveals.forEach(function (el) { io.observe(el); });
-
-    /* initial sweep: reveal anything already within the viewport on load
-       (covers tall panels the observer can miss on programmatic/instant scroll) */
-    var sweep = function () {
-      reveals.forEach(function (el) {
-        if (el.classList.contains("is-in")) return;
-        var r = el.getBoundingClientRect();
-        if (r.top < innerHeight && r.bottom > 0) { reveal(el); io.unobserve(el); }
-      });
-    };
-    sweep();
-    addEventListener("scroll", sweep, { passive: true });
-
-    /* absolute failsafe — no section may stay permanently hidden */
-    addEventListener("load", function () {
-      setTimeout(function () { reveals.forEach(reveal); }, 2600);
-    });
   })();
   </script>
 

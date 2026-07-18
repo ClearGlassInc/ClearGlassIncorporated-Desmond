@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-07-17",
+  "updated": "2026-07-18",
   "site": "https://www.clearglassinc.com",
   "topics": {
     "governed-ai": "Governed AI",
@@ -14,6 +14,37 @@
     "frontier": "Frontier intelligence"
   },
   "posts": [
+    {
+      "slug": "post-quantum-security-advisor-clearglass-artemis",
+      "url": "/blog/post-quantum-security-advisor-clearglass-artemis.html",
+      "title": "Post-Quantum Security Advisor: The Commercial Quantum Wedge for ClearGlassInc Artemis",
+      "description": "A ClearGlassInc Artemis product thesis for a Post-Quantum Security Advisor: cryptographic inventory, RSA/ECC exposure scoring, NIST PQC migration planning, and a four-module quantum intelligence architecture.",
+      "category": "Frontier Intelligence",
+      "series": "Frontier Desk Briefings",
+      "topics": [
+        "frontier",
+        "cyber",
+        "systems",
+        "governed-ai"
+      ],
+      "tags": [
+        "post-quantum-cryptography",
+        "pqc-migration",
+        "cryptographic-inventory",
+        "quantum-readiness",
+        "ml-kem",
+        "ml-dsa",
+        "rsa",
+        "ecc",
+        "nist-standards"
+      ],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-07-18",
+      "readMinutes": 14,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
     {
       "slug": "clearglass-secure-deployment-agent",
       "url": "/blog/clearglass-secure-deployment-agent.html",
@@ -52,7 +83,7 @@
       "slug": "clearglassinc-0-to-1m-corporate-execution-plan",
       "url": "/blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
       "title": "ClearGlassInc: The $0-to-$1,000,000 Corporate Execution Plan",
-      "description": "An 18-month operating plan to reach $1,000,000 CAD in collected corporate revenue: governance, cybersecurity, procurement-intelligence, compliance and AI-oversight services converted into managed services and licensed technology — sequenced across eight phases with a four-tier offer ladder, financial controls, scorecard, and a 30-day command sequence.",
+      "description": "An 18-month operating plan to reach $1,000,000 CAD in collected corporate revenue: governance, cybersecurity, procurement-intelligence, compliance and AI-oversight services converted into managed services and licensed technology \u2014 sequenced across eight phases with a four-tier offer ladder, financial controls, scorecard, and a 30-day command sequence.",
       "category": "Revenue Architecture",
       "series": "Artemis Growth Systems",
       "topics": [
@@ -82,7 +113,7 @@
       "slug": "frontier-intelligence-briefing-quantum-gravity-asi-biosecurity",
       "url": "/blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html",
       "title": "Frontier Intelligence Briefing: Quantum Gravity, ASI Timelines, Biosecurity & the Economic Singularity",
-      "description": "An EYES-ONLY styled field briefing on five frontier vectors: quantum gravity progress, near-term ASI timelines and risks, the biosecurity landscape, economic-singularity scenarios, and the truth about time-travel and future-prediction claims — with a sober assessment on each.",
+      "description": "An EYES-ONLY styled field briefing on five frontier vectors: quantum gravity progress, near-term ASI timelines and risks, the biosecurity landscape, economic-singularity scenarios, and the truth about time-travel and future-prediction claims \u2014 with a sober assessment on each.",
       "category": "Frontier Intelligence",
       "series": "Frontier Desk Briefings",
       "topics": [
@@ -265,7 +296,7 @@
       "slug": "ai-agent-governance-governed-autonomy",
       "url": "/blog/ai-agent-governance-governed-autonomy.html",
       "title": "AI Agent Governance: The Governed Autonomy Playbook",
-      "description": "The bottleneck to deploying AI agents isn't intelligence — it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
+      "description": "The bottleneck to deploying AI agents isn't intelligence \u2014 it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
       "category": "AI & Autonomy",
       "series": "Governed Autonomy Playbooks",
       "topics": [
@@ -292,7 +323,7 @@
       "slug": "ai-agents-insider-threat",
       "url": "/blog/ai-agents-insider-threat.html",
       "title": "AI Agents Are the New Insider Threat",
-      "description": "Agents hold credentials, access, and goals — the textbook insider profile — and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
+      "description": "Agents hold credentials, access, and goals \u2014 the textbook insider profile \u2014 and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
       "category": "AI & Security",
       "series": "Field Notes",
       "topics": [
@@ -429,11 +460,11 @@
   "pipeline": [
     {
       "slug": "illusion-of-ai-security",
-      "plannedTitle": "The Illusion of AI Security: Why Most “Secure” Systems Are Already Compromised",
+      "plannedTitle": "The Illusion of AI Security: Why Most \u201cSecure\u201d Systems Are Already Compromised",
       "primaryKeyword": "AI security",
-      "angle": "Contrarian — exposes false confidence in AI defenses",
+      "angle": "Contrarian \u2014 exposes false confidence in AI defenses",
       "coreIdea": "Most AI systems are vulnerable at the orchestration layer, not the model layer.",
-      "hook": "Your AI isn’t secure. It just hasn’t been tested properly.",
+      "hook": "Your AI isn\u2019t secure. It just hasn\u2019t been tested properly.",
       "topics": [
         "cyber",
         "governed-ai",
@@ -463,7 +494,7 @@
       "primaryKeyword": "cybersecurity automation",
       "angle": "Inevitable shift",
       "coreIdea": "Humans cannot keep pace with machine-speed threats.",
-      "hook": "If your defense requires human reaction time, you’ve already lost.",
+      "hook": "If your defense requires human reaction time, you\u2019ve already lost.",
       "topics": [
         "cyber",
         "automation"
@@ -472,9 +503,9 @@
     },
     {
       "slug": "ai-agents-new-workforce-attack-surface",
-      "plannedTitle": "AI Agents Are the New Workforce: But They’re Also Your Biggest Attack Surface",
+      "plannedTitle": "AI Agents Are the New Workforce: But They\u2019re Also Your Biggest Attack Surface",
       "primaryKeyword": "AI agents security",
-      "angle": "Duality — opportunity plus risk",
+      "angle": "Duality \u2014 opportunity plus risk",
       "coreIdea": "Every AI agent is both a productivity multiplier and a vulnerability node.",
       "framework": "Agent Attack Surface Index (AASI)",
       "topics": [
@@ -492,7 +523,7 @@
       "plannedTitle": "The Hidden Layer of Cyber Risk: Workflow Automation Is the New Exploit Vector",
       "primaryKeyword": "workflow automation security",
       "angle": "Overlooked risk",
-      "coreIdea": "Zapier-style automation, APIs, and pipelines are massively under-secured. The system isn’t hacked — the workflow is.",
+      "coreIdea": "Zapier-style automation, APIs, and pipelines are massively under-secured. The system isn\u2019t hacked \u2014 the workflow is.",
       "topics": [
         "automation",
         "cyber"
@@ -505,7 +536,7 @@
       "primaryKeyword": "software architecture strategy",
       "angle": "Executive-level positioning",
       "coreIdea": "Architecture decisions now directly impact revenue, security, and dominance.",
-      "hook": "Your architecture is your strategy — whether you designed it that way or not.",
+      "hook": "Your architecture is your strategy \u2014 whether you designed it that way or not.",
       "topics": [
         "systems"
       ],
@@ -516,7 +547,7 @@
       "plannedTitle": "OSINT + AI: The New Intelligence Stack Reshaping Government and Finance",
       "primaryKeyword": "OSINT AI",
       "angle": "High-authority, geopolitical relevance",
-      "coreIdea": "AI-powered intelligence pipelines are redefining investigations — fraud detection, sanctions tracking, network analysis.",
+      "coreIdea": "AI-powered intelligence pipelines are redefining investigations \u2014 fraud detection, sanctions tracking, network analysis.",
       "topics": [
         "osint",
         "fincrime",
@@ -542,7 +573,7 @@
       "plannedTitle": "Why Most AI Implementations Fail Before They Start (And How to Fix It)",
       "primaryKeyword": "AI implementation strategy",
       "angle": "Pain-driven, widely relatable",
-      "coreIdea": "Failure happens at system design, not model choice. AI is not a tool — it’s an ecosystem.",
+      "coreIdea": "Failure happens at system design, not model choice. AI is not a tool \u2014 it\u2019s an ecosystem.",
       "topics": [
         "automation",
         "governed-ai",

@@ -63,7 +63,11 @@ jobs:
 
           echo "Pages artifact validated:"
           du -sh dist
-          find dist -maxdepth 2 -type f | sort | head -100
+          # sed (not head) caps the listing: head exits early and SIGPIPEs sort,
+          # which under `set -o pipefail` intermittently fails this step with
+          # exit 2 ("sort: write failed: Broken pipe") even though the artifact
+          # is valid. sed consumes all input, so the pipeline is race-free.
+          find dist -maxdepth 2 -type f | sort | sed -n '1,100p'
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4

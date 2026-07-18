@@ -55,6 +55,7 @@
     ]],
     ["Company", [
       ["Home", "index.html", "⌂"],
+      ["Authority Grid", "authority-network.html", "⌁"],
       ["Web Design & Dev", "web-design.html", "💻"],
       ["Store · Buy", "store.html", "🛒"],
       ["Side Store · Electronics", "side-store.html", "🔌"],

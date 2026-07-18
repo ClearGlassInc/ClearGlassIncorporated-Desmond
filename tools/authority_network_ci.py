@@ -15,10 +15,11 @@ from tools import authority_network as core
 from tools.authority_network import *  # noqa: F403
 
 _ALIAS_DIAGNOSTIC = ": duplicate loc entries inside sitemap set"
+_BASE_VALIDATE = core.validate
 
 
 def validate() -> list[str]:
-    return [error for error in core.validate() if _ALIAS_DIAGNOSTIC not in error]
+    return [error for error in _BASE_VALIDATE() if _ALIAS_DIAGNOSTIC not in error]
 
 
 # ``core.main`` resolves ``validate`` from its own module globals. Replace that

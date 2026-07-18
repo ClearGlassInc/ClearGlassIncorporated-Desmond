@@ -39,6 +39,8 @@
     ]],
     ["Intelligence", [
       ["Intelligence", "intelligence.html", "🧠"],
+      ["Autonomous Threat Modeling", "blog/autonomous-threat-modeling-2026.html", "◈"],
+      ["Threat Modeling Service", "offers/autonomous-threat-modeling.html", "◎"],
       ["Command Surface", "intelligence-command-surface.html", "🗺"],
       ["Interface", "intelligence-interface.html", "🖥"],
       ["Flow Intelligence", "clearglass.html", "🕸"],

@@ -664,6 +664,115 @@ def build_electrical_work_order(finding: ElectricalFinding) -> ElectricalWorkOrd
     )
 
 
+PostQuantumAlgorithm = Literal[
+    "RSA", "ECC", "DH", "DSA", "ML-KEM", "ML-DSA", "SLH-DSA", "AES"
+]
+MigrationUrgency = Literal["inventory", "plan", "migrate", "monitor"]
+
+
+@dataclass(frozen=True)
+class CryptographicAsset:
+    """Ontology-ready cryptographic dependency for PQC readiness scoring."""
+
+    asset_id: str
+    owner: str
+    algorithm: PostQuantumAlgorithm
+    key_size_bits: int
+    protocol: str
+    data_classification: Classification
+    stores_long_lived_secrets: bool
+    external_exposure: bool
+    business_criticality: float
+    certificate_expires_at: datetime | None = None
+    evidence_refs: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class PostQuantumFinding:
+    asset_id: str
+    urgency: MigrationUrgency
+    risk_score: float
+    recommended_target: str
+    rationale: str
+    evidence_sources: tuple[str, ...]
+    confidence_drivers: tuple[str, ...]
+    approval_gate: ApprovalGate = ApprovalGate.CASE_WRITEBACK
+
+
+def post_quantum_readiness_score(asset: CryptographicAsset) -> float:
+    """Return an auditable 0..1 score for harvest-now/decrypt-later exposure.
+
+    The baseline is intentionally deterministic for high-assurance review: legacy
+    public-key cryptography, long-lived protected data, external reachability, and
+    business criticality dominate the score. NIST-standardized PQC algorithms are
+    treated as monitoring items rather than migration blockers.
+    """
+
+    legacy_public_key = asset.algorithm in {"RSA", "ECC", "DH", "DSA"}
+    standardized_pqc = asset.algorithm in {"ML-KEM", "ML-DSA", "SLH-DSA"}
+    if standardized_pqc:
+        return round(0.15 + 0.10 * _clamp_probability(asset.business_criticality), 4)
+
+    algorithm_component = 0.45 if legacy_public_key else 0.12
+    secret_lifetime_component = 0.22 if asset.stores_long_lived_secrets else 0.06
+    exposure_component = 0.18 if asset.external_exposure else 0.05
+    criticality_component = 0.15 * _clamp_probability(asset.business_criticality)
+    weak_key_component = (
+        0.08 if asset.algorithm == "RSA" and asset.key_size_bits < 3072 else 0.0
+    )
+    return round(
+        _clamp_probability(
+            algorithm_component
+            + secret_lifetime_component
+            + exposure_component
+            + criticality_component
+            + weak_key_component
+        ),
+        4,
+    )
+
+
+def advise_post_quantum_migration(asset: CryptographicAsset) -> PostQuantumFinding:
+    """Create a human-reviewable PQC remediation recommendation."""
+
+    score = post_quantum_readiness_score(asset)
+    if asset.algorithm in {"ML-KEM", "ML-DSA", "SLH-DSA"}:
+        urgency: MigrationUrgency = "monitor"
+        target = (
+            "maintain NIST PQC implementation, patch cadence, and crypto-agility tests"
+        )
+    elif score >= 0.78:
+        urgency = "migrate"
+        target = (
+            "prioritize hybrid TLS/PKI pilot and migration to ML-KEM/ML-DSA profiles"
+        )
+    elif score >= 0.55:
+        urgency = "plan"
+        target = "create migration backlog, dependency owners, and certificate rotation windows"
+    else:
+        urgency = "inventory"
+        target = "complete crypto inventory and monitor standards/vendor support"
+
+    drivers = [
+        f"algorithm={asset.algorithm}",
+        f"external_exposure={asset.external_exposure}",
+        f"long_lived_secrets={asset.stores_long_lived_secrets}",
+        f"criticality={asset.business_criticality:.2f}",
+    ]
+    return PostQuantumFinding(
+        asset_id=asset.asset_id,
+        urgency=urgency,
+        risk_score=score,
+        recommended_target=target,
+        rationale=(
+            f"{asset.protocol} dependency uses {asset.algorithm}-{asset.key_size_bits}; "
+            f"PQC readiness score {score:.2f} maps to {urgency}."
+        ),
+        evidence_sources=asset.evidence_refs,
+        confidence_drivers=tuple(drivers),
+    )
+
+
 MetricName = Literal[
     "precision",
     "recall",

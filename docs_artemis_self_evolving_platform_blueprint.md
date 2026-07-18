@@ -134,6 +134,47 @@ platform/policies            # OPA/Kyverno/Terraform guardrails
 platform/delivery            # Apollo/Argo ring rollout manifests
 ```
 
+
+## Electrical Safety Workflow and Revenue Operations Merge
+
+ClearGlassInc Artemis can extend the same ontology, workflow, eval, and audit architecture into field-service electrical maintenance planning. The intent is not to automate physical electrical work. Artemis acts as a documentation, planning, risk-ranking, permit-tracking, evidence-management, and revenue-operations layer while qualified licensed electricians perform permitted, de-energized, locked-out, tested, inspected work.
+
+### Electrical workflow ontology extension
+
+| Object | Purpose |
+| --- | --- |
+| `ElectricalAsset` | Service entrance, meter base, disconnect, panel, subpanel, feeder, branch circuit, junction box, device, major load, generator, UPS, solar, battery, and low-voltage subsystem. |
+| `ElectricalFinding` | Evidence-backed defect or observation with photos, circuit trace references, hazards, status, severity, and required controls. |
+| `ElectricalWorkOrder` | Staged remediation package containing isolation requirement, permit review, material list, test plan, approval gates, and closeout evidence. |
+| `CircuitTraceRegister` | Source panel, breaker/fuse, conductor details, neutral/grounding arrangement, connected devices, GFCI/AFCI status, measured load, and final status. |
+| `TestResult` | Meter, continuity, insulation-resistance, polarity, torque, thermal, functional, protective-device, and re-energization records. |
+| `OwnerAction` | Customer decision, outage authorization, critical-load coordination, quote approval, inspection scheduling, and remaining deficiencies. |
+
+### Safe operating model
+
+Artemis enforces a safety-first field workflow:
+
+1. Create a shutdown and critical-load protection plan before opening equipment.
+2. Document every existing condition before alterations.
+3. Stop and isolate immediately on arcing, burning odour, overheating, water intrusion, damaged service equipment, exposed live parts, or evidence of fire.
+4. Trace circuits without guessing conductor identity or energizing unknown conductors outside an approved controlled testing procedure.
+5. Generate work orders that require licensed-electrician acceptance, permit/AHJ review, lockout/tagout, live-dead-live absence-of-voltage verification, PPE controls, pre-energization test records, and owner/operator restore authorization.
+6. Prohibit cosmetic wire cleanup until immediate dangers and critical repairs are isolated or resolved.
+7. Close the job only after final labels, panel directories, test evidence, inspection status, restricted circuits, and remaining owner actions are recorded.
+
+### Workflow and earning engine
+
+The same evidence objects can improve revenue without compromising safety:
+
+- Convert traced findings into risk-ranked estimates with required, recommended, and optional scopes.
+- Auto-build material schedules from verified assets, not guesses.
+- Generate customer-ready before/after reports, deficiency lists, permit checklists, and maintenance schedules.
+- Track technician utilization, quote acceptance, inspection pass rate, callbacks, recurring maintenance reminders, and margin by work category.
+- Recommend smart monitoring, surge protection evaluation, digital panel schedules, QR-coded asset records, and preventive-maintenance subscriptions only when technically justified.
+- Feed accepted/rejected quotes and job outcomes into evals that improve proposal clarity, prioritization, dispatch planning, and follow-up timing while preserving human approval gates.
+
+The Python reference implementation includes `ElectricalFinding`, `ElectricalWorkOrder`, severity classification, mandatory control injection, and final-report section generation so the AI workflow can be tested before it is connected to production systems.
+
 ## Security and Governance
 
 Security controls are enforced in code, policy, data products, and deployment gates:

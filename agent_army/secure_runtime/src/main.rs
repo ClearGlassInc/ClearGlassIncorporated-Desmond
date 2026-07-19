@@ -1,6 +1,6 @@
 use clearglass_agent_crypto::{
-    SecureResult, decrypt_bytes, encrypt_bytes, generate_identity_pair, read_key_line, read_limited,
-    write_new_file,
+    SecureResult, decrypt_bytes, encrypt_bytes, generate_identity_pair, read_key_line,
+    read_limited, write_new_file,
 };
 use std::collections::BTreeMap;
 use std::env;
@@ -83,10 +83,14 @@ fn keygen(args: &[String]) -> SecureResult<()> {
     let recipient_path = PathBuf::from(required(&options, "recipient")?);
 
     if identity_path == Path::new("-") || recipient_path == Path::new("-") {
-        return Err(invalid_input("keygen requires file paths; '-' is not accepted"));
+        return Err(invalid_input(
+            "keygen requires file paths; '-' is not accepted",
+        ));
     }
     if identity_path == recipient_path {
-        return Err(invalid_input("identity and recipient paths must be different"));
+        return Err(invalid_input(
+            "identity and recipient paths must be different",
+        ));
     }
     if identity_path.exists() || recipient_path.exists() {
         return Err(invalid_input("refusing to overwrite an existing key file"));

@@ -128,11 +128,7 @@ fn temporary_path(path: &Path, attempt: u32) -> SecureResult<PathBuf> {
         .file_name()
         .and_then(|value| value.to_str())
         .ok_or_else(|| runtime_error("output path must contain a valid UTF-8 file name"))?;
-    Ok(parent_directory(path).join(format!(
-        ".{file_name}.{}.{}.tmp",
-        process::id(),
-        attempt
-    )))
+    Ok(parent_directory(path).join(format!(".{file_name}.{}.{}.tmp", process::id(), attempt)))
 }
 
 /// Writes a new file without overwriting an existing path.
@@ -187,7 +183,9 @@ pub fn write_new_file(path: &Path, data: &[u8], private: bool) -> SecureResult<(
         return Ok(());
     }
 
-    Err(runtime_error("unable to allocate a collision-free temporary file"))
+    Err(runtime_error(
+        "unable to allocate a collision-free temporary file",
+    ))
 }
 
 #[cfg(test)]

@@ -47,6 +47,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "operations/hubspot-handoff.html": ("HubSpot Handoff", "CRM connection runbook"),
     "operations/ontario-incorporation-handoff.html": ("Ontario Incorporation Handoff", "corporate filing runbook"),
     "operations/stripe-handoff.html": ("Stripe Handoff", "payments connection runbook"),
+    "authority-network.html": ("Authority Network", "the ClearGlass pillar-and-cluster site graph"),
 
     # Cyber defense & security operations
     "cyber-defense-console.html": ("Cyber Defense Console", "the ClearGlass command center for defensive operations"),
@@ -334,7 +335,7 @@ CLUSTERS: dict[str, dict] = {
         "name": "Company & Operations",
         "pillar": "index.html",
         "members": [
-            "investors/index.html", "operations/client-onboarding.html",
+            "investors/index.html", "authority-network.html", "operations/client-onboarding.html",
             "operations/hubspot-handoff.html",
             "operations/ontario-incorporation-handoff.html",
             "operations/stripe-handoff.html",
@@ -353,9 +354,10 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "guardian.html": ["docs/guardian_command_nexus_spec.html"],
     "percival-os.html": ["blog/ai-agent-governance-governed-autonomy.html"],
     "agentmesh.html": ["blog/cybersecurity-architecture-for-agentic-software.html", "flowsint.html"],
+    "ai-operator.html": ["artemis-self-evolving-platform.html", "blog/ai-agent-governance-governed-autonomy.html"],
     "conduit.html": ["blog/clearglass-agentops-microsoft-foundry-future-stack.html"],
-    "flowsint.html": ["blog/osint-workflow-that-survives-contact-with-reality.html"],
-    "intelligence.html": ["blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html"],
+    "flowsint.html": ["blog/osint-workflow-that-survives-contact-with-reality.html", "agentmesh.html", "cyber-defense-console.html"],
+    "intelligence.html": ["authority-network.html", "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html"],
     "artemis-os.html": ["artemis-percival.html", "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
     "artemis-self-evolving-platform.html": ["blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
     "revenue-engine.html": ["postloop.html", "blog/ethical-sales-system-100k-revenue-prompt.html"],
@@ -412,8 +414,8 @@ CSS = (
     "#cg-related{margin:48px auto 0;max-width:1080px;padding:0 18px 34px;"
     "font-family:'Inter',system-ui,-apple-system,sans-serif}"
     "#cg-related .cgr-box{background:linear-gradient(165deg,rgba(15,17,34,.96),rgba(9,10,24,.96));"
-    "border:1px solid rgba(124,150,255,.26);border-radius:14px;padding:22px 24px;"
-    "color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35)}"
+    "border:1px solid rgba(54,182,255,.34);border-radius:14px;padding:22px 24px;"
+    "color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35),0 0 28px rgba(54,182,255,.16)}"
     "#cg-related .cgr-crumb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;"
     "color:#8a90c4;margin:0 0 10px}"
     "#cg-related .cgr-crumb a{color:#a5b4fc;text-decoration:none}"
@@ -423,7 +425,7 @@ CSS = (
     "grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}"
     "#cg-related li a{display:block;padding:7px 10px;border-radius:8px;font-size:13.5px;"
     "line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;transition:.13s}"
-    "#cg-related li a:hover{background:rgba(124,150,255,.12);border-color:rgba(124,150,255,.3);color:#fff}"
+    "#cg-related li a:hover{background:rgba(54,182,255,.14);border-color:rgba(54,182,255,.42);color:#fff;text-shadow:0 0 10px rgba(54,182,255,.55)}"
     "#cg-related li a b{color:#bcd0ff;font-weight:600}"
     "#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(124,150,255,.16);"
     "font-size:13.5px;color:#9aa3d0}"

@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #346",
+    "title": "Control Surface Feeds #347",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:09",
+    "timestamp": "2026-07-19T00:09:24Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #898",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-3f53e615-8f64-4a5a-a5ff-b28f8b39e270",
+    "time": "00:08",
+    "timestamp": "2026-07-19T00:08:06Z"
+  },
+  {
+    "title": "Deploy Pages #1077",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "23:10",
+    "timestamp": "2026-07-18T23:10:35Z"
+  },
+  {
+    "title": "pages build and deployment #1540",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:10",
+    "timestamp": "2026-07-18T23:10:27Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2621",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:10",
+    "timestamp": "2026-07-18T23:10:26Z"
+  },
+  {
+    "title": "Control Surface Feeds #346",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:10",
     "timestamp": "2026-07-18T23:10:05Z"
   },
@@ -99,41 +134,6 @@
   },
   {
     "title": "Defender Watch #874",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/authority-network-release-gate",
-    "time": "22:49",
-    "timestamp": "2026-07-18T22:49:14Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1578",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/authority-network-release-gate",
-    "time": "22:49",
-    "timestamp": "2026-07-18T22:49:14Z"
-  },
-  {
-    "title": "Security #1297",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/authority-network-release-gate",
-    "time": "22:49",
-    "timestamp": "2026-07-18T22:49:14Z"
-  },
-  {
-    "title": "CI #1531",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/authority-network-release-gate",
-    "time": "22:49",
-    "timestamp": "2026-07-18T22:49:14Z"
-  },
-  {
-    "title": "Internal Link Authority #36",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on fix/authority-network-release-gate",
-    "time": "22:49",
-    "timestamp": "2026-07-18T22:49:14Z"
-  },
-  {
-    "title": "PR Automation #672",
     "status": "ok",
     "detail": "success \u00b7 pull_request on fix/authority-network-release-gate",
     "time": "22:49",

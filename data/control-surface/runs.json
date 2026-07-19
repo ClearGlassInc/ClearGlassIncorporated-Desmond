@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #356",
+    "title": "Control Surface Feeds #357",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "18:09",
+    "timestamp": "2026-07-19T18:09:10Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #916",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-02f28d78-8bb1-4bbb-87d4-b4b8c015e385",
+    "time": "18:08",
+    "timestamp": "2026-07-19T18:08:08Z"
+  },
+  {
+    "title": "Deploy Pages #1093",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "17:15",
+    "timestamp": "2026-07-19T17:15:26Z"
+  },
+  {
+    "title": "pages build and deployment #1558",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "17:15",
+    "timestamp": "2026-07-19T17:15:17Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2653",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "17:15",
+    "timestamp": "2026-07-19T17:15:17Z"
+  },
+  {
+    "title": "Control Surface Feeds #356",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "17:15",
     "timestamp": "2026-07-19T17:15:02Z"
   },
@@ -103,40 +138,5 @@
     "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-60843c52-d73d-4c93-94a6-84e840bd6e1e",
     "time": "14:08",
     "timestamp": "2026-07-19T14:08:06Z"
-  },
-  {
-    "title": "Deploy Pages #1090",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "13:52",
-    "timestamp": "2026-07-19T13:52:59Z"
-  },
-  {
-    "title": "pages build and deployment #1555",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "13:52",
-    "timestamp": "2026-07-19T13:52:53Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2650",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "13:52",
-    "timestamp": "2026-07-19T13:52:53Z"
-  },
-  {
-    "title": "Control Surface Feeds #353",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "13:52",
-    "timestamp": "2026-07-19T13:52:33Z"
-  },
-  {
-    "title": "Defender Watch #898",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "13:40",
-    "timestamp": "2026-07-19T13:40:14Z"
   }
 ]

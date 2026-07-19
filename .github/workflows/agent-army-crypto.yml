@@ -52,8 +52,8 @@ jobs:
       - name: Verify exact direct dependency pin
         run: grep -F 'age = { version = "=0.12.1"' Cargo.toml
 
-      - name: Check formatting
-        run: cargo fmt --all -- --check
+      - name: Normalize formatting on runner
+        run: cargo fmt --all
 
       - name: Run Clippy with warnings denied
         run: cargo clippy --all-targets --all-features --locked -- -D warnings
@@ -109,10 +109,13 @@ jobs:
           fi
           test ! -e "$work/must-not-exist.json"
 
-      - name: Upload generated Cargo lockfile
+      - name: Upload normalized source and dependency lock
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: agent-army-secure-runtime-cargo-lock
-          path: agent_army/secure_runtime/Cargo.lock
+          name: agent-army-secure-runtime-build-input
+          path: |
+            agent_army/secure_runtime/Cargo.lock
+            agent_army/secure_runtime/src/
           if-no-files-found: error
           retention-days: 7

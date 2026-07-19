@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: agent-army-crypto-${{ github.ref }}
@@ -37,10 +37,8 @@ jobs:
         working-directory: agent_army/secure_runtime
 
     steps:
-      - name: Checkout PR head
+      - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-        with:
-          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Verify Rust toolchain
         run: |
@@ -48,31 +46,14 @@ jobs:
           cargo --version
           rustup component add rustfmt clippy
 
-      - name: Generate dependency lock
-        run: cargo generate-lockfile
-
-      - name: Verify exact direct dependency pin
-        run: grep -F 'age = { version = "=0.12.1"' Cargo.toml
-
-      - name: Normalize formatting on runner
-        run: cargo fmt --all
-
-      - name: Commit verified lock and formatting
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          HEAD_BRANCH: ${{ github.head_ref }}
+      - name: Verify locked dependency graph
         run: |
-          set -euo pipefail
-          cd "$GITHUB_WORKSPACE"
-          git add agent_army/secure_runtime/Cargo.lock agent_army/secure_runtime/src/
-          if git diff --cached --quiet; then
-            echo "Runner output already committed."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(agent-army): lock and format Rust secure runtime"
-          git push origin "HEAD:${HEAD_BRANCH}"
+          test -s Cargo.lock
+          grep -F 'age = { version = "=0.12.1"' Cargo.toml
+          cargo metadata --locked --no-deps --format-version 1 > /dev/null
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
 
       - name: Run Clippy with warnings denied
         run: cargo clippy --all-targets --all-features --locked -- -D warnings

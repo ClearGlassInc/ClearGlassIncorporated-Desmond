@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #348",
+    "title": "Control Surface Feeds #349",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "06:42",
+    "timestamp": "2026-07-19T06:42:03Z"
+  },
+  {
+    "title": "Multi-Repo Audit #33",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:41",
+    "timestamp": "2026-07-19T06:41:37Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #904",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-d46b8f41-02e6-4f51-93c3-d6cff53a3887",
+    "time": "06:08",
+    "timestamp": "2026-07-19T06:08:08Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1594",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "05:27",
+    "timestamp": "2026-07-19T05:27:41Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #903",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-9aacee7b-9fc2-45b2-85df-3bfd348406b8",
+    "time": "05:08",
+    "timestamp": "2026-07-19T05:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #902",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-66855b97-4135-4501-841a-840bb1700df0",
+    "time": "04:08",
+    "timestamp": "2026-07-19T04:08:07Z"
+  },
+  {
+    "title": "Deploy Pages #1082",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "03:53",
+    "timestamp": "2026-07-19T03:53:50Z"
+  },
+  {
+    "title": "pages build and deployment #1545",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:53",
+    "timestamp": "2026-07-19T03:53:42Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2637",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "03:53",
+    "timestamp": "2026-07-19T03:53:41Z"
+  },
+  {
+    "title": "Control Surface Feeds #348",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "03:53",
     "timestamp": "2026-07-19T03:53:21Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "02:50",
     "timestamp": "2026-07-19T02:50:44Z"
-  },
-  {
-    "title": "pages build and deployment #1544",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "02:50",
-    "timestamp": "2026-07-19T02:50:44Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2636",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "02:50",
-    "timestamp": "2026-07-19T02:50:44Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1592",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on feature/editorial-visual-intelligence",
-    "time": "02:48",
-    "timestamp": "2026-07-19T02:48:49Z"
-  },
-  {
-    "title": "CI #1545",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on feature/editorial-visual-intelligence",
-    "time": "02:48",
-    "timestamp": "2026-07-19T02:48:49Z"
-  },
-  {
-    "title": "PR Automation #684",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on feature/editorial-visual-intelligence",
-    "time": "02:48",
-    "timestamp": "2026-07-19T02:48:49Z"
-  },
-  {
-    "title": "Defender Watch #888",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on feature/editorial-visual-intelligence",
-    "time": "02:48",
-    "timestamp": "2026-07-19T02:48:49Z"
-  },
-  {
-    "title": "Security #1311",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on feature/editorial-visual-intelligence",
-    "time": "02:48",
-    "timestamp": "2026-07-19T02:48:49Z"
-  },
-  {
-    "title": "Policy Gate #1283",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on feature/editorial-visual-intelligence",
-    "time": "02:48",
-    "timestamp": "2026-07-19T02:48:49Z"
-  },
-  {
-    "title": "Code Quality: PR #944 #2635",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/944/head",
-    "time": "02:48",
-    "timestamp": "2026-07-19T02:48:47Z"
   }
 ]

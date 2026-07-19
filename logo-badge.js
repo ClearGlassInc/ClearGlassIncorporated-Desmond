@@ -30,9 +30,27 @@
 
   var LOGO = "/assets/images/clearglass-logo.png";
   var HOME = "/index.html";
+  var EDITORIAL_TARGETS = {
+    "cyber-defense-console.html": true,
+    "advanced-features-tools-systems.html": true,
+    "revenue-engine.html": true,
+    "button-lab.html": true
+  };
+
+  function loadEditorialVisuals() {
+    if (!EDITORIAL_TARGETS[last] || document.getElementById("cg-editorial-visuals-script")) return;
+    var script = document.createElement("script");
+    script.id = "cg-editorial-visuals-script";
+    script.src = "/editorial-visuals.js";
+    script.defer = true;
+    document.head.appendChild(script);
+  }
 
   function build() {
-    if (document.getElementById("cg-dock")) return;
+    if (document.getElementById("cg-dock")) {
+      loadEditorialVisuals();
+      return;
+    }
 
     var css = [
       /* shared corner dock — a flex row other corner controls can join */
@@ -88,6 +106,7 @@
 
     a.appendChild(img);
     dock.appendChild(a);
+    loadEditorialVisuals();
   }
 
   if (document.readyState === "loading") {

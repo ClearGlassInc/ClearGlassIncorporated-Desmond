@@ -448,7 +448,7 @@ CSS = (
     "#cg-related li a{display:block;padding:9px 11px;border-radius:10px;font-size:13.5px;"
     "line-height:1.45;color:#cfe0ff;text-decoration:none;border:1px solid rgba(124,150,255,.08);"
     "background:rgba(7,14,32,.36);transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}"
-    "#cg-related li a:hover{transform:translateY(-1px);background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.42);"
+    "#cg-related li a:hover,#cg-related li a:focus-visible{transform:translateY(-1px);background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.42);"
     "color:#fff;box-shadow:0 0 22px rgba(34,211,238,.14)}"
     "#cg-related li a b{color:#9bdcff;font-weight:700;text-shadow:0 0 12px rgba(34,211,238,.28)}"
     "#cg-related .cgr-cta{position:relative;margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(34,211,238,.18);"
@@ -456,6 +456,7 @@ CSS = (
     "#cg-related .cgr-cta a{color:#67e8f9;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.36)}"
     "#cg-related .cgr-cta a:hover{color:#fff;border-bottom-color:#fff}"
     "@keyframes cgr-scan{0%,58%{transform:translateX(-120%) skewX(-18deg);opacity:0}70%{opacity:1}100%{transform:translateX(220%) skewX(-18deg);opacity:0}}"
+    "@media(prefers-reduced-motion:reduce){#cg-related .cgr-box:before{animation:none}}"
 )
 
 DOCK_CSS = (

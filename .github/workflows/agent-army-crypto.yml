@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: agent-army-crypto-${{ github.ref }}
@@ -54,6 +54,23 @@ jobs:
 
       - name: Normalize formatting on runner
         run: cargo fmt --all
+
+      - name: Commit verified lock and formatting
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+          cd "$GITHUB_WORKSPACE"
+          git add agent_army/secure_runtime/Cargo.lock agent_army/secure_runtime/src/
+          if git diff --cached --quiet; then
+            echo "Runner output already committed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(agent-army): lock and format Rust secure runtime"
+          git push origin "HEAD:${HEAD_BRANCH}"
 
       - name: Run Clippy with warnings denied
         run: cargo clippy --all-targets --all-features --locked -- -D warnings
@@ -108,14 +125,3 @@ jobs:
             exit 1
           fi
           test ! -e "$work/must-not-exist.json"
-
-      - name: Upload normalized source and dependency lock
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: agent-army-secure-runtime-build-input
-          path: |
-            agent_army/secure_runtime/Cargo.lock
-            agent_army/secure_runtime/src/
-          if-no-files-found: error
-          retention-days: 7

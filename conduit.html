@@ -178,6 +178,13 @@ section{max-width:1280px;margin:0 auto;padding:46px 22px}
 .deploy li b{color:var(--txt);font-weight:600}
 .deploy li .ck{color:var(--ok);flex:0 0 auto;margin-top:2px}
 
+
+/* authority lattice */
+.authority-lattice{position:relative;overflow:hidden;border:1px solid rgba(96,165,250,.34);border-radius:22px;background:linear-gradient(160deg,rgba(10,15,35,.88),rgba(5,8,20,.74));padding:28px;box-shadow:0 28px 90px -54px rgba(54,182,255,.78)}
+.authority-lattice::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0 9%,rgba(96,165,250,.12) 10%,transparent 11% 49%,rgba(52,211,153,.11) 50%,transparent 51% 89%,rgba(167,139,250,.12) 90%,transparent 91%),linear-gradient(0deg,transparent 0 18%,rgba(96,165,250,.08) 19%,transparent 20% 68%,rgba(244,114,182,.08) 69%,transparent 70%);opacity:.75;mask-image:radial-gradient(circle at 50% 18%,#000,transparent 82%);pointer-events:none}
+.authority-lattice>*{position:relative;z-index:1}.lattice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:20px}.lattice-card{border:1px solid rgba(96,165,250,.24);border-radius:15px;background:rgba(96,165,250,.045);padding:16px}.lattice-card h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9fc4ff;margin-bottom:9px}.lattice-card p,.lattice-card li{color:var(--dim);font-size:13px;line-height:1.58}.lattice-card ul{margin:0;padding-left:17px;display:grid;gap:6px}.signal-link{color:#bfdbfe;text-decoration:none;border-bottom:1px solid rgba(96,165,250,.45);box-shadow:0 1px 0 rgba(96,165,250,.08)}.signal-link:hover{color:#fff;border-bottom-color:#34d399;text-shadow:0 0 12px rgba(96,165,250,.65)}
+.matrix{width:100%;border-collapse:collapse;margin-top:18px;font-size:12.5px;color:var(--dim);overflow:hidden;border-radius:14px}.matrix th,.matrix td{border:1px solid rgba(96,165,250,.18);padding:10px;vertical-align:top}.matrix th{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#dbeafe;background:rgba(96,165,250,.1);text-align:left}.matrix td a{display:inline-block;margin:2px 4px 2px 0}.priority-rail{counter-reset:step;display:grid;gap:9px;margin-top:16px}.priority-rail li{list-style:none;counter-increment:step;border:1px solid rgba(124,150,255,.2);background:rgba(124,150,255,.045);border-radius:12px;padding:11px 13px;color:var(--dim);font-size:13px;line-height:1.5}.priority-rail li::before{content:counter(step,decimal-leading-zero);font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:#34d399;margin-right:9px}
+
 /* final cta */
 .final{text-align:center;background:linear-gradient(180deg,rgba(124,150,255,.08),rgba(124,150,255,.02));border:1px solid var(--line);border-radius:20px;padding:46px 24px;margin:10px auto 0;max-width:900px}
 .final h2{font-family:var(--display);font-weight:900;font-size:clamp(24px,4vw,38px)}
@@ -609,6 +616,51 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
       <div class="motion-cell"><b>Performance rules</b><p>No layout-thrashing animation: motion stays on transform, opacity, and lightweight filters; observers activate content only near viewport.</p></div>
       <div class="motion-cell"><b>Accessibility</b><p>prefers-reduced-motion disables ambient drift, shimmer, split text transforms, smooth transitions, and magnetic pointer effects.</p></div>
     </div>
+  </div>
+</section>
+
+
+<!-- AUTHORITY LATTICE -->
+<section id="authority-lattice">
+  <div class="authority-lattice" data-motion>
+    <div class="sec-head" style="margin-bottom:0">
+      <div class="sec-kicker">Internal authority lattice</div>
+      <h2 class="sec-title">One ClearGlass knowledge graph, wired for crawlability and conversion</h2>
+      <p class="sec-sub">CONDUIT sits inside a deliberate neon command grid: the home hub routes to pillar systems, pillar systems route to focused clusters, proof pages reinforce trust, and every conversion path returns to a clear next action.</p>
+    </div>
+
+    <div class="lattice-grid">
+      <div class="lattice-card"><h4>1 · Full site linking strategy</h4><p><a class="signal-link" href="index.html">ClearGlass Inc.</a> operates as the authority hub. Major pillars—<a class="signal-link" href="cyber-defense-console.html">cyber defense</a>, <a class="signal-link" href="intelligence.html">intelligence and OSINT</a>, <a class="signal-link" href="artemis-os.html">Artemis platform systems</a>, <a class="signal-link" href="percival-os.html">command operations</a>, <a class="signal-link" href="offers/index.html">services</a>, and <a class="signal-link" href="blog/index.html">ClearGlass Intelligence</a>—carry the strongest semantic signal. Cluster pages connect back to their pillar, across to one sibling, and forward to a conversion or proof path.</p></div>
+      <div class="lattice-card"><h4>2 · Page hierarchy map</h4><ul><li>Home hub: <a class="signal-link" href="index.html">ClearGlass Inc.</a></li><li>Pillars: cyber defense, intelligence, Artemis, command, legal, healthcare, government, services, UI engineering, Opal-Koboi, and insights.</li><li>Clusters: service pages, product surfaces, proof pages, operational runbooks, and blog essays.</li><li>Conversion: <a class="signal-link" href="offers/index.html">services and engagements</a>, <a class="signal-link" href="pricing.html">pricing</a>, and <a class="signal-link" href="store.html">security engagement booking</a>.</li></ul></div>
+      <div class="lattice-card"><h4>3 · Anchor doctrine</h4><p>Use controlled-signal anchors: “self-hosted workflow automation,” “governed autonomous operations,” “OSINT investigation graph,” “security architecture for agentic software,” “procurement-ready public-sector systems,” and “book a security engagement.” Avoid generic anchors and avoid linking low-intent incidental words.</p></div>
+      <div class="lattice-card"><h4>4 · CTA structure</h4><p>Discovery pages point to pillar explainers. Pillar pages point to proof and service pages. Service pages point to <a class="signal-link" href="pricing.html">pricing and engagement models</a>, <a class="signal-link" href="store.html">booking</a>, and focused offers like the <a class="signal-link" href="offers/security-quick-audit.html">Security Quick-Audit</a>. Final CTAs stay sparse, bright, and operationally exact.</p></div>
+    </div>
+
+    <table class="matrix" aria-label="Pillar to cluster internal-linking matrix">
+      <thead><tr><th>Pillar</th><th>Supporting clusters</th><th>Strategic anchors</th></tr></thead>
+      <tbody>
+        <tr><td><a class="signal-link" href="cyber-defense-console.html">Cyber Defense Console</a></td><td><a class="signal-link" href="bluedesk.html">BLUEDESK</a>, <a class="signal-link" href="guardian.html">GUARDIAN</a>, <a class="signal-link" href="sentinel.html">SENTINEL</a>, <a class="signal-link" href="artemis-blue-team.html">Artemis Blue Team</a></td><td>defensive command center · blue-team console · geospatial security operations</td></tr>
+        <tr><td><a class="signal-link" href="intelligence.html">Intelligence &amp; OSINT</a></td><td><a class="signal-link" href="flowsint.html">Flowsint</a>, <a class="signal-link" href="clearglass-nexus.html">ClearGlass NEXUS</a>, <a class="signal-link" href="intelligence-command-surface.html">Intelligence Command Surface</a></td><td>OSINT investigation graph · intelligence platform · unified operational picture</td></tr>
+        <tr><td><a class="signal-link" href="artemis-os.html">Artemis OS</a></td><td><a class="signal-link" href="artemis-self-evolving-platform.html">Self-Evolving Platform</a>, <a class="signal-link" href="artemis-ai-cyber-intelligence-platform.html">AI Cyber Intelligence Platform</a>, <a class="signal-link" href="artemis-2040.html">Artemis 2040</a></td><td>self-evolving intelligence loop · cyber intelligence platform · long-horizon AI systems</td></tr>
+        <tr><td><a class="signal-link" href="percival-os.html">Command &amp; Autonomous Operations</a></td><td><a class="signal-link" href="conduit.html">CONDUIT</a>, <a class="signal-link" href="agentmesh.html">Agent Mesh</a>, <a class="signal-link" href="ai-operator.html">AI Operator Workspace</a>, <a class="signal-link" href="postloop.html">PostLoop</a></td><td>self-hosted workflow automation · multi-agent orchestration · human-in-the-loop operations</td></tr>
+        <tr><td><a class="signal-link" href="blog/index.html">ClearGlass Intelligence</a></td><td><a class="signal-link" href="blog/ai-agent-governance-governed-autonomy.html">AI Agent Governance</a>, <a class="signal-link" href="blog/cybersecurity-architecture-for-agentic-software.html">Agentic Security Architecture</a>, <a class="signal-link" href="blog/osint-workflow-that-survives-contact-with-reality.html">OSINT Workflow</a></td><td>governed autonomy · agentic software security · field-tested investigation practice</td></tr>
+      </tbody>
+    </table>
+
+    <div class="lattice-grid">
+      <div class="lattice-card"><h4>5 · Home-page links</h4><p>Feature one row of pillar routes: <a class="signal-link" href="cyber-defense-console.html">cyber defense operations</a>, <a class="signal-link" href="intelligence.html">intelligence systems</a>, <a class="signal-link" href="artemis-os.html">Artemis OS</a>, <a class="signal-link" href="percival-os.html">PERCIVAL OS</a>, <a class="signal-link" href="offers/index.html">services</a>, and <a class="signal-link" href="blog/index.html">insights</a>.</p></div>
+      <div class="lattice-card"><h4>6 · Service-page links</h4><p>Each service should connect back to its pillar, laterally to one proof or runbook page, and forward to contact or booking. Example: <a class="signal-link" href="offers/hardening-sprint.html">Hardening Sprint</a> → cyber-defense pillar → SMB Trust Kit → booking.</p></div>
+      <div class="lattice-card"><h4>7 · Blog pillar links</h4><p>Blog articles should link upward to <a class="signal-link" href="blog/index.html">ClearGlass Intelligence</a>, sideways to one sibling essay, and forward to the product or service that operationalizes the idea.</p></div>
+      <div class="lattice-card"><h4>8 · Footer links</h4><p>Keep the footer structural: home, core pillars, services, pricing, store, privacy, terms, and investor materials. Footer links should stabilize crawl paths, not duplicate every page.</p></div>
+    </div>
+
+    <ol class="priority-rail">
+      <li>Maintain the generated “Continue exploring” graph with <code>tools/internal_links.py</code> so every indexable page keeps a pillar, siblings, cross-cluster bridges, and CTA path.</li>
+      <li>Strengthen home, services, blog index, and CONDUIT with high-intent contextual anchors before adding new links elsewhere.</li>
+      <li>Audit service pages for proof-to-service and service-to-contact paths; keep one primary conversion route per section.</li>
+      <li>Add or update blog-cluster links only when the target deepens the same topic or advances the reader toward trust and conversion.</li>
+      <li>Review the lattice quarterly: retire weak links, add new pillar members to the generator, and preserve the bright, sparse, command-grid visual language.</li>
+    </ol>
   </div>
 </section>
 

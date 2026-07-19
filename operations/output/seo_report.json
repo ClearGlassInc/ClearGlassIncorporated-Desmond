@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-18T08:47:17.004399+00:00",
-  "files_audited": 68,
-  "average_score": 90.0,
+  "run_utc": "2026-07-19T09:04:01.648961+00:00",
+  "files_audited": 72,
+  "average_score": 89.3,
   "pages": [
     {
       "file": "404.html",
@@ -365,6 +365,47 @@
       "issues": []
     },
     {
+      "file": "authority-network.html",
+      "title": "ClearGlass Authority Network | Connected AI, Cybersecurity, OSINT & Infrastructure",
+      "title_length": 82,
+      "title_ok": false,
+      "description": "Explore the ClearGlass Inc. authority network: a connected knowledge graph spanning cyber defense, governed AI, autonomous operations, OSINT, procurement, critical infrastructure, services, proof, and technical insights.",
+      "description_length": 220,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 80,
+      "issues": [
+        "Title length 82 chars (ideal 30\u201360)",
+        "Description length 220 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "automap.html",
+      "title": "ClearGlass AutoMap \u00b7 Agent Orchestration Architect",
+      "title_length": 50,
+      "title_ok": true,
+      "description": "ClearGlass AutoMap converts workflow requirements into an auditable n8n, LangGraph, or hybrid agent-orchestration blueprint.",
+      "description_length": 124,
+      "description_ok": true,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 1,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "1 image(s) missing alt text"
+      ]
+    },
+    {
       "file": "banking-law-advisor.html",
       "title": "ClearBank Legal AI\u2122 \u2014 Banking Law &amp; Regulatory",
       "title_length": 50,
@@ -571,6 +612,29 @@
       "og_image": true,
       "score": 100,
       "issues": []
+    },
+    {
+      "file": "command-center.html",
+      "title": "ClearGlassInc Artemis \u2014 Live Advanced Command Center",
+      "title_length": 52,
+      "title_ok": true,
+      "description": "A live advanced command-center dashboard for ClearGlassInc Artemis unifying business performance, AI agent activity, security posture, infrastructure health, automation throughput, quantum readiness, market intelligence, and executive priorities.",
+      "description_length": 246,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 60,
+      "issues": [
+        "Description length 246 chars (ideal 120\u2013160)",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
     },
     {
       "file": "command-console.html",
@@ -1104,6 +1168,27 @@
       "issues": []
     },
     {
+      "file": "sats-digital-twin.html",
+      "title": "SATS Digital Twin \u2014 Storm-Adaptive Transit Simulation | ClearGlass Inc.",
+      "title_length": 71,
+      "title_ok": false,
+      "description": "The ClearGlass SATS digital twin: physics-aware storm simulation over subways, tunnels, streets and drainage, with governed AI operations. Run a live 100-year storm scenario in your browser.",
+      "description_length": 190,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 80,
+      "issues": [
+        "Title length 71 chars (ideal 30\u201360)",
+        "Description length 190 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "sentinel.html",
       "title": "SENTINEL \u00b7 Live Geospatial Command Center \u2014 ClearGlass Inc.",
       "title_length": 59,
@@ -1325,15 +1410,15 @@
     }
   ],
   "top_issues": [
-    "21x \u2014 Description length N chars (ideal N\u2013N)",
-    "17x \u2014 Title length N chars (ideal N\u2013N)",
-    "10x \u2014 Missing og:image",
-    "4x \u2014 Missing og:description",
+    "24x \u2014 Description length N chars (ideal N\u2013N)",
+    "19x \u2014 Title length N chars (ideal N\u2013N)",
+    "11x \u2014 Missing og:image",
+    "5x \u2014 Missing og:description",
+    "4x \u2014 Missing og:title",
     "4x \u2014 Multiple <hN> tags (N)",
-    "3x \u2014 Missing og:title",
     "2x \u2014 Missing canonical link tag",
+    "2x \u2014 N image(s) missing alt text",
     "2x \u2014 No <hN> tag found",
-    "1x \u2014 Missing <title>",
-    "1x \u2014 Missing meta description"
+    "1x \u2014 Missing <title>"
   ]
 }

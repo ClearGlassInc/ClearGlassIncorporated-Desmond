@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-18
+# Release Notes — 2026-07-19
 
-*889 commit(s) since v1.0.0*
+*951 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -63,6 +63,7 @@
 
 ## Bug Fixes
 
+- **pages:** stop SIGPIPE from failing the Pages build listing (`213bb46`)
 - **artemis:** define missing EvalGateResult, repair intelligence package imports (`86df0e3`)
 - **security:** bump next to 16.2.10 across apps — clear Next.js advisory batch (`4bdc03f`)
 - **actions:** harden commerce deployment gate (`8200f34`)
@@ -163,6 +164,49 @@
 
 ## Maintenance
 
+- Enforce Etsy as a hard downstream dependency gate (`bd0f9af`)
+- Add Etsy Factory Connect Integration Agent v2 (`80b4f07`)
+- Add Etsy Factory Connect Operations Agent (#946) (`9cf9391`)
+- Add governed editorial visuals to contextual webpages (`36f0f95`)
+- Add Rust encrypted runtime for agent-army artifacts (#943) (`fd0ff20`)
+- Add governed engineering and marketing agent army (`b677e4d`)
+- Complete the self-evolving authority-network release gate (`98634d0`)
+- Document the complete self-evolving authority-network strategy (`4941721`)
+- Add authority-network integrity regression tests (`70fa014`)
+- Upgrade authority-network validation workflow (`6f92c87`)
+- Link the public authority grid from shared navigation (`b4b36b1`)
+- Add public neon authority-network map (`c08c8fb`)
+- Register authority-network sitemap (`26106bd`)
+- Register authority-network supplemental pages (`9907296`)
+- Add self-auditing authority-network controller (`5527e6d`)
+- Complete autonomous threat modeling authority cluster (`011d862`)
+- Add reusable autonomous threat modeling multi-agent prompt (`3c85348`)
+- Publish flagship autonomous threat modeling article (`1fb0adb`)
+- Link AutoMap into the existing command navigation (`70aa9ff`)
+- Add high-assurance advanced engineering doctrine (#937) (`fe79efe`)
+- Add world-class engineering execution standard (#936) (`5b53a6e`)
+- Update browser tab stamp favicon (`102fef0`)
+- Add ClearGlass AutoMap orchestration architect (#934) (`07a1494`)
+- Add engineering execution agent (`87074ce`)
+- Add electrical system restoration agent (`e3d882a`)
+- Add SATS digital twin: storm simulation engine, live twin page, 2026 tool guide (`5ed7d0b`)
+- Enhance Artemis command center dashboard (`0a0758c`)
+- Add Artemis live command center blog post (`195928e`)
+- Add Artemis live command center dashboard (`1f2b822`)
+- Add Artemis full-stack blueprint blog post (`45d3571`)
+- Add post-quantum security advisor blueprint (`78cd65d`)
+- Add post-quantum security advisor blog post (`35c844a`)
+- Add Artemis self-upgrade evaluation guardrails (`73b3ef3`)
+- Unify ClearGlass logo and browser icons (`56831fa`)
+- Add Artemis self-evolving intelligence platform blueprint (`4f24ce7`)
+- Add Artemis self-evolving platform reference module (`80cb024`)
+- Add Artemis full-stack self-evolving platform spec (`d3d8ddb`)
+- Add Artemis electrical safety workflow (`71a81a0`)
+- Patch all workflows: apply workflow_doctor fixes (`1f2afc3`)
+- Add Artemis platform architect system prompt (`3f50596`)
+- Add general-assistant system prompt pack under prompts/ (`e29f3f3`)
+- Add tests for ARTEMIS IP guardian and provenance bots (`f9e934d`)
+- Add ARTEMIS agent stack: agents, bots, deploy workflow, IP governance files (`3284257`)
 - Add safer Windows GPU tuning utility (`6ef4ff8`)
 - Add authority-network guardrails and AI-readable site map (`3c3a388`)
 - Rebuild advanced systems page as a cohesive dark command surface (`a8b2ec3`)
@@ -525,6 +569,24 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`4ba9bf4`)
+- refresh control-surface data feeds [skip ci] (`98fc80d`)
+- refresh control-surface data feeds [skip ci] (`877c1b4`)
+- refresh control-surface data feeds [skip ci] (`84e4386`)
+- refresh control-surface data feeds [skip ci] (`0c2beb7`)
+- refresh control-surface data feeds [skip ci] (`6993f05`)
+- refresh control-surface data feeds [skip ci] (`885d3b7`)
+- refresh control-surface data feeds [skip ci] (`35db0bd`)
+- refresh control-surface data feeds [skip ci] (`c023449`)
+- refresh control-surface data feeds [skip ci] (`4ff16b2`)
+- refresh control-surface data feeds [skip ci] (`6716ada`)
+- refresh control-surface data feeds [skip ci] (`1147eae`)
+- refresh control-surface data feeds [skip ci] (`bc41083`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`4839506`)
+- refresh control-surface data feeds [skip ci] (`c09ab0d`)
+- refresh control-surface data feeds [skip ci] (`b25f479`)
+- refresh control-surface data feeds [skip ci] (`7468f4f`)
+- update generated outputs — 2026-07-18 08:47 UTC [skip ci] (`aa4d65f`)
 - refresh control-surface data feeds [skip ci] (`6e1ec65`)
 - refresh control-surface data feeds [skip ci] (`e7e0ed2`)
 - refresh control-surface data feeds [skip ci] (`22ab0b9`)

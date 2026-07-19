@@ -58,11 +58,6 @@ SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {
         "continuous threat-modeling assessment and implementation services",
         "services",
     ),
-    "authority-network.html": (
-        "ClearGlass Authority Network",
-        "the public knowledge graph connecting every ClearGlass authority domain",
-        "company",
-    ),
 }
 
 # Explicit lateral relationships for new pages. These are not inferred at run
@@ -91,9 +86,6 @@ SUPPLEMENTAL_BRIDGES: dict[str, list[str]] = {
         "cyber-defense-console.html",
         "bluedesk.html",
         "offers/index.html",
-    ],
-    "authority-network.html": [
-        cluster["pillar"] for cluster in legacy.CLUSTERS.values()
     ],
 }
 

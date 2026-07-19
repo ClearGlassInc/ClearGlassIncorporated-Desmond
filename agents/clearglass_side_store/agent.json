@@ -2,16 +2,18 @@
   "name": "ClearGlass Side Store Agent",
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "specification",
   "role": "Autonomous revenue agent for a low-cost wires & electronics storefront.",
   "soul_path": "SOUL.md",
+  "etsy_factory_connect_agent_path": "ETSY_FACTORY_CONNECT_AGENT.md",
   "workflow_template": "agentic-workflow.template.yml",
   "model_recommendation": "claude-opus-4-8",
   "niche": "Cheap wires, cables, connectors, basic electronics, tech accessories",
   "platform": {
     "storefront": "Next.js",
     "catalog": "Shopify-compatible",
+    "marketplaces": ["Etsy"],
     "payments": "Stripe",
     "currency": "CAD"
   },
@@ -35,7 +37,8 @@
     "Never expose secrets; least-privilege tokens via GitHub Secrets",
     "No autonomous merge of Tier 3 changes (auth, security, billing, compliance)",
     "All marketing is CASL-compliant: consent on file + working unsubscribe",
-    "Roll back within ~2 minutes on instability"
+    "Roll back within ~2 minutes on instability",
+    "Never publish Etsy listings, synchronize inventory, or handle Etsy orders until every connection gate passes"
   ],
   "deployment_tiers": {
     "tier0": "formatting/docs — auto-merge with strict checks",
@@ -44,16 +47,45 @@
     "tier3": "auth/security/billing/compliance — domain approvers, no autonomous merge"
   },
   "integrations_status": {
-    "note": "All integrations below are DECLARED, not connected. Each needs an account and a GitHub Secret before any automation can run.",
+    "note": "Integrations are DECLARED, not assumed connected. Each requires verified configuration and approved secret references before automation can run.",
     "github_actions": "available",
     "stripe": "needs account + STRIPE_API_KEY",
     "shopify": "needs store + SHOPIFY_API_KEY",
+    "etsy": {
+      "state": "blocked_user_action",
+      "authentication": "not verified",
+      "shop_identity": "not verified",
+      "listing_permissions": "not verified",
+      "order_permissions": "not verified",
+      "sync_readiness": "not verified",
+      "required_next_step": "Complete Etsy OAuth through the approved connection surface, then run the Factory Connect verification gates"
+    },
     "nextjs_storefront": "needs build + deploy target",
     "social_apis": "needs accounts + tokens",
     "supplier_apis": "needs human-approved suppliers"
   },
+  "etsy_connection_policy": {
+    "initial_state": "BLOCKED_USER_ACTION",
+    "terminal_states": ["READY", "BLOCKED_USER_ACTION", "FAILED_REMEDIABLE"],
+    "fail_closed": true,
+    "public_profile_is_authorization": false,
+    "secrets_in_source_control": false,
+    "remote_mutations_during_verification": false,
+    "production_activation_requires_owner_approval": true
+  },
   "guardrails": {
-    "human_review_flags": ["payments", "billing", "personal_data", "discounts_over_15pct", "supplier_onboarding"],
-    "kill_switch": "per automation class (marketing, pricing, deploy, support)"
+    "human_review_flags": [
+      "authentication",
+      "authorization",
+      "payments",
+      "billing",
+      "personal_data",
+      "order_management",
+      "listing_publish",
+      "inventory_sync",
+      "discounts_over_15pct",
+      "supplier_onboarding"
+    ],
+    "kill_switch": "per automation class (marketing, pricing, deploy, support, marketplace_sync)"
   }
 }

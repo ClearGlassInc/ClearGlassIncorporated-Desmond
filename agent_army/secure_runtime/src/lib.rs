@@ -12,8 +12,10 @@ use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 use std::process;
 
-/// Maximum artifact size accepted by the in-memory CLI path.
+/// Maximum plaintext artifact size accepted by the in-memory CLI path.
 pub const MAX_ARTIFACT_BYTES: usize = 32 * 1024 * 1024;
+/// Maximum ciphertext stream size, including age format overhead.
+pub const MAX_CIPHERTEXT_BYTES: usize = MAX_ARTIFACT_BYTES + 1024 * 1024;
 /// Maximum identity or recipient file size.
 pub const MAX_KEY_FILE_BYTES: usize = 16 * 1024;
 
@@ -62,26 +64,33 @@ pub fn encrypt_bytes(recipient: &str, plaintext: &[u8]) -> SecureResult<Vec<u8>>
 
 /// Decrypts an age ciphertext using an X25519 identity.
 pub fn decrypt_bytes(identity: &str, ciphertext: &[u8]) -> SecureResult<Vec<u8>> {
-    if ciphertext.len() > MAX_ARTIFACT_BYTES {
+    if ciphertext.len() > MAX_CIPHERTEXT_BYTES {
         return Err(runtime_error(format!(
             "ciphertext exceeds {}-byte limit",
-            MAX_ARTIFACT_BYTES
+            MAX_CIPHERTEXT_BYTES
         )));
     }
 
     let identity: x25519::Identity = identity.trim().parse()?;
-    Ok(age::decrypt(&identity, ciphertext)?)
+    let plaintext = age::decrypt(&identity, ciphertext)?;
+    if plaintext.len() > MAX_ARTIFACT_BYTES {
+        return Err(runtime_error(format!(
+            "decrypted artifact exceeds {}-byte limit",
+            MAX_ARTIFACT_BYTES
+        )));
+    }
+    Ok(plaintext)
 }
 
-/// Reads at most [`MAX_ARTIFACT_BYTES`] from a stream.
+/// Reads at most [`MAX_CIPHERTEXT_BYTES`] from a stream.
 pub fn read_limited<R: Read>(reader: R) -> SecureResult<Vec<u8>> {
     let mut data = Vec::new();
-    let mut limited = reader.take((MAX_ARTIFACT_BYTES + 1) as u64);
+    let mut limited = reader.take((MAX_CIPHERTEXT_BYTES + 1) as u64);
     limited.read_to_end(&mut data)?;
-    if data.len() > MAX_ARTIFACT_BYTES {
+    if data.len() > MAX_CIPHERTEXT_BYTES {
         return Err(runtime_error(format!(
             "input exceeds {}-byte limit",
-            MAX_ARTIFACT_BYTES
+            MAX_CIPHERTEXT_BYTES
         )));
     }
     Ok(data)
@@ -107,13 +116,19 @@ pub fn read_key_line(path: &Path) -> SecureResult<String> {
         .ok_or_else(|| runtime_error(format!("no key found in {}", path.display())))
 }
 
+fn parent_directory(path: &Path) -> &Path {
+    match path.parent() {
+        Some(parent) if !parent.as_os_str().is_empty() => parent,
+        _ => Path::new("."),
+    }
+}
+
 fn temporary_path(path: &Path, attempt: u32) -> SecureResult<PathBuf> {
-    let parent = path.parent().unwrap_or_else(|| Path::new("."));
     let file_name = path
         .file_name()
         .and_then(|value| value.to_str())
         .ok_or_else(|| runtime_error("output path must contain a valid UTF-8 file name"))?;
-    Ok(parent.join(format!(
+    Ok(parent_directory(path).join(format!(
         ".{file_name}.{}.{}.tmp",
         process::id(),
         attempt
@@ -136,8 +151,7 @@ pub fn write_new_file(path: &Path, data: &[u8], private: bool) -> SecureResult<(
         )));
     }
 
-    let parent = path.parent().unwrap_or_else(|| Path::new("."));
-    fs::create_dir_all(parent)?;
+    fs::create_dir_all(parent_directory(path))?;
 
     for attempt in 0..128 {
         let temporary = temporary_path(path, attempt)?;
@@ -156,19 +170,21 @@ pub fn write_new_file(path: &Path, data: &[u8], private: bool) -> SecureResult<(
             Err(error) => return Err(Box::new(error)),
         };
 
-        let result = (|| -> SecureResult<()> {
-            file.write_all(data)?;
-            file.sync_all()?;
+        if let Err(error) = file.write_all(data).and_then(|_| file.sync_all()) {
             drop(file);
-            fs::hard_link(&temporary, path)?;
-            fs::remove_file(&temporary)?;
-            Ok(())
-        })();
-
-        if result.is_err() {
             let _ = fs::remove_file(&temporary);
+            return Err(Box::new(error));
         }
-        return result;
+        drop(file);
+
+        if let Err(error) = fs::hard_link(&temporary, path) {
+            let _ = fs::remove_file(&temporary);
+            return Err(Box::new(error));
+        }
+        if let Err(error) = fs::remove_file(&temporary) {
+            return Err(Box::new(error));
+        }
+        return Ok(());
     }
 
     Err(runtime_error("unable to allocate a collision-free temporary file"))

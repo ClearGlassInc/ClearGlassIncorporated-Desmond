@@ -140,6 +140,11 @@ section{max-width:1280px;margin:0 auto;padding:46px 22px}
 footer{text-align:center;padding:40px 22px 70px;color:var(--dim-2);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;border-top:1px solid var(--line);margin-top:30px}
 footer a{color:#9fc4ff;text-decoration:none}
 @keyframes pulse{50%{opacity:.4}}
+.signal-network{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(9,13,34,.82),rgba(4,9,22,.72));border:1px solid rgba(54,182,255,.24);border-radius:22px;padding:24px;box-shadow:0 0 0 1px rgba(52,211,153,.08),0 22px 70px -42px rgba(54,182,255,.9)}
+.signal-network::before{content:"";position:absolute;inset:-1px;background:linear-gradient(90deg,transparent,rgba(54,182,255,.28),transparent),radial-gradient(circle at 18% 0,rgba(52,211,153,.18),transparent 36%),radial-gradient(circle at 88% 18%,rgba(155,123,255,.18),transparent 34%);pointer-events:none}
+.signal-network>*{position:relative}.signal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:20px}.signal-card{border:1px solid rgba(124,150,255,.18);background:rgba(5,9,25,.72);border-radius:16px;padding:17px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)}
+.signal-card h3{font-family:var(--display);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#dbeafe;margin-bottom:9px}.signal-card p,.signal-card li{color:var(--dim);font-size:13px;line-height:1.55}.signal-card ul{list-style:none;display:grid;gap:7px}.signal-card a{color:#a7f3d0;text-decoration:none;border-bottom:1px solid rgba(52,211,153,.24)}.signal-card a:hover{color:#fff;border-bottom-color:#36b6ff;text-shadow:0 0 12px rgba(54,182,255,.7)}.matrix{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px}.matrix a{display:block;padding:10px 12px;border-radius:12px;border:1px solid rgba(54,182,255,.2);background:rgba(54,182,255,.055);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#c7f9ff;text-decoration:none}.matrix a:hover{background:rgba(54,182,255,.12);box-shadow:0 0 18px rgba(54,182,255,.24)}
+
 </style>
 <!-- ClearGlass Global Design System — homepage is the design source of truth -->
 <link rel="stylesheet" href="/assets/css/glass.css">
@@ -253,6 +258,27 @@ footer a{color:#9fc4ff;text-decoration:none}
     <div class="fcard"><div class="fi">⇄</div><h4>Pivot across entities</h4><p>Select up to many entities at once and pivot — Flowsint redraws the graph around the shared infrastructure between them.</p></div>
     <div class="fcard"><div class="fi">📍</div><h4>Geo + ISP enrichment</h4><p>Country, city, ISP and coordinates fill in as enrichment transforms complete — N/A today, mapped tomorrow.</p></div>
     <div class="fcard"><div class="fi">🗂</div><h4>Sketches that persist</h4><p>Every investigation is a saved sketch — 924 nodes in #13434 — so you can return, re-run, and keep building the case.</p></div>
+  </div>
+</section>
+
+
+<section id="authority-network">
+  <div class="signal-network">
+    <div class="sec-head">
+      <div class="sec-kicker">Authority lattice</div>
+      <div class="sec-title">Flowsint is the OSINT node in the ClearGlass command grid.</div>
+      <p class="sec-sub">This page now acts as an investigation cluster waypoint: it routes discovery traffic into the intelligence pillar, laterally into cyber defense and agent orchestration, and forward into a governed engagement path without adding noisy or random links.</p>
+    </div>
+    <div class="signal-grid">
+      <article class="signal-card"><h3>1 · Site linking strategy</h3><p>Home remains the authority hub; pillar pages hold category intent; cluster pages prove depth; blog posts expand topical relevance; service pages convert qualified demand. Each link is a controlled signal path from discovery to trust to conversion.</p></article>
+      <article class="signal-card"><h3>2 · Page hierarchy map</h3><ul><li><a href="index.html">Home authority hub</a></li><li><a href="intelligence.html">Intelligence &amp; OSINT pillar</a></li><li><a href="cyber-defense-console.html">Cyber defense pillar</a></li><li><a href="percival-os.html">Command and agent operations pillar</a></li><li><a href="offers/index.html">Services and engagement pillar</a></li></ul></article>
+      <article class="signal-card"><h3>3 · Pillar-to-cluster matrix</h3><p>Flowsint supports the Intelligence pillar, bridges to the Cyber Defense Console for defensive validation, and connects to Agent Mesh for governed OSINT orchestration.</p><div class="matrix"><a href="intelligence-command-surface.html">Unified intelligence picture</a><a href="agentmesh.html">Multi-agent OSINT orchestration</a><a href="blog/osint-workflow-that-survives-contact-with-reality.html">Operational OSINT workflow</a></div></article>
+      <article class="signal-card"><h3>4 · Recommended anchors</h3><ul><li><a href="intelligence.html">ClearGlass intelligence practice</a></li><li><a href="clearglass-nexus.html">full-spectrum intelligence platform</a></li><li><a href="Ontario-osint.html">regional OSINT control deck</a></li><li><a href="store.html">book an authorized investigation</a></li></ul></article>
+      <article class="signal-card"><h3>5 · Service-page links</h3><p>Service pages should point back to proof and process: Security Quick-Audit to cyber defense, hardening to SMB trust, PHIPA to ClearPulse, procurement work to government readiness, and all high-intent routes to pricing or booking.</p></article>
+      <article class="signal-card"><h3>6 · Blog pillar links</h3><p>Blog posts should reinforce a pillar, one sibling cluster, and one conversion next step. OSINT posts route to Flowsint and Intelligence; agent-governance posts route to PERCIVAL and AI Operator; security posts route to Cyber Defense Console.</p></article>
+      <article class="signal-card"><h3>7 · Footer and CTA structure</h3><p>The footer stays minimal: ClearGlass hub, intelligence pillar, service booking, pricing, privacy, and terms. CTAs stay specific: open an investigation, request a security briefing, see pricing, or browse engagements.</p></article>
+      <article class="signal-card"><h3>8 · Implementation order</h3><p>Maintain the graph in <code>tools/internal_links.py</code>, regenerate generated blocks, add contextual links only where they improve intent, validate with the bot, then review changed pages for visual and crawl integrity.</p></article>
+    </div>
   </div>
 </section>
 
@@ -447,12 +473,14 @@ setInterval(()=>{
 <script defer src="/stealth-glass.js"></script>
 <!-- cg-related:start -->
 <aside id="cg-related">
-  <style>#cg-related{margin:48px auto 0;max-width:1080px;padding:0 18px 34px;font-family:'Inter',system-ui,-apple-system,sans-serif}#cg-related .cgr-box{background:linear-gradient(165deg,rgba(15,17,34,.96),rgba(9,10,24,.96));border:1px solid rgba(124,150,255,.26);border-radius:14px;padding:22px 24px;color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35)}#cg-related .cgr-crumb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a90c4;margin:0 0 10px}#cg-related .cgr-crumb a{color:#a5b4fc;text-decoration:none}#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:underline}#cg-related h2{margin:0 0 12px;font-size:15px;letter-spacing:.04em;color:#e7ecff}#cg-related ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}#cg-related li a{display:block;padding:7px 10px;border-radius:8px;font-size:13.5px;line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;transition:.13s}#cg-related li a:hover{background:rgba(124,150,255,.12);border-color:rgba(124,150,255,.3);color:#fff}#cg-related li a b{color:#bcd0ff;font-weight:600}#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(124,150,255,.16);font-size:13.5px;color:#9aa3d0}#cg-related .cgr-cta a{color:#93c5fd;font-weight:600;text-decoration:none}#cg-related .cgr-cta a:hover{color:#fff;text-decoration:underline}</style>
+  <style>#cg-related{margin:48px auto 0;max-width:1080px;padding:0 18px 34px;font-family:'Inter',system-ui,-apple-system,sans-serif}#cg-related .cgr-box{background:linear-gradient(165deg,rgba(15,17,34,.96),rgba(9,10,24,.96));border:1px solid rgba(54,182,255,.34);border-radius:14px;padding:22px 24px;color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35),0 0 28px rgba(54,182,255,.16)}#cg-related .cgr-crumb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a90c4;margin:0 0 10px}#cg-related .cgr-crumb a{color:#a5b4fc;text-decoration:none}#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:underline}#cg-related h2{margin:0 0 12px;font-size:15px;letter-spacing:.04em;color:#e7ecff}#cg-related ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}#cg-related li a{display:block;padding:7px 10px;border-radius:8px;font-size:13.5px;line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;transition:.13s}#cg-related li a:hover{background:rgba(54,182,255,.14);border-color:rgba(54,182,255,.42);color:#fff;text-shadow:0 0 10px rgba(54,182,255,.55)}#cg-related li a b{color:#bcd0ff;font-weight:600}#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(124,150,255,.16);font-size:13.5px;color:#9aa3d0}#cg-related .cgr-cta a{color:#93c5fd;font-weight:600;text-decoration:none}#cg-related .cgr-cta a:hover{color:#fff;text-decoration:underline}</style>
   <nav class="cgr-box" aria-label="Related ClearGlass pages">
     <p class="cgr-crumb"><a href="index.html">ClearGlass Inc.</a> › <a href="intelligence.html">Intelligence &amp; OSINT</a></p>
     <h2>Continue exploring</h2>
     <ul>
       <li><a href="blog/osint-workflow-that-survives-contact-with-reality.html"><b>The OSINT Workflow That Survives Contact With Reality</b> — field-tested investigation practice</a></li>
+      <li><a href="agentmesh.html"><b>Agent Mesh</b> — multi-agent OSINT orchestration</a></li>
+      <li><a href="cyber-defense-console.html"><b>Cyber Defense Console</b> — the ClearGlass command center for defensive operations</a></li>
       <li><a href="clearglass-nexus.html"><b>ClearGlass NEXUS</b> — full-spectrum intelligence platform</a></li>
       <li><a href="Ontario-osint.html"><b>Ontario OSINT Deck</b> — regional open-source intelligence control deck</a></li>
       <li><a href="clearglass.html"><b>Network Flow Intelligence</b> — see network traffic as living structure</a></li>

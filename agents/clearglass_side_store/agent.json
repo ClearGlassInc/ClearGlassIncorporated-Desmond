@@ -2,11 +2,12 @@
   "name": "ClearGlass Side Store Agent",
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "specification",
   "role": "Autonomous revenue agent for a low-cost wires & electronics storefront.",
   "soul_path": "SOUL.md",
   "etsy_factory_connect_agent_path": "ETSY_FACTORY_CONNECT_AGENT.md",
+  "etsy_factory_connect_integration_agent_path": "ETSY_FACTORY_CONNECT_INTEGRATION_AGENT.md",
   "workflow_template": "agentic-workflow.template.yml",
   "model_recommendation": "claude-opus-4-8",
   "niche": "Cheap wires, cables, connectors, basic electronics, tech accessories",
@@ -38,7 +39,8 @@
     "No autonomous merge of Tier 3 changes (auth, security, billing, compliance)",
     "All marketing is CASL-compliant: consent on file + working unsubscribe",
     "Roll back within ~2 minutes on instability",
-    "Never publish Etsy listings, synchronize inventory, or handle Etsy orders until every connection gate passes"
+    "Never publish Etsy listings, synchronize inventory, or handle Etsy orders until every connection gate passes",
+    "Never report a partial Etsy authorization state as fully ready"
   ],
   "deployment_tiers": {
     "tier0": "formatting/docs — auto-merge with strict checks",
@@ -53,24 +55,48 @@
     "shopify": "needs store + SHOPIFY_API_KEY",
     "etsy": {
       "state": "blocked_user_action",
+      "connection_state": "configured_but_unconnected",
       "authentication": "not verified",
+      "token_validity": "not verified",
       "shop_identity": "not verified",
+      "shop_access": "not verified",
       "listing_permissions": "not verified",
       "order_permissions": "not verified",
-      "sync_readiness": "not verified",
-      "required_next_step": "Complete Etsy OAuth through the approved connection surface, then run the Factory Connect verification gates"
+      "inventory_permissions": "not verified",
+      "sync_configuration": "not verified",
+      "dry_run_sync": "not run",
+      "owner_approval": "missing",
+      "final_readiness": "BLOCKED_USER_ACTION",
+      "required_next_step": "Complete Etsy OAuth through the approved connection surface, then run the Factory Connect verification gates sequentially"
     },
     "nextjs_storefront": "needs build + deploy target",
     "social_apis": "needs accounts + tokens",
     "supplier_apis": "needs human-approved suppliers"
   },
   "etsy_connection_policy": {
+    "specification_version": "2.0.0",
     "initial_state": "BLOCKED_USER_ACTION",
-    "terminal_states": ["READY", "BLOCKED_USER_ACTION", "FAILED_REMEDIABLE"],
+    "terminal_states": ["READY", "BLOCKED_USER_ACTION", "FAILED_REMEDIABLE", "FAILED_UNRECOVERABLE"],
+    "failure_categories": [
+      "MISSING_USER_ACTION",
+      "INVALID_AUTHENTICATION",
+      "INSUFFICIENT_PERMISSION",
+      "CONFIGURATION_ERROR",
+      "NETWORK_OR_API_FAILURE",
+      "IDENTITY_MISMATCH",
+      "SYNC_VALIDATION_FAILURE",
+      "OWNER_APPROVAL_MISSING",
+      "UNKNOWN_INTEGRATION_FAILURE"
+    ],
     "fail_closed": true,
+    "sequential_gates_required": true,
+    "partial_success_is_ready": false,
     "public_profile_is_authorization": false,
     "secrets_in_source_control": false,
     "remote_mutations_during_verification": false,
+    "dry_run_required_before_sync": true,
+    "audit_event_required_per_transition": true,
+    "kill_switch_required": true,
     "production_activation_requires_owner_approval": true
   },
   "guardrails": {

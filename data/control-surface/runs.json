@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #351",
+    "title": "Control Surface Feeds #352",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "12:06",
+    "timestamp": "2026-07-19T12:06:02Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #909",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-04f64d7f-b33b-4038-87ef-d8beecd61af1",
+    "time": "11:08",
+    "timestamp": "2026-07-19T11:08:07Z"
+  },
+  {
+    "title": "Deploy Pages #1088",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "10:45",
+    "timestamp": "2026-07-19T10:45:09Z"
+  },
+  {
+    "title": "pages build and deployment #1553",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "10:45",
+    "timestamp": "2026-07-19T10:45:03Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2648",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "10:45",
+    "timestamp": "2026-07-19T10:45:03Z"
+  },
+  {
+    "title": "Control Surface Feeds #351",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "10:44",
     "timestamp": "2026-07-19T10:44:48Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "08:42",
     "timestamp": "2026-07-19T08:42:34Z"
-  },
-  {
-    "title": "ARTEMIS Deploy #175",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:41",
-    "timestamp": "2026-07-19T08:41:57Z"
-  },
-  {
-    "title": "Cert Bot #53",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:31",
-    "timestamp": "2026-07-19T08:31:24Z"
-  },
-  {
-    "title": "Defender Watch #897",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:28",
-    "timestamp": "2026-07-19T08:28:52Z"
-  },
-  {
-    "title": "Health Monitor #199",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:24",
-    "timestamp": "2026-07-19T08:24:41Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #906",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-995cc710-e373-4e94-9a6c-73245ced7d66",
-    "time": "08:08",
-    "timestamp": "2026-07-19T08:08:09Z"
   }
 ]

@@ -31,6 +31,7 @@
       ["ClearGlass NEXUS", "clearglass-nexus.html", "🛡"],
       ["Government", "government.html", "🏛"],
       ["ClearPulse", "clearpulse.html", "📡"],
+      ["Flowsint · OSINT Graph", "flowsint.html", "🕸"],
       ["Satellite Map", "https://www.arcgis.com/apps/mapviewer/index.html?center=-79.799,43.3255&level=13", "🛰"]
     ]],
     ["For Small Business", [

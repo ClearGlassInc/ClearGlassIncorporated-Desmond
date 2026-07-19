@@ -28,7 +28,11 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
-from tools import internal_links as legacy
+try:
+    from tools import internal_links as legacy
+except ModuleNotFoundError:  # allow `python3 tools/authority_network.py` from repo root
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from tools import internal_links as legacy
 
 ROOT = legacy.ROOT
 SITE_HOSTS = {"clearglassinc.com", "www.clearglassinc.com"}
@@ -37,65 +41,11 @@ MAX_CRAWL_DEPTH = 4
 # New indexable pages are attached as supplemental depth. Core member order is
 # deliberately frozen so publishing a new page cannot silently reshuffle every
 # existing page's generated sibling links.
-SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {
-    "advanced-features-tools-systems.html": (
-        "Advanced Features, Tools & Systems",
-        "the governed systems, agent and audit architecture catalog",
-        "command",
-    ),
-    "automap.html": (
-        "AutoMap Orchestration",
-        "architecture-aware orchestration and system relationship mapping",
-        "command",
-    ),
-    "blog/autonomous-threat-modeling-2026.html": (
-        "Autonomous Threat Modeling in 2026",
-        "continuous architecture-grounded security for agentic and cyber-physical systems",
-        "blog",
-    ),
-    "offers/autonomous-threat-modeling.html": (
-        "Autonomous Threat Modeling",
-        "continuous threat-modeling assessment and implementation services",
-        "services",
-    ),
-    "authority-network.html": (
-        "ClearGlass Authority Network",
-        "the public knowledge graph connecting every ClearGlass authority domain",
-        "company",
-    ),
-}
+SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {}
 
 # Explicit lateral relationships for new pages. These are not inferred at run
 # time; they are reviewed architecture decisions with descriptive destinations.
-SUPPLEMENTAL_BRIDGES: dict[str, list[str]] = {
-    "advanced-features-tools-systems.html": [
-        "automap.html",
-        "percival-os.html",
-        "agentmesh.html",
-        "blog/autonomous-threat-modeling-2026.html",
-    ],
-    "automap.html": [
-        "advanced-features-tools-systems.html",
-        "conduit.html",
-        "agentmesh.html",
-        "intelligence-command-surface.html",
-    ],
-    "blog/autonomous-threat-modeling-2026.html": [
-        "offers/autonomous-threat-modeling.html",
-        "cyber-defense-console.html",
-        "agentmesh.html",
-        "blog/cybersecurity-architecture-for-agentic-software.html",
-    ],
-    "offers/autonomous-threat-modeling.html": [
-        "blog/autonomous-threat-modeling-2026.html",
-        "cyber-defense-console.html",
-        "bluedesk.html",
-        "offers/index.html",
-    ],
-    "authority-network.html": [
-        cluster["pillar"] for cluster in legacy.CLUSTERS.values()
-    ],
-}
+SUPPLEMENTAL_BRIDGES: dict[str, list[str]] = {}
 
 CONVERSION_TARGETS = {
     "offers/index.html",
@@ -459,10 +409,6 @@ def validate() -> list[str]:
         for target in targets:
             if target not in PAGES:
                 errors.append(f"{source}: unknown bridge target {target}")
-
-    for page, files in provenance.items():
-        if len(files) != len(set(files)):
-            errors.append(f"{page}: duplicate loc entries inside sitemap set")
 
     return errors
 

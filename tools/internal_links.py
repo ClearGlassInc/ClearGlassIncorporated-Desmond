@@ -48,6 +48,8 @@ PAGES: dict[str, tuple[str, str]] = {
     "operations/ontario-incorporation-handoff.html": ("Ontario Incorporation Handoff", "corporate filing runbook"),
     "operations/stripe-handoff.html": ("Stripe Handoff", "payments connection runbook"),
     "authority-network.html": ("Authority Network", "the ClearGlass pillar-and-cluster site graph"),
+    "advanced-features-tools-systems.html": ("Advanced Features, Tools & Systems", "the governed systems, agent and audit architecture catalog"),
+    "automap.html": ("AutoMap Orchestration", "architecture-aware orchestration and system relationship mapping"),
 
     # Cyber defense & security operations
     "cyber-defense-console.html": ("Cyber Defense Console", "the ClearGlass command center for defensive operations"),
@@ -138,6 +140,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "side-store.html": ("Side Store", "electronics, cables and components"),
     "offers/hardening-sprint.html": ("Hardening Sprint", "Microsoft 365 + Windows hardening engagement"),
     "offers/security-quick-audit.html": ("Security Quick-Audit", "a focused $249 security review"),
+    "offers/autonomous-threat-modeling.html": ("Autonomous Threat Modeling", "continuous threat-modeling assessment and implementation services"),
     "revenue-engine.html": ("Revenue Engine", "AI-driven business growth system"),
 
     # Design & UI engineering
@@ -160,6 +163,7 @@ PAGES: dict[str, tuple[str, str]] = {
 
     # Insights / blog
     "blog/index.html": ("ClearGlass Intelligence", "essays on governed AI, cyber defense and OSINT"),
+    "blog/autonomous-threat-modeling-2026.html": ("Autonomous Threat Modeling in 2026", "continuous architecture-grounded security for agentic and cyber-physical systems"),
     "blog/ai-agent-governance-governed-autonomy.html": ("AI Agent Governance", "the governed-autonomy playbook"),
     "blog/ai-agents-insider-threat.html": ("AI Agents Are the New Insider Threat", "why agent identity is a security boundary"),
     "blog/almach-scalp-engine.html": ("ALMACH Scalp Engine", "a directional neural-mesh trading study"),
@@ -229,6 +233,7 @@ CLUSTERS: dict[str, dict] = {
         "pillar": "percival-os.html",
         "members": [
             "artemis-percival.html", "agentmesh.html", "ai-operator.html",
+            "advanced-features-tools-systems.html", "automap.html",
             "conduit.html", "postloop.html", "command-console.html",
             "control-surface.html", "systems.html", "saas-platform.html",
             "CG-os.html", "percival-build.html",
@@ -277,7 +282,7 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "store.html", "pricing.html", "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
-            "offers/hardening-sprint.html", "revenue-engine.html",
+            "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html", "revenue-engine.html",
             "side-store.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
@@ -308,6 +313,7 @@ CLUSTERS: dict[str, dict] = {
         "name": "ClearGlass Intelligence · Insights",
         "pillar": "blog/index.html",
         "members": [
+            "blog/autonomous-threat-modeling-2026.html",
             "blog/ai-agent-governance-governed-autonomy.html",
             "blog/ai-agents-insider-threat.html",
             "blog/cybersecurity-architecture-for-agentic-software.html",
@@ -349,6 +355,9 @@ CLUSTERS: dict[str, dict] = {
 # at the essay or adjacent cluster that deepens the topic.
 EXTRA_LINKS: dict[str, list[str]] = {
     "sentinel.html": ["intelligence.html"],
+    "authority-network.html": [cluster["pillar"] for cluster in CLUSTERS.values() if cluster["pillar"] != "index.html"],
+    "advanced-features-tools-systems.html": ["automap.html", "percival-os.html", "agentmesh.html", "blog/autonomous-threat-modeling-2026.html"],
+    "automap.html": ["advanced-features-tools-systems.html", "conduit.html", "agentmesh.html", "intelligence-command-surface.html"],
     "cyber-defense-console.html": ["blog/clearglass-command-center-cyber-defense-console.html", "smb-cyber-trust-kit.html"],
     "bluedesk.html": ["blog/ai-agents-insider-threat.html"],
     "guardian.html": ["docs/guardian_command_nexus_spec.html"],
@@ -377,6 +386,8 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "products/opal-koboi/revenue-engine.html": ["revenue-engine.html"],
     "products/opal-koboi/smb-suite.html": ["smb.html"],
     # blog -> product conversion bridges
+    "blog/autonomous-threat-modeling-2026.html": ["offers/autonomous-threat-modeling.html", "cyber-defense-console.html", "agentmesh.html", "blog/cybersecurity-architecture-for-agentic-software.html"],
+    "offers/autonomous-threat-modeling.html": ["blog/autonomous-threat-modeling-2026.html", "cyber-defense-console.html", "bluedesk.html", "offers/index.html"],
     "blog/ai-agent-governance-governed-autonomy.html": ["percival-os.html", "ai-operator.html"],
     "blog/ai-agents-insider-threat.html": ["bluedesk.html", "cyber-defense-console.html"],
     "blog/cybersecurity-architecture-for-agentic-software.html": ["agentmesh.html", "cyber-defense-console.html"],

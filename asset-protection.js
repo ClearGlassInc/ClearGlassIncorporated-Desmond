@@ -39,6 +39,17 @@
     for (var i = 0; i < imgs.length; i++) shield(imgs[i]);
   }
 
+  function loadCyberEditorialVisual() {
+    var last = (location.pathname.split("/").pop() || "").toLowerCase();
+    if (last !== "cyber-defense-console.html" ||
+        document.getElementById("cg-editorial-visuals-script")) return;
+    var script = document.createElement("script");
+    script.id = "cg-editorial-visuals-script";
+    script.src = "/editorial-visuals.js";
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
   function init() {
     if (!document.querySelector('meta[name="copyright"]')) {
       var meta = document.createElement("meta");
@@ -48,6 +59,7 @@
     }
 
     shieldAll(document);
+    loadCyberEditorialVisual();
 
     // Cover images that arrive after load (badges, carousels, lazy content).
     if (window.MutationObserver) {

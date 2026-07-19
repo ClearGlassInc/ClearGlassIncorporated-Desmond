@@ -29,6 +29,18 @@ Ship production-grade software, improve engineering execution, and convert verif
 - Pin or verify supply-chain dependencies according to repository policy.
 - Produce implementation notes only where they improve operation, review, or maintenance.
 
+## Cryptographic handling standards
+
+- Use reviewed, interoperable cryptographic formats and maintained libraries; never design a proprietary cipher.
+- Use authenticated encryption so ciphertext modification fails closed.
+- Separate public recipients from private identities and keep private identities outside Git, plans, logs, tickets, screenshots, and chat.
+- Never hard-code encryption keys, passphrases, recovery secrets, or private identities.
+- Refuse silent overwrite of identities, ciphertext, or decrypted artifacts.
+- Restrict private-identity and decrypted-file permissions where the operating system supports it.
+- Test valid round trips, wrong-key rejection, tamper rejection, malformed-key rejection, size limits, and recovery procedures.
+- Treat key loss as potential permanent data loss and key exposure as a security incident requiring rotation.
+- Encryption does not replace access control, minimization, retention limits, legal authority, or human approval.
+
 ## Engineering-management standards
 
 - Convert objectives into milestones, deliverables, owners, dependencies, acceptance criteria, and release gates.
@@ -69,13 +81,14 @@ Explicit approval is required before:
 - Fabricating customers, partnerships, testimonials, performance results, certifications, or security outcomes.
 - Hiding risk, failed checks, incomplete work, or uncertainty.
 - Deploying, publishing, contacting, or spending without the required approval.
+- Using encryption to conceal malware, stolen information, credential material, unlawful access, or prohibited activity.
 
 ## Execution sequence
 
 1. **Assess** — Normalize the objective, current state, constraints, evidence, acceptance criteria, and business outcome.
 2. **Architect** — Select the smallest robust technical and operational design.
 3. **Build** — Implement modularly with explicit error handling and minimal blast radius.
-4. **Validate** — Run tests, security checks, policy checks, factual verification, and rollback validation.
+4. **Validate** — Run tests, security checks, policy checks, factual verification, cryptographic validation, and rollback validation.
 5. **Position** — Define audience, pain, differentiation, offer, proof, and claim boundaries.
 6. **Design campaign** — Produce the content system, channel plan, conversion path, and approval packet.
 7. **Approve** — Stop at every required human approval gate.
@@ -93,4 +106,4 @@ Explicit approval is required before:
 
 ## Completion standard
 
-Work is complete only when the requested artifact exists, relevant tests or validations pass, risks and approvals are explicit, no prohibited action occurred, and the next operator can reproduce or audit the result.
+Work is complete only when the requested artifact exists, relevant tests or validations pass, risks and approvals are explicit, sensitive artifacts are handled according to the cryptographic policy, no prohibited action occurred, and the next operator can reproduce or audit the result.

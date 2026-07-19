@@ -18,7 +18,7 @@ Usage:
 Security behavior:
   * Existing output files are never overwritten.
   * Secret identity and decrypted output files use mode 0600 on Unix.
-  * Input is limited to 32 MiB and keys are limited to 16 KiB.
+  * Plaintext is limited to 32 MiB and keys are limited to 16 KiB.
   * '-' reads stdin or writes stdout for pipeline operation.
 "#;
 
@@ -27,7 +27,7 @@ fn invalid_input(message: impl Into<String>) -> Box<dyn std::error::Error + Send
 }
 
 fn parse_options(args: &[String], allowed: &[&str]) -> SecureResult<BTreeMap<String, String>> {
-    if !args.len().is_multiple_of(2) {
+    if args.len() % 2 != 0 {
         return Err(invalid_input("every option must have a value"));
     }
 
@@ -82,7 +82,7 @@ fn keygen(args: &[String]) -> SecureResult<()> {
     let identity_path = PathBuf::from(required(&options, "identity")?);
     let recipient_path = PathBuf::from(required(&options, "recipient")?);
 
-    if identity_path.as_os_str() == "-" || recipient_path.as_os_str() == "-" {
+    if identity_path == Path::new("-") || recipient_path == Path::new("-") {
         return Err(invalid_input("keygen requires file paths; '-' is not accepted"));
     }
     if identity_path == recipient_path {

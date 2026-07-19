@@ -399,6 +399,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page
 PILLAR_MAX_MEMBERS = 10  # member links shown on a pillar page
+BRIDGE_MAX = 3  # curated cross-cluster signal paths per page
 
 # Full-viewport HUD pages whose body{overflow:hidden} would strand a normal
 # bottom block; these get a fixed corner chip that expands the same panel on
@@ -409,26 +410,35 @@ FIXED_VIEWPORT = {
 }
 
 CSS = (
-    "#cg-related{margin:48px auto 0;max-width:1080px;padding:0 18px 34px;"
-    "font-family:'Inter',system-ui,-apple-system,sans-serif}"
-    "#cg-related .cgr-box{background:linear-gradient(165deg,rgba(15,17,34,.96),rgba(9,10,24,.96));"
-    "border:1px solid rgba(124,150,255,.26);border-radius:14px;padding:22px 24px;"
-    "color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35)}"
-    "#cg-related .cgr-crumb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;"
+    "#cg-related{margin:54px auto 0;max-width:1120px;padding:0 18px 38px;"
+    "font-family:'Inter',system-ui,-apple-system,sans-serif;position:relative}"
+    "#cg-related .cgr-box{position:relative;overflow:hidden;background:linear-gradient(165deg,rgba(15,17,34,.97),rgba(7,10,24,.97));"
+    "border:1px solid rgba(124,150,255,.34);border-radius:18px;padding:24px 26px;"
+    "color:#cdd6f5;box-shadow:0 0 0 1px rgba(96,165,250,.06),0 18px 54px rgba(0,0,0,.42),0 0 38px rgba(96,165,250,.12)}"
+    "#cg-related .cgr-box::before{content:'';position:absolute;inset:0;pointer-events:none;"
+    "background:linear-gradient(90deg,rgba(96,165,250,.1) 1px,transparent 1px),linear-gradient(rgba(167,139,250,.07) 1px,transparent 1px),radial-gradient(circle at 14% 0%,rgba(96,165,250,.16),transparent 32%),radial-gradient(circle at 92% 100%,rgba(52,211,153,.11),transparent 32%);"
+    "background-size:34px 34px,34px 34px,auto,auto;opacity:.62;mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.72))}"
+    "#cg-related .cgr-box>*{position:relative;z-index:1}"
+    "#cg-related .cgr-crumb{font-size:11px;letter-spacing:.16em;text-transform:uppercase;"
     "color:#8a90c4;margin:0 0 10px}"
     "#cg-related .cgr-crumb a{color:#a5b4fc;text-decoration:none}"
     "#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:underline}"
-    "#cg-related h2{margin:0 0 12px;font-size:15px;letter-spacing:.04em;color:#e7ecff}"
-    "#cg-related ul{list-style:none;margin:0;padding:0;display:grid;"
-    "grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}"
-    "#cg-related li a{display:block;padding:7px 10px;border-radius:8px;font-size:13.5px;"
-    "line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;transition:.13s}"
-    "#cg-related li a:hover{background:rgba(124,150,255,.12);border-color:rgba(124,150,255,.3);color:#fff}"
-    "#cg-related li a b{color:#bcd0ff;font-weight:600}"
-    "#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(124,150,255,.16);"
+    "#cg-related h2{margin:0 0 14px;font-size:16px;letter-spacing:.08em;color:#e7ecff;text-transform:uppercase}"
+    "#cg-related .cgr-lattice{display:grid;grid-template-columns:1.35fr .95fr;gap:18px;align-items:start}"
+    "#cg-related .cgr-layer{border:1px solid rgba(124,150,255,.16);border-radius:14px;background:rgba(255,255,255,.025);padding:14px}"
+    "#cg-related .cgr-label{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7dd3fc;margin:0 0 10px;font-weight:700}"
+    "#cg-related ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 12px}"
+    "#cg-related li a{display:block;padding:8px 10px;border-radius:10px;font-size:13.5px;"
+    "line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid rgba(124,150,255,.08);transition:.13s;background:rgba(3,7,18,.18)}"
+    "#cg-related li a:hover{background:rgba(124,150,255,.14);border-color:rgba(124,150,255,.42);color:#fff;box-shadow:0 0 18px rgba(96,165,250,.18),inset 0 0 18px rgba(96,165,250,.05)}"
+    "#cg-related li a b{color:#bcd0ff;font-weight:700}"
+    "#cg-related .cgr-primary li a{border-color:rgba(96,165,250,.2)}"
+    "#cg-related .cgr-bridge li a{border-color:rgba(52,211,153,.16)}"
+    "#cg-related .cgr-cta{margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(124,150,255,.18);"
     "font-size:13.5px;color:#9aa3d0}"
-    "#cg-related .cgr-cta a{color:#93c5fd;font-weight:600;text-decoration:none}"
+    "#cg-related .cgr-cta a{color:#93c5fd;font-weight:700;text-decoration:none}"
     "#cg-related .cgr-cta a:hover{color:#fff;text-decoration:underline}"
+    "@media(max-width:760px){#cg-related .cgr-lattice{grid-template-columns:1fr}#cg-related{padding-left:12px;padding-right:12px}}"
 )
 
 DOCK_CSS = (
@@ -517,7 +527,13 @@ def build_block(page: str) -> str:
         crumb += f" › {html.escape(name)}"
         heading = f"Inside {name}"
 
-    items = "\n      ".join(anchor(page, t) for t in targets)
+    bridge_set = set(EXTRA_LINKS.get(page, [])[:BRIDGE_MAX])
+    bridge_targets = [t for t in targets if t in bridge_set]
+    primary_targets = [t for t in targets if t not in bridge_set]
+    if not primary_targets:
+        primary_targets, bridge_targets = targets, []
+    primary_items = "\n          ".join(anchor(page, t) for t in primary_targets)
+    bridge_items = "\n          ".join(anchor(page, t) for t in bridge_targets)
     cta_html = " · ".join(
         f'<a href="{html.escape(rel(page, path), quote=True)}">{html.escape(label)}</a>'
         for path, label in cta
@@ -539,7 +555,10 @@ def build_block(page: str) -> str:
         f'  <nav class="cgr-box" aria-label="Related ClearGlass pages">\n'
         f'    <p class="cgr-crumb">{crumb}</p>\n'
         f"    <h2>{html.escape(heading)}</h2>\n"
-        f"    <ul>\n      {items}\n    </ul>\n"
+        f'    <div class="cgr-lattice">\n'
+        f'      <div class="cgr-layer cgr-primary"><p class="cgr-label">Primary signal paths</p><ul>\n          {primary_items}\n        </ul></div>\n'
+        f'      <div class="cgr-layer cgr-bridge"><p class="cgr-label">Cross-cluster bridges</p><ul>\n          {bridge_items or primary_items}\n        </ul></div>\n'
+        f'    </div>\n'
         f'    <p class="cgr-cta">Next step: {cta_html}</p>\n'
         f"  </nav>\n"
         f"{tab}"

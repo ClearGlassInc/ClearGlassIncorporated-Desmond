@@ -230,3 +230,102 @@ Discovery → pillar → proof/process → service → pricing/store/intake
 - Keep anchor terminology consistent with page titles, metadata and service language.
 - When the graph changes, regenerate all blocks and update the sitemap in the same pull request.
 - The validation workflow is a release gate for changes affecting HTML, the sitemap, the graph generator or AI-readable site maps.
+
+---
+
+## 2026 Neon Command Grid Extension
+
+### Full site linking strategy
+
+ClearGlass now uses a generated **hub → pillar → cluster → bridge → CTA** lattice. The home page remains the authority hub, pillar pages define the major categories, cluster pages provide supporting depth, and curated cross-cluster bridges connect adjacent intent without turning pages into link directories. The executable source of truth is still `tools/internal_links.py`, and all visible `cg-related` blocks must be regenerated instead of hand-edited.
+
+### Page hierarchy map
+
+| Level | Role | Representative pages |
+| --- | --- | --- |
+| Hub | Authority entry point | `index.html` |
+| Pillars | Major topic categories | `cyber-defense-console.html`, `intelligence.html`, `artemis-os.html`, `percival-os.html`, `legal/index.html`, `clearpulse.html`, `government.html`, `offers/index.html`, `web-design.html`, `opal/index.html`, `blog/index.html` |
+| Clusters | Supporting topical depth | Security consoles, OSINT tools, Artemis systems, command operations, legal/compliance, healthcare, government procurement, services, design/UI, Opal assets, Insights posts |
+| Proof | Trust reinforcement | `docs/guardian_command_nexus_spec.html`, `operations/procurement-readiness.html`, `operations/client-onboarding.html`, `legal/ai-liability.html`, selected blog posts |
+| Conversion | Next-step routes | `store.html`, `pricing.html`, `offers/index.html`, `offers/security-quick-audit.html`, `offers/hardening-sprint.html`, `offers/phipa-readiness.html` |
+
+### Pillar-to-cluster matrix
+
+| Pillar | Cluster intent | Supporting depth |
+| --- | --- | --- |
+| Cyber Defense Console | Security operations and blue-team authority | SENTINEL, GUARDIAN, BLUEDESK, Artemis Blue Team, STEGOFORGE, ATT&CK Prompt Integrator, Environmental Cyber-Risk |
+| Intelligence | OSINT and operational intelligence | Flowsint, Ontario OSINT, Network Flow Intelligence, NEXUS, intelligence surfaces |
+| Artemis OS | Self-evolving AI platform | Artemis IV, AI Cyber Intelligence Platform, Self-Evolving Platform, Artemis 2040, ZEPHYR |
+| PERCIVAL OS | Command and autonomous operations | AVALON, Agent Mesh, AI Operator, CONDUIT, PostLoop, Command Console, Systems Console |
+| Legal Infrastructure | Governance, legal AI and compliance | AEGIS, ClearCounsel, Banking Law, ClearTax, Procurement Legal-Tech, AI Liability, Legal Council |
+| ClearPulse | Healthcare intelligence | ClearPulse Architecture, PHIPA readiness, PHIPA checklist |
+| Government Solutions | Public-sector readiness | Procurement Readiness, Federal Supplier Handoff, Counter-UAS OS, Speed Vision AI, SATS Digital Twin |
+| Services & Engagements | Conversion and packaging | Store, Pricing, SMB Cyber Trust Kit, Quick Audit, Hardening Sprint, Revenue Engine |
+| Web Design & Development | UI systems and visual trust | Ultra Glass, ClearGlass Ultra, Aurora Glass, Button Lab, Button System, Hover Menu |
+| Opal-Koboi | Automation assets | Opal asset index and platform sheets |
+| ClearGlass Intelligence | Editorial authority | Governed AI, agent security, cyber architecture, OSINT, post-quantum security, digital twins |
+
+### Recommended anchor text for major pages
+
+- Home: **ClearGlass Inc. governed intelligent systems hub**
+- Cyber pillar: **ClearGlass cyber defense command center**
+- Intelligence pillar: **ClearGlass intelligence and OSINT practice**
+- Artemis pillar: **Artemis self-evolving AI platform**
+- PERCIVAL pillar: **PERCIVAL governed command operations**
+- CONDUIT: **CONDUIT workflow automation lattice**
+- Agent Mesh: **multi-agent OSINT orchestration**
+- AI Operator: **human-in-the-loop AI operator workspace**
+- Legal: **ClearGlass legal infrastructure and AI governance**
+- Government: **public-sector procurement intelligence**
+- Services: **ClearGlass services and engagements**
+- Store: **book a ClearGlass security engagement**
+- Pricing: **ClearGlass pricing and engagement models**
+- Blog: **ClearGlass Intelligence essays and technical briefings**
+
+### Suggested home-page internal links
+
+Home should expose a compact set of high-signal routes: Cyber Defense Console, Intelligence, Artemis OS, PERCIVAL OS, Services & Engagements, ClearGlass Intelligence, Government Solutions, and Legal Infrastructure.
+
+### Suggested service-page internal links
+
+| Service page | Pillar link | Proof link | Conversion link |
+| --- | --- | --- | --- |
+| Store | Services & Engagements | SMB Cyber Trust Kit | Pricing |
+| Pricing | Services & Engagements | Procurement Readiness | Store |
+| SMB Cyber Trust Kit | Cyber Defense Console | Hardening Sprint | Store |
+| Hardening Sprint | Cyber Defense Console | Security Quick-Audit | Store |
+| Security Quick-Audit | Cyber Defense Console | SMB Cyber Trust Kit | Store |
+| PHIPA Readiness | ClearPulse | PHIPA Checklist | Store |
+| Revenue Engine | Services & Engagements | PostLoop or ethical sales article | Pricing |
+
+### Suggested blog-pillar and cluster-article links
+
+The blog index should route to governed AI, agent security, cyber architecture, OSINT, deployment governance, post-quantum security, digital twins, and revenue systems. Each article should link back to `blog/index.html`, one product or service pillar, one adjacent article, and one conversion route. Cluster articles should use the minimum pattern: backward to pillar, forward to sibling, lateral to one cross-cluster bridge, and onward to one CTA.
+
+### Suggested footer link structure
+
+When revising global footer markup, keep four compact groups:
+
+- **Operate:** Home, PERCIVAL OS, Agent Mesh, CONDUIT, AI Operator.
+- **Defend:** Cyber Defense Console, SENTINEL, BLUEDESK, SMB Cyber Trust Kit.
+- **Understand:** Intelligence, Flowsint, ClearGlass Intelligence, Artemis OS.
+- **Engage:** Services, Pricing, Store, Procurement Readiness, Legal, Privacy, Terms.
+
+### Suggested CTA link structure
+
+- Security pages: **Book a security engagement** + **Start with the Security Quick-Audit**.
+- Service pages: **Book a security engagement** + **See pricing and plans**.
+- Healthcare pages: **Get the PHIPA readiness checklist** + **Book a security engagement**.
+- Government pages: **Book a security engagement** + **Check procurement readiness**.
+- Blog pages: **Book a security engagement** + **See pricing and plans**.
+- Command and automation pages: **Browse services and engagements** + **See pricing and plans**.
+
+### Prioritized implementation order
+
+1. Maintain `tools/internal_links.py` as the source of truth.
+2. Regenerate generated related blocks with `python3 tools/internal_links.py` after every map change.
+3. Verify freshness with `python3 tools/internal_links.py --check`.
+4. Keep `nav.js` as the global human navigation layer.
+5. Add sitemap entries when new pages are introduced.
+6. Prefer one precise cross-cluster bridge over several generic links.
+7. Review density on desktop and mobile after large graph updates.

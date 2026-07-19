@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #358",
+    "title": "Control Surface Feeds #359",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:06",
+    "timestamp": "2026-07-19T21:06:39Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #918",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-2687a9c0-8ba5-4df3-8236-a754c045eab1",
+    "time": "20:08",
+    "timestamp": "2026-07-19T20:08:07Z"
+  },
+  {
+    "title": "Deploy Pages #1095",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:31",
+    "timestamp": "2026-07-19T19:31:37Z"
+  },
+  {
+    "title": "pages build and deployment #1560",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:31",
+    "timestamp": "2026-07-19T19:31:30Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2655",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:31",
+    "timestamp": "2026-07-19T19:31:30Z"
+  },
+  {
+    "title": "Control Surface Feeds #358",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "19:31",
     "timestamp": "2026-07-19T19:31:07Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 workflow_dispatch on main",
     "time": "16:11",
     "timestamp": "2026-07-19T16:11:19Z"
-  },
-  {
-    "title": "pages build and deployment #1557",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:11",
-    "timestamp": "2026-07-19T16:11:13Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2652",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:11",
-    "timestamp": "2026-07-19T16:11:12Z"
-  },
-  {
-    "title": "Control Surface Feeds #355",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "16:10",
-    "timestamp": "2026-07-19T16:10:51Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #914",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-a10ecc4c-de1d-48fe-bbe7-f394a315ac88",
-    "time": "16:08",
-    "timestamp": "2026-07-19T16:08:07Z"
-  },
-  {
-    "title": "Deploy Pages #1091",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "15:14",
-    "timestamp": "2026-07-19T15:14:24Z"
   }
 ]

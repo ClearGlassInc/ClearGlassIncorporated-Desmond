@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #350",
+    "title": "Control Surface Feeds #351",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "10:44",
+    "timestamp": "2026-07-19T10:44:48Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #908",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-b3c6ef7d-8d16-4220-8b20-1b1614ab8f88",
+    "time": "10:08",
+    "timestamp": "2026-07-19T10:08:07Z"
+  },
+  {
+    "title": "Burlington Release #39",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "09:17",
+    "timestamp": "2026-07-19T09:17:26Z"
+  },
+  {
+    "title": "Deploy Pages #1087",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "09:16",
+    "timestamp": "2026-07-19T09:16:19Z"
+  },
+  {
+    "title": "pages build and deployment #1552",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "09:16",
+    "timestamp": "2026-07-19T09:16:13Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2647",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "09:16",
+    "timestamp": "2026-07-19T09:16:13Z"
+  },
+  {
+    "title": "Control Surface Feeds #350",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "09:15",
     "timestamp": "2026-07-19T09:15:57Z"
   },
@@ -96,47 +138,5 @@
     "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-995cc710-e373-4e94-9a6c-73245ced7d66",
     "time": "08:08",
     "timestamp": "2026-07-19T08:08:09Z"
-  },
-  {
-    "title": "Security #1318",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "07:13",
-    "timestamp": "2026-07-19T07:13:34Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1600",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "07:13",
-    "timestamp": "2026-07-19T07:13:34Z"
-  },
-  {
-    "title": "CI #1552",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "07:13",
-    "timestamp": "2026-07-19T07:13:34Z"
-  },
-  {
-    "title": "Policy Gate #1290",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "07:13",
-    "timestamp": "2026-07-19T07:13:34Z"
-  },
-  {
-    "title": "Deploy Pages #1086",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "07:13",
-    "timestamp": "2026-07-19T07:13:34Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #403",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "07:13",
-    "timestamp": "2026-07-19T07:13:34Z"
   }
 ]

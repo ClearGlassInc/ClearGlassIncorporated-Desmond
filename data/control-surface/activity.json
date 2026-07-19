@@ -3,12 +3,54 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "09:16",
-    "timestamp": "2026-07-19T09:16:07Z"
+    "time": "10:44",
+    "timestamp": "2026-07-19T10:44:57Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #351",
+    "time": "10:44",
+    "timestamp": "2026-07-19T10:44:48Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-b3c6ef7d-8d16-4220-8b20-1b1614ab8f88 \u00b7 run #908",
+    "time": "10:08",
+    "timestamp": "2026-07-19T10:08:07Z"
+  },
+  {
+    "title": "Burlington Release",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #39",
+    "time": "09:17",
+    "timestamp": "2026-07-19T09:17:26Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1087",
+    "time": "09:16",
+    "timestamp": "2026-07-19T09:16:19Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1552",
+    "time": "09:16",
+    "timestamp": "2026-07-19T09:16:13Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2647",
+    "time": "09:16",
+    "timestamp": "2026-07-19T09:16:13Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #350",
     "time": "09:15",
     "timestamp": "2026-07-19T09:15:57Z"
@@ -47,47 +89,5 @@
     "detail": "dynamic on main \u00b7 run #2646",
     "time": "09:04",
     "timestamp": "2026-07-19T09:04:05Z"
-  },
-  {
-    "title": "Bot Orchestrator",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #60",
-    "time": "09:03",
-    "timestamp": "2026-07-19T09:03:46Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1550",
-    "time": "08:42",
-    "timestamp": "2026-07-19T08:42:34Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2645",
-    "time": "08:42",
-    "timestamp": "2026-07-19T08:42:34Z"
-  },
-  {
-    "title": "ARTEMIS Deploy",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #175",
-    "time": "08:41",
-    "timestamp": "2026-07-19T08:41:57Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #53",
-    "time": "08:31",
-    "timestamp": "2026-07-19T08:31:24Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #897",
-    "time": "08:28",
-    "timestamp": "2026-07-19T08:28:52Z"
   }
 ]

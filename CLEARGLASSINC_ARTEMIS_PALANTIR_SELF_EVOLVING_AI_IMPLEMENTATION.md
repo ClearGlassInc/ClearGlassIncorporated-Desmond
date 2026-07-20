@@ -1113,3 +1113,155 @@ clear_glass_artemis_acceptance:
     - coalition-release checks run before retrieval, summarization, export, and action package creation
     - Apollo canaries automatically stop promotion on SLO, policy, or eval failure
 ```
+
+## Full-Stack Implementation Control Plane Addendum
+
+This addendum tightens the production blueprint around a Python-first precision control plane. It keeps ClearGlassInc Artemis self-improving, but not self-authorizing: every candidate prompt, workflow, heuristic, and model-route change is represented as data, evaluated offline, signed by a human reviewer, released by Apollo, and continuously monitored for rollback conditions.
+
+### Implementation boundaries
+
+| Boundary | Allowed automation | Explicitly blocked without approval |
+|---|---|---|
+| Data ingest | Validate, normalize, deduplicate, quarantine malformed records, attach lineage | Widen coalition release scope, discard raw evidence, suppress audit writes |
+| Agent tools | Query permitted ontology slices, draft cases, draft intel products, prepare action packages | Execute operationally significant actions, bypass policy, access hidden compartments |
+| Self-improvement | Propose prompt/workflow/model-route candidates from eval evidence | Promote candidates, lower approval thresholds, change mission objectives |
+| Deployment | Canary approved signed artifacts, monitor SLOs, rollback to known-good versions | Deploy unsigned artifacts, continue after policy/eval regression, disable audit |
+
+### Python reference modules
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from hashlib import sha256
+from typing import Any, Mapping
+from uuid import UUID, uuid4
+
+
+class Decision(str, Enum):
+    ALLOW = "allow"
+    DENY = "deny"
+    REQUIRE_APPROVAL = "require_approval"
+
+
+@dataclass(frozen=True)
+class MissionContext:
+    mission_id: UUID
+    operator_id: UUID
+    role: str
+    clearance: str
+    compartments: frozenset[str]
+    coalition_scope: frozenset[str]
+    purpose_of_use: str
+    correlation_id: str
+
+
+@dataclass(frozen=True)
+class ToolInvocation:
+    tool_name: str
+    arguments: Mapping[str, Any]
+    classification: str
+    compartments: frozenset[str]
+    operational_significance: int
+    requested_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass(frozen=True)
+class PolicyDecision:
+    decision: Decision
+    reason: str
+    policy_version: str
+    audit_id: UUID = field(default_factory=uuid4)
+
+
+def evaluate_tool_policy(ctx: MissionContext, invocation: ToolInvocation) -> PolicyDecision:
+    if not invocation.compartments.issubset(ctx.compartments):
+        return PolicyDecision(Decision.DENY, "compartment_mismatch", "policy-2026.07")
+    if invocation.operational_significance >= 70:
+        return PolicyDecision(Decision.REQUIRE_APPROVAL, "high_impact_action", "policy-2026.07")
+    if ctx.purpose_of_use not in {"investigation", "triage", "mission_command"}:
+        return PolicyDecision(Decision.DENY, "invalid_purpose_of_use", "policy-2026.07")
+    return PolicyDecision(Decision.ALLOW, "authorized", "policy-2026.07")
+
+
+def canonical_hash(payload: Mapping[str, Any]) -> str:
+    encoded = repr(sorted(payload.items())).encode("utf-8")
+    return sha256(encoded).hexdigest()
+```
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+from enum import Enum
+from uuid import UUID
+
+
+class CandidateStatus(str, Enum):
+    DRAFT = "draft"
+    EVAL_RUNNING = "eval_running"
+    READY_FOR_REVIEW = "ready_for_review"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    CANARY = "canary"
+    PROMOTED = "promoted"
+    ROLLED_BACK = "rolled_back"
+
+
+@dataclass(frozen=True)
+class EvalScorecard:
+    precision: Decimal
+    recall: Decimal
+    citation_accuracy: Decimal
+    hallucination_rate: Decimal
+    policy_violation_rate: Decimal
+    p95_latency_ms: int
+    operator_acceptance_rate: Decimal
+
+
+@dataclass(frozen=True)
+class SelfUpgradeCandidate:
+    candidate_id: UUID
+    kind: str
+    baseline_version: str
+    candidate_version: str
+    evidence_ids: tuple[UUID, ...]
+    scorecard: EvalScorecard
+    rollback_version: str
+    status: CandidateStatus
+
+
+def promotion_gate(candidate: SelfUpgradeCandidate) -> tuple[bool, str]:
+    score = candidate.scorecard
+    if candidate.status is not CandidateStatus.APPROVED:
+        return False, "human_approval_required"
+    if candidate.rollback_version == candidate.candidate_version:
+        return False, "rollback_version_must_be_distinct"
+    if score.policy_violation_rate != Decimal("0"):
+        return False, "policy_regression"
+    if score.citation_accuracy < Decimal("0.98"):
+        return False, "citation_accuracy_below_threshold"
+    if score.precision < Decimal("0.92") or score.recall < Decimal("0.85"):
+        return False, "mission_quality_regression"
+    if score.hallucination_rate > Decimal("0.005"):
+        return False, "hallucination_rate_above_threshold"
+    if score.p95_latency_ms > 2500:
+        return False, "latency_slo_regression"
+    return True, "eligible_for_apollo_canary"
+```
+
+### Scenario execution trace
+
+1. A live telemetry event enters the streaming gateway with source reliability, mission tags, classification, compartments, and coalition markings.
+2. The Python intake service validates the event, computes a canonical lineage hash, writes the raw payload to immutable storage, and emits a normalized observation.
+3. Foundry pipelines materialize bronze, silver, and gold datasets, then update ontology objects and links with bitemporal validity.
+4. Gotham surfaces the updated entity graph and investigative timeline to authorized operators.
+5. An AIP triage agent queries only the operator-permitted ontology slice, enriches the alert, and drafts a case summary with source citations.
+6. A deterministic policy broker checks the proposed tool invocation. Low-impact drafting is allowed; operationally significant response actions become approval packages.
+7. The commander approves a narrow defensive package and rejects an over-broad recommendation. Both decisions become labeled feedback signals.
+8. The self-improvement service turns the rejection into eval cases, proposes a prompt-weighting change, and runs offline regression, drift, policy, citation, and latency checks.
+9. A human ModelOps reviewer approves the evidence-backed candidate. Apollo deploys it to a canary ring with a pinned rollback version.
+10. Observability watches precision, recall, p95 latency, policy-denial rates, operator acceptance, and citation accuracy. Any regression triggers automatic rollback and preserves the full audit chain.

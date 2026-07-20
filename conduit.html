@@ -611,6 +611,20 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
   </div>
 </section>
 
+
+<!-- TRUST BOUNDARIES -->
+<section id="trust-boundaries">
+  <div class="sec-head"><div class="sec-kicker">Trust boundaries and containment</div><h2 class="sec-title">Governed automation with bounded authority</h2><p class="sec-sub">CONDUIT treats every connector, credential, workflow, environment, and outbound route as a separate trust decision. The result is automation that can move quickly without inheriting unlimited permission.</p></div>
+  <div class="arch-grid">
+    <div class="arch-card"><h4>Connector trust boundaries</h4><p>Each connector operates as a scoped interface with explicit read, write, export, and side-effect permissions. Sensitive plugins can be isolated by workflow, environment, team, or approval class so one integration cannot silently expand authority across the platform.</p></div>
+    <div class="arch-card"><h4>Credential isolation</h4><p>Secrets are attached to the narrowest viable workflow context, rotated outside the workflow definition, and withheld from logs, prompts, exported runs, and browser-visible state. Ephemeral credentials can be issued for high-risk actions and revoked without changing the workflow graph.</p></div>
+    <div class="arch-card"><h4>Network segmentation</h4><p>Deploy workers into segmented networks that match data sensitivity, connector risk, and latency needs. Deny-by-default egress, allowlisted destinations, private service routes, and per-worker network policy reduce exposure when a payload or third-party API behaves unexpectedly.</p></div>
+    <div class="arch-card"><h4>Policy enforcement</h4><p>Evaluate policy at trigger time, before privileged nodes, during approval transitions, and before final side effects. Run-level decisions can consider actor, environment, connector scope, data class, record count, destination, risk score, and workflow version.</p></div>
+    <div class="arch-card"><h4>Recovery boundaries</h4><p>Separate retryable steps, terminal failures, manual interventions, and compensating actions. Operators can recover a failed segment without rewriting the full run, duplicating side effects, or erasing the evidence needed for incident review.</p></div>
+    <div class="arch-card"><h4>Long-running workflow custody</h4><p>Pause durable workflows at approvals, rate limits, dependency outages, scheduled windows, or operator review points. State remains recoverable, timers remain explicit, and stale runs can be expired by policy instead of drifting indefinitely.</p></div>
+  </div>
+</section>
+
 <!-- CONTENT DELIVERABLES -->
 <section id="decision-brief">
   <div class="sec-head"><div class="sec-kicker">Deployment decision brief</div><h2 class="sec-title">The language of production automation</h2><p class="sec-sub">Use CONDUIT when automation must be private, reviewable, observable, and recoverable enough to become operating infrastructure.</p></div>

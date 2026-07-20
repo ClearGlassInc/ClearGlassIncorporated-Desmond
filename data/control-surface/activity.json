@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "00:11",
-    "timestamp": "2026-07-20T00:11:45Z"
+    "time": "04:03",
+    "timestamp": "2026-07-20T04:03:42Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #363",
+    "time": "04:03",
+    "timestamp": "2026-07-20T04:03:25Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #921",
+    "time": "03:49",
+    "timestamp": "2026-07-20T03:49:23Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #202",
+    "time": "03:32",
+    "timestamp": "2026-07-20T03:32:30Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-a8900431-641a-4a12-93a8-2ef125dae9e8 \u00b7 run #925",
+    "time": "03:08",
+    "timestamp": "2026-07-20T03:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-5d7b65e8-01ea-4d4e-a71b-aa42b053baf6 \u00b7 run #924",
+    "time": "02:08",
+    "timestamp": "2026-07-20T02:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-7d455abd-8afb-4ec6-a116-af5573397404 \u00b7 run #923",
+    "time": "01:08",
+    "timestamp": "2026-07-20T01:08:07Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2693",
+    "time": "00:11",
+    "timestamp": "2026-07-20T00:11:52Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #362",
     "time": "00:11",
     "timestamp": "2026-07-20T00:11:31Z"
@@ -38,55 +87,6 @@
     "title": "Defender Watch",
     "status": "ok",
     "detail": "push on main \u00b7 run #920",
-    "time": "23:57",
-    "timestamp": "2026-07-19T23:57:54Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #98",
-    "time": "23:57",
-    "timestamp": "2026-07-19T23:57:54Z"
-  },
-  {
-    "title": "Internal Link Authority",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #58",
-    "time": "23:57",
-    "timestamp": "2026-07-19T23:57:54Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1311",
-    "time": "23:57",
-    "timestamp": "2026-07-19T23:57:54Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1573",
-    "time": "23:57",
-    "timestamp": "2026-07-19T23:57:54Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #410",
-    "time": "23:57",
-    "timestamp": "2026-07-19T23:57:54Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1105",
-    "time": "23:57",
-    "timestamp": "2026-07-19T23:57:54Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2692",
     "time": "23:57",
     "timestamp": "2026-07-19T23:57:54Z"
   }

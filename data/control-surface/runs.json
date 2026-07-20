@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #362",
+    "title": "Control Surface Feeds #363",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "04:03",
+    "timestamp": "2026-07-20T04:03:25Z"
+  },
+  {
+    "title": "Defender Watch #921",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "03:49",
+    "timestamp": "2026-07-20T03:49:23Z"
+  },
+  {
+    "title": "Health Monitor #202",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "03:32",
+    "timestamp": "2026-07-20T03:32:30Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #925",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-a8900431-641a-4a12-93a8-2ef125dae9e8",
+    "time": "03:08",
+    "timestamp": "2026-07-20T03:08:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #924",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-5d7b65e8-01ea-4d4e-a71b-aa42b053baf6",
+    "time": "02:08",
+    "timestamp": "2026-07-20T02:08:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #923",
+    "status": "bad",
+    "detail": "failure \u00b7 dynamic on copilot/task-272290681-1196426665-7d455abd-8afb-4ec6-a116-af5573397404",
+    "time": "01:08",
+    "timestamp": "2026-07-20T01:08:07Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2693",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:11",
+    "timestamp": "2026-07-20T00:11:52Z"
+  },
+  {
+    "title": "Control Surface Feeds #362",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "00:11",
     "timestamp": "2026-07-20T00:11:31Z"
   },
@@ -85,55 +134,6 @@
   },
   {
     "title": "Auto-Store #97",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on agent/authority-lattice-accessibility",
-    "time": "23:56",
-    "timestamp": "2026-07-19T23:56:44Z"
-  },
-  {
-    "title": "CI #1572",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on agent/authority-lattice-accessibility",
-    "time": "23:56",
-    "timestamp": "2026-07-19T23:56:44Z"
-  },
-  {
-    "title": "Internal Link Authority #57",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on agent/authority-lattice-accessibility",
-    "time": "23:56",
-    "timestamp": "2026-07-19T23:56:44Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1620",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on agent/authority-lattice-accessibility",
-    "time": "23:56",
-    "timestamp": "2026-07-19T23:56:44Z"
-  },
-  {
-    "title": "Security #1338",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on agent/authority-lattice-accessibility",
-    "time": "23:56",
-    "timestamp": "2026-07-19T23:56:44Z"
-  },
-  {
-    "title": "Policy Gate #1310",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on agent/authority-lattice-accessibility",
-    "time": "23:56",
-    "timestamp": "2026-07-19T23:56:44Z"
-  },
-  {
-    "title": "PR Automation #701",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on agent/authority-lattice-accessibility",
-    "time": "23:56",
-    "timestamp": "2026-07-19T23:56:44Z"
-  },
-  {
-    "title": "Defender Watch #919",
     "status": "ok",
     "detail": "success \u00b7 pull_request on agent/authority-lattice-accessibility",
     "time": "23:56",

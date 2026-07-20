@@ -1265,3 +1265,62 @@ def promotion_gate(candidate: SelfUpgradeCandidate) -> tuple[bool, str]:
 8. The self-improvement service turns the rejection into eval cases, proposes a prompt-weighting change, and runs offline regression, drift, policy, citation, and latency checks.
 9. A human ModelOps reviewer approves the evidence-backed candidate. Apollo deploys it to a canary ring with a pinned rollback version.
 10. Observability watches precision, recall, p95 latency, policy-denial rates, operator acceptance, and citation accuracy. Any regression triggers automatic rollback and preserves the full audit chain.
+
+## Repository Audit and Agent Command Prompt
+
+Use the `agents/clearglass_artemis_platform_architect/` agent pack when the repository needs an additive audit, merge, or implementation pass that strengthens ClearGlassInc Artemis without removing existing pages or weakening governance.
+
+### One-line command prompt
+
+```text
+Act as the ClearGlassInc Artemis Platform Architect for Desmond Otieno Odhiambo: audit this repository, keep existing pages intact, and add the highest-value Python-first automation, AI-agent, security, observability, eval, and deployment-governance improvements needed to make it a secure, modular, observable, self-improving, production-ready platform.
+```
+
+### Cursor-ready repository upgrade prompt
+
+```text
+Act as a principal software architect, AI systems designer, product strategist, and senior full-stack AI architect for ClearGlassInc Artemis and founder Desmond Otieno Odhiambo.
+
+Main objective:
+Treat the repo like a defense-grade system that must scale under pressure and evolve continuously.
+
+Audit the repository and upgrade it into a future-tech production platform. Add and merge improvements without removing existing pages, safeguards, deployment paths, generated internal-link blocks, or governance controls. Use Python for precision in control-plane logic, evals, policy checks, workflow state machines, automation bots, telemetry processors, and repository audit tooling.
+
+Review missing advanced features, weak or placeholder code, duplication, architecture bottlenecks, automation opportunities, AI workflow opportunities, security gaps, observability gaps, performance bottlenecks, poor abstractions, and modules that should be simplified or split.
+
+Build only high-leverage capabilities: AI agents and orchestration, context-aware workflows, retrieval and knowledge layers, telemetry and monitoring, event-driven automation, secure auth and access control, secrets handling, retries and fallback logic, benchmarking and evals, plugin-style modular architecture, CI/CD automation, caching, performance optimization, test coverage, and handoff documentation.
+
+For every major upgrade, explain purpose, architecture, dependencies, risks, testing approach, rollout sequence, rollback path, and human approval gate. Keep automation self-improving but never self-authorizing.
+
+Return: Repository assessment, Best upgrade opportunities, Refactor plan, Implementation plan, and Future direction.
+```
+
+### Repo audit checklist
+
+```yaml
+clearglass_artemis_repo_audit:
+  preserve:
+    - existing_pages
+    - generated_internal_links
+    - github_pages_deploy_paths
+    - commerce_governance_flow
+    - append_only_auditability
+    - human_approval_for_consequential_actions
+  assess:
+    - architecture_boundaries
+    - duplicate_or_placeholder_code
+    - agent_and_bot_runtime_contracts
+    - python_control_plane_quality
+    - authn_authz_policy_enforcement
+    - secrets_and_configuration_handling
+    - observability_and_eval_coverage
+    - ci_cd_and_rollback_readiness
+    - documentation_and_handoff_quality
+  add_next:
+    - typed_agent_registry
+    - eval_backed_self_improvement_queue
+    - policy_as_code_preflight_tests
+    - telemetry_schema_and_dashboards
+    - signed_prompt_workflow_release_manifests
+    - apollo_style_canary_and_rollback_runbooks
+```

@@ -160,6 +160,7 @@ class PromotionDecision:
     rollback_version: str
     reasons: tuple[str, ...]
 
+
 @dataclass(frozen=True)
 class ImprovementProposal:
     proposal_id: str
@@ -192,10 +193,14 @@ class ImmutableAuditLog:
     def __init__(self) -> None:
         self.records: list[AuditRecord] = []
 
-    def append(self, *, actor: str, action: str, resource: str, decision: str, payload: dict[str, Any]) -> AuditRecord:
+    def append(
+        self, *, actor: str, action: str, resource: str, decision: str, payload: dict[str, Any]
+    ) -> AuditRecord:
         previous_hash = self.records[-1].chain_hash if self.records else "GENESIS"
         payload_hash = sha256(repr(sorted(payload.items())).encode("utf-8")).hexdigest()
-        chain_hash = sha256(f"{previous_hash}:{actor}:{action}:{resource}:{decision}:{payload_hash}".encode("utf-8")).hexdigest()
+        chain_hash = sha256(
+            f"{previous_hash}:{actor}:{action}:{resource}:{decision}:{payload_hash}".encode("utf-8")
+        ).hexdigest()
         record = AuditRecord(
             record_id=str(uuid4()),
             actor=actor,
@@ -214,7 +219,9 @@ class ImmutableAuditLog:
         previous_hash = "GENESIS"
         for record in self.records:
             expected = sha256(
-                f"{previous_hash}:{record.actor}:{record.action}:{record.resource}:{record.decision}:{record.payload_hash}".encode("utf-8")
+                f"{previous_hash}:{record.actor}:{record.action}:{record.resource}:{record.decision}:{record.payload_hash}".encode(
+                    "utf-8"
+                )
             ).hexdigest()
             if not compare_digest(expected, record.chain_hash):
                 return False
@@ -222,14 +229,77 @@ class ImmutableAuditLog:
         return True
 
 
+class WorkflowStateMachine:
+    """Deterministic mission workflow guardrail for agent and operator actions."""
+
+    ALLOWED_TRANSITIONS: dict[WorkflowState, frozenset[WorkflowState]] = {
+        WorkflowState.RECEIVED: frozenset({WorkflowState.TRIAGED}),
+        WorkflowState.TRIAGED: frozenset({WorkflowState.ENRICHED, WorkflowState.REJECTED}),
+        WorkflowState.ENRICHED: frozenset({WorkflowState.RECOMMENDED, WorkflowState.REJECTED}),
+        WorkflowState.RECOMMENDED: frozenset(
+            {WorkflowState.AWAITING_APPROVAL, WorkflowState.REJECTED}
+        ),
+        WorkflowState.AWAITING_APPROVAL: frozenset(
+            {WorkflowState.APPROVED, WorkflowState.REJECTED}
+        ),
+        WorkflowState.APPROVED: frozenset({WorkflowState.DEPLOYED, WorkflowState.ROLLED_BACK}),
+        WorkflowState.DEPLOYED: frozenset({WorkflowState.ROLLED_BACK}),
+        WorkflowState.REJECTED: frozenset(),
+        WorkflowState.ROLLED_BACK: frozenset(),
+    }
+
+    def __init__(self, audit_log: ImmutableAuditLog) -> None:
+        self.audit_log = audit_log
+
+    def transition(
+        self,
+        workflow_id: str,
+        current: WorkflowState,
+        target: WorkflowState,
+        *,
+        actor: str,
+        reason: str,
+    ) -> WorkflowState:
+        """Move a workflow only through approved states and audit denied jumps."""
+
+        allowed = target in self.ALLOWED_TRANSITIONS[current]
+        self.audit_log.append(
+            actor=actor,
+            action="workflow.transition",
+            resource=workflow_id,
+            decision="ALLOW" if allowed else "DENY",
+            payload={"from": current.value, "to": target.value, "reason": reason},
+        )
+        if not allowed:
+            raise ValueError(f"invalid workflow transition: {current.value} -> {target.value}")
+        return target
+
+
 class ModelRouter:
     """Deterministic, policy-aware model routing for latency-sensitive missions."""
 
-    def route(self, *, task_type: str, classification: str, latency_budget_ms: int, requires_deep_reasoning: bool) -> ModelRoute:
+    def route(
+        self,
+        *,
+        task_type: str,
+        classification: str,
+        latency_budget_ms: int,
+        requires_deep_reasoning: bool,
+    ) -> ModelRoute:
         if classification in {"SECRET", "COALITION_RESTRICTED"}:
-            return ModelRoute(task_type, "aip-secure-reasoner", "isolated", "restricted classification requires hardened AIP path")
+            return ModelRoute(
+                task_type,
+                "aip-secure-reasoner",
+                "isolated",
+                "restricted classification requires hardened AIP path",
+            )
         if requires_deep_reasoning or latency_budget_ms >= 1_200:
-            return ModelRoute(task_type, "aip-frontier-reasoner", "standard", "deep reasoning or relaxed latency budget")
+            return ModelRoute(
+                task_type,
+                "aip-frontier-reasoner",
+                "standard",
+                "deep reasoning or relaxed latency budget",
+            )
         return ModelRoute(task_type, "aip-fast-mini", "low-latency", "tight latency budget")
 
 
@@ -275,19 +345,44 @@ class InMemoryOntologyStore:
 
 
 class ArtemisEventBus:
-    """Small synchronous event bus standing in for Kafka/Pulsar topics."""
+    """Small synchronous event bus standing in for Kafka/Pulsar topics.
+
+    Handler failures are isolated into a dead-letter queue so one fragile
+    integration cannot prevent other mission consumers from receiving an event.
+    """
 
     def __init__(self) -> None:
         self._subscribers: dict[str, list[Callable[[dict[str, Any]], None]]] = {}
+        self.dead_letters: list[dict[str, Any]] = []
+        self.telemetry: dict[str, int] = {
+            "events.published": 0,
+            "events.delivered": 0,
+            "events.handler_failed": 0,
+        }
 
     def subscribe(self, topic: str, handler: Callable[[dict[str, Any]], None]) -> None:
         self._subscribers.setdefault(topic, []).append(handler)
 
-    def publish(self, topic: str, event: dict[str, Any]) -> None:
+    def publish(self, topic: str, event: dict[str, Any]) -> str:
         event.setdefault("event_id", str(uuid4()))
         event.setdefault("emitted_at", datetime.now(UTC).isoformat())
+        self.telemetry["events.published"] += 1
         for handler in self._subscribers.get(topic, []):
-            handler(event)
+            try:
+                handler(event)
+            except Exception as exc:
+                self.telemetry["events.handler_failed"] += 1
+                self.dead_letters.append(
+                    {
+                        "topic": topic,
+                        "event": dict(event),
+                        "handler": getattr(handler, "__name__", handler.__class__.__name__),
+                        "error": str(exc),
+                    }
+                )
+            else:
+                self.telemetry["events.delivered"] += 1
+        return str(event["event_id"])
 
 
 class TriageAgent:
@@ -303,8 +398,12 @@ class TriageAgent:
             if self.policy.authorize_entity(context, entity).allowed:
                 visible_entities.append(entity)
 
-        confidence = fmean([entity.confidence for entity in visible_entities]) if visible_entities else 0.0
-        risk_tier = "high" if alert.severity in {"high", "critical"} and confidence >= 0.75 else "medium"
+        confidence = (
+            fmean([entity.confidence for entity in visible_entities]) if visible_entities else 0.0
+        )
+        risk_tier = (
+            "high" if alert.severity in {"high", "critical"} and confidence >= 0.75 else "medium"
+        )
         return AgentAction(
             action_id=str(uuid4()),
             action_type="open_case_and_request_review",
@@ -313,7 +412,10 @@ class TriageAgent:
             summary=f"{alert.hypothesis} based on {len(alert.evidence_refs)} cited observations.",
             required_approval=True,
             evidence_refs=alert.evidence_refs,
-            parameters={"visible_entity_count": len(visible_entities), "mean_confidence": confidence},
+            parameters={
+                "visible_entity_count": len(visible_entities),
+                "mean_confidence": confidence,
+            },
         )
 
 
@@ -475,11 +577,15 @@ class ApprovalGate:
         self.policy = policy
         self.audit_log = audit_log
 
-    def approve(self, context: AccessContext, action: AgentAction, decision: str, reason: str) -> PolicyDecision:
+    def approve(
+        self, context: AccessContext, action: AgentAction, decision: str, reason: str
+    ) -> PolicyDecision:
         if decision not in {"approve", "reject"}:
             raise ValueError("decision must be approve or reject")
         policy_decision = self.policy.authorize_action(context, action)
-        final_decision = "REJECT" if decision == "reject" or not policy_decision.allowed else "APPROVE"
+        final_decision = (
+            "REJECT" if decision == "reject" or not policy_decision.allowed else "APPROVE"
+        )
         self.audit_log.append(
             actor=context.operator_id,
             action=f"human_approval.{decision}",

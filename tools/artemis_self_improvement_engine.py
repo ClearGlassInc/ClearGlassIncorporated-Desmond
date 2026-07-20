@@ -6,6 +6,7 @@ System 2040 architecture. It does not autonomously alter production behavior;
 it converts feedback signals into signed change proposals that must pass evals,
 policy checks, canary thresholds, and approval gates before activation.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field, asdict
@@ -30,6 +31,14 @@ class ProposalType(str, Enum):
     WORKFLOW_PATCH = "workflow_patch"
     ROUTING_PATCH = "routing_patch"
     HEURISTIC_PATCH = "heuristic_patch"
+
+
+class ApprovalState(str, Enum):
+    DRAFT = "draft"
+    EVAL_FAILED = "eval_failed"
+    NEEDS_HUMAN_APPROVAL = "needs_human_approval"
+    APPROVED_FOR_CANARY = "approved_for_canary"
+    REJECTED = "rejected"
 
 
 @dataclass(frozen=True)
@@ -94,6 +103,9 @@ class ChangeProposal:
     eval_result: EvalResult
     approval_required: bool = True
     rollout_ring: str = "staging-canary"
+    approval_state: ApprovalState = ApprovalState.NEEDS_HUMAN_APPROVAL
+    policy_decision: str = "human_approval_required"
+    drift_score: float = 0.0
 
     @property
     def signed_manifest(self) -> dict[str, Any]:
@@ -118,19 +130,29 @@ class ArtemisImprovementEngine:
 
         proposals: list[ChangeProposal] = []
         for mission_id, mission_signals in grouped.items():
-            corrections = [s for s in mission_signals if s.signal_type == SignalType.OPERATOR_CORRECTION]
+            corrections = [
+                s for s in mission_signals if s.signal_type == SignalType.OPERATOR_CORRECTION
+            ]
             outcomes = [s for s in mission_signals if s.signal_type == SignalType.ALERT_OUTCOME]
-            latency = [float(s.payload.get("latency_ms", 0)) for s in mission_signals if s.signal_type == SignalType.LATENCY_SAMPLE]
+            latency = [
+                float(s.payload.get("latency_ms", 0))
+                for s in mission_signals
+                if s.signal_type == SignalType.LATENCY_SAMPLE
+            ]
 
             if len(corrections) >= 3:
                 eval_result = self._offline_eval(corrections, outcomes, latency)
-                patch = self._build_prompt_patch(corrections)
+                drift_score = self._drift_score(corrections)
+                patch = self._build_prompt_patch(corrections, drift_score)
+                approval_state, policy_decision = self._proposal_gate(eval_result, drift_score)
                 proposals.append(
                     ChangeProposal(
                         proposal_id=self._proposal_id(mission_id, "triage-copilot", patch),
                         proposal_type=ProposalType.PROMPT_PATCH,
                         target_component="aip.agent.triage_copilot",
-                        current_version=self.component_versions.get("aip.agent.triage_copilot", "0.0.0"),
+                        current_version=self.component_versions.get(
+                            "aip.agent.triage_copilot", "0.0.0"
+                        ),
                         proposed_version=self._next_patch_version(
                             self.component_versions.get("aip.agent.triage_copilot", "0.0.0")
                         ),
@@ -138,6 +160,9 @@ class ArtemisImprovementEngine:
                         patch=patch,
                         evidence_hashes=[s.lineage_hash for s in mission_signals],
                         eval_result=eval_result,
+                        approval_state=approval_state,
+                        policy_decision=policy_decision,
+                        drift_score=drift_score,
                     )
                 )
         return proposals
@@ -146,12 +171,20 @@ class ArtemisImprovementEngine:
     def _offline_eval(
         corrections: list[FeedbackSignal], outcomes: list[FeedbackSignal], latency: list[float]
     ) -> EvalResult:
-        true_positive = sum(1 for s in outcomes if s.payload.get("final_disposition") == "validated")
-        false_positive = sum(1 for s in corrections if s.payload.get("correction") == "false_positive")
+        true_positive = sum(
+            1 for s in outcomes if s.payload.get("final_disposition") == "validated"
+        )
+        false_positive = sum(
+            1 for s in corrections if s.payload.get("correction") == "false_positive"
+        )
         missed = sum(1 for s in corrections if s.payload.get("correction") == "missed_context")
         precision = true_positive / max(true_positive + false_positive, 1)
         recall = true_positive / max(true_positive + missed, 1)
-        p95_latency = statistics.quantiles(latency or [250.0], n=20)[-1] if len(latency) >= 2 else (latency[0] if latency else 250.0)
+        p95_latency = (
+            statistics.quantiles(latency or [250.0], n=20)[-1]
+            if len(latency) >= 2
+            else (latency[0] if latency else 250.0)
+        )
         trust = 1.0 - min(len(corrections) * 0.025, 0.2)
         return EvalResult(
             precision=round(precision, 4),
@@ -163,7 +196,33 @@ class ArtemisImprovementEngine:
         )
 
     @staticmethod
-    def _build_prompt_patch(corrections: list[FeedbackSignal]) -> dict[str, Any]:
+    def _drift_score(corrections: list[FeedbackSignal]) -> float:
+        """Estimate workflow drift from correction-theme concentration.
+
+        A higher score means operators are repeatedly correcting the same failure
+        mode, which is useful evidence for proposing a change but should slow
+        rollout until a human reviews root cause and regression coverage.
+        """
+        if not corrections:
+            return 0.0
+        themes = [str(s.payload.get("theme", "evidence_threshold")) for s in corrections]
+        dominant_theme_count = max(themes.count(theme) for theme in set(themes))
+        return round(dominant_theme_count / len(themes), 4)
+
+    @staticmethod
+    def _proposal_gate(eval_result: EvalResult, drift_score: float) -> tuple[ApprovalState, str]:
+        if eval_result.policy_violations:
+            return ApprovalState.EVAL_FAILED, "blocked_policy_violation"
+        if not eval_result.passes():
+            return ApprovalState.EVAL_FAILED, "blocked_eval_threshold"
+        if drift_score >= 0.67:
+            return ApprovalState.NEEDS_HUMAN_APPROVAL, "human_review_required_high_drift"
+        return ApprovalState.NEEDS_HUMAN_APPROVAL, "human_approval_required"
+
+    @staticmethod
+    def _build_prompt_patch(
+        corrections: list[FeedbackSignal], drift_score: float
+    ) -> dict[str, Any]:
         themes = sorted({str(s.payload.get("theme", "evidence_threshold")) for s in corrections})
         return {
             "guardrail_additions": [
@@ -173,6 +232,12 @@ class ArtemisImprovementEngine:
             ],
             "observed_correction_themes": themes,
             "requires_eval_suite": "mission_triage_regression_v3",
+            "drift_score": drift_score,
+            "rollout_controls": {
+                "canary_percentage": 5,
+                "rollback_on_policy_violation": True,
+                "rollback_on_p95_latency_ms": 1200,
+            },
         }
 
     @staticmethod
@@ -182,20 +247,72 @@ class ArtemisImprovementEngine:
 
     @staticmethod
     def _next_patch_version(version: str) -> str:
-        major, minor, patch = (int(part) for part in version.split("."))
+        parts = version.split(".")
+        if len(parts) != 3 or not all(part.isdigit() for part in parts):
+            raise ValueError(f"component version must use MAJOR.MINOR.PATCH, got {version!r}")
+        major, minor, patch = (int(part) for part in parts)
         return f"{major}.{minor}.{patch + 1}"
 
 
 def demo() -> None:
     signals = [
-        FeedbackSignal("s1", SignalType.OPERATOR_CORRECTION, "m-2040", "case-7", "analyst.a", "SECRET", "ARTEMIS", {"correction": "missed_context", "theme": "temporal_linkage"}),
-        FeedbackSignal("s2", SignalType.OPERATOR_CORRECTION, "m-2040", "case-7", "analyst.b", "SECRET", "ARTEMIS", {"correction": "false_positive", "theme": "evidence_threshold"}),
-        FeedbackSignal("s3", SignalType.OPERATOR_CORRECTION, "m-2040", "case-7", "analyst.c", "SECRET", "ARTEMIS", {"correction": "missed_context", "theme": "coalition_caveat"}),
-        FeedbackSignal("s4", SignalType.ALERT_OUTCOME, "m-2040", "case-7", "commander.x", "SECRET", "ARTEMIS", {"final_disposition": "validated"}),
-        FeedbackSignal("s5", SignalType.LATENCY_SAMPLE, "m-2040", "case-7", "system", "SECRET", "ARTEMIS", {"latency_ms": 412}),
+        FeedbackSignal(
+            "s1",
+            SignalType.OPERATOR_CORRECTION,
+            "m-2040",
+            "case-7",
+            "analyst.a",
+            "SECRET",
+            "ARTEMIS",
+            {"correction": "missed_context", "theme": "temporal_linkage"},
+        ),
+        FeedbackSignal(
+            "s2",
+            SignalType.OPERATOR_CORRECTION,
+            "m-2040",
+            "case-7",
+            "analyst.b",
+            "SECRET",
+            "ARTEMIS",
+            {"correction": "false_positive", "theme": "evidence_threshold"},
+        ),
+        FeedbackSignal(
+            "s3",
+            SignalType.OPERATOR_CORRECTION,
+            "m-2040",
+            "case-7",
+            "analyst.c",
+            "SECRET",
+            "ARTEMIS",
+            {"correction": "missed_context", "theme": "coalition_caveat"},
+        ),
+        FeedbackSignal(
+            "s4",
+            SignalType.ALERT_OUTCOME,
+            "m-2040",
+            "case-7",
+            "commander.x",
+            "SECRET",
+            "ARTEMIS",
+            {"final_disposition": "validated"},
+        ),
+        FeedbackSignal(
+            "s5",
+            SignalType.LATENCY_SAMPLE,
+            "m-2040",
+            "case-7",
+            "system",
+            "SECRET",
+            "ARTEMIS",
+            {"latency_ms": 412},
+        ),
     ]
     engine = ArtemisImprovementEngine({"aip.agent.triage_copilot": "2.4.9"})
-    print(json.dumps([p.signed_manifest for p in engine.synthesize_proposals(signals)], indent=2, default=str))
+    print(
+        json.dumps(
+            [p.signed_manifest for p in engine.synthesize_proposals(signals)], indent=2, default=str
+        )
+    )
 
 
 if __name__ == "__main__":

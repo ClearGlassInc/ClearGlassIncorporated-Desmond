@@ -376,6 +376,33 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
   </div>
 </section>
 
+
+<!-- PLATFORM MODULES -->
+<section id="platform-modules">
+  <div class="sec-head"><div class="sec-kicker">Feature architecture</div><h2 class="sec-title">Core modules for mission-grade automation</h2><p class="sec-sub">CONDUIT expands from a visual builder into an automation command center: triggers, queues, approvals, agents, connectors, logs, and deployment controls operate as one self-hosted system.</p></div>
+  <div class="arch-grid">
+    <div class="arch-card"><h4>Event intake layer</h4><p>API calls, webhooks, schedules, inbox events, forms, repository changes, and file drops enter through normalized trigger contracts with explicit payload shape and source metadata.</p></div>
+    <div class="arch-card"><h4>Workflow definition layer</h4><p>Version-controlled node graphs define branching logic, retry policy, secrets scope, approval checkpoints, AI model routes, and terminal states before execution begins.</p></div>
+    <div class="arch-card"><h4>Queue and worker layer</h4><p>Jobs move through queue-backed workers that support concurrency limits, delayed retries, resumable steps, dead-letter handling, and clean isolation between long-running automations.</p></div>
+    <div class="arch-card"><h4>Governance layer</h4><p>Human approval gates, role permissions, policy-aware nodes, prompt governance, and audit events keep automation accountable even when agentic steps are embedded inside flows.</p></div>
+    <div class="arch-card"><h4>Connector layer</h4><p>Modular integrations standardize SaaS APIs, databases, AI services, internal tools, and generic HTTP calls so teams can extend workflows without rebuilding orchestration primitives.</p></div>
+    <div class="arch-card"><h4>Observability layer</h4><p>Execution history, node timings, payload lineage, error traces, queue depth, retry outcomes, and exported logs give operators a reliable view of what happened and why.</p></div>
+  </div>
+</section>
+
+<!-- EXECUTION FLOW -->
+<section id="execution-flow">
+  <div class="sec-head"><div class="sec-kicker">How it works</div><h2 class="sec-title">From signal to governed action</h2><p class="sec-sub">Every run follows an inspectable path: receive the event, evaluate context, execute deterministic steps, request approval when needed, and preserve the record.</p></div>
+  <div class="system-rail">
+    <div class="rail-row"><div class="rail-k">01 · Trigger</div><div class="rail-v">A webhook, API call, cron schedule, email, file event, form submission, or manual launch creates a typed workflow run with source, actor, and correlation metadata.</div></div>
+    <div class="rail-row"><div class="rail-k">02 · Validate</div><div class="rail-v">Schema checks, authorization rules, deduplication, confidence thresholds, and required fields determine whether the run can proceed safely.</div></div>
+    <div class="rail-row"><div class="rail-k">03 · Orchestrate</div><div class="rail-v">Nodes execute through conditional branches, transformations, connector calls, AI-assisted steps, and retry policies while the system persists intermediate state.</div></div>
+    <div class="rail-row"><div class="rail-k">04 · Approve</div><div class="rail-v">Material changes can pause for one or multiple approvers, preserving the proposed action, evidence, operator decision, comments, and final disposition.</div></div>
+    <div class="rail-row"><div class="rail-k">05 · Recover</div><div class="rail-v">Failures route to retries, dead-letter queues, compensating workflows, alerts, or manual intervention without hiding partial outcomes.</div></div>
+    <div class="rail-row"><div class="rail-k">06 · Audit</div><div class="rail-v">The final run record links trigger, workflow version, credentials used, model route, outputs, approvals, errors, and exportable execution history.</div></div>
+  </div>
+</section>
+
 <!-- GOVERNANCE -->
 <section id="governance">
   <div class="sec-head"><div class="sec-kicker">Security and governance</div><h2 class="sec-title">Private automation for high-trust environments</h2><p class="sec-sub">CONDUIT keeps sensitive automation close to the systems it serves, with controls that support auditability, separation of duties, and disciplined AI use.</p></div>
@@ -440,6 +467,63 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
     <div class="deploy-card"><h4>Queue-mode production</h4><p>Separate web, workers, database, and queue services to handle higher execution volume and isolate failure domains.</p></div>
     <div class="deploy-card"><h4>Kubernetes and edge</h4><p>Deploy into Kubernetes, private cloud, on-prem infrastructure, or edge systems where data gravity and connectivity demand local execution.</p></div>
     <div class="deploy-card"><h4>Managed by ClearGlass</h4><p>Use the ClearGlass fleet when you want managed hosting, hardening, updates, backups, workflow buildout, and operational handoff.</p></div>
+  </div>
+</section>
+
+
+<!-- RELIABILITY -->
+<section id="reliability">
+  <div class="sec-head"><div class="sec-kicker">Reliability and recovery</div><h2 class="sec-title">Automation that fails visibly and recovers deliberately</h2><p class="sec-sub">CONDUIT is built around operational truth: integrations fail, payloads drift, APIs rate-limit, and human decisions matter. The platform makes those realities manageable.</p></div>
+  <div class="cards">
+    <div class="fcard"><div class="fi">↻</div><h4>Bounded retries</h4><p>Retry transient failures with defined limits, backoff windows, and escalation paths instead of silent infinite loops.</p></div>
+    <div class="fcard"><div class="fi">⚑</div><h4>Dead-letter handling</h4><p>Route exhausted jobs into review queues with payload, node, error, timestamp, and workflow version preserved.</p></div>
+    <div class="fcard"><div class="fi">◷</div><h4>Latency visibility</h4><p>Track node timings, connector response, queue wait, model latency, and total execution time for bottleneck analysis.</p></div>
+    <div class="fcard"><div class="fi">⇄</div><h4>Replayable context</h4><p>Re-run failed branches with known inputs, patched credentials, or updated definitions while keeping prior history intact.</p></div>
+    <div class="fcard"><div class="fi">☑</div><h4>Compensating workflows</h4><p>Launch cleanup, notification, rollback, or reconciliation flows when downstream systems reject or partially complete a step.</p></div>
+  </div>
+</section>
+
+<!-- DEVELOPER EXTENSIBILITY -->
+<section id="extensibility">
+  <div class="sec-head"><div class="sec-kicker">Developer extensibility</div><h2 class="sec-title">Open source where it counts: at the edge of your operations</h2><p class="sec-sub">Technical teams can keep the visual builder for speed while extending the engine with custom nodes, internal APIs, model providers, and versioned automation packages.</p></div>
+  <div class="arch-grid">
+    <div class="arch-card"><h4>Custom nodes</h4><p>Wrap internal services, proprietary data sources, validation routines, and domain-specific actions as reusable workflow blocks.</p></div>
+    <div class="arch-card"><h4>Code-level escape hatch</h4><p>Use code nodes for transformations, signatures, payload normalization, scoring, and specialized logic that does not belong in a generic connector.</p></div>
+    <div class="arch-card"><h4>API-first control</h4><p>Trigger, inspect, export, and manage workflows through APIs so CONDUIT can sit behind portals, command centers, or internal developer platforms.</p></div>
+    <div class="arch-card"><h4>Model provider choice</h4><p>Route AI steps to approved commercial models, private endpoints, or local inference while preserving prompt versions and output lineage.</p></div>
+    <div class="arch-card"><h4>Git-friendly operations</h4><p>Promote definitions through review, staging, production, and rollback workflows so automation changes behave like software changes.</p></div>
+  </div>
+</section>
+
+<!-- USE CASE MATRIX -->
+<section id="use-cases">
+  <div class="sec-head"><div class="sec-kicker">Operational use cases</div><h2 class="sec-title">Built for teams that run critical internal systems</h2><p class="sec-sub">CONDUIT is broad enough for everyday automation and disciplined enough for work that needs approval, evidence, and recoverability.</p></div>
+  <div class="lattice-grid">
+    <div class="lattice-card"><h4>Operations</h4><p>Route form submissions, reconcile spreadsheets, enrich customer records, generate handoff packets, notify owners, and require approval before external communications.</p></div>
+    <div class="lattice-card"><h4>Engineering</h4><p>Trigger incident workflows, open issues, query logs, summarize deploy changes, request rollback approval, and fan out status updates from one controlled run.</p></div>
+    <div class="lattice-card"><h4>Security</h4><p>Ingest alerts, enrich indicators, classify severity, collect evidence, open cases, and keep containment actions behind explicit human authorization.</p></div>
+    <div class="lattice-card"><h4>Internal tooling</h4><p>Connect databases, Slack, CRM, ticketing, docs, and AI copilots into approval-aware tools without waiting for a full custom app build.</p></div>
+    <div class="lattice-card"><h4>Executive workflows</h4><p>Summarize operational signals, prepare decision briefs, track follow-ups, and preserve the evidence chain behind recommendations.</p></div>
+  </div>
+</section>
+
+<!-- SAAS COMPARISON -->
+<section id="comparison">
+  <div class="sec-head"><div class="sec-kicker">CONDUIT versus generic SaaS automation</div><h2 class="sec-title">Control beats convenience when workflows become infrastructure</h2><p class="sec-sub">SaaS automation is useful for lightweight glue. CONDUIT is for teams that need ownership, auditability, and operational depth.</p></div>
+  <div class="system-rail">
+    <div class="rail-row"><div class="rail-k">Custody</div><div class="rail-v">Generic SaaS brokers credentials and data through a vendor runtime. CONDUIT runs beside your systems, in your account, with secrets and execution history under your control.</div></div>
+    <div class="rail-row"><div class="rail-k">Governance</div><div class="rail-v">Generic task chains often hide approvals inside ad hoc process. CONDUIT makes approval gates, roles, run history, prompt versions, and policy boundaries first-class operating objects.</div></div>
+    <div class="rail-row"><div class="rail-k">Extensibility</div><div class="rail-v">Generic platforms stop at their connector catalog. CONDUIT remains open source, API-ready, and extensible for private services, local models, custom nodes, and self-managed deployment topologies.</div></div>
+  </div>
+</section>
+
+<!-- WHY SELF-HOSTED WINS -->
+<section id="self-hosted-wins">
+  <div class="sec-head"><div class="sec-kicker">Why self-hosted wins</div><h2 class="sec-title">Private automation compounds institutional advantage</h2><p class="sec-sub">The more important the workflow, the less acceptable it becomes to lose control of credentials, latency, deployment timing, data retention, or audit evidence.</p></div>
+  <div class="why-grid">
+    <div class="why-card"><h4>Data stays close to authority</h4><p>Run automation near databases, files, internal APIs, and private models without exporting operational context into a shared external runtime.</p></div>
+    <div class="why-card"><h4>Execution matches policy</h4><p>Network boundaries, identity systems, logging standards, retention requirements, and approval workflows can mirror how your organization already operates.</p></div>
+    <div class="why-card"><h4>Economics scale cleanly</h4><p>High-volume automation should not become a tax on every task. Self-hosting lets capacity planning replace unpredictable per-run economics.</p></div>
   </div>
 </section>
 

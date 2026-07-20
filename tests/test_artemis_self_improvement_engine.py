@@ -25,9 +25,21 @@ def _signal(signal_id: str, signal_type: SignalType, payload: dict) -> FeedbackS
 def test_three_operator_corrections_generate_human_approved_prompt_proposal() -> None:
     engine = ArtemisImprovementEngine({"aip.agent.triage_copilot": "2.4.9"})
     signals = [
-        _signal("s1", SignalType.OPERATOR_CORRECTION, {"correction": "missed_context", "theme": "temporal_linkage"}),
-        _signal("s2", SignalType.OPERATOR_CORRECTION, {"correction": "false_positive", "theme": "evidence_threshold"}),
-        _signal("s3", SignalType.OPERATOR_CORRECTION, {"correction": "missed_context", "theme": "coalition_caveat"}),
+        _signal(
+            "s1",
+            SignalType.OPERATOR_CORRECTION,
+            {"correction": "missed_context", "theme": "temporal_linkage"},
+        ),
+        _signal(
+            "s2",
+            SignalType.OPERATOR_CORRECTION,
+            {"correction": "false_positive", "theme": "evidence_threshold"},
+        ),
+        _signal(
+            "s3",
+            SignalType.OPERATOR_CORRECTION,
+            {"correction": "missed_context", "theme": "coalition_caveat"},
+        ),
         _signal("s4", SignalType.ALERT_OUTCOME, {"final_disposition": "validated"}),
         _signal("s5", SignalType.LATENCY_SAMPLE, {"latency_ms": 412}),
     ]
@@ -53,3 +65,51 @@ def test_fewer_than_three_operator_corrections_do_not_generate_proposal() -> Non
     ]
 
     assert engine.synthesize_proposals(signals) == []
+
+
+def test_generated_proposal_carries_eval_gate_and_drift_controls() -> None:
+    engine = ArtemisImprovementEngine({"aip.agent.triage_copilot": "2.4.9"})
+    signals = [
+        _signal(
+            "s1",
+            SignalType.OPERATOR_CORRECTION,
+            {"correction": "missed_context", "theme": "temporal_linkage"},
+        ),
+        _signal(
+            "s2",
+            SignalType.OPERATOR_CORRECTION,
+            {"correction": "missed_context", "theme": "temporal_linkage"},
+        ),
+        _signal(
+            "s3",
+            SignalType.OPERATOR_CORRECTION,
+            {"correction": "missed_context", "theme": "temporal_linkage"},
+        ),
+    ]
+
+    proposal = engine.synthesize_proposals(signals)[0]
+
+    assert proposal.approval_state.value == "eval_failed"
+    assert proposal.policy_decision == "blocked_eval_threshold"
+    assert proposal.drift_score == 1.0
+    assert proposal.patch["rollout_controls"] == {
+        "canary_percentage": 5,
+        "rollback_on_policy_violation": True,
+        "rollback_on_p95_latency_ms": 1200,
+    }
+
+
+def test_invalid_component_version_fails_closed() -> None:
+    engine = ArtemisImprovementEngine({"aip.agent.triage_copilot": "latest"})
+    signals = [
+        _signal("s1", SignalType.OPERATOR_CORRECTION, {"correction": "missed_context"}),
+        _signal("s2", SignalType.OPERATOR_CORRECTION, {"correction": "false_positive"}),
+        _signal("s3", SignalType.OPERATOR_CORRECTION, {"correction": "missed_context"}),
+    ]
+
+    try:
+        engine.synthesize_proposals(signals)
+    except ValueError as exc:
+        assert "MAJOR.MINOR.PATCH" in str(exc)
+    else:
+        raise AssertionError("invalid component versions must fail closed")

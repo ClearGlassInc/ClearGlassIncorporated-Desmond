@@ -56,6 +56,14 @@
       "deliverables": ["test plan", "risk register", "release gate", "rollback checklist"]
     },
     {
+      "id": "legacy_modernization",
+      "division": "engineering",
+      "name": "Legacy Modernization Agent",
+      "mission": "Stabilize, document, and safely modernize legacy systems without breaking existing contracts or deployment paths.",
+      "triggers": ["legacy", "migration", "modernize", "backward compatibility", "technical debt", "strangler", "deprecation"],
+      "deliverables": ["legacy inventory", "compatibility contract", "migration slice plan", "rollback and parity checklist"]
+    },
+    {
       "id": "market_intelligence",
       "division": "marketing",
       "name": "Market Intelligence Agent",
@@ -70,6 +78,14 @@
       "mission": "Translate verified product capabilities into authoritative, channel-appropriate content.",
       "triggers": ["content", "article", "post", "campaign", "seo", "landing page", "newsletter"],
       "deliverables": ["content brief", "editorial calendar", "draft requirements", "claim ledger"]
+    },
+    {
+      "id": "campaign_bot_commander",
+      "division": "marketing",
+      "name": "Campaign Bot Commander",
+      "mission": "Coordinate a governed marketing bot swarm for campaign planning, asset generation, channel adaptation, and approval-ready launch packages.",
+      "triggers": ["bot army", "bots", "swarm", "campaign automation", "marketing campaign", "compaign", "multi-channel", "legacy campaign"],
+      "deliverables": ["bot roster", "campaign workback plan", "asset production queue", "approval-ready launch packet"]
     },
     {
       "id": "distribution_planner",
@@ -99,9 +115,11 @@
   "workflow": [
     {"stage": "intake", "owner": "chief_of_staff", "output": "normalized objective and constraints"},
     {"stage": "architecture", "owner": "staff_engineer", "output": "implementation or capability architecture"},
+    {"stage": "legacy_assurance", "owner": "legacy_modernization", "output": "legacy boundaries, parity requirements, migration slices, and rollback evidence"},
     {"stage": "quality_gate", "owner": "quality_security", "output": "risk, test, security, and rollback evidence"},
     {"stage": "market_fit", "owner": "market_intelligence", "output": "audience, pain, positioning, and evidence map"},
     {"stage": "campaign_design", "owner": "content_strategist", "output": "content and campaign system"},
+    {"stage": "campaign_bot_operations", "owner": "campaign_bot_commander", "output": "governed bot roster, channel asset queue, and approval-ready campaign packet"},
     {"stage": "distribution", "owner": "distribution_planner", "output": "approved channel execution queue"},
     {"stage": "revenue", "owner": "revenue_operator", "output": "offer and pipeline linkage"},
     {"stage": "measurement", "owner": "analytics_controller", "output": "KPI scorecard and next decision"}

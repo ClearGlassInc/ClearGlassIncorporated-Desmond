@@ -11,8 +11,10 @@ This package does **not** publish posts, send messages, spend money, deploy prod
 | Command | Chief of Staff | Objective normalization, sequencing, dependencies, decisions |
 | Engineering | Staff Engineer | Architecture, implementation, maintainability, performance |
 | Engineering | Quality and Security | Testing, threat/failure analysis, release and rollback gates |
+| Engineering | Legacy Modernization | Legacy-system inventory, compatibility contracts, migration slices, parity and rollback evidence |
 | Marketing | Market Intelligence | Audience, pain, positioning, buying signals, evidence gaps |
 | Marketing | Content Strategy | Evidence-backed content systems and claim control |
+| Marketing | Campaign Bot Commander | Governed bot swarm coordination for campaign workbacks, channel assets, and launch packets |
 | Marketing | Distribution Planning | Channel execution queues and approval packets |
 | Marketing | Revenue Operations | Offers, qualification, pipeline, conversion hypotheses |
 | Command | Analytics Controller | KPI definitions, experiments, decision-ready reporting |
@@ -63,6 +65,8 @@ The orchestrator uses explicit role triggers and request signals:
 
 - Engineering requests select engineering and quality roles.
 - Marketing/revenue requests select market, content, distribution, and revenue roles.
+- Legacy modernization requests add compatibility, parity, migration-slice, and rollback planning so existing contracts are preserved.
+- Bot-army or campaign-automation requests add the Campaign Bot Commander to coordinate channel specialists without granting publish, send, spend, or platform-control authority.
 - Combined requests select the complete cross-functional chain.
 - Ambiguous requests default to full-spectrum planning rather than silently omitting a required discipline.
 - Chief of Staff and Analytics Controller remain present to enforce sequencing and measurable outcomes.

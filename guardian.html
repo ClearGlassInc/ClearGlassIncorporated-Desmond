@@ -564,6 +564,16 @@ ADVANCED COMMAND CONSOLE ENHANCEMENTS
 @media(max-width:768px){.hero-kpi-strip,.command-grid,.gp-grid{grid-template-columns:1fr}.gp-card.wide,.gp-terminal{grid-column:auto}.guardian-picture{min-height:auto}.activity-list li{grid-template-columns:1fr}.hero-in{gap:32px}.nav-wrap{top:10px}.nav-inner{border-radius:24px;flex-wrap:wrap}.nav-back{padding:7px 10px}.command-nexus{padding-top:80px}}
 @media(max-width:480px){.hero-kpi-strip{grid-template-columns:1fr}.gp-brand{align-items:flex-start;flex-direction:column}.gp-brand strong{margin-left:0}.gp-topline{flex-direction:column}.hero-stack{width:100%}}
 
+
+/* ════════════════════════════════
+CLEARGLASS GUARDIAN v5.0 — Artemis mission command additive layers
+════════════════════════════════ */
+.guardian-brief{position:relative;z-index:2;padding:120px 0;background:radial-gradient(ellipse 70% 45% at 50% 0%,rgba(96,165,250,.10),transparent 70%)}
+.gb-head{max-width:920px;margin-bottom:46px}.gb-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.gb-card{grid-column:span 4;position:relative;padding:24px;border:1px solid var(--crimson-line);border-radius:20px;background:linear-gradient(145deg,rgba(124,150,255,.075),rgba(255,255,255,.018));box-shadow:0 24px 64px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden}.gb-card::before{content:'';position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--crimson),transparent)}.gb-card.wide{grid-column:span 6}.gb-card.full{grid-column:span 12}.gb-k{display:block;font-family:var(--M);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--crimson-2);margin-bottom:12px}.gb-card h3{font-size:24px;line-height:1.08;letter-spacing:-.025em;margin-bottom:12px}.gb-card p,.gb-card li{font-size:14px;line-height:1.72;color:var(--ash)}.gb-card ul{list-style:none;display:grid;gap:10px;margin-top:16px}.gb-card li{padding-left:22px;position:relative}.gb-card li::before{content:'↳';position:absolute;left:0;color:var(--crimson-2);font-family:var(--M)}.gb-rail{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:16px;background:var(--crimson-line);border:1px solid var(--crimson-line)}.gb-rail span{padding:13px 12px;background:rgba(8,5,10,.92);font-family:var(--M);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash)}.hero-options{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}.hero-options div{padding:16px;border:1px solid var(--crimson-dim);border-radius:14px;background:rgba(0,0,0,.22)}.hero-options b{display:block;color:var(--bone);font-size:15px;margin-bottom:6px}.hero-options small{font-family:var(--M);color:var(--ash-d);line-height:1.6}.motion-notes{counter-reset:motion}.motion-notes li::before{content:'M' counter(motion,decimal-leading-zero);counter-increment:motion;width:auto;min-width:34px;text-align:center}.gb-matrix{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.gb-metric{padding:14px;border:1px solid var(--crimson-dim);background:rgba(0,0,0,.24);border-radius:14px}.gb-metric strong{display:block;font-family:var(--M);color:var(--green);font-size:20px;margin-bottom:4px}.gb-metric span{font-family:var(--M);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash-d)}
+@media(max-width:1000px){.gb-card,.gb-card.wide{grid-column:span 6}.gb-rail{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.gb-card,.gb-card.wide,.gb-card.full{grid-column:span 12}.hero-options,.gb-matrix{grid-template-columns:1fr}.gb-rail{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.guardian-brief *{scroll-behavior:auto}}
+
 @media(prefers-reduced-motion:reduce){
 *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important;}
 }
@@ -1146,6 +1156,114 @@ body:not(.cg-evo-live) .cg-evo-aura i{animation-play-state:paused}
           <li><time>15:04Z</time><span class="sev med">Med</span>Endpoint risk elevated</li>
           <li><time>14:58Z</time><span class="sev low">Low</span>Compliance evidence sealed</li>
         </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<div class="line-sep shell"></div>
+
+<!-- GUARDIAN v5.0 MISSION COMMAND EXPANSION -->
+<section class="guardian-brief" id="guardian-v5" aria-labelledby="guardian-v5-title">
+  <div class="shell">
+    <div class="rv gb-head">
+      <span class="sec-kicker">◈ ClearGlass Guardian v5.0 · Mission Command Layer</span>
+      <h2 class="sec-h2" id="guardian-v5-title">Built as a governed command surface between <span>humans, agents, infrastructure, and decision systems.</span></h2>
+      <p class="sec-p">GUARDIAN v5.0 presents ClearGlassInc Artemis as an operational control plane for secure orchestration, evidence-aware workflows, policy-bound execution, and human-approved autonomy. It is written to feel live, verified, continuously monitored, and audit-ready without weakening the existing cybersecurity platform story.</p>
+    </div>
+
+    <div class="gb-grid">
+      <article class="gb-card full rv d1">
+        <span class="gb-k">Second-layer hero message</span>
+        <h3>Command the workflow. Verify the evidence. Authorize the action.</h3>
+        <p>ClearGlassInc Artemis turns GUARDIAN into a high-trust intelligence interface where autonomous systems can observe, correlate, draft, and recommend — while consequential execution remains gated by explicit operator authority, provenance, and policy-as-code.</p>
+        <div class="hero-options" aria-label="Alternate hero headlines and subheads">
+          <div><b>Alternate headline 01</b><small>Secure automation for teams that cannot afford unverified action.</small></div>
+          <div><b>Alternate headline 02</b><small>The command layer for governed agents, critical infrastructure, and operational truth.</small></div>
+          <div><b>Alternate headline 03</b><small>Mission-grade control for evidence-aware AI workflows.</small></div>
+          <div><b>Supporting subhead 01</b><small>Fuse telemetry, identity, cases, policy, and model output into one verified operating picture.</small></div>
+          <div><b>Supporting subhead 02</b><small>Let agents accelerate analysis while approvals, rollback, and audit trails keep humans in command.</small></div>
+          <div><b>Supporting subhead 03</b><small>Deploy privately, observe continuously, and route every sensitive action through deterministic governance.</small></div>
+        </div>
+      </article>
+
+      <article class="gb-card wide rv d2">
+        <span class="gb-k">Advanced capability lines</span>
+        <h3>Operational modules</h3>
+        <ul>
+          <li>Secure orchestration with signed tool calls, scoped credentials, and bounded agent permissions.</li>
+          <li>Autonomous control loops that can recommend improvements but cannot expand mission scope.</li>
+          <li>Evidence-aware workflows that bind every summary to source records, timestamps, and confidence.</li>
+          <li>Provenance and traceability across prompts, models, datasets, approvals, and generated work products.</li>
+          <li>Policy-bound execution with deny-by-default checks at every protected action boundary.</li>
+          <li>Human approval checkpoints for operationally significant actions, escalation, or workflow promotion.</li>
+          <li>Audit-grade observability with immutable event chains, correlation IDs, and replayable decisions.</li>
+          <li>Resilient behavior through fault isolation, safe degradation, circuit breakers, and rollback channels.</li>
+          <li>Mission-critical infrastructure posture for latency-sensitive, coalition-aware, multi-domain operations.</li>
+          <li>Private deployment readiness across cloud, hybrid, on-premises, and disconnected operating environments.</li>
+        </ul>
+      </article>
+
+      <article class="gb-card wide rv d3">
+        <span class="gb-k">Trust and governance statements</span>
+        <h3>Audit-ready control doctrine</h3>
+        <ul>
+          <li>Every model recommendation is treated as untrusted until verified against policy and evidence.</li>
+          <li>Human approval remains the authority boundary for critical actions and external execution.</li>
+          <li>Operator corrections become evaluated improvement candidates, not silent production mutations.</li>
+          <li>Each prompt, workflow, model route, and policy bundle is versioned, reviewed, and reversible.</li>
+          <li>Need-to-know access is enforced at row, column, entity, mission, and coalition compartments.</li>
+          <li>Audit logs preserve who saw what, what changed, which evidence was used, and why action was allowed.</li>
+          <li>Drift detection blocks degraded automation before degraded confidence becomes operational risk.</li>
+          <li>Deployment promotion requires test evidence, rollback paths, owner approval, and post-release monitoring.</li>
+        </ul>
+      </article>
+
+      <article class="gb-card rv d1">
+        <span class="gb-k">System architecture block</span>
+        <h3>ClearGlassInc Artemis command architecture</h3>
+        <p>Frontend command glass, API gateway, ontology services, streaming ingestion, policy engine, model router, agent runtime, eval harness, observability plane, and Apollo-style release control operate as separable trust domains. Gotham-style investigations track entities and cases; Foundry-style pipelines normalize live and historical data; AIP-style agents draft decisions under governed tools; Apollo-style deployment control promotes, rolls back, and isolates runtime versions.</p>
+      </article>
+
+      <article class="gb-card rv d2">
+        <span class="gb-k">Operational readiness block</span>
+        <h3>Ready for mission-critical operations</h3>
+        <p>GUARDIAN emphasizes private deployment readiness, latency-aware routing, fail-closed authorization, incident replay, health separation, chain-of-custody evidence, and controlled escalation. The interface communicates not just detection, but operational readiness: what is known, what is uncertain, what is approved, and what remains blocked.</p>
+        <div class="gb-matrix"><div class="gb-metric"><strong>4 lanes</strong><span>Observe · Draft · Approve · Execute</span></div><div class="gb-metric"><strong>0 bypass</strong><span>Critical actions require authority</span></div></div>
+      </article>
+
+      <article class="gb-card rv d3">
+        <span class="gb-k">Future stack block</span>
+        <h3>Future-state, grounded stack</h3>
+        <p>Ontology-native intelligence, retrieval-augmented reasoning, policy-as-code, confidential compute enclaves, post-quantum migration paths, signed artifacts, typed agent tools, eval-driven prompt governance, and multi-environment release rings form the credible future stack behind the command surface.</p>
+      </article>
+
+      <article class="gb-card wide rv d1">
+        <span class="gb-k">Why this exists</span>
+        <h3>Automation is only useful when authority, evidence, and recovery are engineered into the system.</h3>
+        <p>ClearGlassInc Artemis exists because modern operations are too fast for manual triage alone and too consequential for unchecked autonomy. GUARDIAN v5.0 positions the platform as the disciplined command layer that lets organizations move at machine speed without surrendering human judgment, provenance, or control.</p>
+      </article>
+
+      <article class="gb-card wide rv d2">
+        <span class="gb-k">CTA variants</span>
+        <h3>Command-action language</h3>
+        <div class="gb-rail"><span>Initialize Assessment</span><span>Request Command Briefing</span><span>Open Deployment Review</span><span>Validate Readiness</span><span>Authorize Demo Access</span></div>
+      </article>
+
+      <article class="gb-card full rv d3">
+        <span class="gb-k">Motion notes for premium implementation</span>
+        <h3>Engineered motion language</h3>
+        <ul class="motion-notes">
+          <li>Use a controlled cinematic boot sequence: loader, badge, headline, metrics, console, then architecture panels.</li>
+          <li>Reserve split-text reveals for the hero and command doctrine only; avoid animating dense technical copy.</li>
+          <li>Use transform and opacity for all section reveals, with glow changes limited to hierarchy and state.</li>
+          <li>Add subtle parallax to grid, console, and orbital layers so the page feels like one live operating system.</li>
+          <li>Make hover feedback precise: border brightening, 2–4px lift, and status-chip illumination; no noisy effects.</li>
+          <li>Prefer luminous drift and scan sweeps that imply monitoring rather than decorative science fiction.</li>
+          <li>Pause nonessential animation off-screen and provide static reduced-motion equivalents.</li>
+          <li>Keep all live-style metrics visually credible and avoid implying fabricated operational status.</li>
+        </ul>
       </article>
     </div>
   </div>

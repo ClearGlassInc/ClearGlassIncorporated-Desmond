@@ -139,3 +139,58 @@ def test_compile_feedback_to_eval_keeps_stable_ids_and_operator_expected_behavio
         "rating": 2,
     }
     assert eval_case["source_feedback_ids"] == ["feedback-1"]
+
+
+def test_workflow_state_machine_blocks_invalid_transition_and_audits():
+    from artemis.intelligence.platform import ImmutableAuditLog, WorkflowStateMachine, WorkflowState
+
+    audit = ImmutableAuditLog()
+    machine = WorkflowStateMachine(audit)
+
+    assert (
+        machine.transition(
+            "wf-1",
+            WorkflowState.RECEIVED,
+            WorkflowState.TRIAGED,
+            actor="agent",
+            reason="initial triage",
+        )
+        == WorkflowState.TRIAGED
+    )
+    try:
+        machine.transition(
+            "wf-1",
+            WorkflowState.RECEIVED,
+            WorkflowState.DEPLOYED,
+            actor="agent",
+            reason="skip gates",
+        )
+    except ValueError as exc:
+        assert "invalid workflow transition" in str(exc)
+    else:
+        raise AssertionError("expected invalid transition")
+    assert audit.verify()
+    assert audit.records[-1].decision == "DENY"
+
+
+def test_resilient_event_bus_dead_letters_handler_failures():
+    from artemis.intelligence.platform import ArtemisEventBus
+
+    bus = ArtemisEventBus()
+    received = []
+
+    def broken(event):
+        raise RuntimeError("boom")
+
+    def ok(event):
+        received.append(event["event_id"])
+
+    bus.subscribe("alerts", broken)
+    bus.subscribe("alerts", ok)
+    event_id = bus.publish("alerts", {"payload": "x"})
+
+    assert received == [event_id]
+    assert bus.telemetry["events.published"] == 1
+    assert bus.telemetry["events.handler_failed"] == 1
+    assert bus.dead_letters[0]["topic"] == "alerts"
+    assert bus.dead_letters[0]["event"]["event_id"] == event_id

@@ -1233,6 +1233,19 @@ If canary precision, latency, operator trust, and policy metrics meet thresholds
 
 ---
 
+## Executable Verification Harness
+
+The blueprint is paired with Python regression tests for the precision-critical control points in the reference implementation:
+
+- **Self-improvement eval gates** must block candidate prompt/workflow/router versions when human approval is missing or quality thresholds regress.
+- **Apollo canary promotion review** must deny unsafe rollback manifests and append a tamper-evident audit decision.
+- **Human approval gates** must still enforce deterministic policy constraints; an analyst approval request cannot authorize a high-risk action that requires commander authority.
+- **Feedback-to-eval compilation** must preserve stable artifact IDs, workflow versions, and operator correction labels without embedding unnecessary source payloads.
+
+These tests keep the architecture honest: Artemis can propose better prompts, workflows, heuristics, and routing decisions, but promotion remains gated by eval evidence, policy, rollback safety, and explicit human approval.
+
+---
+
 ## Remaining Engineering Risks and Mitigations
 
 | Risk | Mitigation |

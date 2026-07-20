@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-07-19T09:04:01.593344+00:00",
+  "run_utc": "2026-07-20T10:08:36.164430+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 951,
+  "commit_count": 1016,
   "sections": {
     "New Features": [
       {
@@ -1295,6 +1295,438 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "418de54",
+        "type": "chore",
+        "scope": null,
+        "subject": "Harden authority lattice accessibility and deployment safety (#960)",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "1f72e94",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "d65b394",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "abda821",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "01ef1b8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "dbe6441",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "7c85f81",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "b80fe85",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "877f8a7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "c216ca1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "6f03181",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "23f31e7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "4658b62",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "2b2347f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "43001db",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "fc4df4f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "a0c8ea3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "ed83ce6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "79249f5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "625d71e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "3168c0d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "f84b139",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "32abaee",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "e0658f7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "f55bf95",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "30f2503",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "58f3a8f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "c6f9586",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "c6ce91c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "85b5dfd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "4aeded3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "1966145",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "fda098e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "2c09110",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "0212494",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "3f55a8c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "d3604a6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "85e24f6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "f1421b5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "d433021",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "6bb3521",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate accessible authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "cfd230b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove duplicate authority grid registration",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "77522f9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add accessible lattice focus and motion controls",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "d903f18",
+        "type": "chore",
+        "scope": null,
+        "subject": "Strengthen internal authority network",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "a7b1818",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade canonical authority lattice visual signal",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "d67b360",
+        "type": "chore",
+        "scope": null,
+        "subject": "Build ClearGlass internal authority network",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "833e60e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Flowsint to product navigation",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "a746eac",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add CONDUIT authority lattice",
+        "author": "Desmond Otieno",
+        "date": "2026-07-19",
+        "breaking": false
+      },
       {
         "sha": "bd0f9af",
         "type": "chore",
@@ -4915,6 +5347,159 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "293e670",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "3e761d9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "5e88401",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "a3d72a8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "0af7bb5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "7e9c539",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "1a4733b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "be646ee",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "483610d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "397315b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "5dccc8d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "d4901a4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "218df29",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "3ad3af3",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "8812346",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "e36880c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
+      {
+        "sha": "d317f1c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-19 09:04 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-19",
+        "breaking": false
+      },
       {
         "sha": "4ba9bf4",
         "type": "bot",

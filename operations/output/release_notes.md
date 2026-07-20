@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-19
+# Release Notes — 2026-07-20
 
-*951 commit(s) since v1.0.0*
+*1016 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -164,6 +164,54 @@
 
 ## Maintenance
 
+- Harden authority lattice accessibility and deployment safety (#960) (`418de54`)
+- Regenerate accessible authority lattice (`1f72e94`)
+- Regenerate accessible authority lattice (`d65b394`)
+- Regenerate accessible authority lattice (`abda821`)
+- Regenerate accessible authority lattice (`01ef1b8`)
+- Regenerate accessible authority lattice (`dbe6441`)
+- Regenerate accessible authority lattice (`7c85f81`)
+- Regenerate accessible authority lattice (`b80fe85`)
+- Regenerate accessible authority lattice (`877f8a7`)
+- Regenerate accessible authority lattice (`c216ca1`)
+- Regenerate accessible authority lattice (`6f03181`)
+- Regenerate accessible authority lattice (`23f31e7`)
+- Regenerate accessible authority lattice (`4658b62`)
+- Regenerate accessible authority lattice (`2b2347f`)
+- Regenerate accessible authority lattice (`43001db`)
+- Regenerate accessible authority lattice (`fc4df4f`)
+- Regenerate accessible authority lattice (`a0c8ea3`)
+- Regenerate accessible authority lattice (`ed83ce6`)
+- Regenerate accessible authority lattice (`79249f5`)
+- Regenerate accessible authority lattice (`625d71e`)
+- Regenerate accessible authority lattice (`3168c0d`)
+- Regenerate accessible authority lattice (`f84b139`)
+- Regenerate accessible authority lattice (`32abaee`)
+- Regenerate accessible authority lattice (`e0658f7`)
+- Regenerate accessible authority lattice (`f55bf95`)
+- Regenerate accessible authority lattice (`30f2503`)
+- Regenerate accessible authority lattice (`58f3a8f`)
+- Regenerate accessible authority lattice (`c6f9586`)
+- Regenerate accessible authority lattice (`c6ce91c`)
+- Regenerate accessible authority lattice (`85b5dfd`)
+- Regenerate accessible authority lattice (`4aeded3`)
+- Regenerate accessible authority lattice (`1966145`)
+- Regenerate accessible authority lattice (`fda098e`)
+- Regenerate accessible authority lattice (`2c09110`)
+- Regenerate accessible authority lattice (`0212494`)
+- Regenerate accessible authority lattice (`3f55a8c`)
+- Regenerate accessible authority lattice (`d3604a6`)
+- Regenerate accessible authority lattice (`85e24f6`)
+- Regenerate accessible authority lattice (`f1421b5`)
+- Regenerate accessible authority lattice (`d433021`)
+- Regenerate accessible authority lattice (`6bb3521`)
+- Remove duplicate authority grid registration (`cfd230b`)
+- Add accessible lattice focus and motion controls (`77522f9`)
+- Strengthen internal authority network (`d903f18`)
+- Upgrade canonical authority lattice visual signal (`a7b1818`)
+- Build ClearGlass internal authority network (`d67b360`)
+- Add Flowsint to product navigation (`833e60e`)
+- Add CONDUIT authority lattice (`a746eac`)
 - Enforce Etsy as a hard downstream dependency gate (`bd0f9af`)
 - Add Etsy Factory Connect Integration Agent v2 (`80b4f07`)
 - Add Etsy Factory Connect Operations Agent (#946) (`9cf9391`)
@@ -569,6 +617,23 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`293e670`)
+- refresh control-surface data feeds [skip ci] (`3e761d9`)
+- refresh control-surface data feeds [skip ci] (`5e88401`)
+- refresh control-surface data feeds [skip ci] (`a3d72a8`)
+- refresh control-surface data feeds [skip ci] (`0af7bb5`)
+- refresh control-surface data feeds [skip ci] (`7e9c539`)
+- refresh control-surface data feeds [skip ci] (`1a4733b`)
+- refresh control-surface data feeds [skip ci] (`be646ee`)
+- refresh control-surface data feeds [skip ci] (`483610d`)
+- refresh control-surface data feeds [skip ci] (`397315b`)
+- refresh control-surface data feeds [skip ci] (`5dccc8d`)
+- refresh control-surface data feeds [skip ci] (`d4901a4`)
+- refresh control-surface data feeds [skip ci] (`218df29`)
+- refresh control-surface data feeds [skip ci] (`3ad3af3`)
+- refresh control-surface data feeds [skip ci] (`8812346`)
+- refresh control-surface data feeds [skip ci] (`e36880c`)
+- update generated outputs — 2026-07-19 09:04 UTC [skip ci] (`d317f1c`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`4ba9bf4`)
 - refresh control-surface data feeds [skip ci] (`98fc80d`)
 - refresh control-surface data feeds [skip ci] (`877c1b4`)

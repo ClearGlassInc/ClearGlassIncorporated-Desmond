@@ -595,6 +595,35 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
   </div>
 </section>
 
+
+<!-- OPERATOR CONTROL SURFACES -->
+<section id="operator-control-surfaces">
+  <div class="sec-head"><div class="sec-kicker">Operator control surfaces</div><h2 class="sec-title">Every capability has a control, a trace, and a recovery path</h2><p class="sec-sub">CONDUIT is not only a canvas for connecting apps. It is an operational surface for understanding who triggered a run, what changed, which policy applied, where execution paused, and how to recover without losing the historical record.</p></div>
+  <div class="arch-grid">
+    <div class="arch-card"><h4>Workflow observability</h4><p>Inspect run timelines by trigger, node, connector, model route, queue wait, retry attempt, approval decision, and terminal state. Operators can separate integration failure, data drift, model latency, and policy denial instead of debugging from a single generic error.</p></div>
+    <div class="arch-card"><h4>Permissions and governance</h4><p>Scope users, teams, credentials, environments, and connector actions so a workflow can read broadly, write narrowly, and require approval before privileged side effects. UI access accelerates work; server-side policy remains the authority.</p></div>
+    <div class="arch-card"><h4>Replay and recovery</h4><p>Replay a failed branch with the same input snapshot, patched credentials, adjusted retry policy, or a newer workflow definition while preserving the original run as immutable evidence.</p></div>
+    <div class="arch-card"><h4>Version-controlled definitions</h4><p>Promote workflows through draft, review, staging, production, and rollback states. Each release records graph structure, node configuration, prompt versions, connector scopes, and approval policy.</p></div>
+    <div class="arch-card"><h4>Blast-radius control</h4><p>Constrain execution by environment, connector scope, rate limit, batch size, approval threshold, and maximum affected records so a malformed event cannot become an organization-wide incident.</p></div>
+    <div class="arch-card"><h4>Audit-ready change control</h4><p>Material edits capture author, reviewer, diff summary, risk classification, approval evidence, release target, and rollback pointer before production automation changes behavior.</p></div>
+    <div class="arch-card"><h4>Deploy and recover</h4><p>Run locally, in private cloud, in Kubernetes, or through ClearGlass-managed infrastructure with backup, restore, health-check, and rollback procedures aligned to your operational tolerance.</p></div>
+    <div class="arch-card"><h4>Policy and approval flows</h4><p>Use single approver, multi-step, role-based, or environment-specific gates for finance, customer communication, security response, infrastructure change, and AI-generated action packages.</p></div>
+  </div>
+</section>
+
+<!-- CONTENT DELIVERABLES -->
+<section id="decision-brief">
+  <div class="sec-head"><div class="sec-kicker">Deployment decision brief</div><h2 class="sec-title">The language of production automation</h2><p class="sec-sub">Use CONDUIT when automation must be private, reviewable, observable, and recoverable enough to become operating infrastructure.</p></div>
+  <div class="system-rail">
+    <div class="rail-row"><div class="rail-k">Hero support lines</div><div class="rail-v">Self-hosted workflow execution for teams that need private data, governed actions, and durable run evidence. · Event-driven automation with approvals, traces, retries, and recovery built into the operating path. · Open-source orchestration polished for enterprise operators who need control without surrendering infrastructure custody.</div></div>
+    <div class="rail-row"><div class="rail-k">Advanced features</div><div class="rail-v">Event triggers, queue-backed workers, conditional branching, bounded retries, human gates, AI-assisted steps, scoped connector credentials, immutable run history, exportable execution evidence, and drift-aware operations.</div></div>
+    <div class="rail-row"><div class="rail-k">Trust posture</div><div class="rail-v">Private execution boundary, least-privilege credentials, role-based workflow access, approval evidence, prompt and model version records, and audit-forward logs for compliance review.</div></div>
+    <div class="rail-row"><div class="rail-k">Self-hosting posture</div><div class="rail-v">Single-container start, queue-mode production, private database persistence, Kubernetes deployment, on-prem or edge placement, and ClearGlass-managed operation when teams want hosted hardening.</div></div>
+    <div class="rail-row"><div class="rail-k">Reliability posture</div><div class="rail-v">Durable state, idempotent step design, timeout boundaries, dead-letter review, partial-failure recovery, replayable branches, and compensating workflows.</div></div>
+    <div class="rail-row"><div class="rail-k">Developer posture</div><div class="rail-v">Custom nodes, code transforms, API-first control, workflow-as-code promotion, model provider choice, reusable internal automations, and inspectable connector contracts.</div></div>
+  </div>
+</section>
+
 <!-- PLANS -->
 <style>
 .ptier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -848,7 +877,7 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
       return txt.replace(/\S+/g,function(w){var d=(wi++*70);return '<span class="word" style="--wd:'+d+'ms"><span>'+w+'</span></span>';});
     });
   }
-  var staged=[".tagchip",".hero h1",".lede",".deep-copy",".hero-ops",".cta-row",".stats",".builder",".fcard",".why-card",".arch-card",".gov-card",".deploy-card",".ptier",".final",".system-rail",".term",".deploy li",".intg",".flow-step",".reliability-card",".dev-card",".usecase-card",".architecture-overview",".comparison-table",".mission-strip span"];
+  var staged=[".tagchip",".hero h1",".lede",".deep-copy",".hero-ops",".cta-row",".stats",".builder",".fcard",".why-card",".arch-card",".gov-card",".deploy-card",".ptier",".final",".system-rail",".term",".deploy li",".intg",".flow-step",".reliability-card",".dev-card",".usecase-card",".architecture-overview",".comparison-table",".mission-strip span","#operator-control-surfaces .arch-card","#decision-brief .rail-row"];
   document.querySelectorAll(staged.join(',')).forEach(function(el,i){if(!el.hasAttribute('data-motion'))el.setAttribute('data-motion','up');el.style.setProperty('--d',Math.min(i%12*55,420)+'ms');});
   if(!reduce&&'IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});

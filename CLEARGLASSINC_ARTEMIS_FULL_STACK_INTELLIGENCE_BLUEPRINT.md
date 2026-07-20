@@ -1731,3 +1731,81 @@ result = loop.run_once(principal, environmental_signal)
 ```
 
 This preserves the requested automation path — sensors → findings → dashboard → alerts → mitigation packages → revenue-support drafts — while maintaining ClearGlassInc Artemis invariants: no unauthorized access, no secret materialization, no autonomous external outreach, no autonomous operational disruption, full provenance, and Apollo-compatible rollback.
+
+## Marketing Campaign and Legacy Agent Army Merge
+
+ClearGlassInc Artemis can attach the repository's governed engineering-and-marketing agent army to the broader AIP orchestration layer when a mission objective requires both legacy preservation and market execution. This is a planning-and-control capability, not an autonomous publishing or outreach engine.
+
+### Agent Army Operating Boundary
+
+- **Legacy Modernization Agent** maps old surfaces, dependencies, contracts, deployment paths, data schemas, and rollback requirements before any campaign depends on them.
+- **Campaign Bot Commander** coordinates market intelligence, content strategy, distribution planning, revenue operations, and analytics into one approval-ready campaign packet.
+- **Quality and Security Agent** remains the release gate for code, security, privacy, and rollback evidence.
+- **Analytics Controller** defines qualified-demand metrics, experiment criteria, and stop conditions before launch.
+- **Human approval is mandatory** for external publishing, external outreach, paid spend, customer-data use, production deployment, legal/regulatory claims, and any legacy migration that could alter live behavior.
+
+### Legacy-to-Campaign Workflow
+
+```text
+INTAKE
+  → LEGACY_ASSURANCE
+      inventory legacy assets, owners, data contracts, redirects, SEO equity,
+      active customers, failure modes, and rollback path
+  → QUALITY_GATE
+      verify no secrets, no contract breakage, no unsafe automation path
+  → MARKET_FIT
+      identify audience, pain, proof points, objections, and evidence gaps
+  → CAMPAIGN_DESIGN
+      produce claims ledger, editorial map, offers, landing-page requirements
+  → CAMPAIGN_BOT_OPERATIONS
+      fan out approved draft work to channel bots; keep publish/send/spend queued
+  → DISTRIBUTION
+      package platform-specific assets for named human approval
+  → REVENUE
+      connect campaign to qualification, pipeline, and conversion hypotheses
+  → MEASUREMENT
+      score qualified demand, trust, conversion quality, latency, and risk
+```
+
+### Safe Self-Improvement for Campaign Bots
+
+Campaign bots may propose better hooks, prompts, channel cadences, segmentation rules, and workflow templates only as versioned change requests. Artemis stores each proposal with source evidence, eval scores, expected impact, risk tier, rollback plan, and approver. The active production prompt or workflow changes only after review; rejected proposals become negative eval examples so the system learns what not to repeat.
+
+```python
+from dataclasses import dataclass
+from enum import Enum
+
+class ChangeState(str, Enum):
+    DRAFT = "draft"
+    REVIEW = "review"
+    APPROVED = "approved"
+    ACTIVE = "active"
+    ROLLED_BACK = "rolled_back"
+
+@dataclass(frozen=True)
+class CampaignBotUpgrade:
+    proposal_id: str
+    bot_id: str
+    artifact: str              # prompt | workflow | routing_rule | metric
+    candidate_version: str
+    evidence_paths: tuple[str, ...]
+    eval_suite: str
+    approval_required: bool = True
+    state: ChangeState = ChangeState.DRAFT
+
+
+def activate_upgrade(upgrade: CampaignBotUpgrade, approver: str) -> CampaignBotUpgrade:
+    if not approver:
+        raise PermissionError("campaign bot upgrades require named human approval")
+    if upgrade.state is not ChangeState.APPROVED:
+        raise ValueError("only approved upgrades can become active")
+    return CampaignBotUpgrade(**{**upgrade.__dict__, "state": ChangeState.ACTIVE})
+```
+
+### Legacy Campaign Invariants
+
+1. Existing URLs, redirects, headers, GitHub Pages compatibility, and customer-facing content remain intact unless explicitly approved.
+2. Generated internal-link blocks are regenerated with the canonical generator; bots must not hand-edit generated sections.
+3. Campaign claims must trace to verified repository evidence, authoritative sources, or clearly labeled assumptions.
+4. Outreach, publishing, ad spend, pricing, offers, and production deploys are queued for approval; unknown approval state means deny.
+5. Every material recommendation and operator decision is appended to audit evidence for replayability.

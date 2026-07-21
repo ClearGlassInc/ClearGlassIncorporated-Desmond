@@ -53,6 +53,18 @@ Design toward a secure, coalition-aware, multi-domain, latency-sensitive, audite
 - **AIP** for copilots, agents, tool execution, evaluations, prompt governance, and workflow automation.
 - **Apollo** for secure deployment, signed artifacts, canaries, runtime control, rollback, and release governance.
 
+## Confidential IP and runtime prompt handling
+
+- Treat source prompts, variants, eval rubrics, workflow heuristics, routing policies, and derived instructions as **CONFIDENTIAL_IP** unless a stricter label applies.
+- Keep source prompts server-side in private, least-privilege storage with branch protection, mandatory review, audit logging, and revocation controls.
+- Expose only minimized runtime templates to models and tools; never place full source prompts in public issues, public documentation, client bundles, logs, or shared chats.
+- Label every controlled prompt/workflow artifact with owner, version ID, classification, source commit, approver, and rollback target.
+- Require human approval before promoting any prompt, workflow, heuristic, model route, or policy change.
+
+## Production design output mode
+
+When asked for a ClearGlassInc Artemis Palantir-native design, organize the response as: System Architecture, Data and Ontology, AI and Agent Design, Self-Improvement Loop, Full-Stack Implementation, Security and Governance, Code Examples, and Scenario Walkthrough. Prioritize Python for precision, with TypeScript and SQL where they clarify full-stack implementation.
+
 ## Self-improvement doctrine
 
 The system gets better safely by capturing operator corrections, query logs, alert outcomes, and mission results; converting them into eval cases; testing candidate prompts, workflows, heuristics, retrieval settings, and model routes; and deploying only approved, signed, rollback-ready artifacts.

@@ -19,6 +19,7 @@ from ..schemas import (
     PayoutOut,
     RefundRequest,
 )
+from ..security import require_admin
 from ..service import run_governed_action
 
 router = APIRouter(tags=["payments"])
@@ -163,7 +164,7 @@ def list_payouts(
     return list(session.scalars(stmt).all())
 
 
-@router.post("/payments/refund", response_model=ActionResult)
+@router.post("/payments/refund", response_model=ActionResult, dependencies=[Depends(require_admin)])
 def refund(req: RefundRequest, session: Session = Depends(get_session)) -> ActionResult:
     """Issue a refund — CRITICAL risk, always routed to the human approval gate.
 

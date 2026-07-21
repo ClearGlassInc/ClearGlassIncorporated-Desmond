@@ -1,16 +1,19 @@
 """FastAPI application factory for the commerce control plane."""
 from __future__ import annotations
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
 from .config import get_settings
 from .routers import approvals, events, inventory, metrics, orders, payments, store
+from .security import auth_enabled, require_admin, verify_startup_posture
 
 
 def create_app() -> FastAPI:
     settings = get_settings()
+    # Refuse to boot a production control plane with an unauthenticated admin surface.
+    verify_startup_posture(settings)
     if settings.auto_create_tables:
         from .db import engine
         from .models import Base
@@ -36,7 +39,12 @@ def create_app() -> FastAPI:
 
     @app.get("/health", tags=["meta"])
     def health() -> dict:
-        return {"status": "ok", "env": settings.app_env, "version": __version__}
+        return {
+            "status": "ok",
+            "env": settings.app_env,
+            "version": __version__,
+            "admin_auth": "enabled" if auth_enabled(settings) else "disabled",
+        }
 
     @app.get("/", tags=["meta"])
     def root() -> dict:
@@ -46,13 +54,17 @@ def create_app() -> FastAPI:
             "governance": "high/critical actions require human approval",
         }
 
-    app.include_router(store.router)
-    app.include_router(payments.router)
-    app.include_router(orders.router)
-    app.include_router(inventory.router)
+    # Administrative surfaces (governed actions + the approval gate itself) require an
+    # admin credential. Customer flows (checkout), the Stripe webhook (signature-verified),
+    # and read-only telemetry (metrics/events) stay open by design.
+    admin = [Depends(require_admin)]
+    app.include_router(store.router, dependencies=admin)
+    app.include_router(payments.router)  # per-endpoint: only the refund is gated (see router)
+    app.include_router(orders.router, dependencies=admin)
+    app.include_router(inventory.router, dependencies=admin)
     app.include_router(metrics.router)
     app.include_router(events.router)
-    app.include_router(approvals.router)
+    app.include_router(approvals.router, dependencies=admin)
     return app
 
 

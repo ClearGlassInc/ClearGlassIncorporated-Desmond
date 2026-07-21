@@ -24,6 +24,6 @@ jobs:
           test -s artemis-fawl/styles.css
           test -s artemis-fawl/app.js
           python -m json.tool artemis-fawl/data/source-registry.json >/dev/null
-          ! grep -RIE '(api[_-]?key|secret|token|private[_-]?key)[[:space:]]*[:=][[:space:]]*["'''][^"''']+' artemis-fawl agents/artemis_fawl_revenue.py
+          ! grep -RIE '(api[_-]?key|secret|access[_-]?token|private[_-]?key)[[:space:]]*[:=]' artemis-fawl agents/artemis_fawl_revenue.py
       - name: Run focused policy tests
         run: python -m pytest -q tests/test_artemis_fawl_revenue.py

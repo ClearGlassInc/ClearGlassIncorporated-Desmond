@@ -4,10 +4,11 @@
 **Scope:** Full monorepo (`ClearGlassInc.github.io`) — static site, commerce OS, agents, workflows
 **Posture:** Principal-architect review. High-impact, non-breaking improvements over cosmetics.
 
-> **Status of this document.** Section 1–5 below is the assessment and plan. One
-> high-value item from it — **admin authentication on the commerce control plane** —
-> has already been implemented and shipped in this same change (see §2, item 1). The
-> rest is a ranked roadmap, not yet built.
+> **Status of this document.** Section 1–5 below is the assessment and plan. Two
+> high-value items from it are now shipped: **admin authentication on the commerce
+> control plane** (§2, item 1) and **approver identity binding** (§2, item 2 — every
+> approval decision is now attributed to the authenticated credential, not a
+> self-asserted request field). The rest is a ranked roadmap, not yet built.
 
 ---
 
@@ -71,7 +72,7 @@ that don't yet match the quality of the commerce core.
 | # | Upgrade | Why it's high-leverage | Effort |
 |---|---------|------------------------|--------|
 | **1** | **Admin auth on the control plane** ✅ *shipped in this change* | The safety model is only real if the gate is locked. Highest risk-reduction per line. | S |
-| 2 | **Approver identity binding + audit** | Record the *authenticated* principal on every approval, not a self-asserted `decided_by`. Completes item 1. | S |
+| 2 | **Approver identity binding + audit** ✅ *shipped* | Record the *authenticated* principal on every approval, not a self-asserted `decided_by`. Completes item 1. | S |
 | 3 | **Observability layer** (request IDs, structured logs, `/metrics`, error tracking) | Turns a demo into an operable service; prerequisite for scaling under load. | M |
 | 4 | **Documentation consolidation** | Collapse 26 blueprint docs into one `docs/` tree with clear "real vs. target" status banners. Biggest trust/maintainability win. | M |
 | 5 | **Repo weight reduction** | Move root images to `assets/`, dedupe the 3 logos, drop superseded `apps/`. Faster clone/deploy, less confusion. | S |
@@ -130,6 +131,27 @@ that don't yet match the quality of the commerce core.
   fail-closed startup). Full suite: **41 passed**, ruff clean.
 - **Rollout:** already backward-compatible (dev unchanged). Production: set `ADMIN_API_KEY`,
   redeploy, confirm `GET /health → admin_auth: enabled`, give the admin UI the same key.
+
+### 4.1b Approver identity binding ✅ (shipped)
+- **Purpose:** make the audit ledger truthful — a pricing/refund approval must be
+  attributable to *who actually held the credential*, not to a name typed into the
+  request body. This is what turns "the gate is locked" (§4.1) into "we know who
+  opened it."
+- **Architecture:** `routers/approvals.py` now captures the principal returned by
+  `require_admin` (already applied router-wide) and resolves the decider via
+  `_resolve_decider`: the authenticated credential is authoritative, so `admin` is
+  written to both `Approval.decided_by` and the audit `actor`. The self-asserted
+  `DecisionRequest.decided_by` is demoted to an optional display label and preserved
+  only as an `asserted_by` annotation in the event payload when it differs. Open
+  dev/mock mode (no key) falls back to the request label for readability, matching the
+  platform's existing open-mode philosophy.
+- **Dependencies:** none new — reuses the existing `require_admin` dependency and audit
+  writer.
+- **Risks:** none to the write path; governance/scoring untouched. Backward-compatible
+  in dev (labels still flow through).
+- **Testing:** two new tests in `tests/test_resilience.py` assert the credential —
+  not the body — is recorded as `decided_by`/`actor`, and that the self-asserted label
+  is preserved as `asserted_by`. Full suite: **52 passed**, ruff clean.
 
 ### 4.2 Observability layer
 - **Purpose:** operate the service under real load; see latency/errors, correlate requests.

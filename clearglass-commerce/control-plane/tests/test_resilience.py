@@ -26,7 +26,7 @@ from app import payments
 from app import security as security_module
 from app.config import get_settings
 from app.main import create_app
-from app.models import Approval, Base, Order
+from app.models import Approval, Base, Event, Order
 from app.security import SlidingWindowLimiter
 
 
@@ -160,3 +160,58 @@ def test_security_headers_present(harness) -> None:
     assert resp.headers["X-Content-Type-Options"] == "nosniff"
     assert resp.headers["X-Frame-Options"] == "DENY"
     assert resp.headers["Referrer-Policy"] == "strict-origin-when-cross-origin"
+
+
+# --- approver identity binding ---------------------------------------------
+# A decision must be attributed to the authenticated credential, not a name the
+# caller types into the request body — otherwise the audit ledger records fiction.
+
+
+def _pending_approval(TestingSession) -> int:
+    with TestingSession() as s:
+        approval = Approval(action="update_pricing", risk_score=80, risk_tier="high")
+        s.add(approval)
+        s.commit()
+        return approval.id
+
+
+def test_decision_records_authenticated_principal_not_body(harness) -> None:
+    build, TestingSession, monkeypatch = harness
+    monkeypatch.setenv("ADMIN_API_KEY", "top-secret")
+    client = build()
+    approval_id = _pending_approval(TestingSession)
+
+    resp = client.post(
+        f"/approvals/{approval_id}/approve",
+        json={"decided_by": "not-me", "note": "ship it"},
+        headers={"Authorization": "Bearer top-secret"},
+    )
+    assert resp.status_code == 200
+    # The credential ("admin") wins over the self-asserted "not-me".
+    assert resp.json()["decided_by"] == "admin"
+
+    with TestingSession() as s:
+        approval = s.get(Approval, approval_id)
+        assert approval.decided_by == "admin"
+        event = s.scalars(select(Event).where(Event.action == "approval_approved")).one()
+    assert event.actor == "admin"
+    # The self-asserted label is preserved as an annotation, never as the actor.
+    assert event.payload.get("asserted_by") == "not-me"
+
+
+def test_open_mode_falls_back_to_asserted_label(harness) -> None:
+    build, TestingSession, _ = harness  # no ADMIN_API_KEY -> open dev mode
+    client = build()
+    approval_id = _pending_approval(TestingSession)
+
+    resp = client.post(
+        f"/approvals/{approval_id}/reject",
+        json={"decided_by": "desmond", "note": "no"},
+    )
+    assert resp.status_code == 200
+    assert resp.json()["decided_by"] == "desmond"
+    with TestingSession() as s:
+        event = s.scalars(select(Event).where(Event.action == "approval_rejected")).one()
+    assert event.actor == "desmond"
+    # Nothing to disambiguate in open mode: no separate asserted_by annotation.
+    assert "asserted_by" not in event.payload

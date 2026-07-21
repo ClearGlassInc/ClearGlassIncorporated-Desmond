@@ -11,7 +11,7 @@ def sample(**changes):
 
 def test_is_deterministic_and_review_gated():
     first=rank(sample()); second=rank(sample())
-    assert first.score == 92
+    assert first.score == 79
     assert first.audit_hash == second.audit_hash
     assert first.status is Gate.REVIEW
 

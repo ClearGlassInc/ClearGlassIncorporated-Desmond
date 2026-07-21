@@ -47,13 +47,20 @@ Operating rules also enforced in code/prompt: never fabricate inventory, reviews
 sales, or urgency; never change live pricing/tax/payment/refund/fulfillment
 without approval; log every action.
 
+The gate is also access-controlled: mutating admin endpoints (approvals, pricing,
+refunds, catalog/order/inventory writes) require an `Authorization: Bearer <key>`
+credential (`ADMIN_API_KEY`, see `app/security.py`). Unset = open dev/mock mode;
+`APP_ENV=production` with no key **fails closed at startup**. Customer checkout, the
+signature-verified Stripe webhook, and read-only telemetry stay open. Don't add a
+mutating admin route without gating it behind `require_admin`.
+
 ## Running & testing the commerce control plane
 
 ```bash
 cd clearglass-commerce/control-plane
 pip install -r requirements.txt        # fastapi, sqlalchemy, stripe, httpx (TestClient), …
 ruff check .                           # lint (must pass)
-python -m pytest tests/ -q             # 21 tests; payout tests need the full web stack
+python -m pytest tests/ -q             # 41 tests; payout tests need the full web stack (httpx)
 uvicorn app.main:app --reload          # http://localhost:8000/docs
 python -m app.daily_loop --json        # governance self-check + executive report (stdlib only)
 ```

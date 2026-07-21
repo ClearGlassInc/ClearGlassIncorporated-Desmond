@@ -58,12 +58,28 @@ curl $BASE/health
 # customer purchase (mock unless a live Stripe key is set):
 curl -X POST $BASE/checkout/session -H 'Content-Type: application/json' \
   -d '{"items":[{"name":"Aurora Lamp","amount":4900,"quantity":1}],"customer_email":"a@b.com"}'
-# a pricing change is gated — returns queued_for_approval, never executes inline:
+# a pricing change is gated — returns queued_for_approval, never executes inline.
+# Admin endpoints require the bearer token in production (see "Admin authentication"):
 curl -X POST $BASE/store/update-pricing -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $ADMIN_API_KEY" \
   -d '{"sku":"AURORA-STD","old_price":49,"new_price":59}'
-curl "$BASE/approvals?status=pending"
+curl -H "Authorization: Bearer $ADMIN_API_KEY" "$BASE/approvals?status=pending"
 curl "$BASE/events?limit=20"
 ```
+
+## Admin authentication
+
+The approval gate only means something if not everyone can open it. Mutating admin
+endpoints — `/approvals/*`, `/store/*`, `/orders/*`, `/inventory/*`, `/payments/refund` —
+require an `Authorization: Bearer <key>` credential set via **`ADMIN_API_KEY`**.
+
+- **Unset** → open dev/mock mode (local dev + tests run unchanged).
+- **`APP_ENV=production` with no key** → the API **fails closed at startup** and will not
+  boot — a production control plane must never be reachable without auth.
+- Multiple comma-separated keys are accepted so credentials can be rotated with no downtime.
+- Customer checkout, the signature-verified Stripe webhook, and read-only telemetry
+  (`/metrics`, `/events`, `/health`) stay open by design. `GET /health` reports
+  `"admin_auth": "enabled" | "disabled"` so you can confirm posture after deploy.
 
 ## Going from mock to real money
 

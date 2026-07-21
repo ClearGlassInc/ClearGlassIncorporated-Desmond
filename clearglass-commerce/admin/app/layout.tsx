@@ -1,8 +1,15 @@
 import type { ReactNode } from "react";
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3001"),
   title: "ClearGlass Commerce — Admin Cockpit",
   description: "Orders, products, inventory, analytics, and the approval gate.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "ClearGlass Commerce — Admin Cockpit",
+    description: "Orders, products, inventory, analytics, and the approval gate.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -36,6 +43,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </a>
         </nav>
         <main style={{ maxWidth: 1080, margin: "0 auto", padding: 24 }}>{children}</main>
+        <footer aria-label="Copyright notice" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px 24px", color: "#aab6d3" }}>
+          <small>© {new Date().getFullYear()} ClearGlass Inc. All rights reserved.</small>
+        </footer>
       </body>
     </html>
   );

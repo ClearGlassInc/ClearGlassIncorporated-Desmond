@@ -169,3 +169,82 @@ It emits a signed proposal manifest with:
 8. The proposal service creates a prompt patch requiring two independent evidence artifacts and explicit uncertainty below 0.78 confidence.
 9. Human reviewers inspect the signed manifest, eval score, policy result, and rollback plan.
 10. Apollo promotes the approved change to staging-canary, watches metrics, and either expands rollout or rolls back automatically.
+
+## Advanced Merge and Self-Improvement Controls
+
+The July 2026 feature merge adds a safer ontology-improvement path for ClearGlassInc Artemis. It extends the self-improvement loop beyond prompt patches while preserving the core invariant that agents may propose changes, but only approved humans and governed deployment controls may apply them.
+
+### New production-grade capabilities
+
+- **Draft-only ontology merge review**: repeated operator merge/split corrections can create an `ONTOLOGY_MERGE_REVIEW` proposal for entity-resolution stewards. Artemis never merges entities directly from agent output.
+- **Cross-compartment fail-closed guard**: if merge evidence spans compartments, the proposal is blocked as `blocked_policy_boundary` and keeps the active ontology version unchanged.
+- **Deterministic sanitization**: user-provided payload strings are HTML-escaped before being copied into signed proposal manifests or review surfaces.
+- **Risk-tier assignment**: proposal manifests now carry `medium`, `high`, or `critical` risk labels based on drift, policy violations, and ontology-impact scope.
+- **Rollback pointer on every proposal**: each signed manifest records the rollback version Apollo should restore if canary metrics, policy checks, or human review fail.
+
+### Merge-review state machine
+
+```text
+Operator merge correction
+  └─► feedback.signals
+        └─► sanitize payload
+              └─► group by mission + compartment
+                    ├─ cross-compartment evidence ─► BLOCKED_POLICY_BOUNDARY
+                    └─ same-compartment evidence
+                          └─► ONTOLOGY_MERGE_REVIEW proposal
+                                └─► entity steward review
+                                      └─► mission owner approval
+                                            └─► Apollo canary release
+                                                  ├─ promote if policy/eval/SLO pass
+                                                  └─ rollback to recorded rollback_version
+```
+
+### Python implementation anchor
+
+The stdlib-safe simulator now models both prompt-patch proposals and ontology merge-review proposals:
+
+```python
+from tools.artemis_self_improvement_engine import ArtemisImprovementEngine, FeedbackSignal, SignalType
+
+engine = ArtemisImprovementEngine({
+    "aip.agent.triage_copilot": "2.4.9",
+    "ontology.entity_resolution": "1.3.5",
+})
+
+proposal = engine.synthesize_proposals([
+    FeedbackSignal(
+        signal_id="merge-1",
+        signal_type=SignalType.ENTITY_MERGE_CORRECTION,
+        mission_id="mission-alpha",
+        ontology_object_id="person-a",
+        actor="operator.alpha",
+        classification="SECRET",
+        compartment="ARTEMIS",
+        payload={"candidate_pair": ["person-a", "person-b"]},
+    ),
+    FeedbackSignal(
+        signal_id="merge-2",
+        signal_type=SignalType.ENTITY_MERGE_CORRECTION,
+        mission_id="mission-alpha",
+        ontology_object_id="person-b",
+        actor="operator.bravo",
+        classification="SECRET",
+        compartment="ARTEMIS",
+        payload={"candidate_pair": ["person-a", "person-b"]},
+    ),
+])[0]
+
+assert proposal.proposal_type.value == "ontology_merge_review"
+assert proposal.patch["merge_execution"] == "draft_only_until_approved"
+assert proposal.rollback_version == "1.3.5"
+```
+
+### Top 5 implementation risks and fastest mitigations
+
+| Risk | Fastest mitigation |
+|---|---|
+| Agent proposes an unsafe entity merge that collapses distinct identities. | Keep merge execution draft-only; require entity steward plus mission-owner approval and regression tests against known split cases. |
+| Coalition or compartment leakage through proposal evidence. | Fail closed when evidence spans compartments; run policy filtering before manifest generation and redact inaccessible evidence hashes from reviewer views. |
+| Malicious operator text appears in dashboards or signed manifests. | Sanitize all user-facing strings before proposal creation; keep raw payloads only in access-controlled audit storage. |
+| Canary deployment degrades latency or trust. | Attach rollback versions to every proposal and configure Apollo abort thresholds for p95 latency, policy denials, and rejection-rate spikes. |
+| Self-improvement loop optimizes local metrics while hurting mission outcomes. | Require mission-level eval suites with precision, recall, trust, policy safety delta, and after-action labels before promotion. |

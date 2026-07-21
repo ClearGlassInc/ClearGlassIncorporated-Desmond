@@ -43,8 +43,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   }
 
   // Accept JSON or form posts (the login page uses a plain <form>, no JS needed).
-  let password = "";
-  let next = "/";
+  // Both `password` and `next` are assigned in every branch below before use.
+  let password: string;
+  let next: string;
   const contentType = req.headers.get("content-type") || "";
   if (contentType.includes("application/json")) {
     const body = (await req.json().catch(() => ({}))) as { password?: string; next?: string };

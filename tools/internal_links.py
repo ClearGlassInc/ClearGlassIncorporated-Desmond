@@ -97,6 +97,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "systems.html": ("Systems Console", "PERCIVAL operations console"),
     "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
+    "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),
 
     # Legal, tax & compliance
     "legal/index.html": ("Legal Infrastructure", "the ClearGlass corporate legal stack"),
@@ -238,7 +239,7 @@ CLUSTERS: dict[str, dict] = {
             "advanced-features-tools-systems.html", "automap.html",
             "conduit.html", "postloop.html", "command-console.html",
             "control-surface.html", "systems.html", "saas-platform.html",
-            "CG-os.html", "percival-build.html",
+            "CG-os.html", "percival-build.html", "clearsight.html",
         ],
         "cta": [CTA_OFFERS, CTA_PRICING],
     },
@@ -423,6 +424,7 @@ PILLAR_MAX_MEMBERS = 10  # member links shown on a pillar page
 FIXED_VIEWPORT = {
     "sentinel.html", "clearglass.html", "air-control.html",
     "percival-os.html", "artemis-percival.html", "percival-build.html",
+    "clearsight.html",
 }
 
 CSS = (

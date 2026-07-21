@@ -116,6 +116,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "legal/directors-resolution.html": ("Directors' Resolution", "initial board resolutions"),
     "legal/banking-resolution.html": ("Banking Resolution", "officer and banking authority"),
     "legal/share-subscription.html": ("Share Subscription Agreement", "founder share issuance"),
+    "legal/content-policy.html": ("Content Policy", "authorized use, attribution, and copyright ownership"),
 
     # Healthcare
     "clearpulse.html": ("ClearPulse", "healthcare intelligence pipeline"),
@@ -252,7 +253,7 @@ CLUSTERS: dict[str, dict] = {
             "legal/terms.html", "legal/articles.html", "legal/bylaws.html",
             "legal/nda.html", "legal/ip-assignment.html",
             "legal/directors-resolution.html", "legal/banking-resolution.html",
-            "legal/share-subscription.html",
+            "legal/share-subscription.html", "legal/content-policy.html",
         ],
         "cta": [CTA_STORE, CTA_OFFERS],
     },

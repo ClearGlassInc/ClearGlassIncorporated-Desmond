@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ClearGlass · Platform Command Center</title>
+<meta name="description" content="ClearGlassInc platform command center — a live visual dashboard of the monorepo: composition, the governed-commerce safety model, systems map, audit findings, and CI posture.">
+<link rel="icon" href="/assets/images/clearglass-logo.png">
+<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png">
+<style>
+  /* ClearGlass Platform Command Center — self-contained HUD. No external deps.
+     Logo marker for site-health: references clearglass-logo + /logo-badge.js. */
+  :root{
+    --bg:#05070d; --bg2:#0a0f1a; --panel:rgba(17,25,40,.72); --panel-line:rgba(120,160,220,.14);
+    --ink:#e7eefc; --ink-dim:#93a4c4; --ink-faint:#5f7196;
+    --cyan:#22d3ee; --emerald:#34d399; --amber:#fbbf24; --red:#f87171;
+    --violet:#a78bfa; --pink:#f472b6; --blue:#60a5fa; --teal:#2dd4bf; --slate:#94a3b8;
+    --glow:0 0 24px rgba(34,211,238,.22);
+    --radius:16px; --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; overflow:hidden; font-family:var(--sans); color:var(--ink);
+    background:radial-gradient(1200px 800px at 78% -8%,rgba(34,211,238,.10),transparent 60%),
+               radial-gradient(1000px 700px at 12% 108%,rgba(52,211,153,.08),transparent 60%),
+               linear-gradient(180deg,var(--bg),var(--bg2));
+  }
+  canvas#grid{position:fixed;inset:0;z-index:0;opacity:.5}
+  .scan{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 2px,transparent 4px);
+    mix-blend-mode:overlay}
+  .app{position:relative;z-index:2;height:100vh;display:flex;flex-direction:column;padding:18px 22px;gap:14px}
+
+  /* header */
+  header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:34px;height:34px;border-radius:8px;box-shadow:var(--glow)}
+  .brand .t{line-height:1.1}
+  .brand h1{margin:0;font-size:16px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .brand small{color:var(--ink-dim);font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+  .spacer{flex:1}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;
+    padding:7px 13px;border:1px solid var(--panel-line);border-radius:999px;background:var(--panel);color:var(--ink-dim)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 10px var(--emerald);animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  .clock{font-family:var(--mono);color:var(--cyan)}
+
+  /* tabs */
+  nav.tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{font:600 12px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);
+    background:var(--panel);border:1px solid var(--panel-line);padding:9px 15px;border-radius:11px;cursor:pointer;
+    transition:.2s;display:flex;align-items:center;gap:8px}
+  .tab:hover{color:var(--ink);border-color:rgba(34,211,238,.4)}
+  .tab[aria-selected=true]{color:#04121a;background:linear-gradient(180deg,var(--cyan),#0fb8d4);border-color:transparent;box-shadow:var(--glow)}
+  .tab .g{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6}
+
+  main{flex:1;position:relative;overflow:hidden}
+  .view{position:absolute;inset:0;overflow:auto;padding:2px;opacity:0;transform:translateY(8px);
+    pointer-events:none;transition:opacity .35s,transform .35s}
+  .view.active{opacity:1;transform:none;pointer-events:auto}
+  .view::-webkit-scrollbar{width:9px}.view::-webkit-scrollbar-thumb{background:rgba(120,160,220,.25);border-radius:8px}
+
+  .grid{display:grid;gap:14px}
+  .k4{grid-template-columns:repeat(4,1fr)} .k3{grid-template-columns:repeat(3,1fr)} .k2{grid-template-columns:repeat(2,1fr)}
+  @media (max-width:1100px){.k4{grid-template-columns:repeat(2,1fr)}.k3,.k2{grid-template-columns:1fr}}
+
+  .card{background:var(--panel);border:1px solid var(--panel-line);border-radius:var(--radius);
+    padding:18px;backdrop-filter:blur(10px);position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 auto auto 0;width:100%;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(34,211,238,.5),transparent);opacity:.5}
+  .card h3{margin:0 0 3px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);font-weight:700}
+  .card .sub{color:var(--ink-faint);font-size:11px;margin-bottom:12px}
+
+  /* KPI */
+  .kpi .num{font-family:var(--mono);font-size:40px;font-weight:700;line-height:1;letter-spacing:-.02em}
+  .kpi .lab{margin-top:8px;color:var(--ink-dim);font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+  .kpi .foot{margin-top:10px;font-size:11px;color:var(--ink-faint);font-family:var(--mono)}
+  .kpi.cyan .num{color:var(--cyan)}.kpi.em .num{color:var(--emerald)}.kpi.am .num{color:var(--amber)}
+  .kpi.vi .num{color:var(--violet)}.kpi.bl .num{color:var(--blue)}.kpi.pk .num{color:var(--pink)}
+
+  /* donut */
+  .donut-wrap{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+  .donut{position:relative;width:210px;height:210px;flex:0 0 auto}
+  .donut svg{transform:rotate(-90deg)}
+  .donut .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .donut .center b{font-family:var(--mono);font-size:30px}
+  .donut .center span{font-size:11px;color:var(--ink-dim);letter-spacing:.12em;text-transform:uppercase}
+  .legend{flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px}
+  .legend .row{display:flex;align-items:center;gap:10px;font-size:12px;cursor:default;padding:3px 5px;border-radius:7px;transition:.15s}
+  .legend .row:hover{background:rgba(120,160,220,.08)}
+  .legend .sw{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
+  .legend .nm{flex:1;color:var(--ink)}
+  .legend .vl{font-family:var(--mono);color:var(--ink-dim)}
+  .legend .bar{height:5px;border-radius:3px;background:rgba(255,255,255,.06);width:96px;overflow:hidden;flex:0 0 auto}
+  .legend .bar i{display:block;height:100%;border-radius:3px}
+
+  /* risk ladder */
+  .ladder{display:flex;flex-direction:column;gap:7px}
+  .rung{display:grid;grid-template-columns:190px 1fr 54px;align-items:center;gap:12px}
+  .rung .act{font-family:var(--mono);font-size:12px;color:var(--ink)}
+  .rung .track{height:22px;border-radius:7px;background:rgba(255,255,255,.05);position:relative;overflow:hidden}
+  .rung .fill{height:100%;border-radius:7px;position:relative;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+  .rung .sc{font-family:var(--mono);font-size:13px;text-align:right;color:var(--ink-dim)}
+  .tier-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;font-size:11px;color:var(--ink-dim)}
+  .tier-legend span{display:inline-flex;align-items:center;gap:6px}
+  .tier-legend i{width:10px;height:10px;border-radius:3px}
+  .thresholds{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .chip{font-family:var(--mono);font-size:11px;padding:4px 9px;border-radius:8px;border:1px solid var(--panel-line);color:var(--ink-dim)}
+
+  /* pipeline */
+  .pipe{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-top:6px}
+  .step{flex:1;min-width:150px;background:rgba(255,255,255,.03);border:1px solid var(--panel-line);
+    border-radius:12px;padding:14px;position:relative;margin-right:26px}
+  .step:last-child{margin-right:0}
+  .step::after{content:"→";position:absolute;right:-21px;top:50%;transform:translateY(-50%);color:var(--cyan);font-size:20px}
+  .step:last-child::after{display:none}
+  .step .n{font-family:var(--mono);font-size:11px;color:var(--cyan)}
+  .step h4{margin:6px 0 4px;font-size:14px}
+  .step p{margin:0;font-size:11px;color:var(--ink-dim);line-height:1.5}
+  .step.gate{border-color:rgba(251,191,36,.4);box-shadow:0 0 20px rgba(251,191,36,.08)}
+  .step.gate .n{color:var(--amber)}
+
+  /* systems map */
+  .map{width:100%;height:auto}
+  .node rect{fill:rgba(17,25,40,.9);stroke:var(--panel-line);rx:12}
+  .node.core rect{stroke:var(--cyan);filter:drop-shadow(0 0 8px rgba(34,211,238,.4))}
+  .node .tl{fill:var(--ink);font:700 13px var(--sans)}
+  .node .st{fill:var(--ink-dim);font:11px var(--mono)}
+  .edge{stroke:rgba(120,160,220,.35);stroke-width:1.5;fill:none}
+  .edge.hot{stroke:var(--cyan);stroke-dasharray:5 5;animation:flow 1s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-20}}
+  .badge{font:700 9px var(--mono);letter-spacing:.05em}
+
+  /* findings */
+  .finds{display:flex;flex-direction:column;gap:10px}
+  .find{display:grid;grid-template-columns:34px 1fr auto;gap:14px;align-items:center;
+    background:rgba(255,255,255,.03);border:1px solid var(--panel-line);border-left-width:3px;border-radius:12px;padding:13px 15px}
+  .find .rk{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--ink-faint);text-align:center}
+  .find h4{margin:0 0 3px;font-size:14px}
+  .find p{margin:0;font-size:12px;color:var(--ink-dim);line-height:1.45}
+  .find .meta{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+  .tag{font:700 10px/1 var(--mono);padding:5px 8px;border-radius:7px;letter-spacing:.04em;white-space:nowrap}
+  .tag.S{background:rgba(52,211,153,.16);color:var(--emerald)}
+  .tag.M{background:rgba(96,165,250,.16);color:var(--blue)}
+  .tag.L{background:rgba(167,139,250,.16);color:var(--violet)}
+  .tag.done{background:rgba(52,211,153,.2);color:var(--emerald)}
+  .tag.plan{background:rgba(148,163,184,.16);color:var(--slate)}
+  .sev{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+
+  /* workflow grid */
+  .wf{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:9px}
+  .wf .w{background:rgba(255,255,255,.03);border:1px solid var(--panel-line);border-radius:10px;padding:11px 12px;
+    display:flex;align-items:center;gap:9px;font-size:12px;transition:.15s}
+  .wf .w:hover{border-color:rgba(34,211,238,.4);transform:translateY(-1px)}
+  .wf .w i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .wf .w b{font-weight:600;color:var(--ink)}
+  .cat-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--ink-dim);margin-bottom:10px}
+  .cat-legend span{display:inline-flex;align-items:center;gap:6px}
+  .cat-legend i{width:9px;height:9px;border-radius:50%}
+
+  /* gauge */
+  .gauges{display:flex;gap:26px;flex-wrap:wrap;align-items:center;justify-content:center}
+  .gauge{position:relative;width:150px;height:150px;text-align:center}
+  .gauge svg{transform:rotate(-90deg)}
+  .gauge .lab{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .gauge .lab b{font-family:var(--mono);font-size:26px}
+  .gauge .lab span{font-size:10px;color:var(--ink-dim);letter-spacing:.1em;text-transform:uppercase}
+
+  .note{font-size:11px;color:var(--ink-faint);margin-top:12px;line-height:1.5}
+  a.src{color:var(--cyan);text-decoration:none;border-bottom:1px dotted rgba(34,211,238,.4)}
+</style>
+</head>
+<body>
+<canvas id="grid"></canvas>
+<div class="scan"></div>
+
+<div class="app">
+  <header>
+    <div class="brand">
+      <img src="/assets/images/clearglass-logo.png" alt="ClearGlass logo">
+      <div class="t">
+        <h1>Platform Command Center</h1>
+        <small>ClearGlassInc · Desmond Otieno Odhiambo</small>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="pill"><span class="dot"></span> Governance: <b style="color:var(--emerald)">FAIL-CLOSED</b></div>
+    <div class="pill">Branch <b style="color:var(--cyan)">audit-gg8ece</b></div>
+    <div class="pill clock" id="clock">--:--:--</div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab" data-v="overview" aria-selected="true"><span class="g"></span>Overview</button>
+    <button class="tab" data-v="composition"><span class="g"></span>Composition</button>
+    <button class="tab" data-v="governance"><span class="g"></span>Governance</button>
+    <button class="tab" data-v="systems"><span class="g"></span>Systems Map</button>
+    <button class="tab" data-v="audit"><span class="g"></span>Audit Findings</button>
+    <button class="tab" data-v="ci"><span class="g"></span>CI &amp; Workflows</button>
+  </nav>
+
+  <main id="main"></main>
+</div>
+
+<script defer src="/logo-badge.js"></script>
+<script>
+/* ---------------- DATA (grounded in the live repo audit) ---------------- */
+const DATA = {
+  kpis:[
+    {k:"cyan",n:1370,l:"Tracked files",f:"across 10 subsystems"},
+    {k:"em",n:333,l:"Python modules",f:"typed control plane + agents"},
+    {k:"vi",n:42,l:"CI workflows",f:"Pages · commerce · security"},
+    {k:"am",n:41,l:"Passing tests",f:"governance + payments + auth"},
+    {k:"bl",n:131,l:"HTML pages",f:"72 at root · pillar-linked"},
+    {k:"pk",n:8,l:"Live systems",f:"static · commerce · agents"},
+    {k:"cyan",n:26,l:"Vision blueprints",f:"target-state, unprovisioned"},
+    {k:"em",n:100,l:"% money paths gated",f:"read → draft → approve → run"},
+  ],
+  // file counts by subsystem (git ls-files); "Static site & content" = remainder
+  composition:[
+    {n:"Static site & content",v:923,c:"#e2e8f0"},
+    {n:"clearglass-commerce",v:75,c:"#22d3ee"},
+    {n:"apps (legacy)",v:66,c:"#f472b6"},
+    {n:"sentinel",v:62,c:"#a78bfa"},
+    {n:"bots",v:53,c:"#34d399"},
+    {n:".github / CI",v:50,c:"#f87171"},
+    {n:"agents",v:49,c:"#fbbf24"},
+    {n:"operations",v:43,c:"#60a5fa"},
+    {n:"assets",v:23,c:"#2dd4bf"},
+    {n:"tools",v:14,c:"#c084fc"},
+    {n:"data",v:12,c:"#94a3b8"},
+  ],
+  bytype:[
+    {n:"Python",v:333,c:"#34d399"},
+    {n:"HTML",v:131,c:"#60a5fa"},
+    {n:"TypeScript/TSX",v:53,c:"#22d3ee"},
+    {n:"Markdown",v:37,c:"#a78bfa"},
+    {n:"JavaScript",v:28,c:"#fbbf24"},
+    {n:"CSS",v:17,c:"#f472b6"},
+    {n:"Config · data · assets",v:771,c:"#475569"},
+  ],
+  // governance.py ACTION_RISK — the real safety map
+  risk:[
+    {a:"read_metrics",s:0},{a:"generate_copy",s:5},{a:"reconcile_orders",s:10},
+    {a:"inventory_check",s:10},{a:"draft_message",s:15},{a:"draft_campaign",s:20},
+    {a:"refresh_products",s:35},{a:"update_catalog",s:40},{a:"publish_content",s:45},
+    {a:"launch_campaign",s:70},{a:"inventory_reorder",s:75},{a:"send_outbound",s:78},
+    {a:"update_pricing",s:80},{a:"update_fulfillment_rules",s:90},{a:"update_tax_settings",s:95},
+    {a:"trigger_refund",s:95},{a:"update_payment_settings",s:100},
+  ],
+  findings:[
+    {r:1,t:"Unauthenticated approval gate",d:"Every mutating admin endpoint was open; the safety model rested on a lock anyone could open.",e:"S",st:"SHIPPED",sev:"var(--red)"},
+    {r:2,t:"Approver identity binding",d:"Bind the authenticated principal to each approval instead of a self-asserted decided_by string.",e:"S",st:"PLANNED",sev:"var(--amber)"},
+    {r:3,t:"Observability layer",d:"Request IDs, structured JSON logs, /metrics, error tracking — operate under real load.",e:"M",st:"PLANNED",sev:"var(--amber)"},
+    {r:4,t:"Documentation consolidation",d:"Collapse 26 overlapping ARTEMIS/OS blueprints into one docs tree with real-vs-target banners.",e:"M",st:"PLANNED",sev:"var(--amber)"},
+    {r:5,t:"Repo weight reduction",d:"~8MB root images incl. 3 duplicate ~1MB logos; archive superseded apps/.",e:"S",st:"PLANNED",sev:"var(--blue)"},
+    {r:6,t:"CI consolidation + cost",d:"42 workflows with overlap; one required-checks contract + concurrency on scheduled loops.",e:"M",st:"PLANNED",sev:"var(--blue)"},
+    {r:7,t:"Reproducible builds",d:"Hash-locked installs for the control plane; wire Dependabot to a lockfile.",e:"S",st:"PLANNED",sev:"var(--blue)"},
+    {r:8,t:"Rate limiting + idempotency",d:"Defense-grade hardening on checkout/refund under abuse or retries.",e:"M",st:"PLANNED",sev:"var(--blue)"},
+    {r:9,t:"Retrieval layer over ledger",d:"Read-only RAG 'ask the operator' over the append-only events ledger — leverage, no write risk.",e:"L",st:"PLANNED",sev:"var(--violet)"},
+    {r:10,t:"Resumable daily loop + alerts",d:"Make the scheduled governance loop observable and page on failure.",e:"M",st:"PLANNED",sev:"var(--violet)"},
+  ],
+  workflows:[
+    ["CI","core"],["Deploy Pages","core"],["Commerce Deploy","commerce"],["Commerce Frontend CI","commerce"],
+    ["Commerce Daily Loop","commerce"],["Sales-Ops Briefing","commerce"],["Security","sec"],["API Security Audit","sec"],
+    ["Secret Pattern Scan","sec"],["Dependency Review","sec"],["IP Protection Scan","sec"],["Compliance Evidence","sec"],
+    ["Policy Gate","gov"],["Percival Policy Gate","gov"],["Percival Policy (reusable)","gov"],["Agent OS Self-Check","gov"],
+    ["Internal Link Authority","site"],["Control Surface Feeds","site"],["Content Pipeline","site"],["Daily Marketing Content","site"],
+    ["Health Monitor","site"],["Defender Watch","sec"],["Repo Audit","gov"],["Multi-Repo Audit","gov"],
+    ["Agent Army","agent"],["Agent Army Crypto","agent"],["Bot Orchestrator","agent"],["Auto-Store","agent"],
+    ["ARTEMIS Deploy","agent"],["Content Pipeline ","site"],["Cert Bot","sec"],["Dependency Updater","sec"],
+    ["PR Automation","core"],["Codex Autofix","core"],["Workflow Doctor","core"],["Workflow Repair Agent","core"],
+    ["Release Supply Chain","sec"],["Military-Op Pipeline","agent"],["Military-Op Release","agent"],["Burlington Release","agent"],
+    ["Dispatch All Workflows","core"],["Pages Check","core"],
+  ],
+  ci:[
+    {n:"Python Tests",g:"success"},{n:"Lint (ruff)",g:"success"},{n:"Policy Gate",g:"success"},
+    {n:"CodeQL · python",g:"success"},{n:"CodeQL · js/ts",g:"success"},{n:"Secret Pattern Scan",g:"success"},
+    {n:"Dependency Review",g:"success"},{n:"Workflow Doctor",g:"success"},{n:"Site Reliability Audit",g:"success"},
+    {n:"IP Risk Assessment",g:"success"},{n:"Storefront Smoke",g:"success"},{n:"Validate codebase",g:"success"},
+  ],
+};
+const WF_CAT={core:"#22d3ee",commerce:"#34d399",sec:"#f87171",gov:"#fbbf24",site:"#60a5fa",agent:"#a78bfa"};
+const WF_LAB={core:"Core CI",commerce:"Commerce",sec:"Security",gov:"Governance",site:"Site",agent:"Agents"};
+
+/* ---------------- helpers ---------------- */
+const $=(s,r=document)=>r.querySelector(s);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
+const tierColor=s=>s>=90?"var(--red)":s>=60?"var(--amber)":s>=30?"var(--blue)":"var(--emerald)";
+const tierName=s=>s>=90?"CRITICAL":s>=60?"HIGH":s>=30?"MEDIUM":"LOW";
+
+/* count-up */
+function countUp(node,to,dur=1100){
+  const start=performance.now();const from=0;
+  const step=t=>{const p=Math.min(1,(t-start)/dur);const e=1-Math.pow(1-p,3);
+    node.textContent=Math.round(from+(to-from)*e).toLocaleString();
+    if(p<1)requestAnimationFrame(step);};
+  requestAnimationFrame(step);
+}
+/* donut via stroke-dasharray */
+function donut(items,{size=210,stroke=26,centerTop,centerBottom}={}){
+  const r=(size-stroke)/2, c=2*Math.PI*r, total=items.reduce((a,b)=>a+b.v,0);
+  const wrap=el("div","donut");wrap.style.width=wrap.style.height=size+"px";
+  const NS="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(NS,"svg");svg.setAttribute("width",size);svg.setAttribute("height",size);
+  const track=document.createElementNS(NS,"circle");
+  [["cx",size/2],["cy",size/2],["r",r],["fill","none"],["stroke","rgba(255,255,255,.05)"],["stroke-width",stroke]]
+    .forEach(([k,v])=>track.setAttribute(k,v));svg.appendChild(track);
+  let off=0;
+  items.forEach((it,i)=>{
+    const seg=document.createElementNS(NS,"circle");const len=c*it.v/total;
+    [["cx",size/2],["cy",size/2],["r",r],["fill","none"],["stroke",it.c],["stroke-width",stroke],
+     ["stroke-dasharray",`${len} ${c-len}`],["stroke-dashoffset",-off]].forEach(([k,v])=>seg.setAttribute(k,v));
+    seg.style.transition="stroke-width .2s";seg.style.opacity="0";
+    setTimeout(()=>seg.style.opacity="1",60*i);
+    seg.addEventListener("mouseenter",()=>seg.setAttribute("stroke-width",stroke+6));
+    seg.addEventListener("mouseleave",()=>seg.setAttribute("stroke-width",stroke));
+    svg.appendChild(seg);off+=len;
+  });
+  wrap.appendChild(svg);
+  const ctr=el("div","center",`<b>${(centerTop||total.toLocaleString())}</b><span>${centerBottom||"files"}</span>`);
+  wrap.appendChild(ctr);return {wrap,total};
+}
+function legend(items,total){
+  const box=el("div","legend");
+  items.forEach(it=>{
+    const row=el("div","row");
+    row.innerHTML=`<span class="sw" style="background:${it.c}"></span>
+      <span class="nm">${it.n}</span>
+      <span class="bar"><i style="width:${(it.v/total*100).toFixed(1)}%;background:${it.c}"></i></span>
+      <span class="vl">${it.v}</span>`;
+    box.appendChild(row);
+  });return box;
+}
+function gauge(pct,label,color){
+  const size=150,stroke=13,r=(size-stroke)/2,c=2*Math.PI*r;
+  const g=el("div","gauge");const NS="http://www.w3.org/2000/svg";
+  const svg=document.createElementNS(NS,"svg");svg.setAttribute("width",size);svg.setAttribute("height",size);
+  const bg=document.createElementNS(NS,"circle");
+  [["cx",size/2],["cy",size/2],["r",r],["fill","none"],["stroke","rgba(255,255,255,.06)"],["stroke-width",stroke]].forEach(([k,v])=>bg.setAttribute(k,v));
+  const fg=document.createElementNS(NS,"circle");
+  [["cx",size/2],["cy",size/2],["r",r],["fill","none"],["stroke",color],["stroke-width",stroke],
+   ["stroke-linecap","round"],["stroke-dasharray",c],["stroke-dashoffset",c]].forEach(([k,v])=>fg.setAttribute(k,v));
+  fg.style.transition="stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)";
+  svg.append(bg,fg);g.appendChild(svg);
+  g.appendChild(el("div","lab",`<b style="color:${color}">${pct}%</b><span>${label}</span>`));
+  setTimeout(()=>fg.setAttribute("stroke-dashoffset",c*(1-pct/100)),120);
+  return g;
+}
+
+/* ---------------- views ---------------- */
+const views={};
+views.overview=()=>{
+  const v=el("div","view");
+  const g=el("div","grid k4");
+  DATA.kpis.forEach(k=>{
+    const card=el("div",`card kpi ${k.k}`);
+    card.innerHTML=`<div class="num" data-n="${k.n}">0</div><div class="lab">${k.l}</div><div class="foot">${k.f}</div>`;
+    g.appendChild(card);
+  });
+  v.appendChild(g);
+  const banner=el("div","card");banner.style.marginTop="14px";
+  banner.innerHTML=`<h3>Platform posture</h3><div class="sub">Snapshot from the live monorepo audit</div>
+    <div class="pipe">
+      <div class="step"><div class="n">01 · ANALYZE</div><h4>Read-only</h4><p>Metrics, reconciliation, drafting. Fully reversible, auto-executes and logs.</p></div>
+      <div class="step"><div class="n">02 · DRAFT</div><h4>Proposed action</h4><p>Every material change is scored 0–100 by <a class="src">governance.py</a>.</p></div>
+      <div class="step gate"><div class="n">03 · GATE</div><h4>Human approval</h4><p>High/critical actions blocked until an approvals row is <b>approved</b> — now behind admin auth.</p></div>
+      <div class="step"><div class="n">04 · AUDIT</div><h4>Append-only ledger</h4><p>Executed with a risk score written to the immutable events ledger.</p></div>
+    </div>
+    <div class="note">Core is strong &amp; safe. The ranked roadmap (Audit Findings tab) lifts observability, docs clarity, and repo weight to match the commerce core. Finding #1 — the unauthenticated approval gate — is already <b style="color:var(--emerald)">shipped</b>.</div>`;
+  v.appendChild(banner);
+  setTimeout(()=>v.querySelectorAll(".num[data-n]").forEach(n=>countUp(n,+n.dataset.n)),80);
+  return v;
+};
+views.composition=()=>{
+  const v=el("div","view");const g=el("div","grid k2");
+  const c1=el("div","card");c1.innerHTML=`<h3>By subsystem</h3><div class="sub">Tracked files across the monorepo · 1,370 total</div>`;
+  const d1=donut(DATA.composition,{centerBottom:"files"});
+  const w1=el("div","donut-wrap");w1.append(d1.wrap,legend(DATA.composition,d1.total));c1.appendChild(w1);
+  const c2=el("div","card");c2.innerHTML=`<h3>By language / type</h3><div class="sub">What the platform is written in</div>`;
+  const d2=donut(DATA.bytype,{centerBottom:"files"});
+  const w2=el("div","donut-wrap");w2.append(d2.wrap,legend(DATA.bytype,d2.total));c2.appendChild(w2);
+  g.append(c1,c2);v.appendChild(g);
+  const note=el("div","card");note.style.marginTop="14px";
+  note.innerHTML=`<h3>Reading this</h3><div class="note" style="margin-top:2px">
+    The flagship <b>clearglass-commerce</b> control plane is small (~1,900 LOC) and dense with safety logic — quality over volume.
+    The large <b>static site &amp; content</b> slice (product/legal/offers pages) and the <b>26 vision blueprints</b> in Markdown
+    are the biggest consolidation targets flagged in the audit. <b>apps/</b> is legacy, superseded by clearglass-commerce.</div>`;
+  v.appendChild(note);return v;
+};
+views.governance=()=>{
+  const v=el("div","view");
+  const c=el("div","card");
+  c.innerHTML=`<h3>Governance risk ladder</h3><div class="sub">Live map from <span style="font-family:var(--mono)">control-plane/app/governance.py</span> — every action scored 0–100, higher = more gated</div>`;
+  const lad=el("div","ladder");
+  DATA.risk.slice().sort((a,b)=>a.s-b.s).forEach((r,i)=>{
+    const rung=el("div","rung");const col=tierColor(r.s);
+    rung.innerHTML=`<span class="act">${r.a}</span>
+      <div class="track"><div class="fill" style="width:0;background:linear-gradient(90deg,${col}55,${col})"></div></div>
+      <span class="sc">${r.s}</span>`;
+    lad.appendChild(rung);
+    setTimeout(()=>rung.querySelector(".fill").style.width=Math.max(4,r.s)+"%",120+i*45);
+  });
+  c.appendChild(lad);
+  c.insertAdjacentHTML("beforeend",`
+    <div class="tier-legend">
+      <span><i style="background:var(--emerald)"></i>LOW &lt;30 · auto-execute + log</span>
+      <span><i style="background:var(--blue)"></i>MEDIUM 30–59 · queue review</span>
+      <span><i style="background:var(--amber)"></i>HIGH 60–89 · approval required</span>
+      <span><i style="background:var(--red)"></i>CRITICAL ≥90 · approval, top scrutiny</span>
+    </div>
+    <div class="thresholds">
+      <span class="chip">Unknown action → defaults to 85 (fail closed)</span>
+      <span class="chip">Δprice ≥20% → +10</span>
+      <span class="chip">audience=all / bulk → +8</span>
+      <span class="chip">low confidence → +12</span>
+    </div>`);
+  v.appendChild(c);
+  const sec=el("div","card");sec.style.marginTop="14px";
+  sec.innerHTML=`<h3>Access control · shipped</h3><div class="sub">The gate is only real if not everyone can open it</div>
+    <div class="pipe">
+      <div class="step"><div class="n">GUARD</div><h4>require_admin</h4><p>Bearer token, constant-time compare, comma-separated keys for zero-downtime rotation.</p></div>
+      <div class="step gate"><div class="n">FAIL-CLOSED</div><h4>Startup posture</h4><p>APP_ENV=production with no ADMIN_API_KEY refuses to boot.</p></div>
+      <div class="step"><div class="n">OPEN PATHS</div><h4>By design</h4><p>Customer checkout, signature-verified Stripe webhook, read-only telemetry stay open.</p></div>
+      <div class="step"><div class="n">TESTED</div><h4>12 new tests</h4><p>401/403/valid, rotation, fail-closed. Suite: 41 passed, ruff clean.</p></div>
+    </div>`;
+  v.appendChild(sec);return v;
+};
+views.systems=()=>{
+  const v=el("div","view");const c=el("div","card");
+  c.innerHTML=`<h3>Systems map</h3><div class="sub">What actually ships and how it connects · core = governed commerce OS</div>`;
+  c.insertAdjacentHTML("beforeend",`
+  <svg class="map" viewBox="0 0 1000 470" role="img" aria-label="ClearGlass systems architecture map">
+    <defs></defs>
+    <path class="edge" d="M170,90 C300,90 300,210 430,210"/>
+    <path class="edge hot" d="M570,210 C660,210 660,140 760,140"/>
+    <path class="edge hot" d="M570,235 C660,235 660,310 760,310"/>
+    <path class="edge" d="M500,290 L500,360"/>
+    <path class="edge" d="M170,380 C300,380 330,300 430,265"/>
+    <path class="edge" d="M830,200 C880,250 880,250 830,300"/>
+    ${node(40,55,250,70,"Static GitHub Pages site","72 root pages · pillar-linked",false,"SITE","#e2e8f0")}
+    ${node(430,180,140,80,"Control Plane","FastAPI · governed",true,"CORE","#22d3ee")}
+    ${node(760,105,200,70,"Storefront","Next.js · Stripe checkout",false,"WEB","#34d399")}
+    ${node(760,275,200,70,"Admin","Next.js · approvals UI",false,"WEB","#34d399")}
+    ${node(410,345,180,60,"Postgres","events ledger · orders",false,"DB","#60a5fa")}
+    ${node(40,350,250,60,"Agents · Bots · Sentinel","governed automation",false,"AI","#a78bfa")}
+    ${node(40,150,250,55,"tools/internal_links.py","site graph generator",false,"GEN","#c084fc")}
+  </svg>
+  <div class="note">Animated cyan edges carry <b>governed money/action flow</b> through the approval gate. Agents, bots and the
+  sentinel index all funnel proposals through the same <b>score → gate → execute → audit</b> spine — new capability means a new
+  scored action, never a new bypass.</div>`);
+  v.appendChild(c);return v;
+};
+function node(x,y,w,h,title,sub,core,badge,col){
+  return `<g class="node ${core?'core':''}" transform="translate(${x},${y})">
+    <rect width="${w}" height="${h}" rx="12"></rect>
+    <text class="tl" x="14" y="26">${title}</text>
+    <text class="st" x="14" y="46">${sub}</text>
+    <text class="badge" x="${w-14}" y="20" text-anchor="end" fill="${col}">${badge}</text>
+  </g>`;
+}
+views.audit=()=>{
+  const v=el("div","view");const c=el("div","card");
+  c.innerHTML=`<h3>Ranked audit findings</h3><div class="sub">Highest leverage first · S/M/L = effort · from PLATFORM_AUDIT.md</div>`;
+  const box=el("div","finds");
+  DATA.findings.forEach(f=>{
+    const row=el("div","find");row.style.borderLeftColor=f.sev;
+    row.innerHTML=`<div class="rk">${f.r}</div>
+      <div><div class="meta"><span class="sev" style="background:${f.sev}"></span><h4>${f.t}</h4></div>
+        <p>${f.d}</p></div>
+      <div class="meta"><span class="tag ${f.e}">${f.e}</span>
+        <span class="tag ${f.st==='SHIPPED'?'done':'plan'}">${f.st}</span></div>`;
+    box.appendChild(row);
+  });
+  c.appendChild(box);v.appendChild(c);return v;
+};
+views.ci=()=>{
+  const v=el("div","view");const g=el("div","grid k2");
+  const c1=el("div","card");
+  c1.innerHTML=`<h3>Merge posture · PR #984</h3><div class="sub">All required checks green before merge</div>`;
+  const gw=el("div","gauges");
+  gw.append(
+    gauge(100,"Checks green","var(--emerald)"),
+    gauge(100,"Tests pass","var(--cyan)"),
+    gauge(0,"Lint issues","var(--amber)")
+  );
+  c1.appendChild(gw);
+  const list=el("div","wf");list.style.marginTop="16px";
+  DATA.ci.forEach(x=>{const w=el("div","w");w.innerHTML=`<i style="background:var(--emerald);box-shadow:0 0 8px var(--emerald)"></i><b>${x.n}</b>`;list.appendChild(w);});
+  c1.appendChild(list);
+
+  const c2=el("div","card");
+  c2.innerHTML=`<h3>Workflow fleet · 42</h3><div class="sub">Automation surface, colored by domain</div>`;
+  const cats=el("div","cat-legend");
+  Object.keys(WF_LAB).forEach(k=>cats.insertAdjacentHTML("beforeend",`<span><i style="background:${WF_CAT[k]}"></i>${WF_LAB[k]}</span>`));
+  c2.appendChild(cats);
+  const wf=el("div","wf");
+  DATA.workflows.forEach(([n,cat])=>{const w=el("div","w");
+    w.innerHTML=`<i style="background:${WF_CAT[cat]}"></i><b>${n.trim()}</b>`;wf.appendChild(w);});
+  c2.appendChild(wf);
+  g.append(c1,c2);v.appendChild(g);
+  const note=el("div","card");note.style.marginTop="14px";
+  note.innerHTML=`<h3>Opportunity</h3><div class="note" style="margin-top:2px">42 workflows include overlapping agent/release pipelines
+   (agent-army, military-op, burlington, dispatch-all). Audit finding #6 recommends one required-checks contract plus
+   <span style="font-family:var(--mono)">concurrency:</span> groups and failure alerts on scheduled loops to cut cost and surface real failures.</div>`;
+  v.appendChild(note);return v;
+};
+
+/* ---------------- mount + tabs ---------------- */
+const main=$("#main");let mounted={};
+function show(name){
+  Object.values(mounted).forEach(x=>x.classList.remove("active"));
+  if(!mounted[name]){mounted[name]=views[name]();main.appendChild(mounted[name]);}
+  requestAnimationFrame(()=>mounted[name].classList.add("active"));
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===name));
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)show(b.dataset.v);});
+show("overview");
+
+/* clock */
+const clk=$("#clock");
+setInterval(()=>{clk.textContent=new Date().toUTCString().slice(17,25)+" UTC";},1000);
+
+/* animated grid background */
+const cv=$("#grid"),cx=cv.getContext("2d");let W,H,t=0;
+function rz(){W=cv.width=innerWidth;H=cv.height=innerHeight;}addEventListener("resize",rz);rz();
+(function loop(){
+  cx.clearRect(0,0,W,H);t+=.4;const g=46;
+  cx.strokeStyle="rgba(90,130,190,.10)";cx.lineWidth=1;
+  const oy=(t*.4)%g;
+  for(let y=-g+oy;y<H;y+=g){cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke();}
+  for(let x=0;x<W;x+=g){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();}
+  // travelling pulse dots along a couple lines
+  for(let i=0;i<3;i++){
+    const px=((t*2.2+i*W/3)%W);const py=H*(.28+i*.22);
+    const grd=cx.createRadialGradient(px,py,0,px,py,60);
+    grd.addColorStop(0,"rgba(34,211,238,.20)");grd.addColorStop(1,"transparent");
+    cx.fillStyle=grd;cx.beginPath();cx.arc(px,py,60,0,7);cx.fill();
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

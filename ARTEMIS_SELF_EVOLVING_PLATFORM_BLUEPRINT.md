@@ -1125,3 +1125,297 @@ def feedback_to_eval_slice(feedback: FeedbackSignal) -> str:
 ```
 
 The self-improvement loop is deliberately asymmetric: feedback can create evals and proposals automatically, but deployment is impossible without review-board approval, signed artifacts, Apollo ring deployment, and live rollback criteria.
+
+## Advanced Feature Merge — Secure-by-Design Production Extensions
+
+This merge adds advanced implementation guidance without removing any existing blueprint scope. The additions keep ClearGlassInc Artemis Python-first for deterministic control-plane logic and preserve the invariant that AI may propose improvements, but only humans can authorize operationally significant changes or production rollout.
+
+### Advanced capability map
+
+| Capability | Primary platform | Python precision role | Guardrail |
+|---|---|---|---|
+| Real-time fusion fabric | Foundry + Gotham | Normalize events, compute confidence, publish typed envelopes | Reject malformed, oversized, duplicate, or unauthorized events before ontology writeback |
+| Agentic mission workflows | AIP | Run state machines, tool policies, eval gates | Human approval required for case-changing, access-changing, or operational actions |
+| Coalition release automation | Gotham + Foundry | Redaction checks, caveat validation, releasability scoring | Default-deny if classification, compartment, purpose, or coalition tags conflict |
+| Self-upgrade review board | AIP + Apollo | Generate eval-backed proposals and rollback triggers | No autonomous policy, objective, model, prompt, or workflow deployment |
+| Mission observability mesh | Apollo + SIEM | Emit privacy-aware OpenTelemetry, eval, audit, and drift events | No secrets, raw credentials, or restricted payloads in logs or model context |
+| Resilience control plane | Apollo | Canary, health gates, feature flags, rollback decisions | Signed artifacts, pinned versions, and immutable deployment provenance |
+
+### Extended folder structure
+
+```text
+artemis/
+  apps/
+    web/                              # Next.js mission console and ModelOps console
+      app/
+        mission/[missionId]/page.tsx
+        approvals/page.tsx
+        modelops/page.tsx
+      components/
+        ClassificationBanner.tsx
+        EvidenceCitationList.tsx
+        ApprovalGate.tsx
+        LiveEventStream.tsx
+      lib/
+        api-client.ts
+        accessibility.ts
+        redaction.ts
+  services/
+    api-gateway/                      # FastAPI edge service with auth, validation, policy, audit
+      artemis_api/
+        main.py
+        auth.py
+        schemas.py
+        audit.py
+        errors.py
+        observability.py
+    fusion-engine/                    # Python event fusion and confidence scoring
+      artemis_fusion/
+        normalizer.py
+        correlator.py
+        confidence.py
+        lineage.py
+    agent-runtime/                    # AIP tool execution and workflow state machines
+      artemis_agents/
+        router.py
+        tools.py
+        workflows.py
+        approvals.py
+        safety.py
+    self-improvement/                 # Eval generation and candidate upgrade proposals
+      artemis_improve/
+        signals.py
+        eval_cases.py
+        prompt_candidates.py
+        workflow_candidates.py
+        drift.py
+        rollout.py
+  packages/
+    ontology/                         # Shared typed ontology contracts and query builders
+    policy/                           # Rego bundles plus Python policy client
+    telemetry/                        # OpenTelemetry conventions, dashboards, alert rules
+  infra/
+    apollo/                           # Ring definitions, promotion rules, rollback health checks
+    sql/                              # Warehouse/lakehouse schemas and dashboard views
+    terraform/                        # Environment-scoped least-privilege infrastructure
+  tests/
+    contract/                         # API, event, and ontology contract tests
+    policy/                           # Positive and negative authorization tests
+    evals/                            # Golden-set and regression eval cases
+    resilience/                       # Timeout, retry, idempotency, rollback tests
+```
+
+### Python control-plane security defaults
+
+```python
+# services/api-gateway/artemis_api/schemas.py
+from __future__ import annotations
+
+from datetime import UTC, datetime
+from typing import Any, Literal
+from uuid import uuid4
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+MAX_ATTRIBUTES = 128
+MAX_STRING = 4096
+
+
+class StrictModel(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+
+class MissionEventIn(StrictModel):
+    event_id: str = Field(default_factory=lambda: f"evt_{uuid4().hex}")
+    mission_id: str = Field(min_length=3, max_length=96, pattern=r"^[a-zA-Z0-9_.:-]+$")
+    source_system: str = Field(min_length=2, max_length=128)
+    event_type: str = Field(min_length=2, max_length=128)
+    occurred_at: datetime
+    classification: Literal["U", "CUI", "S", "TS"]
+    coalition_tags: list[str] = Field(default_factory=list, max_length=32)
+    payload_hash: str = Field(min_length=64, max_length=64)
+    attributes: dict[str, Any] = Field(default_factory=dict)
+
+    @field_validator("payload_hash")
+    @classmethod
+    def payload_hash_must_be_sha256(cls, value: str) -> str:
+        lowered = value.lower()
+        if any(char not in "0123456789abcdef" for char in lowered):
+            raise ValueError("payload_hash must be a SHA-256 hex digest")
+        return lowered
+
+    @field_validator("attributes")
+    @classmethod
+    def attributes_must_be_bounded(cls, value: dict[str, Any]) -> dict[str, Any]:
+        if len(value) > MAX_ATTRIBUTES:
+            raise ValueError("attributes exceeds maximum key count")
+        for key, item in value.items():
+            if len(str(key)) > 128 or len(str(item)) > MAX_STRING:
+                raise ValueError("attributes contains an oversized key or value")
+        return value
+
+
+class SafeError(StrictModel):
+    error_id: str
+    message: str = "request could not be processed"
+    retryable: bool = False
+    emitted_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+```
+
+```python
+# services/api-gateway/artemis_api/main.py
+from __future__ import annotations
+
+import html
+import logging
+from uuid import uuid4
+
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
+from opentelemetry import trace
+
+from .schemas import MissionEventIn, SafeError
+
+app = FastAPI(title="ClearGlassInc Artemis API", version="1.0.0")
+log = logging.getLogger("artemis.api")
+tracer = trace.get_tracer("artemis.api")
+
+
+async def require_principal(request: Request) -> dict:
+    # Production implementation validates an mTLS-bound JWT/SPIFFE identity.
+    principal = request.headers.get("x-artemis-principal")
+    if not principal:
+        raise HTTPException(status_code=401, detail="authentication required")
+    return {"subject": principal, "purpose": request.headers.get("x-purpose", "triage")}
+
+
+async def require_policy(principal: dict, action: str, mission_id: str) -> None:
+    # Production implementation calls signed OPA bundles and Foundry/Gotham policy filters.
+    if not principal["subject"] or not mission_id:
+        raise HTTPException(status_code=403, detail="policy denied")
+
+
+@app.exception_handler(Exception)
+async def safe_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    error_id = f"err_{uuid4().hex}"
+    log.exception("request_failed", extra={"error_id": error_id, "path": request.url.path})
+    return JSONResponse(status_code=500, content=SafeError(error_id=error_id).model_dump(mode="json"))
+
+
+@app.post("/v1/events")
+async def ingest_event(event: MissionEventIn, principal: dict = Depends(require_principal)) -> dict:
+    with tracer.start_as_current_span("events.ingest") as span:
+        span.set_attribute("mission_id", event.mission_id)
+        span.set_attribute("event_type", event.event_type)
+        await require_policy(principal, "event:ingest", event.mission_id)
+        normalized = event.model_dump(mode="json")
+        normalized["source_system"] = html.escape(normalized["source_system"])
+        audit_id = f"audit_{uuid4().hex}"
+        log.info("event_ingested", extra={"audit_id": audit_id, "event_id": event.event_id})
+        return {"ok": True, "event_id": event.event_id, "audit_id": audit_id}
+```
+
+### Advanced self-improvement state machine
+
+```python
+# services/self-improvement/artemis_improve/rollout.py
+from __future__ import annotations
+
+from dataclasses import dataclass
+from enum import StrEnum
+
+
+class ProposalState(StrEnum):
+    DRAFT = "draft"
+    EVALUATED = "evaluated"
+    BLOCKED = "blocked"
+    HUMAN_REVIEW = "human_review"
+    APPROVED = "approved"
+    CANARY = "canary"
+    PROMOTED = "promoted"
+    ROLLED_BACK = "rolled_back"
+
+
+ALLOWED_TRANSITIONS = {
+    ProposalState.DRAFT: {ProposalState.EVALUATED, ProposalState.BLOCKED},
+    ProposalState.EVALUATED: {ProposalState.HUMAN_REVIEW, ProposalState.BLOCKED},
+    ProposalState.HUMAN_REVIEW: {ProposalState.APPROVED, ProposalState.BLOCKED},
+    ProposalState.APPROVED: {ProposalState.CANARY},
+    ProposalState.CANARY: {ProposalState.PROMOTED, ProposalState.ROLLED_BACK},
+}
+
+
+@dataclass(frozen=True)
+class RolloutDecision:
+    from_state: ProposalState
+    to_state: ProposalState
+    actor: str
+    reason: str
+    evidence_refs: tuple[str, ...]
+
+
+def transition(decision: RolloutDecision) -> ProposalState:
+    allowed = ALLOWED_TRANSITIONS.get(decision.from_state, set())
+    if decision.to_state not in allowed:
+        raise ValueError(f"invalid rollout transition: {decision.from_state} -> {decision.to_state}")
+    if decision.to_state in {ProposalState.APPROVED, ProposalState.CANARY} and decision.actor == "system":
+        raise PermissionError("system actor cannot approve or deploy self-upgrades")
+    if not decision.evidence_refs:
+        raise ValueError("rollout transition requires eval, approval, or monitoring evidence")
+    return decision.to_state
+```
+
+### SQL warehouse and immutable audit foundation
+
+```sql
+create table if not exists artemis_audit_event (
+  audit_id text primary key,
+  occurred_at timestamptz not null default now(),
+  actor text not null,
+  action text not null,
+  mission_id text not null,
+  resource_ref text not null,
+  policy_decision text not null check (policy_decision in ('allow', 'deny', 'redact')),
+  classification text not null check (classification in ('U', 'CUI', 'S', 'TS')),
+  request_hash text not null,
+  response_hash text,
+  prior_audit_hash text,
+  audit_hash text not null unique
+);
+
+create table if not exists artemis_upgrade_proposal (
+  proposal_id text primary key,
+  target_kind text not null check (target_kind in ('prompt', 'workflow', 'model_route', 'heuristic')),
+  target_name text not null,
+  base_version text not null,
+  candidate_version text not null,
+  state text not null,
+  precision_delta numeric not null,
+  recall_delta numeric not null,
+  citation_accuracy_delta numeric not null,
+  latency_p95_delta_ms integer not null,
+  policy_violations integer not null default 0,
+  created_by text not null,
+  approved_by text,
+  created_at timestamptz not null default now(),
+  approved_at timestamptz
+);
+```
+
+### Deployment notes
+
+1. Use Apollo release rings for every prompt, workflow, model-route, policy, API, and UI artifact: `dev -> ring-0 -> ring-1 -> mission-prod`.
+2. Require signed artifacts, pinned dependency versions, SBOM generation, and environment-scoped service identities before promotion.
+3. Keep production secrets only in approved runtime secret stores; local development uses safe mock defaults and fails closed for privileged operations.
+4. Gate deployment on policy tests, contract tests, eval thresholds, accessibility checks for UI changes, and rollback rehearsal for mission-critical workflows.
+5. Roll back automatically when policy violations exceed zero, citation accuracy regresses, p95 latency breaches SLO, drift detectors fire, or operator trust drops below threshold.
+
+### Top 5 implementation risks and fastest mitigations
+
+| Risk | Failure mode | Fastest mitigation |
+|---|---|---|
+| Over-permissive agent tools | A tool path changes cases, access, or operational state without approval | Put every mutating tool behind a server-side policy check, explicit approval token, and regression test for denial |
+| Ontology permission leakage | Retrieval or UI rendering exposes coalition-restricted objects | Apply entity/row/column filters before retrieval, then run redaction-aware output validation before display |
+| Unsafe self-improvement | Prompt or workflow changes silently alter authority, objectives, or escalation logic | Treat all self-upgrades as proposals; require eval evidence, human approval, Apollo canary, and automatic rollback |
+| Telemetry data spill | Logs, traces, or eval corpora capture secrets or restricted payloads | Use structured allowlisted telemetry fields, hash payloads, redact at SDK boundaries, and scan artifacts in CI |
+| Latency under mission load | Agent chains exceed decision windows or time out during incidents | Add bounded queues, per-tool timeouts, cached ontology contexts, model-route fallbacks, and p95/p99 Apollo health gates |

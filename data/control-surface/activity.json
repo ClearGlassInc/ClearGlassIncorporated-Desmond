@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "00:10",
-    "timestamp": "2026-07-21T00:10:33Z"
+    "time": "03:44",
+    "timestamp": "2026-07-21T03:44:11Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #372",
-    "time": "00:10",
-    "timestamp": "2026-07-21T00:10:21Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "bad",
-    "detail": "dynamic on copilot/task-272290681-1196426665-a3ea53c4-8c05-4655-ba24-e1c6b057440d \u00b7 run #946",
-    "time": "00:08",
-    "timestamp": "2026-07-21T00:08:04Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1343",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:58Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1130",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:58Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #426",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:58Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1605",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:58Z"
+    "detail": "schedule on main \u00b7 run #373",
+    "time": "03:44",
+    "timestamp": "2026-07-21T03:44:01Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "push on main \u00b7 run #956",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:58Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1654",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:58Z"
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #962",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:16Z"
   },
   {
     "title": "Security",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1372",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:58Z"
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #1377",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:16Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1593",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:58Z"
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #721",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:16Z"
   },
   {
-    "title": "Code Quality: Push on main",
+    "title": "CI",
+    "status": "bad",
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #1610",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:16Z"
+  },
+  {
+    "title": "ARTEMIS FAWL validation",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2736",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:57Z"
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #3",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:16Z"
+  },
+  {
+    "title": "Internal Link Authority",
+    "status": "ok",
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #77",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:16Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #1348",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:16Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "pull_request on codex/audit-and-upgrade-repository-for-scalability \u00b7 run #1653",
-    "time": "23:57",
-    "timestamp": "2026-07-20T23:57:33Z"
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #1659",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:16Z"
+  },
+  {
+    "title": "Code Quality: PR #980",
+    "status": "warn",
+    "detail": "dynamic on refs/pull/980/head \u00b7 run #2742",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:13Z"
+  },
+  {
+    "title": "Workflow Doctor",
+    "status": "ok",
+    "detail": "push on agent/artemis-fawl-command-system \u00b7 run #339",
+    "time": "03:43",
+    "timestamp": "2026-07-21T03:43:13Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "pull_request on agent/artemis-fawl-command-system \u00b7 run #1658",
+    "time": "03:42",
+    "timestamp": "2026-07-21T03:42:30Z"
   }
 ]

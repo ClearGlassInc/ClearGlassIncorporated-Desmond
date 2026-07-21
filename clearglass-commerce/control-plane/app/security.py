@@ -25,8 +25,11 @@ from __future__ import annotations
 
 import hmac
 import logging
+import threading
+import time
+from collections import defaultdict, deque
 
-from fastapi import Depends, Header, HTTPException, status
+from fastapi import Depends, Header, HTTPException, Request, status
 
 from .config import Settings, get_settings
 
@@ -107,3 +110,49 @@ def require_admin(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="invalid admin credentials",
     )
+
+
+class SlidingWindowLimiter:
+    """Thread-safe sliding-window request counter keyed by caller identity.
+
+    In-process only, which matches the single-instance Render/Docker deployments this
+    repo targets; a shared store (e.g. Redis) can replace the backend later without
+    touching call sites.
+    """
+
+    def __init__(self) -> None:
+        self._hits: dict[str, deque[float]] = defaultdict(deque)
+        self._lock = threading.Lock()
+
+    def allow(self, key: str, limit: int, window_seconds: float = 60.0) -> bool:
+        now = time.monotonic()
+        with self._lock:
+            hits = self._hits[key]
+            while hits and now - hits[0] > window_seconds:
+                hits.popleft()
+            if len(hits) >= limit:
+                return False
+            hits.append(now)
+            return True
+
+
+_limiter = SlidingWindowLimiter()
+
+
+def rate_limit(scope: str, setting_name: str):
+    """Dependency factory: throttle ``scope`` per client IP at the per-minute limit
+    named by ``setting_name`` on :class:`~app.config.Settings`. A limit of 0 disables
+    the throttle for that scope."""
+
+    def dependency(request: Request) -> None:
+        limit = getattr(get_settings(), setting_name)
+        if limit <= 0:
+            return
+        client = request.client.host if request.client else "unknown"
+        if not _limiter.allow(f"{scope}:{client}", limit):
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail=f"rate limit exceeded for {scope}",
+            )
+
+    return dependency

@@ -11,14 +11,16 @@ admin are Next.js apps. Below are three paths — pick one.
 2. Render → **New +** → **Blueprint** → select the repo.
 3. After the first deploy, open the `clearglass-commerce-api` service → **Environment** and set the
    `sync:false` secrets: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PUBLISHABLE_KEY`.
-4. The service exposes `GET /health`; Render uses it for health checks.
+4. The service exposes `GET /health` (liveness) and `GET /ready` (database reachability);
+   Render uses `/health` for health checks.
 5. Point a Stripe webhook at `https://<your-service>.onrender.com/webhooks/stripe` and paste the
    signing secret into `STRIPE_WEBHOOK_SECRET`.
 
 The blueprint deploys **all three services** — API, storefront, admin — plus the database.
 
 `AUTO_CREATE_TABLES=true` creates the schema on first boot. For production hardening, switch it
-off and apply `control-plane/migrations/001_init.sql` (it adds the append-only ledger trigger).
+off and apply the numbered files in `control-plane/migrations/` in order — `001_init.sql` adds the
+append-only ledger trigger; `004_order_external_ref.sql` adds the webhook idempotency key on `orders`.
 
 ### Continuous deploy (GitHub Actions)
 
@@ -80,6 +82,17 @@ require an `Authorization: Bearer <key>` credential set via **`ADMIN_API_KEY`**.
 - Customer checkout, the signature-verified Stripe webhook, and read-only telemetry
   (`/metrics`, `/events`, `/health`) stay open by design. `GET /health` reports
   `"admin_auth": "enabled" | "disabled"` so you can confirm posture after deploy.
+
+## Abuse controls & recovery
+
+- **Rate limits** — checkout, the Stripe webhook, and approval decisions carry per-client-IP
+  sliding-window throttles (`RATE_LIMIT_CHECKOUT_PER_MINUTE`, `RATE_LIMIT_WEBHOOK_PER_MINUTE`,
+  `RATE_LIMIT_DECISIONS_PER_MINUTE`; `0` disables one). Exceeding a limit returns `429`.
+- **Webhook idempotency** — `checkout.session.completed` orders are keyed on the Stripe
+  checkout-session id (`orders.external_ref`); redelivered events are logged to the audit
+  ledger as `order_paid_duplicate_skipped` instead of double-booking revenue.
+- **Readiness** — `GET /ready` runs `SELECT 1` against the database and returns `503` when it
+  is unreachable, so orchestrators can hold traffic during a database failover.
 
 ## Going from mock to real money
 

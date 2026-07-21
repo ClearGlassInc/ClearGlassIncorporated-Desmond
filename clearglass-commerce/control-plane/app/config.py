@@ -30,6 +30,14 @@ class Settings(BaseSettings):
     require_approval_for_high_risk: bool = True
     inventory_low_threshold: int = 10
 
+    # Security — bearer token required to decide approvals. Empty means: allow in
+    # dev (zero-config demos/tests), refuse decisions in production (fail closed).
+    admin_api_token: str = ""
+    # Per-client-IP sliding-window limits (per minute); 0 disables a throttle.
+    rate_limit_checkout_per_minute: int = 30
+    rate_limit_webhook_per_minute: int = 240
+    rate_limit_decisions_per_minute: int = 60
+
     # Payments (never logged, never echoed in responses)
     stripe_secret_key: str = ""
     stripe_webhook_secret: str = ""

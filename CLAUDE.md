@@ -43,6 +43,12 @@ Every material change is written to an append‑only audit ledger (`events` tabl
 high/critical action execute without an approval — `daily_loop.py`'s governance
 self‑check (and `tests/test_governance.py`) will fail if you do, by design.
 
+The gate itself is authenticated: `POST /approvals/{id}/approve|reject` requires
+`Authorization: Bearer $ADMIN_API_TOKEN` (`app/security.py`); with
+`APP_ENV=production` and no token the gate fails closed. Checkout/webhook/decision
+endpoints are rate-limited per client IP, and the Stripe webhook is idempotent on
+redelivery (`orders.external_ref`). Don't weaken any of these when editing routers.
+
 Operating rules also enforced in code/prompt: never fabricate inventory, reviews,
 sales, or urgency; never change live pricing/tax/payment/refund/fulfillment
 without approval; log every action.
@@ -53,7 +59,7 @@ without approval; log every action.
 cd clearglass-commerce/control-plane
 pip install -r requirements.txt        # fastapi, sqlalchemy, stripe, httpx (TestClient), …
 ruff check .                           # lint (must pass)
-python -m pytest tests/ -q             # 21 tests; payout tests need the full web stack
+python -m pytest tests/ -q             # full suite; payout/security tests need the full web stack
 uvicorn app.main:app --reload          # http://localhost:8000/docs
 python -m app.daily_loop --json        # governance self-check + executive report (stdlib only)
 ```

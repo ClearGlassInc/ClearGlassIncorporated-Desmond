@@ -19,12 +19,20 @@ from ..schemas import (
     PayoutOut,
     RefundRequest,
 )
+from ..security import rate_limit
 from ..service import run_governed_action
 
 router = APIRouter(tags=["payments"])
 
+_checkout_throttle = rate_limit("checkout", "rate_limit_checkout_per_minute")
+_webhook_throttle = rate_limit("stripe_webhook", "rate_limit_webhook_per_minute")
 
-@router.post("/checkout/session", response_model=CheckoutSessionOut)
+
+@router.post(
+    "/checkout/session",
+    response_model=CheckoutSessionOut,
+    dependencies=[Depends(_checkout_throttle)],
+)
 def create_checkout(req: CheckoutRequest, session: Session = Depends(get_session)) -> CheckoutSessionOut:
     """Create a Stripe Checkout session for a customer cart.
 
@@ -49,7 +57,7 @@ def create_checkout(req: CheckoutRequest, session: Session = Depends(get_session
     return CheckoutSessionOut(**result)
 
 
-@router.post("/webhooks/stripe")
+@router.post("/webhooks/stripe", dependencies=[Depends(_webhook_throttle)])
 async def stripe_webhook(request: Request, session: Session = Depends(get_session)) -> dict:
     """Ingest Stripe webhook events. Signature is verified when a webhook secret is configured."""
     payload = await request.body()
@@ -64,11 +72,27 @@ async def stripe_webhook(request: Request, session: Session = Depends(get_sessio
     obj = (event.get("data") or {}).get("object") or {}
 
     if etype == "checkout.session.completed":
+        # Stripe redelivers webhooks; key the order on the checkout-session id so
+        # a retry never books revenue twice.
+        external_ref = obj.get("id") or obj.get("payment_intent")
+        if external_ref:
+            existing = session.scalar(select(Order).where(Order.external_ref == external_ref))
+            if existing is not None:
+                log_event(
+                    session,
+                    actor="stripe",
+                    action="order_paid_duplicate_skipped",
+                    target=str(existing.id),
+                    payload={"verified": check["verified"], "external_ref": external_ref},
+                    result="skipped",
+                )
+                return {"received": True, "type": etype, "verified": check["verified"]}
         order = Order(
             status="paid",
             total=Decimal(str((obj.get("amount_total") or 0) / 100)),
             currency=(obj.get("currency") or "cad").upper(),
             source="stripe_checkout",
+            external_ref=external_ref,
         )
         session.add(order)
         session.flush()

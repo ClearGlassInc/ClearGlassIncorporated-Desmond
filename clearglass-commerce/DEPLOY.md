@@ -10,15 +10,19 @@ admin are Next.js apps. Below are three paths — pick one.
 1. Push this repo to GitHub.
 2. Render → **New +** → **Blueprint** → select the repo.
 3. After the first deploy, open the `clearglass-commerce-api` service → **Environment** and set the
-   `sync:false` secrets: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PUBLISHABLE_KEY`.
-4. The service exposes `GET /health`; Render uses it for health checks.
+   `sync:false` secrets: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PUBLISHABLE_KEY`,
+   and `ADMIN_API_TOKEN` (any long random string — it protects `/approvals/*` decisions; without
+   it the gate fails closed in production and refuses all approve/reject calls).
+4. The service exposes `GET /health` (liveness) and `GET /ready` (DB reachability); Render uses
+   `/health` for health checks.
 5. Point a Stripe webhook at `https://<your-service>.onrender.com/webhooks/stripe` and paste the
    signing secret into `STRIPE_WEBHOOK_SECRET`.
 
 The blueprint deploys **all three services** — API, storefront, admin — plus the database.
 
 `AUTO_CREATE_TABLES=true` creates the schema on first boot. For production hardening, switch it
-off and apply `control-plane/migrations/001_init.sql` (it adds the append-only ledger trigger).
+off and apply the numbered files in `control-plane/migrations/` in order — `001_init.sql` adds the
+append-only ledger trigger; `004_order_external_ref.sql` adds the webhook idempotency key on `orders`.
 
 ### Continuous deploy (GitHub Actions)
 

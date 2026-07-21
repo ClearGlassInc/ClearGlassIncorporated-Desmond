@@ -11,8 +11,11 @@ from ..audit import log_event
 from ..db import get_session
 from ..models import Approval
 from ..schemas import ApprovalOut, DecisionRequest
+from ..security import rate_limit, require_admin
 
 router = APIRouter(prefix="/approvals", tags=["approvals"])
+
+_decision_throttle = rate_limit("approval_decisions", "rate_limit_decisions_per_minute")
 
 
 @router.get("", response_model=list[ApprovalOut])
@@ -25,7 +28,9 @@ def list_approvals(status: str = "pending", session: Session = Depends(get_sessi
     )
 
 
-def _decide(session: Session, approval_id: int, decision: str, req: DecisionRequest) -> Approval:
+def _decide(
+    session: Session, approval_id: int, decision: str, req: DecisionRequest, principal: str
+) -> Approval:
     approval = session.get(Approval, approval_id)
     if approval is None:
         raise HTTPException(status_code=404, detail="approval not found")
@@ -40,19 +45,37 @@ def _decide(session: Session, approval_id: int, decision: str, req: DecisionRequ
         actor=req.decided_by,
         action=f"approval_{decision}",
         target=approval.action,
-        payload={"approval_id": approval_id, "note": req.note},
+        payload={"approval_id": approval_id, "note": req.note, "auth_principal": principal},
         result="executed" if decision == "approved" else "rejected",
     )
     return approval
 
 
-@router.post("/{approval_id}/approve", response_model=ApprovalOut)
-def approve(approval_id: int, req: DecisionRequest, session: Session = Depends(get_session)) -> Approval:
-    """Approve a gated action. Execution of the side effect happens downstream."""
-    return _decide(session, approval_id, "approved", req)
+@router.post(
+    "/{approval_id}/approve",
+    response_model=ApprovalOut,
+    dependencies=[Depends(_decision_throttle)],
+)
+def approve(
+    approval_id: int,
+    req: DecisionRequest,
+    session: Session = Depends(get_session),
+    principal: str = Depends(require_admin),
+) -> Approval:
+    """Approve a gated action (admin token required). Execution happens downstream."""
+    return _decide(session, approval_id, "approved", req, principal)
 
 
-@router.post("/{approval_id}/reject", response_model=ApprovalOut)
-def reject(approval_id: int, req: DecisionRequest, session: Session = Depends(get_session)) -> Approval:
-    """Reject a gated action; nothing is executed."""
-    return _decide(session, approval_id, "rejected", req)
+@router.post(
+    "/{approval_id}/reject",
+    response_model=ApprovalOut,
+    dependencies=[Depends(_decision_throttle)],
+)
+def reject(
+    approval_id: int,
+    req: DecisionRequest,
+    session: Session = Depends(get_session),
+    principal: str = Depends(require_admin),
+) -> Approval:
+    """Reject a gated action (admin token required); nothing is executed."""
+    return _decide(session, approval_id, "rejected", req, principal)

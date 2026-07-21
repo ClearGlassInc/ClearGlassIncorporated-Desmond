@@ -28,6 +28,8 @@ services:
         sync: false
       - key: STRIPE_PUBLISHABLE_KEY
         sync: false
+      - key: ADMIN_API_TOKEN
+        sync: false
       - key: CHECKOUT_SUCCESS_URL
         value: https://clearglass-commerce-storefront.onrender.com/success
       - key: CHECKOUT_CANCEL_URL

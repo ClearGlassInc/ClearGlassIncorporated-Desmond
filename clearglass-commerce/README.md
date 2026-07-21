@@ -86,8 +86,16 @@ Nothing in the high/critical tier executes without an `approvals` row reaching `
 | `POST` | `/inventory/check` | low (reorder = high) |
 | `GET`  | `/metrics/overview` | low |
 | `GET`  | `/events` | low |
-| `POST` | `/approvals/{id}/approve` | human |
-| `POST` | `/approvals/{id}/reject` | human |
+| `POST` | `/approvals/{id}/approve` | human (bearer `ADMIN_API_TOKEN`) |
+| `POST` | `/approvals/{id}/reject` | human (bearer `ADMIN_API_TOKEN`) |
+
+### Securing the approval gate
+
+Approve/reject calls require `Authorization: Bearer $ADMIN_API_TOKEN`. If the token is unset the
+gate stays open only in development; with `APP_ENV=production` it **fails closed** and refuses
+all decisions until the token is configured. Checkout, webhook, and decision endpoints carry
+per-IP rate limits (`RATE_LIMIT_*_PER_MINUTE`), the Stripe webhook is idempotent on redelivery
+(`orders.external_ref`), and `GET /ready` reports database reachability for orchestrators.
 
 ## Revenue settlement / bank wiring
 

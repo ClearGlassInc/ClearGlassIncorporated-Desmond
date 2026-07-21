@@ -1,29 +1,14 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://admin.clearglass.example";
-const YEAR = new Date().getFullYear();
-
-// metadataBase lets relative `alternates.canonical` values in each page resolve
-// to absolute URLs. The admin cockpit is private, so the default robots policy
-// is noindex/nofollow site-wide (individual pages reaffirm this too).
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: "ClearGlass Commerce — Admin Cockpit",
-    template: "%s",
-  },
+export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3001"),
+  title: "ClearGlass Commerce — Admin Cockpit",
   description: "Orders, products, inventory, analytics, and the approval gate.",
-  applicationName: "ClearGlass Commerce Admin",
-  robots: { index: false, follow: false },
   alternates: { canonical: "/" },
-  // Machine-readable copyright asserted on every page (paired with the visible
-  // footer notice below).
-  other: { copyright: `© ${YEAR} ClearGlass Inc. All rights reserved.` },
   openGraph: {
     title: "ClearGlass Commerce — Admin Cockpit",
-    description: "Governed commerce operator cockpit.",
-    siteName: "ClearGlass Commerce Admin",
+    description: "Orders, products, inventory, analytics, and the approval gate.",
     type: "website",
   },
 };
@@ -99,22 +84,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </button>
           </form>
         </nav>
-
-        <main id="main-content" style={{ maxWidth: 1080, margin: "0 auto", padding: 24 }}>
-          {children}
-        </main>
-
-        <footer
-          style={{
-            maxWidth: 1080,
-            margin: "0 auto",
-            padding: "24px",
-            color: "#6b7699",
-            fontSize: 13,
-            borderTop: "1px solid rgba(124,150,255,.1)",
-          }}
-        >
-          © {YEAR} ClearGlass Inc. All rights reserved. Confidential — for authorized operators only.
+        <main style={{ maxWidth: 1080, margin: "0 auto", padding: 24 }}>{children}</main>
+        <footer aria-label="Copyright notice" style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px 24px", color: "#aab6d3" }}>
+          <small>© {new Date().getFullYear()} ClearGlass Inc. All rights reserved.</small>
         </footer>
       </body>
     </html>

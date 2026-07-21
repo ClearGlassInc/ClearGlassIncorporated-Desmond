@@ -70,6 +70,11 @@ class Order(Base):
     total: Mapped[Decimal] = mapped_column(Numeric(12, 2), default=Decimal("0"))
     currency: Mapped[str] = mapped_column(String(3), default="CAD")
     source: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    # Upstream payment reference (Stripe checkout-session id) — dedupe key so
+    # webhook redelivery can never book the same order twice.
+    external_ref: Mapped[str | None] = mapped_column(
+        String(160), nullable=True, unique=True, index=True
+    )
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
 
 

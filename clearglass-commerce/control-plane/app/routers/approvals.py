@@ -11,8 +11,12 @@ from ..audit import log_event
 from ..db import get_session
 from ..models import Approval
 from ..schemas import ApprovalOut, DecisionRequest
+from ..security import rate_limit
 
 router = APIRouter(prefix="/approvals", tags=["approvals"])
+
+# Admin auth is applied router-wide in main.py; this adds abuse throttling on decisions.
+_decision_throttle = rate_limit("approval_decisions", "rate_limit_decisions_per_minute")
 
 
 @router.get("", response_model=list[ApprovalOut])
@@ -46,13 +50,21 @@ def _decide(session: Session, approval_id: int, decision: str, req: DecisionRequ
     return approval
 
 
-@router.post("/{approval_id}/approve", response_model=ApprovalOut)
+@router.post(
+    "/{approval_id}/approve",
+    response_model=ApprovalOut,
+    dependencies=[Depends(_decision_throttle)],
+)
 def approve(approval_id: int, req: DecisionRequest, session: Session = Depends(get_session)) -> Approval:
     """Approve a gated action. Execution of the side effect happens downstream."""
     return _decide(session, approval_id, "approved", req)
 
 
-@router.post("/{approval_id}/reject", response_model=ApprovalOut)
+@router.post(
+    "/{approval_id}/reject",
+    response_model=ApprovalOut,
+    dependencies=[Depends(_decision_throttle)],
+)
 def reject(approval_id: int, req: DecisionRequest, session: Session = Depends(get_session)) -> Approval:
     """Reject a gated action; nothing is executed."""
     return _decide(session, approval_id, "rejected", req)

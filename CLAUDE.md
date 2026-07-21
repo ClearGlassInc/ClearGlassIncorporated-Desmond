@@ -54,13 +54,18 @@ credential (`ADMIN_API_KEY`, see `app/security.py`). Unset = open dev/mock mode;
 signature-verified Stripe webhook, and read-only telemetry stay open. Don't add a
 mutating admin route without gating it behind `require_admin`.
 
+Abuse/resilience controls (also in `app/security.py`): checkout, the Stripe webhook,
+and approval decisions carry per-IP rate limits (`RATE_LIMIT_*_PER_MINUTE`), and the
+webhook is idempotent on redelivery via `orders.external_ref` (migration 004).
+`GET /ready` reports database reachability. Don't weaken these when editing routers.
+
 ## Running & testing the commerce control plane
 
 ```bash
 cd clearglass-commerce/control-plane
 pip install -r requirements.txt        # fastapi, sqlalchemy, stripe, httpx (TestClient), …
 ruff check .                           # lint (must pass)
-python -m pytest tests/ -q             # 41 tests; payout tests need the full web stack (httpx)
+python -m pytest tests/ -q             # full suite; payout/resilience tests need the full web stack (httpx)
 uvicorn app.main:app --reload          # http://localhost:8000/docs
 python -m app.daily_loop --json        # governance self-check + executive report (stdlib only)
 ```

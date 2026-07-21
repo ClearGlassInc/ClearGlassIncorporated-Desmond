@@ -1,7 +1,7 @@
 """FastAPI application factory for the commerce control plane."""
 from __future__ import annotations
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
@@ -37,14 +37,41 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    @app.middleware("http")
+    async def security_headers(request, call_next):
+        response = await call_next(request)
+        response.headers.setdefault("X-Content-Type-Options", "nosniff")
+        response.headers.setdefault("X-Frame-Options", "DENY")
+        response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+        if settings.app_env.lower() in {"production", "prod"}:
+            response.headers.setdefault(
+                "Strict-Transport-Security", "max-age=63072000; includeSubDomains"
+            )
+        return response
+
     @app.get("/health", tags=["meta"])
     def health() -> dict:
+        """Liveness: the process is up. Makes no external calls."""
         return {
             "status": "ok",
             "env": settings.app_env,
             "version": __version__,
             "admin_auth": "enabled" if auth_enabled(settings) else "disabled",
         }
+
+    @app.get("/ready", tags=["meta"])
+    def ready() -> dict:
+        """Readiness: the service can reach its database. Use for orchestrator checks."""
+        from sqlalchemy import text
+
+        from .db import engine
+
+        try:
+            with engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
+        except Exception as exc:  # pragma: no cover - exercised via fault injection
+            raise HTTPException(status_code=503, detail=f"database unavailable: {type(exc).__name__}")
+        return {"status": "ready", "database": "ok", "version": __version__}
 
     @app.get("/", tags=["meta"])
     def root() -> dict:

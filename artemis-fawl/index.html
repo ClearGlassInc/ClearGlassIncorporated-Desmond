@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARTEMIS // FAWL — ClearGlass Inc.</title>
+<meta name="description" content="ClearGlass federated autonomous workflow and intelligence command layer.">
+<link rel="canonical" href="https://www.clearglassinc.com/artemis-fawl/">
+<link rel="stylesheet" href="./styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ARTEMIS // FAWL","applicationCategory":"BusinessApplication","creator":{"@type":"Organization","name":"ClearGlass Inc."}}</script>
+</head>
+<body>
+<a class="skip" href="#workspace">Skip to intelligence workspace</a>
+<div class="atmosphere" aria-hidden="true"></div>
+<header class="command-header">
+  <a class="brand" href="../"><span class="mark"><img src="../assets/images/clearglass-logo.png" alt="ClearGlass Inc. logo" width="40" height="40" style="width:100%;height:100%;object-fit:cover;border-radius:9px"></span><span><b>ARTEMIS // FAWL</b><small>ClearGlass Inc. · Federated Autonomous Workflow &amp; Intelligence Layer</small></span></a>
+  <div class="global-state" aria-label="Global system status"><span class="dot ok"></span><b>MONITORING</b><span>Sources: demo only</span></div>
+  <label class="search"><span class="sr-only">Command search</span><input id="commandSearch" type="search" placeholder="Ask ARTEMIS or trace a metric…" autocomplete="off"></label>
+  <div class="header-tools"><time id="utcClock">--:--:-- UTC</time><span class="role">EXECUTIVE · DEMO</span><button id="pause" class="danger" aria-pressed="false">Emergency pause</button></div>
+</header>
+
+<section class="kpis" aria-label="Executive key performance indicators" id="kpis"></section>
+
+<div class="shell">
+<nav class="system-map" aria-label="Operational domains">
+<h2>System map</h2>
+<div id="modules"></div>
+<div class="source-card"><span>DATA CLASSIFICATION</span><b>SIMULATED · PUBLIC DEMO</b><small>No credentials or private records connected.</small></div>
+</nav>
+
+<main id="workspace" class="workspace" tabindex="-1">
+<section class="workspace-head">
+<div><span class="eyebrow">MISSION CONTROL / EXECUTIVE VIEW</span><h1>See Through Everything.<br><em>Act With Evidence.</em></h1></div>
+<div class="integrity"><span>Integrity chain</span><b>VALIDATED</b><small>Schema → provenance → policy</small></div>
+</section>
+
+<section class="brief glass" aria-labelledby="brief-title">
+<div><span class="eyebrow">ARTEMIS EXECUTIVE INTELLIGENCE</span><h2 id="brief-title">Controlled revenue operations</h2><p>Opportunity signals are ranked by evidence quality, expected value, effort, and permission state. Recommendations never execute payments, trades, outreach, or deployments without a verified human gate.</p></div>
+<div class="brief-actions"><button data-command="revenue">Show revenue opportunities</button><button data-command="sources">Trace connected sources</button><button data-command="failures">Show blocked workflows</button></div>
+</section>
+
+<section class="grid-two">
+<article class="glass chart-card"><header><div><span class="eyebrow">REVENUE INFLUENCE</span><h2>Evidence-weighted pipeline</h2></div><span class="badge simulated">SIMULATED</span></header><div class="chart" id="pipelineChart" role="img" aria-label="Simulated pipeline values by stage"></div><table><caption>Accessible pipeline summary</caption><thead><tr><th>Stage</th><th>Value</th><th>Confidence</th></tr></thead><tbody id="pipelineTable"></tbody></table></article>
+<article class="glass"><header><div><span class="eyebrow">AGENT FLEET</span><h2>Permission-aware workers</h2></div><span class="badge">4 REGISTERED</span></header><div id="agents" class="agent-list"></div></article>
+</section>
+
+<section class="glass opportunities"><header><div><span class="eyebrow">DECISION SUPPORT</span><h2>Ranked earning opportunities</h2></div><button id="explainScore">Explain scoring</button></header><div id="opportunities"></div></section>
+</main>
+
+<aside class="decision-rail" aria-label="Decision rail">
+<header><span class="eyebrow">DECISION RAIL</span><h2>Evidence before action</h2></header>
+<div id="decisions"></div>
+<section class="approval"><span class="badge warn">HUMAN GATE</span><h3>Approval queue</h3><strong>2 recommendations waiting</strong><p>Execution remains locked. Scope, impact, identity and rollback must be confirmed.</p><button id="reviewApprovals">Review—not execute</button></section>
+</aside>
+</div>
+
+<section class="mission-timeline" aria-labelledby="timeline-title">
+<header><div><span class="eyebrow">IMMUTABLE MISSION LOG</span><h2 id="timeline-title">Operational timeline</h2></div><div class="filters"><button data-filter="all" class="active">All</button><button data-filter="agent">Agents</button><button data-filter="source">Sources</button><button data-filter="governance">Governance</button></div></header>
+<div id="timeline" aria-live="polite"></div>
+</section>
+
+<dialog id="detailDialog"><button class="close" aria-label="Close">×</button><div id="dialogContent"></div></dialog>
+<div id="announcer" class="sr-only" aria-live="polite"></div>
+<script src="./app.js" defer></script>
+</body></html>

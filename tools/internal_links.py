@@ -42,6 +42,7 @@ END = "<!-- cg-related:end -->"
 PAGES: dict[str, tuple[str, str]] = {
     # Company / hub
     "index.html": ("ClearGlass Inc.", "governed intelligent systems — home"),
+    "authority-network.html": ("Authority Network", "the connected knowledge graph across every ClearGlass system"),
     "investors/index.html": ("Investor Data Room", "corporate documents and diligence materials"),
     "operations/client-onboarding.html": ("Client Onboarding", "how engagements start at ClearGlass"),
     "operations/hubspot-handoff.html": ("HubSpot Handoff", "CRM connection runbook"),
@@ -94,6 +95,9 @@ PAGES: dict[str, tuple[str, str]] = {
     "systems.html": ("Systems Console", "PERCIVAL operations console"),
     "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
+    "command-center.html": ("Live Command Center", "a unified real-time operations dashboard"),
+    "advanced-features-tools-systems.html": ("Advanced Systems Surface", "the full governed-operator and agent-stack index"),
+    "automap.html": ("AutoMap", "workflow-to-orchestration blueprint architect"),
 
     # Legal, tax & compliance
     "legal/index.html": ("Legal Infrastructure", "the ClearGlass corporate legal stack"),
@@ -137,6 +141,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "side-store.html": ("Side Store", "electronics, cables and components"),
     "offers/hardening-sprint.html": ("Hardening Sprint", "Microsoft 365 + Windows hardening engagement"),
     "offers/security-quick-audit.html": ("Security Quick-Audit", "a focused $249 security review"),
+    "offers/autonomous-threat-modeling.html": ("Autonomous Threat Modeling", "continuous, architecture-aware threat-modeling engagements"),
     "revenue-engine.html": ("Revenue Engine", "AI-driven business growth system"),
 
     # Design & UI engineering
@@ -179,6 +184,8 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/zero-trust-is-outdated.html": ("Zero Trust Is Outdated", "the original argument"),
     "blog/zero-trust-is-outdated-adaptive-trust.html": ("The Case for Adaptive Trust", "zero trust, revisited for agentic systems"),
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ("Digital Twin Tools for Storm-Adaptive Transit", "the 2026 platform comparison and hybrid architecture"),
+    "blog/autonomous-threat-modeling-2026.html": ("Autonomous Threat Modeling in 2026", "continuous, executable threat modeling at machine speed"),
+    "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": ("Artemis Full-Stack Blueprint", "the production architecture for a governed intelligence platform"),
 }
 
 # --------------------------------------------------------------------------
@@ -230,7 +237,8 @@ CLUSTERS: dict[str, dict] = {
             "artemis-percival.html", "agentmesh.html", "ai-operator.html",
             "conduit.html", "postloop.html", "command-console.html",
             "control-surface.html", "systems.html", "saas-platform.html",
-            "CG-os.html", "percival-build.html",
+            "CG-os.html", "percival-build.html", "command-center.html",
+            "advanced-features-tools-systems.html", "automap.html",
         ],
         "cta": [CTA_OFFERS, CTA_PRICING],
     },
@@ -276,8 +284,8 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "store.html", "pricing.html", "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
-            "offers/hardening-sprint.html", "revenue-engine.html",
-            "side-store.html",
+            "offers/hardening-sprint.html", "offers/autonomous-threat-modeling.html",
+            "revenue-engine.html", "side-store.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -327,6 +335,8 @@ CLUSTERS: dict[str, dict] = {
             "blog/ethical-sales-system-100k-revenue-prompt.html",
             "blog/almach-scalp-engine.html",
             "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
+            "blog/autonomous-threat-modeling-2026.html",
+            "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -334,6 +344,7 @@ CLUSTERS: dict[str, dict] = {
         "name": "Company & Operations",
         "pillar": "index.html",
         "members": [
+            "authority-network.html",
             "investors/index.html", "operations/client-onboarding.html",
             "operations/hubspot-handoff.html",
             "operations/ontario-incorporation-handoff.html",
@@ -347,6 +358,12 @@ CLUSTERS: dict[str, dict] = {
 # Blog posts point at the product page their topic sells; product pages point
 # at the essay or adjacent cluster that deepens the topic.
 EXTRA_LINKS: dict[str, list[str]] = {
+    # Authority-network hub: bridge the strongest pillars into the map page.
+    "authority-network.html": ["cyber-defense-console.html", "intelligence.html", "artemis-os.html"],
+    "advanced-features-tools-systems.html": ["percival-os.html", "authority-network.html"],
+    "automap.html": ["conduit.html", "agentmesh.html"],
+    "command-center.html": ["cyber-defense-console.html"],
+    "offers/autonomous-threat-modeling.html": ["blog/autonomous-threat-modeling-2026.html", "cyber-defense-console.html"],
     "sentinel.html": ["intelligence.html"],
     "cyber-defense-console.html": ["blog/clearglass-command-center-cyber-defense-console.html", "smb-cyber-trust-kit.html"],
     "bluedesk.html": ["blog/ai-agents-insider-threat.html"],
@@ -395,6 +412,8 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/ethical-sales-system-100k-revenue-prompt.html": ["revenue-engine.html"],
     "blog/almach-scalp-engine.html": ["revenue-engine.html"],
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ["sats-digital-twin.html", "environmental-cyber-risk.html"],
+    "blog/autonomous-threat-modeling-2026.html": ["offers/autonomous-threat-modeling.html", "cyber-defense-console.html"],
+    "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": ["artemis-os.html", "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
 }
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page
@@ -411,24 +430,47 @@ FIXED_VIEWPORT = {
 CSS = (
     "#cg-related{margin:48px auto 0;max-width:1080px;padding:0 18px 34px;"
     "font-family:'Inter',system-ui,-apple-system,sans-serif}"
-    "#cg-related .cgr-box{background:linear-gradient(165deg,rgba(15,17,34,.96),rgba(9,10,24,.96));"
-    "border:1px solid rgba(124,150,255,.26);border-radius:14px;padding:22px 24px;"
-    "color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35)}"
-    "#cg-related .cgr-crumb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;"
+    # Panel: layered high-voltage lattice (faint grid) over the dark glass gradient,
+    # a brighter electric border, and a cyan-indigo signal glow.
+    "#cg-related .cgr-box{position:relative;overflow:hidden;"
+    "background:repeating-linear-gradient(90deg,rgba(124,150,255,.05) 0 1px,transparent 1px 33px),"
+    "repeating-linear-gradient(0deg,rgba(124,150,255,.038) 0 1px,transparent 1px 33px),"
+    "linear-gradient(118deg,rgba(56,189,248,.07),transparent 46%),"
+    "linear-gradient(165deg,rgba(15,17,34,.97),rgba(9,10,24,.98));"
+    "border:1px solid rgba(96,165,250,.36);border-radius:14px;padding:22px 24px;color:#cdd6f5;"
+    "box-shadow:0 12px 40px rgba(0,0,0,.45),0 0 34px -10px rgba(56,189,248,.34),"
+    "inset 0 1px 0 rgba(150,180,255,.10)}"
+    # Top signal rail: a luminous line firing across the panel head.
+    "#cg-related .cgr-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;"
+    "background:linear-gradient(90deg,transparent,rgba(56,189,248,.95),rgba(124,150,255,.95),transparent);"
+    "box-shadow:0 0 11px rgba(56,189,248,.6)}"
+    "#cg-related .cgr-crumb{position:relative;font-size:11px;letter-spacing:.14em;text-transform:uppercase;"
     "color:#8a90c4;margin:0 0 10px}"
     "#cg-related .cgr-crumb a{color:#a5b4fc;text-decoration:none}"
     "#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:underline}"
-    "#cg-related h2{margin:0 0 12px;font-size:15px;letter-spacing:.04em;color:#e7ecff}"
+    # Heading gets a pulsing signal node glyph.
+    "#cg-related h2{position:relative;margin:0 0 12px;font-size:15px;letter-spacing:.04em;color:#e7ecff}"
+    "#cg-related h2::before{content:'\\2301  ';color:#38bdf8;text-shadow:0 0 9px rgba(56,189,248,.75)}"
     "#cg-related ul{list-style:none;margin:0;padding:0;display:grid;"
     "grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}"
-    "#cg-related li a{display:block;padding:7px 10px;border-radius:8px;font-size:13.5px;"
-    "line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;transition:.13s}"
-    "#cg-related li a:hover{background:rgba(124,150,255,.12);border-color:rgba(124,150,255,.3);color:#fff}"
+    # Each link is a signal path: a bright bar ignites at its left edge on hover.
+    "#cg-related li a{position:relative;display:block;padding:7px 10px 7px 12px;border-radius:8px;"
+    "font-size:13.5px;line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;"
+    "transition:.14s}"
+    "#cg-related li a::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);"
+    "width:2px;height:0;border-radius:2px;background:linear-gradient(180deg,#38bdf8,#7c96ff);"
+    "box-shadow:0 0 8px rgba(56,189,248,.85);transition:height .14s}"
+    "#cg-related li a:hover{background:rgba(90,130,240,.14);border-color:rgba(96,165,250,.44);color:#fff}"
+    "#cg-related li a:hover::before{height:62%}"
     "#cg-related li a b{color:#bcd0ff;font-weight:600}"
-    "#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(124,150,255,.16);"
+    "#cg-related li a:hover b{color:#dbe9ff}"
+    "#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(96,165,250,.22);"
     "font-size:13.5px;color:#9aa3d0}"
-    "#cg-related .cgr-cta a{color:#93c5fd;font-weight:600;text-decoration:none}"
-    "#cg-related .cgr-cta a:hover{color:#fff;text-decoration:underline}"
+    "#cg-related .cgr-cta a{color:#7fd0ff;font-weight:600;text-decoration:none}"
+    "#cg-related .cgr-cta a:hover{color:#fff;text-shadow:0 0 10px rgba(56,189,248,.6)}"
+    "@keyframes cgrPulse{0%,100%{opacity:.72}50%{opacity:1}}"
+    "@media(prefers-reduced-motion:no-preference){"
+    "#cg-related h2::before{animation:cgrPulse 2.6s ease-in-out infinite}}"
 )
 
 DOCK_CSS = (
@@ -436,10 +478,12 @@ DOCK_CSS = (
     "max-width:none;z-index:2147483000}"
     "#cg-related.cgr-dock .cgr-tab{display:inline-block;cursor:pointer;font-size:10.5px;"
     "letter-spacing:.22em;text-transform:uppercase;color:#dbe4ff;padding:8px 12px;"
-    "border-radius:9px;border:1px solid rgba(124,150,255,.42);"
-    "background:linear-gradient(180deg,rgba(18,20,42,.92),rgba(11,12,28,.92));"
-    "box-shadow:0 6px 22px rgba(0,0,0,.4);backdrop-filter:blur(6px);user-select:none}"
-    "#cg-related.cgr-dock .cgr-tab:hover{color:#fff;border-color:rgba(124,150,255,.85)}"
+    "border-radius:9px;border:1px solid rgba(96,165,250,.55);"
+    "background:linear-gradient(180deg,rgba(18,20,42,.93),rgba(11,12,28,.93));"
+    "box-shadow:0 6px 22px rgba(0,0,0,.4),0 0 18px -6px rgba(56,189,248,.5);"
+    "backdrop-filter:blur(6px);user-select:none}"
+    "#cg-related.cgr-dock .cgr-tab:hover{color:#fff;border-color:rgba(56,189,248,.9);"
+    "box-shadow:0 6px 22px rgba(0,0,0,.45),0 0 26px -4px rgba(56,189,248,.78)}"
     "#cg-related.cgr-dock .cgr-box{display:none;position:absolute;bottom:calc(100% + 8px);"
     "left:0;width:min(400px,92vw);max-height:62vh;overflow-y:auto}"
     "#cg-related.cgr-dock:hover .cgr-box,#cg-related.cgr-dock:focus-within .cgr-box{display:block}"

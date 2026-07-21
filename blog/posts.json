@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-07-18",
+  "updated": "2026-07-21",
   "site": "https://www.clearglassinc.com",
   "topics": {
     "governed-ai": "Governed AI",
@@ -15,10 +15,42 @@
   },
   "posts": [
     {
+      "slug": "clearglass-platform-audit-2026",
+      "url": "/blog/clearglass-platform-audit-2026.html",
+      "title": "The ClearGlass Platform Audit: Upgrading a Governed Monorepo Into a Future-Tech Platform",
+      "description": "The full ClearGlass platform audit doctrine: what a governed monorepo already gets right, the seven highest-leverage upgrades ranked, a keep/simplify/gate/build refactor map, the six-field implementation contract, and the rollout order that never breaks production.",
+      "category": "Platform Engineering",
+      "series": "High-Trust Systems Patterns",
+      "topics": [
+        "systems",
+        "governed-ai",
+        "agents",
+        "automation"
+      ],
+      "tags": [
+        "platform-audit",
+        "platform-engineering",
+        "observability",
+        "rate-limiting",
+        "circuit-breakers",
+        "feature-flags",
+        "rollback",
+        "retrieval-layer",
+        "audit-ledger",
+        "governed-operations"
+      ],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-07-21",
+      "readMinutes": 14,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
+    {
       "slug": "digital-twin-simulation-tools-storm-adaptive-transit-2026",
       "url": "/blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
       "title": "Best Digital Twin Simulation Tools for Storm-Adaptive Transit Systems in 2026",
-      "description": "A production-oriented comparison of digital twin platforms for storm-adaptive transit: NVIDIA Omniverse, Bentley iTwin, Autodesk Tandem, Azure Digital Twins, AWS IoT TwinMaker, MATSim and CesiumJS \u2014 scored against SATS criteria, with a recommended hybrid architecture and governed-operations model.",
+      "description": "A production-oriented comparison of digital twin platforms for storm-adaptive transit: NVIDIA Omniverse, Bentley iTwin, Autodesk Tandem, Azure Digital Twins, AWS IoT TwinMaker, MATSim and CesiumJS — scored against SATS criteria, with a recommended hybrid architecture and governed-operations model.",
       "category": "Resilient Infrastructure",
       "series": "Resilient Infrastructure Briefs",
       "topics": [
@@ -44,7 +76,7 @@
       "date": "2026-07-18",
       "readMinutes": 15,
       "featured": true,
-      "deskRank": 1,
+      "deskRank": 2,
       "status": "published"
     },
     {
@@ -75,7 +107,7 @@
       "date": "2026-07-18",
       "readMinutes": 14,
       "featured": true,
-      "deskRank": 2,
+      "deskRank": 3,
       "status": "published"
     },
     {
@@ -109,14 +141,14 @@
       "date": "2026-07-17",
       "readMinutes": 13,
       "featured": true,
-      "deskRank": 3,
+      "deskRank": 4,
       "status": "published"
     },
     {
       "slug": "clearglassinc-0-to-1m-corporate-execution-plan",
       "url": "/blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
       "title": "ClearGlassInc: The $0-to-$1,000,000 Corporate Execution Plan",
-      "description": "An 18-month operating plan to reach $1,000,000 CAD in collected corporate revenue: governance, cybersecurity, procurement-intelligence, compliance and AI-oversight services converted into managed services and licensed technology \u2014 sequenced across eight phases with a four-tier offer ladder, financial controls, scorecard, and a 30-day command sequence.",
+      "description": "An 18-month operating plan to reach $1,000,000 CAD in collected corporate revenue: governance, cybersecurity, procurement-intelligence, compliance and AI-oversight services converted into managed services and licensed technology — sequenced across eight phases with a four-tier offer ladder, financial controls, scorecard, and a 30-day command sequence.",
       "category": "Revenue Architecture",
       "series": "Artemis Growth Systems",
       "topics": [
@@ -139,14 +171,14 @@
       "date": "2026-07-17",
       "readMinutes": 16,
       "featured": true,
-      "deskRank": 4,
+      "deskRank": 5,
       "status": "published"
     },
     {
       "slug": "frontier-intelligence-briefing-quantum-gravity-asi-biosecurity",
       "url": "/blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html",
       "title": "Frontier Intelligence Briefing: Quantum Gravity, ASI Timelines, Biosecurity & the Economic Singularity",
-      "description": "An EYES-ONLY styled field briefing on five frontier vectors: quantum gravity progress, near-term ASI timelines and risks, the biosecurity landscape, economic-singularity scenarios, and the truth about time-travel and future-prediction claims \u2014 with a sober assessment on each.",
+      "description": "An EYES-ONLY styled field briefing on five frontier vectors: quantum gravity progress, near-term ASI timelines and risks, the biosecurity landscape, economic-singularity scenarios, and the truth about time-travel and future-prediction claims — with a sober assessment on each.",
       "category": "Frontier Intelligence",
       "series": "Frontier Desk Briefings",
       "topics": [
@@ -169,7 +201,7 @@
       "date": "2026-07-16",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 5,
+      "deskRank": 6,
       "status": "published"
     },
     {
@@ -200,14 +232,14 @@
       "date": "2026-07-12",
       "readMinutes": 14,
       "featured": true,
-      "deskRank": 6,
+      "deskRank": 7,
       "status": "published"
     },
     {
       "slug": "clearglass-command-center-cyber-defense-console",
       "url": "/blog/clearglass-command-center-cyber-defense-console.html",
       "title": "Inside the ClearGlass Command Center: Designing a Cyber Defense Console That Earns Trust",
-      "description": "The design and engineering decisions behind the ClearGlass Command Center \u2014 a cinematic cyber defense console where every animation supports evidence: live telemetry, risk gauges, governed pipelines, and human-in-the-loop approval gates.",
+      "description": "The design and engineering decisions behind the ClearGlass Command Center — a cinematic cyber defense console where every animation supports evidence: live telemetry, risk gauges, governed pipelines, and human-in-the-loop approval gates.",
       "category": "Cyber Defense Design",
       "series": "Command Center Field Notes",
       "topics": [
@@ -231,7 +263,7 @@
       "date": "2026-07-11",
       "readMinutes": 9,
       "featured": true,
-      "deskRank": 7,
+      "deskRank": 8,
       "status": "published"
     },
     {
@@ -263,7 +295,7 @@
       "date": "2026-07-07",
       "readMinutes": 22,
       "featured": true,
-      "deskRank": 8,
+      "deskRank": 9,
       "status": "published"
     },
     {
@@ -295,7 +327,7 @@
       "date": "2026-07-06",
       "readMinutes": 28,
       "featured": true,
-      "deskRank": 9,
+      "deskRank": 10,
       "status": "published"
     },
     {
@@ -322,14 +354,14 @@
       "date": "2026-07-06",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 10,
+      "deskRank": 11,
       "status": "published"
     },
     {
       "slug": "ai-agent-governance-governed-autonomy",
       "url": "/blog/ai-agent-governance-governed-autonomy.html",
       "title": "AI Agent Governance: The Governed Autonomy Playbook",
-      "description": "The bottleneck to deploying AI agents isn't intelligence \u2014 it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
+      "description": "The bottleneck to deploying AI agents isn't intelligence — it's accountability. The Four Gates and the Risk Router that let enterprises deploy autonomous AI without getting burned.",
       "category": "AI & Autonomy",
       "series": "Governed Autonomy Playbooks",
       "topics": [
@@ -349,14 +381,14 @@
       "date": "2026-06-26",
       "readMinutes": 11,
       "featured": true,
-      "deskRank": 11,
+      "deskRank": 12,
       "status": "published"
     },
     {
       "slug": "ai-agents-insider-threat",
       "url": "/blog/ai-agents-insider-threat.html",
       "title": "AI Agents Are the New Insider Threat",
-      "description": "Agents hold credentials, access, and goals \u2014 the textbook insider profile \u2014 and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
+      "description": "Agents hold credentials, access, and goals — the textbook insider profile — and behavioral tooling can't see them. The AIRF framework: Identity, Intent, Blast Radius, Ledger.",
       "category": "AI & Security",
       "series": "Field Notes",
       "topics": [
@@ -375,7 +407,7 @@
       "date": "2026-07-02",
       "readMinutes": 12,
       "featured": false,
-      "deskRank": 12,
+      "deskRank": 13,
       "status": "published"
     },
     {
@@ -401,7 +433,7 @@
       "date": "2026-07-02",
       "readMinutes": 12,
       "featured": false,
-      "deskRank": 13,
+      "deskRank": 14,
       "status": "published"
     },
     {
@@ -431,7 +463,7 @@
       "date": "2026-07-12",
       "readMinutes": 31,
       "featured": false,
-      "deskRank": 14,
+      "deskRank": 15,
       "status": "published"
     },
     {
@@ -458,7 +490,7 @@
       "date": "2026-07-01",
       "readMinutes": 14,
       "featured": true,
-      "deskRank": 15,
+      "deskRank": 16,
       "status": "published"
     },
     {
@@ -486,18 +518,18 @@
       "date": "2026-07-03",
       "readMinutes": 15,
       "featured": true,
-      "deskRank": 16,
+      "deskRank": 17,
       "status": "published"
     }
   ],
   "pipeline": [
     {
       "slug": "illusion-of-ai-security",
-      "plannedTitle": "The Illusion of AI Security: Why Most \u201cSecure\u201d Systems Are Already Compromised",
+      "plannedTitle": "The Illusion of AI Security: Why Most “Secure” Systems Are Already Compromised",
       "primaryKeyword": "AI security",
-      "angle": "Contrarian \u2014 exposes false confidence in AI defenses",
+      "angle": "Contrarian — exposes false confidence in AI defenses",
       "coreIdea": "Most AI systems are vulnerable at the orchestration layer, not the model layer.",
-      "hook": "Your AI isn\u2019t secure. It just hasn\u2019t been tested properly.",
+      "hook": "Your AI isn’t secure. It just hasn’t been tested properly.",
       "topics": [
         "cyber",
         "governed-ai",
@@ -527,7 +559,7 @@
       "primaryKeyword": "cybersecurity automation",
       "angle": "Inevitable shift",
       "coreIdea": "Humans cannot keep pace with machine-speed threats.",
-      "hook": "If your defense requires human reaction time, you\u2019ve already lost.",
+      "hook": "If your defense requires human reaction time, you’ve already lost.",
       "topics": [
         "cyber",
         "automation"
@@ -536,9 +568,9 @@
     },
     {
       "slug": "ai-agents-new-workforce-attack-surface",
-      "plannedTitle": "AI Agents Are the New Workforce: But They\u2019re Also Your Biggest Attack Surface",
+      "plannedTitle": "AI Agents Are the New Workforce: But They’re Also Your Biggest Attack Surface",
       "primaryKeyword": "AI agents security",
-      "angle": "Duality \u2014 opportunity plus risk",
+      "angle": "Duality — opportunity plus risk",
       "coreIdea": "Every AI agent is both a productivity multiplier and a vulnerability node.",
       "framework": "Agent Attack Surface Index (AASI)",
       "topics": [
@@ -556,7 +588,7 @@
       "plannedTitle": "The Hidden Layer of Cyber Risk: Workflow Automation Is the New Exploit Vector",
       "primaryKeyword": "workflow automation security",
       "angle": "Overlooked risk",
-      "coreIdea": "Zapier-style automation, APIs, and pipelines are massively under-secured. The system isn\u2019t hacked \u2014 the workflow is.",
+      "coreIdea": "Zapier-style automation, APIs, and pipelines are massively under-secured. The system isn’t hacked — the workflow is.",
       "topics": [
         "automation",
         "cyber"
@@ -569,7 +601,7 @@
       "primaryKeyword": "software architecture strategy",
       "angle": "Executive-level positioning",
       "coreIdea": "Architecture decisions now directly impact revenue, security, and dominance.",
-      "hook": "Your architecture is your strategy \u2014 whether you designed it that way or not.",
+      "hook": "Your architecture is your strategy — whether you designed it that way or not.",
       "topics": [
         "systems"
       ],
@@ -580,7 +612,7 @@
       "plannedTitle": "OSINT + AI: The New Intelligence Stack Reshaping Government and Finance",
       "primaryKeyword": "OSINT AI",
       "angle": "High-authority, geopolitical relevance",
-      "coreIdea": "AI-powered intelligence pipelines are redefining investigations \u2014 fraud detection, sanctions tracking, network analysis.",
+      "coreIdea": "AI-powered intelligence pipelines are redefining investigations — fraud detection, sanctions tracking, network analysis.",
       "topics": [
         "osint",
         "fincrime",
@@ -606,7 +638,7 @@
       "plannedTitle": "Why Most AI Implementations Fail Before They Start (And How to Fix It)",
       "primaryKeyword": "AI implementation strategy",
       "angle": "Pain-driven, widely relatable",
-      "coreIdea": "Failure happens at system design, not model choice. AI is not a tool \u2014 it\u2019s an ecosystem.",
+      "coreIdea": "Failure happens at system design, not model choice. AI is not a tool — it’s an ecosystem.",
       "topics": [
         "automation",
         "governed-ai",

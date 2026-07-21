@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-20
+# Release Notes — 2026-07-21
 
-*1016 commit(s) since v1.0.0*
+*1046 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -115,6 +115,7 @@
 
 ## Documentation
 
+- harden Artemis self-evolving control plane (`7da6f43`)
 - add Kimi K3 AI coding-agent tech radar note (#898) (`6474968`)
 - record www.clearglassinc.com domain migration + verification (`b9e2248`)
 - add engineering guidelines (`3c68483`)
@@ -164,6 +165,23 @@
 
 ## Maintenance
 
+- Add ARTEMIS // FAWL command system (`98d35e3`)
+- Publish the ClearGlass Platform Audit 2026 as a new Insights page (#979) (`c365e3c`)
+- Upgrade Artemis workflow resilience (`f8b3b33`)
+- Harden Artemis self-improvement governance (`18ab76f`)
+- Add Artemis self-evolving platform blueprint (`dd600d9`)
+- Add Artemis platform architect agent prompt (`d5c300d`)
+- Sharpen homepage executive positioning (`573d7d2`)
+- Enhance CONDUIT trust boundary content (`0082748`)
+- Enhance CONDUIT automation command center (`095e82b`)
+- Enhance CONDUIT automation command center (`dbebb74`)
+- Enhance CONDUIT automation positioning (`ec566b2`)
+- Add Artemis intelligence safety regression tests (`6985f4f`)
+- Add Artemis self-evolving intelligence platform blueprint (`5589283`)
+- Add Artemis self-evolving AI platform blueprint (`569a531`)
+- Add governed legacy campaign bot army (`74d766a`)
+- Enhance Guardian command interface copy (`2fd5c52`)
+- Add futuristic Guardian 2040 banner (`83ffb65`)
 - Harden authority lattice accessibility and deployment safety (#960) (`418de54`)
 - Regenerate accessible authority lattice (`1f72e94`)
 - Regenerate accessible authority lattice (`d65b394`)
@@ -617,6 +635,18 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`839bc7f`)
+- refresh control-surface data feeds [skip ci] (`5d3b177`)
+- refresh control-surface data feeds [skip ci] (`d02f46e`)
+- refresh control-surface data feeds [skip ci] (`99b1338`)
+- refresh control-surface data feeds [skip ci] (`d73e520`)
+- refresh control-surface data feeds [skip ci] (`a30be2e`)
+- refresh control-surface data feeds [skip ci] (`e2933f1`)
+- refresh control-surface data feeds [skip ci] (`aaaf8ec`)
+- refresh control-surface data feeds [skip ci] (`99e3e4c`)
+- refresh control-surface data feeds [skip ci] (`25511ed`)
+- refresh control-surface data feeds [skip ci] (`8b85a36`)
+- update generated outputs — 2026-07-20 10:08 UTC [skip ci] (`7172820`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`293e670`)
 - refresh control-surface data feeds [skip ci] (`3e761d9`)
 - refresh control-surface data feeds [skip ci] (`5e88401`)

@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-07-20T10:08:36.164430+00:00",
+  "run_utc": "2026-07-21T09:26:17.567436+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1016,
+  "commit_count": 1046,
   "sections": {
     "New Features": [
       {
@@ -930,6 +930,15 @@
     ],
     "Documentation": [
       {
+        "sha": "7da6f43",
+        "type": "docs",
+        "scope": null,
+        "subject": "harden Artemis self-evolving control plane",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
         "sha": "6474968",
         "type": "docs",
         "scope": null,
@@ -1295,6 +1304,159 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "98d35e3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ARTEMIS // FAWL command system",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "c365e3c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish the ClearGlass Platform Audit 2026 as a new Insights page (#979)",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "f8b3b33",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade Artemis workflow resilience",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "18ab76f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Harden Artemis self-improvement governance",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "dd600d9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis self-evolving platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "d5c300d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis platform architect agent prompt",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "573d7d2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Sharpen homepage executive positioning",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "0082748",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance CONDUIT trust boundary content",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "095e82b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance CONDUIT automation command center",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "dbebb74",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance CONDUIT automation command center",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "ec566b2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance CONDUIT automation positioning",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "6985f4f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis intelligence safety regression tests",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "5589283",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis self-evolving intelligence platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "569a531",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis self-evolving AI platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "74d766a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add governed legacy campaign bot army",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "2fd5c52",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Guardian command interface copy",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "83ffb65",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add futuristic Guardian 2040 banner",
+        "author": "Desmond Otieno",
+        "date": "2026-07-20",
+        "breaking": false
+      },
       {
         "sha": "418de54",
         "type": "chore",
@@ -5347,6 +5509,114 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "839bc7f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "5d3b177",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "d02f46e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "99b1338",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "d73e520",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "a30be2e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "e2933f1",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "aaaf8ec",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "99e3e4c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "25511ed",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "8b85a36",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "7172820",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-20 10:08 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-20",
+        "breaking": false
+      },
       {
         "sha": "293e670",
         "type": "bot",

@@ -1,6 +1,6 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-20T10:08:36.228414+00:00
+**Run:** 2026-07-21T09:26:17.614573+00:00
 **Average Score:** 89.3/100
 **Files Audited:** 72
 
@@ -83,8 +83,8 @@
 
 ## Top Issues Across All Pages
 
-- 24x — Description length N chars (ideal N–N)
-- 19x — Title length N chars (ideal N–N)
+- 23x — Description length N chars (ideal N–N)
+- 20x — Title length N chars (ideal N–N)
 - 11x — Missing og:image
 - 5x — Missing og:description
 - 4x — Missing og:title

@@ -13,6 +13,7 @@
       ["AVALON · A⊕P Fusion", "artemis-percival.html", "⬣"],
       ["PERCIVAL OS", "percival-os.html", "◐"],
       ["SENTINEL · Live", "sentinel.html", "◉"],
+      ["CLEARSIGHT · Edge Vision", "clearsight.html", "🎥"],
       ["AEGIS · Legal Shield", "aegis.html", "⚖"],
       ["Agent Mesh", "agentmesh.html", "⌗"],
       ["CONDUIT · Automation", "conduit.html", "⟿"],

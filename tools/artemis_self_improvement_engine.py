@@ -24,6 +24,8 @@ class SignalType(str, Enum):
     ALERT_OUTCOME = "alert_outcome"
     MISSION_RESULT = "mission_result"
     LATENCY_SAMPLE = "latency_sample"
+    ENTITY_MERGE_CORRECTION = "entity_merge_correction"
+    TRUST_RATING = "trust_rating"
 
 
 class ProposalType(str, Enum):
@@ -31,6 +33,7 @@ class ProposalType(str, Enum):
     WORKFLOW_PATCH = "workflow_patch"
     ROUTING_PATCH = "routing_patch"
     HEURISTIC_PATCH = "heuristic_patch"
+    ONTOLOGY_MERGE_REVIEW = "ontology_merge_review"
 
 
 class ApprovalState(str, Enum):
@@ -39,6 +42,7 @@ class ApprovalState(str, Enum):
     NEEDS_HUMAN_APPROVAL = "needs_human_approval"
     APPROVED_FOR_CANARY = "approved_for_canary"
     REJECTED = "rejected"
+    BLOCKED_POLICY_BOUNDARY = "blocked_policy_boundary"
 
 
 @dataclass(frozen=True)
@@ -106,6 +110,8 @@ class ChangeProposal:
     approval_state: ApprovalState = ApprovalState.NEEDS_HUMAN_APPROVAL
     policy_decision: str = "human_approval_required"
     drift_score: float = 0.0
+    risk_tier: str = "medium"
+    rollback_version: str | None = None
 
     @property
     def signed_manifest(self) -> dict[str, Any]:
@@ -130,14 +136,19 @@ class ArtemisImprovementEngine:
 
         proposals: list[ChangeProposal] = []
         for mission_id, mission_signals in grouped.items():
+            sanitized_signals = [self._sanitize_signal(signal) for signal in mission_signals]
             corrections = [
-                s for s in mission_signals if s.signal_type == SignalType.OPERATOR_CORRECTION
+                s for s in sanitized_signals if s.signal_type == SignalType.OPERATOR_CORRECTION
             ]
-            outcomes = [s for s in mission_signals if s.signal_type == SignalType.ALERT_OUTCOME]
+            outcomes = [s for s in sanitized_signals if s.signal_type == SignalType.ALERT_OUTCOME]
             latency = [
                 float(s.payload.get("latency_ms", 0))
-                for s in mission_signals
+                for s in sanitized_signals
                 if s.signal_type == SignalType.LATENCY_SAMPLE
+            ]
+
+            merge_corrections = [
+                s for s in sanitized_signals if s.signal_type == SignalType.ENTITY_MERGE_CORRECTION
             ]
 
             if len(corrections) >= 3:
@@ -158,14 +169,117 @@ class ArtemisImprovementEngine:
                         ),
                         rationale="Repeated operator corrections indicate the triage prompt needs stricter evidence thresholds and uncertainty language.",
                         patch=patch,
-                        evidence_hashes=[s.lineage_hash for s in mission_signals],
+                        evidence_hashes=[s.lineage_hash for s in sanitized_signals],
                         eval_result=eval_result,
                         approval_state=approval_state,
                         policy_decision=policy_decision,
                         drift_score=drift_score,
+                        risk_tier=self._risk_tier(drift_score, eval_result),
+                        rollback_version=self.component_versions.get(
+                            "aip.agent.triage_copilot", "0.0.0"
+                        ),
                     )
                 )
+
+            proposals.extend(self._synthesize_merge_review(mission_id, merge_corrections))
         return proposals
+
+
+    @staticmethod
+    def _sanitize_signal(signal: FeedbackSignal) -> FeedbackSignal:
+        """Return a signal with recursively redacted user-provided display fields.
+
+        The simulator intentionally keeps sanitization deterministic and stdlib-only so
+        examples can run in constrained CI while still modelling the production rule:
+        user-facing strings are escaped before being copied into proposal manifests.
+        """
+        def clean(value: Any) -> Any:
+            if isinstance(value, str):
+                return (
+                    value.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace('"', "&quot;")
+                    .replace("'", "&#x27;")
+                )
+            if isinstance(value, dict):
+                return {str(k): clean(v) for k, v in value.items()}
+            if isinstance(value, list):
+                return [clean(v) for v in value]
+            return value
+
+        return FeedbackSignal(
+            signal.signal_id,
+            signal.signal_type,
+            signal.mission_id,
+            signal.ontology_object_id,
+            signal.actor,
+            signal.classification,
+            signal.compartment,
+            clean(signal.payload),
+            signal.observed_at,
+        )
+
+    def _synthesize_merge_review(
+        self, mission_id: str, merge_corrections: list[FeedbackSignal]
+    ) -> list[ChangeProposal]:
+        if len(merge_corrections) < 2:
+            return []
+        compartments = {signal.compartment for signal in merge_corrections}
+        if len(compartments) != 1:
+            eval_result = EvalResult(0.0, 0.0, 0.0, 0.0, 1, len(merge_corrections))
+            return [
+                ChangeProposal(
+                    proposal_id=self._proposal_id(
+                        mission_id, "entity-merge-review", {"compartments": sorted(compartments)}
+                    ),
+                    proposal_type=ProposalType.ONTOLOGY_MERGE_REVIEW,
+                    target_component="ontology.entity_resolution",
+                    current_version=self.component_versions.get(
+                        "ontology.entity_resolution", "0.0.0"
+                    ),
+                    proposed_version=self.component_versions.get(
+                        "ontology.entity_resolution", "0.0.0"
+                    ),
+                    rationale="Entity merge proposal blocked because corrections span compartments and require manual compartment authority review.",
+                    patch={"blocked_merge_compartments": sorted(compartments)},
+                    evidence_hashes=[s.lineage_hash for s in merge_corrections],
+                    eval_result=eval_result,
+                    approval_state=ApprovalState.BLOCKED_POLICY_BOUNDARY,
+                    policy_decision="blocked_cross_compartment_merge",
+                    risk_tier="critical",
+                    rollback_version=self.component_versions.get(
+                        "ontology.entity_resolution", "0.0.0"
+                    ),
+                )
+            ]
+
+        eval_result = EvalResult(0.97, 0.91, 300.0, 0.88, 0, len(merge_corrections))
+        current_version = self.component_versions.get("ontology.entity_resolution", "0.0.0")
+        patch = {
+            "candidate_pairs": [s.payload.get("candidate_pair", []) for s in merge_corrections],
+            "minimum_independent_corrections": 2,
+            "required_review": "entity_steward_and_mission_owner",
+            "merge_execution": "draft_only_until_approved",
+        }
+        return [
+            ChangeProposal(
+                proposal_id=self._proposal_id(mission_id, "entity-merge-review", patch),
+                proposal_type=ProposalType.ONTOLOGY_MERGE_REVIEW,
+                target_component="ontology.entity_resolution",
+                current_version=current_version,
+                proposed_version=self._next_patch_version(current_version),
+                rationale="Repeated operator corrections indicate possible duplicate ontology entities; Artemis drafts a merge review but never merges automatically.",
+                patch=patch,
+                evidence_hashes=[s.lineage_hash for s in merge_corrections],
+                eval_result=eval_result,
+                approval_state=ApprovalState.NEEDS_HUMAN_APPROVAL,
+                policy_decision="human_approval_required_entity_merge",
+                drift_score=self._drift_score(merge_corrections),
+                risk_tier="high",
+                rollback_version=current_version,
+            )
+        ]
 
     @staticmethod
     def _offline_eval(
@@ -218,6 +332,14 @@ class ArtemisImprovementEngine:
         if drift_score >= 0.67:
             return ApprovalState.NEEDS_HUMAN_APPROVAL, "human_review_required_high_drift"
         return ApprovalState.NEEDS_HUMAN_APPROVAL, "human_approval_required"
+
+    @staticmethod
+    def _risk_tier(drift_score: float, eval_result: EvalResult) -> str:
+        if eval_result.policy_violations or drift_score >= 0.9:
+            return "critical"
+        if drift_score >= 0.67 or eval_result.precision < 0.94:
+            return "high"
+        return "medium"
 
     @staticmethod
     def _build_prompt_patch(

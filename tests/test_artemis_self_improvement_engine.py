@@ -113,3 +113,80 @@ def test_invalid_component_version_fails_closed() -> None:
         assert "MAJOR.MINOR.PATCH" in str(exc)
     else:
         raise AssertionError("invalid component versions must fail closed")
+
+
+def test_entity_merge_corrections_create_draft_only_human_review() -> None:
+    engine = ArtemisImprovementEngine({"ontology.entity_resolution": "1.3.5"})
+    signals = [
+        _signal(
+            "m1",
+            SignalType.ENTITY_MERGE_CORRECTION,
+            {"candidate_pair": ["person-a", "person-b"], "theme": "duplicate_identity"},
+        ),
+        _signal(
+            "m2",
+            SignalType.ENTITY_MERGE_CORRECTION,
+            {"candidate_pair": ["person-a", "person-b"], "theme": "duplicate_identity"},
+        ),
+    ]
+
+    proposal = engine.synthesize_proposals(signals)[0]
+
+    assert proposal.proposal_type == ProposalType.ONTOLOGY_MERGE_REVIEW
+    assert proposal.current_version == "1.3.5"
+    assert proposal.proposed_version == "1.3.6"
+    assert proposal.patch["merge_execution"] == "draft_only_until_approved"
+    assert proposal.policy_decision == "human_approval_required_entity_merge"
+    assert proposal.risk_tier == "high"
+    assert proposal.rollback_version == "1.3.5"
+
+
+def test_cross_compartment_entity_merge_fails_closed() -> None:
+    def signal(signal_id: str, compartment: str) -> FeedbackSignal:
+        base = _signal(
+            signal_id,
+            SignalType.ENTITY_MERGE_CORRECTION,
+            {"candidate_pair": ["device-a", "device-b"], "theme": "duplicate_asset"},
+        )
+        return FeedbackSignal(
+            base.signal_id,
+            base.signal_type,
+            base.mission_id,
+            base.ontology_object_id,
+            base.actor,
+            base.classification,
+            compartment,
+            base.payload,
+            base.observed_at,
+        )
+
+    engine = ArtemisImprovementEngine({"ontology.entity_resolution": "1.3.5"})
+    proposal = engine.synthesize_proposals([signal("m1", "ARTEMIS"), signal("m2", "PARTNER")])[0]
+
+    assert proposal.approval_state.value == "blocked_policy_boundary"
+    assert proposal.policy_decision == "blocked_cross_compartment_merge"
+    assert proposal.proposed_version == "1.3.5"
+    assert proposal.risk_tier == "critical"
+
+
+def test_user_facing_payload_is_sanitized_in_proposal_manifest() -> None:
+    engine = ArtemisImprovementEngine({"ontology.entity_resolution": "1.3.5"})
+    proposal = engine.synthesize_proposals(
+        [
+            _signal(
+                "m1",
+                SignalType.ENTITY_MERGE_CORRECTION,
+                {"candidate_pair": ["<script>alert(1)</script>", "person-b"]},
+            ),
+            _signal(
+                "m2",
+                SignalType.ENTITY_MERGE_CORRECTION,
+                {"candidate_pair": ["<script>alert(1)</script>", "person-b"]},
+            ),
+        ]
+    )[0]
+
+    manifest = proposal.signed_manifest
+
+    assert "<script>" not in str(manifest)
+    assert "&lt;script&gt;" in str(manifest)

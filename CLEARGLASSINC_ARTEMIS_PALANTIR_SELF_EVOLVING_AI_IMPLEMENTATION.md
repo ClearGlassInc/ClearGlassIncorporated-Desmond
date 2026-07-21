@@ -514,6 +514,138 @@ async def run_eval_suite(candidate: CandidateUpgrade, cases: list[EvalCase]) -> 
     }
 ```
 
+
+## Intellectual Property Protection and Anti-Theft Layer
+
+ClearGlassInc Artemis treats intellectual-property protection as an operational control plane, not as a cosmetic browser trick. The objective is to make theft harder, faster to detect, and easier to prove while preserving accessibility, coalition usability, and legitimate analyst workflows.
+
+### Defensive posture
+
+| Layer | Implementation | Security value | Accessibility constraint |
+|---|---|---|---|
+| Authenticated delivery | Serve high-value text, generated intelligence products, and premium assets through backend routes instead of embedding complete raw material in static bundles | Reduces unauthenticated bulk copying and enables per-user logging | Do not block ordinary reading, keyboard navigation, text zoom, or assistive technology |
+| Copyright and attribution | Add visible copyright notices, canonical metadata, author metadata, and immutable Git-backed publication history | Establishes authorship and supports enforcement | Notices must be readable and non-obstructive |
+| Watermarking | Apply visible watermarks to public previews and optional per-principal forensic watermarks to exported images/PDFs | Makes redistributed copies traceable | Watermarks cannot obscure operational content or safety-critical details |
+| Signed assets | Issue short-lived signed URLs for protected media, exports, and downloadable intelligence products | Limits hotlinking and stale public URLs | Signed URLs must degrade with clear renewal paths for authorized users |
+| Rate limits and bot detection | Enforce per-principal, per-IP, per-token, and per-route quotas with anomaly scoring | Slows scraping and creates early-warning telemetry | Avoid blanket blocks that lock out legitimate coalition networks; provide operator override workflow |
+| Distinctive fingerprints | Embed page/product-specific marker phrases, metadata, content hashes, and optional user-scoped canary tokens | Makes copied content easier to identify and prove | Markers must not alter facts, mission meaning, or legal claims |
+| Evidence logging | Persist publication timestamps, asset digests, request logs, export manifests, model/prompt versions, and approval events | Proves priority, custody, and provenance | Logs must minimize sensitive content and respect retention/classification policy |
+
+### What actually works
+
+1. Keep sensitive logic, valuable source datasets, prompt bundles, evaluation datasets, and unreleased intelligence products server-side.
+2. Deliver only the minimum representation needed by the browser or Gotham/Foundry client for the current authorized workflow.
+3. Add visible ownership notices and canonical metadata to public pages, but treat those notices as evidence and deterrence rather than access control.
+4. Watermark original images, exported reports, downloadable PDFs, and preview assets.
+5. Preserve Git history, publication timestamps, provenance hashes, immutable audit events, and release manifests so ownership can be proven later.
+6. Use robots directives and canonical tags for search-engine hygiene, but never treat them as security controls.
+7. Avoid brittle anti-copy scripts such as disabling right-click, paste, or selection as a primary defense. They are easy to bypass and can harm keyboard users, screen-reader users, researchers, and legitimate operators.
+
+### Anti-scrape architecture
+
+```mermaid
+flowchart LR
+  USER[Authorized browser / Gotham / Foundry client]
+  EDGE[CDN/WAF + Bot Signals]
+  GATEWAY[API Gateway]
+  POLICY[Policy Decision Point]
+  SIGNER[Asset Signing Service]
+  CONTENT[Protected Content Service]
+  WATERMARK[Watermark + Fingerprint Service]
+  LEDGER[Immutable Evidence Ledger]
+  SIEM[Detection + SIEM]
+
+  USER --> EDGE --> GATEWAY --> POLICY
+  POLICY --> CONTENT
+  CONTENT --> SIGNER
+  CONTENT --> WATERMARK
+  SIGNER --> USER
+  WATERMARK --> USER
+  EDGE --> SIEM
+  GATEWAY --> SIEM
+  CONTENT --> LEDGER
+  SIGNER --> LEDGER
+  WATERMARK --> LEDGER
+```
+
+### Backend enforcement contract
+
+- All protected assets require an authenticated principal, mission context, purpose-of-use, and policy decision.
+- Download and export routes require idempotency keys and write an immutable `content_accessed` or `artifact_exported` audit event.
+- Signed asset URLs are scoped to one asset, one principal or service account, one purpose, one content hash, and a short expiration window.
+- Hotlink protection validates the signature, expiry, audience, asset digest, and request context before streaming bytes.
+- Bot detection is advisory for low-risk public pages and blocking for protected routes once policy and rate thresholds are exceeded.
+- Anti-copy UI controls, if used at all, are minor deterrents only and must never disable accessibility-critical selection, focus, or keyboard behavior.
+
+### Python-first implementation skeleton
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from hashlib import sha256
+import hmac
+import json
+from typing import Literal
+
+
+@dataclass(frozen=True)
+class ProtectedAssetRequest:
+    principal_id: str
+    asset_id: str
+    asset_sha256: str
+    purpose: str
+    mission_id: str
+    classification: str
+    expires_at: datetime
+
+
+def canonical_json(payload: dict[str, str]) -> bytes:
+    return json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+
+
+def sign_asset_request(request: ProtectedAssetRequest, secret: bytes) -> str:
+    if request.expires_at <= datetime.now(timezone.utc):
+        raise ValueError("asset request must expire in the future")
+    payload = {
+        "principal_id": request.principal_id,
+        "asset_id": request.asset_id,
+        "asset_sha256": request.asset_sha256,
+        "purpose": request.purpose,
+        "mission_id": request.mission_id,
+        "classification": request.classification,
+        "expires_at": request.expires_at.isoformat(),
+    }
+    return hmac.new(secret, canonical_json(payload), sha256).hexdigest()
+
+
+def verify_asset_signature(request: ProtectedAssetRequest, signature: str, secret: bytes) -> bool:
+    if request.expires_at <= datetime.now(timezone.utc):
+        return False
+    expected = sign_asset_request(request, secret)
+    return hmac.compare_digest(expected, signature)
+
+
+def fingerprint_text(content: str, *, page_id: str, release_id: str) -> str:
+    marker = sha256(f"{page_id}:{release_id}".encode("utf-8")).hexdigest()[:12]
+    return f"{content}\n\n<!-- artemis-fingerprint:{marker} -->"
+
+
+def rate_limit_bucket(principal_id: str, route: str, window: Literal["minute", "hour"]) -> str:
+    now = datetime.now(timezone.utc)
+    slot = now.strftime("%Y%m%d%H%M") if window == "minute" else now.strftime("%Y%m%d%H")
+    return f"ratelimit:{route}:{principal_id}:{window}:{slot}"
+```
+
+### Detection and proof workflow
+
+1. The content service publishes or exports an artifact with a content hash, watermark manifest, author metadata, release ID, and timestamp.
+2. The evidence ledger records the artifact hash, source commit, publishing actor, policy decision, and signed URL issuance.
+3. The SIEM correlates abnormal request patterns, hotlink failures, high-volume exports, user-agent rotation, and marker reuse on external pages.
+4. The IP Guardian agent opens an evidence package containing the original hash, Git commit, publication timestamp, access trail, marker match, and screenshots or crawled observations where legally obtained.
+5. A human reviewer decides whether to revoke access, rotate signatures, notify a partner, or start legal enforcement.
+
 ## Security and Governance
 
 - **Need-to-know**: access requires clearance, role, mission assignment, purpose-of-use, compartments, coalition scope, and active operational need.

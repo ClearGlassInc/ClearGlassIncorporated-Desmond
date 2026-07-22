@@ -132,14 +132,30 @@
     if (pagePath === '' || pagePath === '/index.html') return;
 
     var PRODUCTS = [
-      ['Guardian', '/guardian.html', '🌐', 'ClearGlassInc. Intelligence'],
+      ['Artemis IV Core', '/artemis-iv.html', '◎', 'Tactical Intelligence'],
+      ['Artemis OS', '/artemis-os.html', '◈', 'Governed Agent OS'],
+      ['Artemis Self-Evolving Platform', '/artemis-self-evolving-platform.html', '✦', 'AI Improvement Loop'],
+      ['Artemis AI Cyber Intelligence', '/artemis-ai-cyber-intelligence-platform.html', '⚡', 'Cyber Intelligence'],
+      ['Guardian', '/guardian.html', '🌐', 'Financial Intelligence'],
       ['BLUEDESK', '/bluedesk.html', '🛡️', 'CISO Risk & Blue Team'],
-      ['Government Solutions', '/government.html', '🏛️', 'Federal & Defence'],
-      ['Web Design & Dev', '/web-design.html', '💻', 'Design & Development'],
-      ['SMB Cyber Trust Kit', '/smb-cyber-trust-kit.html', '🔐', 'Small Business Security'],
-      ['Side Store', '/side-store.html', '🔌', 'Cheap Wires & Electronics'],
-      null,
-      ['Insights', '/blog/', '📡', 'Blog & Field Notes']
+      ['ClearGlass NEXUS v12', '/clearglass-nexus.html', '◇', 'Command Platform'],
+      ['ClearPulse', '/clearpulse.html', '📡', 'Signal Intelligence'],
+      ['Flowsint', '/flowsint.html', '🕸️', 'OSINT Investigation Graph'],
+      ['Command Center', '/command-center.html', '⌁', 'Live Operations Console'],
+      ['Conduit', '/conduit.html', '⟿', 'Workflow Automation'],
+      ['Air Systems Control', '/air-systems-control.html', '◌', 'Glass Control Surface'],
+      ['SATS Digital Twin', '/sats-digital-twin.html', '◍', 'Storm-Adaptive Simulation'],
+      ['Counter-UAS OS', '/counter-uas-commercialization-os.html', '⦿', 'Commercialization System'],
+      ['Procurement Legal Tech', '/procurement-legal-tech.html', '§', 'Public-Sector Legal Ops'],
+      ['Traffic Enforcement', '/traffic-enforcement.html', '◆', 'Safety Intelligence'],
+      ['SMB Suite', '/smb.html', '▣', 'Small Business Systems'],
+      ['SMB Cyber Trust Kit', '/smb-cyber-trust-kit.html', '🔐', 'Plain-Language Security'],
+      ['Web Design & Dev', '/web-design.html', '💻', 'Growth Infrastructure'],
+      ['Side Store', '/side-store.html', '🔌', 'Electronics Catalog'],
+      ['Revenue Engine', '/revenue-engine.html', '$', 'Commercial Automation'],
+      ['StegoForge', '/stegoforge.html', '▧', 'Media Assurance'],
+      ['PERCIVAL OS', '/percival-os.html', '♜', 'Mission-Ready Agent Governance'],
+      ['SENTINEL', '/sentinel.html', '◬', 'Geospatial Intelligence']
     ];
     var LINKS = [
       ['Vision', '/index.html#vision'],

@@ -11,16 +11,19 @@
 
 const encoder = new TextEncoder();
 
-const DEV_SECRET = "clearglass-dev-only-insecure-asset-secret";
-
 // Default validity for a download link. Long enough for a click, short enough
 // that a link pasted into a log or chat is useless within minutes.
 export const DEFAULT_ASSET_TTL_SECONDS = 5 * 60;
 
 function getSecret(): string {
   // Separate secret from session signing so rotating one does not invalidate the
-  // other. Falls back to AUTH_SECRET, then a dev default.
-  return process.env.ASSET_SIGNING_SECRET || process.env.AUTH_SECRET || DEV_SECRET;
+  // other. Falls back to AUTH_SECRET, then an insecure dev-only default that
+  // production must override (same pattern as auth.ts — never a real credential).
+  return (
+    process.env.ASSET_SIGNING_SECRET ||
+    process.env.AUTH_SECRET ||
+    "clearglass-dev-only-insecure-asset-secret"
+  );
 }
 
 function bytesToBase64Url(bytes: Uint8Array): string {

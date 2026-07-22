@@ -1,0 +1,15 @@
+lead_score_total: 100
+factors:
+  location: 18
+  industry_risk: 16
+  company_size: 16
+  microsoft_365_dependence: 10
+  privacy_sensitive_operations: 10
+  regulatory_exposure: 8
+  recent_growth: 6
+  lack_of_visible_security_leadership: 8
+  engagement: 8
+rules:
+  - Never infer protected personal characteristics.
+  - Preserve source evidence for every score component.
+  - Explain every score in human-readable language.

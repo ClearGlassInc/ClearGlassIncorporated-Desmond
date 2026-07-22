@@ -1,0 +1,31 @@
+offers:
+  executive_cyber_ai_risk_checkup:
+    target_buyer: Owner, executive director, COO, managing partner, or IT lead at a Burlington SME.
+    business_problem: Leaders lack visible, prioritized evidence of cyber and AI risk.
+    deliverables: [90-minute assessment, prioritized findings, executive briefing, remediation roadmap]
+    boundaries: Assessment and advisory only; no guarantee of security; implementation is separately scoped.
+    pricing_framework: Entry fixed-fee package with optional credit toward retainer.
+    cta: Book a confidential risk review.
+    qualification_rules: [5-100 employees, Burlington or Halton preference, handles sensitive data]
+    upsell_path: Microsoft 365 Security Review or Ransomware Readiness Assessment.
+    recurring_revenue_path: ClearGlass Guardian or Cybersecurity Retainer.
+  microsoft_365_security_review:
+    target_buyer: Law, accounting, real-estate, and professional-services executives.
+    business_problem: Account compromise can expose email, files, admin controls, and client data.
+    deliverables: [MFA review, administrator-role review, email-security assessment, compromise-readiness checklist]
+    boundaries: No tenant changes without explicit written approval.
+    pricing_framework: Fixed-fee review scaled by tenant size.
+    cta: Request a Microsoft 365 exposure review.
+    qualification_rules: [Uses Microsoft 365, privacy-sensitive operations]
+    upsell_path: Incident response plan and endpoint hardening.
+    recurring_revenue_path: Guardian identity monitoring.
+  ransomware_readiness_assessment:
+    target_buyer: Operations leaders in manufacturing, logistics, construction, property management.
+    business_problem: Backups do not prove recovery unless restoration has been tested.
+    deliverables: [backup verification plan, recovery evidence review, endpoint review, incident checklist, executive risk summary]
+    boundaries: Does not perform destructive restore tests without written authorization.
+    pricing_framework: Fixed-fee assessment plus optional tabletop workshop.
+    cta: Validate recovery evidence.
+    qualification_rules: [Operational downtime risk, backup uncertainty]
+    upsell_path: Tabletop exercise.
+    recurring_revenue_path: Resilience retainer.

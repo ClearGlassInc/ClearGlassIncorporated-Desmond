@@ -1,0 +1,13 @@
+default_mode: dry_run
+external_actions_require_human_approval:
+  - send_email
+  - send_linkedin_message
+  - publish_content
+  - launch_ad
+  - change_budget
+  - contact_government
+  - submit_procurement_response
+  - collect_personal_data
+  - connect_third_party_account
+  - delete_campaign_record
+controls: [role_based_access, approval_queue, rate_limits, opt_out, append_only_audit, rollback, kill_switch, budget_ceilings, retention, environment_secrets]

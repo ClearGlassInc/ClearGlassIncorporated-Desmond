@@ -1,0 +1,4 @@
+name: outreach-approval
+mode: fail-closed
+approval_required_for: [send_email, send_linkedin_message, contact_government]
+rate_limits: {emails_per_day: 25, linkedin_messages_per_day: 10}

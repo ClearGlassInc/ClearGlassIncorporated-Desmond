@@ -1,0 +1,17 @@
+{
+  "brief_id": "burlington-cyber-2026-07",
+  "assumptions": ["No campaign result is claimed until measured.", "Public directories are discovery inputs, not consent to mass email."],
+  "sources": [
+    {"url": "https://www.cyber.gc.ca/en/small-medium-businesses", "use": "Canadian SME cyber guidance"},
+    {"url": "https://www.cyber.gc.ca/en/guidance/ransomware", "use": "Ransomware impact and mitigation context"},
+    {"url": "https://www.getcybersafe.gc.ca/en/resources/get-cyber-safe-guide-small-businesses", "use": "Small-business cyber lead and budgeting guidance"},
+    {"url": "https://ised-isde.canada.ca/site/canada-anti-spam-legislation/en/canadas-anti-spam-legislation", "use": "CASL compliance framing"},
+    {"url": "https://investburlington.ca/burlington-business-directory/", "use": "Lawful public account discovery starting point"},
+    {"url": "https://www.burlingtonchamber.com/membership/member-directory/", "use": "Partnership and local business cluster research"}
+  ],
+  "opportunities": [
+    {"industry": "professional services", "offer": "microsoft_365_security_review", "rationale": "privacy-sensitive client records and email compromise exposure", "score": 88},
+    {"industry": "manufacturing/logistics/construction", "offer": "ransomware_readiness_assessment", "rationale": "downtime-sensitive operations require recovery evidence", "score": 84},
+    {"industry": "nonprofits", "offer": "nonprofit_cyber_resilience_workshop", "rationale": "sensitive donor/client data with constrained budgets", "score": 76}
+  ]
+}

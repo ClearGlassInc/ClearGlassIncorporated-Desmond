@@ -1,0 +1,6 @@
+name: campaign-planning
+mode: dry-run
+steps:
+  - market_signal
+  - opportunity_qualification
+  - human_approval_before_publication

@@ -1,0 +1,10 @@
+{
+  "name": "outreach",
+  "organization": "ClearGlass Inc.",
+  "market": "Burlington, Ontario",
+  "permissions": ["read_public_sources", "draft_recommendations", "write_audit_log"],
+  "forbidden_actions": ["external_publication_without_approval", "paid_spend_without_approval", "contact_without_approval", "restricted_scraping", "deception"],
+  "approval_required": true,
+  "audit_output": "data/audit/outreach.jsonl",
+  "outputs": ["evidence_linked_reports", "drafts", "recommendations"]
+}

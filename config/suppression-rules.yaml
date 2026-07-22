@@ -1,0 +1,6 @@
+suppression:
+  honor_opt_out: true
+  dedupe_key: normalized_organization_plus_location
+  stop_after_followups: 3
+  casl_review_required: true
+  retained_fields: [organization, source_url, consent_status, suppression_reason, recorded_at]

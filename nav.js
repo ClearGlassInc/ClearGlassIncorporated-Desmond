@@ -77,7 +77,7 @@
     ["Procurement Legal Tech", "procurement-legal-tech.html", "Procurement integrity AI", "⚖"],
     ["Pricing", "pricing.html", "Plans and engagements", "₵"]
   ];
-  var TOP = [["Vision","index.html#vision"],["Services","index.html#services"],["Products","#products"],["Government","government.html"],["Insights","blog/"],["Contact","index.html#contact"]];
+  var TOP = [["Vision","index.html#vision"],["Services","index.html#services"],["Products","index.html#products"],["Government","government.html"],["Insights","blog/"],["Contact","index.html#contact"]];
   var script = document.currentScript || Array.prototype.slice.call(document.scripts).filter(function(s){return /nav\.js(?:\?|$)/.test(s.src);}).pop();
   var base = script ? new URL('.', script.src).href : new URL('.', location.href).href;
   function href(path){ return /^https?:|^mailto:|^#/.test(path) ? path : new URL(path, base).href; }

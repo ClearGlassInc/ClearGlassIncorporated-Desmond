@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-21T09:26:17.614573+00:00
-**Average Score:** 89.3/100
-**Files Audited:** 72
+**Run:** 2026-07-22T09:25:03.366761+00:00
+**Average Score:** 88.9/100
+**Files Audited:** 74
 
 ## Page Scores
 
@@ -14,6 +14,7 @@
 | `command-center.html` | 60/100 | 4 |
 | `cyber-defense-console.html` | 60/100 | 4 |
 | `flowsint.html` | 60/100 | 4 |
+| `platform-command-center.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
 | `artemis-self-evolving-platform.html` | 70/100 | 3 |
 | `bluedesk-mobile.html` | 70/100 | 3 |
@@ -33,6 +34,7 @@
 | `bluedesk.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
 | `clearglass-ultra.html` | 90/100 | 1 |
+| `clearsight.html` | 90/100 | 1 |
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `environmental-cyber-risk.html` | 90/100 | 1 |
 | `futuristic.html` | 90/100 | 1 |
@@ -83,13 +85,13 @@
 
 ## Top Issues Across All Pages
 
-- 23x — Description length N chars (ideal N–N)
+- 25x — Description length N chars (ideal N–N)
 - 20x — Title length N chars (ideal N–N)
 - 11x — Missing og:image
-- 5x — Missing og:description
-- 4x — Missing og:title
+- 6x — Missing og:description
+- 5x — Missing og:title
 - 4x — Multiple <hN> tags (N)
-- 2x — Missing canonical link tag
+- 3x — Missing canonical link tag
 - 2x — N image(s) missing alt text
 - 2x — No <hN> tag found
 - 1x — Missing <title>

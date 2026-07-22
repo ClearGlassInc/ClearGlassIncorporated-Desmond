@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-21
+# Release Notes — 2026-07-22
 
-*1046 commit(s) since v1.0.0*
+*1087 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -63,6 +63,7 @@
 
 ## Bug Fixes
 
+- **governance:** hard-gate low-confidence actions per operating rule 8 (`c800505`)
 - **pages:** stop SIGPIPE from failing the Pages build listing (`213bb46`)
 - **artemis:** define missing EvalGateResult, repair intelligence package imports (`86df0e3`)
 - **security:** bump next to 16.2.10 across apps — clear Next.js advisory batch (`4bdc03f`)
@@ -165,8 +166,33 @@
 
 ## Maintenance
 
+- Fix pre-existing authority-network CI failures (broken main) (`78bcc3e`)
+- Add governed incident state machine (`af9efe1`)
+- Add PHOENIX governed autonomous-recovery / self-healing agent (`ac25952`)
+- Bind approval decisions to the authenticated admin credential (`555c633`)
+- Add Cloudflare edge protection for premium content (`8c876b1`)
+- Add premium storefront route protection (`f1a3776`)
+- Protect premium admin routes (`f76872b`)
+- Add premium route protection to the admin cockpit (`ea928b4`)
+- Add CLEARSIGHT to homepage explore list (`24ef9ed`)
+- Add CLEARSIGHT edge-AI camera vision system (`354b6b8`)
+- Register legal/content-policy.html in the authority network (`45be1f9`)
+- Upgrade Platform Command Center with advanced interactive features (`2fbeb5a`)
+- Add content protection notices (`0a16722`)
+- Add Artemis advanced feature blueprint (`fceb786`)
+- Add advanced Artemis Palantir platform blueprint (`463dabf`)
+- Add Artemis merge-review safeguards (`164ee50`)
+- Add Artemis IP protection blueprint (`6d796b4`)
+- Enhance Artemis confidential AI platform blueprint (`d86dedb`)
+- Redesign Artemis command center deck (`d628df8`)
+- Add Platform Command Center visual dashboard (`8f5c3da`)
+- Add rate limiting, webhook idempotency, and readiness probe to the commerce control plane (`21f45eb`)
+- Harden the commerce control plane: authenticated approval gate, rate limits, webhook idempotency (`7b8f69f`)
+- Add platform audit + admin auth for the commerce control plane (`cee3bb5`)
 - Add ARTEMIS // FAWL command system (`98d35e3`)
 - Publish the ClearGlass Platform Audit 2026 as a new Insights page (#979) (`c365e3c`)
+- Expose the platform-audit page in the Authority Network grid (`dc8b2a6`)
+- Publish the ClearGlass Platform Audit 2026 as a new Insights page (`611a1f0`)
 - Upgrade Artemis workflow resilience (`f8b3b33`)
 - Harden Artemis self-improvement governance (`18ab76f`)
 - Add Artemis self-evolving platform blueprint (`dd600d9`)
@@ -635,6 +661,19 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`1ec4fe7`)
+- refresh control-surface data feeds [skip ci] (`e69cd74`)
+- refresh control-surface data feeds [skip ci] (`adc625f`)
+- refresh control-surface data feeds [skip ci] (`07f1991`)
+- refresh control-surface data feeds [skip ci] (`48f0511`)
+- refresh control-surface data feeds [skip ci] (`fab0b4e`)
+- refresh control-surface data feeds [skip ci] (`623a6ce`)
+- refresh control-surface data feeds [skip ci] (`740201c`)
+- refresh control-surface data feeds [skip ci] (`a657912`)
+- refresh control-surface data feeds [skip ci] (`a0d5ccd`)
+- refresh control-surface data feeds [skip ci] (`c94efaa`)
+- refresh control-surface data feeds [skip ci] (`e9741b7`)
+- update generated outputs — 2026-07-21 09:26 UTC [skip ci] (`bc111d1`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`839bc7f`)
 - refresh control-surface data feeds [skip ci] (`5d3b177`)
 - refresh control-surface data feeds [skip ci] (`d02f46e`)
@@ -1054,6 +1093,8 @@
 
 ## Other
 
+- drop dead initializers in login route (`9bf904d`)
+- plate OCR, watchlist alerts, camera wall, site nav (`9068670`)
 - add ClearGlass logo badge to artemis-self-evolving-platform.html (`e097f76`)
 - add Second Brain System guide card to store and offers lists (`343166e`)
 - publish $0-to-$1M Corporate Execution Plan post (`0a052f6`)

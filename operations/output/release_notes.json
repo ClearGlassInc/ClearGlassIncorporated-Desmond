@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-07-21T09:26:17.567436+00:00",
+  "run_utc": "2026-07-22T09:25:03.276387+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1046,
+  "commit_count": 1087,
   "sections": {
     "New Features": [
       {
@@ -511,6 +511,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "c800505",
+        "type": "fix",
+        "scope": "governance",
+        "subject": "hard-gate low-confidence actions per operating rule 8",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
       {
         "sha": "213bb46",
         "type": "fix",
@@ -1305,6 +1314,213 @@
     ],
     "Maintenance": [
       {
+        "sha": "78bcc3e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix pre-existing authority-network CI failures (broken main)",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "af9efe1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add governed incident state machine",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "ac25952",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add PHOENIX governed autonomous-recovery / self-healing agent",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "555c633",
+        "type": "chore",
+        "scope": null,
+        "subject": "Bind approval decisions to the authenticated admin credential",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "8c876b1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Cloudflare edge protection for premium content",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "f1a3776",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add premium storefront route protection",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "f76872b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Protect premium admin routes",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "ea928b4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add premium route protection to the admin cockpit",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "24ef9ed",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add CLEARSIGHT to homepage explore list",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "354b6b8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add CLEARSIGHT edge-AI camera vision system",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "45be1f9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Register legal/content-policy.html in the authority network",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "2fbeb5a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade Platform Command Center with advanced interactive features",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "0a16722",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add content protection notices",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "fceb786",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis advanced feature blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "463dabf",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add advanced Artemis Palantir platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "164ee50",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis merge-review safeguards",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "6d796b4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis IP protection blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "d86dedb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Artemis confidential AI platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "d628df8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Redesign Artemis command center deck",
+        "author": "Desmond Otieno",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "8f5c3da",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Platform Command Center visual dashboard",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "21f45eb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add rate limiting, webhook idempotency, and readiness probe to the commerce control plane",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "7b8f69f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Harden the commerce control plane: authenticated approval gate, rate limits, webhook idempotency",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "cee3bb5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add platform audit + admin auth for the commerce control plane",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
         "sha": "98d35e3",
         "type": "chore",
         "scope": null,
@@ -1320,6 +1536,24 @@
         "subject": "Publish the ClearGlass Platform Audit 2026 as a new Insights page (#979)",
         "author": "Desmond Otieno",
         "date": "2026-07-20",
+        "breaking": false
+      },
+      {
+        "sha": "dc8b2a6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Expose the platform-audit page in the Authority Network grid",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "611a1f0",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish the ClearGlass Platform Audit 2026 as a new Insights page",
+        "author": "Claude",
+        "date": "2026-07-21",
         "breaking": false
       },
       {
@@ -5510,6 +5744,123 @@
     ],
     "Automation": [
       {
+        "sha": "1ec4fe7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-22",
+        "breaking": false
+      },
+      {
+        "sha": "e69cd74",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-22",
+        "breaking": false
+      },
+      {
+        "sha": "adc625f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-22",
+        "breaking": false
+      },
+      {
+        "sha": "07f1991",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-22",
+        "breaking": false
+      },
+      {
+        "sha": "48f0511",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "fab0b4e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "623a6ce",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "740201c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "a657912",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "a0d5ccd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "c94efaa",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "e9741b7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "bc111d1",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-21 09:26 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
         "sha": "839bc7f",
         "type": "bot",
         "scope": null,
@@ -9205,6 +9556,24 @@
       }
     ],
     "Other": [
+      {
+        "sha": "9bf904d",
+        "type": "admin",
+        "scope": null,
+        "subject": "drop dead initializers in login route",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
+      {
+        "sha": "9068670",
+        "type": "clearsight",
+        "scope": null,
+        "subject": "plate OCR, watchlist alerts, camera wall, site nav",
+        "author": "Claude",
+        "date": "2026-07-21",
+        "breaking": false
+      },
       {
         "sha": "e097f76",
         "type": "site",

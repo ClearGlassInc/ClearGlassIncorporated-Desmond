@@ -32,6 +32,7 @@ from .learning import LearningLog
 from .memory import MemoryStore
 from .orchestrator import AgentOS, MissionReport, ProposedAction
 from .recovery import plan_recovery
+from .state_machine import IncidentState, IncidentStateMachine, TransitionRecord
 from .roster import ROSTER, SubAgent
 
 __all__ = [
@@ -41,12 +42,15 @@ __all__ = [
     "Claim",
     "LearningLog",
     "MemoryStore",
+    "IncidentState",
+    "IncidentStateMachine",
     "MissionReport",
     "ProposedAction",
     "RiskAssessment",
     "RiskTier",
     "Strategy",
     "SubAgent",
+    "TransitionRecord",
     "cross_reference",
     "plan_recovery",
     "rank_strategies",

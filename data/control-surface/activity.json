@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:10",
-    "timestamp": "2026-07-21T23:10:57Z"
+    "time": "00:06",
+    "timestamp": "2026-07-22T00:06:18Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #383",
+    "time": "00:06",
+    "timestamp": "2026-07-22T00:06:03Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1165",
+    "time": "23:11",
+    "timestamp": "2026-07-21T23:11:12Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1630",
+    "time": "23:11",
+    "timestamp": "2026-07-21T23:11:04Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2810",
+    "time": "23:11",
+    "timestamp": "2026-07-21T23:11:04Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #382",
     "time": "23:10",
     "timestamp": "2026-07-21T23:10:40Z"
@@ -59,34 +87,6 @@
     "title": "Security",
     "status": "ok",
     "detail": "push on main \u00b7 run #1429",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1400",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1662",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1017",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1163",
     "time": "21:38",
     "timestamp": "2026-07-21T21:38:08Z"
   }

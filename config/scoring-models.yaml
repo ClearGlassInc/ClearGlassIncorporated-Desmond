@@ -1,0 +1,17 @@
+lead_score_max: 100
+factors:
+  burlington_location: 18
+  halton_location: 14
+  ontario_expansion_location: 8
+  priority_industry: 12
+  sme_size_5_to_100: 10
+  microsoft_365_signal: 8
+  privacy_sensitive_operations: 8
+  regulatory_exposure: 7
+  recent_growth: 6
+  no_visible_security_leadership: 8
+  content_engagement_max: 10
+  expressed_urgency: 7
+  budget_indicator: 4
+  service_fit: 2
+prohibited_inferences: [protected_characteristics]

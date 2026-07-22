@@ -1,0 +1,14 @@
+dry_run_default: true
+human_approval_required_before:
+  - sending emails
+  - sending LinkedIn messages
+  - publishing content
+  - launching advertisements
+  - changing budgets
+  - contacting government officials
+  - submitting procurement responses
+  - collecting personal data
+  - connecting third-party accounts
+  - deleting campaign records
+budget_ceiling_cad: 2500
+kill_switch_env: CLEARGLASS_GROWTH_ENGINE_DISABLED

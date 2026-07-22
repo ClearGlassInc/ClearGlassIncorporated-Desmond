@@ -1,0 +1,8 @@
+{
+  "name": "ClearGlass campaign-strategy Agent",
+  "organization": "ClearGlass Inc.",
+  "market": "Burlington, Ontario",
+  "permissions": ["draft", "analyze", "export"],
+  "requires_human_approval_before_external_action": true,
+  "audit_log": "data/audit/growth-engine-audit.jsonl"
+}

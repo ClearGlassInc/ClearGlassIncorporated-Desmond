@@ -1,0 +1,1 @@
+{"required":["organization","city","region","industry","source_url","confidence_score","relevance_rationale","recommended_service","consent_status"],"properties":{"consent_status":{"enum":["unknown","consented","opted_out","declined","bounced"]},"score":{"minimum":0,"maximum":100}}}

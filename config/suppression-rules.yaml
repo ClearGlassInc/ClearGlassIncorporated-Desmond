@@ -1,0 +1,4 @@
+respect_opt_outs: true
+dedupe_fields: [domain, organization, city]
+stop_after_followups: 2
+never_contact_categories: [declined, opted_out, bounced, legal_hold]

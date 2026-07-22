@@ -1,0 +1,12 @@
+name: content-production
+mode: dry-run-by-default
+approval_required: true
+audit_log: data/audit/growth-engine-audit.jsonl
+steps:
+  - load_config
+  - validate_sources
+  - generate_draft
+  - run_compliance_checks
+  - queue_human_approval
+  - export_only_after_approval
+failure_policy: fail_closed

@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "20:20",
-    "timestamp": "2026-07-22T20:20:56Z"
+    "time": "22:15",
+    "timestamp": "2026-07-22T22:15:28Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #392",
+    "time": "22:15",
+    "timestamp": "2026-07-22T22:15:18Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1191",
+    "time": "20:21",
+    "timestamp": "2026-07-22T20:21:11Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1658",
+    "time": "20:21",
+    "timestamp": "2026-07-22T20:21:03Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2863",
+    "time": "20:21",
+    "timestamp": "2026-07-22T20:21:03Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #391",
     "time": "20:20",
     "timestamp": "2026-07-22T20:20:45Z"
@@ -61,33 +89,5 @@
     "detail": "push on main \u00b7 run #1464",
     "time": "20:04",
     "timestamp": "2026-07-22T20:04:57Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1190",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:57Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2862",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:56Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "ok",
-    "detail": "pull_request on codex/patch-and-deploy-application-dt0lzq \u00b7 run #772",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:32Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "bad",
-    "detail": "pull_request on codex/patch-and-deploy-application-dt0lzq \u00b7 run #1055",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:32Z"
   }
 ]

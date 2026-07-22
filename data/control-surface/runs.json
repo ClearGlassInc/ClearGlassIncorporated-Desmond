@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #391",
+    "title": "Control Surface Feeds #392",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:15",
+    "timestamp": "2026-07-22T22:15:18Z"
+  },
+  {
+    "title": "Deploy Pages #1191",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "20:21",
+    "timestamp": "2026-07-22T20:21:11Z"
+  },
+  {
+    "title": "pages build and deployment #1658",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:21",
+    "timestamp": "2026-07-22T20:21:03Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2863",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:21",
+    "timestamp": "2026-07-22T20:21:03Z"
+  },
+  {
+    "title": "Control Surface Feeds #391",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:20",
     "timestamp": "2026-07-22T20:20:45Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 pull_request on codex/patch-and-deploy-application-dt0lzq",
     "time": "20:04",
     "timestamp": "2026-07-22T20:04:32Z"
-  },
-  {
-    "title": "Code Quality: PR #1029 #2861",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/1029/head",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:30Z"
-  },
-  {
-    "title": "pages build and deployment #1656",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "20:03",
-    "timestamp": "2026-07-22T20:03:22Z"
-  },
-  {
-    "title": "CI #1695",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "20:03",
-    "timestamp": "2026-07-22T20:03:21Z"
-  },
-  {
-    "title": "Deploy Pages #1189",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "20:03",
-    "timestamp": "2026-07-22T20:03:21Z"
   }
 ]

@@ -54,7 +54,7 @@ jobs:
       actions: read          # read failing workflow run logs
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
 
@@ -76,7 +76,7 @@ jobs:
 
       - name: Run repair agent
         if: steps.creds.outputs.skip != 'true'
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@b76a0776ae74036e77cd11018083743453d7ad35 # v1
         with:
           # Prefer an OAuth token if present, otherwise fall back to API key.
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}

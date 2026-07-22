@@ -45,7 +45,14 @@ apt-get install -y --no-install-recommends \
 ###############################################################################
 if ! command -v node &>/dev/null; then
     info "Installing Node.js 20 LTS..."
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+    # Download the NodeSource setup script to disk and execute it as a separate
+    # step rather than piping curl straight into a shell — a fetched script that
+    # can't be inspected before it runs is a supply-chain risk (defender:
+    # curl_pipe_shell). Fetch, run, then remove.
+    nodesource_setup="$(mktemp)"
+    curl -fsSL https://deb.nodesource.com/setup_20.x -o "$nodesource_setup"
+    bash "$nodesource_setup"
+    rm -f "$nodesource_setup"
     apt-get install -y nodejs
 fi
 

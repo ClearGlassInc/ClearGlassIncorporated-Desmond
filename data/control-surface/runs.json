@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #383",
+    "title": "Control Surface Feeds #384",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "03:45",
+    "timestamp": "2026-07-22T03:45:13Z"
+  },
+  {
+    "title": "Defender Watch #1018",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "03:27",
+    "timestamp": "2026-07-22T03:27:23Z"
+  },
+  {
+    "title": "Health Monitor #210",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "02:56",
+    "timestamp": "2026-07-22T02:56:29Z"
+  },
+  {
+    "title": "Deploy Pages #1166",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "00:06",
+    "timestamp": "2026-07-22T00:06:33Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2811",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:06",
+    "timestamp": "2026-07-22T00:06:26Z"
+  },
+  {
+    "title": "pages build and deployment #1631",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:06",
+    "timestamp": "2026-07-22T00:06:26Z"
+  },
+  {
+    "title": "Control Surface Feeds #383",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "00:06",
     "timestamp": "2026-07-22T00:06:03Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "21:38",
     "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "Defender Watch #1017",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "Deploy Pages #1163",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2808",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:07Z"
-  },
-  {
-    "title": "pages build and deployment #1628",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:07Z"
-  },
-  {
-    "title": "Policy Gate #1399",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:34",
-    "timestamp": "2026-07-21T21:34:42Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #449",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "21:34",
-    "timestamp": "2026-07-21T21:34:42Z"
   }
 ]

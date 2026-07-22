@@ -3,12 +3,54 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "00:06",
-    "timestamp": "2026-07-22T00:06:18Z"
+    "time": "03:45",
+    "timestamp": "2026-07-22T03:45:30Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #384",
+    "time": "03:45",
+    "timestamp": "2026-07-22T03:45:13Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #1018",
+    "time": "03:27",
+    "timestamp": "2026-07-22T03:27:23Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #210",
+    "time": "02:56",
+    "timestamp": "2026-07-22T02:56:29Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1166",
+    "time": "00:06",
+    "timestamp": "2026-07-22T00:06:33Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2811",
+    "time": "00:06",
+    "timestamp": "2026-07-22T00:06:26Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1631",
+    "time": "00:06",
+    "timestamp": "2026-07-22T00:06:26Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #383",
     "time": "00:06",
     "timestamp": "2026-07-22T00:06:03Z"
@@ -47,47 +89,5 @@
     "detail": "workflow_dispatch on main \u00b7 run #1164",
     "time": "22:12",
     "timestamp": "2026-07-21T22:12:37Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1629",
-    "time": "22:12",
-    "timestamp": "2026-07-21T22:12:29Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2809",
-    "time": "22:12",
-    "timestamp": "2026-07-21T22:12:29Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #381",
-    "time": "22:12",
-    "timestamp": "2026-07-21T22:12:03Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1712",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #450",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1429",
-    "time": "21:38",
-    "timestamp": "2026-07-21T21:38:08Z"
   }
 ]

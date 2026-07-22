@@ -47,6 +47,9 @@ PAGES: dict[str, tuple[str, str]] = {
     "operations/hubspot-handoff.html": ("HubSpot Handoff", "CRM connection runbook"),
     "operations/ontario-incorporation-handoff.html": ("Ontario Incorporation Handoff", "corporate filing runbook"),
     "operations/stripe-handoff.html": ("Stripe Handoff", "payments connection runbook"),
+    "authority-network.html": ("Authority Network", "the ClearGlass pillar-and-cluster site graph"),
+    "advanced-features-tools-systems.html": ("Advanced Features, Tools & Systems", "the governed systems, agent and audit architecture catalog"),
+    "automap.html": ("AutoMap Orchestration", "architecture-aware orchestration and system relationship mapping"),
 
     # Cyber defense & security operations
     "cyber-defense-console.html": ("Cyber Defense Console", "the ClearGlass command center for defensive operations"),
@@ -94,6 +97,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "systems.html": ("Systems Console", "PERCIVAL operations console"),
     "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
+    "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),
 
     # Legal, tax & compliance
     "legal/index.html": ("Legal Infrastructure", "the ClearGlass corporate legal stack"),
@@ -113,6 +117,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "legal/directors-resolution.html": ("Directors' Resolution", "initial board resolutions"),
     "legal/banking-resolution.html": ("Banking Resolution", "officer and banking authority"),
     "legal/share-subscription.html": ("Share Subscription Agreement", "founder share issuance"),
+    "legal/content-policy.html": ("Content Policy", "authorized use, attribution, and copyright ownership"),
 
     # Healthcare
     "clearpulse.html": ("ClearPulse", "healthcare intelligence pipeline"),
@@ -137,6 +142,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "side-store.html": ("Side Store", "electronics, cables and components"),
     "offers/hardening-sprint.html": ("Hardening Sprint", "Microsoft 365 + Windows hardening engagement"),
     "offers/security-quick-audit.html": ("Security Quick-Audit", "a focused $249 security review"),
+    "offers/autonomous-threat-modeling.html": ("Autonomous Threat Modeling", "continuous threat-modeling assessment and implementation services"),
     "revenue-engine.html": ("Revenue Engine", "AI-driven business growth system"),
 
     # Design & UI engineering
@@ -159,12 +165,14 @@ PAGES: dict[str, tuple[str, str]] = {
 
     # Insights / blog
     "blog/index.html": ("ClearGlass Intelligence", "essays on governed AI, cyber defense and OSINT"),
+    "blog/autonomous-threat-modeling-2026.html": ("Autonomous Threat Modeling in 2026", "continuous architecture-grounded security for agentic and cyber-physical systems"),
     "blog/ai-agent-governance-governed-autonomy.html": ("AI Agent Governance", "the governed-autonomy playbook"),
     "blog/ai-agents-insider-threat.html": ("AI Agents Are the New Insider Threat", "why agent identity is a security boundary"),
     "blog/almach-scalp-engine.html": ("ALMACH Scalp Engine", "a directional neural-mesh trading study"),
     "blog/artemis-governed-ai-gtm-visual-growth-engine.html": ("Governed AI Threat Modeling", "the Artemis GTM visual growth engine"),
     "blog/clearglass-agentops-microsoft-foundry-future-stack.html": ("ClearGlass AgentOps", "the Microsoft Foundry future stack"),
     "blog/clearglass-command-center-cyber-defense-console.html": ("Inside the Command Center", "designing a cyber defense console"),
+    "blog/clearglass-platform-audit-2026.html": ("The ClearGlass Platform Audit", "keep, simplify, gate, build — the platform upgrade doctrine"),
     "blog/clearglass-secure-deployment-agent.html": ("The Secure Deployment Agent", "governed authorization for every production push"),
     "blog/clearglassinc-0-to-1m-corporate-execution-plan.html": ("$0-to-$1M Execution Plan", "the corporate build-out playbook"),
     "blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html": ("Artemis Resume Builder", "a self-evolving intelligence platform case study"),
@@ -228,9 +236,10 @@ CLUSTERS: dict[str, dict] = {
         "pillar": "percival-os.html",
         "members": [
             "artemis-percival.html", "agentmesh.html", "ai-operator.html",
+            "advanced-features-tools-systems.html", "automap.html",
             "conduit.html", "postloop.html", "command-console.html",
             "control-surface.html", "systems.html", "saas-platform.html",
-            "CG-os.html", "percival-build.html",
+            "CG-os.html", "percival-build.html", "clearsight.html",
         ],
         "cta": [CTA_OFFERS, CTA_PRICING],
     },
@@ -245,7 +254,7 @@ CLUSTERS: dict[str, dict] = {
             "legal/terms.html", "legal/articles.html", "legal/bylaws.html",
             "legal/nda.html", "legal/ip-assignment.html",
             "legal/directors-resolution.html", "legal/banking-resolution.html",
-            "legal/share-subscription.html",
+            "legal/share-subscription.html", "legal/content-policy.html",
         ],
         "cta": [CTA_STORE, CTA_OFFERS],
     },
@@ -276,7 +285,7 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "store.html", "pricing.html", "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
-            "offers/hardening-sprint.html", "revenue-engine.html",
+            "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html", "revenue-engine.html",
             "side-store.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
@@ -307,7 +316,9 @@ CLUSTERS: dict[str, dict] = {
         "name": "ClearGlass Intelligence · Insights",
         "pillar": "blog/index.html",
         "members": [
+            "blog/autonomous-threat-modeling-2026.html",
             "blog/ai-agent-governance-governed-autonomy.html",
+            "blog/clearglass-platform-audit-2026.html",
             "blog/ai-agents-insider-threat.html",
             "blog/cybersecurity-architecture-for-agentic-software.html",
             "blog/zero-trust-is-outdated-adaptive-trust.html",
@@ -334,7 +345,7 @@ CLUSTERS: dict[str, dict] = {
         "name": "Company & Operations",
         "pillar": "index.html",
         "members": [
-            "investors/index.html", "operations/client-onboarding.html",
+            "investors/index.html", "authority-network.html", "operations/client-onboarding.html",
             "operations/hubspot-handoff.html",
             "operations/ontario-incorporation-handoff.html",
             "operations/stripe-handoff.html",
@@ -348,14 +359,18 @@ CLUSTERS: dict[str, dict] = {
 # at the essay or adjacent cluster that deepens the topic.
 EXTRA_LINKS: dict[str, list[str]] = {
     "sentinel.html": ["intelligence.html"],
+    "authority-network.html": [cluster["pillar"] for cluster in CLUSTERS.values() if cluster["pillar"] != "index.html"],
+    "advanced-features-tools-systems.html": ["automap.html", "percival-os.html", "agentmesh.html", "blog/autonomous-threat-modeling-2026.html"],
+    "automap.html": ["advanced-features-tools-systems.html", "conduit.html", "agentmesh.html", "intelligence-command-surface.html"],
     "cyber-defense-console.html": ["blog/clearglass-command-center-cyber-defense-console.html", "smb-cyber-trust-kit.html"],
     "bluedesk.html": ["blog/ai-agents-insider-threat.html"],
     "guardian.html": ["docs/guardian_command_nexus_spec.html"],
     "percival-os.html": ["blog/ai-agent-governance-governed-autonomy.html"],
     "agentmesh.html": ["blog/cybersecurity-architecture-for-agentic-software.html", "flowsint.html"],
+    "ai-operator.html": ["artemis-self-evolving-platform.html", "blog/ai-agent-governance-governed-autonomy.html"],
     "conduit.html": ["blog/clearglass-agentops-microsoft-foundry-future-stack.html"],
-    "flowsint.html": ["blog/osint-workflow-that-survives-contact-with-reality.html"],
-    "intelligence.html": ["blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html"],
+    "flowsint.html": ["blog/osint-workflow-that-survives-contact-with-reality.html", "agentmesh.html", "cyber-defense-console.html"],
+    "intelligence.html": ["authority-network.html", "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html"],
     "artemis-os.html": ["artemis-percival.html", "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
     "artemis-self-evolving-platform.html": ["blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
     "revenue-engine.html": ["postloop.html", "blog/ethical-sales-system-100k-revenue-prompt.html"],
@@ -375,12 +390,15 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "products/opal-koboi/revenue-engine.html": ["revenue-engine.html"],
     "products/opal-koboi/smb-suite.html": ["smb.html"],
     # blog -> product conversion bridges
+    "blog/autonomous-threat-modeling-2026.html": ["offers/autonomous-threat-modeling.html", "cyber-defense-console.html", "agentmesh.html", "blog/cybersecurity-architecture-for-agentic-software.html"],
+    "offers/autonomous-threat-modeling.html": ["blog/autonomous-threat-modeling-2026.html", "cyber-defense-console.html", "bluedesk.html", "offers/index.html"],
     "blog/ai-agent-governance-governed-autonomy.html": ["percival-os.html", "ai-operator.html"],
     "blog/ai-agents-insider-threat.html": ["bluedesk.html", "cyber-defense-console.html"],
     "blog/cybersecurity-architecture-for-agentic-software.html": ["agentmesh.html", "cyber-defense-console.html"],
     "blog/zero-trust-is-outdated-adaptive-trust.html": ["cyber-defense-console.html"],
     "blog/zero-trust-is-outdated.html": ["blog/zero-trust-is-outdated-adaptive-trust.html", "cyber-defense-console.html"],
-    "blog/clearglass-secure-deployment-agent.html": ["percival-os.html"],
+    "blog/clearglass-platform-audit-2026.html": ["ai-operator.html", "advanced-features-tools-systems.html", "blog/ai-agent-governance-governed-autonomy.html"],
+    "blog/clearglass-secure-deployment-agent.html": ["percival-os.html", "blog/clearglass-platform-audit-2026.html"],
     "blog/clearglass-command-center-cyber-defense-console.html": ["cyber-defense-console.html"],
     "blog/clearglass-agentops-microsoft-foundry-future-stack.html": ["conduit.html", "agentmesh.html"],
     "blog/osint-workflow-that-survives-contact-with-reality.html": ["flowsint.html", "intelligence.html"],
@@ -406,29 +424,45 @@ PILLAR_MAX_MEMBERS = 10  # member links shown on a pillar page
 FIXED_VIEWPORT = {
     "sentinel.html", "clearglass.html", "air-control.html",
     "percival-os.html", "artemis-percival.html", "percival-build.html",
+    "clearsight.html",
 }
 
 CSS = (
-    "#cg-related{margin:48px auto 0;max-width:1080px;padding:0 18px 34px;"
-    "font-family:'Inter',system-ui,-apple-system,sans-serif}"
-    "#cg-related .cgr-box{background:linear-gradient(165deg,rgba(15,17,34,.96),rgba(9,10,24,.96));"
-    "border:1px solid rgba(124,150,255,.26);border-radius:14px;padding:22px 24px;"
-    "color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35)}"
-    "#cg-related .cgr-crumb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;"
-    "color:#8a90c4;margin:0 0 10px}"
-    "#cg-related .cgr-crumb a{color:#a5b4fc;text-decoration:none}"
-    "#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:underline}"
-    "#cg-related h2{margin:0 0 12px;font-size:15px;letter-spacing:.04em;color:#e7ecff}"
-    "#cg-related ul{list-style:none;margin:0;padding:0;display:grid;"
-    "grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}"
-    "#cg-related li a{display:block;padding:7px 10px;border-radius:8px;font-size:13.5px;"
-    "line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;transition:.13s}"
-    "#cg-related li a:hover{background:rgba(124,150,255,.12);border-color:rgba(124,150,255,.3);color:#fff}"
-    "#cg-related li a b{color:#bcd0ff;font-weight:600}"
-    "#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(124,150,255,.16);"
-    "font-size:13.5px;color:#9aa3d0}"
-    "#cg-related .cgr-cta a{color:#93c5fd;font-weight:600;text-decoration:none}"
-    "#cg-related .cgr-cta a:hover{color:#fff;text-decoration:underline}"
+    "#cg-related{margin:54px auto 0;max-width:1120px;padding:0 18px 38px;"
+    "font-family:'Inter',system-ui,-apple-system,sans-serif;position:relative}"
+    "#cg-related .cgr-box{position:relative;overflow:hidden;background:"
+    "linear-gradient(rgba(34,211,238,.055) 1px,transparent 1px),"
+    "linear-gradient(90deg,rgba(124,150,255,.05) 1px,transparent 1px),"
+    "radial-gradient(circle at 12% 0,rgba(34,211,238,.16),transparent 34%),"
+    "radial-gradient(circle at 88% 100%,rgba(168,85,247,.16),transparent 36%),"
+    "linear-gradient(165deg,rgba(5,12,28,.97),rgba(9,7,24,.97));"
+    "background-size:32px 32px,32px 32px,auto,auto,auto;border:1px solid rgba(34,211,238,.34);"
+    "border-radius:16px;padding:24px 26px;color:#d8e4ff;"
+    "box-shadow:0 18px 54px rgba(0,0,0,.44),0 0 34px rgba(34,211,238,.12),inset 0 0 0 1px rgba(255,255,255,.035)}"
+    "#cg-related .cgr-box:before{content:'';position:absolute;inset:0;pointer-events:none;"
+    "background:linear-gradient(90deg,transparent,rgba(34,211,238,.18),transparent);"
+    "transform:translateX(-120%) skewX(-18deg);animation:cgr-scan 8s ease-in-out infinite}"
+    "#cg-related .cgr-box:after{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;"
+    "background:linear-gradient(90deg,transparent,#22d3ee,#a855f7,transparent);box-shadow:0 0 18px rgba(34,211,238,.75)}"
+    "#cg-related .cgr-crumb{position:relative;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;"
+    "color:#8fb9ff;margin:0 0 12px}"
+    "#cg-related .cgr-crumb a{color:#67e8f9;text-decoration:none;text-shadow:0 0 12px rgba(34,211,238,.35)}"
+    "#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:none}"
+    "#cg-related h2{position:relative;margin:0 0 14px;font-size:15.5px;letter-spacing:.08em;text-transform:uppercase;color:#f3f7ff}"
+    "#cg-related ul{position:relative;list-style:none;margin:0;padding:0;display:grid;"
+    "grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:8px 18px}"
+    "#cg-related li a{display:block;padding:9px 11px;border-radius:10px;font-size:13.5px;"
+    "line-height:1.45;color:#cfe0ff;text-decoration:none;border:1px solid rgba(124,150,255,.08);"
+    "background:rgba(7,14,32,.36);transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}"
+    "#cg-related li a:hover,#cg-related li a:focus-visible{transform:translateY(-1px);background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.42);"
+    "color:#fff;box-shadow:0 0 22px rgba(34,211,238,.14)}"
+    "#cg-related li a b{color:#9bdcff;font-weight:700;text-shadow:0 0 12px rgba(34,211,238,.28)}"
+    "#cg-related .cgr-cta{position:relative;margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(34,211,238,.18);"
+    "font-size:13.5px;color:#a9b8df}"
+    "#cg-related .cgr-cta a{color:#67e8f9;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.36)}"
+    "#cg-related .cgr-cta a:hover{color:#fff;border-bottom-color:#fff}"
+    "@keyframes cgr-scan{0%,58%{transform:translateX(-120%) skewX(-18deg);opacity:0}70%{opacity:1}100%{transform:translateX(220%) skewX(-18deg);opacity:0}}"
+    "@media(prefers-reduced-motion:reduce){#cg-related .cgr-box:before{animation:none}}"
 )
 
 DOCK_CSS = (

@@ -78,7 +78,7 @@ Nothing in the high/critical tier executes without an `approvals` row reaching `
 | `POST` | `/store/generate-copy` | low |
 | `POST` | `/store/update-pricing` | **high → approval** |
 | `POST` | `/checkout/session` | customer revenue (logged) |
-| `POST` | `/webhooks/stripe` | signed ingest → writes paid orders |
+| `POST` | `/webhooks/stripe` | signed ingest → writes paid orders (idempotent on redelivery) |
 | `POST` | `/payments/refund` | **critical → approval** |
 | `GET`  | `/payments/payout-account` | low masked bank metadata |
 | `GET`  | `/payouts` | low settlement records |

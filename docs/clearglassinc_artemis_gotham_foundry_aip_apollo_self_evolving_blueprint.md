@@ -513,3 +513,232 @@ The system improves continuously, but only by human-approved, policy-audited, re
 - Advanced model routing + drift detection at mission granularity.
 - Coalition-aware cross-domain decision intelligence at machine speed.
 
+
+## Confidential Prompt and IP Governance
+
+ClearGlassInc Artemis treats architecture prompts, agent prompts, eval rubrics, workflow heuristics, model-routing policies, and derived improvement proposals as controlled company intellectual property. The production control model is:
+
+- **Private prompt registry**: source prompts remain in a private, least-privilege repository or Foundry-protected artifact store. Runtime services receive only a minimized template plus signed version metadata.
+- **Mandatory labels**: every prompt/workflow bundle carries `owner`, `version_id`, `classification`, `approved_by`, `approved_at`, `source_commit`, and `rollback_target` fields.
+- **Access governance**: access requires need-to-know, contractual confidentiality coverage for vendors/contractors, branch protection, mandatory review, audit logging, and immediate revocation on exit or vendor termination.
+- **Evidence preservation**: authorship, review comments, commits, signatures, eval outputs, deployment rings, and rollback events are retained as defensible confidential-IP evidence.
+- **Runtime minimization**: client applications never receive source prompts. The model sees only the smallest task template required for the approved action.
+
+```yaml
+# prompt_bundle.yaml
+owner: ClearGlassInc Artemis
+version_id: artemis-triage-v1.4.2
+classification: CONFIDENTIAL_IP
+source_commit: 4b7c9e1
+approved_by:
+  - mission-ai-review-board
+  - security-governance
+runtime_exposure: minimized_template_only
+rollback_target: artemis-triage-v1.4.1
+controls:
+  branch_protection: required
+  mandatory_review: required
+  audit_access: required
+  vendor_confidentiality_terms: required
+```
+
+```python
+# services/prompt_registry/access.py
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from typing import Literal
+
+Classification = Literal["INTERNAL", "CONFIDENTIAL_IP", "RESTRICTED"]
+
+@dataclass(frozen=True)
+class PromptBundle:
+    bundle_id: str
+    owner: str
+    version_id: str
+    classification: Classification
+    minimized_template: str
+    source_prompt_ref: str
+    approved_by: tuple[str, ...]
+
+@dataclass(frozen=True)
+class AccessRequest:
+    actor_id: str
+    purpose: str
+    nda_or_employment_covered: bool
+    need_to_know_labels: frozenset[str]
+
+class PromptRegistry:
+    def __init__(self, audit_writer):
+        self.audit_writer = audit_writer
+
+    def load_runtime_template(self, bundle: PromptBundle, request: AccessRequest) -> str:
+        if bundle.classification == "CONFIDENTIAL_IP":
+            if not request.nda_or_employment_covered:
+                self.audit_writer.write_denial(request.actor_id, bundle.bundle_id, "NO_CONFIDENTIALITY_COVERAGE")
+                raise PermissionError("confidentiality coverage required")
+            if "prompt-runtime" not in request.need_to_know_labels:
+                self.audit_writer.write_denial(request.actor_id, bundle.bundle_id, "NO_NEED_TO_KNOW")
+                raise PermissionError("need-to-know label required")
+
+        self.audit_writer.write_access(
+            actor_id=request.actor_id,
+            artifact_id=bundle.bundle_id,
+            action="LOAD_MINIMIZED_RUNTIME_TEMPLATE",
+            occurred_at=datetime.now(UTC),
+        )
+        return bundle.minimized_template
+```
+
+## Code Examples
+
+### FastAPI command boundary with policy, audit, and idempotency
+
+```python
+# services/command_api/routes.py
+from __future__ import annotations
+
+from enum import Enum
+from uuid import UUID, uuid4
+
+from fastapi import APIRouter, Depends, HTTPException, Header
+from pydantic import BaseModel, Field
+
+router = APIRouter(prefix="/v1/actions", tags=["actions"])
+
+class ImpactTier(str, Enum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+
+class ActionPackage(BaseModel):
+    mission_id: UUID
+    recommendation_id: UUID
+    action_type: str = Field(min_length=3, max_length=80)
+    impact_tier: ImpactTier
+    evidence_refs: list[str] = Field(min_length=1)
+    requested_by: str
+
+@router.post("/prepare")
+async def prepare_action(
+    package: ActionPackage,
+    idempotency_key: str = Header(..., alias="Idempotency-Key"),
+    user=Depends(require_operator),
+    policy=Depends(policy_engine),
+    audit=Depends(audit_log),
+):
+    decision = policy.evaluate(
+        subject=user.claims,
+        action="prepare_action_package",
+        resource=package.model_dump(mode="json"),
+    )
+    audit.append(
+        event_type="ACTION_PACKAGE_POLICY_DECISION",
+        subject=user.user_id,
+        resource=str(package.recommendation_id),
+        decision=decision.model_dump(),
+        idempotency_key=idempotency_key,
+    )
+    if not decision.allow:
+        raise HTTPException(status_code=403, detail=decision.reason)
+
+    approval_required = package.impact_tier in {ImpactTier.HIGH, ImpactTier.CRITICAL}
+    return {
+        "action_package_id": str(uuid4()),
+        "status": "AWAITING_APPROVAL" if approval_required else "READY_TO_EXECUTE",
+        "requires_human_approval": approval_required,
+        "policy_decision_id": decision.decision_id,
+    }
+```
+
+### Ontology temporal query with row/entity-level authorization
+
+```sql
+-- Returns visible two-hop relationships for one mission and actor claim set.
+WITH actor AS (
+  SELECT
+    :clearance::int AS clearance,
+    :coalition_tags::text[] AS coalition_tags,
+    :ntk_labels::text[] AS ntk_labels
+), visible_entities AS (
+  SELECT e.*
+  FROM ontology_entity e, actor a
+  WHERE e.classification_rank <= a.clearance
+    AND e.coalition_tags && a.coalition_tags
+    AND (cardinality(e.ntk_labels) = 0 OR e.ntk_labels <@ a.ntk_labels)
+    AND tstzrange(e.valid_from, COALESCE(e.valid_to, 'infinity')) @> :as_of::timestamptz
+)
+SELECT r.relation_id, r.relation_type, r.relation_strength, src.entity_id AS src, dst.entity_id AS dst
+FROM ontology_relation r
+JOIN visible_entities src ON src.entity_id = r.src_entity_id
+JOIN visible_entities dst ON dst.entity_id = r.dst_entity_id
+WHERE r.mission_context_id = :mission_context_id;
+```
+
+### Evaluation gate for proposed self-upgrades
+
+```python
+# services/eval/gates.py
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class EvalThresholds:
+    min_precision: float = 0.92
+    min_recall: float = 0.86
+    max_policy_violations: int = 0
+    max_latency_p95_ms: int = 850
+    max_operator_override_rate: float = 0.18
+
+@dataclass(frozen=True)
+class EvalReport:
+    precision: float
+    recall: float
+    policy_violations: int
+    latency_p95_ms: int
+    operator_override_rate: float
+    drift_alarm_active: bool
+
+
+def approve_for_human_review(report: EvalReport, thresholds: EvalThresholds) -> tuple[bool, list[str]]:
+    reasons: list[str] = []
+    if report.precision < thresholds.min_precision:
+        reasons.append("precision_regression")
+    if report.recall < thresholds.min_recall:
+        reasons.append("recall_regression")
+    if report.policy_violations > thresholds.max_policy_violations:
+        reasons.append("policy_violation")
+    if report.latency_p95_ms > thresholds.max_latency_p95_ms:
+        reasons.append("latency_slo_regression")
+    if report.operator_override_rate > thresholds.max_operator_override_rate:
+        reasons.append("operator_trust_regression")
+    if report.drift_alarm_active:
+        reasons.append("drift_alarm_active")
+    return (len(reasons) == 0, reasons)
+```
+
+### Apollo-style progressive delivery contract
+
+```yaml
+release:
+  artifact: artemis-agent-workflows
+  version: 1.4.2
+  signed: true
+  rings:
+    - name: lab
+      traffic: 0
+      required_checks: [offline_eval, safety_eval, policy_diff]
+    - name: canary-watchfloor
+      traffic: 10
+      required_checks: [human_approval, p95_latency, no_policy_violations]
+    - name: mission-prod
+      traffic: 100
+      required_checks: [canary_success, rollback_plan, audit_export]
+  rollback:
+    automatic_on:
+      - policy_violations > 0
+      - precision_delta < -0.02
+      - p95_latency_ms > 850
+      - approval_override_rate > 0.25
+```

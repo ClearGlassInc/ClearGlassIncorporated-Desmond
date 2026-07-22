@@ -13,6 +13,10 @@
 - [Open-Source TTS Models (2026)](open-source-tts-models.md)
   Zero-shot voice cloning for custom personas (Aria British RP female advisor). Chatterbox, Qwen3-TTS, Fish Speech. Self-host ready for ClearGlass AI ecosystem.
 
+
+- [ClearGlassInc Artemis Advanced Palantir Self-Evolving AI Intelligence Platform Blueprint (2026-07-21)](clearglassinc_artemis_palantir_self_evolving_ai_platform_advanced_merge_blueprint_2026-07-21.md)
+  Advanced full-stack Gotham, Foundry, AIP, and Apollo implementation blueprint with Python-first secure-by-design code examples, ontology contracts, self-improvement gates, and deployment controls.
+
 ## Core Sections (expand as added)
 - AI Prompt Engineering & Agent Creation
 - GitHub Automation & DevOps

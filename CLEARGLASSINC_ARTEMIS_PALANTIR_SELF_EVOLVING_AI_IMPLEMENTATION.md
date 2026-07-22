@@ -514,6 +514,138 @@ async def run_eval_suite(candidate: CandidateUpgrade, cases: list[EvalCase]) -> 
     }
 ```
 
+
+## Intellectual Property Protection and Anti-Theft Layer
+
+ClearGlassInc Artemis treats intellectual-property protection as an operational control plane, not as a cosmetic browser trick. The objective is to make theft harder, faster to detect, and easier to prove while preserving accessibility, coalition usability, and legitimate analyst workflows.
+
+### Defensive posture
+
+| Layer | Implementation | Security value | Accessibility constraint |
+|---|---|---|---|
+| Authenticated delivery | Serve high-value text, generated intelligence products, and premium assets through backend routes instead of embedding complete raw material in static bundles | Reduces unauthenticated bulk copying and enables per-user logging | Do not block ordinary reading, keyboard navigation, text zoom, or assistive technology |
+| Copyright and attribution | Add visible copyright notices, canonical metadata, author metadata, and immutable Git-backed publication history | Establishes authorship and supports enforcement | Notices must be readable and non-obstructive |
+| Watermarking | Apply visible watermarks to public previews and optional per-principal forensic watermarks to exported images/PDFs | Makes redistributed copies traceable | Watermarks cannot obscure operational content or safety-critical details |
+| Signed assets | Issue short-lived signed URLs for protected media, exports, and downloadable intelligence products | Limits hotlinking and stale public URLs | Signed URLs must degrade with clear renewal paths for authorized users |
+| Rate limits and bot detection | Enforce per-principal, per-IP, per-token, and per-route quotas with anomaly scoring | Slows scraping and creates early-warning telemetry | Avoid blanket blocks that lock out legitimate coalition networks; provide operator override workflow |
+| Distinctive fingerprints | Embed page/product-specific marker phrases, metadata, content hashes, and optional user-scoped canary tokens | Makes copied content easier to identify and prove | Markers must not alter facts, mission meaning, or legal claims |
+| Evidence logging | Persist publication timestamps, asset digests, request logs, export manifests, model/prompt versions, and approval events | Proves priority, custody, and provenance | Logs must minimize sensitive content and respect retention/classification policy |
+
+### What actually works
+
+1. Keep sensitive logic, valuable source datasets, prompt bundles, evaluation datasets, and unreleased intelligence products server-side.
+2. Deliver only the minimum representation needed by the browser or Gotham/Foundry client for the current authorized workflow.
+3. Add visible ownership notices and canonical metadata to public pages, but treat those notices as evidence and deterrence rather than access control.
+4. Watermark original images, exported reports, downloadable PDFs, and preview assets.
+5. Preserve Git history, publication timestamps, provenance hashes, immutable audit events, and release manifests so ownership can be proven later.
+6. Use robots directives and canonical tags for search-engine hygiene, but never treat them as security controls.
+7. Avoid brittle anti-copy scripts such as disabling right-click, paste, or selection as a primary defense. They are easy to bypass and can harm keyboard users, screen-reader users, researchers, and legitimate operators.
+
+### Anti-scrape architecture
+
+```mermaid
+flowchart LR
+  USER[Authorized browser / Gotham / Foundry client]
+  EDGE[CDN/WAF + Bot Signals]
+  GATEWAY[API Gateway]
+  POLICY[Policy Decision Point]
+  SIGNER[Asset Signing Service]
+  CONTENT[Protected Content Service]
+  WATERMARK[Watermark + Fingerprint Service]
+  LEDGER[Immutable Evidence Ledger]
+  SIEM[Detection + SIEM]
+
+  USER --> EDGE --> GATEWAY --> POLICY
+  POLICY --> CONTENT
+  CONTENT --> SIGNER
+  CONTENT --> WATERMARK
+  SIGNER --> USER
+  WATERMARK --> USER
+  EDGE --> SIEM
+  GATEWAY --> SIEM
+  CONTENT --> LEDGER
+  SIGNER --> LEDGER
+  WATERMARK --> LEDGER
+```
+
+### Backend enforcement contract
+
+- All protected assets require an authenticated principal, mission context, purpose-of-use, and policy decision.
+- Download and export routes require idempotency keys and write an immutable `content_accessed` or `artifact_exported` audit event.
+- Signed asset URLs are scoped to one asset, one principal or service account, one purpose, one content hash, and a short expiration window.
+- Hotlink protection validates the signature, expiry, audience, asset digest, and request context before streaming bytes.
+- Bot detection is advisory for low-risk public pages and blocking for protected routes once policy and rate thresholds are exceeded.
+- Anti-copy UI controls, if used at all, are minor deterrents only and must never disable accessibility-critical selection, focus, or keyboard behavior.
+
+### Python-first implementation skeleton
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from hashlib import sha256
+import hmac
+import json
+from typing import Literal
+
+
+@dataclass(frozen=True)
+class ProtectedAssetRequest:
+    principal_id: str
+    asset_id: str
+    asset_sha256: str
+    purpose: str
+    mission_id: str
+    classification: str
+    expires_at: datetime
+
+
+def canonical_json(payload: dict[str, str]) -> bytes:
+    return json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+
+
+def sign_asset_request(request: ProtectedAssetRequest, secret: bytes) -> str:
+    if request.expires_at <= datetime.now(timezone.utc):
+        raise ValueError("asset request must expire in the future")
+    payload = {
+        "principal_id": request.principal_id,
+        "asset_id": request.asset_id,
+        "asset_sha256": request.asset_sha256,
+        "purpose": request.purpose,
+        "mission_id": request.mission_id,
+        "classification": request.classification,
+        "expires_at": request.expires_at.isoformat(),
+    }
+    return hmac.new(secret, canonical_json(payload), sha256).hexdigest()
+
+
+def verify_asset_signature(request: ProtectedAssetRequest, signature: str, secret: bytes) -> bool:
+    if request.expires_at <= datetime.now(timezone.utc):
+        return False
+    expected = sign_asset_request(request, secret)
+    return hmac.compare_digest(expected, signature)
+
+
+def fingerprint_text(content: str, *, page_id: str, release_id: str) -> str:
+    marker = sha256(f"{page_id}:{release_id}".encode("utf-8")).hexdigest()[:12]
+    return f"{content}\n\n<!-- artemis-fingerprint:{marker} -->"
+
+
+def rate_limit_bucket(principal_id: str, route: str, window: Literal["minute", "hour"]) -> str:
+    now = datetime.now(timezone.utc)
+    slot = now.strftime("%Y%m%d%H%M") if window == "minute" else now.strftime("%Y%m%d%H")
+    return f"ratelimit:{route}:{principal_id}:{window}:{slot}"
+```
+
+### Detection and proof workflow
+
+1. The content service publishes or exports an artifact with a content hash, watermark manifest, author metadata, release ID, and timestamp.
+2. The evidence ledger records the artifact hash, source commit, publishing actor, policy decision, and signed URL issuance.
+3. The SIEM correlates abnormal request patterns, hotlink failures, high-volume exports, user-agent rotation, and marker reuse on external pages.
+4. The IP Guardian agent opens an evidence package containing the original hash, Git commit, publication timestamp, access trail, marker match, and screenshots or crawled observations where legally obtained.
+5. A human reviewer decides whether to revoke access, rotate signatures, notify a partner, or start legal enforcement.
+
 ## Security and Governance
 
 - **Need-to-know**: access requires clearance, role, mission assignment, purpose-of-use, compartments, coalition scope, and active operational need.
@@ -1112,4 +1244,215 @@ clear_glass_artemis_acceptance:
     - immutable audit records bind operator, policy, prompt, model, workflow, evidence, and decision
     - coalition-release checks run before retrieval, summarization, export, and action package creation
     - Apollo canaries automatically stop promotion on SLO, policy, or eval failure
+```
+
+## Full-Stack Implementation Control Plane Addendum
+
+This addendum tightens the production blueprint around a Python-first precision control plane. It keeps ClearGlassInc Artemis self-improving, but not self-authorizing: every candidate prompt, workflow, heuristic, and model-route change is represented as data, evaluated offline, signed by a human reviewer, released by Apollo, and continuously monitored for rollback conditions.
+
+### Implementation boundaries
+
+| Boundary | Allowed automation | Explicitly blocked without approval |
+|---|---|---|
+| Data ingest | Validate, normalize, deduplicate, quarantine malformed records, attach lineage | Widen coalition release scope, discard raw evidence, suppress audit writes |
+| Agent tools | Query permitted ontology slices, draft cases, draft intel products, prepare action packages | Execute operationally significant actions, bypass policy, access hidden compartments |
+| Self-improvement | Propose prompt/workflow/model-route candidates from eval evidence | Promote candidates, lower approval thresholds, change mission objectives |
+| Deployment | Canary approved signed artifacts, monitor SLOs, rollback to known-good versions | Deploy unsigned artifacts, continue after policy/eval regression, disable audit |
+
+### Python reference modules
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from enum import Enum
+from hashlib import sha256
+from typing import Any, Mapping
+from uuid import UUID, uuid4
+
+
+class Decision(str, Enum):
+    ALLOW = "allow"
+    DENY = "deny"
+    REQUIRE_APPROVAL = "require_approval"
+
+
+@dataclass(frozen=True)
+class MissionContext:
+    mission_id: UUID
+    operator_id: UUID
+    role: str
+    clearance: str
+    compartments: frozenset[str]
+    coalition_scope: frozenset[str]
+    purpose_of_use: str
+    correlation_id: str
+
+
+@dataclass(frozen=True)
+class ToolInvocation:
+    tool_name: str
+    arguments: Mapping[str, Any]
+    classification: str
+    compartments: frozenset[str]
+    operational_significance: int
+    requested_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass(frozen=True)
+class PolicyDecision:
+    decision: Decision
+    reason: str
+    policy_version: str
+    audit_id: UUID = field(default_factory=uuid4)
+
+
+def evaluate_tool_policy(ctx: MissionContext, invocation: ToolInvocation) -> PolicyDecision:
+    if not invocation.compartments.issubset(ctx.compartments):
+        return PolicyDecision(Decision.DENY, "compartment_mismatch", "policy-2026.07")
+    if invocation.operational_significance >= 70:
+        return PolicyDecision(Decision.REQUIRE_APPROVAL, "high_impact_action", "policy-2026.07")
+    if ctx.purpose_of_use not in {"investigation", "triage", "mission_command"}:
+        return PolicyDecision(Decision.DENY, "invalid_purpose_of_use", "policy-2026.07")
+    return PolicyDecision(Decision.ALLOW, "authorized", "policy-2026.07")
+
+
+def canonical_hash(payload: Mapping[str, Any]) -> str:
+    encoded = repr(sorted(payload.items())).encode("utf-8")
+    return sha256(encoded).hexdigest()
+```
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+from enum import Enum
+from uuid import UUID
+
+
+class CandidateStatus(str, Enum):
+    DRAFT = "draft"
+    EVAL_RUNNING = "eval_running"
+    READY_FOR_REVIEW = "ready_for_review"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    CANARY = "canary"
+    PROMOTED = "promoted"
+    ROLLED_BACK = "rolled_back"
+
+
+@dataclass(frozen=True)
+class EvalScorecard:
+    precision: Decimal
+    recall: Decimal
+    citation_accuracy: Decimal
+    hallucination_rate: Decimal
+    policy_violation_rate: Decimal
+    p95_latency_ms: int
+    operator_acceptance_rate: Decimal
+
+
+@dataclass(frozen=True)
+class SelfUpgradeCandidate:
+    candidate_id: UUID
+    kind: str
+    baseline_version: str
+    candidate_version: str
+    evidence_ids: tuple[UUID, ...]
+    scorecard: EvalScorecard
+    rollback_version: str
+    status: CandidateStatus
+
+
+def promotion_gate(candidate: SelfUpgradeCandidate) -> tuple[bool, str]:
+    score = candidate.scorecard
+    if candidate.status is not CandidateStatus.APPROVED:
+        return False, "human_approval_required"
+    if candidate.rollback_version == candidate.candidate_version:
+        return False, "rollback_version_must_be_distinct"
+    if score.policy_violation_rate != Decimal("0"):
+        return False, "policy_regression"
+    if score.citation_accuracy < Decimal("0.98"):
+        return False, "citation_accuracy_below_threshold"
+    if score.precision < Decimal("0.92") or score.recall < Decimal("0.85"):
+        return False, "mission_quality_regression"
+    if score.hallucination_rate > Decimal("0.005"):
+        return False, "hallucination_rate_above_threshold"
+    if score.p95_latency_ms > 2500:
+        return False, "latency_slo_regression"
+    return True, "eligible_for_apollo_canary"
+```
+
+### Scenario execution trace
+
+1. A live telemetry event enters the streaming gateway with source reliability, mission tags, classification, compartments, and coalition markings.
+2. The Python intake service validates the event, computes a canonical lineage hash, writes the raw payload to immutable storage, and emits a normalized observation.
+3. Foundry pipelines materialize bronze, silver, and gold datasets, then update ontology objects and links with bitemporal validity.
+4. Gotham surfaces the updated entity graph and investigative timeline to authorized operators.
+5. An AIP triage agent queries only the operator-permitted ontology slice, enriches the alert, and drafts a case summary with source citations.
+6. A deterministic policy broker checks the proposed tool invocation. Low-impact drafting is allowed; operationally significant response actions become approval packages.
+7. The commander approves a narrow defensive package and rejects an over-broad recommendation. Both decisions become labeled feedback signals.
+8. The self-improvement service turns the rejection into eval cases, proposes a prompt-weighting change, and runs offline regression, drift, policy, citation, and latency checks.
+9. A human ModelOps reviewer approves the evidence-backed candidate. Apollo deploys it to a canary ring with a pinned rollback version.
+10. Observability watches precision, recall, p95 latency, policy-denial rates, operator acceptance, and citation accuracy. Any regression triggers automatic rollback and preserves the full audit chain.
+
+## Repository Audit and Agent Command Prompt
+
+Use the `agents/clearglass_artemis_platform_architect/` agent pack when the repository needs an additive audit, merge, or implementation pass that strengthens ClearGlassInc Artemis without removing existing pages or weakening governance.
+
+### One-line command prompt
+
+```text
+Act as the ClearGlassInc Artemis Platform Architect for Desmond Otieno Odhiambo: audit this repository, keep existing pages intact, and add the highest-value Python-first automation, AI-agent, security, observability, eval, and deployment-governance improvements needed to make it a secure, modular, observable, self-improving, production-ready platform.
+```
+
+### Cursor-ready repository upgrade prompt
+
+```text
+Act as a principal software architect, AI systems designer, product strategist, and senior full-stack AI architect for ClearGlassInc Artemis and founder Desmond Otieno Odhiambo.
+
+Main objective:
+Treat the repo like a defense-grade system that must scale under pressure and evolve continuously.
+
+Audit the repository and upgrade it into a future-tech production platform. Add and merge improvements without removing existing pages, safeguards, deployment paths, generated internal-link blocks, or governance controls. Use Python for precision in control-plane logic, evals, policy checks, workflow state machines, automation bots, telemetry processors, and repository audit tooling.
+
+Review missing advanced features, weak or placeholder code, duplication, architecture bottlenecks, automation opportunities, AI workflow opportunities, security gaps, observability gaps, performance bottlenecks, poor abstractions, and modules that should be simplified or split.
+
+Build only high-leverage capabilities: AI agents and orchestration, context-aware workflows, retrieval and knowledge layers, telemetry and monitoring, event-driven automation, secure auth and access control, secrets handling, retries and fallback logic, benchmarking and evals, plugin-style modular architecture, CI/CD automation, caching, performance optimization, test coverage, and handoff documentation.
+
+For every major upgrade, explain purpose, architecture, dependencies, risks, testing approach, rollout sequence, rollback path, and human approval gate. Keep automation self-improving but never self-authorizing.
+
+Return: Repository assessment, Best upgrade opportunities, Refactor plan, Implementation plan, and Future direction.
+```
+
+### Repo audit checklist
+
+```yaml
+clearglass_artemis_repo_audit:
+  preserve:
+    - existing_pages
+    - generated_internal_links
+    - github_pages_deploy_paths
+    - commerce_governance_flow
+    - append_only_auditability
+    - human_approval_for_consequential_actions
+  assess:
+    - architecture_boundaries
+    - duplicate_or_placeholder_code
+    - agent_and_bot_runtime_contracts
+    - python_control_plane_quality
+    - authn_authz_policy_enforcement
+    - secrets_and_configuration_handling
+    - observability_and_eval_coverage
+    - ci_cd_and_rollback_readiness
+    - documentation_and_handoff_quality
+  add_next:
+    - typed_agent_registry
+    - eval_backed_self_improvement_queue
+    - policy_as_code_preflight_tests
+    - telemetry_schema_and_dashboards
+    - signed_prompt_workflow_release_manifests
+    - apollo_style_canary_and_rollback_runbooks
 ```

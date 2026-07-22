@@ -45,3 +45,14 @@ def test_large_price_delta_raises_score() -> None:
 def test_low_confidence_escalates() -> None:
     a = score_action("refresh_products", {}, low_confidence=True)
     assert any("low confidence" in r for r in a.reasons)
+    # Operating rule 8: low confidence must hard-gate, not merely bump the score.
+    assert a.requires_approval is True
+
+
+def test_low_confidence_gates_low_base_action() -> None:
+    # A low/medium-base action stays below the HIGH threshold after the score
+    # bump, so without a dedicated gate it would auto-execute despite rule 8.
+    baseline = score_action("generate_copy", {})
+    assert baseline.requires_approval is False
+    gated = score_action("generate_copy", {}, low_confidence=True)
+    assert gated.requires_approval is True

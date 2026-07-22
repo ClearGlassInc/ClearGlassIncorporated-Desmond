@@ -32,6 +32,17 @@ See [`PERCIVAL_AGENTS.md`](./PERCIVAL_AGENTS.md). Recent additions:
   counsel (fail-closed), and **refuses** to assist with evading or obstructing
   valid process. Not legal advice.
 
+- **PHOENIX** — governed **autonomous recovery / self-healing** agent
+  ([`PHOENIX_RECOVERY_BRIEF.md`](./PHOENIX_RECOVERY_BRIEF.md) ·
+  `sentinel/sentinel/phoenix.py`). Runs the incident loop
+  *detect → classify → contain → plan → gate → execute → verify → learn* under a
+  fail-closed policy gate: only reversible, low-risk, low-blast, high-confidence
+  steps auto-execute; data-corruption / security / payment incidents are
+  escalation-only; a circuit breaker + incident memory prevent repeated-failure
+  loops; and an incident only closes once an independent health probe verifies
+  restoration. `python -m sentinel.phoenix_demo` narrates the scenarios;
+  `tests/test_phoenix.py` proves the safety invariants.
+
 ## Charter-compliant capabilities (no person identification)
 
 - **Command center** ([`../sentinel.html`](../sentinel.html)) — map-first

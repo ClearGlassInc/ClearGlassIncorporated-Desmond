@@ -11,6 +11,9 @@ export function StoreShell({ children }: { children: ReactNode }) {
     <CartProvider>
       <Header />
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: 24 }}>{children}</main>
+      <footer style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px 24px", color: "#9aa6c8", fontSize: 13 }}>
+        © ClearGlass Inc. All rights reserved.
+      </footer>
     </CartProvider>
   );
 }

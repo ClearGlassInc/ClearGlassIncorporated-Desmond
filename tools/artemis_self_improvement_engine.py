@@ -6,6 +6,7 @@ System 2040 architecture. It does not autonomously alter production behavior;
 it converts feedback signals into signed change proposals that must pass evals,
 policy checks, canary thresholds, and approval gates before activation.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field, asdict
@@ -23,6 +24,8 @@ class SignalType(str, Enum):
     ALERT_OUTCOME = "alert_outcome"
     MISSION_RESULT = "mission_result"
     LATENCY_SAMPLE = "latency_sample"
+    ENTITY_MERGE_CORRECTION = "entity_merge_correction"
+    TRUST_RATING = "trust_rating"
 
 
 class ProposalType(str, Enum):
@@ -30,6 +33,16 @@ class ProposalType(str, Enum):
     WORKFLOW_PATCH = "workflow_patch"
     ROUTING_PATCH = "routing_patch"
     HEURISTIC_PATCH = "heuristic_patch"
+    ONTOLOGY_MERGE_REVIEW = "ontology_merge_review"
+
+
+class ApprovalState(str, Enum):
+    DRAFT = "draft"
+    EVAL_FAILED = "eval_failed"
+    NEEDS_HUMAN_APPROVAL = "needs_human_approval"
+    APPROVED_FOR_CANARY = "approved_for_canary"
+    REJECTED = "rejected"
+    BLOCKED_POLICY_BOUNDARY = "blocked_policy_boundary"
 
 
 @dataclass(frozen=True)
@@ -94,6 +107,11 @@ class ChangeProposal:
     eval_result: EvalResult
     approval_required: bool = True
     rollout_ring: str = "staging-canary"
+    approval_state: ApprovalState = ApprovalState.NEEDS_HUMAN_APPROVAL
+    policy_decision: str = "human_approval_required"
+    drift_score: float = 0.0
+    risk_tier: str = "medium"
+    rollback_version: str | None = None
 
     @property
     def signed_manifest(self) -> dict[str, Any]:
@@ -118,40 +136,169 @@ class ArtemisImprovementEngine:
 
         proposals: list[ChangeProposal] = []
         for mission_id, mission_signals in grouped.items():
-            corrections = [s for s in mission_signals if s.signal_type == SignalType.OPERATOR_CORRECTION]
-            outcomes = [s for s in mission_signals if s.signal_type == SignalType.ALERT_OUTCOME]
-            latency = [float(s.payload.get("latency_ms", 0)) for s in mission_signals if s.signal_type == SignalType.LATENCY_SAMPLE]
+            sanitized_signals = [self._sanitize_signal(signal) for signal in mission_signals]
+            corrections = [
+                s for s in sanitized_signals if s.signal_type == SignalType.OPERATOR_CORRECTION
+            ]
+            outcomes = [s for s in sanitized_signals if s.signal_type == SignalType.ALERT_OUTCOME]
+            latency = [
+                float(s.payload.get("latency_ms", 0))
+                for s in sanitized_signals
+                if s.signal_type == SignalType.LATENCY_SAMPLE
+            ]
+
+            merge_corrections = [
+                s for s in sanitized_signals if s.signal_type == SignalType.ENTITY_MERGE_CORRECTION
+            ]
 
             if len(corrections) >= 3:
                 eval_result = self._offline_eval(corrections, outcomes, latency)
-                patch = self._build_prompt_patch(corrections)
+                drift_score = self._drift_score(corrections)
+                patch = self._build_prompt_patch(corrections, drift_score)
+                approval_state, policy_decision = self._proposal_gate(eval_result, drift_score)
                 proposals.append(
                     ChangeProposal(
                         proposal_id=self._proposal_id(mission_id, "triage-copilot", patch),
                         proposal_type=ProposalType.PROMPT_PATCH,
                         target_component="aip.agent.triage_copilot",
-                        current_version=self.component_versions.get("aip.agent.triage_copilot", "0.0.0"),
+                        current_version=self.component_versions.get(
+                            "aip.agent.triage_copilot", "0.0.0"
+                        ),
                         proposed_version=self._next_patch_version(
                             self.component_versions.get("aip.agent.triage_copilot", "0.0.0")
                         ),
                         rationale="Repeated operator corrections indicate the triage prompt needs stricter evidence thresholds and uncertainty language.",
                         patch=patch,
-                        evidence_hashes=[s.lineage_hash for s in mission_signals],
+                        evidence_hashes=[s.lineage_hash for s in sanitized_signals],
                         eval_result=eval_result,
+                        approval_state=approval_state,
+                        policy_decision=policy_decision,
+                        drift_score=drift_score,
+                        risk_tier=self._risk_tier(drift_score, eval_result),
+                        rollback_version=self.component_versions.get(
+                            "aip.agent.triage_copilot", "0.0.0"
+                        ),
                     )
                 )
+
+            proposals.extend(self._synthesize_merge_review(mission_id, merge_corrections))
         return proposals
+
+
+    @staticmethod
+    def _sanitize_signal(signal: FeedbackSignal) -> FeedbackSignal:
+        """Return a signal with recursively redacted user-provided display fields.
+
+        The simulator intentionally keeps sanitization deterministic and stdlib-only so
+        examples can run in constrained CI while still modelling the production rule:
+        user-facing strings are escaped before being copied into proposal manifests.
+        """
+        def clean(value: Any) -> Any:
+            if isinstance(value, str):
+                return (
+                    value.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace('"', "&quot;")
+                    .replace("'", "&#x27;")
+                )
+            if isinstance(value, dict):
+                return {str(k): clean(v) for k, v in value.items()}
+            if isinstance(value, list):
+                return [clean(v) for v in value]
+            return value
+
+        return FeedbackSignal(
+            signal.signal_id,
+            signal.signal_type,
+            signal.mission_id,
+            signal.ontology_object_id,
+            signal.actor,
+            signal.classification,
+            signal.compartment,
+            clean(signal.payload),
+            signal.observed_at,
+        )
+
+    def _synthesize_merge_review(
+        self, mission_id: str, merge_corrections: list[FeedbackSignal]
+    ) -> list[ChangeProposal]:
+        if len(merge_corrections) < 2:
+            return []
+        compartments = {signal.compartment for signal in merge_corrections}
+        if len(compartments) != 1:
+            eval_result = EvalResult(0.0, 0.0, 0.0, 0.0, 1, len(merge_corrections))
+            return [
+                ChangeProposal(
+                    proposal_id=self._proposal_id(
+                        mission_id, "entity-merge-review", {"compartments": sorted(compartments)}
+                    ),
+                    proposal_type=ProposalType.ONTOLOGY_MERGE_REVIEW,
+                    target_component="ontology.entity_resolution",
+                    current_version=self.component_versions.get(
+                        "ontology.entity_resolution", "0.0.0"
+                    ),
+                    proposed_version=self.component_versions.get(
+                        "ontology.entity_resolution", "0.0.0"
+                    ),
+                    rationale="Entity merge proposal blocked because corrections span compartments and require manual compartment authority review.",
+                    patch={"blocked_merge_compartments": sorted(compartments)},
+                    evidence_hashes=[s.lineage_hash for s in merge_corrections],
+                    eval_result=eval_result,
+                    approval_state=ApprovalState.BLOCKED_POLICY_BOUNDARY,
+                    policy_decision="blocked_cross_compartment_merge",
+                    risk_tier="critical",
+                    rollback_version=self.component_versions.get(
+                        "ontology.entity_resolution", "0.0.0"
+                    ),
+                )
+            ]
+
+        eval_result = EvalResult(0.97, 0.91, 300.0, 0.88, 0, len(merge_corrections))
+        current_version = self.component_versions.get("ontology.entity_resolution", "0.0.0")
+        patch = {
+            "candidate_pairs": [s.payload.get("candidate_pair", []) for s in merge_corrections],
+            "minimum_independent_corrections": 2,
+            "required_review": "entity_steward_and_mission_owner",
+            "merge_execution": "draft_only_until_approved",
+        }
+        return [
+            ChangeProposal(
+                proposal_id=self._proposal_id(mission_id, "entity-merge-review", patch),
+                proposal_type=ProposalType.ONTOLOGY_MERGE_REVIEW,
+                target_component="ontology.entity_resolution",
+                current_version=current_version,
+                proposed_version=self._next_patch_version(current_version),
+                rationale="Repeated operator corrections indicate possible duplicate ontology entities; Artemis drafts a merge review but never merges automatically.",
+                patch=patch,
+                evidence_hashes=[s.lineage_hash for s in merge_corrections],
+                eval_result=eval_result,
+                approval_state=ApprovalState.NEEDS_HUMAN_APPROVAL,
+                policy_decision="human_approval_required_entity_merge",
+                drift_score=self._drift_score(merge_corrections),
+                risk_tier="high",
+                rollback_version=current_version,
+            )
+        ]
 
     @staticmethod
     def _offline_eval(
         corrections: list[FeedbackSignal], outcomes: list[FeedbackSignal], latency: list[float]
     ) -> EvalResult:
-        true_positive = sum(1 for s in outcomes if s.payload.get("final_disposition") == "validated")
-        false_positive = sum(1 for s in corrections if s.payload.get("correction") == "false_positive")
+        true_positive = sum(
+            1 for s in outcomes if s.payload.get("final_disposition") == "validated"
+        )
+        false_positive = sum(
+            1 for s in corrections if s.payload.get("correction") == "false_positive"
+        )
         missed = sum(1 for s in corrections if s.payload.get("correction") == "missed_context")
         precision = true_positive / max(true_positive + false_positive, 1)
         recall = true_positive / max(true_positive + missed, 1)
-        p95_latency = statistics.quantiles(latency or [250.0], n=20)[-1] if len(latency) >= 2 else (latency[0] if latency else 250.0)
+        p95_latency = (
+            statistics.quantiles(latency or [250.0], n=20)[-1]
+            if len(latency) >= 2
+            else (latency[0] if latency else 250.0)
+        )
         trust = 1.0 - min(len(corrections) * 0.025, 0.2)
         return EvalResult(
             precision=round(precision, 4),
@@ -163,7 +310,41 @@ class ArtemisImprovementEngine:
         )
 
     @staticmethod
-    def _build_prompt_patch(corrections: list[FeedbackSignal]) -> dict[str, Any]:
+    def _drift_score(corrections: list[FeedbackSignal]) -> float:
+        """Estimate workflow drift from correction-theme concentration.
+
+        A higher score means operators are repeatedly correcting the same failure
+        mode, which is useful evidence for proposing a change but should slow
+        rollout until a human reviews root cause and regression coverage.
+        """
+        if not corrections:
+            return 0.0
+        themes = [str(s.payload.get("theme", "evidence_threshold")) for s in corrections]
+        dominant_theme_count = max(themes.count(theme) for theme in set(themes))
+        return round(dominant_theme_count / len(themes), 4)
+
+    @staticmethod
+    def _proposal_gate(eval_result: EvalResult, drift_score: float) -> tuple[ApprovalState, str]:
+        if eval_result.policy_violations:
+            return ApprovalState.EVAL_FAILED, "blocked_policy_violation"
+        if not eval_result.passes():
+            return ApprovalState.EVAL_FAILED, "blocked_eval_threshold"
+        if drift_score >= 0.67:
+            return ApprovalState.NEEDS_HUMAN_APPROVAL, "human_review_required_high_drift"
+        return ApprovalState.NEEDS_HUMAN_APPROVAL, "human_approval_required"
+
+    @staticmethod
+    def _risk_tier(drift_score: float, eval_result: EvalResult) -> str:
+        if eval_result.policy_violations or drift_score >= 0.9:
+            return "critical"
+        if drift_score >= 0.67 or eval_result.precision < 0.94:
+            return "high"
+        return "medium"
+
+    @staticmethod
+    def _build_prompt_patch(
+        corrections: list[FeedbackSignal], drift_score: float
+    ) -> dict[str, Any]:
         themes = sorted({str(s.payload.get("theme", "evidence_threshold")) for s in corrections})
         return {
             "guardrail_additions": [
@@ -173,6 +354,12 @@ class ArtemisImprovementEngine:
             ],
             "observed_correction_themes": themes,
             "requires_eval_suite": "mission_triage_regression_v3",
+            "drift_score": drift_score,
+            "rollout_controls": {
+                "canary_percentage": 5,
+                "rollback_on_policy_violation": True,
+                "rollback_on_p95_latency_ms": 1200,
+            },
         }
 
     @staticmethod
@@ -182,20 +369,72 @@ class ArtemisImprovementEngine:
 
     @staticmethod
     def _next_patch_version(version: str) -> str:
-        major, minor, patch = (int(part) for part in version.split("."))
+        parts = version.split(".")
+        if len(parts) != 3 or not all(part.isdigit() for part in parts):
+            raise ValueError(f"component version must use MAJOR.MINOR.PATCH, got {version!r}")
+        major, minor, patch = (int(part) for part in parts)
         return f"{major}.{minor}.{patch + 1}"
 
 
 def demo() -> None:
     signals = [
-        FeedbackSignal("s1", SignalType.OPERATOR_CORRECTION, "m-2040", "case-7", "analyst.a", "SECRET", "ARTEMIS", {"correction": "missed_context", "theme": "temporal_linkage"}),
-        FeedbackSignal("s2", SignalType.OPERATOR_CORRECTION, "m-2040", "case-7", "analyst.b", "SECRET", "ARTEMIS", {"correction": "false_positive", "theme": "evidence_threshold"}),
-        FeedbackSignal("s3", SignalType.OPERATOR_CORRECTION, "m-2040", "case-7", "analyst.c", "SECRET", "ARTEMIS", {"correction": "missed_context", "theme": "coalition_caveat"}),
-        FeedbackSignal("s4", SignalType.ALERT_OUTCOME, "m-2040", "case-7", "commander.x", "SECRET", "ARTEMIS", {"final_disposition": "validated"}),
-        FeedbackSignal("s5", SignalType.LATENCY_SAMPLE, "m-2040", "case-7", "system", "SECRET", "ARTEMIS", {"latency_ms": 412}),
+        FeedbackSignal(
+            "s1",
+            SignalType.OPERATOR_CORRECTION,
+            "m-2040",
+            "case-7",
+            "analyst.a",
+            "SECRET",
+            "ARTEMIS",
+            {"correction": "missed_context", "theme": "temporal_linkage"},
+        ),
+        FeedbackSignal(
+            "s2",
+            SignalType.OPERATOR_CORRECTION,
+            "m-2040",
+            "case-7",
+            "analyst.b",
+            "SECRET",
+            "ARTEMIS",
+            {"correction": "false_positive", "theme": "evidence_threshold"},
+        ),
+        FeedbackSignal(
+            "s3",
+            SignalType.OPERATOR_CORRECTION,
+            "m-2040",
+            "case-7",
+            "analyst.c",
+            "SECRET",
+            "ARTEMIS",
+            {"correction": "missed_context", "theme": "coalition_caveat"},
+        ),
+        FeedbackSignal(
+            "s4",
+            SignalType.ALERT_OUTCOME,
+            "m-2040",
+            "case-7",
+            "commander.x",
+            "SECRET",
+            "ARTEMIS",
+            {"final_disposition": "validated"},
+        ),
+        FeedbackSignal(
+            "s5",
+            SignalType.LATENCY_SAMPLE,
+            "m-2040",
+            "case-7",
+            "system",
+            "SECRET",
+            "ARTEMIS",
+            {"latency_ms": 412},
+        ),
     ]
     engine = ArtemisImprovementEngine({"aip.agent.triage_copilot": "2.4.9"})
-    print(json.dumps([p.signed_manifest for p in engine.synthesize_proposals(signals)], indent=2, default=str))
+    print(
+        json.dumps(
+            [p.signed_manifest for p in engine.synthesize_proposals(signals)], indent=2, default=str
+        )
+    )
 
 
 if __name__ == "__main__":

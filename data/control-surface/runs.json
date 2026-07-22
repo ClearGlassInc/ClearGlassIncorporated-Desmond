@@ -1,142 +1,142 @@
 [
   {
-    "title": "Control Surface Feeds #389",
+    "title": "Control Surface Feeds #390",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
-    "time": "16:44",
-    "timestamp": "2026-07-22T16:44:52Z"
+    "time": "18:33",
+    "timestamp": "2026-07-22T18:33:35Z"
   },
   {
-    "title": "Agent OS Self-Check #21",
+    "title": "Security #1450",
     "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:18",
-    "timestamp": "2026-07-22T15:18:47Z"
+    "detail": "success \u00b7 push on main",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
-    "title": "Commerce Daily Loop #44",
+    "title": "CI #1683",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
+  },
+  {
+    "title": "ClearGlass GitHub Pages Check #460",
     "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:02",
-    "timestamp": "2026-07-22T15:02:08Z"
+    "detail": "success \u00b7 push on main",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
-    "title": "Deploy Pages #1174",
+    "title": "Defender Watch #1041",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
+  },
+  {
+    "title": "Policy Gate #1421",
     "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "14:21",
-    "timestamp": "2026-07-22T14:21:39Z"
+    "detail": "success \u00b7 push on main",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
-    "title": "pages build and deployment #1641",
+    "title": "Deploy Pages #1182",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #1734",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
+  },
+  {
+    "title": "Internal Link Authority #118",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
+  },
+  {
+    "title": "pages build and deployment #1649",
     "status": "ok",
     "detail": "success \u00b7 dynamic on main",
-    "time": "14:21",
-    "timestamp": "2026-07-22T14:21:30Z"
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:17Z"
   },
   {
-    "title": "Code Quality: Push on main #2825",
+    "title": "Code Quality: Push on main #2844",
     "status": "ok",
     "detail": "success \u00b7 dynamic on main",
-    "time": "14:21",
-    "timestamp": "2026-07-22T14:21:30Z"
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:17Z"
   },
   {
-    "title": "Control Surface Feeds #388",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:21",
-    "timestamp": "2026-07-22T14:21:04Z"
-  },
-  {
-    "title": "Defender Watch #1026",
+    "title": "Internal Link Authority #117",
     "status": "bad",
-    "detail": "failure \u00b7 schedule on main",
-    "time": "14:12",
-    "timestamp": "2026-07-22T14:12:13Z"
+    "detail": "failure \u00b7 pull_request on codex/style-navbar-to-match-reference-image",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:51Z"
   },
   {
-    "title": "Health Monitor #212",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:04",
-    "timestamp": "2026-07-22T14:04:47Z"
-  },
-  {
-    "title": "Auto-Store #123",
+    "title": "CI #1682",
     "status": "bad",
-    "detail": "failure \u00b7 schedule on main",
-    "time": "13:27",
-    "timestamp": "2026-07-22T13:27:55Z"
+    "detail": "failure \u00b7 pull_request on codex/style-navbar-to-match-reference-image",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:51Z"
   },
   {
-    "title": "Sales-Ops Briefing #29",
+    "title": "Defender Watch #1040",
+    "status": "bad",
+    "detail": "failure \u00b7 pull_request on codex/style-navbar-to-match-reference-image",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:50Z"
+  },
+  {
+    "title": "Policy Gate #1420",
     "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "12:46",
-    "timestamp": "2026-07-22T12:46:16Z"
+    "detail": "success \u00b7 pull_request on codex/style-navbar-to-match-reference-image",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:50Z"
   },
   {
-    "title": "Code Quality: PR #1013 #2824",
+    "title": "IP Protection Bot - Risk Assessment #1733",
     "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/1013/head",
-    "time": "12:42",
-    "timestamp": "2026-07-22T12:42:57Z"
+    "detail": "success \u00b7 pull_request on codex/style-navbar-to-match-reference-image",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:50Z"
   },
   {
-    "title": "Policy Gate #1406",
+    "title": "PR Automation #765",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on codex/style-navbar-to-match-reference-image",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:50Z"
+  },
+  {
+    "title": "Security #1449",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on codex/style-navbar-to-match-reference-image",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:50Z"
+  },
+  {
+    "title": "Code Quality: PR #1020 #2843",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on refs/pull/1020/head",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:44Z"
+  },
+  {
+    "title": "Workflow Doctor #348",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "12:33",
-    "timestamp": "2026-07-22T12:33:41Z"
-  },
-  {
-    "title": "Phoenix Self-Heal #6",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:33",
-    "timestamp": "2026-07-22T12:33:41Z"
-  },
-  {
-    "title": "Defender Watch #1025",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "12:33",
-    "timestamp": "2026-07-22T12:33:41Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1719",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:33",
-    "timestamp": "2026-07-22T12:33:41Z"
-  },
-  {
-    "title": "Security #1435",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:33",
-    "timestamp": "2026-07-22T12:33:41Z"
-  },
-  {
-    "title": "Auto-Store #122",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "12:33",
-    "timestamp": "2026-07-22T12:33:41Z"
-  },
-  {
-    "title": "CI #1668",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "12:33",
-    "timestamp": "2026-07-22T12:33:41Z"
-  },
-  {
-    "title": "Internal Link Authority #103",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "12:33",
-    "timestamp": "2026-07-22T12:33:41Z"
+    "time": "18:22",
+    "timestamp": "2026-07-22T18:22:43Z"
   }
 ]

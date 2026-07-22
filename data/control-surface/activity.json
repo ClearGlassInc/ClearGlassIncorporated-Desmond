@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "16:45",
-    "timestamp": "2026-07-22T16:45:06Z"
+    "time": "18:33",
+    "timestamp": "2026-07-22T18:33:47Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #389",
-    "time": "16:44",
-    "timestamp": "2026-07-22T16:44:52Z"
+    "detail": "schedule on main \u00b7 run #390",
+    "time": "18:33",
+    "timestamp": "2026-07-22T18:33:35Z"
   },
   {
-    "title": "Agent OS Self-Check",
+    "title": "Security",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #21",
-    "time": "15:18",
-    "timestamp": "2026-07-22T15:18:47Z"
+    "detail": "push on main \u00b7 run #1450",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
-    "title": "Commerce Daily Loop",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #44",
-    "time": "15:02",
-    "timestamp": "2026-07-22T15:02:08Z"
+    "title": "CI",
+    "status": "bad",
+    "detail": "push on main \u00b7 run #1683",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
-    "title": "Deploy Pages",
+    "title": "ClearGlass GitHub Pages Check",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #1174",
-    "time": "14:21",
-    "timestamp": "2026-07-22T14:21:39Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1641",
-    "time": "14:21",
-    "timestamp": "2026-07-22T14:21:30Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2825",
-    "time": "14:21",
-    "timestamp": "2026-07-22T14:21:30Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #388",
-    "time": "14:21",
-    "timestamp": "2026-07-22T14:21:04Z"
+    "detail": "push on main \u00b7 run #460",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
     "title": "Defender Watch",
     "status": "bad",
-    "detail": "schedule on main \u00b7 run #1026",
-    "time": "14:12",
-    "timestamp": "2026-07-22T14:12:13Z"
+    "detail": "push on main \u00b7 run #1041",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
-    "title": "Health Monitor",
+    "title": "Policy Gate",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #212",
-    "time": "14:04",
-    "timestamp": "2026-07-22T14:04:47Z"
+    "detail": "push on main \u00b7 run #1421",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
-    "title": "Auto-Store",
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #1182",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #1734",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
+  },
+  {
+    "title": "Internal Link Authority",
     "status": "bad",
-    "detail": "schedule on main \u00b7 run #123",
-    "time": "13:27",
-    "timestamp": "2026-07-22T13:27:55Z"
+    "detail": "push on main \u00b7 run #118",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:18Z"
   },
   {
-    "title": "Sales-Ops Briefing",
+    "title": "pages build and deployment",
     "status": "ok",
-    "detail": "schedule on main \u00b7 run #29",
-    "time": "12:46",
-    "timestamp": "2026-07-22T12:46:16Z"
+    "detail": "dynamic on main \u00b7 run #1649",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:17Z"
   },
   {
-    "title": "Code Quality: PR #1013",
+    "title": "Code Quality: Push on main",
     "status": "ok",
-    "detail": "dynamic on refs/pull/1013/head \u00b7 run #2824",
-    "time": "12:42",
-    "timestamp": "2026-07-22T12:42:57Z"
+    "detail": "dynamic on main \u00b7 run #2844",
+    "time": "18:31",
+    "timestamp": "2026-07-22T18:31:17Z"
+  },
+  {
+    "title": "Internal Link Authority",
+    "status": "bad",
+    "detail": "pull_request on codex/style-navbar-to-match-reference-image \u00b7 run #117",
+    "time": "18:30",
+    "timestamp": "2026-07-22T18:30:51Z"
   }
 ]

@@ -437,7 +437,10 @@ a:hover { color: #0369a1 !important; }
   position: absolute;
   top: calc(100% + 12px); left: 50%;
   transform: translateX(-50%) translateY(-6px);
-  min-width: 252px;
+  min-width: 280px;
+  max-width: min(380px, 86vw);
+  max-height: min(72vh, 680px);
+  overflow-y: auto;
   background: rgba(252, 253, 254, .97);
   backdrop-filter: blur(28px) saturate(1.5);
   -webkit-backdrop-filter: blur(28px) saturate(1.5);
@@ -646,3 +649,70 @@ body.cg-neon-ready :is(.card,.panel,.mini,.product-card,.tech-card,.connect-card
   :is(.card,.panel,.prompt,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.glass,.tile,.module,.console,.terminal,.metric,.feature,.service-card,.case-card)::before{animation:none!important}
   body.cg-neon-ready :is(.card,.panel,.mini,.product-card,.tech-card,.connect-card,.value-card,.offer-card,.cg-glass-card,.tile,.module){animation:none!important;translate:none!important}
 }
+
+
+/* ── 10. HOMEPAGE-MATCHED PAGE STRUCTURE — global unification layer ──
+   Applies the homepage rhythm to legacy pages without removing their content. */
+body:not([data-cg-no-unify]) main,
+body:not([data-cg-no-unify]) .page,
+body:not([data-cg-no-unify]) .wrap,
+body:not([data-cg-no-unify]) .container {
+  max-width: min(1180px, 92vw);
+}
+body:not([data-cg-no-unify]) :is(section,.section,.block,.panel-section) {
+  scroll-margin-top: 96px;
+}
+body:not([data-cg-no-unify]) :is(main > section, body > section):not(.hero):not(.cg-topbar):not(.mobile-menu) {
+  padding-top: clamp(80px, 12vw, 140px);
+  padding-bottom: clamp(80px, 12vw, 140px);
+}
+body:not([data-cg-no-unify]) :is(h1,.hero-title,.title) {
+  font-family: var(--cg-serif);
+  font-weight: 300;
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+body:not([data-cg-no-unify]) :is(h2,.section-title) {
+  font-family: var(--cg-serif);
+  font-weight: 300;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+}
+body:not([data-cg-no-unify]) :is(.eyebrow,.kicker,.label,.sh-tag,.overline) {
+  font-family: var(--cg-mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+body:not([data-cg-no-unify]) :is(.lead,.subtitle,.subhead,.hero-sub) {
+  color: var(--cg-text-3);
+  line-height: 1.75;
+}
+body:not([data-cg-no-unify]) :is(.grid,.cards,.features,.products-grid,.services-grid) {
+  gap: clamp(16px, 2vw, 24px);
+}
+body:not([data-cg-no-unify]) :is(.btn,.button,.cta,.primary,.secondary,[class*="btn"],[class*="button"]) {
+  border-radius: 999px;
+  font-family: var(--cg-sans);
+  font-weight: 700;
+}
+body:not([data-cg-no-unify]) :is(.btn-primary,.primary,.cta-primary) {
+  background: #0a0c10;
+  color: #fff;
+}
+.cg-catalog-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+  margin-top:24px;
+}
+.cg-catalog-card {
+  display:flex;align-items:center;gap:12px;padding:16px;border-radius:18px;
+  border:1px solid var(--cg-line);background:rgba(255,255,255,.74);
+  text-decoration:none;color:var(--cg-text);backdrop-filter:blur(16px);
+  box-shadow:var(--cg-shadow);transition:transform .25s var(--cg-ease),border-color .25s var(--cg-ease),box-shadow .25s var(--cg-ease);
+}
+.cg-catalog-card:hover,.cg-catalog-card:focus-visible { transform:translateY(-3px);border-color:rgba(56,189,248,.28);box-shadow:var(--cg-shadow-lift); }
+.cg-catalog-icon { width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(10,12,16,.05);font-family:var(--cg-mono);flex:0 0 auto; }
+.cg-catalog-card b { display:block;font-size:14px;line-height:1.2; }
+.cg-catalog-card span:last-child { display:block;margin-top:3px;font-family:var(--cg-mono);font-size:9px;letter-spacing:.08em;color:var(--cg-text-4);text-transform:uppercase; }
+@media(max-width:760px){.cg-catalog-grid{grid-template-columns:1fr}}

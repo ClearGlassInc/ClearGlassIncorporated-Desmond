@@ -1,12 +1,32 @@
 [
   {
     "status": "warn",
+    "title": "Auto-Store failing",
+    "detail": "Latest run #123 concluded failure (2026-07-22)."
+  },
+  {
+    "status": "warn",
+    "title": "CI failing",
+    "detail": "Latest run #1668 concluded failure (2026-07-22)."
+  },
+  {
+    "status": "warn",
+    "title": "Commerce Deploy failing",
+    "detail": "Latest run #36 concluded failure (2026-07-22)."
+  },
+  {
+    "status": "warn",
     "title": "Commerce Frontend CI failing",
-    "detail": "Latest run #24 concluded failure (2026-07-22)."
+    "detail": "Latest run #25 concluded failure (2026-07-22)."
   },
   {
     "status": "warn",
     "title": "Defender Watch failing",
-    "detail": "Latest run #1022 concluded failure (2026-07-22)."
+    "detail": "Latest run #1026 concluded failure (2026-07-22)."
+  },
+  {
+    "status": "warn",
+    "title": "Internal Link Authority failing",
+    "detail": "Latest run #103 concluded failure (2026-07-22)."
   }
 ]

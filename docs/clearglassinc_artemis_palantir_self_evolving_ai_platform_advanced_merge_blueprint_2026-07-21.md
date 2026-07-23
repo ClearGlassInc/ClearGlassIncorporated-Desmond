@@ -666,3 +666,87 @@ rollback:
 3. **Prompt injection through retrieved content:** Treat retrieved text as untrusted, isolate instructions from evidence, strip executable content, and require tool-call schemas.
 4. **Latency spikes during multi-agent workflows:** Use model-routing budgets, concurrent bounded enrichment, cached ontology reads, and early-exit confidence thresholds.
 5. **Rollback gaps for self-upgrades:** Version every artifact, require signed promotion records, deploy with Apollo rings, and keep one-command rollback and kill switches tested.
+
+## Scenario Walkthrough
+
+### Live event to governed learning loop
+
+At 03:14:22 UTC, a coalition-approved source adapter emits a signed `signal.received` event for ClearGlassInc Artemis. The gateway verifies producer identity, validates the schema, hashes the payload, attaches classification and coalition markings, and writes the immutable source envelope into Foundry Bronze. A streaming transform normalizes the payload into a `Signal` object, links it to candidate `Entity`, `Location`, and `Evidence` objects, and publishes an ontology update with lineage and confidence.
+
+1. **Triage:** The Watchfloor Copilot invokes the triage workflow in AIP. The workflow queries Foundry Ontology for mission-scoped context and Gotham for open investigations. Policy filters remove non-releasable partner evidence before the model sees it.
+2. **Enrichment:** The enrichment agent retrieves authorized corroborating evidence, builds a temporal graph, and marks two relationships as low-confidence because one source has reliability `C` and the second is stale.
+3. **Recommendation:** The recommendation agent drafts three response options: monitor, open a case, or prepare an external notification package. The external notification is marked `human_approval_required` because it crosses a coalition release boundary.
+4. **Operator decision:** The analyst approves opening a case, rejects the external notification, and adds a correction: the entity alias was obsolete and should not boost confidence.
+5. **Feedback capture:** The feedback service stores the analyst correction, the rejected recommendation, the approved case transition, the final case outcome, prompt version, workflow graph hash, model route, retrieval set, and latency trace.
+6. **Eval generation:** Overnight, the eval service converts this trace into a replay case: the expected behavior is to open a case, lower alias confidence, and avoid recommending partner notification without stronger evidence.
+7. **Candidate improvement:** The self-upgrade generator proposes a prompt diff and a graph-correlation heuristic change that downweights stale aliases. It attaches the eval delta, policy regression result, rollback reference, and risk label.
+8. **Human review:** The ModelOps reviewer approves the prompt change but rejects the heuristic change pending more examples. Apollo deploys the prompt to shadow, then canary, then mission ring only after eval and live telemetry stay inside thresholds.
+9. **Learning without unsafe autonomy:** The platform improves future recommendations by changing an approved prompt artifact, not by changing mission goals, access controls, or action authority.
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from statistics import mean
+
+@dataclass(frozen=True)
+class CandidateScore:
+    candidate_version: str
+    precision: float
+    recall: float
+    citation_coverage: float
+    p95_latency_ms: int
+    policy_violations: int
+    stale_alias_false_boosts: int
+
+
+def artemis_precision_gate(candidate: CandidateScore, baseline: CandidateScore) -> tuple[bool, list[str]]:
+    """Deterministic promotion gate used before Apollo canary rollout."""
+    failures: list[str] = []
+    if candidate.policy_violations != 0:
+        failures.append("policy_violations_must_be_zero")
+    if candidate.precision < baseline.precision - 0.02:
+        failures.append("precision_regression_exceeds_2pp")
+    if candidate.recall < baseline.recall - 0.03:
+        failures.append("recall_regression_exceeds_3pp")
+    if candidate.citation_coverage < 0.98:
+        failures.append("citation_coverage_below_98_percent")
+    if candidate.p95_latency_ms > 4000:
+        failures.append("latency_slo_exceeded")
+    if candidate.stale_alias_false_boosts > baseline.stale_alias_false_boosts:
+        failures.append("stale_alias_confidence_regression")
+    return not failures, failures
+
+
+def trust_score(recent_scores: list[CandidateScore]) -> float:
+    """Python precision metric for reviewer dashboards; policy violations dominate."""
+    if not recent_scores:
+        return 0.0
+    quality = mean((s.precision * 0.42) + (s.recall * 0.28) + (s.citation_coverage * 0.30) for s in recent_scores)
+    penalty = min(0.50, sum(s.policy_violations for s in recent_scores) * 0.10)
+    return round(max(0.0, quality - penalty), 4)
+```
+
+## Full-Stack Deployment Patch Notes
+
+This blueprint is deployable as documentation for GitHub Pages and as an engineering specification for implementation teams. The deployment path is intentionally conservative: documentation updates can publish through Pages, while runtime services, prompt bundles, workflow graphs, model routing policies, and policy packs must move through Apollo-style signed rings with explicit human approval for mission-impacting changes.
+
+```yaml
+release_controls:
+  organization: ClearGlassInc Artemis
+  documentation:
+    target: GitHub Pages
+    rollback: revert documentation commit
+  runtime:
+    target: Apollo controlled rings
+    artifact_requirements:
+      - signed_container_image
+      - signed_prompt_bundle
+      - signed_policy_pack
+      - eval_replay_report
+      - rollback_reference
+    blocked_without:
+      - human_approval_record
+      - zero_policy_violations
+      - immutable_audit_emitter_healthy
+```

@@ -1732,6 +1732,71 @@ result = loop.run_once(principal, environmental_signal)
 
 This preserves the requested automation path — sensors → findings → dashboard → alerts → mitigation packages → revenue-support drafts — while maintaining ClearGlassInc Artemis invariants: no unauthorized access, no secret materialization, no autonomous external outreach, no autonomous operational disruption, full provenance, and Apollo-compatible rollback.
 
+## Patch, Fix, and Deploy Control Plane
+
+ClearGlassInc Artemis treats every platform improvement as a governed change packet rather than an autonomous mutation. The patch/fix/deploy loop is implemented in Python-first services so scoring, approval, rollback, and audit behavior can be reproduced deterministically across Foundry Code Repositories, AIP eval jobs, and Apollo release gates.
+
+### Deployment State Machine
+
+```text
+DETECTED_SIGNAL
+  → PATCH_CANDIDATE
+  → STATIC_ANALYSIS
+  → EVAL_REPLAY
+  → SECURITY_POLICY_CHECK
+  → HUMAN_REVIEW
+  → APOLLO_CANARY
+  → RING_PROMOTION
+  → POST_DEPLOY_OBSERVATION
+  → ACTIVE_OR_ROLLED_BACK
+```
+
+No candidate can skip from `PATCH_CANDIDATE` to deployment. AIP agents may assemble a diff, summarize evidence, and recommend the next state, but Apollo receives only signed, approved release bundles with attached eval reports and rollback metadata.
+
+### Python Precision Gate
+
+```python
+from dataclasses import dataclass
+from enum import Enum
+
+class DeployDecision(str, Enum):
+    BLOCK = "block"
+    REVIEW = "review"
+    CANARY = "canary"
+
+@dataclass(frozen=True)
+class PatchEvidence:
+    change_id: str
+    eval_precision: float
+    eval_recall: float
+    p95_latency_ms: int
+    policy_findings: tuple[str, ...]
+    rollback_plan: str
+    human_approval_id: str | None
+
+
+def decide_deploy(evidence: PatchEvidence) -> DeployDecision:
+    if evidence.policy_findings:
+        return DeployDecision.BLOCK
+    if not evidence.rollback_plan:
+        return DeployDecision.BLOCK
+    if evidence.eval_precision < 0.92 or evidence.eval_recall < 0.86:
+        return DeployDecision.REVIEW
+    if evidence.p95_latency_ms > 750:
+        return DeployDecision.REVIEW
+    if evidence.human_approval_id is None:
+        return DeployDecision.REVIEW
+    return DeployDecision.CANARY
+```
+
+### Apollo Rollout Contract
+
+- **Ring 0**: replay-only shadow deployment against historical missions and synthetic red-team cases.
+- **Ring 1**: canary for one approved mission cell with read-only recommendations and no autonomous external effects.
+- **Ring 2**: broader production availability after SLO, eval, trust, and audit checks remain inside thresholds for the observation window.
+- **Rollback trigger**: precision regression, recall regression, latency SLO breach, policy denial spike, operator trust drop, provenance failure, or commander-initiated kill switch.
+- **Immutable evidence**: every prompt version, workflow graph, model route, policy bundle, approval, deployment ID, and rollback event is written to the audit ledger and linked to the affected ontology objects.
+
 ## Marketing Campaign and Legacy Agent Army Merge
 
 ClearGlassInc Artemis can attach the repository's governed engineering-and-marketing agent army to the broader AIP orchestration layer when a mission objective requires both legacy preservation and market execution. This is a planning-and-control capability, not an autonomous publishing or outreach engine.

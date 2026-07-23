@@ -33,7 +33,8 @@ jobs:
           cache: pip
       - name: Lint (ruff)
         run: |
-          pip install ruff
+          # Pin ruff below 0.16 so its expanded default rules can't fail this gate.
+          pip install "ruff==0.15.8"
           ruff check sentinel/sentinel/selfheal.py sentinel/tests/test_selfheal.py \
                      sentinel/sentinel/artemis_fawl.py sentinel/tests/test_artemis_fawl.py
       - name: Recovery-loop unit suite

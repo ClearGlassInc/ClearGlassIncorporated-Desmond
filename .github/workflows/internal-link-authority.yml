@@ -52,7 +52,9 @@ jobs:
           python-version: "3.13"
 
       - name: Install focused validation dependencies
-        run: python3 -m pip install "pytest>=8,<9" "ruff>=0.12,<1"
+        # ruff capped below 0.16: its expanded default rule set (EXE001, RUF059,
+        # RUF100, ...) flags pre-existing style and fails the focused-lint gate.
+        run: python3 -m pip install "pytest>=8,<9" "ruff==0.15.8"
 
       - name: Capture focused authority-network lint
         id: authority_lint

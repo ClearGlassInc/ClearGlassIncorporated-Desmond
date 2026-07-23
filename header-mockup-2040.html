@@ -91,18 +91,18 @@
 
   .seal-housing{
     position:relative;flex:0 0 auto;
-    width:clamp(80px,6.2vw,104px);height:clamp(80px,6.2vw,104px);
+    width:clamp(84px,6.4vw,108px);height:clamp(84px,6.4vw,108px);
     border-radius:50%;
     display:grid;place-items:center;
+    overflow:hidden;
     background:
-      radial-gradient(circle at 34% 26%, rgba(255,255,255,.30), rgba(120,150,220,.10) 40%, rgba(10,16,40,.55) 74%),
-      conic-gradient(from 210deg, rgba(150,120,255,.55), rgba(120,200,255,.35), rgba(200,140,255,.55), rgba(120,200,255,.35), rgba(150,120,255,.55));
-    border:1px solid rgba(238,242,255,.6);
+      radial-gradient(circle at 38% 30%, #eef1f6 0%, #dfe3ea 46%, #c9cdd6 78%, #aab0be 100%);
+    border:1px solid rgba(238,242,255,.72);
     box-shadow:
-      0 0 0 6px rgba(151,90,255,.20),
+      0 0 0 6px rgba(151,90,255,.22),
       0 0 34px rgba(174,91,255,.7),
-      inset 0 2px 12px rgba(255,255,255,.5),
-      inset 0 -10px 22px rgba(0,0,0,.4);
+      inset 0 2px 12px rgba(255,255,255,.6),
+      inset 0 -12px 26px rgba(70,60,110,.35);
   }
   /* rotating holographic ring */
   .seal-housing::before{
@@ -114,8 +114,22 @@
   }
   @keyframes spin{to{transform:rotate(360deg)}}
   @media (prefers-reduced-motion:reduce){.seal-housing::before{animation:none}.circuit{opacity:.4}}
-
-  .seal{width:86%;height:86%;display:block;filter:drop-shadow(0 3px 6px rgba(4,6,20,.5))}
+  /* cool violet/cyan glass sheen + rim over the crystal emblem */
+  .seal-housing::after{
+    content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
+    background:
+      radial-gradient(120% 90% at 30% 18%, rgba(255,255,255,.55), rgba(255,255,255,0) 42%),
+      radial-gradient(140% 120% at 78% 92%, rgba(124,77,255,.34), rgba(124,77,255,0) 55%),
+      radial-gradient(120% 120% at 88% 22%, rgba(127,216,255,.30), rgba(127,216,255,0) 50%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.35), inset 0 0 22px rgba(70,60,120,.28);
+    mix-blend-mode:screen;
+  }
+  .seal{
+    position:relative;z-index:1;
+    width:100%;height:100%;display:block;object-fit:cover;border-radius:50%;
+    /* the source emblem sits on a light-gray card; lift it toward cool crystal */
+    filter:contrast(1.08) brightness(1.04) saturate(.9) drop-shadow(0 2px 5px rgba(4,6,20,.4));
+  }
 
   .wordmark{display:flex;flex-direction:column;line-height:.98}
   .wordmark .name{
@@ -260,107 +274,10 @@
 
       <!-- Brand: holographic glass seal + wordmark -->
       <a class="brand" href="#" aria-label="ClearGlassInc. 2040 home">
-        <span class="seal-housing" aria-hidden="true">
-          <!-- Transparent glass presidential-style seal -->
-          <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="ClearGlassInc presidential glass seal">
-            <defs>
-              <radialGradient id="glassBody" cx="42%" cy="34%" r="70%">
-                <stop offset="0" stop-color="#ffffff" stop-opacity=".92"/>
-                <stop offset="34%" stop-color="#d7e2ff" stop-opacity=".5"/>
-                <stop offset="70%" stop-color="#8aa0d8" stop-opacity=".28"/>
-                <stop offset="100%" stop-color="#0c1330" stop-opacity=".55"/>
-              </radialGradient>
-              <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#ffffff"/>
-                <stop offset="45%" stop-color="#cdd6ea"/>
-                <stop offset="100%" stop-color="#7f8aa8"/>
-              </linearGradient>
-              <linearGradient id="quartz" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#eaf1ff" stop-opacity=".95"/>
-                <stop offset="100%" stop-color="#9db4ff" stop-opacity=".55"/>
-              </linearGradient>
-              <path id="ringtop" d="M100 100 m-74,0 a74,74 0 1,1 148,0" />
-              <path id="ringbot" d="M100 100 m74,0 a74,74 0 1,1 -148,0" />
-            </defs>
-
-            <!-- outer crystal ring -->
-            <circle cx="100" cy="100" r="96" fill="url(#glassBody)" stroke="url(#silver)" stroke-width="2.2"/>
-            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#silver)" stroke-width="3"/>
-            <circle cx="100" cy="100" r="76" fill="none" stroke="rgba(127,216,255,.5)" stroke-width="1"/>
-
-            <!-- outer lettering -->
-            <text font-family="'Cormorant Garamond',serif" font-size="12.5" font-weight="700"
-                  letter-spacing="3.4" fill="#eaf1ff">
-              <textPath href="#ringtop" startOffset="50%" text-anchor="middle">CLEARGLASS · INCORPORATED</textPath>
-            </text>
-            <text font-family="'Cormorant Garamond',serif" font-size="12.5" font-weight="700"
-                  letter-spacing="5" fill="#c9b3ff">
-              <textPath href="#ringbot" startOffset="50%" text-anchor="middle">★ EST · 2040 ★</textPath>
-            </text>
-
-            <!-- arc of stars above the eagle -->
-            <g fill="url(#quartz)" stroke="rgba(255,255,255,.7)" stroke-width=".4">
-              <!-- 13 stars along an arc -->
-              <g id="stars"></g>
-            </g>
-
-            <!-- ===== Eagle ===== -->
-            <g stroke="url(#silver)" stroke-width="1" stroke-linejoin="round">
-              <!-- spread wings -->
-              <path d="M100 96
-                       C86 78, 64 70, 40 74
-                       C56 74, 66 82, 72 92
-                       C58 88, 44 90, 34 98
-                       C50 96, 62 100, 70 108
-                       C58 108, 48 114, 42 122
-                       C58 116, 74 116, 86 120 Z"
-                    fill="url(#quartz)" fill-opacity=".85"/>
-              <path d="M100 96
-                       C114 78, 136 70, 160 74
-                       C144 74, 134 82, 128 92
-                       C142 88, 156 90, 166 98
-                       C150 96, 138 100, 130 108
-                       C142 108, 152 114, 158 122
-                       C142 116, 126 116, 114 120 Z"
-                    fill="url(#quartz)" fill-opacity=".85"/>
-
-              <!-- head + neck -->
-              <path d="M100 66
-                       C94 66, 90 71, 90 77
-                       C90 83, 94 88, 100 90
-                       C106 88, 110 83, 110 77
-                       C110 71, 106 66, 100 66 Z"
-                    fill="url(#glassBody)"/>
-              <!-- beak -->
-              <path d="M110 76 l10 3 l-10 4 Z" fill="url(#silver)"/>
-              <!-- eye -->
-              <circle cx="103" cy="76" r="1.4" fill="#0c1330"/>
-
-              <!-- body / shield backing -->
-              <path d="M88 90 h24 v18 c0 14 -6 22 -12 26 c-6 -4 -12 -12 -12 -26 Z"
-                    fill="url(#glassBody)"/>
-
-              <!-- shield stripes -->
-              <g fill="rgba(120,150,255,.55)">
-                <rect x="92" y="94" width="3" height="30"/>
-                <rect x="100" y="94" width="3" height="34"/>
-                <rect x="108" y="94" width="3" height="30"/>
-              </g>
-              <path d="M88 90 h24 v6 h-24 Z" fill="rgba(150,175,255,.6)"/>
-
-              <!-- talons: olive branch (left) + arrows (right) -->
-              <g stroke="url(#silver)" stroke-width="1.1" fill="none" opacity=".9">
-                <path d="M84 130 q-14 6 -26 2"/>
-                <circle cx="66" cy="132" r="1.6" fill="url(#quartz)"/>
-                <circle cx="60" cy="133" r="1.6" fill="url(#quartz)"/>
-                <path d="M116 130 q14 6 26 2"/>
-                <path d="M134 128 l8 4 M138 130 l4 6"/>
-              </g>
-            </g>
-
-            <!-- glass refraction highlight -->
-            <ellipse cx="76" cy="58" rx="34" ry="16" fill="rgba(255,255,255,.28)" transform="rotate(-24 76 58)"/>
-          </svg>
+        <span class="seal-housing">
+          <!-- Official ClearGlassInc transparent-crystal presidential seal -->
+          <img class="seal" src="assets/clearglass-logo.png"
+               alt="ClearGlassInc presidential glass seal — crystal eagle, shield, star ring, and embossed lettering">
         </span>
 
         <span class="wordmark">

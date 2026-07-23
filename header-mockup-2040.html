@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClearGlassInc. 2040 — Header Mockup</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Futuristic glassmorphism website header mockup for ClearGlassInc. 2040 — holographic presidential glass seal, command-bar navigation, and a cinematic night-city hero.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#0a1130; --navy-800:#101a41; --navy-700:#16234f;
+    --silver:#cfd8ff; --violet:#b06dff; --violet-soft:#c978ff;
+    --cyan:#7fd8ff; --ink:#04060e;
+    --stage-max:1760px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:Inter,system-ui,sans-serif;
+    color:#eef4ff;
+    background:
+      radial-gradient(1200px 620px at 50% -8%, #f2f5ff 0%, #eef1fb 42%, #e7eaf6 100%),
+      #eef1fb;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding:clamp(22px,3.4vw,54px);
+  }
+
+  /* ============ Wide desktop stage (~3.2:1 composition) ============ */
+  .stage{
+    width:min(var(--stage-max), 100%);
+    display:flex;
+    flex-direction:column;
+    gap:clamp(20px,2.2vw,34px);
+    filter:drop-shadow(0 40px 90px rgba(31,26,74,.16));
+  }
+
+  /* ---------------- Command-bar navigation ---------------- */
+  .navbar{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:clamp(1rem,2vw,2rem);
+    min-height:112px;
+    padding:clamp(.7rem,1.1vw,1rem) clamp(1.1rem,1.8vw,1.9rem);
+    border-radius:999px;
+    isolation:isolate;
+    overflow:visible;
+    background:linear-gradient(90deg,
+      rgba(37,50,91,.80),
+      rgba(18,28,56,.92) 46%,
+      rgba(79,56,142,.82));
+    -webkit-backdrop-filter:blur(30px) saturate(1.6);
+    backdrop-filter:blur(30px) saturate(1.6);
+    border:1px solid rgba(204,215,255,.72);
+    box-shadow:
+      0 26px 74px rgba(55,34,130,.26),
+      0 8px 22px rgba(8,13,35,.26),
+      inset 0 1px 0 rgba(255,255,255,.62),
+      inset 0 -1px 0 rgba(176,128,255,.55),
+      0 0 0 1px rgba(148,163,255,.28);
+  }
+  /* inner glass sheen + circuit tint */
+  .navbar::before{
+    content:"";position:absolute;inset:5px;border-radius:inherit;pointer-events:none;z-index:-1;
+    background:
+      linear-gradient(180deg,rgba(255,255,255,.16),transparent 36%),
+      linear-gradient(90deg,rgba(112,178,255,.22),transparent 28%,rgba(190,109,255,.20) 72%,rgba(255,255,255,.10));
+    box-shadow:inset 0 0 40px rgba(126,87,255,.36),inset 0 0 0 1px rgba(255,255,255,.18);
+  }
+  /* violet edge illumination hairline */
+  .navbar::after{
+    content:"";position:absolute;left:56px;right:56px;top:9px;height:2px;border-radius:999px;pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(125,164,255,.82) 21%,rgba(255,255,255,.96) 42%,rgba(202,123,255,.96) 63%,transparent);
+    filter:blur(.2px);
+    box-shadow:0 0 14px rgba(190,109,255,.8),0 0 28px rgba(96,165,250,.4);
+  }
+
+  /* faint circuit-line detailing behind the bar contents */
+  .circuit{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none;opacity:.5;z-index:-1}
+  .circuit svg{position:absolute;inset:0;width:100%;height:100%}
+
+  /* -------- Brand cluster: seal + wordmark -------- */
+  .brand{display:flex;align-items:center;gap:clamp(14px,1.7vw,24px);min-width:max-content;text-decoration:none}
+
+  .seal-housing{
+    position:relative;flex:0 0 auto;
+    width:clamp(80px,6.2vw,104px);height:clamp(80px,6.2vw,104px);
+    border-radius:50%;
+    display:grid;place-items:center;
+    background:
+      radial-gradient(circle at 34% 26%, rgba(255,255,255,.30), rgba(120,150,220,.10) 40%, rgba(10,16,40,.55) 74%),
+      conic-gradient(from 210deg, rgba(150,120,255,.55), rgba(120,200,255,.35), rgba(200,140,255,.55), rgba(120,200,255,.35), rgba(150,120,255,.55));
+    border:1px solid rgba(238,242,255,.6);
+    box-shadow:
+      0 0 0 6px rgba(151,90,255,.20),
+      0 0 34px rgba(174,91,255,.7),
+      inset 0 2px 12px rgba(255,255,255,.5),
+      inset 0 -10px 22px rgba(0,0,0,.4);
+  }
+  /* rotating holographic ring */
+  .seal-housing::before{
+    content:"";position:absolute;inset:-4px;border-radius:50%;padding:1px;pointer-events:none;
+    background:conic-gradient(from 0deg,transparent,rgba(127,216,255,.9),transparent 30%,rgba(190,109,255,.9),transparent 60%,rgba(255,255,255,.85),transparent 85%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    animation:spin 14s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.seal-housing::before{animation:none}.circuit{opacity:.4}}
+
+  .seal{width:86%;height:86%;display:block;filter:drop-shadow(0 3px 6px rgba(4,6,20,.5))}
+
+  .wordmark{display:flex;flex-direction:column;line-height:.98}
+  .wordmark .name{
+    font-family:"Cormorant Garamond",Georgia,serif;
+    font-weight:700;
+    font-size:clamp(1.55rem,2.3vw,2.35rem);
+    letter-spacing:.005em;
+    color:#f7fbff;
+    text-shadow:0 0 22px rgba(160,190,255,.35);
+    white-space:nowrap;
+  }
+  .wordmark .name em{
+    font-style:italic;font-weight:600;
+    color:#c9b3ff;
+    margin-left:.34rem;
+    text-shadow:0 0 18px rgba(185,156,255,.7);
+  }
+  .wordmark .tag{
+    margin-top:.32rem;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:clamp(.52rem,.66vw,.68rem);
+    letter-spacing:.42em;text-transform:uppercase;
+    color:rgba(180,196,240,.72);
+    white-space:nowrap;
+  }
+
+  /* -------- Navigation links -------- */
+  .links{display:flex;align-items:center;gap:clamp(.2rem,.5vw,.72rem);margin-left:auto}
+  .links a,.dropbtn{
+    position:relative;
+    color:rgba(239,244,255,.9);
+    text-decoration:none;font-weight:600;
+    font-size:clamp(.88rem,.94vw,1.02rem);
+    padding:13px 10px 17px;border-radius:14px;border:0;background:transparent;cursor:pointer;
+    font-family:Inter,system-ui,sans-serif;letter-spacing:.005em;white-space:nowrap;
+  }
+  .links a::after,.dropbtn::after{
+    content:"";position:absolute;left:50%;bottom:6px;width:32px;height:3px;border-radius:999px;
+    transform:translateX(-50%) scaleX(.7);
+    background:linear-gradient(90deg,transparent,#8aa7ff,#c978ff,transparent);
+    box-shadow:0 0 13px rgba(176,103,255,.9);
+    opacity:.62;transition:opacity .2s ease,transform .2s ease;
+  }
+  .links a:hover,.dropbtn:hover{color:#fff;background:rgba(255,255,255,.07)}
+  .links a:hover::after,.dropbtn:hover::after{opacity:1;transform:translateX(-50%) scaleX(1.25)}
+  .dropbtn{display:inline-flex;align-items:center;gap:.34rem}
+  .caret{font-size:.7em;opacity:.85;transform:translateY(1px)}
+
+  /* -------- CTA -------- */
+  .cta{
+    display:inline-flex;align-items:center;gap:10px;margin-left:clamp(.3rem,.7vw,.7rem);
+    padding:14px 20px;border-radius:16px;
+    color:#fff;text-decoration:none;font-weight:600;font-size:clamp(.88rem,.94vw,1rem);
+    white-space:nowrap;
+    background:linear-gradient(180deg,rgba(11,14,28,.98),rgba(4,6,14,.98));
+    border:1px solid rgba(196,139,255,.78);
+    box-shadow:
+      0 0 0 1px rgba(123,92,255,.25),
+      0 0 24px rgba(178,88,255,.6),
+      0 14px 34px rgba(0,0,0,.38),
+      inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .cta .shield{
+    width:26px;height:26px;flex:0 0 auto;
+    filter:drop-shadow(0 0 8px rgba(190,120,255,.85));
+  }
+  .cta:hover{box-shadow:0 0 0 1px rgba(123,92,255,.35),0 0 34px rgba(178,88,255,.85),0 16px 40px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.18)}
+
+  /* ---------------- Hero: cinematic night city ---------------- */
+  .hero{
+    position:relative;
+    width:100%;
+    aspect-ratio:32 / 11;
+    border-radius:clamp(26px,2.4vw,40px);
+    overflow:hidden;
+    border:1px solid rgba(202,212,255,.5);
+    box-shadow:
+      0 40px 100px rgba(18,22,60,.4),
+      inset 0 1px 0 rgba(255,255,255,.14),
+      inset 0 0 0 1px rgba(120,150,255,.14);
+    background:#060a1e;
+  }
+  .hero svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .hero .hero-label{
+    position:absolute;left:clamp(22px,3vw,52px);bottom:clamp(20px,2.6vw,44px);
+    z-index:3;max-width:min(560px,60%);
+  }
+  .hero .kicker{
+    font-family:"IBM Plex Mono",monospace;font-size:clamp(.56rem,.72vw,.72rem);
+    letter-spacing:.4em;text-transform:uppercase;color:rgba(160,200,255,.8);margin:0 0 .7rem;
+  }
+  .hero h1{
+    font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;
+    font-size:clamp(1.7rem,3.4vw,3.4rem);line-height:1.02;margin:0;
+    color:#f5f8ff;text-shadow:0 4px 40px rgba(10,14,40,.7);
+  }
+  .hero h1 em{font-style:italic;color:#c9b3ff}
+
+  .caption{
+    text-align:center;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+    color:rgba(70,84,140,.72);
+    margin-top:.4rem;
+  }
+
+  @media (max-width:960px){
+    .links{display:none}
+    .navbar{min-height:88px}
+    .hero{aspect-ratio:16/10}
+  }
+</style>
+</head>
+<body>
+  <main class="stage" role="img" aria-label="ClearGlassInc. 2040 futuristic website header mockup: holographic glass presidential seal, glassmorphism command navigation bar, and a night-city hero.">
+
+    <!-- =================== NAVIGATION =================== -->
+    <nav class="navbar" aria-label="Primary">
+      <!-- circuit-line detailing -->
+      <div class="circuit" aria-hidden="true">
+        <svg viewBox="0 0 1600 120" preserveAspectRatio="none">
+          <g fill="none" stroke="url(#circ)" stroke-width="1">
+            <path d="M120 20 H360 v34 H520"/>
+            <path d="M120 100 H300 v-28 H470"/>
+            <path d="M1480 26 H1240 v40 H1080"/>
+            <path d="M1480 96 H1300 v-30 H1150"/>
+            <path d="M760 8 v18 M820 8 v18 M880 8 v18"/>
+          </g>
+          <g fill="#9fd0ff">
+            <circle cx="520" cy="54" r="2.2"/><circle cx="470" cy="72" r="2.2"/>
+            <circle cx="1080" cy="66" r="2.2"/><circle cx="1150" cy="66" r="2.2"/>
+          </g>
+          <defs>
+            <linearGradient id="circ" x1="0" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#7fd8ff" stop-opacity="0"/>
+              <stop offset=".5" stop-color="#b06dff" stop-opacity=".8"/>
+              <stop offset="1" stop-color="#7fd8ff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Brand: holographic glass seal + wordmark -->
+      <a class="brand" href="#" aria-label="ClearGlassInc. 2040 home">
+        <span class="seal-housing" aria-hidden="true">
+          <!-- Transparent glass presidential-style seal -->
+          <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="ClearGlassInc presidential glass seal">
+            <defs>
+              <radialGradient id="glassBody" cx="42%" cy="34%" r="70%">
+                <stop offset="0" stop-color="#ffffff" stop-opacity=".92"/>
+                <stop offset="34%" stop-color="#d7e2ff" stop-opacity=".5"/>
+                <stop offset="70%" stop-color="#8aa0d8" stop-opacity=".28"/>
+                <stop offset="100%" stop-color="#0c1330" stop-opacity=".55"/>
+              </radialGradient>
+              <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffffff"/>
+                <stop offset="45%" stop-color="#cdd6ea"/>
+                <stop offset="100%" stop-color="#7f8aa8"/>
+              </linearGradient>
+              <linearGradient id="quartz" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#eaf1ff" stop-opacity=".95"/>
+                <stop offset="100%" stop-color="#9db4ff" stop-opacity=".55"/>
+              </linearGradient>
+              <path id="ringtop" d="M100 100 m-74,0 a74,74 0 1,1 148,0" />
+              <path id="ringbot" d="M100 100 m74,0 a74,74 0 1,1 -148,0" />
+            </defs>
+
+            <!-- outer crystal ring -->
+            <circle cx="100" cy="100" r="96" fill="url(#glassBody)" stroke="url(#silver)" stroke-width="2.2"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#silver)" stroke-width="3"/>
+            <circle cx="100" cy="100" r="76" fill="none" stroke="rgba(127,216,255,.5)" stroke-width="1"/>
+
+            <!-- outer lettering -->
+            <text font-family="'Cormorant Garamond',serif" font-size="12.5" font-weight="700"
+                  letter-spacing="3.4" fill="#eaf1ff">
+              <textPath href="#ringtop" startOffset="50%" text-anchor="middle">CLEARGLASS · INCORPORATED</textPath>
+            </text>
+            <text font-family="'Cormorant Garamond',serif" font-size="12.5" font-weight="700"
+                  letter-spacing="5" fill="#c9b3ff">
+              <textPath href="#ringbot" startOffset="50%" text-anchor="middle">★ EST · 2040 ★</textPath>
+            </text>
+
+            <!-- arc of stars above the eagle -->
+            <g fill="url(#quartz)" stroke="rgba(255,255,255,.7)" stroke-width=".4">
+              <!-- 13 stars along an arc -->
+              <g id="stars"></g>
+            </g>
+
+            <!-- ===== Eagle ===== -->
+            <g stroke="url(#silver)" stroke-width="1" stroke-linejoin="round">
+              <!-- spread wings -->
+              <path d="M100 96
+                       C86 78, 64 70, 40 74
+                       C56 74, 66 82, 72 92
+                       C58 88, 44 90, 34 98
+                       C50 96, 62 100, 70 108
+                       C58 108, 48 114, 42 122
+                       C58 116, 74 116, 86 120 Z"
+                    fill="url(#quartz)" fill-opacity=".85"/>
+              <path d="M100 96
+                       C114 78, 136 70, 160 74
+                       C144 74, 134 82, 128 92
+                       C142 88, 156 90, 166 98
+                       C150 96, 138 100, 130 108
+                       C142 108, 152 114, 158 122
+                       C142 116, 126 116, 114 120 Z"
+                    fill="url(#quartz)" fill-opacity=".85"/>
+
+              <!-- head + neck -->
+              <path d="M100 66
+                       C94 66, 90 71, 90 77
+                       C90 83, 94 88, 100 90
+                       C106 88, 110 83, 110 77
+                       C110 71, 106 66, 100 66 Z"
+                    fill="url(#glassBody)"/>
+              <!-- beak -->
+              <path d="M110 76 l10 3 l-10 4 Z" fill="url(#silver)"/>
+              <!-- eye -->
+              <circle cx="103" cy="76" r="1.4" fill="#0c1330"/>
+
+              <!-- body / shield backing -->
+              <path d="M88 90 h24 v18 c0 14 -6 22 -12 26 c-6 -4 -12 -12 -12 -26 Z"
+                    fill="url(#glassBody)"/>
+
+              <!-- shield stripes -->
+              <g fill="rgba(120,150,255,.55)">
+                <rect x="92" y="94" width="3" height="30"/>
+                <rect x="100" y="94" width="3" height="34"/>
+                <rect x="108" y="94" width="3" height="30"/>
+              </g>
+              <path d="M88 90 h24 v6 h-24 Z" fill="rgba(150,175,255,.6)"/>
+
+              <!-- talons: olive branch (left) + arrows (right) -->
+              <g stroke="url(#silver)" stroke-width="1.1" fill="none" opacity=".9">
+                <path d="M84 130 q-14 6 -26 2"/>
+                <circle cx="66" cy="132" r="1.6" fill="url(#quartz)"/>
+                <circle cx="60" cy="133" r="1.6" fill="url(#quartz)"/>
+                <path d="M116 130 q14 6 26 2"/>
+                <path d="M134 128 l8 4 M138 130 l4 6"/>
+              </g>
+            </g>
+
+            <!-- glass refraction highlight -->
+            <ellipse cx="76" cy="58" rx="34" ry="16" fill="rgba(255,255,255,.28)" transform="rotate(-24 76 58)"/>
+          </svg>
+        </span>
+
+        <span class="wordmark">
+          <span class="name">ClearGlassInc. <em>2040</em></span>
+          <span class="tag">Governed Intelligence · Cyber Command</span>
+        </span>
+      </a>
+
+      <!-- Links -->
+      <div class="links">
+        <a href="#vision">Vision</a>
+        <a href="#services">Services</a>
+        <button class="dropbtn" aria-haspopup="true" aria-expanded="false">Products <span class="caret" aria-hidden="true">⌄</span></button>
+        <a href="#government">Government</a>
+        <a href="#insights">Insights</a>
+        <a href="#contact">Contact</a>
+
+        <a class="cta" href="#engagement">
+          <svg class="shield" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="shieldg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#e6d0ff"/>
+                <stop offset="1" stop-color="#a76bff"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2.5 3.5 6v6c0 5 3.6 8 8.5 9.5C16.9 20 20.5 17 20.5 12V6L12 2.5Z"
+                  stroke="url(#shieldg)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M8.6 12.2l2.3 2.3 4.5-4.8" stroke="url(#shieldg)" stroke-width="1.6"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Book a Security Engagement
+        </a>
+      </div>
+    </nav>
+
+    <!-- =================== HERO =================== -->
+    <div class="hero">
+      <svg viewBox="0 0 1600 550" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#050a24"/>
+            <stop offset="45%" stop-color="#0b1440"/>
+            <stop offset="80%" stop-color="#1a1a52"/>
+            <stop offset="100%" stop-color="#2a1e5e"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="66%" cy="78%" r="55%">
+            <stop offset="0" stop-color="#7c4dff" stop-opacity=".55"/>
+            <stop offset="55%" stop-color="#4a2f9e" stop-opacity=".2"/>
+            <stop offset="100%" stop-color="#4a2f9e" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="towerLit" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#3a2a7a"/>
+            <stop offset="50%" stop-color="#7e57ff"/>
+            <stop offset="100%" stop-color="#c77dff"/>
+          </linearGradient>
+          <linearGradient id="towerDark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#141b45"/>
+            <stop offset="100%" stop-color="#0a0f2c"/>
+          </linearGradient>
+          <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2a1e5e" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#3a2a7a" stop-opacity=".7"/>
+          </linearGradient>
+        </defs>
+
+        <!-- sky -->
+        <rect width="1600" height="550" fill="url(#sky)"/>
+        <rect width="1600" height="550" fill="url(#glow)"/>
+
+        <!-- stars -->
+        <g fill="#dbe6ff" id="skystars"></g>
+
+        <!-- aerial technology: drones / craft -->
+        <g fill="none" stroke="#9fd0ff" stroke-width="1.4" opacity=".85">
+          <g transform="translate(420,120)">
+            <path d="M-14 0 h28 M0 -6 v12" stroke-width="2"/>
+            <circle cx="0" cy="0" r="3" fill="#cfe6ff" stroke="none"/>
+            <path d="M-22 -4 l8 4 l-8 4 M22 -4 l-8 4 l8 4" stroke-width="1"/>
+          </g>
+          <g transform="translate(1180,90)">
+            <path d="M-12 0 h24 M0 -5 v10" stroke-width="2"/>
+            <circle cx="0" cy="0" r="2.6" fill="#e6d0ff" stroke="none"/>
+          </g>
+          <g transform="translate(760,150)">
+            <ellipse cx="0" cy="0" rx="26" ry="7"/>
+            <path d="M-26 0 h52" stroke-width="1"/>
+            <circle cx="0" cy="0" r="2.4" fill="#c77dff" stroke="none"/>
+          </g>
+        </g>
+        <!-- light trails -->
+        <g stroke="url(#towerLit)" stroke-width="1.4" opacity=".5" fill="none">
+          <path d="M300 80 Q620 60 900 110"/>
+          <path d="M1000 60 Q1200 90 1420 70"/>
+        </g>
+
+        <!-- distant skyline -->
+        <g fill="url(#towerDark)" opacity=".8">
+          <rect x="0" y="360" width="70" height="190"/>
+          <rect x="90" y="320" width="60" height="230"/>
+          <rect x="170" y="380" width="80" height="170"/>
+          <rect x="1360" y="340" width="70" height="210"/>
+          <rect x="1450" y="300" width="60" height="250"/>
+          <rect x="1530" y="370" width="70" height="180"/>
+        </g>
+
+        <!-- mid buildings -->
+        <g fill="url(#towerDark)">
+          <rect x="250" y="300" width="120" height="250"/>
+          <rect x="1150" y="280" width="140" height="270"/>
+          <rect x="1040" y="360" width="90" height="190"/>
+        </g>
+
+        <!-- hero purple-lit skyscraper -->
+        <g>
+          <rect x="640" y="120" width="150" height="430" fill="url(#towerDark)"/>
+          <rect x="640" y="120" width="150" height="430" fill="url(#towerLit)" opacity=".35"/>
+          <!-- lit edge -->
+          <rect x="782" y="120" width="8" height="430" fill="url(#towerLit)"/>
+          <!-- crown -->
+          <path d="M640 120 L715 78 L790 120 Z" fill="url(#towerLit)" opacity=".9"/>
+          <rect x="712" y="46" width="6" height="34" fill="#c77dff"/>
+          <circle cx="715" cy="44" r="4" fill="#e6d0ff"/>
+          <!-- window grid -->
+          <g fill="#c9a8ff" opacity=".85" id="windowsA"></g>
+        </g>
+        <!-- secondary lit tower -->
+        <g>
+          <rect x="830" y="200" width="110" height="350" fill="url(#towerDark)"/>
+          <rect x="932" y="200" width="8" height="350" fill="url(#towerLit)" opacity=".8"/>
+          <g fill="#9fd0ff" opacity=".7" id="windowsB"></g>
+        </g>
+
+        <!-- atmospheric haze -->
+        <rect x="0" y="330" width="1600" height="220" fill="url(#haze)"/>
+        <ellipse cx="760" cy="520" rx="900" ry="120" fill="#7c4dff" opacity=".18"/>
+      </svg>
+
+      <div class="hero-label">
+        <p class="kicker">Governed Autonomy · 2040</p>
+        <h1>The city runs on <em>ClearGlass</em>.</h1>
+      </div>
+    </div>
+
+    <p class="caption">ClearGlassInc. 2040 — Header Composition Mockup</p>
+  </main>
+
+<script>
+  // Procedurally place seal stars, sky stars, and window grids so the SVG stays compact.
+  (function(){
+    var NS="http://www.w3.org/2000/svg";
+    function star(cx,cy,r){
+      var pts=[],i,a;
+      for(i=0;i<10;i++){a=Math.PI/5*i - Math.PI/2;var rr=i%2?r*0.42:r;pts.push((cx+Math.cos(a)*rr).toFixed(1)+","+(cy+Math.sin(a)*rr).toFixed(1));}
+      var p=document.createElementNS(NS,"polygon");p.setAttribute("points",pts.join(" "));return p;
+    }
+    // 13 seal stars along an arc above the eagle
+    var g=document.getElementById("stars");
+    if(g){for(var i=0;i<13;i++){var t=i/12, ang=(-150 + t*120)*Math.PI/180, R=58;
+      var cx=100+Math.cos(ang)*R, cy=100+Math.sin(ang)*R*0.62 - 6;
+      g.appendChild(star(cx,cy,2.6));}}
+    // sky stars
+    var ss=document.getElementById("skystars");
+    if(ss){for(var j=0;j<90;j++){var c=document.createElementNS(NS,"circle");
+      c.setAttribute("cx",(Math.random()*1600).toFixed(0));
+      c.setAttribute("cy",(Math.random()*300).toFixed(0));
+      c.setAttribute("r",(Math.random()*1.3+.3).toFixed(2));
+      c.setAttribute("opacity",(Math.random()*.6+.2).toFixed(2));ss.appendChild(c);}}
+    // window grids
+    function windows(id,x,y,w,h,cols,rows){
+      var wg=document.getElementById(id);if(!wg)return;
+      var pw=w/(cols*2), ph=h/(rows*1.7);
+      for(var r=0;r<rows;r++)for(var c=0;c<cols;c++){
+        if(Math.random()<.28)continue;
+        var rect=document.createElementNS(NS,"rect");
+        rect.setAttribute("x",(x+ pw + c*(pw*2)).toFixed(1));
+        rect.setAttribute("y",(y+ ph + r*(ph*1.7)).toFixed(1));
+        rect.setAttribute("width",pw.toFixed(1));rect.setAttribute("height",(ph*.8).toFixed(1));
+        rect.setAttribute("opacity",(Math.random()*.6+.35).toFixed(2));
+        wg.appendChild(rect);
+      }
+    }
+    windows("windowsA",648,150,134,390,7,20);
+    windows("windowsB",838,215,86,320,5,16);
+  })();
+</script>
+</body>
+</html>

@@ -77,14 +77,14 @@
     ["Procurement Legal Tech", "procurement-legal-tech.html", "Procurement integrity AI", "⚖"],
     ["Pricing", "pricing.html", "Plans and engagements", "₵"]
   ];
-  var TOP = [["Home","index.html"],["Products","products.html"],["Solutions","government.html"],["Company","index.html#contact"],["Resources","blog/"],["Contact","index.html#contact"]];
+  var TOP = [["Vision","index.html#vision"],["Services","index.html#services"],["Products","products.html"],["Government","index.html#government"],["Insights","blog/"],["Contact","index.html#contact"]];
   var script = document.currentScript || Array.prototype.slice.call(document.scripts).filter(function(s){return /nav\.js(?:\?|$)/.test(s.src);}).pop();
   var base = script ? new URL('.', script.src).href : new URL('.', location.href).href;
   function href(path){ return /^https?:|^mailto:|^#/.test(path) ? path : new URL(path, base).href; }
   var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   var css = [
-    ".cg-native-nav-hidden{display:none!important}.cg-global-nav-enabled{--cg-unified-nav-offset:clamp(104px,9.5vw,156px)}",
+    ".cg-native-nav-hidden,.cg-native-header-hidden{display:none!important}.cg-global-nav-enabled{--cg-unified-nav-offset:clamp(104px,9.5vw,156px)}",
     ".cg-topnav{position:fixed;top:clamp(16px,2.1vw,30px);left:50%;transform:translateX(-50%);width:min(1840px,calc(100% - clamp(1.5rem,3vw,4rem)));z-index:2147483000;min-height:112px;display:flex;align-items:center;justify-content:space-between;gap:clamp(1.25rem,2.4vw,3rem);padding:clamp(.72rem,1vw,1rem) clamp(1rem,1.65vw,1.85rem);border-radius:999px;border:1px solid rgba(221,228,255,.78);background:linear-gradient(90deg,rgba(233,241,255,.26),rgba(20,31,61,.88) 13%,rgba(11,18,38,.94) 48%,rgba(41,32,82,.9) 78%,rgba(139,92,246,.32));backdrop-filter:blur(34px) saturate(1.85);-webkit-backdrop-filter:blur(34px) saturate(1.85);box-shadow:0 30px 88px rgba(18,24,52,.18),0 16px 44px rgba(87,54,170,.26),inset 0 1px 0 rgba(255,255,255,.72),inset 0 -1px 0 rgba(196,142,255,.72),0 0 0 1px rgba(133,163,255,.22);font-family:Urbanist,Inter,system-ui,sans-serif;isolation:isolate;overflow:visible}",
     ".cg-topnav:before{content:\"\";position:absolute;inset:7px;border-radius:inherit;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent 34%),linear-gradient(90deg,rgba(133,183,255,.22),transparent 28%,rgba(176,91,255,.23) 72%,rgba(235,244,255,.14)),repeating-linear-gradient(90deg,transparent 0 154px,rgba(172,202,255,.2) 155px,transparent 157px);box-shadow:inset 0 0 42px rgba(112,87,255,.44),inset 0 0 0 1px rgba(255,255,255,.18)}",
     ".cg-topnav:after{content:\"\";position:absolute;left:48px;right:48px;top:8px;height:2px;border-radius:999px;background:linear-gradient(90deg,transparent,rgba(127,180,255,.9) 18%,rgba(255,255,255,.98) 42%,rgba(206,119,255,.98) 64%,transparent);box-shadow:0 0 16px rgba(190,109,255,.9),0 0 34px rgba(96,165,250,.44);pointer-events:none}",
@@ -110,7 +110,12 @@
   }
   function hideNativeNavigation(){
     Array.prototype.forEach.call(document.querySelectorAll('nav,[role="navigation"]'), function(el){
-      if (isNativePrimaryNav(el)) el.classList.add('cg-native-nav-hidden');
+      if (!isNativePrimaryNav(el)) return;
+      el.classList.add('cg-native-nav-hidden');
+      var shell = el.closest('header,.st-header,.site-header,.topbar,.navbar');
+      if (shell && shell !== document.body && !shell.closest('footer,.footer,.site-footer,.cgr-box')) {
+        shell.classList.add('cg-native-header-hidden');
+      }
     });
     document.body.classList.add('cg-global-nav-enabled');
   }

@@ -84,6 +84,8 @@
     ["Pricing", "pricing.html", "Plans and engagements", "₵"]
   ];
   var TOP = [["Vision","index.html#vision"],["Services","index.html#services"],["Products","products.html"],["Government","index.html#government"],["Insights","blog/"],["Contact","index.html#contact"]];
+  // Company / authority links exposed in the shared nav (name, href, icon).
+  var COMPANY = [["Authority Grid", "authority-network.html", "⌁"]];
   var script = document.currentScript || Array.prototype.slice.call(document.scripts).filter(function(s){return /nav\.js(?:\?|$)/.test(s.src);}).pop();
   var base = script ? new URL('.', script.src).href : new URL('.', location.href).href;
   function href(path){ return /^https?:|^mailto:|^#/.test(path) ? path : new URL(path, base).href; }
@@ -130,9 +132,9 @@
     var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
     hideNativeNavigation();
     var nav=document.createElement('nav'); nav.id='cg-global-nav'; nav.className='cg-topnav'; nav.setAttribute('aria-label','Primary navigation');
-    var menu=PRODUCTS.map(function(p){return '<a class="cg-prod" href="'+href(p[1])+'"><span class="cg-ic">'+p[3]+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span></a>';}).join('');
+    var menu=PRODUCTS.map(function(p){return '<a class="cg-prod" href="'+href(p[1])+'"><span class="cg-ic">'+p[3]+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span></a>';}).join('')+COMPANY.map(function(p){return '<a class="cg-prod" href="'+href(p[1])+'"><span class="cg-ic">'+p[2]+'</span><span><b>'+esc(p[0])+'</b><small>Internal authority lattice</small></span></a>';}).join('');
     nav.innerHTML='<a class="cg-brand" href="'+href('index.html')+'"><span class="cg-mark" aria-hidden="true"><img src="'+href('assets/images/clearglass-logo.png')+'" alt=""></span><span class="cg-name">ClearGlassInc. <em>2040</em></span></a><div class="cg-links">'+TOP.map(function(t){return t[0]==='Products'?'<span class="cg-drop"><a class="cg-dropbtn" href="'+href('products.html')+'" aria-haspopup="true">Products⌄</a><span class="cg-menu" role="menu"><a class="cg-prod" href="'+href('products.html')+'"><span class="cg-ic">▨</span><span><b>All Products</b><small>Unified catalog</small></span></a>'+menu+'</span></span>':'<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a class="cg-cta" href="'+href('store.html')+'"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5l10 3.8v7.2c0 6.2-4 11.6-10 14-6-2.4-10-7.8-10-14V7.3l10-3.8z"/><path d="M12.2 15.7l2.5 2.5 5.5-6"/></svg>Book a Security Engagement</a></div><button class="cg-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>';
-    var mob=document.createElement('div'); mob.className='cg-mobile'; mob.id='cg-mobile-nav'; mob.innerHTML='<div class="cg-label">Navigation</div>'+TOP.map(function(t){return '<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a href="'+href('store.html')+'">Book a Security Engagement</a><div class="cg-label">Products</div>'+PRODUCTS.map(function(p){return '<a href="'+href(p[1])+'">'+esc(p[0])+'</a>';}).join('');
+    var mob=document.createElement('div'); mob.className='cg-mobile'; mob.id='cg-mobile-nav'; mob.innerHTML='<div class="cg-label">Navigation</div>'+TOP.map(function(t){return '<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a href="'+href('store.html')+'">Book a Security Engagement</a><div class="cg-label">Products</div>'+PRODUCTS.map(function(p){return '<a href="'+href(p[1])+'">'+esc(p[0])+'</a>';}).join('')+'<div class="cg-label">Company</div>'+COMPANY.map(function(p){return '<a href="'+href(p[1])+'">'+esc(p[0])+'</a>';}).join('');
     document.body.appendChild(nav); document.body.appendChild(mob);
     var btn=nav.querySelector('.cg-toggle'); btn.addEventListener('click',function(){var open=mob.classList.toggle('open');btn.setAttribute('aria-expanded',open?'true':'false');});
   }

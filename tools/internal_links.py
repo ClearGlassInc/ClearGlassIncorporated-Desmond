@@ -96,6 +96,8 @@ PAGES: dict[str, tuple[str, str]] = {
     "CG-os.html": ("CG OS", "the ClearGlass command HUD"),
     "systems.html": ("Systems Console", "PERCIVAL operations console"),
     "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
+    "command-center.html": ("Command Center", "executive security operations deck"),
+    "platform-command-center.html": ("Platform Command Center", "live monorepo dashboard with governance risk simulator"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
     "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),
 
@@ -134,6 +136,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "sats-digital-twin.html": ("SATS Digital Twin", "storm-adaptive transit simulation with governed operations"),
 
     # Services & conversion
+    "products.html": ("ClearGlass Products", "the unified ClearGlass product catalog"),
     "offers/index.html": ("Services & Engagements", "every ClearGlass offer in one place"),
     "store.html": ("ClearGlass Store", "book a security engagement"),
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
@@ -240,6 +243,7 @@ CLUSTERS: dict[str, dict] = {
             "conduit.html", "postloop.html", "command-console.html",
             "control-surface.html", "systems.html", "saas-platform.html",
             "CG-os.html", "percival-build.html", "clearsight.html",
+            "command-center.html", "platform-command-center.html",
         ],
         "cta": [CTA_OFFERS, CTA_PRICING],
     },
@@ -286,7 +290,7 @@ CLUSTERS: dict[str, dict] = {
             "store.html", "pricing.html", "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html", "revenue-engine.html",
-            "side-store.html",
+            "side-store.html", "products.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -383,6 +387,8 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "web-design.html": ["offers/index.html"],
     "smb-cyber-trust-kit.html": ["offers/hardening-sprint.html"],
     "store.html": ["smb-cyber-trust-kit.html"],
+    "products.html": ["offers/index.html", "advanced-features-tools-systems.html", "store.html"],
+    "platform-command-center.html": ["systems.html", "control-surface.html", "advanced-features-tools-systems.html"],
     "opal/index.html": ["conduit.html"],
     "products/opal-koboi/artemis-iv-core.html": ["artemis-iv.html"],
     "products/opal-koboi/artemis-vi.html": ["artemis-os.html"],

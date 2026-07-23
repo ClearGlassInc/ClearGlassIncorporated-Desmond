@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-22T09:25:03.366761+00:00",
-  "files_audited": 74,
-  "average_score": 88.9,
+  "run_utc": "2026-07-23T09:23:27.171916+00:00",
+  "files_audited": 76,
+  "average_score": 88.2,
   "pages": [
     {
       "file": "404.html",
@@ -635,11 +635,11 @@
     },
     {
       "file": "command-center.html",
-      "title": "ClearGlassInc Artemis \u2014 Live Advanced Command Center",
-      "title_length": 52,
-      "title_ok": true,
-      "description": "A live advanced command-center dashboard for ClearGlassInc Artemis unifying business performance, AI agent activity, security posture, infrastructure health, automation throughput, quantum readiness, market intelligence, and executive priorities.",
-      "description_length": 246,
+      "title": "ClearGlass Command Center \u2014 Executive Security Operations Deck",
+      "title_length": 62,
+      "title_ok": false,
+      "description": "The ClearGlass executive command center: a policy-bound operations deck unifying AI agent orchestration, security posture, provenance, governance gates, and live operational telemetry under zero-trust control.",
+      "description_length": 209,
       "description_ok": false,
       "canonical_present": true,
       "h1_count": 1,
@@ -648,9 +648,10 @@
       "og_title": false,
       "og_description": false,
       "og_image": false,
-      "score": 60,
+      "score": 50,
       "issues": [
-        "Description length 246 chars (ideal 120\u2013160)",
+        "Title length 62 chars (ideal 30\u201360)",
+        "Description length 209 chars (ideal 120\u2013160)",
         "Missing og:title",
         "Missing og:description",
         "Missing og:image"
@@ -901,6 +902,30 @@
       "og_image": true,
       "score": 100,
       "issues": []
+    },
+    {
+      "file": "header-mockup-2040.html",
+      "title": "ClearGlassInc. 2040 \u2014 Header Mockup",
+      "title_length": 35,
+      "title_ok": true,
+      "description": "Futuristic glassmorphism website header mockup for ClearGlassInc. 2040 \u2014 holographic presidential glass seal, command-bar navigation, and a cinematic night-city hero.",
+      "description_length": 166,
+      "description_ok": false,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Description length 166 chars (ideal 120\u2013160)",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
     },
     {
       "file": "hover-menu.html",
@@ -1172,6 +1197,27 @@
       "score": 90,
       "issues": [
         "Description length 238 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "products.html",
+      "title": "ClearGlass Inc. Products \u2014 Unified Product Suite",
+      "title_length": 48,
+      "title_ok": true,
+      "description": "Explore the complete verified ClearGlass Inc. product ecosystem across intelligence platforms, cybersecurity systems, industry solutions, AI automation, and premium interface assets.",
+      "description_length": 182,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 80,
+      "issues": [
+        "Description length 182 chars (ideal 120\u2013160)",
+        "Missing og:image"
       ]
     },
     {
@@ -1453,13 +1499,13 @@
     }
   ],
   "top_issues": [
-    "25x \u2014 Description length N chars (ideal N\u2013N)",
-    "20x \u2014 Title length N chars (ideal N\u2013N)",
-    "11x \u2014 Missing og:image",
-    "6x \u2014 Missing og:description",
-    "5x \u2014 Missing og:title",
+    "27x \u2014 Description length N chars (ideal N\u2013N)",
+    "21x \u2014 Title length N chars (ideal N\u2013N)",
+    "13x \u2014 Missing og:image",
+    "7x \u2014 Missing og:description",
+    "6x \u2014 Missing og:title",
+    "4x \u2014 Missing canonical link tag",
     "4x \u2014 Multiple <hN> tags (N)",
-    "3x \u2014 Missing canonical link tag",
     "2x \u2014 N image(s) missing alt text",
     "2x \u2014 No <hN> tag found",
     "1x \u2014 Missing <title>"

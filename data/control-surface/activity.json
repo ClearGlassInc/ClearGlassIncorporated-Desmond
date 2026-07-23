@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "18:37",
-    "timestamp": "2026-07-23T18:37:06Z"
+    "time": "20:19",
+    "timestamp": "2026-07-23T20:19:39Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #401",
-    "time": "18:36",
-    "timestamp": "2026-07-23T18:36:52Z"
-  },
-  {
-    "title": "Internal Link Authority",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #145",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:54Z"
+    "detail": "schedule on main \u00b7 run #402",
+    "time": "20:19",
+    "timestamp": "2026-07-23T20:19:28Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1774",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:54Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1460",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:54Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1489",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:54Z"
+    "detail": "pull_request on claude/bar-design-change-enjs3b \u00b7 run #1775",
+    "time": "19:53",
+    "timestamp": "2026-07-23T19:53:01Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1084",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:54Z"
+    "detail": "pull_request on claude/bar-design-change-enjs3b \u00b7 run #1086",
+    "time": "19:53",
+    "timestamp": "2026-07-23T19:53:01Z"
   },
   {
-    "title": "Deploy Pages",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1210",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:54Z"
+    "detail": "pull_request on claude/bar-design-change-enjs3b \u00b7 run #788",
+    "time": "19:53",
+    "timestamp": "2026-07-23T19:53:01Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on claude/bar-design-change-enjs3b \u00b7 run #1490",
+    "time": "19:53",
+    "timestamp": "2026-07-23T19:53:01Z"
   },
   {
     "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1722",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:54Z"
+    "status": "bad",
+    "detail": "pull_request on claude/bar-design-change-enjs3b \u00b7 run #1723",
+    "time": "19:53",
+    "timestamp": "2026-07-23T19:53:01Z"
   },
   {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #477",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:54Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1679",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:53Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2904",
-    "time": "17:58",
-    "timestamp": "2026-07-23T17:58:53Z"
+    "title": "Internal Link Authority",
+    "status": "bad",
+    "detail": "pull_request on claude/bar-design-change-enjs3b \u00b7 run #146",
+    "time": "19:53",
+    "timestamp": "2026-07-23T19:53:01Z"
   },
   {
     "title": "Policy Gate",
     "status": "ok",
-    "detail": "pull_request on claude/patch-deploy-workflows-o4kiso \u00b7 run #1459",
-    "time": "17:53",
-    "timestamp": "2026-07-23T17:53:07Z"
+    "detail": "pull_request on claude/bar-design-change-enjs3b \u00b7 run #1461",
+    "time": "19:53",
+    "timestamp": "2026-07-23T19:53:01Z"
+  },
+  {
+    "title": "Code Quality: PR #1044",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/1044/head \u00b7 run #2906",
+    "time": "19:52",
+    "timestamp": "2026-07-23T19:52:59Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #1085",
+    "time": "19:36",
+    "timestamp": "2026-07-23T19:36:29Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #217",
+    "time": "19:23",
+    "timestamp": "2026-07-23T19:23:26Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1211",
+    "time": "18:37",
+    "timestamp": "2026-07-23T18:37:20Z"
   }
 ]

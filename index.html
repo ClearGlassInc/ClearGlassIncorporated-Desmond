@@ -243,6 +243,36 @@ body{background:#f7f8fd;}
 <script defer src="/assets/js/cg-design-system.js"></script>
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="brand-system.css">
+<style>
+/* ── Center all page text — homepage alignment pass ─────────────────
+   Overrides the earlier left-aligned "screenshot-match" hero and the
+   default left alignment of content sections so every block of copy on
+   the page reads centered. Structural nav/mobile-menu layout is left
+   untouched. Loaded last so it wins the cascade. */
+.hero{text-align:center}
+.hero-year,.hero-sub,.hero-deep-copy{margin-left:auto;margin-right:auto}
+.hero-signal,.hero-option{text-align:center}
+.hero-actions,.hero-command-rail,.hero-options,.cta-actions,.founder-actions,.cta-variants{justify-content:center}
+/* Section headers */
+.sh{text-align:center}
+.sh .sh-tag,.sh-tag{justify-content:center}
+.sh p{margin-left:auto;margin-right:auto}
+/* Mission + manifesto */
+.mission-inner{text-align:center}
+.mission-text{margin-left:auto;margin-right:auto}
+/* Cards and content blocks */
+.value-card,.tech-card,.command-panel,.ops-card,.product-card,
+.connect-card,.tl-content,.founder-card,.credentials-card,
+.feature-lines li,.trust-lines li{text-align:center}
+.tc-tags,.pc-feats,.pc-feat,.pc-dots,.credentials-list{justify-content:center}
+.tl-content p,.command-panel p,.product-card .pd{margin-left:auto;margin-right:auto}
+/* Keep the checklist tick marks visually attached while text centers */
+.feature-lines li,.trust-lines li{padding-left:14px;padding-right:14px}
+.feature-lines li::before,.trust-lines li::before{position:static;display:inline-block;margin-right:8px}
+/* Footer copy */
+.footer-col{align-items:center;text-align:center}
+.footer-col a{width:auto}
+</style>
 </head>
 <body>
 <!-- Classification banner — UNCLASSIFIED demo instance -->

@@ -126,6 +126,13 @@
      left side with data-cg-topbar-title / data-cg-topbar-sub on <body>. ── */
   function mountTopbar() {
     if (document.querySelector('.cg-topbar')) return;
+    // nav.js supplies the single global top bar site-wide. When a page also
+    // loads nav.js, defer to it so only one navigation bar renders instead of
+    // two stacked bars. Checked via the script tag (present in the DOM
+    // regardless of execution order) so this is order- and timing-independent.
+    if (Array.prototype.some.call(document.scripts, function (s) {
+        return /(^|\/)nav\.js(\?|$)/.test(s.src);
+    })) return;
     if (document.documentElement.hasAttribute('data-cg-no-topbar') ||
         (document.body && document.body.hasAttribute('data-cg-no-topbar'))) return;
     var pagePath = location.pathname.replace(/\/+$/, '').toLowerCase();

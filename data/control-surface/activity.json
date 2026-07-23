@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "22:13",
-    "timestamp": "2026-07-23T22:13:56Z"
+    "time": "23:12",
+    "timestamp": "2026-07-23T23:12:12Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #404",
+    "time": "23:12",
+    "timestamp": "2026-07-23T23:12:03Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1218",
+    "time": "22:14",
+    "timestamp": "2026-07-23T22:14:10Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1687",
+    "time": "22:14",
+    "timestamp": "2026-07-23T22:14:03Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2919",
+    "time": "22:14",
+    "timestamp": "2026-07-23T22:14:03Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #403",
     "time": "22:13",
     "timestamp": "2026-07-23T22:13:42Z"
@@ -61,33 +89,5 @@
     "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1501",
     "time": "21:57",
     "timestamp": "2026-07-23T21:57:19Z"
-  },
-  {
-    "title": "Code Quality: PR #1048",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/1048/head \u00b7 run #2918",
-    "time": "21:57",
-    "timestamp": "2026-07-23T21:57:17Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #349",
-    "time": "21:56",
-    "timestamp": "2026-07-23T21:56:57Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1096",
-    "time": "21:33",
-    "timestamp": "2026-07-23T21:33:45Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1471",
-    "time": "21:33",
-    "timestamp": "2026-07-23T21:33:45Z"
   }
 ]

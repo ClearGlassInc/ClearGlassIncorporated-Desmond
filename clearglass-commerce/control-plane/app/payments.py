@@ -204,7 +204,14 @@ def verify_webhook(payload: bytes, sig_header: str, *, tolerance: int = 300) -> 
     if not ts or not given:
         return {"verified": False, "event": event, "reason": "malformed signature header"}
 
-    if tolerance and abs(int(time.time()) - int(ts)) > tolerance:
+    try:
+        ts_int = int(ts)
+    except ValueError:
+        # Attacker-controlled header; a non-numeric timestamp is malformed, not a
+        # server error. Fail closed with a clean rejection instead of raising.
+        return {"verified": False, "event": event, "reason": "malformed signature header"}
+
+    if tolerance and abs(int(time.time()) - ts_int) > tolerance:
         return {"verified": False, "event": event, "reason": "timestamp outside tolerance"}
 
     signed = f"{ts}.".encode() + payload

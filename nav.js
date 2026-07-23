@@ -84,6 +84,7 @@
   var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   var css = [
+    ".cg-native-nav-hidden{display:none!important}.cg-global-nav-enabled{--cg-unified-nav-offset:clamp(104px,9.5vw,156px)}",
     ".cg-topnav{position:fixed;top:clamp(16px,2.1vw,30px);left:50%;transform:translateX(-50%);width:min(1840px,calc(100% - clamp(1.5rem,3vw,4rem)));z-index:2147483000;min-height:112px;display:flex;align-items:center;justify-content:space-between;gap:clamp(1.25rem,2.4vw,3rem);padding:clamp(.72rem,1vw,1rem) clamp(1rem,1.65vw,1.85rem);border-radius:999px;border:1px solid rgba(221,228,255,.78);background:linear-gradient(90deg,rgba(233,241,255,.26),rgba(20,31,61,.88) 13%,rgba(11,18,38,.94) 48%,rgba(41,32,82,.9) 78%,rgba(139,92,246,.32));backdrop-filter:blur(34px) saturate(1.85);-webkit-backdrop-filter:blur(34px) saturate(1.85);box-shadow:0 30px 88px rgba(18,24,52,.18),0 16px 44px rgba(87,54,170,.26),inset 0 1px 0 rgba(255,255,255,.72),inset 0 -1px 0 rgba(196,142,255,.72),0 0 0 1px rgba(133,163,255,.22);font-family:Urbanist,Inter,system-ui,sans-serif;isolation:isolate;overflow:visible}",
     ".cg-topnav:before{content:\"\";position:absolute;inset:7px;border-radius:inherit;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent 34%),linear-gradient(90deg,rgba(133,183,255,.22),transparent 28%,rgba(176,91,255,.23) 72%,rgba(235,244,255,.14)),repeating-linear-gradient(90deg,transparent 0 154px,rgba(172,202,255,.2) 155px,transparent 157px);box-shadow:inset 0 0 42px rgba(112,87,255,.44),inset 0 0 0 1px rgba(255,255,255,.18)}",
     ".cg-topnav:after{content:\"\";position:absolute;left:48px;right:48px;top:8px;height:2px;border-radius:999px;background:linear-gradient(90deg,transparent,rgba(127,180,255,.9) 18%,rgba(255,255,255,.98) 42%,rgba(206,119,255,.98) 64%,transparent);box-shadow:0 0 16px rgba(190,109,255,.9),0 0 34px rgba(96,165,250,.44);pointer-events:none}",
@@ -96,9 +97,27 @@
     ".cg-toggle{display:none;border:1px solid rgba(196,139,255,.55);background:rgba(7,10,24,.7);color:#fff;border-radius:14px;padding:10px}.cg-mobile{position:fixed;top:132px;left:.75rem;right:.75rem;z-index:2147482999;display:none;grid-template-columns:1fr;gap:4px;max-height:calc(100vh - 148px);overflow:auto;padding:10px;background:rgba(16,24,50,.98);border:1px solid rgba(185,156,255,.36);border-radius:24px;box-shadow:0 12px 48px rgba(10,12,16,.28)}.cg-mobile.open{display:grid}.cg-mobile a{padding:12px 14px;border-radius:12px;text-decoration:none;color:#eef4ff;font-weight:650}.cg-mobile a:hover{background:rgba(255,255,255,.08)}.cg-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#aeb9d5;padding:10px 14px 4px}",
     ".cg-topnav+main,.cg-topnav~main{scroll-margin-top:148px}.cg-topnav~:is(main,.page,.wrap){padding-top:max(144px,env(safe-area-inset-top))}.cg-unified-page :is(section,.section,.panel,.card){border-radius:clamp(16px,2vw,24px)}body{--cg-home-rhythm:clamp(80px,12vw,140px)}main :is(h1,h2){letter-spacing:-.025em}main :is(.eyebrow,.kicker,.label,.mono){letter-spacing:.12em;text-transform:uppercase}.btn,.button,a[class*=cta],button[class*=cta]{border-radius:999px}@media(max-width:1240px){.cg-links{display:none}.cg-toggle{display:block}.cg-topnav{min-height:82px}.cg-mark{width:60px;height:60px}.cg-menu{grid-template-columns:1fr}.cg-brand:after{display:none}}@media(max-width:760px){.cg-topnav{top:8px;width:calc(100% - 1rem);min-height:68px;padding:.45rem .75rem}.cg-name{font-size:18px}.cg-name em{display:none}.cg-mark{width:50px;height:50px}.cg-mobile{top:86px;max-height:calc(100vh - 102px)}}"
   ].join("");
+  function isNativePrimaryNav(el){
+    if (!el || el.id === 'cg-global-nav' || el.id === 'cg-mobile-nav') return false;
+    if (el.closest('#cg-related,footer,.footer,.site-footer,.gov-footer,.cgr-box,.cg-topnav,.cg-mobile')) return false;
+    var label = (el.getAttribute('aria-label') || '').toLowerCase();
+    var role = (el.getAttribute('role') || '').toLowerCase();
+    var cls = (' ' + (el.className || '') + ' ').toLowerCase();
+    var id = (' ' + (el.id || '') + ' ').toLowerCase();
+    if (/related|footer|breadcrumb|pagination/.test(label + cls + id)) return false;
+    if (/primary|main|navigation/.test(label) || role === 'navigation') return true;
+    return /( nav | navbar | topbar | header-nav | ag-nav | site-nav )/.test(cls) || /( navbar | nav )/.test(id);
+  }
+  function hideNativeNavigation(){
+    Array.prototype.forEach.call(document.querySelectorAll('nav,[role="navigation"]'), function(el){
+      if (isNativePrimaryNav(el)) el.classList.add('cg-native-nav-hidden');
+    });
+    document.body.classList.add('cg-global-nav-enabled');
+  }
   function build(){
     if (document.getElementById('cg-global-nav')) return;
     var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
+    hideNativeNavigation();
     var nav=document.createElement('nav'); nav.id='cg-global-nav'; nav.className='cg-topnav'; nav.setAttribute('aria-label','Primary navigation');
     var menu=PRODUCTS.map(function(p){return '<a class="cg-prod" href="'+href(p[1])+'"><span class="cg-ic">'+p[3]+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span></a>';}).join('');
     nav.innerHTML='<a class="cg-brand" href="'+href('index.html')+'"><span class="cg-mark" aria-hidden="true"><img src="'+href('assets/images/clearglass-logo.png')+'" alt=""></span><span class="cg-name">ClearGlassInc. <em>2040</em></span></a><div class="cg-links">'+TOP.map(function(t){return t[0]==='Products'?'<span class="cg-drop"><a class="cg-dropbtn" href="'+href('products.html')+'" aria-haspopup="true">Products⌄</a><span class="cg-menu" role="menu"><a class="cg-prod" href="'+href('products.html')+'"><span class="cg-ic">▨</span><span><b>All Products</b><small>Unified catalog</small></span></a>'+menu+'</span></span>':'<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a class="cg-cta" href="'+href('store.html')+'"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5l10 3.8v7.2c0 6.2-4 11.6-10 14-6-2.4-10-7.8-10-14V7.3l10-3.8z"/><path d="M12.2 15.7l2.5 2.5 5.5-6"/></svg>Book a Security Engagement</a></div><button class="cg-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>';

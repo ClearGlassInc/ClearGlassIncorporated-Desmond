@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #393",
+    "title": "Control Surface Feeds #394",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:14",
+    "timestamp": "2026-07-23T00:14:25Z"
+  },
+  {
+    "title": "Deploy Pages #1193",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "23:17",
+    "timestamp": "2026-07-22T23:17:03Z"
+  },
+  {
+    "title": "pages build and deployment #1660",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:16",
+    "timestamp": "2026-07-22T23:16:58Z"
+  },
+  {
+    "title": "Code Quality: Push on main #2865",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:16",
+    "timestamp": "2026-07-22T23:16:57Z"
+  },
+  {
+    "title": "Control Surface Feeds #393",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:16",
     "timestamp": "2026-07-22T23:16:39Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "20:04",
     "timestamp": "2026-07-22T20:04:57Z"
-  },
-  {
-    "title": "Deploy Pages #1190",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:57Z"
-  },
-  {
-    "title": "Code Quality: Push on main #2862",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:56Z"
-  },
-  {
-    "title": "PR Automation #772",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/patch-and-deploy-application-dt0lzq",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:32Z"
-  },
-  {
-    "title": "Defender Watch #1055",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/patch-and-deploy-application-dt0lzq",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:32Z"
   }
 ]

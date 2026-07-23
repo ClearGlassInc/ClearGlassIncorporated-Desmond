@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:16",
-    "timestamp": "2026-07-22T23:16:51Z"
+    "time": "00:14",
+    "timestamp": "2026-07-23T00:14:37Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #394",
+    "time": "00:14",
+    "timestamp": "2026-07-23T00:14:25Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1193",
+    "time": "23:17",
+    "timestamp": "2026-07-22T23:17:03Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1660",
+    "time": "23:16",
+    "timestamp": "2026-07-22T23:16:58Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2865",
+    "time": "23:16",
+    "timestamp": "2026-07-22T23:16:57Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #393",
     "time": "23:16",
     "timestamp": "2026-07-22T23:16:39Z"
@@ -61,33 +89,5 @@
     "detail": "dynamic on main \u00b7 run #2863",
     "time": "20:21",
     "timestamp": "2026-07-22T20:21:03Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #391",
-    "time": "20:20",
-    "timestamp": "2026-07-22T20:20:45Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1657",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:57Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1435",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:57Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1697",
-    "time": "20:04",
-    "timestamp": "2026-07-22T20:04:57Z"
   }
 ]

@@ -41,7 +41,23 @@ MAX_CRAWL_DEPTH = 4
 # New indexable pages are attached as supplemental depth. Core member order is
 # deliberately frozen so publishing a new page cannot silently reshuffle every
 # existing page's generated sibling links.
-SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {}
+SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {
+    "products.html": (
+        "ClearGlass Inc. Products — Unified Product Suite",
+        "Explore the complete verified ClearGlass Inc. product ecosystem across intelligence platforms, cybersecurity systems, industry solutions, AI automation, and premium interface assets.",
+        "services",
+    ),
+    "command-center.html": (
+        "ClearGlass Command Center — Executive Security Operations Deck",
+        "The ClearGlass executive command center: a policy-bound operations deck unifying AI agent orchestration, security posture, provenance, governance gates, and live operational telemetry under zero-trust control.",
+        "command",
+    ),
+    "platform-command-center.html": (
+        "ClearGlass · Platform Command Center",
+        "ClearGlassInc platform command center — a live visual dashboard of the monorepo: composition, an interactive governance risk simulator, systems map, repo pulse, audit findings, and CI posture.",
+        "command",
+    ),
+}
 
 # Explicit lateral relationships for new pages. These are not inferred at run
 # time; they are reviewed architecture decisions with descriptive destinations.

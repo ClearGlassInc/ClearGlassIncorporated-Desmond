@@ -30,6 +30,10 @@ def test_full_stack_blueprint_contains_requested_sections_and_controls():
         "Python Precision Implementation Contract",
         "Secret hygiene",
         "Replayability",
+        "target-state architecture",
+        "No model output can grant authority",
+        "PENDING_HUMAN_APPROVAL",
+        "RTO of 30 minutes",
     ]
     for control in required_controls:
         assert control in markdown

@@ -1,22 +1,17 @@
 # Site Health Report
 
-**Run:** 2026-07-23T09:23:28.408311+00:00
-**Status:** ⚠️ Issues Detected
+**Run:** 2026-07-24T09:20:21.517119+00:00
+**Status:** ✅ Healthy
 **Pages:** 6/6 healthy
 
 ## Pages
 
-- ✅ `/` (329ms)
-- ✅ `/artemis.html` (174ms)
-- ✅ `/artemis-iv.html` (179ms)
-- ✅ `/guardian.html` (166ms)
-- ✅ `/clearglass-nexus.html` (204ms)
-- ✅ `/government.html` (172ms)
-
-## Local Issues
-
-- ❌ Page missing ClearGlass logo: apps/command-center/index.html
-- ❌ Page missing ClearGlass logo: products.html
+- ✅ `/` (161ms)
+- ✅ `/artemis.html` (46ms)
+- ✅ `/artemis-iv.html` (66ms)
+- ✅ `/guardian.html` (47ms)
+- ✅ `/clearglass-nexus.html` (59ms)
+- ✅ `/government.html` (45ms)
 
 ## Warnings (non-failing)
 

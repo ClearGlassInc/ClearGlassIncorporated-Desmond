@@ -1,23 +1,8 @@
 {
-  "run_utc": "2026-07-23T09:23:28.742911+00:00",
-  "total_alerts": 2,
+  "run_utc": "2026-07-24T09:20:21.557259+00:00",
+  "total_alerts": 0,
   "critical": 0,
-  "warnings": 2,
+  "warnings": 0,
   "github_issue_created": false,
-  "alerts": [
-    {
-      "severity": "warning",
-      "source": "site_health",
-      "message": "Page missing ClearGlass logo: apps/command-center/index.html",
-      "detail": "",
-      "detected_utc": "2026-07-23T09:23:28.741229+00:00"
-    },
-    {
-      "severity": "warning",
-      "source": "site_health",
-      "message": "Page missing ClearGlass logo: products.html",
-      "detail": "",
-      "detected_utc": "2026-07-23T09:23:28.741238+00:00"
-    }
-  ]
+  "alerts": []
 }

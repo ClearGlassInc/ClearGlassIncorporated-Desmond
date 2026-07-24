@@ -6,6 +6,26 @@ ClearGlassInc Artemis is a mission-critical, coalition-aware intelligence platfo
 
 The design assumes secure Canadian enterprise and public-sector operations, including environmental cyber-risk domains such as ionospheric physics, space weather, GNSS degradation, HF radio disruption, satellite interference, and communication-infrastructure resilience.
 
+> **Implementation status:** This document is a target-state architecture and implementation blueprint, not evidence that Palantir infrastructure, integrations, data feeds, or operational authority have been provisioned. Product-specific interfaces shown below are integration contracts that must be mapped to the licensed deployment's supported Gotham, Foundry, AIP, and Apollo APIs during implementation.
+
+### Architecture Decision and Acceptance Contract
+
+The primary design is a **governed proposal system**, not an autonomously self-modifying system. Models may analyze, draft, rank, and propose changes; deterministic services enforce identity, authorization, workflow transitions, release eligibility, and audit invariants. No model output can grant authority, expand mission scope, modify policy, promote itself, or cause an operationally significant external effect.
+
+The first production release is acceptable only when all of the following are demonstrated with replayable evidence:
+
+1. Every read is filtered by tenant, mission, purpose, classification, compartments, coalition releasability, and object/property policy before context reaches a model.
+2. Every tool call uses a typed allowlisted contract, a short-lived workload identity, bounded time and resource budgets, and a server-side policy decision adjacent to the protected action.
+3. Operationally significant actions stop in `PENDING_HUMAN_APPROVAL`; approval is attributable, scoped to the exact immutable action payload, time bounded, and non-replayable.
+4. Prompt, workflow, heuristic, and routing candidates cannot reach a canary without regression evaluations, security review, a named human approval, a stable rollback version, and a signed release manifest.
+5. Audit records bind input lineage, policy bundle, prompt/workflow/model versions, tool calls, approval decisions, outputs, and deployment identity in a tamper-evident chain.
+6. Failure of identity, policy, lineage, audit, model routing, or approval dependencies fails closed for mutations and degrades read paths to an explicitly labeled, non-actionable state.
+7. Ring 0 replay and Ring 1 read-only canary meet the approved precision, recall, citation, latency, policy-violation, trust, and rollback thresholds before wider release.
+
+**Initial service objectives (to be validated by load and recovery testing):** authorized interactive reads target p95 under 750 ms excluding long-running model work; streaming normalization targets p95 under 2 seconds; policy decisions target p99 under 50 ms; critical audit events target durable acknowledgement before action completion; the control plane targets an RTO of 30 minutes and RPO of 5 minutes. These are proposed engineering budgets, not measured production claims.
+
+**Non-goals:** autonomous goal creation, autonomous privilege acquisition, unsupervised operational action, cross-coalition inference, training foundation models on mission data, or treating model confidence as evidence confidence.
+
 ## System Architecture
 
 ### Palantir Platform Responsibilities

@@ -31,7 +31,7 @@ function Header() {
       }}
     >
       <a href="/" style={{ color: "inherit", textDecoration: "none" }}>
-        <strong className="neon-text-primary">ClearGlass Store</strong>
+        <strong>ClearGlass Store</strong>
       </a>
       <a
         href="/cart"

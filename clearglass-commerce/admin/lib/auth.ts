@@ -4,10 +4,10 @@ import { createHmac, randomBytes, timingSafeEqual } from "crypto";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { recordSecurityEvent } from "@/lib/security-events";
-import { SESSION_COOKIE } from "@/lib/constants";
+import { SESSION_COOKIE } from "@/lib/session";
 
 export { SESSION_COOKIE };
-export const SESSION_TTL_SECONDS = Number(process.env.ADMIN_SESSION_TTL_SECONDS || 60 * 60 * 8);
+const SESSION_TTL_SECONDS = Number(process.env.ADMIN_SESSION_TTL_SECONDS || 60 * 60 * 8);
 
 export interface AdminSession {
   sub: string;
@@ -16,31 +16,12 @@ export interface AdminSession {
   nonce: string;
 }
 
-// The signing key, resolved from (in order) ADMIN_SESSION_SECRET, AUTH_SECRET
-// (the name documented in PREMIUM_PROTECTION.md / .env.example), or ADMIN_API_KEY.
-function configuredSecret(): string | undefined {
-  return (
-    process.env.ADMIN_SESSION_SECRET ||
-    process.env.AUTH_SECRET ||
-    process.env.ADMIN_API_KEY ||
-    undefined
-  );
-}
-
 function secret(): string {
-  const value = configuredSecret();
+  const value = process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_API_KEY;
   if (!value && process.env.NODE_ENV === "production") {
-    throw new Error("ADMIN_SESSION_SECRET, AUTH_SECRET or ADMIN_API_KEY is required in production");
+    throw new Error("ADMIN_SESSION_SECRET or ADMIN_API_KEY is required in production");
   }
   return value || "dev-only-admin-session-secret-change-me";
-}
-
-// True only when a real, sufficiently long signing secret is configured — i.e.
-// we are NOT falling back to the insecure dev default. The hardened login route
-// uses this to fail closed in production rather than mint dev-signed sessions.
-export function hasStrongSecret(): boolean {
-  const value = configuredSecret();
-  return typeof value === "string" && value.length >= 16;
 }
 
 function b64url(input: Buffer | string): string {
@@ -51,29 +32,15 @@ function sign(payload: string): string {
   return createHmac("sha256", secret()).update(payload).digest("base64url");
 }
 
-export function issueSession(
-  sub: string,
-  roles: string[] = ["premium"],
-  ttlSeconds: number = SESSION_TTL_SECONDS,
-): string {
+export function issueSession(sub: string, roles: string[] = ["premium"]): string {
   const session: AdminSession = {
     sub,
     roles,
-    exp: Math.floor(Date.now() / 1000) + ttlSeconds,
+    exp: Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS,
     nonce: randomBytes(16).toString("base64url"),
   };
   const payload = b64url(JSON.stringify(session));
   return `${payload}.${sign(payload)}`;
-}
-
-// Async alias used by the hardened /api/auth/login flow (kept async so callers
-// can `await` it uniformly even if signing later moves to WebCrypto/subtle).
-export async function createSession(
-  sub: string,
-  ttlSeconds: number = SESSION_TTL_SECONDS,
-  roles: string[] = ["premium"],
-): Promise<string> {
-  return issueSession(sub, roles, ttlSeconds);
 }
 
 export function verifySessionToken(token: string | undefined): AdminSession | null {

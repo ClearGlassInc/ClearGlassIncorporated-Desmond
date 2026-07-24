@@ -131,15 +131,24 @@
     });
     document.body.classList.add('cg-global-nav-enabled');
   }
+  function hasPageOwnedPrimaryNav(){
+    return Array.prototype.some.call(document.querySelectorAll('nav,[role="navigation"]'), isNativePrimaryNav);
+  }
   function build(){
     if (document.getElementById('cg-global-nav')) return;
+    // Do not overlay a second global bar on pages that already ship their own
+    // primary navigation. The homepage has a bespoke hero-integrated nav; pages
+    // without a native nav still receive this injected cross-site fallback.
+    if (hasPageOwnedPrimaryNav()) {
+      document.body.classList.add('cg-global-nav-enabled');
+      return;
+    }
     // On non-home pages the design-system top bar (cg-design-system.js) owns the
     // global nav, so defer to it and avoid a duplicate bar. This bar still builds
-    // on the homepage and on any page that does not load the design system.
-    var isIndex = (here === '' || here === 'index.html');
+    // on any page that does not load the design system.
     var tbOptOut = document.documentElement.hasAttribute('data-cg-no-topbar') ||
       (document.body && document.body.hasAttribute('data-cg-no-topbar'));
-    if (window.__cgDesignSystem && !isIndex && !tbOptOut) return;
+    if (window.__cgDesignSystem && !tbOptOut) return;
     var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
     hideNativeNavigation();
     var nav=document.createElement('nav'); nav.id='cg-global-nav'; nav.className='cg-topnav'; nav.setAttribute('aria-label','Primary navigation');

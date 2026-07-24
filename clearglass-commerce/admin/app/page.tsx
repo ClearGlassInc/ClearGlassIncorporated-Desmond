@@ -14,9 +14,7 @@ export default async function Page() {
 
   return (
     <section>
-      <h1 className="neon-text-primary" style={{ fontSize: 30 }}>
-        Store overview
-      </h1>
+      <h1 style={{ fontSize: 30 }}>Store overview</h1>
 
       {pending.length > 0 && (
         <a
@@ -101,10 +99,15 @@ export default async function Page() {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="neon-card" style={{ padding: 16 }}>
-      <div className="neon-text-secondary" style={{ fontSize: 24, fontWeight: 800 }}>
-        {value}
-      </div>
+    <div
+      style={{
+        border: "1px solid rgba(124,150,255,.16)",
+        borderRadius: 12,
+        padding: 16,
+        background: "rgba(12,16,38,.6)",
+      }}
+    >
+      <div style={{ fontSize: 24, fontWeight: 800, color: "#a78bfa" }}>{value}</div>
       <div style={{ fontSize: 12, color: "#9aa6c8", marginTop: 4 }}>{label}</div>
     </div>
   );

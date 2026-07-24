@@ -218,6 +218,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from hashlib import sha256
+import json
 from math import exp
 from typing import Any
 
@@ -238,7 +239,13 @@ def compute_confidence(score: EvidenceScore) -> float:
 
 
 def provenance_hash(payload: dict[str, Any]) -> str:
-    canonical = repr(sorted(payload.items())).encode("utf-8")
+    canonical = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+        allow_nan=False,
+    ).encode("utf-8")
     return sha256(canonical).hexdigest()
 
 

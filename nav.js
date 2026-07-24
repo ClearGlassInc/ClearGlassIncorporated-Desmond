@@ -1,6 +1,9 @@
 /* ClearGlass · homepage-matched global navigation.
-   Injects the same premium glass top bar, complete product catalog, mobile menu,
-   and clear CTA language on every static page without removing page content. */
+   Injects the ClearGlassInc. 2040 command bar — dark chrome / neon-purple glass,
+   metallic medallion, complete product catalog, mobile menu, a Book a Security
+   Engagement CTA, and live movement animations — on every static page without
+   removing page content. Scoped to #cg-global-nav with !important so it wins
+   over the global design-system stylesheet (assets/css/glass.css). */
 (function () {
   "use strict";
   if (window.__cgNavLoaded) return;

@@ -41,7 +41,27 @@ MAX_CRAWL_DEPTH = 4
 # New indexable pages are attached as supplemental depth. Core member order is
 # deliberately frozen so publishing a new page cannot silently reshuffle every
 # existing page's generated sibling links.
-SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {}
+SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {
+    # (title, description, cluster). Full-viewport command decks and the product
+    # catalog were shipped to nav + sitemap without being registered here, which
+    # tripped the sitemap-coverage gate. They join as supplemental members so
+    # their native/HUD layouts are preserved (no injected block, no reshuffle).
+    "command-center.html": (
+        "Command Center",
+        "the ClearGlass executive security operations deck",
+        "command",
+    ),
+    "platform-command-center.html": (
+        "Platform Command Center",
+        "a live visual dashboard of the ClearGlass monorepo",
+        "command",
+    ),
+    "products.html": (
+        "Products",
+        "the unified ClearGlass product suite catalog",
+        "services",
+    ),
+}
 
 # Explicit lateral relationships for new pages. These are not inferred at run
 # time; they are reviewed architecture decisions with descriptive destinations.

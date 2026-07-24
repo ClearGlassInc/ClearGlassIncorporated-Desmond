@@ -63,5 +63,11 @@ def test_authority_fingerprint_is_deterministic() -> None:
 
 
 def test_shared_navigation_exposes_authority_grid() -> None:
+    # The CI adapter (authority_network_ci.graph_edges) records a home ->
+    # authority-network.html edge on the strength of the shared navigation
+    # linking the Authority Network on every page. Assert that durable edge
+    # (the link target) rather than a specific label/emoji, so a legitimate
+    # nav redesign cannot silently make that recorded edge dishonest while a
+    # cosmetic rename cannot spuriously fail the gate.
     nav = Path("nav.js").read_text(encoding="utf-8")
-    assert '["Authority Grid", "authority-network.html", "⌁"]' in nav
+    assert '"authority-network.html"' in nav

@@ -529,6 +529,8 @@ def compile_feedback_to_eval(feedback: FeedbackEvent) -> dict[str, Any]:
 class PromotionController:
     """Blocks unsafe self-upgrades before Apollo canary deployment."""
 
+    REVIEWER_ROLES = frozenset({"governance", "modelops"})
+
     def __init__(self, engine: SelfImprovementEngine, audit_log: ImmutableAuditLog) -> None:
         self.engine = engine
         self.audit_log = audit_log
@@ -543,6 +545,11 @@ class PromotionController:
             human_approved=candidate.human_approved,
         )
         reasons = list(gate.reasons)
+        reviewer_authorized = bool(context.roles.intersection(self.REVIEWER_ROLES))
+        if context.purpose != "evaluation":
+            reasons.append("canary review requires evaluation purpose")
+        if not reviewer_authorized:
+            reasons.append("canary review requires governance or modelops role")
         if candidate.rollback_version == candidate.candidate_version:
             reasons.append("rollback version must differ from candidate version")
         if candidate.rollback_version != candidate.baseline_version:
@@ -563,7 +570,11 @@ class PromotionController:
             },
         )
         return PromotionDecision(
-            safe_to_review=candidate.human_approved,
+            safe_to_review=(
+                candidate.human_approved
+                and context.purpose == "evaluation"
+                and reviewer_authorized
+            ),
             canary_allowed=canary_allowed,
             rollback_version=candidate.rollback_version,
             reasons=tuple(reasons),

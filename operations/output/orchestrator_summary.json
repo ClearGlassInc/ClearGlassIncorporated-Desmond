@@ -1,17 +1,11 @@
 {
-  "run_utc": "2026-07-22T09:25:04.458913+00:00",
+  "run_utc": "2026-07-24T09:20:21.561173+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
   "failed": 0,
   "skipped": 0,
   "bots": [
-    {
-      "bot_id": "growth",
-      "status": "ok",
-      "duration_s": 0.01,
-      "error": null
-    },
     {
       "bot_id": "daily_priority",
       "status": "ok",
@@ -25,13 +19,13 @@
       "error": null
     },
     {
-      "bot_id": "lead_draft",
+      "bot_id": "growth",
       "status": "ok",
-      "duration_s": 0.03,
+      "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "wealth_ladder",
+      "bot_id": "lead_draft",
       "status": "ok",
       "duration_s": 0.03,
       "error": null
@@ -43,15 +37,21 @@
       "error": null
     },
     {
+      "bot_id": "wealth_ladder",
+      "status": "ok",
+      "duration_s": 0.09,
+      "error": null
+    },
+    {
       "bot_id": "seo_optimizer",
       "status": "ok",
-      "duration_s": 0.18,
+      "duration_s": 0.16,
       "error": null
     },
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 1.24,
+      "duration_s": 0.62,
       "error": null
     },
     {
@@ -63,13 +63,13 @@
     {
       "bot_id": "campaign_reporter",
       "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 0.02,
       "error": null
     },
     {
       "bot_id": "sales",
       "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 0.02,
       "error": null
     },
     {

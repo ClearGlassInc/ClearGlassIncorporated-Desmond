@@ -47,6 +47,17 @@ def test_webhook_rejects_tampered_payload(monkeypatch) -> None:
     assert payments.verify_webhook(tampered, header)["verified"] is False
 
 
+def test_webhook_rejects_non_numeric_timestamp(monkeypatch) -> None:
+    # A signature header with a non-numeric timestamp is attacker-controlled and
+    # must fail closed with a clean rejection, not raise (which would surface as a
+    # 500 from the webhook route instead of a 400).
+    monkeypatch.setenv("STRIPE_WEBHOOK_SECRET", "whsec_test_123")
+    body = json.dumps({"type": "checkout.session.completed"}).encode()
+    result = payments.verify_webhook(body, "t=not-a-number,v1=deadbeef")
+    assert result["verified"] is False
+    assert result["reason"] == "malformed signature header"
+
+
 def test_webhook_unverified_without_secret(monkeypatch) -> None:
     monkeypatch.delenv("STRIPE_WEBHOOK_SECRET", raising=False)
     body = json.dumps({"type": "ping"}).encode()

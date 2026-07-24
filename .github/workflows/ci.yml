@@ -36,7 +36,10 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-      - run: pip install ruff
+      # Pin ruff: an unpinned install lets CI pull a newer ruff whose expanded
+      # default rule set flags hundreds of pre-existing style issues, turning
+      # this repo-wide `ruff check .` red with no code change. Bump deliberately.
+      - run: pip install "ruff==0.15.8"
       - run: ruff check .
 
   site-audit:

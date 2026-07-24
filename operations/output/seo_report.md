@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-22T09:25:03.366761+00:00
-**Average Score:** 88.9/100
-**Files Audited:** 74
+**Run:** 2026-07-24T09:20:21.047814+00:00
+**Average Score:** 88.2/100
+**Files Audited:** 76
 
 ## Page Scores
 
@@ -10,8 +10,9 @@
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
 | `artemis-2040.html` | 50/100 | 5 |
+| `command-center.html` | 50/100 | 5 |
+| `header-mockup-2040.html` | 50/100 | 5 |
 | `intelligence-platform.html` | 50/100 | 5 |
-| `command-center.html` | 60/100 | 4 |
 | `cyber-defense-console.html` | 60/100 | 4 |
 | `flowsint.html` | 60/100 | 4 |
 | `platform-command-center.html` | 60/100 | 4 |
@@ -24,6 +25,7 @@
 | `authority-network.html` | 80/100 | 2 |
 | `conduit.html` | 80/100 | 2 |
 | `control-surface.html` | 80/100 | 2 |
+| `products.html` | 80/100 | 2 |
 | `sats-digital-twin.html` | 80/100 | 2 |
 | `systems.html` | 80/100 | 2 |
 | `ultra-glass.html` | 80/100 | 2 |
@@ -85,13 +87,13 @@
 
 ## Top Issues Across All Pages
 
-- 25x — Description length N chars (ideal N–N)
-- 20x — Title length N chars (ideal N–N)
-- 11x — Missing og:image
-- 6x — Missing og:description
-- 5x — Missing og:title
+- 27x — Description length N chars (ideal N–N)
+- 21x — Title length N chars (ideal N–N)
+- 13x — Missing og:image
+- 7x — Missing og:description
+- 6x — Missing og:title
+- 4x — Missing canonical link tag
 - 4x — Multiple <hN> tags (N)
-- 3x — Missing canonical link tag
 - 2x — N image(s) missing alt text
 - 2x — No <hN> tag found
 - 1x — Missing <title>

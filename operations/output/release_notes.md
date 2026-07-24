@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-22
+# Release Notes — 2026-07-24
 
-*1087 commit(s) since v1.0.0*
+*1157 commit(s) since v1.0.0*
 
 ## New Features
 
+- **commerce-ui:** add neon-glow design system to storefront & admin (`6dd984d`)
 - **bluedesk:** add multi-domain dominance Executive Summary to brief (`365b247`)
 - **smb:** premium product experience for the SMB Cyber Trust Kit (`9f77153`)
 - **percival:** thread correlation/trace IDs through the policy governor (`3beebfa`)
@@ -63,6 +64,7 @@
 
 ## Bug Fixes
 
+- **admin:** resolve lib/auth & lib/session export drift so admin builds (`f80dc9e`)
 - **governance:** hard-gate low-confidence actions per operating rule 8 (`c800505`)
 - **pages:** stop SIGPIPE from failing the Pages build listing (`213bb46`)
 - **artemis:** define missing EvalGateResult, repair intelligence package imports (`86df0e3`)
@@ -166,8 +168,50 @@
 
 ## Maintenance
 
+- Add 4-D Dominance Activation strategy document (#1053) (`ce4a05c`)
+- Fix auto-store test gate: register catalog pages + restore logo/nav invariants (`11e66be`)
+- Pin ruff at the remaining gating install sites (drift confirmed at 0.16.0) (`a735f8a`)
+- Drop graduated pages from SUPPLEMENTAL_PAGES to fix authority-network CI (`d359ef0`)
+- Pin ruff in CI to stop unpinned-linter drift breaking the lint gate (`55153c9`)
+- Add restrained neon logo pulse (`880ad97`)
+- Add Artemis flagship product blueprint (`77e1333`)
+- Fix uncaught ValueError on malformed Stripe webhook timestamp (`c8a3ca5`)
+- Slim down and minimize the global top nav bar (`e73de1b`)
+- Style homepage nav as 2040 dark violet-glass command bar + register authority pages (#1042) (`c3a8bcb`)
+- Fix failing CI, Auto-Store & Internal Link Authority workflows (`17df34a`)
+- Add shared logo badge to 3 pages that lost their sole logo marker (`3fa798e`)
+- Set holographic ClearGlass seal as site favicon / tab logo (`06088bf`)
+-  holographic image (`4bbd4a1`)
+- Center all text content on the homepage (`255d851`)
+- Unify catalog: add 6 missing product pages to nav, products, sitemap (`8becfec`)
+- Fix duplicate nav bar: defer design-system top bar to nav.js (`82e9c2d`)
+- Unify global navigation bar (`18327cb`)
+- Patch high-severity sharp/next advisories across frontends (`c36d1cd`)
+- Expose Authority Grid in shared navigation (`8dd9c15`)
+- Use official ClearGlassInc crystal seal in header mockup (`e010cef`)
+- Add ClearGlassInc. 2040 futuristic header mockup (`5665b96`)
+- Unify static site navigation (`f6b498d`)
+- Match homepage hero to 2040 glass reference (`13571f1`)
+- Patch Artemis self-evolving blueprint deployment notes (`172e82c`)
+- Add Artemis patch deployment control plane (`0bb3261`)
+- Unify product catalog and global navigation (`3ef46bf`)
+- Trigger Artemis Pages redeploy (`de4cd5f`)
+- Build Burlington growth command system (`52bb5b9`)
+- Sharpen futuristic ClearGlass header (`4444edd`)
+- Refine holographic global nav styling (`02cea34`)
+- Style global nav like holographic glass reference (`3d6a72f`)
+- Add ARTEMIS // FAWL governance spine over the PHOENIX recovery engines (`af58d0e`)
+- Unify site product catalog and homepage system (`26d0e39`)
+- Unify site navigation and product catalog (`8bf4788`)
+- Unify product catalog navigation (`09f75c9`)
+- Unify website styling and product navigation (`75ed57d`)
+- Redesign command center as an executive operations deck (#1014) (`3b8a58e`)
+- Unify site navigation and brand system (`aa55b80`)
+- Harden CI: pin actions to SHAs, fix curl (`5abe925`)
+- Brand PHOENIX dashboard with ClearGlass logo (`b73fffd`)
 - Fix pre-existing authority-network CI failures (broken main) (`78bcc3e`)
 - Add governed incident state machine (`af9efe1`)
+- Add PHOENIX — governed self-healing / autonomous recovery engine (`5cf0145`)
 - Add PHOENIX governed autonomous-recovery / self-healing agent (`ac25952`)
 - Bind approval decisions to the authenticated admin credential (`555c633`)
 - Add Cloudflare edge protection for premium content (`8c876b1`)
@@ -661,6 +705,32 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`1ddac26`)
+- refresh control-surface data feeds [skip ci] (`bd671aa`)
+- refresh control-surface data feeds [skip ci] (`168031e`)
+- refresh control-surface data feeds [skip ci] (`f761871`)
+- refresh control-surface data feeds [skip ci] (`c0d9cb9`)
+- refresh control-surface data feeds [skip ci] (`cc1648c`)
+- refresh control-surface data feeds [skip ci] (`d33d7d5`)
+- refresh control-surface data feeds [skip ci] (`d9ca31c`)
+- refresh control-surface data feeds [skip ci] (`f15d1ac`)
+- refresh control-surface data feeds [skip ci] (`eaee733`)
+- refresh control-surface data feeds [skip ci] (`018d78a`)
+- refresh control-surface data feeds [skip ci] (`4951918`)
+- update generated outputs — 2026-07-23 09:23 UTC [skip ci] (`b6444a9`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`8e9ff7a`)
+- refresh control-surface data feeds [skip ci] (`d0b9902`)
+- refresh control-surface data feeds [skip ci] (`fffe48a`)
+- refresh control-surface data feeds [skip ci] (`84b4a07`)
+- refresh control-surface data feeds [skip ci] (`6c09730`)
+- refresh control-surface data feeds [skip ci] (`41c334d`)
+- refresh control-surface data feeds [skip ci] (`0e11873`)
+- refresh control-surface data feeds [skip ci] (`8536b59`)
+- refresh control-surface data feeds [skip ci] (`53c4499`)
+- refresh control-surface data feeds [skip ci] (`c2583e8`)
+- refresh control-surface data feeds [skip ci] (`afde553`)
+- refresh control-surface data feeds [skip ci] (`b8a7408`)
+- update generated outputs — 2026-07-22 09:25 UTC [skip ci] (`7dd003a`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`1ec4fe7`)
 - refresh control-surface data feeds [skip ci] (`e69cd74`)
 - refresh control-surface data feeds [skip ci] (`adc625f`)

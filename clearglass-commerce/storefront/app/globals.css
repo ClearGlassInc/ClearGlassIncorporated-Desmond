@@ -1,0 +1,232 @@
+/*
+ * ClearGlass neon-glow UI system.
+ *
+ * A dark-theme, glassmorphism + neon design layer shared by the storefront and
+ * admin cockpit. Everything is pure CSS (no images, no runtime deps) so it works
+ * in the minimal `tsc --noEmit` + `next build` CI gate. Colors are exposed as CSS
+ * variables so brand glow can be swapped globally.
+ *
+ * Usage:
+ *   - Wrap headings/metrics in .neon-text-primary / -secondary / -accent
+ *   - Panels/cards          -> .neon-card (add .neon-pulse for a "live" feel)
+ *   - CTAs                  -> .btn-neon (+ .btn-neon--secondary / --accent)
+ *   - Drop one <div class="bg-grid" aria-hidden="true"/> in the root layout
+ */
+
+:root {
+  --bg-dark: #070a14;
+  --bg-panel: rgba(124, 150, 255, 0.04);
+  --neon-primary: #00f3ff; /* cyan  */
+  --neon-secondary: #bd00ff; /* purple */
+  --neon-accent: #00ff9d; /* green  */
+  --text-main: #eef2ff;
+  --text-dim: #9aa6c8;
+
+  --glow-soft: 0 0 8px;
+  --glow-mid: 0 0 16px;
+  --glow-strong: 0 0 32px;
+  --glow-extreme: 0 0 64px;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(1200px 800px at 10% -10%, #0b0f1e 0%, var(--bg-dark) 60%),
+    var(--bg-dark);
+  color: var(--text-main);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Neon text                                                                  */
+/* -------------------------------------------------------------------------- */
+
+.neon-text-primary {
+  color: var(--neon-primary);
+  text-shadow:
+    0 0 4px rgba(0, 243, 255, 0.8),
+    0 0 12px rgba(0, 243, 255, 0.6),
+    0 0 24px rgba(0, 243, 255, 0.35);
+}
+
+.neon-text-secondary {
+  color: var(--neon-secondary);
+  text-shadow:
+    0 0 4px rgba(189, 0, 255, 0.8),
+    0 0 12px rgba(189, 0, 255, 0.6),
+    0 0 24px rgba(189, 0, 255, 0.35);
+}
+
+.neon-text-accent {
+  color: var(--neon-accent);
+  text-shadow:
+    0 0 4px rgba(0, 255, 157, 0.8),
+    0 0 12px rgba(0, 255, 157, 0.6),
+    0 0 24px rgba(0, 255, 157, 0.35);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Neon card / panel (glass + glow)                                           */
+/* -------------------------------------------------------------------------- */
+
+.neon-card {
+  position: relative;
+  background: var(--bg-panel);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 4px rgba(0, 243, 255, 0.4),
+    0 0 12px rgba(0, 243, 255, 0.25),
+    0 0 24px rgba(0, 243, 255, 0.15),
+    inset 0 0 12px rgba(0, 243, 255, 0.05);
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.neon-card:hover {
+  border-color: rgba(0, 243, 255, 0.6);
+  box-shadow:
+    0 0 6px rgba(0, 243, 255, 0.6),
+    0 0 16px rgba(0, 243, 255, 0.35),
+    0 0 32px rgba(0, 243, 255, 0.2),
+    inset 0 0 16px rgba(0, 243, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.neon-card--secondary {
+  border-color: rgba(189, 0, 255, 0.25);
+  box-shadow:
+    0 0 4px rgba(189, 0, 255, 0.4),
+    0 0 12px rgba(189, 0, 255, 0.25),
+    0 0 24px rgba(189, 0, 255, 0.15),
+    inset 0 0 12px rgba(189, 0, 255, 0.05);
+}
+
+.neon-card--secondary:hover {
+  border-color: rgba(189, 0, 255, 0.6);
+  box-shadow:
+    0 0 6px rgba(189, 0, 255, 0.6),
+    0 0 16px rgba(189, 0, 255, 0.35),
+    0 0 32px rgba(189, 0, 255, 0.2),
+    inset 0 0 16px rgba(189, 0, 255, 0.08);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Neon button (CTA)                                                          */
+/* -------------------------------------------------------------------------- */
+
+.btn-neon {
+  --btn-r: 0;
+  --btn-g: 243;
+  --btn-b: 255;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.5);
+  color: rgb(var(--btn-r), var(--btn-g), var(--btn-b));
+  padding: 12px 28px;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow:
+    0 0 6px rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.4),
+    inset 0 0 8px rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.08);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.15s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn-neon:hover {
+  border-color: rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.9);
+  color: #fff;
+  box-shadow:
+    0 0 10px rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.7),
+    0 0 24px rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.35),
+    inset 0 0 14px rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.15);
+  transform: translateY(-1px);
+}
+
+.btn-neon:active {
+  transform: translateY(0);
+  box-shadow:
+    0 0 6px rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.5),
+    0 0 14px rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.25),
+    inset 0 0 18px rgba(var(--btn-r), var(--btn-g), var(--btn-b), 0.2);
+}
+
+.btn-neon--secondary {
+  --btn-r: 189;
+  --btn-g: 0;
+  --btn-b: 255;
+}
+
+.btn-neon--accent {
+  --btn-r: 0;
+  --btn-g: 255;
+  --btn-b: 157;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Animated pulse glow (for a "live" feel)                                     */
+/* -------------------------------------------------------------------------- */
+
+@keyframes neon-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 4px rgba(0, 243, 255, 0.5),
+      0 0 12px rgba(0, 243, 255, 0.35),
+      0 0 24px rgba(0, 243, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 2px rgba(0, 243, 255, 0.3),
+      0 0 8px rgba(0, 243, 255, 0.2),
+      0 0 16px rgba(0, 243, 255, 0.1);
+  }
+}
+
+.neon-pulse {
+  animation: neon-pulse 2.5s ease-in-out infinite;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Futuristic background grid                                                  */
+/* -------------------------------------------------------------------------- */
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 243, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Respect users who prefer no motion: freeze the pulse animation. */
+@media (prefers-reduced-motion: reduce) {
+  .neon-pulse {
+    animation: none;
+  }
+}

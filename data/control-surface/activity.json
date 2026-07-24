@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:12",
-    "timestamp": "2026-07-23T23:12:12Z"
+    "time": "00:10",
+    "timestamp": "2026-07-24T00:10:08Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #404",
-    "time": "23:12",
-    "timestamp": "2026-07-23T23:12:03Z"
+    "detail": "schedule on main \u00b7 run #405",
+    "time": "00:09",
+    "timestamp": "2026-07-24T00:09:58Z"
   },
   {
-    "title": "Deploy Pages",
+    "title": "Phoenix Self-Heal",
     "status": "ok",
-    "detail": "workflow_dispatch on main \u00b7 run #1218",
-    "time": "22:14",
-    "timestamp": "2026-07-23T22:14:10Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1687",
-    "time": "22:14",
-    "timestamp": "2026-07-23T22:14:03Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2919",
-    "time": "22:14",
-    "timestamp": "2026-07-23T22:14:03Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #403",
-    "time": "22:13",
-    "timestamp": "2026-07-23T22:13:42Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1734",
-    "time": "21:57",
-    "timestamp": "2026-07-23T21:57:19Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1097",
-    "time": "21:57",
-    "timestamp": "2026-07-23T21:57:19Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1472",
-    "time": "21:57",
-    "timestamp": "2026-07-23T21:57:19Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "bad",
-    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #132",
-    "time": "21:57",
-    "timestamp": "2026-07-23T21:57:19Z"
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #11",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
   },
   {
     "title": "PR Automation",
     "status": "ok",
-    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #794",
-    "time": "21:57",
-    "timestamp": "2026-07-23T21:57:19Z"
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #796",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
   },
   {
-    "title": "IP Protection Bot - Risk Assessment",
+    "title": "Defender Watch",
     "status": "ok",
-    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1786",
-    "time": "21:57",
-    "timestamp": "2026-07-23T21:57:19Z"
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1099",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
   },
   {
     "title": "Security",
     "status": "ok",
-    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1501",
-    "time": "21:57",
-    "timestamp": "2026-07-23T21:57:19Z"
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1503",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1474",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1788",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
+  },
+  {
+    "title": "Auto-Store",
+    "status": "bad",
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #133",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
+  },
+  {
+    "title": "Internal Link Authority",
+    "status": "bad",
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #154",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
+  },
+  {
+    "title": "CI",
+    "status": "bad",
+    "detail": "pull_request on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #1736",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:04Z"
+  },
+  {
+    "title": "Code Quality: PR #1048",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/1048/head \u00b7 run #2922",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:03Z"
+  },
+  {
+    "title": "Workflow Doctor",
+    "status": "ok",
+    "detail": "push on claude/repo-audit-patch-cycle-ah8iol \u00b7 run #350",
+    "time": "23:58",
+    "timestamp": "2026-07-23T23:58:02Z"
   }
 ]

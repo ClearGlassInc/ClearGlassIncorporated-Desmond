@@ -1,12 +1,11 @@
 /* ClearGlass · corner logo badge — a fixed, self-contained brand mark for every
-   page EXCEPT the homepage. Drop in with <script defer src="/logo-badge.js"></script>.
-   No dependencies. Sits in the bottom-RIGHT corner and never collides with page
-   navbars (top). Self-guards the homepage: it returns early on "/" or
-   "/index.html", so it physically cannot render there even if mistakenly
-   included. Idempotent — a second include is a no-op.
+   page. Drop in with <script defer src="/logo-badge.js"></script>.
+   No dependencies. Sits in the top-RIGHT corner so the ClearGlass logo remains
+   visible as persistent home wayfinding on every page, including the homepage.
+   Idempotent — a second include is a no-op.
 
    The badge lives inside a shared corner "dock" (#cg-dock, a flex row anchored to
-   the bottom-right). On its own the dock holds just the coin. On pages that also
+   the top-right). On its own the dock holds just the coin. On pages that also
    load the Writing-help control, that control docks its pill into the SAME row,
    to the LEFT of the coin, so the two read as one continuous, glowing control
    cluster instead of two elements stacked on top of each other.
@@ -22,11 +21,7 @@
   if (window.__cgLogoBadge) return;
   window.__cgLogoBadge = true;
 
-  // Homepage guard: skip the site root and root index.html.
-  var path = location.pathname.replace(/\/+$/, "/");
   var last = (location.pathname.split("/").pop() || "").toLowerCase();
-  var isHome = path === "/" || (last === "index.html" && location.pathname.toLowerCase() === "/index.html");
-  if (isHome) return;
 
   var LOGO = "/assets/images/clearglass-logo.png";
   var HOME = "/index.html";
@@ -54,7 +49,7 @@
 
     var css = [
       /* shared corner dock — a flex row other corner controls can join */
-      "#cg-dock{position:fixed;right:18px;bottom:18px;z-index:2147483000;",
+      "#cg-dock{position:fixed;right:18px;top:18px;z-index:2147483640;",
       "display:inline-flex;align-items:center;gap:8px;pointer-events:none}",
       "#cg-dock>*{pointer-events:auto}",
       /* Keep docked controls adjacent without visually covering one another. */
@@ -79,7 +74,7 @@
       "box-shadow:0 8px 26px rgba(0,0,0,.46),0 0 26px rgba(96,165,250,.6),0 0 44px rgba(167,139,250,.45)}",
       "#cg-logo-badge img{width:100%;height:100%;object-fit:cover;display:block}",
       "#cg-logo-badge:focus-visible{outline:2px solid #a78bfa;outline-offset:3px}",
-      "@media(max-width:640px){#cg-dock{right:14px;bottom:14px;gap:6px}#cg-logo-badge{width:46px;height:46px}}",
+      "@media(max-width:640px){#cg-dock{right:14px;top:14px;gap:6px}#cg-logo-badge{width:46px;height:46px}}",
       /* honour reduced motion — freeze the halo at a steady mid glow */
       "@media (prefers-reduced-motion:reduce){#cg-dock::before{animation:none;opacity:.7}}"
     ].join("");

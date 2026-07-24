@@ -7,7 +7,9 @@ import { AddToCart } from "@/lib/AddToCart";
 export default function Home() {
   return (
     <section>
-      <h1 style={{ fontSize: 34 }}>Shop the collection</h1>
+      <h1 className="neon-text-primary" style={{ fontSize: 34 }}>
+        Shop the collection
+      </h1>
       <p style={{ color: "#9aa6c8" }}>
         Storefront powered by the ClearGlass commerce control plane. Pricing and copy changes are
         governed and audited.
@@ -23,11 +25,9 @@ export default function Home() {
         {CATALOG.map((p) => (
           <div
             key={p.slug}
+            className="neon-card"
             style={{
-              border: "1px solid rgba(124,150,255,.16)",
-              borderRadius: 14,
               padding: 20,
-              background: "rgba(12,16,38,.6)",
               display: "flex",
               flexDirection: "column",
             }}
@@ -40,7 +40,7 @@ export default function Home() {
               <div style={{ color: "#9aa6c8", fontSize: 13, marginTop: 6, lineHeight: 1.5 }}>
                 {p.blurb}
               </div>
-              <div style={{ color: "#a78bfa", marginTop: 8 }}>
+              <div className="neon-text-secondary" style={{ marginTop: 8 }}>
                 {formatPrice(p.amount, p.currency)}
               </div>
             </a>

@@ -1,90 +1,66 @@
 # ClearGlassInc Artemis — Palantir-Native Self-Evolving AI Intelligence Platform Implementation Blueprint
 
-> **Document status — target-state specification, not deployment evidence.** This blueprint defines the proposed ClearGlassInc Artemis architecture and control contract. It does not assert that Palantir products, cloud resources, data integrations, models, accreditation, or production operations are currently provisioned. Every production capability remains disabled until the applicable architecture, security, privacy, mission-owner, and operational-readiness gates have recorded approvals.
+> **Status: target-state implementation specification.** This document defines a proposed architecture and delivery contract; it is not evidence that any Palantir tenant, data connection, model, control, or operational capability has been provisioned. Product-specific interfaces must be validated against the licensed Gotham, Foundry, AIP, and Apollo environments during inception.
 
-## Executive Build Contract
+## Delivery Contract
 
-### Objective and acceptance criteria
+### Objective and measurable acceptance criteria
 
-Build a coalition-aware intelligence platform that turns authorized live and historical data into evidence-linked analysis while preserving human authority over consequential action and over every production self-improvement. The initial production release is acceptable only when all of the following are demonstrated in the intended deployment environment:
+Build ClearGlassInc Artemis as a governed intelligence platform that turns authorized live and historical data into evidence-backed analysis while keeping operational authority with accountable humans. The first production release is acceptable only when it can:
 
-| Dimension | Release acceptance criterion | Evidence owner |
-|---|---|---|
-| Authorization | 100% of object reads and Actions pass server-side mission, classification, compartment, coalition, purpose-of-use, and entity-policy checks | Security and data governance |
-| Consequential actions | 100% require a valid, scoped, unexpired human approval; denial or timeout causes no operational side effect | Mission owner |
-| Provenance | 100% of generated claims expose source references, transform version, prompt/workflow/model versions, and confidence | Intelligence governance |
-| Audit | Material transitions produce append-only, integrity-verifiable records; audit-plane failure blocks consequential execution | Security operations |
-| Quality | Mission-specific offline eval floors are approved before launch; no global synthetic threshold substitutes for mission validation | Model governance |
-| Reliability | Ingestion, query, inference, and approval-path SLOs are measured under representative load and failure injection | SRE |
-| Recovery | Known-good prompt, workflow, model-route, policy, and service artifacts are pinned and rollback is rehearsed | Release engineering |
-| Coalition release | Cross-domain products are created from an explicitly approved releasability policy and are tested against forbidden-field leakage | Coalition data owner |
+1. ingest a representative live event and make a policy-filtered ontology update without crossing coalition or compartment boundaries;
+2. produce a cited triage result whose evidence, model route, prompt, workflow, policy decision, and source lineage can be reconstructed from immutable records;
+3. prevent every operationally significant action until an authorized operator approves the exact, unexpired action package;
+4. turn operator corrections and mission outcomes into reproducible evaluation cases without training directly on raw feedback;
+5. propose—but never self-deploy—a prompt, workflow, heuristic, or route change and promote it only after offline gates, human approval, and an Apollo-controlled canary; and
+6. demonstrate kill-switch activation, rollback, audit export, backup restoration, and coalition-disconnection behavior in a production-like environment.
 
 ### Non-negotiable invariants
 
-1. **Artemis is self-improving, never self-authorizing.** Agents may draft bounded changes; they cannot approve, sign, deploy, broaden, or conceal them.
-2. **Policy is enforced adjacent to data and action boundaries.** UI hiding and prompt instructions are defense-in-depth, not authorization controls.
-3. **Model output is untrusted.** Typed validation, deterministic policy, evidence checks, and workflow state transitions mediate every output.
-4. **Authority does not flow through delegation.** A tool call receives a capability scoped to the initiating principal, mission, purpose, resource, action, and expiry—not the service's ambient privilege.
-5. **No read-up, no write-down, no cross-coalition join by inference.** Derived objects inherit the most restrictive applicable markings until an authorized release process explicitly changes them.
-6. **Audit failure is visible and safe.** Read-only analysis may degrade according to an approved continuity plan; consequential actions fail closed.
-7. **Promotion is evidence-driven and reversible.** A candidate cannot enter an Apollo canary without signed approval, immutable eval evidence, a distinct known-good rollback version, and automated stop conditions.
-8. **Mission goals and guardrails are immutable to agents.** Only accountable humans using separately authorized governance paths may change objectives, tools, policy, approval thresholds, or data scope.
-
-### Trust boundaries and failure posture
-
-```mermaid
-flowchart LR
-  U[Operator device\nuntrusted endpoint] -->|OIDC + device posture| E[Zero-trust edge]
-  S[Partner and sensor feeds\nuntrusted content] -->|schema, size, signature, malware checks| I[Ingestion boundary]
-  E -->|principal + mission context| P[Policy enforcement point]
-  I --> Q[Quarantine / normalization]
-  Q --> D[Foundry governed data plane]
-  P --> D
-  P --> T[AIP tool broker]
-  T -->|short-lived scoped capability| A[Ontology Action]
-  D --> R[Retrieval context]
-  R -->|untrusted evidence envelope| M[Model runtime]
-  M -->|untrusted typed proposal| T
-  A --> G[Human approval gate]
-  G -->|signed decision| X[Execution adapter]
-  D --> L[Independent audit plane]
-  T --> L
-  G --> L
-  X --> L
-```
-
-| Failure | Required behavior |
-|---|---|
-| Identity, mission context, or policy decision unavailable | Deny data access and tool execution; do not reuse a stale allow decision beyond its signed TTL |
-| Model or retrieval unavailable | Preserve case state, expose degraded status, and permit authorized manual investigation without fabricating a result |
-| Stream backlog | Apply bounded queues and backpressure, retain replay position, surface freshness, and prioritize by an approved mission policy |
-| Audit ledger unavailable | Block material transitions and consequential execution; alert security operations |
-| Approval service unavailable | Keep packages pending; never interpret timeout or transport failure as approval |
-| Candidate quality or safety regression | Stop promotion, restore the pinned known-good artifact set, preserve traces, and open an incident review |
-
-### Initial service objectives to validate
-
-These are **proposed engineering targets**, not measured production claims. Mission owners and SRE must replace them with workload-tested objectives before authorization to operate.
-
-| Capability | Proposed SLI / target | Safe degradation and recovery target |
+| Invariant | Enforcement point | Required negative test |
 |---|---|---|
-| Priority event intake | 99.9% accepted or durably rejected with reason; p95 acknowledgement ≤ 500 ms | Buffer at the trusted edge; RPO 0 for acknowledged events |
-| Governed ontology query | 99.9% availability; p95 ≤ 2 s for the approved reference workload | Disable semantic expansion before weakening policy filters |
-| Triage recommendation | p95 ≤ 10 s; freshness and evidence coverage always displayed | Queue for human triage when model, retrieval, or confidence gates fail |
-| Approval decision | Durable and idempotent; p95 persistence ≤ 2 s | Remain `PENDING`; RPO 0 for acknowledged decisions |
-| Audit ledger | 100% coverage of material transitions; integrity verification every 15 minutes | Consequential path RTO ≤ 30 minutes after ledger recovery |
-| Release rollback | Automated stop signal ≤ 5 minutes; known-good restoration ≤ 15 minutes | Freeze further promotion and retain the candidate for investigation |
+| No model output is authority | Workflow state machine and action service | A recommendation cannot invoke a consequential tool directly |
+| No self-granted scope, tools, goals, or privileges | Signed capability manifest and policy decision point | A candidate workflow adding a tool or mission scope is rejected |
+| Need-to-know applies before retrieval | Ontology/search query planner and data product ACLs | An inaccessible entity never reaches model context, citations, cache, or trace payloads |
+| Approval binds the exact action | Approval service verifies actor, digest, expiry, mission, and policy version | Replayed, expired, edited, or cross-mission approvals fail with no side effect |
+| Material records are append-only | Independently controlled audit plane | Update/delete attempts fail and integrity verification detects tampering |
+| Releases are reversible | Apollo release policy, immutable artifact registry, and runtime kill switch | A failed canary restores the last-known-good signed bundle within the recovery objective |
+| Failure is safe and visible | Policy, workflow, and dependency circuit breakers | A policy, identity, lineage, or audit outage blocks writes and raises an alert |
 
-### Delivery sequence and accountable gates
+### Service objectives and failure tolerances
 
-1. **Foundation:** ratify mission use cases, ontology contract, data classification, threat model, identity federation, audit retention, and measurable workloads.
-2. **Read-only pilot:** ingest synthetic or approved low-side data; deliver governed search, graph exploration, citations, and eval tracing without operational Actions.
-3. **Draft workflow pilot:** enable agents to draft cases and intelligence products; require human creation or approval for every persistent mutation.
-4. **Governed Actions:** introduce typed Actions one at a time with idempotency, adjacent authorization, negative tests, audit evidence, and rollback drills.
-5. **Bounded improvement:** generate offline prompt, workflow, and routing candidates; permit canaries only after human ModelOps and mission-owner approval.
-6. **Coalition expansion:** onboard each partner as a separate policy and data-release milestone; never infer equivalence between national or organizational markings.
+These are initial engineering targets, not claims about deployed performance. Mission owners must ratify them against threat, capacity, and network assumptions before production authorization.
 
-Promotion between milestones requires named owners, test evidence, residual-risk acceptance, an incident runbook, and a demonstrated rollback. Apollo provides deployment control; it does not replace authorization to operate or mission approval.
+| Capability | Initial target | Degraded-mode behavior |
+|---|---:|---|
+| Live event acknowledgement | p95 <= 500 ms, p99 <= 1 s | Persist to bounded encrypted spool; do not claim ontology freshness |
+| Policy-filtered triage | p95 <= 2.5 s for the validated load envelope | Fall back to deterministic rules or queue for human triage |
+| Consequential action authorization | 100% policy and approval checks; zero tolerated bypasses | Fail closed; leave action package in `AWAITING_APPROVAL` |
+| Audit durability | RPO 0 for acknowledged material writes | Reject the material write if the audit append cannot commit atomically |
+| Operational control plane | 99.95% monthly availability target | Read-only last-known-good views with an explicit stale-data banner |
+| Regional/enclave recovery | RTO <= 30 minutes; configuration RPO <= 5 minutes | Isolate the affected enclave and reconcile from signed event checkpoints |
+| Emergency AI disablement | <= 60 seconds per enclave | Keep deterministic search, case, and approval workflows available |
+
+### Trust boundaries and ownership
+
+- **Data plane:** Foundry datasets, ontology objects, indexes, and event streams. Data owners approve source use, retention, classification mappings, and release markings.
+- **AI plane:** AIP prompts, agents, evaluations, retrieval policies, and model routes. ModelOps owns quality evidence but cannot authorize operational actions.
+- **Control plane:** identity, policy, workflow, approval, capability, and Apollo release controls. Security and mission authorities jointly approve material changes.
+- **Audit plane:** append-only decision and provenance records under an administrative boundary independent from agent and application writers. Audit custodians control export and retention.
+- **Operator plane:** Gotham, Foundry applications, and the ClearGlassInc Artemis web surface. Operators receive only mission-scoped views and cannot approve their own privileged access expansion.
+
+### Delivery sequence and go/no-go gates
+
+| Milestone | Deliverable | Exit gate | Accountable owner |
+|---|---|---|---|
+| 0. Inception | Licensed-product interface validation, threat model, data classification, mission vocabulary, capacity baseline | Architecture, privacy, security, and mission-owner approval | Chief architect |
+| 1. Governed data foundation | Source contracts, bronze/silver/gold pipelines, bitemporal ontology, lineage, ABAC fixtures | Data-quality thresholds and cross-coalition leakage tests pass | Data platform lead |
+| 2. Read-only intelligence | Search, entity correlation, Gotham investigation views, cited analyst copilot | Groundedness, precision/recall, latency, accessibility, and operator acceptance pass | Intelligence product lead |
+| 3. Governed workflows | Typed tools, durable workflow engine, approval service, immutable audit, action packages | Forbidden-transition, replay, concurrency, outage, and recovery tests pass | Application/security leads |
+| 4. Improvement control plane | Feedback capture, eval corpus, candidate registry, review UI, drift monitors | Candidate cannot deploy without quorum approval and signed release evidence | ModelOps lead |
+| 5. Enclave rollout | Apollo rings, observability, incident runbooks, restore/failover drills | Production authorization plus successful canary and rollback exercise | SRE and mission authority |
+
+Each milestone produces a signed evidence pack containing source commit, schemas, policy bundle, test results, security findings, residual-risk decisions, deployment manifest, rollback procedure, and named on-call owner. Any missing gate keeps the affected capability disabled or read-only.
 
 ## System Architecture
 

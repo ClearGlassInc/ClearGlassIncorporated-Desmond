@@ -38,6 +38,20 @@ class Settings(BaseSettings):
     escalation_email: str = "info@clearglassinc.com"
     slack_webhook_url: str = ""
 
+    # Etsy Open API v3 connection (never logged; secrets are runtime env vars only).
+    # A connection is "present" once keystring + access token are set; identity and
+    # permissions are confirmed by a read-only verification call (see app/etsy.py).
+    etsy_keystring: str = ""          # app API key (x-api-key header)
+    etsy_shared_secret: str = ""      # OAuth app shared secret (never echoed)
+    etsy_access_token: str = ""       # OAuth2 access token, format "<user_id>.<token>"
+    etsy_refresh_token: str = ""      # OAuth2 refresh token (access tokens expire hourly)
+    etsy_shop_id: str = ""            # numeric shop id; derived from the token if blank
+    etsy_shop_name: str = ""          # declared shop name, cross-checked on verify
+    etsy_login_email: str = ""        # declared Etsy account email (informational)
+    # Comma-separated OAuth scopes granted at token-exchange time.
+    etsy_scopes: str = ""
+    etsy_api_base: str = "https://openapi.etsy.com/v3"
+
 
 @lru_cache
 def get_settings() -> Settings:

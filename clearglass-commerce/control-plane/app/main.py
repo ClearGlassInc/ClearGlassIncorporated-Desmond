@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
 from .config import get_settings
-from .routers import approvals, events, inventory, metrics, orders, payments, store
+from .routers import approvals, etsy, events, inventory, metrics, orders, payments, store
 
 
 def create_app() -> FastAPI:
@@ -53,6 +53,7 @@ def create_app() -> FastAPI:
     app.include_router(metrics.router)
     app.include_router(events.router)
     app.include_router(approvals.router)
+    app.include_router(etsy.router)
     return app
 
 

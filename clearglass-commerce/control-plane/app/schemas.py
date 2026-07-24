@@ -83,6 +83,32 @@ class RefundRequest(BaseModel):
     reason: str = ""
 
 
+class EtsyPublishListingRequest(BaseModel):
+    """Propose publishing a listing to the live Etsy shop (HIGH risk — always gated)."""
+
+    sku: str
+    title: str
+    price: float = Field(ge=0, description="List price in the shop currency")
+    quantity: int = Field(default=1, ge=0)
+    description: str = ""
+
+
+class EtsySyncInventoryRequest(BaseModel):
+    """Propose pushing inventory quantities to live Etsy listings (HIGH risk — gated)."""
+
+    updates: dict[str, int] = Field(
+        default_factory=dict, description="Map of Etsy listing_id -> new on-hand quantity"
+    )
+
+
+class EtsyManageOrderRequest(BaseModel):
+    """Propose a change to a live Etsy order/receipt (HIGH risk — gated)."""
+
+    receipt_id: str
+    action: str = Field(description="e.g. mark_shipped | cancel | refund")
+    note: str = ""
+
+
 class ActionResult(BaseModel):
     """Uniform envelope returned by every governed action."""
 

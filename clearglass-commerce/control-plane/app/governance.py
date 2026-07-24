@@ -29,6 +29,9 @@ ACTION_RISK: dict[str, int] = {
     "inventory_check": 10,
     "draft_message": 15,
     "draft_campaign": 20,
+    # low — Etsy connection introspection is read-only (detect creds / read shop identity)
+    "etsy_connection_check": 0,
+    "etsy_verify_connection": 5,
     # medium — content/catalog changes that are reversible but customer-visible
     "refresh_products": 35,
     "publish_content": 45,
@@ -38,6 +41,11 @@ ACTION_RISK: dict[str, int] = {
     "inventory_reorder": 75,
     "send_outbound": 78,
     "launch_campaign": 70,
+    # high — writes to a live external marketplace (customer-visible listings, prices, orders)
+    "etsy_publish_listing": 82,
+    "etsy_update_listing": 80,
+    "etsy_sync_inventory": 72,
+    "etsy_manage_order": 80,
     # critical — irreversible or platform-level exposure
     "update_payment_settings": 100,
     "update_tax_settings": 95,
@@ -53,6 +61,11 @@ ALWAYS_ESCALATE = {
     "trigger_refund",
     "update_fulfillment_rules",
     "inventory_reorder",
+    # Every write to the live Etsy shop is human-gated: listings, prices, inventory, orders.
+    "etsy_publish_listing",
+    "etsy_update_listing",
+    "etsy_sync_inventory",
+    "etsy_manage_order",
 }
 
 

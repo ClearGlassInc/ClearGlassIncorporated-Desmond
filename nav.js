@@ -134,7 +134,28 @@
   function hasPageOwnedPrimaryNav(){
     return Array.prototype.some.call(document.querySelectorAll('nav,[role="navigation"]'), isNativePrimaryNav);
   }
+  function ensureMissionCoreAssets(){
+    if (!document.querySelector('link[data-mission-core-css]')) {
+      var link=document.createElement('link'); link.rel='stylesheet'; link.href=href('assets/css/mission-core.css'); link.setAttribute('data-mission-core-css',''); document.head.appendChild(link);
+    }
+    if (!document.querySelector('script[data-mission-core-js]')) {
+      var js=document.createElement('script'); js.defer=true; js.src=href('assets/js/mission-core.js'); js.setAttribute('data-mission-core-js',''); document.head.appendChild(js);
+    }
+  }
+  function missionCoreMarkup(){
+    return '<span class="mission-core" data-mission-core aria-label="ClearGlassInc mission intelligence core">'+
+      '<span class="mission-core__energy" aria-hidden="true"></span>'+
+      '<span class="mission-core__radar" aria-hidden="true"></span>'+
+      '<span class="mission-core__orbit mission-core__orbit--outer" aria-hidden="true"></span>'+
+      '<span class="mission-core__orbit mission-core__orbit--inner" aria-hidden="true"></span>'+
+      '<span class="mission-core__nodes" aria-hidden="true"><span class="mission-node mission-node--1"></span><span class="mission-node mission-node--2"></span><span class="mission-node mission-node--3"></span><span class="mission-node mission-node--4"></span></span>'+
+      '<span class="mission-core__reticle" aria-hidden="true"></span>'+
+      '<span class="mission-core__logo-shell"><img src="'+href('assets/images/clearglass-logo.png')+'" alt="ClearGlassInc" class="mission-core__logo site-logo"></span>'+
+      '<span class="mission-core__status" role="status" aria-live="polite"><span class="mission-core__status-dot" aria-hidden="true"></span><span class="mission-core__status-text">MISSION ACTIVE</span></span>'+
+    '</span>';
+  }
   function build(){
+    ensureMissionCoreAssets();
     if (document.getElementById('cg-global-nav')) return;
     // Do not overlay a second global bar on pages that already ship their own
     // primary navigation. The homepage has a bespoke hero-integrated nav; pages
@@ -154,7 +175,7 @@
     var nav=document.createElement('nav'); nav.id='cg-global-nav'; nav.className='cg-topnav'; nav.setAttribute('aria-label','Primary navigation');
     var menu=PRODUCTS.map(function(p){return '<a class="cg-prod" href="'+href(p[1])+'"><span class="cg-ic">'+p[3]+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span></a>';}).join('');
     menu+=COMPANY.map(function(c){return '<a class="cg-prod" href="'+href(c[1])+'"><span class="cg-ic">'+c[2]+'</span><span><b>'+esc(c[0])+'</b><small>Company</small></span></a>';}).join('');
-    nav.innerHTML='<a class="cg-brand" href="'+href('index.html')+'"><span class="cg-mark logo-orb" aria-hidden="true"><img src="'+href('assets/images/clearglass-logo.png')+'" alt="" class="site-logo"></span><span class="cg-name">ClearGlassInc. <em>2040</em></span></a><div class="cg-links">'+TOP.map(function(t){return t[0]==='Products'?'<span class="cg-drop"><a class="cg-dropbtn" href="'+href('products.html')+'" aria-haspopup="true">Products⌄</a><span class="cg-menu" role="menu"><a class="cg-prod" href="'+href('products.html')+'"><span class="cg-ic">▨</span><span><b>All Products</b><small>Unified catalog</small></span></a>'+menu+'</span></span>':'<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a class="cg-cta" href="'+href('store.html')+'"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5l10 3.8v7.2c0 6.2-4 11.6-10 14-6-2.4-10-7.8-10-14V7.3l10-3.8z"/><path d="M12.2 15.7l2.5 2.5 5.5-6"/></svg>Book a Security Engagement</a></div><button class="cg-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>';
+    nav.innerHTML='<a class="cg-brand" href="'+href('index.html')+'">'+missionCoreMarkup()+'<span class="cg-name">ClearGlassInc. <em>2040</em></span></a><div class="cg-links">'+TOP.map(function(t){return t[0]==='Products'?'<span class="cg-drop"><a class="cg-dropbtn" href="'+href('products.html')+'" aria-haspopup="true">Products⌄</a><span class="cg-menu" role="menu"><a class="cg-prod" href="'+href('products.html')+'"><span class="cg-ic">▨</span><span><b>All Products</b><small>Unified catalog</small></span></a>'+menu+'</span></span>':'<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a class="cg-cta" href="'+href('store.html')+'"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5l10 3.8v7.2c0 6.2-4 11.6-10 14-6-2.4-10-7.8-10-14V7.3l10-3.8z"/><path d="M12.2 15.7l2.5 2.5 5.5-6"/></svg>Book a Security Engagement</a></div><button class="cg-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>';
     var mob=document.createElement('div'); mob.className='cg-mobile'; mob.id='cg-mobile-nav'; mob.innerHTML='<div class="cg-label">Navigation</div>'+TOP.map(function(t){return '<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a href="'+href('store.html')+'">Book a Security Engagement</a><div class="cg-label">Products</div>'+PRODUCTS.map(function(p){return '<a href="'+href(p[1])+'">'+esc(p[0])+'</a>';}).join('')+'<div class="cg-label">Company</div>'+COMPANY.map(function(c){return '<a href="'+href(c[1])+'">'+esc(c[0])+'</a>';}).join('');
     document.body.appendChild(nav); document.body.appendChild(mob);
     var btn=nav.querySelector('.cg-toggle'); btn.addEventListener('click',function(){var open=mob.classList.toggle('open');btn.setAttribute('aria-expanded',open?'true':'false');});

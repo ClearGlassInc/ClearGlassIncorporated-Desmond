@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-22
+# Release Notes — 2026-07-23
 
-*1087 commit(s) since v1.0.0*
+*1127 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -166,8 +166,35 @@
 
 ## Maintenance
 
+- Unify catalog: add 6 missing product pages to nav, products, sitemap (`8becfec`)
+- Fix duplicate nav bar: defer design-system top bar to nav.js (`82e9c2d`)
+- Unify global navigation bar (`18327cb`)
+- Patch high-severity sharp/next advisories across frontends (`c36d1cd`)
+- Expose Authority Grid in shared navigation (`8dd9c15`)
+- Use official ClearGlassInc crystal seal in header mockup (`e010cef`)
+- Add ClearGlassInc. 2040 futuristic header mockup (`5665b96`)
+- Unify static site navigation (`f6b498d`)
+- Match homepage hero to 2040 glass reference (`13571f1`)
+- Patch Artemis self-evolving blueprint deployment notes (`172e82c`)
+- Add Artemis patch deployment control plane (`0bb3261`)
+- Unify product catalog and global navigation (`3ef46bf`)
+- Trigger Artemis Pages redeploy (`de4cd5f`)
+- Build Burlington growth command system (`52bb5b9`)
+- Sharpen futuristic ClearGlass header (`4444edd`)
+- Refine holographic global nav styling (`02cea34`)
+- Style global nav like holographic glass reference (`3d6a72f`)
+- Add ARTEMIS // FAWL governance spine over the PHOENIX recovery engines (`af58d0e`)
+- Unify site product catalog and homepage system (`26d0e39`)
+- Unify site navigation and product catalog (`8bf4788`)
+- Unify product catalog navigation (`09f75c9`)
+- Unify website styling and product navigation (`75ed57d`)
+- Redesign command center as an executive operations deck (#1014) (`3b8a58e`)
+- Unify site navigation and brand system (`aa55b80`)
+- Harden CI: pin actions to SHAs, fix curl (`5abe925`)
+- Brand PHOENIX dashboard with ClearGlass logo (`b73fffd`)
 - Fix pre-existing authority-network CI failures (broken main) (`78bcc3e`)
 - Add governed incident state machine (`af9efe1`)
+- Add PHOENIX — governed self-healing / autonomous recovery engine (`5cf0145`)
 - Add PHOENIX governed autonomous-recovery / self-healing agent (`ac25952`)
 - Bind approval decisions to the authenticated admin credential (`555c633`)
 - Add Cloudflare edge protection for premium content (`8c876b1`)
@@ -661,6 +688,19 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`8e9ff7a`)
+- refresh control-surface data feeds [skip ci] (`d0b9902`)
+- refresh control-surface data feeds [skip ci] (`fffe48a`)
+- refresh control-surface data feeds [skip ci] (`84b4a07`)
+- refresh control-surface data feeds [skip ci] (`6c09730`)
+- refresh control-surface data feeds [skip ci] (`41c334d`)
+- refresh control-surface data feeds [skip ci] (`0e11873`)
+- refresh control-surface data feeds [skip ci] (`8536b59`)
+- refresh control-surface data feeds [skip ci] (`53c4499`)
+- refresh control-surface data feeds [skip ci] (`c2583e8`)
+- refresh control-surface data feeds [skip ci] (`afde553`)
+- refresh control-surface data feeds [skip ci] (`b8a7408`)
+- update generated outputs — 2026-07-22 09:25 UTC [skip ci] (`7dd003a`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`1ec4fe7`)
 - refresh control-surface data feeds [skip ci] (`e69cd74`)
 - refresh control-surface data feeds [skip ci] (`adc625f`)

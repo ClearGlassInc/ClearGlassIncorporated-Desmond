@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3001"),
@@ -16,14 +17,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body
-        style={{
-          margin: 0,
-          fontFamily: "Inter, system-ui, sans-serif",
-          background: "#070a14",
-          color: "#eef2ff",
-        }}
-      >
+      <body>
+        {/* Futuristic cyber grid behind all content (pure CSS, no images). */}
+        <div className="bg-grid" aria-hidden="true" />
         {/* Keyboard/screen-reader skip link — first focusable element on the page. */}
         <a
           href="#main-content"
@@ -54,7 +50,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             borderBottom: "1px solid rgba(124,150,255,.16)",
           }}
         >
-          <strong>Admin Cockpit</strong>
+          <strong className="neon-text-primary">Admin Cockpit</strong>
           <a href="/" style={{ color: "#9fc4ff" }}>
             Overview
           </a>

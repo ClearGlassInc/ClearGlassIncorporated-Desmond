@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SESSION_COOKIE } from "@/lib/session";
+import { SESSION_COOKIE } from "@/lib/constants";
 
 const PROTECTED_PREFIXES = ["/", "/approvals", "/audit", "/premium", "/api/premium", "/api/assets"];
 const PUBLIC_PREFIXES = ["/login", "/api/login", "/_next", "/favicon.ico"];

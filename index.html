@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
 <!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
-<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon-32.png">
+<link rel="alternate icon" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#07111f">
 <meta name="msapplication-TileColor" content="#07111f">
-<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
+<meta name="msapplication-TileImage" content="/icon-192.png">
 <meta name="msapplication-config" content="/browserconfig.xml">
 
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
@@ -243,6 +244,78 @@ body{background:#f7f8fd;}
 <script defer src="/assets/js/cg-design-system.js"></script>
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="brand-system.css">
+<style>
+/* ── Center all page text — homepage alignment pass ─────────────────
+   Overrides the earlier left-aligned "screenshot-match" hero and the
+   default left alignment of content sections so every block of copy on
+   the page reads centered. Structural nav/mobile-menu layout is left
+   untouched. Loaded last so it wins the cascade. */
+.hero{text-align:center}
+.hero-year,.hero-sub,.hero-deep-copy{margin-left:auto;margin-right:auto}
+.hero-signal,.hero-option{text-align:center}
+.hero-actions,.hero-command-rail,.hero-options,.cta-actions,.founder-actions,.cta-variants{justify-content:center}
+/* Section headers */
+.sh{text-align:center}
+.sh .sh-tag,.sh-tag{justify-content:center}
+.sh p{margin-left:auto;margin-right:auto}
+/* Mission + manifesto */
+.mission-inner{text-align:center}
+.mission-text{margin-left:auto;margin-right:auto}
+/* Cards and content blocks */
+.value-card,.tech-card,.command-panel,.ops-card,.product-card,
+.connect-card,.tl-content,.founder-card,.credentials-card,
+.feature-lines li,.trust-lines li{text-align:center}
+.tc-tags,.pc-feats,.pc-feat,.pc-dots,.credentials-list{justify-content:center}
+.tl-content p,.command-panel p,.product-card .pd{margin-left:auto;margin-right:auto}
+/* Keep the checklist tick marks visually attached while text centers */
+.feature-lines li,.trust-lines li{padding-left:14px;padding-right:14px}
+.feature-lines li::before,.trust-lines li::before{position:static;display:inline-block;margin-right:8px}
+/* Footer copy */
+.footer-col{align-items:center;text-align:center}
+.footer-col a{width:auto}
+
+/* ══════════════════════════════════════════════════════════════
+   2040 COMMAND-BAR NAV — dark violet-glass, loaded last so it beats
+   glass.css / cg-design-system.css / brand-system.css, which force a
+   light nav with !important. Matches header-mockup-2040.html.
+══════════════════════════════════════════════════════════════ */
+.nav{
+  background:linear-gradient(90deg,rgba(151,174,255,.30) 0%,rgba(25,39,78,.90) 14%,rgba(17,27,55,.96) 47%,rgba(41,32,83,.94) 77%,rgba(161,115,255,.46) 100%)!important;
+  border:2px solid rgba(219,226,255,.72)!important;
+  color:#eef4ff!important;
+  backdrop-filter:blur(30px) saturate(1.6)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(1.6)!important;
+  box-shadow:0 28px 70px rgba(34,39,78,.18),0 18px 52px rgba(112,73,214,.30),inset 0 2px 0 rgba(255,255,255,.55),inset 0 -2px 0 rgba(203,161,255,.70),0 0 0 1px rgba(127,158,255,.32)!important;
+  overflow:visible!important;
+}
+/* Brand wordmark reads white with a violet accent on the year */
+.nav-name{color:#f8fbff!important;text-shadow:0 0 24px rgba(255,255,255,.22)}
+.nav-name em{color:#b69cff!important}
+/* Holographic crystal seal — glowing rim, not the flat light chip glass.css sets */
+.nav-mark{
+  background:radial-gradient(circle at 34% 22%,#fff,rgba(221,228,241,.86) 25%,rgba(129,139,157,.78) 52%,rgba(18,25,42,.94) 80%)!important;
+  border:2px solid rgba(247,250,255,.84)!important;
+  box-shadow:0 0 0 12px rgba(155,92,255,.28),0 0 38px rgba(185,93,255,.92),0 0 58px rgba(92,165,255,.24),inset 0 5px 14px rgba(255,255,255,.75),inset 0 -12px 24px rgba(0,0,0,.42)!important;
+}
+/* Nav links: light text on the dark bar, violet neon underline */
+.nav-links,.nav-links.is-open{background:transparent!important;border:0!important}
+.nav-links a,.nav-drop-btn{color:rgba(246,248,255,.92)!important;background:transparent!important}
+.nav-links a:hover,.nav-drop-btn:hover,.nav-links a:focus-visible,.nav-drop-btn:focus-visible{color:#fff!important;background:rgba(255,255,255,.07)!important}
+.nav-links a::after,.nav-drop-btn::after{background:linear-gradient(90deg,transparent,#91b4ff,#ca78ff,transparent)!important;box-shadow:0 0 15px rgba(190,103,255,.95)!important}
+.nav-drop-chevron{color:#dbe4ff!important;opacity:.9}
+/* CTA keeps the dark ink fill but regains its violet neon rim + glow */
+.nav-cta{
+  background:linear-gradient(180deg,rgba(12,15,31,.99),rgba(3,5,13,1))!important;
+  border:2px solid rgba(205,146,255,.84)!important;
+  color:#fff!important;
+  box-shadow:0 0 0 1px rgba(123,92,255,.34),0 0 30px rgba(186,92,255,.82),0 17px 40px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.16)!important;
+}
+.nav-cta:hover,.nav-cta:focus-visible{box-shadow:0 0 0 1px rgba(123,92,255,.45),0 0 40px rgba(186,92,255,.98),0 19px 46px rgba(0,0,0,.46),inset 0 1px 0 rgba(255,255,255,.2)!important}
+.nav-cta-shield{border:2px solid rgba(211,172,255,.78)!important;color:#e7caff!important;box-shadow:0 0 14px rgba(190,103,255,.72)!important}
+/* Mobile menu toggle must stay visible on the dark bar */
+.nav-toggle{color:#eef4ff!important;border-color:rgba(219,226,255,.35)!important}
+.nav-toggle:hover{background:rgba(255,255,255,.08)!important;border-color:rgba(219,226,255,.55)!important}
+</style>
 </head>
 <body>
 <!-- Classification banner — UNCLASSIFIED demo instance -->

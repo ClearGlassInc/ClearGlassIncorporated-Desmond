@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-07-22T09:25:04.458913+00:00",
+  "run_utc": "2026-07-23T09:23:28.816830+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
@@ -7,13 +7,13 @@
   "skipped": 0,
   "bots": [
     {
-      "bot_id": "growth",
+      "bot_id": "daily_priority",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "daily_priority",
+      "bot_id": "growth",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
@@ -39,25 +39,19 @@
     {
       "bot_id": "release_notes",
       "status": "ok",
-      "duration_s": 0.11,
+      "duration_s": 0.41,
       "error": null
     },
     {
       "bot_id": "seo_optimizer",
       "status": "ok",
-      "duration_s": 0.18,
+      "duration_s": 0.41,
       "error": null
     },
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 1.24,
-      "error": null
-    },
-    {
-      "bot_id": "operations",
-      "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 1.66,
       "error": null
     },
     {
@@ -67,21 +61,27 @@
       "error": null
     },
     {
-      "bot_id": "sales",
+      "bot_id": "operations",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "alert_dispatcher",
+      "bot_id": "sales",
       "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 0.11,
       "error": null
     },
     {
       "bot_id": "self_evolving",
       "status": "ok",
-      "duration_s": 0.01,
+      "duration_s": 0.08,
+      "error": null
+    },
+    {
+      "bot_id": "alert_dispatcher",
+      "status": "ok",
+      "duration_s": 0.08,
       "error": null
     }
   ]

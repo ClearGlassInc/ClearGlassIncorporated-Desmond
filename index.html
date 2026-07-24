@@ -328,7 +328,9 @@ body{background:#f7f8fd;}
 .nav-toggle{color:#eef4ff!important;border-color:rgba(219,226,255,.35)!important}
 .nav-toggle:hover{background:rgba(255,255,255,.08)!important;border-color:rgba(219,226,255,.55)!important}
 </style>
+  <link rel="stylesheet" href="assets/css/mission-core.css">
   <link rel="stylesheet" href="assets/css/site-unifier.css">
+  <script defer src="assets/js/mission-core.js"></script>
   <script defer src="assets/js/site-unifier.js"></script>
 </head>
 <body>
@@ -367,7 +369,26 @@ body{background:#f7f8fd;}
 <div class="cursor-glow" id="cursorGlow"></div>
 <nav class="nav" id="navbar" aria-label="Primary navigation">
   <a href="index.html" class="nav-brand">
-    <div class="nav-mark"><img src="assets/images/clearglass-logo.png" alt="ClearGlass logo"></div>
+    <div class="mission-core nav-mark" data-mission-core aria-label="ClearGlassInc mission intelligence core">
+      <div class="mission-core__energy" aria-hidden="true"></div>
+      <div class="mission-core__radar" aria-hidden="true"></div>
+      <div class="mission-core__orbit mission-core__orbit--outer" aria-hidden="true"></div>
+      <div class="mission-core__orbit mission-core__orbit--inner" aria-hidden="true"></div>
+      <div class="mission-core__nodes" aria-hidden="true">
+        <span class="mission-node mission-node--1"></span>
+        <span class="mission-node mission-node--2"></span>
+        <span class="mission-node mission-node--3"></span>
+        <span class="mission-node mission-node--4"></span>
+      </div>
+      <div class="mission-core__reticle" aria-hidden="true"></div>
+      <div class="mission-core__logo-shell">
+        <img src="assets/images/clearglass-logo.png" alt="ClearGlassInc" class="mission-core__logo">
+      </div>
+      <div class="mission-core__status" role="status" aria-live="polite">
+        <span class="mission-core__status-dot" aria-hidden="true"></span>
+        <span class="mission-core__status-text">MISSION ACTIVE</span>
+      </div>
+    </div>
     <div class="nav-name">ClearGlassInc. <em>2040</em></div>
   </a>
   <div class="nav-links" id="navLinks">

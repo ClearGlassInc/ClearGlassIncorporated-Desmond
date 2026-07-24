@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-23T09:23:28.408311+00:00",
+  "run_utc": "2026-07-24T09:20:21.517119+00:00",
   "site_url": "https://www.clearglassinc.com",
-  "overall_healthy": false,
+  "overall_healthy": true,
   "pages_checked": 6,
   "pages_healthy": 6,
   "pages_unreachable": 0,
@@ -11,7 +11,7 @@
       "url": "https://www.clearglassinc.com/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 329,
+      "response_ms": 161,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://www.clearglassinc.com/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 174,
+      "response_ms": 46,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://www.clearglassinc.com/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 179,
+      "response_ms": 66,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://www.clearglassinc.com/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 166,
+      "response_ms": 47,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://www.clearglassinc.com/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 204,
+      "response_ms": 59,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,16 +61,13 @@
       "url": "https://www.clearglassinc.com/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 172,
+      "response_ms": 45,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
-  "local_issues": [
-    "Page missing ClearGlass logo: apps/command-center/index.html",
-    "Page missing ClearGlass logo: products.html"
-  ],
+  "local_issues": [],
   "local_warnings": [
     "HTML page not referenced in sitemap.xml: automap.html",
     "HTML page not referenced in sitemap.xml: header-mockup-2040.html"

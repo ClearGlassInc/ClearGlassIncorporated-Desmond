@@ -1,11 +1,5 @@
 # Executive Summary: 4-D Dominance Activation
 
-> **Implementation:** A working, stdlib-only build of this framework lives in
-> [`four_d_dominance/`](four_d_dominance/README.md) — an orchestrator with
-> Planner/Executor/Critic agents, tiered model routing, a memory layer, and a
-> governance gate, wired to the `4-D Dominance Pipeline` GitHub Actions workflow.
-> Run it with `python -m four_d_dominance.pipeline --all`.
-
 As your CEO and AI Strategy Architect, I'm deploying a comprehensive **Prompt-Patch-Deploy** framework across all four domains (Web, AI, Corporate, Brand) to achieve simultaneous top-tier status. This isn't incremental improvement—it's a systematic overhaul designed for compounding dominance.
 
 ## 1. DECONSTRUCT: Your Current Positioning

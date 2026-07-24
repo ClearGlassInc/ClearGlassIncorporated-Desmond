@@ -21,18 +21,10 @@ export function AddToCart({ product, block = false }: { product: Product; block?
   return (
     <button
       onClick={onClick}
+      className={`btn-neon${added ? " btn-neon--accent" : ""}`}
       style={{
         width: block ? "100%" : undefined,
         marginTop: 12,
-        padding: "10px 18px",
-        borderRadius: 10,
-        border: "1px solid rgba(124,150,255,.3)",
-        background: added
-          ? "rgba(52,211,153,.18)"
-          : "linear-gradient(180deg,rgba(124,150,255,.22),rgba(124,150,255,.06))",
-        color: added ? "#34d399" : "#fff",
-        cursor: "pointer",
-        fontWeight: 600,
       }}
     >
       {added ? "Added ✓" : "Add to cart"}

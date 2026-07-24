@@ -47,6 +47,9 @@
   transform:translateY(-50%);
   background:linear-gradient(90deg,rgba(114,199,255,.55),rgba(140,92,255,.28),transparent);
   box-shadow:0 0 10px rgba(77,163,255,.45);
+  background-size:140px 1px,100% 1px;
+  background-image:linear-gradient(90deg,transparent 0 38%,rgba(234,245,255,.94) 48%,transparent 58%),linear-gradient(90deg,rgba(114,199,255,.55),rgba(140,92,255,.28),transparent);
+  animation:missionDataPacket 6s linear infinite;
   pointer-events:none;
   z-index:-2;
   -webkit-mask:linear-gradient(90deg,#000 0 62%,transparent 100%);
@@ -134,9 +137,12 @@
 .mission-core__status-text{transition:opacity .28s ease}.mission-core__status-text.is-fading{opacity:.18}.mission-core__status-dot{width:5px;height:5px;border-radius:50%;background:#78ffc8;box-shadow:0 0 8px rgba(120,255,200,.75);animation:missionStatusPulse 4s ease-in-out infinite;}
 .cg-brand:hover .mission-core,.nav-brand:hover .mission-core,.cg-brand:focus-visible .mission-core,.nav-brand:focus-visible .mission-core{transform:scale(1.025)}
 .cg-brand:hover .mission-core__radar,.nav-brand:hover .mission-core__radar,.cg-brand:focus-visible .mission-core__radar,.nav-brand:focus-visible .mission-core__radar{opacity:.62}.cg-brand:hover .mission-core__orbit--inner,.nav-brand:hover .mission-core__orbit--inner,.cg-brand:focus-visible .mission-core__orbit--inner,.nav-brand:focus-visible .mission-core__orbit--inner{animation-duration:8s}.cg-brand:hover .mission-core__reticle,.nav-brand:hover .mission-core__reticle,.cg-brand:focus-visible .mission-core__reticle,.nav-brand:focus-visible .mission-core__reticle{opacity:.86}
-html.mission-core-paused .mission-core *{animation-play-state:paused!important}
+html.mission-core-paused .mission-core *,
+html.mission-core-paused .mission-core::before,
+html.mission-core-paused .mission-core::after{animation-play-state:paused!important}
 @keyframes missionEnergyPulse{0%,100%{opacity:.46;transform:scale(.96)}50%{opacity:.86;transform:scale(1.08)}62%{opacity:.64;transform:scale(1.035)}}@keyframes missionOrbitCw{to{transform:rotate(360deg)}}@keyframes missionOrbitCcw{to{transform:rotate(-360deg)}}@keyframes missionRadarSweep{to{transform:rotate(360deg)}}@keyframes missionReticleLock{0%,82%,100%{opacity:.5;transform:scale(1)}88%{opacity:.86;transform:scale(1.015)}}@keyframes missionNodePulse{0%,100%{opacity:.45}45%,55%{opacity:1}}@keyframes missionNodeWave{0%,55%{opacity:0;transform:scale(.45)}66%{opacity:.45}100%{opacity:0;transform:scale(1.55)}}@keyframes missionStatusPulse{0%,100%{opacity:.7;transform:scale(1)}8%,16%{opacity:1;transform:scale(1.35)}12%,20%{transform:scale(.9)}}@keyframes missionActivationWave{0%,62%{opacity:0;transform:scale(.78)}72%{opacity:.38}100%{opacity:0;transform:scale(1.22)}}
+@keyframes missionDataPacket{0%,64%{background-position:-140px 0;opacity:.28}76%{opacity:.86}100%{background-position:160px 0;opacity:.28}}
 @media(max-width:1240px){.mission-core{--mission-core-size:62px;--mission-orbit-scale:1.18}.mission-core__status{font-size:7px;top:calc(100% + 5px)}}
-@media(max-width:760px){.mission-core{--mission-core-size:50px;--mission-orbit-scale:1.12}.mission-core::after{display:none}.mission-core__status{display:none}.mission-core__energy{filter:none}.mission-core__reticle{opacity:.36}.mission-node{width:4px;height:4px}}
-@media(max-width:480px){.mission-core__nodes,.mission-core__reticle{display:none}.mission-core__radar{opacity:.24;animation-duration:8s}.mission-core::before{animation:none;opacity:.18;transform:scale(1)}}
-@media(prefers-reduced-motion:reduce){.mission-core,.mission-core *,.mission-core::before{animation:none!important;transition:none!important}.mission-core__energy{opacity:.5;transform:scale(1)}.mission-core__radar{opacity:.16;transform:none}.mission-core__orbit{transform:none}.mission-core__status{display:inline-flex}.mission-core__status-text{opacity:1!important}}
+@media(max-width:760px){.mission-core{--mission-core-size:50px;--mission-orbit-scale:1.12}.mission-core::after{display:none;animation:none}.mission-core__status{display:none}.mission-core__energy{filter:none}.mission-core__reticle{opacity:.36}.mission-node{width:4px;height:4px}}
+@media(max-width:480px){.mission-core__nodes,.mission-core__reticle{display:none}.mission-core__orbit--inner{animation-duration:16s}.mission-core__radar{opacity:.18;animation:none}.mission-core::before{animation:none;opacity:.18;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.mission-core,.mission-core *,.mission-core::before,.mission-core::after{animation:none!important;transition:none!important}.mission-core__energy{opacity:.5;transform:scale(1)}.mission-core__radar{opacity:.16;transform:none}.mission-core__orbit{transform:none}.mission-core__status{display:inline-flex}.mission-core__status-text{opacity:1!important}}

@@ -201,3 +201,32 @@ def test_promotion_controller_allows_human_approved_candidate_with_stable_rollba
     assert decision.safe_to_review is True
     assert decision.canary_allowed is True
     assert decision.reasons == ()
+
+
+def test_promotion_controller_requires_evaluation_purpose() -> None:
+    context = AccessContext(
+        operator_id="modelops-1",
+        roles=frozenset({"modelops"}),
+        mission_ids=frozenset({"mission-1"}),
+        compartments=frozenset({"ARTEMIS"}),
+        coalition="internal",
+        purpose="investigation",
+    )
+    candidate = ReleaseCandidate(
+        candidate_id="rc-3",
+        proposal_id="proposal-3",
+        artifact_type="model_route",
+        baseline_version="router.v2",
+        candidate_version="router.v3",
+        rollback_version="router.v2",
+        eval_metrics={"precision": 0.96, "recall": 0.91, "p95_latency_ms": 850},
+        human_approved=True,
+    )
+
+    decision = PromotionController(SelfImprovementEngine(), ImmutableAuditLog()).review_for_canary(
+        context, candidate
+    )
+
+    assert decision.safe_to_review is False
+    assert decision.canary_allowed is False
+    assert "canary review requires evaluation purpose" in decision.reasons

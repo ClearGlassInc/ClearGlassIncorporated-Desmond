@@ -1,5 +1,91 @@
 # ClearGlassInc Artemis — Palantir-Native Self-Evolving AI Intelligence Platform Implementation Blueprint
 
+> **Document status — target-state specification, not deployment evidence.** This blueprint defines the proposed ClearGlassInc Artemis architecture and control contract. It does not assert that Palantir products, cloud resources, data integrations, models, accreditation, or production operations are currently provisioned. Every production capability remains disabled until the applicable architecture, security, privacy, mission-owner, and operational-readiness gates have recorded approvals.
+
+## Executive Build Contract
+
+### Objective and acceptance criteria
+
+Build a coalition-aware intelligence platform that turns authorized live and historical data into evidence-linked analysis while preserving human authority over consequential action and over every production self-improvement. The initial production release is acceptable only when all of the following are demonstrated in the intended deployment environment:
+
+| Dimension | Release acceptance criterion | Evidence owner |
+|---|---|---|
+| Authorization | 100% of object reads and Actions pass server-side mission, classification, compartment, coalition, purpose-of-use, and entity-policy checks | Security and data governance |
+| Consequential actions | 100% require a valid, scoped, unexpired human approval; denial or timeout causes no operational side effect | Mission owner |
+| Provenance | 100% of generated claims expose source references, transform version, prompt/workflow/model versions, and confidence | Intelligence governance |
+| Audit | Material transitions produce append-only, integrity-verifiable records; audit-plane failure blocks consequential execution | Security operations |
+| Quality | Mission-specific offline eval floors are approved before launch; no global synthetic threshold substitutes for mission validation | Model governance |
+| Reliability | Ingestion, query, inference, and approval-path SLOs are measured under representative load and failure injection | SRE |
+| Recovery | Known-good prompt, workflow, model-route, policy, and service artifacts are pinned and rollback is rehearsed | Release engineering |
+| Coalition release | Cross-domain products are created from an explicitly approved releasability policy and are tested against forbidden-field leakage | Coalition data owner |
+
+### Non-negotiable invariants
+
+1. **Artemis is self-improving, never self-authorizing.** Agents may draft bounded changes; they cannot approve, sign, deploy, broaden, or conceal them.
+2. **Policy is enforced adjacent to data and action boundaries.** UI hiding and prompt instructions are defense-in-depth, not authorization controls.
+3. **Model output is untrusted.** Typed validation, deterministic policy, evidence checks, and workflow state transitions mediate every output.
+4. **Authority does not flow through delegation.** A tool call receives a capability scoped to the initiating principal, mission, purpose, resource, action, and expiry—not the service's ambient privilege.
+5. **No read-up, no write-down, no cross-coalition join by inference.** Derived objects inherit the most restrictive applicable markings until an authorized release process explicitly changes them.
+6. **Audit failure is visible and safe.** Read-only analysis may degrade according to an approved continuity plan; consequential actions fail closed.
+7. **Promotion is evidence-driven and reversible.** A candidate cannot enter an Apollo canary without signed approval, immutable eval evidence, a distinct known-good rollback version, and automated stop conditions.
+8. **Mission goals and guardrails are immutable to agents.** Only accountable humans using separately authorized governance paths may change objectives, tools, policy, approval thresholds, or data scope.
+
+### Trust boundaries and failure posture
+
+```mermaid
+flowchart LR
+  U[Operator device\nuntrusted endpoint] -->|OIDC + device posture| E[Zero-trust edge]
+  S[Partner and sensor feeds\nuntrusted content] -->|schema, size, signature, malware checks| I[Ingestion boundary]
+  E -->|principal + mission context| P[Policy enforcement point]
+  I --> Q[Quarantine / normalization]
+  Q --> D[Foundry governed data plane]
+  P --> D
+  P --> T[AIP tool broker]
+  T -->|short-lived scoped capability| A[Ontology Action]
+  D --> R[Retrieval context]
+  R -->|untrusted evidence envelope| M[Model runtime]
+  M -->|untrusted typed proposal| T
+  A --> G[Human approval gate]
+  G -->|signed decision| X[Execution adapter]
+  D --> L[Independent audit plane]
+  T --> L
+  G --> L
+  X --> L
+```
+
+| Failure | Required behavior |
+|---|---|
+| Identity, mission context, or policy decision unavailable | Deny data access and tool execution; do not reuse a stale allow decision beyond its signed TTL |
+| Model or retrieval unavailable | Preserve case state, expose degraded status, and permit authorized manual investigation without fabricating a result |
+| Stream backlog | Apply bounded queues and backpressure, retain replay position, surface freshness, and prioritize by an approved mission policy |
+| Audit ledger unavailable | Block material transitions and consequential execution; alert security operations |
+| Approval service unavailable | Keep packages pending; never interpret timeout or transport failure as approval |
+| Candidate quality or safety regression | Stop promotion, restore the pinned known-good artifact set, preserve traces, and open an incident review |
+
+### Initial service objectives to validate
+
+These are **proposed engineering targets**, not measured production claims. Mission owners and SRE must replace them with workload-tested objectives before authorization to operate.
+
+| Capability | Proposed SLI / target | Safe degradation and recovery target |
+|---|---|---|
+| Priority event intake | 99.9% accepted or durably rejected with reason; p95 acknowledgement ≤ 500 ms | Buffer at the trusted edge; RPO 0 for acknowledged events |
+| Governed ontology query | 99.9% availability; p95 ≤ 2 s for the approved reference workload | Disable semantic expansion before weakening policy filters |
+| Triage recommendation | p95 ≤ 10 s; freshness and evidence coverage always displayed | Queue for human triage when model, retrieval, or confidence gates fail |
+| Approval decision | Durable and idempotent; p95 persistence ≤ 2 s | Remain `PENDING`; RPO 0 for acknowledged decisions |
+| Audit ledger | 100% coverage of material transitions; integrity verification every 15 minutes | Consequential path RTO ≤ 30 minutes after ledger recovery |
+| Release rollback | Automated stop signal ≤ 5 minutes; known-good restoration ≤ 15 minutes | Freeze further promotion and retain the candidate for investigation |
+
+### Delivery sequence and accountable gates
+
+1. **Foundation:** ratify mission use cases, ontology contract, data classification, threat model, identity federation, audit retention, and measurable workloads.
+2. **Read-only pilot:** ingest synthetic or approved low-side data; deliver governed search, graph exploration, citations, and eval tracing without operational Actions.
+3. **Draft workflow pilot:** enable agents to draft cases and intelligence products; require human creation or approval for every persistent mutation.
+4. **Governed Actions:** introduce typed Actions one at a time with idempotency, adjacent authorization, negative tests, audit evidence, and rollback drills.
+5. **Bounded improvement:** generate offline prompt, workflow, and routing candidates; permit canaries only after human ModelOps and mission-owner approval.
+6. **Coalition expansion:** onboard each partner as a separate policy and data-release milestone; never infer equivalence between national or organizational markings.
+
+Promotion between milestones requires named owners, test evidence, residual-risk acceptance, an incident runbook, and a demonstrated rollback. Apollo provides deployment control; it does not replace authorization to operate or mission approval.
+
 ## System Architecture
 
 ClearGlassInc Artemis is a secure, coalition-aware, audited, latency-sensitive intelligence platform built across **Palantir Gotham**, **Foundry**, **AIP**, and **Apollo**. Gotham is the operational intelligence and investigations layer. Foundry is the governed data, ontology, pipeline, and application-logic layer. AIP is the AI copilot, agent, tool, workflow, and evaluation layer. Apollo is the deployment, canary, rollback, runtime-control, and fleet-management layer.
@@ -156,6 +242,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from hashlib import sha256
+import json
 from math import exp
 from typing import Any
 
@@ -176,7 +263,13 @@ def compute_confidence(score: EvidenceScore) -> float:
 
 
 def provenance_hash(payload: dict[str, Any]) -> str:
-    canonical = repr(sorted(payload.items())).encode("utf-8")
+    canonical = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+        allow_nan=False,
+    ).encode("utf-8")
     return sha256(canonical).hexdigest()
 
 

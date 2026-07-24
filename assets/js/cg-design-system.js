@@ -249,6 +249,27 @@
     body.insertBefore(spacer, body.firstChild);
     body.insertBefore(bar, spacer);
 
+    // Hide redundant native primary navigation so only the global bar shows,
+    // preventing a stacked/double navigation. Page-specific tab bars, footers,
+    // and related-links blocks are left untouched.
+    (function hideNativePrimaryNav() {
+      var nodes = document.querySelectorAll('nav,[role="navigation"]');
+      for (var k = 0; k < nodes.length; k++) {
+        var el = nodes[k];
+        if (el === bar || bar.contains(el)) continue;
+        if (el.closest('.cg-topbar,.cg-tb-mobile,#cg-related,footer,.footer,.site-footer,.gov-footer,.cgr-box')) continue;
+        var lbl = (el.getAttribute('aria-label') || '').toLowerCase();
+        var role = (el.getAttribute('role') || '').toLowerCase();
+        var cls = (' ' + (el.className || '') + ' ').toLowerCase();
+        var eid = (' ' + (el.id || '') + ' ').toLowerCase();
+        if (/related|footer|breadcrumb|pagination|tab/.test(lbl + cls + eid)) continue;
+        var primary = /primary|main|navigation/.test(lbl) || role === 'navigation' ||
+          /( nav | navbar | topbar | header-nav | ag-nav | site-nav | cg-nav )/.test(cls) ||
+          /( navbar | nav )/.test(eid);
+        if (primary) el.classList.add('cg-tb-native-hidden');
+      }
+    })();
+
     // Adopt page-provided controls (e.g. the store's cart button) into
     // the action cluster, ahead of the CTA.
     var cta = bar.querySelector('.cg-tb-cta');

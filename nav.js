@@ -133,6 +133,13 @@
   }
   function build(){
     if (document.getElementById('cg-global-nav')) return;
+    // On non-home pages the design-system top bar (cg-design-system.js) owns the
+    // global nav, so defer to it and avoid a duplicate bar. This bar still builds
+    // on the homepage and on any page that does not load the design system.
+    var isIndex = (here === '' || here === 'index.html');
+    var tbOptOut = document.documentElement.hasAttribute('data-cg-no-topbar') ||
+      (document.body && document.body.hasAttribute('data-cg-no-topbar'));
+    if (window.__cgDesignSystem && !isIndex && !tbOptOut) return;
     var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
     hideNativeNavigation();
     var nav=document.createElement('nav'); nav.id='cg-global-nav'; nav.className='cg-topnav'; nav.setAttribute('aria-label','Primary navigation');

@@ -41,6 +41,12 @@ MAX_CRAWL_DEPTH = 4
 # New indexable pages are attached as supplemental depth. Core member order is
 # deliberately frozen so publishing a new page cannot silently reshuffle every
 # existing page's generated sibling links.
+#
+# A page listed here must NOT also live in the legacy graph (tools/internal_links.py):
+# validate() rejects that as "duplicates legacy graph". Once a supplemental page is
+# promoted to a full cluster member in internal_links.py it graduates out of this map.
+# products.html, command-center.html and platform-command-center.html were promoted
+# in that way, so they are registered only in the legacy graph now.
 SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {}
 
 # Explicit lateral relationships for new pages. These are not inferred at run

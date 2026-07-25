@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #426",
+    "title": "Control Surface Feeds #427",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "21:08",
+    "timestamp": "2026-07-25T21:08:05Z"
+  },
+  {
+    "title": "Deploy Pages #1273",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:34",
+    "timestamp": "2026-07-25T19:34:00Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3017",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:33",
+    "timestamp": "2026-07-25T19:33:52Z"
+  },
+  {
+    "title": "pages build and deployment #1746",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:33",
+    "timestamp": "2026-07-25T19:33:51Z"
+  },
+  {
+    "title": "Control Surface Feeds #426",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "19:33",
     "timestamp": "2026-07-25T19:33:36Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "15:18",
     "timestamp": "2026-07-25T15:18:49Z"
-  },
-  {
-    "title": "Policy Gate #1537",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "14:57",
-    "timestamp": "2026-07-25T14:57:36Z"
-  },
-  {
-    "title": "Internal Link Authority #184",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "14:57",
-    "timestamp": "2026-07-25T14:57:36Z"
-  },
-  {
-    "title": "Defender Watch #1169",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "14:57",
-    "timestamp": "2026-07-25T14:57:36Z"
-  },
-  {
-    "title": "CI #1800",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "14:57",
-    "timestamp": "2026-07-25T14:57:36Z"
   }
 ]

@@ -1,15 +1,78 @@
 [
   {
-    "title": "Sales-Ops Briefing #32",
+    "title": "Control Surface Feeds #422",
     "status": "warn",
-    "detail": "queued \u00b7 schedule on main",
+    "detail": "in_progress \u00b7 schedule on main",
+    "time": "14:00",
+    "timestamp": "2026-07-25T14:00:47Z"
+  },
+  {
+    "title": "Defender Watch #1167",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "13:51",
+    "timestamp": "2026-07-25T13:51:07Z"
+  },
+  {
+    "title": "Health Monitor #224",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "13:43",
+    "timestamp": "2026-07-25T13:43:12Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #4",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "13:10",
+    "timestamp": "2026-07-25T13:10:57Z"
+  },
+  {
+    "title": "Auto-Store #143",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "13:09",
+    "timestamp": "2026-07-25T13:09:23Z"
+  },
+  {
+    "title": "Organic Growth \u2014 Daily Content #1",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "13:04",
+    "timestamp": "2026-07-25T13:04:54Z"
+  },
+  {
+    "title": "Deploy Pages #1267",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "12:09",
+    "timestamp": "2026-07-25T12:09:47Z"
+  },
+  {
+    "title": "pages build and deployment #1740",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "12:09",
+    "timestamp": "2026-07-25T12:09:40Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3010",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "12:09",
+    "timestamp": "2026-07-25T12:09:40Z"
+  },
+  {
+    "title": "Sales-Ops Briefing #32",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "12:09",
     "timestamp": "2026-07-25T12:09:30Z"
   },
   {
     "title": "Control Surface Feeds #421",
-    "status": "warn",
-    "detail": "in_progress \u00b7 schedule on main",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "12:09",
     "timestamp": "2026-07-25T12:09:18Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "09:11",
     "timestamp": "2026-07-25T09:11:52Z"
-  },
-  {
-    "title": "Daily Marketing Content #9",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "09:04",
-    "timestamp": "2026-07-25T09:04:16Z"
-  },
-  {
-    "title": "Content Pipeline #78",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_run on main",
-    "time": "08:59",
-    "timestamp": "2026-07-25T08:59:48Z"
-  },
-  {
-    "title": "pages build and deployment #1737",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "08:59",
-    "timestamp": "2026-07-25T08:59:42Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3007",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "08:59",
-    "timestamp": "2026-07-25T08:59:42Z"
-  },
-  {
-    "title": "Bot Orchestrator #66",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:59",
-    "timestamp": "2026-07-25T08:59:21Z"
-  },
-  {
-    "title": "pages build and deployment #1736",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "08:29",
-    "timestamp": "2026-07-25T08:29:30Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3006",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "08:29",
-    "timestamp": "2026-07-25T08:29:30Z"
-  },
-  {
-    "title": "ARTEMIS Deploy #181",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:28",
-    "timestamp": "2026-07-25T08:28:49Z"
-  },
-  {
-    "title": "Cert Bot #59",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:22",
-    "timestamp": "2026-07-25T08:22:31Z"
   }
 ]

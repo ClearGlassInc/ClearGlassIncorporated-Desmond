@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-24
+# Release Notes — 2026-07-25
 
-*1157 commit(s) since v1.0.0*
+*1198 commit(s) since v1.0.0*
 
 ## New Features
 
+- **growth:** activate full Organic Social Growth Engine with workflows, pillars, agents, and content system (`4068817`)
 - **commerce-ui:** add neon-glow design system to storefront & admin (`6dd984d`)
 - **bluedesk:** add multi-domain dominance Executive Summary to brief (`365b247`)
 - **smb:** premium product experience for the SMB Cyber Trust Kit (`9f77153`)
@@ -118,6 +119,12 @@
 
 ## Documentation
 
+- harden Artemis architecture acceptance contract (`4293e34`)
+- harden Artemis implementation blueprint (`d85d486`)
+- define Artemis delivery assurance contract (`6e5e014`)
+- add Artemis operational readiness plan (`a28f175`)
+- harden Artemis platform blueprint (`e0eb3f8`)
+- expand Artemis intelligence platform blueprint (`7227e56`)
 - harden Artemis self-evolving control plane (`7da6f43`)
 - add Kimi K3 AI coding-agent tech radar note (#898) (`6474968`)
 - record www.clearglassinc.com domain migration + verification (`b9e2248`)
@@ -168,7 +175,27 @@
 
 ## Maintenance
 
+- Cloudflare domain ownership certification letter (`d69978e`)
+- Add Artemis enterprise architecture agent (`67b0b46`)
+- Refine 2040 glass navigation bar (`0c3499e`)
+- Add Artemis Palantir self-evolving AI blueprint blog (`e6a2a0f`)
+- Add Artemis browser intelligence assistant (`c7a5ce9`)
+- Revert today's website updates (`afd595e`)
+- Revert today's website updates (`55c2203`)
+- Enhance mission core telemetry animation (`8344964`)
+- Keep logo badge visible on every page (`b5dfdc9`)
+- Upgrade navbar logo mission core animation (`cd7f666`)
+- Add Artemis weekly architect execution checklist (`d6df0f5`)
+- Match homepage nav to cinematic header style (`22b5c50`)
+- Fix duplicate navigation overlay (`28b49d3`)
+- Add Artemis network intelligence map to blog (`1f5c873`)
+- Refine global navigation to futuristic dark-chrome style + logo neon pulse (`bb24666`)
+- Unify site navigation and homepage styling (`efc29c6`)
+- Deepen 2040 nav body and strengthen neon glow to match mock (`c81a862`)
+- Restyle global nav to 2040 command bar with live movement animations (`e5147b7`)
+- Build the 4-D Dominance system from the strategy doc (`1f2bdcb`)
 - Add 4-D Dominance Activation strategy document (#1053) (`ce4a05c`)
+- Add 4-D Dominance Activation strategy document (`0ddabe3`)
 - Fix auto-store test gate: register catalog pages + restore logo/nav invariants (`11e66be`)
 - Pin ruff at the remaining gating install sites (drift confirmed at 0.16.0) (`a735f8a`)
 - Drop graduated pages from SUPPLEMENTAL_PAGES to fix authority-network CI (`d359ef0`)
@@ -705,6 +732,19 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`5c81b2e`)
+- refresh control-surface data feeds [skip ci] (`329a035`)
+- refresh control-surface data feeds [skip ci] (`340abc7`)
+- refresh control-surface data feeds [skip ci] (`9fc7a01`)
+- refresh control-surface data feeds [skip ci] (`40d15de`)
+- refresh control-surface data feeds [skip ci] (`1b7c3b7`)
+- refresh control-surface data feeds [skip ci] (`9e61783`)
+- refresh control-surface data feeds [skip ci] (`c75e692`)
+- refresh control-surface data feeds [skip ci] (`a85d369`)
+- refresh control-surface data feeds [skip ci] (`64949b7`)
+- refresh control-surface data feeds [skip ci] (`05b4177`)
+- refresh control-surface data feeds [skip ci] (`9eb5824`)
+- update generated outputs — 2026-07-24 09:20 UTC [skip ci] (`279b2c4`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`1ddac26`)
 - refresh control-surface data feeds [skip ci] (`bd671aa`)
 - refresh control-surface data feeds [skip ci] (`168031e`)
@@ -1152,6 +1192,7 @@
 
 ## Security
 
+- restrict Artemis canary promotion reviews (`2fdb8c4`)
 - enforce dependency audit failures (`6a1db72`)
 - harden ClearGlass Artemis audit controls (`66fe6b2`)
 - harden workflow deployment gates (`7f83166`)

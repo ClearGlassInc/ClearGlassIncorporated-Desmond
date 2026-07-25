@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "09:12",
-    "timestamp": "2026-07-25T09:12:06Z"
+    "time": "10:43",
+    "timestamp": "2026-07-25T10:43:39Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #420",
+    "time": "10:43",
+    "timestamp": "2026-07-25T10:43:27Z"
+  },
+  {
+    "title": "Burlington Release",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #45",
+    "time": "09:12",
+    "timestamp": "2026-07-25T09:12:45Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1265",
+    "time": "09:12",
+    "timestamp": "2026-07-25T09:12:19Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1738",
+    "time": "09:12",
+    "timestamp": "2026-07-25T09:12:12Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3008",
+    "time": "09:12",
+    "timestamp": "2026-07-25T09:12:12Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #419",
     "time": "09:11",
     "timestamp": "2026-07-25T09:11:52Z"
@@ -54,40 +89,5 @@
     "detail": "dynamic on main \u00b7 run #1736",
     "time": "08:29",
     "timestamp": "2026-07-25T08:29:30Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #3006",
-    "time": "08:29",
-    "timestamp": "2026-07-25T08:29:30Z"
-  },
-  {
-    "title": "ARTEMIS Deploy",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #181",
-    "time": "08:28",
-    "timestamp": "2026-07-25T08:28:49Z"
-  },
-  {
-    "title": "Cert Bot",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #59",
-    "time": "08:22",
-    "timestamp": "2026-07-25T08:22:31Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #1166",
-    "time": "08:17",
-    "timestamp": "2026-07-25T08:17:32Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #223",
-    "time": "08:11",
-    "timestamp": "2026-07-25T08:11:33Z"
   }
 ]

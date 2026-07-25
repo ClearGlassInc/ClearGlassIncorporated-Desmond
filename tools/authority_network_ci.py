@@ -10,6 +10,11 @@ other graph, sitemap, crawl-depth, conversion and block-integrity failures.
 The public Authority Grid is linked from the shared ``nav.js`` Company group.
 Because the core HTML parser intentionally does not execute JavaScript, this
 release adapter records that reviewed global-navigation edge explicitly.
+
+Newly published, indexable pages are registered here as supplemental nodes until
+the next deliberate legacy-graph regeneration. This keeps scheduled releases
+safe without reshuffling established internal-link blocks across the whole site.
+Client-rendered pillar listings are also represented as reviewed graph edges.
 """
 from __future__ import annotations
 
@@ -25,6 +30,21 @@ if str(ROOT) not in sys.path:
 from tools import authority_network as core  # noqa: E402
 from tools.authority_network import *  # noqa: E402,F403
 
+_RELEASE_SUPPLEMENTAL_PAGES = {
+    "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html": (
+        "ClearGlassInc Artemis: Palantir Blueprint",
+        "governed, ontology-driven self-evolving AI intelligence architecture",
+        "blog",
+    ),
+}
+
+for _path, (_title, _description, _cluster) in _RELEASE_SUPPLEMENTAL_PAGES.items():
+    core.SUPPLEMENTAL_PAGES.setdefault(
+        _path,
+        (_title, _description, _cluster),
+    )
+    core.PAGES.setdefault(_path, (_title, _description))
+
 _ALIAS_DIAGNOSTIC = ": duplicate loc entries inside sitemap set"
 _BASE_VALIDATE = core.validate
 _BASE_GRAPH_EDGES = core.graph_edges
@@ -38,6 +58,14 @@ def graph_edges() -> dict[str, set[str]]:
     edges = _BASE_GRAPH_EDGES()
     if "authority-network.html" in core.PAGES:
         edges["index.html"].add("authority-network.html")
+
+    # The Insights pillar is populated from the reviewed post registry at runtime.
+    # Record those client-rendered discovery edges because the stdlib parser does
+    # not execute JavaScript or inspect the JSON registry used by the page.
+    for page, (_title, _description, cluster_id) in core.SUPPLEMENTAL_PAGES.items():
+        pillar = core.legacy.CLUSTERS[cluster_id]["pillar"]
+        edges[pillar].add(page)
+
     return edges
 
 

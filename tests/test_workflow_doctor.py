@@ -54,3 +54,14 @@ def test_patch_action_versions_leaves_sha_pins_alone(doctor):
     new_text, changes = doctor.patch_action_versions(text)
     assert new_text == text
     assert changes == []
+
+
+def test_unpinned_external_actions_checks_composite_steps(doctor, tmp_path):
+    action_file = tmp_path / "action.yml"
+    mutable = "runs:\n  using: composite\n  steps:\n    - uses: actions/setup-python@v6\n"
+    assert doctor.unpinned_external_actions(action_file, mutable) == [
+        f"ERROR {action_file}: external action is not pinned to a full commit SHA: actions/setup-python@v6"
+    ]
+
+    pinned = mutable.replace("@v6", "@a309ff8b426b58ec0e2a45f0f869d46889d02405")
+    assert doctor.unpinned_external_actions(action_file, pinned) == []

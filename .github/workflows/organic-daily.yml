@@ -20,7 +20,7 @@ on:
         default: all
 
 permissions:
-  contents: write
+  contents: read
   issues: write
 
 concurrency:
@@ -92,4 +92,4 @@ jobs:
           gh issue create \
             --title "Organic Daily Pack — $DATE" \
             --body "$(cat marketing/output/organic/$DATE.md)" \
-            --label "growth,organic,content" || true
+            --label "growth,organic,content"

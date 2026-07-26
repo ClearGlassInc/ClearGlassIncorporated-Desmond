@@ -74,7 +74,7 @@
     return topicMatch + published + desk;
   }
   function complexity(post) {
-    var minutes = Number(post.readMinutes) || 0;
+    var minutes = Number(post.readMinutes || post.readingMinutes) || 0;
     return minutes >= 20 ? 'Deep dive' : minutes >= 12 ? 'Technical' : 'Brief';
   }
   function render(posts) {
@@ -89,7 +89,7 @@
       return '<a class="future-rec" href="' + escapeHtml(post.url) + '">' +
         '<div class="future-rec-top"><span>0' + (index + 1) + ' · ' + escapeHtml(post.category || 'Intelligence brief') + '</span><span class="future-rec-match">' + match + '</span></div>' +
         '<h3>' + escapeHtml(post.title) + '</h3><p>' + escapeHtml(post.description || '') + '</p>' +
-        '<div class="future-rec-signals"><span>' + escapeHtml(complexity(post)) + '</span><span>' + escapeHtml(String(post.readMinutes || '—')) + ' min</span><span>' + escapeHtml(post.date || 'Published') + '</span></div></a>';
+        '<div class="future-rec-signals"><span>' + escapeHtml(complexity(post)) + '</span><span>' + escapeHtml(String(post.readMinutes || post.readingMinutes || '—')) + ' min</span><span>' + escapeHtml(post.date || post.published || 'Published') + '</span></div></a>';
     }).join('');
   }
   function showFallback() {

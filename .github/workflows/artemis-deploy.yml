@@ -107,6 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: ip-guardian-gate
+    environment: automation-write
     permissions:
       contents: write
     steps:

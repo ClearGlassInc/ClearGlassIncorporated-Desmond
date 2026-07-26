@@ -18,6 +18,7 @@ jobs:
     name: Generate & Publish Data Feeds
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: automation-write
     permissions:
       contents: write   # commit refreshed feeds
       actions: read     # read workflow runs for the feeds

@@ -441,6 +441,76 @@ def release_gate(champion: EvalScore, challenger: EvalScore) -> bool:
     ])
 ```
 
+### Shadow, A/B, and Canary Experiment Design
+
+An approved candidate is first evaluated in **shadow mode** against replayable, policy-filtered
+traffic. Shadow output is stored in the evaluation plane and is never shown to an operator, written
+to the ontology, or passed to an action tool. Only candidates with zero authorization, disclosure,
+and unsafe-action violations may enter an online experiment. Prompt and workflow experiments use a
+stable mission-level assignment so one mission never receives inconsistent behavior during an
+investigation. Classified missions, active incidents, break-glass sessions, and consequential action
+workflows remain on the champion unless the mission authority explicitly approves their inclusion.
+
+The experiment service records the champion and challenger artifact digests, policy version,
+assignment reason, eligible population, exposure, outcome window, and predefined stopping rule.
+ModelOps may stop an experiment early for harm, leakage, latency, or reliability; it may not declare
+success early from a favorable sample. Promotion requires the full evaluation window, minimum sample
+size, confidence interval, segmented results, security review, and named mission-owner approval.
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from hashlib import sha256
+from typing import Literal
+
+
+@dataclass(frozen=True)
+class ExperimentContext:
+    mission_id: str
+    experiment_id: str
+    classification: str
+    active_incident: bool
+    break_glass: bool
+    consequential_action: bool
+    mission_authority_opt_in: bool
+
+
+@dataclass(frozen=True)
+class ExperimentAssignment:
+    arm: Literal["champion", "challenger"]
+    reason: str
+    bucket: int | None
+
+
+def assign_experiment(context: ExperimentContext, challenger_basis_points: int) -> ExperimentAssignment:
+    """Assign one mission deterministically; this function grants no execution authority."""
+    if not 0 <= challenger_basis_points <= 10_000:
+        raise ValueError("challenger_basis_points must be between 0 and 10_000")
+
+    protected = (
+        context.classification in {"TOP_SECRET", "SPECIAL_ACCESS"}
+        or context.active_incident
+        or context.break_glass
+        or context.consequential_action
+    )
+    if protected and not context.mission_authority_opt_in:
+        return ExperimentAssignment("champion", "protected mission context", None)
+
+    assignment_key = f"{context.experiment_id}:{context.mission_id}".encode("utf-8")
+    bucket = int.from_bytes(sha256(assignment_key).digest()[:8], "big") % 10_000
+    arm: Literal["champion", "challenger"] = (
+        "challenger" if bucket < challenger_basis_points else "champion"
+    )
+    return ExperimentAssignment(arm, "stable mission-level assignment", bucket)
+```
+
+Online scorecards are segmented by mission, coalition, language, data freshness, severity, and
+operator role to prevent aggregate gains from concealing harm to a smaller group. The hard stop
+conditions are any cross-boundary disclosure, unauthorized tool attempt, audit gap, statistically
+credible precision or trust regression, or latency/error-budget breach. Stopping restores the
+champion pointer through Apollo; it does not delete exposure, decision, or outcome records.
+
 ## Full-Stack Implementation
 
 ### Repository Layout

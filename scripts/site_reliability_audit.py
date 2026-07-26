@@ -61,6 +61,21 @@ class LinkParser(HTMLParser):
             self.references.append((attr_map["src"], self.getpos()[0]))
 
 
+class AnchorParser(HTMLParser):
+    """Collect addressable element IDs and legacy named anchors."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.anchors: set[str] = set()
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = dict(attrs)
+        if attr_map.get("id"):
+            self.anchors.add(attr_map["id"])
+        if tag == "a" and attr_map.get("name"):
+            self.anchors.add(attr_map["name"])
+
+
 @dataclass
 class AuditIssue:
     level: str
@@ -103,6 +118,20 @@ def check_links() -> list[AuditIssue]:
                         f"Broken local reference {html_file.relative_to(REPO_ROOT)}:{line_number} -> {ref}",
                     )
                 )
+                continue
+
+            fragment = urlparse(ref).fragment
+            if fragment and target.is_file() and target.suffix.lower() in {".html", ".htm"}:
+                anchor_parser = AnchorParser()
+                anchor_parser.feed(target.read_text(encoding="utf-8", errors="ignore"))
+                if fragment not in anchor_parser.anchors:
+                    issues.append(
+                        AuditIssue(
+                            "ERROR",
+                            f"Missing fragment target {html_file.relative_to(REPO_ROOT)}:"
+                            f"{line_number} -> {ref}",
+                        )
+                    )
 
     return issues
 
@@ -160,9 +189,28 @@ def check_sitemap() -> list[AuditIssue]:
     if not urls:
         issues.append(AuditIssue("WARN", "sitemap.xml has no <loc> entries"))
 
+    seen: set[str] = set()
     for loc in urls:
-        if loc.text and " " in loc.text:
-            issues.append(AuditIssue("ERROR", f"Invalid URL in sitemap (contains whitespace): {loc.text}"))
+        value = (loc.text or "").strip()
+        if not value:
+            issues.append(AuditIssue("ERROR", "Empty URL in sitemap"))
+            continue
+        if " " in value:
+            issues.append(AuditIssue("ERROR", f"Invalid URL in sitemap (contains whitespace): {value}"))
+        if value in seen:
+            issues.append(AuditIssue("ERROR", f"Duplicate URL in sitemap: {value}"))
+        seen.add(value)
+
+        parsed = urlparse(value)
+        if parsed.scheme != "https" or parsed.hostname != EXPECTED_DOMAIN:
+            issues.append(AuditIssue("ERROR", f"Sitemap URL is outside the canonical HTTPS origin: {value}"))
+            continue
+        route = parsed.path.lstrip("/") or "index.html"
+        target = REPO_ROOT / route
+        if parsed.path.endswith("/") and parsed.path != "/":
+            target = target / "index.html"
+        if not target.is_file():
+            issues.append(AuditIssue("ERROR", f"Sitemap URL has no publishable file: {value}"))
 
     return issues
 

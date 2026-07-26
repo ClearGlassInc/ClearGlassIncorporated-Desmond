@@ -69,6 +69,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/store-setup
       - name: Lint (ruff)
         run: ruff check .
@@ -85,6 +87,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/store-setup
         with:
           requirements: apps/autostore/control_plane/requirements.txt
@@ -105,6 +109,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/store-setup
       - name: Storefront checkout smoke test
         run: python bots/store_smoke_bot.py
@@ -139,6 +145,8 @@ jobs:
       release: ${{ steps.marker.outputs.hash }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/store-setup
 
       - name: Record release marker
@@ -191,6 +199,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/store-setup
       - name: Post-deploy storefront smoke
         run: python bots/store_smoke_bot.py
@@ -263,6 +273,8 @@ jobs:
       issues: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - name: Open or update incident issue
         continue-on-error: true
         env:

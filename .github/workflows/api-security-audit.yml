@@ -23,8 +23,6 @@ on:
 
 permissions:
   contents: read
-  security-events: write   # for uploading SARIF if extended in future
-  issues: write            # for auto-opening issues on failures
 
 jobs:
   api-security-audit:
@@ -32,10 +30,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     environment: staging   # requires environment-level secret approval
+    permissions:
+      contents: read
+      security-events: write
+      issues: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Set up Python 3.11
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0

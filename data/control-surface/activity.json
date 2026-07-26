@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "19:34",
-    "timestamp": "2026-07-26T19:34:21Z"
+    "time": "21:11",
+    "timestamp": "2026-07-26T21:11:05Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #440",
+    "time": "21:10",
+    "timestamp": "2026-07-26T21:10:52Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1303",
+    "time": "19:34",
+    "timestamp": "2026-07-26T19:34:35Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1780",
+    "time": "19:34",
+    "timestamp": "2026-07-26T19:34:28Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3073",
+    "time": "19:34",
+    "timestamp": "2026-07-26T19:34:28Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #439",
     "time": "19:34",
     "timestamp": "2026-07-26T19:34:04Z"
@@ -61,33 +89,5 @@
     "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #1209",
     "time": "18:45",
     "timestamp": "2026-07-26T18:45:44Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #1890",
-    "time": "18:45",
-    "timestamp": "2026-07-26T18:45:44Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "bad",
-    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #156",
-    "time": "18:45",
-    "timestamp": "2026-07-26T18:45:44Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #1602",
-    "time": "18:45",
-    "timestamp": "2026-07-26T18:45:44Z"
-  },
-  {
-    "title": "Code Quality: PR #1104",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/1104/head \u00b7 run #3072",
-    "time": "18:45",
-    "timestamp": "2026-07-26T18:45:43Z"
   }
 ]

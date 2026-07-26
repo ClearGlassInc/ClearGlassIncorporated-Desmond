@@ -421,8 +421,14 @@ section{padding:42px 0}
 <script defer src="/assets/js/cg-design-system.js"></script>
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="../brand-system.css">
+  <link rel="stylesheet" href="future-editorial.css">
 </head>
 <body data-ix-page="hub" data-ix-theme="dark">
+<div class="future-progress" aria-hidden="true"><span id="futureProgress"></span></div>
+<aside class="future-controls" aria-label="Reading display controls">
+  <button id="futureTheme" type="button" aria-pressed="false" title="Toggle contrast mode"><span aria-hidden="true">◐</span><span class="future-control-label">Contrast</span></button>
+  <button id="futureFocus" type="button" aria-pressed="false" title="Toggle focus mode"><span aria-hidden="true">◎</span><span class="future-control-label">Focus</span></button>
+</aside>
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="class-banner">UNCLASSIFIED / NON-CLASSIFIÉ <span>·</span> CLEARGLASS INTELLIGENCE DESK <span>·</span> OPEN PUBLICATION</div>
 <nav class="nav" id="nav" aria-label="Primary navigation"><div class="wrap nav-inner">
@@ -444,6 +450,36 @@ section{padding:42px 0}
   <div class="chips" id="topics" role="toolbar" aria-label="Filter briefs by topic"><a class="chip on" href="?" data-topic="all">All briefs</a><a class="chip" href="?topic=governed-ai" data-topic="governed-ai">Governed AI</a><a class="chip" href="?topic=agents" data-topic="agents">Autonomous agents</a><a class="chip" href="?topic=cyber" data-topic="cyber">Cyber architecture</a><a class="chip" href="?topic=osint" data-topic="osint">OSINT workflows</a><a class="chip" href="?topic=automation" data-topic="automation">AI automation</a><a class="chip" href="?topic=fincrime" data-topic="fincrime">Financial crime detection</a><a class="chip" href="?topic=systems" data-topic="systems">High-trust systems</a><a class="chip" href="?topic=saved" data-topic="saved">★ Saved</a></div>
 </header>
 <main>
+  <section class="wrap future-briefing" id="briefing" aria-labelledby="briefing-title">
+    <div class="future-briefing-copy reveal">
+      <div class="kicker">Adaptive editorial briefing</div>
+      <h2 id="briefing-title">A faster path into the intelligence that matters.</h2>
+      <p class="future-synopsis">ClearGlass Insights turns deep technical reporting into governed, scan-ready intelligence. This briefing uses published post metadata—not remote profiling—to surface concise takeaways and relevant reading paths on this device.</p>
+      <div class="future-takeaways" aria-label="Key takeaways">
+        <span>01 · Human approval stays at consequential boundaries</span>
+        <span>02 · Provenance outranks persuasive output</span>
+        <span>03 · Architecture is an operational control</span>
+      </div>
+    </div>
+    <div class="future-profile reveal" aria-labelledby="profile-title">
+      <div class="future-profile-head"><span id="profile-title">Tune your desk</span><span class="future-local">LOCAL ONLY</span></div>
+      <p>Choose a lens. Your selection stays in this browser and re-ranks the recommendations below.</p>
+      <div class="future-lenses" role="group" aria-label="Preferred editorial lens">
+        <button type="button" data-lens="governed-ai" aria-pressed="false">AI governor</button>
+        <button type="button" data-lens="cyber" aria-pressed="false">Cyber defender</button>
+        <button type="button" data-lens="systems" aria-pressed="false">Systems builder</button>
+        <button type="button" data-lens="osint" aria-pressed="false">OSINT analyst</button>
+      </div>
+      <div class="future-profile-status" id="futureProfileStatus" role="status">No lens selected · showing desk-ranked intelligence</div>
+    </div>
+  </section>
+  <section class="wrap future-for-you" id="for-you" aria-labelledby="for-you-title">
+    <div class="section-head reveal"><div><div class="kicker">Intelligent reading path</div><h2 id="for-you-title">Selected for your mission.</h2></div><p>Related briefs are ranked transparently from topic overlap, freshness, and editorial desk rank. No opaque behavioral profile and no fabricated engagement signals.</p></div>
+    <div class="future-recommendations" id="futureRecommendations" aria-live="polite">
+      <p class="future-loading">Loading the published post index…</p>
+    </div>
+    <noscript><p class="future-noscript">Personalized ranking requires JavaScript. Every published brief remains available in the Latest section and the <a href="posts.json">static post index</a>.</p></noscript>
+  </section>
   <section class="wrap" id="command" aria-labelledby="qci-title">
     <div class="section-head reveal">
       <div><div class="kicker">Quantum Command Interface</div><h2 id="qci-title">The ClearGlass mission-control deck.</h2></div>
@@ -753,6 +789,7 @@ if(!reduceMotion){
 })();
 </script>
 <script defer src="insights.js"></script>
+<script defer src="future-editorial.js"></script>
 <script defer src="atlas.js"></script>
 <script defer src="/logo-badge.js"></script>
 <script defer src="assistant/writing-help.js"></script>

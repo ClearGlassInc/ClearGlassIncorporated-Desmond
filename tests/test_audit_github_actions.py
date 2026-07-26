@@ -63,3 +63,24 @@ jobs:
 """,
     )
     assert result.status == "unsafe and requiring governance changes before execution"
+
+
+def test_scheduled_writer_requires_environment_boundary(tmp_path: Path) -> None:
+    result = workflow(
+        tmp_path,
+        """on: {schedule: [{cron: '0 0 * * *'}]}
+permissions: {contents: read}
+jobs:
+  publish:
+    permissions: {contents: write}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps: [{run: 'git push origin HEAD'}]
+""",
+    )
+    assert any("unattended job 'publish'" in warning for warning in result.warnings)
+
+    result.data["jobs"]["publish"]["environment"] = "automation-write"
+    result.warnings.clear()
+    audit(result)
+    assert result.status == "valid and ready"

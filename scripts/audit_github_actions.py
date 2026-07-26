@@ -9,7 +9,7 @@ an authorized repository administrator to verify before production execution.
 from __future__ import annotations
 
 import argparse
-import json
+import copy
 import re
 import sys
 from dataclasses import dataclass, field
@@ -29,6 +29,10 @@ class GitHubLoader(yaml.SafeLoader):
     """YAML 1.2-like loader which preserves GitHub's literal ``on`` key."""
 
 
+# Loader subclasses inherit this mapping by reference. Copy it before removing
+# YAML 1.1 booleans so importing the auditor cannot mutate PyYAML's SafeLoader
+# process-wide and make unrelated validation order-dependent.
+GitHubLoader.yaml_implicit_resolvers = copy.deepcopy(GitHubLoader.yaml_implicit_resolvers)
 for first, resolvers in list(GitHubLoader.yaml_implicit_resolvers.items()):
     GitHubLoader.yaml_implicit_resolvers[first] = [
         (tag, pattern)
@@ -173,22 +177,26 @@ def audit(result: Result) -> None:
             result.errors.append(f"deployment job {job_name!r} is not gated by job dependencies")
 
     scheduled = isinstance(triggers, dict) and "schedule" in triggers
-    has_write = permissions.get("contents") == "write" if isinstance(permissions, dict) else False
-    has_write = has_write or any(
-        isinstance(job, dict)
-        and isinstance(job.get("permissions"), dict)
-        and job["permissions"].get("contents") == "write"
-        for job in jobs.values()
-    )
-    direct_push = any(
-        isinstance(step.get("run"), str) and "git push" in step["run"]
-        for _, _, step in iter_steps(data)
-    )
     chained = isinstance(triggers, dict) and "workflow_run" in triggers
-    if (scheduled or chained) and has_write and direct_push:
-        result.warnings.append(
-            "GOVERNANCE: unattended workflow can push repository content without a protected approval environment"
-        )
+    if scheduled or chained:
+        for job_name, job in jobs.items():
+            if not isinstance(job, dict):
+                continue
+            job_permissions = job.get("permissions", permissions)
+            has_write = (
+                isinstance(job_permissions, dict)
+                and job_permissions.get("contents") == "write"
+            )
+            direct_push = any(
+                isinstance(step.get("run"), str) and "git push" in step["run"]
+                for step in job.get("steps") or []
+                if isinstance(step, dict)
+            )
+            if has_write and direct_push and "environment" not in job:
+                result.warnings.append(
+                    f"GOVERNANCE: unattended job {job_name!r} can push repository content "
+                    "without a protected approval environment"
+                )
 
 
 def scalar_keys(value: Any) -> str:

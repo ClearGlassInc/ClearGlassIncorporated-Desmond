@@ -13,6 +13,7 @@ jobs:
     name: Check & Update Python Dependencies
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: automation-write
     permissions:
       contents: write
       pull-requests: write

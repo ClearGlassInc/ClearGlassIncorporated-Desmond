@@ -172,7 +172,17 @@ CREATE TABLE artemis_entity (
   display_name TEXT NOT NULL,
   canonical_attributes JSONB NOT NULL DEFAULT '{}',
   confidence NUMERIC(5,4) NOT NULL CHECK (confidence BETWEEN 0 AND 1),
-  classification TEXT NOT NULL,
+  classification TEXT NOT NULL CHECK (classification IN (
+    'UNCLASSIFIED','CONTROLLED','SECRET','TOP_SECRET'
+  )),
+  classification_rank SMALLINT GENERATED ALWAYS AS (
+    CASE classification
+      WHEN 'UNCLASSIFIED' THEN 0
+      WHEN 'CONTROLLED' THEN 1
+      WHEN 'SECRET' THEN 2
+      WHEN 'TOP_SECRET' THEN 3
+    END
+  ) STORED,
   compartments TEXT[] NOT NULL DEFAULT '{}',
   coalition_scope TEXT NOT NULL,
   mission_tags TEXT[] NOT NULL DEFAULT '{}',
@@ -205,6 +215,8 @@ CREATE TABLE artemis_relationship (
 ```
 
 ### Ontology-driven behavior
+
+Classification labels are never compared lexicographically. The generated numeric rank is the canonical relational projection for clearance comparisons; ingestion rejects unknown labels, while the policy decision point remains authoritative and evaluates classification together with compartments, coalition, mission assignment, and purpose-of-use. Search indexes and caches must carry the same numeric rank and markings, and a result is discarded if its policy metadata is missing or stale.
 
 - **Humans** see mission-relevant objects through Gotham and Foundry apps, filtered by classification, compartment, coalition, role, purpose, and active mission assignment.
 - **Agents** receive the same filtered ontology view through governed tools, so a copilot cannot reason over or cite data the operator is not allowed to see.
@@ -756,6 +768,21 @@ def rate_limit_bucket(principal_id: str, route: str, window: Literal["minute", "
 ### Ontology query with policy filtering
 
 ```python
+CLASSIFICATION_RANK = {
+    "UNCLASSIFIED": 0,
+    "CONTROLLED": 1,
+    "SECRET": 2,
+    "TOP_SECRET": 3,
+}
+
+
+def classification_rank(classification: str) -> int:
+    try:
+        return CLASSIFICATION_RANK[classification]
+    except KeyError as exc:
+        raise ValueError("unknown classification marking") from exc
+
+
 async def query_policy_filtered_context(alert_id: str, principal: Principal) -> dict:
     sql = """
     SELECT e.entity_id, e.entity_type, e.display_name, e.confidence, e.classification,
@@ -764,13 +791,13 @@ async def query_policy_filtered_context(alert_id: str, principal: Principal) -> 
     JOIN artemis_relationship r ON r.dst_entity_id = e.entity_id
     WHERE r.src_entity_id = :alert_id
       AND e.coalition_scope = :coalition
-      AND e.classification <= :clearance
+      AND e.classification_rank <= :clearance_rank
       AND e.compartments <@ :compartments
     """
     return await db.fetch_all(sql, {
         "alert_id": alert_id,
         "coalition": principal.coalition,
-        "clearance": max_clearance(principal),
+        "clearance_rank": classification_rank(principal.clearance),
         "compartments": principal.compartments,
     })
 ```

@@ -4,8 +4,8 @@
   "original_author": "Desmond Otieno Odhiambo",
   "classification": "CONFIDENTIAL",
   "bot": "artemis_provenance_bot",
-  "generated_utc": "2026-07-26T08:44:36+00:00",
-  "repository_head": "deb174b6b53fac322778cc3cbd1c8cf4b8c203ad",
+  "generated_utc": "2026-07-26T18:35:18+00:00",
+  "repository_head": "cdb2ca02cc3e49c4948af51b2cd0775eb34114d5",
   "branch": "main",
   "artifact_count": 12,
   "artifacts": [
@@ -53,10 +53,10 @@
     },
     {
       "artifact": ".github/workflows/artemis-deploy.yml",
-      "sha256": "5cea8aeaef545b82e3f01b866a87d956ef4ca85f6ae031d08c9624b38284cd1d",
-      "size_bytes": 5504,
-      "last_commit": "e29f3f32542627acf4fa968b361b73dcf80f3ada",
-      "last_commit_date": "2026-07-18T12:15:17Z"
+      "sha256": "fb2a8db0294c49c4e4888c8787ff4148fba9a8a817e595eb11d720dfca548fa2",
+      "size_bytes": 5538,
+      "last_commit": "6796ea25b90537d35e65f50f14713a8736e10ffa",
+      "last_commit_date": "2026-07-26T14:33:54-04:00"
     },
     {
       "artifact": "prompts/general_assistant_system_prompt.md",

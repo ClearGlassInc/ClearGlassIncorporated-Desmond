@@ -410,6 +410,31 @@ def promotion_allowed(scores: dict[str, float]) -> tuple[bool, list[str]]:
     return not failures, failures
 ```
 
+### Executable governed lifecycle reference
+
+The dependency-light Python reference in `tools/artemis_self_improvement_engine.py`
+implements the boundary between candidate generation and release orchestration. A
+proposal can move from `needs_human_approval` to `approved_for_canary` only when
+its offline evaluation passes, policy has not blocked it, the reviewer holds both
+mission-owner and model-governance authority, and the approval is bound to the
+exact canonical proposal-manifest digest. Any edit after review invalidates the
+decision.
+
+The lifecycle emits a **release intent**, not a deployment side effect. An Apollo
+adapter in a separate trust domain must validate that intent, artifact signature,
+environment, and current policy again. Canary policy violations or metric
+regressions produce a rollback state referencing the last-known-good component
+version. Approval, canary start, promotion intent, and rollback are recorded in a
+hash-chained append-only evidence stream; production must persist that stream in
+an independently administered immutable audit store rather than process memory.
+
+The regression suite in `tests/test_artemis_self_improvement_engine.py` exercises
+stale-manifest rejection, approval-bypass rejection, authorized promotion intent,
+automatic rollback on a policy violation, and audit-chain verification. These
+tests establish control-plane behavior only; Palantir API contracts, identity
+claims, durable transactions, artifact signing, and Apollo rollback timing remain
+deployment-environment verification gates.
+
 ## Full-Stack Implementation
 
 ### Web UI

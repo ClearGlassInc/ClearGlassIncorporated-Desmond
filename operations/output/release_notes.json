@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-07-25T08:59:37.504056+00:00",
+  "run_utc": "2026-07-26T09:11:26.071823+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1198,
+  "commit_count": 1215,
   "sections": {
     "New Features": [
       {
@@ -529,6 +529,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "290569f",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "repair auto-store authority registration",
+        "author": "Desmond Otieno",
+        "date": "2026-07-25",
+        "breaking": false
+      },
       {
         "sha": "f80dc9e",
         "type": "fix",
@@ -6382,6 +6391,150 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "b410779",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-26",
+        "breaking": false
+      },
+      {
+        "sha": "deb174b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-26",
+        "breaking": false
+      },
+      {
+        "sha": "ba8881b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-26",
+        "breaking": false
+      },
+      {
+        "sha": "af24ddc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-26",
+        "breaking": false
+      },
+      {
+        "sha": "fb27b80",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "041fc7a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "70d536f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "ebd2a8b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "dd0a7c4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "53957db",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "ca0f142",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "ec41c78",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "e06f128",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "8d1db8d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "b1fc0b5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
+      {
+        "sha": "b90f712",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-25 08:59 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-25",
+        "breaking": false
+      },
       {
         "sha": "5c81b2e",
         "type": "bot",

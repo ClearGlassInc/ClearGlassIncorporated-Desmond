@@ -1,6 +1,6 @@
-# Release Notes — 2026-07-25
+# Release Notes — 2026-07-26
 
-*1198 commit(s) since v1.0.0*
+*1215 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -65,6 +65,7 @@
 
 ## Bug Fixes
 
+- **ci:** repair auto-store authority registration (`290569f`)
 - **admin:** resolve lib/auth & lib/session export drift so admin builds (`f80dc9e`)
 - **governance:** hard-gate low-confidence actions per operating rule 8 (`c800505`)
 - **pages:** stop SIGPIPE from failing the Pages build listing (`213bb46`)
@@ -732,6 +733,22 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`b410779`)
+- refresh control-surface data feeds [skip ci] (`deb174b`)
+- refresh control-surface data feeds [skip ci] (`ba8881b`)
+- refresh control-surface data feeds [skip ci] (`af24ddc`)
+- refresh control-surface data feeds [skip ci] (`fb27b80`)
+- refresh control-surface data feeds [skip ci] (`041fc7a`)
+- refresh control-surface data feeds [skip ci] (`70d536f`)
+- refresh control-surface data feeds [skip ci] (`ebd2a8b`)
+- refresh control-surface data feeds [skip ci] (`dd0a7c4`)
+- refresh control-surface data feeds [skip ci] (`53957db`)
+- refresh control-surface data feeds [skip ci] (`ca0f142`)
+- refresh control-surface data feeds [skip ci] (`ec41c78`)
+- refresh control-surface data feeds [skip ci] (`e06f128`)
+- refresh control-surface data feeds [skip ci] (`8d1db8d`)
+- refresh control-surface data feeds [skip ci] (`b1fc0b5`)
+- update generated outputs — 2026-07-25 08:59 UTC [skip ci] (`b90f712`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`5c81b2e`)
 - refresh control-surface data feeds [skip ci] (`329a035`)
 - refresh control-surface data feeds [skip ci] (`340abc7`)

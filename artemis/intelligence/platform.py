@@ -8,10 +8,11 @@ policy checks, feedback capture, and human-approved self-improvement.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from enum import StrEnum
 from hashlib import sha256
 from hmac import compare_digest
+import json
 from statistics import fmean
 from typing import Any, Callable, Protocol
 from uuid import uuid4
@@ -135,6 +136,7 @@ class ApprovalToken:
     action_id: str
     package_hash: str
     issued_at: datetime
+    expires_at: datetime
 
 
 @dataclass(frozen=True)
@@ -587,6 +589,24 @@ class ApprovalGate:
     def __init__(self, policy: PolicyEngine, audit_log: ImmutableAuditLog) -> None:
         self.policy = policy
         self.audit_log = audit_log
+        self._consumed_token_ids: set[str] = set()
+
+    @staticmethod
+    def package_hash(action: AgentAction) -> str:
+        """Hash the complete action package so approval cannot authorize a mutation."""
+
+        package = {
+            "action_id": action.action_id,
+            "action_type": action.action_type,
+            "mission_id": action.mission_id,
+            "risk_tier": action.risk_tier,
+            "summary": action.summary,
+            "required_approval": action.required_approval,
+            "evidence_refs": action.evidence_refs,
+            "parameters": action.parameters,
+        }
+        canonical = json.dumps(package, sort_keys=True, separators=(",", ":"), allow_nan=False)
+        return sha256(canonical.encode("utf-8")).hexdigest()
 
     def approve(
         self, context: AccessContext, action: AgentAction, decision: str, reason: str
@@ -612,3 +632,71 @@ class ApprovalGate:
         if final_decision == "REJECT" and policy_decision.allowed:
             return PolicyDecision(False, reason)
         return policy_decision
+
+    def approve_and_issue(
+        self,
+        context: AccessContext,
+        action: AgentAction,
+        *,
+        decision: str,
+        reason: str,
+        ttl: timedelta = timedelta(minutes=5),
+        now: datetime | None = None,
+    ) -> ApprovalToken | None:
+        """Issue a short-lived token only after an attributable policy-approved decision."""
+
+        if ttl <= timedelta(0):
+            raise ValueError("approval token ttl must be positive")
+        decided_at = now or datetime.now(UTC)
+        if decided_at.tzinfo is None:
+            raise ValueError("approval decision time must be timezone-aware")
+        policy_decision = self.approve(context, action, decision, reason)
+        if not policy_decision.allowed or decision != "approve":
+            return None
+        token = ApprovalToken(
+            token_id=str(uuid4()),
+            operator_id=context.operator_id,
+            action_id=action.action_id,
+            package_hash=self.package_hash(action),
+            issued_at=decided_at,
+            expires_at=decided_at + ttl,
+        )
+        self.audit_log.append(
+            actor=context.operator_id,
+            action="approval.token.issue",
+            resource=action.action_id,
+            decision="ALLOW",
+            payload={"token_id": token.token_id, "expires_at": token.expires_at.isoformat()},
+        )
+        return token
+
+    def consume(
+        self, token: ApprovalToken, action: AgentAction, *, now: datetime | None = None
+    ) -> PolicyDecision:
+        """Atomically consume an approval token bound to the immutable action package."""
+
+        consumed_at = now or datetime.now(UTC)
+        reasons: list[str] = []
+        if consumed_at.tzinfo is None:
+            reasons.append("approval consumption time must be timezone-aware")
+        elif consumed_at > token.expires_at:
+            reasons.append("approval token expired")
+        if token.token_id in self._consumed_token_ids:
+            reasons.append("approval token already consumed")
+        if token.action_id != action.action_id:
+            reasons.append("approval token is bound to a different action")
+        if not compare_digest(token.package_hash, self.package_hash(action)):
+            reasons.append("action package changed after approval")
+
+        allowed = not reasons
+        if allowed:
+            self._consumed_token_ids.add(token.token_id)
+        reason = "approval token consumed" if allowed else "; ".join(reasons)
+        self.audit_log.append(
+            actor=token.operator_id,
+            action="approval.token.consume",
+            resource=action.action_id,
+            decision="ALLOW" if allowed else "DENY",
+            payload={"token_id": token.token_id, "reason": reason},
+        )
+        return PolicyDecision(allowed, reason)

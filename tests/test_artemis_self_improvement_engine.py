@@ -1,8 +1,13 @@
 from datetime import datetime, timezone
 
 from tools.artemis_self_improvement_engine import (
+    ApprovalDecision,
+    ApprovalState,
     ArtemisImprovementEngine,
+    ChangeProposal,
+    EvalResult,
     FeedbackSignal,
+    GovernedProposalLifecycle,
     ProposalType,
     SignalType,
 )
@@ -19,6 +24,36 @@ def _signal(signal_id: str, signal_type: SignalType, payload: dict) -> FeedbackS
         compartment="ARTEMIS",
         payload=payload,
         observed_at=datetime(2026, 7, 13, tzinfo=timezone.utc),
+    )
+
+
+def _passing_proposal() -> ChangeProposal:
+    return ChangeProposal(
+        proposal_id="prop-mission-alpha-triage-001",
+        proposal_type=ProposalType.PROMPT_PATCH,
+        target_component="aip.agent.triage_copilot",
+        current_version="2.4.9",
+        proposed_version="2.4.10",
+        rationale="Improve evidence thresholds after verified operator corrections.",
+        patch={"minimum_evidence": 2},
+        evidence_hashes=["sha256:evidence"],
+        eval_result=EvalResult(0.96, 0.90, 410.0, 0.87, 0, 50),
+        approval_state=ApprovalState.NEEDS_HUMAN_APPROVAL,
+        policy_decision="human_approval_required",
+        rollback_version="2.4.9",
+    )
+
+
+def _approval(
+    lifecycle: GovernedProposalLifecycle, proposal: ChangeProposal
+) -> ApprovalDecision:
+    return ApprovalDecision(
+        proposal_id=proposal.proposal_id,
+        manifest_digest=lifecycle.manifest_digest(proposal),
+        reviewer="reviewer.artemis",
+        reviewer_roles=frozenset({"mission_owner", "model_governance"}),
+        decision="approve",
+        rationale="Offline evidence and rollback controls satisfy the release gate.",
     )
 
 
@@ -190,3 +225,88 @@ def test_user_facing_payload_is_sanitized_in_proposal_manifest() -> None:
 
     assert "<script>" not in str(manifest)
     assert "&lt;script&gt;" in str(manifest)
+
+
+def test_governed_lifecycle_requires_exact_manifest_and_dual_role_authority() -> None:
+    lifecycle = GovernedProposalLifecycle()
+    proposal = _passing_proposal()
+    stale_decision = ApprovalDecision(
+        proposal_id=proposal.proposal_id,
+        manifest_digest="0" * 64,
+        reviewer="reviewer.artemis",
+        reviewer_roles=frozenset({"mission_owner", "model_governance"}),
+        decision="approve",
+        rationale="Reviewed.",
+    )
+
+    try:
+        lifecycle.approve_for_canary(proposal, stale_decision)
+    except PermissionError as exc:
+        assert "changed after approval" in str(exc)
+    else:
+        raise AssertionError("a stale approval must fail closed")
+
+    underprivileged_decision = ApprovalDecision(
+        proposal_id=proposal.proposal_id,
+        manifest_digest=lifecycle.manifest_digest(proposal),
+        reviewer="reviewer.artemis",
+        reviewer_roles=frozenset({"mission_owner"}),
+        decision="approve",
+        rationale="Reviewed.",
+    )
+    try:
+        lifecycle.approve_for_canary(proposal, underprivileged_decision)
+    except PermissionError as exc:
+        assert "required approval roles" in str(exc)
+    else:
+        raise AssertionError("single-role authority must fail closed")
+
+    assert lifecycle.records == ()
+
+
+def test_governed_lifecycle_never_promotes_without_human_approval() -> None:
+    lifecycle = GovernedProposalLifecycle()
+
+    try:
+        lifecycle.start_canary(_passing_proposal(), "apollo.controller")
+    except PermissionError as exc:
+        assert "valid human approval" in str(exc)
+    else:
+        raise AssertionError("canary must not start without human approval")
+
+
+def test_governed_lifecycle_emits_promotion_intent_and_verifiable_audit_chain() -> None:
+    lifecycle = GovernedProposalLifecycle()
+    proposal = _passing_proposal()
+    approved = lifecycle.approve_for_canary(proposal, _approval(lifecycle, proposal))
+    active = lifecycle.start_canary(approved, "apollo.controller")
+    promoted = lifecycle.complete_canary(
+        active,
+        EvalResult(0.97, 0.91, 430.0, 0.89, 0, 100),
+        "modelops.monitor",
+    )
+
+    assert promoted.approval_state == ApprovalState.PROMOTED
+    assert promoted.policy_decision == "canary_passed_release_intent"
+    assert [record.event_type for record in lifecycle.records] == [
+        "proposal.approved",
+        "canary.started",
+        "proposal.promotion_intent",
+    ]
+    assert lifecycle.verify_audit_chain() is True
+
+
+def test_canary_policy_violation_rolls_back_instead_of_promoting() -> None:
+    lifecycle = GovernedProposalLifecycle()
+    proposal = _passing_proposal()
+    approved = lifecycle.approve_for_canary(proposal, _approval(lifecycle, proposal))
+    active = lifecycle.start_canary(approved, "apollo.controller")
+    rolled_back = lifecycle.complete_canary(
+        active,
+        EvalResult(0.98, 0.95, 390.0, 0.92, 1, 100),
+        "modelops.monitor",
+    )
+
+    assert rolled_back.approval_state == ApprovalState.ROLLED_BACK
+    assert rolled_back.rollback_version == "2.4.9"
+    assert lifecycle.records[-1].event_type == "canary.rolled_back"

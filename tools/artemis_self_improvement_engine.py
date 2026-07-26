@@ -9,7 +9,7 @@ policy checks, canary thresholds, and approval gates before activation.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field, asdict, replace
 from datetime import datetime, timezone
 from enum import Enum
 import hashlib
@@ -43,6 +43,9 @@ class ApprovalState(str, Enum):
     APPROVED_FOR_CANARY = "approved_for_canary"
     REJECTED = "rejected"
     BLOCKED_POLICY_BOUNDARY = "blocked_policy_boundary"
+    CANARY_ACTIVE = "canary_active"
+    PROMOTED = "promoted"
+    ROLLED_BACK = "rolled_back"
 
 
 @dataclass(frozen=True)
@@ -121,6 +124,184 @@ class ChangeProposal:
             json.dumps(manifest, sort_keys=True, default=str).encode("utf-8")
         ).hexdigest()
         return manifest
+
+
+@dataclass(frozen=True)
+class ApprovalDecision:
+    """Human decision bound to one immutable proposal manifest."""
+
+    proposal_id: str
+    manifest_digest: str
+    reviewer: str
+    reviewer_roles: frozenset[str]
+    decision: str
+    rationale: str
+    decided_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass(frozen=True)
+class AuditRecord:
+    """Append-only lifecycle evidence with hash-chain integrity."""
+
+    sequence: int
+    event_type: str
+    proposal_id: str
+    actor: str
+    payload_digest: str
+    previous_hash: str
+    recorded_at: datetime
+    record_hash: str
+
+
+class GovernedProposalLifecycle:
+    """Fail-closed approval, canary, promotion, and rollback control plane.
+
+    This reference lifecycle deliberately cannot deploy artifacts. It emits an
+    audited state and release intent for an external Apollo adapter to execute.
+    The adapter remains a separate trust domain and must revalidate the manifest.
+    """
+
+    REQUIRED_REVIEW_ROLES = frozenset({"mission_owner", "model_governance"})
+
+    def __init__(self) -> None:
+        self._records: list[AuditRecord] = []
+
+    @property
+    def records(self) -> tuple[AuditRecord, ...]:
+        return tuple(self._records)
+
+    @staticmethod
+    def manifest_digest(proposal: ChangeProposal) -> str:
+        canonical = json.dumps(proposal.signed_manifest, sort_keys=True, default=str)
+        return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+    def approve_for_canary(
+        self, proposal: ChangeProposal, decision: ApprovalDecision
+    ) -> ChangeProposal:
+        if proposal.approval_state != ApprovalState.NEEDS_HUMAN_APPROVAL:
+            raise PermissionError("proposal is not eligible for human approval")
+        if not proposal.eval_result.passes():
+            raise PermissionError("proposal eval thresholds have not passed")
+        if proposal.policy_decision.startswith("blocked_"):
+            raise PermissionError("proposal is blocked by policy")
+        if decision.proposal_id != proposal.proposal_id:
+            raise PermissionError("approval is bound to a different proposal")
+        if decision.manifest_digest != self.manifest_digest(proposal):
+            raise PermissionError("proposal changed after approval review")
+        if decision.decision != "approve":
+            raise PermissionError("an explicit approval decision is required")
+        if not self.REQUIRED_REVIEW_ROLES.issubset(decision.reviewer_roles):
+            raise PermissionError("reviewer lacks required approval roles")
+        if not decision.rationale.strip():
+            raise ValueError("approval rationale is required")
+
+        approved = replace(
+            proposal,
+            approval_state=ApprovalState.APPROVED_FOR_CANARY,
+            policy_decision="approved_for_canary",
+        )
+        self._append("proposal.approved", approved, decision.reviewer)
+        return approved
+
+    def start_canary(self, proposal: ChangeProposal, actor: str) -> ChangeProposal:
+        if proposal.approval_state != ApprovalState.APPROVED_FOR_CANARY:
+            raise PermissionError("canary requires a valid human approval")
+        active = replace(proposal, approval_state=ApprovalState.CANARY_ACTIVE)
+        self._append("canary.started", active, actor)
+        return active
+
+    def complete_canary(
+        self, proposal: ChangeProposal, canary_result: EvalResult, actor: str
+    ) -> ChangeProposal:
+        if proposal.approval_state != ApprovalState.CANARY_ACTIVE:
+            raise PermissionError("proposal has no active canary")
+        if canary_result.policy_violations or not canary_result.passes():
+            rolled_back = replace(
+                proposal,
+                approval_state=ApprovalState.ROLLED_BACK,
+                policy_decision="automatic_rollback_canary_gate",
+            )
+            self._append("canary.rolled_back", rolled_back, actor)
+            return rolled_back
+        promoted = replace(
+            proposal,
+            approval_state=ApprovalState.PROMOTED,
+            policy_decision="canary_passed_release_intent",
+        )
+        self._append("proposal.promotion_intent", promoted, actor)
+        return promoted
+
+    def verify_audit_chain(self) -> bool:
+        previous_hash = "GENESIS"
+        for expected_sequence, record in enumerate(self._records, start=1):
+            if record.sequence != expected_sequence or record.previous_hash != previous_hash:
+                return False
+            material = self._audit_material(
+                record.sequence,
+                record.event_type,
+                record.proposal_id,
+                record.actor,
+                record.payload_digest,
+                record.previous_hash,
+                record.recorded_at,
+            )
+            if hashlib.sha256(material.encode("utf-8")).hexdigest() != record.record_hash:
+                return False
+            previous_hash = record.record_hash
+        return True
+
+    def _append(self, event_type: str, proposal: ChangeProposal, actor: str) -> None:
+        if not actor.strip():
+            raise ValueError("audit actor is required")
+        sequence = len(self._records) + 1
+        previous_hash = self._records[-1].record_hash if self._records else "GENESIS"
+        recorded_at = datetime.now(timezone.utc)
+        payload_digest = self.manifest_digest(proposal)
+        material = self._audit_material(
+            sequence,
+            event_type,
+            proposal.proposal_id,
+            actor,
+            payload_digest,
+            previous_hash,
+            recorded_at,
+        )
+        self._records.append(
+            AuditRecord(
+                sequence=sequence,
+                event_type=event_type,
+                proposal_id=proposal.proposal_id,
+                actor=actor,
+                payload_digest=payload_digest,
+                previous_hash=previous_hash,
+                recorded_at=recorded_at,
+                record_hash=hashlib.sha256(material.encode("utf-8")).hexdigest(),
+            )
+        )
+
+    @staticmethod
+    def _audit_material(
+        sequence: int,
+        event_type: str,
+        proposal_id: str,
+        actor: str,
+        payload_digest: str,
+        previous_hash: str,
+        recorded_at: datetime,
+    ) -> str:
+        return json.dumps(
+            {
+                "sequence": sequence,
+                "event_type": event_type,
+                "proposal_id": proposal_id,
+                "actor": actor,
+                "payload_digest": payload_digest,
+                "previous_hash": previous_hash,
+                "recorded_at": recorded_at.isoformat(),
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        )
 
 
 class ArtemisImprovementEngine:

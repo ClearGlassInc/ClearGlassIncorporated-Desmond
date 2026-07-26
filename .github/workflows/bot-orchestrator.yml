@@ -26,6 +26,7 @@ jobs:
     name: Run Bot Suite
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: automation-write
     permissions:
       contents: write
       issues: write

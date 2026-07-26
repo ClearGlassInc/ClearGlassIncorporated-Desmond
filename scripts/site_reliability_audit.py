@@ -18,7 +18,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 import re
 import sys
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 import xml.etree.ElementTree as ET
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -52,9 +52,14 @@ class LinkParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.references: list[tuple[str, int]] = []
+        self.ids: set[str] = set()
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attr_map = dict(attrs)
+        if attr_map.get("id"):
+            self.ids.add(attr_map["id"])
+        if tag == "a" and attr_map.get("name"):
+            self.ids.add(attr_map["name"])
         if tag in {"a", "link"} and attr_map.get("href"):
             self.references.append((attr_map["href"], self.getpos()[0]))
         elif tag in {"img", "script", "source"} and attr_map.get("src"):
@@ -72,6 +77,12 @@ def is_local_ref(ref: str) -> bool:
     return not ref.startswith(prefixes)
 
 
+def resolve_page_target(path: Path) -> Path:
+    """Resolve a Pages-style directory URL to its checked-in entry document."""
+
+    return path / "index.html" if path.is_dir() else path
+
+
 def check_links() -> list[AuditIssue]:
     issues: list[AuditIssue] = []
     html_files = iter_repo_html_files()
@@ -80,14 +91,19 @@ def check_links() -> list[AuditIssue]:
         parser = LinkParser()
         parser.feed(html_file.read_text(encoding="utf-8", errors="ignore"))
         for ref, line_number in parser.references:
-            if not is_local_ref(ref):
+            parsed_ref = urlparse(ref)
+            is_same_site_absolute = (
+                parsed_ref.scheme in {"http", "https"}
+                and parsed_ref.hostname == EXPECTED_DOMAIN
+            )
+            if not is_local_ref(ref) and not is_same_site_absolute and not ref.startswith("#"):
                 continue
 
-            local_ref = ref.split("#", 1)[0].split("?", 1)[0]
+            local_ref = unquote(parsed_ref.path)
+
             if not local_ref:
-                continue
-
-            if local_ref.startswith("/"):
+                target = html_file
+            elif local_ref.startswith("/"):
                 target = (REPO_ROOT / local_ref.lstrip("/")).resolve()
             else:
                 target = (html_file.parent / local_ref).resolve()
@@ -96,13 +112,28 @@ def check_links() -> list[AuditIssue]:
                 issues.append(AuditIssue("ERROR", f"Invalid path outside repository in {html_file.relative_to(REPO_ROOT)}:{line_number} -> {ref}"))
                 continue
 
-            if not target.exists():
+            target = resolve_page_target(target)
+            if not target.is_file():
                 issues.append(
                     AuditIssue(
                         "ERROR",
                         f"Broken local reference {html_file.relative_to(REPO_ROOT)}:{line_number} -> {ref}",
                     )
                 )
+                continue
+
+            if parsed_ref.fragment and target.suffix.lower() == ".html":
+                target_parser = LinkParser()
+                target_parser.feed(target.read_text(encoding="utf-8", errors="ignore"))
+                fragment = unquote(parsed_ref.fragment)
+                if fragment not in target_parser.ids:
+                    issues.append(
+                        AuditIssue(
+                            "ERROR",
+                            f"Missing fragment target {html_file.relative_to(REPO_ROOT)}:"
+                            f"{line_number} -> {ref}",
+                        )
+                    )
 
     return issues
 
@@ -161,8 +192,47 @@ def check_sitemap() -> list[AuditIssue]:
         issues.append(AuditIssue("WARN", "sitemap.xml has no <loc> entries"))
 
     for loc in urls:
-        if loc.text and " " in loc.text:
-            issues.append(AuditIssue("ERROR", f"Invalid URL in sitemap (contains whitespace): {loc.text}"))
+        value = (loc.text or "").strip()
+        if " " in value:
+            issues.append(AuditIssue("ERROR", f"Invalid URL in sitemap (contains whitespace): {value}"))
+            continue
+        parsed = urlparse(value)
+        if parsed.scheme != "https" or parsed.hostname != EXPECTED_DOMAIN:
+            issues.append(AuditIssue("ERROR", f"Sitemap URL is outside the canonical HTTPS origin: {value}"))
+            continue
+        relative_path = unquote(parsed.path).lstrip("/") or "index.html"
+        target = resolve_page_target((REPO_ROOT / relative_path).resolve())
+        if not target.is_file():
+            issues.append(AuditIssue("ERROR", f"Sitemap URL has no published file: {value}"))
+
+    return issues
+
+
+def check_robots() -> list[AuditIssue]:
+    """Validate crawl directives and every sitemap connection declared to bots."""
+
+    robots = REPO_ROOT / "robots.txt"
+    if not robots.is_file():
+        return [AuditIssue("ERROR", "Missing robots.txt")]
+
+    issues: list[AuditIssue] = []
+    for line_number, raw_line in enumerate(robots.read_text(encoding="utf-8").splitlines(), 1):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            issues.append(AuditIssue("ERROR", f"Malformed robots.txt directive at line {line_number}: {line}"))
+            continue
+        field, value = (part.strip() for part in line.split(":", 1))
+        if field.lower() != "sitemap":
+            continue
+        parsed = urlparse(value)
+        if parsed.scheme != "https" or parsed.hostname != EXPECTED_DOMAIN:
+            issues.append(AuditIssue("ERROR", f"robots.txt declares a non-canonical sitemap: {value}"))
+            continue
+        sitemap_path = REPO_ROOT / unquote(parsed.path).lstrip("/")
+        if not sitemap_path.is_file():
+            issues.append(AuditIssue("ERROR", f"robots.txt declares a missing sitemap: {value}"))
 
     return issues
 
@@ -286,6 +356,7 @@ def main() -> int:
     all_issues.extend(check_required_docs())
     all_issues.extend(check_workflows())
     all_issues.extend(check_sitemap())
+    all_issues.extend(check_robots())
     all_issues.extend(check_pages_domain())
     all_issues.extend(check_seo_accessibility())
     return print_report(all_issues)

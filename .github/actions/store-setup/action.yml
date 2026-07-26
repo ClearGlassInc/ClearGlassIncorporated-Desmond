@@ -20,7 +20,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-python@v6
+    - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
       with:
         python-version: ${{ inputs.python-version }}
         cache: pip
@@ -36,7 +36,7 @@ runs:
         # Pin ruff: an unpinned install lets CI pull a newer ruff whose expanded
         # default rule set flags hundreds of pre-existing style issues, turning
         # the validate job's repo-wide `ruff check .` red with no code change.
-        pip install "ruff==0.15.8" pyyaml
+        pip install "ruff==0.15.8" "pyyaml==6.0.3"
 
     - name: Install extra requirements
       if: inputs.requirements != ''

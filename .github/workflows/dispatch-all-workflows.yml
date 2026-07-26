@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-      - run: pip install pyyaml
+      - run: pip install "pyyaml==6.0.3"
       - name: Dispatch every workflow_dispatch workflow
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

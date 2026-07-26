@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "18:12",
-    "timestamp": "2026-07-26T18:12:09Z"
+    "time": "19:34",
+    "timestamp": "2026-07-26T19:34:21Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #438",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:58Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1826",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
-  },
-  {
-    "title": "Commerce Deploy",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #43",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "warn",
-    "detail": "push on main \u00b7 run #150",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #365",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
+    "detail": "schedule on main \u00b7 run #439",
+    "time": "19:34",
+    "timestamp": "2026-07-26T19:34:04Z"
   },
   {
     "title": "Defender Watch",
     "status": "bad",
-    "detail": "push on main \u00b7 run #1199",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
+    "detail": "schedule on main \u00b7 run #1210",
+    "time": "19:21",
+    "timestamp": "2026-07-26T19:21:23Z"
   },
   {
-    "title": "Security",
+    "title": "Health Monitor",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1592",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
+    "detail": "schedule on main \u00b7 run #229",
+    "time": "19:16",
+    "timestamp": "2026-07-26T19:16:51Z"
   },
   {
-    "title": "ClearGlass GitHub Pages Check",
+    "title": "4-D Dominance Pipeline",
     "status": "ok",
-    "detail": "push on main \u00b7 run #527",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
+    "detail": "schedule on main \u00b7 run #9",
+    "time": "19:01",
+    "timestamp": "2026-07-26T19:01:42Z"
   },
   {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1880",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
+    "title": "CI",
+    "status": "bad",
+    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #1836",
+    "time": "18:45",
+    "timestamp": "2026-07-26T18:45:44Z"
   },
   {
     "title": "Policy Gate",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1563",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
+    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #1573",
+    "time": "18:45",
+    "timestamp": "2026-07-26T18:45:44Z"
   },
   {
-    "title": "Deploy Pages",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1297",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:13Z"
+    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #846",
+    "time": "18:45",
+    "timestamp": "2026-07-26T18:45:44Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "Defender Watch",
+    "status": "bad",
+    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #1209",
+    "time": "18:45",
+    "timestamp": "2026-07-26T18:45:44Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1772",
-    "time": "18:11",
-    "timestamp": "2026-07-26T18:11:12Z"
+    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #1890",
+    "time": "18:45",
+    "timestamp": "2026-07-26T18:45:44Z"
+  },
+  {
+    "title": "Auto-Store",
+    "status": "bad",
+    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #156",
+    "time": "18:45",
+    "timestamp": "2026-07-26T18:45:44Z"
+  },
+  {
+    "title": "Security",
+    "status": "ok",
+    "detail": "pull_request on codex/connect-etsy-shop-to-platform-and-verify-setup \u00b7 run #1602",
+    "time": "18:45",
+    "timestamp": "2026-07-26T18:45:44Z"
+  },
+  {
+    "title": "Code Quality: PR #1104",
+    "status": "ok",
+    "detail": "dynamic on refs/pull/1104/head \u00b7 run #3072",
+    "time": "18:45",
+    "timestamp": "2026-07-26T18:45:43Z"
   }
 ]

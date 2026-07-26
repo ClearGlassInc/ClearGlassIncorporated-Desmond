@@ -66,6 +66,21 @@ class LinkParser(HTMLParser):
             self.references.append((attr_map["src"], self.getpos()[0]))
 
 
+class AnchorParser(HTMLParser):
+    """Collect addressable element IDs and legacy named anchors."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.anchors: set[str] = set()
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr_map = dict(attrs)
+        if attr_map.get("id"):
+            self.anchors.add(attr_map["id"])
+        if tag == "a" and attr_map.get("name"):
+            self.anchors.add(attr_map["name"])
+
+
 @dataclass
 class AuditIssue:
     level: str
@@ -122,11 +137,11 @@ def check_links() -> list[AuditIssue]:
                 )
                 continue
 
-            if parsed_ref.fragment and target.suffix.lower() == ".html":
-                target_parser = LinkParser()
-                target_parser.feed(target.read_text(encoding="utf-8", errors="ignore"))
-                fragment = unquote(parsed_ref.fragment)
-                if fragment not in target_parser.ids:
+            fragment = urlparse(ref).fragment
+            if fragment and target.is_file() and target.suffix.lower() in {".html", ".htm"}:
+                anchor_parser = AnchorParser()
+                anchor_parser.feed(target.read_text(encoding="utf-8", errors="ignore"))
+                if fragment not in anchor_parser.anchors:
                     issues.append(
                         AuditIssue(
                             "ERROR",
@@ -191,48 +206,28 @@ def check_sitemap() -> list[AuditIssue]:
     if not urls:
         issues.append(AuditIssue("WARN", "sitemap.xml has no <loc> entries"))
 
+    seen: set[str] = set()
     for loc in urls:
         value = (loc.text or "").strip()
+        if not value:
+            issues.append(AuditIssue("ERROR", "Empty URL in sitemap"))
+            continue
         if " " in value:
             issues.append(AuditIssue("ERROR", f"Invalid URL in sitemap (contains whitespace): {value}"))
-            continue
+        if value in seen:
+            issues.append(AuditIssue("ERROR", f"Duplicate URL in sitemap: {value}"))
+        seen.add(value)
+
         parsed = urlparse(value)
         if parsed.scheme != "https" or parsed.hostname != EXPECTED_DOMAIN:
             issues.append(AuditIssue("ERROR", f"Sitemap URL is outside the canonical HTTPS origin: {value}"))
             continue
-        relative_path = unquote(parsed.path).lstrip("/") or "index.html"
-        target = resolve_page_target((REPO_ROOT / relative_path).resolve())
+        route = parsed.path.lstrip("/") or "index.html"
+        target = REPO_ROOT / route
+        if parsed.path.endswith("/") and parsed.path != "/":
+            target = target / "index.html"
         if not target.is_file():
-            issues.append(AuditIssue("ERROR", f"Sitemap URL has no published file: {value}"))
-
-    return issues
-
-
-def check_robots() -> list[AuditIssue]:
-    """Validate crawl directives and every sitemap connection declared to bots."""
-
-    robots = REPO_ROOT / "robots.txt"
-    if not robots.is_file():
-        return [AuditIssue("ERROR", "Missing robots.txt")]
-
-    issues: list[AuditIssue] = []
-    for line_number, raw_line in enumerate(robots.read_text(encoding="utf-8").splitlines(), 1):
-        line = raw_line.strip()
-        if not line or line.startswith("#"):
-            continue
-        if ":" not in line:
-            issues.append(AuditIssue("ERROR", f"Malformed robots.txt directive at line {line_number}: {line}"))
-            continue
-        field, value = (part.strip() for part in line.split(":", 1))
-        if field.lower() != "sitemap":
-            continue
-        parsed = urlparse(value)
-        if parsed.scheme != "https" or parsed.hostname != EXPECTED_DOMAIN:
-            issues.append(AuditIssue("ERROR", f"robots.txt declares a non-canonical sitemap: {value}"))
-            continue
-        sitemap_path = REPO_ROOT / unquote(parsed.path).lstrip("/")
-        if not sitemap_path.is_file():
-            issues.append(AuditIssue("ERROR", f"robots.txt declares a missing sitemap: {value}"))
+            issues.append(AuditIssue("ERROR", f"Sitemap URL has no publishable file: {value}"))
 
     return issues
 

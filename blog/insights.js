@@ -170,9 +170,30 @@
      ================================================================ */
   function initHub() {
     var cards = [].slice.call(document.querySelectorAll('.article-card[data-title]'));
+    var archiveCards = [].slice.call(document.querySelectorAll('#postGrid .article-card[data-title]'));
     var search = document.getElementById('smartSearch');
     var chips = [].slice.call(document.querySelectorAll('#topics .chip[data-topic]'));
     var activeTopic = 'all';
+    var pageSize = 6;
+    var visiblePages = Math.max(1, parseInt(new URLSearchParams(location.search).get('page'), 10) || 1);
+    var pageStatus = document.getElementById('postPageStatus');
+    var loadMore = document.getElementById('loadMorePosts');
+    var pageLinks = [].slice.call(document.querySelectorAll('[data-page]'));
+
+    function updateArchivePage(push) {
+      var matching = archiveCards.filter(function (card) { return card.dataset.filterMatch !== 'false'; });
+      var shown = Math.min(matching.length, visiblePages * pageSize);
+      matching.forEach(function (card, index) { card.hidden = index >= shown; });
+      if (pageStatus) pageStatus.textContent = matching.length ? 'Showing ' + shown + ' of ' + matching.length + ' matching briefs · page ' + visiblePages : 'No briefs match this view.';
+      if (loadMore) { loadMore.hidden = shown >= matching.length; loadMore.disabled = shown >= matching.length; }
+      pageLinks.forEach(function (link) { link.setAttribute('aria-current', Number(link.dataset.page) === visiblePages ? 'page' : 'false'); });
+      if (push && history.pushState) {
+        var params = new URLSearchParams(location.search);
+        if (visiblePages > 1) params.set('page', String(visiblePages)); else params.delete('page');
+        var query = params.toString();
+        history.pushState({ page: visiblePages }, '', location.pathname + (query ? '?' + query : '') + location.hash);
+      }
+    }
 
     function apply() {
       var q = (search && search.value || '').toLowerCase().trim();
@@ -185,14 +206,17 @@
         var okT = activeTopic === 'all' ||
           (activeTopic === 'saved' ? saved.indexOf(card.dataset.slug) !== -1 : topics.indexOf(activeTopic) !== -1);
         var show = okQ && okT;
+        card.dataset.filterMatch = String(show);
         card.style.display = show ? 'flex' : 'none';
         if (show) visible++;
       });
+      updateArchivePage(false);
       if (activeTopic === 'saved' && !visible && !q) say('No saved briefs yet — save one from any article.');
     }
 
     function selectTopic(topic, push) {
       activeTopic = topic;
+      if (push) visiblePages = 1;
       chips.forEach(function (c) { c.classList.toggle('on', c.dataset.topic === topic); });
       apply();
       if (push && history.replaceState) {
@@ -207,7 +231,18 @@
         selectTopic(chip.dataset.topic === activeTopic && chip.dataset.topic !== 'all' ? 'all' : chip.dataset.topic, true);
       });
     });
-    if (search) search.addEventListener('input', apply);
+    if (search) search.addEventListener('input', function () { visiblePages = 1; apply(); });
+
+    if (loadMore) loadMore.addEventListener('click', function () { visiblePages++; updateArchivePage(true); });
+    pageLinks.forEach(function (link) { link.addEventListener('click', function (event) {
+      event.preventDefault(); visiblePages = Math.max(1, Number(link.dataset.page) || 1); updateArchivePage(true);
+      document.getElementById('postGrid').scrollIntoView({ behavior: REDUCE ? 'auto' : 'smooth', block: 'start' });
+    }); });
+    addEventListener('popstate', function () { visiblePages = Math.max(1, parseInt(new URLSearchParams(location.search).get('page'), 10) || 1); updateArchivePage(false); });
+    var sentinel = document.getElementById('postScrollSentinel');
+    if (sentinel && 'IntersectionObserver' in window) new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && loadMore && !loadMore.hidden) { visiblePages++; updateArchivePage(true); }
+    }, { rootMargin: '240px 0px' }).observe(sentinel);
 
     /* deep links: /blog/?topic=osint and /blog/?q=agents (SearchAction target) */
     var params = new URLSearchParams(location.search);

@@ -65,6 +65,8 @@ jobs:
           cache: pip
       - run: pip install pyyaml
       - run: python scripts/workflow_doctor.py
+      - name: Enforce workflow safety invariants
+        run: python scripts/audit_github_actions.py
 
   osint-deck:
     name: OSINT Deck Validator

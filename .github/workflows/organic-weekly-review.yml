@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   issues: write
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir -p marketing/output/organic/reviews
           WEEK=$(date +%Y-W%V)
-          cat > marketing/output/organic/reviews/$WEEK.md << 'EOF'
+          cat > marketing/output/organic/reviews/$WEEK.md << EOF
           # Organic Growth Weekly Review — $WEEK
 
           ## What shipped
@@ -61,4 +61,4 @@ jobs:
           gh issue create \
             --title "Organic Weekly Review — $WEEK" \
             --body-file marketing/output/organic/reviews/$WEEK.md \
-            --label "growth,review,organic" || true
+            --label "growth,review,organic"

@@ -34,10 +34,10 @@ def test_full_stack_blueprint_contains_requested_sections_and_controls():
         "No model output can grant authority",
         "PENDING_HUMAN_APPROVAL",
         "RTO of 30 minutes",
-        "Shadow, A/B, and Canary Experiment Design",
-        "stable mission-level assignment",
-        "assign_experiment",
-        "champion pointer through Apollo",
+        "### Trust Boundaries and Fail-Closed Behavior",
+        "Ambiguous-outcome invariant",
+        "never blindly retried",
+        "break-glass access is time-bound",
     ]
     for control in required_controls:
         assert control in markdown

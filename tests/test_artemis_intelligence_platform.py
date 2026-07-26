@@ -1,3 +1,6 @@
+from dataclasses import replace
+from datetime import UTC, datetime, timedelta
+
 from artemis.intelligence import (
     AccessContext,
     AgentAction,
@@ -108,6 +111,81 @@ def test_approval_gate_blocks_high_risk_non_commander_and_audits() -> None:
     assert decision.reason == "high-risk action requires commander role"
     assert audit_log.verify() is True
     assert audit_log.records[0].decision == "REJECT"
+
+
+def test_approval_token_is_package_bound_short_lived_and_single_use() -> None:
+    context = AccessContext(
+        operator_id="commander-1",
+        roles=frozenset({"commander"}),
+        mission_ids=frozenset({"mission-1"}),
+        compartments=frozenset({"ARTEMIS"}),
+        coalition="internal",
+        purpose="command_briefing",
+    )
+    action = AgentAction(
+        action_id="act-approved",
+        action_type="operational_posture_change",
+        mission_id="mission-1",
+        risk_tier="critical",
+        summary="Increase monitoring posture.",
+        required_approval=True,
+        evidence_refs=("obs-1",),
+        parameters={"posture": "heightened"},
+    )
+    decided_at = datetime(2026, 7, 26, 12, tzinfo=UTC)
+    audit_log = ImmutableAuditLog()
+    gate = ApprovalGate(PolicyEngine(), audit_log)
+
+    token = gate.approve_and_issue(
+        context,
+        action,
+        decision="approve",
+        reason="validated against mission intent",
+        ttl=timedelta(minutes=5),
+        now=decided_at,
+    )
+
+    assert token is not None
+    assert gate.consume(token, action, now=decided_at + timedelta(minutes=1)).allowed is True
+    replay = gate.consume(token, action, now=decided_at + timedelta(minutes=2))
+    assert replay.allowed is False
+    assert replay.reason == "approval token already consumed"
+    assert audit_log.verify() is True
+
+
+def test_approval_token_rejects_expired_or_mutated_action_package() -> None:
+    context = AccessContext(
+        operator_id="commander-1",
+        roles=frozenset({"commander"}),
+        mission_ids=frozenset({"mission-1"}),
+        compartments=frozenset({"ARTEMIS"}),
+        coalition="internal",
+        purpose="command_briefing",
+    )
+    action = AgentAction(
+        action_id="act-bound",
+        action_type="notify_commander",
+        mission_id="mission-1",
+        risk_tier="high",
+        summary="Send the reviewed warning.",
+        required_approval=True,
+        evidence_refs=("obs-2",),
+        parameters={"audience": "watch-floor"},
+    )
+    decided_at = datetime(2026, 7, 26, 12, tzinfo=UTC)
+    gate = ApprovalGate(PolicyEngine(), ImmutableAuditLog())
+    token = gate.approve_and_issue(
+        context, action, decision="approve", reason="release authorized", now=decided_at
+    )
+
+    assert token is not None
+    mutated = replace(action, parameters={"audience": "external-partner"})
+    mutation_decision = gate.consume(token, mutated, now=decided_at + timedelta(minutes=1))
+    expiry_decision = gate.consume(token, action, now=decided_at + timedelta(minutes=6))
+    assert mutation_decision.allowed is False
+    assert mutation_decision.reason == "action package changed after approval"
+    assert expiry_decision.allowed is False
+    assert expiry_decision.reason == "approval token expired"
 
 
 def test_model_router_uses_hardened_path_for_restricted_data() -> None:

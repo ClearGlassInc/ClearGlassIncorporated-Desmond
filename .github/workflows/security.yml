@@ -116,3 +116,73 @@ jobs:
             sys.exit(1)
           print(f"All {len(list(Path('.github/workflows').glob('*.y*ml')))} workflow files are valid YAML.")
           PYEOF
+      - name: Enforce workflow security invariants
+        run: |
+          python3 - <<'PYEOF'
+          import re
+          import sys
+          from pathlib import Path
+
+          import yaml
+
+          action_ref = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
+          action_use = re.compile(r"^\s*-?\s*uses:\s*([^\s#]+)", re.MULTILINE)
+          secret_expression = re.compile(re.escape("$" + "{{") + r"\s*secrets\.")
+          failures = []
+
+          def walk(value):
+            if isinstance(value, dict):
+              for child in value.values():
+                yield from walk(child)
+            elif isinstance(value, list):
+              for child in value:
+                yield from walk(child)
+            elif isinstance(value, str):
+              yield value
+
+          for workflow in sorted(Path(".github/workflows").glob("*.y*ml")):
+            text = workflow.read_text(encoding="utf-8")
+            data = yaml.safe_load(text)
+            trigger = data.get(True, data.get("on"))
+            permissions = data.get("permissions")
+
+            if not isinstance(permissions, dict):
+              failures.append(f"{workflow}: explicit top-level permissions mapping is required")
+            if isinstance(trigger, dict) and "pull_request_target" in trigger:
+              failures.append(f"{workflow}: pull_request_target is prohibited")
+
+            for ref in action_use.findall(text):
+              if ref.startswith("./") or ref.startswith("docker://"):
+                continue
+              if not action_ref.fullmatch(ref):
+                failures.append(f"{workflow}: external action must use a full commit SHA: {ref}")
+
+            for job_name, job in (data.get("jobs") or {}).items():
+              if not isinstance(job, dict):
+                failures.append(f"{workflow}: job {job_name} is not a mapping")
+                continue
+              if "uses" not in job and "timeout-minutes" not in job:
+                failures.append(f"{workflow}: job {job_name} requires timeout-minutes")
+              for step in job.get("steps", []):
+                if not isinstance(step, dict):
+                  continue
+                run = step.get("run")
+                if isinstance(run, str) and secret_expression.search(run):
+                  failures.append(
+                    f"{workflow}: job {job_name} interpolates a secret directly into run; pass it through env"
+                  )
+
+            # Scan all scalar values for credential literals while allowing
+            # GitHub's secrets context references and documentation labels.
+            for scalar in walk(data):
+              if ("$" + "{{ secrets.") in scalar:
+                continue
+              if re.search(r"-----BEGIN (?:RSA|EC|DSA|OPENSSH) PRIVATE KEY-----", scalar):
+                failures.append(f"{workflow}: embedded private key material detected")
+
+          if failures:
+            for failure in failures:
+              print(f"::error::{failure}")
+            sys.exit(1)
+          print("Workflow security invariants satisfied.")
+          PYEOF

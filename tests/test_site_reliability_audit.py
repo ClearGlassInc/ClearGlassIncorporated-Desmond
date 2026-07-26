@@ -62,3 +62,14 @@ def test_check_sitemap_rejects_duplicates_and_unpublished_routes(tmp_path: Path)
     assert "Duplicate URL in sitemap: https://www.clearglassinc.com/" in messages
     assert any("missing.html" in message for message in messages)
     assert any("outside the canonical HTTPS origin" in message for message in messages)
+
+
+def test_check_robots_rejects_malformed_and_missing_sitemaps(tmp_path: Path) -> None:
+    (tmp_path / "robots.txt").write_text(
+        "User-agent: *\nmalformed\nSitemap: https://www.clearglassinc.com/missing.xml\n",
+        encoding="utf-8",
+    )
+    with patch.object(audit, "REPO_ROOT", tmp_path):
+        messages = [issue.message for issue in audit.check_robots()]
+    assert any("Malformed robots.txt directive" in message for message in messages)
+    assert any("declares a missing sitemap" in message for message in messages)

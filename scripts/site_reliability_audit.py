@@ -222,12 +222,39 @@ def check_sitemap() -> list[AuditIssue]:
         if parsed.scheme != "https" or parsed.hostname != EXPECTED_DOMAIN:
             issues.append(AuditIssue("ERROR", f"Sitemap URL is outside the canonical HTTPS origin: {value}"))
             continue
-        route = parsed.path.lstrip("/") or "index.html"
-        target = REPO_ROOT / route
-        if parsed.path.endswith("/") and parsed.path != "/":
-            target = target / "index.html"
+        route = unquote(parsed.path).lstrip("/") or "index.html"
+        target = resolve_page_target((REPO_ROOT / route).resolve())
         if not target.is_file():
-            issues.append(AuditIssue("ERROR", f"Sitemap URL has no publishable file: {value}"))
+            issues.append(AuditIssue("ERROR", f"Sitemap URL has no published file: {value}"))
+
+    return issues
+
+
+def check_robots() -> list[AuditIssue]:
+    """Validate crawl directives and every sitemap connection declared to bots."""
+
+    robots = REPO_ROOT / "robots.txt"
+    if not robots.is_file():
+        return [AuditIssue("ERROR", "Missing robots.txt")]
+
+    issues: list[AuditIssue] = []
+    for line_number, raw_line in enumerate(robots.read_text(encoding="utf-8").splitlines(), 1):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            issues.append(AuditIssue("ERROR", f"Malformed robots.txt directive at line {line_number}: {line}"))
+            continue
+        field, value = (part.strip() for part in line.split(":", 1))
+        if field.lower() != "sitemap":
+            continue
+        parsed = urlparse(value)
+        if parsed.scheme != "https" or parsed.hostname != EXPECTED_DOMAIN:
+            issues.append(AuditIssue("ERROR", f"robots.txt declares a non-canonical sitemap: {value}"))
+            continue
+        sitemap_path = REPO_ROOT / unquote(parsed.path).lstrip("/")
+        if not sitemap_path.is_file():
+            issues.append(AuditIssue("ERROR", f"robots.txt declares a missing sitemap: {value}"))
 
     return issues
 

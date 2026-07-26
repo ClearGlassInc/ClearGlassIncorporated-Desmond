@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir -p marketing/output/organic/reviews
           WEEK=$(date +%Y-W%V)
-          cat > marketing/output/organic/reviews/$WEEK.md << 'EOF'
+          cat > marketing/output/organic/reviews/$WEEK.md << EOF
           # Organic Growth Weekly Review — $WEEK
 
           ## What shipped

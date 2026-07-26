@@ -1,124 +1,108 @@
 # GitHub Actions remediation report
 
-**Audit date:** 2026-07-26  
-**Scope:** every YAML file in `.github/workflows/` plus the local composite action in `.github/actions/`  
-**Operating decision:** validate locally; do not dispatch remote, production, secret-bearing, repository-writing, or deployment workflows without a named human approval.
+Date: 2026-07-26
+Scope: every `*.yml` workflow in `.github/workflows/` (51 files).
+Decision: local validation only. No remote workflow was dispatched because this checkout has no authenticated GitHub CLI, production credentials were not assumed, and deployment/mutation workflows require repository-side approval controls.
 
-## Executive disposition
+## Classification and dependency map
 
-The repository contains 50 workflows. All 50 parse as YAML, every executable job has an explicit timeout, and all third-party actions in both workflows and composite actions are now pinned to immutable 40-character commit SHAs. The official Pages chain is `build` → validated `dist` artifact → `deploy`, with `needs: build` and the protected `github-pages` environment.
+All third-party action references observed in executable `uses:` fields are pinned to 40-character commit SHAs; local actions/reusable workflows use repository-relative paths. “Secrets” below records references, not values. Environment and deploy bindings are extracted from jobs and steps.
 
-| State | Workflows | Exact risk / disposition |
-|---|---|---|
-| **Valid and ready** | `agent-army-crypto`, `agent-army`, `agent-deployer`, `agent-os`, `artemis-browser`, `artemis-deploy`, `artemis-fawl`, `burlington-military-op`, `burlington-release`, `cert-bot`, `ci`, `commerce-daily-loop`, `commerce-frontend-ci`, `compliance-evidence`, `content-pipeline`, `control-surface-feeds`, `copilot-setup-steps`, `daily-marketing-content`, `defender-watch`, `dependency-updater`, `health-monitor`, `internal-link-authority`, `master-orchestrator`, `multi-repo-audit`, `percival-policy-gate`, `percival-policy-reusable`, `phoenix-self-heal`, `policy-gate`, `pr-automation`, `release-supply-chain`, `repo-audit`, `security`, `seo-optimizer`, `thought-leadership`, `viral-content` | Read-only or narrowly scoped validation/automation; no immediate defect found. Secret-bearing jobs require the documented secret and remain unsuitable for forked/untrusted execution. |
-| **Valid but improved in this patch** | `auto-store`, `commerce-deploy`, `organic-daily`, `organic-weekly-review`, `pages`, `workflow-doctor` | The composite action had a mutable action ref; the Render deploy lacked a protected environment binding; organic jobs had unnecessary `contents: write` and hid issue-creation failures; doctor dependencies floated. Corrected as described below. Pages required no patch and is the reference deployment pattern. |
-| **Valid but needs improvement** | `api-security-audit`, `bot-orchestrator`, `clearglassinc-military-op`, `codex-autofix`, `ip-protection-scan`, `sales-ops-briefing` | Permissions are broader than individual steps need, optional-secret behavior can mask missing operational configuration, or external side effects lack a dedicated protected environment. Narrow permissions per job and bind side-effecting jobs to protected environments before treating these as unattended production automation. |
-| **Unsafe pending governance change** | `agent`, `dispatch-all-workflows`, `remove-homepage-crimson-loader`, `workflow-repair-agent` | These can grant an agent repository write access, fan out into deploy/secret-bearing workflows, push directly to the default branch, or claim automated fixes that are currently placeholders. Do not dispatch. Require an allowlist, inspect/fix privilege separation, protected environment approval, branch-only writes, and PR review. |
-| **Broken requiring immediate patching** | None remaining | The mutable action reference in `.github/actions/store-setup/action.yml` was the immediate supply-chain failure and is fixed. |
+| Workflow | Status | Triggers | Workflow permissions | Secret references | Jobs / dependencies | Artifacts, caches, environment, deployment | Exact risk | Exact patch / disposition |
+|---|---|---|---|---|---|---|---|---|
+| `agent-army-crypto.yml` | valid and ready | pull_request, push, workflow_dispatch | contents:read | none | secure-runtime | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `agent-army.yml` | valid and ready | pull_request, push, workflow_dispatch | contents:read | none | validate | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `agent-deployer.yml` | valid and ready | workflow_call, workflow_dispatch | contents:read | none | run | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `agent-os.yml` | valid and ready | schedule, pull_request, workflow_dispatch | contents:read | none | self-check | artifacts=none; cache=pip; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `agent.yml` | valid — improvement queued | workflow_dispatch | contents:read | ANTHROPIC_API_KEY, CLAUDE_CODE_OAUTH_TOKEN, GITHUB_TOKEN | repair | artifacts=none; cache=none; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `api-security-audit.yml` | valid — improvement queued | schedule, workflow_dispatch | contents:read, security-events:write, issues:write | AUDIT_LOW_PRIV_TOKEN, AUDIT_OTHER_USER_ID, AUDIT_VALID_TOKEN | api-security-audit | artifacts=actions/upload-artifact; cache=none; env=staging; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `artemis-browser.yml` | valid and ready | push, pull_request, workflow_dispatch | contents:read | none | browser-assistant | artifacts=none; cache=npm,pip; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `artemis-deploy.yml` | valid — improvement queued | push, schedule, workflow_dispatch | contents:read | none | validate, ip-guardian-gate, provenance | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `artemis-fawl.yml` | valid and ready | pull_request, workflow_dispatch | contents:read | none | validate | artifacts=none; cache=pip; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `auto-store.yml` | valid — improvement queued | pull_request, push, schedule, workflow_dispatch | contents:read | CONTROL_PLANE_URL, GITHUB_TOKEN, RENDER_DEPLOY_HOOK_URL, RENDER_ROLLBACK_HOOK_URL | validate, test, checkout-health, deploy, verify, rollback, alert | artifacts=actions/download-artifact,actions/upload-artifact; cache=none; env=production; deploy jobs=deploy | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `bot-orchestrator.yml` | valid — improvement queued | schedule, workflow_dispatch | contents:read | GITHUB_TOKEN | orchestrate | artifacts=actions/upload-artifact; cache=pip; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `burlington-military-op.yml` | valid and ready | workflow_dispatch, schedule | contents:read | none | military-op | artifacts=actions/upload-artifact; cache=none; env=${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'staging' }}; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `burlington-release.yml` | valid and ready | workflow_dispatch, schedule | contents:read | none | release-gate | artifacts=actions/upload-artifact; cache=none; env=${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'staging' }}; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `cert-bot.yml` | valid and ready | schedule, workflow_dispatch | contents:read | none | track | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `ci.yml` | valid and ready | push, pull_request, workflow_dispatch | contents:read | none | python-tests, lint, site-audit, workflow-doctor, osint-deck | artifacts=none; cache=pip; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `clearglassinc-military-op.yml` | valid — improvement queued | workflow_dispatch, schedule | contents:read, id-token:write, actions:read, security-events:write | none | inspect, build-test, security, staging, production, release, audit | artifacts=actions/upload-artifact; cache=none; env=name:production, url:https://www.clearglassinc.com; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `codex-autofix.yml` | valid — improvement queued | workflow_dispatch | contents:read | OPENAI_API_KEY | autofix | artifacts=none; cache=none; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `commerce-daily-loop.yml` | valid and ready | schedule, workflow_dispatch | contents:read | none | daily-loop | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `commerce-deploy.yml` | valid — improvement queued | push, workflow_dispatch | contents:read | RENDER_DEPLOY_HOOK_URL | gate, frontend-build, deploy | artifacts=none; cache=npm; env=none; deploy jobs=deploy | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `commerce-frontend-ci.yml` | broken — patched | push, pull_request | contents:read | none | build | artifacts=none; cache=npm; env=none; deploy jobs=none | Admin build failed because auth/session exports and edge-safe cookie constants had drifted. | Restored the previously reviewed authentication/session contract and middleware boundary; both frontend builds pass. |
+| `compliance-evidence.yml` | valid and ready | schedule, workflow_dispatch | contents:read | none | harvest | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `content-pipeline.yml` | valid — improvement queued | workflow_run, workflow_dispatch | contents:read | none | validate-and-commit | artifacts=none; cache=none; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `control-surface-feeds.yml` | valid — improvement queued | schedule, workflow_dispatch | contents:read | GITHUB_TOKEN | publish-feeds, dispatch-pages-deploy | artifacts=none; cache=pip; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `copilot-setup-steps.yml` | valid and ready | push, workflow_dispatch | contents:read | none | validate-site | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `daily-marketing-content.yml` | valid and ready | schedule, workflow_dispatch | contents:read, issues:write | GITHUB_TOKEN | create-daily-page | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `defender-watch.yml` | valid and ready | push, pull_request, schedule, workflow_dispatch | contents:read | DEFENDER_DISCORD_WEBHOOK_URL, DEFENDER_SLACK_WEBHOOK_URL, GITHUB_TOKEN | defend | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `dependency-updater.yml` | valid — improvement queued | schedule, workflow_dispatch | contents:read | GITHUB_TOKEN | update-python-deps | artifacts=none; cache=pip; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `dispatch-all-workflows.yml` | valid — improvement queued | workflow_dispatch | contents:read, actions:write | GITHUB_TOKEN | dispatch | artifacts=none; cache=pip; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `health-monitor.yml` | valid and ready | schedule, workflow_dispatch | contents:read | GITHUB_TOKEN | site-health | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `internal-link-authority.yml` | valid and ready | pull_request, push, workflow_dispatch | contents:read | none | validate-authority-network | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `ip-protection-scan.yml` | valid — improvement queued | push, pull_request, schedule | contents:read, issues:write, pull-requests:write | GITHUB_TOKEN | scan | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `master-orchestrator.yml` | valid and ready | workflow_dispatch, schedule | contents:read | none | web-seo, ai-agents, corporate-content, brand-viral | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `multi-repo-audit.yml` | valid — improvement queued | schedule, workflow_dispatch | contents:read | CG_ORG_PAT | audit | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `organic-daily.yml` | broken — patched | schedule, workflow_dispatch | contents:read, issues:write | GITHUB_TOKEN | generate | artifacts=none; cache=none; env=none; deploy jobs=none | Excess contents write, fragile inline generation, and suppressed issue errors could hide failed output. | Patched: read-only contents, heredoc generation, expanded review week, fail-fast issue creation. |
+| `organic-weekly-review.yml` | broken — patched | schedule, workflow_dispatch | contents:read, issues:write | GITHUB_TOKEN | review | artifacts=none; cache=none; env=none; deploy jobs=none | Excess contents write, fragile inline generation, and suppressed issue errors could hide failed output. | Patched: read-only contents, heredoc generation, expanded review week, fail-fast issue creation. |
+| `pages.yml` | valid — improvement queued | push, workflow_dispatch | contents:read, pages:write, id-token:write | none | build, deploy | artifacts=actions/upload-pages-artifact; cache=none; env=name:github-pages, url:${{ steps.deployment.outputs.page_url }}; deploy jobs=deploy | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `percival-policy-gate.yml` | valid and ready | pull_request, workflow_dispatch | contents:read | none | call-policy-gate | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `percival-policy-reusable.yml` | valid and ready | workflow_call | contents:read | none | policy-tests | artifacts=none; cache=pip; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `phoenix-self-heal.yml` | valid and ready | push, pull_request, workflow_dispatch | contents:read | none | self-heal-gate | artifacts=none; cache=pip; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `policy-gate.yml` | valid and ready | pull_request, push, workflow_dispatch | contents:read | none | opa | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `pr-automation.yml` | valid and ready | pull_request | contents:read | GITHUB_TOKEN | triage | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `release-supply-chain.yml` | valid — improvement queued | workflow_call | contents:read | GITHUB_TOKEN | build-sign-attest | artifacts=none; cache=none; env=none; deploy jobs=build-sign-attest | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `remove-homepage-crimson-loader.yml` | unsafe — governance required | push, workflow_dispatch | contents:write | none | patch | artifacts=none; cache=none; env=none; deploy jobs=none | Push-triggered workflow can autonomously commit a homepage mutation. | Require manual dispatch plus a protected environment/PR review before execution; do not run as-is. |
+| `repo-audit.yml` | valid and ready | schedule, workflow_dispatch | contents:read | GITHUB_TOKEN | audit | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `sales-ops-briefing.yml` | valid — improvement queued | schedule, workflow_dispatch | contents:read | BRIEFING_TO, DATABASE_URL, GMAIL_APP_PASSWORD, GMAIL_USER | briefing | artifacts=none; cache=none; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `security.yml` | valid and ready | pull_request, push, schedule | contents:read | none | dependency-review, secret-scan, workflow-lint | artifacts=none; cache=pip; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `seo-optimizer.yml` | valid and ready | workflow_call, workflow_dispatch | contents:read | none | run | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `thought-leadership.yml` | valid and ready | workflow_call, workflow_dispatch | contents:read | none | run | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `viral-content.yml` | valid and ready | workflow_call, workflow_dispatch | contents:read | none | run | artifacts=none; cache=none; env=none; deploy jobs=none | No blocking defect found in static review; runtime dependencies can still drift. | None now; keep weekly doctor/security validation. |
+| `workflow-doctor.yml` | valid — improvement queued | schedule, push, workflow_dispatch | contents:read | GITHUB_TOKEN | audit, repair | artifacts=none; cache=pip; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
+| `workflow-repair-agent.yml` | valid — improvement queued | workflow_dispatch | contents:read, pull-requests:read, actions:read, id-token:none | none | inspect-and-fix | artifacts=actions/upload-artifact; cache=none; env=none; deploy jobs=none | Privileged, secret-bearing, mutation, cross-repo, or deployment path; safe only with documented approvals and configured environments. | No immediate defect found; retain manual/environment gates and verify repository rules before execution. |
 
-## Exact remediation applied
+## Changed-file inventory
 
-1. Pinned the composite action's `actions/setup-python` call to its reviewed SHA and pinned its PyYAML install. This closes the nested mutable-action gap that a workflow-only scan missed.
-2. Added immutable-action validation for both `.github/workflows/*.yml` and `.github/actions/**/action.yml` to `scripts/workflow_doctor.py`. A mutable external action now fails the audit rather than being advisory.
-3. Bound `commerce-deploy.yml`'s Render job to the `production` environment. Repository administrators should configure required reviewers there; missing configuration must never be interpreted as approval.
-4. Reduced both organic workflows from `contents: write` to `contents: read`; retained only `issues: write`. Removed `|| true` so failed issue creation is observable.
-5. Pinned PyYAML in the workflow-doctor and dispatcher bootstrap steps.
+* `.github/workflows/organic-daily.yml` — least-privilege contents access, robust Python heredoc generation, explicit platform environment input, and observable issue-creation failure.
+* `.github/workflows/organic-weekly-review.yml` — least-privilege contents access, expanded week identifier in the report body, and observable issue-creation failure.
+* `clearglass-commerce/admin/lib/auth.ts` — restores exported TTL, strong-secret validation, `AUTH_SECRET` support, explicit session TTL, and the async session-creation contract.
+* `clearglass-commerce/admin/lib/constants.ts` — provides the edge-safe shared session-cookie constant.
+* `clearglass-commerce/admin/lib/session.ts` — restores server-only `getSession` and `requireSession` backstops with security-event logging and safe redirects.
+* `clearglass-commerce/admin/middleware.ts` — imports the cookie constant from the edge-safe constants module, avoiding server-only dependencies in middleware.
+* `docs/WORKFLOW_REMEDIATION_REPORT.md` — records all workflow classifications, triggers, permissions, secret references, jobs, artifacts/caches/environments/deployment bindings, remediation order, runbook, monitoring, and rollback.
 
-Rollback is a normal revert of this commit. Reverting the Render environment binding removes the approval boundary and is therefore not recommended. The Pages rollback path is redeploying a known-good commit; the auto-store path additionally retains a 30-day last-known-good artifact and invokes its configured rollback hook.
+## Fix order and completed remediation
 
-## Complete workflow inventory
-
-`Secrets` lists references only; no secret value was read or printed. `Artifacts` names jobs that upload an artifact. Caches are configured through pinned setup actions where present. A dash means none found.
-
-| Workflow | Triggers | Jobs | Effective top-level permissions | Secrets | Artifact jobs | Environment / target |
-|---|---|---:|---|---|---|---|
-| `agent-army-crypto.yml` | PR, push, manual | 1 | contents:read | — | — | — |
-| `agent-army.yml` | PR, push, manual | 1 | contents:read | — | — | — |
-| `agent-deployer.yml` | reusable, manual | 1 | contents:read | — | — | — |
-| `agent-os.yml` | schedule, PR, manual | 1 | contents:read | — | — | — |
-| `agent.yml` | manual | 1 | contents:read; job elevation | Anthropic credential, GitHub token | — | repository/PR writes |
-| `api-security-audit.yml` | schedule, manual | 1 | contents:read; security-events/issues:write | three audit identities | `api-security-audit` | `staging` |
-| `artemis-browser.yml` | push, PR, manual | 1 | contents:read | — | — | — |
-| `artemis-deploy.yml` | push, schedule, manual | 3 | contents:read | — | `ip-guardian-gate` | validation only |
-| `artemis-fawl.yml` | PR, manual | 1 | contents:read | — | — | — |
-| `auto-store.yml` | PR, push, schedule, manual | 7 | contents:read; alert job issues:write | control URL, deploy/rollback hooks, GitHub token | rollback anchor | `production` / Render |
-| `bot-orchestrator.yml` | schedule, manual | 1 | contents:read; job issues:write | GitHub token | `orchestrate` | issues |
-| `burlington-military-op.yml` | manual, schedule | 1 | contents:read | — | `military-op` | selected environment; no deploy |
-| `burlington-release.yml` | manual, schedule | 1 | contents:read | — | `release-gate` | selected environment; no deploy |
-| `cert-bot.yml` | schedule, manual | 1 | contents:read | — | — | — |
-| `ci.yml` | push, PR, manual | 5 | contents:read | — | — | — |
-| `clearglassinc-military-op.yml` | manual, schedule | 7 | contents:read; OIDC/security writes | — | security, release, audit | `production`; release tag |
-| `codex-autofix.yml` | manual | 1 | contents:read; job PR/contents write | OpenAI key | — | draft PR |
-| `commerce-daily-loop.yml` | schedule, manual | 1 | contents:read | — | — | — |
-| `commerce-deploy.yml` | main-path push, manual | 3 | contents:read | Render hook | — | `production` / Render |
-| `commerce-frontend-ci.yml` | push, PR | 1 matrix | contents:read | — | — | — |
-| `compliance-evidence.yml` | schedule, manual | 1 | contents:read | — | `harvest` | — |
-| `content-pipeline.yml` | workflow completion, manual | 1 | contents:read | — | — | — |
-| `control-surface-feeds.yml` | schedule, manual | 2 | contents:read; update job contents:write | GitHub token | — | branch commit |
-| `copilot-setup-steps.yml` | push, manual | 1 | contents:read | — | `validate-site` | — |
-| `daily-marketing-content.yml` | schedule, manual | 1 | contents:read; issues:write | GitHub token | — | issues |
-| `defender-watch.yml` | push, PR, schedule, manual | 1 | contents:read; issues:write | notification webhooks, GitHub token | `defend` | issues/webhooks |
-| `dependency-updater.yml` | schedule, manual | 1 | contents:read; job contents/PR write | GitHub token | — | PR |
-| `dispatch-all-workflows.yml` | manual | 1 | contents:read; actions:write | GitHub token | — | workflow fan-out |
-| `health-monitor.yml` | schedule, manual | 1 | contents:read; issues:write | GitHub token | `site-health` | issues |
-| `internal-link-authority.yml` | PR, push, manual | 1 | contents:read | — | validation bundle | — |
-| `ip-protection-scan.yml` | push, PR, schedule | 1 | contents:read; issues/PR:write | GitHub token | `scan` | issues |
-| `master-orchestrator.yml` | manual, schedule | 4 reusable jobs | contents:read | — | — | reusable fan-out |
-| `multi-repo-audit.yml` | schedule, manual | 1 | contents:read | organization PAT | `audit` | organization read |
-| `organic-daily.yml` | schedule, manual | 1 | contents:read; issues:write | GitHub token | — | issues |
-| `organic-weekly-review.yml` | schedule, manual | 1 | contents:read; issues:write | GitHub token | — | issues |
-| `pages.yml` | main push, manual | 2 | contents:read; pages/OIDC:write | — | Pages artifact | `github-pages` / Pages |
-| `percival-policy-gate.yml` | PR, manual | 1 reusable | contents:read | — | — | — |
-| `percival-policy-reusable.yml` | reusable | 1 | contents:read | — | — | — |
-| `phoenix-self-heal.yml` | push, PR, manual | 1 | contents:read | — | — | simulation only |
-| `policy-gate.yml` | PR, push, manual | 1 | contents:read | — | — | — |
-| `pr-automation.yml` | PR | 1 | contents:read; scoped job writes | GitHub token | — | PR metadata |
-| `release-supply-chain.yml` | reusable | 1 | contents:read; packages/OIDC attestations | GitHub token | — | GHCR |
-| `remove-homepage-crimson-loader.yml` | workflow-file push, manual | 1 | contents:write | — | — | direct default-branch push |
-| `repo-audit.yml` | schedule, manual | 1 | contents:read; issues:write | GitHub token | `audit` | issues |
-| `sales-ops-briefing.yml` | schedule, manual | 1 | contents:read | database/mail credentials | — | email |
-| `security.yml` | PR, push, schedule | 3 | contents:read; scoped security-events write | — | — | CodeQL/security |
-| `seo-optimizer.yml` | reusable, manual | 1 | contents:read | — | — | — |
-| `thought-leadership.yml` | reusable, manual | 1 | contents:read | — | — | — |
-| `viral-content.yml` | reusable, manual | 1 | contents:read | — | — | — |
-| `workflow-doctor.yml` | schedule, workflow push, manual | 2 | contents:read; repair job contents/PR write | GitHub token | — | repair PR |
-| `workflow-repair-agent.yml` | manual | 1 | read defaults; job contents/PR write | GitHub token | audit bundle | PR |
+1. **Completed — immediate failures:** restored the admin authentication/session contract required by `commerce-frontend-ci.yml`, and patched `organic-daily.yml` and `organic-weekly-review.yml`. Both now use `contents: read`; issue creation is fail-fast instead of silently ignored. Daily generation uses a quoted Python heredoc and passes the selected platform through an environment variable. Weekly review expands the computed week in the generated document.
+2. **Governance block — do not execute:** `remove-homepage-crimson-loader.yml` remains blocked because a push-triggered, write-enabled workflow mutates and commits the homepage. Convert it to manual dispatch and require a protected approval environment or PR-only change before any run.
+3. **Privileged paths:** workflows classified “valid — improvement queued” require confirmation of environment protection, branch protection, secret availability, and rollback ownership in GitHub before dispatch. No speculative permissions or secret changes were made.
+4. **Ready paths:** read-only test/audit workflows may run after the repository-hosted safety gates pass.
 
 ## Validation and rollout runbook
 
-### Apply in this order
+1. Parse all workflow YAML and assert each document contains trigger and jobs mappings.
+2. Run `python scripts/workflow_doctor.py`; it must report `Workflow doctor clean.`
+3. Audit every executable external `uses:` reference for a full commit SHA; audit secret references for interpolation only and scan workflow text for credential literals.
+4. Run the repository CI commands locally, beginning with workflow doctor and focused organic-content generation checks, then the full Python test suite, Ruff, internal links, site reliability, and affected package builds.
+5. On GitHub, dispatch only read-only/manual workflows first. Capture run URL, commit SHA, actor, job logs, artifact digests, and conclusion.
+6. For deployment, require a protected environment approval; confirm build artifact identity and upstream success before deploy. For Pages, `build` uploads the root artifact and `deploy` consumes it through the official Pages actions.
+7. Observe the first production run for failed jobs, permission denials, missing secrets, artifact mismatch, Pages URL health, and unexpected commits/issues.
 
-1. Merge immutable action and doctor enforcement changes.
-2. Merge least-privilege organic changes.
-3. Configure required reviewers on the `production` environment, then merge the commerce binding.
-4. Run read-only CI/security/policy workflows. Do not use the fan-out dispatcher.
-5. After green validation and named release approval, run the applicable deploy workflow against a reviewed commit SHA.
+## Rollback
 
-### Preflight commands
+* Before merge: close the PR; no runtime state changes have occurred.
+* After merge: revert the remediation commit to restore both workflow files. Prefer `git revert <merge-or-change-commit>` so rollback remains auditable.
+* If issue creation begins failing because labels are absent, create the documented labels through an approved repository-administration change; do **not** restore `|| true`, which hides operational failure.
+* No deployment was initiated by this remediation. If a later deployment fails, use that workflow’s protected rollback path (for Auto Store, the configured Render rollback hook) and redeploy the last known-good commit/artifact.
 
-```bash
-python scripts/workflow_doctor.py
-python -m pytest tests/test_workflow_doctor.py tests/test_dispatch_all_workflows.py -q
-python scripts/dispatch_all_workflows.py --dry-run
-python tools/internal_links.py --check
-```
+## Monitoring and weekly health checks
 
-Before deployment, confirm the target environment has required reviewers, the deploy hook exists without printing it, the build artifact is from the current run, and a known-good commit is recorded. Abort on any mismatch.
+* Run Workflow Doctor and Security weekly; alert on YAML/schema errors, non-SHA action refs, widened permissions, new secret references, missing timeouts, or broken local paths.
+* Review scheduled/mutation workflow run conclusions, queue duration, artifact retention/download success, failed issue/PR creation, and unexpected repository writes.
+* Verify environment reviewers and branch protections, rotate/revalidate external credentials per policy, and sample logs for accidental secret output.
+* Exercise a non-production deployment and rollback quarterly; verify Pages artifact provenance and live health after each production deployment.
 
-### Post-deployment monitoring
+## Residual limitations
 
-- Verify the Pages deployment URL and `/index.html`, `_headers`, `_redirects`, `.nojekyll`, and representative static assets.
-- Verify Render readiness and functional health, not merely hook acceptance.
-- Watch Actions audit events, environment approvals, unexpected token elevation, artifact provenance, and rollback alerts for the observation window.
-- Roll back Pages by redeploying the last known-good commit; roll back Render through the configured rollback hook or provider dashboard.
-
-### Weekly health checks
-
-- Run Workflow Doctor and the read-only CI, security, policy, dependency, IP, and repository audits.
-- Review action SHAs against approved upstream releases and dependency advisories; never auto-advance a SHA without review.
-- Review workflow permissions, environment reviewers, secret age/usage, skipped optional-secret paths, failed schedules, artifact retention, cache hit anomalies, and runner duration drift.
-- Dry-run the dispatcher inventory only. Review the four governance-blocked workflows until their controls are implemented.
-
-## ClearGlassInc Artemis platform note
-
-The repository's existing Artemis architecture documents remain specifications rather than evidence of deployed Palantir Gotham, Foundry, AIP, or Apollo infrastructure. Workflow automation must preserve the governed lifecycle: telemetry and proposals may be automatic, but prompt/workflow/model changes require evaluation evidence, explicit human approval, versioned promotion, and Apollo-style rollback control before production activation.
+Static and local execution cannot prove repository environment reviewers, organization policies, secret presence, remote action availability, or hosted-runner behavior. Those checks remain mandatory GitHub-side gates. Palantir Gotham, Foundry, AIP, and Apollo material in this repository is treated as target-state architecture, not evidence of provisioned infrastructure.

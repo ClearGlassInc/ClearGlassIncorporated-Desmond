@@ -43,16 +43,18 @@ jobs:
         run: mkdir -p marketing/output/organic
 
       - name: Run content engine (organic mode)
+        env:
+          PLATFORM: ${{ inputs.platform || 'all' }}
         run: |
-          python -c "
-          import json, datetime, pathlib
+          python - <<'PY'
+          import datetime, json, os
           from pathlib import Path
           today = datetime.date.today().isoformat()
           out = Path('marketing/output/organic')
           out.mkdir(parents=True, exist_ok=True)
           pack = {
             'date': today,
-            'platform_focus': '${{ inputs.platform || 'all' }}',
+            'platform_focus': os.environ['PLATFORM'],
             'assets': [
               {
                 'id': f'organic-{today}-x',
@@ -76,9 +78,9 @@ jobs:
             'repurpose_notes': 'Turn X post into LinkedIn first comment + Threads version. Save best replies for future content.'
           }
           (out / f'{today}.json').write_text(json.dumps(pack, indent=2))
-          (out / f'{today}.md').write_text(f\"# Organic Pack — {today}\\n\\n\" + '\\n\\n'.join([f\"### {a['platform'].upper()}\\n**Hook:** {a['hook']}\\n\\n{a['body']}\\n\\nCTA: {a['cta']}\" for a in pack['assets']]))
+          (out / f'{today}.md').write_text(f"# Organic Pack — {today}\n\n" + '\n\n'.join([f"### {a['platform'].upper()}\n**Hook:** {a['hook']}\n\n{a['body']}\n\nCTA: {a['cta']}" for a in pack['assets']]))
           print('Organic pack written')
-          "
+          PY
 
       - name: Validate pack exists
         run: ls -la marketing/output/organic/ && test -f marketing/output/organic/$(date +%Y-%m-%d).json

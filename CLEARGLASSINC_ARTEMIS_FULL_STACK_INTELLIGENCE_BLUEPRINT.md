@@ -316,6 +316,8 @@ hard_controls:
 
 Any action that can affect availability, confidentiality, integrity, safety, contracts, reputation, or coalition disclosure requires explicit approval. Examples include isolating a network segment, changing firewall policy, notifying a third party, sharing an intelligence product outside a compartment, re-tasking a sensor, promoting a new prompt to production, or changing a model route for classified workflows.
 
+Approval is a capability, not a boolean field. The policy service hashes the canonical action package (action type, mission, risk, rationale, evidence, and parameters) and issues a five-minute token bound to that hash, action identifier, and approving operator. The executor atomically consumes the token once; expired, replayed, cross-action, or post-approval-mutated packages fail closed and append a denial to the audit chain. Production storage must enforce single-use consumption transactionally so horizontally scaled executors cannot race the same approval.
+
 ## Self-Improvement Loop
 
 ClearGlassInc Artemis improves itself by creating proposed changes, never by silently changing goals or production behavior. The loop is intentionally conservative: observe, evaluate, propose, review, canary, monitor, promote, or roll back.

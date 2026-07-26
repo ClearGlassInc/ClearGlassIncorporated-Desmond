@@ -9,10 +9,10 @@
 | Surface | Status | Evidence and risk |
 |---|---|---|
 | Checked-in site graph | **live (repository artifact)** | The enhanced offline crawl resolves local and canonical same-site links, Pages-style directory routes, assets, and fragments with zero remaining errors. |
-| Production site and 133 unique sitemap resources | **unknown** | The canonical origin returned HTTP 403 to this audit environment. This may be an egress/proxy limitation; it is not evidence that production is down. |
+| Production site and 132 unique sitemap resources | **unknown** | The canonical origin returned HTTP 403 to this audit environment. This may be an egress/proxy limitation; it is not evidence that production is down. |
 | Pages source method | **live (source configuration)** | `pages.yml` publishes the repository root on pushes to `main`, requires build before deploy, creates `dist/index.html`, preserves `.nojekyll`, and uses the official Pages artifact flow. |
 | GitHub Pages repository setting / protected environment | **unknown** | The checkout has no Git remote or authenticated GitHub API context, so the configured Pages source and environment reviewer rules cannot be independently confirmed. |
-| Workflow definitions | **live (offline validation)** | 51/51 parse and pass fail-closed structural validation; 48 are ready and 3 need improvement. Hosted run history and secret authorization remain unknown. |
+| Workflow definitions | **live (offline validation)** | 52/52 parse and pass fail-closed structural validation; 49 are ready and 3 need improvement. Hosted run history and secret authorization remain unknown. |
 | Crawl directives | **live (repository artifact)** | `robots.txt` is syntactically valid after removing a stray `</content>` token; all three declared sitemap files exist. |
 
 ## Repairs shipped
@@ -23,6 +23,8 @@
 | P0 | One case-mismatched Ontario OSINT canonical URL resolved to a nonexistent Linux/Pages path. | Matched the canonical to `/Ontario-osint.html`. |
 | P1 | Nineteen CTA/menu/footer fragment paths targeted missing anchors. | Retargeted links to existing sections, added the `#top`, `#exposure`, and `#vendor` anchors, and connected mockup navigation to real site routes. |
 | P1 | The previous crawler checked file existence only and could report disconnected fragments as healthy. | Added fragment, same-origin absolute URL, directory-index, canonical sitemap target, and robots sitemap checks with regression coverage. |
+| P1 | The offline audit, workflow audit, generated-link check, and production crawl were separate manual operations. | Added one fail-closed weekly/manual workflow: offline gates run for changes, while scheduled/manual runs crawl all 132 unique sitemap routes and retain machine-readable evidence for 30 days. |
+| P1 | The reliability audit called a missing `check_robots` function and crashed before reporting results. | Restored deterministic robots validation and added a regression test for malformed directives and missing sitemap targets. |
 
 ## Corrected routing structure
 
@@ -231,6 +233,7 @@ The status below is source-verifiable only. A workflow is not called operational
 | `repo-audit.yml` | valid and ready | schedule, workflow_dispatch | No source-verifiable failure. |
 | `sales-ops-briefing.yml` | valid and ready | schedule, workflow_dispatch | No source-verifiable failure. |
 | `security.yml` | valid but needs improvement | pull_request, push, schedule | job 'dependency-review' makes critical step None non-blocking; remove continue-on-error after its prerequisite is enabled |
+| `site-reliability.yml` | valid and ready | pull_request, push, schedule, workflow_dispatch | No source-verifiable failure. |
 | `seo-optimizer.yml` | valid and ready | workflow_call, workflow_dispatch | No source-verifiable failure. |
 | `thought-leadership.yml` | valid and ready | workflow_call, workflow_dispatch | No source-verifiable failure. |
 | `viral-content.yml` | valid and ready | workflow_call, workflow_dispatch | No source-verifiable failure. |
@@ -242,7 +245,7 @@ The status below is source-verifiable only. A workflow is not called operational
 1. **Merge only after required checks pass.** The patch is static and reversible by reverting the commit.
 2. **Confirm GitHub settings before deployment.** Repository owner verifies **Settings → Pages → Source = GitHub Actions**, the `github-pages` environment protection, `main` branch protection, custom-domain DNS, and HTTPS enforcement.
 3. **Observe the Pages run.** Record commit SHA, actor, workflow/ref, run URL, build/deploy job results, artifact ID/digest, environment approval, published URL, and rollback owner.
-4. **Post-deploy crawl.** Fetch the homepage, `robots.txt`, all three sitemaps, and all 133 unique sitemap resources; require expected 2xx responses, canonical consistency, no redirect loops, correct content type, and no browser-console failures.
+4. **Post-deploy crawl.** Fetch the homepage, `robots.txt`, all three sitemaps, and all 132 unique sitemap resources; require expected 2xx responses, canonical consistency, no redirect loops, correct content type, and no browser-console failures.
 5. **Integration verification.** Validate external forms/APIs with authorized test data. Authorization cannot be inferred from markup, and no secret or third-party account was modified during this audit.
 
 ## What to monitor after deployment
@@ -254,8 +257,8 @@ The status below is source-verifiable only. A workflow is not called operational
 
 ## Weekly checks
 
-- Run `python3 scripts/site_reliability_audit.py`, `python3 tools/internal_links.py --check`, and `python3 scripts/audit_github_actions.py --markdown`.
-- Run an external sitemap crawl from a monitored runner and retain status, latency, final URL, and content-type evidence.
+- Confirm the scheduled `Site Reliability Audit` run completed both jobs; it runs `python3 scripts/site_reliability_audit.py`, `python3 tools/internal_links.py --check`, `python3 scripts/audit_github_actions.py --markdown`, focused regression tests, and the bounded live crawl.
+- Retain and review the workflow's 30-day offline and live artifacts; the live JSON records status, final URL, content type, and error state for every unique sitemap route.
 - Review workflow run history, disabled workflows, environment approvals, action pin drift, secret-name availability (never values), cache/artifact provenance, and alert-delivery success.
 - Compare sitemap URLs, checked-in indexable pages, navigation entry points, and Search Console coverage; triage orphaned/non-indexed pages deliberately.
 

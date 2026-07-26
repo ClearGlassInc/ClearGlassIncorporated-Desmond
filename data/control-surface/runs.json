@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #441",
+    "title": "Control Surface Feeds #442",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:11",
+    "timestamp": "2026-07-26T23:11:36Z"
+  },
+  {
+    "title": "Deploy Pages #1309",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "22:12",
+    "timestamp": "2026-07-26T22:12:04Z"
+  },
+  {
+    "title": "pages build and deployment #1786",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:11",
+    "timestamp": "2026-07-26T22:11:59Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3082",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:11",
+    "timestamp": "2026-07-26T22:11:59Z"
+  },
+  {
+    "title": "Control Surface Feeds #441",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:11",
     "timestamp": "2026-07-26T22:11:40Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 pull_request on codex/upgrade-blog-page-to-futuristic-experience",
     "time": "21:37",
     "timestamp": "2026-07-26T21:37:54Z"
-  },
-  {
-    "title": "Security #1608",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/upgrade-blog-page-to-futuristic-experience",
-    "time": "21:37",
-    "timestamp": "2026-07-26T21:37:54Z"
-  },
-  {
-    "title": "Internal Link Authority #193",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/upgrade-blog-page-to-futuristic-experience",
-    "time": "21:37",
-    "timestamp": "2026-07-26T21:37:54Z"
-  },
-  {
-    "title": "Code Quality: PR #1107 #3080",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/1107/head",
-    "time": "21:37",
-    "timestamp": "2026-07-26T21:37:53Z"
-  },
-  {
-    "title": "pages build and deployment #1784",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "21:28",
-    "timestamp": "2026-07-26T21:28:39Z"
   }
 ]

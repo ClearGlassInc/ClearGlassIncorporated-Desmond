@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "22:11",
-    "timestamp": "2026-07-26T22:11:53Z"
+    "time": "23:11",
+    "timestamp": "2026-07-26T23:11:51Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #442",
+    "time": "23:11",
+    "timestamp": "2026-07-26T23:11:36Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1309",
+    "time": "22:12",
+    "timestamp": "2026-07-26T22:12:04Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1786",
+    "time": "22:11",
+    "timestamp": "2026-07-26T22:11:59Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3082",
+    "time": "22:11",
+    "timestamp": "2026-07-26T22:11:59Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #441",
     "time": "22:11",
     "timestamp": "2026-07-26T22:11:40Z"
@@ -61,33 +89,5 @@
     "detail": "push on main \u00b7 run #535",
     "time": "21:38",
     "timestamp": "2026-07-26T21:38:17Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1217",
-    "time": "21:38",
-    "timestamp": "2026-07-26T21:38:17Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1785",
-    "time": "21:38",
-    "timestamp": "2026-07-26T21:38:17Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #3081",
-    "time": "21:38",
-    "timestamp": "2026-07-26T21:38:16Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "pull_request on codex/upgrade-blog-page-to-futuristic-experience \u00b7 run #1842",
-    "time": "21:37",
-    "timestamp": "2026-07-26T21:37:54Z"
   }
 ]

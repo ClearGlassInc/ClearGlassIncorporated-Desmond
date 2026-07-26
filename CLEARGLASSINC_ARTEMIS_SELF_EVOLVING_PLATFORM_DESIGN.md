@@ -17,6 +17,48 @@ Design principles:
 4. **Coalition-safe operation**: every query, tool call, recommendation, and generated product is filtered by clearance, compartment, mission, jurisdiction, and coalition-sharing constraints.
 5. **Machine-speed, audit-grade execution**: streaming triage and enrichment run continuously while immutable logs preserve exactly what happened, why, and under which policy version.
 
+### Specification Status and Acceptance Envelope
+
+This document is a **target-state implementation specification**, not evidence that a Palantir tenant, data connection, model, policy bundle, or Apollo environment has been provisioned. Product-specific interfaces must be validated against the APIs and security controls enabled in the target Gotham, Foundry, AIP, and Apollo enrollment before implementation.
+
+The first production release is acceptable only when all of these conditions are demonstrated with retained evidence:
+
+1. An authorized operator can trace every generated claim to visible, permitted source objects and transformation lineage.
+2. A user, service, or model without the required mission, compartment, coalition, or action grant cannot retrieve the protected object through direct lookup, search, graph traversal, inference, cache, export, or generated text.
+3. Every operationally significant tool call stops in `PENDING_HUMAN_APPROVAL`; approval is bound to the exact action digest, expires, and cannot be replayed for altered arguments.
+4. Duplicate or out-of-order source events produce one deterministic ontology mutation, while contradictory observations remain separately attributable rather than being silently overwritten.
+5. A prompt, workflow, heuristic, model route, or policy candidate cannot reach production without offline regression, shadow evidence, named approvals, a versioned rollback target, and a tested kill switch.
+6. Loss of the model runtime, retrieval index, policy decision point, event bus, or audit sink causes explicit bounded degradation; it never widens access or converts a draft into execution.
+7. Apollo can recall the candidate independently of data products, policy bundles, and ontology schema versions, and operators can verify the restored version and functional health.
+
+Initial service objectives are hypotheses to validate under representative classified workloads, not claims of achieved performance:
+
+| Capability | Initial objective | Abort or degrade behavior |
+|---|---:|---|
+| Authorization decision | p95 <= 50 ms; 100% decision logging | Fail closed; permit cached decisions only when policy version, subject, object, action, purpose, and TTL all match |
+| Live-event ingest to triage | p95 <= 2 s; >= 99.9% accepted-event durability | Apply backpressure, preserve the durable event, and display source lag; never drop silently |
+| Evidence-grounded copilot response | p95 <= 5 s; >= 95% claim citation coverage | Return a partial evidence view or abstain; never fill evidence gaps with unsupported claims |
+| Consequential action approval | 100% valid action-digest binding | Reject execution and require a fresh approval when content, policy, identity, or expiry differs |
+| Audit record persistence | 100% for material reads, decisions, and actions | Block consequential actions; buffer bounded read telemetry with integrity-protected sequence numbers |
+| Candidate rollback | <= 10 minutes after an abort signal | Apollo recall to the last-known-good bundle, stop new runs, and quarantine in-flight candidate output |
+
+### Trust Domains and Failure Containment
+
+Artemis separates privileges so model fluency cannot become operational authority:
+
+| Trust domain | Holds | May call | Must not do |
+|---|---|---|---|
+| Operator surface | Short-lived user session and redacted view models | API gateway only | Hold service credentials, evaluate authorization locally, or call models/tools directly |
+| Mission API and services | Validated request and workload identity | Policy point, Ontology facade, event producer | Bypass field masks, accept model output as authorization, or mutate the audit ledger |
+| AI orchestration | Bounded plan, prompt/model versions, mission-scoped tool grants | Typed read tools and proposal actions | Mint permissions, change goals/policy, approve its own proposal, or invoke execution actions |
+| Policy control plane | Signed policy bundles and attribute contracts | Identity and authoritative mission attributes | Depend on model judgment or accept client-asserted clearance and compartments |
+| Data and ontology plane | Source records, lineage, temporal objects, relationship evidence | Governed transforms and Ontology actions | Collapse coalition partitions or expose unfiltered indexes and embeddings |
+| Approval and execution plane | Action digest, approver authority, expiry, idempotency state | Allowlisted operational adapters | Execute a changed/expired action, reuse approval, or infer consent from UI behavior |
+| Audit plane | Append-only, time-correlated decision and action records | Integrity verification and restricted query interfaces | Permit runtime services to update or delete committed records |
+| Apollo management plane | Signed releases, environment policy, health gates, rollback pointers | Deployment targets through workload identity | Receive mission data or promote an artifact without recorded release authorization |
+
+All cross-domain calls use mutually authenticated workload identity, audience-restricted short-lived credentials, schema validation, deadlines, idempotency keys where mutation is possible, and correlation identifiers that contain no mission data. Network policy is default-deny. The policy decision point is adjacent to each protected action, while data-plane enforcement repeats row, column, object, and link filtering to prevent a gateway bypass from becoming disclosure.
+
 ---
 
 ## System Architecture

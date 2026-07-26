@@ -136,6 +136,22 @@ flowchart TB
 | Observability | OpenTelemetry traces, metrics, structured logs, immutable audit ledger, model telemetry, prompt telemetry, eval dashboards, SLO alerts, and replayable incidents. |
 | Deployment | Apollo promotion rings, signed artifacts, deployment attestations, runtime config, canaries, rollback, break-glass controls, and environment-specific policy packs. |
 
+### Trust Boundaries and Fail-Closed Behavior
+
+ClearGlassInc Artemis separates the user, data, inference, action, deployment, and audit planes so a compromise or outage in one plane cannot silently manufacture authority in another. Identity and policy decisions are deterministic service decisions; AIP model output is always untrusted content carried inside a typed envelope.
+
+| Boundary | Untrusted input | Preventive control | Degraded or recovery behavior |
+|---|---|---|---|
+| User to API | Browser state, tokens, uploaded evidence, query text. | mTLS or device-bound session, short-lived identity, strict schemas, size limits, purpose-of-use, and CSRF protection. | Reject mutations; preserve an attributable denial event without persisting rejected sensitive payloads. |
+| Source to Foundry | Streaming events, partner feeds, files, source markings. | Quarantine, schema registry, malware scanning, canonicalization, deduplication, source signature, and classification validation. | Route invalid records to a restricted dead-letter data product; never create ontology facts from them. |
+| Ontology to retrieval | Objects, links, embeddings, inferred relationships. | Mission, tenant, classification, compartment, property, edge, temporal, and releasability filters before ranking or prompt construction. | Return a labeled partial result or deny; never substitute cross-boundary context. |
+| AIP to tool broker | Prompt text, model-selected arguments, retrieved instructions. | Typed allowlist, server-side authorization, idempotency key, timeout, bounded retry, egress policy, and action risk classification. | Cancel on timeout; retry only read-only/idempotent calls; quarantine ambiguous outcomes for operator reconciliation. |
+| Tool broker to action plane | Draft action packages and approval claims. | Immutable payload digest, dual control where required, approval expiry, nonce consumption, and adjacent policy recheck. | Unknown, changed, expired, or replayed approval fails closed in `PENDING_HUMAN_APPROVAL`. |
+| Release service to Apollo | Candidate prompts, workflows, routes, policies, containers. | Signed manifest, provenance attestation, eval evidence, named approvers, compatibility checks, and rollback pointer. | Keep the champion active; recall the canary or invoke the kill switch when integrity or SLO evidence fails. |
+| Runtime to audit plane | Tool, decision, approval, and deployment events. | Durable append acknowledgement, hash chaining, independent access control, retention policy, and clock correlation. | Consequential actions do not complete without durable audit acknowledgement; buffer read-only telemetry within a bounded queue. |
+
+**Ambiguous-outcome invariant:** a timed-out mutation is never blindly retried. The orchestrator queries the idempotency record and target state; if completion cannot be proven, it opens a reconciliation task and prevents dependent actions. **Emergency access invariant:** break-glass access is time-bound, reason-coded, independently alerted, never changes coalition releasability, and receives mandatory after-action review.
+
 ## Data and Ontology
 
 The ontology is the operational contract shared by humans, backend services, agents, and governance controls. It makes every recommendation explainable because each object, relationship, and action carries confidence, lineage, temporal validity, mission context, and permissions.

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   issues: write
 
 jobs:
@@ -61,4 +61,4 @@ jobs:
           gh issue create \
             --title "Organic Weekly Review — $WEEK" \
             --body-file marketing/output/organic/reviews/$WEEK.md \
-            --label "growth,review,organic" || true
+            --label "growth,review,organic"

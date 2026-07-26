@@ -26,6 +26,8 @@ jobs:
       - run: pip install pyyaml
       - name: Dry-run workflow doctor
         run: python scripts/workflow_doctor.py
+      - name: Enforce workflow safety invariants
+        run: python scripts/audit_github_actions.py
 
   # ── Auto-repair (schedule and manual dispatch only) ──────────────────────────
   repair:

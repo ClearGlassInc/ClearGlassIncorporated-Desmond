@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from scripts.audit_github_actions import GitHubLoader, Result, audit
+from scripts.audit_github_actions import GitHubLoader, Result, audit, json_inventory
 import yaml
 
 
@@ -84,3 +84,69 @@ jobs:
     result.warnings.clear()
     audit(result)
     assert result.status == "valid and ready"
+
+
+def test_pages_deploy_requires_official_artifact_gate(tmp_path: Path) -> None:
+    result = workflow(
+        tmp_path,
+        """on: {workflow_dispatch: null}
+permissions: {contents: read}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/upload-pages-artifact@1111111111111111111111111111111111111111
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {pages: write, id-token: write}
+    environment: github-pages
+    steps:
+      - uses: actions/deploy-pages@2222222222222222222222222222222222222222
+""",
+    )
+    assert any("must need a job" in error for error in result.errors)
+
+    result.data["jobs"]["deploy"]["needs"] = "build"
+    result.errors.clear()
+    audit(result)
+    assert result.status == "valid and ready"
+
+
+def test_artifact_consumer_requires_matching_producer(tmp_path: Path) -> None:
+    result = workflow(
+        tmp_path,
+        """on: {workflow_dispatch: null}
+permissions: {contents: read}
+jobs:
+  consume:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@1111111111111111111111111111111111111111
+        with: {name: release}
+""",
+    )
+    assert any("release" in error for error in result.errors)
+
+
+def test_json_inventory_includes_execution_dependencies(tmp_path: Path) -> None:
+    result = workflow(
+        tmp_path,
+        """on: {workflow_dispatch: null}
+permissions: {contents: read}
+concurrency: {group: checks, cancel-in-progress: true}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-python@1111111111111111111111111111111111111111
+        with: {cache: pip}
+""",
+    )
+    record = json_inventory(result)
+    assert record["caches"] == [{"job": "check", "type": "pip"}]
+    assert record["concurrency"]["group"] == "checks"
+    assert len(record["actions"]) == 1

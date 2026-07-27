@@ -117,6 +117,10 @@ def audit(result: Result) -> None:
                 result.errors.append(f"job {job_name!r} references missing reusable workflow {local_call}")
 
     deploy_jobs_detected: set[str] = set()
+    artifact_uploads: set[str] = set()
+    artifact_downloads: set[str] = set()
+    pages_upload_jobs: set[str] = set()
+    pages_deploy_jobs: set[str] = set()
     for job_name, _, step in iter_steps(data):
         uses = step.get("uses")
         if isinstance(uses, str):
@@ -131,6 +135,15 @@ def audit(result: Result) -> None:
                 result.errors.append(f"external action is not pinned to a full commit SHA: {uses}")
             if "deploy" in target or "build-push-action" in target:
                 deploy_jobs_detected.add(job_name)
+            action_inputs = step.get("with") or {}
+            if target == "actions/upload-artifact" and isinstance(action_inputs, dict):
+                artifact_uploads.add(str(action_inputs.get("name", "artifact")))
+            if target == "actions/download-artifact" and isinstance(action_inputs, dict):
+                artifact_downloads.add(str(action_inputs.get("name", "artifact")))
+            if target == "actions/upload-pages-artifact":
+                pages_upload_jobs.add(job_name)
+            if target == "actions/deploy-pages":
+                pages_deploy_jobs.add(job_name)
             if target == "actions/checkout":
                 persist = (step.get("with") or {}).get("persist-credentials")
                 job = jobs[job_name]
@@ -163,6 +176,37 @@ def audit(result: Result) -> None:
                 )
             if "curl " in run and "HOOK" in run:
                 deploy_jobs_detected.add(job_name)
+
+    missing_artifacts = artifact_downloads - artifact_uploads
+    if missing_artifacts:
+        result.errors.append(
+            "downloaded artifacts have no same-workflow producer: "
+            + ", ".join(sorted(missing_artifacts))
+        )
+
+    for job_name in pages_deploy_jobs:
+        job = jobs[job_name]
+        needs = job.get("needs")
+        dependencies = {needs} if isinstance(needs, str) else set(needs or [])
+        if not pages_upload_jobs.intersection(dependencies):
+            result.errors.append(
+                f"Pages deploy job {job_name!r} must need a job that uploads the Pages artifact"
+            )
+        environment = job.get("environment")
+        environment_name = environment.get("name") if isinstance(environment, dict) else environment
+        if environment_name != "github-pages":
+            result.errors.append(
+                f"Pages deploy job {job_name!r} must use the github-pages environment"
+            )
+        job_permissions = job.get("permissions")
+        if (
+            not isinstance(job_permissions, dict)
+            or job_permissions.get("pages") != "write"
+            or job_permissions.get("id-token") != "write"
+        ):
+            result.errors.append(
+                f"Pages deploy job {job_name!r} must scope pages: write and id-token: write locally"
+            )
 
     deploy_jobs = [
         (name, job)
@@ -261,12 +305,23 @@ def json_inventory(result: Result) -> dict[str, Any]:
     """Return a machine-readable record without exposing secret values."""
     data = result.data
     jobs = data.get("jobs") or {}
+    actions = [step["uses"] for _, _, step in iter_steps(data) if isinstance(step.get("uses"), str)]
+    artifact_actions = [action for action in actions if "artifact" in action]
+    caches = [
+        {"job": name, "type": step["with"]["cache"]}
+        for name, _, step in iter_steps(data)
+        if isinstance(step.get("with"), dict) and step["with"].get("cache")
+    ]
     return {
         "workflow": result.path.name,
         "status": result.status,
         "triggers": list((data.get("on") or {}).keys()) if isinstance(data.get("on"), dict) else data.get("on"),
         "permissions": data.get("permissions"),
         "secret_names": sorted(set(re.findall(r"secrets\.([A-Z0-9_]+)", result.path.read_text()))),
+        "actions": actions,
+        "artifact_actions": artifact_actions,
+        "caches": caches,
+        "concurrency": data.get("concurrency"),
         "jobs": {
             name: {
                 "needs": job.get("needs"),

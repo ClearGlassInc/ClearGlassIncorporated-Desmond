@@ -6,7 +6,7 @@
 
 ## Executive decision
 
-The repository contains 51 workflows. YAML parsing, local references, full-SHA action pinning, explicit permissions, job timeouts, deployment dependencies, secrets interpolation, artifact/cache declarations, environments, and recognizable deployment targets were inspected by `scripts/audit_github_actions.py`. The inventory below is generated from the checked-in workflow source.
+The repository contains 52 workflows. YAML parsing, local references, full-SHA action pinning, explicit permissions, job timeouts, deployment dependencies, secrets interpolation, artifact/cache declarations, environments, and recognizable deployment targets were inspected by `scripts/audit_github_actions.py`. The auditor also fails closed when a named artifact download has no same-workflow producer or when the official Pages deploy action lacks an upstream Pages artifact, job-local `pages: write` and `id-token: write`, or the `github-pages` environment. Its JSON evidence now records action references, artifact actions, cache configuration, and concurrency alongside the existing trigger, permission, secret-name, job, environment, error, and warning map. The inventory below is generated from the checked-in workflow source.
 
 The immediate source-level governance defects were patched: every unattended repository writer now crosses the `automation-write` environment boundary, and production deploy, rollback, release, and image-publication jobs cross the `production` environment boundary. The offline auditor now evaluates write authority per job rather than incorrectly combining unrelated workflow-level signals.
 
@@ -34,6 +34,8 @@ No remote workflow was executed. All workflows are source-valid after remediatio
 | `release-supply-chain.yml` | Reusable GHCR publisher had no environment boundary. | Bound `build-sign-attest` to `production`. |
 | `workflow-doctor.yml` | Scheduled repair branch writer could force-push without approval. | Bound `repair` to `automation-write`; PR review remains required. |
 | `scripts/audit_github_actions.py` | Workflow-wide write detection produced false positives, and its custom loader mutated PyYAML resolver state process-wide. | Made unattended-write analysis job-scoped/environment-aware and isolated the loader resolver table. |
+| `scripts/audit_github_actions.py` | Artifact consumers and Pages deploy readiness were inventory-only, so a producer/name mismatch or an incomplete official Pages dependency chain could pass the offline gate. | Added fail-closed same-workflow artifact matching and explicit Pages producer, dependency, permission, and environment validation; expanded JSON audit evidence. |
+| `tests/test_audit_github_actions.py` | The new artifact and Pages invariants had no regression coverage. | Added positive and negative Pages, artifact-name, and machine-readable inventory tests. |
 
 ## Validation and rollout runbook
 

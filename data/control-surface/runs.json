@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #443",
+    "title": "Control Surface Feeds #444",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "04:01",
+    "timestamp": "2026-07-27T04:01:03Z"
+  },
+  {
+    "title": "Defender Watch #1226",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "03:49",
+    "timestamp": "2026-07-27T03:49:20Z"
+  },
+  {
+    "title": "Health Monitor #230",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "03:32",
+    "timestamp": "2026-07-27T03:32:33Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #10",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "02:23",
+    "timestamp": "2026-07-27T02:23:45Z"
+  },
+  {
+    "title": "Deploy Pages #1315",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "00:12",
+    "timestamp": "2026-07-27T00:12:11Z"
+  },
+  {
+    "title": "pages build and deployment #1792",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:12",
+    "timestamp": "2026-07-27T00:12:04Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3093",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:12",
+    "timestamp": "2026-07-27T00:12:04Z"
+  },
+  {
+    "title": "Control Surface Feeds #443",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "00:11",
     "timestamp": "2026-07-27T00:11:44Z"
   },
@@ -87,55 +136,6 @@
     "title": "Defender Watch #1224",
     "status": "bad",
     "detail": "failure \u00b7 pull_request on codex/add-pulsing-neon-ui-design-specifications",
-    "time": "23:47",
-    "timestamp": "2026-07-26T23:47:50Z"
-  },
-  {
-    "title": "PR Automation #853",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-pulsing-neon-ui-design-specifications",
-    "time": "23:47",
-    "timestamp": "2026-07-26T23:47:50Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1904",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-pulsing-neon-ui-design-specifications",
-    "time": "23:47",
-    "timestamp": "2026-07-26T23:47:50Z"
-  },
-  {
-    "title": "CI #1850",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/add-pulsing-neon-ui-design-specifications",
-    "time": "23:47",
-    "timestamp": "2026-07-26T23:47:50Z"
-  },
-  {
-    "title": "Policy Gate #1587",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-pulsing-neon-ui-design-specifications",
-    "time": "23:47",
-    "timestamp": "2026-07-26T23:47:50Z"
-  },
-  {
-    "title": "Code Quality: PR #1111 #3091",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/1111/head",
-    "time": "23:47",
-    "timestamp": "2026-07-26T23:47:50Z"
-  },
-  {
-    "title": "Internal Link Authority #199",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-pulsing-neon-ui-design-specifications",
-    "time": "23:47",
-    "timestamp": "2026-07-26T23:47:50Z"
-  },
-  {
-    "title": "Site Reliability Audit #308",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-pulsing-neon-ui-design-specifications",
     "time": "23:47",
     "timestamp": "2026-07-26T23:47:50Z"
   }

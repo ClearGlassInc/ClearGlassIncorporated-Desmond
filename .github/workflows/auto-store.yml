@@ -1,24 +1,9 @@
 name: Auto-Store
 
-# Enterprise-grade auto-store pipeline for the ClearGlass storefront + autostore
-# control plane (see SOUL.md, apps/autostore/). One workflow, end to end:
-#
-#   validate -> test -> checkout-health -> deploy -> verify
-#                                              \-> rollback (on failure)
-#   (any failure) ----------------------------------> alert
-#
-# It honors the SOUL.md hard constraints: never push to protected branches
-# (PRs and the schedule are validate-only; deploy is gated on an environment
-# approval), every deploy passes build/test/lint/smoke first, least-privilege
-# tokens, secrets only via GitHub Secrets, and rollback-safe release logic.
-#
-# Triggers:
-#   * pull_request  — validate + test + checkout-health (no deploy). AI/PR work
-#     can never reach production from here.
-#   * push to main  — full pipeline incl. the gated deploy.
-#   * schedule      — daily drift + checkout-health guard (no deploy).
-#   * workflow_dispatch — manual run; set deploy=true to exercise the deploy path.
-
+# Fail-closed storefront and commerce-control-plane pipeline:
+# validate -> test + checkout-health -> deploy -> verify
+#                                      \-> rollback only after an actual deploy attempt
+# Any unattended failure opens or updates an incident issue.
 on:
   pull_request:
     paths:
@@ -44,25 +29,22 @@ on:
       - ".github/workflows/auto-store.yml"
       - ".github/actions/store-setup/**"
   schedule:
-    - cron: "0 12 * * *" # 12:00 UTC daily — catalog drift + checkout-health guard
+    - cron: "0 12 * * *"
   workflow_dispatch:
     inputs:
       deploy:
-        description: "Run the gated deploy + verify path (requires environment approval)."
+        description: "Run the gated deploy and production verification path."
         type: boolean
         default: false
 
-# Least privilege by default; jobs widen only where they must (alert needs issues).
 permissions:
   contents: read
 
-# Never cancel an in-flight deploy — serialize the storefront pipeline instead.
 concurrency:
   group: auto-store-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  # 1) Validate the codebase: lint, workflow hygiene, and store-data sync.
   validate:
     name: Validate codebase + store data
     runs-on: ubuntu-latest
@@ -79,7 +61,6 @@ jobs:
       - name: Store catalog in sync with storefront
         run: python scripts/store_sync.py --check
 
-  # 2) Run tests: root bot/agent suite + the autostore control-plane trust loop.
   test:
     name: Tests (bots + autostore control plane)
     needs: validate
@@ -98,10 +79,6 @@ jobs:
         working-directory: apps/autostore/control_plane
         run: pytest tests/ -q
 
-  # 3) Confirm checkout health BEFORE any deploy — the money-safety gate.
-  #    A storefront whose buy buttons or e-Transfer flow are broken must never
-  #    ship. Live card checkout being off (Stripe paused) is a valid state:
-  #    the e-Transfer / invoice fallback keeps revenue flowing.
   checkout-health:
     name: Checkout health (storefront smoke)
     needs: validate
@@ -118,20 +95,17 @@ jobs:
         if: always()
         run: |
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
-          import json, pathlib
+          import json
+          import pathlib
+
           doc = json.loads(pathlib.Path("data/store/catalog.json").read_text())
           live = doc["summary"]["live_checkout_skus"]
-          print("### 🛒 Checkout health")
+          print("### Checkout health")
           print(f"- SKUs: **{doc['summary']['sku_count']}**, live card checkout: **{live}**")
           if not live:
               print(f"- {doc.get('fallback_note', 'Fallback payment flow active.')}")
           PY
 
-  # 4) Deploy — gated. Only push-to-main or an explicit dispatch deploy=true runs
-  #    this, and the `production` environment can require a human approval
-  #    (Settings -> Environments). Records the rollback anchor first, then
-  #    triggers the control-plane deploy. The static site is published by
-  #    pages.yml; this job owns the control-plane release + rollback record.
   deploy:
     name: Deploy (gated, rollback-anchored)
     needs: [test, checkout-health]
@@ -143,7 +117,30 @@ jobs:
     environment: production
     outputs:
       release: ${{ steps.marker.outputs.hash }}
+      deployment_attempted: ${{ steps.attempt.outputs.attempted }}
     steps:
+      - name: Verify production configuration before release
+        env:
+          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          ROLLBACK_HOOK: ${{ secrets.RENDER_ROLLBACK_HOOK_URL }}
+          CONTROL_PLANE_URL: ${{ secrets.CONTROL_PLANE_URL }}
+        run: |
+          set -euo pipefail
+          missing=()
+          [ -n "${DEPLOY_HOOK:-}" ] || missing+=("RENDER_DEPLOY_HOOK_URL")
+          [ -n "${ROLLBACK_HOOK:-}" ] || missing+=("RENDER_ROLLBACK_HOOK_URL")
+          [ -n "${CONTROL_PLANE_URL:-}" ] || missing+=("CONTROL_PLANE_URL")
+          if (( ${#missing[@]} )); then
+            joined=$(IFS=", "; echo "${missing[*]}")
+            echo "::error::Production deployment is not configured. Missing: $joined"
+            {
+              echo "### Production deployment blocked"
+              echo "- Missing GitHub environment secrets: \`$joined\`"
+              echo "- No release marker was promoted and no deployment was attempted."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
@@ -167,15 +164,15 @@ jobs:
           path: data/store/last-known-good.json
           retention-days: 30
 
+      - name: Mark deployment attempt
+        id: attempt
+        run: echo "attempted=true" >> "$GITHUB_OUTPUT"
+
       - name: Trigger control-plane deploy (Render)
         env:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           set -euo pipefail
-          if [ -z "${HOOK:-}" ]; then
-            echo "::error::RENDER_DEPLOY_HOOK_URL is required for a production deployment."
-            exit 1
-          fi
           curl -fsS -X POST "$HOOK" >/dev/null
           echo "Control-plane deploy triggered."
           echo "render_deploy=triggered" >> "$GITHUB_ENV"
@@ -183,13 +180,12 @@ jobs:
       - name: Release summary
         run: |
           {
-            echo "### 🚀 Auto-store release"
+            echo "### Auto-store release"
             echo "- Catalog: \`${{ steps.marker.outputs.hash }}\`"
             echo "- Rollback anchor promoted and uploaded (retention 30d)."
             echo "- Render control-plane deploy: \`${render_deploy:-unknown}\`."
           } >> "$GITHUB_STEP_SUMMARY"
 
-  # 5) Verify — post-deploy checkout health and required live HTTP probes.
   verify:
     name: Verify (post-deploy checkout health)
     needs: deploy
@@ -215,26 +211,29 @@ jobs:
           URL: ${{ secrets.CONTROL_PLANE_URL }}
         run: |
           set -euo pipefail
-          if [ -z "${URL:-}" ]; then
-            echo "::error::CONTROL_PLANE_URL is required for production verification."
-            exit 1
-          fi
           for i in 1 2 3 4 5; do
             if curl -fsS --max-time 10 "${URL%/}/healthz" >/dev/null; then
-              echo "Control plane healthy after attempt $i."; exit 0
+              echo "Control plane healthy after attempt $i."
+              exit 0
             fi
-            echo "Health probe attempt $i failed; retrying..."; sleep $((i*3))
+            echo "Health probe attempt $i failed; retrying..."
+            sleep $((i * 3))
           done
-          echo "::error::Control plane did not become healthy — verify failed."
+          echo "::error::Control plane did not become healthy."
           exit 1
 
-  # 6) Rollback — runs only if deploy or verify failed. Rollback-safe release:
-  #    re-trigger the control-plane rollback hook (Render keeps prior deploys)
-  #    and surface the last-known-good catalog to roll back to.
   rollback:
-    name: Rollback (on deploy/verify failure)
+    name: Rollback (after attempted deploy/verification failure)
     needs: [deploy, verify]
-    if: always() && (needs.deploy.result == 'failure' || needs.verify.result == 'failure')
+    if: |
+      always() &&
+      (
+        needs.verify.result == 'failure' ||
+        (
+          needs.deploy.result == 'failure' &&
+          needs.deploy.outputs.deployment_attempted == 'true'
+        )
+      )
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: production
@@ -248,29 +247,24 @@ jobs:
           HOOK: ${{ secrets.RENDER_ROLLBACK_HOOK_URL }}
         run: |
           set -euo pipefail
-          if [ -z "${HOOK:-}" ]; then
-            echo "::error::RENDER_ROLLBACK_HOOK_URL is required for automatic rollback."
-            exit 1
-          fi
           curl -fsS -X POST "$HOOK" >/dev/null
           echo "Control-plane rollback triggered."
       - name: Rollback summary
         if: always()
         run: |
           {
-            echo "### ⏪ Rollback engaged"
-            echo "Deploy/verify failed — the control-plane rollback hook was requested."
+            echo "### Rollback engaged"
+            echo "A control-plane deployment was attempted and deploy/verification failed."
             if [ -f last-known-good.json ]; then
-              echo '```json'; cat last-known-good.json; echo '```'
+              echo '```json'
+              cat last-known-good.json
+              echo '```'
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
-  # 7) Alert — any pipeline failure opens/updates a tracking issue. Alerting must
-  #    never fail the pipeline itself, so the issue step is best-effort.
   alert:
     name: Alert on failure
     needs: [validate, test, checkout-health, deploy, verify, rollback]
-    # Unattended paths only — PR failures already surface as failed checks.
     if: failure() && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -301,10 +295,11 @@ jobs:
             "- test: ${{ needs.test.result }}" \
             "- checkout-health: ${{ needs.checkout-health.result }}" \
             "- deploy: ${{ needs.deploy.result }}" \
+            "- deployment attempted: ${{ needs.deploy.outputs.deployment_attempted || 'false' }}" \
             "- verify: ${{ needs.verify.result }}" \
             "- rollback: ${{ needs.rollback.result }}" \
             "" \
-            "If a deploy was in flight, rollback has been engaged automatically.")
+            "If deployment was not attempted, configure the required production environment secrets. If it was attempted, inspect deploy/verify and rollback logs.")
           EXISTING=$(gh issue list --repo "$GH_REPO" --label auto-store-alert --state open \
             --json number,title --jq ".[] | select(.title==\"$TITLE\") | .number" 2>/dev/null | head -1 || true)
           if [ -n "$EXISTING" ]; then

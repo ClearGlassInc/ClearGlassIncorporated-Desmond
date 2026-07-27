@@ -130,7 +130,12 @@ def _render_markdown(record: dict[str, Any]) -> str:
     return "\n".join(md)
 
 
-def quarantine(report: "DefenderReport", policy: dict[str, Any] | None = None) -> dict[str, Any]:
+def quarantine(
+    report: "DefenderReport",
+    policy: dict[str, Any] | None = None,
+    *,
+    emit_ci_annotations: bool = True,
+) -> dict[str, Any]:
     """Build the advisory containment record and write it to disk.
 
     Non-destructive: returns and persists a record; never touches the flagged
@@ -153,5 +158,9 @@ def quarantine(report: "DefenderReport", policy: dict[str, Any] | None = None) -
     (OUTPUT_DIR / "quarantine.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
     (OUTPUT_DIR / "quarantine.md").write_text(_render_markdown(record), encoding="utf-8")
 
-    _emit_ci_annotations(findings)
+    # Unit tests exercise intentionally dangerous fixtures.  Callers must opt
+    # out explicitly for those synthetic reports; genuine scans retain the
+    # fail-visible CI annotations by default.
+    if emit_ci_annotations:
+        _emit_ci_annotations(findings)
     return record

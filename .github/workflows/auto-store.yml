@@ -167,16 +167,14 @@ jobs:
           path: data/store/last-known-good.json
           retention-days: 30
 
-      - name: Trigger control-plane deploy (Render, optional)
+      - name: Trigger control-plane deploy (Render)
         env:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           set -euo pipefail
           if [ -z "${HOOK:-}" ]; then
-            echo "::warning::RENDER_DEPLOY_HOOK_URL is not configured; skipping optional Render deploy."
-            echo "Static production is still published by pages.yml on main, so this gate remains green."
-            echo "render_deploy=skipped" >> "$GITHUB_ENV"
-            exit 0
+            echo "::error::RENDER_DEPLOY_HOOK_URL is required for a production deployment."
+            exit 1
           fi
           curl -fsS -X POST "$HOOK" >/dev/null
           echo "Control-plane deploy triggered."
@@ -191,7 +189,7 @@ jobs:
             echo "- Render control-plane deploy: \`${render_deploy:-unknown}\`."
           } >> "$GITHUB_STEP_SUMMARY"
 
-  # 5) Verify — post-deploy checkout health (+ optional live control-plane probe).
+  # 5) Verify — post-deploy checkout health and required live HTTP probes.
   verify:
     name: Verify (post-deploy checkout health)
     needs: deploy
@@ -204,14 +202,22 @@ jobs:
       - uses: ./.github/actions/store-setup
       - name: Post-deploy storefront smoke
         run: python bots/store_smoke_bot.py
-      - name: Control-plane health probe (optional)
+      - name: Production storefront probes
+        run: |
+          set -euo pipefail
+          for path in / /store.html /pricing.html; do
+            curl --fail --silent --show-error --location --max-redirs 5 \
+              --connect-timeout 10 --max-time 30 \
+              "https://www.clearglassinc.com${path}" >/dev/null
+          done
+      - name: Control-plane health probe
         env:
           URL: ${{ secrets.CONTROL_PLANE_URL }}
         run: |
           set -euo pipefail
           if [ -z "${URL:-}" ]; then
-            echo "::notice::CONTROL_PLANE_URL not set — skipping live /healthz probe."
-            exit 0
+            echo "::error::CONTROL_PLANE_URL is required for production verification."
+            exit 1
           fi
           for i in 1 2 3 4 5; do
             if curl -fsS --max-time 10 "${URL%/}/healthz" >/dev/null; then
@@ -235,7 +241,6 @@ jobs:
     steps:
       - name: Download rollback anchor
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
-        continue-on-error: true
         with:
           name: store-rollback-anchor-${{ github.run_id }}
       - name: Trigger control-plane rollback (Render)
@@ -244,17 +249,17 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${HOOK:-}" ]; then
-            echo "::warning::RENDER_ROLLBACK_HOOK_URL not set — perform manual rollback:"
-            echo "  Render Dashboard -> control-plane service -> Deploys -> Rollback to last green."
-          else
-            curl -fsS -X POST "$HOOK" >/dev/null && echo "Control-plane rollback triggered."
+            echo "::error::RENDER_ROLLBACK_HOOK_URL is required for automatic rollback."
+            exit 1
           fi
+          curl -fsS -X POST "$HOOK" >/dev/null
+          echo "Control-plane rollback triggered."
       - name: Rollback summary
         if: always()
         run: |
           {
             echo "### ⏪ Rollback engaged"
-            echo "Deploy/verify failed — control-plane reverted to last green."
+            echo "Deploy/verify failed — the control-plane rollback hook was requested."
             if [ -f last-known-good.json ]; then
               echo '```json'; cat last-known-good.json; echo '```'
             fi

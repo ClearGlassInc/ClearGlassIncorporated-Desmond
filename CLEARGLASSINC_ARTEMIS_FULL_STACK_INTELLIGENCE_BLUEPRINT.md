@@ -8,6 +8,24 @@ The design assumes secure Canadian enterprise and public-sector operations, incl
 
 > **Implementation status:** This document is a target-state architecture and implementation blueprint, not evidence that Palantir infrastructure, integrations, data feeds, or operational authority have been provisioned. Product-specific interfaces shown below are integration contracts that must be mapped to the licensed deployment's supported Gotham, Foundry, AIP, and Apollo APIs during implementation.
 
+### Delivery Coverage and System Boundary
+
+This blueprint is the complete engineering handoff for the requested ClearGlassInc Artemis design. It deliberately separates implementable contracts from claims about deployed infrastructure and maps every requested outcome to a verifiable section:
+
+| Requested outcome | Authoritative section | Completion evidence |
+|---|---|---|
+| End-to-end platform architecture | [System Architecture](#system-architecture) | Trust boundaries, layer ownership, data flow, failure behavior, and Palantir responsibility map. |
+| Ontology and data model | [Data and Ontology](#data-and-ontology) | Entities, links, bitemporal state, confidence, lineage, mission context, and access markings. |
+| Copilots and governed agents | [AI and Agent Design](#ai-and-agent-design) | Analyst and commander copilots, bounded multi-agent graph, typed tools, and approval gates. |
+| Safe self-improvement | [Self-Improvement Loop](#self-improvement-loop) | Feedback capture, evaluation, candidate generation, review, canary, drift detection, rollback, and audit. |
+| Full-stack implementation | [Full-Stack Implementation](#full-stack-implementation) | Web surfaces, APIs, Python services, streams, retrieval, model routing, and operational dashboards. |
+| Security and governance | [Security and Governance](#security-and-governance) | Need-to-know enforcement, compartments, coalition boundaries, zero trust, provenance, and policy-as-code. |
+| Production code patterns | [Code Examples](#code-examples) | Python-first contracts for ingestion, policy, ontology queries, tools, workflows, routing, and evaluations. |
+| Mission walkthrough | [Scenario Walkthrough](#scenario-walkthrough) | Live event-to-outcome trace including operator authority and the subsequent learning signal. |
+| Delivery and operations | [Build Phases](#build-phases) and [Patch, Fix, and Deploy Control Plane](#patch-fix-and-deploy-control-plane) | Milestones, release gates, Apollo rollout, rollback, monitoring, and operational ownership requirements. |
+
+**System boundary:** ClearGlassInc Artemis may automate collection, normalization, read-only analysis, drafting, simulation, evaluation, and release proposals. It may not autonomously change objectives, grant privileges, alter policy, approve its own upgrades, promote a release, or execute an operationally significant action. Those transitions require deterministic policy checks and attributable human authorization. Until licensed Palantir interfaces, identity federation, protected environments, data agreements, approvers, and rollback owners are verified, every external integration remains disabled or in a synthetic, read-only pilot.
+
 ### Architecture Decision and Acceptance Contract
 
 The primary design is a **governed proposal system**, not an autonomously self-modifying system. Models may analyze, draft, rank, and propose changes; deterministic services enforce identity, authorization, workflow transitions, release eligibility, and audit invariants. No model output can grant authority, expand mission scope, modify policy, promote itself, or cause an operationally significant external effect.

@@ -44,11 +44,12 @@ build artifact. It holds only `contents: read`.
 
 | Dimension | How |
 |---|---|
-| **Workflow health** | Latest-per-workflow conclusion over the last 50 runs → success rate %, failing workflow names |
-| **Bot status** | `healthy` ≥90% · `degraded` ≥50% · `failing` <50% · `none` (no workflows) |
+| **Workflow health** | Latest-per-workflow conclusion over the last 50 runs → success rate, last success/failure timestamps, failing names, and run URLs as exact failure evidence |
+| **Bot status** | `healthy` ≥90% · `degraded` ≥50% · `failing` <50% · `unverified` (workflows exist but no completed-run evidence) · `none` (no workflows) |
+| **Operational status** | Evidence-safe vocabulary: `RUNNING_BUT_UNVERIFIED` for successful CI (which is not production proof), `CODE_FAILURE` for observed CI failures, or `DISABLED` when no workflows exist |
 | **Python deps** | `requirements.txt` lines classified pinned (`==`/range) vs unpinned (bare name) |
 | **Node deps** | `package.json` deps pinned to a moving target (`*` / `latest`) flagged |
-| **Score / grade** | Composite 0–100 → A–F; penalizes red CI, missing workflows, dependency drift |
+| **Score / grade** | Composite 0–100 → A–F; penalizes red CI, missing workflows, missing completed-run evidence, and dependency drift |
 
 ## Outputs (`audit-reports/`)
 
@@ -56,6 +57,10 @@ build artifact. It holds only `contents: read`.
 - `repo_audit.json` — the same rows plus a portfolio `summary`:
   repos audited, average score, repos with failing CI, repos with unpinned deps,
   and the A–F grade distribution
+
+The audit deliberately never reports `LIVE_AND_VERIFIED`: a GitHub Actions run
+cannot prove external health, payment completion, fulfillment, or production
+deployment. Those claims require separate endpoint and processor evidence.
 
 ## Scope note
 

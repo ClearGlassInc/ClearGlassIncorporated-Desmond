@@ -16,9 +16,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write   # required for OIDC
-  actions: read
-  security-events: write
 
 env:
   NODE_ENV: production

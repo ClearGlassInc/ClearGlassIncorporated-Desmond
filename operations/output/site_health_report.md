@@ -1,17 +1,17 @@
 # Site Health Report
 
-**Run:** 2026-07-26T09:11:27.233672+00:00
+**Run:** 2026-07-27T10:40:53.048638+00:00
 **Status:** ✅ Healthy
 **Pages:** 6/6 healthy
 
 ## Pages
 
-- ✅ `/` (196ms)
-- ✅ `/artemis.html` (165ms)
-- ✅ `/artemis-iv.html` (164ms)
-- ✅ `/guardian.html` (167ms)
-- ✅ `/clearglass-nexus.html` (213ms)
-- ✅ `/government.html` (137ms)
+- ✅ `/` (295ms)
+- ✅ `/artemis.html` (173ms)
+- ✅ `/artemis-iv.html` (245ms)
+- ✅ `/guardian.html` (223ms)
+- ✅ `/clearglass-nexus.html` (284ms)
+- ✅ `/government.html` (215ms)
 
 ## Warnings (non-failing)
 

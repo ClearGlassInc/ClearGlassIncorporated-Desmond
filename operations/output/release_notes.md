@@ -1,9 +1,16 @@
-# Release Notes — 2026-07-26
+# Release Notes — 2026-07-27
 
-*1215 commit(s) since v1.0.0*
+*1258 commit(s) since v1.0.0*
 
 ## New Features
 
+- **blog:** add governed Artemis neon command interface (`9aea1ff`)
+- **site:** automate end-to-end reliability audits (`4e57c6e`)
+- **commerce:** add governed Etsy launch agent prompt (`8f11592`)
+- **artemis:** bind approvals to action packages (`89c8862`)
+- **artemis:** harden self-evolving reference controls (`8af9b7a`)
+- govern Artemis self-improvement rollout (`f828a18`)
+- add governed Artemis social growth agent (`fcabe67`)
 - **growth:** activate full Organic Social Growth Engine with workflows, pillars, agents, and content system (`4068817`)
 - **commerce-ui:** add neon-glow design system to storefront & admin (`6dd984d`)
 - **bluedesk:** add multi-domain dominance Executive Summary to brief (`365b247`)
@@ -65,6 +72,16 @@
 
 ## Bug Fixes
 
+- **ci:** import json in workflow auditor (`bfca5d5`)
+- **site:** repair routing and strengthen reliability audit (`123caca`)
+- validate and repair site anchor routes (`1a2d8f2`)
+- complete private surface metadata (`0da601e`)
+- **ci:** harden workflow credentials and audit controls (`86e30c1`)
+- **ci:** gate automated writes and releases (`6796ea2`)
+- **ci:** enforce governed workflow security audits (`d9f664e`)
+- **ci:** audit and harden GitHub Actions workflows (`46e5ed8`)
+- **ci:** harden workflow supply chain and deploy gates (`9ecf6e0`)
+- **ci:** repair workflow and admin build drift (`d9a19ff`)
 - **ci:** repair auto-store authority registration (`290569f`)
 - **admin:** resolve lib/auth & lib/session export drift so admin builds (`f80dc9e`)
 - **governance:** hard-gate low-confidence actions per operating rule 8 (`c800505`)
@@ -120,6 +137,12 @@
 
 ## Documentation
 
+- **artemis:** define governed experiment rollout (`62e5f49`)
+- **artemis:** deepen governed platform blueprint (`aebe503`)
+- **artemis:** define assurance acceptance envelope (`c0bb898`)
+- **artemis:** define platform trust boundaries (`558f6ad`)
+- **artemis:** harden classification clearance example (`4b9356a`)
+- add Artemis delivery assurance contract (`c8a3b4b`)
 - harden Artemis architecture acceptance contract (`4293e34`)
 - harden Artemis implementation blueprint (`d85d486`)
 - define Artemis delivery assurance contract (`6e5e014`)
@@ -176,6 +199,9 @@
 
 ## Maintenance
 
+- Upgrade blog discovery and AI readiness (`a2acdc1`)
+- Add adaptive futuristic editorial experience (`694180c`)
+- Add source-led Greenbelt accountability brief (`936f23c`)
 - Cloudflare domain ownership certification letter (`d69978e`)
 - Add Artemis enterprise architecture agent (`67b0b46`)
 - Refine 2040 glass navigation bar (`0c3499e`)
@@ -733,6 +759,23 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`5fc15ec`)
+- refresh control-surface data feeds [skip ci] (`d426879`)
+- refresh control-surface data feeds [skip ci] (`4279193`)
+- refresh control-surface data feeds [skip ci] (`5e93d29`)
+- refresh control-surface data feeds [skip ci] (`da816d7`)
+- refresh control-surface data feeds [skip ci] (`eb99740`)
+- refresh control-surface data feeds [skip ci] (`6cc2dee`)
+- refresh control-surface data feeds [skip ci] (`2753d08`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`befb194`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`c3f9881`)
+- refresh control-surface data feeds [skip ci] (`5b5a856`)
+- refresh control-surface data feeds [skip ci] (`51dad81`)
+- refresh control-surface data feeds [skip ci] (`b292ae3`)
+- refresh control-surface data feeds [skip ci] (`ad942b2`)
+- refresh control-surface data feeds [skip ci] (`cc856db`)
+- refresh control-surface data feeds [skip ci] (`d509bc8`)
+- update generated outputs — 2026-07-26 09:11 UTC [skip ci] (`01983c7`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`b410779`)
 - refresh control-surface data feeds [skip ci] (`deb174b`)
 - refresh control-surface data feeds [skip ci] (`ba8881b`)

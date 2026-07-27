@@ -67,7 +67,8 @@ jobs:
             echo "Push rejected (attempt $attempt/5) — rebasing onto latest main"
             git pull --rebase origin main || break
           done
-          echo "::warning::Could not push bot outputs after retries — next run will pick them up"
+          echo "::error::Could not push bot outputs after 5 attempts"
+          exit 1
 
       - name: Upload bot outputs
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

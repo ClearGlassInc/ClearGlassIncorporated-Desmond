@@ -148,7 +148,8 @@ jobs:
             echo "Push rejected (attempt $attempt/5) — rebasing onto latest main"
             git pull --rebase origin main || break
           done
-          echo "::warning::Could not push ARTEMIS outputs after retries — next run will pick them up"
+          echo "::error::Could not push ARTEMIS outputs after 5 attempts"
+          exit 1
 
       - name: Write job summary
         if: always()

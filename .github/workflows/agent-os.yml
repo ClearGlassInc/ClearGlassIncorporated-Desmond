@@ -14,6 +14,12 @@ name: Agent OS Self-Check
 on:
   schedule:
     - cron: "30 13 * * *"   # 13:30 UTC daily — after the commerce daily loop
+  push:
+    branches: ["main"]
+    paths:
+      - "agent_os/**"
+      - "tests/test_agent_os*.py"
+      - ".github/workflows/agent-os.yml"
   pull_request:
     branches: ["main"]
     paths:
@@ -50,4 +56,5 @@ jobs:
       - name: Governance self-check (fails closed on any invariant violation)
         run: python -m agent_os.self_check --json
       - name: Executive report (step summary)
+        if: always()
         run: python -m agent_os.self_check | tee "$GITHUB_STEP_SUMMARY"

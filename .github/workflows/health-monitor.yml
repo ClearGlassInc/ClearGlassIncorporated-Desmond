@@ -95,3 +95,13 @@ jobs:
           else
             echo "No health report generated." >> "$GITHUB_STEP_SUMMARY"
           fi
+
+      - name: Enforce production health gate
+        if: always()
+        env:
+          HEALTHY: ${{ steps.health.outputs.healthy }}
+        run: |
+          if [ "$HEALTHY" != "true" ]; then
+            echo "::error::Production site health check failed; inspect the report artifact and alert issue."
+            exit 1
+          fi

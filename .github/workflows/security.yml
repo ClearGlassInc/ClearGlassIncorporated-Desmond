@@ -24,14 +24,9 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
-      # Dependency review needs Dependency Graph enabled under
-      # Settings → Code security and analysis. While it is disabled the action
-      # errors with "Dependency review is not supported on this repository",
-      # which would hard-fail every PR. Run it non-blocking (matching the
-      # IP Risk Assessment job) so a finding still surfaces in the logs without
-      # blocking merges; re-enable Dependency Graph to restore hard enforcement.
+      # Dependency Graph is a required repository control. Fail closed when it
+      # is unavailable so dependency findings cannot be silently bypassed.
       - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
-        continue-on-error: true
 
   secret-scan:
     name: Secret Pattern Scan

@@ -306,6 +306,36 @@
   .cta p{color:var(--dim);max-width:52ch;margin:18px auto 32px;font-size:1.05rem}
   .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
+  /* Artemis platform case study — intentionally dark, like a secured ops console */
+  .artemis{color:#dcecff;background:
+    radial-gradient(900px 460px at 50% 0,rgba(31,220,255,.15),transparent 65%),
+    linear-gradient(155deg,#030813,#071126 52%,#09071d);border-block:1px solid rgba(79,226,255,.28);
+    box-shadow:inset 0 1px rgba(255,255,255,.04),inset 0 -1px rgba(159,83,255,.16);overflow:hidden}
+  .artemis .eyebrow{color:#65eaff}.artemis .eyebrow::before{background:linear-gradient(90deg,transparent,#65eaff)}
+  .artemis .sh{max-width:820px}.artemis .sh h2,.artemis h3{color:#f3f7ff}.artemis .sh p{color:#9eb1cf}
+  .artemis-shell{border:1px solid rgba(79,226,255,.28);border-radius:24px;padding:clamp(18px,3vw,32px);
+    background:linear-gradient(rgba(50,225,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(50,225,255,.035) 1px,transparent 1px),rgba(3,9,23,.82);
+    background-size:36px 36px;box-shadow:0 32px 90px rgba(0,0,0,.48),0 0 50px rgba(40,215,255,.08);position:relative}
+  .artemis-shell::before{content:"ARTEMIS // CONTROL PLANE";position:absolute;right:24px;top:-10px;padding:3px 10px;
+    color:#74ecff;background:#071126;border:1px solid rgba(79,226,255,.34);border-radius:99px;font:600 9px/1.5 var(--cg-mono);letter-spacing:.14em}
+  .architecture{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:stretch}
+  .arch-node{min-height:132px;padding:16px;border-radius:14px;border:1px solid rgba(90,224,255,.22);background:rgba(8,20,43,.84);position:relative}
+  .arch-node:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:48%;z-index:2;color:#62e9ff;text-shadow:0 0 10px #32d9ff}
+  .arch-node .arch-k{font:600 9px/1.4 var(--cg-mono);letter-spacing:.13em;text-transform:uppercase;color:#63e7ff}
+  .arch-node h3{font:600 15px/1.25 var(--cg-sans);letter-spacing:0;margin:8px 0}
+  .arch-node p{font-size:12px;line-height:1.5;color:#8fa6c9;margin:0}
+  .artemis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+  .artemis-card{border:1px solid rgba(114,138,255,.2);border-radius:16px;padding:22px;background:linear-gradient(145deg,rgba(13,31,60,.84),rgba(11,9,37,.78))}
+  .artemis-card.wide{grid-column:1/-1}.artemis-card h3{font-family:var(--cg-sans);font-size:16px;font-weight:700;letter-spacing:0;margin:0 0 9px}
+  .artemis-card p,.artemis-card li{color:#9eb1cf;font-size:13px}.artemis-card ul{margin:12px 0 0;padding-left:18px}
+  .platforms{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.platforms span{border:1px solid rgba(92,229,255,.27);border-radius:99px;padding:5px 10px;color:#bcefff;background:rgba(40,213,255,.06);font:500 10px var(--cg-mono)}
+  .loop{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}.loop div{padding:12px;border-radius:10px;background:rgba(94,68,255,.1);border:1px solid rgba(148,105,255,.22);color:#aebee0;font-size:11px}.loop b{display:block;color:#d9ceff;font:600 10px var(--cg-mono);margin-bottom:5px}
+  .artemis pre{margin:14px 0 0;padding:16px;overflow:auto;border-radius:12px;border:1px solid rgba(64,219,255,.18);background:#020712;color:#b9eaff;font:11px/1.6 var(--cg-mono);white-space:pre}
+  .artemis details{margin-top:14px;border-top:1px solid rgba(100,213,255,.14);padding-top:12px}.artemis summary{cursor:pointer;color:#79eaff;font:600 12px var(--cg-mono)}
+  .scenario{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:15px;counter-reset:scene}.scene{counter-increment:scene;padding:14px;border-left:2px solid #6feaff;background:rgba(24,57,88,.38)}
+  .scene::before{content:"0" counter(scene);display:block;color:#cb7cff;font:600 10px var(--cg-mono);margin-bottom:6px}.scene b{color:#edf8ff;font-size:12px}.scene span{display:block;color:#8fa6c9;font-size:11px;margin-top:5px}
+  .artemis-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.artemis .cg-btn--ghost{color:#73e9ff;border-color:rgba(82,225,255,.38);background:rgba(18,42,68,.5)}
+
   footer{padding:54px 0 90px;border-top:1px solid var(--line);margin-top:clamp(64px,9vw,110px);color:var(--dim-2);font-size:13px}
   footer a{color:var(--wine);text-decoration:none}
   footer a:hover{color:var(--neon)}
@@ -318,10 +348,12 @@
     .g-3{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.trust{grid-template-columns:1fr}
     .metrics{grid-template-columns:1fr 1fr}.showcase .inner{grid-template-columns:1fr}.stage{order:-1}
     .live-grid{grid-template-columns:1fr 1fr}.panels{grid-template-columns:1fr}
+    .architecture{grid-template-columns:1fr 1fr}.arch-node:not(:last-child)::after{display:none}.loop,.scenario{grid-template-columns:1fr 1fr}
   }
   @media(max-width:600px){
     .g-2,.g-3{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}
     .live-grid{grid-template-columns:1fr 1fr}
+    .architecture,.artemis-grid,.loop,.scenario{grid-template-columns:1fr}.artemis-card.wide{grid-column:auto}
   }
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -394,6 +426,71 @@
           <li><span class="dot">◆</span> <span><b>Motion with a fallback.</b> A poster frame renders instantly; the loop pauses for <code>prefers-reduced-motion</code>; captions describe it for assistive tech.</span></li>
           <li><span class="dot">◆</span> <span><b>Neon, not noise.</b> The glow is pure CSS — conic gradients and blur, zero image weight, GPU-composited.</span></li>
         </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTEMIS FULL-STACK CASE STUDY -->
+<section class="band artemis reveal" id="artemis" aria-labelledby="artemis-title">
+  <div class="wrap">
+    <div class="sh">
+      <span class="eyebrow">ClearGlassInc Artemis · Reference architecture</span>
+      <h2 id="artemis-title">A self-evolving intelligence platform, <strong>governed by humans.</strong></h2>
+      <p>A production blueprint for secure, coalition-aware, latency-sensitive operations. Artemis fuses live and historical data, reasons over a permissioned ontology, and proposes evidence-backed improvements without ever manufacturing its own authority.</p>
+    </div>
+
+    <div class="artemis-shell" aria-label="Artemis system architecture">
+      <div class="architecture">
+        <article class="arch-node"><span class="arch-k">01 · Interface</span><h3>Mission workbench</h3><p>Analyst, commander, ModelOps, approvals, timelines, maps and evidence-linked briefs.</p></article>
+        <article class="arch-node"><span class="arch-k">02 · Control</span><h3>Zero-trust gateway</h3><p>mTLS, workload identity, typed APIs, rate limits, purpose binding and OPA policy checks.</p></article>
+        <article class="arch-node"><span class="arch-k">03 · Intelligence</span><h3>AIP orchestration</h3><p>Copilots, bounded agents, model routing, approved tools, retrieval and evaluation harnesses.</p></article>
+        <article class="arch-node"><span class="arch-k">04 · Knowledge</span><h3>Foundry + Gotham</h3><p>Pipelines, ontology, lineage, investigations, entity resolution and operational cases.</p></article>
+        <article class="arch-node"><span class="arch-k">05 · Runtime</span><h3>Apollo delivery</h3><p>Signed releases, enclave-aware configuration, canary rings, health gates and rollback.</p></article>
+      </div>
+      <div class="platforms" aria-label="Platform layers"><span>Kafka / Pulsar</span><span>Lakehouse</span><span>Hybrid search</span><span>OpenTelemetry</span><span>Immutable audit</span><span>Policy as code</span></div>
+
+      <div class="artemis-grid">
+        <article class="artemis-card">
+          <h3>Data and Ontology</h3>
+          <p>Mission, Event, Alert, Case, Entity, Device, Location, Evidence, Intel Product, Operator Feedback, Approval and Version objects carry confidence, source lineage, classification, coalition caveats, valid time and transaction time.</p>
+          <pre>Evidence ─supports→ Event ─triggers→ Alert
+Mission ─scopes→ Case ─contains→ Entity
+Feedback ─corrects→ Decision ─proposes→ Upgrade</pre>
+        </article>
+        <article class="artemis-card">
+          <h3>AI and Agent Design</h3>
+          <p>Analyst and commander copilots coordinate bounded specialists for triage, enrichment, correlation, summarization and recommendation. Every output cites evidence; every tool receives the operator's filtered authorization context.</p>
+          <ul><li>Read-only ontology search and evidence retrieval</li><li>Case and intel-product drafts through governed Foundry Actions</li><li>Operational action packages stop at explicit human approval</li></ul>
+        </article>
+        <article class="artemis-card wide">
+          <h3>Self-Improvement Loop</h3>
+          <p>Artemis learns from corrections, query traces, alert dispositions and mission results—but can only propose versioned changes to prompts, workflows, heuristics or routing. Deterministic policy, offline regression gates and accountable reviewers remain outside the model.</p>
+          <div class="loop"><div><b>1 · CAPTURE</b>Redact and normalize feedback, outcomes and traces.</div><div><b>2 · EVALUATE</b>Build eval cases; score quality, safety, cost and latency.</div><div><b>3 · PROPOSE</b>Create a signed, reviewable diff with evidence and rollback.</div><div><b>4 · APPROVE</b>Human owner accepts scope, risk and canary criteria.</div><div><b>5 · RELEASE</b>Apollo canary, drift watch, promote or auto-rollback.</div></div>
+          <details><summary>View Python approval-gate skeleton</summary><pre><code>def promote(candidate: Upgrade, actor: Identity) -&gt; Release:
+    policy.require(actor, "upgrade.approve", candidate.mission_scope)
+    assert candidate.evals.safety_regressions == 0
+    assert candidate.evals.precision &gt;= candidate.baseline.precision
+    approval = approvals.consume(candidate.id, actor.id)
+    audit.append("upgrade.approved", candidate.digest, approval.id)
+    return apollo.canary(candidate.artifact, ring="shadow", rollback=True)</code></pre></details>
+        </article>
+        <article class="artemis-card">
+          <h3>Security and Governance</h3>
+          <p>Need-to-know ABAC enforces row, column, entity, relationship and Action-level access. Coalition markings propagate into retrieval, prompts, exports and audit. Short-lived identities, default-deny egress and tamper-evident logs protect every trust boundary.</p>
+        </article>
+        <article class="artemis-card">
+          <h3>Observability and Evals</h3>
+          <p>OpenTelemetry joins request, retrieval, model and tool spans. Dashboards track precision, recall, citation validity, time-to-decision, p95 latency, operator override rate, trust, drift, policy denials and mission impact—without placing sensitive content in telemetry.</p>
+        </article>
+        <article class="artemis-card wide">
+          <h3>Scenario Walkthrough · signal to safe learning</h3>
+          <div class="scenario"><div class="scene"><b>Live event</b><span>A signed sensor event enters the stream and is hashed, classified and deduplicated.</span></div><div class="scene"><b>Machine triage</b><span>Agents correlate bitemporal entities and retrieve only policy-visible evidence.</span></div><div class="scene"><b>Recommendation</b><span>AIP drafts a cited response package with confidence and alternatives.</span></div><div class="scene"><b>Human gate</b><span>The commander edits, approves or rejects; no significant action bypasses this step.</span></div><div class="scene"><b>Safe learning</b><span>The outcome becomes an eval. A proposed prompt diff must beat baseline before canary release.</span></div></div>
+        </article>
+      </div>
+      <div class="artemis-actions">
+        <a class="cg-btn cg-btn--primary" href="artemis-self-evolving-platform.html">Open the interactive platform brief</a>
+        <a class="cg-btn cg-btn--ghost" href="ARTEMIS_SELF_EVOLVING_PLATFORM_BLUEPRINT.md">Read the engineering blueprint</a>
       </div>
     </div>
   </div>

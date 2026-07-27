@@ -38,6 +38,18 @@ def test_workflow_health_latest_per_workflow():
 def test_workflow_health_empty_is_perfect():
     h = workflow_health([])
     assert h["success_rate"] == 100 and h["failing"] == []
+    assert h["last_successful_execution"] is None
+    assert h["failure_evidence"] == []
+
+
+def test_workflow_health_preserves_execution_evidence():
+    h = workflow_health([
+        {"name": "CI", "status": "completed", "conclusion": "success", "created_at": "2026-07-25T10:00:00Z"},
+        {"name": "Deploy", "status": "completed", "conclusion": "failure", "created_at": "2026-07-26T10:00:00Z", "html_url": "https://example.test/run/7"},
+    ])
+    assert h["last_successful_execution"] == "2026-07-25T10:00:00Z"
+    assert h["last_failed_execution"] == "2026-07-26T10:00:00Z"
+    assert h["failure_evidence"] == ["https://example.test/run/7"]
 
 
 # ── bot_status ──────────────────────────────────────────────────────────────
@@ -48,6 +60,7 @@ def test_bot_status_thresholds():
     assert bot_status(75, 3) == "degraded"
     assert bot_status(10, 3) == "failing"
     assert bot_status(100, 0) == "none"
+    assert bot_status(100, 3, 0) == "unverified"
 
 
 # ── dependency audits ─────────────────────────────────────────────────────────
@@ -77,6 +90,7 @@ def test_score_repo_grades():
     failing = score_repo(5, 0, 0, 0)
     assert failing["score"] == 50 and failing["grade"] == "F"
     assert score_repo(0, 100, 0, 0)["score"] == 75   # no workflows → -25
+    assert score_repo(5, 100, 0, 0, completed_count=0)["score"] == 75
 
 
 def test_score_repo_clamped():
@@ -97,7 +111,16 @@ def _row():
 def test_build_row_shape():
     row = _row()
     assert set(row) == set(CSV_FIELDS)
-    assert row["bot_status"] in {"healthy", "degraded", "failing", "none"}
+    assert row["bot_status"] in {"healthy", "degraded", "failing", "none", "unverified"}
+    assert row["current_status"] == "RUNNING_BUT_UNVERIFIED"
+
+
+def test_build_row_never_claims_live_from_workflow_success():
+    row = build_row("demo", 1, workflow_health([
+        {"name": "CI", "status": "completed", "conclusion": "success"}
+    ]), audit_python_deps(""), audit_node_deps("{}"))
+    assert row["current_status"] == "RUNNING_BUT_UNVERIFIED"
+    assert row["last_successful_execution"] == "UNVERIFIED"
 
 
 def test_rows_to_csv_roundtrip():
@@ -117,6 +140,7 @@ def test_summarize_counts():
     assert s["repos_audited"] == 2
     assert s["repos_with_failing_ci"] == 1
     assert s["repos_with_unpinned_deps"] == 1
+    assert s["repos_without_execution_evidence"] == 2
     assert sum(s["grade_distribution"].values()) == 2
 
 

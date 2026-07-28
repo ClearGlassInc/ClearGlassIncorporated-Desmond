@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
 from .config import get_settings
-from .routers import approvals, events, inventory, metrics, orders, payments, store
+from .routers import approvals, etsy, events, inventory, metrics, orders, payments, store
 from .security import auth_enabled, require_admin, verify_startup_posture
 
 
@@ -92,6 +92,9 @@ def create_app() -> FastAPI:
     app.include_router(metrics.router)
     app.include_router(events.router)
     app.include_router(approvals.router, dependencies=admin)
+    # Etsy is an operator surface end to end: connection state and verification read
+    # credential-backed shop identity, and the write endpoints propose live-shop changes.
+    app.include_router(etsy.router, dependencies=admin)
     return app
 
 

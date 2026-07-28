@@ -28,8 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      # Org-scoped PAT with repo:read + read:org. Add as repo secret CG_ORG_PAT.
-      GH_TOKEN: ${{ secrets.CG_ORG_PAT }}
+      # CG_ORG_PAT is deliberately NOT set here. It is the broadest credential in the
+      # repo (org-scoped, long-lived), and a job-level env exposes it to every step —
+      # including `pip install` and `apt-get`, which execute third-party code. It is
+      # bound only to the two steps that actually call the GitHub API.
       GH_OWNER: ${{ github.event.inputs.owner || 'ClearGlassInc' }}
       PARALLEL: ${{ github.event.inputs.parallel || '4' }}
       SKIP_DEPS: ${{ github.event.inputs.skip_deps == 'true' && '1' || '0' }}
@@ -53,6 +55,9 @@ jobs:
 
       - name: Verify gh auth
         id: auth
+        env:
+          # Org-scoped PAT with repo:read + read:org. Add as repo secret CG_ORG_PAT.
+          GH_TOKEN: ${{ secrets.CG_ORG_PAT }}
         run: |
           # Optional-secret convention (mirrors commerce-deploy's RENDER hook):
           # without an org-scoped PAT the audit cannot discover sibling repos, so
@@ -68,6 +73,8 @@ jobs:
 
       - name: Run audit pipeline
         if: steps.auth.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.CG_ORG_PAT }}
         run: bash scripts/audit/run_audit.sh
 
       - name: Upload audit artifacts

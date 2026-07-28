@@ -113,24 +113,54 @@ from a known option rather than rediscovering it.
 
 ## AI tooling
 
-### Trial — CodeQL for application SAST
+### Adopt (already in place, undocumented until now) — CodeQL via default setup
 
-Added this week as `.github/workflows/codeql-trial.yml` (checklist item 7).
+CodeQL has been running on this repository the whole time, through **code
+scanning default setup**. It analyses `python` and `javascript-typescript` on
+every pull request, appearing as `Analyze (…)` checks under the synthetic path
+`dynamic/github-code-scanning/codeql`.
 
-We had no static application security testing at all. `security.yml` covers
-dependency review, a regex secret sweep and workflow linting — none of which
-reads application logic. That is a real gap on a codebase whose control plane
-handles checkout, Stripe webhooks and refunds, where the interesting bugs are
-taint-flow bugs (untrusted request field reaching a query or a shell) that
-regex scanning cannot see.
+It is recorded here because **it was not recorded anywhere**. Default setup is
+configured in repository settings, not in `.github/workflows/`, so a workflow
+audit does not see it — this week's audit initially concluded we had no static
+analysis at all and was corrected by CI. A control nobody has written down is a
+control nobody is verifying: the open question is whether its alert queue is
+being triaged, which is now a tracked action.
+
+**Constraint worth knowing:** while default setup is enabled, GitHub will not
+process an advanced CodeQL workflow. Any future CodeQL customisation means
+migrating to advanced setup, not adding a second workflow alongside it.
+
+### Trial — Semgrep as a complementary SAST engine
+
+Added this week as `.github/workflows/semgrep-trial.yml` (checklist item 7).
+
+Chosen specifically because it is **additive to CodeQL rather than duplicative**
+— a different engine and rule corpus, catching a different slice of bugs — and
+because it **does not depend on GitHub Advanced Security**, which is currently
+disabled on this repo.
 
 Running **non-gating on purpose**: schedule plus manual dispatch only, never on
-`pull_request`, with `continue-on-error` on analysis. It cannot block a merge
-or become a required check during the trial.
+`pull_request`, `continue-on-error` on the scan, `contents: read` throughout, and
+findings written to the step summary and an artifact rather than the Security tab
+(SARIF upload would reintroduce the GHAS dependency).
 
-**Review:** 2026-08-24. Promote to a required PR check only if the
-false-positive rate is low enough to triage weekly without eroding trust in the
-signal. Criteria in `operations/architect-checklist/2026-W31.md`.
+**Review:** 2026-08-24. The decisive criterion is whether it finds something
+CodeQL did not — if not, drop it and tune CodeQL instead. Full criteria in
+`operations/architect-checklist/2026-W31.md`.
+
+### Hold — GitHub Advanced Security (as currently configured)
+
+Not a judgement on the product; a statement of fact about our configuration.
+Dependency graph and GHAS are **disabled**, which is why `Dependency Review` and
+`IP Risk Assessment` fail on every pull request. Both workflows attempt to
+suppress this with `continue-on-error`, and that suppression is **not working** —
+the jobs still conclude `failure`.
+
+The result is two permanently-red checks, which is worse than either enabling the
+feature or removing the checks: reviewers learn to ignore check status, and the
+next real failure merges through unnoticed. Needs a decision either way; tracked
+as a high-priority action in the week-31 record.
 
 ### Assess — Kimi K3 as an agentic coding model
 

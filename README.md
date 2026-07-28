@@ -213,6 +213,7 @@ Founder & Chairman **Desmond Otieno Odhiambo**. See `docs/Desmond_Otieno_Odhiamb
 ## Architecture Blueprints
 
 - [ClearGlassInc Artemis full-stack intelligence blueprint](CLEARGLASSINC_ARTEMIS_FULL_STACK_INTELLIGENCE_BLUEPRINT.md)
+- [ClearGlassInc Artemis local SEO and multi-channel growth intelligence plan](CLEARGLASSINC_ARTEMIS_LOCAL_SEO_GROWTH_PLAN.md)
 
 ## ClearGlass Growth Entity
 

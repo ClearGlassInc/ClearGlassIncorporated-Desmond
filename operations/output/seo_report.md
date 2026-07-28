@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-18T08:47:17.004399+00:00
-**Average Score:** 90.0/100
-**Files Audited:** 68
+**Run:** 2026-07-28T09:35:38.352982+00:00
+**Average Score:** 88.2/100
+**Files Audited:** 76
 
 ## Page Scores
 
@@ -10,25 +10,33 @@
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
 | `artemis-2040.html` | 50/100 | 5 |
+| `command-center.html` | 50/100 | 5 |
+| `header-mockup-2040.html` | 50/100 | 5 |
 | `intelligence-platform.html` | 50/100 | 5 |
 | `cyber-defense-console.html` | 60/100 | 4 |
 | `flowsint.html` | 60/100 | 4 |
+| `platform-command-center.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
 | `artemis-self-evolving-platform.html` | 70/100 | 3 |
 | `bluedesk-mobile.html` | 70/100 | 3 |
 | `side-store.html` | 70/100 | 3 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
 | `artemis-percival.html` | 80/100 | 2 |
+| `authority-network.html` | 80/100 | 2 |
 | `conduit.html` | 80/100 | 2 |
 | `control-surface.html` | 80/100 | 2 |
+| `products.html` | 80/100 | 2 |
+| `sats-digital-twin.html` | 80/100 | 2 |
 | `systems.html` | 80/100 | 2 |
 | `ultra-glass.html` | 80/100 | 2 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
 | `advanced-features-tools-systems.html` | 90/100 | 1 |
 | `air-systems-control.html` | 90/100 | 1 |
+| `automap.html` | 90/100 | 1 |
 | `bluedesk.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
 | `clearglass-ultra.html` | 90/100 | 1 |
+| `clearsight.html` | 90/100 | 1 |
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `environmental-cyber-risk.html` | 90/100 | 1 |
 | `futuristic.html` | 90/100 | 1 |
@@ -79,13 +87,13 @@
 
 ## Top Issues Across All Pages
 
-- 21x — Description length N chars (ideal N–N)
-- 17x — Title length N chars (ideal N–N)
-- 10x — Missing og:image
-- 4x — Missing og:description
+- 27x — Description length N chars (ideal N–N)
+- 21x — Title length N chars (ideal N–N)
+- 13x — Missing og:image
+- 7x — Missing og:description
+- 6x — Missing og:title
+- 4x — Missing canonical link tag
 - 4x — Multiple <hN> tags (N)
-- 3x — Missing og:title
-- 2x — Missing canonical link tag
+- 2x — N image(s) missing alt text
 - 2x — No <hN> tag found
 - 1x — Missing <title>
-- 1x — Missing meta description

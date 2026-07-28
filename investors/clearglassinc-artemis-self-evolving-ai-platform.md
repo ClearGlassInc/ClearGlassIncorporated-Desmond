@@ -513,7 +513,8 @@ python -m py_compile platform/artemis_reference/self_evolving_platform.py
 Core implementation artifacts:
 
 - `Principal`, `MissionContext`, and `PolicyDecision` model coalition-aware access decisions.
-- `OntologyEnvelope` and `SignalObserved` preserve confidence, lineage, temporal state, mission scope, and security metadata.
+- `OntologyEnvelope` and `SignalObserved` preserve confidence, lineage, temporal state, mission scope, and security metadata; signal creation rejects missing mission/source scope and non-finite or out-of-range confidence.
+- `hash_payload()` uses deterministic canonical JSON and rejects non-finite numbers so replay and provenance hashes remain stable across mapping insertion order.
 - `transition()` enforces deterministic workflow movement before any agent can advance a mission package.
 - `passes_eval_gates()` and `submit_upgrade_proposal()` prevent self-upgrades unless metrics pass and a human reviewer approves Apollo canary eligibility.
 

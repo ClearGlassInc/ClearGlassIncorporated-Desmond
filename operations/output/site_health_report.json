@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-07-18T08:47:17.657777+00:00",
+  "run_utc": "2026-07-28T09:35:39.253411+00:00",
   "site_url": "https://www.clearglassinc.com",
   "overall_healthy": true,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://www.clearglassinc.com/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 140,
+      "response_ms": 251,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://www.clearglassinc.com/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 64,
+      "response_ms": 136,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://www.clearglassinc.com/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 87,
+      "response_ms": 127,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://www.clearglassinc.com/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 73,
+      "response_ms": 131,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://www.clearglassinc.com/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 247,
+      "response_ms": 137,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,12 +61,15 @@
       "url": "https://www.clearglassinc.com/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 60,
+      "response_ms": 130,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
   "local_issues": [],
-  "local_warnings": []
+  "local_warnings": [
+    "HTML page not referenced in sitemap.xml: automap.html",
+    "HTML page not referenced in sitemap.xml: header-mockup-2040.html"
+  ]
 }

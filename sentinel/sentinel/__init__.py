@@ -11,4 +11,7 @@ __all__ = [
     "redteam",
     "audit",
     "models",
+    "phoenix",
+    "selfheal",
+    "artemis_fawl",
 ]

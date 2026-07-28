@@ -150,7 +150,10 @@ class ApprovalOut(BaseModel):
 
 
 class DecisionRequest(BaseModel):
-    decided_by: str = "human"
+    # Optional human-readable label only. The decider recorded on the approval and in the
+    # audit ledger is the authenticated admin credential, not this field — see
+    # routers/approvals.py::_resolve_decider. Kept for forensic annotation.
+    decided_by: str = Field(default="human", description="Optional display label; not the trusted identity")
     note: str = ""
 
 

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClearGlass Burlington Growth Command Centre</title>
+<meta name="description" content="Governed ClearGlass Burlington cybersecurity campaign command centre for approved growth operations.">
+<style>
+:root{--bg:#05070d;--panel:rgba(16,24,39,.76);--line:rgba(148,163,184,.22);--text:#e5eefc;--muted:#9fb0cc;--cyan:#22d3ee;--green:#34d399;--amber:#fbbf24;--red:#fb7185;--radius:18px;font-family:Inter,system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0,rgba(34,211,238,.18),transparent 34%),linear-gradient(135deg,#020617,#0f172a);color:var(--text)}main{width:min(1180px,94vw);margin:auto;padding:32px 0}.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:18px;align-items:stretch}.card{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(18px);border-radius:var(--radius);padding:22px;box-shadow:0 24px 80px rgba(0,0,0,.28)}h1{font-size:clamp(34px,6vw,68px);line-height:.95;margin:0 0 14px;letter-spacing:-.06em}.eyebrow{color:var(--cyan);text-transform:uppercase;letter-spacing:.18em;font-weight:800;font-size:12px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}.kpi strong{display:block;font-size:32px}.kpi span{color:var(--muted);font-size:13px}.section{margin-top:18px}.campaign{display:grid;grid-template-columns:1fr auto;gap:12px;border-top:1px solid var(--line);padding:14px 0}.badge{border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:var(--amber);font-size:12px;white-space:nowrap}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.flow{display:flex;gap:8px;flex-wrap:wrap}.flow span{border:1px solid var(--line);border-radius:12px;padding:9px 11px;background:rgba(255,255,255,.04);font-size:12px}.warn{color:var(--amber)}.ok{color:var(--green)}.danger{color:var(--red)}@media(max-width:900px){.hero,.two,.grid{grid-template-columns:1fr}main{padding:18px 0}}</style>
+</head>
+<body>
+<main>
+<section class="hero">
+<div class="card"><div class="eyebrow">ClearGlass Inc. · Burlington Cyber Market</div><h1>Growth command centre, not a decorative dashboard.</h1><p class="muted">Draft campaigns, lead scoring, approvals, compliance warnings, agent activity, and revenue operations for evidence-first cybersecurity and AI-risk growth. External actions are disabled until exact human approval exists.</p><div class="flow" aria-label="campaign workflow"><span>Market signal</span><span>Qualification</span><span>Campaign draft</span><span>Claim verification</span><span>Compliance review</span><span>Human approval</span><span>Export</span><span>Attribution</span></div></div>
+<aside class="card"><div class="eyebrow">Safeguards</div><p class="warn">Dry-run mode active</p><p class="muted">No ads, emails, LinkedIn messages, content publication, budget changes, third-party connections, or personal-data collection may run from this interface without approval and audit logging.</p></aside>
+</section>
+<section class="grid" aria-label="operating metrics">
+<div class="card kpi"><strong>5</strong><span>Draft campaigns</span></div><div class="card kpi"><strong>$0</strong><span>Approved spend</span></div><div class="card kpi"><strong>0</strong><span>Live outreach sends</span></div><div class="card kpi"><strong>12</strong><span>Agent control surfaces</span></div>
+</section>
+<section class="two section">
+<div class="card"><div class="eyebrow">Initial campaigns</div><div id="campaigns"></div></div>
+<div class="card"><div class="eyebrow">Next recommended actions</div><ol class="muted"><li>Refresh Burlington/Halton evidence sources.</li><li>Review claims and legal/compliance notes.</li><li>Approve one low-budget pilot campaign package.</li><li>Export approved assets to CRM/ad platforms with UTM tracking.</li><li>Review qualified leads and booked consultations weekly.</li></ol><p class="danger">Failed workflows: none committed; runtime integrations not connected.</p><p class="ok">Audit chain: enabled in deterministic Python guardrail module.</p></div>
+</section>
+</main>
+<script>
+const campaigns=["Burlington Cyber Risk Checkup","Microsoft 365 Account Protection","Ransomware Readiness for Burlington SMEs","Nonprofit Cyber Resilience","AI Governance for Ontario Businesses"];
+document.getElementById('campaigns').innerHTML=campaigns.map((c,i)=>`<div class="campaign"><div><strong>${c}</strong><div class="muted">Draft package ${i+1}; requires claim, compliance, budget, and publication approval.</div></div><span class="badge">approval required</span></div>`).join('');
+</script>
+  <script defer src="/logo-badge.js"></script>
+</body></html>

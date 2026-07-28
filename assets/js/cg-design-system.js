@@ -126,27 +126,51 @@
      left side with data-cg-topbar-title / data-cg-topbar-sub on <body>. ── */
   function mountTopbar() {
     if (document.querySelector('.cg-topbar')) return;
+    // nav.js supplies the single global top bar site-wide. When a page also
+    // loads nav.js, defer to it so only one navigation bar renders instead of
+    // two stacked bars. Checked via the script tag (present in the DOM
+    // regardless of execution order) so this is order- and timing-independent.
+    if (Array.prototype.some.call(document.scripts, function (s) {
+        return /(^|\/)nav\.js(\?|$)/.test(s.src);
+    })) return;
     if (document.documentElement.hasAttribute('data-cg-no-topbar') ||
         (document.body && document.body.hasAttribute('data-cg-no-topbar'))) return;
     var pagePath = location.pathname.replace(/\/+$/, '').toLowerCase();
     if (pagePath === '' || pagePath === '/index.html') return;
 
     var PRODUCTS = [
-      ['Guardian', '/guardian.html', '🌐', 'ClearGlassInc. Intelligence'],
+      ['Artemis IV Core', '/artemis-iv.html', '◎', 'Tactical Intelligence'],
+      ['Artemis OS', '/artemis-os.html', '◈', 'Governed Agent OS'],
+      ['Artemis Self-Evolving Platform', '/artemis-self-evolving-platform.html', '✦', 'AI Improvement Loop'],
+      ['Artemis AI Cyber Intelligence', '/artemis-ai-cyber-intelligence-platform.html', '⚡', 'Cyber Intelligence'],
+      ['Guardian', '/guardian.html', '🌐', 'Financial Intelligence'],
       ['BLUEDESK', '/bluedesk.html', '🛡️', 'CISO Risk & Blue Team'],
-      ['Government Solutions', '/government.html', '🏛️', 'Federal & Defence'],
-      ['Web Design & Dev', '/web-design.html', '💻', 'Design & Development'],
-      ['SMB Cyber Trust Kit', '/smb-cyber-trust-kit.html', '🔐', 'Small Business Security'],
-      ['Side Store', '/side-store.html', '🔌', 'Cheap Wires & Electronics'],
-      null,
-      ['Insights', '/blog/', '📡', 'Blog & Field Notes']
+      ['ClearGlass NEXUS v12', '/clearglass-nexus.html', '◇', 'Command Platform'],
+      ['ClearPulse', '/clearpulse.html', '📡', 'Signal Intelligence'],
+      ['Flowsint', '/flowsint.html', '🕸️', 'OSINT Investigation Graph'],
+      ['Command Center', '/command-center.html', '⌁', 'Live Operations Console'],
+      ['Conduit', '/conduit.html', '⟿', 'Workflow Automation'],
+      ['Air Systems Control', '/air-systems-control.html', '◌', 'Glass Control Surface'],
+      ['SATS Digital Twin', '/sats-digital-twin.html', '◍', 'Storm-Adaptive Simulation'],
+      ['Counter-UAS OS', '/counter-uas-commercialization-os.html', '⦿', 'Commercialization System'],
+      ['Procurement Legal Tech', '/procurement-legal-tech.html', '§', 'Public-Sector Legal Ops'],
+      ['Traffic Enforcement', '/traffic-enforcement.html', '◆', 'Safety Intelligence'],
+      ['SMB Suite', '/smb.html', '▣', 'Small Business Systems'],
+      ['SMB Cyber Trust Kit', '/smb-cyber-trust-kit.html', '🔐', 'Plain-Language Security'],
+      ['Web Design & Dev', '/web-design.html', '💻', 'Growth Infrastructure'],
+      ['Side Store', '/side-store.html', '🔌', 'Electronics Catalog'],
+      ['Revenue Engine', '/revenue-engine.html', '$', 'Commercial Automation'],
+      ['StegoForge', '/stegoforge.html', '▧', 'Media Assurance'],
+      ['PERCIVAL OS', '/percival-os.html', '♜', 'Mission-Ready Agent Governance'],
+      ['SENTINEL', '/sentinel.html', '◬', 'Geospatial Intelligence']
     ];
     var LINKS = [
       ['Vision', '/index.html#vision'],
-      ['Technology', '/index.html#technology'],
+      ['Services', '/index.html#services'],
       ['PRODUCTS'],
-      ['Services', '/offers/index.html'],
-      ['Founder', '/index.html#founder']
+      ['Government', '/government.html'],
+      ['Insights', '/blog/'],
+      ['Contact', '/index.html#contact']
     ];
 
     var path = location.pathname.toLowerCase();
@@ -181,23 +205,24 @@
     LINKS.forEach(function (l) {
       if (l[0] === 'PRODUCTS') {
         linksHtml += '<div class="cg-tb-dropwrap">' +
-          '<button type="button" class="cg-tb-dropbtn' + (productActive ? ' is-active' : '') + '" aria-haspopup="true" aria-expanded="false">Products' + chev + '</button>' +
+          '<button type="button" class="cg-tb-dropbtn' + (productActive ? ' is-active' : '') + '" aria-haspopup="true" aria-expanded="false">Products⌄' + chev + '</button>' +
           '<div class="cg-tb-dropdown" role="menu">' + ddHtml + '</div></div>';
       } else {
         linksHtml += '<a href="' + l[1] + '"' + (isHere(l[1]) ? ' class="is-active" aria-current="page"' : '') + '>' + l[0] + '</a>';
       }
     });
 
-    var mobHtml = '<a href="/index.html#vision">Vision</a><a href="/index.html#technology">Technology</a>' +
+    var mobHtml = '<a href="/index.html#vision">Vision</a><a href="/index.html#services">Services</a>' +
       '<div class="cg-tb-mob-sep"></div><div class="cg-tb-mob-label">Products</div>';
     PRODUCTS.forEach(function (p) {
       if (!p) return;
       mobHtml += '<a href="' + p[1] + '">' + esc(p[0]) + ' <span class="arr">→</span></a>';
     });
     mobHtml += '<div class="cg-tb-mob-sep"></div>' +
-      '<a href="/offers/index.html">Services <span class="arr">→</span></a>' +
-      '<a href="/index.html#founder">Founder</a>' +
-      '<a class="cg-tb-mob-cta" href="/index.html#contact">Contact →</a>';
+      '<a href="/government.html">Government <span class="arr">→</span></a>' +
+      '<a href="/blog/">Insights</a>' +
+      '<a href="/index.html#contact">Contact</a>' +
+      '<a class="cg-tb-mob-cta" href="/store.html">Book a Security Engagement →</a>';
 
     var bar = document.createElement('div');
     bar.className = 'cg-topbar';
@@ -210,8 +235,7 @@
         '</a>' +
         '<nav class="cg-tb-links" aria-label="Primary navigation">' + linksHtml + '</nav>' +
         '<div class="cg-tb-actions">' +
-          '<span class="cg-tb-status"><i class="cg-pulse ok"></i>SYS · LIVE</span>' +
-          '<a class="cg-tb-cta" href="/index.html#contact">Contact →</a>' +
+          '<a class="cg-tb-cta" href="/store.html"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5l10 3.8v7.2c0 6.2-4 11.6-10 14-6-2.4-10-7.8-10-14V7.3l10-3.8z"/><path d="M12.2 15.7l2.5 2.5 5.5-6"/></svg>Book a Security Engagement</a>' +
           '<button type="button" class="cg-tb-toggle" aria-label="Open menu" aria-expanded="false">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M4 6h16M4 18h16"/></svg>' +
           '</button>' +

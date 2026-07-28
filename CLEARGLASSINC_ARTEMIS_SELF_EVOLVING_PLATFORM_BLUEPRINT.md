@@ -3,6 +3,8 @@
 ## Executive Intent
 ClearGlassInc Artemis is a secure, coalition-aware, latency-sensitive intelligence platform built on **Palantir Gotham**, **Foundry**, **AIP**, and **Apollo**. The platform fuses live and historical data, reasons over a governed ontology, coordinates agentic workflows, and proposes evidence-backed improvements to prompts, workflows, heuristics, and model routing under explicit human-approved guardrails.
 
+> **Target-state specification:** this document describes the intended production architecture and acceptance gates. It is not evidence that Palantir environments, integrations, security accreditations, data agreements, or operational capabilities have been provisioned. Every integration named below must be confirmed against the licensed platform version and the owning environment before implementation.
+
 Palantir terms used precisely:
 - **Gotham**: operational intelligence, investigations, entity tracking, link analysis, mission casework, and investigative timelines.
 - **Foundry**: data integration, transformation pipelines, operational applications, Ontology, lineage, and governed data products.
@@ -805,6 +807,53 @@ async def run_eval_suite(candidate: CandidateWorkflow, examples: list[EvalExampl
 }
 ```
 
+### Delivery Plan and Operational Readiness
+
+The safest implementation sequence establishes deterministic controls before enabling model-driven automation. Each milestone is independently deployable and reversible.
+
+| Milestone | Deliverable | Exit gate | Accountable owner |
+| --- | --- | --- | --- |
+| M0 — authority and threat model | mission boundary, data classification, abuse cases, RACI, SLO/RTO/RPO, accreditation plan | security, privacy, legal, coalition, and operational owners approve the boundary | program executive |
+| M1 — governed data plane | signed ingestion, quarantine, bronze/silver/gold datasets, lineage, initial Ontology | contract tests pass; replay is deterministic; unauthorized reads and cross-coalition joins fail | data platform owner |
+| M2 — read-only operations | Gotham investigation views, workbench search, graph/timeline, evidence provenance | analyst acceptance tests; p95 objectives met; recovery exercise passes | mission application owner |
+| M3 — advisory AI | AIP copilot, read-only typed tools, retrieval controls, eval harness, abstention | golden/adversarial eval gates pass; no consequential side effects exist | AI assurance owner |
+| M4 — governed workflows | draft recommendations, approval service, action packages, append-only audit | forbidden-transition, replay, idempotency, and dual-control tests pass | operations owner |
+| M5 — bounded improvement | feedback compiler, proposal registry, shadow and canary evaluation, Apollo rollback | signed human approval and tested rollback required for every promotion | change authority |
+| M6 — production hardening | load/fault tests, backup restore, key rotation, incident drills, runbooks | operational review gates complete and observation window accepted | service owner |
+
+Initial objectives must be baselined from representative workloads rather than treated as measured facts:
+
+```yaml
+service_objectives:
+  alert_ingest:
+    availability: "99.95% per mission month"
+    p95_end_to_end_latency_ms: 1500
+    maximum_event_loss: 0
+  approval_plane:
+    availability: "99.99% per mission month"
+    rto_minutes: 15
+    rpo: "zero committed approvals"
+  analytical_plane:
+    rto_minutes: 60
+    rpo_minutes: 5
+  audit_plane:
+    maximum_event_loss: 0
+    integrity_check: "continuous hash-chain verification plus independent WORM export"
+```
+
+Production admission requires a named service owner, change authority, incident commander rotation, data steward, security approver, and coalition release authority. Missing ownership is a release blocker, not an item that an agent may infer or self-assign.
+
+### Deployment, Recovery, and Rollback Contract
+
+1. Build immutable, signed application, prompt, workflow, model-route, and policy artifacts; record source commit, builder identity, SBOM, and eval evidence.
+2. Deploy through Apollo rings: development → isolated integration → shadow → mission canary → production. No ring may inherit broader data or action permissions implicitly.
+3. Keep database changes expand/contract compatible across the active and rollback versions. Destructive schema cleanup is a later, separately approved release.
+4. Automatically halt or recall a canary on any policy violation, unauthorized disclosure, audit gap, approval bypass, statistically significant quality regression, or exhausted latency/error budget.
+5. Restore the last known-good artifact bundle by content digest, disable affected tools with a server-side kill switch, replay idempotent events from the durable log, and reconcile side effects against the audit plane.
+6. Validate recovery with synthetic mission data, permission-negative probes, audit-chain verification, queue-lag convergence, and operator sign-off before reopening consequential actions.
+
+Rollback does not erase decisions or feedback. Audit records remain append-only; a compensating event records the rollback, its authority, reason, affected artifact digests, and reconciliation status.
+
 ---
 
 ## Security and Governance
@@ -1230,6 +1279,19 @@ The Governance Console shows a diff, eval metrics, sample failures, risk assessm
 
 ### 9. Promote or Rollback
 If canary precision, latency, operator trust, and policy metrics meet thresholds, Apollo promotes the update to production. If rejection rate spikes or policy tests fail, Apollo rolls back to the prior prompt/workflow/router bundle in under 60 seconds. The audit log records every artifact version, approval, deployment event, and rollback decision.
+
+---
+
+## Executable Verification Harness
+
+The blueprint is paired with Python regression tests for the precision-critical control points in the reference implementation:
+
+- **Self-improvement eval gates** must block candidate prompt/workflow/router versions when human approval is missing or quality thresholds regress.
+- **Apollo canary promotion review** must deny unsafe rollback manifests and append a tamper-evident audit decision.
+- **Human approval gates** must still enforce deterministic policy constraints; an analyst approval request cannot authorize a high-risk action that requires commander authority.
+- **Feedback-to-eval compilation** must preserve stable artifact IDs, workflow versions, and operator correction labels without embedding unnecessary source payloads.
+
+These tests keep the architecture honest: Artemis can propose better prompts, workflows, heuristics, and routing decisions, but promotion remains gated by eval evidence, policy, rollback safety, and explicit human approval.
 
 ---
 

@@ -2,8 +2,11 @@ import type { ReactNode } from "react";
 import { StoreShell } from "@/lib/StoreShell";
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://clearglassinc.github.io"),
   title: "ClearGlass Store",
   description: "A governed, autonomous e-commerce storefront.",
+  alternates: { canonical: "/" },
+  other: { copyright: "© ClearGlass Inc. All rights reserved." },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

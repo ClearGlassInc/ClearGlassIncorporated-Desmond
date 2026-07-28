@@ -133,7 +133,15 @@ def score_action(
 
     tier = _tier_for_score(score)
 
-    requires_approval = tier in (RiskTier.HIGH, RiskTier.CRITICAL) or action in ALWAYS_ESCALATE
+    # Operating rule 8: stop and escalate when data is missing or confidence is
+    # low. A low-confidence signal must hard-gate on its own — a score bump alone
+    # can leave a low/medium-base action below the HIGH threshold and let it
+    # auto-execute, which would contradict the escalation the reason claims.
+    requires_approval = (
+        tier in (RiskTier.HIGH, RiskTier.CRITICAL)
+        or action in ALWAYS_ESCALATE
+        or low_confidence
+    )
     if action in ALWAYS_ESCALATE:
         reasons.append("action is in the always-escalate set (financial / fulfillment / outbound)")
     if requires_approval and require_approval_for_high_risk:

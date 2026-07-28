@@ -42,6 +42,24 @@ class AgentArmyTests(unittest.TestCase):
             }.issubset(selected)
         )
 
+    def test_legacy_marketing_bot_army_routes_specialists(self) -> None:
+        selected = set(
+            self.army.select_roles(
+                "Add a bot army for a marketing compaign while preserving the legacy system."
+            )
+        )
+        self.assertTrue(
+            {
+                "chief_of_staff",
+                "legacy_modernization",
+                "market_intelligence",
+                "content_strategist",
+                "campaign_bot_commander",
+                "distribution_planner",
+                "analytics_controller",
+            }.issubset(selected)
+        )
+
     def test_external_side_effects_create_approval_gates(self) -> None:
         approvals = set(
             self.army.required_approvals(

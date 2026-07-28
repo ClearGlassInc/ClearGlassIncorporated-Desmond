@@ -55,6 +55,7 @@ SITEMAP_EXEMPT = {
     "cg-loader.html",             # session preloader fragment, not a landing page
     "loader.html",                # noindex initializer, not a landing page
     "offline.html",               # service-worker offline shell (noindex)
+    "platform-command-center.html",  # internal platform HUD dashboard (noindex, not a landing page)
     "ClearGlass-NEXUS-v12-FINAL.html",  # build artifact of clearglass-nexus.html
     # Google Search Console verification token — must NOT be in the sitemap
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",

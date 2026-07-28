@@ -10,6 +10,8 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from enum import StrEnum
 from hashlib import sha256
+import json
+import math
 from statistics import fmean
 from typing import Any, Callable, Iterable, Mapping
 from uuid import uuid4
@@ -147,7 +149,13 @@ ALLOWED_TRANSITIONS: Mapping[WorkflowStage, frozenset[WorkflowStage]] = {
 
 
 def hash_payload(payload: Mapping[str, Any]) -> str:
-    canonical = repr(sorted(payload.items())).encode("utf-8")
+    canonical = json.dumps(
+        payload,
+        allow_nan=False,
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
+    ).encode("utf-8")
     return sha256(canonical).hexdigest()
 
 
@@ -181,9 +189,18 @@ def transition(current: WorkflowStage, target: WorkflowStage) -> WorkflowStage:
 
 
 def make_signal(payload: Mapping[str, Any], mission_id: str, source_system: str) -> SignalObserved:
+    if not mission_id.strip():
+        raise ValueError("mission_id must not be empty")
+    if not source_system.strip():
+        raise ValueError("source_system must not be empty")
+
+    confidence = float(payload.get("confidence", 0.5))
+    if not math.isfinite(confidence) or not 0.0 <= confidence <= 1.0:
+        raise ValueError("confidence must be a finite value between 0.0 and 1.0")
+
     now = datetime.now(UTC)
     envelope = OntologyEnvelope(
-        confidence=float(payload.get("confidence", 0.5)),
+        confidence=confidence,
         source_system=source_system,
         pipeline_version="foundry-silver-v1",
         prompt_version=None,

@@ -15,6 +15,7 @@ is the *contract*; this package is the *executable governance runtime* behind it
 | `intelligence.py` | Multi-source cross-reference; single-source cap, contradiction detection, min-confidence aggregation. |
 | `memory.py` | Ranked persistent recall (`accuracy × recency × authority`); missing memory reported as missing. |
 | `recovery.py` | Root-cause classification + bounded exponential-backoff retry + escalation. |
+| `state_machine.py` | ARTEMIS // FAWL incident lifecycle transitions with attribution, evidence, policy decisions, correlation IDs, and tamper-evident audit entries. |
 | `learning.py` | Outcome capture, deterministic metrics, lessons, optimization opportunities. |
 | `audit.py` | Append-only, tamper-evident SHA-256 hash-chain ledger with `verify()`. |
 | `orchestrator.py` | The executive loop. Composes the above into the mandated 13-field `MissionReport`. No side effects. |
@@ -27,7 +28,7 @@ is the *contract*; this package is the *executable governance runtime* behind it
 python -m agent_os                     # end-to-end governed demo mission
 python -m agent_os.self_check          # human-readable self-check + report
 python -m agent_os.self_check --json   # machine-readable
-pytest tests/test_agent_os.py tests/test_agent_os_advanced.py -q
+pytest tests/test_agent_os.py tests/test_agent_os_advanced.py tests/test_agent_os_state_machine.py -q
 ```
 
 ## Safety invariant (enforced in code)
@@ -38,7 +39,11 @@ The self-check **fails the build** if any of these can auto-execute: an
 always-escalate action (money, production deploy, access-control change, data
 deletion, secret rotation, mass outbound); an unknown action; an action whose
 confidence is unavailable; a conclusion with no supporting evidence. It also
-fails if the audit chain does not detect tampering.
+fails if the audit chain does not detect tampering. Incident recovery workflows
+are constrained by `state_machine.py`: an action cannot jump from detection to
+execution, terminal states cannot be reopened by automation, and every accepted
+transition requires actor, evidence, policy decision, correlation ID, timestamp,
+and reason before being appended to the audit hash chain.
 
 Mission confidence is reported as the **minimum** observed signal — the OS never
 inflates certainty. The orchestrator performs no external side effects; it

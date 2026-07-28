@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
 <!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
-<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon-32.png">
+<link rel="alternate icon" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#07111f">
 <meta name="msapplication-TileColor" content="#07111f">
-<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
+<meta name="msapplication-TileImage" content="/icon-192.png">
 <meta name="msapplication-config" content="/browserconfig.xml">
 
 <meta charset="UTF-8"/>
@@ -178,6 +179,13 @@ section{max-width:1280px;margin:0 auto;padding:46px 22px}
 .deploy li b{color:var(--txt);font-weight:600}
 .deploy li .ck{color:var(--ok);flex:0 0 auto;margin-top:2px}
 
+
+/* authority lattice */
+.authority-lattice{position:relative;overflow:hidden;border:1px solid rgba(96,165,250,.34);border-radius:22px;background:linear-gradient(160deg,rgba(10,15,35,.88),rgba(5,8,20,.74));padding:28px;box-shadow:0 28px 90px -54px rgba(54,182,255,.78)}
+.authority-lattice::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0 9%,rgba(96,165,250,.12) 10%,transparent 11% 49%,rgba(52,211,153,.11) 50%,transparent 51% 89%,rgba(167,139,250,.12) 90%,transparent 91%),linear-gradient(0deg,transparent 0 18%,rgba(96,165,250,.08) 19%,transparent 20% 68%,rgba(244,114,182,.08) 69%,transparent 70%);opacity:.75;mask-image:radial-gradient(circle at 50% 18%,#000,transparent 82%);pointer-events:none}
+.authority-lattice>*{position:relative;z-index:1}.lattice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:20px}.lattice-card{border:1px solid rgba(96,165,250,.24);border-radius:15px;background:rgba(96,165,250,.045);padding:16px}.lattice-card h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9fc4ff;margin-bottom:9px}.lattice-card p,.lattice-card li{color:var(--dim);font-size:13px;line-height:1.58}.lattice-card ul{margin:0;padding-left:17px;display:grid;gap:6px}.signal-link{color:#bfdbfe;text-decoration:none;border-bottom:1px solid rgba(96,165,250,.45);box-shadow:0 1px 0 rgba(96,165,250,.08)}.signal-link:hover{color:#fff;border-bottom-color:#34d399;text-shadow:0 0 12px rgba(96,165,250,.65)}
+.matrix{width:100%;border-collapse:collapse;margin-top:18px;font-size:12.5px;color:var(--dim);overflow:hidden;border-radius:14px}.matrix th,.matrix td{border:1px solid rgba(96,165,250,.18);padding:10px;vertical-align:top}.matrix th{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#dbeafe;background:rgba(96,165,250,.1);text-align:left}.matrix td a{display:inline-block;margin:2px 4px 2px 0}.priority-rail{counter-reset:step;display:grid;gap:9px;margin-top:16px}.priority-rail li{list-style:none;counter-increment:step;border:1px solid rgba(124,150,255,.2);background:rgba(124,150,255,.045);border-radius:12px;padding:11px 13px;color:var(--dim);font-size:13px;line-height:1.5}.priority-rail li::before{content:counter(step,decimal-leading-zero);font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:#34d399;margin-right:9px}
+
 /* final cta */
 .final{text-align:center;background:linear-gradient(180deg,rgba(124,150,255,.08),rgba(124,150,255,.02));border:1px solid var(--line);border-radius:20px;padding:46px 24px;margin:10px auto 0;max-width:900px}
 .final h2{font-family:var(--display);font-weight:900;font-size:clamp(24px,4vw,38px)}
@@ -230,6 +238,11 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
 .fcard,.why-card,.arch-card,.gov-card,.deploy-card,.ptier,.stat,.ops-pill{position:relative;overflow:hidden}.fcard::before,.why-card::before,.arch-card::before,.gov-card::before,.deploy-card::before,.ptier::before,.stat::before,.ops-pill::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(96,165,250,.22),transparent 34%,rgba(52,211,153,.1));opacity:0;transition:opacity .25s;pointer-events:none}.fcard:hover::before,.why-card:hover::before,.arch-card:hover::before,.gov-card:hover::before,.deploy-card:hover::before,.ptier:hover::before,.stat:hover::before,.ops-pill:hover::before{opacity:1}
 .motion-brief{border:1px solid var(--line);border-radius:22px;padding:26px;background:linear-gradient(180deg,rgba(12,16,38,.76),rgba(6,8,15,.68));box-shadow:0 30px 90px -55px rgba(54,182,255,.65)}
 .motion-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:18px}.motion-cell{border:1px solid rgba(96,165,250,.18);background:rgba(96,165,250,.045);border-radius:14px;padding:15px}.motion-cell b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#9fc4ff;margin-bottom:7px}.motion-cell p{color:var(--dim);font-size:13px;line-height:1.55}
+
+.flow-steps,.usecase-grid,.dev-grid,.reliability-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:22px}
+.flow-step,.usecase-card,.dev-card,.reliability-card{background:linear-gradient(180deg,rgba(12,16,38,.74),rgba(8,11,28,.56));border:1px solid var(--line);border-radius:16px;padding:19px;position:relative;overflow:hidden}
+.flow-step .num{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#34d399;margin-bottom:10px}.flow-step h4,.usecase-card h4,.dev-card h4,.reliability-card h4{font-size:15px;margin-bottom:8px;color:#eef2ff}.flow-step p,.usecase-card p,.dev-card p,.reliability-card p{color:var(--dim);font-size:13px;line-height:1.58}.architecture-overview{border:1px solid rgba(52,211,153,.24);border-radius:18px;background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(96,165,250,.05));padding:22px;margin-top:22px}.architecture-overview h3{font-size:18px;margin-bottom:10px}.architecture-overview p{color:var(--dim);font-size:14px;line-height:1.65}.comparison-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:12.5px;color:var(--dim);border-radius:15px;overflow:hidden}.comparison-table th,.comparison-table td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}.comparison-table th{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#dbeafe;background:rgba(96,165,250,.1)}.comparison-table td:nth-child(2){color:#cfe9ff}.mission-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:16px}.mission-strip span{border:1px solid rgba(167,139,250,.24);background:rgba(167,139,250,.055);border-radius:999px;padding:10px 12px;text-align:center;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#d9d2ff}
+
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}.hero h1 .word>span,[data-motion]{opacity:1!important;transform:none!important;filter:none!important}body::before,body::after{display:none!important}}
 
 </style>
@@ -244,6 +257,7 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
 <link rel="stylesheet" href="/assets/css/cg-design-system.css">
 <script defer src="/assets/js/cg-design-system.js"></script>
   <script defer src="/asset-protection.js"></script>
+  <link rel="stylesheet" href="brand-system.css">
 </head>
 <body>
 
@@ -369,6 +383,33 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
   </div>
 </section>
 
+
+<!-- PLATFORM MODULES -->
+<section id="platform-modules">
+  <div class="sec-head"><div class="sec-kicker">Feature architecture</div><h2 class="sec-title">Core modules for mission-grade automation</h2><p class="sec-sub">CONDUIT expands from a visual builder into an automation command center: triggers, queues, approvals, agents, connectors, logs, and deployment controls operate as one self-hosted system.</p></div>
+  <div class="arch-grid">
+    <div class="arch-card"><h4>Event intake layer</h4><p>API calls, webhooks, schedules, inbox events, forms, repository changes, and file drops enter through normalized trigger contracts with explicit payload shape and source metadata.</p></div>
+    <div class="arch-card"><h4>Workflow definition layer</h4><p>Version-controlled node graphs define branching logic, retry policy, secrets scope, approval checkpoints, AI model routes, and terminal states before execution begins.</p></div>
+    <div class="arch-card"><h4>Queue and worker layer</h4><p>Jobs move through queue-backed workers that support concurrency limits, delayed retries, resumable steps, dead-letter handling, and clean isolation between long-running automations.</p></div>
+    <div class="arch-card"><h4>Governance layer</h4><p>Human approval gates, role permissions, policy-aware nodes, prompt governance, and audit events keep automation accountable even when agentic steps are embedded inside flows.</p></div>
+    <div class="arch-card"><h4>Connector layer</h4><p>Modular integrations standardize SaaS APIs, databases, AI services, internal tools, and generic HTTP calls so teams can extend workflows without rebuilding orchestration primitives.</p></div>
+    <div class="arch-card"><h4>Observability layer</h4><p>Execution history, node timings, payload lineage, error traces, queue depth, retry outcomes, and exported logs give operators a reliable view of what happened and why.</p></div>
+  </div>
+</section>
+
+<!-- EXECUTION FLOW -->
+<section id="execution-flow">
+  <div class="sec-head"><div class="sec-kicker">How it works</div><h2 class="sec-title">From signal to governed action</h2><p class="sec-sub">Every run follows an inspectable path: receive the event, evaluate context, execute deterministic steps, request approval when needed, and preserve the record.</p></div>
+  <div class="system-rail">
+    <div class="rail-row"><div class="rail-k">01 · Trigger</div><div class="rail-v">A webhook, API call, cron schedule, email, file event, form submission, or manual launch creates a typed workflow run with source, actor, and correlation metadata.</div></div>
+    <div class="rail-row"><div class="rail-k">02 · Validate</div><div class="rail-v">Schema checks, authorization rules, deduplication, confidence thresholds, and required fields determine whether the run can proceed safely.</div></div>
+    <div class="rail-row"><div class="rail-k">03 · Orchestrate</div><div class="rail-v">Nodes execute through conditional branches, transformations, connector calls, AI-assisted steps, and retry policies while the system persists intermediate state.</div></div>
+    <div class="rail-row"><div class="rail-k">04 · Approve</div><div class="rail-v">Material changes can pause for one or multiple approvers, preserving the proposed action, evidence, operator decision, comments, and final disposition.</div></div>
+    <div class="rail-row"><div class="rail-k">05 · Recover</div><div class="rail-v">Failures route to retries, dead-letter queues, compensating workflows, alerts, or manual intervention without hiding partial outcomes.</div></div>
+    <div class="rail-row"><div class="rail-k">06 · Audit</div><div class="rail-v">The final run record links trigger, workflow version, credentials used, model route, outputs, approvals, errors, and exportable execution history.</div></div>
+  </div>
+</section>
+
 <!-- GOVERNANCE -->
 <section id="governance">
   <div class="sec-head"><div class="sec-kicker">Security and governance</div><h2 class="sec-title">Private automation for high-trust environments</h2><p class="sec-sub">CONDUIT keeps sensitive automation close to the systems it serves, with controls that support auditability, separation of duties, and disciplined AI use.</p></div>
@@ -384,6 +425,69 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
     <li>Support air-gapped or private-network deployment patterns where external AI calls are not permitted.</li>
     <li>Export logs and workflow definitions for compliance review, disaster recovery, and vendor independence.</li>
   </ul>
+</section>
+
+<!-- EXECUTION FLOW -->
+<section id="execution-flow">
+  <div class="sec-head"><div class="sec-kicker">Execution flow</div><h2 class="sec-title">From event to governed outcome</h2><p class="sec-sub">CONDUIT treats every automation as a traceable run: triggered by a real event, resolved through explicit logic, and completed with evidence attached.</p></div>
+  <div class="flow-steps">
+    <div class="flow-step"><div class="num">01 · Trigger</div><h4>API, webhook, cron, file, email, or app event</h4><p>Incoming events are normalized into structured payloads with actor context, source metadata, timestamps, and correlation identifiers.</p></div>
+    <div class="flow-step"><div class="num">02 · Decide</div><h4>Branch, enrich, retrieve, and validate</h4><p>Conditional logic, connectors, databases, AI-assisted steps, and confidence thresholds transform raw signals into operational decisions.</p></div>
+    <div class="flow-step"><div class="num">03 · Govern</div><h4>Approval gates before material action</h4><p>Human-in-the-loop checkpoints can require one or many approvers before customer, finance, security, or infrastructure changes proceed.</p></div>
+    <div class="flow-step"><div class="num">04 · Execute</div><h4>Queue-backed workers with bounded retries</h4><p>Jobs run through isolated workers, idempotency keys, retry policies, timeout controls, and terminal success or failure states.</p></div>
+    <div class="flow-step"><div class="num">05 · Observe</div><h4>Logs, traces, exports, and recovery context</h4><p>Every node emits run evidence so teams can replay decisions, export history, diagnose failures, and improve future workflows.</p></div>
+  </div>
+</section>
+
+<!-- RELIABILITY -->
+<section id="reliability">
+  <div class="sec-head"><div class="sec-kicker">Reliability and recovery</div><h2 class="sec-title">Automation that fails visibly and recovers cleanly</h2><p class="sec-sub">Production workflows need more than happy-path execution. CONDUIT is positioned around durable state, explicit failure handling, and operational recovery.</p></div>
+  <div class="reliability-grid">
+    <div class="reliability-card"><h4>Durable run state</h4><p>Persist node inputs, outputs, status transitions, and terminal results so interrupted workflows can be inspected, resumed, or replayed.</p></div>
+    <div class="reliability-card"><h4>Retry discipline</h4><p>Apply bounded retries, backoff, timeout limits, and dead-letter handling instead of infinite loops or silent background failure.</p></div>
+    <div class="reliability-card"><h4>Queue visibility</h4><p>Track queue depth, worker health, execution latency, stuck jobs, and connector error rates before backlog becomes business risk.</p></div>
+    <div class="reliability-card"><h4>Recoverable changes</h4><p>Version workflow definitions, credentials, prompts, and approval policies so teams can roll back known-bad automation quickly.</p></div>
+    <div class="reliability-card"><h4>Exportable evidence</h4><p>Move execution history into analytics, SIEM, data warehouses, or compliance archives without relying on a vendor-controlled console.</p></div>
+  </div>
+</section>
+
+<!-- DEVELOPER EXTENSIBILITY -->
+<section id="extensibility">
+  <div class="sec-head"><div class="sec-kicker">Developer extensibility</div><h2 class="sec-title">Open-source automation you can inspect, fork, and extend</h2><p class="sec-sub">CONDUIT keeps the visual builder approachable while preserving an engineering-grade escape hatch for teams that need custom connectors, reusable nodes, and version-controlled operations.</p></div>
+  <div class="dev-grid">
+    <div class="dev-card"><h4>Custom connector surface</h4><p>Wrap internal APIs, databases, queues, ticketing systems, model endpoints, and proprietary tools as reusable nodes with clear contracts.</p></div>
+    <div class="dev-card"><h4>Workflow-as-code posture</h4><p>Export definitions for review, promotion, backup, and source control so automation changes can follow the same discipline as application code.</p></div>
+    <div class="dev-card"><h4>Typed payload conventions</h4><p>Use schema validation, field mapping, and deterministic transforms to keep multi-step workflows stable as upstream systems evolve.</p></div>
+    <div class="dev-card"><h4>AI step governance</h4><p>Attach model routes, prompt versions, retrieval sources, eval criteria, and approval requirements to agentic steps instead of burying them in ad hoc scripts.</p></div>
+    <div class="dev-card"><h4>Composable internal tooling</h4><p>Turn recurring operational procedures into reusable automations that engineering, security, support, finance, and leadership can safely operate.</p></div>
+  </div>
+</section>
+
+<!-- USE CASE MATRIX -->
+<section id="use-cases">
+  <div class="sec-head"><div class="sec-kicker">Operational use cases</div><h2 class="sec-title">One automation layer across the company</h2><p class="sec-sub">CONDUIT is strongest where events, decisions, integrations, and accountability need to meet in one governed execution surface.</p></div>
+  <div class="usecase-grid">
+    <div class="usecase-card"><h4>Operations command</h4><p>Route intake, update systems of record, reconcile spreadsheets, notify owners, generate status briefs, and escalate exceptions with approvals.</p></div>
+    <div class="usecase-card"><h4>Engineering platform</h4><p>Trigger deploy checklists, triage incidents, enrich alerts, open tickets, rotate runbooks, and coordinate human review before risky actions.</p></div>
+    <div class="usecase-card"><h4>Security workflow</h4><p>Ingest findings, correlate identity and asset context, classify severity, prepare response packages, and preserve immutable evidence trails.</p></div>
+    <div class="usecase-card"><h4>Revenue and customer teams</h4><p>Qualify inbound leads, draft follow-ups, sync CRM records, alert sales, and require approval before sensitive customer communications.</p></div>
+    <div class="usecase-card"><h4>Internal AI tooling</h4><p>Build private assistants that retrieve enterprise context, summarize documents, propose next actions, and hand off decisions to accountable humans.</p></div>
+  </div>
+</section>
+
+<!-- SELF-HOSTING WINS AND COMPARISON -->
+<section id="self-hosted-wins">
+  <div class="sec-head"><div class="sec-kicker">Why self-hosted wins</div><h2 class="sec-title">Own the execution boundary</h2><p class="sec-sub">Generic SaaS automation is convenient until credentials, regulated data, model prompts, or operational authority must leave your control plane.</p></div>
+  <div class="architecture-overview"><h3>Architecture overview</h3><p>CONDUIT places workflow design, credential custody, run execution, approval evidence, AI routing, queues, and observability inside your deployment boundary. That architecture keeps automation close to source systems, shortens feedback loops for operators, and gives technical buyers the right control points for scale, governance, and incident response.</p></div>
+  <table class="comparison-table" aria-label="CONDUIT compared with generic SaaS automation tools">
+    <thead><tr><th>Decision angle</th><th>CONDUIT</th><th>Generic SaaS automation</th></tr></thead>
+    <tbody>
+      <tr><td>Data and credentials</td><td>Private execution, environment-held secrets, local databases, exportable history, and optional air-gapped patterns.</td><td>Third-party execution boundary, external credential brokerage, vendor logs, and limited infrastructure control.</td></tr>
+      <tr><td>Governance and approvals</td><td>Multi-step approval flows, role-aware operation, audit trails, deterministic branching, and policy-aware privileged actions.</td><td>Workflow convenience first, with governance often added through separate tools or enterprise plans.</td></tr>
+      <tr><td>Extensibility and portability</td><td>Open-source modules, custom connectors, workflow definitions that can be reviewed, forked, backed up, and migrated.</td><td>Closed runtime, platform-specific limits, per-task billing pressure, and limited deep customization.</td></tr>
+    </tbody>
+  </table>
+  <div class="mission-strip"><span>Private by default</span><span>Governed by design</span><span>Observable in production</span><span>Extensible without permission</span></div>
 </section>
 
 <!-- INTEGRATIONS -->
@@ -433,6 +537,106 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
     <div class="deploy-card"><h4>Queue-mode production</h4><p>Separate web, workers, database, and queue services to handle higher execution volume and isolate failure domains.</p></div>
     <div class="deploy-card"><h4>Kubernetes and edge</h4><p>Deploy into Kubernetes, private cloud, on-prem infrastructure, or edge systems where data gravity and connectivity demand local execution.</p></div>
     <div class="deploy-card"><h4>Managed by ClearGlass</h4><p>Use the ClearGlass fleet when you want managed hosting, hardening, updates, backups, workflow buildout, and operational handoff.</p></div>
+  </div>
+</section>
+
+
+<!-- RELIABILITY -->
+<section id="reliability">
+  <div class="sec-head"><div class="sec-kicker">Reliability and recovery</div><h2 class="sec-title">Automation that fails visibly and recovers deliberately</h2><p class="sec-sub">CONDUIT is built around operational truth: integrations fail, payloads drift, APIs rate-limit, and human decisions matter. The platform makes those realities manageable.</p></div>
+  <div class="cards">
+    <div class="fcard"><div class="fi">↻</div><h4>Bounded retries</h4><p>Retry transient failures with defined limits, backoff windows, and escalation paths instead of silent infinite loops.</p></div>
+    <div class="fcard"><div class="fi">⚑</div><h4>Dead-letter handling</h4><p>Route exhausted jobs into review queues with payload, node, error, timestamp, and workflow version preserved.</p></div>
+    <div class="fcard"><div class="fi">◷</div><h4>Latency visibility</h4><p>Track node timings, connector response, queue wait, model latency, and total execution time for bottleneck analysis.</p></div>
+    <div class="fcard"><div class="fi">⇄</div><h4>Replayable context</h4><p>Re-run failed branches with known inputs, patched credentials, or updated definitions while keeping prior history intact.</p></div>
+    <div class="fcard"><div class="fi">☑</div><h4>Compensating workflows</h4><p>Launch cleanup, notification, rollback, or reconciliation flows when downstream systems reject or partially complete a step.</p></div>
+  </div>
+</section>
+
+<!-- DEVELOPER EXTENSIBILITY -->
+<section id="extensibility">
+  <div class="sec-head"><div class="sec-kicker">Developer extensibility</div><h2 class="sec-title">Open source where it counts: at the edge of your operations</h2><p class="sec-sub">Technical teams can keep the visual builder for speed while extending the engine with custom nodes, internal APIs, model providers, and versioned automation packages.</p></div>
+  <div class="arch-grid">
+    <div class="arch-card"><h4>Custom nodes</h4><p>Wrap internal services, proprietary data sources, validation routines, and domain-specific actions as reusable workflow blocks.</p></div>
+    <div class="arch-card"><h4>Code-level escape hatch</h4><p>Use code nodes for transformations, signatures, payload normalization, scoring, and specialized logic that does not belong in a generic connector.</p></div>
+    <div class="arch-card"><h4>API-first control</h4><p>Trigger, inspect, export, and manage workflows through APIs so CONDUIT can sit behind portals, command centers, or internal developer platforms.</p></div>
+    <div class="arch-card"><h4>Model provider choice</h4><p>Route AI steps to approved commercial models, private endpoints, or local inference while preserving prompt versions and output lineage.</p></div>
+    <div class="arch-card"><h4>Git-friendly operations</h4><p>Promote definitions through review, staging, production, and rollback workflows so automation changes behave like software changes.</p></div>
+  </div>
+</section>
+
+<!-- USE CASE MATRIX -->
+<section id="use-cases">
+  <div class="sec-head"><div class="sec-kicker">Operational use cases</div><h2 class="sec-title">Built for teams that run critical internal systems</h2><p class="sec-sub">CONDUIT is broad enough for everyday automation and disciplined enough for work that needs approval, evidence, and recoverability.</p></div>
+  <div class="lattice-grid">
+    <div class="lattice-card"><h4>Operations</h4><p>Route form submissions, reconcile spreadsheets, enrich customer records, generate handoff packets, notify owners, and require approval before external communications.</p></div>
+    <div class="lattice-card"><h4>Engineering</h4><p>Trigger incident workflows, open issues, query logs, summarize deploy changes, request rollback approval, and fan out status updates from one controlled run.</p></div>
+    <div class="lattice-card"><h4>Security</h4><p>Ingest alerts, enrich indicators, classify severity, collect evidence, open cases, and keep containment actions behind explicit human authorization.</p></div>
+    <div class="lattice-card"><h4>Internal tooling</h4><p>Connect databases, Slack, CRM, ticketing, docs, and AI copilots into approval-aware tools without waiting for a full custom app build.</p></div>
+    <div class="lattice-card"><h4>Executive workflows</h4><p>Summarize operational signals, prepare decision briefs, track follow-ups, and preserve the evidence chain behind recommendations.</p></div>
+  </div>
+</section>
+
+<!-- SAAS COMPARISON -->
+<section id="comparison">
+  <div class="sec-head"><div class="sec-kicker">CONDUIT versus generic SaaS automation</div><h2 class="sec-title">Control beats convenience when workflows become infrastructure</h2><p class="sec-sub">SaaS automation is useful for lightweight glue. CONDUIT is for teams that need ownership, auditability, and operational depth.</p></div>
+  <div class="system-rail">
+    <div class="rail-row"><div class="rail-k">Custody</div><div class="rail-v">Generic SaaS brokers credentials and data through a vendor runtime. CONDUIT runs beside your systems, in your account, with secrets and execution history under your control.</div></div>
+    <div class="rail-row"><div class="rail-k">Governance</div><div class="rail-v">Generic task chains often hide approvals inside ad hoc process. CONDUIT makes approval gates, roles, run history, prompt versions, and policy boundaries first-class operating objects.</div></div>
+    <div class="rail-row"><div class="rail-k">Extensibility</div><div class="rail-v">Generic platforms stop at their connector catalog. CONDUIT remains open source, API-ready, and extensible for private services, local models, custom nodes, and self-managed deployment topologies.</div></div>
+  </div>
+</section>
+
+<!-- WHY SELF-HOSTED WINS -->
+<section id="self-hosted-wins">
+  <div class="sec-head"><div class="sec-kicker">Why self-hosted wins</div><h2 class="sec-title">Private automation compounds institutional advantage</h2><p class="sec-sub">The more important the workflow, the less acceptable it becomes to lose control of credentials, latency, deployment timing, data retention, or audit evidence.</p></div>
+  <div class="why-grid">
+    <div class="why-card"><h4>Data stays close to authority</h4><p>Run automation near databases, files, internal APIs, and private models without exporting operational context into a shared external runtime.</p></div>
+    <div class="why-card"><h4>Execution matches policy</h4><p>Network boundaries, identity systems, logging standards, retention requirements, and approval workflows can mirror how your organization already operates.</p></div>
+    <div class="why-card"><h4>Economics scale cleanly</h4><p>High-volume automation should not become a tax on every task. Self-hosting lets capacity planning replace unpredictable per-run economics.</p></div>
+  </div>
+</section>
+
+
+<!-- OPERATOR CONTROL SURFACES -->
+<section id="operator-control-surfaces">
+  <div class="sec-head"><div class="sec-kicker">Operator control surfaces</div><h2 class="sec-title">Every capability has a control, a trace, and a recovery path</h2><p class="sec-sub">CONDUIT is not only a canvas for connecting apps. It is an operational surface for understanding who triggered a run, what changed, which policy applied, where execution paused, and how to recover without losing the historical record.</p></div>
+  <div class="arch-grid">
+    <div class="arch-card"><h4>Workflow observability</h4><p>Inspect run timelines by trigger, node, connector, model route, queue wait, retry attempt, approval decision, and terminal state. Operators can separate integration failure, data drift, model latency, and policy denial instead of debugging from a single generic error.</p></div>
+    <div class="arch-card"><h4>Permissions and governance</h4><p>Scope users, teams, credentials, environments, and connector actions so a workflow can read broadly, write narrowly, and require approval before privileged side effects. UI access accelerates work; server-side policy remains the authority.</p></div>
+    <div class="arch-card"><h4>Replay and recovery</h4><p>Replay a failed branch with the same input snapshot, patched credentials, adjusted retry policy, or a newer workflow definition while preserving the original run as immutable evidence.</p></div>
+    <div class="arch-card"><h4>Version-controlled definitions</h4><p>Promote workflows through draft, review, staging, production, and rollback states. Each release records graph structure, node configuration, prompt versions, connector scopes, and approval policy.</p></div>
+    <div class="arch-card"><h4>Blast-radius control</h4><p>Constrain execution by environment, connector scope, rate limit, batch size, approval threshold, and maximum affected records so a malformed event cannot become an organization-wide incident.</p></div>
+    <div class="arch-card"><h4>Audit-ready change control</h4><p>Material edits capture author, reviewer, diff summary, risk classification, approval evidence, release target, and rollback pointer before production automation changes behavior.</p></div>
+    <div class="arch-card"><h4>Deploy and recover</h4><p>Run locally, in private cloud, in Kubernetes, or through ClearGlass-managed infrastructure with backup, restore, health-check, and rollback procedures aligned to your operational tolerance.</p></div>
+    <div class="arch-card"><h4>Policy and approval flows</h4><p>Use single approver, multi-step, role-based, or environment-specific gates for finance, customer communication, security response, infrastructure change, and AI-generated action packages.</p></div>
+  </div>
+</section>
+
+
+<!-- TRUST BOUNDARIES -->
+<section id="trust-boundaries">
+  <div class="sec-head"><div class="sec-kicker">Trust boundaries and containment</div><h2 class="sec-title">Governed automation with bounded authority</h2><p class="sec-sub">CONDUIT treats every connector, credential, workflow, environment, and outbound route as a separate trust decision. The result is automation that can move quickly without inheriting unlimited permission.</p></div>
+  <div class="arch-grid">
+    <div class="arch-card"><h4>Connector trust boundaries</h4><p>Each connector operates as a scoped interface with explicit read, write, export, and side-effect permissions. Sensitive plugins can be isolated by workflow, environment, team, or approval class so one integration cannot silently expand authority across the platform.</p></div>
+    <div class="arch-card"><h4>Credential isolation</h4><p>Secrets are attached to the narrowest viable workflow context, rotated outside the workflow definition, and withheld from logs, prompts, exported runs, and browser-visible state. Ephemeral credentials can be issued for high-risk actions and revoked without changing the workflow graph.</p></div>
+    <div class="arch-card"><h4>Network segmentation</h4><p>Deploy workers into segmented networks that match data sensitivity, connector risk, and latency needs. Deny-by-default egress, allowlisted destinations, private service routes, and per-worker network policy reduce exposure when a payload or third-party API behaves unexpectedly.</p></div>
+    <div class="arch-card"><h4>Policy enforcement</h4><p>Evaluate policy at trigger time, before privileged nodes, during approval transitions, and before final side effects. Run-level decisions can consider actor, environment, connector scope, data class, record count, destination, risk score, and workflow version.</p></div>
+    <div class="arch-card"><h4>Recovery boundaries</h4><p>Separate retryable steps, terminal failures, manual interventions, and compensating actions. Operators can recover a failed segment without rewriting the full run, duplicating side effects, or erasing the evidence needed for incident review.</p></div>
+    <div class="arch-card"><h4>Long-running workflow custody</h4><p>Pause durable workflows at approvals, rate limits, dependency outages, scheduled windows, or operator review points. State remains recoverable, timers remain explicit, and stale runs can be expired by policy instead of drifting indefinitely.</p></div>
+  </div>
+</section>
+
+<!-- CONTENT DELIVERABLES -->
+<section id="decision-brief">
+  <div class="sec-head"><div class="sec-kicker">Deployment decision brief</div><h2 class="sec-title">The language of production automation</h2><p class="sec-sub">Use CONDUIT when automation must be private, reviewable, observable, and recoverable enough to become operating infrastructure.</p></div>
+  <div class="system-rail">
+    <div class="rail-row"><div class="rail-k">Hero support lines</div><div class="rail-v">Self-hosted workflow execution for teams that need private data, governed actions, and durable run evidence. · Event-driven automation with approvals, traces, retries, and recovery built into the operating path. · Open-source orchestration polished for enterprise operators who need control without surrendering infrastructure custody.</div></div>
+    <div class="rail-row"><div class="rail-k">Advanced features</div><div class="rail-v">Event triggers, queue-backed workers, conditional branching, bounded retries, human gates, AI-assisted steps, scoped connector credentials, immutable run history, exportable execution evidence, and drift-aware operations.</div></div>
+    <div class="rail-row"><div class="rail-k">Trust posture</div><div class="rail-v">Private execution boundary, least-privilege credentials, role-based workflow access, approval evidence, prompt and model version records, and audit-forward logs for compliance review.</div></div>
+    <div class="rail-row"><div class="rail-k">Self-hosting posture</div><div class="rail-v">Single-container start, queue-mode production, private database persistence, Kubernetes deployment, on-prem or edge placement, and ClearGlass-managed operation when teams want hosted hardening.</div></div>
+    <div class="rail-row"><div class="rail-k">Reliability posture</div><div class="rail-v">Durable state, idempotent step design, timeout boundaries, dead-letter review, partial-failure recovery, replayable branches, and compensating workflows.</div></div>
+    <div class="rail-row"><div class="rail-k">Developer posture</div><div class="rail-v">Custom nodes, code transforms, API-first control, workflow-as-code promotion, model provider choice, reusable internal automations, and inspectable connector contracts.</div></div>
   </div>
 </section>
 
@@ -612,6 +816,51 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
   </div>
 </section>
 
+
+<!-- AUTHORITY LATTICE -->
+<section id="authority-lattice">
+  <div class="authority-lattice" data-motion>
+    <div class="sec-head" style="margin-bottom:0">
+      <div class="sec-kicker">Internal authority lattice</div>
+      <h2 class="sec-title">One ClearGlass knowledge graph, wired for crawlability and conversion</h2>
+      <p class="sec-sub">CONDUIT sits inside a deliberate neon command grid: the home hub routes to pillar systems, pillar systems route to focused clusters, proof pages reinforce trust, and every conversion path returns to a clear next action.</p>
+    </div>
+
+    <div class="lattice-grid">
+      <div class="lattice-card"><h4>1 · Full site linking strategy</h4><p><a class="signal-link" href="index.html">ClearGlass Inc.</a> operates as the authority hub. Major pillars—<a class="signal-link" href="cyber-defense-console.html">cyber defense</a>, <a class="signal-link" href="intelligence.html">intelligence and OSINT</a>, <a class="signal-link" href="artemis-os.html">Artemis platform systems</a>, <a class="signal-link" href="percival-os.html">command operations</a>, <a class="signal-link" href="offers/index.html">services</a>, and <a class="signal-link" href="blog/index.html">ClearGlass Intelligence</a>—carry the strongest semantic signal. Cluster pages connect back to their pillar, across to one sibling, and forward to a conversion or proof path.</p></div>
+      <div class="lattice-card"><h4>2 · Page hierarchy map</h4><ul><li>Home hub: <a class="signal-link" href="index.html">ClearGlass Inc.</a></li><li>Pillars: cyber defense, intelligence, Artemis, command, legal, healthcare, government, services, UI engineering, Opal-Koboi, and insights.</li><li>Clusters: service pages, product surfaces, proof pages, operational runbooks, and blog essays.</li><li>Conversion: <a class="signal-link" href="offers/index.html">services and engagements</a>, <a class="signal-link" href="pricing.html">pricing</a>, and <a class="signal-link" href="store.html">security engagement booking</a>.</li></ul></div>
+      <div class="lattice-card"><h4>3 · Anchor doctrine</h4><p>Use controlled-signal anchors: “self-hosted workflow automation,” “governed autonomous operations,” “OSINT investigation graph,” “security architecture for agentic software,” “procurement-ready public-sector systems,” and “book a security engagement.” Avoid generic anchors and avoid linking low-intent incidental words.</p></div>
+      <div class="lattice-card"><h4>4 · CTA structure</h4><p>Discovery pages point to pillar explainers. Pillar pages point to proof and service pages. Service pages point to <a class="signal-link" href="pricing.html">pricing and engagement models</a>, <a class="signal-link" href="store.html">booking</a>, and focused offers like the <a class="signal-link" href="offers/security-quick-audit.html">Security Quick-Audit</a>. Final CTAs stay sparse, bright, and operationally exact.</p></div>
+    </div>
+
+    <table class="matrix" aria-label="Pillar to cluster internal-linking matrix">
+      <thead><tr><th>Pillar</th><th>Supporting clusters</th><th>Strategic anchors</th></tr></thead>
+      <tbody>
+        <tr><td><a class="signal-link" href="cyber-defense-console.html">Cyber Defense Console</a></td><td><a class="signal-link" href="bluedesk.html">BLUEDESK</a>, <a class="signal-link" href="guardian.html">GUARDIAN</a>, <a class="signal-link" href="sentinel.html">SENTINEL</a>, <a class="signal-link" href="artemis-blue-team.html">Artemis Blue Team</a></td><td>defensive command center · blue-team console · geospatial security operations</td></tr>
+        <tr><td><a class="signal-link" href="intelligence.html">Intelligence &amp; OSINT</a></td><td><a class="signal-link" href="flowsint.html">Flowsint</a>, <a class="signal-link" href="clearglass-nexus.html">ClearGlass NEXUS</a>, <a class="signal-link" href="intelligence-command-surface.html">Intelligence Command Surface</a></td><td>OSINT investigation graph · intelligence platform · unified operational picture</td></tr>
+        <tr><td><a class="signal-link" href="artemis-os.html">Artemis OS</a></td><td><a class="signal-link" href="artemis-self-evolving-platform.html">Self-Evolving Platform</a>, <a class="signal-link" href="artemis-ai-cyber-intelligence-platform.html">AI Cyber Intelligence Platform</a>, <a class="signal-link" href="artemis-2040.html">Artemis 2040</a></td><td>self-evolving intelligence loop · cyber intelligence platform · long-horizon AI systems</td></tr>
+        <tr><td><a class="signal-link" href="percival-os.html">Command &amp; Autonomous Operations</a></td><td><a class="signal-link" href="conduit.html">CONDUIT</a>, <a class="signal-link" href="agentmesh.html">Agent Mesh</a>, <a class="signal-link" href="ai-operator.html">AI Operator Workspace</a>, <a class="signal-link" href="postloop.html">PostLoop</a></td><td>self-hosted workflow automation · multi-agent orchestration · human-in-the-loop operations</td></tr>
+        <tr><td><a class="signal-link" href="blog/index.html">ClearGlass Intelligence</a></td><td><a class="signal-link" href="blog/ai-agent-governance-governed-autonomy.html">AI Agent Governance</a>, <a class="signal-link" href="blog/cybersecurity-architecture-for-agentic-software.html">Agentic Security Architecture</a>, <a class="signal-link" href="blog/osint-workflow-that-survives-contact-with-reality.html">OSINT Workflow</a></td><td>governed autonomy · agentic software security · field-tested investigation practice</td></tr>
+      </tbody>
+    </table>
+
+    <div class="lattice-grid">
+      <div class="lattice-card"><h4>5 · Home-page links</h4><p>Feature one row of pillar routes: <a class="signal-link" href="cyber-defense-console.html">cyber defense operations</a>, <a class="signal-link" href="intelligence.html">intelligence systems</a>, <a class="signal-link" href="artemis-os.html">Artemis OS</a>, <a class="signal-link" href="percival-os.html">PERCIVAL OS</a>, <a class="signal-link" href="offers/index.html">services</a>, and <a class="signal-link" href="blog/index.html">insights</a>.</p></div>
+      <div class="lattice-card"><h4>6 · Service-page links</h4><p>Each service should connect back to its pillar, laterally to one proof or runbook page, and forward to contact or booking. Example: <a class="signal-link" href="offers/hardening-sprint.html">Hardening Sprint</a> → cyber-defense pillar → SMB Trust Kit → booking.</p></div>
+      <div class="lattice-card"><h4>7 · Blog pillar links</h4><p>Blog articles should link upward to <a class="signal-link" href="blog/index.html">ClearGlass Intelligence</a>, sideways to one sibling essay, and forward to the product or service that operationalizes the idea.</p></div>
+      <div class="lattice-card"><h4>8 · Footer links</h4><p>Keep the footer structural: home, core pillars, services, pricing, store, privacy, terms, and investor materials. Footer links should stabilize crawl paths, not duplicate every page.</p></div>
+    </div>
+
+    <ol class="priority-rail">
+      <li>Maintain the generated “Continue exploring” graph with <code>tools/internal_links.py</code> so every indexable page keeps a pillar, siblings, cross-cluster bridges, and CTA path.</li>
+      <li>Strengthen home, services, blog index, and CONDUIT with high-intent contextual anchors before adding new links elsewhere.</li>
+      <li>Audit service pages for proof-to-service and service-to-contact paths; keep one primary conversion route per section.</li>
+      <li>Add or update blog-cluster links only when the target deepens the same topic or advances the reader toward trust and conversion.</li>
+      <li>Review the lattice quarterly: retire weak links, add new pillar members to the generator, and preserve the bright, sparse, command-grid visual language.</li>
+    </ol>
+  </div>
+</section>
+
 <!-- FINAL CTA -->
 <section>
   <div class="final">
@@ -644,7 +893,7 @@ body::after{opacity:.18;background:repeating-linear-gradient(90deg,transparent 0
       return txt.replace(/\S+/g,function(w){var d=(wi++*70);return '<span class="word" style="--wd:'+d+'ms"><span>'+w+'</span></span>';});
     });
   }
-  var staged=[".tagchip",".hero h1",".lede",".deep-copy",".hero-ops",".cta-row",".stats",".builder",".fcard",".why-card",".arch-card",".gov-card",".deploy-card",".ptier",".final",".system-rail",".term",".deploy li",".intg"];
+  var staged=[".tagchip",".hero h1",".lede",".deep-copy",".hero-ops",".cta-row",".stats",".builder",".fcard",".why-card",".arch-card",".gov-card",".deploy-card",".ptier",".final",".system-rail",".term",".deploy li",".intg",".flow-step",".reliability-card",".dev-card",".usecase-card",".architecture-overview",".comparison-table",".mission-strip span","#operator-control-surfaces .arch-card","#decision-brief .rail-row"];
   document.querySelectorAll(staged.join(',')).forEach(function(el,i){if(!el.hasAttribute('data-motion'))el.setAttribute('data-motion','up');el.style.setProperty('--d',Math.min(i%12*55,420)+'ms');});
   if(!reduce&&'IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
@@ -964,7 +1213,7 @@ window.addEventListener("resize",drawWires);
 <script defer src="/stealth-glass.js"></script>
 <!-- cg-related:start -->
 <aside id="cg-related">
-  <style>#cg-related{margin:48px auto 0;max-width:1080px;padding:0 18px 34px;font-family:'Inter',system-ui,-apple-system,sans-serif}#cg-related .cgr-box{background:linear-gradient(165deg,rgba(15,17,34,.96),rgba(9,10,24,.96));border:1px solid rgba(124,150,255,.26);border-radius:14px;padding:22px 24px;color:#cdd6f5;box-shadow:0 12px 40px rgba(0,0,0,.35)}#cg-related .cgr-crumb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a90c4;margin:0 0 10px}#cg-related .cgr-crumb a{color:#a5b4fc;text-decoration:none}#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:underline}#cg-related h2{margin:0 0 12px;font-size:15px;letter-spacing:.04em;color:#e7ecff}#cg-related ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}#cg-related li a{display:block;padding:7px 10px;border-radius:8px;font-size:13.5px;line-height:1.45;color:#cdd6f5;text-decoration:none;border:1px solid transparent;transition:.13s}#cg-related li a:hover{background:rgba(124,150,255,.12);border-color:rgba(124,150,255,.3);color:#fff}#cg-related li a b{color:#bcd0ff;font-weight:600}#cg-related .cgr-cta{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(124,150,255,.16);font-size:13.5px;color:#9aa3d0}#cg-related .cgr-cta a{color:#93c5fd;font-weight:600;text-decoration:none}#cg-related .cgr-cta a:hover{color:#fff;text-decoration:underline}</style>
+  <style>#cg-related{margin:54px auto 0;max-width:1120px;padding:0 18px 38px;font-family:'Inter',system-ui,-apple-system,sans-serif;position:relative}#cg-related .cgr-box{position:relative;overflow:hidden;background:linear-gradient(rgba(34,211,238,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,255,.05) 1px,transparent 1px),radial-gradient(circle at 12% 0,rgba(34,211,238,.16),transparent 34%),radial-gradient(circle at 88% 100%,rgba(168,85,247,.16),transparent 36%),linear-gradient(165deg,rgba(5,12,28,.97),rgba(9,7,24,.97));background-size:32px 32px,32px 32px,auto,auto,auto;border:1px solid rgba(34,211,238,.34);border-radius:16px;padding:24px 26px;color:#d8e4ff;box-shadow:0 18px 54px rgba(0,0,0,.44),0 0 34px rgba(34,211,238,.12),inset 0 0 0 1px rgba(255,255,255,.035)}#cg-related .cgr-box:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(34,211,238,.18),transparent);transform:translateX(-120%) skewX(-18deg);animation:cgr-scan 8s ease-in-out infinite}#cg-related .cgr-box:after{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,#a855f7,transparent);box-shadow:0 0 18px rgba(34,211,238,.75)}#cg-related .cgr-crumb{position:relative;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8fb9ff;margin:0 0 12px}#cg-related .cgr-crumb a{color:#67e8f9;text-decoration:none;text-shadow:0 0 12px rgba(34,211,238,.35)}#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:none}#cg-related h2{position:relative;margin:0 0 14px;font-size:15.5px;letter-spacing:.08em;text-transform:uppercase;color:#f3f7ff}#cg-related ul{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:8px 18px}#cg-related li a{display:block;padding:9px 11px;border-radius:10px;font-size:13.5px;line-height:1.45;color:#cfe0ff;text-decoration:none;border:1px solid rgba(124,150,255,.08);background:rgba(7,14,32,.36);transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}#cg-related li a:hover,#cg-related li a:focus-visible{transform:translateY(-1px);background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.42);color:#fff;box-shadow:0 0 22px rgba(34,211,238,.14)}#cg-related li a b{color:#9bdcff;font-weight:700;text-shadow:0 0 12px rgba(34,211,238,.28)}#cg-related .cgr-cta{position:relative;margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(34,211,238,.18);font-size:13.5px;color:#a9b8df}#cg-related .cgr-cta a{color:#67e8f9;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.36)}#cg-related .cgr-cta a:hover{color:#fff;border-bottom-color:#fff}@keyframes cgr-scan{0%,58%{transform:translateX(-120%) skewX(-18deg);opacity:0}70%{opacity:1}100%{transform:translateX(220%) skewX(-18deg);opacity:0}}@media(prefers-reduced-motion:reduce){#cg-related .cgr-box:before{animation:none}}</style>
   <nav class="cgr-box" aria-label="Related ClearGlass pages">
     <p class="cgr-crumb"><a href="index.html">ClearGlass Inc.</a> › <a href="percival-os.html">Command &amp; Autonomous Operations</a></p>
     <h2>Continue exploring</h2>

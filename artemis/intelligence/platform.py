@@ -8,10 +8,11 @@ policy checks, feedback capture, and human-approved self-improvement.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from enum import StrEnum
 from hashlib import sha256
 from hmac import compare_digest
+import json
 from statistics import fmean
 from typing import Any, Callable, Protocol
 from uuid import uuid4
@@ -135,6 +136,7 @@ class ApprovalToken:
     action_id: str
     package_hash: str
     issued_at: datetime
+    expires_at: datetime
 
 
 @dataclass(frozen=True)
@@ -159,6 +161,7 @@ class PromotionDecision:
     canary_allowed: bool
     rollback_version: str
     reasons: tuple[str, ...]
+
 
 @dataclass(frozen=True)
 class ImprovementProposal:
@@ -192,10 +195,14 @@ class ImmutableAuditLog:
     def __init__(self) -> None:
         self.records: list[AuditRecord] = []
 
-    def append(self, *, actor: str, action: str, resource: str, decision: str, payload: dict[str, Any]) -> AuditRecord:
+    def append(
+        self, *, actor: str, action: str, resource: str, decision: str, payload: dict[str, Any]
+    ) -> AuditRecord:
         previous_hash = self.records[-1].chain_hash if self.records else "GENESIS"
         payload_hash = sha256(repr(sorted(payload.items())).encode("utf-8")).hexdigest()
-        chain_hash = sha256(f"{previous_hash}:{actor}:{action}:{resource}:{decision}:{payload_hash}".encode("utf-8")).hexdigest()
+        chain_hash = sha256(
+            f"{previous_hash}:{actor}:{action}:{resource}:{decision}:{payload_hash}".encode("utf-8")
+        ).hexdigest()
         record = AuditRecord(
             record_id=str(uuid4()),
             actor=actor,
@@ -214,7 +221,9 @@ class ImmutableAuditLog:
         previous_hash = "GENESIS"
         for record in self.records:
             expected = sha256(
-                f"{previous_hash}:{record.actor}:{record.action}:{record.resource}:{record.decision}:{record.payload_hash}".encode("utf-8")
+                f"{previous_hash}:{record.actor}:{record.action}:{record.resource}:{record.decision}:{record.payload_hash}".encode(
+                    "utf-8"
+                )
             ).hexdigest()
             if not compare_digest(expected, record.chain_hash):
                 return False
@@ -222,14 +231,77 @@ class ImmutableAuditLog:
         return True
 
 
+class WorkflowStateMachine:
+    """Deterministic mission workflow guardrail for agent and operator actions."""
+
+    ALLOWED_TRANSITIONS: dict[WorkflowState, frozenset[WorkflowState]] = {
+        WorkflowState.RECEIVED: frozenset({WorkflowState.TRIAGED}),
+        WorkflowState.TRIAGED: frozenset({WorkflowState.ENRICHED, WorkflowState.REJECTED}),
+        WorkflowState.ENRICHED: frozenset({WorkflowState.RECOMMENDED, WorkflowState.REJECTED}),
+        WorkflowState.RECOMMENDED: frozenset(
+            {WorkflowState.AWAITING_APPROVAL, WorkflowState.REJECTED}
+        ),
+        WorkflowState.AWAITING_APPROVAL: frozenset(
+            {WorkflowState.APPROVED, WorkflowState.REJECTED}
+        ),
+        WorkflowState.APPROVED: frozenset({WorkflowState.DEPLOYED, WorkflowState.ROLLED_BACK}),
+        WorkflowState.DEPLOYED: frozenset({WorkflowState.ROLLED_BACK}),
+        WorkflowState.REJECTED: frozenset(),
+        WorkflowState.ROLLED_BACK: frozenset(),
+    }
+
+    def __init__(self, audit_log: ImmutableAuditLog) -> None:
+        self.audit_log = audit_log
+
+    def transition(
+        self,
+        workflow_id: str,
+        current: WorkflowState,
+        target: WorkflowState,
+        *,
+        actor: str,
+        reason: str,
+    ) -> WorkflowState:
+        """Move a workflow only through approved states and audit denied jumps."""
+
+        allowed = target in self.ALLOWED_TRANSITIONS[current]
+        self.audit_log.append(
+            actor=actor,
+            action="workflow.transition",
+            resource=workflow_id,
+            decision="ALLOW" if allowed else "DENY",
+            payload={"from": current.value, "to": target.value, "reason": reason},
+        )
+        if not allowed:
+            raise ValueError(f"invalid workflow transition: {current.value} -> {target.value}")
+        return target
+
+
 class ModelRouter:
     """Deterministic, policy-aware model routing for latency-sensitive missions."""
 
-    def route(self, *, task_type: str, classification: str, latency_budget_ms: int, requires_deep_reasoning: bool) -> ModelRoute:
+    def route(
+        self,
+        *,
+        task_type: str,
+        classification: str,
+        latency_budget_ms: int,
+        requires_deep_reasoning: bool,
+    ) -> ModelRoute:
         if classification in {"SECRET", "COALITION_RESTRICTED"}:
-            return ModelRoute(task_type, "aip-secure-reasoner", "isolated", "restricted classification requires hardened AIP path")
+            return ModelRoute(
+                task_type,
+                "aip-secure-reasoner",
+                "isolated",
+                "restricted classification requires hardened AIP path",
+            )
         if requires_deep_reasoning or latency_budget_ms >= 1_200:
-            return ModelRoute(task_type, "aip-frontier-reasoner", "standard", "deep reasoning or relaxed latency budget")
+            return ModelRoute(
+                task_type,
+                "aip-frontier-reasoner",
+                "standard",
+                "deep reasoning or relaxed latency budget",
+            )
         return ModelRoute(task_type, "aip-fast-mini", "low-latency", "tight latency budget")
 
 
@@ -275,19 +347,44 @@ class InMemoryOntologyStore:
 
 
 class ArtemisEventBus:
-    """Small synchronous event bus standing in for Kafka/Pulsar topics."""
+    """Small synchronous event bus standing in for Kafka/Pulsar topics.
+
+    Handler failures are isolated into a dead-letter queue so one fragile
+    integration cannot prevent other mission consumers from receiving an event.
+    """
 
     def __init__(self) -> None:
         self._subscribers: dict[str, list[Callable[[dict[str, Any]], None]]] = {}
+        self.dead_letters: list[dict[str, Any]] = []
+        self.telemetry: dict[str, int] = {
+            "events.published": 0,
+            "events.delivered": 0,
+            "events.handler_failed": 0,
+        }
 
     def subscribe(self, topic: str, handler: Callable[[dict[str, Any]], None]) -> None:
         self._subscribers.setdefault(topic, []).append(handler)
 
-    def publish(self, topic: str, event: dict[str, Any]) -> None:
+    def publish(self, topic: str, event: dict[str, Any]) -> str:
         event.setdefault("event_id", str(uuid4()))
         event.setdefault("emitted_at", datetime.now(UTC).isoformat())
+        self.telemetry["events.published"] += 1
         for handler in self._subscribers.get(topic, []):
-            handler(event)
+            try:
+                handler(event)
+            except Exception as exc:
+                self.telemetry["events.handler_failed"] += 1
+                self.dead_letters.append(
+                    {
+                        "topic": topic,
+                        "event": dict(event),
+                        "handler": getattr(handler, "__name__", handler.__class__.__name__),
+                        "error": str(exc),
+                    }
+                )
+            else:
+                self.telemetry["events.delivered"] += 1
+        return str(event["event_id"])
 
 
 class TriageAgent:
@@ -303,8 +400,12 @@ class TriageAgent:
             if self.policy.authorize_entity(context, entity).allowed:
                 visible_entities.append(entity)
 
-        confidence = fmean([entity.confidence for entity in visible_entities]) if visible_entities else 0.0
-        risk_tier = "high" if alert.severity in {"high", "critical"} and confidence >= 0.75 else "medium"
+        confidence = (
+            fmean([entity.confidence for entity in visible_entities]) if visible_entities else 0.0
+        )
+        risk_tier = (
+            "high" if alert.severity in {"high", "critical"} and confidence >= 0.75 else "medium"
+        )
         return AgentAction(
             action_id=str(uuid4()),
             action_type="open_case_and_request_review",
@@ -313,7 +414,10 @@ class TriageAgent:
             summary=f"{alert.hypothesis} based on {len(alert.evidence_refs)} cited observations.",
             required_approval=True,
             evidence_refs=alert.evidence_refs,
-            parameters={"visible_entity_count": len(visible_entities), "mean_confidence": confidence},
+            parameters={
+                "visible_entity_count": len(visible_entities),
+                "mean_confidence": confidence,
+            },
         )
 
 
@@ -427,6 +531,8 @@ def compile_feedback_to_eval(feedback: FeedbackEvent) -> dict[str, Any]:
 class PromotionController:
     """Blocks unsafe self-upgrades before Apollo canary deployment."""
 
+    REVIEWER_ROLES = frozenset({"governance", "modelops"})
+
     def __init__(self, engine: SelfImprovementEngine, audit_log: ImmutableAuditLog) -> None:
         self.engine = engine
         self.audit_log = audit_log
@@ -441,6 +547,11 @@ class PromotionController:
             human_approved=candidate.human_approved,
         )
         reasons = list(gate.reasons)
+        reviewer_authorized = bool(context.roles.intersection(self.REVIEWER_ROLES))
+        if context.purpose != "evaluation":
+            reasons.append("canary review requires evaluation purpose")
+        if not reviewer_authorized:
+            reasons.append("canary review requires governance or modelops role")
         if candidate.rollback_version == candidate.candidate_version:
             reasons.append("rollback version must differ from candidate version")
         if candidate.rollback_version != candidate.baseline_version:
@@ -461,7 +572,11 @@ class PromotionController:
             },
         )
         return PromotionDecision(
-            safe_to_review=candidate.human_approved,
+            safe_to_review=(
+                candidate.human_approved
+                and context.purpose == "evaluation"
+                and reviewer_authorized
+            ),
             canary_allowed=canary_allowed,
             rollback_version=candidate.rollback_version,
             reasons=tuple(reasons),
@@ -474,12 +589,34 @@ class ApprovalGate:
     def __init__(self, policy: PolicyEngine, audit_log: ImmutableAuditLog) -> None:
         self.policy = policy
         self.audit_log = audit_log
+        self._consumed_token_ids: set[str] = set()
 
-    def approve(self, context: AccessContext, action: AgentAction, decision: str, reason: str) -> PolicyDecision:
+    @staticmethod
+    def package_hash(action: AgentAction) -> str:
+        """Hash the complete action package so approval cannot authorize a mutation."""
+
+        package = {
+            "action_id": action.action_id,
+            "action_type": action.action_type,
+            "mission_id": action.mission_id,
+            "risk_tier": action.risk_tier,
+            "summary": action.summary,
+            "required_approval": action.required_approval,
+            "evidence_refs": action.evidence_refs,
+            "parameters": action.parameters,
+        }
+        canonical = json.dumps(package, sort_keys=True, separators=(",", ":"), allow_nan=False)
+        return sha256(canonical.encode("utf-8")).hexdigest()
+
+    def approve(
+        self, context: AccessContext, action: AgentAction, decision: str, reason: str
+    ) -> PolicyDecision:
         if decision not in {"approve", "reject"}:
             raise ValueError("decision must be approve or reject")
         policy_decision = self.policy.authorize_action(context, action)
-        final_decision = "REJECT" if decision == "reject" or not policy_decision.allowed else "APPROVE"
+        final_decision = (
+            "REJECT" if decision == "reject" or not policy_decision.allowed else "APPROVE"
+        )
         self.audit_log.append(
             actor=context.operator_id,
             action=f"human_approval.{decision}",
@@ -495,3 +632,71 @@ class ApprovalGate:
         if final_decision == "REJECT" and policy_decision.allowed:
             return PolicyDecision(False, reason)
         return policy_decision
+
+    def approve_and_issue(
+        self,
+        context: AccessContext,
+        action: AgentAction,
+        *,
+        decision: str,
+        reason: str,
+        ttl: timedelta = timedelta(minutes=5),
+        now: datetime | None = None,
+    ) -> ApprovalToken | None:
+        """Issue a short-lived token only after an attributable policy-approved decision."""
+
+        if ttl <= timedelta(0):
+            raise ValueError("approval token ttl must be positive")
+        decided_at = now or datetime.now(UTC)
+        if decided_at.tzinfo is None:
+            raise ValueError("approval decision time must be timezone-aware")
+        policy_decision = self.approve(context, action, decision, reason)
+        if not policy_decision.allowed or decision != "approve":
+            return None
+        token = ApprovalToken(
+            token_id=str(uuid4()),
+            operator_id=context.operator_id,
+            action_id=action.action_id,
+            package_hash=self.package_hash(action),
+            issued_at=decided_at,
+            expires_at=decided_at + ttl,
+        )
+        self.audit_log.append(
+            actor=context.operator_id,
+            action="approval.token.issue",
+            resource=action.action_id,
+            decision="ALLOW",
+            payload={"token_id": token.token_id, "expires_at": token.expires_at.isoformat()},
+        )
+        return token
+
+    def consume(
+        self, token: ApprovalToken, action: AgentAction, *, now: datetime | None = None
+    ) -> PolicyDecision:
+        """Atomically consume an approval token bound to the immutable action package."""
+
+        consumed_at = now or datetime.now(UTC)
+        reasons: list[str] = []
+        if consumed_at.tzinfo is None:
+            reasons.append("approval consumption time must be timezone-aware")
+        elif consumed_at > token.expires_at:
+            reasons.append("approval token expired")
+        if token.token_id in self._consumed_token_ids:
+            reasons.append("approval token already consumed")
+        if token.action_id != action.action_id:
+            reasons.append("approval token is bound to a different action")
+        if not compare_digest(token.package_hash, self.package_hash(action)):
+            reasons.append("action package changed after approval")
+
+        allowed = not reasons
+        if allowed:
+            self._consumed_token_ids.add(token.token_id)
+        reason = "approval token consumed" if allowed else "; ".join(reasons)
+        self.audit_log.append(
+            actor=token.operator_id,
+            action="approval.token.consume",
+            resource=action.action_id,
+            decision="ALLOW" if allowed else "DENY",
+            payload={"token_id": token.token_id, "reason": reason},
+        )
+        return PolicyDecision(allowed, reason)

@@ -10,6 +10,7 @@ running store and does not move money on its own.
 | File | Purpose |
 |---|---|
 | `SOUL.md` | The agent's soul: identity, mission, skills, hard constraints, cadence, output contract. |
+| `ETSY_FACTORY_CONNECT_AGENT.md` | Deterministic, fail-closed Etsy authentication, shop-identity, permission, and sync-readiness workflow. |
 | `agent.json` | Machine-readable config (pricing, constraints, deployment tiers, integration status). |
 | `agentic-workflow.template.yml` | A GitHub Actions **template** — reference only, intentionally not in `.github/workflows/`. |
 | `README.md` | This file. |
@@ -17,18 +18,45 @@ running store and does not move money on its own.
 ## Real today vs. needs setup
 
 **Real today (committed artifacts):**
-- The SOUL spec, the machine-readable config, and the workflow template.
+- The SOUL spec, Etsy Factory Connect specification, machine-readable config,
+  and workflow template.
 - A coherent, internally-consistent ruleset an operator (or a future runtime)
   can follow.
+- A fail-closed Etsy state machine that blocks listing publication, inventory
+  synchronization, and order handling until every verification gate passes.
 
 **Needs accounts, credentials, and human setup before anything executes:**
 - A Shopify-compatible catalog and a deployed Next.js storefront.
 - Stripe (payments), and `STRIPE_API_KEY` / `SHOPIFY_API_KEY` in GitHub Secrets.
+- An Etsy developer application, approved redirect URI, owner-completed OAuth
+  authorization, verified shop identity, approved least-privilege scopes, and
+  secret-manager references. Never commit Etsy credentials or tokens.
+- A production owner-approval record before Etsy publishing, inventory sync,
+  buyer messaging, or order-management capabilities are activated.
 - Real, human-approved suppliers and funding for inventory.
 - Social / email / SMS accounts and tokens for marketing.
 
 Until those exist, the workflow template stays out of `.github/workflows/`. If it
 ran now it would fail on every tick and waste Actions minutes.
+
+## Etsy connection status
+
+The repository cannot prove that an Etsy shop is currently authenticated or
+authorized. A public Etsy `people/...` profile URL is not shop authorization.
+The current declared state is therefore `BLOCKED_USER_ACTION`.
+
+Required sequence:
+
+1. Complete Etsy authentication and consent through the approved Etsy surface.
+2. Resolve and verify the exact shop name and server-derived shop ID.
+3. Verify listing scopes through non-destructive API checks.
+4. Verify order scopes without exposing buyer personal data.
+5. Run a dry-run synchronization validation with no remote mutations.
+6. Record production owner approval for the exact scopes and capabilities.
+7. Activate only capabilities that passed every gate.
+
+See `ETSY_FACTORY_CONNECT_AGENT.md` for the state machine, error taxonomy,
+capability matrix, audit requirements, and required status output.
 
 ## Two deliberate corrections to the original brief
 
@@ -45,18 +73,19 @@ ran now it would fail on every tick and waste Actions minutes.
 
 ## Safety posture
 
-Anything that touches **payments, billing, or personal data is Tier 3**:
-human-approved, audited, and reversible — no autonomous merge. Marketing is
-**consent-first (CASL)**: consent on file, sender identified, one-click
-unsubscribe honoured. Secrets live only in GitHub Secrets with least-privilege
-tokens.
+Anything that touches **authentication, authorization, payments, billing,
+orders, or personal data is Tier 3**: human-approved, audited, and reversible —
+no autonomous production activation. Marketing is **consent-first (CASL)**:
+consent on file, sender identified, one-click unsubscribe honoured. Secrets live
+only in GitHub Secrets or the approved secret manager with least-privilege
+access.
 
 ## Next step (opt-in)
 
-When you're ready to make it real, the natural follow-on is a minimal
-**Next.js + Stripe Checkout** storefront skeleton with a seed catalog and a
-checkout smoke test — built once real accounts and secrets exist so it can be
-verified end-to-end rather than scaffolded blind.
+After Etsy OAuth has been completed through the external account surface, run
+the Factory Connect checks sequentially. Until authentication and permissions
+are proven, the system must remain blocked and must not publish, synchronize, or
+handle orders.
 
 ---
 

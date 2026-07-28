@@ -1,5 +1,74 @@
 # ClearGlassInc Artemis — Mission-Grade Self-Evolving Intelligence Platform Blueprint
 
+> **Document status:** Target-state architecture and implementation blueprint. The
+> Palantir products, integrations, service-level objectives, and controls described
+> here are specifications for ClearGlassInc Artemis; their presence in this document
+> is not evidence that they are provisioned, accredited, or deployed. Production
+> activation requires the review gates and verification evidence defined below.
+
+## Delivery Contract
+
+### Objective, Scope, and Non-Negotiable Invariants
+
+The objective is a secure, coalition-aware intelligence platform that fuses live and
+historical data, assists operators at low latency, and improves prompts, workflows,
+heuristics, retrieval, and model routing through measured, reversible releases. The
+initial production boundary comprises the analyst workbench, governed APIs, Foundry
+data products and Ontology, AIP-assisted workflows, and Apollo-controlled deployment.
+
+The following invariants apply across every deployment ring:
+
+1. Models and agents may **propose** consequential actions and system improvements;
+   they cannot approve, promote, or execute them.
+2. Authentication, authorization, classification, releasability, compartment, and
+   need-to-know checks run in deterministic policy code adjacent to every protected
+   read and write. UI controls and model instructions are not security boundaries.
+3. Every material input, retrieval, model route, tool call, policy decision, operator
+   decision, artifact version, and execution result has immutable, queryable lineage.
+4. Cross-compartment joins and coalition release are denied by default. Missing or
+   stale identity, policy, provenance, or approval context fails closed.
+5. Prompt, workflow, router, ontology, model, and policy releases are independently
+   versioned, signed, canaried, observable, and rollback-capable.
+6. Feedback can optimize performance only inside the approved mission objective,
+   permissions, tools, budgets, and safety thresholds. It cannot expand its own scope.
+
+### Acceptance Criteria and Verification Gates
+
+| Gate | Measurable acceptance criterion | Required evidence | Accountable role |
+|---|---|---|---|
+| Data | Contract-valid records retain source, transform, bitemporal, and security lineage; invalid records quarantine without contaminating gold products | Replay report, lineage query, quarantine test | Data product owner |
+| Access | Unauthorized and cross-compartment reads/writes are denied with no partial side effect | ABAC/ReBAC negative tests and policy decision log | Security authority |
+| Agent | Every claim cites accessible evidence; every tool call is schema-valid, allowlisted, bounded, and policy-authorized | Adversarial eval report and tool trace | AI system owner |
+| Action | Operationally significant packages cannot transition from `PROPOSED` to execution without a valid, scoped, unexpired human approval | Forbidden-transition and replay tests | Mission authority |
+| Improvement | A challenger has zero policy violations, meets its registered quality/latency floors, and cannot alter objectives or approval policy | Frozen-dataset eval, red-team results, signed approval | Model governance board |
+| Release | Artifact provenance verifies, canary health remains within error budgets, and rollback restores the last known-good independent component version | Apollo manifest, canary report, rollback drill | Release authority |
+| Recovery | Audit remains queryable during degraded operation; tested recovery satisfies the mission-specific RTO/RPO | Restore/failover exercise | Service owner |
+
+Numeric quality floors are registered per mission and data distribution rather than
+treated as universal constants. Before a pilot, owners must record the baseline,
+minimum precision and recall, maximum p95 latency, abstention range, error budget,
+RTO/RPO, observation window, and automatic rollback triggers. Any missing threshold
+keeps the capability in non-production mode.
+
+### Recommended Delivery Sequence
+
+1. **Foundation:** approve the threat model, data classification, Ontology contract,
+   identity federation, policy bundles, audit schema, and mission-specific SLOs.
+2. **Read-only pilot:** ingest replayable feeds and ship evidence-backed search,
+   correlation, and summarization with action tools disabled.
+3. **Governed workflows:** enable case creation and action-package preparation behind
+   typed tools, idempotency controls, explicit approval, and append-only audit.
+4. **Learning shadow mode:** capture feedback and evaluate candidates offline without
+   influencing live routing or operator recommendations.
+5. **Controlled optimization:** promote approved challengers through Apollo rings;
+   compare against the champion and automatically restore the last known-good version
+   on policy, quality, latency, trust, or data-drift regression.
+
+Rollback is component-scoped: disable the affected feature flag, stop new work,
+drain or quarantine in-flight events, restore the signed prior artifact, replay only
+idempotent events, verify policy and audit integrity, then reopen after authority
+approval. No rollback deletes evidence or rewrites historical decisions.
+
 ## System Architecture
 
 ### 1) End-to-End Full-Stack Topology (Gotham + Foundry + AIP + Apollo)

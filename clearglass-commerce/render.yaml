@@ -16,6 +16,11 @@ services:
         value: production
       - key: REQUIRE_APPROVAL_FOR_HIGH_RISK
         value: "true"
+      # Admin bearer token for approvals / pricing / refunds / catalog writes.
+      # Required in production: the API fails closed at startup if this is unset.
+      # Render generates a strong value on first deploy; give the admin app the same value.
+      - key: ADMIN_API_KEY
+        generateValue: true
       - key: AUTO_CREATE_TABLES
         value: "true"   # first boot creates tables; switch to migrations for prod hardening
       - key: DATABASE_URL

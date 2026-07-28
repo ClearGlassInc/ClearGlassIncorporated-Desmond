@@ -220,6 +220,9 @@ class AgentArmy:
         "engineering",
         "fix",
         "implement",
+        "legacy",
+        "migration",
+        "modernize",
         "performance",
         "refactor",
         "release",
@@ -230,6 +233,7 @@ class AgentArmy:
     _MARKETING_SIGNALS = {
         "audience",
         "campaign",
+        "compaign",
         "content",
         "conversion",
         "customer",
@@ -239,6 +243,7 @@ class AgentArmy:
         "linkedin",
         "market",
         "marketing",
+        "multi",
         "offer",
         "outreach",
         "pipeline",
@@ -248,6 +253,7 @@ class AgentArmy:
         "sales",
         "seo",
         "social",
+        "swarm",
     }
     _APPROVAL_SIGNALS = {
         "external_publish": {"publish", "post", "social", "launch", "newsletter"},
@@ -340,7 +346,9 @@ class AgentArmy:
     def _approval_for_stage(stage: str, approvals: Sequence[str]) -> tuple[str, ...]:
         stage_rules = {
             "quality_gate": {"production_deploy", "legal_or_regulatory_claim", "customer_data_use"},
+            "legacy_assurance": {"production_deploy", "customer_data_use"},
             "distribution": {"external_publish", "external_outreach", "paid_spend"},
+            "campaign_bot_operations": {"external_publish", "external_outreach", "paid_spend"},
             "revenue": {"external_outreach", "paid_spend", "customer_data_use"},
         }
         applicable = stage_rules.get(stage, set())

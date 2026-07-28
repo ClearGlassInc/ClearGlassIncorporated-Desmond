@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-18T08:47:17.004399+00:00",
-  "files_audited": 68,
-  "average_score": 90.0,
+  "run_utc": "2026-07-28T09:35:38.352982+00:00",
+  "files_audited": 76,
+  "average_score": 88.2,
   "pages": [
     {
       "file": "404.html",
@@ -365,6 +365,47 @@
       "issues": []
     },
     {
+      "file": "authority-network.html",
+      "title": "ClearGlass Authority Network | Connected AI, Cybersecurity, OSINT & Infrastructure",
+      "title_length": 82,
+      "title_ok": false,
+      "description": "Explore the ClearGlass Inc. authority network: a connected knowledge graph spanning cyber defense, governed AI, autonomous operations, OSINT, procurement, critical infrastructure, services, proof, and technical insights.",
+      "description_length": 220,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 80,
+      "issues": [
+        "Title length 82 chars (ideal 30\u201360)",
+        "Description length 220 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "automap.html",
+      "title": "ClearGlass AutoMap \u00b7 Agent Orchestration Architect",
+      "title_length": 50,
+      "title_ok": true,
+      "description": "ClearGlass AutoMap converts workflow requirements into an auditable n8n, LangGraph, or hybrid agent-orchestration blueprint.",
+      "description_length": 124,
+      "description_ok": true,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 1,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "1 image(s) missing alt text"
+      ]
+    },
+    {
       "file": "banking-law-advisor.html",
       "title": "ClearBank Legal AI\u2122 \u2014 Banking Law &amp; Regulatory",
       "title_length": 50,
@@ -571,6 +612,50 @@
       "og_image": true,
       "score": 100,
       "issues": []
+    },
+    {
+      "file": "clearsight.html",
+      "title": "CLEARSIGHT \u2014 Edge-AI Camera Vision System | ClearGlass Inc",
+      "title_length": 58,
+      "title_ok": true,
+      "description": "CLEARSIGHT is ClearGlass Inc",
+      "description_length": 28,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 28 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "command-center.html",
+      "title": "ClearGlass Command Center \u2014 Executive Security Operations Deck",
+      "title_length": 62,
+      "title_ok": false,
+      "description": "The ClearGlass executive command center: a policy-bound operations deck unifying AI agent orchestration, security posture, provenance, governance gates, and live operational telemetry under zero-trust control.",
+      "description_length": 209,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Title length 62 chars (ideal 30\u201360)",
+        "Description length 209 chars (ideal 120\u2013160)",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
     },
     {
       "file": "command-console.html",
@@ -819,6 +904,30 @@
       "issues": []
     },
     {
+      "file": "header-mockup-2040.html",
+      "title": "ClearGlassInc. 2040 \u2014 Header Mockup",
+      "title_length": 35,
+      "title_ok": true,
+      "description": "Futuristic glassmorphism website header mockup for ClearGlassInc. 2040 \u2014 holographic presidential glass seal, command-bar navigation, and a cinematic night-city hero.",
+      "description_length": 166,
+      "description_ok": false,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Description length 166 chars (ideal 120\u2013160)",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "hover-menu.html",
       "title": "ClearGlassInc \u00b7 Elegant Hover Menu",
       "title_length": 34,
@@ -838,12 +947,12 @@
     },
     {
       "file": "index.html",
-      "title": "ClearGlass Inc \u2014 Clarity Is Power \u00b7 Enterprise",
-      "title_length": 46,
-      "title_ok": true,
-      "description": "ClearGlass Inc. builds enterprise cybersecurity platforms, AI automation, autonomous agents, and zero-trust infrastructure. Founded by software architect Desmond Otieno Odhiambo \u2014 explore Artemis IV Core, Guardian, and Vision 2040.",
-      "description_length": 231,
-      "description_ok": false,
+      "title": "ClearGlass Inc \u2014 AI Automation, Cybersecurity & Operational Strategy",
+      "title_length": 68,
+      "title_ok": false,
+      "description": "ClearGlass Inc. helps leaders design governed AI automation, cybersecurity programs, legal-tech workflows, OSINT systems, and enterprise operating architecture.",
+      "description_length": 160,
+      "description_ok": true,
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
@@ -853,7 +962,7 @@
       "og_image": true,
       "score": 90,
       "issues": [
-        "Description length 231 chars (ideal 120\u2013160)"
+        "Title length 68 chars (ideal 30\u201360)"
       ]
     },
     {
@@ -1007,6 +1116,29 @@
       "issues": []
     },
     {
+      "file": "platform-command-center.html",
+      "title": "ClearGlass \u00b7 Platform Command Center",
+      "title_length": 36,
+      "title_ok": true,
+      "description": "ClearGlassInc platform command center \u2014 a live visual dashboard of the monorepo: composition, an interactive governance risk simulator, systems map, repo pulse, audit findings, and CI posture.",
+      "description_length": 192,
+      "description_ok": false,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": true,
+      "score": 60,
+      "issues": [
+        "Description length 192 chars (ideal 120\u2013160)",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description"
+      ]
+    },
+    {
       "file": "postloop.html",
       "title": "PostLoop \u00b7 Autonomous Content Engine \u2014 Multi-Account Publishing on Autopilot | ClearGlass Inc.",
       "title_length": 94,
@@ -1068,6 +1200,27 @@
       ]
     },
     {
+      "file": "products.html",
+      "title": "ClearGlass Inc. Products \u2014 Unified Product Suite",
+      "title_length": 48,
+      "title_ok": true,
+      "description": "Explore the complete verified ClearGlass Inc. product ecosystem across intelligence platforms, cybersecurity systems, industry solutions, AI automation, and premium interface assets.",
+      "description_length": 182,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 80,
+      "issues": [
+        "Description length 182 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "revenue-engine.html",
       "title": "Revenue Engine \u2014 ClearGlass Inc. \u00b7 AI-Driven Business",
       "title_length": 53,
@@ -1102,6 +1255,27 @@
       "og_image": true,
       "score": 100,
       "issues": []
+    },
+    {
+      "file": "sats-digital-twin.html",
+      "title": "SATS Digital Twin \u2014 Storm-Adaptive Transit Simulation | ClearGlass Inc.",
+      "title_length": 71,
+      "title_ok": false,
+      "description": "The ClearGlass SATS digital twin: physics-aware storm simulation over subways, tunnels, streets and drainage, with governed AI operations. Run a live 100-year storm scenario in your browser.",
+      "description_length": 190,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 80,
+      "issues": [
+        "Title length 71 chars (ideal 30\u201360)",
+        "Description length 190 chars (ideal 120\u2013160)"
+      ]
     },
     {
       "file": "sentinel.html",
@@ -1325,15 +1499,15 @@
     }
   ],
   "top_issues": [
-    "21x \u2014 Description length N chars (ideal N\u2013N)",
-    "17x \u2014 Title length N chars (ideal N\u2013N)",
-    "10x \u2014 Missing og:image",
-    "4x \u2014 Missing og:description",
+    "27x \u2014 Description length N chars (ideal N\u2013N)",
+    "21x \u2014 Title length N chars (ideal N\u2013N)",
+    "13x \u2014 Missing og:image",
+    "7x \u2014 Missing og:description",
+    "6x \u2014 Missing og:title",
+    "4x \u2014 Missing canonical link tag",
     "4x \u2014 Multiple <hN> tags (N)",
-    "3x \u2014 Missing og:title",
-    "2x \u2014 Missing canonical link tag",
+    "2x \u2014 N image(s) missing alt text",
     "2x \u2014 No <hN> tag found",
-    "1x \u2014 Missing <title>",
-    "1x \u2014 Missing meta description"
+    "1x \u2014 Missing <title>"
   ]
 }

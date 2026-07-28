@@ -32,6 +32,7 @@ except ImportError:  # pragma: no cover
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOWS = ROOT / ".github" / "workflows"
+LOCAL_ACTIONS = ROOT / ".github" / "actions"
 
 STABLE_ACTIONS = {
     "actions/checkout": "v6",
@@ -48,6 +49,8 @@ STABLE_ACTIONS = {
 
 INVALID_REUSABLE_JOB_KEYS = {"runs-on", "steps", "permissions"}
 ALLOWED_REUSABLE_JOB_KEYS = {"name", "needs", "if", "uses", "with", "secrets", "strategy", "concurrency"}
+ACTION_USE = re.compile(r"^\s*-?\s*uses:\s*([^\s#]+)", re.MULTILINE)
+IMMUTABLE_ACTION = re.compile(r"^[^@\s]+@[0-9a-f]{40}$")
 
 
 def load_yaml(path: Path) -> tuple[dict[str, Any] | None, str | None]:
@@ -90,6 +93,17 @@ def patch_action_versions(text: str) -> tuple[str, list[str]]:
             changes.append(f"pinned {action} to {version}")
             text = new_text
     return text, changes
+
+
+def unpinned_external_actions(path: Path, text: str) -> list[str]:
+    """Return mutable or missing external action refs, including composite actions."""
+    findings: list[str] = []
+    for action in ACTION_USE.findall(text):
+        if action.startswith("./") or action.startswith("docker://"):
+            continue
+        if not IMMUTABLE_ACTION.fullmatch(action):
+            findings.append(f"ERROR {path}: external action is not pinned to a full commit SHA: {action}")
+    return findings
 
 
 def local_called_workflows(data: dict[str, Any]) -> set[str]:
@@ -244,6 +258,7 @@ def main() -> int:
 
     for path in sorted(WORKFLOWS.glob("*.y*ml")):
         original = path.read_text(encoding="utf-8")
+        findings.extend(unpinned_external_actions(path, original))
         patched_text, action_changes = patch_action_versions(original)
         if patched_text != original and args.fix:
             path.write_text(patched_text, encoding="utf-8")
@@ -258,6 +273,14 @@ def main() -> int:
             findings.extend(f"FIX {path}: {c}" for c in action_changes)
         elif action_changes:
             findings.extend(f"NEEDS_FIX {path}: {c}" for c in action_changes)
+
+    if LOCAL_ACTIONS.exists():
+        for path in sorted(LOCAL_ACTIONS.glob("**/action.y*ml")):
+            text = path.read_text(encoding="utf-8")
+            findings.extend(unpinned_external_actions(path, text))
+            _, error = load_yaml(path)
+            if error:
+                findings.append(f"ERROR {path}: YAML parse failed: {error}")
 
     for path, data in parsed.items():
         changes: list[str] = []

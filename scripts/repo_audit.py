@@ -113,12 +113,38 @@ def workflow_health(runs: list[dict[str, Any]]) -> dict[str, Any]:
         if r.get("conclusion") in ("failure", "timed_out", "startup_failure")
     )
     rate = round(100 * green / total) if total else 100
-    return {"workflows_completed": total, "success_rate": rate, "failing": failing}
+    successful_runs = [r for r in latest.values() if r.get("conclusion") == "success"]
+    failed_runs = [
+        r for r in latest.values()
+        if r.get("conclusion") in ("failure", "timed_out", "startup_failure")
+    ]
+
+    def newest_timestamp(items: list[dict[str, Any]]) -> str | None:
+        timestamps = [str(r["created_at"]) for r in items if r.get("created_at")]
+        return max(timestamps, default=None)
+
+    failure_evidence = sorted(
+        {
+            str(r.get("html_url") or r.get("name") or r.get("path"))
+            for r in failed_runs
+            if r.get("html_url") or r.get("name") or r.get("path")
+        }
+    )
+    return {
+        "workflows_completed": total,
+        "success_rate": rate,
+        "failing": failing,
+        "last_successful_execution": newest_timestamp(successful_runs),
+        "last_failed_execution": newest_timestamp(failed_runs),
+        "failure_evidence": failure_evidence,
+    }
 
 
-def bot_status(success_rate: int, workflow_count: int) -> str:
+def bot_status(success_rate: int, workflow_count: int, completed_count: int | None = None) -> str:
     if workflow_count == 0:
         return "none"
+    if completed_count == 0:
+        return "unverified"
     if success_rate >= 90:
         return "healthy"
     if success_rate >= 50:
@@ -164,11 +190,19 @@ def audit_node_deps(package_json: str) -> dict[str, Any]:
     return {"deps": len(deps), "risky": len(offenders), "offenders": sorted(offenders)}
 
 
-def score_repo(workflow_count: int, success_rate: int, unpinned: int, risky_node: int) -> dict[str, Any]:
+def score_repo(
+    workflow_count: int,
+    success_rate: int,
+    unpinned: int,
+    risky_node: int,
+    completed_count: int | None = None,
+) -> dict[str, Any]:
     """Composite 0–100 health score → letter grade."""
     score = 100
     if workflow_count == 0:
         score -= 25
+    elif completed_count == 0:
+        score -= 25  # absence of run evidence must not receive a perfect score
     score -= (100 - success_rate) // 2          # up to -50 for all-red CI
     score -= min(20, unpinned * 5)              # dependency drift
     score -= min(15, risky_node * 5)
@@ -179,7 +213,14 @@ def score_repo(workflow_count: int, success_rate: int, unpinned: int, risky_node
 
 def build_row(repo: str, workflow_count: int, wf: dict[str, Any], py: dict[str, Any], node: dict[str, Any]) -> dict[str, Any]:
     sr = wf["success_rate"]
-    sc = score_repo(workflow_count, sr, py["unpinned"], node["risky"])
+    completed = wf["workflows_completed"]
+    sc = score_repo(workflow_count, sr, py["unpinned"], node["risky"], completed)
+    evidence_status = bot_status(sr, workflow_count, completed)
+    current_status = (
+        "DISABLED" if workflow_count == 0
+        else "RUNNING_BUT_UNVERIFIED" if completed == 0 or sr >= 90
+        else "CODE_FAILURE"
+    )
     return {
         "repo": repo,
         "workflows": workflow_count,
@@ -190,7 +231,11 @@ def build_row(repo: str, workflow_count: int, wf: dict[str, Any], py: dict[str, 
         "py_deps_unpinned": py["unpinned"],
         "node_deps": node["deps"],
         "node_deps_risky": node["risky"],
-        "bot_status": bot_status(sr, workflow_count),
+        "bot_status": evidence_status,
+        "current_status": current_status,
+        "last_successful_execution": wf.get("last_successful_execution") or "UNVERIFIED",
+        "last_failed_execution": wf.get("last_failed_execution") or "UNVERIFIED",
+        "exact_failure_evidence": ";".join(wf.get("failure_evidence", [])) or "UNVERIFIED",
         "score": sc["score"],
         "grade": sc["grade"],
     }
@@ -199,7 +244,8 @@ def build_row(repo: str, workflow_count: int, wf: dict[str, Any], py: dict[str, 
 CSV_FIELDS = [
     "repo", "workflows", "workflows_completed", "success_rate_pct", "failing_workflows",
     "py_deps_pinned", "py_deps_unpinned", "node_deps", "node_deps_risky",
-    "bot_status", "score", "grade",
+    "bot_status", "current_status", "last_successful_execution", "last_failed_execution",
+    "exact_failure_evidence", "score", "grade",
 ]
 
 
@@ -219,7 +265,10 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "repos_audited": n,
         "avg_score": avg,
-        "repos_with_failing_ci": sum(1 for r in rows if r["bot_status"] == "failing"),
+        "repos_with_failing_ci": sum(1 for r in rows if r["current_status"] == "CODE_FAILURE"),
+        "repos_without_execution_evidence": sum(
+            1 for r in rows if r["last_successful_execution"] == "UNVERIFIED"
+        ),
         "repos_with_unpinned_deps": sum(1 for r in rows if r["py_deps_unpinned"] or r["node_deps_risky"]),
         "grade_distribution": {g: sum(1 for r in rows if r["grade"] == g) for g in "ABCDF"},
     }
@@ -237,7 +286,7 @@ def audit_local(root: Path) -> dict[str, Any]:
     pkg = root / "package.json"
     node = audit_node_deps(pkg.read_text(encoding="utf-8")) if pkg.exists() else {"deps": 0, "risky": 0, "offenders": []}
     # No API in self mode → CI health unknown; report neutrally.
-    wf = {"workflows_completed": 0, "success_rate": 100, "failing": []}
+    wf = workflow_health([])
     return build_row(root.name, workflow_count, wf, py, node)
 
 

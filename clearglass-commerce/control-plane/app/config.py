@@ -30,6 +30,18 @@ class Settings(BaseSettings):
     require_approval_for_high_risk: bool = True
     inventory_low_threshold: int = 10
 
+    # Admin authentication. The approval gate is only meaningful if not everyone can
+    # open it, so mutating/administrative endpoints (approvals, pricing, refunds,
+    # catalog writes) require a bearer token when this is set. Unset = open dev/mock
+    # mode (consistent with no-Stripe-key mock payments); production must set it or the
+    # app fails closed at startup. Comma-separated to allow rotation / per-operator keys.
+    admin_api_key: str = ""
+
+    # Per-client-IP sliding-window request limits (per minute); 0 disables a throttle.
+    rate_limit_checkout_per_minute: int = 30
+    rate_limit_webhook_per_minute: int = 240
+    rate_limit_decisions_per_minute: int = 60
+
     # Payments (never logged, never echoed in responses)
     stripe_secret_key: str = ""
     stripe_webhook_secret: str = ""

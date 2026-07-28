@@ -6,6 +6,44 @@ ClearGlassInc Artemis is a mission-critical, coalition-aware intelligence platfo
 
 The design assumes secure Canadian enterprise and public-sector operations, including environmental cyber-risk domains such as ionospheric physics, space weather, GNSS degradation, HF radio disruption, satellite interference, and communication-infrastructure resilience.
 
+> **Implementation status:** This document is a target-state architecture and implementation blueprint, not evidence that Palantir infrastructure, integrations, data feeds, or operational authority have been provisioned. Product-specific interfaces shown below are integration contracts that must be mapped to the licensed deployment's supported Gotham, Foundry, AIP, and Apollo APIs during implementation.
+
+### Delivery Coverage and System Boundary
+
+This blueprint is the complete engineering handoff for the requested ClearGlassInc Artemis design. It deliberately separates implementable contracts from claims about deployed infrastructure and maps every requested outcome to a verifiable section:
+
+| Requested outcome | Authoritative section | Completion evidence |
+|---|---|---|
+| End-to-end platform architecture | [System Architecture](#system-architecture) | Trust boundaries, layer ownership, data flow, failure behavior, and Palantir responsibility map. |
+| Ontology and data model | [Data and Ontology](#data-and-ontology) | Entities, links, bitemporal state, confidence, lineage, mission context, and access markings. |
+| Copilots and governed agents | [AI and Agent Design](#ai-and-agent-design) | Analyst and commander copilots, bounded multi-agent graph, typed tools, and approval gates. |
+| Safe self-improvement | [Self-Improvement Loop](#self-improvement-loop) | Feedback capture, evaluation, candidate generation, review, canary, drift detection, rollback, and audit. |
+| Full-stack implementation | [Full-Stack Implementation](#full-stack-implementation) | Web surfaces, APIs, Python services, streams, retrieval, model routing, and operational dashboards. |
+| Security and governance | [Security and Governance](#security-and-governance) | Need-to-know enforcement, compartments, coalition boundaries, zero trust, provenance, and policy-as-code. |
+| Production code patterns | [Code Examples](#code-examples) | Python-first contracts for ingestion, policy, ontology queries, tools, workflows, routing, and evaluations. |
+| Mission walkthrough | [Scenario Walkthrough](#scenario-walkthrough) | Live event-to-outcome trace including operator authority and the subsequent learning signal. |
+| Delivery and operations | [Build Phases](#build-phases) and [Patch, Fix, and Deploy Control Plane](#patch-fix-and-deploy-control-plane) | Milestones, release gates, Apollo rollout, rollback, monitoring, and operational ownership requirements. |
+
+**System boundary:** ClearGlassInc Artemis may automate collection, normalization, read-only analysis, drafting, simulation, evaluation, and release proposals. It may not autonomously change objectives, grant privileges, alter policy, approve its own upgrades, promote a release, or execute an operationally significant action. Those transitions require deterministic policy checks and attributable human authorization. Until licensed Palantir interfaces, identity federation, protected environments, data agreements, approvers, and rollback owners are verified, every external integration remains disabled or in a synthetic, read-only pilot.
+
+### Architecture Decision and Acceptance Contract
+
+The primary design is a **governed proposal system**, not an autonomously self-modifying system. Models may analyze, draft, rank, and propose changes; deterministic services enforce identity, authorization, workflow transitions, release eligibility, and audit invariants. No model output can grant authority, expand mission scope, modify policy, promote itself, or cause an operationally significant external effect.
+
+The first production release is acceptable only when all of the following are demonstrated with replayable evidence:
+
+1. Every read is filtered by tenant, mission, purpose, classification, compartments, coalition releasability, and object/property policy before context reaches a model.
+2. Every tool call uses a typed allowlisted contract, a short-lived workload identity, bounded time and resource budgets, and a server-side policy decision adjacent to the protected action.
+3. Operationally significant actions stop in `PENDING_HUMAN_APPROVAL`; approval is attributable, scoped to the exact immutable action payload, time bounded, and non-replayable.
+4. Prompt, workflow, heuristic, and routing candidates cannot reach a canary without regression evaluations, security review, a named human approval, a stable rollback version, and a signed release manifest.
+5. Audit records bind input lineage, policy bundle, prompt/workflow/model versions, tool calls, approval decisions, outputs, and deployment identity in a tamper-evident chain.
+6. Failure of identity, policy, lineage, audit, model routing, or approval dependencies fails closed for mutations and degrades read paths to an explicitly labeled, non-actionable state.
+7. Ring 0 replay and Ring 1 read-only canary meet the approved precision, recall, citation, latency, policy-violation, trust, and rollback thresholds before wider release.
+
+**Initial service objectives (to be validated by load and recovery testing):** authorized interactive reads target p95 under 750 ms excluding long-running model work; streaming normalization targets p95 under 2 seconds; policy decisions target p99 under 50 ms; critical audit events target durable acknowledgement before action completion; the control plane targets an RTO of 30 minutes and RPO of 5 minutes. These are proposed engineering budgets, not measured production claims.
+
+**Non-goals:** autonomous goal creation, autonomous privilege acquisition, unsupervised operational action, cross-coalition inference, training foundation models on mission data, or treating model confidence as evidence confidence.
+
 ## System Architecture
 
 ### Palantir Platform Responsibilities
@@ -115,6 +153,22 @@ flowchart TB
 | Policy layer | OPA/Rego policy bundles plus Foundry/Gotham permissions for need-to-know, row, column, entity, edge, action, model, prompt, and coalition controls. |
 | Observability | OpenTelemetry traces, metrics, structured logs, immutable audit ledger, model telemetry, prompt telemetry, eval dashboards, SLO alerts, and replayable incidents. |
 | Deployment | Apollo promotion rings, signed artifacts, deployment attestations, runtime config, canaries, rollback, break-glass controls, and environment-specific policy packs. |
+
+### Trust Boundaries and Fail-Closed Behavior
+
+ClearGlassInc Artemis separates the user, data, inference, action, deployment, and audit planes so a compromise or outage in one plane cannot silently manufacture authority in another. Identity and policy decisions are deterministic service decisions; AIP model output is always untrusted content carried inside a typed envelope.
+
+| Boundary | Untrusted input | Preventive control | Degraded or recovery behavior |
+|---|---|---|---|
+| User to API | Browser state, tokens, uploaded evidence, query text. | mTLS or device-bound session, short-lived identity, strict schemas, size limits, purpose-of-use, and CSRF protection. | Reject mutations; preserve an attributable denial event without persisting rejected sensitive payloads. |
+| Source to Foundry | Streaming events, partner feeds, files, source markings. | Quarantine, schema registry, malware scanning, canonicalization, deduplication, source signature, and classification validation. | Route invalid records to a restricted dead-letter data product; never create ontology facts from them. |
+| Ontology to retrieval | Objects, links, embeddings, inferred relationships. | Mission, tenant, classification, compartment, property, edge, temporal, and releasability filters before ranking or prompt construction. | Return a labeled partial result or deny; never substitute cross-boundary context. |
+| AIP to tool broker | Prompt text, model-selected arguments, retrieved instructions. | Typed allowlist, server-side authorization, idempotency key, timeout, bounded retry, egress policy, and action risk classification. | Cancel on timeout; retry only read-only/idempotent calls; quarantine ambiguous outcomes for operator reconciliation. |
+| Tool broker to action plane | Draft action packages and approval claims. | Immutable payload digest, dual control where required, approval expiry, nonce consumption, and adjacent policy recheck. | Unknown, changed, expired, or replayed approval fails closed in `PENDING_HUMAN_APPROVAL`. |
+| Release service to Apollo | Candidate prompts, workflows, routes, policies, containers. | Signed manifest, provenance attestation, eval evidence, named approvers, compatibility checks, and rollback pointer. | Keep the champion active; recall the canary or invoke the kill switch when integrity or SLO evidence fails. |
+| Runtime to audit plane | Tool, decision, approval, and deployment events. | Durable append acknowledgement, hash chaining, independent access control, retention policy, and clock correlation. | Consequential actions do not complete without durable audit acknowledgement; buffer read-only telemetry within a bounded queue. |
+
+**Ambiguous-outcome invariant:** a timed-out mutation is never blindly retried. The orchestrator queries the idempotency record and target state; if completion cannot be proven, it opens a reconciliation task and prevents dependent actions. **Emergency access invariant:** break-glass access is time-bound, reason-coded, independently alerted, never changes coalition releasability, and receives mandatory after-action review.
 
 ## Data and Ontology
 
@@ -296,6 +350,8 @@ hard_controls:
 
 Any action that can affect availability, confidentiality, integrity, safety, contracts, reputation, or coalition disclosure requires explicit approval. Examples include isolating a network segment, changing firewall policy, notifying a third party, sharing an intelligence product outside a compartment, re-tasking a sensor, promoting a new prompt to production, or changing a model route for classified workflows.
 
+Approval is a capability, not a boolean field. The policy service hashes the canonical action package (action type, mission, risk, rationale, evidence, and parameters) and issues a five-minute token bound to that hash, action identifier, and approving operator. The executor atomically consumes the token once; expired, replayed, cross-action, or post-approval-mutated packages fail closed and append a denial to the audit chain. Production storage must enforce single-use consumption transactionally so horizontally scaled executors cannot race the same approval.
+
 ## Self-Improvement Loop
 
 ClearGlassInc Artemis improves itself by creating proposed changes, never by silently changing goals or production behavior. The loop is intentionally conservative: observe, evaluate, propose, review, canary, monitor, promote, or roll back.
@@ -402,6 +458,76 @@ def release_gate(champion: EvalScore, challenger: EvalScore) -> bool:
         challenger.cost_delta_pct <= 20.0,
     ])
 ```
+
+### Shadow, A/B, and Canary Experiment Design
+
+An approved candidate is first evaluated in **shadow mode** against replayable, policy-filtered
+traffic. Shadow output is stored in the evaluation plane and is never shown to an operator, written
+to the ontology, or passed to an action tool. Only candidates with zero authorization, disclosure,
+and unsafe-action violations may enter an online experiment. Prompt and workflow experiments use a
+stable mission-level assignment so one mission never receives inconsistent behavior during an
+investigation. Classified missions, active incidents, break-glass sessions, and consequential action
+workflows remain on the champion unless the mission authority explicitly approves their inclusion.
+
+The experiment service records the champion and challenger artifact digests, policy version,
+assignment reason, eligible population, exposure, outcome window, and predefined stopping rule.
+ModelOps may stop an experiment early for harm, leakage, latency, or reliability; it may not declare
+success early from a favorable sample. Promotion requires the full evaluation window, minimum sample
+size, confidence interval, segmented results, security review, and named mission-owner approval.
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from hashlib import sha256
+from typing import Literal
+
+
+@dataclass(frozen=True)
+class ExperimentContext:
+    mission_id: str
+    experiment_id: str
+    classification: str
+    active_incident: bool
+    break_glass: bool
+    consequential_action: bool
+    mission_authority_opt_in: bool
+
+
+@dataclass(frozen=True)
+class ExperimentAssignment:
+    arm: Literal["champion", "challenger"]
+    reason: str
+    bucket: int | None
+
+
+def assign_experiment(context: ExperimentContext, challenger_basis_points: int) -> ExperimentAssignment:
+    """Assign one mission deterministically; this function grants no execution authority."""
+    if not 0 <= challenger_basis_points <= 10_000:
+        raise ValueError("challenger_basis_points must be between 0 and 10_000")
+
+    protected = (
+        context.classification in {"TOP_SECRET", "SPECIAL_ACCESS"}
+        or context.active_incident
+        or context.break_glass
+        or context.consequential_action
+    )
+    if protected and not context.mission_authority_opt_in:
+        return ExperimentAssignment("champion", "protected mission context", None)
+
+    assignment_key = f"{context.experiment_id}:{context.mission_id}".encode("utf-8")
+    bucket = int.from_bytes(sha256(assignment_key).digest()[:8], "big") % 10_000
+    arm: Literal["champion", "challenger"] = (
+        "challenger" if bucket < challenger_basis_points else "champion"
+    )
+    return ExperimentAssignment(arm, "stable mission-level assignment", bucket)
+```
+
+Online scorecards are segmented by mission, coalition, language, data freshness, severity, and
+operator role to prevent aggregate gains from concealing harm to a smaller group. The hard stop
+conditions are any cross-boundary disclosure, unauthorized tool attempt, audit gap, statistically
+credible precision or trust regression, or latency/error-budget breach. Stopping restores the
+champion pointer through Apollo; it does not delete exposure, decision, or outcome records.
 
 ## Full-Stack Implementation
 
@@ -1731,3 +1857,146 @@ result = loop.run_once(principal, environmental_signal)
 ```
 
 This preserves the requested automation path — sensors → findings → dashboard → alerts → mitigation packages → revenue-support drafts — while maintaining ClearGlassInc Artemis invariants: no unauthorized access, no secret materialization, no autonomous external outreach, no autonomous operational disruption, full provenance, and Apollo-compatible rollback.
+
+## Patch, Fix, and Deploy Control Plane
+
+ClearGlassInc Artemis treats every platform improvement as a governed change packet rather than an autonomous mutation. The patch/fix/deploy loop is implemented in Python-first services so scoring, approval, rollback, and audit behavior can be reproduced deterministically across Foundry Code Repositories, AIP eval jobs, and Apollo release gates.
+
+### Deployment State Machine
+
+```text
+DETECTED_SIGNAL
+  → PATCH_CANDIDATE
+  → STATIC_ANALYSIS
+  → EVAL_REPLAY
+  → SECURITY_POLICY_CHECK
+  → HUMAN_REVIEW
+  → APOLLO_CANARY
+  → RING_PROMOTION
+  → POST_DEPLOY_OBSERVATION
+  → ACTIVE_OR_ROLLED_BACK
+```
+
+No candidate can skip from `PATCH_CANDIDATE` to deployment. AIP agents may assemble a diff, summarize evidence, and recommend the next state, but Apollo receives only signed, approved release bundles with attached eval reports and rollback metadata.
+
+### Python Precision Gate
+
+```python
+from dataclasses import dataclass
+from enum import Enum
+
+class DeployDecision(str, Enum):
+    BLOCK = "block"
+    REVIEW = "review"
+    CANARY = "canary"
+
+@dataclass(frozen=True)
+class PatchEvidence:
+    change_id: str
+    eval_precision: float
+    eval_recall: float
+    p95_latency_ms: int
+    policy_findings: tuple[str, ...]
+    rollback_plan: str
+    human_approval_id: str | None
+
+
+def decide_deploy(evidence: PatchEvidence) -> DeployDecision:
+    if evidence.policy_findings:
+        return DeployDecision.BLOCK
+    if not evidence.rollback_plan:
+        return DeployDecision.BLOCK
+    if evidence.eval_precision < 0.92 or evidence.eval_recall < 0.86:
+        return DeployDecision.REVIEW
+    if evidence.p95_latency_ms > 750:
+        return DeployDecision.REVIEW
+    if evidence.human_approval_id is None:
+        return DeployDecision.REVIEW
+    return DeployDecision.CANARY
+```
+
+### Apollo Rollout Contract
+
+- **Ring 0**: replay-only shadow deployment against historical missions and synthetic red-team cases.
+- **Ring 1**: canary for one approved mission cell with read-only recommendations and no autonomous external effects.
+- **Ring 2**: broader production availability after SLO, eval, trust, and audit checks remain inside thresholds for the observation window.
+- **Rollback trigger**: precision regression, recall regression, latency SLO breach, policy denial spike, operator trust drop, provenance failure, or commander-initiated kill switch.
+- **Immutable evidence**: every prompt version, workflow graph, model route, policy bundle, approval, deployment ID, and rollback event is written to the audit ledger and linked to the affected ontology objects.
+
+## Marketing Campaign and Legacy Agent Army Merge
+
+ClearGlassInc Artemis can attach the repository's governed engineering-and-marketing agent army to the broader AIP orchestration layer when a mission objective requires both legacy preservation and market execution. This is a planning-and-control capability, not an autonomous publishing or outreach engine.
+
+### Agent Army Operating Boundary
+
+- **Legacy Modernization Agent** maps old surfaces, dependencies, contracts, deployment paths, data schemas, and rollback requirements before any campaign depends on them.
+- **Campaign Bot Commander** coordinates market intelligence, content strategy, distribution planning, revenue operations, and analytics into one approval-ready campaign packet.
+- **Quality and Security Agent** remains the release gate for code, security, privacy, and rollback evidence.
+- **Analytics Controller** defines qualified-demand metrics, experiment criteria, and stop conditions before launch.
+- **Human approval is mandatory** for external publishing, external outreach, paid spend, customer-data use, production deployment, legal/regulatory claims, and any legacy migration that could alter live behavior.
+
+### Legacy-to-Campaign Workflow
+
+```text
+INTAKE
+  → LEGACY_ASSURANCE
+      inventory legacy assets, owners, data contracts, redirects, SEO equity,
+      active customers, failure modes, and rollback path
+  → QUALITY_GATE
+      verify no secrets, no contract breakage, no unsafe automation path
+  → MARKET_FIT
+      identify audience, pain, proof points, objections, and evidence gaps
+  → CAMPAIGN_DESIGN
+      produce claims ledger, editorial map, offers, landing-page requirements
+  → CAMPAIGN_BOT_OPERATIONS
+      fan out approved draft work to channel bots; keep publish/send/spend queued
+  → DISTRIBUTION
+      package platform-specific assets for named human approval
+  → REVENUE
+      connect campaign to qualification, pipeline, and conversion hypotheses
+  → MEASUREMENT
+      score qualified demand, trust, conversion quality, latency, and risk
+```
+
+### Safe Self-Improvement for Campaign Bots
+
+Campaign bots may propose better hooks, prompts, channel cadences, segmentation rules, and workflow templates only as versioned change requests. Artemis stores each proposal with source evidence, eval scores, expected impact, risk tier, rollback plan, and approver. The active production prompt or workflow changes only after review; rejected proposals become negative eval examples so the system learns what not to repeat.
+
+```python
+from dataclasses import dataclass
+from enum import Enum
+
+class ChangeState(str, Enum):
+    DRAFT = "draft"
+    REVIEW = "review"
+    APPROVED = "approved"
+    ACTIVE = "active"
+    ROLLED_BACK = "rolled_back"
+
+@dataclass(frozen=True)
+class CampaignBotUpgrade:
+    proposal_id: str
+    bot_id: str
+    artifact: str              # prompt | workflow | routing_rule | metric
+    candidate_version: str
+    evidence_paths: tuple[str, ...]
+    eval_suite: str
+    approval_required: bool = True
+    state: ChangeState = ChangeState.DRAFT
+
+
+def activate_upgrade(upgrade: CampaignBotUpgrade, approver: str) -> CampaignBotUpgrade:
+    if not approver:
+        raise PermissionError("campaign bot upgrades require named human approval")
+    if upgrade.state is not ChangeState.APPROVED:
+        raise ValueError("only approved upgrades can become active")
+    return CampaignBotUpgrade(**{**upgrade.__dict__, "state": ChangeState.ACTIVE})
+```
+
+### Legacy Campaign Invariants
+
+1. Existing URLs, redirects, headers, GitHub Pages compatibility, and customer-facing content remain intact unless explicitly approved.
+2. Generated internal-link blocks are regenerated with the canonical generator; bots must not hand-edit generated sections.
+3. Campaign claims must trace to verified repository evidence, authoritative sources, or clearly labeled assumptions.
+4. Outreach, publishing, ad spend, pricing, offers, and production deploys are queued for approval; unknown approval state means deny.
+5. Every material recommendation and operator decision is appended to audit evidence for replayability.

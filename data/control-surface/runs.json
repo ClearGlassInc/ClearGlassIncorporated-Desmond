@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #461",
+    "title": "Control Surface Feeds #462",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:17",
+    "timestamp": "2026-07-28T23:17:02Z"
+  },
+  {
+    "title": "Deploy Pages #1351",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "22:16",
+    "timestamp": "2026-07-28T22:16:54Z"
+  },
+  {
+    "title": "pages build and deployment #1834",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:16",
+    "timestamp": "2026-07-28T22:16:39Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3158",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:16",
+    "timestamp": "2026-07-28T22:16:39Z"
+  },
+  {
+    "title": "Control Surface Feeds #461",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:16",
     "timestamp": "2026-07-28T22:16:15Z"
   },
@@ -106,34 +134,6 @@
   },
   {
     "title": "Policy Gate #1629",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:00Z"
-  },
-  {
-    "title": "CI #1892",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:00Z"
-  },
-  {
-    "title": "ARTEMIS FAWL validation #13",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:00Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1948",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:00Z"
-  },
-  {
-    "title": "Auto-Store #171",
     "status": "ok",
     "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
     "time": "17:41",

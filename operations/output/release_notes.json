@@ -1,10 +1,37 @@
 {
-  "run_utc": "2026-07-27T10:40:51.545383+00:00",
+  "run_utc": "2026-07-28T09:35:38.281358+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1258,
+  "commit_count": 1282,
   "sections": {
     "New Features": [
+      {
+        "sha": "28faa6c",
+        "type": "feat",
+        "scope": null,
+        "subject": "showcase Artemis platform on web design page",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "f56096e",
+        "type": "feat",
+        "scope": "marketing",
+        "subject": "add governed local growth intelligence plan",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "41aabf2",
+        "type": "feat",
+        "scope": "blog",
+        "subject": "feature Artemis threat console visual",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
       {
         "sha": "9aea1ff",
         "type": "feat",
@@ -593,6 +620,60 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "1187658",
+        "type": "fix",
+        "scope": null,
+        "subject": "fail closed on production automation failures",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "be27a21",
+        "type": "fix",
+        "scope": "audit",
+        "subject": "enforce artifact deploy readiness",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "8fd5626",
+        "type": "fix",
+        "scope": "auto-store",
+        "subject": "preflight production configuration before deploy",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "d58934f",
+        "type": "fix",
+        "scope": "audit",
+        "subject": "distinguish execution evidence from CI presence",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "7522d1f",
+        "type": "fix",
+        "scope": "auto-store",
+        "subject": "fail closed on production verification",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "3729a28",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "fail closed and document workflow audit",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
         "sha": "bfca5d5",
         "type": "fix",
         "scope": "ci",
@@ -1128,6 +1209,15 @@
     ],
     "Documentation": [
       {
+        "sha": "61e1d70",
+        "type": "docs",
+        "scope": null,
+        "subject": "map Artemis blueprint delivery coverage",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
         "sha": "62e5f49",
         "type": "docs",
         "scope": "artemis",
@@ -1610,6 +1700,24 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "c2d86ae",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance homepage with Artemis command interface",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "90a339c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add governed Artemis platform blueprint to web design page",
+        "author": "Desmond Otieno",
+        "date": "2026-07-27",
+        "breaking": false
+      },
       {
         "sha": "a2acdc1",
         "type": "chore",
@@ -6625,6 +6733,114 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "318cc33",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "84b0a75",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "e099cb4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "682c5dd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "44b98de",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "416718e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "447f13d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "7781324",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "f0df31d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "2c643de",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "9803e62",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-27",
+        "breaking": false
+      },
+      {
+        "sha": "6d8fe2e",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-27 10:40 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-27",
+        "breaking": false
+      },
       {
         "sha": "5fc15ec",
         "type": "bot",

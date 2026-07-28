@@ -1,9 +1,12 @@
-# Release Notes — 2026-07-27
+# Release Notes — 2026-07-28
 
-*1258 commit(s) since v1.0.0*
+*1282 commit(s) since v1.0.0*
 
 ## New Features
 
+- showcase Artemis platform on web design page (`28faa6c`)
+- **marketing:** add governed local growth intelligence plan (`f56096e`)
+- **blog:** feature Artemis threat console visual (`41aabf2`)
 - **blog:** add governed Artemis neon command interface (`9aea1ff`)
 - **site:** automate end-to-end reliability audits (`4e57c6e`)
 - **commerce:** add governed Etsy launch agent prompt (`8f11592`)
@@ -72,6 +75,12 @@
 
 ## Bug Fixes
 
+- fail closed on production automation failures (`1187658`)
+- **audit:** enforce artifact deploy readiness (`be27a21`)
+- **auto-store:** preflight production configuration before deploy (`8fd5626`)
+- **audit:** distinguish execution evidence from CI presence (`d58934f`)
+- **auto-store:** fail closed on production verification (`7522d1f`)
+- **ci:** fail closed and document workflow audit (`3729a28`)
 - **ci:** import json in workflow auditor (`bfca5d5`)
 - **site:** repair routing and strengthen reliability audit (`123caca`)
 - validate and repair site anchor routes (`1a2d8f2`)
@@ -137,6 +146,7 @@
 
 ## Documentation
 
+- map Artemis blueprint delivery coverage (`61e1d70`)
 - **artemis:** define governed experiment rollout (`62e5f49`)
 - **artemis:** deepen governed platform blueprint (`aebe503`)
 - **artemis:** define assurance acceptance envelope (`c0bb898`)
@@ -199,6 +209,8 @@
 
 ## Maintenance
 
+- Enhance homepage with Artemis command interface (`c2d86ae`)
+- Add governed Artemis platform blueprint to web design page (`90a339c`)
 - Upgrade blog discovery and AI readiness (`a2acdc1`)
 - Add adaptive futuristic editorial experience (`694180c`)
 - Add source-led Greenbelt accountability brief (`936f23c`)
@@ -759,6 +771,18 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`318cc33`)
+- refresh control-surface data feeds [skip ci] (`84b0a75`)
+- refresh control-surface data feeds [skip ci] (`e099cb4`)
+- refresh control-surface data feeds [skip ci] (`682c5dd`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`44b98de`)
+- refresh control-surface data feeds [skip ci] (`416718e`)
+- refresh control-surface data feeds [skip ci] (`447f13d`)
+- refresh control-surface data feeds [skip ci] (`7781324`)
+- refresh control-surface data feeds [skip ci] (`f0df31d`)
+- refresh control-surface data feeds [skip ci] (`2c643de`)
+- refresh control-surface data feeds [skip ci] (`9803e62`)
+- update generated outputs — 2026-07-27 10:40 UTC [skip ci] (`6d8fe2e`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`5fc15ec`)
 - refresh control-surface data feeds [skip ci] (`d426879`)
 - refresh control-surface data feeds [skip ci] (`4279193`)

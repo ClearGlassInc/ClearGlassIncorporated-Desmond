@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #459",
+    "title": "Control Surface Feeds #460",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "20:33",
+    "timestamp": "2026-07-28T20:33:58Z"
+  },
+  {
+    "title": "Defender Watch #1274",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "19:42",
+    "timestamp": "2026-07-28T19:42:57Z"
+  },
+  {
+    "title": "Health Monitor #237",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:37",
+    "timestamp": "2026-07-28T19:37:50Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #17",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:14",
+    "timestamp": "2026-07-28T19:14:23Z"
+  },
+  {
+    "title": "Deploy Pages #1349",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "18:45",
+    "timestamp": "2026-07-28T18:45:16Z"
+  },
+  {
+    "title": "pages build and deployment #1832",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:45",
+    "timestamp": "2026-07-28T18:45:10Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3156",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:45",
+    "timestamp": "2026-07-28T18:45:10Z"
+  },
+  {
+    "title": "Control Surface Feeds #459",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "18:44",
     "timestamp": "2026-07-28T18:44:52Z"
   },
@@ -89,54 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
     "time": "17:35",
     "timestamp": "2026-07-28T17:35:37Z"
-  },
-  {
-    "title": "Auto-Store #170",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:35",
-    "timestamp": "2026-07-28T17:35:37Z"
-  },
-  {
-    "title": "PR Automation #875",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:35",
-    "timestamp": "2026-07-28T17:35:36Z"
-  },
-  {
-    "title": "Site Reliability Audit #338",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:35",
-    "timestamp": "2026-07-28T17:35:36Z"
-  },
-  {
-    "title": "Defender Watch #1272",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:35",
-    "timestamp": "2026-07-28T17:35:36Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1947",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:35",
-    "timestamp": "2026-07-28T17:35:36Z"
-  },
-  {
-    "title": "Internal Link Authority #214",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:35",
-    "timestamp": "2026-07-28T17:35:36Z"
-  },
-  {
-    "title": "CI #1891",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:35",
-    "timestamp": "2026-07-28T17:35:36Z"
   }
 ]

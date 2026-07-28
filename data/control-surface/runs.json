@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #452",
+    "title": "Control Surface Feeds #453",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "03:33",
+    "timestamp": "2026-07-28T03:33:57Z"
+  },
+  {
+    "title": "Defender Watch #1255",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "03:19",
+    "timestamp": "2026-07-28T03:19:34Z"
+  },
+  {
+    "title": "Health Monitor #234",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "02:49",
+    "timestamp": "2026-07-28T02:49:15Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #14",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "01:58",
+    "timestamp": "2026-07-28T01:58:45Z"
+  },
+  {
+    "title": "Deploy Pages #1336",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "00:10",
+    "timestamp": "2026-07-28T00:10:56Z"
+  },
+  {
+    "title": "pages build and deployment #1817",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:10",
+    "timestamp": "2026-07-28T00:10:50Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3130",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:10",
+    "timestamp": "2026-07-28T00:10:49Z"
+  },
+  {
+    "title": "Control Surface Feeds #452",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "00:10",
     "timestamp": "2026-07-28T00:10:29Z"
   },
@@ -87,55 +136,6 @@
     "title": "Defender Watch #1253",
     "status": "bad",
     "detail": "failure \u00b7 pull_request on codex/enhance-dashboard-with-advanced-ui-elements",
-    "time": "23:50",
-    "timestamp": "2026-07-27T23:50:24Z"
-  },
-  {
-    "title": "PR Automation #865",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/enhance-dashboard-with-advanced-ui-elements",
-    "time": "23:50",
-    "timestamp": "2026-07-27T23:50:24Z"
-  },
-  {
-    "title": "Security #1642",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/enhance-dashboard-with-advanced-ui-elements",
-    "time": "23:50",
-    "timestamp": "2026-07-27T23:50:24Z"
-  },
-  {
-    "title": "CI #1875",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/enhance-dashboard-with-advanced-ui-elements",
-    "time": "23:50",
-    "timestamp": "2026-07-27T23:50:24Z"
-  },
-  {
-    "title": "Site Reliability Audit #328",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/enhance-dashboard-with-advanced-ui-elements",
-    "time": "23:50",
-    "timestamp": "2026-07-27T23:50:24Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1930",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/enhance-dashboard-with-advanced-ui-elements",
-    "time": "23:50",
-    "timestamp": "2026-07-27T23:50:24Z"
-  },
-  {
-    "title": "Policy Gate #1612",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/enhance-dashboard-with-advanced-ui-elements",
-    "time": "23:50",
-    "timestamp": "2026-07-27T23:50:24Z"
-  },
-  {
-    "title": "Internal Link Authority #207",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/enhance-dashboard-with-advanced-ui-elements",
     "time": "23:50",
     "timestamp": "2026-07-27T23:50:24Z"
   }

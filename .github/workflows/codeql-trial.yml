@@ -1,0 +1,92 @@
+name: CodeQL Trial (advisory)
+
+# Architect checklist item 7 — trial one vuln-detection tool in a non-prod pipeline.
+#
+# The repo ships a FastAPI control plane that handles checkout, Stripe webhooks and
+# refunds, but carries no SAST: `security.yml` covers dependency review, a regex
+# secret sweep and workflow linting only. CodeQL closes that gap with semantic
+# taint tracking (untrusted input → SQL/command/redirect sinks).
+#
+# TRIAL POSTURE — deliberately non-production:
+#   * schedule + manual dispatch only. It never runs on pull_request, so it can
+#     never block a merge or become a required check while we are evaluating it.
+#   * `continue-on-error` on analysis: a scanner failure is trial noise, not a
+#     broken build. Judge the trial on findings, not on run colour.
+#   * results land in the Security tab (code scanning alerts) for triage.
+#
+# Promotion/rejection criteria and the review date are recorded in
+# operations/architect-checklist/2026-W31.md. Do not add this to branch
+# protection until that review concludes.
+
+on:
+  schedule:
+    # Weekly, Mondays 05:42 UTC — off-peak, well clear of the 04:17 multi-repo audit.
+    - cron: "42 5 * * 1"
+  workflow_dispatch:
+
+# Least privilege: read the tree, write alerts, nothing else.
+permissions:
+  contents: read
+
+concurrency:
+  group: codeql-trial-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read           # check out the tree to analyze it
+      security-events: write   # upload SARIF to code scanning
+      actions: read            # required by CodeQL to read workflow run metadata
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The control plane — the money-movement paths that most need taint analysis.
+          - language: python
+            build-mode: none
+          # Storefront + admin (Next.js) and the static site's shared JS.
+          - language: javascript-typescript
+            build-mode: none
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4.37.3
+        continue-on-error: true
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          # security-extended adds lower-confidence rules. During a trial we want
+          # the wider net: false-positive rate is one of the things being measured.
+          queries: security-extended
+
+      - name: Perform CodeQL analysis
+        id: analysis
+        uses: github/codeql-action/analyze@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4.37.3
+        continue-on-error: true
+        with:
+          category: "/language:${{ matrix.language }}"
+
+      - name: Record trial outcome
+        if: always()
+        env:
+          LANGUAGE: ${{ matrix.language }}
+          OUTCOME: ${{ steps.analysis.outcome }}
+        run: |
+          {
+            echo "### CodeQL trial — ${LANGUAGE}"
+            echo ""
+            echo "- Analysis outcome: \`${OUTCOME}\`"
+            echo "- Findings: see **Security → Code scanning alerts**, filtered to \`/language:${LANGUAGE}\`."
+            echo ""
+            echo "Advisory trial run — non-gating by design. Evaluation criteria and"
+            echo "review date: \`operations/architect-checklist/2026-W31.md\`."
+          } >> "$GITHUB_STEP_SUMMARY"

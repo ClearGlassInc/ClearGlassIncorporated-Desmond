@@ -34,7 +34,8 @@ body{
 
 header.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-.brand-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--violet));display:grid;place-items:center;font-weight:800;color:#04121e;font-size:17px;flex-shrink:0}
+.brand-mark{width:38px;height:38px;border-radius:10px;overflow:hidden;background:#fff;display:grid;place-items:center;flex-shrink:0}
+.brand-mark img{width:100%;height:100%;object-fit:cover;display:block}
 h1{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:700;letter-spacing:-.02em;line-height:1.2}
 .sub{color:var(--dim);font-size:14px;margin-top:2px}
 .stamp{font-family:var(--mono);font-size:11.5px;color:var(--dim-2);letter-spacing:.04em;text-align:right}
@@ -119,7 +120,7 @@ footer a:hover{color:var(--accent)}
   <header class="top">
     <div>
       <a class="brand" href="/">
-        <span class="brand-mark">CG</span>
+        <span class="brand-mark"><img src="/assets/images/clearglass-logo.png" alt="ClearGlass Inc. logo" width="38" height="38"></span>
         <div>
           <h1>SEO Performance Dashboard</h1>
           <div class="sub">clearglassinc.com · search visibility, indexation &amp; alerts</div>

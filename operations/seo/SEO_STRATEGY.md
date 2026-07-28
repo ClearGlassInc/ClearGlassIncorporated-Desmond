@@ -49,11 +49,12 @@ Ordered by **impact ÷ effort**. Status reflects work shipped in this change.
 | 1 | Added `Service` + `FAQPage` + `BreadcrumbList` schema to `web-design.html` | Money page had **zero** structured data | ✅ Done |
 | 2 | Added `Service`/`OfferCatalog` schema to `smb.html`, `government.html`, `pricing.html` | All three had zero structured data | ✅ Done |
 | 3 | Added 5 orphaned pages to `sitemap.xml` | They were invisible to crawler discovery | ✅ Done |
-| 4 | Removed `platform-command-center.html` (noindex) from sitemap | `noindex` + sitemap is a contradictory signal that wastes crawl budget | ✅ Done |
+| 4 | Registered 2 orphaned pages in the authority network and gave them real inbound links | They were in the sitemap but no page linked to them | ✅ Done |
 | 5 | Added `url` to 44 `Organization` schema nodes across 30 pages | Missing required property blocked rich-result eligibility | ✅ Done |
 | 6 | Added the real social profiles to `sameAs` | Entity consolidation for a Knowledge Panel | ✅ Done |
 | 7 | Added `areaServed` + `serviceArea` geo targeting to homepage | Local relevance for Burlington / Halton / GTA | ✅ Done |
 | 8 | Added missing canonicals (3 pages) and static `<h1>`s (2 pages) | Duplicate-signal and topic-clarity fixes | ✅ Done |
+| 8b | Flagged `platform-command-center.html`: `noindex` **and** in the sitemap | Needs an owner decision — see §3 | ⚠️ Open |
 | 9 | Built `tools/seo_audit.py` + `tools/seo_dashboard.py` + `seo-dashboard.html` | Continuous measurement instead of one-off audits | ✅ Done |
 
 **Result: health score 63 → 79/100, blocking errors 10 → 0, sitemap coverage 100%.**
@@ -117,7 +118,7 @@ Character counts verified. Titles target ≤60, descriptions 140–160.
 ### ✅ Already correct
 - [x] HTTPS with canonical host `www.clearglassinc.com` (CNAME)
 - [x] `robots.txt` allows all major crawlers, and explicitly welcomes AI answer engines (GPTBot, ClaudeBot, PerplexityBot) — a genuine advantage for AI-search citation
-- [x] `sitemap.xml` valid, 130 URLs, **zero dead entries**, 100% coverage of indexable pages
+- [x] `sitemap.xml` valid, 131 URLs, **zero dead entries**, 100% coverage of indexable pages
 - [x] Mobile viewport meta on every page
 - [x] Service worker + offline page
 - [x] `lang="en"` throughout
@@ -149,7 +150,11 @@ unnecessary. Prefer one of:
 
 **8. Multiple H1s** — `bluedesk.html`, `flowsint.html`, `postloop.html`.
 
-**9. Remaining orphans** — `artemis-fawl/index.html` and `blog/clearglassinc-artemis-full-stack-*.html` are in the sitemap but have no inbound internal links. Add them to `PAGES` in `tools/internal_links.py`.
+**9. `platform-command-center.html` is `noindex` *and* listed in the sitemap.** This is a contradictory signal and needs an owner decision, not a guess:
+  - **If the page is meant to be public** (it has a title, description, `<h1>`, 56 KB of content, and is a registered member of the internal link graph) — remove the `noindex`. The evidence leans this way; the `noindex` arrived in an unrelated workflow-remediation PR.
+  - **If it is meant to be internal** — remove it from `sitemap.xml` *and* from `PAGES` in `tools/internal_links.py`, which also drops the internal links pointing at it.
+
+  Left as-is pending that call, because either fix changes what the site publishes. `noindex` wins regardless, so the page is not in the index today either way — the cost is a little wasted crawl budget.
 
 ### Continuous verification
 ```bash

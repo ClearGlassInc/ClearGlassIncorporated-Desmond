@@ -286,9 +286,14 @@ def audit_page(path: Path, in_sitemap: set[str], disallow: list[str],
 
     # --- indexability conflicts -------------------------------------------
     if noindex and listed:
+        # Warning, not error: noindex wins, so the page stays out of the index
+        # either way. The cost is wasted crawl budget and a contradictory
+        # signal — worth fixing, but it breaks nothing.
         findings.append({
-            "page": rel, "level": "error", "check": "index.conflict",
-            "message": "Page is noindex but listed in sitemap.xml — remove it from the sitemap.",
+            "page": rel, "level": "warn", "check": "index.conflict",
+            "message": "Page is noindex but listed in sitemap.xml — decide whether the page "
+                       "should be public (drop the noindex) or internal (drop it from the "
+                       "sitemap and the authority-network registry).",
         })
     if blocked and listed:
         findings.append({

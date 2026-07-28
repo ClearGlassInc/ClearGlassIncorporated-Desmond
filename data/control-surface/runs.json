@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #460",
+    "title": "Control Surface Feeds #461",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:16",
+    "timestamp": "2026-07-28T22:16:15Z"
+  },
+  {
+    "title": "Deploy Pages #1350",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "20:34",
+    "timestamp": "2026-07-28T20:34:32Z"
+  },
+  {
+    "title": "pages build and deployment #1833",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:34",
+    "timestamp": "2026-07-28T20:34:24Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3157",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "20:34",
+    "timestamp": "2026-07-28T20:34:23Z"
+  },
+  {
+    "title": "Control Surface Feeds #460",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "20:33",
     "timestamp": "2026-07-28T20:33:58Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
     "time": "17:41",
     "timestamp": "2026-07-28T17:41:00Z"
-  },
-  {
-    "title": "Internal Link Authority #215",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:00Z"
-  },
-  {
-    "title": "Security #1659",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:00Z"
-  },
-  {
-    "title": "Code Quality: PR #1135 #3155",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/1135/head",
-    "time": "17:40",
-    "timestamp": "2026-07-28T17:40:58Z"
-  },
-  {
-    "title": "ARTEMIS FAWL validation #12",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:35",
-    "timestamp": "2026-07-28T17:35:37Z"
   }
 ]

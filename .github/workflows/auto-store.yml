@@ -36,6 +36,10 @@ on:
         description: "Run the gated deploy and production verification path."
         type: boolean
         default: false
+      change_ticket:
+        description: "Approved change-ticket reference required for production deployment."
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -109,9 +113,10 @@ jobs:
   deploy:
     name: Deploy (gated, rollback-anchored)
     needs: [test, checkout-health]
-    if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true')
+    # A merge proves source review, but it does not manufacture production
+    # authority. Deployment requires a deliberate dispatch plus the protected
+    # environment approval below; ordinary main pushes remain validation-only.
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: production
@@ -121,18 +126,20 @@ jobs:
     steps:
       - name: Verify production configuration before release
         env:
+          CHANGE_TICKET: ${{ inputs.change_ticket }}
           DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
           ROLLBACK_HOOK: ${{ secrets.RENDER_ROLLBACK_HOOK_URL }}
           CONTROL_PLANE_URL: ${{ secrets.CONTROL_PLANE_URL }}
         run: |
           set -euo pipefail
           missing=()
+          [ -n "${CHANGE_TICKET:-}" ] || missing+=("change_ticket input")
           [ -n "${DEPLOY_HOOK:-}" ] || missing+=("RENDER_DEPLOY_HOOK_URL")
           [ -n "${ROLLBACK_HOOK:-}" ] || missing+=("RENDER_ROLLBACK_HOOK_URL")
           [ -n "${CONTROL_PLANE_URL:-}" ] || missing+=("CONTROL_PLANE_URL")
           if (( ${#missing[@]} )); then
             joined=$(IFS=", "; echo "${missing[*]}")
-            echo "::error::Production deployment is not configured. Missing: $joined"
+            echo "::error::Production deployment is not authorized/configured. Missing: $joined"
             {
               echo "### Production deployment blocked"
               echo "- Missing GitHub environment secrets: \`$joined\`"
@@ -181,6 +188,7 @@ jobs:
         run: |
           {
             echo "### Auto-store release"
+            echo "- Change ticket: \`${{ inputs.change_ticket }}\`"
             echo "- Catalog: \`${{ steps.marker.outputs.hash }}\`"
             echo "- Rollback anchor promoted and uploaded (retention 30d)."
             echo "- Render control-plane deploy: \`${render_deploy:-unknown}\`."

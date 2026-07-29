@@ -139,7 +139,7 @@ Then test messages in both directions with unrelated Microsoft, Google, and othe
 ### Outlook on the web
 
 1. Visit [outlook.office.com](https://outlook.office.com).
-2. Sign in with the full address, such as `firstname.lastname@clearglassinc.com`.
+2. Sign in with the full address, `Desmond@clearglassinc.com`.
 3. Complete MFA registration and verify the expected ClearGlassInc Artemis tenant/organization context before approving a prompt.
 4. Configure time zone, language, signature, and notification preferences. Do not create rules that automatically forward company mail to personal accounts.
 

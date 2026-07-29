@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "21:11",
-    "timestamp": "2026-07-29T21:11:42Z"
+    "time": "22:12",
+    "timestamp": "2026-07-29T22:12:12Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #470",
-    "time": "21:11",
-    "timestamp": "2026-07-29T21:11:29Z"
+    "detail": "schedule on main \u00b7 run #471",
+    "time": "22:11",
+    "timestamp": "2026-07-29T22:11:56Z"
   },
   {
-    "title": "Policy Gate",
+    "title": "PR Automation",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1664",
-    "time": "20:48",
-    "timestamp": "2026-07-29T20:48:00Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1377",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:59Z"
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #896",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:36Z"
   },
   {
     "title": "Defender Watch",
     "status": "bad",
-    "detail": "push on main \u00b7 run #1313",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:59Z"
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #1315",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:08Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #895",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:08Z"
+  },
+  {
+    "title": "Internal Link Authority",
+    "status": "ok",
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #230",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:07Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #1666",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:07Z"
+  },
+  {
+    "title": "Security",
+    "status": "bad",
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #1696",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:07Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "bad",
-    "detail": "push on main \u00b7 run #1984",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:59Z"
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #1986",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:07Z"
   },
   {
     "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1927",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:59Z"
-  },
-  {
-    "title": "Security",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1694",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:59Z"
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #1929",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:07Z"
   },
   {
-    "title": "ClearGlass GitHub Pages Check",
+    "title": "Site Reliability Audit",
     "status": "ok",
-    "detail": "push on main \u00b7 run #576",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:59Z"
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #360",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:07Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "Code Quality: PR #1156",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1863",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:58Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #3208",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:57Z"
-  },
-  {
-    "title": "Security",
-    "status": "bad",
-    "detail": "pull_request on codex/setup-professional-email-for-desmond \u00b7 run #1693",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:35Z"
+    "detail": "dynamic on refs/pull/1156/head \u00b7 run #3211",
+    "time": "21:58",
+    "timestamp": "2026-07-29T21:58:05Z"
   },
   {
     "title": "IP Protection Bot - Risk Assessment",
     "status": "bad",
-    "detail": "pull_request on codex/setup-professional-email-for-desmond \u00b7 run #1983",
-    "time": "20:47",
-    "timestamp": "2026-07-29T20:47:35Z"
+    "detail": "pull_request on claude/ai-phishing-blog-post-0hcwhp \u00b7 run #1985",
+    "time": "21:38",
+    "timestamp": "2026-07-29T21:38:41Z"
   }
 ]

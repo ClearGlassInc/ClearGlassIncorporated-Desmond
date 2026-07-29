@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>SEO Performance Dashboard | ClearGlass Inc.</title>
+<meta name="description" content="Internal ClearGlass Inc. SEO dashboard — Google Search Console and Bing Webmaster Tools performance, indexation coverage, keyword tracking, schema health and alerts.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#07111f">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070d16;--panel:rgba(255,255,255,.045);--panel-2:rgba(255,255,255,.07);
+  --line:rgba(148,163,184,.2);--line-2:rgba(148,163,184,.34);
+  --ink:#e8f4ff;--dim:#93a7bd;--dim-2:#647a92;
+  --ok:#34d399;--warn:#fbbf24;--crit:#f87171;--info:#60a5fa;--accent:#38bdf8;--violet:#a78bfa;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Urbanist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:14px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  background-image:
+    radial-gradient(900px 500px at 12% -8%,rgba(56,189,248,.12),transparent 62%),
+    radial-gradient(760px 460px at 88% 4%,rgba(167,139,250,.1),transparent 62%);
+  background-attachment:fixed;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,3vw,28px) 72px}
+
+header.top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.brand-mark{width:38px;height:38px;border-radius:10px;overflow:hidden;background:#fff;display:grid;place-items:center;flex-shrink:0}
+.brand-mark img{width:100%;height:100%;object-fit:cover;display:block}
+h1{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.sub{color:var(--dim);font-size:14px;margin-top:2px}
+.stamp{font-family:var(--mono);font-size:11.5px;color:var(--dim-2);letter-spacing:.04em;text-align:right}
+
+/* connector chips */
+.connectors{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;
+  border:1px solid var(--line);background:var(--panel);font-family:var(--mono);
+  font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--dim-2);flex-shrink:0}
+.chip.live{border-color:rgba(52,211,153,.42);color:#a7f3d0}
+.chip.live .dot{background:var(--ok);box-shadow:0 0 9px var(--ok)}
+.chip.error{border-color:rgba(248,113,113,.45);color:#fecaca}
+.chip.error .dot{background:var(--crit);box-shadow:0 0 9px var(--crit)}
+.chip.unconfigured{border-style:dashed}
+
+/* generic panel */
+section.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  padding:clamp(18px,2.4vw,26px);margin-bottom:20px;backdrop-filter:blur(9px)}
+section.card>h2{font-size:1.02rem;font-weight:700;letter-spacing:-.01em;margin-bottom:4px;
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.card-note{color:var(--dim);font-size:13.2px;margin-bottom:16px;max-width:78ch}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;background:var(--panel-2);color:var(--dim);border:1px solid var(--line)}
+
+/* KPI grid */
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(178px,1fr))}
+.kpi{background:var(--panel-2);border:1px solid var(--line);border-radius:11px;padding:15px 16px}
+.kpi .lb{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim-2)}
+.kpi .val{font-size:1.85rem;font-weight:700;letter-spacing:-.02em;margin-top:5px;line-height:1.12}
+.kpi .val.none{font-size:1rem;color:var(--dim-2);font-weight:500;font-family:var(--mono)}
+.kpi .delta{font-family:var(--mono);font-size:11.5px;margin-top:4px;color:var(--dim)}
+.delta.up{color:var(--ok)} .delta.down{color:var(--crit)}
+
+/* tables */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px}
+table{width:100%;border-collapse:collapse;font-size:13.4px;min-width:560px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--dim-2);font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--mono);font-size:12.6px;white-space:nowrap}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody tr:last-child td{border-bottom:0}
+.kw{color:var(--ink)} .kw.untracked{color:var(--dim-2)}
+
+/* alerts */
+.alert{display:flex;gap:12px;padding:13px 15px;border-radius:10px;margin-bottom:9px;
+  border:1px solid var(--line);background:var(--panel-2);align-items:flex-start}
+.alert:last-child{margin-bottom:0}
+.alert .lvl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;flex-shrink:0;margin-top:1px;font-weight:700}
+.alert.critical{border-color:rgba(248,113,113,.4)} .alert.critical .lvl{background:rgba(248,113,113,.16);color:#fca5a5}
+.alert.warning{border-color:rgba(251,191,36,.34)} .alert.warning .lvl{background:rgba(251,191,36,.14);color:#fcd34d}
+.alert.info .lvl{background:rgba(96,165,250,.14);color:#93c5fd}
+.alert .msg{font-size:13.6px;color:var(--ink)}
+.alert .meta{font-family:var(--mono);font-size:10.8px;color:var(--dim-2);margin-top:3px}
+
+/* coverage bar */
+.bar{height:9px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden;margin:9px 0 7px;display:flex}
+.bar i{display:block;height:100%}
+.bar i.sm{background:linear-gradient(90deg,var(--accent),var(--violet))}
+.bar i.gap{background:rgba(251,191,36,.5)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dim)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+
+.empty{color:var(--dim-2);font-size:13.4px;font-style:italic;padding:14px 0}
+.setup{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.26);border-radius:11px;padding:15px 17px;margin-top:14px}
+.setup h3{font-size:13.2px;margin-bottom:8px;color:#bfdbfe;font-weight:700}
+.setup code{font-family:var(--mono);font-size:11.8px;background:rgba(0,0,0,.34);padding:2px 6px;border-radius:4px;color:#e0f2fe}
+.setup ol{margin:0 0 0 17px;font-size:13px;color:var(--dim);line-height:1.85}
+footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);
+  color:var(--dim-2);font-size:12.2px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line-2)}
+footer a:hover{color:var(--accent)}
+@media(max-width:640px){.stamp{text-align:left}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <a class="brand" href="/">
+        <span class="brand-mark"><img src="/assets/images/clearglass-logo.png" alt="ClearGlass Inc. logo" width="38" height="38"></span>
+        <div>
+          <h1>SEO Performance Dashboard</h1>
+          <div class="sub">clearglassinc.com · search visibility, indexation &amp; alerts</div>
+        </div>
+      </a>
+    </div>
+    <div class="stamp" id="stamp">loading…</div>
+  </header>
+
+  <div class="connectors" id="connectors"></div>
+
+  <!-- ── Search performance ─────────────────────────────────────────── -->
+  <section class="card">
+    <h2>Search performance <span class="tag" id="window-tag">28-day window</span></h2>
+    <p class="card-note">Clicks, impressions and average position from Google Search Console,
+      compared against the immediately preceding window of equal length. Search Console
+      finalises data on a ~2 day lag, so the window ends two days back.</p>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <!-- ── Indexation ─────────────────────────────────────────────────── -->
+  <section class="card">
+    <h2>Indexation coverage</h2>
+    <p class="card-note">Every page in the repository, graded by whether a crawler can index it
+      and whether it is discoverable from <code>sitemap.xml</code>. Sourced from the local
+      audit, so it is accurate even before the search-engine connectors are wired.</p>
+    <div class="kpis" id="index-kpis"></div>
+    <div id="coverage"></div>
+  </section>
+
+  <!-- ── Keywords ───────────────────────────────────────────────────── -->
+  <section class="card">
+    <h2>Target keyword tracking</h2>
+    <p class="card-note">Configured target terms in <code>data/seo/config.json</code>, matched
+      against live Search Console query rows. <em>Related</em> counts impressions earned by
+      longer queries containing the term — early traction that an exact-match row misses.</p>
+    <div id="keywords"></div>
+  </section>
+
+  <!-- ── Top queries / pages ────────────────────────────────────────── -->
+  <section class="card">
+    <h2>Top queries &amp; landing pages</h2>
+    <p class="card-note">Highest-impression rows in the current window.</p>
+    <div id="top-tables"></div>
+  </section>
+
+  <!-- ── Competitors ────────────────────────────────────────────────── -->
+  <section class="card">
+    <h2>Competitor benchmark</h2>
+    <p class="card-note" id="comp-note">Comparison against configured rival domains.</p>
+    <div id="competitors"></div>
+  </section>
+
+  <!-- ── Technical health ───────────────────────────────────────────── -->
+  <section class="card">
+    <h2>Technical &amp; schema health</h2>
+    <p class="card-note">Findings from <code>tools/seo_audit.py</code> — indexability conflicts,
+      structured-data gaps, crawl blockage, on-page signal quality.</p>
+    <div class="kpis" id="tech-kpis"></div>
+    <div id="tech-breakdown"></div>
+  </section>
+
+  <!-- ── Alerts ─────────────────────────────────────────────────────── -->
+  <section class="card">
+    <h2>Alerts</h2>
+    <p class="card-note">Threshold breaches from the most recent run. Thresholds live under
+      <code>alerts</code> in <code>data/seo/config.json</code>.</p>
+    <div id="alerts"></div>
+  </section>
+
+  <footer>
+    <span>ClearGlass Inc. · internal dashboard · <code>noindex</code></span>
+    <span>
+      <a href="/data/seo/performance.json">performance.json</a> ·
+      <a href="/data/seo/alerts.json">alerts.json</a> ·
+      <a href="/data/seo/audit.json">audit.json</a>
+    </span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var $ = function(id){ return document.getElementById(id); };
+  var esc = function(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  };
+  var nf = function(n){
+    return (n == null || isNaN(n)) ? "—" : Number(n).toLocaleString("en-CA");
+  };
+  var pct = function(n){ return (n == null || isNaN(n)) ? "—" : (n*100).toFixed(2) + "%"; };
+
+  function getJSON(url){
+    return fetch(url, {cache:"no-store"}).then(function(r){
+      if(!r.ok) throw new Error(url + " → HTTP " + r.status);
+      return r.json();
+    });
+  }
+
+  /* ---- KPI card ---- */
+  function kpi(label, value, deltaHtml){
+    var isNone = (value == null);
+    return '<div class="kpi"><div class="lb">' + esc(label) + '</div>' +
+      '<div class="val' + (isNone ? ' none' : '') + '">' +
+      (isNone ? 'not connected' : esc(value)) + '</div>' +
+      (deltaHtml ? '<div class="delta ' + deltaHtml.cls + '">' + esc(deltaHtml.text) + '</div>' : '') +
+      '</div>';
+  }
+
+  function delta(cur, prev, invert){
+    if(cur == null || prev == null || !prev) return null;
+    var d = (cur - prev) / prev * 100;
+    var better = invert ? d < 0 : d > 0;
+    var arrow = d > 0 ? "▲" : (d < 0 ? "▼" : "•");
+    return { cls: Math.abs(d) < 0.5 ? "" : (better ? "up" : "down"),
+             text: arrow + " " + Math.abs(d).toFixed(1) + "% vs prev" };
+  }
+
+  /* ---- connectors ---- */
+  function renderConnectors(perf){
+    var c = perf.connectors || {};
+    var names = {
+      google_search_console: "Google Search Console",
+      bing_webmaster_tools: "Bing Webmaster Tools",
+      local_audit: "Local technical audit"
+    };
+    $("connectors").innerHTML = Object.keys(names).map(function(k){
+      var st = (c[k] && c[k].state) || "unconfigured";
+      return '<span class="chip ' + esc(st) + '" title="' + esc((c[k] && c[k].detail) || "") + '">' +
+             '<span class="dot"></span>' + esc(names[k]) + ' · ' + esc(st) + '</span>';
+    }).join("");
+  }
+
+  /* ---- search performance ---- */
+  function renderPerformance(perf){
+    var g = perf.google || {}, cur = g.current || {}, prev = g.previous || {};
+    var b = perf.bing || {}, bcur = b.current || {};
+    var live = g.state === "live";
+    $("window-tag").textContent = (perf.window_days || 28) + "-day window";
+
+    var html = "";
+    html += kpi("Google clicks", live ? nf(cur.clicks) : null, live ? delta(cur.clicks, prev.clicks) : null);
+    html += kpi("Google impressions", live ? nf(cur.impressions) : null, live ? delta(cur.impressions, prev.impressions) : null);
+    html += kpi("Google CTR", live ? pct(cur.ctr) : null, live ? delta(cur.ctr, prev.ctr) : null);
+    html += kpi("Avg. position", live && cur.position != null ? cur.position.toFixed(1) : null,
+                live ? delta(cur.position, prev.position, true) : null);
+    html += kpi("Bing clicks", b.state === "live" ? nf(bcur.clicks) : null, null);
+    html += kpi("Bing impressions", b.state === "live" ? nf(bcur.impressions) : null, null);
+    $("kpis").innerHTML = html;
+
+    if(!live){
+      $("kpis").insertAdjacentHTML("afterend",
+        '<div class="setup"><h3>Connect Google Search Console</h3><ol>' +
+        '<li>Verify <code>clearglassinc.com</code> as a domain property in Search Console.</li>' +
+        '<li>Create an OAuth client with the <code>webmasters.readonly</code> scope.</li>' +
+        '<li>Store <code>GSC_CLIENT_ID</code>, <code>GSC_CLIENT_SECRET</code> and ' +
+        '<code>GSC_REFRESH_TOKEN</code> as repository secrets.</li>' +
+        '<li>For Bing, add <code>BING_API_KEY</code> from Webmaster Tools → API access.</li>' +
+        '<li>Run <code>python3 tools/seo_dashboard.py</code> (the scheduled workflow does this daily).</li>' +
+        '</ol></div>');
+    }
+  }
+
+  /* ---- indexation ---- */
+  function renderIndexation(perf){
+    var ix = perf.indexation || {};
+    var html = "";
+    html += kpi("Pages tracked", nf(ix.pages_total));
+    html += kpi("Indexable", nf(ix.indexable));
+    html += kpi("In sitemap", nf(ix.in_sitemap));
+    html += kpi("Intentionally noindex", nf(ix.noindex));
+    html += kpi("With structured data", nf(ix.with_schema));
+    html += kpi("Bing indexed", ix.bing_in_index != null ? nf(ix.bing_in_index) : null);
+    $("index-kpis").innerHTML = html;
+
+    var total = ix.indexable || 0, listed = ix.in_sitemap || 0;
+    if(total){
+      var covered = Math.min(listed, total);
+      var pctCovered = (covered / total * 100);
+      $("coverage").innerHTML =
+        '<div class="bar">' +
+          '<i class="sm" style="width:' + pctCovered.toFixed(1) + '%"></i>' +
+          '<i class="gap" style="width:' + (100 - pctCovered).toFixed(1) + '%"></i>' +
+        '</div>' +
+        '<div class="legend">' +
+          '<span><i class="sm" style="background:linear-gradient(90deg,#38bdf8,#a78bfa)"></i>' +
+            'In sitemap · ' + covered + '</span>' +
+          '<span><i style="background:rgba(251,191,36,.5)"></i>Not discoverable · ' +
+            Math.max(0, total - covered) + '</span>' +
+          '<span>' + pctCovered.toFixed(1) + '% sitemap coverage</span>' +
+        '</div>';
+    }
+  }
+
+  /* ---- keywords ---- */
+  function renderKeywords(perf){
+    var groups = perf.keywords || {};
+    var live = (perf.google || {}).state === "live";
+    var keys = Object.keys(groups);
+    if(!keys.length){ $("keywords").innerHTML = '<p class="empty">No keyword groups configured.</p>'; return; }
+
+    var html = keys.map(function(g){
+      var rows = groups[g] || [];
+      var body = rows.map(function(r){
+        return '<tr>' +
+          '<td class="kw' + (r.tracked ? '' : ' untracked') + '">' + esc(r.keyword) + '</td>' +
+          '<td class="num">' + (r.tracked ? "ranking" : (live ? "no data" : "—")) + '</td>' +
+          '<td class="num">' + nf(r.clicks) + '</td>' +
+          '<td class="num">' + nf(r.impressions) + '</td>' +
+          '<td class="num">' + (r.position != null ? r.position.toFixed(1) : "—") + '</td>' +
+          '<td class="num">' + nf(r.related_impressions) + '</td>' +
+        '</tr>';
+      }).join("");
+      return '<h3 style="font-size:12px;font-family:var(--mono);letter-spacing:.09em;' +
+             'text-transform:uppercase;color:var(--dim-2);margin:18px 0 6px">' + esc(g) + '</h3>' +
+             '<div class="scroll"><table><thead><tr>' +
+             '<th>Keyword</th><th class="num">State</th><th class="num">Clicks</th>' +
+             '<th class="num">Impr.</th><th class="num">Pos.</th><th class="num">Related impr.</th>' +
+             '</tr></thead><tbody>' + body + '</tbody></table></div>';
+    }).join("");
+    $("keywords").innerHTML = html;
+  }
+
+  /* ---- top queries + pages ---- */
+  function renderTop(perf){
+    var g = perf.google || {};
+    if(g.state !== "live"){
+      $("top-tables").innerHTML = '<p class="empty">Connect Search Console to populate top queries and landing pages.</p>';
+      return;
+    }
+    function table(title, rows, labelKey, labelHead){
+      if(!rows || !rows.length) return '<p class="empty">No ' + esc(title) + ' rows returned.</p>';
+      var sorted = rows.slice().sort(function(a,b){ return b.impressions - a.impressions; }).slice(0,15);
+      return '<h3 style="font-size:12px;font-family:var(--mono);letter-spacing:.09em;' +
+        'text-transform:uppercase;color:var(--dim-2);margin:18px 0 6px">' + esc(title) + '</h3>' +
+        '<div class="scroll"><table><thead><tr><th>' + esc(labelHead) + '</th>' +
+        '<th class="num">Clicks</th><th class="num">Impr.</th><th class="num">CTR</th>' +
+        '<th class="num">Pos.</th></tr></thead><tbody>' +
+        sorted.map(function(r){
+          return '<tr><td>' + esc(r[labelKey]) + '</td>' +
+            '<td class="num">' + nf(r.clicks) + '</td>' +
+            '<td class="num">' + nf(r.impressions) + '</td>' +
+            '<td class="num">' + pct(r.ctr) + '</td>' +
+            '<td class="num">' + (r.position != null ? r.position.toFixed(1) : "—") + '</td></tr>';
+        }).join("") + '</tbody></table></div>';
+    }
+    $("top-tables").innerHTML =
+      table("Top queries", g.queries, "query", "Query") +
+      table("Top landing pages", g.pages, "page", "Page");
+  }
+
+  /* ---- competitors ---- */
+  function renderCompetitors(perf){
+    var c = perf.competitors || {};
+    if(c.note) $("comp-note").textContent = c.note;
+
+    var rows = [];
+    if(c.own) rows.push(c.own);
+    rows = rows.concat(c.competitors || []);
+
+    if(!rows.length){
+      $("competitors").innerHTML =
+        '<p class="empty">No competitor domains configured.</p>' +
+        '<div class="setup"><h3>Configure the benchmark</h3><ol>' +
+        '<li>Add rival domains under <code>competitors.domains</code> in ' +
+          '<code>data/seo/config.json</code>.</li>' +
+        '<li>Each row takes <code>domain</code>, <code>ranking_keywords</code>, ' +
+          '<code>impressions</code>, <code>source</code> and <code>measured</code> (date).</li>' +
+        '<li>Set <code>verified: true</code> only when the numbers come from a real ' +
+          'rank-tracking measurement — unverified rows are excluded from the gap calculation.</li>' +
+        '</ol></div>';
+      return;
+    }
+
+    $("competitors").innerHTML =
+      '<div class="scroll"><table><thead><tr><th>Domain</th>' +
+      '<th class="num">Ranking keywords</th><th class="num">Impressions</th>' +
+      '<th class="num">Clicks</th><th class="num">Avg. pos.</th>' +
+      '<th class="num">Source</th><th class="num">Verified</th></tr></thead><tbody>' +
+      rows.map(function(r){
+        var own = r.domain === "clearglassinc.com";
+        return '<tr' + (own ? ' style="background:rgba(56,189,248,.07)"' : '') + '>' +
+          '<td>' + esc(r.domain) + (own ? ' <span class="tag">you</span>' : '') + '</td>' +
+          '<td class="num">' + nf(r.ranking_keywords) + '</td>' +
+          '<td class="num">' + nf(r.impressions) + '</td>' +
+          '<td class="num">' + nf(r.clicks) + '</td>' +
+          '<td class="num">' + (r.avg_position != null ? Number(r.avg_position).toFixed(1) : "—") + '</td>' +
+          '<td class="num">' + esc(r.source || "—") + '</td>' +
+          '<td class="num">' + (r.verified ? "yes" : "no") + '</td></tr>';
+      }).join("") + '</tbody></table></div>' +
+      (c.keyword_gap_vs_best != null
+        ? '<p class="card-note" style="margin-top:12px">Keyword gap versus best verified rival: <strong>' +
+          esc(c.keyword_gap_vs_best) + '</strong> terms.</p>'
+        : "");
+  }
+
+  /* ---- technical ---- */
+  function renderTechnical(audit){
+    if(!audit){
+      $("tech-kpis").innerHTML = kpi("Audit", null);
+      $("tech-breakdown").innerHTML =
+        '<p class="empty">Run <code>python3 tools/seo_audit.py --write</code> to populate this section.</p>';
+      return;
+    }
+    var t = audit.totals || {};
+    $("tech-kpis").innerHTML =
+      kpi("Health score", (audit.score != null ? audit.score + "/100" : null)) +
+      kpi("Blocking errors", nf(t.errors)) +
+      kpi("Warnings", nf(t.warnings)) +
+      kpi("Advisories", nf(t.info)) +
+      kpi("Pages with schema", nf(t.with_schema));
+
+    var byCheck = audit.by_check || {};
+    var checks = Object.keys(byCheck);
+    if(!checks.length){
+      $("tech-breakdown").innerHTML = '<p class="empty">No findings — the site is clean.</p>';
+      return;
+    }
+    var findings = audit.findings || [];
+    var firstFor = {};
+    findings.forEach(function(f){ if(!firstFor[f.check]) firstFor[f.check] = f; });
+
+    $("tech-breakdown").innerHTML =
+      '<div class="scroll"><table><thead><tr><th>Check</th><th class="num">Count</th>' +
+      '<th class="num">Severity</th><th>Example</th></tr></thead><tbody>' +
+      checks.map(function(k){
+        var f = firstFor[k] || {};
+        return '<tr><td>' + esc(k) + '</td><td class="num">' + nf(byCheck[k]) + '</td>' +
+          '<td class="num">' + esc(f.level || "—") + '</td>' +
+          '<td style="color:var(--dim);font-size:12.6px">' + esc(f.page || "") + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
+  }
+
+  /* ---- alerts ---- */
+  function renderAlerts(feed){
+    if(!feed || !feed.alerts || !feed.alerts.length){
+      $("alerts").innerHTML = '<p class="empty">No alerts in the latest run.</p>';
+      return;
+    }
+    var order = {critical:0, warning:1, info:2};
+    var sorted = feed.alerts.slice().sort(function(a,b){
+      return (order[a.level] == null ? 3 : order[a.level]) - (order[b.level] == null ? 3 : order[b.level]);
+    });
+    $("alerts").innerHTML = sorted.map(function(a){
+      return '<div class="alert ' + esc(a.level) + '">' +
+        '<span class="lvl">' + esc(a.level) + '</span>' +
+        '<div><div class="msg">' + esc(a.message) + '</div>' +
+        '<div class="meta">' + esc(a.kind) + ' · ' + esc(a.detected || "") + '</div></div></div>';
+    }).join("");
+  }
+
+  /* ---- boot ---- */
+  Promise.all([
+    getJSON("/data/seo/performance.json").catch(function(){ return null; }),
+    getJSON("/data/seo/alerts.json").catch(function(){ return null; }),
+    getJSON("/data/seo/audit.json").catch(function(){ return null; })
+  ]).then(function(res){
+    var perf = res[0], alerts = res[1], audit = res[2];
+
+    if(!perf){
+      $("stamp").textContent = "no feed — run tools/seo_dashboard.py";
+      $("connectors").innerHTML = '<span class="chip unconfigured"><span class="dot"></span>feeds not generated</span>';
+      renderTechnical(audit);
+      renderAlerts(alerts);
+      return;
+    }
+
+    $("stamp").innerHTML = "generated " + esc(perf.generated || "—") +
+      "<br>window " + esc((perf.google && perf.google.current && perf.google.current.start) || "—") +
+      " → " + esc((perf.google && perf.google.current && perf.google.current.end) || "—");
+
+    renderConnectors(perf);
+    renderPerformance(perf);
+    renderIndexation(perf);
+    renderKeywords(perf);
+    renderTop(perf);
+    renderCompetitors(perf);
+    renderTechnical(audit);
+    renderAlerts(alerts);
+  }).catch(function(err){
+    $("stamp").textContent = "error: " + err.message;
+  });
+})();
+</script>
+</body>
+</html>

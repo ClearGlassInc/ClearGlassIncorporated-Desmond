@@ -58,6 +58,16 @@ SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {
         "A source-led Ontario Greenbelt accountability brief with an inspectable evidence ledger.",
         "intelligence",
     ),
+    "artemis-fawl/index.html": (
+        "ARTEMIS // FAWL",
+        "the revenue-ready, self-healing command platform built on the Artemis core.",
+        "artemis",
+    ),
+    "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": (
+        "Artemis Full-Stack AI Intelligence Platform Blueprint",
+        "a production architecture and implementation blueprint for the Artemis platform.",
+        "artemis",
+    ),
 }
 
 # Explicit lateral relationships for new pages. These are not inferred at run
@@ -70,6 +80,14 @@ SUPPLEMENTAL_BRIDGES: dict[str, list[str]] = {
     "blog/greenbelt-92-percent-access-beats-process.html": [
         "blog/index.html",
         "Ontario-osint.html",
+    ],
+    "artemis-fawl/index.html": [
+        "artemis-os.html",
+        "artemis-self-evolving-platform.html",
+    ],
+    "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": [
+        "blog/index.html",
+        "artemis-iv.html",
     ],
 }
 

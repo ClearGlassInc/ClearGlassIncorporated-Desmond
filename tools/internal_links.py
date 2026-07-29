@@ -194,6 +194,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ("Digital Twin Tools for Storm-Adaptive Transit", "the 2026 platform comparison and hybrid architecture"),
     "blog/coffee-and-technology-digital-revolution.html": ("Coffee & Technology", "how coffee culture and technology grew together"),
     "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ("ChatGPT Prompt Shortcuts", "a practical field guide to clearer, faster AI prompts"),
+    "blog/ai-generated-phishing-54-percent-click-rate.html": ("AI-Generated Phishing Hits a 54% Click Rate", "this week's long read on why identity beats detection"),
 }
 
 # --------------------------------------------------------------------------
@@ -350,6 +351,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
             "blog/coffee-and-technology-digital-revolution.html",
             "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
+            "blog/ai-generated-phishing-54-percent-click-rate.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -430,6 +432,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ["sats-digital-twin.html", "environmental-cyber-risk.html"],
     "blog/coffee-and-technology-digital-revolution.html": ["advanced-features-tools-systems.html", "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html"],
     "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ["ai-operator.html", "blog/ai-agent-governance-governed-autonomy.html"],
+    "blog/ai-generated-phishing-54-percent-click-rate.html": ["guardian.html", "blog/ai-agents-insider-threat.html"],
 }
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page

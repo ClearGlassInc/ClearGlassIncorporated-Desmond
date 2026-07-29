@@ -17,7 +17,7 @@
 <meta property="og:url" content="https://www.clearglassinc.com/blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html"/>
 <meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png"/>
 <meta property="article:published_time" content="2026-07-18"/>
-<meta property="article:modified_time" content="2026-07-21"/>
+<meta property="article:modified_time" content="2026-07-29"/>
 <meta property="article:section" content="AI Architecture"/>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon-32.png">
@@ -67,7 +67,7 @@
 <nav class="nav"><div class="wrap nav-inner"><a class="brand" href="index.html">ClearGlassInc <em>Insights</em></a><div><a href="../index.html">Home</a><a href="index.html">Blog</a></div></div></nav>
 <header class="hero"><div class="wrap"><div class="eyebrow">AI architecture · Palantir runtime · governed autonomy</div><h1 class="title">ClearGlassInc Artemis: Full-Stack Blueprint for a Self-Evolving AI Intelligence Platform</h1><p class="dek">A premium engineering design document for a secure, coalition-aware, latency-sensitive, audited intelligence platform that fuses live and historical data, reasons over ontology objects, learns from operator feedback, and proposes safe workflow upgrades inside human-approved guardrails.</p><div class="meta"><span>Published July 18, 2026</span><span>34 min read</span><span>Production blueprint</span></div></div></header>
 <main class="wrap article-signature" data-source-signature="CLEARGLASSINC-ARTEMIS-2026-ORIGINAL" data-canonical-source="https://www.clearglassinc.com/blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html">
-<section class="callout"><h2>System Architecture</h2><p><b>ClearGlassInc Artemis</b> uses Gotham for operational intelligence, investigations, entity tracking, link analysis, cases, and mission timelines; Foundry for integration, ontology, pipelines, transformations, and application logic; AIP for copilots, agents, evaluations, tool-use, model routing, and workflow automation; and Apollo for secure deployment, runtime control, rollback, ring releases, and continuous operations.</p><div class="grid"><div class="card"><h3>Frontend</h3><p>Analyst workbench, commander cockpit, governance review board, alert rail, graph canvas, approval queue, eval dashboard, and mission playback UI built as a policy-aware TypeScript application.</p></div><div class="card"><h3>Backend</h3><p>Python FastAPI services for identity context, case orchestration, feedback capture, tool brokering, eval generation, model routing, audit writes, and Apollo release promotion.</p></div><div class="card"><h3>Data layer</h3><p>Streaming and batch ingestion land in Foundry-style bronze, silver, and gold datasets, then bind to ontology objects with lineage hashes, sensitivity labels, temporal validity, and confidence.</p></div><div class="card"><h3>Policy layer</h3><p>Need-to-know authorization is enforced at row, column, entity, relationship, derived-output, tool, prompt, model, and action levels before humans or agents can consume or act.</p></div></div></section>
+<section class="callout"><h2>System Architecture</h2><p><strong>Implementation status:</strong> this document is a target-state reference architecture—not evidence that Palantir infrastructure, production credentials, coalition agreements, or operational integrations are currently provisioned. Every production release remains subject to security, data-governance, operational-owner, and human-approval gates.</p><p><b>ClearGlassInc Artemis</b> uses Gotham for operational intelligence, investigations, entity tracking, link analysis, cases, and mission timelines; Foundry for integration, ontology, pipelines, transformations, and application logic; AIP for copilots, agents, evaluations, tool-use, model routing, and workflow automation; and Apollo for secure deployment, runtime control, rollback, ring releases, and continuous operations.</p><div class="grid"><div class="card"><h3>Frontend</h3><p>Analyst workbench, commander cockpit, governance review board, alert rail, graph canvas, approval queue, eval dashboard, and mission playback UI built as a policy-aware TypeScript application.</p></div><div class="card"><h3>Backend</h3><p>Python FastAPI services for identity context, case orchestration, feedback capture, tool brokering, eval generation, model routing, audit writes, and Apollo release promotion.</p></div><div class="card"><h3>Data layer</h3><p>Streaming and batch ingestion land in Foundry-style bronze, silver, and gold datasets, then bind to ontology objects with lineage hashes, sensitivity labels, temporal validity, and confidence.</p></div><div class="card"><h3>Policy layer</h3><p>Need-to-know authorization is enforced at row, column, entity, relationship, derived-output, tool, prompt, model, and action levels before humans or agents can consume or act.</p></div></div></section>
 <section><h2>Data and Ontology</h2><p>The ontology is the operating model. Agents do not reason over loose blobs; they reason over typed objects, relationships, lineage, permissions, caveats, and time. Core entities include Person, Organization, Asset, Location, CyberIndicator, Event, Source, Case, Mission, IntelProduct, ApprovalDecision, ModelVersion, PromptVersion, WorkflowVersion, EvalRun, and OperatorFeedback.</p><pre><code>CREATE TABLE ontology_event (
   event_id TEXT PRIMARY KEY,
   event_type TEXT NOT NULL,
@@ -168,6 +168,118 @@ async def capture_feedback(payload: FeedbackIn, user=Depends(current_user)):
     on_reject: [capture_counterexample]
   capture_counterexample:
     next: [eval_backlog]</code></pre></section>
+<section><h2>Code Examples</h2><p>The Python service boundary is deliberately small, typed, and testable. This package contract uses Python 3.11, FastAPI, Pydantic v2, asynchronous HTTP, and strict development gates. The console script should invoke a callable CLI entry point; a production repository would use <code>artemis.api.cli:main</code>, while ASGI servers load <code>artemis.api.app:app</code> directly.</p><pre><code>[build-system]
+requires = ["setuptools&gt;=72", "wheel"]
+build-backend = "setuptools.build_meta:__legacy__"
+
+[project]
+name = "artemis-intelligence"
+version = "5.0.0"
+description = "ARTEMIS — ClearGlass Intelligence Platform Agent Layer"
+readme = "README.md"
+requires-python = "&gt;=3.11"
+dependencies = [
+  "fastapi&gt;=0.115",
+  "uvicorn[standard]&gt;=0.30",
+  "httpx&gt;=0.27",
+  "pydantic&gt;=2.7",
+  "pydantic-settings&gt;=2.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest&gt;=8.2", "pytest-asyncio&gt;=0.23", "pytest-cov&gt;=5.0", "httpx"]
+
+[project.scripts]
+artemis-api = "artemis.api.cli:main"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["artemis/tests"]
+addopts = "-v --tb=short --cov=artemis --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["artemis"]
+omit = ["*/tests/*", "*/__init__.py"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true</code></pre><p>A consequential recommendation is a state machine, not a free-form model response. Deterministic code owns authorization and transitions; AIP supplies a typed proposal that remains untrusted until validated.</p><pre><code>from enum import StrEnum
+from pydantic import BaseModel, Field
+
+class ActionState(StrEnum):
+    DRAFT = "draft"
+    PENDING_APPROVAL = "pending_approval"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    EXECUTED = "executed"
+    ROLLED_BACK = "rolled_back"
+
+ALLOWED = {
+    ActionState.DRAFT: {ActionState.PENDING_APPROVAL},
+    ActionState.PENDING_APPROVAL: {ActionState.APPROVED, ActionState.REJECTED},
+    ActionState.APPROVED: {ActionState.EXECUTED},
+    ActionState.EXECUTED: {ActionState.ROLLED_BACK},
+}
+
+class ActionPackage(BaseModel):
+    action_id: str
+    mission_id: str
+    state: ActionState = ActionState.DRAFT
+    evidence_ids: list[str] = Field(min_length=1)
+    confidence: float = Field(ge=0, le=1)
+    expected_effect: str
+    rollback_plan: str
+
+    def transition(self, target: ActionState) -&gt; None:
+        if target not in ALLOWED.get(self.state, set()):
+            raise ValueError(f"forbidden transition: {self.state} -&gt; {target}")
+        self.state = target</code></pre><p>Streaming consumers are idempotent and authorize before ontology mutation. The event ID is both the deduplication key and the audit correlation ID.</p><pre><code>async def consume_signal(envelope: SignalEnvelope, ctx: IdentityContext) -&gt; None:
+    envelope.verify_schema_and_signature()
+    if await dedupe.seen(envelope.event_id):
+        return
+
+    decision = await policy.authorize(
+        subject=ctx.workload_id,
+        action="ontology:event:create",
+        resource_labels=envelope.security_labels,
+        purpose=envelope.mission_id,
+    )
+    if not decision.allow:
+        await audit.append("signal.denied", envelope.event_id, decision.reason)
+        raise PermissionError(decision.reason)
+
+    async with unit_of_work() as tx:
+        event = await ontology.upsert_event(envelope, tx=tx)
+        await outbox.publish("ontology.event.created", event.to_envelope(), tx=tx)
+        await dedupe.mark_seen(envelope.event_id, tx=tx)
+        await audit.append("signal.accepted", envelope.event_id, event.lineage_hash, tx=tx)</code></pre><p>Ontology queries apply mission and coalition predicates at the data boundary—not after retrieval—and return evidence references rather than unrestricted rows.</p><pre><code>SELECT e.event_id, e.event_type, e.confidence, e.lineage_hash
+FROM ontology_event AS e
+WHERE e.mission_context -&gt;&gt; 'mission_id' = :mission_id
+  AND e.compartments &lt;@ :authorized_compartments
+  AND e.coalition_releasability &amp;&amp; :authorized_coalitions
+  AND e.valid_time @&gt; :as_of
+ORDER BY e.confidence DESC
+LIMIT :bounded_limit;</code></pre><p>The evaluation pipeline blocks unsafe candidates, requires statistically meaningful improvement on frozen and adversarial suites, and emits only a reviewable change proposal.</p><pre><code>def promotion_decision(candidate: EvalReport, baseline: EvalReport) -&gt; Decision:
+    hard_gates = [
+        candidate.policy_violations == 0,
+        candidate.cross_compartment_leaks == 0,
+        candidate.citation_integrity &gt;= 0.995,
+        candidate.p95_latency_ms &lt;= baseline.p95_latency_ms * 1.10,
+        candidate.precision_lower_bound &gt; baseline.precision_lower_bound,
+    ]
+    if not all(hard_gates):
+        return Decision.reject("candidate failed a safety or quality gate")
+    return Decision.review(
+        rollout="shadow -&gt; 1% -&gt; 10% -&gt; 50% -&gt; 100%",
+        rollback_to=baseline.version,
+        required_approvers=("mission-owner", "security-owner", "model-governance"),
+    )</code></pre></section>
+<section><h2>Observability and Deployment</h2><p>Every request propagates a non-sensitive correlation ID across the web client, API gateway, agent run, tool broker, ontology query, audit plane, and Apollo release. Dashboards separate service health from mission quality: request rate, saturation, queue age, end-to-end p50/p95/p99 latency, model cost, tool failures, policy denials, evidence coverage, precision, recall, calibration, abstention, operator override rate, and time-to-decision. Alerts fire on policy bypass attempts, missing provenance, cross-compartment retrieval, drift, approval anomalies, and canary regression.</p><p>Apollo promotes signed, immutable artifacts through development, integration, mission rehearsal, and production rings. Build and deploy are separate; production consumes the exact evaluated digest. Readiness checks validate policy, ontology, event bus, audit sink, and model-router dependencies. Automatic rollback triggers on safety invariant failure, error-budget burn, latency regression, or eval-gate regression, while an incident owner can freeze all new agent execution independently of read-only analysis.</p></section>
 <section><h2>Security and Governance</h2><p>ClearGlassInc Artemis treats every human, service, agent, model, prompt, workflow, tool, dataset, and generated artifact as a governed principal or resource. Zero-trust execution means no implicit trust for internal services, no hidden agent privileges, no unlogged tool calls, no unversioned prompts, and no operationally significant autonomous actions.</p><ul><li><b>Need-to-know:</b> clearance, coalition, compartment, mission, purpose, role, and time-bound approval tokens.</li><li><b>Fine-grained controls:</b> row, column, entity, relationship, embedding, summary, export, and action permissions.</li><li><b>Immutable logs:</b> append-only audit events for prompts, model calls, tool calls, human approvals, deployment decisions, and rollbacks.</li><li><b>Governance:</b> prompt registry, model registry, eval registry, workflow registry, policy-as-code repository, and signed Apollo release manifests.</li></ul></section>
 <section><h2>Scenario Walkthrough</h2><p>A live intel event enters through the streaming layer: a suspicious infrastructure change overlaps with a known campaign pattern and a mission-critical asset. Foundry binds the event to CyberIndicator, Asset, Organization, Mission, and Case objects with lineage. The triage agent clusters it against historical events, suppresses duplicate noise, and escalates because business criticality and exploitability align. The enrichment agent queries asset posture, public reporting, internal controls, and recent cases; the correlation agent finds a weak relationship to prior incidents but marks it medium confidence.</p><p>The recommendation agent produces a response package: monitor, block candidate domain, validate supplier ownership, and open a case. The block action is operationally significant, so Artemis stops at an approval gate. The operator approves monitoring and case creation, rejects blocking due to insufficient confidence, and adds a correction explaining the supplier context. Artemis stores that rejection as OperatorFeedback, creates an eval case that penalizes over-aggressive blocking for similar supplier contexts, proposes a workflow threshold change, routes it to human review, and deploys only after approval through Apollo canary rings with rollback enabled.</p></section>
 <section><h2>Logo System Addendum</h2><p>For brand alignment, the Artemis experience should use a production-ready ClearGlass Inc. logo system: a proprietary geometric CG symbol formed from interlocking transparent glass planes, restrained cyan energy pulse, precision-cut architectural geometry, subtle refraction, and a strong central silhouette. Deliverables should include horizontal, stacked, symbol-only, wordmark-only, dark, light, monochrome, no-glow, favicon, app icon, social icon, and Open Graph variants, with square exports at 180, 192, 256, and 512 pixels plus favicon.ico at 16, 32, and 48 pixels.</p></section>

@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #462",
+    "title": "Control Surface Feeds #463",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "03:37",
+    "timestamp": "2026-07-29T03:37:39Z"
+  },
+  {
+    "title": "Defender Watch #1275",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "03:21",
+    "timestamp": "2026-07-29T03:21:40Z"
+  },
+  {
+    "title": "Health Monitor #238",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "02:56",
+    "timestamp": "2026-07-29T02:56:03Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #18",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "02:01",
+    "timestamp": "2026-07-29T02:01:45Z"
+  },
+  {
+    "title": "Deploy Pages #1352",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "23:17",
+    "timestamp": "2026-07-28T23:17:32Z"
+  },
+  {
+    "title": "pages build and deployment #1835",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:17",
+    "timestamp": "2026-07-28T23:17:26Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3159",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:17",
+    "timestamp": "2026-07-28T23:17:26Z"
+  },
+  {
+    "title": "Control Surface Feeds #462",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:17",
     "timestamp": "2026-07-28T23:17:02Z"
   },
@@ -89,54 +138,5 @@
     "detail": "failure \u00b7 workflow_dispatch on main",
     "time": "18:45",
     "timestamp": "2026-07-28T18:45:16Z"
-  },
-  {
-    "title": "pages build and deployment #1832",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "18:45",
-    "timestamp": "2026-07-28T18:45:10Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3156",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "18:45",
-    "timestamp": "2026-07-28T18:45:10Z"
-  },
-  {
-    "title": "Control Surface Feeds #459",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "18:44",
-    "timestamp": "2026-07-28T18:44:52Z"
-  },
-  {
-    "title": "PR Automation #876",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:01Z"
-  },
-  {
-    "title": "Site Reliability Audit #339",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:01Z"
-  },
-  {
-    "title": "Defender Watch #1273",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:00Z"
-  },
-  {
-    "title": "Policy Gate #1629",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/clearglassinc-seo-strategy-tua632",
-    "time": "17:41",
-    "timestamp": "2026-07-28T17:41:00Z"
   }
 ]

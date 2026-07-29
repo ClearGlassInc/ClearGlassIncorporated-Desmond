@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:17",
-    "timestamp": "2026-07-28T23:17:19Z"
+    "time": "03:37",
+    "timestamp": "2026-07-29T03:37:50Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #463",
+    "time": "03:37",
+    "timestamp": "2026-07-29T03:37:39Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #1275",
+    "time": "03:21",
+    "timestamp": "2026-07-29T03:21:40Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #238",
+    "time": "02:56",
+    "timestamp": "2026-07-29T02:56:03Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #18",
+    "time": "02:01",
+    "timestamp": "2026-07-29T02:01:45Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1352",
+    "time": "23:17",
+    "timestamp": "2026-07-28T23:17:32Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1835",
+    "time": "23:17",
+    "timestamp": "2026-07-28T23:17:26Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3159",
+    "time": "23:17",
+    "timestamp": "2026-07-28T23:17:26Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #462",
     "time": "23:17",
     "timestamp": "2026-07-28T23:17:02Z"
@@ -40,54 +89,5 @@
     "detail": "schedule on main \u00b7 run #461",
     "time": "22:16",
     "timestamp": "2026-07-28T22:16:15Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "bad",
-    "detail": "workflow_dispatch on main \u00b7 run #1350",
-    "time": "20:34",
-    "timestamp": "2026-07-28T20:34:32Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1833",
-    "time": "20:34",
-    "timestamp": "2026-07-28T20:34:24Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #3157",
-    "time": "20:34",
-    "timestamp": "2026-07-28T20:34:23Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #460",
-    "time": "20:33",
-    "timestamp": "2026-07-28T20:33:58Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #1274",
-    "time": "19:42",
-    "timestamp": "2026-07-28T19:42:57Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #237",
-    "time": "19:37",
-    "timestamp": "2026-07-28T19:37:50Z"
-  },
-  {
-    "title": "4-D Dominance Pipeline",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #17",
-    "time": "19:14",
-    "timestamp": "2026-07-28T19:14:23Z"
   }
 ]

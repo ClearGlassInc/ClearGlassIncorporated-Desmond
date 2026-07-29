@@ -193,6 +193,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/zero-trust-is-outdated-adaptive-trust.html": ("The Case for Adaptive Trust", "zero trust, revisited for agentic systems"),
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ("Digital Twin Tools for Storm-Adaptive Transit", "the 2026 platform comparison and hybrid architecture"),
     "blog/coffee-and-technology-digital-revolution.html": ("Coffee & Technology", "how coffee culture and technology grew together"),
+    "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ("ChatGPT Prompt Shortcuts", "a practical field guide to clearer, faster AI prompts"),
 }
 
 # --------------------------------------------------------------------------
@@ -348,6 +349,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/almach-scalp-engine.html",
             "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
             "blog/coffee-and-technology-digital-revolution.html",
+            "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -427,6 +429,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/almach-scalp-engine.html": ["revenue-engine.html"],
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ["sats-digital-twin.html", "environmental-cyber-risk.html"],
     "blog/coffee-and-technology-digital-revolution.html": ["advanced-features-tools-systems.html", "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html"],
+    "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ["ai-operator.html", "blog/ai-agent-governance-governed-autonomy.html"],
 }
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page

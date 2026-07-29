@@ -1,27 +1,33 @@
 # ClearGlassInc Artemis custom-domain email runbook
 
-> **Scope:** establish the production mailbox `Desmond@clearglassinc.com` without changing the website hosted on the same domain. Email addresses are case-insensitive in normal use, so `desmond@clearglassinc.com` reaches the same mailbox. This is an operator runbook, not evidence that any provider, tenant, DNS record, or security control is currently configured.
+> **Scope:** establish the production mailbox `desmond@clearglassinc.com` without changing the website hosted on the same domain. This is an operator runbook, not evidence that any provider, tenant, DNS record, or security control is currently configured.
 
-## Desired outcome and fastest safe path
+## Exact outcome and shortest safe path
 
-The domain registration alone does not provide a mailbox. The smallest complete setup is:
+Owning `clearglassinc.com` is necessary, but it does not itself create a mailbox. The domain must be connected to a mail host, and the mail host must contain a licensed user whose primary address is `desmond@clearglassinc.com`.
 
-1. Purchase **Microsoft 365 Business Premium** for one user from Microsoft or an authorized reseller.
-2. In the Microsoft 365 admin center, add and verify `clearglassinc.com` using the unique TXT record supplied by the domain wizard.
-3. Create the licensed user with username `Desmond`, producing `Desmond@clearglassinc.com`. Keep the user's everyday mailbox separate from privileged administrator accounts.
-4. At the authoritative DNS provider, publish the exact MX, SPF, Autodiscover, and DKIM values shown by the Microsoft wizard. Do not change the website's `A`, `AAAA`, `CNAME`, or GitHub Pages records.
-5. Publish DMARC initially in monitoring mode, validate inbound and outbound delivery, then enforce quarantine and rejection in stages.
-6. Sign in at [Outlook on the web](https://outlook.office.com) as `Desmond@clearglassinc.com`, register phishing-resistant MFA, and test mail in both directions.
+Email domain names and, in normal hosted-mail operation, mailbox addressing are case-insensitive. Configure and publish the canonical address in lowercase as `desmond@clearglassinc.com`; messages addressed as `Desmond@clearglassinc.com` should reach the same mailbox, while the lowercase form avoids inconsistent display, forms, and documentation.
 
-Only the domain owner or an explicitly authorized administrator can purchase the service, verify the domain, and change DNS. Do not share registrar, DNS, or Microsoft credentials in this repository or with an AI assistant. The provider-specific values cannot be safely precomputed because Microsoft generates them for the tenant.
+The recommended implementation is:
 
-Setup is complete only when all of the following are true:
+1. Buy **Microsoft 365 Business Premium** directly from Microsoft for one user. Do not buy a second domain during checkout.
+2. Create the temporary Microsoft tenant and protect its administrator with phishing-resistant MFA.
+3. In the Microsoft 365 admin center, add the existing domain `clearglassinc.com` and copy Microsoft's unique verification TXT record into the domain's authoritative DNS console.
+4. After verification, create the user **Desmond**, set the username and primary address to `desmond@clearglassinc.com`, and assign the Exchange-containing licence.
+5. Copy the tenant-specific MX, SPF, Autodiscover, and DKIM values shown by Microsoft into DNS. Preserve all website records; only replace obsolete mail records.
+6. Enable DKIM, publish DMARC initially at `p=none`, and test inbound and outbound delivery before tightening DMARC.
 
-- `Desmond@clearglassinc.com` has an Exchange Online licence and can sign in with MFA.
-- Public DNS returns only the intended Microsoft 365 MX route and a single valid SPF policy.
-- Both Microsoft DKIM selectors resolve and outbound mail reports `spf=pass`, `dkim=pass`, and `dmarc=pass` with alignment to `clearglassinc.com`.
-- External send, receive, reply, attachment, calendar, recovery, and junk-folder tests succeed.
-- Emergency administration, audit access, retention, rollback ownership, and DNS recovery are documented outside the mailbox itself.
+Do not copy another tenant's MX, verification, or DKIM targets from this document or a tutorial. Those values are generated for the specific Microsoft tenant. DNS changes are the only part performed at the registrar or DNS provider; mailbox creation and security configuration happen in Microsoft 365.
+
+### Completion checklist
+
+The setup is complete only when all of the following are true:
+
+- `desmond@clearglassinc.com` can sign in at Outlook on the web with MFA.
+- External test accounts can send to the mailbox and receive replies.
+- A received test message reports aligned `spf=pass`, `dkim=pass`, and `dmarc=pass` in its authentication results.
+- Existing `clearglassinc.com` website records and GitHub Pages routing still resolve normally.
+- Recovery accounts, DNS rollback values, and tenant ownership are recorded in the approved credential/recovery system—not in this repository.
 
 ## Recommendation
 
@@ -73,8 +79,8 @@ Microsoft's admin wizard is the source of truth for tenant-specific record value
 
 ### 3. Create the first mailbox
 
-1. In **Users → Active users → Add a user**, enter the operator's real display name and select `clearglassinc.com` as the domain.
-2. Set the username to `Desmond` so the primary address is `Desmond@clearglassinc.com`. Use this named address as the person's sign-in identity; keep shared role addresses separate.
+1. In **Users → Active users → Add a user**, enter **Desmond** as the display name and select `clearglassinc.com` as the domain.
+2. Set the username and primary address to `desmond@clearglassinc.com`. Avoid using a shared role address as the person's sign-in identity.
 3. Assign a licence containing Exchange Online, set usage location, and require registration of strong authentication at first sign-in.
 4. Create role addresses such as `security@`, `billing@`, or `support@` as shared mailboxes where appropriate. Grant named users access; do not share passwords.
 5. Send a test message internally while MX still points to the old provider.

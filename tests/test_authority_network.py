@@ -23,14 +23,19 @@ def test_supplemental_pages_have_stable_pillars_and_curated_bridges() -> None:
         assert page not in targets
 
 
-def test_public_authority_grid_exposes_every_other_registered_page() -> None:
+def test_public_discovery_surfaces_expose_every_registered_page() -> None:
     records = authority.native_link_records()
     grid_targets = {
         record.target
         for record in records
         if record.source == "authority-network.html"
     }
-    assert set(authority.PAGES) - {"authority-network.html"} <= grid_targets
+    assert set(authority.legacy.PAGES) - {"authority-network.html"} <= grid_targets
+
+    edges = authority.graph_edges()
+    for page, (_title, _description, cid) in authority.SUPPLEMENTAL_PAGES.items():
+        pillar = authority.legacy.CLUSTERS[cid]["pillar"]
+        assert page in edges[pillar]
 
 
 def test_graph_has_no_orphans_and_reaches_conversion() -> None:
@@ -51,7 +56,10 @@ def test_authority_grid_uses_descriptive_anchors() -> None:
         if record.source == "authority-network.html"
     ]
     assert records
-    assert all(record.anchor.strip().casefold() not in authority.GENERIC_ANCHORS for record in records)
+    assert all(
+        record.anchor.strip().casefold() not in authority.GENERIC_ANCHORS
+        for record in records
+    )
     assert all(record.anchor.strip() for record in records)
 
 
@@ -63,5 +71,11 @@ def test_authority_fingerprint_is_deterministic() -> None:
 
 
 def test_shared_navigation_exposes_authority_grid() -> None:
+    # The CI adapter (authority_network_ci.graph_edges) records a home ->
+    # authority-network.html edge on the strength of the shared navigation
+    # linking the Authority Network on every page. Assert that durable edge
+    # (the link target) rather than a specific label/emoji, so a legitimate
+    # nav redesign cannot silently make that recorded edge dishonest while a
+    # cosmetic rename cannot spuriously fail the gate.
     nav = Path("nav.js").read_text(encoding="utf-8")
-    assert '["Authority Grid", "authority-network.html", "⌁"]' in nav
+    assert '"authority-network.html"' in nav

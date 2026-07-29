@@ -96,6 +96,8 @@ PAGES: dict[str, tuple[str, str]] = {
     "CG-os.html": ("CG OS", "the ClearGlass command HUD"),
     "systems.html": ("Systems Console", "PERCIVAL operations console"),
     "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
+    "command-center.html": ("Command Center", "executive security operations deck"),
+    "platform-command-center.html": ("Platform Command Center", "live monorepo dashboard with governance risk simulator"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
     "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),
 
@@ -118,6 +120,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "legal/banking-resolution.html": ("Banking Resolution", "officer and banking authority"),
     "legal/share-subscription.html": ("Share Subscription Agreement", "founder share issuance"),
     "legal/content-policy.html": ("Content Policy", "authorized use, attribution, and copyright ownership"),
+    "legal/accessibility.html": ("Accessibility Statement", "our WCAG 2.2 AA commitment and how to report a barrier"),
 
     # Healthcare
     "clearpulse.html": ("ClearPulse", "healthcare intelligence pipeline"),
@@ -134,6 +137,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "sats-digital-twin.html": ("SATS Digital Twin", "storm-adaptive transit simulation with governed operations"),
 
     # Services & conversion
+    "products.html": ("ClearGlass Products", "the unified ClearGlass product catalog"),
     "offers/index.html": ("Services & Engagements", "every ClearGlass offer in one place"),
     "store.html": ("ClearGlass Store", "book a security engagement"),
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
@@ -187,6 +191,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/zero-trust-is-outdated.html": ("Zero Trust Is Outdated", "the original argument"),
     "blog/zero-trust-is-outdated-adaptive-trust.html": ("The Case for Adaptive Trust", "zero trust, revisited for agentic systems"),
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ("Digital Twin Tools for Storm-Adaptive Transit", "the 2026 platform comparison and hybrid architecture"),
+    "blog/coffee-and-technology-digital-revolution.html": ("Coffee & Technology", "how coffee culture and technology grew together"),
 }
 
 # --------------------------------------------------------------------------
@@ -240,6 +245,7 @@ CLUSTERS: dict[str, dict] = {
             "conduit.html", "postloop.html", "command-console.html",
             "control-surface.html", "systems.html", "saas-platform.html",
             "CG-os.html", "percival-build.html", "clearsight.html",
+            "command-center.html", "platform-command-center.html",
         ],
         "cta": [CTA_OFFERS, CTA_PRICING],
     },
@@ -255,6 +261,7 @@ CLUSTERS: dict[str, dict] = {
             "legal/nda.html", "legal/ip-assignment.html",
             "legal/directors-resolution.html", "legal/banking-resolution.html",
             "legal/share-subscription.html", "legal/content-policy.html",
+            "legal/accessibility.html",
         ],
         "cta": [CTA_STORE, CTA_OFFERS],
     },
@@ -286,7 +293,7 @@ CLUSTERS: dict[str, dict] = {
             "store.html", "pricing.html", "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html", "revenue-engine.html",
-            "side-store.html",
+            "side-store.html", "products.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -338,6 +345,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/ethical-sales-system-100k-revenue-prompt.html",
             "blog/almach-scalp-engine.html",
             "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
+            "blog/coffee-and-technology-digital-revolution.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -383,6 +391,8 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "web-design.html": ["offers/index.html"],
     "smb-cyber-trust-kit.html": ["offers/hardening-sprint.html"],
     "store.html": ["smb-cyber-trust-kit.html"],
+    "products.html": ["offers/index.html", "advanced-features-tools-systems.html", "store.html"],
+    "platform-command-center.html": ["systems.html", "control-surface.html", "advanced-features-tools-systems.html"],
     "opal/index.html": ["conduit.html"],
     "products/opal-koboi/artemis-iv-core.html": ["artemis-iv.html"],
     "products/opal-koboi/artemis-vi.html": ["artemis-os.html"],
@@ -413,6 +423,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/ethical-sales-system-100k-revenue-prompt.html": ["revenue-engine.html"],
     "blog/almach-scalp-engine.html": ["revenue-engine.html"],
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ["sats-digital-twin.html", "environmental-cyber-risk.html"],
+    "blog/coffee-and-technology-digital-revolution.html": ["advanced-features-tools-systems.html", "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html"],
 }
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page

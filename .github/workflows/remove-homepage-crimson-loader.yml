@@ -1,21 +1,27 @@
 name: Remove homepage crimson loader
 
 on:
-  push:
-    paths:
-      - .github/workflows/remove-homepage-crimson-loader.yml
   workflow_dispatch:
+    inputs:
+      change_ticket:
+        description: "Approved change-ticket identifier recorded in the pull request"
+        required: true
+        type: string
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   patch:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - name: Remove crimson homepage redirect gate only
         run: |
           python3 - <<'PY'
@@ -40,14 +46,17 @@ jobs:
           test "$(grep -c "window.location.replace('cg-loader.html?next=index.html')" index.html || true)" = "0"
           grep -q 'id="cg-loader"' index.html
           grep -q 'CLEARGLASS PREMIUM LOADER' index.html
-      - name: Commit patch
-        run: |
-          if git diff --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          git commit -m "Remove crimson homepage loader gate"
-          git push
+      - name: Open governed patch pull request
+        uses: peter-evans/create-pull-request@84ae59a2cdc2258d6fa0732dd66352dddae2a412 # v7.0.9
+        with:
+          branch: automation/remove-homepage-crimson-loader
+          delete-branch: true
+          commit-message: "fix(site): remove crimson homepage loader gate"
+          title: "fix(site): remove crimson homepage loader gate"
+          body: |
+            Automated, narrowly scoped homepage patch.
+
+            Change ticket: `${{ inputs.change_ticket }}`
+
+            This pull request must pass normal branch protection and human review.
+            Closing it without merge is the rollback before deployment.

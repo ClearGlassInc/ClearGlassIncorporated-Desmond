@@ -1,71 +1,15 @@
 {
-  "run_utc": "2026-06-24T03:59:41+00:00",
+  "run_utc": "2026-07-28T17:37:11+00:00",
   "repo": "clearglassinc/clearglassinc.github.io",
-  "scanned_files": 400,
+  "scanned_files": 754,
   "summary": {
     "critical": 0,
-    "high": 5,
+    "high": 0,
     "medium": 0,
     "low": 0,
     "info": 0
   },
-  "response_plan": [
-    "require_review",
-    "alert_owner",
-    "open_incident_issue",
-    "block_merge"
-  ],
+  "response_plan": [],
   "fail_build": false,
-  "findings": [
-    {
-      "rule_id": "curl_pipe_shell",
-      "category": "command",
-      "severity": "high",
-      "title": "Remote script piped straight into a shell",
-      "detail": "Suspicious command pattern in automation surface.",
-      "file": "runner/setup-runner.sh",
-      "line": 48,
-      "evidence": "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -"
-    },
-    {
-      "rule_id": "require_sha_pinned_actions",
-      "category": "workflow",
-      "severity": "high",
-      "title": "Third-party action is not pinned to a full commit SHA",
-      "detail": "Tag and branch refs are mutable and can be re-pointed at malicious code. Pin actions to a full 40-character commit SHA (keep the version in a trailing comment).",
-      "file": ".github/workflows/agent.yml",
-      "line": 57,
-      "evidence": "uses: actions/checkout@v5"
-    },
-    {
-      "rule_id": "require_sha_pinned_actions",
-      "category": "workflow",
-      "severity": "high",
-      "title": "Third-party action is not pinned to a full commit SHA",
-      "detail": "Tag and branch refs are mutable and can be re-pointed at malicious code. Pin actions to a full 40-character commit SHA (keep the version in a trailing comment).",
-      "file": ".github/workflows/agent.yml",
-      "line": 62,
-      "evidence": "uses: anthropics/claude-code-action@v1"
-    },
-    {
-      "rule_id": "require_sha_pinned_actions",
-      "category": "workflow",
-      "severity": "high",
-      "title": "Third-party action is not pinned to a full commit SHA",
-      "detail": "Tag and branch refs are mutable and can be re-pointed at malicious code. Pin actions to a full 40-character commit SHA (keep the version in a trailing comment).",
-      "file": ".github/workflows/codeql.yml",
-      "line": 51,
-      "evidence": "uses: github/codeql-action/init@v3"
-    },
-    {
-      "rule_id": "require_sha_pinned_actions",
-      "category": "workflow",
-      "severity": "high",
-      "title": "Third-party action is not pinned to a full commit SHA",
-      "detail": "Tag and branch refs are mutable and can be re-pointed at malicious code. Pin actions to a full 40-character commit SHA (keep the version in a trailing comment).",
-      "file": ".github/workflows/codeql.yml",
-      "line": 58,
-      "evidence": "uses: github/codeql-action/analyze@v3"
-    }
-  ]
+  "findings": []
 }

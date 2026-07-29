@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
 <!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="alternate icon" href="/assets/images/clearglass-logo.png">
-<link rel="apple-touch-icon" href="/assets/images/clearglass-logo.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon-32.png">
+<link rel="alternate icon" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#07111f">
 <meta name="msapplication-TileColor" content="#07111f">
-<meta name="msapplication-TileImage" content="/assets/images/clearglass-logo.png">
+<meta name="msapplication-TileImage" content="/icon-192.png">
 <meta name="msapplication-config" content="/browserconfig.xml">
 
 <meta charset="UTF-8"/>
@@ -206,6 +207,28 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opa
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:1000px){.grid{grid-template-columns:1fr}.rail-panel,.stream{position:static;max-height:none}.rail{display:grid;grid-template-columns:repeat(2,1fr)}.rail .sep{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* ===== ClearGlassInc Artemis flagship product blueprint ===== */
+.artemis-blueprint{max-width:1180px;margin:18px auto 70px;padding:0 18px;display:flex;flex-direction:column;gap:18px}
+.artemis-hero{padding:28px;border:1px solid rgba(57,199,255,.26);border-radius:20px;background:linear-gradient(145deg,rgba(9,14,28,.92),rgba(8,10,22,.82)),radial-gradient(circle at 12% 0,rgba(57,199,255,.18),transparent 34%);box-shadow:0 24px 70px rgba(0,0,0,.42),inset 0 0 0 1px rgba(255,255,255,.035)}
+.artemis-eyebrow{font:800 11px var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.artemis-hero h2{font:900 clamp(28px,4vw,54px)/1.02 var(--display);letter-spacing:.04em;color:#f2f9ff;text-shadow:0 0 24px rgba(57,199,255,.34);margin:0 0 12px}
+.artemis-hero p{max-width:980px;color:var(--txt-2);font-size:15.5px;line-height:1.7;margin:0}
+.artemis-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.artemis-card{border:1px solid var(--line);border-radius:18px;background:rgba(10,16,28,.74);padding:18px;position:relative;overflow:hidden}
+.artemis-card::before{content:"";position:absolute;top:0;left:18px;right:18px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.55}
+.artemis-card h3{font:800 13px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#eaf6ff;margin:0 0 12px}
+.artemis-card p,.artemis-card li{color:var(--txt-2);font-size:13.5px;line-height:1.65}
+.artemis-card ul,.artemis-card ol{padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px}
+.artemis-card strong{color:var(--ice)}
+.artemis-code{grid-column:1/-1}
+.artemis-code pre{margin:10px 0 0;overflow:auto;border:1px solid var(--line-2);border-radius:14px;background:#050914;color:#d9f7ff;padding:16px;font:12px/1.55 var(--mono);white-space:pre}
+.artemis-pipeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.artemis-step{border:1px solid var(--line-2);border-radius:14px;padding:12px;background:rgba(57,199,255,.05)}
+.artemis-step b{display:block;color:var(--cyan);font:800 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.artemis-step span{display:block;color:var(--txt-2);font-size:12.5px;line-height:1.45}
+@media(max-width:900px){.artemis-grid,.artemis-pipeline{grid-template-columns:1fr}.artemis-blueprint{margin-bottom:96px}}
+
 </style>
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="theme.css">
@@ -218,6 +241,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opa
 <link rel="stylesheet" href="/assets/css/cg-design-system.css">
 <script defer src="/assets/js/cg-design-system.js"></script>
   <script defer src="/asset-protection.js"></script>
+  <link rel="stylesheet" href="brand-system.css">
 </head>
 <body>
   <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">CG OS — Command HUD</h1>
@@ -312,6 +336,162 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opa
     </aside>
   </div>
 </div>
+
+<section class="artemis-blueprint" aria-labelledby="artemis-title">
+  <div class="artemis-hero">
+    <div class="artemis-eyebrow">Flagship product · ClearGlassInc Artemis</div>
+    <h2 id="artemis-title">Self-evolving AI intelligence command platform</h2>
+    <p>ClearGlassInc Artemis is the production blueprint for a coalition-aware intelligence operating system on Palantir Gotham, Foundry, AIP, and Apollo. It fuses live and historical data, reasons over governed ontologies, learns from operator feedback, and proposes prompt, workflow, heuristic, and model-routing improvements only inside explicit human-approved guardrails.</p>
+    <div class="artemis-pipeline" aria-label="End-to-end platform flow">
+      <div class="artemis-step"><b>Ingest</b><span>Live streams, historical lakehouse tables, case files, OSINT, sensors, and operator annotations enter Foundry with lineage.</span></div>
+      <div class="artemis-step"><b>Reason</b><span>Gotham investigations and Foundry Ontology objects drive entity tracking, missions, alerts, and context-aware retrieval.</span></div>
+      <div class="artemis-step"><b>Act</b><span>AIP copilots and typed agents draft intel products, case updates, enrichments, and action packages behind approval gates.</span></div>
+      <div class="artemis-step"><b>Evolve</b><span>Evaluation results, drift signals, and feedback produce versioned upgrade proposals deployed or rolled back by Apollo.</span></div>
+    </div>
+  </div>
+
+  <div class="artemis-grid">
+    <article class="artemis-card">
+      <h3>System Architecture</h3>
+      <ul>
+        <li><strong>Frontend:</strong> command HUD, analyst workbench, commander brief, eval console, approval queue, and mission timeline.</li>
+        <li><strong>Backend:</strong> Python FastAPI services for ingest, ontology access, policy decisions, agent orchestration, audit, and eval generation.</li>
+        <li><strong>Data layer:</strong> Foundry pipelines normalize streaming and batch data into governed datasets, feature tables, vector indexes, and warehouse marts.</li>
+        <li><strong>AI layer:</strong> AIP hosts copilots, agent workflows, model routing, prompt registry, tool schemas, safety policies, and regression evaluations.</li>
+        <li><strong>Deployment:</strong> Apollo promotes signed service, prompt, workflow, and policy releases across enclaves with canaries, rollback, and runtime control.</li>
+      </ul>
+    </article>
+
+    <article class="artemis-card">
+      <h3>Data and Ontology</h3>
+      <ul>
+        <li><strong>Core entities:</strong> Person, Organization, Asset, Location, Event, Signal, Alert, Case, Mission, IntelProduct, Source, CollectionPlan, ActionPackage.</li>
+        <li><strong>Relationships:</strong> observed_at, affiliated_with, communicated_with, controls, derived_from, corroborates, contradicts, assigned_to, recommends, approved_by.</li>
+        <li><strong>State:</strong> confidence, classification, compartments, temporal validity, source lineage, model provenance, feedback state, and mission relevance.</li>
+        <li><strong>Behavior:</strong> the ontology constrains AI tools; agents query object actions rather than raw tables and inherit row, column, entity, and coalition policy.</li>
+      </ul>
+    </article>
+
+    <article class="artemis-card">
+      <h3>AI and Agent Design</h3>
+      <ul>
+        <li><strong>Analyst copilot:</strong> builds timelines, explains entity graphs, summarizes source packets, asks clarifying questions, and cites evidence.</li>
+        <li><strong>Commander copilot:</strong> compresses mission state into decision briefs, uncertainty bands, second-order effects, and recommended next approvals.</li>
+        <li><strong>Agent mesh:</strong> triage, enrichment, correlation, contradiction detection, summarization, red-team critique, and recommendation agents run with typed tools and budgets.</li>
+        <li><strong>Approval gates:</strong> operationally significant actions are draft-only until a qualified human approves the exact package, scope, expiry, and rollback plan.</li>
+      </ul>
+    </article>
+
+    <article class="artemis-card">
+      <h3>Self-Improvement Loop</h3>
+      <ol>
+        <li>Capture operator corrections, rejected recommendations, query logs, alert outcomes, latency, confidence calibration, and mission results.</li>
+        <li>Transform signals into eval cases with expected answers, forbidden behaviors, source requirements, and policy assertions.</li>
+        <li>Generate candidate prompt, workflow, heuristic, and model-routing changes in a sandbox branch with immutable provenance.</li>
+        <li>Run offline evals, drift tests, canaries, A/B experiments, and human review before Apollo promotion.</li>
+        <li>Rollback automatically when precision, recall, latency, policy compliance, operator trust, or mission-impact thresholds regress.</li>
+      </ol>
+    </article>
+
+    <article class="artemis-card">
+      <h3>Security and Governance</h3>
+      <ul>
+        <li>Zero-trust workload identity, need-to-know access, ABAC/ReBAC, compartment tags, coalition release markings, and fail-closed policy decisions.</li>
+        <li>Immutable append-only audit logs capture user, tool, model, prompt, dataset, policy, approval, and deployment versions for every material transition.</li>
+        <li>Prompt governance separates draft, evaluated, approved, canary, active, and retired prompts; model governance tracks eval evidence and residual risk.</li>
+        <li>Policy-as-code enforces classification, source handling, data minimization, action approval, egress restrictions, and tool allowlists.</li>
+      </ul>
+    </article>
+
+    <article class="artemis-card">
+      <h3>Scenario Walkthrough</h3>
+      <p>A live event enters Foundry from a coalition feed. The triage agent links it to Gotham entities, detects a confidence jump, and drafts an alert. The enrichment and correlation agents attach source packets, contradictions, and temporal context. AIP prepares an action package but cannot execute it. The commander approves a bounded recommendation; Apollo deploys the approved workflow version. If the outcome is rejected or later disproven, the feedback becomes an eval, the prompt optimizer proposes a safer rule, and the next release ships only after review and regression gates pass.</p>
+    </article>
+
+    <article class="artemis-card artemis-code">
+      <h3>Code Examples</h3>
+      <pre><code># Python FastAPI orchestration skeleton for ClearGlassInc Artemis
+from dataclasses import dataclass
+from enum import Enum
+from typing import Literal
+from fastapi import FastAPI, HTTPException
+
+app = FastAPI(title="ClearGlassInc Artemis Control Plane")
+
+class Risk(str, Enum):
+    green = "green"
+    amber = "amber"
+    red = "red"
+
+@dataclass(frozen=True)
+class MissionContext:
+    mission_id: str
+    user_id: str
+    compartments: set[str]
+    coalition: str
+    purpose: str
+
+@dataclass(frozen=True)
+class ActionPackage:
+    kind: Literal["intel_product", "case_update", "response_recommendation"]
+    target_id: str
+    rationale: str
+    evidence_ids: list[str]
+    risk: Risk
+    prompt_version: str
+    workflow_version: str
+
+def enforce_need_to_know(ctx: MissionContext, entity_markings: set[str]) -&gt; None:
+    if not entity_markings.issubset(ctx.compartments):
+        raise HTTPException(status_code=403, detail="Denied by compartment policy")
+
+def requires_human_approval(pkg: ActionPackage) -&gt; bool:
+    return pkg.risk in {Risk.amber, Risk.red} or pkg.kind == "response_recommendation"
+
+@app.post("/missions/{mission_id}/triage")
+def triage_event(mission_id: str, event_id: str, ctx: MissionContext) -&gt; dict:
+    entity = foundry_ontology_get("Event", event_id)  # ontology object action, not raw table access
+    enforce_need_to_know(ctx, set(entity["markings"]))
+    candidates = aip_agent_run(
+        agent="triage-correlation-v7",
+        inputs={"event_id": event_id, "mission_id": mission_id},
+        tools=["ontology.search", "gotham.case_graph", "vector.retrieve"],
+        max_tool_calls=12,
+    )
+    pkg = ActionPackage(
+        kind="response_recommendation",
+        target_id=event_id,
+        rationale=candidates["rationale"],
+        evidence_ids=candidates["evidence_ids"],
+        risk=Risk(candidates["risk"]),
+        prompt_version=candidates["prompt_version"],
+        workflow_version="triage-flow-2026.07.23",
+    )
+    audit_append("action_package_prepared", pkg.__dict__)
+    return {"status": "approval_required" if requires_human_approval(pkg) else "ready", "package": pkg.__dict__}
+
+# Eval pipeline: convert feedback into gated self-upgrade proposals
+def build_eval_from_feedback(feedback: dict) -&gt; dict:
+    return {
+        "case_id": feedback["feedback_id"],
+        "input_event": feedback["event_id"],
+        "expected": feedback["operator_correction"],
+        "must_cite_evidence": True,
+        "forbidden": ["uncited claims", "cross-compartment leakage", "unapproved action"],
+        "metrics": ["precision", "recall", "latency_ms", "policy_pass_rate", "operator_trust"],
+    }
+
+def propose_self_upgrade(feedback_batch: list[dict]) -&gt; dict:
+    evals = [build_eval_from_feedback(item) for item in feedback_batch]
+    candidate = aip_prompt_optimizer(evals=evals, base_prompt="triage-correlation-v7")
+    report = run_offline_evals(candidate, evals)
+    if report["policy_pass_rate"] &lt; 1.0 or report["precision_delta"] &lt; 0:
+        return {"decision": "reject", "reason": "regression or policy failure", "report": report}
+    return {"decision": "human_review", "candidate": candidate, "report": report}</code></pre>
+    </article>
+  </div>
+</section>
+
 
 <!-- voice orb -->
 <div class="voice">
@@ -525,12 +705,13 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opa
     <ul>
       <li><a href="percival-build.html"><b>PERCIVAL BUILD</b> — spatial engineering workspace</a></li>
       <li><a href="clearsight.html"><b>CLEARSIGHT</b> — edge-AI camera vision &amp; object detection</a></li>
-      <li><a href="artemis-percival.html"><b>AVALON</b> — the ARTEMIS ⊕ PERCIVAL unified fusion core</a></li>
-      <li><a href="agentmesh.html"><b>Agent Mesh</b> — multi-agent OSINT orchestration</a></li>
+      <li><a href="command-center.html"><b>Command Center</b> — executive security operations deck</a></li>
+      <li><a href="platform-command-center.html"><b>Platform Command Center</b> — live monorepo dashboard with governance risk simulator</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="offers/index.html">Browse services &amp; engagements</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
   </nav>
 </aside>
 <!-- cg-related:end -->
+<script defer src="nav.js"></script>
 </body>
 </html>

@@ -4,17 +4,17 @@
   "original_author": "Desmond Otieno Odhiambo",
   "classification": "CONFIDENTIAL",
   "bot": "artemis_provenance_bot",
-  "generated_utc": "2026-07-22T09:08:14+00:00",
-  "repository_head": "e69cd74960ca7445b1a90429388193b47ab0ca86",
+  "generated_utc": "2026-07-29T09:57:49+00:00",
+  "repository_head": "b01ef6a307f3cbb3b30848df8efaf5fb859eeb31",
   "branch": "main",
   "artifact_count": 12,
   "artifacts": [
     {
       "artifact": "agents/artemis_command_system/agent.json",
-      "sha256": "b805426ac80aad03900483f8e6fbbcfa37ab419e028c22f2bcac4dc20f7ad8b4",
-      "size_bytes": 2657,
-      "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "sha256": "7d22f85f03566f34678f6965bb311878dbf5293ed069ab2964ea22836239ad2a",
+      "size_bytes": 3160,
+      "last_commit": "bbfaea037a37ec7046f0ac4689b7e112a13b385e",
+      "last_commit_date": "2026-07-29T09:13:36Z"
     },
     {
       "artifact": "agents/artemis_command_system/system_prompt.md",
@@ -25,10 +25,10 @@
     },
     {
       "artifact": "agents/artemis_ip_guardian/agent.json",
-      "sha256": "497fdf4800d4a13b3f02488c3481adfcbe20b9f674185660ba02d912083eb89f",
-      "size_bytes": 1436,
-      "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "sha256": "b4b8d328c004cfe9503f9f6311ea5885f626872c62ff22cd7765a29ba7c9fbb2",
+      "size_bytes": 1870,
+      "last_commit": "bbfaea037a37ec7046f0ac4689b7e112a13b385e",
+      "last_commit_date": "2026-07-29T09:13:36Z"
     },
     {
       "artifact": "agents/artemis_ip_guardian/system_prompt.md",
@@ -53,10 +53,10 @@
     },
     {
       "artifact": ".github/workflows/artemis-deploy.yml",
-      "sha256": "5cea8aeaef545b82e3f01b866a87d956ef4ca85f6ae031d08c9624b38284cd1d",
-      "size_bytes": 5504,
-      "last_commit": "e29f3f32542627acf4fa968b361b73dcf80f3ada",
-      "last_commit_date": "2026-07-18T12:15:17Z"
+      "sha256": "6eb6ec4cd0de4ecfc2b901ff4cf6cabbaa86a64395569c9d976d3e4f282da2d3",
+      "size_bytes": 5698,
+      "last_commit": "118765838ee64b482b2ba5d7f8bd1e61debb4303",
+      "last_commit_date": "2026-07-27T19:42:26-04:00"
     },
     {
       "artifact": "prompts/general_assistant_system_prompt.md",

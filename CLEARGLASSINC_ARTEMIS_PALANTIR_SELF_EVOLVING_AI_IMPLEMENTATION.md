@@ -1,5 +1,67 @@
 # ClearGlassInc Artemis — Palantir-Native Self-Evolving AI Intelligence Platform Implementation Blueprint
 
+> **Status: target-state implementation specification.** This document defines a proposed architecture and delivery contract; it is not evidence that any Palantir tenant, data connection, model, control, or operational capability has been provisioned. Product-specific interfaces must be validated against the licensed Gotham, Foundry, AIP, and Apollo environments during inception.
+
+## Delivery Contract
+
+### Objective and measurable acceptance criteria
+
+Build ClearGlassInc Artemis as a governed intelligence platform that turns authorized live and historical data into evidence-backed analysis while keeping operational authority with accountable humans. The first production release is acceptable only when it can:
+
+1. ingest a representative live event and make a policy-filtered ontology update without crossing coalition or compartment boundaries;
+2. produce a cited triage result whose evidence, model route, prompt, workflow, policy decision, and source lineage can be reconstructed from immutable records;
+3. prevent every operationally significant action until an authorized operator approves the exact, unexpired action package;
+4. turn operator corrections and mission outcomes into reproducible evaluation cases without training directly on raw feedback;
+5. propose—but never self-deploy—a prompt, workflow, heuristic, or route change and promote it only after offline gates, human approval, and an Apollo-controlled canary; and
+6. demonstrate kill-switch activation, rollback, audit export, backup restoration, and coalition-disconnection behavior in a production-like environment.
+
+### Non-negotiable invariants
+
+| Invariant | Enforcement point | Required negative test |
+|---|---|---|
+| No model output is authority | Workflow state machine and action service | A recommendation cannot invoke a consequential tool directly |
+| No self-granted scope, tools, goals, or privileges | Signed capability manifest and policy decision point | A candidate workflow adding a tool or mission scope is rejected |
+| Need-to-know applies before retrieval | Ontology/search query planner and data product ACLs | An inaccessible entity never reaches model context, citations, cache, or trace payloads |
+| Approval binds the exact action | Approval service verifies actor, digest, expiry, mission, and policy version | Replayed, expired, edited, or cross-mission approvals fail with no side effect |
+| Material records are append-only | Independently controlled audit plane | Update/delete attempts fail and integrity verification detects tampering |
+| Releases are reversible | Apollo release policy, immutable artifact registry, and runtime kill switch | A failed canary restores the last-known-good signed bundle within the recovery objective |
+| Failure is safe and visible | Policy, workflow, and dependency circuit breakers | A policy, identity, lineage, or audit outage blocks writes and raises an alert |
+
+### Service objectives and failure tolerances
+
+These are initial engineering targets, not claims about deployed performance. Mission owners must ratify them against threat, capacity, and network assumptions before production authorization.
+
+| Capability | Initial target | Degraded-mode behavior |
+|---|---:|---|
+| Live event acknowledgement | p95 <= 500 ms, p99 <= 1 s | Persist to bounded encrypted spool; do not claim ontology freshness |
+| Policy-filtered triage | p95 <= 2.5 s for the validated load envelope | Fall back to deterministic rules or queue for human triage |
+| Consequential action authorization | 100% policy and approval checks; zero tolerated bypasses | Fail closed; leave action package in `AWAITING_APPROVAL` |
+| Audit durability | RPO 0 for acknowledged material writes | Reject the material write if the audit append cannot commit atomically |
+| Operational control plane | 99.95% monthly availability target | Read-only last-known-good views with an explicit stale-data banner |
+| Regional/enclave recovery | RTO <= 30 minutes; configuration RPO <= 5 minutes | Isolate the affected enclave and reconcile from signed event checkpoints |
+| Emergency AI disablement | <= 60 seconds per enclave | Keep deterministic search, case, and approval workflows available |
+
+### Trust boundaries and ownership
+
+- **Data plane:** Foundry datasets, ontology objects, indexes, and event streams. Data owners approve source use, retention, classification mappings, and release markings.
+- **AI plane:** AIP prompts, agents, evaluations, retrieval policies, and model routes. ModelOps owns quality evidence but cannot authorize operational actions.
+- **Control plane:** identity, policy, workflow, approval, capability, and Apollo release controls. Security and mission authorities jointly approve material changes.
+- **Audit plane:** append-only decision and provenance records under an administrative boundary independent from agent and application writers. Audit custodians control export and retention.
+- **Operator plane:** Gotham, Foundry applications, and the ClearGlassInc Artemis web surface. Operators receive only mission-scoped views and cannot approve their own privileged access expansion.
+
+### Delivery sequence and go/no-go gates
+
+| Milestone | Deliverable | Exit gate | Accountable owner |
+|---|---|---|---|
+| 0. Inception | Licensed-product interface validation, threat model, data classification, mission vocabulary, capacity baseline | Architecture, privacy, security, and mission-owner approval | Chief architect |
+| 1. Governed data foundation | Source contracts, bronze/silver/gold pipelines, bitemporal ontology, lineage, ABAC fixtures | Data-quality thresholds and cross-coalition leakage tests pass | Data platform lead |
+| 2. Read-only intelligence | Search, entity correlation, Gotham investigation views, cited analyst copilot | Groundedness, precision/recall, latency, accessibility, and operator acceptance pass | Intelligence product lead |
+| 3. Governed workflows | Typed tools, durable workflow engine, approval service, immutable audit, action packages | Forbidden-transition, replay, concurrency, outage, and recovery tests pass | Application/security leads |
+| 4. Improvement control plane | Feedback capture, eval corpus, candidate registry, review UI, drift monitors | Candidate cannot deploy without quorum approval and signed release evidence | ModelOps lead |
+| 5. Enclave rollout | Apollo rings, observability, incident runbooks, restore/failover drills | Production authorization plus successful canary and rollback exercise | SRE and mission authority |
+
+Each milestone produces a signed evidence pack containing source commit, schemas, policy bundle, test results, security findings, residual-risk decisions, deployment manifest, rollback procedure, and named on-call owner. Any missing gate keeps the affected capability disabled or read-only.
+
 ## System Architecture
 
 ClearGlassInc Artemis is a secure, coalition-aware, audited, latency-sensitive intelligence platform built across **Palantir Gotham**, **Foundry**, **AIP**, and **Apollo**. Gotham is the operational intelligence and investigations layer. Foundry is the governed data, ontology, pipeline, and application-logic layer. AIP is the AI copilot, agent, tool, workflow, and evaluation layer. Apollo is the deployment, canary, rollback, runtime-control, and fleet-management layer.
@@ -110,7 +172,17 @@ CREATE TABLE artemis_entity (
   display_name TEXT NOT NULL,
   canonical_attributes JSONB NOT NULL DEFAULT '{}',
   confidence NUMERIC(5,4) NOT NULL CHECK (confidence BETWEEN 0 AND 1),
-  classification TEXT NOT NULL,
+  classification TEXT NOT NULL CHECK (classification IN (
+    'UNCLASSIFIED','CONTROLLED','SECRET','TOP_SECRET'
+  )),
+  classification_rank SMALLINT GENERATED ALWAYS AS (
+    CASE classification
+      WHEN 'UNCLASSIFIED' THEN 0
+      WHEN 'CONTROLLED' THEN 1
+      WHEN 'SECRET' THEN 2
+      WHEN 'TOP_SECRET' THEN 3
+    END
+  ) STORED,
   compartments TEXT[] NOT NULL DEFAULT '{}',
   coalition_scope TEXT NOT NULL,
   mission_tags TEXT[] NOT NULL DEFAULT '{}',
@@ -144,6 +216,8 @@ CREATE TABLE artemis_relationship (
 
 ### Ontology-driven behavior
 
+Classification labels are never compared lexicographically. The generated numeric rank is the canonical relational projection for clearance comparisons; ingestion rejects unknown labels, while the policy decision point remains authoritative and evaluates classification together with compartments, coalition, mission assignment, and purpose-of-use. Search indexes and caches must carry the same numeric rank and markings, and a result is discarded if its policy metadata is missing or stale.
+
 - **Humans** see mission-relevant objects through Gotham and Foundry apps, filtered by classification, compartment, coalition, role, purpose, and active mission assignment.
 - **Agents** receive the same filtered ontology view through governed tools, so a copilot cannot reason over or cite data the operator is not allowed to see.
 - **Actions** are first-class ontology operations: open a case, request enrichment, produce an intelligence product, request approval, or submit an action package.
@@ -156,6 +230,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from hashlib import sha256
+import json
 from math import exp
 from typing import Any
 
@@ -176,7 +251,13 @@ def compute_confidence(score: EvidenceScore) -> float:
 
 
 def provenance_hash(payload: dict[str, Any]) -> str:
-    canonical = repr(sorted(payload.items())).encode("utf-8")
+    canonical = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+        allow_nan=False,
+    ).encode("utf-8")
     return sha256(canonical).hexdigest()
 
 
@@ -340,6 +421,31 @@ def promotion_allowed(scores: dict[str, float]) -> tuple[bool, list[str]]:
             failures.append(f"{metric}={observed} below {threshold}")
     return not failures, failures
 ```
+
+### Executable governed lifecycle reference
+
+The dependency-light Python reference in `tools/artemis_self_improvement_engine.py`
+implements the boundary between candidate generation and release orchestration. A
+proposal can move from `needs_human_approval` to `approved_for_canary` only when
+its offline evaluation passes, policy has not blocked it, the reviewer holds both
+mission-owner and model-governance authority, and the approval is bound to the
+exact canonical proposal-manifest digest. Any edit after review invalidates the
+decision.
+
+The lifecycle emits a **release intent**, not a deployment side effect. An Apollo
+adapter in a separate trust domain must validate that intent, artifact signature,
+environment, and current policy again. Canary policy violations or metric
+regressions produce a rollback state referencing the last-known-good component
+version. Approval, canary start, promotion intent, and rollback are recorded in a
+hash-chained append-only evidence stream; production must persist that stream in
+an independently administered immutable audit store rather than process memory.
+
+The regression suite in `tests/test_artemis_self_improvement_engine.py` exercises
+stale-manifest rejection, approval-bypass rejection, authorized promotion intent,
+automatic rollback on a policy violation, and audit-chain verification. These
+tests establish control-plane behavior only; Palantir API contracts, identity
+claims, durable transactions, artifact signing, and Apollo rollback timing remain
+deployment-environment verification gates.
 
 ## Full-Stack Implementation
 
@@ -662,6 +768,21 @@ def rate_limit_bucket(principal_id: str, route: str, window: Literal["minute", "
 ### Ontology query with policy filtering
 
 ```python
+CLASSIFICATION_RANK = {
+    "UNCLASSIFIED": 0,
+    "CONTROLLED": 1,
+    "SECRET": 2,
+    "TOP_SECRET": 3,
+}
+
+
+def classification_rank(classification: str) -> int:
+    try:
+        return CLASSIFICATION_RANK[classification]
+    except KeyError as exc:
+        raise ValueError("unknown classification marking") from exc
+
+
 async def query_policy_filtered_context(alert_id: str, principal: Principal) -> dict:
     sql = """
     SELECT e.entity_id, e.entity_type, e.display_name, e.confidence, e.classification,
@@ -670,13 +791,13 @@ async def query_policy_filtered_context(alert_id: str, principal: Principal) -> 
     JOIN artemis_relationship r ON r.dst_entity_id = e.entity_id
     WHERE r.src_entity_id = :alert_id
       AND e.coalition_scope = :coalition
-      AND e.classification <= :clearance
+      AND e.classification_rank <= :clearance_rank
       AND e.compartments <@ :compartments
     """
     return await db.fetch_all(sql, {
         "alert_id": alert_id,
         "coalition": principal.coalition,
-        "clearance": max_clearance(principal),
+        "clearance_rank": classification_rank(principal.clearance),
         "compartments": principal.compartments,
     })
 ```
@@ -1455,4 +1576,276 @@ clearglass_artemis_repo_audit:
     - telemetry_schema_and_dashboards
     - signed_prompt_workflow_release_manifests
     - apollo_style_canary_and_rollback_runbooks
+```
+
+## Weekly Architect Execution Checklist — 2026-07-24
+
+This section operationalizes the current ClearGlassInc Artemis architecture work into a one-week, evidence-producing execution plan. It is intentionally framed as implementation governance, not as a claim that any Palantir, cloud, accelerator, or AI-security integration is already deployed.
+
+### Acceptance gates
+
+| Work item | Evidence to produce | Minimum pass condition | Owner role |
+|---|---|---|---|
+| CI/CD permission audit | Workflow inventory, token permissions, secret references, third-party actions, deploy environments | Every workflow declares least-privilege `permissions`, no secrets in logs, production deploy jobs use protected environments | Platform security lead |
+| AMD accelerator benchmark | Reproducible Python benchmark harness, model/config hash, dataset hash, latency/cost/quality report | Compare current baseline vs AMD target on p50/p95 latency, throughput, cost per 1k inferences, and eval quality | AI infrastructure lead |
+| Agent/tool sandbox review | Tool registry, capability matrix, network/file/process boundaries, approval gates | Consequential tools remain human-approved, agents cannot expand their own permissions, sandbox defaults deny unlisted egress | Agent platform lead |
+| K8s AI maturity radar | Radar entry updates for KServe, Ray Serve, vLLM, Envoy AI Gateway, GPU Operator, OpenTelemetry, Kyverno/Gatekeeper | Each item has maturity, adoption posture, dependency risk, rollback notes, and pilot criteria | Architecture council |
+| Cross-team risk session | Agenda, attendee list, decisions, action log | Supply-chain and agentic-risk decisions have named owners and due dates | Engineering manager |
+| Q3 cloud-spend model | Python notebook or script, growth assumptions, confidence intervals, sensitivity table | Includes inference, retrieval, storage, network egress, evals, observability, and failover overhead | FinOps lead |
+| Non-prod vuln-AI trial | Non-prod pipeline runbook, tool output, false-positive sample, security review | Tool runs only on non-production code/artifacts and cannot access production secrets | AppSec lead |
+
+### CI/CD permission and secret-exposure audit blueprint
+
+1. Enumerate `.github/workflows/*.yml` and `.yaml`.
+2. Parse job-level and workflow-level `permissions`.
+3. Flag missing `permissions`, broad `write-all`, unexpected `contents: write`, broad `id-token: write`, unpinned third-party actions, plaintext secret-like literals, and commands that echo environment variables.
+4. Require production deploy jobs to use protected `environment` blocks and explicit artifact provenance.
+5. Generate a Markdown report under `operations/output/ci-audit/` without mutating workflows until reviewed.
+
+```python
+from __future__ import annotations
+
+import dataclasses
+import pathlib
+import re
+SECRET_PATTERNS = [
+    re.compile(r"(?i)(api[_-]?key|token|secret|password)\s*[:=]\s*['\"][^'\"]{8,}"),
+    re.compile(r"(?i)echo\s+.*\$\{?\{?\s*secrets\."),
+]
+
+@dataclasses.dataclass(frozen=True)
+class WorkflowFinding:
+    path: str
+    severity: str
+    control: str
+    detail: str
+
+
+def audit_workflow_text(path: pathlib.Path, text: str) -> list[WorkflowFinding]:
+    findings: list[WorkflowFinding] = []
+    if "permissions:" not in text:
+        findings.append(WorkflowFinding(str(path), "high", "least_privilege", "workflow lacks explicit permissions block"))
+    if "write-all" in text:
+        findings.append(WorkflowFinding(str(path), "critical", "least_privilege", "workflow grants write-all"))
+    if "id-token: write" in text and "environment:" not in text:
+        findings.append(WorkflowFinding(str(path), "medium", "oidc_scope", "OIDC write token without protected environment review"))
+    if re.search(r"uses:\s+[^\s]+@(?:main|master|HEAD)\b", text):
+        findings.append(WorkflowFinding(str(path), "medium", "supply_chain", "third-party action is pinned to a moving ref"))
+    for pattern in SECRET_PATTERNS:
+        if pattern.search(text):
+            findings.append(WorkflowFinding(str(path), "critical", "secret_exposure", "possible secret literal or secret echo pattern"))
+    return findings
+
+
+def audit_workflows(root: pathlib.Path) -> list[WorkflowFinding]:
+    workflow_dir = root / ".github" / "workflows"
+    findings: list[WorkflowFinding] = []
+    for path in sorted(workflow_dir.glob("*.y*ml")):
+        findings.extend(audit_workflow_text(path, path.read_text(encoding="utf-8")))
+    return findings
+```
+
+### AMD AI-workload benchmark plan
+
+The AMD trial must use a non-sensitive, representative workload: for example alert summarization with a fixed synthetic eval corpus and the same prompt pack currently used by the AIP triage workflow. The benchmark compares existing baseline hardware against an AMD accelerator target without changing production routing.
+
+```yaml
+amd_benchmark:
+  workload: artemis_alert_triage_summarization
+  data: synthetic_or_declassified_eval_corpus_only
+  models:
+    - route_id: triage-small
+      precision_floor: 0.92
+      recall_floor: 0.85
+      hallucination_ceiling: 0.005
+  metrics:
+    latency: [p50_ms, p95_ms, p99_ms]
+    efficiency: [tokens_per_second, watts_per_1k_tokens, cost_per_1k_inferences]
+    quality: [precision, recall, citation_accuracy, abstention_correctness]
+  gates:
+    - no_production_data
+    - no_production_secrets
+    - reproducible_container_digest
+    - rollback_to_existing_model_route
+```
+
+```python
+from __future__ import annotations
+
+import statistics
+import time
+from dataclasses import dataclass
+from decimal import Decimal
+from typing import Callable, Sequence
+
+@dataclass(frozen=True)
+class EvalCase:
+    case_id: str
+    prompt: str
+    expected_citations: set[str]
+    expected_label: str
+
+@dataclass(frozen=True)
+class BenchmarkResult:
+    route_id: str
+    accelerator: str
+    p50_ms: float
+    p95_ms: float
+    tokens_per_second: float
+    precision: Decimal
+    recall: Decimal
+    citation_accuracy: Decimal
+
+
+def percentile(values: Sequence[float], pct: float) -> float:
+    if not values:
+        raise ValueError("cannot compute percentile for empty values")
+    ordered = sorted(values)
+    index = min(len(ordered) - 1, round((pct / 100) * (len(ordered) - 1)))
+    return ordered[index]
+
+
+def benchmark_route(
+    *,
+    route_id: str,
+    accelerator: str,
+    eval_cases: Sequence[EvalCase],
+    infer: Callable[[str], tuple[str, int]],
+    score_quality: Callable[[Sequence[EvalCase]], tuple[Decimal, Decimal, Decimal]],
+) -> BenchmarkResult:
+    latencies_ms: list[float] = []
+    generated_tokens = 0
+    started = time.perf_counter()
+    for case in eval_cases:
+        case_started = time.perf_counter()
+        _text, token_count = infer(case.prompt)
+        latencies_ms.append((time.perf_counter() - case_started) * 1000)
+        generated_tokens += token_count
+    elapsed = max(time.perf_counter() - started, 0.001)
+    precision, recall, citation_accuracy = score_quality(eval_cases)
+    return BenchmarkResult(
+        route_id=route_id,
+        accelerator=accelerator,
+        p50_ms=statistics.median(latencies_ms),
+        p95_ms=percentile(latencies_ms, 95),
+        tokens_per_second=generated_tokens / elapsed,
+        precision=precision,
+        recall=recall,
+        citation_accuracy=citation_accuracy,
+    )
+```
+
+### Agent/tool permission and sandboxing review
+
+Agent permissions are expressed as signed capability manifests. AIP agents may propose changes to prompt text, retrieval weights, routing policy, and workflow branching, but they cannot grant themselves new tools, deploy artifacts, bypass approvals, or access data outside the operator's current mission and coalition scope.
+
+```yaml
+agent_capability_review:
+  deny_by_default: true
+  required_boundaries:
+    filesystem: read_only_unless_ephemeral_workspace
+    network: allowlisted_destinations_only
+    shell: disabled_for_autonomous_agents
+    data: ontology_filtered_by_abac_and_mission_context
+    actions: consequential_actions_require_human_approval
+  prohibited:
+    - autonomous_permission_expansion
+    - production_secret_access
+    - direct_payment_or_fulfillment_action
+    - unreviewed_prompt_deployment
+    - cross_coalition_context_join_without_policy_grant
+```
+
+### Kubernetes AI maturity tech radar update
+
+| Item | Ring | Why it matters for Artemis | Adoption condition |
+|---|---|---|---|
+| KServe | Assess | Standardizes model serving, inference graphs, autoscaling, and canary rollout on Kubernetes | Pilot when Apollo release controls and policy enforcement can wrap the serving plane |
+| Ray Serve | Trial | Useful for Python-native distributed inference, retrieval, and evaluation workloads | Use for non-prod eval/batch workloads before live mission inference |
+| vLLM | Trial | High-throughput LLM serving with paged attention and OpenAI-compatible APIs | Adopt only with approved model governance, prompt logging, and tenant isolation |
+| Envoy AI Gateway | Assess | Centralizes model API routing, auth, telemetry, and policy checks | Pilot for model-router observability and quota enforcement |
+| AMD GPU Operator / ROCm stack | Assess | Enables accelerator diversity and cloud-cost leverage | Advance after reproducible benchmark proves quality-neutral cost/performance gain |
+| OpenTelemetry semantic conventions for GenAI | Adopt | Normalizes model traces, prompt versions, token metrics, latency, and eval correlation | Required for all production agent/model calls |
+| Kyverno or Gatekeeper | Adopt | Enforces signed images, non-root pods, secret restrictions, and network policies | Required before any model-serving namespace enters production |
+
+### Cross-team supply-chain and agentic-risk session
+
+```text
+Agenda: ClearGlassInc Artemis supply-chain + agentic-risk review
+Duration: 60 minutes
+Participants: platform, AppSec, AI/ML, data governance, SRE, legal/privacy, FinOps, mission operations
+Decisions required:
+  1. Required evidence before agent workflow promotion.
+  2. Default policy for third-party model/tool access.
+  3. CI/CD token and OIDC boundaries.
+  4. Non-prod AI vulnerability tool trial scope.
+  5. Q3 accelerator and cloud-spend decision date.
+Outputs:
+  - risk register updates
+  - named owners
+  - due dates
+  - go/no-go gates
+  - rollback and incident-response owners
+```
+
+### Q3 AI cloud-spend modeling skeleton
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+
+@dataclass(frozen=True)
+class AIGrowthSignals:
+    daily_events: int
+    agent_runs_per_event: Decimal
+    avg_input_tokens: int
+    avg_output_tokens: int
+    eval_replay_multiplier: Decimal
+    retrieval_queries_per_run: Decimal
+    storage_gb_growth_per_day: Decimal
+
+@dataclass(frozen=True)
+class UnitCosts:
+    input_per_1k_tokens: Decimal
+    output_per_1k_tokens: Decimal
+    retrieval_query: Decimal
+    storage_gb_month: Decimal
+    observability_per_run: Decimal
+
+
+def estimate_monthly_ai_spend(signals: AIGrowthSignals, costs: UnitCosts, days: int = 30) -> Decimal:
+    production_runs = Decimal(signals.daily_events) * signals.agent_runs_per_event * days
+    eval_runs = production_runs * signals.eval_replay_multiplier
+    total_runs = production_runs + eval_runs
+    input_cost = total_runs * Decimal(signals.avg_input_tokens) / Decimal(1000) * costs.input_per_1k_tokens
+    output_cost = total_runs * Decimal(signals.avg_output_tokens) / Decimal(1000) * costs.output_per_1k_tokens
+    retrieval_cost = total_runs * signals.retrieval_queries_per_run * costs.retrieval_query
+    storage_cost = signals.storage_gb_growth_per_day * Decimal(days) * costs.storage_gb_month
+    observability_cost = total_runs * costs.observability_per_run
+    return input_cost + output_cost + retrieval_cost + storage_cost + observability_cost
+```
+
+### Non-prod vulnerability-detection AI trial
+
+The trial runs in a non-production pipeline with a read-only repository token, no deployment credentials, no cloud production secrets, no customer data, and no authority to file or merge changes automatically. Findings are triaged by AppSec before becoming tickets.
+
+```yaml
+non_prod_vuln_ai_trial:
+  trigger: pull_request_or_manual_non_prod_only
+  permissions:
+    contents: read
+    security-events: write
+    pull-requests: read
+  blocked_access:
+    - production_secrets
+    - deployment_tokens
+    - customer_data
+    - persistent_cloud_credentials
+  outputs:
+    - sarif_report
+    - false_positive_sample
+    - critical_finding_reproduction_steps
+    - recommendation_for_continue_pause_or_stop
 ```

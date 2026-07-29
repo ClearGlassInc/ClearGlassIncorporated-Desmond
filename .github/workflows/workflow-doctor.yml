@@ -19,13 +19,17 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: "3.11"
           cache: pip
-      - run: pip install pyyaml
+      - run: pip install "pyyaml==6.0.3"
       - name: Dry-run workflow doctor
         run: python scripts/workflow_doctor.py
+      - name: Enforce workflow safety invariants
+        run: python scripts/audit_github_actions.py
 
   # ── Auto-repair (schedule and manual dispatch only) ──────────────────────────
   repair:
@@ -33,12 +37,14 @@ jobs:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: automation-write
     permissions:
       contents: write
       pull-requests: write
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
+          persist-credentials: true # Required only for this job's audited git push.
           ref: main
 
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -46,7 +52,7 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - run: pip install pyyaml
+      - run: pip install "pyyaml==6.0.3"
 
       - name: Apply workflow repairs
         id: doctor

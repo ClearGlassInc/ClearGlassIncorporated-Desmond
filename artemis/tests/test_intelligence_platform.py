@@ -87,6 +87,43 @@ def test_promotion_controller_blocks_invalid_rollback_and_audits_decision():
     assert audit_log.records[-1].decision == "DENY"
 
 
+def test_promotion_controller_denies_unauthorized_reviewer_even_after_approval():
+    audit_log = ImmutableAuditLog()
+    context = AccessContext(
+        operator_id="analyst-1",
+        roles=frozenset({"analyst"}),
+        mission_ids=frozenset({"mission-7"}),
+        compartments=frozenset({"alpha"}),
+        coalition="CLEARGLASSINC",
+        purpose="evaluation",
+    )
+
+    decision = PromotionController(SelfImprovementEngine(), audit_log).review_for_canary(
+        context,
+        ReleaseCandidate(
+            candidate_id="candidate-2",
+            proposal_id="proposal-2",
+            artifact_type="workflow",
+            baseline_version="triage-v1",
+            candidate_version="triage-v2",
+            rollback_version="triage-v1",
+            eval_metrics={
+                "precision": 0.95,
+                "recall": 0.90,
+                "p95_latency_ms": 700,
+                "policy_denials_delta": 0,
+            },
+            human_approved=True,
+        ),
+    )
+
+    assert not decision.safe_to_review
+    assert not decision.canary_allowed
+    assert "canary review requires governance or modelops role" in decision.reasons
+    assert audit_log.records[-1].decision == "DENY"
+    assert audit_log.verify()
+
+
 def test_approval_gate_denies_high_risk_action_without_commander_role():
     audit_log = ImmutableAuditLog()
     gate = ApprovalGate(PolicyEngine(), audit_log)

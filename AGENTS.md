@@ -248,3 +248,40 @@ A high-risk change may proceed only when the applicable evidence exists:
 - Post-deployment verification criteria and observation window.
 
 If a required gate cannot be completed, report the precise limitation and keep the capability disabled, isolated, or in a non-production state.
+
+## GitHub Actions audit and release operations
+
+These requirements apply whenever `.github/workflows/` or an automation dependency is inspected, created, repaired, dispatched, or reviewed. Do not remove or bypass any earlier requirement in this file.
+
+### Required sequence
+
+1. Discover every workflow before editing and map its triggers, effective workflow/job permissions, secret references (names only), jobs and `needs` edges, local/external actions, caches, artifacts, environments, concurrency controls, and deployment targets.
+2. Validate YAML and reusable-workflow structure, then verify referenced scripts, manifests, lockfiles, build directories, local actions, artifact names, and deploy paths exist and agree.
+3. Classify each workflow as `valid and ready`, `valid but needs improvement`, `broken and requiring immediate patching`, or `unsafe and requiring governance changes before execution`.
+4. Patch only the smallest complete failure or security boundary. Restore broken validation and deployment gates before optimizing or refactoring.
+5. Run local, read-only validation before any hosted run. Run a hosted workflow only when it is explicitly classified safe, credentials and environment controls are verified, rollback is documented, and the run cannot mutate or deploy without the required human approval.
+6. Record the commit SHA, actor, workflow/ref, inputs, run URL, job results, relevant log excerpts, artifact identifiers/digests, environment decision, and rollback owner for every hosted run.
+
+### Mandatory workflow security checks
+
+- Require an explicit top-level `permissions` mapping and narrow job-level elevation. Default to `contents: read`; grant `contents`, `issues`, `pull-requests`, `packages`, `pages`, `security-events`, `actions`, or `id-token` write only to the job that demonstrably requires it.
+- Pin every external action to a reviewed full 40-character commit SHA and retain a version comment for update visibility. Repository-local actions and reusable workflows must use an audited relative path; cross-repository reusable workflows must also be SHA-pinned.
+- Reject `pull_request_target` unless a written threat model proves that no fork-controlled code, ref, artifact, cache, script, or interpolation can execute with privileged context. Never check out an untrusted pull-request head with write tokens or secrets.
+- Never place secret values in source, inputs, command arguments, generated artifacts, caches, summaries, annotations, or logs. Pass secret references through step `env`, quote expansions, mask derived values, and ensure fork-originated events cannot access them.
+- Treat workflow inputs, event payloads, branch names, issue/PR text, artifact contents, cache contents, and model output as untrusted. Do not interpolate event data directly into shell; pass it through environment variables and validate type, length, format, and allowlists.
+- Give every executable job an explicit `timeout-minutes`. Use bounded retries only for idempotent operations, preserve the final error, and do not use `|| true` or `continue-on-error` on a required security, build, test, provenance, approval, or deployment gate.
+- Set `persist-credentials: false` on checkout unless a narrowly scoped later step must perform an audited Git operation. Prefer a pull request over direct pushes; protect mutation branches and prevent bot-trigger loops.
+- For third-party pull requests, isolate or disable dependency installation scripts where practical, prevent production-secret access, and keep build/test tokens read-only. Review package-manager scripts and lockfile changes before execution.
+- Validate artifact producer, name, path, digest/provenance, retention, and consumer. Never deploy an artifact from an untrusted run or silently fall back to a workspace directory. Keep build and deploy jobs separate with explicit `needs` and fail-closed conditions.
+- For GitHub Pages, use the official configure/upload/deploy artifact flow. The deploy job must depend on the successful build, use the `github-pages` environment, and scope `pages: write` plus `id-token: write` to deployment.
+- Bind production deployment to a protected environment with required reviewers, branch/tag restrictions, concurrency control, immutable artifact identity, health verification, and a tested rollback to the last known-good artifact. Never assume a credential or environment rule exists.
+- Prefer OIDC and audience-restricted short-lived identity over long-lived cloud keys. Document issuer, audience, subject constraints, role scope, and revocation; grant `id-token: write` only to the consuming job.
+- Audit caches for poisoning and cross-trust reuse. Keys must include trusted lockfile hashes and relevant platform/runtime dimensions; privileged jobs must not restore caches created by untrusted refs.
+- Detect hardcoded credential patterns, mutable action refs, deprecated action/runtime versions, excessive permissions, invalid local paths, missing timeouts, unsafe shell interpolation, silent failure, artifact mismatch, and unauthorized deploy paths in CI.
+- For agentic automation, constrain tools, paths, tokens, network destinations, budgets, and output schema. Model output may propose a patch but cannot approve, merge, deploy, expand privileges, alter governance, or manufacture authority.
+
+### Execution and reporting gates
+
+Do not dispatch a workflow if YAML/schema validation, immutable action pinning, least privilege, secret-handling review, trust-boundary review, or rollback readiness fails. Report the blocked workflow, exact failing invariant, file and line, required remediation, and approval owner. Deployment remains disabled until all applicable gates pass.
+
+The remediation handoff must enumerate every workflow, status, exact risk, exact patch or disposition, ordered rollout plan, checks actually run, blocked remote validations, rollback procedure, post-deploy monitoring, and weekly health checks. Do not claim hosted execution, environment protection, secret availability, Palantir provisioning, or production state without direct evidence.

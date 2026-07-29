@@ -1,5 +1,19 @@
 # ClearGlassInc Artemis Self-Evolving AI Intelligence Platform Full-Stack Blueprint
 
+> **Status:** Target-state production design, not evidence of a deployed Palantir environment. Product-specific APIs, SDK versions, ontology identifiers, security markings, and Apollo topology must be validated against the licensed ClearGlassInc Artemis tenant before implementation.
+
+### Engineering objective and acceptance criteria
+
+The objective is a governed intelligence platform that can shorten time-to-understanding while making unauthorized state changes structurally impossible. The initial production release is acceptable only when it demonstrates all of the following against representative, access-controlled mission data:
+
+- every generated claim resolves to authorized evidence and a reproducible lineage reference;
+- every significant mutation follows `draft -> approval -> execution` with a payload-bound, expiring approval;
+- cross-compartment and cross-coalition negative tests return no protected object existence, metadata, or content;
+- duplicate events and retries are idempotent, while material state transitions remain append-only and replayable;
+- the mission-critical read path meets an agreed p95 latency SLO and degrades to deterministic search rather than bypassing policy when AI inference is unavailable;
+- prompt, workflow, heuristic, or model-route changes cannot reach a mission ring without evaluation evidence and independent human approval;
+- an Apollo rollback exercise restores the last approved artifact set without losing the audit chain.
+
 ## System Architecture
 
 ClearGlassInc Artemis is a secure, coalition-aware, latency-sensitive intelligence platform that combines Palantir Gotham, Foundry, AIP, and Apollo into a governed intelligence operating system. Gotham provides operational investigations, link analysis, entity tracking, and case workflows. Foundry provides governed data integration, pipelines, ontology, transforms, and application logic. AIP provides copilots, tool-using agents, model routing, prompt governance, and evaluations. Apollo provides signed deployment, runtime control, progressive delivery, rollback, and environment-specific policy enforcement.
@@ -61,6 +75,19 @@ flowchart LR
 6. Operators approve, reject, or correct outputs. Those decisions become governed feedback records.
 7. The self-improvement loop converts feedback and outcomes into eval cases, candidate diffs, risk assessments, and human-reviewed proposals.
 8. Apollo deploys approved prompt, workflow, model-route, and service changes progressively with automatic rollback triggers.
+
+### Availability, degradation, and recovery targets
+
+Targets must be finalized by the mission owner and platform SRE from measured baselines; the values below are release-candidate objectives rather than measured claims.
+
+| Capability | Candidate objective | Safe degradation | Recovery control |
+| --- | --- | --- | --- |
+| Authorization decision | p99 <= 50 ms inside a region; fail closed | deny mutation and return a correlation ID | redundant policy decision points with signed policy bundle rollback |
+| Alert ingestion | p95 <= 2 s source-to-normalized event | retain encrypted source envelopes in a bounded durable queue | replay by idempotency key and source sequence |
+| Authorized search | p95 <= 1.5 s for bounded mission queries | deterministic metadata and keyword search | rebuild disposable indexes from governed Foundry datasets |
+| AI-assisted triage | p95 <= 15 s within declared workflow budget | rule-based prioritization with `AI_UNAVAILABLE` status | circuit breaker, alternate approved route, then human queue |
+| Audit append | acknowledged before material mutation completes | block the mutation | replicated append service plus WORM export reconciliation |
+| Approved release | zero policy-regression tolerance | freeze current mission version | Apollo ring rollback to signed `rollback_ref` |
 
 ## Data and Ontology
 
@@ -242,6 +269,36 @@ Feedback + outcomes + query traces
 - Model routing changes must preserve data residency, classification, latency SLOs, cost ceilings, and tool compatibility.
 
 ## Full-Stack Implementation
+
+### Reference repository boundaries
+
+Keep policy enforcement, agent orchestration, and deployment promotion separate so a model-facing service never possesses release authority. A practical Python-first layout is:
+
+```text
+artemis/
+  contracts/                 # versioned Pydantic event and API schemas
+  services/
+    mission_api/             # FastAPI query and draft endpoints
+    workflow_controller/     # deterministic state machines and leases
+    tool_gateway/            # allowlisted AIP tool adapters
+    policy_adapter/          # fail-closed PDP client and decision cache
+    audit_writer/            # append-only, hash-linked event writer
+    feedback_processor/      # sanitization, labels, eval-case preparation
+    evaluation_runner/       # offline replay and invariant checks
+    promotion_controller/    # human-approved Apollo release requests only
+  pipelines/                 # Foundry transforms and quality contracts
+  ontology/                  # object/link schemas and migration manifests
+  policy/                    # reviewed policy-as-code and negative fixtures
+  web/                       # TypeScript mission and governance consoles
+  deploy/                    # environment overlays, health gates, rollback refs
+  tests/
+    contract/                # producer/consumer compatibility
+    policy/                  # compartment and coalition non-disclosure tests
+    replay/                  # golden traces and temporal correctness
+    resilience/              # duplicate, timeout, failover, and rollback tests
+```
+
+Dependencies point inward toward `contracts`; service adapters own Palantir-specific integration. This keeps the blueprint implementable without inventing tenant-specific Gotham, Foundry, AIP, or Apollo identifiers.
 
 ### Web UI
 
@@ -573,3 +630,14 @@ An analyst reviews the brief in the mission console. The analyst accepts the ent
 After the mission window, the self-improvement controller batches the analyst correction, query trace, alert disposition, latency metrics, and commander outcome. It generates eval cases that require the system to distinguish stale relationships from currently valid ones. The ModelOps Agent proposes a prompt and retrieval heuristic update that weights bitemporal validity more strongly. Offline evals show improved precision without latency regression, so an `ImprovementProposal` is queued. A human reviewer approves it, Apollo deploys it to shadow, then canary. Drift and eval dashboards remain green, so Apollo promotes it to the mission ring. If false positives rise or policy validators fail, Apollo rolls the route back to the stored `rollback_ref` and freezes further promotion.
 
 The system has improved, but only by learning from governed evidence, passing evals, preserving auditability, and obtaining human approval before production behavior changed.
+
+### Delivery sequence and operational gates
+
+1. **Foundation:** name the mission owner, security owner, data stewards, release authority, and incident commander; approve the threat model, data classification, and coalition-release rules.
+2. **Read-only spine:** onboard one source, implement lineage and bitemporal ontology mappings, and expose authorized deterministic search. Gate on schema replay, provenance, and negative access tests.
+3. **Audited copilot:** add cited summarization with no mutation tools. Gate on precision/recall, unsupported-claim rate, latency, red-team prompt-injection cases, and operator usability review.
+4. **Draft workflows:** allow agents to prepare cases and action packages while execution remains disabled. Gate on state-machine model tests, idempotency, approval binding, and complete audit replay.
+5. **Governed execution:** enable only a narrow, reversible executor after mission-owner authorization. Gate on failure injection, kill switch, least privilege, backup restoration, and Apollo rollback rehearsal.
+6. **Self-improvement proposals:** ingest feedback into sealed evaluation datasets and generate diffs. Gate on privacy review, holdout integrity, reviewer separation, shadow/canary evidence, and promotion freeze behavior.
+
+Production monitoring compares baseline and candidate cohorts by alert precision, alert recall measured from adjudicated outcomes, calibration error, unsupported-claim rate, median and p95 decision latency, approval/rejection rate, operator correction rate, policy-denial rate, time saved, and mission-owner-defined outcome measures. A candidate is rolled back immediately for any authorization bypass, protected-data disclosure, audit-chain break, statistically credible safety regression, or breach of its approved latency/error budget. Operator acceptance or speed alone can never offset a security or governance invariant failure.

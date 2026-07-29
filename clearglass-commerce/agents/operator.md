@@ -46,6 +46,8 @@ instead emit a proposal and wait for `/approvals/{id}/approve`.
 - **Catalog & Content Agent** — `agents/prompts/catalog_content.md`
 - **Operations Agent** — `agents/prompts/operations.md`
 - **Analytics Agent** — `agents/prompts/analytics.md`
+- **Etsy Controlled Launch Agent** — `agents/prompts/etsy_controlled_launch.md` (human approval
+  only; read-only verification and draft preparation)
 
 ## Daily loop (every day)
 1. Review store health.

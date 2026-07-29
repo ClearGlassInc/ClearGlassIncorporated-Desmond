@@ -29,9 +29,13 @@ validate ─▶ test ─▶ checkout-health ─▶ deploy ─▶ verify
 - **pull_request** — validate + test + checkout-health only. **No deploy** (AI/PR
   work can never reach production from here — honors the "no direct push to
   protected branches" constraint).
-- **push to `main`** — full pipeline including the gated deploy.
+- **push to `main`** — validate + test + checkout-health only. A merge does not
+  grant production authority or attempt a deploy when runtime configuration is
+  absent.
 - **schedule** (daily 12:00 UTC) — drift + checkout-health guard, no deploy.
-- **workflow_dispatch** — set `deploy=true` to exercise the deploy/verify path.
+- **workflow_dispatch** — set `deploy=true` and provide the approved
+  `change_ticket` reference to request the deploy/verify path. The protected
+  `production` environment remains the human authorization boundary.
 
 ## Store-data sync (`scripts/store_sync.py`)
 
@@ -55,9 +59,9 @@ python scripts/store_sync.py --promote    # record last-known-good rollback anch
 
 | Secret | Used by | Effect if unset |
 |---|---|---|
-| `RENDER_DEPLOY_HOOK_URL` | `deploy` | Control-plane auto-deploy is skipped (documented no-op). |
-| `RENDER_ROLLBACK_HOOK_URL` | `rollback` | Falls back to a printed **manual** rollback command. |
-| `CONTROL_PLANE_URL` | `verify` | Live `/healthz` probe is skipped. |
+| `RENDER_DEPLOY_HOOK_URL` | `deploy` | Preflight fails before a release marker is promoted. |
+| `RENDER_ROLLBACK_HOOK_URL` | `deploy`, `rollback` | Preflight fails before deployment; no release proceeds without a tested rollback hook. |
+| `CONTROL_PLANE_URL` | `deploy`, `verify` | Preflight fails before deployment because post-release health cannot be verified. |
 
 `GITHUB_TOKEN` is the default least-privilege token; only `alert` widens to
 `issues: write`. No long-lived credentials live in the repo.
@@ -78,4 +82,7 @@ artifact (30-day retention) and printed in the rollback job summary.
 1. Edit `store.html` (and `pricing.html` to match).
 2. `python scripts/store_sync.py --write` and commit `data/store/catalog.json`.
 3. Open a PR — validate/test/checkout-health run automatically.
-4. Merge to `main` → deploy (with environment approval) → verify.
+4. Merge to `main`; confirm the validation-only run is green.
+5. Dispatch **Auto-Store** with `deploy=true` and the approved change-ticket
+   reference; approve the protected `production` environment; verify the run
+   and production health before closing the ticket.

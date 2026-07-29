@@ -14,6 +14,12 @@ name: Agent OS Self-Check
 on:
   schedule:
     - cron: "30 13 * * *"   # 13:30 UTC daily — after the commerce daily loop
+  push:
+    branches: ["main"]
+    paths:
+      - "agent_os/**"
+      - "tests/test_agent_os*.py"
+      - ".github/workflows/agent-os.yml"
   pull_request:
     branches: ["main"]
     paths:
@@ -36,6 +42,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: "3.11"
@@ -48,4 +56,5 @@ jobs:
       - name: Governance self-check (fails closed on any invariant violation)
         run: python -m agent_os.self_check --json
       - name: Executive report (step summary)
+        if: always()
         run: python -m agent_os.self_check | tee "$GITHUB_STEP_SUMMARY"

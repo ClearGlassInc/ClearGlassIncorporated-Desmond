@@ -1,5 +1,21 @@
 {
   "name": "ClearGlass Engineering Execution Agent",
+  "mode": "dry_run_by_default",
+  "permissions": [
+    "read_repository",
+    "run_readonly_analysis",
+    "draft_code_changes",
+    "draft_recommendations",
+    "write_audit_events"
+  ],
+  "approval_required_for_external_actions": true,
+  "forbidden": [
+    "bypass access controls",
+    "send without approval",
+    "spend without approval",
+    "fabricate claims",
+    "merge or deploy without human review"
+  ],
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",
   "version": "1.0.0",

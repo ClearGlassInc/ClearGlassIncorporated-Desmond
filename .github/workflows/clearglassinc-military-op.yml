@@ -16,9 +16,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write   # required for OIDC
-  actions: read
-  security-events: write
 
 env:
   NODE_ENV: production
@@ -36,6 +33,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Detect package manager / site type
         id: detect
@@ -57,6 +56,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Setup Node (Pinned)
         if: ${{ needs.inspect.outputs.site_type == 'node' }}
@@ -109,6 +110,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Dependency Audit
         run: |
@@ -146,6 +149,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Authenticate via OIDC
         run: echo "OIDC token issued (short-lived identity)"
@@ -167,6 +172,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Require Approval Gate
         run: echo "Awaiting manual approval via protected environment"
@@ -184,12 +191,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: production
     timeout-minutes: 30
+    environment: production
     permissions:
       contents: write   # required to push the release tag
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.RELEASE == 'true' }}
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: true # Required only for this job's audited git push.
 
       - name: Create Artifact Bundle
         run: |
@@ -219,6 +229,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Generate Audit Log
         run: |

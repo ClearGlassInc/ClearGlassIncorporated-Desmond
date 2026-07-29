@@ -10,26 +10,29 @@ on:
 
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
 
 jobs:
   scan:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     name: IP Risk Assessment
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Secret Pattern Scan
         id: secrets
-        continue-on-error: true
         run: |
           # Scan recent commit patches for common credential patterns.
-          # Non-blocking (continue-on-error) — a finding flags for review, not a hard block.
+          # Findings are recorded for the consolidated report without suppressing
+          # operational failures in the scan itself.
           if git log --patch --since="7 days ago" | \
               grep -qiE '(api[_-]?key|secret[_-]?key|password|private[_-]?key)\s*[:=]\s*["'\''][^"'\'']{8,}'; then
             echo "::warning::Potential credential pattern detected in recent commits — review git history"
@@ -44,12 +47,6 @@ jobs:
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
         with:
           fail-on-severity: critical
-        # Non-blocking: dependency-review requires Dependency Graph + GitHub
-        # Advanced Security, which may be disabled on this repo. A finding (or
-        # the feature being unavailable) flags for review rather than hard-failing CI.
-        # continue-on-error keeps `outcome` (failure on a finding/unavailable)
-        # readable by the report step while never failing the job.
-        continue-on-error: true
 
       - name: License Compliance (REUSE/SPDX)
         id: reuse

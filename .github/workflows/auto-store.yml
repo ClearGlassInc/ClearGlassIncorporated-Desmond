@@ -124,33 +124,17 @@ jobs:
       release: ${{ steps.marker.outputs.hash }}
       deployment_attempted: ${{ steps.attempt.outputs.attempted }}
     steps:
-      - name: Verify production configuration before release
-        env:
-          CHANGE_TICKET: ${{ inputs.change_ticket }}
-          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-          ROLLBACK_HOOK: ${{ secrets.RENDER_ROLLBACK_HOOK_URL }}
-          CONTROL_PLANE_URL: ${{ secrets.CONTROL_PLANE_URL }}
-        run: |
-          set -euo pipefail
-          missing=()
-          [ -n "${CHANGE_TICKET:-}" ] || missing+=("change_ticket input")
-          [ -n "${DEPLOY_HOOK:-}" ] || missing+=("RENDER_DEPLOY_HOOK_URL")
-          [ -n "${ROLLBACK_HOOK:-}" ] || missing+=("RENDER_ROLLBACK_HOOK_URL")
-          [ -n "${CONTROL_PLANE_URL:-}" ] || missing+=("CONTROL_PLANE_URL")
-          if (( ${#missing[@]} )); then
-            joined=$(IFS=", "; echo "${missing[*]}")
-            echo "::error::Production deployment is not authorized/configured. Missing: $joined"
-            {
-              echo "### Production deployment blocked"
-              echo "- Missing GitHub environment secrets: \`$joined\`"
-              echo "- No release marker was promoted and no deployment was attempted."
-            } >> "$GITHUB_STEP_SUMMARY"
-            exit 1
-          fi
-
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+
+      - name: Verify production configuration before release
+        env:
+          CHANGE_TICKET: ${{ inputs.change_ticket }}
+          CONTROL_PLANE_URL: ${{ secrets.CONTROL_PLANE_URL }}
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          RENDER_ROLLBACK_HOOK_URL: ${{ secrets.RENDER_ROLLBACK_HOOK_URL }}
+        run: python scripts/validate_production_deploy.py
       - uses: ./.github/actions/store-setup
 
       - name: Record release marker

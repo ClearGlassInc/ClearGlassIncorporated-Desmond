@@ -1,5 +1,20 @@
 {
   "name": "ClearGlass SMB Cyber Trust Agent",
+  "mode": "dry_run_by_default",
+  "permissions": [
+    "read_kit_content",
+    "draft_recommendations",
+    "write_audit_events"
+  ],
+  "approval_required_for_external_actions": true,
+  "forbidden": [
+    "bypass access controls",
+    "send without approval",
+    "spend without approval",
+    "fabricate claims",
+    "advise beyond the four kit deliverables",
+    "invent controls, statistics or legal thresholds not present in the kit"
+  ],
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",
   "version": "1.0.0",

@@ -295,3 +295,49 @@ def _risk(key):
 def test_self_check_invariants_hold():
     _reports, failures = run_self_check()
     assert failures == []
+
+
+# ------------------------------------------------- memory persistence ----
+
+def test_memory_state_roundtrip_preserves_learning():
+    mem = IncidentMemory(max_failures=4)
+    act = RecoveryAction("retry_backoff", "d", risk=10, reversible=True, kind="retry",
+                         base_effectiveness=0.5)
+    for ok in (True, True, False, True):
+        mem.record("sig-A", act, ok)
+    restored = IncidentMemory.from_state(mem.to_state())
+    # Effectiveness (attempts/successes) and config survive the round-trip.
+    assert restored.effectiveness("sig-A", act) == mem.effectiveness("sig-A", act)
+    assert restored.max_failures == 4
+
+
+def test_memory_save_load_survives_restart(tmp_path):
+    path = str(tmp_path / "phoenix_memory.json")
+    mem = IncidentMemory(max_failures=2)
+    act = RecoveryAction("clear_cache", "d", risk=20, reversible=True, kind="remediate")
+    # Two consecutive failures → exhausted (loop prevention must persist).
+    mem.record("sig-B", act, False)
+    mem.record("sig-B", act, False)
+    assert mem.exhausted("sig-B", act)
+    mem.save(path)
+
+    reloaded = IncidentMemory.load(path)
+    assert reloaded.exhausted("sig-B", act)          # streak survived restart
+    assert reloaded.max_failures == 2
+
+
+def test_memory_load_missing_file_is_fresh(tmp_path):
+    missing = str(tmp_path / "does_not_exist.json")
+    mem = IncidentMemory.load(missing, max_failures=5)
+    act = RecoveryAction("x", "d", risk=10, reversible=True, kind="retry")
+    assert not mem.exhausted("sig", act)             # fail-open on learning only
+    assert mem.max_failures == 5
+
+
+def test_cli_memory_flag_persists_across_runs(tmp_path):
+    from sentinel.selfheal import main
+    path = str(tmp_path / "mem.json")
+    assert main(["--memory", path]) == 0             # gate still passes
+    assert (tmp_path / "mem.json").exists()          # learning was written
+    # A second run loads the prior file and still passes cleanly.
+    assert main(["--memory", path]) == 0

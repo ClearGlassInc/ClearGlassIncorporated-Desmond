@@ -1,7 +1,9 @@
 # PHOENIX — governed self-healing engine gate.
-# Runs the recovery-loop unit suite and the safety-invariant self-check
-# (fail-closed / no high-risk auto-exec / tamper-evident audit) on any change
-# to the sentinel subtree. Pure stdlib — no install needed for the self-check.
+# Runs the FULL sentinel unit suite (both recovery engines + the governance,
+# policy, capability, identity and mission-memory stack) and the PHOENIX
+# safety-invariant self-check (fail-closed / no high-risk auto-exec /
+# tamper-evident audit) on any change to the sentinel subtree. Pure stdlib —
+# no install needed for the self-check.
 name: Phoenix Self-Heal
 
 on:
@@ -34,11 +36,11 @@ jobs:
       - name: Lint (ruff)
         run: |
           pip install ruff
-          ruff check sentinel/sentinel/selfheal.py sentinel/tests/test_selfheal.py
-      - name: Recovery-loop unit suite
+          ruff check sentinel/sentinel sentinel/tests
+      - name: Sentinel unit suite (both engines + governance stack)
         run: |
           pip install pytest
-          python -m pytest sentinel/tests/test_selfheal.py -q
+          python -m pytest sentinel/tests -q
       - name: Safety-invariant self-check (fail-closed gate)
         # Non-zero exit if any invariant is violated (high-risk auto-exec,
         # broken audit chain, or an integrity incident that failed to escalate).

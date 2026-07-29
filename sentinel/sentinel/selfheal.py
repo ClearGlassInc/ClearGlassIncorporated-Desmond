@@ -384,6 +384,78 @@ class IncidentMemory:
             out.setdefault(sig, {})[key] = st.rate
         return out
 
+    # -- persistence: learning survives restarts (stdlib-only, atomic write) --
+
+    def to_state(self) -> dict:
+        """Serialize the *full* learning state (attempts/successes + fail
+        streaks). ``snapshot`` is lossy (rates only); this preserves everything
+        needed to resume ranking and loop-prevention exactly after a restart, so
+        the engine keeps learning across process boundaries instead of forgetting
+        every incident on redeploy."""
+        keys = set(self._stats) | set(self._consecutive_fail)
+        records = [
+            {
+                "signature": sig,
+                "action": key,
+                "attempts": self._stats.get((sig, key), _Stat()).attempts,
+                "successes": self._stats.get((sig, key), _Stat()).successes,
+                "consecutive_fail": self._consecutive_fail.get((sig, key), 0),
+            }
+            for sig, key in sorted(keys)
+        ]
+        return {"version": 1, "max_failures": self.max_failures, "records": records}
+
+    def load_state(self, state: dict) -> "IncidentMemory":
+        """Merge a serialized state into this memory in place. Returns self."""
+        for rec in state.get("records", []):
+            k = (str(rec["signature"]), str(rec["action"]))
+            st = self._stats[k]
+            st.attempts = int(rec.get("attempts", 0))
+            st.successes = int(rec.get("successes", 0))
+            self._consecutive_fail[k] = int(rec.get("consecutive_fail", 0))
+        return self
+
+    @classmethod
+    def from_state(cls, state: dict, *, max_failures: Optional[int] = None) -> "IncidentMemory":
+        mem = cls(max_failures=int(state.get("max_failures", 3)) if max_failures is None else max_failures)
+        return mem.load_state(state)
+
+    def save(self, path: str) -> None:
+        """Atomically persist learning state to ``path`` as JSON (write-temp +
+        rename, so a crash mid-write never leaves a half-written memory file)."""
+        import json
+        import os
+        import tempfile
+
+        data = json.dumps(self.to_state(), indent=2, sort_keys=True)
+        directory = os.path.dirname(os.path.abspath(path)) or "."
+        os.makedirs(directory, exist_ok=True)
+        fd, tmp = tempfile.mkstemp(dir=directory, suffix=".tmp")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as fh:
+                fh.write(data)
+            os.replace(tmp, path)  # atomic on POSIX
+        except BaseException:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            raise
+
+    @classmethod
+    def load(cls, path: str, *, max_failures: Optional[int] = None) -> "IncidentMemory":
+        """Load memory from ``path``. A missing file yields fresh memory — this
+        fail-open is on *learning quality only* (an empty prior), never on a
+        safety decision; gating still fails closed regardless of memory state."""
+        import json
+        import os
+
+        if not os.path.exists(path):
+            return cls(max_failures=max_failures if max_failures is not None else 3)
+        with open(path, encoding="utf-8") as fh:
+            state = json.load(fh)
+        return cls.from_state(state, max_failures=max_failures)
+
 
 # --------------------------------------------------------------------------- #
 # Policy gate — the safety heart
@@ -622,9 +694,12 @@ def _scenarios() -> list[Incident]:
     ]
 
 
-def run_self_check() -> tuple[list[IncidentReport], list[str]]:
-    """Run the reference scenarios and assert PHOENIX's safety invariants."""
-    engine = SelfHealEngine()
+def run_self_check(memory: Optional[IncidentMemory] = None) -> tuple[list[IncidentReport], list[str]]:
+    """Run the reference scenarios and assert PHOENIX's safety invariants.
+
+    An optional ``memory`` lets the caller carry learned effectiveness across
+    runs (see the ``--memory`` CLI flag)."""
+    engine = SelfHealEngine(memory=memory)
     reports = [
         engine.handle(inc, executor=lambda a, i: a.risk < RISK_HIGH, verifier=lambda i: True)
         for inc in _scenarios()
@@ -663,7 +738,20 @@ def main(argv: Optional[list[str]] = None) -> int:
     import sys
 
     argv = argv if argv is not None else sys.argv[1:]
-    reports, failures = run_self_check()
+
+    # Optional persistent learning: `--memory PATH` loads prior effectiveness,
+    # runs, then durably saves it back so learning survives restarts.
+    mem_path: Optional[str] = None
+    if "--memory" in argv:
+        i = argv.index("--memory")
+        if i + 1 < len(argv):
+            mem_path = argv[i + 1]
+    memory = IncidentMemory.load(mem_path) if mem_path else None
+
+    reports, failures = run_self_check(memory)
+
+    if mem_path and memory is not None:
+        memory.save(mem_path)
 
     if "--json" in argv:
         print(json.dumps({
@@ -671,6 +759,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             "reports": [r.to_dict() for r in reports],
             "invariant_failures": failures,
             "ok": not failures,
+            "memory": mem_path or None,
         }, indent=2))
     else:
         for r in reports:

@@ -439,6 +439,8 @@ class IncidentMemory:
             try:
                 os.unlink(tmp)
             except OSError:
+                # Best-effort temp cleanup; ignore its failure so the original
+                # write error below is re-raised unmasked.
                 pass
             raise
 

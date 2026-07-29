@@ -4,17 +4,17 @@
   "original_author": "Desmond Otieno Odhiambo",
   "classification": "CONFIDENTIAL",
   "bot": "artemis_provenance_bot",
-  "generated_utc": "2026-07-29T09:21:01+00:00",
-  "repository_head": "2de662592510d124d083606f0faf03151f6591a2",
+  "generated_utc": "2026-07-29T09:57:49+00:00",
+  "repository_head": "b01ef6a307f3cbb3b30848df8efaf5fb859eeb31",
   "branch": "main",
   "artifact_count": 12,
   "artifacts": [
     {
       "artifact": "agents/artemis_command_system/agent.json",
-      "sha256": "b805426ac80aad03900483f8e6fbbcfa37ab419e028c22f2bcac4dc20f7ad8b4",
-      "size_bytes": 2657,
-      "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "sha256": "7d22f85f03566f34678f6965bb311878dbf5293ed069ab2964ea22836239ad2a",
+      "size_bytes": 3160,
+      "last_commit": "bbfaea037a37ec7046f0ac4689b7e112a13b385e",
+      "last_commit_date": "2026-07-29T09:13:36Z"
     },
     {
       "artifact": "agents/artemis_command_system/system_prompt.md",
@@ -25,10 +25,10 @@
     },
     {
       "artifact": "agents/artemis_ip_guardian/agent.json",
-      "sha256": "497fdf4800d4a13b3f02488c3481adfcbe20b9f674185660ba02d912083eb89f",
-      "size_bytes": 1436,
-      "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "sha256": "b4b8d328c004cfe9503f9f6311ea5885f626872c62ff22cd7765a29ba7c9fbb2",
+      "size_bytes": 1870,
+      "last_commit": "bbfaea037a37ec7046f0ac4689b7e112a13b385e",
+      "last_commit_date": "2026-07-29T09:13:36Z"
     },
     {
       "artifact": "agents/artemis_ip_guardian/system_prompt.md",

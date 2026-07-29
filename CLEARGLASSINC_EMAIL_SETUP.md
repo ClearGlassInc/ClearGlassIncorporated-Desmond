@@ -1,6 +1,27 @@
 # ClearGlassInc Artemis custom-domain email runbook
 
-> **Scope:** establish a production mailbox such as `me@clearglassinc.com` without changing the website hosted on the same domain. This is an operator runbook, not evidence that any provider, tenant, DNS record, or security control is currently configured.
+> **Scope:** establish the production mailbox `Desmond@clearglassinc.com` without changing the website hosted on the same domain. Email addresses are case-insensitive in normal use, so `desmond@clearglassinc.com` reaches the same mailbox. This is an operator runbook, not evidence that any provider, tenant, DNS record, or security control is currently configured.
+
+## Desired outcome and fastest safe path
+
+The domain registration alone does not provide a mailbox. The smallest complete setup is:
+
+1. Purchase **Microsoft 365 Business Premium** for one user from Microsoft or an authorized reseller.
+2. In the Microsoft 365 admin center, add and verify `clearglassinc.com` using the unique TXT record supplied by the domain wizard.
+3. Create the licensed user with username `Desmond`, producing `Desmond@clearglassinc.com`. Keep the user's everyday mailbox separate from privileged administrator accounts.
+4. At the authoritative DNS provider, publish the exact MX, SPF, Autodiscover, and DKIM values shown by the Microsoft wizard. Do not change the website's `A`, `AAAA`, `CNAME`, or GitHub Pages records.
+5. Publish DMARC initially in monitoring mode, validate inbound and outbound delivery, then enforce quarantine and rejection in stages.
+6. Sign in at [Outlook on the web](https://outlook.office.com) as `Desmond@clearglassinc.com`, register phishing-resistant MFA, and test mail in both directions.
+
+Only the domain owner or an explicitly authorized administrator can purchase the service, verify the domain, and change DNS. Do not share registrar, DNS, or Microsoft credentials in this repository or with an AI assistant. The provider-specific values cannot be safely precomputed because Microsoft generates them for the tenant.
+
+Setup is complete only when all of the following are true:
+
+- `Desmond@clearglassinc.com` has an Exchange Online licence and can sign in with MFA.
+- Public DNS returns only the intended Microsoft 365 MX route and a single valid SPF policy.
+- Both Microsoft DKIM selectors resolve and outbound mail reports `spf=pass`, `dkim=pass`, and `dmarc=pass` with alignment to `clearglassinc.com`.
+- External send, receive, reply, attachment, calendar, recovery, and junk-folder tests succeed.
+- Emergency administration, audit access, retention, rollback ownership, and DNS recovery are documented outside the mailbox itself.
 
 ## Recommendation
 
@@ -53,7 +74,7 @@ Microsoft's admin wizard is the source of truth for tenant-specific record value
 ### 3. Create the first mailbox
 
 1. In **Users → Active users → Add a user**, enter the operator's real display name and select `clearglassinc.com` as the domain.
-2. Use a durable named address such as `firstname.lastname@clearglassinc.com`; add `me@clearglassinc.com` as an alias if desired. Avoid using a shared role address as the person's sign-in identity.
+2. Set the username to `Desmond` so the primary address is `Desmond@clearglassinc.com`. Use this named address as the person's sign-in identity; keep shared role addresses separate.
 3. Assign a licence containing Exchange Online, set usage location, and require registration of strong authentication at first sign-in.
 4. Create role addresses such as `security@`, `billing@`, or `support@` as shared mailboxes where appropriate. Grant named users access; do not share passwords.
 5. Send a test message internally while MX still points to the old provider.
@@ -112,7 +133,7 @@ Then test messages in both directions with unrelated Microsoft, Google, and othe
 ### Outlook on the web
 
 1. Visit [outlook.office.com](https://outlook.office.com).
-2. Sign in with the full address, such as `firstname.lastname@clearglassinc.com`.
+2. Sign in with the full address, `Desmond@clearglassinc.com`.
 3. Complete MFA registration and verify the expected ClearGlassInc Artemis tenant/organization context before approving a prompt.
 4. Configure time zone, language, signature, and notification preferences. Do not create rules that automatically forward company mail to personal accounts.
 

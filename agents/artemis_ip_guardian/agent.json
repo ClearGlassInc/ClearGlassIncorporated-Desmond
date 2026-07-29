@@ -1,5 +1,21 @@
 {
   "name": "ARTEMIS IP Guardian",
+  "mode": "dry_run_by_default",
+  "permissions": [
+    "read_repository",
+    "run_readonly_analysis",
+    "draft_recommendations",
+    "write_audit_events"
+  ],
+  "approval_required_for_external_actions": true,
+  "forbidden": [
+    "bypass access controls",
+    "send without approval",
+    "spend without approval",
+    "fabricate claims",
+    "delete files or rewrite repository history",
+    "remove third-party attribution"
+  ],
   "id": "artemis_ip_guardian",
   "owner": "ClearGlass Inc.",
   "original_author": "Desmond Otieno Odhiambo",

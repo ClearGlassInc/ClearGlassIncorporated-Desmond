@@ -1,5 +1,21 @@
 {
   "name": "ClearGlass Marketing Command OS",
+  "mode": "dry_run_by_default",
+  "permissions": [
+    "read_public_sources",
+    "read_authorized_analytics",
+    "draft_content",
+    "draft_recommendations",
+    "write_audit_events"
+  ],
+  "approval_required_for_external_actions": true,
+  "forbidden": [
+    "bypass access controls",
+    "send without approval",
+    "spend without approval",
+    "fabricate claims",
+    "publish or send outbound content without approval"
+  ],
   "tagline": "Autonomous Growth Machine",
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",

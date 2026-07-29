@@ -1,5 +1,22 @@
 {
   "name": "ARTEMIS Command System",
+  "mode": "dry_run_by_default",
+  "permissions": [
+    "read_repository",
+    "read_public_sources",
+    "run_readonly_analysis",
+    "draft_recommendations",
+    "write_audit_events"
+  ],
+  "approval_required_for_external_actions": true,
+  "forbidden": [
+    "bypass access controls",
+    "send without approval",
+    "spend without approval",
+    "fabricate claims",
+    "claim an action was executed, deployed, tested or registered without evidence",
+    "strip or alter authorship attribution"
+  ],
   "id": "artemis_command_system",
   "owner": "ClearGlass Inc.",
   "original_author": "Desmond Otieno Odhiambo",

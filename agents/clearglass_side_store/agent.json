@@ -1,5 +1,23 @@
 {
   "name": "ClearGlass Side Store Agent",
+  "mode": "dry_run_by_default",
+  "permissions": [
+    "read_repository",
+    "read_public_sources",
+    "draft_content",
+    "draft_recommendations",
+    "write_audit_events"
+  ],
+  "approval_required_for_external_actions": true,
+  "forbidden": [
+    "bypass access controls",
+    "send without approval",
+    "spend without approval",
+    "fabricate claims",
+    "push to protected branches (main, release)",
+    "exceed the documented discount cap or daily paid-action budget",
+    "change payments, billing, authentication or order management without review"
+  ],
   "owner": "ClearGlass Inc.",
   "location": "Burlington, Ontario",
   "version": "1.3.0",

@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-07-28T09:35:38.281358+00:00",
+  "run_utc": "2026-07-29T09:35:48.803688+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1282,
+  "commit_count": 1302,
   "sections": {
     "New Features": [
+      {
+        "sha": "19b0698",
+        "type": "feat",
+        "scope": "agents",
+        "subject": "add Positioning & Credibility Architect agent",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
       {
         "sha": "28faa6c",
         "type": "feat",
@@ -1700,6 +1709,69 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "4515358",
+        "type": "chore",
+        "scope": null,
+        "subject": "Use company logo on pricing page",
+        "author": "Desmond Otieno",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "58843cc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Correct item 7 and two audit claims that CI disproved",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "55154d3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Mount the Etsy router (lost in the #1129 merge) behind admin auth",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "0ee4687",
+        "type": "chore",
+        "scope": null,
+        "subject": "Week 31 architect checklist: CI secret-exposure fixes, SAST trial, tech radar",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "5762e49",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add governed Etsy Open API v3 connector to commerce control plane",
+        "author": "Claude",
+        "date": "2026-07-24",
+        "breaking": false
+      },
+      {
+        "sha": "6bdebe8",
+        "type": "chore",
+        "scope": null,
+        "subject": "List the accessibility statement on the authority network grid",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "3d2b4f0",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add full footer mark set to the homepage",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
       {
         "sha": "c2d86ae",
         "type": "chore",
@@ -6733,6 +6805,114 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "9385b68",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "2de6625",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "cb182a8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "830b1ca",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "e00268c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "293d89c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "057fe99",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "05b8c66",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "3a43453",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "1ff68a2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "760cc80",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "0daa022",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-28 09:35 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-28",
+        "breaking": false
+      },
       {
         "sha": "318cc33",
         "type": "bot",

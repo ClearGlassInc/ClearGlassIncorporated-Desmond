@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-28
+# Release Notes — 2026-07-29
 
-*1282 commit(s) since v1.0.0*
+*1302 commit(s) since v1.0.0*
 
 ## New Features
 
+- **agents:** add Positioning & Credibility Architect agent (`19b0698`)
 - showcase Artemis platform on web design page (`28faa6c`)
 - **marketing:** add governed local growth intelligence plan (`f56096e`)
 - **blog:** feature Artemis threat console visual (`41aabf2`)
@@ -209,6 +210,13 @@
 
 ## Maintenance
 
+- Use company logo on pricing page (`4515358`)
+- Correct item 7 and two audit claims that CI disproved (`58843cc`)
+- Mount the Etsy router (lost in the #1129 merge) behind admin auth (`55154d3`)
+- Week 31 architect checklist: CI secret-exposure fixes, SAST trial, tech radar (`0ee4687`)
+- Add governed Etsy Open API v3 connector to commerce control plane (`5762e49`)
+- List the accessibility statement on the authority network grid (`6bdebe8`)
+- Add full footer mark set to the homepage (`3d2b4f0`)
 - Enhance homepage with Artemis command interface (`c2d86ae`)
 - Add governed Artemis platform blueprint to web design page (`90a339c`)
 - Upgrade blog discovery and AI readiness (`a2acdc1`)
@@ -771,6 +779,18 @@
 
 ## Automation
 
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`9385b68`)
+- refresh control-surface data feeds [skip ci] (`2de6625`)
+- refresh control-surface data feeds [skip ci] (`cb182a8`)
+- refresh control-surface data feeds [skip ci] (`830b1ca`)
+- refresh control-surface data feeds [skip ci] (`e00268c`)
+- refresh control-surface data feeds [skip ci] (`293d89c`)
+- refresh control-surface data feeds [skip ci] (`057fe99`)
+- refresh control-surface data feeds [skip ci] (`05b8c66`)
+- refresh control-surface data feeds [skip ci] (`3a43453`)
+- refresh control-surface data feeds [skip ci] (`1ff68a2`)
+- refresh control-surface data feeds [skip ci] (`760cc80`)
+- update generated outputs — 2026-07-28 09:35 UTC [skip ci] (`0daa022`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`318cc33`)
 - refresh control-surface data feeds [skip ci] (`84b0a75`)
 - refresh control-surface data feeds [skip ci] (`e099cb4`)

@@ -1,28 +1,29 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-29T09:35:48.884682+00:00
-**Average Score:** 88.2/100
-**Files Audited:** 76
+**Run:** 2026-07-30T09:28:51.526499+00:00
+**Average Score:** 87.9/100
+**Files Audited:** 77
 
 ## Page Scores
 
 | File | Score | Issues |
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
-| `artemis-2040.html` | 50/100 | 5 |
 | `command-center.html` | 50/100 | 5 |
 | `header-mockup-2040.html` | 50/100 | 5 |
 | `intelligence-platform.html` | 50/100 | 5 |
+| `seo-dashboard.html` | 50/100 | 5 |
+| `artemis-2040.html` | 60/100 | 4 |
 | `cyber-defense-console.html` | 60/100 | 4 |
 | `flowsint.html` | 60/100 | 4 |
 | `platform-command-center.html` | 60/100 | 4 |
 | `postloop.html` | 60/100 | 4 |
 | `artemis-self-evolving-platform.html` | 70/100 | 3 |
-| `bluedesk-mobile.html` | 70/100 | 3 |
 | `side-store.html` | 70/100 | 3 |
 | `smb-cyber-trust-kit.html` | 70/100 | 3 |
 | `artemis-percival.html` | 80/100 | 2 |
 | `authority-network.html` | 80/100 | 2 |
+| `bluedesk-mobile.html` | 80/100 | 2 |
 | `conduit.html` | 80/100 | 2 |
 | `control-surface.html` | 80/100 | 2 |
 | `products.html` | 80/100 | 2 |
@@ -87,13 +88,13 @@
 
 ## Top Issues Across All Pages
 
-- 27x — Description length N chars (ideal N–N)
+- 28x — Description length N chars (ideal N–N)
 - 21x — Title length N chars (ideal N–N)
-- 13x — Missing og:image
-- 7x — Missing og:description
-- 6x — Missing og:title
-- 4x — Missing canonical link tag
+- 14x — Missing og:image
+- 8x — Missing og:description
+- 7x — Missing og:title
 - 4x — Multiple <hN> tags (N)
+- 4x — Missing canonical link tag
 - 2x — N image(s) missing alt text
-- 2x — No <hN> tag found
 - 1x — Missing <title>
+- 1x — Missing meta description

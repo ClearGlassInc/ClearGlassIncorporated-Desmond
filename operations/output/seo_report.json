@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-07-29T09:35:48.884682+00:00",
-  "files_audited": 76,
-  "average_score": 88.2,
+  "run_utc": "2026-07-30T09:28:51.526499+00:00",
+  "files_audited": 77,
+  "average_score": 87.9,
   "pages": [
     {
       "file": "404.html",
@@ -197,17 +197,16 @@
       "description": "ClearGlassInc Artemis 2040 blueprint: self-evolving AI intelligence platform spanning Gotham, Foundry, AIP, Apollo, secure agents, and human-approved self-improvement.",
       "description_length": 167,
       "description_ok": false,
-      "canonical_present": false,
+      "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
       "img_without_alt": 0,
       "og_title": false,
       "og_description": false,
       "og_image": false,
-      "score": 50,
+      "score": 60,
       "issues": [
         "Description length 167 chars (ideal 120\u2013160)",
-        "Missing canonical link tag",
         "Missing og:title",
         "Missing og:description",
         "Missing og:image"
@@ -294,7 +293,7 @@
       "description_length": 157,
       "description_ok": true,
       "canonical_present": true,
-      "h1_count": 2,
+      "h1_count": 3,
       "h1_ok": false,
       "img_without_alt": 0,
       "og_title": true,
@@ -303,7 +302,7 @@
       "score": 80,
       "issues": [
         "Title length 67 chars (ideal 30\u201360)",
-        "Multiple <h1> tags (2)"
+        "Multiple <h1> tags (3)"
       ]
     },
     {
@@ -432,17 +431,16 @@
       "description_length": 183,
       "description_ok": false,
       "canonical_present": true,
-      "h1_count": 0,
-      "h1_ok": false,
+      "h1_count": 1,
+      "h1_ok": true,
       "img_without_alt": 0,
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 70,
+      "score": 80,
       "issues": [
         "Title length 65 chars (ideal 30\u201360)",
-        "Description length 183 chars (ideal 120\u2013160)",
-        "No <h1> tag found"
+        "Description length 183 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -1298,6 +1296,30 @@
       ]
     },
     {
+      "file": "seo-dashboard.html",
+      "title": "SEO Performance Dashboard | ClearGlass Inc.",
+      "title_length": 43,
+      "title_ok": true,
+      "description": "Internal ClearGlass Inc. SEO dashboard \u2014 Google Search Console and Bing Webmaster Tools performance, indexation coverage, keyword tracking, schema health and alerts.",
+      "description_length": 165,
+      "description_ok": false,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Description length 165 chars (ideal 120\u2013160)",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "side-store.html",
       "title": "ClearGlass Side Store \u2014 Electronics, Cables & Components | ClearGlass Inc",
       "title_length": 73,
@@ -1499,15 +1521,15 @@
     }
   ],
   "top_issues": [
-    "27x \u2014 Description length N chars (ideal N\u2013N)",
+    "28x \u2014 Description length N chars (ideal N\u2013N)",
     "21x \u2014 Title length N chars (ideal N\u2013N)",
-    "13x \u2014 Missing og:image",
-    "7x \u2014 Missing og:description",
-    "6x \u2014 Missing og:title",
-    "4x \u2014 Missing canonical link tag",
+    "14x \u2014 Missing og:image",
+    "8x \u2014 Missing og:description",
+    "7x \u2014 Missing og:title",
     "4x \u2014 Multiple <hN> tags (N)",
+    "4x \u2014 Missing canonical link tag",
     "2x \u2014 N image(s) missing alt text",
-    "2x \u2014 No <hN> tag found",
-    "1x \u2014 Missing <title>"
+    "1x \u2014 Missing <title>",
+    "1x \u2014 Missing meta description"
   ]
 }

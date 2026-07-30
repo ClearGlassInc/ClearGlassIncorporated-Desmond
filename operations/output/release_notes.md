@@ -1,9 +1,12 @@
-# Release Notes — 2026-07-29
+# Release Notes — 2026-07-30
 
-*1302 commit(s) since v1.0.0*
+*1345 commit(s) since v1.0.0*
 
 ## New Features
 
+- **legal-tech:** add fault-tolerant orchestration + documented 3x efficiency gain (`cdcc5f3`)
+- **blog:** add advanced prompt engineering composer (`3aee533`)
+- **blog:** publish Ontario accountability brief (`a45bd5b`)
 - **agents:** add Positioning & Credibility Architect agent (`19b0698`)
 - showcase Artemis platform on web design page (`28faa6c`)
 - **marketing:** add governed local growth intelligence plan (`f56096e`)
@@ -76,6 +79,8 @@
 
 ## Bug Fixes
 
+- **auto-store:** validate production deployment config (`50d0efa`)
+- **auto-store:** require explicit production dispatch (`66b35d5`)
 - fail closed on production automation failures (`1187658`)
 - **audit:** enforce artifact deploy readiness (`be27a21`)
 - **auto-store:** preflight production configuration before deploy (`8fd5626`)
@@ -147,6 +152,11 @@
 
 ## Documentation
 
+- complete Desmond email setup runbook (`e092378`)
+- tailor custom email setup for Desmond (`1c36cfb`)
+- tailor custom-domain mailbox setup for Desmond (`07ce461`)
+- add custom domain email setup runbook (`8986a7b`)
+- add Stripe live earning audit (`b0b92f4`)
 - map Artemis blueprint delivery coverage (`61e1d70`)
 - **artemis:** define governed experiment rollout (`62e5f49`)
 - **artemis:** deepen governed platform blueprint (`aebe503`)
@@ -210,6 +220,21 @@
 
 ## Maintenance
 
+- Expand Artemis intelligence platform blueprint (`b18029c`)
+- Add Enterprise Patch & Deploy reusable control plane (`0b0cb2f`)
+- Add interactive blast-radius model and chart to the phishing long read (`7f76b16`)
+- Register recent Insights posts in the authority-network grid (`2e5fbe0`)
+- Add This Week's Long Read: AI-generated phishing 54% click rate (`834af86`)
+- Add ChatGPT prompt shortcuts blog guide (`d8d98f6`)
+- Add FIPPA section 14 appeal guide to blog (`39eee60`)
+- Add banking law strategist and Outlook contact (`0f63b75`)
+- Add business email activation runbook and DNS verifier (`e7ffb7b`)
+- Enhance SEO command dashboard experience (`a152ffe`)
+- Add interactive coffee and technology blog post (`586cb12`)
+- Add Azure OIDC production activation runbook and driver (`98f353b`)
+- Give every agent a declared permission scope, and gate it in CI (`bbfaea0`)
+- Add SEO test suite, sync schema.json, bump service-worker cache (`fe994e2`)
+- Fix authority-network parity and resolve the two link orphans (`b77d37a`)
 - Use company logo on pricing page (`4515358`)
 - Correct item 7 and two audit claims that CI disproved (`58843cc`)
 - Mount the Etsy router (lost in the #1129 merge) behind admin auth (`55154d3`)
@@ -779,6 +804,21 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`25a4ac5`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`5eeaa0c`)
+- refresh control-surface data feeds [skip ci] (`9e1454c`)
+- refresh control-surface data feeds [skip ci] (`b6115cc`)
+- refresh control-surface data feeds [skip ci] (`7b4d70c`)
+- refresh control-surface data feeds [skip ci] (`a4936f0`)
+- refresh control-surface data feeds [skip ci] (`291f9f8`)
+- refresh control-surface data feeds [skip ci] (`537c960`)
+- refresh control-surface data feeds [skip ci] (`61a663c`)
+- refresh control-surface data feeds [skip ci] (`bac26d4`)
+- refresh control-surface data feeds [skip ci] (`396a9f2`)
+- refresh control-surface data feeds [skip ci] (`5217a41`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`84e5dac`)
+- refresh control-surface data feeds [skip ci] (`1def417`)
+- update generated outputs — 2026-07-29 09:35 UTC [skip ci] (`e11da4c`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`9385b68`)
 - refresh control-surface data feeds [skip ci] (`2de6625`)
 - refresh control-surface data feeds [skip ci] (`cb182a8`)
@@ -1308,6 +1348,9 @@
 
 ## Other
 
+- document intentional temp-cleanup swallow in IncidentMemory.save (`1d167d3`)
+- durable incident memory + full-stack self-heal CI gate (`4c2666b`)
+- structured data, sitemap coverage, and a measurement stack (`a2f1c8c`)
 - drop dead initializers in login route (`9bf904d`)
 - plate OCR, watchlist alerts, camera wall, site nav (`9068670`)
 - add ClearGlass logo badge to artemis-self-evolving-platform.html (`e097f76`)

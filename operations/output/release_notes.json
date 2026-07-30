@@ -1,10 +1,37 @@
 {
-  "run_utc": "2026-07-29T09:35:48.803688+00:00",
+  "run_utc": "2026-07-30T09:28:51.459271+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1302,
+  "commit_count": 1345,
   "sections": {
     "New Features": [
+      {
+        "sha": "cdcc5f3",
+        "type": "feat",
+        "scope": "legal-tech",
+        "subject": "add fault-tolerant orchestration + documented 3x efficiency gain",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "3aee533",
+        "type": "feat",
+        "scope": "blog",
+        "subject": "add advanced prompt engineering composer",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "a45bd5b",
+        "type": "feat",
+        "scope": "blog",
+        "subject": "publish Ontario accountability brief",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
       {
         "sha": "19b0698",
         "type": "feat",
@@ -629,6 +656,24 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "50d0efa",
+        "type": "fix",
+        "scope": "auto-store",
+        "subject": "validate production deployment config",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "66b35d5",
+        "type": "fix",
+        "scope": "auto-store",
+        "subject": "require explicit production dispatch",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
         "sha": "1187658",
         "type": "fix",
         "scope": null,
@@ -1218,6 +1263,51 @@
     ],
     "Documentation": [
       {
+        "sha": "e092378",
+        "type": "docs",
+        "scope": null,
+        "subject": "complete Desmond email setup runbook",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "1c36cfb",
+        "type": "docs",
+        "scope": null,
+        "subject": "tailor custom email setup for Desmond",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "07ce461",
+        "type": "docs",
+        "scope": null,
+        "subject": "tailor custom-domain mailbox setup for Desmond",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "8986a7b",
+        "type": "docs",
+        "scope": null,
+        "subject": "add custom domain email setup runbook",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "b0b92f4",
+        "type": "docs",
+        "scope": null,
+        "subject": "add Stripe live earning audit",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
         "sha": "61e1d70",
         "type": "docs",
         "scope": null,
@@ -1709,6 +1799,141 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "b18029c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Expand Artemis intelligence platform blueprint",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "0b0cb2f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Enterprise Patch & Deploy reusable control plane",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "7f76b16",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add interactive blast-radius model and chart to the phishing long read",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "2e5fbe0",
+        "type": "chore",
+        "scope": null,
+        "subject": "Register recent Insights posts in the authority-network grid",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "834af86",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add This Week's Long Read: AI-generated phishing 54% click rate",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "d8d98f6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ChatGPT prompt shortcuts blog guide",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "39eee60",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add FIPPA section 14 appeal guide to blog",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "0f63b75",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add banking law strategist and Outlook contact",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "e7ffb7b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add business email activation runbook and DNS verifier",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "a152ffe",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance SEO command dashboard experience",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "586cb12",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add interactive coffee and technology blog post",
+        "author": "Desmond Otieno",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "98f353b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Azure OIDC production activation runbook and driver",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "bbfaea0",
+        "type": "chore",
+        "scope": null,
+        "subject": "Give every agent a declared permission scope, and gate it in CI",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "fe994e2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add SEO test suite, sync schema.json, bump service-worker cache",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
+      {
+        "sha": "b77d37a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix authority-network parity and resolve the two link orphans",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
       {
         "sha": "4515358",
         "type": "chore",
@@ -6806,6 +7031,141 @@
     ],
     "Automation": [
       {
+        "sha": "25a4ac5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "5eeaa0c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "9e1454c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "b6115cc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "7b4d70c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "a4936f0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "291f9f8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "537c960",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "61a663c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "bac26d4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "396a9f2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "5217a41",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "84e5dac",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "1def417",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "e11da4c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-29 09:35 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
         "sha": "9385b68",
         "type": "bot",
         "scope": null,
@@ -11491,6 +11851,33 @@
       }
     ],
     "Other": [
+      {
+        "sha": "1d167d3",
+        "type": "phoenix",
+        "scope": null,
+        "subject": "document intentional temp-cleanup swallow in IncidentMemory.save",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "4c2666b",
+        "type": "phoenix",
+        "scope": null,
+        "subject": "durable incident memory + full-stack self-heal CI gate",
+        "author": "Claude",
+        "date": "2026-07-29",
+        "breaking": false
+      },
+      {
+        "sha": "a2f1c8c",
+        "type": "seo",
+        "scope": null,
+        "subject": "structured data, sitemap coverage, and a measurement stack",
+        "author": "Claude",
+        "date": "2026-07-28",
+        "breaking": false
+      },
       {
         "sha": "9bf904d",
         "type": "admin",

@@ -1,79 +1,61 @@
 # ClearGlassInc Artemis — Burlington Exposure Baseline
 
-> **Baseline status: incomplete / external data not collected.** Generated 2026-07-30. This document does not claim current rankings, traffic, profile activity, competitor performance, social performance, leads, partnerships, or event availability. A JSON `null` means unknown, never zero.
+> **Evidence status (2026-07-30): baseline collection ready; live accounts not connected.** Zero is not substituted for unavailable data. No ranking, competitor, review, traffic, Palantir provisioning, or service-area claim in this brief is represented as verified.
 
-## Executive finding
+## Objective and 90-day targets
 
-The repository establishes a canonical domain (`www.clearglassinc.com`) and its checked-in homepage includes Burlington locality and `Organization`, `ProfessionalService`, and `WebSite` structured data. These are **repository observations only**, not proof that the live page is indexed, that Google accepts its markup, that the stated service area is operationally verified, or that a Google Business Profile exists.
-
-No authenticated GBP, GA4, Search Console, CRM, social, citation, competitor, or geo-grid exports were available. Consequently, a quantitative 90-day baseline cannot yet be calculated. The first operational milestone is connector authorization and a reproducible snapshot—not optimization claims.
-
-## Evidence inventory
-
-| Area | State | Evidence available | Blocking requirement |
+| Outcome | Baseline | Day-90 target | Source / cadence |
 |---|---|---|---|
-| Canonical web domain | Repository-observed | `CNAME:1` | Resolve live URL and record HTTP/indexing checks |
-| Homepage local/entity markup | Repository-observed | `index.html:246` | Verify business facts, validate rendered JSON-LD, inspect Search Console |
-| GBP performance | Not collected | None | Authorized API access or dated export |
-| Web/search performance | Not collected | None | GA4 and Search Console read-only access or dated exports |
-| Lead outcomes | Not collected | None | Consent-aware CRM aggregate and local-lead definition |
-| Social performance | Not collected | None | Read-only platform analytics or dated exports |
-| Competitors | Not collected | None | Terms-compliant, time-and-location-stamped observation |
-| Geo-grid | Not collected | None | Approved provider, grid, keyword set, budget, and collection method |
+| Top-three geo-grid cells for three approved non-brand terms | pending first scan | +30% relative green cells | approved local rank tracker, monthly, identical grid |
+| Burlington/Halton organic sessions | pending GA4 validation | +40% versus prior comparable 90 days | GA4 aggregate, weekly |
+| Qualified local inbound leads | pending CRM audit | 10/month with locality evidence | CRM, weekly |
+| GBP discovery and actions | pending GBP export | +25% actions without policy incidents | GBP performance, weekly |
+| Local earned mentions | pending citation audit | 2 legitimate mentions/month | verified URLs, monthly |
 
-## Machine-readable artifacts
+Targets are hypotheses, not guarantees. Use a 90-day pre-period adjusted for seasonality and consent changes. A “green” cell means rank 1–3 in a fixed 7×7 or 9×9 Burlington grid with unchanged centre, spacing, device/language, keywords, and scan vendor.
 
-- `baseline_metrics.json` is the normalized 90-day measurement contract. All unavailable measures are `null` and all unavailable lists are empty.
-- `competitor_intel.json` defines keyword coverage and the evidence contract for future competitor records; it identifies no competitors without observations.
-- `local_opportunity_map.json` separates user-supplied candidates from verified opportunities and records the validation required before use.
-- `geo_grid_baseline.json` defines rank semantics and a pending grid contract; it contains no fabricated cells.
+## Recon contract
 
-## Initial diagnostic (bounded to repository evidence)
+1. Export **aggregate** GBP searches, views, calls, website clicks, direction requests, and date ranges. Record profile ID and timezone separately in a secret store.
+2. Export GA4 Burlington, Oakville, Hamilton, Milton, and Dundas sessions/conversions by landing page and source. Apply privacy thresholds; do not retain IP addresses.
+3. Export Search Console query/page/country/device aggregates. Join only at aggregate grain.
+4. Export Instagram, TikTok, and LinkedIn post metrics, follower-region aggregates, posting time, format, and link tags.
+5. Export CRM qualified outcome and locality evidence with pseudonymous IDs. Do not place contact data in prompts or reports.
+6. Run each core term on a fixed grid: `software architect Burlington`, `cybersecurity consultant Burlington`, `AI automation Burlington`, and brand-control `ClearGlass Burlington`.
 
-### Confirmed
+Store each import with source, extraction time, coverage period, timezone, schema version, row count, consent/purpose, and checksum. Reject malformed, duplicate, over-granular, or lineage-free data.
 
-1. The checked-in `CNAME` names `www.clearglassinc.com`.
-2. The checked-in homepage describes AI automation, cybersecurity, software architecture, OSINT, and enterprise workflow services.
-3. The checked-in homepage JSON-LD states Burlington, Ontario and includes organization/service entities.
+## Competitor scan (evidence template)
 
-### Unknown and not safe to infer
+Do not preselect competitors from memory. For each non-brand keyword, record the five businesses appearing most often across the fixed grid, then verify they offer the relevant service. Never scrape contrary to terms.
 
-- GBP ownership, verification, category, services, hours, photos, posts, Q&A, reviews, actions, queries, or guideline compliance.
-- Organic visibility, local sessions, conversions, branded demand, or source attribution.
-- The top three to five local competitors for any keyword.
-- Current event dates, directory eligibility, publication contacts, partnership availability, or backlink opportunity.
-- Map/local-pack rank at any coordinate.
-- Whether Oakville, Hamilton, Milton, or Dundas are verified operational service areas.
+| Field | Required evidence |
+|---|---|
+| Identity | exact business/profile name and first-party URL |
+| GBP | primary/secondary categories, completeness, hours, post/photo cadence, review count/date distribution; no reviewer PII |
+| Site | relevant landing URL, unique local value, LocalBusiness/Service schema, CWV field data, indexability |
+| Content/social | public cadence and formats over a declared window; engagement reported, not inferred |
+| Citations | legitimate directory/local publication URLs and NAP consistency |
+| Grid | keyword, cell coordinates, observed rank, scan timestamp/vendor |
 
-## Reproducible collection plan
+Score evidence completeness separately from marketing strength. Manual verification is required for identity collisions and service relevance.
 
-1. **Approve scope:** owner signs off on 3–7 exact keywords, verified service areas, local-lead definition, grid resolution, green threshold, provider, cost ceiling, retention, and responsible operators.
-2. **Create read-only connectors:** use least-privilege identities for GBP, GA4, Search Console, CRM aggregates, and platform analytics. Keep credentials in runtime secrets and personal data out of artifacts.
-3. **Freeze the baseline window:** capture a single 90-day interval with explicit UTC start/end, source export IDs, collection timestamps, account/property identifiers (non-secret), and checksums.
-4. **Validate:** reject duplicate rows, impossible negative counts, mismatched time zones, unrecognized dimensions, missing attribution fields, and partial connector responses. Record unknowns as `null`.
-5. **Collect geo-grid evidence:** use a terms-compliant provider at approved, stable points. Record provider, device/language settings, observation time, maximum checked rank, and raw-run digest. Do not scrape or manipulate Google.
-6. **Verify candidates:** identify competitors from repeated observations, then record profile/site/social/citation fields only with dated evidence. Validate opportunity records from official sources before outreach.
-7. **Lock and compare:** checksum the accepted snapshot, retain it read-only, and compare day 30/60/90 runs using the identical definitions. Any methodology change creates a new series.
+## Local opportunity map
 
-## Acceptance gates for baseline completion
+### Priority geography
 
-- All required sources have either a successful timestamped snapshot or an explicit approved exclusion.
-- The 90-day window and time zone are consistent across sources or differences are documented.
-- Every aggregate has lineage; no secret or unnecessary personal data appears in artifacts.
-- Competitor facts include observation time and evidence references.
-- Every rank cell contains keyword, point, position/not-found status, collection settings, and source-run reference.
-- Reconciliation checks pass and a named owner approves the immutable baseline digest.
+- **Primary:** Burlington citywide; validate service coverage before naming Aldershot, Brant Hills, Central/Downtown, Headon Forest, Mountainside, Orchard, Roseland, and Tyandaga.
+- **Secondary:** Oakville, Hamilton, Milton, and Dundas only after operational coverage and unique local usefulness are documented.
+- Pages are not created merely because a place appears here. Each page needs verified service availability, distinct evidence, and user value; otherwise use one truthful service-area page.
 
-## Immediate next actions
+### Community anchors (research leads, not endorsements or partnerships)
 
-| Priority | Action | Owner needed | Exit evidence |
-|---:|---|---|---|
-| 1 | Verify canonical NAP, services, public address/service-area model, and secondary-market coverage | Business owner | Signed source-of-truth record |
-| 2 | Authorize read-only GBP, GA4, Search Console, CRM, and social exports | Data owners | Successful connector timestamps/export digests |
-| 3 | Approve keyword/grid measurement contract and compliant provider | Local SEO + privacy/governance | Signed measurement specification |
-| 4 | Execute baseline collection and schema validation | ReconEngine operator | Complete JSON, validation log, snapshot digest |
-| 5 | Review competitor and opportunity evidence before any public action | Marketing owner | Approved evidence-backed shortlist |
+Downtown Brant Street, Burlington waterfront, Royal Botanical Gardens, Joseph Brant Museum, Burlington Public Library, local BIAs, chambers/economic-development organizations, coworking and technology meetups, and major public festivals are candidate research topics. Confirm names, dates, rights, relevance, and outreach eligibility from first-party sources before use. Do not imply affiliation.
 
-## Risk and authorization boundary
+### Publication and citation discovery
 
-Collection is read-only. No agent may edit GBP, publish a page or social post, contact a customer or partner, request a review, purchase a citation, or deploy schema from this baseline. Those actions require an exact draft/action package, evidence and policy checks, named human approval, auditable execution, and a rollback or disposition plan. Review gating, fabricated reviews, deceptive location pages, unverified claims, mass outreach, and link schemes are prohibited.
+Research official municipal/community calendars, local chambers/BIAs, legitimate Canadian directories, local journalism, association member pages, university/college event listings, and partner websites. Accept a placement only when editorially relevant and truthful; reject paid link schemes, bulk directories, reciprocal-link farms, fake events, and manufactured citations.
+
+## Baseline acceptance gate
+
+Baseline is complete only when account owners authorize read-only access, metric definitions reconcile, geography and timezone are fixed, grid scans are reproducible, competitor evidence has URLs/timestamps, consent and retention are approved, and the signed dataset checksum is logged. Until then, automation remains `analysis_and_draft_only`.

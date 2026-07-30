@@ -1,81 +1,46 @@
 # ClearGlassInc Artemis — Burlington Local SEO Plan
 
-**Status:** evidence-gated 90-day operating plan; not proof of deployment or performance.
-**Primary market:** Burlington, Ontario. **Secondary test markets:** Oakville, Hamilton, Milton, and Dundas.
+## Principles and success contract
 
-## 1. Outcome, invariants, and measurement
+Win local visibility through accurate business information, useful local content, real community participation, and measurable technical quality. Never keyword-stuff a business name, fabricate a location/review/event, gate reviews by sentiment, mass-produce doorway pages, or buy manipulative links. Targets and baseline rules are defined in `BURLINGTON_EXPOSURE_BASELINE.md`.
 
-The objective is to improve qualified local discovery, not manufacture proximity or reputation. KPI contracts and thresholds live in `MISSION_OBJECTIVES.json`. Before work begins, the GrowthReporter must freeze a dated 90-day baseline and a comparison protocol. “Green” means rank 1–3 only; blocked, missing, or provider-error cells are `unavailable`, never failures or successes.
+## Google Business Profile
 
-**Non-negotiable invariants**
+**Foundation (owner-approved):** verify the real-world business name, eligible address/service-area model, phone, website, hours, holiday hours, and primary/secondary categories against current Google rules. Keep one source-of-truth record. Add only services actually delivered. Use UTM-tagged website links and test them.
 
-- Use only the real business name, address/service area, hours, categories, services, qualifications, clients, testimonials, and images verified by the business owner.
-- Never create virtual locations, doorway pages, fake engagement, review gating, sentiment-based solicitation, or reciprocal/paid links disguised as editorial links.
-- Automation produces **drafts**. A named human approves every GBP mutation, public post, outreach send, schema/site deployment, review campaign, and personal-data integration.
-- Record `actor`, UTC timestamp, source evidence, before/after representation, rationale, approval ID, result, and rollback for each material action.
+**Cadence:** prepare two useful posts weekly and an optional third event-led post. Rotate: local problem/answer, evidence-backed service explanation, rights-cleared case insight, team/community contribution, and article excerpt. Check image rights, alt-text equivalent/caption, claims, dates, CTA destination, and expiration before approval. A named owner publishes; automation records the exact approved digest.
 
-## 2. Foundation (days 1–14)
+**Reviews:** a completed engagement triggers an eligibility check → consent/channel preference → one neutral request → one bounded reminder → stop. Ask all eligible customers consistently and never offer incentives. Suppression, withdrawal, delivery, and response state are auditable. Draft responses acknowledge specifics without disclosing customer or project information. Human approval is mandatory before sending or posting.
 
-### Evidence and GBP
+## Website localization
 
-1. Analytics/privacy owner validates consent, retention, city-level reporting thresholds, conversion definitions, referral exclusions, and UTM capture.
-2. ReconEngine records a fixed geo-grid: points, coordinates/labels, keyword, language, device, provider, radius, collection time, and error state. Use an approved rank provider; do not scrape Google or simulate user traffic.
-3. Business owner exports GBP and verifies canonical NAP, genuine service area, opening hours, appointment URL, primary/secondary categories, service descriptions, and landing URL.
-4. StrategyArchitect creates a field-level GBP change set. Publish only after owner approval; preserve a rollback snapshot. Establish a sustainable draft cadence of up to two useful GBP posts weekly, reduced if quality or evidence is unavailable.
-5. Add real, rights-cleared photos only. Q&A answers must address genuine questions; never seed fabricated consumer questions or keyword-stuffed answers.
+Use `/burlington` first only after service coverage is verified. Oakville, Hamilton, Milton, and Dundas pages require unique evidence and demand; otherwise consolidate. Each valid page needs distinct local problem framing, verified delivery details, real case evidence with rights, travel/service constraints, visible FAQs, useful internal links, and one clear lead CTA. Avoid embedded maps that assert an office that does not exist.
 
-### Website hub
+Technical gate: indexable canonical; unique title/H1/meta; mobile-first layout; keyboard and focus QA; reduced motion; image dimensions/compression; passing applicable Core Web Vitals; valid sitemap; no broken links; truthful `Organization`, eligible `LocalBusiness`, `Service`, `BreadcrumbList`, and visible-content-only FAQ/Event schema. Never emit aggregate ratings or address/hours not supported by the source of truth. Generated related-link blocks must be changed only through `python3 tools/internal_links.py`.
 
-Create `/burlington` first, only if the business genuinely serves Burlington. It must contain unique service scope, verified local proof, delivery model, relevant FAQ, contact path, and a truthful statement about office versus service area. It must not imply a storefront or local clients that do not exist.
+## Content clusters
 
-Release gate: unique-content review; canonical URL; localized title/H1 without stuffing; crawl/index directives; accessible landmarks/headings/forms; valid `Organization` and the correct business subtype (use `LocalBusiness` only if applicable); consistent NAP; privacy-safe map; internal links; sitemap; 404/canonical checks; Core Web Vitals budget; CTA events; and rollback commit. Secondary pages are authorized only when query/lead evidence supports distinct content.
+Publish one or two evidence-led articles monthly, then connect them to the relevant service and location page. Initial hypotheses:
 
-### Reviews and citations
+1. AI automation readiness for Burlington/Halton SMEs.
+2. Cybersecurity governance for Ontario professional services.
+3. Practical AI risk controls for local manufacturers.
+4. How to evaluate an automation architecture partner.
 
-- Send the same neutral request path to all eligible, genuinely completed engagements—never only promoters. Do not reward positive sentiment. Legal/privacy must approve CASL basis, channel, identity, unsubscribe/suppression, retention, vendor processing, frequency, and evidence.
-- Establish one canonical NAP record. Audit GBP, Bing Places, Apple Business Connect, relevant chamber/association profiles, and high-quality industry profiles. Correct inaccuracies account-by-account; avoid bulk directory blasts.
+Every brief includes audience, query evidence, primary page, original contribution, subject-matter reviewer, sources, claims register, CTA, update date, and success metric. Local references must add substance, not decorative keyword density.
 
-## 3. Momentum (days 15–45)
+## Citations and earned authority
 
-| Workstream | Action | Owner | Verification |
-|---|---|---|---|
-| Content | Publish two evidence-backed local articles mapped to distinct intents | Editor | Index status, engagement, CTA conversions after 30 days |
-| Social | Run the approved calendar at 3–5 quality posts/week, Instagram first | ContentGenerator + human publisher | UTM sessions, saves, shares, qualified replies; not vanity reach alone |
-| GBP | Draft useful updates from approved articles/case evidence | GBP owner | Post URL, date, actions; policy check |
-| Partnerships | Research five organizations and make value-first, one-to-one approaches | Scout + partnership owner | Recipient basis, approval, response, outcome |
-| Grid | Repeat identical grid at day 30 | ReconEngine | Comparable-cell coverage and cell transition matrix |
+Create a canonical NAP/service-area record and audit Google, Apple Business Connect, Bing Places, Yelp, YellowPages, chamber/BIA and eligible industry profiles. Record URL, owner, credentials custodian, last verified date, inconsistency, correction state, and evidence. Prioritize official and relevant sources; do not create duplicates. Earn mentions through workshops, original local datasets, expert commentary, community service, and co-authored guidance—not payment for PageRank.
 
-At day 30, continue a tactic only if its evidence is interpretable. Diagnose red zones; do not fabricate neighbourhood pages. Prefer a useful Burlington-wide asset, a real local event contribution, or stronger service proof.
+## 90-day execution
 
-## 4. Scale and refine (days 46–90)
+| Window | Work | Exit gate |
+|---|---|---|
+| Days 1–14 | complete baseline; verify GBP truth; technical crawl; fix critical index/schema/NAP issues; configure governed review drafts; publish one justified location page and 1–2 reviewed articles | evidence owner, policy review, accessibility/schema/link checks |
+| Days 15–45 | two GBP drafts/week; social cadence; 2–3 articles; five tailored partnership drafts; first fixed grid scan | exact artifacts approved; attribution works; no policy incidents |
+| Days 46–90 | prioritize red-zone/user-demand gaps; improve winning formats; add pages only when justified; seek 1–2 genuine mentions; monthly grid comparisons | measured outcome, experiment disposition, rollback-ready release |
 
-- Expand a secondary-city page only where Search Console/analytics, qualified demand, and unique proof support it. Each page receives an independent editorial and schema gate.
-- Repeat geo-grid runs on the same protocol at days 60 and 90. Report absolute green-cell rate, relative change, median rank, valid-cell coverage, and confidence caveats by term.
-- Promote only formats with meaningful local actions. Stop or revise content after two evaluation windows with no qualified signal, unless it serves a documented user need.
-- Seek one or two **earned** local contributions (workshop, expert commentary, jointly useful guide). Disclose sponsorships and never require followed links.
+## Experiments, monitoring, rollback
 
-## 5. Content architecture and internal links
-
-Pillars: (1) practical AI automation for Halton organizations, (2) secure software architecture and cybersecurity, (3) responsible AI/governance, (4) locally useful workshops and case evidence. Each article links naturally to one service page and the Burlington hub when relevant. The hub links to verified services, contact/privacy pages, and genuinely related articles. Repository-generated internal-link blocks must be changed only through `tools/internal_links.py`.
-
-## 6. Experiments and decision rules
-
-| Experiment | Hypothesis | Primary metric | Guardrail | Decision |
-|---|---|---|---|---|
-| Burlington hub | A proof-rich hub earns qualified local discovery | Local organic conversions | No false location; CWV/accessibility stable | Keep if indexed and contributes a qualified action within 60 days; otherwise revise intent/proof |
-| Two content topics | Practical local answers attract relevant visitors | Engaged local organic sessions and leads | Source/claim review | Scale winning intent only after a comparable 30-day window |
-| Neutral review request | A compliant request improves response coverage | Request-to-review rate | Complaint, unsubscribe, platform warning | Pause immediately on consent/control failure |
-| Partner workshop | Useful education generates earned mentions/leads | Verified mention and qualified referrals | No quid-pro-quo link | Repeat only with partner and audience evidence |
-
-## 7. Reporting, approvals, and rollback
-
-Weekly: data freshness/quality, GBP actions, local organic sessions/conversions, content outcomes, review workflow controls, grid only when scheduled, experiments, incidents, and approvals. Monthly: target trajectory, comparable cohorts, winning/losing hypotheses, resource decisions, and residual risks. No causal claim without a controlled or clearly qualified analysis.
-
-Rollback means reverting the repository commit or restoring captured GBP/profile fields; pausing messaging and applying suppression; removing erroneous schema; and annotating measurement breaks. GBP warning, privacy/consent fault, material NAP error, deceptive claim, or unexplained data discontinuity triggers an immediate pause and owner review.
-
-## 8. Immediate next actions
-
-1. Assign business, analytics/privacy, GBP, editorial, and production owners.
-2. Validate recon JSON and replace every `not_connected`/unknown value with sourced data or an explicit unavailable reason.
-3. Approve canonical NAP and core keyword set (limit initial tracking to four; add terms only by change request).
-4. Rescore `priority_levers.json`; approve the first reversible experiment.
+Pre-register hypothesis, primary metric, guardrails, cohort, minimum duration/sample, and stopping rule. Never serve deceptive crawler variants. Monitor indexation, GBP warnings, incorrect facts, leads, conversion, CWV, grid distribution, unsubscribe/complaint rates, and operator overrides. An incorrect claim, consent failure, GBP warning, accessibility regression, or material performance regression stops the experiment. Restore the last approved page/profile package, preserve the audit trail, and open a root-cause action.

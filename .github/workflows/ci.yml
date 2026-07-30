@@ -59,6 +59,41 @@ jobs:
           python-version: "3.11"
       - run: python scripts/site_reliability_audit.py
 
+  search-integrity:
+    name: Search discovery and structured data
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.11"
+      - name: Validate generated search assets are current
+        run: |
+          python3 tools/generate_search_assets.py
+          git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
+      - name: Validate indexability, links, metadata, and JSON-LD
+        run: python3 tools/seo_audit.py
+      - name: Validate generated internal links
+        run: python3 tools/internal_links.py --check
+
+  lighthouse:
+    name: Lighthouse budgets
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@6044e13b5b1b3db8647f5e0b198b9edcc8372e08 # v6.0.0
+        with:
+          node-version: "22"
+      - name: Enforce performance, accessibility, and SEO budgets
+        run: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json
+
   workflow-doctor:
     name: Workflow Doctor (dry-run)
     runs-on: ubuntu-latest

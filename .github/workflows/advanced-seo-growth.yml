@@ -1,0 +1,76 @@
+name: Advanced SEO Growth
+
+on:
+  pull_request:
+    paths:
+      - "**/*.html"
+      - "sitemap*.xml"
+      - "robots.txt"
+      - "tools/advanced_seo_growth.py"
+      - ".github/workflows/advanced-seo-growth.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "sitemap*.xml"
+      - "robots.txt"
+      - "tools/advanced_seo_growth.py"
+  schedule:
+    - cron: "15 7 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: advanced-seo-growth-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Sitewide search growth audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.11"
+
+      - name: Run advanced SEO growth engine
+        run: python3 tools/advanced_seo_growth.py
+
+      - name: Generate complete backlog artifact
+        if: always()
+        run: python3 tools/advanced_seo_growth.py --write || true
+
+      - name: Publish audit summary
+        if: always()
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, pathlib
+          p = pathlib.Path("data/seo/advanced-growth.json")
+          if not p.exists():
+              print("Advanced SEO report was not generated.")
+              raise SystemExit(0)
+          r = json.loads(p.read_text())
+          t = r["totals"]
+          print("# Advanced SEO Growth\n")
+          print(f"**Score:** {r['score']}/100 · **Pages:** {t['pages']} · **Errors:** {t['errors']} · **Warnings:** {t['warnings']} · **Info:** {t['info']}\n")
+          print("## Highest-priority findings\n")
+          for f in r["findings"][:30]:
+              print(f"- **{f['level'].upper()}** `{f['page']}` — {f['message']} **Action:** {f['action']}")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: advanced-seo-growth-${{ github.run_id }}
+          path: |
+            data/seo/advanced-growth.json
+            data/seo/advanced-growth.md
+          if-no-files-found: warn
+          retention-days: 30

@@ -87,6 +87,8 @@ jobs:
       risk_class: ${{ steps.score.outputs.risk_class }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: ${{ inputs.python-version }}
@@ -169,6 +171,8 @@ jobs:
       security-events: write # CodeQL/SARIF upload
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: ${{ inputs.python-version }}
@@ -224,6 +228,8 @@ jobs:
       id-token: write # OIDC — short-lived creds, no long-lived secrets
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - name: Deploy to staging (adapter)
         run: echo "Deploy candidate ${{ needs.triage.outputs.change_id }} to staging via configured adapter."
       - name: Smoke + synthetic probes
@@ -242,6 +248,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - name: Shift canary slice
         run: echo "Route 5-20% traffic to change ${{ needs.triage.outputs.change_id }}; observe."
 
@@ -258,6 +266,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - name: Full promotion
         run: echo "Promote change ${{ needs.triage.outputs.change_id }} to 100%."
 
@@ -286,6 +296,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
       - name: Roll back to last known-good
         run: |
           echo "::warning::Rollback triggered for change ${{ needs.triage.outputs.change_id }}."

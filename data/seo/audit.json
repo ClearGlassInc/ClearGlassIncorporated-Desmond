@@ -1,23 +1,24 @@
 {
-  "generated": "2026-07-28T17:40:41+00:00",
+  "generated": "2026-07-30T09:16:01+00:00",
   "site": "https://www.clearglassinc.com",
   "score": 79,
   "totals": {
-    "pages": 141,
-    "indexable": 130,
-    "in_sitemap": 131,
+    "pages": 145,
+    "indexable": 134,
+    "in_sitemap": 135,
     "noindex": 10,
-    "with_schema": 43,
+    "with_schema": 47,
     "errors": 0,
-    "warnings": 108,
-    "info": 40
+    "warnings": 115,
+    "info": 41
   },
   "by_check": {
-    "description.length": 61,
-    "title.length": 41,
-    "heading.order": 39,
+    "description.length": 63,
+    "title.length": 44,
+    "heading.order": 40,
     "h1.multiple": 3,
     "weight": 2,
+    "schema.required": 2,
     "image.alt": 1,
     "index.conflict": 1
   },
@@ -95,6 +96,30 @@
       "message": "Meta description is 196 chars; Google truncates near 165."
     },
     {
+      "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
+    },
+    {
+      "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
+    },
+    {
+      "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 63 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 195 chars; Google truncates near 165."
+    },
+    {
       "page": "blog/almach-scalp-engine.html",
       "level": "warn",
       "check": "title.length",
@@ -117,6 +142,12 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 180 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 72 chars; over ~62 it is truncated in results."
     },
     {
       "page": "blog/clearglass-agentops-microsoft-foundry-future-stack.html",
@@ -219,6 +250,18 @@
       "level": "warn",
       "check": "title.length",
       "message": "Title is 79 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/coffee-and-technology-digital-revolution.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 81 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/coffee-and-technology-digital-revolution.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 174 chars; Google truncates near 165."
     },
     {
       "page": "blog/cybersecurity-architecture-for-agentic-software.html",
@@ -719,6 +762,12 @@
       "message": "Heading level jumps from h1 to h4 \u2014 skipped levels weaken outline parsing."
     },
     {
+      "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
+      "level": "info",
+      "check": "heading.order",
+      "message": "Heading level jumps from h1 to h3 \u2014 skipped levels weaken outline parsing."
+    },
+    {
       "page": "blog/almach-scalp-engine.html",
       "level": "info",
       "check": "heading.order",
@@ -1005,7 +1054,7 @@
       "internal_links": 14,
       "images_missing_alt": 0,
       "bytes": 50082,
-      "inbound_links": 12
+      "inbound_links": 13
     },
     {
       "page": "aegis.html",
@@ -1062,7 +1111,7 @@
       "internal_links": 11,
       "images_missing_alt": 0,
       "bytes": 47902,
-      "inbound_links": 43
+      "inbound_links": 44
     },
     {
       "page": "air-control.html",
@@ -1318,9 +1367,9 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 157,
+      "internal_links": 161,
       "images_missing_alt": 0,
-      "bytes": 33641,
+      "bytes": 34029,
       "inbound_links": 10
     },
     {
@@ -1414,7 +1463,39 @@
       "internal_links": 31,
       "images_missing_alt": 0,
       "bytes": 43326,
-      "inbound_links": 13
+      "inbound_links": 15
+    },
+    {
+      "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
+      "url": "https://www.clearglassinc.com/blog/ai-generated-phishing-54-percent-click-rate.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Long Read: AI-Generated Phishing Hits 54% | ClearGlass Insights",
+      "title_length": 63,
+      "description": "This week's long read: WatchGuard reports AI-generated phishing reaching a 54% click rate. Why measurable impact beats speculation, and why identity \u2014 not detection \u2014 is now the decisive control.",
+      "description_length": 195,
+      "canonical": "https://www.clearglassinc.com/blog/ai-generated-phishing-54-percent-click-rate.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage",
+        "Thing",
+        "Thing",
+        "Thing",
+        "CreativeWork",
+        "Organization",
+        "CreativeWork",
+        "Organization"
+      ],
+      "internal_links": 20,
+      "images_missing_alt": 0,
+      "bytes": 47365,
+      "inbound_links": 7
     },
     {
       "page": "blog/almach-scalp-engine.html",
@@ -1432,7 +1513,7 @@
       "schema_types": [],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 43938,
+      "bytes": 43965,
       "inbound_links": 5
     },
     {
@@ -1485,6 +1566,31 @@
       "inbound_links": 11
     },
     {
+      "page": "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
+      "url": "https://www.clearglassinc.com/blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Mastering the Machine: Advanced Prompt Engineering | ClearGlass Insights",
+      "title_length": 72,
+      "description": "A practical guide to 60+ prompt modules, quality controls, repeatable workflows, and an interactive composer for building precise AI prompts.",
+      "description_length": 141,
+      "canonical": "https://www.clearglassinc.com/blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage"
+      ],
+      "internal_links": 12,
+      "images_missing_alt": 0,
+      "bytes": 30295,
+      "inbound_links": 5
+    },
+    {
       "page": "blog/clearglass-agentops-microsoft-foundry-future-stack.html",
       "url": "https://www.clearglassinc.com/blog/clearglass-agentops-microsoft-foundry-future-stack.html",
       "indexable": true,
@@ -1504,7 +1610,7 @@
       ],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 34080,
+      "bytes": 34064,
       "inbound_links": 11
     },
     {
@@ -1527,7 +1633,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 16358,
+      "bytes": 16326,
       "inbound_links": 7
     },
     {
@@ -1579,7 +1685,7 @@
       ],
       "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 47886,
+      "bytes": 47862,
       "inbound_links": 10
     },
     {
@@ -1602,7 +1708,7 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 32418,
+      "bytes": 32383,
       "inbound_links": 7
     },
     {
@@ -1628,7 +1734,7 @@
       ],
       "internal_links": 5,
       "images_missing_alt": 0,
-      "bytes": 18767,
+      "bytes": 25474,
       "inbound_links": 1
     },
     {
@@ -1708,6 +1814,31 @@
       "inbound_links": 15
     },
     {
+      "page": "blog/coffee-and-technology-digital-revolution.html",
+      "url": "https://www.clearglassinc.com/blog/coffee-and-technology-digital-revolution.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Coffee & Technology: The Fuel Behind the Digital Revolution | ClearGlass Insights",
+      "title_length": 81,
+      "description": "Explore how coffee culture and technology evolved together\u2014from historic coffeehouses to AI-assisted farming, connected brewing, cybersecurity, and transparent supply chains.",
+      "description_length": 174,
+      "canonical": "https://www.clearglassinc.com/blog/coffee-and-technology-digital-revolution.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage"
+      ],
+      "internal_links": 14,
+      "images_missing_alt": 0,
+      "bytes": 27204,
+      "inbound_links": 7
+    },
+    {
       "page": "blog/cybersecurity-architecture-for-agentic-software.html",
       "url": "https://www.clearglassinc.com/blog/cybersecurity-architecture-for-agentic-software.html",
       "indexable": true,
@@ -1757,8 +1888,8 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 23557,
-      "inbound_links": 8
+      "bytes": 23628,
+      "inbound_links": 9
     },
     {
       "page": "blog/ethical-sales-system-100k-revenue-prompt.html",
@@ -1780,7 +1911,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 19087,
+      "bytes": 19090,
       "inbound_links": 8
     },
     {
@@ -1867,10 +1998,10 @@
         "ListItem",
         "ListItem"
       ],
-      "internal_links": 50,
+      "internal_links": 56,
       "images_missing_alt": 0,
-      "bytes": 109120,
-      "inbound_links": 95
+      "bytes": 115078,
+      "inbound_links": 110
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -1896,6 +2027,31 @@
       "inbound_links": 6
     },
     {
+      "page": "blog/ontario-accountability-sealed-evidence.html",
+      "url": "https://www.clearglassinc.com/blog/ontario-accountability-sealed-evidence.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "They Sealed the Evidence \u2014 ClearGlass Insights",
+      "title_length": 46,
+      "description": "How to challenge an Ontario FIPPA section 14 law-enforcement denial: the legal threshold, 30-day IPC appeal process, evidence checklist, and primary sources.",
+      "description_length": 157,
+      "canonical": "https://www.clearglassinc.com/blog/ontario-accountability-sealed-evidence.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage"
+      ],
+      "internal_links": 17,
+      "images_missing_alt": 0,
+      "bytes": 36355,
+      "inbound_links": 7
+    },
+    {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
       "url": "https://www.clearglassinc.com/blog/osint-workflow-that-survives-contact-with-reality.html",
       "indexable": true,
@@ -1919,7 +2075,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 41855,
+      "bytes": 41838,
       "inbound_links": 14
     },
     {
@@ -1991,7 +2147,7 @@
       "internal_links": 28,
       "images_missing_alt": 0,
       "bytes": 35394,
-      "inbound_links": 7
+      "inbound_links": 9
     },
     {
       "page": "blog/zero-trust-is-outdated.html",
@@ -2404,7 +2560,7 @@
       "internal_links": 28,
       "images_missing_alt": 0,
       "bytes": 37373,
-      "inbound_links": 17
+      "inbound_links": 18
     },
     {
       "page": "futuristic.html",
@@ -2497,7 +2653,7 @@
       "internal_links": 12,
       "images_missing_alt": 0,
       "bytes": 143209,
-      "inbound_links": 66
+      "inbound_links": 68
     },
     {
       "page": "header-mockup-2040.html",
@@ -2583,8 +2739,8 @@
       ],
       "internal_links": 208,
       "images_missing_alt": 0,
-      "bytes": 154215,
-      "inbound_links": 500
+      "bytes": 160226,
+      "inbound_links": 512
     },
     {
       "page": "intelligence-command-surface.html",
@@ -3370,8 +3526,8 @@
       ],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 25337,
-      "inbound_links": 112
+      "bytes": 25382,
+      "inbound_links": 116
     },
     {
       "page": "procurement-legal-tech.html",
@@ -3390,7 +3546,7 @@
       "internal_links": 22,
       "images_missing_alt": 0,
       "bytes": 51457,
-      "inbound_links": 12
+      "inbound_links": 14
     },
     {
       "page": "products.html",
@@ -3661,7 +3817,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 25608,
+      "bytes": 39224,
       "inbound_links": 0
     },
     {
@@ -3801,7 +3957,7 @@
       "internal_links": 14,
       "images_missing_alt": 0,
       "bytes": 31801,
-      "inbound_links": 134
+      "inbound_links": 138
     },
     {
       "page": "systems.html",

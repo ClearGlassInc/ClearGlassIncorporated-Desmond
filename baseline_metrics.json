@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "program": "ClearGlassInc Artemis Burlington Geo-Grid Exposure",
+  "status": "awaiting_authorized_data",
+  "period": {"days": 90, "start": null, "end": null, "timezone": "America/Toronto"},
+  "generated_at": null,
+  "sources": {
+    "google_business_profile": {"connection": "not_configured", "account": null},
+    "ga4": {"connection": "not_configured", "property": null},
+    "search_console": {"connection": "not_configured", "property": null},
+    "instagram": {"connection": "not_configured", "account": null},
+    "tiktok": {"connection": "not_configured", "account": null},
+    "linkedin": {"connection": "not_configured", "account": null},
+    "crm": {"connection": "not_configured", "system": null}
+  },
+  "metrics": {
+    "gbp": {"impressions": null, "profile_views": null, "direction_requests": null, "calls": null, "website_clicks": null, "top_queries": []},
+    "web": {"local_organic_sessions": null, "organic_conversions": null, "top_landing_pages": [], "top_local_queries": [], "geography_thresholding_applied": null},
+    "social": {
+      "instagram": {"follower_growth": null, "engagement_rate": null, "top_posts": [], "local_audience_percent": null},
+      "tiktok": {"follower_growth": null, "engagement_rate": null, "top_posts": [], "local_audience_percent": null},
+      "linkedin": {"follower_growth": null, "engagement_rate": null, "top_posts": [], "local_audience_percent": null}
+    },
+    "leads": {"qualified_local": null, "source_attribution_coverage_percent": null, "definition_version": "pending_owner_approval"}
+  },
+  "quality": {"complete": false, "missing_required_sources": ["google_business_profile", "ga4", "search_console", "social", "crm"], "anomalies": [], "notes": ["Null means unavailable; it does not mean zero."]}
+}

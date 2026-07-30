@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "status": "awaiting_rank_provider",
+  "provider": null,
+  "run_id": null,
+  "observed_at": null,
+  "grid": {"center": null, "radius_km": null, "spacing_km": null, "point_count": 0, "coordinate_precision_policy": "store provider precision; reports use neighbourhood aggregates"},
+  "keywords": ["software architect Burlington", "AI automation Burlington", "cybersecurity consultant Burlington", "ClearGlass Burlington"],
+  "green_rank_threshold": 3,
+  "cells": [],
+  "summary": {"eligible_cells": 0, "successful_cells": 0, "failed_cells": 0, "green_cells": 0, "green_cell_rate": null},
+  "comparison_contract": {"lock_provider": true, "lock_grid": true, "lock_locale": "en-CA", "lock_device": true, "lock_search_settings": true, "exclude_failed_cells_from_denominator": true},
+  "notes": ["No direct automated Google Maps scraping is implemented.", "Null means unavailable; it does not mean rank zero."]
+}

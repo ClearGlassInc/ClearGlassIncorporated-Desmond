@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "status": "provisional_until_baseline",
+  "formula": "expected_impact * confidence * urgency / (effort * risk)",
+  "scale": {"minimum": 1, "maximum": 5, "higher_score": "higher priority", "risk": "1 is low risk; 5 is high risk"},
+  "levers": [
+    {"id": "measurement_baseline", "lever": "Authorize and lock the 90-day measurement baseline", "expected_impact": 5, "confidence": 5, "urgency": 5, "effort": 2, "risk": 1, "score": 62.5, "rationale": "Every optimization and success claim depends on a comparable baseline.", "approval": "data_owner", "acceptance": "all required sources either populated or explicitly waived"},
+    {"id": "gbp_accuracy", "lever": "Audit and correct GBP fields using verified business facts", "expected_impact": 5, "confidence": 4, "urgency": 5, "effort": 2, "risk": 2, "score": 25.0, "rationale": "Accuracy and completeness are foundational local signals; edits can create suspension risk if facts are wrong.", "approval": "gbp_owner", "acceptance": "field-by-field evidence and rollback snapshot approved"},
+    {"id": "burlington_page", "lever": "Publish one evidence-rich Burlington service-area page", "expected_impact": 5, "confidence": 4, "urgency": 4, "effort": 3, "risk": 2, "score": 13.3333, "rationale": "Creates a focused local organic destination without doorway-page expansion.", "approval": "marketing_and_site_owner", "acceptance": "coverage, unique proof, accessibility, schema and CWV checks pass"},
+    {"id": "review_workflow", "lever": "Launch consent-based, sentiment-neutral review requests", "expected_impact": 4, "confidence": 4, "urgency": 4, "effort": 3, "risk": 3, "score": 7.1111, "rationale": "Authentic review velocity can improve trust; CASL and platform controls raise risk.", "approval": "privacy_legal_and_gbp_owner", "acceptance": "consent, suppression, audit, expiry and no-gating tests pass"},
+    {"id": "local_content", "lever": "Publish two evidence-backed local articles per month", "expected_impact": 3, "confidence": 3, "urgency": 3, "effort": 3, "risk": 1, "score": 9.0, "rationale": "Builds topical and local relevance when content answers real audience needs.", "approval": "editor", "acceptance": "source, originality, local relevance and CTA checks pass"},
+    {"id": "community_partnerships", "lever": "Pitch five individually researched local education partnerships", "expected_impact": 4, "confidence": 2, "urgency": 3, "effort": 4, "risk": 2, "score": 3.0, "rationale": "Earned authority is valuable but outcomes and eligibility are uncertain.", "approval": "brand_and_compliance", "acceptance": "five approved one-to-one pitches; no bulk automation"},
+    {"id": "secondary_pages", "lever": "Expand to secondary location pages only after demand and proof gates", "expected_impact": 3, "confidence": 2, "urgency": 1, "effort": 5, "risk": 3, "score": 0.4, "rationale": "Premature templated pages risk thin or doorway content.", "approval": "seo_owner", "acceptance": "query demand, verified coverage and distinct proof exist per location"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "status": "discovery_required",
+  "collected_at": null,
+  "method": "For each keyword, use a policy-compliant rank provider at the approved grid centroid; record the top five unique eligible businesses and evidence URLs.",
+  "keywords": [
+    "software architect Burlington",
+    "AI automation Burlington",
+    "cybersecurity consultant Burlington",
+    "ClearGlass Burlington"
+  ],
+  "competitors": [],
+  "competitor_schema": {
+    "required": ["name", "keyword", "observed_rank", "observed_at", "evidence"],
+    "fields": ["gbp_categories", "photo_count", "post_frequency_30d", "review_count", "rating", "local_pages", "schema_types", "performance", "content_depth", "social_activity", "citations"]
+  },
+  "quality": {"fabricated_records": 0, "note": "No competitor was asserted without current rank evidence and an authorized collection run."}
+}

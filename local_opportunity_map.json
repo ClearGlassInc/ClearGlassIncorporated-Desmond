@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "status": "research_shortlist_not_contacted",
+  "last_verified": null,
+  "geographies": [
+    {"name": "Burlington", "tier": "core", "neighbourhoods": ["Aldershot", "Brant", "Central", "Orchard", "Alton Village", "Millcroft", "Headon Forest", "Roseland", "Shoreacres", "Tyandaga"]},
+    {"name": "Oakville", "tier": "secondary", "neighbourhoods": []},
+    {"name": "Hamilton", "tier": "secondary", "neighbourhoods": []},
+    {"name": "Milton", "tier": "secondary", "neighbourhoods": []},
+    {"name": "Dundas", "tier": "secondary", "neighbourhoods": []}
+  ],
+  "opportunities": [
+    {"name": "Burlington Chamber of Commerce", "type": "business_association", "audience": "Burlington businesses", "potential_leverage": ["membership", "workshop", "earned_mention"], "evidence_url": "https://burlingtonchamber.com/", "verification_status": "verify_before_use"},
+    {"name": "Burlington Economic Development", "type": "economic_development", "audience": "businesses and investors", "potential_leverage": ["program participation", "ecosystem research"], "evidence_url": "https://investburlington.ca/", "verification_status": "verify_before_use"},
+    {"name": "TechPlace", "type": "innovation_hub", "audience": "technology founders and scale-ups", "potential_leverage": ["educational workshop", "community partnership"], "evidence_url": "https://techplace.ca/", "verification_status": "verify_before_use"},
+    {"name": "Sound of Music Festival", "type": "event", "audience": "Burlington residents and visitors", "potential_leverage": ["timely local content", "approved sponsorship research"], "evidence_url": "https://soundofmusic.ca/", "verification_status": "verify_dates_and_rights"},
+    {"name": "Canada's Largest Ribfest", "type": "event", "audience": "Halton community and visitors", "potential_leverage": ["timely local content", "approved sponsorship research"], "evidence_url": "https://canadaslargestribfest.com/", "verification_status": "verify_dates_and_rights"},
+    {"name": "Tourism Burlington", "type": "destination_organization", "audience": "residents, visitors, local organizations", "potential_leverage": ["event discovery", "local research"], "evidence_url": "https://tourismburlington.com/", "verification_status": "verify_before_use"},
+    {"name": "Burlington Public Library", "type": "institution", "audience": "Burlington community", "potential_leverage": ["public education proposal", "event research"], "evidence_url": "https://www.bpl.on.ca/", "verification_status": "verify_program_fit"},
+    {"name": "City of Burlington", "type": "government", "audience": "residents and businesses", "potential_leverage": ["authoritative civic information only"], "evidence_url": "https://www.burlington.ca/", "verification_status": "no_affiliation_claim"}
+  ],
+  "guardrails": ["Verify every listing immediately before outreach or publication.", "Do not imply endorsement, affiliation, sponsorship, or event participation.", "Use individual outreach only after legal basis and suppression checks."]
+}

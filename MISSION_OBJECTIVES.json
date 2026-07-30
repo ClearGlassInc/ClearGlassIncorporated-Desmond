@@ -1,0 +1,96 @@
+{
+  "program": "ClearGlassInc Artemis Burlington Geo-Grid Exposure",
+  "version": "1.0.0",
+  "status": "target_state_not_deployed",
+  "measurement_window_days": 90,
+  "baseline_required": true,
+  "geographies": {
+    "primary": [
+      "Burlington, Ontario"
+    ],
+    "secondary": [
+      "Oakville, Ontario",
+      "Hamilton, Ontario",
+      "Milton, Ontario",
+      "Dundas, Ontario"
+    ]
+  },
+  "core_keywords": [
+    "software architect Burlington",
+    "AI automation Burlington",
+    "cybersecurity consultant Burlington",
+    "ClearGlass Burlington"
+  ],
+  "objectives": [
+    {
+      "id": "geo_grid_green_cells",
+      "metric": "green_cell_rate",
+      "definition": "Percentage of eligible, successfully measured grid cells ranking in positions 1-3 for a priority keyword.",
+      "baseline": null,
+      "target_relative_increase_percent": {
+        "minimum": 30,
+        "stretch": 50
+      },
+      "deadline_days": 90,
+      "source": "approved rank-tracking provider",
+      "success_rule": "minimum target met for at least 3 priority keywords in two consecutive monthly runs",
+      "guardrails": [
+        "same grid and settings across comparisons",
+        "no automated Google scraping",
+        "failed cells excluded and reported"
+      ]
+    },
+    {
+      "id": "local_organic_sessions",
+      "metric": "consented_local_organic_sessions",
+      "definition": "GA4 organic sessions attributed to Burlington, Halton Region, or Hamilton using consented, aggregate geography.",
+      "baseline": null,
+      "target_relative_increase_percent": 40,
+      "deadline_days": 90,
+      "source": "GA4 Data API",
+      "success_rule": "rolling 28-day value is at least 1.40 times the locked baseline",
+      "guardrails": [
+        "aggregate reporting only",
+        "document consent mode and thresholding",
+        "do not infer individual IP location"
+      ]
+    },
+    {
+      "id": "qualified_local_leads",
+      "metric": "qualified_local_leads_per_month",
+      "definition": "Unique consented inquiries meeting the CRM qualification rubric and containing an attributable local source or declared local need.",
+      "baseline": null,
+      "target_absolute": 10,
+      "deadline_days": 90,
+      "source": "CRM plus validated UTM/call attribution",
+      "success_rule": "at least 10 qualified local leads in a calendar month with source coverage at or above 90 percent",
+      "guardrails": [
+        "deduplicate by CRM lead ID",
+        "exclude test and spam leads",
+        "retain no raw personal data in reports"
+      ]
+    },
+    {
+      "id": "brand_surface_area",
+      "metric": "verified_local_mentions",
+      "definition": "New, independently verifiable branded mentions from relevant local media, organizations, events, or partners.",
+      "baseline": null,
+      "target_absolute_90_days": 2,
+      "deadline_days": 90,
+      "source": "Search Console branded queries and evidence-linked mention register",
+      "success_rule": "at least two earned local mentions and a non-negative branded-query trend versus baseline",
+      "guardrails": [
+        "exclude self-published properties",
+        "exclude paid links unless disclosed",
+        "archive evidence URL and observation time"
+      ]
+    }
+  ],
+  "global_stop_conditions": [
+    "Google Business Profile warning or suspension risk",
+    "privacy or consent control failure",
+    "unsupported public claim",
+    "material tracking regression",
+    "production action without bound human approval"
+  ]
+}

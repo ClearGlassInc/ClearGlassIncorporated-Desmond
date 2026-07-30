@@ -61,7 +61,6 @@ PAGES: dict[str, tuple[str, str]] = {
     "stegoforge.html": ("STEGOFORGE", "steganography and covert-channel analysis terminal"),
     "attack-prompt-core.html": ("ATT&CK Prompt Integrator", "MITRE ATT&CK-aligned analysis prompts"),
     "environmental-cyber-risk.html": ("Environmental Cyber-Risk", "OT and environmental threat monitoring"),
-    "docs/guardian_command_nexus_spec.html": ("Guardian Command Nexus Spec", "the technical specification behind GUARDIAN"),
 
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
@@ -97,7 +96,6 @@ PAGES: dict[str, tuple[str, str]] = {
     "systems.html": ("Systems Console", "PERCIVAL operations console"),
     "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
     "command-center.html": ("Command Center", "executive security operations deck"),
-    "platform-command-center.html": ("Platform Command Center", "live monorepo dashboard with governance risk simulator"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
     "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),
 
@@ -195,6 +193,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/coffee-and-technology-digital-revolution.html": ("Coffee & Technology", "how coffee culture and technology grew together"),
     "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ("ChatGPT Prompt Shortcuts", "a practical field guide to clearer, faster AI prompts"),
     "blog/ai-generated-phishing-54-percent-click-rate.html": ("AI-Generated Phishing Hits a 54% Click Rate", "this week's long read on why identity beats detection"),
+    "blog/telecommunications-legal-briefing-30-july-2026.html": ("Telecommunications Legal Briefing", "a source-led Canadian telecommunications law briefing"),
 }
 
 # --------------------------------------------------------------------------
@@ -214,7 +213,7 @@ CLUSTERS: dict[str, dict] = {
             "sentinel.html", "bluedesk.html", "guardian.html",
             "artemis-blue-team.html", "stegoforge.html",
             "attack-prompt-core.html", "environmental-cyber-risk.html",
-            "bluedesk-mobile.html", "docs/guardian_command_nexus_spec.html",
+            "bluedesk-mobile.html",
         ],
         "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")],
     },
@@ -248,7 +247,7 @@ CLUSTERS: dict[str, dict] = {
             "conduit.html", "postloop.html", "command-console.html",
             "control-surface.html", "systems.html", "saas-platform.html",
             "CG-os.html", "percival-build.html", "clearsight.html",
-            "command-center.html", "platform-command-center.html",
+            "command-center.html",
         ],
         "cta": [CTA_OFFERS, CTA_PRICING],
     },
@@ -352,6 +351,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/coffee-and-technology-digital-revolution.html",
             "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
             "blog/ai-generated-phishing-54-percent-click-rate.html",
+            "blog/telecommunications-legal-briefing-30-july-2026.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -378,7 +378,6 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "automap.html": ["advanced-features-tools-systems.html", "conduit.html", "agentmesh.html", "intelligence-command-surface.html"],
     "cyber-defense-console.html": ["blog/clearglass-command-center-cyber-defense-console.html", "smb-cyber-trust-kit.html"],
     "bluedesk.html": ["blog/ai-agents-insider-threat.html"],
-    "guardian.html": ["docs/guardian_command_nexus_spec.html"],
     "percival-os.html": ["blog/ai-agent-governance-governed-autonomy.html"],
     "agentmesh.html": ["blog/cybersecurity-architecture-for-agentic-software.html", "flowsint.html"],
     "ai-operator.html": ["artemis-self-evolving-platform.html", "blog/ai-agent-governance-governed-autonomy.html"],
@@ -398,7 +397,6 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "smb-cyber-trust-kit.html": ["offers/hardening-sprint.html"],
     "store.html": ["smb-cyber-trust-kit.html"],
     "products.html": ["offers/index.html", "advanced-features-tools-systems.html", "store.html"],
-    "platform-command-center.html": ["systems.html", "control-surface.html", "advanced-features-tools-systems.html"],
     "opal/index.html": ["conduit.html"],
     "products/opal-koboi/artemis-iv-core.html": ["artemis-iv.html"],
     "products/opal-koboi/artemis-vi.html": ["artemis-os.html"],

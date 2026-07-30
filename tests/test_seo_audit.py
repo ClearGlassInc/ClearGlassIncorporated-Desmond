@@ -134,6 +134,15 @@ class TestOnPageSignals:
         page = write_page(tmp_path, "two.html", body="<h1>One</h1><h1>Two</h1>")
         assert "h1.multiple" in checks(audit_one(tmp_path, page))
 
+    def test_duplicate_metadata_is_flagged_across_routes(self) -> None:
+        records = {
+            "a.html": {"indexable": True, "title": "Same", "description": "A", "canonical": "u1"},
+            "b.html": {"indexable": True, "title": "Same", "description": "B", "canonical": "u2"},
+        }
+        found: list[dict] = []
+        seo_audit.audit_uniqueness(records, found)
+        assert any(item["check"] == "title.duplicate" for item in found)
+
 
 class TestStructuredData:
     def test_unparseable_json_ld_is_an_error(self, tmp_path: Path) -> None:

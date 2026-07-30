@@ -475,6 +475,26 @@ def audit_sitemap(records: dict[str, dict], findings: list[dict]) -> None:
             })
 
 
+def audit_uniqueness(records: dict[str, dict], findings: list[dict]) -> None:
+    """Detect metadata collisions that make distinct routes compete as duplicates."""
+    for field in ("title", "description", "canonical"):
+        owners: dict[str, list[str]] = {}
+        for rel, record in records.items():
+            if not record["indexable"] or rel in UTILITY_PAGES:
+                continue
+            value = record.get(field)
+            if value:
+                owners.setdefault(value.strip(), []).append(rel)
+        for value, pages in owners.items():
+            if len(pages) > 1:
+                findings.append({
+                    "page": ", ".join(sorted(pages)),
+                    "level": "warn",
+                    "check": f"{field}.duplicate",
+                    "message": f"{len(pages)} indexable pages share the same {field}: '{value}'.",
+                })
+
+
 # ---------------------------------------------------------------------------
 # Report
 # ---------------------------------------------------------------------------
@@ -491,6 +511,7 @@ def build_report() -> dict:
 
     audit_links(pages, records, findings)
     audit_sitemap(records, findings)
+    audit_uniqueness(records, findings)
 
     indexable = [
         r for r in records.values()

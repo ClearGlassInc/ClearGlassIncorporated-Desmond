@@ -1,190 +1,318 @@
 # ClearGlassInc Artemis — Burlington Technical Implementation Plan
 
-> **Target-state blueprint, not deployment evidence.** Palantir licences, tenant configuration, connectors, APIs, credentials, environments, GBP capabilities and production controls are unverified. This design keeps every external mutation disabled until those facts and a bound approval are confirmed.
+## Status, decision, and acceptance contract
+
+> **Target state only.** This document does not assert that Palantir, Google Business Profile (GBP), Google Analytics 4 (GA4), social, CRM, rank-tracking, or production infrastructure is licensed, connected, or provisioned. Every connector starts disabled and read-only; credentials, data agreements, API terms, identity federation, approvers, retention, and rollback owners must be verified before activation.
+
+ClearGlassInc Artemis will implement the Burlington exposure program as a **governed proposal system**: collect evidence → normalize → analyze → draft → deterministic validation → human approval → execution → immutable audit. Models can propose content, prompts, workflows, heuristics, and routing changes, but cannot approve their own changes, modify goals or policy, expand privileges, publish, message contacts, request reviews, or deploy.
+
+Acceptance requires: schema-valid 90-day imports; no invented observations; tenant/mission/purpose/compartment enforcement before retrieval; typed and allowlisted tools; attributable approval bound to an immutable payload; replayable evaluation evidence; a signed release with a stable rollback; and dashboards that label missing/stale data rather than converting it to zero.
 
 ## System Architecture
 
 ```mermaid
 flowchart LR
-  S[GBP / GA4 / GSC / CRM / social / rank provider] --> I[Python ingestion adapters]
-  I --> F[Foundry datasets and transforms]
-  F --> O[Foundry Ontology]
-  O --> G[Gotham operational views]
-  O --> R[Hybrid search / retrieval]
-  R --> A[AIP copilots and draft agents]
-  A --> E[Evaluation and policy gates]
-  E --> Q{Exact-package human approval}
-  Q -->|approved| P[Apollo signed canary]
-  Q -->|rejected| C[Correction/eval corpus]
-  P --> W[Website / channel adapters]
-  W --> S
-  I & A & E & Q & P --> L[Independent append-only audit plane]
+  UI[Next.js operator console] --> GW[Python API gateway]
+  SRC[GBP / GA4 / social / CRM / rank vendor] --> IN[Connector quarantine]
+  IN --> BUS[Event bus]
+  BUS --> FD[Foundry bronze / silver / gold]
+  FD --> ONT[Foundry Ontology]
+  ONT --> G[Gotham investigations and entity tracking]
+  GW --> PE[Policy enforcement]
+  PE --> AIP[AIP copilots and bounded agents]
+  AIP --> TB[Typed tool broker]
+  TB --> DRAFT[Draft and approval queue]
+  DRAFT -->|approved payload digest| EXEC[External executor]
+  AIP --> EVAL[Evaluation and upgrade proposals]
+  EVAL --> AP[Apollo signed canary / rollback]
+  GW --> AUDIT[Append-only audit]
+  TB --> AUDIT
+  EXEC --> AUDIT
+  AP --> AUDIT
 ```
 
-- **Web UI:** Next.js analyst cockpit for grid layers, evidence, content drafts, approval queue, eval scorecards and release history. UI authorization is advisory; APIs enforce policy again.
-- **API gateway:** OIDC/WebAuthn user identity, workload mTLS, request limits, schema validation, correlation IDs and policy decision point (PDP).
-- **Backend:** typed Python/FastAPI services for ingestion, measurement, draft packages, approvals, rank-run normalization and reports.
-- **Event layer:** bounded, partitioned topics with schema registry, idempotency key, dead-letter quarantine and replay authorization.
-- **Data layer:** raw encrypted source datasets → validated normalized datasets → aggregate reporting marts. Foundry provides governed integration and transforms; the Ontology exposes operational objects/actions.
-- **Gotham:** permission-aware investigation and entity tracking views for market signals, opportunities, cases and outcomes.
-- **AIP:** grounded copilots, typed tool definitions, agent workflows, prompt/eval registries and proposal generation. Model output is untrusted.
-- **Apollo:** signed deployment manifests, environment rings, health gates, canary, last-known-good rollback and runtime kill switch.
+### Palantir responsibility map
+
+* **Gotham** is the operational surface for investigations, entity tracking, maps, timelines, cases, watchlists, and evidence-backed opportunity review.
+* **Foundry** integrates sources into governed bronze/silver/gold data products and exposes ontology objects, links, actions, lineage, and application logic.
+* **AIP** hosts copilots, evaluation-backed agent workflows, policy-gated tools, prompt/workflow registries, and model routing.
+* **Apollo** promotes signed application/configuration bundles through deployment rings, observes canaries, supplies kill switches, and rolls back to an identified last-known-good release.
+
+These are precise responsibility boundaries, not claims about available product APIs. Licensed interfaces must be mapped during discovery; adapters isolate product-specific SDK calls.
+
+### Full-stack components
+
+| Layer | Primary implementation | Failure behaviour |
+|---|---|---|
+| Web | Next.js/TypeScript, accessible map/grid, evidence drawer, approval inbox, KPI/eval dashboards | Read-only cached view labeled with age; mutations disabled |
+| Gateway | Python 3.12 FastAPI, OIDC/mTLS, Pydantic, request IDs, rate/size limits | Fail closed on identity, context, or policy failure |
+| Services | Connector, ontology-query, workflow, content-draft, approval, execution, feedback, evaluation, release-proposal services | Bounded retry only for idempotent reads; ambiguous mutations reconcile |
+| Stream | Managed Kafka/Pulsar with schema registry, dead-letter topics, tenant keys, bounded retention | Backpressure; quarantine invalid messages |
+| Storage | Foundry data products; encrypted object store for raw snapshots; relational control state | Missing is `null + reason`, never fabricated zero |
+| Retrieval | Permission-filtered lexical/vector index over approved public and first-party evidence | Policy filters before embedding/search/prompt construction |
+| AI | AIP model router and deterministic state machines | Abstain or deterministic fallback; never bypass approval |
+| Policy | Server-side policy-as-code plus object/property/action permissions | Default deny |
+| Observability | OpenTelemetry, privacy-aware logs, metrics/traces, hash-chained audit exports | Consequential action requires durable audit acknowledgement |
+| Delivery | CI validation → signed artifact → Apollo Ring 0 replay → Ring 1 read-only → approved Ring 2 | Automatic rollback/kill switch on integrity or SLO breach |
 
 ## Data and Ontology
 
-Every object property carries source reference, observed/event time, ingest/system time, confidence method, owner, classification, coalition/tenant marking, consent/usage rights, retention and policy version.
+Every object has `tenant_id`, `mission_id`, `source_id`, `observed_at`, `valid_from`, `valid_to`, `ingested_at`, `confidence`, `lineage_refs`, `classification`, `compartments`, `releasability`, `purpose`, and `schema_version`. Confidence expresses calibrated uncertainty, never authorization.
 
-| Object | Key properties | Links / actions |
+| Object | Important fields | Links/actions |
 |---|---|---|
-| `Organization` | canonical NAP, verified services, policy markings | `serves ServiceArea`; propose profile change |
-| `ServiceArea` | locality, verified state, valid interval, evidence | `targetedBy Page`; verify/revoke |
-| `Keyword` | normalized phrase, intent, locale | `measuredBy GridRun`; activate/deactivate |
-| `GridPoint` | provider point ID, coordinates, neighbourhood | `has Observation`; coordinates restricted |
-| `RankObservation` | rank, success/error, settings digest, event time | `for Keyword/Organization/GridPoint` |
-| `Page` | URL, canonical, schema, CWV, content digest | `targets Keyword/Area`; propose draft |
-| `ContentAsset` | channel, copy/media digest, rights, expiry | `uses Evidence`; request approval |
-| `Evidence` | source, claim scope, confidence, rights | `supports Claim/Asset/Page` |
-| `LeadOutcome` | aggregate attribution, qualification, event time | `attributedTo Campaign/Page` |
-| `Opportunity` | entity, type, fit, verified-at, URL | `becomes PartnershipCase` |
-| `ActionPackage` | exact payload, destination, digest, risk, expiry | `authorizedBy Approval`; execute once |
-| `Approval` | actor, role, decision, reason, digest, expiry | never transferable to a changed package |
-| `Experiment` | hypothesis, cohort, metrics, stop rules | `compares Version`; promote/rollback |
+| `Place` | city, neighbourhood, lat/lng, service radius | contains grid cells; compare periods |
+| `Keyword` | normalized phrase, intent, priority, locale | measured by rank observations |
+| `GridCell` | vendor/grid ID, coarse coordinates, consented precision | located in Place |
+| `RankObservation` | rank, captured_at, method, result URL, raw snapshot digest | keyword/cell/brand; supersedes prior observation |
+| `MetricObservation` | channel, metric, value, unit, period, dimensions | supports KPI; derived from source snapshot |
+| `BusinessProfile` | canonical NAP, verified categories/services | observed profile; proposed update action |
+| `Competitor` | observed public identifiers only | competes for keyword/place |
+| `Opportunity` | event/org/media/directory, leverage, evidence, status | partnership draft; never implies endorsement |
+| `ContentAsset` | locale, claims, evidence, owner, draft/version state | targets keyword/place; publish action gated |
+| `ContactConsent` | channel, lawful basis, proof, scope, expiry/withdrawal | permits a specific message; revocation blocks execution |
+| `Lead` | minimum necessary attribution and local intent | conversion event; restricted PII properties |
+| `Experiment` | hypothesis, baseline, thresholds, assignment, stop rules | evaluates immutable candidate/champion |
+| `ActionPackage` | exact payload digest, risk, status, expiry, approvers | draft → approved → executed/rejected/expired |
+| `Feedback` | correction/outcome, actor, reason, target version | becomes labeled eval case after privacy review |
+| `ReleaseCandidate` | prompt/workflow/router/artifact versions, eval manifest | approved for canary/rollback |
 
-Ontology actions are narrow business interfaces, not unrestricted database access. A content agent can read aggregate signals and create `ActionPackage(status=DRAFT)`; it cannot invoke a publisher. The executor accepts only an approved, unexpired digest and atomically writes execution/audit state.
+Permissions apply at row, property, entity, edge, action, mission, purpose, and coalition boundary. PII never enters prompts unless a policy decision explicitly permits the minimum necessary fields. Temporal queries use both source-valid time and system-recorded time, allowing an operator to reconstruct what was known when a decision occurred.
+
+```sql
+-- Gold rank fact; source payload remains in restricted bronze storage.
+CREATE TABLE rank_observation (
+  tenant_id TEXT NOT NULL, observation_id UUID PRIMARY KEY,
+  keyword_id UUID NOT NULL, grid_cell_id UUID NOT NULL,
+  observed_at TIMESTAMPTZ NOT NULL, position SMALLINT,
+  missing_reason TEXT, method TEXT NOT NULL, source_digest TEXT NOT NULL,
+  confidence NUMERIC(4,3) CHECK (confidence BETWEEN 0 AND 1),
+  classification TEXT NOT NULL, compartments TEXT[] NOT NULL,
+  schema_version SMALLINT NOT NULL,
+  CHECK ((position IS NOT NULL) <> (missing_reason IS NOT NULL))
+);
+```
 
 ## AI and Agent Design
 
-Analyst copilots answer “what changed and what evidence supports it?” Commander/growth-owner copilots summarize objectives, risk, resource decisions and blocked approvals. Triage, enrichment, correlation, summarization and recommendation agents run as bounded state machines with typed input/output, tool allowlists, row/entity policy, token/time/cost ceilings and abstention.
+The analyst copilot explains red cells, finds cited evidence, compares periods, and drafts experiments. The growth lead copilot reviews KPI health, costs, risks, and action packages. Neither executes. A deterministic orchestrator coordinates ReconEngine → StrategyArchitect → ContentGenerator/LocalSEOAuditor/CommunityPartnershipScout → approval → executors → GrowthReporter.
 
-Allowed tools include aggregate Ontology query, evidence retrieval, deterministic score calculation, draft creation, eval execution, case opening and approval-package preparation. Opening a case is an internal reversible action. Profile edits, publishing, outreach, personal-data integration, budgets and production releases require a separate human authorization and executor-side policy check.
+Agents receive a signed mission envelope, maximum steps/tokens/time/cost, permitted object types and tools, output schema, and stop conditions. Retrieval is authorization-filtered before context reaches the model. Tool output is untrusted and validated. Prompt injection cannot grant tools, change scopes, or override policy. Operational effects—GBP edits/posts, website publish, outbound communication, review requests, personal-data integration, schema-wide changes, and production releases—always wait for human approval.
 
 ## Self-Improvement Loop
 
-1. **Capture:** consented feedback, corrections, query traces, alert dispositions, content outcomes, rank/traffic/lead aggregates, latency, cost, overrides and mission results.
-2. **Sanitize:** remove secrets and unnecessary personal data; enforce purpose, lineage, rights and retention; quarantine prompt-injection content.
-3. **Curate evals:** turn corrections and failure clusters into versioned cases; freeze train/development/holdout splits and prevent outcome leakage.
-4. **Propose:** AIP may propose prompt text, workflow ordering, heuristic thresholds or allowlisted model routes. It cannot change mission, policy, privileges, tools, budgets, deployment target, approval rules or its own evaluator.
-5. **Evaluate:** offline replay measures factual grounding, precision/recall, policy violations, rank-report correctness, latency, cost, accessibility, operator trust and qualified-lead outcome. Security/policy failures are hard stops.
-6. **Review:** proposer and approver are separated. Marketing, privacy, security, model-risk and operations approve according to change class and exact signed digest.
-7. **Canary/A-B:** Apollo deploys a bounded eligible cohort with predetermined allocation, sample/window and stop conditions. Search crawlers and users receive no deceptive variants.
-8. **Promote/rollback:** SLO, policy, grounding or trust regression restores the signed last-known-good bundle. Every decision and outcome is reconstructable.
+1. Capture privacy-minimized query logs, retrieved evidence IDs, prompt/model/workflow/policy versions, tool calls, latency/cost, operator corrections, approvals/rejections with reason codes, alert outcomes, lead attribution, and experiment results.
+2. Validate consent/purpose, redact disallowed fields, deduplicate, and create versioned labeled eval cases. Corrections are signals, not unquestioned truth.
+3. Detect quality, data, concept, latency, cost, and trust drift against a frozen baseline and segment by channel, keyword, geography, language, and workflow.
+4. Generate a candidate prompt, workflow, heuristic, or routing diff inside an isolated branch. The candidate cannot alter policy, tools, goals, privileges, retention, or deployment scope.
+5. Replay frozen gold sets, recent shadow traffic, adversarial prompt-injection cases, permission-leak tests, CASL/review-gating tests, hallucination/citation tests, and load/failure tests.
+6. Require non-inferiority safety gates plus a statistically defensible improvement: e.g. precision/recall and citation coverage improve or remain within approved margins; policy violations and cross-boundary disclosures remain exactly zero; p95 latency/cost stay within budget.
+7. Named product, data, privacy/security, and operational owners review the immutable manifest. Candidate and evaluator cannot approve.
+8. Apollo target design: Ring 0 offline replay, Ring 1 shadow/read-only canary, Ring 2 limited operator cohort, then wider promotion only after observation windows and approval.
+9. Automatically recall on policy violation, audit failure, citation regression, trust drop, latency/error threshold, drift alarm, or operator kill switch; restore the recorded champion and reconcile partial work.
+10. Append proposal, evidence, decisions, signatures, release identity, telemetry, and rollback outcome to the audit ledger.
 
-Drift monitors input distributions, retrieval miss rate, abstention, override rate, grounding, performance and channel/API errors. Drift opens a case; it never silently retrains or widens authority.
+Core metrics: green-cell share at explicit rank threshold, local organic sessions, attributable qualified leads, brand mentions, precision, recall, grounded-citation coverage, abstention quality, p50/p95 latency, cost per accepted draft, override/rejection rate, operator trust, policy violations, and downstream outcome. A/B tests randomize only eligible low-risk users, define minimum sample and stopping criteria in advance, prevent metric peeking, and support instant opt-out.
 
 ## Full-Stack Implementation
 
-### Repository layout
+### Repository contracts
 
 ```text
-burlington/
-  contracts/          # JSON Schemas and policy bundles
-  adapters/           # read-only source clients; publisher separated
-  ontology/           # object/action mappings
-  workflows/          # deterministic state machines
-  evals/              # cases, scorers, holdout manifests
-  reports/            # generated aggregate reports
-  ui/                 # cockpit routes/components
-geo_grid_runs/        # timestamped aggregate run artifacts
+apps/operator-web/                  # Next.js UI; no secrets or authorization logic
+services/gateway/                   # OIDC, mission context, policy, request envelope
+services/connector/                 # read-only source adapters and quarantine
+services/orchestrator/              # deterministic state machines
+services/tool-broker/               # typed tools, idempotency, egress allowlist
+services/evaluator/                 # gold sets, drift, candidate manifests
+packages/contracts/                 # JSON Schema / generated Pydantic + TypeScript types
+policy/                             # reviewed policy-as-code and tests
+ontology/                           # target Foundry object/link/action definitions
+geo_grid_runs/                      # metadata/manifests; sensitive raw data external
+content/drafts/                     # draft-only generated content
 ```
 
-The present repository addition is intentionally smaller: canonical JSON contracts, operating documents and `tools/burlington_exposure.py`, a stdlib-only validator/report helper. It does not pretend to provision the target state.
+### Python-first ingestion and validation
 
-### Connector controls
+```python
+from datetime import datetime, timezone
+from hashlib import sha256
+from typing import Literal
+from pydantic import BaseModel, ConfigDict, Field
 
-Use dedicated read-only identities, secret-manager references, 10–30 second timeouts, capped exponential backoff only for idempotent reads, quotas, pagination bounds, schema validation and source checksums. Never scrape Google Maps. Use an approved rank provider or human-exported data. GBP mutation support must be separately confirmed against current official capabilities and terms.
+class RankEvent(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    tenant_id: str = Field(pattern=r"^[a-z0-9_-]{1,64}$")
+    keyword_id: str
+    grid_cell_id: str
+    observed_at: datetime
+    position: int | None = Field(default=None, ge=1, le=100)
+    missing_reason: Literal["not_found", "vendor_error", "not_collected"] | None = None
+    source: Literal["approved_vendor", "manual_export"]
 
-Review requests require project-completion eligibility, channel-specific consent/legal basis, global suppression, frequency cap, neutral copy, direct review link, idempotency key and expiry. NPS may be analyzed in aggregate but cannot decide who receives a public-review request.
+    def validate_missingness(self) -> None:
+        if (self.position is None) == (self.missing_reason is None):
+            raise ValueError("provide exactly one of position or missing_reason")
 
-### Website and CI
+async def ingest(raw: bytes, *, expected_tenant: str, producer) -> str:
+    if len(raw) > 1_000_000:
+        raise ValueError("payload too large")
+    event = RankEvent.model_validate_json(raw)
+    event.validate_missingness()
+    if event.tenant_id != expected_tenant:
+        raise PermissionError("tenant mismatch")
+    digest = sha256(raw).hexdigest()
+    await producer.send("rank.validated", key=event.tenant_id,
+                        value={**event.model_dump(mode="json"), "source_digest": digest})
+    return digest
+```
 
-A location-page build validates metadata, visible/structured-data parity, canonical URL, sitemap/internal-link generation, accessibility and budgets. Enforce p75 targets of LCP ≤2.5s, INP ≤200ms and CLS ≤0.1 using representative field data when available; lab CI is a regression signal, not field proof. A production release needs environment approval, immutable artifact digest, smoke/functional health checks and a documented prior-artifact rollback.
+### Adjacent policy enforcement and ontology query
 
-### Analytics
+```python
+from dataclasses import dataclass
 
-Emit `local_cta_click`, `phone_click`, `directions_click`, `qualified_form_submit` and `outreach_response` with pseudonymous correlation, page/campaign IDs and consent state—never form contents. UTM values are allowlisted and server-side conversion logs minimize personal data. Reconcile CRM and analytics aggregates without presenting probabilistic attribution as certainty.
+@dataclass(frozen=True)
+class Subject:
+    tenant: str; missions: frozenset[str]; compartments: frozenset[str]
+    purposes: frozenset[str]; actions: frozenset[str]
 
-## Security and Governance
+def authorize(subject: Subject, obj: dict, action: str, purpose: str) -> None:
+    allowed = (
+        obj["tenant_id"] == subject.tenant
+        and obj["mission_id"] in subject.missions
+        and set(obj["compartments"]).issubset(subject.compartments)
+        and purpose in subject.purposes and action in subject.actions
+    )
+    if not allowed:
+        raise PermissionError("default-deny policy decision")
 
-ABAC combines tenant, coalition, mission, purpose, role, entity/field scope, classification and consent. Deny by default at gateway, service, Ontology action and executor. Use short-lived audience-bound workload identity, mTLS, egress allowlists and field-level encryption. Coalition exports are new derived products with explicit releasability review; labels are not stripped.
+async def ranked_cells(repo, subject: Subject, mission_id: str, keyword_id: str):
+    # Adapter maps this contract to licensed Foundry Ontology interfaces.
+    rows = await repo.query_rank_cells(tenant=subject.tenant,
+                                       mission=mission_id, keyword=keyword_id)
+    visible = []
+    for row in rows:
+        authorize(subject, row, "rank:read", "local_seo_analysis")
+        visible.append(row)
+    return visible
+```
 
-Audit records are append-only, hash-chained or platform-tamper-evident, time-synchronized, independently readable and privacy-minimized. Record source snapshot, code/prompt/workflow/model/policy versions, tools, evidence IDs, approval digest, executor identity, outcome and rollback. Model/prompt governance uses signed registries, named owners, expiry and emergency disablement.
-
-### Threats and controls
-
-| Threat | Prevent | Detect | Recover |
-|---|---|---|---|
-| Prompt injection from local web content | isolate text, no instruction authority, typed tools/egress | injection/evidence evals | quarantine source; replay last good |
-| Cross-compartment disclosure | policy-filter before retrieval and output | denied-access and canary-token alerts | revoke session; incident process |
-| Fabricated claim/review/affiliation | evidence-required claim schema; no review creation tool | grounding and public-copy scan | unpublish/correct; notify owner |
-| Approval replay/confused deputy | actor, audience, destination, digest, expiry, nonce binding | duplicate/idempotency alert | revoke package/credential |
-| Unsafe self-upgrade | immutable constitutional policy; separate evaluator/approver | registry diff and authority scan | Apollo rollback and kill switch |
-
-## Code Examples
+### Workflow state machine and approval binding
 
 ```python
 from enum import StrEnum
-from pydantic import BaseModel, Field
+import hashlib, json
 
-class Stage(StrEnum):
-    DRAFT = "draft"
-    VALIDATED = "validated"
-    AWAITING_APPROVAL = "awaiting_approval"
-    APPROVED = "approved"
-    EXECUTED = "executed"
-    REJECTED = "rejected"
+class State(StrEnum):
+    DRAFT="draft"; VALIDATED="validated"; PENDING="pending_human_approval"
+    APPROVED="approved"; EXECUTING="executing"; EXECUTED="executed"
+    REJECTED="rejected"; EXPIRED="expired"; RECONCILE="reconcile"
 
-class ActionPackage(BaseModel):
-    action_id: str
-    stage: Stage = Stage.DRAFT
-    destination: str
-    payload_digest: str = Field(pattern=r"^[a-f0-9]{64}$")
-    evidence_ids: list[str] = Field(min_length=1, max_length=50)
-    policy_version: str
-    expires_at: str
-
-ALLOWED = {
-    Stage.DRAFT: {Stage.VALIDATED, Stage.REJECTED},
-    Stage.VALIDATED: {Stage.AWAITING_APPROVAL, Stage.REJECTED},
-    Stage.AWAITING_APPROVAL: {Stage.APPROVED, Stage.REJECTED},
-    Stage.APPROVED: {Stage.EXECUTED, Stage.REJECTED},
+TRANSITIONS = {
+    State.DRAFT: {State.VALIDATED}, State.VALIDATED: {State.PENDING},
+    State.PENDING: {State.APPROVED, State.REJECTED, State.EXPIRED},
+    State.APPROVED: {State.EXECUTING},
+    State.EXECUTING: {State.EXECUTED, State.RECONCILE},
 }
 
-def transition(package: ActionPackage, target: Stage) -> ActionPackage:
-    if target not in ALLOWED.get(package.stage, set()):
-        raise ValueError(f"forbidden transition: {package.stage} -> {target}")
-    return package.model_copy(update={"stage": target})
+def payload_digest(payload: dict) -> str:
+    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(canonical.encode()).hexdigest()
+
+def transition(current: State, target: State) -> None:
+    if target not in TRANSITIONS.get(current, set()):
+        raise ValueError(f"forbidden transition: {current} -> {target}")
+
+async def execute(package, approval, broker):
+    if approval.expired or approval.consumed:
+        raise PermissionError("approval invalid")
+    if approval.payload_digest != payload_digest(package.payload):
+        raise PermissionError("payload changed after approval")
+    transition(package.state, State.EXECUTING)
+    # Idempotency lookup precedes execution; timed-out mutations enter reconciliation.
+    return await broker.execute(package.payload, idempotency_key=package.id)
 ```
+
+### Evaluation and promotion gate
 
 ```python
-async def execute_approved(package, approval, actor, policy, publisher):
-    # Recheck next to the protected action; UI approval alone is never authority.
-    if approval.package_digest != package.payload_digest or approval.expired():
-        raise PermissionError("approval is stale or bound to different content")
-    decision = await policy.authorize(actor=actor, action="publish", resource=package)
-    if not decision.allowed:
-        raise PermissionError(decision.reason)
-    result = await publisher.publish_once(package, idempotency_key=package.action_id)
-    await audit.append_atomically(package, approval, decision, result)
-    return result
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class EvalResult:
+    precision: float; recall: float; citation_coverage: float
+    p95_ms: int; policy_violations: int; boundary_leaks: int
+
+def eligible(champion: EvalResult, candidate: EvalResult) -> bool:
+    return all((
+        candidate.policy_violations == 0,
+        candidate.boundary_leaks == 0,
+        candidate.precision >= champion.precision - 0.01,
+        candidate.recall >= champion.recall,
+        candidate.citation_coverage >= 0.98,
+        candidate.p95_ms <= 2_500,
+    ))
+
+async def propose_release(candidate, evidence, registry):
+    if not eligible(evidence.champion, evidence.candidate):
+        raise ValueError("candidate failed deterministic gates")
+    # Creates a proposal only. Apollo promotion requires independent signed approval.
+    return await registry.create_pending_manifest(
+        artifact_digest=candidate.digest,
+        eval_digest=evidence.digest,
+        rollback_version=evidence.champion_version,
+    )
 ```
 
-```sql
-SELECT keyword_id,
-       SUM(CASE WHEN status = 'success' AND rank BETWEEN 1 AND 3 THEN 1 ELSE 0 END) AS green,
-       SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) AS measured,
-       100.0 * SUM(CASE WHEN status = 'success' AND rank BETWEEN 1 AND 3 THEN 1 ELSE 0 END)
-         / NULLIF(SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END), 0) AS green_rate
-FROM rank_observation
-WHERE run_id = :locked_run_id
-GROUP BY keyword_id;
-```
+### CI and release gates
+
+CI validates JSON/Markdown, schemas, typing, unit/property tests, permission-negative tests, prompt-injection evals, secret scanning, dependency/SBOM/provenance, accessibility, link integrity, and representative Core Web Vitals budgets. External actions must be full-SHA pinned, permissions explicit, checkout credentials disabled, jobs timed out, and production deployment separated from untrusted builds. CI produces proposals/artifacts only; production uses a protected environment, immutable artifact digest, named approver, health check, observation window, and tested rollback.
+
+## Security and Governance
+
+* OIDC workload identity, mTLS, short-lived audience/resource-scoped tokens, default-deny egress, and separation of control/data/action/audit planes.
+* Need-to-know at tenant, mission, row, column/property, entity, edge, action, purpose, classification, compartment, and coalition-releasability levels. UI hiding is never authorization.
+* Data minimization, consent/lawful-basis registry, retention/deletion schedules, Canadian residency assessment, access/correction handling, and privacy impact review before personal-data integrations.
+* CASL execution requires recorded consent or documented applicable basis, accurate sender identity, unsubscribe support, suppression checks, and evidence retention. No mass DMs. Legal counsel owns the final interpretation.
+* Review requests are sent uniformly to eligible consenting customers—never selected by NPS/sentiment—and contain no incentive, fabricated review, or required positive framing.
+* Google/third-party terms, robots, rate limits, and permitted APIs govern collection. No scraping or automated GBP mutation until confirmed lawful and authorized.
+* Prompt/model/tool/data lineage, approvals, denials, release attestations, and actions are append-only and tamper-evident. Secrets and unnecessary PII are excluded from telemetry.
+* Models cannot change policy, tools, retention, goals, privileges, production targets, or approval requirements. Break-glass is time-limited, reason-coded, alerted, independently reviewed, and cannot alter releasability.
+
+## Geo-grid, website, and analytics delivery
+
+Geo-grid collection must use an approved vendor/API, fixed versioned grid, locale/device settings, rate limits, and timestamped manifests. Store rank plus missing reason; compare matched cells and disclose sampling/vendor changes. Coordinates are coarsened in broad-access reports. No proxy abuse or manipulation of Maps.
+
+Location pages (`/burlington` first; Oakville/Hamilton/Milton/Dundas only after evidence) require unique verified services, local evidence, canonical metadata, accessible headings, contact details, and truthful LocalBusiness/Organization/Service schema. Do not fabricate offices, case studies, testimonials, or service areas. Generate internal links canonically with `python3 tools/internal_links.py`; preserve Pages requirements. Proposed schema changes receive validator tests and approval before production.
+
+GA4 events use a versioned contract: `local_cta_click`, `phone_click`, `directions_click`, `lead_submit`, and `qualified_local_lead`, with source/medium/campaign/content and coarse city/region dimensions. Never send PII in event names, URLs, or analytics parameters. Server-side conversion records use event IDs for dedupe and record consent status. UTM format: `utm_source`, `utm_medium`, `utm_campaign=burlington_<initiative>_<yyyyq#>`, `utm_content=<asset_id>`.
+
+## 90-day rollout and rollback
+
+| Phase | Deliverable | Gate / evidence |
+|---|---|---|
+| Days 1–14 | Contracts, synthetic pilot, authorized exports, baseline, GBP/site/NAP/schema drafts, first grid manifest | Owner validates sources and missingness; privacy/security review; no publishing |
+| Days 15–45 | Read-only connectors, operator UI, draft content, five targeted partnership drafts, day-30 matched grid comparison | Evaluation gates; named approval per public/outbound action |
+| Days 46–90 | Limited canary automation, approved location/content releases, monthly grid rerun, feedback/eval loop | Observation window, attributable KPI evidence, rollback drill |
+
+Rollback restores the last-known-good application, prompt/workflow/router and policy bundle; disables affected connectors/tools; invalidates outstanding approvals whose digest/version changed; preserves audit and raw evidence; reconciles ambiguous external effects; and opens an incident review. Public content rollback restores the prior immutable site artifact. Data corrections append superseding facts rather than rewriting history.
 
 ## Scenario Walkthrough
 
-At 08:14, an authorized rank-provider event arrives for the locked Burlington grid. The consumer validates its schema, settings digest and idempotency key, stores the raw object with restricted access, and links successful `RankObservation` objects to `Keyword` and `GridPoint`. Failed cells remain errors.
+At 09:10 an approved rank vendor emits a signed observation showing a matched set of Burlington waterfront cells deteriorating for “AI automation Burlington.” The connector verifies size/schema/tenant and quarantines two malformed records. Foundry preserves the raw digest, normalizes valid observations, and links them to `Keyword`, `GridCell`, `Place`, and prior observations. Gotham displays a time-aware cluster, explicitly labeled vendor evidence—not a causal claim.
 
-At 08:15, triage correlates a real red-zone cluster with aggregate Search Console demand and a weak Burlington landing-page conversion rate. Retrieval exposes only authorized aggregates and rights-cleared evidence. The strategy agent proposes a revised FAQ and mobile CTA; it cites evidence and stops at `AWAITING_APPROVAL`. It cannot edit GBP or publish.
+ReconEngine opens a read-only anomaly. StrategyArchitect asks the policy-filtered ontology for correlated first-party evidence; the model cites a stale Burlington page and absence of recent locally relevant content but reports low causal confidence. ContentGenerator drafts a verified waterfront-workshop article and GBP post. LocalSEOAuditor validates claims, canonical metadata, accessibility, schema, links, and performance. The orchestrator creates two separate immutable action packages; it does not publish.
 
-At 09:02, the operator rejects an unsupported “instant response” phrase, supplies the verified response-policy fact, and approves a corrected exact digest. Policy rechecks actor, destination, expiry and evidence. Apollo canaries the signed site artifact; accessibility, error rate, CWV and conversion guardrails are watched. A breach restores the previous artifact.
+An authorized growth operator rejects the GBP post because the event date is unconfirmed and corrects the evidence link. The website draft remains pending. The rejection, reason, versions, evidence IDs, and payload digest are audited. After event-owner confirmation, a new candidate—not a mutation of the rejected payload—is validated and approved. Execution rechecks consent/policy and consumes the approval nonce; the release is monitored and reversible.
 
-After the predeclared window, the correction becomes a sanitized eval case. AIP proposes a prompt rule requiring a cited SLA for every speed claim. Offline holdout replay improves grounding without policy, latency or trust regression. A different model-risk owner approves the prompt digest; Apollo canaries and promotes it. The system learned a constraint, not a new goal or privilege, and every source, correction, eval, approval and release remains auditable.
+The correction becomes a privacy-reviewed eval case: “event dates require primary-source confirmation.” An isolated candidate workflow adds a deterministic date-evidence requirement. It passes frozen regression, citation, permission, CASL, injection, latency, and recent shadow cases. Product, privacy/security, and operational owners approve the exact signed manifest. Apollo target-state controls run Ring 0 replay and Ring 1 shadow canary; the champion remains available. Following the observation window, a human promotes it. Future unconfirmed dates now cause abstention. The system improved its validation workflow—not its goals, authority, policy, or privileges.
+
+## Immediate next actions
+
+1. Name business, privacy/security, data, deployment, rollback, and approval owners.
+2. Confirm licensed Palantir capabilities and supported interfaces; create adapters only after discovery.
+3. Approve keyword definitions, grid methodology, KPI green threshold, source contracts, and retention.
+4. Load authorized exports into quarantine and validate baseline completeness before making any performance claim.
+5. Threat-model connector, retrieval, prompt-injection, approval, outbound-message, and release boundaries.
+6. Build the synthetic/read-only pilot; do not enable public publishing, outbound communication, personal-data integrations, or production deployment until their gates pass.

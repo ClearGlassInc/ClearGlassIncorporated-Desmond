@@ -1,27 +1,42 @@
 {
   "schema_version": "1.0.0",
-  "program": "ClearGlassInc Artemis Burlington Geo-Grid Exposure",
-  "status": "awaiting_authorized_data",
-  "period": {"days": 90, "start": null, "end": null, "timezone": "America/Toronto"},
-  "generated_at": null,
+  "brand": "ClearGlassInc Artemis",
+  "period": {"lookback_days": 90, "start": null, "end": null, "status": "not_collected"},
+  "generated_at": "2026-07-30T00:00:00Z",
+  "data_state": "not_collected",
+  "collection_notes": [
+    "No authenticated GBP, GA4, Search Console, CRM, Instagram, TikTok, or LinkedIn export was supplied or available in the repository.",
+    "Null values are deliberate and must not be interpreted as zero.",
+    "Repository observations describe checked-in content, not live-site or account performance."
+  ],
   "sources": {
-    "google_business_profile": {"connection": "not_configured", "account": null},
-    "ga4": {"connection": "not_configured", "property": null},
-    "search_console": {"connection": "not_configured", "property": null},
-    "instagram": {"connection": "not_configured", "account": null},
-    "tiktok": {"connection": "not_configured", "account": null},
-    "linkedin": {"connection": "not_configured", "account": null},
-    "crm": {"connection": "not_configured", "system": null}
+    "google_business_profile": {"status": "not_collected", "evidence_ref": null, "last_success_at": null},
+    "ga4": {"status": "not_collected", "evidence_ref": null, "last_success_at": null},
+    "search_console": {"status": "not_collected", "evidence_ref": null, "last_success_at": null},
+    "crm": {"status": "not_collected", "evidence_ref": null, "last_success_at": null},
+    "instagram": {"status": "not_collected", "evidence_ref": null, "last_success_at": null},
+    "tiktok": {"status": "not_collected", "evidence_ref": null, "last_success_at": null},
+    "linkedin": {"status": "not_collected", "evidence_ref": null, "last_success_at": null}
   },
-  "metrics": {
-    "gbp": {"impressions": null, "profile_views": null, "direction_requests": null, "calls": null, "website_clicks": null, "top_queries": []},
-    "web": {"local_organic_sessions": null, "organic_conversions": null, "top_landing_pages": [], "top_local_queries": [], "geography_thresholding_applied": null},
-    "social": {
-      "instagram": {"follower_growth": null, "engagement_rate": null, "top_posts": [], "local_audience_percent": null},
-      "tiktok": {"follower_growth": null, "engagement_rate": null, "top_posts": [], "local_audience_percent": null},
-      "linkedin": {"follower_growth": null, "engagement_rate": null, "top_posts": [], "local_audience_percent": null}
-    },
-    "leads": {"qualified_local": null, "source_attribution_coverage_percent": null, "definition_version": "pending_owner_approval"}
+  "gbp": {
+    "impressions": null, "profile_views": null, "searches": null,
+    "direction_requests": null, "calls": null, "website_clicks": null, "top_queries": []
   },
-  "quality": {"complete": false, "missing_required_sources": ["google_business_profile", "ga4", "search_console", "social", "crm"], "anomalies": [], "notes": ["Null means unavailable; it does not mean zero."]}
+  "web": {
+    "organic_sessions": null, "local_organic_sessions": null,
+    "local_scope": ["Burlington", "Halton Region", "Hamilton", "Oakville", "Milton", "Dundas"],
+    "sessions_by_city": [], "top_landing_pages": [], "local_intent_queries": [],
+    "qualified_local_leads": null, "conversion_events": []
+  },
+  "social": {
+    "instagram": {"followers": null, "follower_growth": null, "engagement_rate": null, "top_posts": [], "location_breakdown": []},
+    "tiktok": {"followers": null, "follower_growth": null, "engagement_rate": null, "top_posts": [], "location_breakdown": []},
+    "linkedin": {"followers": null, "follower_growth": null, "engagement_rate": null, "top_posts": [], "location_breakdown": []}
+  },
+  "repository_observations": {
+    "canonical_domain": {"value": "www.clearglassinc.com", "evidence_ref": "CNAME:1"},
+    "homepage_locality_claim": {"value": "Burlington, ON", "evidence_ref": "index.html:246", "verification_scope": "repository_only"},
+    "homepage_schema_types": {"value": ["Organization", "ProfessionalService", "WebSite"], "evidence_ref": "index.html:246", "verification_scope": "repository_only"}
+  },
+  "quality": {"completeness_ratio": 0.0, "anomalies": [], "blocking_gaps": ["All external measurement connectors or exports are unavailable."]}
 }

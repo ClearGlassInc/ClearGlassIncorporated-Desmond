@@ -1,79 +1,52 @@
-# ClearGlassInc Artemis — Burlington Outreach Scripts
+# ClearGlassInc Artemis — Burlington Partnership Outreach Scripts
 
-> **Drafts only.** One-to-one outreach requires a documented CASL/legal basis, accurate sender identity, contact relevance, suppression-list check, retention limit and approval. These templates do not establish consent or an exemption. Never scrape contact data, bulk-send, conceal sponsorship, or imply affiliation.
+> Drafts only. Verify the recipient, relevance, public contact basis, CASL category/consent, required identification, mailing address, unsubscribe mechanism, suppression status, and organization-specific facts before sending. No bulk sends, scraping, automated DMs, or invented familiarity.
 
-## Pre-send decision record
+## Partnership qualification
 
-Record recipient organization/role (not unnecessary personal data), public source URL, reason the message is relevant, legal basis and evidence, prior relationship, suppression result, exact message digest, approver, send window, one follow-up maximum, and deletion/retention date. If any field is missing, do not send.
+Prioritize 5–10 verified chambers/BIAs, economic-development organizations, libraries/education groups, coworking/technology communities, professional associations, and event organizers. Record first-party source URL, mandate, fit, named owner, contact basis, last contact, suppression state, proposal, mutual benefit, and conflicts. Reject pay-for-link arrangements or proposals requiring unsupported endorsement.
 
-## 1. Educational workshop partnership
+## Workshop email
 
-**Subject:** Burlington workshop idea: practical, governed AI for local operators
-
-Hello [Name],
-
-I’m [Sender] with ClearGlassInc Artemis. I found [Organization] through [public source] while researching Burlington programs for [audience]. We have drafted a practical session on [specific problem] covering measurable pilots, privacy-aware data handling, human approval, and rollback.
-
-Would a short outline be useful for your programming team? This is a proposal, not a claim of partnership, and we would adapt it to your audience only after confirming fit and terms.
-
-Regards,
-
-[legal sender identity] · [postal address] · [contact details]
-[unsubscribe / preference mechanism where required]
-
-**Success:** invited conversation or explicit decline; never opens/clicks alone. **Follow-up:** one concise message after 7–10 business days if permitted.
-
-## 2. Expert resource for local media
-
-**Subject:** Source availability: evidence-first AI automation for Burlington SMEs
+**Subject:** Practical AI governance workshop idea for [Organization]
 
 Hello [Name],
 
-Your coverage of [specific article/topic and URL] prompted a narrow resource offer. ClearGlassInc Artemis can provide an on-record technical explanation of [topic], including limitations, security controls, and what evidence would be needed before claiming results. We will not require a link or editorial commitment.
+I’m [Sender] from ClearGlassInc Artemis in the Burlington area. I found [specific program] on [first-party URL] and thought a practical session on **[AI readiness / safe automation / cybersecurity architecture]** may fit its audience.
 
-If useful, I can send three concise, attributable points and disclose any relevant interests. If not, no response is needed.
+We could prepare a [30/45]-minute educational workshop with a take-home checklist and a live, synthetic-data demonstration. It would be vendor-light, make limitations explicit, and avoid collecting attendee data unless separately consented. If useful, I can send a one-page outline tailored to [verified audience need].
 
-[identity and preference footer]
+Would you be open to a short discussion, or is there a better program contact? No follow-up is needed if this is not relevant.
 
-## 3. Co-authored checklist
+[Full sender name and role]<br>
+ClearGlassInc Artemis<br>
+[Verified mailing address] | [verified website] | [contact]<br>
+[Unsubscribe instruction where required]
 
-**Subject:** Proposed joint checklist for [audience/problem]
+## Co-authored guide email
 
-Hello [Name],
-
-Would [Organization] consider reviewing a vendor-neutral checklist on [specific problem]? ClearGlassInc Artemis would draft it; both parties would approve evidence, accessibility, attribution, branding and distribution before publication. No endorsement would be implied, and either party could withdraw before release.
-
-A one-page scope is available if this aligns with your current mandate.
-
-[identity and preference footer]
-
-## 4. Event organizer question
-
-**Subject:** Speaker/resource fit for [verified event name]
+**Subject:** Burlington business resource collaboration: [specific topic]
 
 Hello [Name],
 
-The official [event/program] page at [URL, verified date] indicates [specific audience/theme]. Does your published process accept educational proposals on [topic]? We can submit a non-promotional, technically reviewed outline with clear learning objectives and accessibility support.
+Your [verified resource/program] addresses [specific observed need]. ClearGlassInc Artemis can contribute a technical, evidence-reviewed section on [topic], while your team retains editorial control over its perspective. Proposed deliverable: a concise guide, accessible PDF/web version, source list, and optional public Q&A. We will not require a backlink, mailing-list access, or endorsement.
 
-Please point me to the appropriate process; this message does not assume participation or sponsorship.
+If this aligns with your mandate, may I send a proposed outline and responsibilities? If not, I will close the request.
 
-[identity and preference footer]
+[Identification block and unsubscribe instruction]
 
-## 5. Existing-client review request
+## Event organizer note / LinkedIn DM
 
-**Subject:** Your feedback on ClearGlassInc Artemis
+Hello [Name] — I saw [event/program] on [first-party source]. I can offer a practical, non-sales session for [audience] on [specific topic], using synthetic examples and a downloadable checklist. If speaker proposals are open, where are the official requirements? If not relevant, no reply is needed.
 
-Hello [Customer],
+## Follow-up (one only unless invited)
 
-Thank you for working with ClearGlassInc Artemis on [verified project reference]. If you would like to share an honest review—positive, neutral, or critical—you may use [approved direct review link]. Feedback is optional, is not incentivized, and does not affect service. You can also reply privately to [support channel].
+Hello [Name], following up once on the [workshop/guide] idea below. I can send a one-page outline with learning outcomes, accessibility format, evidence sources, and zero attendee-data requirement. If it is not a fit, I’ll close the thread. Thank you.
 
-[identity, consent basis, preference/unsubscribe footer]
+## Review request (completed customers only)
 
-The system sends this only after an eligible completed engagement and to customers covered by the approved communication basis. It must never branch on NPS/sentiment before presenting the public-review option.
+Hello [Name], thank you for working with ClearGlassInc Artemis on [verified engagement reference]. If you choose, you may share an honest review here: [verified direct GBP link]. Feedback of any sentiment is welcome; there is no incentive and it does not affect service. [Required sender identification and unsubscribe instruction].
 
-## Response handling
+## Stop conditions and record
 
-- **Interested:** open a partnership case; record scope, brand/privacy/rights terms and next approval.
-- **Decline/unsubscribe:** suppress immediately across connected outreach tools and audit the suppression, not message content.
-- **No response:** at most one permitted follow-up, then close for 90 days.
-- **Complaint/privacy request:** stop automation, acknowledge through an authorized operator, route to the privacy owner and preserve required evidence.
+Stop on opt-out, ambiguity in consent/legal basis, complaint, wrong identity, absent service evidence, platform warning, negative reply, two delivery failures, or after the single unanswered follow-up. The action record binds recipient, purpose, exact message digest, lawful basis/consent evidence, suppression check, approver, approval expiry, send result, and audit hash. Content generation, approval, and sending are separate roles.

@@ -1,96 +1,21 @@
 {
-  "program": "ClearGlassInc Artemis Burlington Geo-Grid Exposure",
-  "version": "1.0.0",
-  "status": "target_state_not_deployed",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "organization": "ClearGlassInc Artemis",
+  "market": {"primary": "Burlington, Ontario", "secondary": ["Oakville, Ontario", "Hamilton, Ontario", "Milton, Ontario", "Dundas, Ontario"]},
   "measurement_window_days": 90,
+  "status": "targets_not_results",
   "baseline_required": true,
-  "geographies": {
-    "primary": [
-      "Burlington, Ontario"
-    ],
-    "secondary": [
-      "Oakville, Ontario",
-      "Hamilton, Ontario",
-      "Milton, Ontario",
-      "Dundas, Ontario"
-    ]
-  },
-  "core_keywords": [
-    "software architect Burlington",
-    "AI automation Burlington",
-    "cybersecurity consultant Burlington",
-    "ClearGlass Burlington"
-  ],
+  "terms": ["software architect Burlington", "AI automation Burlington", "cybersecurity consultant Burlington", "ClearGlass Burlington"],
   "objectives": [
-    {
-      "id": "geo_grid_green_cells",
-      "metric": "green_cell_rate",
-      "definition": "Percentage of eligible, successfully measured grid cells ranking in positions 1-3 for a priority keyword.",
-      "baseline": null,
-      "target_relative_increase_percent": {
-        "minimum": 30,
-        "stretch": 50
-      },
-      "deadline_days": 90,
-      "source": "approved rank-tracking provider",
-      "success_rule": "minimum target met for at least 3 priority keywords in two consecutive monthly runs",
-      "guardrails": [
-        "same grid and settings across comparisons",
-        "no automated Google scraping",
-        "failed cells excluded and reported"
-      ]
-    },
-    {
-      "id": "local_organic_sessions",
-      "metric": "consented_local_organic_sessions",
-      "definition": "GA4 organic sessions attributed to Burlington, Halton Region, or Hamilton using consented, aggregate geography.",
-      "baseline": null,
-      "target_relative_increase_percent": 40,
-      "deadline_days": 90,
-      "source": "GA4 Data API",
-      "success_rule": "rolling 28-day value is at least 1.40 times the locked baseline",
-      "guardrails": [
-        "aggregate reporting only",
-        "document consent mode and thresholding",
-        "do not infer individual IP location"
-      ]
-    },
-    {
-      "id": "qualified_local_leads",
-      "metric": "qualified_local_leads_per_month",
-      "definition": "Unique consented inquiries meeting the CRM qualification rubric and containing an attributable local source or declared local need.",
-      "baseline": null,
-      "target_absolute": 10,
-      "deadline_days": 90,
-      "source": "CRM plus validated UTM/call attribution",
-      "success_rule": "at least 10 qualified local leads in a calendar month with source coverage at or above 90 percent",
-      "guardrails": [
-        "deduplicate by CRM lead ID",
-        "exclude test and spam leads",
-        "retain no raw personal data in reports"
-      ]
-    },
-    {
-      "id": "brand_surface_area",
-      "metric": "verified_local_mentions",
-      "definition": "New, independently verifiable branded mentions from relevant local media, organizations, events, or partners.",
-      "baseline": null,
-      "target_absolute_90_days": 2,
-      "deadline_days": 90,
-      "source": "Search Console branded queries and evidence-linked mention register",
-      "success_rule": "at least two earned local mentions and a non-negative branded-query trend versus baseline",
-      "guardrails": [
-        "exclude self-published properties",
-        "exclude paid links unless disclosed",
-        "archive evidence URL and observation time"
-      ]
-    }
+    {"id": "geo_grid_visibility", "metric": "green_cell_rate", "definition": "eligible measured cells with organic local-pack rank 1-3 / all valid measured cells", "baseline_source": "geo_grid_baseline.json", "target": {"relative_increase_min_pct": 30, "relative_increase_stretch_pct": 50, "deadline_days": 90}, "segments": ["keyword", "grid_point"], "minimum_evidence": "Identical grid, query set, device/language, provider and collection method at baseline and comparison; record unavailable/blocked cells rather than ranking them.", "owner": "GrowthReporter"},
+    {"id": "local_organic_sessions", "metric": "local_organic_sessions", "definition": "consented analytics sessions attributed to organic search and city/region in the declared market", "baseline_source": "baseline_metrics.json", "target": {"relative_increase_pct": 40, "deadline_days": 90}, "segments": ["city", "landing_page"], "minimum_evidence": "GA4 or approved analytics export with unchanged filters and documented consent/thresholding.", "owner": "GrowthReporter"},
+    {"id": "qualified_local_leads", "metric": "qualified_local_leads_per_month", "definition": "unique, non-test inquiries meeting documented fit criteria and containing consented local context, deduplicated by CRM lead ID", "target": {"minimum_count": 10, "deadline_days": 90}, "segments": ["source", "campaign", "city"], "minimum_evidence": "CRM disposition plus first-touch and last-touch UTM/source; no inferred location from sensitive data.", "owner": "GrowthReporter"},
+    {"id": "brand_surface_area", "metric": "verified_local_mentions_per_month", "definition": "distinct, editorially valid local media, organization, event, or partner pages mentioning ClearGlassInc Artemis", "baseline_source": "baseline_metrics.json", "target": {"minimum_count": 2, "deadline_days": 90}, "segments": ["entity_type", "domain"], "minimum_evidence": "Canonical URL, publication date, capture timestamp, and manual relevance review; exclude self-published and paid placements unless separately labelled.", "owner": "CommunityPartnershipScout"}
   ],
-  "global_stop_conditions": [
-    "Google Business Profile warning or suspension risk",
-    "privacy or consent control failure",
-    "unsupported public claim",
-    "material tracking regression",
-    "production action without bound human approval"
-  ]
+  "guardrails": {
+    "prohibited": ["review gating", "fabricated reviews or locations", "incentives conditioned on review sentiment", "keyword-stuffed or duplicate doorway pages", "automated mass outreach", "paid-link schemes", "unapproved production publishing"],
+    "approval_required": ["GBP edits or posts", "public content publication", "new personal-data integration", "review or outreach send", "site-wide schema or routing change", "paid sponsorship"],
+    "stop_conditions": ["GBP warning or suspension signal", "consent or unsubscribe failure", "material NAP conflict", "analytics data-quality break", "complaint-rate threshold set by compliance is exceeded"]
+  }
 }

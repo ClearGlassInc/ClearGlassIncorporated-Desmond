@@ -1,82 +1,66 @@
-# ClearGlassInc Artemis — Burlington Growth Report — YYYY-MM
+# Burlington Growth Report — YYYY_MM
 
-> **Reporting state:** template. Replace examples/placeholders only with reproducible observations. `N/A` means unavailable; zero is a measured zero. Do not include raw personal data.
+> Reporting period: `[start, end]`; comparison: `[period]`; timezone: America/Toronto. Generated values must link to aggregate source snapshots and checksums. Unknown is `N/A`, never zero.
 
-## Executive decision brief
+## Executive decision record
 
-- **Window / comparison:** `[start–end, America/Toronto]` vs `[locked baseline window]`
-- **Data snapshot / code / policy:** `[digests and versions]`
-- **Overall state:** `[on track | at risk | blocked | insufficient evidence]`
-- **Decision required:** `[owner, decision, due date]`
-- **Stop conditions:** `[none or exact condition and action]`
+- **Outcome versus 90-day target:**
+- **One evidence-supported win:**
+- **One miss/data gap:**
+- **Decision required / owner / due date:**
+- **Policy, consent, suspension, or reputation incidents:**
 
-## Objective scorecard
+## Weekly scorecard
 
-| Objective | Baseline | Current | Target | Confidence / quality | Status |
+| Metric | Prior | Current | Δ | Target | Source / freshness | Interpretation |
+|---|---:|---:|---:|---:|---|---|
+| GBP impressions | | | | | | |
+| GBP actions (call/site/directions) | | | | | | |
+| Burlington/Halton organic sessions | | | | | | |
+| Qualified local leads | | | | 10/month | | |
+| Instagram follower growth | | | | | | |
+| Engagement rate (declared formula) | | | | | | |
+| Top-3 grid cells / total | | | | +30% relative | | |
+| Consent complaints / opt-outs | | | | 0 incidents | | |
+
+### Top queries, pages, and posts
+
+| Item | Metric | Change | Evidence | Next action |
+|---|---:|---:|---|---|
+| | | | | |
+
+### Geo-grid detail
+
+| Keyword | Grid/version | Top 3 | 4–10 | 11–20 | >20/not found | Median rank | Scan source/time |
+|---|---|---:|---:|---:|---:|---:|---|
+| | | | | | | | |
+
+Explain cell movement only as observation unless a controlled experiment supports causality. Attach grid artifact checksum and keep centre/spacing unchanged.
+
+## Monthly review
+
+### Progress versus targets
+
+| Objective | Baseline | Current | Day-90 target | Confidence | Status |
 |---|---:|---:|---:|---|---|
-| Green-cell rate for ≥3 priority keywords | `[x%]` | `[x%]` | `+30%; stretch +50%` | `[provider success, fixed grid]` | `[ ]` |
-| Consented local organic sessions | `[x]` | `[x]` | `+40%` | `[thresholding/coverage]` | `[ ]` |
-| Qualified local leads/month | `[x]` | `[x]` | `≥10` | `[≥90% attribution]` | `[ ]` |
-| Verified earned local mentions | `[x]` | `[x]` | `≥2/90d` | `[evidence URLs]` | `[ ]` |
+| Green cells for three terms | | | +30% | | |
+| Local organic sessions | | | +40% | | |
+| Qualified local leads/month | | | 10 | | |
+| Legitimate local mentions/month | | | 2 | | |
 
-## Weekly channel evidence
+### Experiment register
 
-### Google Business Profile
-
-| Metric | Prior | Current | Change | Annotation |
-|---|---:|---:|---:|---|
-| Impressions/profile views | `[ ]` | `[ ]` | `[ ]` | `[release/source note]` |
-| Calls/directions/site clicks | `[ ]` | `[ ]` | `[ ]` | `[ ]` |
-| Top query mix | `[ ]` | `[ ]` | `[ ]` | `[no individual query claims if thresholded]` |
-
-### Web and leads
-
-Report local organic sessions, landing pages, CTA events, qualified forms/calls, qualification rate, attribution coverage and consent/tracking changes. Separate observed association from causal claim.
-
-### Social and brand surface
-
-Report local audience/engagement where channel data supports it, saves/shares, assisted conversions, verified mentions and branded-query trend. Do not infer audience location from individual profiles.
-
-## Geo-grid
-
-```text
-Keyword                       Green / measured     Rate      Δ vs locked baseline
-[software architect...]       [00 / 00]             [--%]     [-- pp]
-```
-
-Include provider/run IDs, timestamp, locale/device, grid/settings digest, successful/failed cells and map legend. A simple accessible table is mandatory even when a visual heatmap is included. Failed cells are errors, not red ranks.
-
-## Experiments
-
-| ID | Hypothesis | Control/candidate | Primary metric | Window/sample | Guardrails | Result / decision |
+| ID | Hypothesis | Control/candidate | Primary metric | Guardrails | Result | Decision/approver |
 |---|---|---|---|---|---|---|
-| `[ ]` | `[ ]` | `[version digests]` | `[ ]` | `[ ]` | `[ ]` | `[continue/stop/promote/rollback]` |
+| | | | | | | |
 
-For each result attach the preregistered plan, data snapshot, analysis method and limitations. Do not call directional movement a win before the success threshold and minimum window.
+### What worked / did not / learned
 
-## What worked / did not / remains unknown
+- **Worked (evidence):**
+- **Did not work (evidence):**
+- **Confounders and data gaps:**
+- **Next experiments (priority, owner, gate):**
 
-- **Supported:** `[claim + evidence reference]`
-- **Not supported:** `[experiment + evidence]`
-- **Unknown:** `[missing signal and collection decision]`
+## Operations, governance, and recovery
 
-## Changes and audit
-
-| Time | Change | Risk | Approval digest | Release | Before/after evidence | Rollback |
-|---|---|---:|---|---|---|---|
-| `[UTC]` | `[ ]` | `[ ]` | `[ ]` | `[ ]` | `[ ]` | `[last-known-good]` |
-
-## Risks, blockers and next actions
-
-| Priority | Risk/blocker | Owner | Due | Mitigation / stop rule |
-|---:|---|---|---|---|
-| 1 | `[ ]` | `[ ]` | `[ ]` | `[ ]` |
-
-## Verification attestation
-
-- [ ] Source windows, timezone, row counts and checksums recorded.
-- [ ] Objective definitions match `MISSION_OBJECTIVES.json`.
-- [ ] Grid/provider settings match the locked baseline.
-- [ ] Null/thresholded/error values are not represented as zero.
-- [ ] No raw PII, fabricated claim, review, partnership or affiliation appears.
-- [ ] Reviewer reproduced totals and linked approvals/releases/rollbacks.
+Record drafts awaiting approval; sends/posts/releases performed by humans or approved adapters; source errors; drift; access changes; retention/deletion work; GBP warnings; and rollback events. Every material action includes artifact digest, actor, approver, policy version, result, and recovery owner. Never publish raw contact details, IP addresses, credentials, review identities, or sensitive customer/project data.

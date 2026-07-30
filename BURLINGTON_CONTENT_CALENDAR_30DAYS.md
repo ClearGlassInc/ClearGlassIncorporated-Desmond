@@ -1,44 +1,40 @@
 # ClearGlassInc Artemis — Burlington Content Calendar (30 Days)
 
-> All items are **draft briefs**. Replace bracketed proof slots only with verified facts. Event/date references must be rechecked on the official source immediately before approval. No auto-publishing, mass DMs or manufactured local participation.
+> Rolling calendar: schedule only after dates, local references, service truth, asset rights, and platform rules are verified. All items are drafts. Recommended cadence is Instagram 3–5/week, LinkedIn 1–2/week, TikTok 1–2/week, GBP 2/week; reuse the evidence, not identical copy.
 
-## Publishing contract
+| Day | Channel / format | Idea and hook | CTA / evidence gate |
+|---:|---|---|---|
+| 1 | IG Reel + TikTok | “Three workflows Burlington teams should automate before adding another dashboard” | Save; cite demo inputs; no client implication |
+| 2 | LinkedIn document | AI readiness checklist for Halton SMEs | Download checklist; expert review |
+| 3 | IG Story poll | Which task creates the most operational drag? | Vote; no automated DM |
+| 4 | GBP post | What an AI automation discovery session covers | Visit service page; verify offering/link |
+| 5 | IG carousel | Five signs an automation needs governance, not another prompt | Save/share; policy sources |
+| 6 | IG Story | Behind the architecture: draft → approval → execution | Ask a question; sanitized demo |
+| 7 | Community reshare | Highlight an eligible local institution resource | Visit original; permission/attribution |
+| 8 | IG Reel | “Your AI agent should not approve its own work” | View governance article |
+| 9 | LinkedIn text | A practical human-approval boundary for Canadian businesses | Comment with use case; SME review |
+| 10 | GBP post | Burlington cybersecurity assessment explainer | Learn more; verified service/category |
+| 11 | IG carousel | Cybersecurity architecture: identity, data, policy, audit | Save; technical review |
+| 12 | TikTok | 30-second prompt-injection tabletop | Run the checklist; harmless demo |
+| 13 | IG Story Q&A | Ask an AI architect: local business edition | Submit question; privacy notice |
+| 14 | Blog + IG | “How Burlington SMEs can evaluate AI automation safely” | Read article; citations/SEO QA |
+| 15 | IG Reel | Map one business process in 45 seconds | Book discovery; truthful availability |
+| 16 | LinkedIn document | Build/buy/automate decision matrix | Download; assumptions labeled |
+| 17 | GBP post | Article summary with one actionable control | Read; visible-content match |
+| 18 | IG carousel | Four metrics beyond “hours saved” | Save; definitions and no invented results |
+| 19 | IG Story | This-or-that: speed versus auditability | Vote; explain both matter |
+| 20 | TikTok + Reel | “The fastest automation is not always the safest” | Share; reviewed scenario |
+| 21 | Community post | Upcoming verified local learning/resource roundup | Explore links; dates first-party verified |
+| 22 | IG carousel | What local data should never enter an AI prompt | Save; privacy review |
+| 23 | LinkedIn text | Zero-trust patterns for agentic workflows | Discuss; technical sources |
+| 24 | GBP post | FAQ: what happens in an architecture review? | Contact; verified process |
+| 25 | IG Reel | Redact a sample workflow before model use | Try checklist; synthetic data label |
+| 26 | IG Story | Quiz: which action needs approval? | Reveal governance answer |
+| 27 | Blog + LinkedIn | “Cybersecurity governance for Ontario professional services” | Read; legal/SME review, not legal advice |
+| 28 | IG carousel | Burlington AI project: 30/60/90-day blueprint | Save; target-state label |
+| 29 | IG Reel | Month recap: three most useful audience questions | Follow; consent before quoting |
+| 30 | Cross-channel | Evidence-led recap and next-month experiment | Subscribe/contact; report actual metrics only |
 
-Use `utm_source`, `utm_medium`, `utm_campaign=burlington_90d`, and a unique `utm_content`. Store the final destination, copy, asset digest, rights evidence, approver and expiry. Add captions/transcripts, descriptive alt text, readable contrast and reduced-motion variants. Default geotag is Burlington only when the content genuinely concerns Burlington.
+## Packaging standard
 
-| Day | Channel / format | Draft hook and body | CTA | Proof and acceptance |
-|---:|---|---|---|---|
-| 1 | LinkedIn carousel | “Five AI workflows a Burlington operator can measure before buying another tool.” | Download approved checklist | Cite internal methodology; no ROI promise |
-| 2 | Instagram Reel | Show a 30-second evidence → draft → approval workflow. | Save/share | Screen contains mock or redacted data |
-| 3 | GBP draft | ClearGlassInc Artemis service overview for verified Burlington needs. | Visit Burlington page | Coverage and service facts approved |
-| 4 | Instagram story | Poll: manual reporting, lead follow-up, security review, or knowledge search? | Vote | Do not collect sensitive details |
-| 5 | LinkedIn text | Why human approval remains essential in business automation. | Comment with workflow class | Governance diagram reviewed |
-| 6 | Blog | “A Burlington SME readiness checklist for practical AI automation.” | Request scoped discovery | Original, locally useful, cited |
-| 7 | Instagram carousel | Seven questions to ask an AI automation consultant. | Save checklist | Accessibility and claim review |
-| 8 | TikTok/Reel | Hook: “Automation is not authority.” Demonstrate a blocked action. | Follow for part two | Mock environment labelled |
-| 9 | LinkedIn poll | Which metric makes automation trustworthy: accuracy, latency, override rate, or outcome? | Vote | Explain that all are needed |
-| 10 | GBP draft | Share one checklist insight and link to the article. | Read guide | Canonical and UTM valid |
-| 11 | Instagram photo | Burlington workspace/community visual with factual caption. | Ask a local operations question | Rights cleared; no implied partnership |
-| 12 | LinkedIn document | Local cybersecurity consultation intake map. | Download | No fear-based urgency |
-| 13 | Instagram Reel | Three signs a workflow needs governance before AI. | Book approved consultation | Transcript and citations |
-| 14 | Newsletter draft | Week-two evidence recap and reader resources. | Manage preferences / reply | CASL basis, sender ID, unsubscribe |
-| 15 | Blog | “How to evaluate AI automation without exposing customer data.” | Use risk checklist | Privacy owner review |
-| 16 | Instagram carousel | Data minimization in six practical steps. | Save/share | Canadian context checked |
-| 17 | LinkedIn text | A local operator’s guide to pilot exit criteria. | Share a metric | No unnamed client anecdote |
-| 18 | GBP draft | Explain discovery-to-pilot stages and approval boundary. | View process | Service process approved |
-| 19 | TikTok/Reel | “What a safe self-improving system may change—and may never change.” | Watch full guide | Guardrails visible |
-| 20 | Instagram story | Question box for non-confidential AI governance questions. | Submit question | Privacy notice and moderation |
-| 21 | LinkedIn carousel | Secure automation: identity, policy, audit, rollback. | Download architecture card | Technical review |
-| 22 | Instagram Reel | Visualize geo-grid measurement without claiming a rank. | Read methodology | Label synthetic sample |
-| 23 | LinkedIn text | Why failed rank checks must not be recorded as bad rankings. | Review baseline contract | Methodology matches JSON |
-| 24 | GBP draft | Invite eligible audiences to an approved educational session. | Register | Only if host/date/rights confirmed |
-| 25 | Blog | “A 90-day measurement plan for a Burlington digital transformation pilot.” | Request template | No guaranteed uplift |
-| 26 | Instagram carousel | From KPI to evidence: baseline, owner, window, threshold, guardrail. | Save template | Numbers are target examples |
-| 27 | LinkedIn video | Operator correction becomes an eval—not an autonomous goal change. | Read blueprint | Captions and transcript |
-| 28 | Instagram photo | Weekly behind-the-scenes review checklist. | Ask for checklist | No confidential screen/data |
-| 29 | Cross-channel recap | Three most useful audience questions, answered with sources. | Visit resource hub | Consent to quote; otherwise anonymize |
-| 30 | LinkedIn + GBP draft | Month-one evidence report: shipped, measured, unknown, next test. | Subscribe/request briefing | Only observed values; unknowns explicit |
-
-## Caption and hashtag rule
-
-Write one audience-specific caption rather than duplicating text across channels. Use 3–8 relevant tags such as `#BurlingtonON`, `#HaltonBusiness`, `#ResponsibleAI`, `#AIAutomation`, and `#Cybersecurity` only when accurate; never stuff unrelated local/event tags. The CTA should lead to a tagged, accessible page and never create false scarcity.
+Each package includes `asset_id`, objective, audience, locality relevance, source URLs, rights/consent, factual claims, channel copy, caption/alt text, aspect ratio, CTA with UTM, reviewer, expiry, risk flags, and SHA-256 digest. Hashtags are contextual and limited: test combinations such as `#BurlingtonON`, `#HaltonBusiness`, `#BurlingtonBusiness`, and `#HaltonTech`; never stuff unrelated tags or imply local affiliation. Use real, rights-cleared local imagery—never fabricate a customer, office, project, event attendance, or landmark relationship.

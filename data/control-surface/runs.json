@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #478",
+    "title": "Control Surface Feeds #479",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "16:49",
+    "timestamp": "2026-07-30T16:49:01Z"
+  },
+  {
+    "title": "Code Quality: Scheduled #3237",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "16:14",
+    "timestamp": "2026-07-30T16:14:02Z"
+  },
+  {
+    "title": "Agent OS Self-Check #32",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "15:27",
+    "timestamp": "2026-07-30T15:27:50Z"
+  },
+  {
+    "title": "Commerce Daily Loop #52",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "15:08",
+    "timestamp": "2026-07-30T15:08:34Z"
+  },
+  {
+    "title": "Deploy Pages #1393",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "14:31",
+    "timestamp": "2026-07-30T14:31:22Z"
+  },
+  {
+    "title": "pages build and deployment #1882",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:31",
+    "timestamp": "2026-07-30T14:31:14Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3236",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:31",
+    "timestamp": "2026-07-30T14:31:14Z"
+  },
+  {
+    "title": "Control Surface Feeds #478",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "14:30",
     "timestamp": "2026-07-30T14:30:45Z"
   },
@@ -89,54 +138,5 @@
     "detail": "failure \u00b7 push on main",
     "time": "13:07",
     "timestamp": "2026-07-30T13:07:42Z"
-  },
-  {
-    "title": "Security #1710",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "13:07",
-    "timestamp": "2026-07-30T13:07:42Z"
-  },
-  {
-    "title": "Workflow Doctor #406",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "13:07",
-    "timestamp": "2026-07-30T13:07:42Z"
-  },
-  {
-    "title": "pages build and deployment #1881",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "13:07",
-    "timestamp": "2026-07-30T13:07:42Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3235",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "13:07",
-    "timestamp": "2026-07-30T13:07:41Z"
-  },
-  {
-    "title": "PR Automation #903",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/audit-and-deploy-repository-workflows",
-    "time": "13:07",
-    "timestamp": "2026-07-30T13:07:25Z"
-  },
-  {
-    "title": "CI #1942",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/audit-and-deploy-repository-workflows",
-    "time": "13:07",
-    "timestamp": "2026-07-30T13:07:25Z"
-  },
-  {
-    "title": "Policy Gate #1679",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/audit-and-deploy-repository-workflows",
-    "time": "13:07",
-    "timestamp": "2026-07-30T13:07:25Z"
   }
 ]

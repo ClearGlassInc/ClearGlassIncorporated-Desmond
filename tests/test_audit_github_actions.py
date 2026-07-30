@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from scripts.audit_github_actions import GitHubLoader, Result, audit, json_inventory
+from scripts.audit_github_actions import GitHubLoader, ROOT, Result, audit, json_inventory, load
 import yaml
 
 
@@ -150,3 +150,11 @@ jobs:
     assert record["caches"] == [{"job": "check", "type": "pip"}]
     assert record["concurrency"]["group"] == "checks"
     assert len(record["actions"]) == 1
+
+
+def test_enterprise_patch_deploy_disables_checkout_credentials() -> None:
+    result = load(ROOT / ".github/workflows/enterprise-patch-deploy.yml")
+    audit(result)
+
+    assert not any("checkout credentials" in warning for warning in result.warnings)
+    assert result.status == "valid and ready"

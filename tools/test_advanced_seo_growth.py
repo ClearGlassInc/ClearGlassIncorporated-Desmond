@@ -34,6 +34,10 @@ class ParserTests(unittest.TestCase):
         self.assertIsNone(seo.normalize_internal("https://example.com/x", "index.html"))
         self.assertIsNone(seo.normalize_internal("mailto:test@example.com", "index.html"))
 
+    def test_ci_execution_sentinel(self):
+        """Sentinel changed only to force and verify the pull-request workflow path."""
+        self.assertEqual(seo.SITE, "https://www.clearglassinc.com")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

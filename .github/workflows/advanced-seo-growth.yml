@@ -7,6 +7,7 @@ on:
       - "sitemap*.xml"
       - "robots.txt"
       - "tools/advanced_seo_growth.py"
+      - "tools/test_advanced_seo_growth.py"
       - ".github/workflows/advanced-seo-growth.yml"
   push:
     branches: [main]
@@ -15,6 +16,7 @@ on:
       - "sitemap*.xml"
       - "robots.txt"
       - "tools/advanced_seo_growth.py"
+      - "tools/test_advanced_seo_growth.py"
       - ".github/workflows/advanced-seo-growth.yml"
   schedule:
     - cron: "15 7 1 * *"
@@ -41,11 +43,14 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Compile engine
-        run: python3 -m py_compile tools/advanced_seo_growth.py
+      - name: Compile engine and tests
+        run: python3 -m py_compile tools/advanced_seo_growth.py tools/test_advanced_seo_growth.py
 
       - name: Run deterministic parser self-tests
         run: python3 tools/advanced_seo_growth.py --self-test
+
+      - name: Run independent regression suite
+        run: python3 -m unittest -v tools/test_advanced_seo_growth.py
 
       - name: Generate complete site audit
         run: python3 tools/advanced_seo_growth.py --write || echo "SEO defects detected and recorded in the backlog"

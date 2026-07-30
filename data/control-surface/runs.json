@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #473",
+    "title": "Control Surface Feeds #474",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "03:27",
+    "timestamp": "2026-07-30T03:27:08Z"
+  },
+  {
+    "title": "Defender Watch #1326",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "02:55",
+    "timestamp": "2026-07-30T02:55:01Z"
+  },
+  {
+    "title": "Health Monitor #242",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "02:41",
+    "timestamp": "2026-07-30T02:41:01Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #22",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "01:51",
+    "timestamp": "2026-07-30T01:51:59Z"
+  },
+  {
+    "title": "Deploy Pages #1386",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "00:11",
+    "timestamp": "2026-07-30T00:11:23Z"
+  },
+  {
+    "title": "pages build and deployment #1872",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:11",
+    "timestamp": "2026-07-30T00:11:07Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3224",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "00:11",
+    "timestamp": "2026-07-30T00:11:07Z"
+  },
+  {
+    "title": "Control Surface Feeds #473",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "00:10",
     "timestamp": "2026-07-30T00:10:42Z"
   },
@@ -89,54 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "23:11",
     "timestamp": "2026-07-29T23:11:19Z"
-  },
-  {
-    "title": "Internal Link Authority #236",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:11",
-    "timestamp": "2026-07-29T23:11:19Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #581",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:11",
-    "timestamp": "2026-07-29T23:11:19Z"
-  },
-  {
-    "title": "pages build and deployment #1870",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "23:11",
-    "timestamp": "2026-07-29T23:11:19Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3222",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "23:11",
-    "timestamp": "2026-07-29T23:11:19Z"
-  },
-  {
-    "title": "Policy Gate #1675",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-build-configuration-to-blog-page",
-    "time": "23:10",
-    "timestamp": "2026-07-29T23:10:52Z"
-  },
-  {
-    "title": "Security #1705",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/add-build-configuration-to-blog-page",
-    "time": "23:10",
-    "timestamp": "2026-07-29T23:10:52Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #1995",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/add-build-configuration-to-blog-page",
-    "time": "23:10",
-    "timestamp": "2026-07-29T23:10:52Z"
   }
 ]

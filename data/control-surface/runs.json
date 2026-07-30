@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #480",
+    "title": "Control Surface Feeds #481",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "20:33",
+    "timestamp": "2026-07-30T20:33:59Z"
+  },
+  {
+    "title": "Defender Watch #1335",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "19:43",
+    "timestamp": "2026-07-30T19:43:20Z"
+  },
+  {
+    "title": "Health Monitor #245",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:38",
+    "timestamp": "2026-07-30T19:38:20Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #25",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:16",
+    "timestamp": "2026-07-30T19:16:03Z"
+  },
+  {
+    "title": "Deploy Pages #1396",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "18:45",
+    "timestamp": "2026-07-30T18:45:13Z"
+  },
+  {
+    "title": "pages build and deployment #1885",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:45",
+    "timestamp": "2026-07-30T18:45:07Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3241",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:45",
+    "timestamp": "2026-07-30T18:45:06Z"
+  },
+  {
+    "title": "Control Surface Feeds #480",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "18:44",
     "timestamp": "2026-07-30T18:44:35Z"
   },
@@ -89,54 +138,5 @@
     "detail": "failure \u00b7 pull_request on codex/define-clearglass-mission-and-objectives",
     "time": "18:28",
     "timestamp": "2026-07-30T18:28:46Z"
-  },
-  {
-    "title": "PR Automation #904",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/define-clearglass-mission-and-objectives",
-    "time": "18:28",
-    "timestamp": "2026-07-30T18:28:46Z"
-  },
-  {
-    "title": "Security #1711",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/define-clearglass-mission-and-objectives",
-    "time": "18:28",
-    "timestamp": "2026-07-30T18:28:46Z"
-  },
-  {
-    "title": "Defender Watch #1333",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/define-clearglass-mission-and-objectives",
-    "time": "18:28",
-    "timestamp": "2026-07-30T18:28:46Z"
-  },
-  {
-    "title": "Code Quality: PR #1164 #3239",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on refs/pull/1164/head",
-    "time": "18:28",
-    "timestamp": "2026-07-30T18:28:45Z"
-  },
-  {
-    "title": "npm_and_yarn in /apps/air-control, /apps/autostore/cockpit, /apps/autostore/storefront, /clearglass-agentops, /clearglass-air-control, /clearglass-commerce/admin, /clearglass-commerce/storefront - Update #1495617726 #71",
-    "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "17:04",
-    "timestamp": "2026-07-30T17:04:09Z"
-  },
-  {
-    "title": "terraform in /infra - Update #1495616004 #70",
-    "status": "warn",
-    "detail": "queued \u00b7 dynamic on main",
-    "time": "17:03",
-    "timestamp": "2026-07-30T17:03:47Z"
-  },
-  {
-    "title": "Deploy Pages #1394",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_dispatch on main",
-    "time": "16:49",
-    "timestamp": "2026-07-30T16:49:52Z"
   }
 ]

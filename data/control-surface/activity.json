@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "18:44",
-    "timestamp": "2026-07-30T18:44:59Z"
+    "time": "20:34",
+    "timestamp": "2026-07-30T20:34:21Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #481",
+    "time": "20:33",
+    "timestamp": "2026-07-30T20:33:59Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #1335",
+    "time": "19:43",
+    "timestamp": "2026-07-30T19:43:20Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #245",
+    "time": "19:38",
+    "timestamp": "2026-07-30T19:38:20Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #25",
+    "time": "19:16",
+    "timestamp": "2026-07-30T19:16:03Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1396",
+    "time": "18:45",
+    "timestamp": "2026-07-30T18:45:13Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1885",
+    "time": "18:45",
+    "timestamp": "2026-07-30T18:45:07Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3241",
+    "time": "18:45",
+    "timestamp": "2026-07-30T18:45:06Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #480",
     "time": "18:44",
     "timestamp": "2026-07-30T18:44:35Z"
@@ -40,54 +89,5 @@
     "detail": "push on main \u00b7 run #584",
     "time": "18:29",
     "timestamp": "2026-07-30T18:29:25Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1395",
-    "time": "18:29",
-    "timestamp": "2026-07-30T18:29:25Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1884",
-    "time": "18:29",
-    "timestamp": "2026-07-30T18:29:25Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1334",
-    "time": "18:29",
-    "timestamp": "2026-07-30T18:29:25Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #2003",
-    "time": "18:29",
-    "timestamp": "2026-07-30T18:29:25Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #3240",
-    "time": "18:29",
-    "timestamp": "2026-07-30T18:29:24Z"
-  },
-  {
-    "title": "CI",
-    "status": "ok",
-    "detail": "pull_request on codex/define-clearglass-mission-and-objectives \u00b7 run #1944",
-    "time": "18:28",
-    "timestamp": "2026-07-30T18:28:47Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on codex/define-clearglass-mission-and-objectives \u00b7 run #1681",
-    "time": "18:28",
-    "timestamp": "2026-07-30T18:28:46Z"
   }
 ]

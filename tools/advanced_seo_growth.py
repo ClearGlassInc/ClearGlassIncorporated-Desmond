@@ -209,11 +209,13 @@ def normalize_internal(href: str, source: str) -> str | None:
         target = target.lstrip("/")
     else:
         target = posixpath.join(posixpath.dirname(source), target)
+    # normpath() drops the trailing slash, so record the directory signal first.
+    directory_link = target.endswith("/")
     target = posixpath.normpath(target).lstrip("./")
     if target in {"", "."}:
         return "index.html"
-    if target.endswith("/"):
-        target += "index.html"
+    if directory_link:
+        target += "/index.html"
     elif not Path(target).suffix:
         target += ".html"
     return target

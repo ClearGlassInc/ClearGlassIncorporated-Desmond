@@ -3,12 +3,82 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "12:16",
-    "timestamp": "2026-07-31T12:16:03Z"
+    "time": "14:38",
+    "timestamp": "2026-07-31T14:38:24Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #488",
+    "time": "14:38",
+    "timestamp": "2026-07-31T14:38:07Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #1379",
+    "time": "14:24",
+    "timestamp": "2026-07-31T14:24:52Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #248",
+    "time": "14:17",
+    "timestamp": "2026-07-31T14:17:40Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #28",
+    "time": "13:50",
+    "timestamp": "2026-07-31T13:50:05Z"
+  },
+  {
+    "title": "Auto-Store",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #185",
+    "time": "13:48",
+    "timestamp": "2026-07-31T13:48:44Z"
+  },
+  {
+    "title": "Organic Growth \u2014 Daily Content",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #7",
+    "time": "13:44",
+    "timestamp": "2026-07-31T13:44:03Z"
+  },
+  {
+    "title": "Sales-Ops Briefing",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #38",
+    "time": "13:05",
+    "timestamp": "2026-07-31T13:05:27Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1424",
+    "time": "12:16",
+    "timestamp": "2026-07-31T12:16:17Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3295",
+    "time": "12:16",
+    "timestamp": "2026-07-31T12:16:10Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1916",
+    "time": "12:16",
+    "timestamp": "2026-07-31T12:16:10Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #487",
     "time": "12:15",
     "timestamp": "2026-07-31T12:15:48Z"
@@ -19,75 +89,5 @@
     "detail": "push on main \u00b7 run #1723",
     "time": "10:52",
     "timestamp": "2026-07-31T10:52:30Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1753",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:30Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #2045",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:30Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1378",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:30Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #605",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:30Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1986",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:30Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1423",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:30Z"
-  },
-  {
-    "title": "Code Quality: Push on main",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #3294",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:29Z"
-  },
-  {
-    "title": "pages build and deployment",
-    "status": "ok",
-    "detail": "dynamic on main \u00b7 run #1915",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:29Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "pull_request on codex/execute-complete-production-release-process \u00b7 run #1985",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:13Z"
-  },
-  {
-    "title": "Security",
-    "status": "bad",
-    "detail": "pull_request on codex/execute-complete-production-release-process \u00b7 run #1752",
-    "time": "10:52",
-    "timestamp": "2026-07-31T10:52:13Z"
   }
 ]

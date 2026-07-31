@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #492",
+    "title": "Control Surface Feeds #493",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:16",
+    "timestamp": "2026-07-31T23:16:04Z"
+  },
+  {
+    "title": "Deploy Pages #1432",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "22:15",
+    "timestamp": "2026-07-31T22:15:34Z"
+  },
+  {
+    "title": "pages build and deployment #1924",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:15",
+    "timestamp": "2026-07-31T22:15:21Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3307",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:15",
+    "timestamp": "2026-07-31T22:15:21Z"
+  },
+  {
+    "title": "Control Surface Feeds #492",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:15",
     "timestamp": "2026-07-31T22:15:04Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "19:01",
     "timestamp": "2026-07-31T19:01:45Z"
-  },
-  {
-    "title": "Policy Gate #1730",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:01",
-    "timestamp": "2026-07-31T19:01:45Z"
-  },
-  {
-    "title": "Security #1760",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:01",
-    "timestamp": "2026-07-31T19:01:45Z"
-  },
-  {
-    "title": "SEO Dashboard #20",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "19:01",
-    "timestamp": "2026-07-31T19:01:45Z"
-  },
-  {
-    "title": "pages build and deployment #1922",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:01",
-    "timestamp": "2026-07-31T19:01:44Z"
   }
 ]

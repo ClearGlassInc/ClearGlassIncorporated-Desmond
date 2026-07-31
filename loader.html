@@ -671,7 +671,9 @@ function handoff() {
   navigating = true;
   try { sessionStorage.setItem('cg.booted', '1'); } catch (e) {}
   document.body.classList.add('exiting');
-  setTimeout(() => { window.location.href = nextUrl; }, 700);
+  // replace() so the loader never becomes a back-button trap now that every
+  // non-home page can route through it.
+  setTimeout(() => { window.location.replace(nextUrl); }, 700);
 }
 
 setTimeout(() => {

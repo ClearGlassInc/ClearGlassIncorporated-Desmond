@@ -2,6 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<script>
+/* cg-boot-loader: first-visit boot routing — plays /loader.html once per browser
+   session on every page except the homepage. Bypass with ?skipboot=1, or visit
+   /loader.html directly to replay. */
+(function(){
+  try {
+    var ua = navigator.userAgent || '';
+    if (/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua)) return;
+    if (/[?&]skipboot=1\b/.test(location.search)) return;
+    var path = location.pathname;
+    /* homepage renders with no loader */
+    if (path === '/' || path === '/index.html') return;
+    if (sessionStorage.getItem('cg.booted')) return;
+    sessionStorage.setItem('cg.booted', '1');
+    var here = path + location.search + location.hash;
+    location.replace('/loader.html?next=' + encodeURIComponent(here));
+  } catch (e) { /* storage unavailable — render normally */ }
+})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Best Digital Twin Simulation Tools for Storm-Adaptive Transit Systems in 2026 — ClearGlass Inc.</title>
 <meta name="description" content="A production-oriented comparison of digital twin platforms for storm-adaptive transit: NVIDIA Omniverse, Bentley iTwin, Autodesk Tandem, Azure Digital Twins, AWS IoT TwinMaker, MATSim and CesiumJS — scored against SATS criteria, with a recommended hybrid architecture."/>

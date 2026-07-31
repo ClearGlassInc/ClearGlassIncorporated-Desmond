@@ -35,7 +35,10 @@ jobs:
           python-version: "3.11"
 
       - name: Install tooling
-        run: pip install --disable-pip-version-check ruff pytest
+        # Pin ruff to match ci.yml and commerce-deploy.yml: an unpinned install
+        # lets CI pull a newer ruff whose expanded default rules fail the gate
+        # with no code change. Bump deliberately, repo-wide.
+        run: pip install --disable-pip-version-check "ruff==0.15.8" pytest
 
       - name: Lint
         run: ruff check xenolith/ tests/test_xenolith_core.py tests/test_xenolith_governance.py tests/test_xenolith_intelligence.py

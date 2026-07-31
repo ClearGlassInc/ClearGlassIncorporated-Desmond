@@ -195,6 +195,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ("ChatGPT Prompt Shortcuts", "a practical field guide to clearer, faster AI prompts"),
     "blog/ai-generated-phishing-54-percent-click-rate.html": ("AI-Generated Phishing Hits a 54% Click Rate", "this week's long read on why identity beats detection"),
     "blog/telecommunications-legal-briefing-30-july-2026.html": ("Telecommunications Legal Briefing", "a source-led Canadian telecommunications law briefing"),
+    "blog/canada-digital-control-architecture-charter.html": ("Canada’s Digital-Control Architecture", "a source-led analysis of safety, surveillance and the Charter"),
 }
 
 # --------------------------------------------------------------------------
@@ -353,6 +354,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
             "blog/ai-generated-phishing-54-percent-click-rate.html",
             "blog/telecommunications-legal-briefing-30-july-2026.html",
+            "blog/canada-digital-control-architecture-charter.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -433,6 +435,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/coffee-and-technology-digital-revolution.html": ["advanced-features-tools-systems.html", "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html"],
     "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ["ai-operator.html", "blog/ai-agent-governance-governed-autonomy.html"],
     "blog/ai-generated-phishing-54-percent-click-rate.html": ["guardian.html", "blog/ai-agents-insider-threat.html"],
+    "blog/canada-digital-control-architecture-charter.html": ["legal/index.html", "aegis.html", "blog/telecommunications-legal-briefing-30-july-2026.html"],
 }
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page

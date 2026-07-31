@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-07-30T09:28:51.459271+00:00",
+  "run_utc": "2026-07-31T09:43:25.849302+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1345,
+  "commit_count": 1374,
   "sections": {
     "New Features": [
+      {
+        "sha": "ce069d8",
+        "type": "feat",
+        "scope": null,
+        "subject": "add sitewide Advanced SEO Growth engine",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
       {
         "sha": "cdcc5f3",
         "type": "feat",
@@ -656,6 +665,42 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "4b191cb",
+        "type": "fix",
+        "scope": "governance",
+        "subject": "restore Burlington contract validation",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "1080fef",
+        "type": "fix",
+        "scope": null,
+        "subject": "make Advanced SEO Growth operational end to end",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "437976c",
+        "type": "fix",
+        "scope": "ci",
+        "subject": "disable persisted credentials in patch deploy",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "d923261",
+        "type": "fix",
+        "scope": "auto-store",
+        "subject": "isolate release regression gate",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
         "sha": "50d0efa",
         "type": "fix",
         "scope": "auto-store",
@@ -1263,6 +1308,15 @@
     ],
     "Documentation": [
       {
+        "sha": "16194f4",
+        "type": "docs",
+        "scope": null,
+        "subject": "merge ARTEMIS FAWL command protocol",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
         "sha": "e092378",
         "type": "docs",
         "scope": null,
@@ -1589,6 +1643,15 @@
     ],
     "Tests": [
       {
+        "sha": "67e5a9b",
+        "type": "test",
+        "scope": null,
+        "subject": "add Actions execution sentinel",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
         "sha": "56a92a0",
         "type": "test",
         "scope": "site-health",
@@ -1608,6 +1671,24 @@
       }
     ],
     "CI/CD": [
+      {
+        "sha": "b1f9b6f",
+        "type": "ci",
+        "scope": null,
+        "subject": "trigger Advanced SEO Growth workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "247be2c",
+        "type": "ci",
+        "scope": null,
+        "subject": "execute SEO regression suite",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
       {
         "sha": "b7e5117",
         "type": "ci",
@@ -1799,6 +1880,69 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "fcf2a02",
+        "type": "chore",
+        "scope": null,
+        "subject": "Repair governed exposure validation gates",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "cf16776",
+        "type": "chore",
+        "scope": null,
+        "subject": "Build deterministic search discovery foundation",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "4cd4c9e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Burlington geo-grid exposure operating package",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "b87bdb5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Burlington geo-grid exposure operating system",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "12b0dfe",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add governed Burlington exposure automation",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "31e7c9b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Index new Telecommunications Legal Briefing in posts.json",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "671c3ce",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Telecommunications Legal Briefing \u2014 30 July 2026 with advanced editorial features",
+        "author": "Desmond Otieno",
+        "date": "2026-07-30",
+        "breaking": false
+      },
       {
         "sha": "b18029c",
         "type": "chore",
@@ -7030,6 +7174,123 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "8c6daf9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "a5e86e8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "fb585d6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "86a201b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "b5753ed",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "3a68233",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "451cd28",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "170bef6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "f9f4943",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "099fb94",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "bc8da7e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "e05cdc6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
+      {
+        "sha": "5760aac",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-30 09:28 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-30",
+        "breaking": false
+      },
       {
         "sha": "25a4ac5",
         "type": "bot",

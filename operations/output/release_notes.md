@@ -1,9 +1,10 @@
-# Release Notes — 2026-07-30
+# Release Notes — 2026-07-31
 
-*1345 commit(s) since v1.0.0*
+*1374 commit(s) since v1.0.0*
 
 ## New Features
 
+- add sitewide Advanced SEO Growth engine (`ce069d8`)
 - **legal-tech:** add fault-tolerant orchestration + documented 3x efficiency gain (`cdcc5f3`)
 - **blog:** add advanced prompt engineering composer (`3aee533`)
 - **blog:** publish Ontario accountability brief (`a45bd5b`)
@@ -79,6 +80,10 @@
 
 ## Bug Fixes
 
+- **governance:** restore Burlington contract validation (`4b191cb`)
+- make Advanced SEO Growth operational end to end (`1080fef`)
+- **ci:** disable persisted credentials in patch deploy (`437976c`)
+- **auto-store:** isolate release regression gate (`d923261`)
 - **auto-store:** validate production deployment config (`50d0efa`)
 - **auto-store:** require explicit production dispatch (`66b35d5`)
 - fail closed on production automation failures (`1187658`)
@@ -152,6 +157,7 @@
 
 ## Documentation
 
+- merge ARTEMIS FAWL command protocol (`16194f4`)
 - complete Desmond email setup runbook (`e092378`)
 - tailor custom email setup for Desmond (`1c36cfb`)
 - tailor custom-domain mailbox setup for Desmond (`07ce461`)
@@ -191,11 +197,14 @@
 
 ## Tests
 
+- add Actions execution sentinel (`67e5a9b`)
 - **site-health:** use a single import style in logo-coverage test (`56a92a0`)
 - **site-health:** guarantee ClearGlass logo on every page (`7406c02`)
 
 ## CI/CD
 
+- trigger Advanced SEO Growth workflow (`b1f9b6f`)
+- execute SEO regression suite (`247be2c`)
 - pin GitHub Pages artifact name (`b7e5117`)
 - restore daily marketing content issues (`fcec60c`)
 - sign bot commits to main via GitHub API (Verified status) (`631a876`)
@@ -220,6 +229,13 @@
 
 ## Maintenance
 
+- Repair governed exposure validation gates (`fcf2a02`)
+- Build deterministic search discovery foundation (`cf16776`)
+- Add Burlington geo-grid exposure operating package (`4cd4c9e`)
+- Add Burlington geo-grid exposure operating system (`b87bdb5`)
+- Add governed Burlington exposure automation (`12b0dfe`)
+- Index new Telecommunications Legal Briefing in posts.json (`31e7c9b`)
+- Add Telecommunications Legal Briefing — 30 July 2026 with advanced editorial features (`671c3ce`)
 - Expand Artemis intelligence platform blueprint (`b18029c`)
 - Add Enterprise Patch & Deploy reusable control plane (`0b0cb2f`)
 - Add interactive blast-radius model and chart to the phishing long read (`7f76b16`)
@@ -804,6 +820,19 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`8c6daf9`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`a5e86e8`)
+- refresh control-surface data feeds [skip ci] (`fb585d6`)
+- refresh control-surface data feeds [skip ci] (`86a201b`)
+- refresh control-surface data feeds [skip ci] (`b5753ed`)
+- refresh control-surface data feeds [skip ci] (`3a68233`)
+- refresh control-surface data feeds [skip ci] (`451cd28`)
+- refresh control-surface data feeds [skip ci] (`170bef6`)
+- refresh control-surface data feeds [skip ci] (`f9f4943`)
+- refresh control-surface data feeds [skip ci] (`099fb94`)
+- refresh control-surface data feeds [skip ci] (`bc8da7e`)
+- refresh control-surface data feeds [skip ci] (`e05cdc6`)
+- update generated outputs — 2026-07-30 09:28 UTC [skip ci] (`5760aac`)
 - refresh SEO dashboard feeds [skip ci] (`25a4ac5`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`5eeaa0c`)
 - refresh control-surface data feeds [skip ci] (`9e1454c`)

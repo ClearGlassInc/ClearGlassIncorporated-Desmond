@@ -38,6 +38,10 @@ def test_full_stack_blueprint_contains_requested_sections_and_controls():
         "Ambiguous-outcome invariant",
         "never blindly retried",
         "break-glass access is time-bound",
+        "### Integration Evidence Gate",
+        "BLOCKED — tenant and identity not evidenced",
+        "Architecture intent is not connection proof",
+        "Operational promotion remains fail-closed",
     ]
     for control in required_controls:
         assert control in markdown

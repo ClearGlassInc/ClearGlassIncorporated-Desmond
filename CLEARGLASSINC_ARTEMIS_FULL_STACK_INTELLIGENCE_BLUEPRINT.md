@@ -26,6 +26,29 @@ This blueprint is the complete engineering handoff for the requested ClearGlassI
 
 **System boundary:** ClearGlassInc Artemis may automate collection, normalization, read-only analysis, drafting, simulation, evaluation, and release proposals. It may not autonomously change objectives, grant privileges, alter policy, approve its own upgrades, promote a release, or execute an operationally significant action. Those transitions require deterministic policy checks and attributable human authorization. Until licensed Palantir interfaces, identity federation, protected environments, data agreements, approvers, and rollback owners are verified, every external integration remains disabled or in a synthetic, read-only pilot.
 
+### Integration Evidence Gate
+
+Architecture intent is not connection proof. The release owner must copy this matrix into the
+release evidence package and replace `BLOCKED` only with a result backed by a timestamped,
+redacted response, trace identifier, and accountable verifier. Secret values must never be copied
+into the evidence package.
+
+| Service | Purpose | Required configuration (names only) | Safest verification | Initial status |
+|---|---|---|---|---|
+| Gotham | Investigations, cases, entity tracking | Gotham tenant, mission scopes, workload identity | Read one allowlisted synthetic case and prove a cross-compartment denial | **BLOCKED — tenant and identity not evidenced** |
+| Foundry | Data products, lineage, Ontology objects/actions | Foundry stack, project/RID allowlist, workload identity | Read a synthetic object with lineage; attempt a denied object action | **BLOCKED — stack and RIDs not evidenced** |
+| AIP | Copilots, agents, model routing, evaluations | AIP entitlement, model allowlist, prompt/eval project | Execute a non-mutating synthetic eval and retain its trace | **BLOCKED — entitlement and project not evidenced** |
+| Apollo | Signed rollout, runtime policy, rollback | Apollo environment, signing trust root, protected rings | Verify a signed no-op artifact in a non-production ring, then roll it back | **BLOCKED — environment and trust root not evidenced** |
+| Identity provider | Human and workload authentication | OIDC issuer/audience, JWKS, group-to-attribute mapping | Validate a short-lived token and reject wrong audience/expired tokens | **BLOCKED — federation not evidenced** |
+| Event transport | Bounded live-data delivery | Broker endpoints, topic ACLs, schema registry, DLQ | Publish a synthetic event and prove replay, dedupe, and DLQ handling | **BLOCKED — broker configuration not evidenced** |
+| Audit store | Tamper-evident provenance | Append identity, retention policy, integrity key reference | Append a synthetic trace, verify its chain, and prove mutation is denied | **BLOCKED — immutable store not evidenced** |
+
+The verifier records `PASS`, `FAIL`, `BLOCKED`, `NOT APPLICABLE`, or `NOT TESTED`; free-form
+labels such as “connected” or “ready” are prohibited. A `PASS` expires when the verified identity,
+endpoint, policy bundle, schema, model, prompt, workflow, or deployed artifact changes.
+Operational promotion remains fail-closed while any mission-critical dependency is `BLOCKED`, `FAIL`, or
+`NOT TESTED`.
+
 ### Architecture Decision and Acceptance Contract
 
 The primary design is a **governed proposal system**, not an autonomously self-modifying system. Models may analyze, draft, rank, and propose changes; deterministic services enforce identity, authorization, workflow transitions, release eligibility, and audit invariants. No model output can grant authority, expand mission scope, modify policy, promote itself, or cause an operationally significant external effect.

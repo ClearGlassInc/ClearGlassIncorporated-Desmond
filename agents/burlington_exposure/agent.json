@@ -19,8 +19,8 @@
   "permissions": [
     "read_authorized_analytics",
     "read_public_sources",
-    "draft_recommendations",
     "draft_content",
+    "draft_recommendations",
     "write_audit_events"
   ],
   "approval_required_for_external_actions": true,

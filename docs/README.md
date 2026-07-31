@@ -42,6 +42,9 @@ Long-form blueprints, platform designs, and corporate documentation supporting t
 - `clearglassinc_artemis_lead_scraping_architecture_python.md`
 - `clearglassinc_artemis_stegoforge_linked_system_design.md`
 
+## Operational reporting
+- `clearglassinc_artemis_governed_intelligence_platform_core_sitrep_2026-07-31.md`
+
 ## Guardian
 - `guardian_clear_glass_browser_concept.md`
 - `guardian_command_nexus_spec.html`

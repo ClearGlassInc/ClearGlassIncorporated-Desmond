@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "16:56",
-    "timestamp": "2026-07-31T16:56:32Z"
+    "time": "18:44",
+    "timestamp": "2026-07-31T18:44:42Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #490",
+    "time": "18:44",
+    "timestamp": "2026-07-31T18:44:23Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1428",
+    "time": "16:56",
+    "timestamp": "2026-07-31T16:56:48Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1920",
+    "time": "16:56",
+    "timestamp": "2026-07-31T16:56:40Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3303",
+    "time": "16:56",
+    "timestamp": "2026-07-31T16:56:39Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #489",
     "time": "16:56",
     "timestamp": "2026-07-31T16:56:07Z"
@@ -61,33 +89,5 @@
     "detail": "pull_request on claude/page-loader-placement-pp36im \u00b7 run #253",
     "time": "16:34",
     "timestamp": "2026-07-31T16:34:02Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "pull_request on claude/page-loader-placement-pp36im \u00b7 run #1385",
-    "time": "16:34",
-    "timestamp": "2026-07-31T16:34:02Z"
-  },
-  {
-    "title": "Site Reliability Audit",
-    "status": "ok",
-    "detail": "pull_request on claude/page-loader-placement-pp36im \u00b7 run #398",
-    "time": "16:34",
-    "timestamp": "2026-07-31T16:34:02Z"
-  },
-  {
-    "title": "Code Quality: PR #1186",
-    "status": "ok",
-    "detail": "dynamic on refs/pull/1186/head \u00b7 run #3302",
-    "time": "16:33",
-    "timestamp": "2026-07-31T16:33:57Z"
-  },
-  {
-    "title": "Security",
-    "status": "bad",
-    "detail": "pull_request on claude/page-loader-placement-pp36im \u00b7 run #1758",
-    "time": "16:19",
-    "timestamp": "2026-07-31T16:19:52Z"
   }
 ]

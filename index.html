@@ -482,10 +482,10 @@ body{background:#f7f8fd;}
        competed with the poster, which is the LCP paint. Autoplay still fires. -->
   <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" aria-label="ClearGlass Ontario" style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;box-shadow:0 20px 70px rgba(0,0,0,.12);margin-bottom:42px;position:relative;z-index:1;">
     <source src="assets/video/hero.mp4" type="video/mp4">
-    <picture>
-      <source type="image/webp" srcset="20260203_224147843_iOS.webp 1x, 20260203_224147843_iOS@2x.webp 2x">
-      <img src="20260203_224147843_iOS.png" alt="ClearGlass Ontario" decoding="async" style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;">
-    </picture>
+    <!-- The <picture> fallback that used to sit here only renders in a browser
+         with no <video> element at all, yet Chrome's preload scanner fetched
+         its 401 KB WebP on every load. The poster attribute above already
+         supplies the still frame, so the fallback was pure transfer cost. -->
   </video>
   <div class="hero-year">SOFTWARE ARCHITECT & COO · AI AUTOMATION · CYBERSECURITY</div>
   <h1><strong>Governed AI systems</strong> for high-stakes operations.</h1>

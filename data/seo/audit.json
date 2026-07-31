@@ -1,26 +1,27 @@
 {
-  "generated": "2026-07-30T09:16:01+00:00",
+  "generated": "2026-07-31T09:27:14+00:00",
   "site": "https://www.clearglassinc.com",
-  "score": 79,
+  "score": 78,
   "totals": {
-    "pages": 145,
-    "indexable": 134,
+    "pages": 146,
+    "indexable": 135,
     "in_sitemap": 135,
     "noindex": 10,
-    "with_schema": 47,
+    "with_schema": 48,
     "errors": 0,
-    "warnings": 115,
+    "warnings": 118,
     "info": 41
   },
   "by_check": {
-    "description.length": 63,
-    "title.length": 44,
+    "description.length": 64,
+    "title.length": 45,
     "heading.order": 40,
     "h1.multiple": 3,
     "weight": 2,
     "schema.required": 2,
     "image.alt": 1,
-    "index.conflict": 1
+    "title.duplicate": 1,
+    "description.duplicate": 1
   },
   "findings": [
     {
@@ -34,6 +35,12 @@
       "level": "warn",
       "check": "weight",
       "message": "306 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
+    },
+    {
+      "page": "ClearGlass-NEXUS-v12-FINAL.html, clearglass-nexus.html",
+      "level": "warn",
+      "check": "title.duplicate",
+      "message": "2 indexable pages share the same title: 'ClearGlass NEXUS v12 \u2014 DARPA Intelligence Platform | ClearGlass Inc.'."
     },
     {
       "page": "advanced-features-tools-systems.html",
@@ -366,6 +373,18 @@
       "message": "Meta description is 208 chars; Google truncates near 165."
     },
     {
+      "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 70 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 243 chars; Google truncates near 165."
+    },
+    {
       "page": "blog/zero-trust-is-outdated-adaptive-trust.html",
       "level": "warn",
       "check": "title.length",
@@ -564,12 +583,6 @@
       "message": "Meta description is 193 chars; Google truncates near 165."
     },
     {
-      "page": "platform-command-center.html",
-      "level": "warn",
-      "check": "index.conflict",
-      "message": "Page is noindex but listed in sitemap.xml \u2014 decide whether the page should be public (drop the noindex) or internal (drop it from the sitemap and the authority-network registry)."
-    },
-    {
       "page": "postloop.html",
       "level": "warn",
       "check": "title.length",
@@ -604,6 +617,12 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is only 54 chars \u2014 thin for a snippet."
+    },
+    {
+      "page": "products/opal-koboi/artemis-iv-core.html, products/opal-koboi/artemis-vi.html, products/opal-koboi/guardian.html, products/opal-koboi/index.html, products/opal-koboi/revenue-engine.html, products/opal-koboi/smb-suite.html",
+      "level": "warn",
+      "check": "description.duplicate",
+      "message": "6 indexable pages share the same description: 'ClearGlassInc Opal-Koboi product assets and downloads.'."
     },
     {
       "page": "products/opal-koboi/artemis-vi.html",
@@ -996,7 +1015,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 55165,
+      "bytes": 55131,
       "inbound_links": 7
     },
     {
@@ -1054,7 +1073,7 @@
       "internal_links": 14,
       "images_missing_alt": 0,
       "bytes": 50082,
-      "inbound_links": 13
+      "inbound_links": 14
     },
     {
       "page": "aegis.html",
@@ -1092,7 +1111,7 @@
       "internal_links": 11,
       "images_missing_alt": 0,
       "bytes": 21468,
-      "inbound_links": 20
+      "inbound_links": 21
     },
     {
       "page": "ai-operator.html",
@@ -1111,7 +1130,7 @@
       "internal_links": 11,
       "images_missing_alt": 0,
       "bytes": 47902,
-      "inbound_links": 44
+      "inbound_links": 45
     },
     {
       "page": "air-control.html",
@@ -1213,7 +1232,7 @@
       "internal_links": 8,
       "images_missing_alt": 0,
       "bytes": 30077,
-      "inbound_links": 8
+      "inbound_links": 9
     },
     {
       "page": "artemis-fawl/index.html",
@@ -1292,7 +1311,7 @@
       "internal_links": 10,
       "images_missing_alt": 0,
       "bytes": 123460,
-      "inbound_links": 12
+      "inbound_links": 13
     },
     {
       "page": "artemis-self-evolving-platform.html",
@@ -1348,7 +1367,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 16093,
+      "bytes": 16038,
       "inbound_links": 8
     },
     {
@@ -1367,9 +1386,9 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 161,
+      "internal_links": 162,
       "images_missing_alt": 0,
-      "bytes": 34029,
+      "bytes": 34142,
       "inbound_links": 10
     },
     {
@@ -1463,7 +1482,7 @@
       "internal_links": 31,
       "images_missing_alt": 0,
       "bytes": 43326,
-      "inbound_links": 15
+      "inbound_links": 16
     },
     {
       "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
@@ -1492,9 +1511,9 @@
         "CreativeWork",
         "Organization"
       ],
-      "internal_links": 20,
+      "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 47365,
+      "bytes": 47545,
       "inbound_links": 7
     },
     {
@@ -1587,7 +1606,7 @@
       ],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 30295,
+      "bytes": 30307,
       "inbound_links": 5
     },
     {
@@ -1835,7 +1854,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 27204,
+      "bytes": 27250,
       "inbound_links": 7
     },
     {
@@ -1888,7 +1907,7 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 23628,
+      "bytes": 23615,
       "inbound_links": 9
     },
     {
@@ -2001,7 +2020,7 @@
       "internal_links": 56,
       "images_missing_alt": 0,
       "bytes": 115078,
-      "inbound_links": 110
+      "inbound_links": 114
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -2124,6 +2143,31 @@
       "inbound_links": 8
     },
     {
+      "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
+      "url": "https://www.clearglassinc.com/blog/telecommunications-legal-briefing-30-july-2026.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Telecommunications Legal Briefing \u2014 30 July 2026 | ClearGlass Insights",
+      "title_length": 70,
+      "description": "CRTC suspends Bell, Rogers and TELUS switching-fee filing deadlines; area code 851 approved for Nova Scotia and PEI (2028); Ofcom proposes Openreach FTTP offer withdrawal. Actionable compliance priorities for Canadian and UK telecom operators.",
+      "description_length": 243,
+      "canonical": "https://www.clearglassinc.com/blog/telecommunications-legal-briefing-30-july-2026.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage"
+      ],
+      "internal_links": 15,
+      "images_missing_alt": 0,
+      "bytes": 26664,
+      "inbound_links": 5
+    },
+    {
       "page": "blog/zero-trust-is-outdated-adaptive-trust.html",
       "url": "https://www.clearglassinc.com/blog/zero-trust-is-outdated-adaptive-trust.html",
       "indexable": true,
@@ -2191,7 +2235,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 24303,
+      "bytes": 24270,
       "inbound_links": 9
     },
     {
@@ -2211,7 +2255,7 @@
       "internal_links": 10,
       "images_missing_alt": 0,
       "bytes": 147167,
-      "inbound_links": 38
+      "inbound_links": 39
     },
     {
       "page": "button-lab.html",
@@ -2388,7 +2432,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 39804,
+      "bytes": 39770,
       "inbound_links": 7
     },
     {
@@ -2407,7 +2451,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 28066,
+      "bytes": 28093,
       "inbound_links": 12
     },
     {
@@ -2519,9 +2563,9 @@
       "canonical": "https://www.clearglassinc.com/cyber-defense-console.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 20,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 64091,
+      "bytes": 63941,
       "inbound_links": 33
     },
     {
@@ -2540,7 +2584,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 19846,
+      "bytes": 19790,
       "inbound_links": 11
     },
     {
@@ -2650,10 +2694,10 @@
       "canonical": "https://www.clearglassinc.com/guardian.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 12,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 143209,
-      "inbound_links": 68
+      "bytes": 143059,
+      "inbound_links": 69
     },
     {
       "page": "header-mockup-2040.html",
@@ -2740,7 +2784,7 @@
       "internal_links": 208,
       "images_missing_alt": 0,
       "bytes": 160226,
-      "inbound_links": 512
+      "inbound_links": 516
     },
     {
       "page": "intelligence-command-surface.html",
@@ -3437,7 +3481,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 34210,
+      "bytes": 34160,
       "inbound_links": 7
     },
     {
@@ -3464,7 +3508,7 @@
       "url": "https://www.clearglassinc.com/platform-command-center.html",
       "indexable": false,
       "noindex": true,
-      "in_sitemap": true,
+      "in_sitemap": false,
       "robots_blocked": null,
       "title": "ClearGlass \u00b7 Platform Command Center",
       "title_length": 36,
@@ -3476,7 +3520,7 @@
       "internal_links": 10,
       "images_missing_alt": 0,
       "bytes": 57117,
-      "inbound_links": 8
+      "inbound_links": 4
     },
     {
       "page": "postloop.html",
@@ -3527,7 +3571,7 @@
       "internal_links": 12,
       "images_missing_alt": 0,
       "bytes": 25382,
-      "inbound_links": 116
+      "inbound_links": 117
     },
     {
       "page": "procurement-legal-tech.html",
@@ -3546,7 +3590,7 @@
       "internal_links": 22,
       "images_missing_alt": 0,
       "bytes": 51457,
-      "inbound_links": 14
+      "inbound_links": 15
     },
     {
       "page": "products.html",
@@ -3761,7 +3805,7 @@
       "internal_links": 9,
       "images_missing_alt": 0,
       "bytes": 56154,
-      "inbound_links": 13
+      "inbound_links": 14
     },
     {
       "page": "sentinel/ARTEMIS_FAWL_COMMAND_SURFACE.html",
@@ -3922,7 +3966,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 14978,
+      "bytes": 14931,
       "inbound_links": 11
     },
     {
@@ -3957,7 +4001,7 @@
       "internal_links": 14,
       "images_missing_alt": 0,
       "bytes": 31801,
-      "inbound_links": 138
+      "inbound_links": 139
     },
     {
       "page": "systems.html",

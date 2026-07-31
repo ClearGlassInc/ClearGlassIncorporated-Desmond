@@ -38,5 +38,19 @@
     "homepage_locality_claim": {"value": "Burlington, ON", "evidence_ref": "index.html:246", "verification_scope": "repository_only"},
     "homepage_schema_types": {"value": ["Organization", "ProfessionalService", "WebSite"], "evidence_ref": "index.html:246", "verification_scope": "repository_only"}
   },
-  "quality": {"completeness_ratio": 0.0, "anomalies": [], "blocking_gaps": ["All external measurement connectors or exports are unavailable."]}
+  "quality": {
+    "complete": false,
+    "missing_required_sources": [
+      "google_business_profile",
+      "ga4",
+      "search_console",
+      "crm",
+      "instagram",
+      "tiktok",
+      "linkedin"
+    ],
+    "completeness_ratio": 0.0,
+    "anomalies": [],
+    "blocking_gaps": ["All external measurement connectors or exports are unavailable."]
+  }
 }

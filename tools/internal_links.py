@@ -73,6 +73,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "intelligence-command-surface.html": ("Intelligence Command Surface", "one unified operational picture"),
     "intelligence-interface.html": ("Intelligence Interface 2027", "next-generation analyst workspace"),
     "intelligence-platform.html": ("Intelligence Platform Architecture", "brand and platform blueprint"),
+    "xenolith.html": ("XENOLITH", "the sovereign intelligence lattice — governed multi-domain command substrate"),
 
     # Artemis platform
     "artemis-os.html": ("Artemis OS", "the Artemis intelligence operating system"),
@@ -224,7 +225,7 @@ CLUSTERS: dict[str, dict] = {
             "flowsint.html", "clearglass-nexus.html", "Ontario-osint.html",
             "clearglass.html", "intelligence-command-surface.html",
             "intelligence-interface.html", "intelligence-platform.html",
-            "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html",
+            "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -384,6 +385,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "conduit.html": ["blog/clearglass-agentops-microsoft-foundry-future-stack.html"],
     "flowsint.html": ["blog/osint-workflow-that-survives-contact-with-reality.html", "agentmesh.html", "cyber-defense-console.html"],
     "intelligence.html": ["authority-network.html", "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html"],
+    "xenolith.html": ["percival-os.html", "agentmesh.html", "advanced-features-tools-systems.html", "blog/ai-agent-governance-governed-autonomy.html"],
     "artemis-os.html": ["artemis-percival.html", "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
     "artemis-self-evolving-platform.html": ["blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html"],
     "revenue-engine.html": ["postloop.html", "blog/ethical-sales-system-100k-revenue-prompt.html"],

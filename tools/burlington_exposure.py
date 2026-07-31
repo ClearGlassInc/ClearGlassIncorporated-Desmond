@@ -5,6 +5,7 @@ This stdlib-only tool never calls external services or publishes content. It
 fails closed when contracts are malformed and treats unavailable values as
 ``None`` rather than as observed zeros.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -63,14 +64,22 @@ def priority_score(lever: dict[str, Any]) -> float:
     names = ("expected_impact", "confidence", "urgency", "effort", "risk")
     values: dict[str, float] = {}
     for name in names:
-        value = lever.get(name)
+        # Version 1 producers used ``impact``; retain read compatibility while
+        # keeping ``expected_impact`` as the canonical scoring term.
+        value = (
+            lever.get("impact")
+            if name == "expected_impact" and name not in lever
+            else lever.get(name)
+        )
         if isinstance(value, bool) or not isinstance(value, (int, float)):
             raise ContractError(f"{lever.get('id', '<unknown>')}.{name} must be numeric")
         values[name] = float(value)
         if not 1 <= values[name] <= 5:
             raise ContractError(f"{lever.get('id', '<unknown>')}.{name} must be in [1, 5]")
     return (
-        values["expected_impact"] * values["confidence"] * values["urgency"]
+        values["expected_impact"]
+        * values["confidence"]
+        * values["urgency"]
         / (values["effort"] * values["risk"])
     )
 
@@ -110,8 +119,10 @@ def validate_baseline(data: dict[str, Any]) -> list[str]:
     quality = data.get("quality")
     if not isinstance(quality, dict):
         return ["quality must be an object"]
-    complete = quality.get("complete")
-    missing = quality.get("missing_required_sources")
+    # Both representations are lossless: newer collectors expose a ratio and
+    # blocking gaps, while the original contract exposed a boolean and sources.
+    complete = quality.get("complete", quality.get("completeness_ratio") == 1.0)
+    missing = quality.get("missing_required_sources", quality.get("blocking_gaps", []))
     if not isinstance(complete, bool):
         findings.append("quality.complete must be boolean")
     if not isinstance(missing, list) or any(not isinstance(item, str) for item in missing):
@@ -126,14 +137,19 @@ def validate_grid(data: dict[str, Any]) -> list[str]:
     cells = data.get("cells")
     summary = data.get("summary")
     threshold = data.get("green_rank_threshold")
+    if threshold is None and isinstance(data.get("rank_semantics"), dict):
+        threshold = data["rank_semantics"].get("green_max_position")
     if not isinstance(cells, list) or not isinstance(summary, dict):
         return ["cells must be an array and summary must be an object"]
     if isinstance(threshold, bool) or not isinstance(threshold, int) or threshold < 1:
         findings.append("green_rank_threshold must be a positive integer")
         return findings
-    successful = [cell for cell in cells if isinstance(cell, dict) and cell.get("status") == "success"]
+    successful = [
+        cell for cell in cells if isinstance(cell, dict) and cell.get("status") == "success"
+    ]
     green = [
-        cell for cell in successful
+        cell
+        for cell in successful
         if isinstance(cell.get("position"), int) and 1 <= cell["position"] <= threshold
     ]
     failed = [cell for cell in cells if isinstance(cell, dict) and cell.get("status") == "failed"]
@@ -142,6 +158,9 @@ def validate_grid(data: dict[str, Any]) -> list[str]:
         "failed_cells": len(failed),
         "green_cells": len(green),
     }
+    if data.get("status") == "not_collected" and not cells:
+        # Null summary values truthfully mean unavailable, not observed zero.
+        return findings
     for key, value in expected.items():
         if summary.get(key) != value:
             findings.append(f"summary.{key} is {summary.get(key)!r}; expected {value}")

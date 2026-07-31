@@ -17,7 +17,7 @@
     {"keyword": "ClearGlass Burlington", "competitors": [], "status": "not_collected"}
   ],
   "competitor_record_contract": {
-    "name": "string", "website": "string|null", "gbp_url": "string|null",
+    "name": "string", "website_url": "string|null", "gbp_url": "string|null",
     "observed_at": "RFC3339 timestamp", "observation_point": "lat/lng or named locality",
     "gbp": {"primary_category": "string|null", "additional_categories": [], "photos_count": "integer|null", "posts_per_30_days": "number|null", "review_count": "integer|null", "rating": "number|null"},
     "website": {"local_pages": [], "schema_types": [], "performance": {"mobile_score": "number|null", "source": "string|null"}, "content_depth_words": "integer|null"},

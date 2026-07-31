@@ -17,11 +17,13 @@
     "GrowthReporter"
   ],
   "permissions": [
-    "read_authorized_aggregate_metrics",
+    "read_authorized_analytics",
     "read_public_sources",
-    "write_versioned_drafts",
-    "write_append_only_audit_events"
+    "draft_recommendations",
+    "draft_content",
+    "write_audit_events"
   ],
+  "approval_required_for_external_actions": true,
   "approval_required": [
     "publish_content",
     "modify_google_business_profile",

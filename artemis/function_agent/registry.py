@@ -5,7 +5,7 @@ from __future__ import annotations
 import inspect
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, get_type_hints
 
 from pydantic import BaseModel, ConfigDict, create_model
 
@@ -68,7 +68,9 @@ class CapabilityRegistry:
         self._capabilities[capability_name] = registered
         return registered
 
-    def register_decorated(self, function: CapabilityCallable, *, replace: bool = False) -> RegisteredCapability:
+    def register_decorated(
+        self, function: CapabilityCallable, *, replace: bool = False
+    ) -> RegisteredCapability:
         metadata = getattr(function, "__artemis_capability__", None)
         if metadata is None:
             raise ValueError(f"Function {function.__name__} is not decorated with @capability")
@@ -81,18 +83,30 @@ class CapabilityRegistry:
             raise KeyError(f"Unknown capability: {name}") from exc
 
     def list(self) -> list[CapabilitySpec]:
-        return [item.spec for item in sorted(self._capabilities.values(), key=lambda item: item.spec.name)]
+        return [
+            item.spec
+            for item in sorted(self._capabilities.values(), key=lambda item: item.spec.name)
+        ]
 
     @staticmethod
     def _build_input_model(name: str, function: CapabilityCallable) -> type[BaseModel]:
         fields: dict[str, tuple[Any, Any]] = {}
+        try:
+            type_hints = get_type_hints(function)
+        except (NameError, TypeError) as exc:
+            raise TypeError(f"Capability {name} contains unresolved type annotations") from exc
+
         for parameter in inspect.signature(function).parameters.values():
             if parameter.kind in {parameter.VAR_POSITIONAL, parameter.VAR_KEYWORD}:
                 raise TypeError(f"Capability {name} may not use *args or **kwargs")
-            annotation = Any if parameter.annotation is inspect.Parameter.empty else parameter.annotation
+            annotation = type_hints.get(parameter.name, Any)
             default = ... if parameter.default is inspect.Parameter.empty else parameter.default
             fields[parameter.name] = (annotation, default)
-        model_name = "".join(part.title() for part in name.replace("-", "_").replace(".", "_").split("_"))
+
+        model_name = "".join(
+            part.title()
+            for part in name.replace("-", "_").replace(".", "_").split("_")
+        )
         return create_model(f"{model_name}Input", __base__=CapabilityInput, **fields)
 
 

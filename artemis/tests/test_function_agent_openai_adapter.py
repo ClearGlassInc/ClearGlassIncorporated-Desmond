@@ -27,13 +27,14 @@ class FakeUsage:
 
 
 class FakeResponse:
-    id = "resp-1"
-    model = "test-model"
-    status = "completed"
-    output_text = ""
-    output = [FakeFunctionCall()]
-    usage = FakeUsage()
-    _request_id = "req-1"
+    def __init__(self) -> None:
+        self.id = "resp-1"
+        self.model = "test-model"
+        self.status = "completed"
+        self.output_text = ""
+        self.output = [FakeFunctionCall()]
+        self.usage = FakeUsage()
+        self._request_id = "req-1"
 
 
 @dataclass

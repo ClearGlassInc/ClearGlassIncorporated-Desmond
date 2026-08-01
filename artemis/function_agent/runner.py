@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+from collections.abc import AsyncIterator
 from enum import StrEnum
 from typing import Any
 
@@ -132,7 +133,7 @@ class AgentRunner:
         context: ExecutionContext | None = None,
         history: list[ChatMessage] | None = None,
         approval_tokens: dict[str, str] | None = None,
-    ):  # return type intentionally inferred as AsyncIterator[LLMStreamEvent]
+    ) -> AsyncIterator[LLMStreamEvent]:
         """Stream model events while preserving the full multi-turn tool loop."""
         execution_context = context or ExecutionContext(actor="runner")
         messages = self._initial_messages(prompt, history)
@@ -151,10 +152,12 @@ class AgentRunner:
                     final_response = event.response
                 yield event
 
-            response = final_response or LLMResponse(text="".join(text_parts), tool_calls=tool_calls)
-            if final_response is not None and not tool_calls:
-                tool_calls = final_response.tool_calls
-                response = final_response
+            response = final_response or LLMResponse(text="".join(text_parts))
+            if not tool_calls:
+                tool_calls = list(response.tool_calls)
+            if tool_calls != response.tool_calls:
+                response = response.model_copy(update={"tool_calls": tool_calls})
+
             messages.append(self._assistant_message(response))
             if not tool_calls:
                 yield LLMStreamEvent(

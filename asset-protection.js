@@ -8,6 +8,10 @@
    - Marks every <img> (including ones added later) as non-draggable.
    - Blocks the context menu and drag-start on images only — text selection,
      links, and everything else on the page behave normally.
+   - Adds an unobtrusive ClearGlass watermark to opt-in
+     [data-cg-watermark] regions.
+   - Adds casual-copy friction to opt-in [data-cg-protected] regions while
+     preserving forms, editable content, keyboard navigation, and global UX.
    - Stamps a machine-readable ownership notice on window.__cgAssetNotice.
 
    This is a deterrent for casual right-click/drag copying; the authoritative
@@ -39,6 +43,36 @@
     for (var i = 0; i < imgs.length; i++) shield(imgs[i]);
   }
 
+  function installProtectionStyles() {
+    if (document.getElementById("cg-asset-protection-styles")) return;
+    var style = document.createElement("style");
+    style.id = "cg-asset-protection-styles";
+    style.textContent =
+      "[data-cg-watermark]{position:relative;isolation:isolate}" +
+      "[data-cg-watermark]::after{" +
+        "content:attr(data-cg-watermark);position:absolute;right:1rem;bottom:.75rem;" +
+        "z-index:20;pointer-events:none;color:rgba(220,245,255,.38);" +
+        "font:700 10px/1.2 Inter,system-ui,sans-serif;letter-spacing:.16em;" +
+        "text-transform:uppercase;text-shadow:0 0 12px rgba(34,211,238,.45)" +
+      "}" +
+      "[data-cg-protected],[data-cg-protected] *{-webkit-user-select:none;user-select:none}" +
+      "[data-cg-protected] input,[data-cg-protected] textarea," +
+      "[data-cg-protected] select,[data-cg-protected] [contenteditable=true]{" +
+        "-webkit-user-select:text;user-select:text" +
+      "}" +
+      "@media print{[data-cg-watermark]::after{position:fixed;right:1cm;bottom:1cm;color:#777}}";
+    document.head.appendChild(style);
+  }
+
+  function closestProtected(el) {
+    return el && el.closest ? el.closest("[data-cg-protected]") : null;
+  }
+
+  function isEditable(el) {
+    return !!(el && el.closest &&
+      el.closest("input,textarea,select,[contenteditable=true]"));
+  }
+
   function loadCyberEditorialVisual() {
     var last = (location.pathname.split("/").pop() || "").toLowerCase();
     if (last !== "cyber-defense-console.html" ||
@@ -58,6 +92,7 @@
       document.head.appendChild(meta);
     }
 
+    installProtectionStyles();
     shieldAll(document);
     loadCyberEditorialVisual();
 
@@ -70,7 +105,10 @@
     document.addEventListener("contextmenu", function (e) {
       var el = e.target;
       while (el && el !== document.body) {
-        if (isImage(el)) { e.preventDefault(); return; }
+        if (isImage(el) || (closestProtected(el) && !isEditable(el))) {
+          e.preventDefault();
+          return;
+        }
         el = el.parentElement;
       }
     });

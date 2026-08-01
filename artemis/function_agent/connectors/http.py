@@ -66,23 +66,25 @@ class AllowlistedHTTPConnector:
         }
 
         timeout = httpx.Timeout(self.timeout_seconds)
-        async with httpx.AsyncClient(timeout=timeout, follow_redirects=False) as client:
-            async with client.stream(
+        async with (
+            httpx.AsyncClient(timeout=timeout, follow_redirects=False) as client,
+            client.stream(
                 normalized_method,
                 url,
                 headers=clean_headers,
                 json=json_body,
-            ) as response:
-                chunks: list[bytes] = []
-                size = 0
-                async for chunk in response.aiter_bytes():
-                    size += len(chunk)
-                    if size > self.max_response_bytes:
-                        raise ConnectorError(
-                            f"Response exceeded {self.max_response_bytes} byte limit"
-                        )
-                    chunks.append(chunk)
-                body = b"".join(chunks)
+            ) as response,
+        ):
+            chunks: list[bytes] = []
+            size = 0
+            async for chunk in response.aiter_bytes():
+                size += len(chunk)
+                if size > self.max_response_bytes:
+                    raise ConnectorError(
+                        f"Response exceeded {self.max_response_bytes} byte limit"
+                    )
+                chunks.append(chunk)
+            body = b"".join(chunks)
 
         return {
             "url": str(response.url),

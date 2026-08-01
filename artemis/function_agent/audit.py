@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import hmac
 import json
 import threading
 from datetime import UTC, datetime
@@ -48,7 +49,7 @@ class HashChainAuditLog:
                     return False, count
                 canonical = json.dumps(envelope, sort_keys=True, separators=(",", ":"), default=str)
                 calculated = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
-                if not hashlib.compare_digest(calculated, supplied_hash):
+                if not hmac.compare_digest(calculated, supplied_hash):
                     return False, count
                 previous = supplied_hash
                 count += 1

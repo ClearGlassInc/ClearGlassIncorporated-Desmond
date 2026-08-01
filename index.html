@@ -14,21 +14,6 @@
 
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <meta charset="UTF-8"/>
-<script>
-/* First-visit boot routing — plays /loader.html once per browser session.
-   Bypass with ?skipboot=1, or visit /loader.html directly to replay. */
-(function(){
-  try {
-    var ua = navigator.userAgent || '';
-    if (/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua)) return;
-    var skip = /[?&]skipboot=1\b/.test(location.search);
-    if (skip || sessionStorage.getItem('cg.booted')) return;
-    sessionStorage.setItem('cg.booted', '1');
-    var here = location.pathname + location.search + location.hash;
-    location.replace('/loader.html?next=' + encodeURIComponent(here || '/'));
-  } catch (e) { /* storage unavailable — render normally */ }
-})();
-</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>ClearGlass Inc — AI Automation, Cybersecurity & Operational Strategy</title>
 <meta name="description" content="ClearGlass Inc. helps leaders design governed AI automation, cybersecurity programs, legal-tech workflows, OSINT systems, and enterprise operating architecture."/>
@@ -655,4 +640,3 @@ fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'
 <!-- cg-related:end -->
 </body>
 </html>
-

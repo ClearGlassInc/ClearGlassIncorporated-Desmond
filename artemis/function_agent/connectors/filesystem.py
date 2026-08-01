@@ -14,10 +14,18 @@ from .base import ConnectorError, ConnectorResponse
 class WorkspaceFileConnector:
     name = "filesystem"
 
-    def __init__(self, root: str | Path, max_read_bytes: int = 2_000_000) -> None:
+    def __init__(
+        self,
+        root: str | Path,
+        max_read_bytes: int = 2_000_000,
+        max_write_bytes: int | None = None,
+    ) -> None:
         self.root = Path(root).resolve()
         self.root.mkdir(parents=True, exist_ok=True)
         self.max_read_bytes = max_read_bytes
+        self.max_write_bytes = (
+            max_read_bytes if max_write_bytes is None else max_write_bytes
+        )
 
     async def health(self) -> ConnectorResponse:
         return ConnectorResponse(
@@ -81,8 +89,10 @@ class WorkspaceFileConnector:
             raise ConnectorError(f"Refusing to overwrite existing file: {target.name}")
         target.parent.mkdir(parents=True, exist_ok=True)
         encoded = content.encode(encoding)
-        if len(encoded) > self.max_read_bytes:
-            raise ConnectorError(f"Content exceeds {self.max_read_bytes} byte write limit")
+        if len(encoded) > self.max_write_bytes:
+            raise ConnectorError(
+                f"Content exceeds {self.max_write_bytes} byte write limit"
+            )
         file_descriptor, temporary_name = tempfile.mkstemp(
             prefix=f".{target.name}.", dir=target.parent
         )

@@ -13,6 +13,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from .audit import HashChainAuditLog
+from .guardrails import GuardrailPipeline
 from .memory import SQLiteMemory
 from .models import (
     BatchExecutionRequest,
@@ -47,6 +48,7 @@ class FunctionAgent:
         registry: CapabilityRegistry | None = None,
         policy: AgentPolicy | None = None,
         approvals: ApprovalManager | None = None,
+        guardrails: GuardrailPipeline | None = None,
         settings: FunctionAgentSettings | None = None,
     ) -> None:
         self.registry = registry or CapabilityRegistry()
@@ -54,6 +56,7 @@ class FunctionAgent:
         self.settings = settings or FunctionAgentSettings()
         self.settings.state_dir.mkdir(parents=True, exist_ok=True)
         self.approvals = approvals or ApprovalManager()
+        self.guardrails = guardrails or GuardrailPipeline()
         self.memory = SQLiteMemory(self.settings.state_dir / "memory.sqlite3")
         self.audit = HashChainAuditLog(self.settings.state_dir / "audit.jsonl")
         self._failures: dict[str, deque[float]] = defaultdict(deque)
@@ -71,6 +74,17 @@ class FunctionAgent:
                 started_wall,
                 started_perf,
                 error=str(exc),
+            )
+
+        try:
+            await self.guardrails.validate_input(request)
+        except Exception as exc:  # noqa: BLE001 - guardrail failures are contained
+            return self._finalize(
+                request,
+                ExecutionStatus.DENIED,
+                started_wall,
+                started_perf,
+                error=f"{type(exc).__name__}: {exc}",
             )
 
         policy_result = self.policy.evaluate(registered.spec, request.context)
@@ -122,6 +136,7 @@ class FunctionAgent:
             self._assert_circuit_closed(request.capability)
             output = await self._invoke_with_retries(registered, request.arguments)
             normalized = self._normalize_output(output)
+            await self.guardrails.validate_output(request, normalized)
             self._record_success(request.capability)
             if registered.spec.idempotent and self.settings.idempotency_ttl_seconds:
                 self.memory.set(

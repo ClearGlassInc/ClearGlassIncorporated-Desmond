@@ -1,6 +1,6 @@
 # ClearGlassInc — Guardian & Artemis Sales Brain Output
 
-- Generated (UTC): 2026-07-31T09:43:27+00:00
+- Generated (UTC): 2026-08-01T09:05:01+00:00
 - Prompt source: `prompts/sales_guardian_artemis_system_prompt.md`
 - Audiences covered: 3
 
@@ -38,10 +38,10 @@ We are not raising to *build* — we are raising to *capture*. The pilots that c
 **CTA:** Open a data room conversation — 30 minutes, founder + architecture deep-dive.
 
 ### 30-Second Elevator Pitch
-Most investors leaders are running 2020 architectures against 2026 adversaries. ClearGlassInc built two systems to close that gap. Guardian is the autonomous intelligence shield — it sees, evidences, and defends in real time. Artemis is the predictive execution engine — it prioritizes and acts inside the adversary's decision loop. Together they replace a category, not a tool. Open a data room conversation — 30 minutes, founder + architecture deep-dive.
+Most investor leaders are running 2020 architectures against 2026 adversaries. ClearGlassInc built two systems to close that gap. Guardian is the autonomous intelligence shield — it sees, evidences, and defends in real time. Artemis is the predictive execution engine — it prioritizes and acts inside the adversary's decision loop. Together they replace a category, not a tool. Open a data room conversation — 30 minutes, founder + architecture deep-dive.
 
 ### Investor / Partner Hook (1 paragraph)
-ClearGlassInc is building the AI-native defense + execution stack the next decade of cybersecurity will be measured against. Guardian is the intelligence shield; Artemis is the autonomous execution engine. Together they collapse detection-to-response from days to seconds, fuse cyber, legal, and intelligence signal into a single sovereign platform, and replace categories — not products — across enterprise, financial, and government markets. We are positioned to capture the investors buyer at the exact procurement inflection point that defines the next decade of cyber spend.
+ClearGlassInc is building the AI-native defense + execution stack the next decade of cybersecurity will be measured against. Guardian is the intelligence shield; Artemis is the autonomous execution engine. Together they collapse detection-to-response from days to seconds, fuse cyber, legal, and intelligence signal into a single sovereign platform, and replace categories — not products — across enterprise, financial, and government markets. We are positioned to capture the investor buyer at the exact procurement inflection point that defines the next decade of cyber spend.
 
 ### Tagline Options
 

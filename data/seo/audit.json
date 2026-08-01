@@ -1,25 +1,25 @@
 {
-  "generated": "2026-07-31T09:27:14+00:00",
+  "generated": "2026-08-01T08:55:14+00:00",
   "site": "https://www.clearglassinc.com",
   "score": 78,
   "totals": {
-    "pages": 146,
-    "indexable": 135,
-    "in_sitemap": 135,
+    "pages": 148,
+    "indexable": 137,
+    "in_sitemap": 137,
     "noindex": 10,
-    "with_schema": 48,
+    "with_schema": 50,
     "errors": 0,
-    "warnings": 118,
-    "info": 41
+    "warnings": 119,
+    "info": 40
   },
   "by_check": {
     "description.length": 64,
     "title.length": 45,
-    "heading.order": 40,
+    "heading.order": 38,
+    "schema.required": 3,
     "h1.multiple": 3,
     "weight": 2,
-    "schema.required": 2,
-    "image.alt": 1,
+    "image.alt": 2,
     "title.duplicate": 1,
     "description.duplicate": 1
   },
@@ -34,7 +34,7 @@
       "page": "ClearGlass-NEXUS-v12-FINAL.html",
       "level": "warn",
       "check": "weight",
-      "message": "306 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
+      "message": "307 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
     },
     {
       "page": "ClearGlass-NEXUS-v12-FINAL.html, clearglass-nexus.html",
@@ -149,6 +149,12 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 180 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/canada-digital-control-architecture-charter.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 79 chars; over ~62 it is truncated in results."
     },
     {
       "page": "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
@@ -327,14 +333,8 @@
     {
       "page": "blog/index.html",
       "level": "warn",
-      "check": "title.length",
-      "message": "Title is 68 chars; over ~62 it is truncated in results."
-    },
-    {
-      "page": "blog/index.html",
-      "level": "warn",
-      "check": "description.length",
-      "message": "Meta description is 203 chars; Google truncates near 165."
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -430,7 +430,7 @@
       "page": "clearglass-nexus.html",
       "level": "warn",
       "check": "weight",
-      "message": "381 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
+      "message": "382 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
     },
     {
       "page": "clearglass-ultra.html",
@@ -733,6 +733,12 @@
       "message": "Title is 70 chars; over ~62 it is truncated in results."
     },
     {
+      "page": "xenolith.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 248 chars; Google truncates near 165."
+    },
+    {
       "page": "CG-os.html",
       "level": "info",
       "check": "heading.order",
@@ -837,8 +843,8 @@
     {
       "page": "blog/index.html",
       "level": "info",
-      "check": "heading.order",
-      "message": "Heading level jumps from h2 to h4 \u2014 skipped levels weaken outline parsing."
+      "check": "image.alt",
+      "message": "1 image(s) missing alt text."
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -899,12 +905,6 @@
       "level": "info",
       "check": "heading.order",
       "message": "Heading level jumps from h1 to h4 \u2014 skipped levels weaken outline parsing."
-    },
-    {
-      "page": "index.html",
-      "level": "info",
-      "check": "heading.order",
-      "message": "Heading level jumps from h1 to h3 \u2014 skipped levels weaken outline parsing."
     },
     {
       "page": "intelligence.html",
@@ -996,7 +996,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 3952,
+      "bytes": 3925,
       "inbound_links": 0
     },
     {
@@ -1015,7 +1015,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 55131,
+      "bytes": 56133,
       "inbound_links": 7
     },
     {
@@ -1034,7 +1034,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 313416,
+      "bytes": 314435,
       "inbound_links": 8
     },
     {
@@ -1053,7 +1053,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 91813,
+      "bytes": 92809,
       "inbound_links": 10
     },
     {
@@ -1072,8 +1072,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 50082,
-      "inbound_links": 14
+      "bytes": 51084,
+      "inbound_links": 16
     },
     {
       "page": "aegis.html",
@@ -1091,8 +1091,8 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 23985,
-      "inbound_links": 13
+      "bytes": 24987,
+      "inbound_links": 14
     },
     {
       "page": "agentmesh.html",
@@ -1110,8 +1110,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 21468,
-      "inbound_links": 21
+      "bytes": 22470,
+      "inbound_links": 22
     },
     {
       "page": "ai-operator.html",
@@ -1129,8 +1129,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 47902,
-      "inbound_links": 45
+      "bytes": 48904,
+      "inbound_links": 44
     },
     {
       "page": "air-control.html",
@@ -1148,7 +1148,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 57293,
+      "bytes": 58283,
       "inbound_links": 10
     },
     {
@@ -1167,7 +1167,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 24945,
+      "bytes": 25947,
       "inbound_links": 12
     },
     {
@@ -1186,7 +1186,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 21167,
+      "bytes": 22169,
       "inbound_links": 9
     },
     {
@@ -1212,7 +1212,7 @@
       ],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 21776,
+      "bytes": 22805,
       "inbound_links": 12
     },
     {
@@ -1231,7 +1231,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 30077,
+      "bytes": 31079,
       "inbound_links": 9
     },
     {
@@ -1253,7 +1253,7 @@
       ],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 5411,
+      "bytes": 6440,
       "inbound_links": 1
     },
     {
@@ -1272,7 +1272,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 168431,
+      "bytes": 169433,
       "inbound_links": 39
     },
     {
@@ -1291,7 +1291,7 @@
       "schema_types": [],
       "internal_links": 29,
       "images_missing_alt": 0,
-      "bytes": 48783,
+      "bytes": 49785,
       "inbound_links": 22
     },
     {
@@ -1310,7 +1310,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 123460,
+      "bytes": 124462,
       "inbound_links": 13
     },
     {
@@ -1329,7 +1329,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 16012,
+      "bytes": 17041,
       "inbound_links": 16
     },
     {
@@ -1348,7 +1348,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 42507,
+      "bytes": 43529,
       "inbound_links": 27
     },
     {
@@ -1367,7 +1367,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 16038,
+      "bytes": 17040,
       "inbound_links": 8
     },
     {
@@ -1386,9 +1386,9 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 162,
+      "internal_links": 164,
       "images_missing_alt": 0,
-      "bytes": 34142,
+      "bytes": 35352,
       "inbound_links": 10
     },
     {
@@ -1410,7 +1410,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 1,
-      "bytes": 50575,
+      "bytes": 51577,
       "inbound_links": 8
     },
     {
@@ -1429,7 +1429,7 @@
       "schema_types": [],
       "internal_links": 35,
       "images_missing_alt": 0,
-      "bytes": 68105,
+      "bytes": 69107,
       "inbound_links": 11
     },
     {
@@ -1455,8 +1455,8 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 42102,
-      "inbound_links": 31
+      "bytes": 43104,
+      "inbound_links": 34
     },
     {
       "page": "blog/ai-agents-insider-threat.html",
@@ -1481,8 +1481,8 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 43326,
-      "inbound_links": 16
+      "bytes": 44328,
+      "inbound_links": 17
     },
     {
       "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
@@ -1513,7 +1513,7 @@
       ],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 47545,
+      "bytes": 48594,
       "inbound_links": 7
     },
     {
@@ -1532,7 +1532,7 @@
       "schema_types": [],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 43965,
+      "bytes": 44967,
       "inbound_links": 5
     },
     {
@@ -1555,8 +1555,8 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 18402,
-      "inbound_links": 5
+      "bytes": 19404,
+      "inbound_links": 7
     },
     {
       "page": "blog/autonomous-threat-modeling-2026.html",
@@ -1581,8 +1581,32 @@
       ],
       "internal_links": 29,
       "images_missing_alt": 0,
-      "bytes": 41778,
+      "bytes": 42780,
       "inbound_links": 11
+    },
+    {
+      "page": "blog/canada-digital-control-architecture-charter.html",
+      "url": "https://www.clearglassinc.com/blog/canada-digital-control-architecture-charter.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Canada\u2019s New Digital-Control Architecture: Safety, Surveillance and the Charter",
+      "title_length": 79,
+      "description": "A source-led analysis of Canada\u2019s proposed digital-safety and lawful-access architecture, age assurance, encryption, platform governance and Charter safeguards.",
+      "description_length": 160,
+      "canonical": "https://www.clearglassinc.com/blog/canada-digital-control-architecture-charter.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject"
+      ],
+      "internal_links": 15,
+      "images_missing_alt": 0,
+      "bytes": 29759,
+      "inbound_links": 8
     },
     {
       "page": "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
@@ -1604,10 +1628,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 12,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 30307,
-      "inbound_links": 5
+      "bytes": 31524,
+      "inbound_links": 7
     },
     {
       "page": "blog/clearglass-agentops-microsoft-foundry-future-stack.html",
@@ -1629,7 +1653,7 @@
       ],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 34064,
+      "bytes": 35075,
       "inbound_links": 11
     },
     {
@@ -1652,8 +1676,8 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 16326,
-      "inbound_links": 7
+      "bytes": 17337,
+      "inbound_links": 9
     },
     {
       "page": "blog/clearglass-platform-audit-2026.html",
@@ -1678,8 +1702,8 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 44428,
-      "inbound_links": 8
+      "bytes": 45430,
+      "inbound_links": 9
     },
     {
       "page": "blog/clearglass-secure-deployment-agent.html",
@@ -1704,7 +1728,7 @@
       ],
       "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 47862,
+      "bytes": 48864,
       "inbound_links": 10
     },
     {
@@ -1727,7 +1751,7 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 32383,
+      "bytes": 33385,
       "inbound_links": 7
     },
     {
@@ -1753,8 +1777,8 @@
       ],
       "internal_links": 5,
       "images_missing_alt": 0,
-      "bytes": 25474,
-      "inbound_links": 1
+      "bytes": 26482,
+      "inbound_links": 2
     },
     {
       "page": "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html",
@@ -1777,7 +1801,7 @@
       ],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 25978,
+      "bytes": 27007,
       "inbound_links": 2
     },
     {
@@ -1803,8 +1827,8 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 42434,
-      "inbound_links": 7
+      "bytes": 43436,
+      "inbound_links": 8
     },
     {
       "page": "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html",
@@ -1829,8 +1853,8 @@
       ],
       "internal_links": 30,
       "images_missing_alt": 0,
-      "bytes": 73008,
-      "inbound_links": 15
+      "bytes": 74010,
+      "inbound_links": 16
     },
     {
       "page": "blog/coffee-and-technology-digital-revolution.html",
@@ -1854,7 +1878,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 27250,
+      "bytes": 28274,
       "inbound_links": 7
     },
     {
@@ -1881,8 +1905,8 @@
       ],
       "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 41913,
-      "inbound_links": 19
+      "bytes": 42915,
+      "inbound_links": 20
     },
     {
       "page": "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
@@ -1907,8 +1931,8 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 23615,
-      "inbound_links": 9
+      "bytes": 24644,
+      "inbound_links": 11
     },
     {
       "page": "blog/ethical-sales-system-100k-revenue-prompt.html",
@@ -1930,7 +1954,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 19090,
+      "bytes": 20092,
       "inbound_links": 8
     },
     {
@@ -1956,7 +1980,7 @@
       ],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 45788,
+      "bytes": 46790,
       "inbound_links": 8
     },
     {
@@ -1979,8 +2003,8 @@
       ],
       "internal_links": 3,
       "images_missing_alt": 0,
-      "bytes": 14876,
-      "inbound_links": 1
+      "bytes": 15902,
+      "inbound_links": 2
     },
     {
       "page": "blog/index.html",
@@ -1989,19 +2013,16 @@
       "noindex": false,
       "in_sitemap": true,
       "robots_blocked": null,
-      "title": "ClearGlass Intelligence | Governed AI, Cyber Defense & OSINT Systems",
-      "title_length": 68,
-      "description": "ClearGlass Intelligence helps serious builders understand governed AI, cyber defense, OSINT, autonomy, and security playbooks through tactical intelligence briefs and professional-grade systems thinking.",
-      "description_length": 203,
+      "title": "ClearGlass Intelligence | Cyber Defense, Governed AI & OSINT",
+      "title_length": 60,
+      "description": "Mission-ready cyber intelligence, governed AI architecture, OSINT tradecraft, and strategic analysis from ClearGlass Inc.",
+      "description_length": 121,
       "canonical": "https://www.clearglassinc.com/blog/",
       "h1_count": 1,
       "schema_types": [
-        "WebSite",
-        "SearchAction",
-        "Organization",
         "Blog",
+        "Organization",
         "BreadcrumbList",
-        "ListItem",
         "ListItem",
         "ListItem",
         "ItemList",
@@ -2015,12 +2036,27 @@
         "ListItem",
         "ListItem",
         "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
         "ListItem"
       ],
-      "internal_links": 56,
-      "images_missing_alt": 0,
-      "bytes": 115078,
-      "inbound_links": 114
+      "internal_links": 70,
+      "images_missing_alt": 1,
+      "bytes": 81898,
+      "inbound_links": 117
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -2042,7 +2078,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 22860,
+      "bytes": 23871,
       "inbound_links": 6
     },
     {
@@ -2067,7 +2103,7 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 36355,
+      "bytes": 37381,
       "inbound_links": 7
     },
     {
@@ -2094,8 +2130,8 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 41838,
-      "inbound_links": 14
+      "bytes": 42840,
+      "inbound_links": 15
     },
     {
       "page": "blog/post-quantum-security-advisor-clearglass-artemis.html",
@@ -2120,7 +2156,7 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 19594,
+      "bytes": 20623,
       "inbound_links": 7
     },
     {
@@ -2139,8 +2175,8 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 12722,
-      "inbound_links": 8
+      "bytes": 13724,
+      "inbound_links": 6
     },
     {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
@@ -2164,8 +2200,8 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 26664,
-      "inbound_links": 5
+      "bytes": 27732,
+      "inbound_links": 8
     },
     {
       "page": "blog/zero-trust-is-outdated-adaptive-trust.html",
@@ -2190,7 +2226,7 @@
       ],
       "internal_links": 28,
       "images_missing_alt": 0,
-      "bytes": 35394,
+      "bytes": 36423,
       "inbound_links": 9
     },
     {
@@ -2216,8 +2252,8 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 44329,
-      "inbound_links": 9
+      "bytes": 45331,
+      "inbound_links": 10
     },
     {
       "page": "bluedesk-mobile.html",
@@ -2235,7 +2271,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 24270,
+      "bytes": 25272,
       "inbound_links": 9
     },
     {
@@ -2254,7 +2290,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 147167,
+      "bytes": 148169,
       "inbound_links": 39
     },
     {
@@ -2273,7 +2309,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 13669,
+      "bytes": 14671,
       "inbound_links": 8
     },
     {
@@ -2292,7 +2328,7 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 6480,
+      "bytes": 7482,
       "inbound_links": 10
     },
     {
@@ -2311,7 +2347,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 28691,
+      "bytes": 28664,
       "inbound_links": 0
     },
     {
@@ -2330,7 +2366,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 390889,
+      "bytes": 391891,
       "inbound_links": 22
     },
     {
@@ -2352,7 +2388,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 26964,
+      "bytes": 27993,
       "inbound_links": 8
     },
     {
@@ -2371,7 +2407,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 43516,
+      "bytes": 44512,
       "inbound_links": 9
     },
     {
@@ -2394,7 +2430,7 @@
       ],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 43532,
+      "bytes": 44534,
       "inbound_links": 7
     },
     {
@@ -2413,7 +2449,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 35918,
+      "bytes": 36920,
       "inbound_links": 19
     },
     {
@@ -2432,7 +2468,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 39770,
+      "bytes": 40772,
       "inbound_links": 7
     },
     {
@@ -2451,7 +2487,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 28093,
+      "bytes": 29107,
       "inbound_links": 12
     },
     {
@@ -2470,7 +2506,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 48953,
+      "bytes": 49955,
       "inbound_links": 9
     },
     {
@@ -2489,7 +2525,7 @@
       "schema_types": [],
       "internal_links": 54,
       "images_missing_alt": 0,
-      "bytes": 114913,
+      "bytes": 115915,
       "inbound_links": 15
     },
     {
@@ -2508,7 +2544,7 @@
       "schema_types": [],
       "internal_links": 29,
       "images_missing_alt": 0,
-      "bytes": 45708,
+      "bytes": 46692,
       "inbound_links": 11
     },
     {
@@ -2527,7 +2563,7 @@
       "schema_types": [],
       "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 88283,
+      "bytes": 89285,
       "inbound_links": 8
     },
     {
@@ -2546,7 +2582,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 43380,
+      "bytes": 44382,
       "inbound_links": 11
     },
     {
@@ -2565,7 +2601,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 63941,
+      "bytes": 64943,
       "inbound_links": 33
     },
     {
@@ -2584,7 +2620,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 19790,
+      "bytes": 20792,
       "inbound_links": 11
     },
     {
@@ -2603,7 +2639,7 @@
       "schema_types": [],
       "internal_links": 28,
       "images_missing_alt": 0,
-      "bytes": 37373,
+      "bytes": 38375,
       "inbound_links": 18
     },
     {
@@ -2622,7 +2658,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 22514,
+      "bytes": 23516,
       "inbound_links": 8
     },
     {
@@ -2677,8 +2713,8 @@
       ],
       "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 54017,
-      "inbound_links": 44
+      "bytes": 55019,
+      "inbound_links": 43
     },
     {
       "page": "guardian.html",
@@ -2696,8 +2732,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 143059,
-      "inbound_links": 69
+      "bytes": 144061,
+      "inbound_links": 68
     },
     {
       "page": "header-mockup-2040.html",
@@ -2715,7 +2751,7 @@
       "schema_types": [],
       "internal_links": 6,
       "images_missing_alt": 0,
-      "bytes": 20138,
+      "bytes": 21167,
       "inbound_links": 0
     },
     {
@@ -2734,7 +2770,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 18202,
+      "bytes": 19204,
       "inbound_links": 8
     },
     {
@@ -2783,8 +2819,8 @@
       ],
       "internal_links": 208,
       "images_missing_alt": 0,
-      "bytes": 160226,
-      "inbound_links": 516
+      "bytes": 155141,
+      "inbound_links": 517
     },
     {
       "page": "intelligence-command-surface.html",
@@ -2802,7 +2838,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 18177,
+      "bytes": 19179,
       "inbound_links": 13
     },
     {
@@ -2821,7 +2857,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 13511,
+      "bytes": 14534,
       "inbound_links": 11
     },
     {
@@ -2840,8 +2876,8 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 19585,
-      "inbound_links": 8
+      "bytes": 20623,
+      "inbound_links": 9
     },
     {
       "page": "intelligence.html",
@@ -2857,10 +2893,10 @@
       "canonical": "https://www.clearglassinc.com/intelligence.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 14337,
-      "inbound_links": 26
+      "bytes": 15481,
+      "inbound_links": 27
     },
     {
       "page": "investors/index.html",
@@ -2878,7 +2914,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 5854,
+      "bytes": 6856,
       "inbound_links": 5
     },
     {
@@ -2902,7 +2938,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 11216,
+      "bytes": 12245,
       "inbound_links": 7
     },
     {
@@ -2921,7 +2957,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25330,
+      "bytes": 26332,
       "inbound_links": 10
     },
     {
@@ -2940,7 +2976,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 20941,
+      "bytes": 21943,
       "inbound_links": 9
     },
     {
@@ -2959,7 +2995,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 24332,
+      "bytes": 25334,
       "inbound_links": 7
     },
     {
@@ -2978,7 +3014,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 23800,
+      "bytes": 24802,
       "inbound_links": 6
     },
     {
@@ -3002,7 +3038,7 @@
       ],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 9392,
+      "bytes": 10421,
       "inbound_links": 8
     },
     {
@@ -3021,7 +3057,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 22871,
+      "bytes": 23873,
       "inbound_links": 6
     },
     {
@@ -3040,8 +3076,8 @@
       "schema_types": [],
       "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 21731,
-      "inbound_links": 62
+      "bytes": 22733,
+      "inbound_links": 63
     },
     {
       "page": "legal/ip-assignment.html",
@@ -3059,7 +3095,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 23675,
+      "bytes": 24677,
       "inbound_links": 6
     },
     {
@@ -3078,7 +3114,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 34491,
+      "bytes": 35493,
       "inbound_links": 7
     },
     {
@@ -3097,7 +3133,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 23033,
+      "bytes": 24035,
       "inbound_links": 10
     },
     {
@@ -3116,7 +3152,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 24353,
+      "bytes": 25355,
       "inbound_links": 37
     },
     {
@@ -3135,7 +3171,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 21497,
+      "bytes": 22499,
       "inbound_links": 6
     },
     {
@@ -3154,7 +3190,7 @@
       "schema_types": [],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 24083,
+      "bytes": 25085,
       "inbound_links": 33
     },
     {
@@ -3173,7 +3209,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 26721,
+      "bytes": 26814,
       "inbound_links": 0
     },
     {
@@ -3196,7 +3232,7 @@
       ],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 20803,
+      "bytes": 21805,
       "inbound_links": 7
     },
     {
@@ -3215,7 +3251,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 14736,
+      "bytes": 15738,
       "inbound_links": 10
     },
     {
@@ -3234,7 +3270,7 @@
       "schema_types": [],
       "internal_links": 23,
       "images_missing_alt": 0,
-      "bytes": 37413,
+      "bytes": 38415,
       "inbound_links": 68
     },
     {
@@ -3253,7 +3289,7 @@
       "schema_types": [],
       "internal_links": 6,
       "images_missing_alt": 0,
-      "bytes": 9840,
+      "bytes": 10842,
       "inbound_links": 6
     },
     {
@@ -3272,7 +3308,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 12182,
+      "bytes": 13184,
       "inbound_links": 8
     },
     {
@@ -3291,7 +3327,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 11464,
+      "bytes": 12466,
       "inbound_links": 19
     },
     {
@@ -3310,7 +3346,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 2482,
+      "bytes": 3484,
       "inbound_links": 0
     },
     {
@@ -3329,7 +3365,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 4358,
+      "bytes": 4331,
       "inbound_links": 0
     },
     {
@@ -3348,7 +3384,7 @@
       "schema_types": [],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 14187,
+      "bytes": 15189,
       "inbound_links": 11
     },
     {
@@ -3367,7 +3403,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 6749,
+      "bytes": 7751,
       "inbound_links": 8
     },
     {
@@ -3386,7 +3422,7 @@
       "schema_types": [],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 17187,
+      "bytes": 18189,
       "inbound_links": 10
     },
     {
@@ -3405,7 +3441,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 17075,
+      "bytes": 18077,
       "inbound_links": 6
     },
     {
@@ -3424,7 +3460,7 @@
       "schema_types": [],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 17593,
+      "bytes": 18595,
       "inbound_links": 7
     },
     {
@@ -3443,7 +3479,7 @@
       "schema_types": [],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 24777,
+      "bytes": 25779,
       "inbound_links": 37
     },
     {
@@ -3462,7 +3498,7 @@
       "schema_types": [],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 17001,
+      "bytes": 18003,
       "inbound_links": 6
     },
     {
@@ -3481,7 +3517,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 34160,
+      "bytes": 35162,
       "inbound_links": 7
     },
     {
@@ -3500,8 +3536,8 @@
       "schema_types": [],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 69870,
-      "inbound_links": 42
+      "bytes": 70872,
+      "inbound_links": 43
     },
     {
       "page": "platform-command-center.html",
@@ -3519,7 +3555,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 57117,
+      "bytes": 58125,
       "inbound_links": 4
     },
     {
@@ -3538,7 +3574,7 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 36928,
+      "bytes": 37930,
       "inbound_links": 10
     },
     {
@@ -3570,8 +3606,8 @@
       ],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 25382,
-      "inbound_links": 117
+      "bytes": 26384,
+      "inbound_links": 119
     },
     {
       "page": "procurement-legal-tech.html",
@@ -3589,7 +3625,7 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 51457,
+      "bytes": 52459,
       "inbound_links": 15
     },
     {
@@ -3608,10 +3644,10 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 162,
+      "internal_links": 164,
       "images_missing_alt": 0,
-      "bytes": 39579,
-      "inbound_links": 6
+      "bytes": 40985,
+      "inbound_links": 8
     },
     {
       "page": "products/opal-koboi/artemis-iv-core.html",
@@ -3629,7 +3665,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 7239,
+      "bytes": 8241,
       "inbound_links": 9
     },
     {
@@ -3648,7 +3684,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 7239,
+      "bytes": 8241,
       "inbound_links": 9
     },
     {
@@ -3667,7 +3703,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 7230,
+      "bytes": 8232,
       "inbound_links": 9
     },
     {
@@ -3686,7 +3722,7 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 8333,
+      "bytes": 9335,
       "inbound_links": 8
     },
     {
@@ -3705,7 +3741,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 7260,
+      "bytes": 8262,
       "inbound_links": 9
     },
     {
@@ -3724,7 +3760,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 7228,
+      "bytes": 8230,
       "inbound_links": 10
     },
     {
@@ -3743,7 +3779,7 @@
       "schema_types": [],
       "internal_links": 50,
       "images_missing_alt": 0,
-      "bytes": 55850,
+      "bytes": 56852,
       "inbound_links": 19
     },
     {
@@ -3762,7 +3798,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 25483,
+      "bytes": 26485,
       "inbound_links": 7
     },
     {
@@ -3785,7 +3821,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 24770,
+      "bytes": 25778,
       "inbound_links": 16
     },
     {
@@ -3804,7 +3840,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 56154,
+      "bytes": 57156,
       "inbound_links": 14
     },
     {
@@ -3823,7 +3859,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 13884,
+      "bytes": 14913,
       "inbound_links": 0
     },
     {
@@ -3842,7 +3878,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 14644,
+      "bytes": 15673,
       "inbound_links": 0
     },
     {
@@ -3861,7 +3897,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 39224,
+      "bytes": 40232,
       "inbound_links": 0
     },
     {
@@ -3889,7 +3925,7 @@
       ],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 106256,
+      "bytes": 107276,
       "inbound_links": 11
     },
     {
@@ -3912,7 +3948,7 @@
       ],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 93567,
+      "bytes": 94563,
       "inbound_links": 12
     },
     {
@@ -3947,7 +3983,7 @@
       ],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 8525,
+      "bytes": 9527,
       "inbound_links": 20
     },
     {
@@ -3966,7 +4002,7 @@
       "schema_types": [],
       "internal_links": 8,
       "images_missing_alt": 0,
-      "bytes": 14931,
+      "bytes": 15933,
       "inbound_links": 11
     },
     {
@@ -4000,8 +4036,8 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 31801,
-      "inbound_links": 139
+      "bytes": 32797,
+      "inbound_links": 142
     },
     {
       "page": "systems.html",
@@ -4019,7 +4055,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 34055,
+      "bytes": 35057,
       "inbound_links": 10
     },
     {
@@ -4038,7 +4074,7 @@
       "schema_types": [],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 61828,
+      "bytes": 62830,
       "inbound_links": 12
     },
     {
@@ -4057,7 +4093,7 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 22088,
+      "bytes": 23072,
       "inbound_links": 12
     },
     {
@@ -4076,7 +4112,7 @@
       "schema_types": [],
       "internal_links": 23,
       "images_missing_alt": 0,
-      "bytes": 35329,
+      "bytes": 36331,
       "inbound_links": 8
     },
     {
@@ -4130,8 +4166,30 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 101397,
+      "bytes": 102399,
       "inbound_links": 18
+    },
+    {
+      "page": "xenolith.html",
+      "url": "https://www.clearglassinc.com/xenolith.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "XENOLITH \u2014 Sovereign Intelligence Lattice | ClearGlass Inc.",
+      "title_length": 59,
+      "description": "XENOLITH is the ClearGlass sovereign intelligence lattice: a governed, multi-domain command substrate uniting executive orchestration, intelligence fusion, cyber defense, threat intelligence and autonomous agents behind one fail-closed policy gate.",
+      "description_length": 248,
+      "canonical": "https://www.clearglassinc.com/xenolith.html",
+      "h1_count": 1,
+      "schema_types": [
+        "SoftwareApplication",
+        "Organization"
+      ],
+      "internal_links": 17,
+      "images_missing_alt": 0,
+      "bytes": 49207,
+      "inbound_links": 7
     }
   ]
 }

@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="/favicon-32.png">
-<link rel="alternate icon" href="/favicon-32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/logo.png" sizes="any">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="alternate icon" href="/logo.png">
+<link rel="apple-touch-icon" href="/logo.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#07111f">
@@ -1077,6 +1077,19 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 /* ── ENHANCED GAUGE RING ─────────────────────────────────────────────────── */
 #gauge-arc { filter:drop-shadow(0 0 4px currentColor); }
 
+/* ── NEXUS QUANTUM COMMAND FABRIC (additive v12.4 enhancement) ── */
+.nq-shell{position:relative;isolation:isolate;overflow:hidden;border-color:rgba(0,221,255,.35);background:linear-gradient(145deg,rgba(2,4,18,.94),rgba(10,1,26,.92));box-shadow:0 0 28px rgba(0,221,255,.1),inset 0 0 38px rgba(55,10,245,.08)}
+.nq-shell::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(0,221,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,221,255,.045) 1px,transparent 1px);background-size:26px 26px;mask-image:linear-gradient(to bottom,#000,transparent)}
+.nq-shell::after{content:'';position:absolute;inset:-70% -20%;z-index:-1;pointer-events:none;background:conic-gradient(from 90deg,transparent,rgba(0,221,255,.12),transparent 24%,rgba(204,102,255,.12),transparent 48%);animation:nqAurora 18s linear infinite}
+.nq-grid{display:grid;grid-template-columns:1.25fr .9fr .9fr;gap:8px;padding:10px}.nq-panel{min-width:0;border:1px solid rgba(0,221,255,.16);border-radius:3px;background:rgba(0,0,0,.42);padding:10px;box-shadow:inset 0 0 22px rgba(0,221,255,.035)}
+.nq-kicker{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:5.5px;letter-spacing:2px;color:var(--cy)}.nq-canvas{display:block;width:100%;height:172px;border:1px solid rgba(0,221,255,.1);background:radial-gradient(circle at 50% 50%,rgba(55,10,245,.12),transparent 62%)}
+.nq-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:7px}.nq-metric{padding:6px;border:1px solid rgba(204,102,255,.13);background:rgba(204,102,255,.025)}.nq-metric b{display:block;font-size:12px;color:var(--cy);text-shadow:0 0 12px rgba(0,221,255,.55)}.nq-metric span{font-size:4.5px;letter-spacing:1.2px;color:var(--wt3)}
+.nq-stage{position:relative;padding:7px 7px 7px 18px;margin-bottom:5px;border:1px solid rgba(55,10,245,.12);background:rgba(55,10,245,.025);font-size:6px;color:var(--wt2)}.nq-stage::before{content:'';position:absolute;left:7px;top:50%;width:5px;height:5px;transform:translateY(-50%);border-radius:50%;background:var(--wt3)}.nq-stage.active{color:var(--cy);border-color:rgba(0,221,255,.34);box-shadow:0 0 14px rgba(0,221,255,.08)}.nq-stage.active::before{background:var(--cy);box-shadow:0 0 8px var(--cy);animation:pulse 1.5s infinite}.nq-stage.locked::before{background:var(--pu);box-shadow:0 0 7px var(--pu)}
+.nq-controls{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.nq-btn{appearance:none;border:1px solid rgba(0,221,255,.28);border-radius:2px;padding:5px 8px;background:rgba(0,221,255,.045);color:var(--cy);font:600 5.5px 'IBM Plex Mono',monospace;letter-spacing:1px;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s}.nq-btn:hover,.nq-btn:focus-visible{transform:translateY(-1px);border-color:var(--cy);box-shadow:0 0 14px rgba(0,221,255,.24);outline:none}.nq-btn[aria-pressed="true"]{background:rgba(0,221,255,.14)}.nq-btn.purple{color:var(--pu);border-color:rgba(204,102,255,.3)}
+.nq-audit{min-height:56px;margin-top:7px;padding:7px;border-left:2px solid var(--pu);background:rgba(204,102,255,.04);font-size:5.5px;line-height:1.65;color:var(--wt2)}.nq-audit strong{color:var(--pu);letter-spacing:1px}.nq-signal{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid rgba(0,221,255,.07);font-size:5.5px;color:var(--wt2)}.nq-signal i{width:6px;height:6px;border-radius:50%;background:var(--gn);box-shadow:0 0 8px var(--gn);flex:0 0 auto}.nq-signal meter{width:54px;height:4px;margin-left:auto;accent-color:var(--cy)}
+@keyframes nqAurora{to{transform:rotate(360deg)}}@media(max-width:900px){.nq-grid{grid-template-columns:1fr}.nq-canvas{height:150px}}@media(prefers-reduced-motion:reduce){.nq-shell::after{animation:none}.nq-stage.active::before{animation:none}}
+
+
 </style>
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="theme.css">
@@ -1775,6 +1788,33 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
       <div class="wb"><span class="wt">RECOMMENDATIONS</span><span class="bdg bgn" id="rec-badge">COMPUTING</span></div>
       <div class="wbody win-scroll" id="rec-content" style="max-height:220px">
         <div class="ph"><div class="ph-t">GENERATING ACTIONS…</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- NEXUS v12.4 — additive governed command-fabric demonstration -->
+<section id="quantum-command-fabric" aria-labelledby="nq-title">
+  <div class="sh"><span class="sh-t" id="nq-title">QUANTUM COMMAND FABRIC</span><span class="sh-c">GOVERNED MULTI-AGENT DECISION SUPPORT · LOCAL DEMONSTRATION</span></div>
+  <div class="win nq-shell">
+    <div class="wb"><span class="wt">NEON SYNAPTIC MESH</span><span class="bdg bcy" id="nq-mode">OBSERVE MODE</span></div>
+    <div class="nq-grid">
+      <div class="nq-panel">
+        <div class="nq-kicker"><span>AGENT TOPOLOGY</span><span>LOCAL SIMULATION</span></div>
+        <canvas class="nq-canvas" id="nq-canvas" width="720" height="344" aria-label="Animated visualization of a governed agent network"></canvas>
+        <div class="nq-metrics" aria-label="Agent mesh metrics"><div class="nq-metric"><b>08</b><span>BOUNDED AGENTS</span></div><div class="nq-metric"><b>24</b><span>EVIDENCE LINKS</span></div><div class="nq-metric"><b>01</b><span>HUMAN GATE</span></div></div>
+      </div>
+      <div class="nq-panel">
+        <div class="nq-kicker"><span>MISSION WORKFLOW</span><span>FAIL CLOSED</span></div>
+        <div class="nq-stage active" data-nq-stage="0">01 · INGEST &amp; VALIDATE SIGNAL</div><div class="nq-stage" data-nq-stage="1">02 · CORRELATE ONTOLOGY</div><div class="nq-stage" data-nq-stage="2">03 · SCORE CONFIDENCE</div><div class="nq-stage" data-nq-stage="3">04 · GENERATE DRAFT</div><div class="nq-stage locked" data-nq-stage="4">05 · HUMAN AUTHORIZATION REQUIRED</div>
+        <div class="nq-controls" aria-label="Command fabric controls"><button class="nq-btn" id="nq-run" type="button">RUN DEMO</button><button class="nq-btn" id="nq-pause" type="button" aria-pressed="false">PAUSE MESH</button><button class="nq-btn purple" id="nq-package" type="button">PREPARE APPROVAL</button></div>
+        <div class="nq-audit" id="nq-audit" role="status" aria-live="polite"><strong>AUDIT:</strong> Ready. No operational action can execute from this demonstration.</div>
+      </div>
+      <div class="nq-panel">
+        <div class="nq-kicker"><span>FUSION CHANNELS</span><span>PROVENANCE ON</span></div>
+        <div class="nq-signal"><i></i><span>GEO / TEMPORAL</span><meter min="0" max="100" value="91">91%</meter></div><div class="nq-signal"><i></i><span>OSINT CORRELATION</span><meter min="0" max="100" value="84">84%</meter></div><div class="nq-signal"><i></i><span>ENTITY RESOLUTION</span><meter min="0" max="100" value="88">88%</meter></div><div class="nq-signal"><i></i><span>POLICY ENGINE</span><meter min="0" max="100" value="100">100%</meter></div><div class="nq-signal"><i></i><span>AUDIT LEDGER</span><meter min="0" max="100" value="100">100%</meter></div>
+        <div class="nq-audit"><strong>CONTROL PLANE:</strong> Read-only analysis → draft → human approval → separately authorized execution.</div>
       </div>
     </div>
   </div>
@@ -6769,6 +6809,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if(document.readyState==='loading'){
     document.addEventListener('DOMContentLoaded',()=>setTimeout(boot23,3500));
   } else { setTimeout(boot23,3500); }
+})();
+</script>
+
+<script>
+/* NEXUS v12.4 additive visualization: isolated, local-only, and non-operational. */
+(()=>{
+  const canvas=document.getElementById('nq-canvas'); if(!canvas) return;
+  const ctx=canvas.getContext('2d'),reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nodes=[[.5,.5,'HUMAN'],[.19,.25,'TRIAGE'],[.48,.16,'FUSION'],[.8,.27,'POLICY'],[.2,.72,'GEO'],[.46,.82,'EVAL'],[.77,.73,'AUDIT'],[.88,.52,'DRAFT']];
+  const links=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[1,2],[2,3],[4,5],[5,6],[6,7]]; let frame=0,paused=reduceMotion,workflowTimer;
+  function draw(){const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);links.forEach((link,index)=>{const a=nodes[link[0]],b=nodes[link[1]],pulse=(Math.sin(frame*.025+index)+1)/2;ctx.beginPath();ctx.moveTo(a[0]*w,a[1]*h);ctx.lineTo(b[0]*w,b[1]*h);ctx.strokeStyle=`rgba(0,221,255,${.12+pulse*.32})`;ctx.lineWidth=1+pulse;ctx.stroke()});nodes.forEach((node,index)=>{const x=node[0]*w,y=node[1]*h,r=index===0?13:8;ctx.shadowBlur=index===0?24:14;ctx.shadowColor=index===0?'#cc66ff':'#00ddff';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=index===0?'#cc66ff':'#00ddff';ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#a9c8df';ctx.font='10px IBM Plex Mono';ctx.textAlign='center';ctx.fillText(node[2],x,y+r+15)});frame+=paused?0:1;if(!paused)requestAnimationFrame(draw)} draw();
+  const stages=[...document.querySelectorAll('[data-nq-stage]')],audit=document.getElementById('nq-audit');
+  document.getElementById('nq-pause')?.addEventListener('click',event=>{paused=!paused;event.currentTarget.setAttribute('aria-pressed',String(paused));event.currentTarget.textContent=paused?'RESUME MESH':'PAUSE MESH';if(!paused)requestAnimationFrame(draw)});
+  document.getElementById('nq-run')?.addEventListener('click',()=>{clearInterval(workflowTimer);let step=0;audit.innerHTML='<strong>AUDIT:</strong> Demonstration started; processing synthetic local signals only.';workflowTimer=setInterval(()=>{stages.forEach((stage,index)=>stage.classList.toggle('active',index===step));if(step===4){clearInterval(workflowTimer);document.getElementById('nq-mode').textContent='AWAITING HUMAN';audit.innerHTML='<strong>AUDIT:</strong> Workflow stopped at the mandatory human authorization boundary.'}step=Math.min(step+1,4)},650)});
+  document.getElementById('nq-package')?.addEventListener('click',()=>{document.getElementById('nq-mode').textContent='DRAFT PACKAGE';audit.innerHTML='<strong>AUDIT:</strong> Draft approval package prepared locally. Execution remains disabled.'});
 })();
 </script>
 

@@ -1,10 +1,271 @@
 {
-  "run_utc": "2026-07-31T09:43:25.849302+00:00",
+  "run_utc": "2026-08-01T09:05:01.089929+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1374,
+  "commit_count": 1472,
   "sections": {
     "New Features": [
+      {
+        "sha": "5a3e5ec",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "expose OpenAI Responses adapter",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "7b07e9e",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add OpenAI Responses async and streaming adapter",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "03083a6",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "persist local approval signing key securely",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "96457c4",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "persist one-use approval challenges across processes",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "1202ac6",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add module CLI entry point",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "8002e72",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "expose public package API",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "b537296",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add operational CLI and API server command",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "3b4616a",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add authenticated FastAPI control plane",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "2436069",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add environment-driven production runtime",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "8e0ba4f",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "install guarded core operational capabilities",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "e781c43",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "expose bounded connector adapters",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "f680b6d",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add SSRF-resistant allowlisted HTTP connector",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "d66ac0f",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add allowlisted no-shell process connector",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "c118c7b",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add workspace-confined filesystem connector",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "f497816",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add external connector contracts",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "07213d5",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "implement async tool-loop runner and streaming",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "ad867b7",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "expose LLM adapter contracts",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "74d84e7",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add vendor-neutral async LLM contracts",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "466ab8b",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "split working episodic semantic and durable memory",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "06448fe",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "wire guardrails into execution lifecycle",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "2186230",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add composable async guardrail pipeline",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "f8e6ff1",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "implement resilient execution engine",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "9df48b6",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add durable SQLite memory",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "6e0571e",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add tamper-evident audit chain",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "76c8f96",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "enforce risk policy and signed approvals",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "5653c39",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add typed capability registry",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "cfd2c3f",
+        "type": "feat",
+        "scope": "agent",
+        "subject": "add typed function-agent contracts",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "7789de2",
+        "type": "feat",
+        "scope": "ci",
+        "subject": "reusable verified-commit action + Market Intelligence lane",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "125ec74",
+        "type": "feat",
+        "scope": "agents",
+        "subject": "add B2B cybersecurity / high-ticket OS profile",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
       {
         "sha": "ce069d8",
         "type": "feat",
@@ -665,6 +926,141 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "4e8f043",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "close approval-state SQLite connections",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "cfff5f3",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "close SQLite memory connections deterministically",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "2f16dec",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "avoid mutable test class attributes",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "6603d8f",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "store decorator metadata without dynamic setattr",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "650aaa7",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "satisfy adapter static-analysis rules",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "198e253",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "combine HTTP async context managers",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "c194ef1",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "normalize module entry-point formatting",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "10c529b",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "satisfy public API import ordering",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "56f9e0a",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "reject undeclared API identity fields",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "01e3390",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "disable process and HTTP connectors by default",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "500f5bd",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "require explicit subprocess allowlist",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "f76dc2c",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "type and reconcile streamed tool calls",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "089ae9a",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "harden signed approval token encoding",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "c14bc5e",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "resolve postponed annotations before schema generation",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "e1d50e2",
+        "type": "fix",
+        "scope": "agent",
+        "subject": "use constant-time audit hash comparison",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
         "sha": "4b191cb",
         "type": "fix",
         "scope": "governance",
@@ -1308,6 +1704,33 @@
     ],
     "Documentation": [
       {
+        "sha": "fcb1fdb",
+        "type": "docs",
+        "scope": "agent",
+        "subject": "add operating and security manual",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "484be5b",
+        "type": "docs",
+        "scope": "artemis",
+        "subject": "add integration evidence gate",
+        "author": "Desmond Otieno",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "7ae7641",
+        "type": "docs",
+        "scope": null,
+        "subject": "add ARTEMIS governed intelligence platform core SITREP",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
         "sha": "16194f4",
         "type": "docs",
         "scope": null,
@@ -1643,6 +2066,60 @@
     ],
     "Tests": [
       {
+        "sha": "8c20640",
+        "type": "test",
+        "scope": "agent",
+        "subject": "cover connector boundaries and all memory modes",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "9d7443d",
+        "type": "test",
+        "scope": "agent",
+        "subject": "validate OpenAI adapter without network access",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "889e8c8",
+        "type": "test",
+        "scope": "agent",
+        "subject": "require strict API request models",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "9465eb6",
+        "type": "test",
+        "scope": "agent",
+        "subject": "cover async and streamed model tool loops",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "2db2147",
+        "type": "test",
+        "scope": "agent",
+        "subject": "verify API authentication and approval flow",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "93a608f",
+        "type": "test",
+        "scope": "agent",
+        "subject": "cover schemas policy memory approvals and audit",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
         "sha": "67e5a9b",
         "type": "test",
         "scope": null,
@@ -1671,6 +2148,69 @@
       }
     ],
     "CI/CD": [
+      {
+        "sha": "9e10804",
+        "type": "ci",
+        "scope": "agent",
+        "subject": "ignore repository-directory N999 false positive",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "c5668f9",
+        "type": "ci",
+        "scope": "agent",
+        "subject": "add multi-version compile lint test and build gate",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "ed1131a",
+        "type": "ci",
+        "scope": null,
+        "subject": "probe Dependency Graph before running dependency review (#1188)",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "d17a0f9",
+        "type": "ci",
+        "scope": null,
+        "subject": "probe the dependency-graph compare endpoint, not the SBOM endpoint",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "12b1072",
+        "type": "ci",
+        "scope": null,
+        "subject": "probe Dependency Graph before running dependency review",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "686369d",
+        "type": "ci",
+        "scope": "workflow-doctor",
+        "subject": "commit repairs via verified-commit action",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "5036b88",
+        "type": "ci",
+        "scope": null,
+        "subject": "repin actions/setup-node to a resolvable SHA",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
       {
         "sha": "b1f9b6f",
         "type": "ci",
@@ -1880,6 +2420,186 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "bef9ab9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Create FUNDING.yml for sponsorship options",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "5e28484",
+        "type": "chore",
+        "scope": null,
+        "subject": "Use existing logo asset for browser icons",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "9b3dda5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add complete YouTube launch operating system",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "802a585",
+        "type": "chore",
+        "scope": null,
+        "subject": "Transform blog into Artemis knowledge operations center",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "a553c50",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add opt-in anti-copy protection helpers",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "d598646",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add layered website IP protection strategy",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "7303c11",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade blog intelligence publishing platform",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "c1c0869",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade blog mission briefing animations",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "d05ef6d",
+        "type": "chore",
+        "scope": "agent",
+        "subject": "ignore local runtime state and signing keys",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "402fa37",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance blog with mission-control animations",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "0582d48",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix founder profile photo rendering at 300x2263 stretched",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "d7d7c4a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix Deploy Pages: grant build job Pages API permissions",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "e281959",
+        "type": "chore",
+        "scope": null,
+        "subject": "Drop the hero video's dead picture fallback (401 KB per load)",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "c719e02",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add the boot loader to xenolith and the Canada digital-control post",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "5c51994",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix homepage accessibility and LCP budgets; shrink the shared nav logo",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "c110485",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Canada digital-control architecture brief",
+        "author": "Desmond Otieno",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "d91c9ea",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate sitemap lastmod dates after the boot-loader page edits",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "199b35c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix CI: pin ruff, regenerate search assets, de-literalize test credential",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "b80a6bd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Move the boot loader off the homepage and onto every other page",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "2ca9097",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add XENOLITH sovereign intelligence lattice and publish it to products",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
       {
         "sha": "fcf2a02",
         "type": "chore",
@@ -7175,6 +7895,132 @@
     ],
     "Automation": [
       {
+        "sha": "8bdcb68",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "1cabd75",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "589074f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "ff050ca",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "a717c5e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "928bc0d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "cacb32b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "bd9cc17",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "2d5b62f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "d326ac6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "b0ba838",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "7cbeee7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "19b74c9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "876230e",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-07-31 09:43 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
         "sha": "8c6daf9",
         "type": "bot",
         "scope": null,
@@ -12111,7 +12957,45 @@
         "breaking": false
       }
     ],
+    "Build": [
+      {
+        "sha": "ea6cdf6",
+        "type": "build",
+        "scope": "agent",
+        "subject": "add CLI entry point and optional OpenAI adapter",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      }
+    ],
     "Other": [
+      {
+        "sha": "3ddda92",
+        "type": "seo",
+        "scope": null,
+        "subject": "preserve directory links in normalize_internal",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "10a0a7a",
+        "type": "deps",
+        "scope": null,
+        "subject": "raise postcss floor above GHSA-r28c-9q8g-f849 across all Node apps",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
+      {
+        "sha": "c410a87",
+        "type": "seo",
+        "scope": null,
+        "subject": "regenerate sitemap.xml to match committed history",
+        "author": "Claude",
+        "date": "2026-07-31",
+        "breaking": false
+      },
       {
         "sha": "1d167d3",
         "type": "phoenix",

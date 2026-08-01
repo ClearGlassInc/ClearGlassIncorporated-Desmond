@@ -1,9 +1,38 @@
-# Release Notes — 2026-07-31
+# Release Notes — 2026-08-01
 
-*1374 commit(s) since v1.0.0*
+*1472 commit(s) since v1.0.0*
 
 ## New Features
 
+- **agent:** expose OpenAI Responses adapter (`5a3e5ec`)
+- **agent:** add OpenAI Responses async and streaming adapter (`7b07e9e`)
+- **agent:** persist local approval signing key securely (`03083a6`)
+- **agent:** persist one-use approval challenges across processes (`96457c4`)
+- **agent:** add module CLI entry point (`1202ac6`)
+- **agent:** expose public package API (`8002e72`)
+- **agent:** add operational CLI and API server command (`b537296`)
+- **agent:** add authenticated FastAPI control plane (`3b4616a`)
+- **agent:** add environment-driven production runtime (`2436069`)
+- **agent:** install guarded core operational capabilities (`8e0ba4f`)
+- **agent:** expose bounded connector adapters (`e781c43`)
+- **agent:** add SSRF-resistant allowlisted HTTP connector (`f680b6d`)
+- **agent:** add allowlisted no-shell process connector (`d66ac0f`)
+- **agent:** add workspace-confined filesystem connector (`c118c7b`)
+- **agent:** add external connector contracts (`f497816`)
+- **agent:** implement async tool-loop runner and streaming (`07213d5`)
+- **agent:** expose LLM adapter contracts (`ad867b7`)
+- **agent:** add vendor-neutral async LLM contracts (`74d84e7`)
+- **agent:** split working episodic semantic and durable memory (`466ab8b`)
+- **agent:** wire guardrails into execution lifecycle (`06448fe`)
+- **agent:** add composable async guardrail pipeline (`2186230`)
+- **agent:** implement resilient execution engine (`f8e6ff1`)
+- **agent:** add durable SQLite memory (`9df48b6`)
+- **agent:** add tamper-evident audit chain (`6e0571e`)
+- **agent:** enforce risk policy and signed approvals (`76c8f96`)
+- **agent:** add typed capability registry (`5653c39`)
+- **agent:** add typed function-agent contracts (`cfd2c3f`)
+- **ci:** reusable verified-commit action + Market Intelligence lane (`7789de2`)
+- **agents:** add B2B cybersecurity / high-ticket OS profile (`125ec74`)
 - add sitewide Advanced SEO Growth engine (`ce069d8`)
 - **legal-tech:** add fault-tolerant orchestration + documented 3x efficiency gain (`cdcc5f3`)
 - **blog:** add advanced prompt engineering composer (`3aee533`)
@@ -80,6 +109,21 @@
 
 ## Bug Fixes
 
+- **agent:** close approval-state SQLite connections (`4e8f043`)
+- **agent:** close SQLite memory connections deterministically (`cfff5f3`)
+- **agent:** avoid mutable test class attributes (`2f16dec`)
+- **agent:** store decorator metadata without dynamic setattr (`6603d8f`)
+- **agent:** satisfy adapter static-analysis rules (`650aaa7`)
+- **agent:** combine HTTP async context managers (`198e253`)
+- **agent:** normalize module entry-point formatting (`c194ef1`)
+- **agent:** satisfy public API import ordering (`10c529b`)
+- **agent:** reject undeclared API identity fields (`56f9e0a`)
+- **agent:** disable process and HTTP connectors by default (`01e3390`)
+- **agent:** require explicit subprocess allowlist (`500f5bd`)
+- **agent:** type and reconcile streamed tool calls (`f76dc2c`)
+- **agent:** harden signed approval token encoding (`089ae9a`)
+- **agent:** resolve postponed annotations before schema generation (`c14bc5e`)
+- **agent:** use constant-time audit hash comparison (`e1d50e2`)
 - **governance:** restore Burlington contract validation (`4b191cb`)
 - make Advanced SEO Growth operational end to end (`1080fef`)
 - **ci:** disable persisted credentials in patch deploy (`437976c`)
@@ -157,6 +201,9 @@
 
 ## Documentation
 
+- **agent:** add operating and security manual (`fcb1fdb`)
+- **artemis:** add integration evidence gate (`484be5b`)
+- add ARTEMIS governed intelligence platform core SITREP (`7ae7641`)
 - merge ARTEMIS FAWL command protocol (`16194f4`)
 - complete Desmond email setup runbook (`e092378`)
 - tailor custom email setup for Desmond (`1c36cfb`)
@@ -197,12 +244,25 @@
 
 ## Tests
 
+- **agent:** cover connector boundaries and all memory modes (`8c20640`)
+- **agent:** validate OpenAI adapter without network access (`9d7443d`)
+- **agent:** require strict API request models (`889e8c8`)
+- **agent:** cover async and streamed model tool loops (`9465eb6`)
+- **agent:** verify API authentication and approval flow (`2db2147`)
+- **agent:** cover schemas policy memory approvals and audit (`93a608f`)
 - add Actions execution sentinel (`67e5a9b`)
 - **site-health:** use a single import style in logo-coverage test (`56a92a0`)
 - **site-health:** guarantee ClearGlass logo on every page (`7406c02`)
 
 ## CI/CD
 
+- **agent:** ignore repository-directory N999 false positive (`9e10804`)
+- **agent:** add multi-version compile lint test and build gate (`c5668f9`)
+- probe Dependency Graph before running dependency review (#1188) (`ed1131a`)
+- probe the dependency-graph compare endpoint, not the SBOM endpoint (`d17a0f9`)
+- probe Dependency Graph before running dependency review (`12b1072`)
+- **workflow-doctor:** commit repairs via verified-commit action (`686369d`)
+- repin actions/setup-node to a resolvable SHA (`5036b88`)
 - trigger Advanced SEO Growth workflow (`b1f9b6f`)
 - execute SEO regression suite (`247be2c`)
 - pin GitHub Pages artifact name (`b7e5117`)
@@ -229,6 +289,26 @@
 
 ## Maintenance
 
+- Create FUNDING.yml for sponsorship options (`bef9ab9`)
+- Use existing logo asset for browser icons (`5e28484`)
+- Add complete YouTube launch operating system (`9b3dda5`)
+- Transform blog into Artemis knowledge operations center (`802a585`)
+- Add opt-in anti-copy protection helpers (`a553c50`)
+- Add layered website IP protection strategy (`d598646`)
+- Upgrade blog intelligence publishing platform (`7303c11`)
+- Upgrade blog mission briefing animations (`c1c0869`)
+- **agent:** ignore local runtime state and signing keys (`d05ef6d`)
+- Enhance blog with mission-control animations (`402fa37`)
+- Fix founder profile photo rendering at 300x2263 stretched (`0582d48`)
+- Fix Deploy Pages: grant build job Pages API permissions (`d7d7c4a`)
+- Drop the hero video's dead picture fallback (401 KB per load) (`e281959`)
+- Add the boot loader to xenolith and the Canada digital-control post (`c719e02`)
+- Fix homepage accessibility and LCP budgets; shrink the shared nav logo (`5c51994`)
+- Add Canada digital-control architecture brief (`c110485`)
+- Regenerate sitemap lastmod dates after the boot-loader page edits (`d91c9ea`)
+- Fix CI: pin ruff, regenerate search assets, de-literalize test credential (`199b35c`)
+- Move the boot loader off the homepage and onto every other page (`b80a6bd`)
+- Add XENOLITH sovereign intelligence lattice and publish it to products (`2ca9097`)
 - Repair governed exposure validation gates (`fcf2a02`)
 - Build deterministic search discovery foundation (`cf16776`)
 - Add Burlington geo-grid exposure operating package (`4cd4c9e`)
@@ -820,6 +900,20 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`8bdcb68`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`1cabd75`)
+- refresh control-surface data feeds [skip ci] (`589074f`)
+- refresh control-surface data feeds [skip ci] (`ff050ca`)
+- refresh control-surface data feeds [skip ci] (`a717c5e`)
+- refresh control-surface data feeds [skip ci] (`928bc0d`)
+- refresh control-surface data feeds [skip ci] (`cacb32b`)
+- refresh control-surface data feeds [skip ci] (`bd9cc17`)
+- refresh control-surface data feeds [skip ci] (`2d5b62f`)
+- refresh control-surface data feeds [skip ci] (`d326ac6`)
+- refresh control-surface data feeds [skip ci] (`b0ba838`)
+- refresh control-surface data feeds [skip ci] (`7cbeee7`)
+- refresh control-surface data feeds [skip ci] (`19b74c9`)
+- update generated outputs — 2026-07-31 09:43 UTC [skip ci] (`876230e`)
 - refresh SEO dashboard feeds [skip ci] (`8c6daf9`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`a5e86e8`)
 - refresh control-surface data feeds [skip ci] (`fb585d6`)
@@ -1375,8 +1469,15 @@
 
 - **outreach:** make draft banner string concatenation explicit (`d4e5147`)
 
+## Build
+
+- **agent:** add CLI entry point and optional OpenAI adapter (`ea6cdf6`)
+
 ## Other
 
+- preserve directory links in normalize_internal (`3ddda92`)
+- raise postcss floor above GHSA-r28c-9q8g-f849 across all Node apps (`10a0a7a`)
+- regenerate sitemap.xml to match committed history (`c410a87`)
 - document intentional temp-cleanup swallow in IncidentMemory.save (`1d167d3`)
 - durable incident memory + full-stack self-heal CI gate (`4c2666b`)
 - structured data, sitemap coverage, and a measurement stack (`a2f1c8c`)

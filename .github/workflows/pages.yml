@@ -16,12 +16,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # configure-pages reads the Pages site config (GET /repos/{owner}/{repo}/pages),
-    # which needs the pages scope. Without it the job inherits contents:read only
-    # and the step fails 403 "Resource not accessible by integration".
+    # configure-pages calls the Pages API; without this the job's token gets
+    # "Resource not accessible by integration" and the build fails before rsync.
     permissions:
       contents: read
-      pages: read
+      pages: write
     steps:
       - name: Checkout site source
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3

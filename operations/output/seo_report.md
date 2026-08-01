@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-07-31T09:43:25.980601+00:00
-**Average Score:** 87.9/100
-**Files Audited:** 77
+**Run:** 2026-08-01T09:05:01.192353+00:00
+**Average Score:** 87.8/100
+**Files Audited:** 78
 
 ## Page Scores
 
@@ -30,6 +30,7 @@
 | `sats-digital-twin.html` | 80/100 | 2 |
 | `systems.html` | 80/100 | 2 |
 | `ultra-glass.html` | 80/100 | 2 |
+| `xenolith.html` | 80/100 | 2 |
 | `ClearGlass-NEXUS-v12-FINAL.html` | 90/100 | 1 |
 | `advanced-features-tools-systems.html` | 90/100 | 1 |
 | `air-systems-control.html` | 90/100 | 1 |
@@ -88,9 +89,9 @@
 
 ## Top Issues Across All Pages
 
-- 28x — Description length N chars (ideal N–N)
+- 29x — Description length N chars (ideal N–N)
 - 21x — Title length N chars (ideal N–N)
-- 14x — Missing og:image
+- 15x — Missing og:image
 - 8x — Missing og:description
 - 7x — Missing og:title
 - 4x — Multiple <hN> tags (N)

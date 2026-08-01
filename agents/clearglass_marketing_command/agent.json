@@ -24,6 +24,10 @@
   "role": "Enterprise-grade, governed marketing operating system — a coordinated organization of specialist AI agents run by an Executive Marketing Director that grows authority, leads, revenue, and search/AI visibility through ethical, measurable, brand-consistent automation.",
   "system_prompt_path": "system_prompt.md",
   "bot_ecosystem_path": "bot_ecosystem.md",
+  "profiles": {
+    "default": "system_prompt.md",
+    "b2b_cybersecurity_high_ticket": "system_prompt_b2b_cyber.md"
+  },
   "model_recommendation": "claude-opus-4-7",
   "orchestrator": "Executive Marketing Director",
   "core_directive": "Research -> Plan -> Create -> Review -> Publish -> Distribute -> Measure -> Optimize -> Repeat",

@@ -64,15 +64,22 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Push repair branch
+      - name: Establish repair branch
         if: steps.doctor.outputs.changed == 'true'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b bot/workflow-doctor-repair
+          # Reset the disposable repair branch to main on the remote so the
+          # signing action can add its commit on top, then stage (don't commit)
+          # the repairs for it. Working-tree edits from --fix stay uncommitted.
+          git push -f origin "HEAD:refs/heads/bot/workflow-doctor-repair"
           git add .github/workflows/
-          git commit -m "fix(ci): repair GitHub Actions workflows [auto]"
-          git push -f origin bot/workflow-doctor-repair
+
+      - name: Commit repairs (Verified)
+        if: steps.doctor.outputs.changed == 'true'
+        uses: ./.github/actions/verified-commit
+        with:
+          paths: .github/workflows
+          message: "fix(ci): repair GitHub Actions workflows [auto]"
+          branch: bot/workflow-doctor-repair
 
       - name: Open repair PR
         if: steps.doctor.outputs.changed == 'true'

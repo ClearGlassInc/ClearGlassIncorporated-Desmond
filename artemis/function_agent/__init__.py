@@ -27,7 +27,7 @@ from .models import (
 )
 from .policy import AgentPolicy, ApprovalManager
 from .registry import CapabilityRegistry, capability
-from .runner import AgentRunner, RunResult, RunnerSettings, RunStatus
+from .runner import AgentRunner, RunnerSettings, RunResult, RunStatus
 from .runtime import AgentRuntime, RuntimeSettings, build_runtime
 
 __all__ = [
@@ -54,8 +54,8 @@ __all__ = [
     "PredicateGuardrail",
     "RiskLevel",
     "RunResult",
-    "RunnerSettings",
     "RunStatus",
+    "RunnerSettings",
     "RuntimeSettings",
     "SQLiteMemory",
     "VectorMemory",

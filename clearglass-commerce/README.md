@@ -88,6 +88,22 @@ Nothing in the high/critical tier executes without an `approvals` row reaching `
 | `GET`  | `/events` | low |
 | `POST` | `/approvals/{id}/approve` | human |
 | `POST` | `/approvals/{id}/reject` | human |
+| `GET`  | `/etsy/connection` | low connection state (no network) |
+| `POST` | `/etsy/verify` | low read-only identity/permission/sync check |
+| `POST` | `/etsy/publish-listing` | **high → approval** |
+| `POST` | `/etsy/sync-inventory` | **high → approval** |
+| `POST` | `/etsy/orders/manage` | **high → approval** |
+
+## Connecting the Etsy shop
+
+Etsy only mints a token after the shop owner approves the scopes in a browser, so
+connecting is a human step — run it once with `python -m app.etsy_connect` (OAuth2 PKCE,
+stdlib only, no secret ever written to disk) and store the printed tokens as runtime env
+vars. Full walkthrough in **[ETSY_CONNECT.md](ETSY_CONNECT.md)**.
+
+Connecting grants no autonomy: every Etsy write stays in `ALWAYS_ESCALATE` and can only
+be queued for approval, and before connection the write routes fail closed with
+`blocked_not_connected`.
 
 ## Revenue settlement / bank wiring
 

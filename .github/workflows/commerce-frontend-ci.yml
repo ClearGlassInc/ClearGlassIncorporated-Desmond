@@ -18,6 +18,7 @@ on:
       - "clearglass-commerce/storefront/**"
       - "clearglass-commerce/admin/**"
       - ".github/workflows/commerce-frontend-ci.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read

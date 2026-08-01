@@ -30,11 +30,9 @@ class RuntimeSettings(BaseSettings):
     state_dir: Path = Path(".artemis/function-agent")
     approval_secret: SecretStr | None = None
     operator_key: SecretStr | None = None
-    enable_process_connector: bool = True
+    enable_process_connector: bool = False
     enable_http_connector: bool = False
-    allowed_executables: set[str] = Field(
-        default_factory=lambda: {"git", "python", "python3", "pytest", "ruff"}
-    )
+    allowed_executables: set[str] = Field(default_factory=set)
     allowed_http_hosts: set[str] = Field(default_factory=set)
     max_file_bytes: int = Field(default=2_000_000, ge=1_024, le=20_000_000)
     max_output_bytes: int = Field(default=1_000_000, ge=1_024, le=10_000_000)

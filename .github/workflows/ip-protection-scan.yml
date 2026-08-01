@@ -42,8 +42,28 @@ jobs:
             echo "result=PASS" >> "$GITHUB_OUTPUT"
           fi
 
+      # The action hard errors when Dependency Graph is switched off, which
+      # fails the whole assessment without producing a dependency finding.
+      # Probe first so the critical-severity gate below still applies whenever
+      # the graph is actually available.
+      - name: Probe Dependency Graph availability
+        id: depgraph
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if curl -sfS -o /dev/null \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/dependency-graph/sbom"; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Dependency Review skipped::Dependency Graph is not enabled for this repository, so dependency review cannot run. Enable it under Settings → Code security and analysis."
+          fi
+
       - name: Dependency Review
         id: deps
+        if: steps.depgraph.outputs.available == 'true'
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
         with:
           fail-on-severity: critical

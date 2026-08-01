@@ -122,18 +122,14 @@ def capability(
     """Mark a function for explicit registration without global side effects."""
 
     def decorator(function: CapabilityCallable) -> CapabilityCallable:
-        setattr(
-            function,
-            "__artemis_capability__",
-            {
-                "name": name,
-                "description": description,
-                "risk": risk,
-                "tags": tags,
-                "timeout_seconds": timeout_seconds,
-                "idempotent": idempotent,
-            },
-        )
+        function.__dict__["__artemis_capability__"] = {
+            "name": name,
+            "description": description,
+            "risk": risk,
+            "tags": tags,
+            "timeout_seconds": timeout_seconds,
+            "idempotent": idempotent,
+        }
         return function
 
     return decorator

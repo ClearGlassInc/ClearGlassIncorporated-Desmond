@@ -10,6 +10,8 @@ import json
 import secrets
 import sqlite3
 import threading
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -182,7 +184,7 @@ class ApprovalManager:
     def _consume_challenge(self, approval_id: str) -> bool:
         with self._lock:
             if self._state_path is not None:
-                with self._connect() as connection:
+                with self._connection() as connection:
                     cursor = connection.execute(
                         "DELETE FROM approval_challenges WHERE approval_id=?",
                         (approval_id,),
@@ -197,7 +199,7 @@ class ApprovalManager:
             return consumed
 
     def _initialize_state(self) -> None:
-        with self._connect() as connection:
+        with self._connection() as connection:
             connection.execute(
                 """
                 CREATE TABLE IF NOT EXISTS approval_challenges(
@@ -222,7 +224,7 @@ class ApprovalManager:
     def _save_challenge(self, challenge: ApprovalChallenge) -> None:
         if self._state_path is None:
             return
-        with self._connect() as connection:
+        with self._connection() as connection:
             connection.execute(
                 """
                 INSERT OR REPLACE INTO approval_challenges(
@@ -242,7 +244,7 @@ class ApprovalManager:
     def _load_challenge(self, approval_id: str) -> ApprovalChallenge | None:
         if self._state_path is None:
             return None
-        with self._connect() as connection:
+        with self._connection() as connection:
             row = connection.execute(
                 """
                 SELECT capability, arguments_digest, actor, reason, expires_at
@@ -264,15 +266,20 @@ class ApprovalManager:
     def _delete_challenge(self, approval_id: str) -> None:
         self._challenges.pop(approval_id, None)
         if self._state_path is not None:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 connection.execute(
                     "DELETE FROM approval_challenges WHERE approval_id=?",
                     (approval_id,),
                 )
 
-    def _connect(self) -> sqlite3.Connection:
+    @contextmanager
+    def _connection(self) -> Iterator[sqlite3.Connection]:
         if self._state_path is None:
             raise RuntimeError("Persistent approval state is not configured")
         connection = sqlite3.connect(self._state_path, timeout=10)
         connection.execute("PRAGMA journal_mode=WAL")
-        return connection
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()

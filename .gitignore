@@ -13,6 +13,9 @@ build/
 venv/
 env/
 
+# Artemis local runtime state
+.artemis/
+
 # OS
 .DS_Store
 Thumbs.db

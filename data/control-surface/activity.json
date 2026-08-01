@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "15:18",
-    "timestamp": "2026-08-01T15:18:25Z"
+    "time": "17:13",
+    "timestamp": "2026-08-01T17:13:54Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #501",
+    "time": "17:13",
+    "timestamp": "2026-08-01T17:13:40Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "ok",
+    "detail": "dynamic on copilot/task-272290681-1196426665-02f20821-9b91-45cc-925c-3ea291b63d9d \u00b7 run #969",
+    "time": "17:00",
+    "timestamp": "2026-08-01T17:00:53Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "ok",
+    "detail": "dynamic on copilot/task-272290681-1196426665-a87f5070-f81a-463d-b352-1b4e0e8f0b4c \u00b7 run #968",
+    "time": "16:00",
+    "timestamp": "2026-08-01T16:00:52Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1460",
+    "time": "15:18",
+    "timestamp": "2026-08-01T15:18:39Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1954",
+    "time": "15:18",
+    "timestamp": "2026-08-01T15:18:31Z"
+  },
+  {
+    "title": "Code Quality: Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3398",
+    "time": "15:18",
+    "timestamp": "2026-08-01T15:18:31Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3397",
+    "time": "15:18",
+    "timestamp": "2026-08-01T15:18:31Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #500",
     "time": "15:18",
     "timestamp": "2026-08-01T15:18:12Z"
@@ -40,54 +89,5 @@
     "detail": "pull_request on claude/senior-eng-ops-agent-cfb7dn \u00b7 run #969",
     "time": "14:17",
     "timestamp": "2026-08-01T14:17:25Z"
-  },
-  {
-    "title": "Running Copilot Code Review",
-    "status": "ok",
-    "detail": "dynamic on claude/senior-eng-ops-agent-cfb7dn \u00b7 run #6",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:56Z"
-  },
-  {
-    "title": "Artemis Function Agent CI",
-    "status": "ok",
-    "detail": "pull_request on claude/senior-eng-ops-agent-cfb7dn \u00b7 run #15",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:51Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "ok",
-    "detail": "pull_request on claude/senior-eng-ops-agent-cfb7dn \u00b7 run #968",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:51Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "pull_request on claude/senior-eng-ops-agent-cfb7dn \u00b7 run #1784",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:51Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "pull_request on claude/senior-eng-ops-agent-cfb7dn \u00b7 run #2107",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:51Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "pull_request on claude/senior-eng-ops-agent-cfb7dn \u00b7 run #1814",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:51Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "pull_request on claude/senior-eng-ops-agent-cfb7dn \u00b7 run #2048",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:51Z"
   }
 ]

@@ -23,23 +23,23 @@ class AllowlistedProcessConnector:
     ) -> None:
         self.workspace = Path(workspace).resolve()
         self.workspace.mkdir(parents=True, exist_ok=True)
-        self.allowed_executables = allowed_executables or {
-            "git",
-            "python",
-            "python3",
-            "pytest",
-            "ruff",
-        }
+        self.allowed_executables = (
+            set(allowed_executables) if allowed_executables is not None else set()
+        )
         self.timeout_seconds = timeout_seconds
         self.max_output_bytes = max_output_bytes
-        self.allowed_environment = allowed_environment or {
-            "PATH",
-            "HOME",
-            "USERPROFILE",
-            "SYSTEMROOT",
-            "TEMP",
-            "TMP",
-        }
+        self.allowed_environment = (
+            set(allowed_environment)
+            if allowed_environment is not None
+            else {
+                "PATH",
+                "HOME",
+                "USERPROFILE",
+                "SYSTEMROOT",
+                "TEMP",
+                "TMP",
+            }
+        )
 
     async def health(self) -> ConnectorResponse:
         available = {

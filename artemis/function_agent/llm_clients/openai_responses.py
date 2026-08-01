@@ -91,7 +91,7 @@ class OpenAIResponsesClient:
                 )
                 continue
             if event_type == "response.completed":
-                parsed = self._parse_response(getattr(event, "response"))
+                parsed = self._parse_response(event.response)
                 for tool_call in parsed.tool_calls:
                     yield LLMStreamEvent(
                         type="tool_call",
@@ -197,7 +197,7 @@ class OpenAIResponsesClient:
             tool_calls.append(
                 ToolCall(
                     id=str(getattr(item, "call_id", getattr(item, "id", ""))),
-                    name=str(getattr(item, "name")),
+                    name=str(item.name),
                     arguments=arguments,
                 )
             )

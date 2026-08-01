@@ -7,7 +7,8 @@ import math
 import sqlite3
 from abc import ABC, abstractmethod
 from collections import deque
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Iterator, Sequence
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -69,7 +70,7 @@ class SQLiteMemory:
         now = datetime.now(UTC)
         expires_at = now + timedelta(seconds=ttl_seconds) if ttl_seconds else None
         payload = json.dumps(value, sort_keys=True, default=str)
-        with self._connect() as connection:
+        with self._connection() as connection:
             connection.execute(
                 """
                 INSERT INTO agent_memory(namespace, key, value, expires_at, updated_at)
@@ -89,7 +90,7 @@ class SQLiteMemory:
             )
 
     def get(self, namespace: str, key: str, default: Any = None) -> Any:
-        with self._connect() as connection:
+        with self._connection() as connection:
             row = connection.execute(
                 "SELECT value, expires_at FROM agent_memory WHERE namespace=? AND key=?",
                 (namespace, key),
@@ -104,7 +105,7 @@ class SQLiteMemory:
             return json.loads(row[0])
 
     def delete(self, namespace: str, key: str) -> bool:
-        with self._connect() as connection:
+        with self._connection() as connection:
             cursor = connection.execute(
                 "DELETE FROM agent_memory WHERE namespace=? AND key=?", (namespace, key)
             )
@@ -112,7 +113,7 @@ class SQLiteMemory:
 
     def list_namespace(self, namespace: str, limit: int = 100) -> dict[str, Any]:
         self.prune_expired()
-        with self._connect() as connection:
+        with self._connection() as connection:
             rows = connection.execute(
                 "SELECT key, value FROM agent_memory WHERE namespace=? ORDER BY updated_at DESC LIMIT ?",
                 (namespace, limit),
@@ -120,7 +121,7 @@ class SQLiteMemory:
         return {key: json.loads(value) for key, value in rows}
 
     def prune_expired(self) -> int:
-        with self._connect() as connection:
+        with self._connection() as connection:
             cursor = connection.execute(
                 "DELETE FROM agent_memory WHERE expires_at IS NOT NULL AND expires_at < ?",
                 (datetime.now(UTC).isoformat(),),
@@ -128,7 +129,7 @@ class SQLiteMemory:
             return cursor.rowcount
 
     def _initialize(self) -> None:
-        with self._connect() as connection:
+        with self._connection() as connection:
             connection.execute(
                 """
                 CREATE TABLE IF NOT EXISTS agent_memory(
@@ -145,11 +146,16 @@ class SQLiteMemory:
                 "CREATE INDEX IF NOT EXISTS idx_agent_memory_expiry ON agent_memory(expires_at)"
             )
 
-    def _connect(self) -> sqlite3.Connection:
+    @contextmanager
+    def _connection(self) -> Iterator[sqlite3.Connection]:
         connection = sqlite3.connect(self.path, timeout=10)
         connection.execute("PRAGMA journal_mode=WAL")
         connection.execute("PRAGMA foreign_keys=ON")
-        return connection
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()
 
 
 class EpisodicMemory(Memory):

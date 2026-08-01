@@ -68,6 +68,29 @@ Apply the shared `/asset-protection.js` to public pages, then opt in only the re
 
 The script adds an inert neon/glass watermark and prevents selection/context menus only inside `data-cg-protected`. Inputs, textareas, selects, and editable regions remain selectable. This is friction, not authorization. Keep substantive authorization server-side.
 
+For class-based layouts, the same shared script also supports the requested
+anti-copy helpers without changing existing `data-cg-*` integrations:
+
+```html
+<section class="protected protected-watermark">
+  <h2>Autonomous Agent Framework</h2>
+  <p>Reserved codenames, system logic, and architecture are protected.</p>
+</section>
+
+<article class="protected blur-preview" tabindex="0">
+  Preview becomes readable on hover or keyboard focus.
+</article>
+```
+
+The `.protected` helper deters selection, context menus, protected copy/save/print
+shortcuts, and dragging while retaining selection and shortcut behavior in form
+and editable controls. `.protected-watermark` adds the ClearGlassInc confidential
+overlay and diagonal capture pattern. `.blur-preview` is optional, supports
+keyboard focus, and disables its transition when reduced motion is requested.
+The script also emits a random, non-identifying per-page token in
+`data-session-watermark` and `<meta name="session-watermark">`; it must not be
+treated as authentication, authorization, or proof of visitor identity.
+
 For exported diagrams and PDFs, render the mark into the artifact itself rather than relying on a CSS overlay. Use a non-secret release ID and asset digest so a capture can be matched to the publication register; do not expose a customer email or personal identifier in a public watermark.
 
 Make premium pages valuable because they are live: progressive entity graphs, time-window controls, source lineage, confidence changes, and governed approval states. Static captures should remain intelligible but naturally omit live data and interactions. Avoid fake telemetry, fake urgency, or animations that conceal required information. Respect `prefers-reduced-motion` and preserve a complete keyboard path.

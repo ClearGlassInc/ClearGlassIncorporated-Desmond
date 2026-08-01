@@ -60,12 +60,33 @@
       "[data-cg-protected] select,[data-cg-protected] [contenteditable=true]{" +
         "-webkit-user-select:text;user-select:text" +
       "}" +
+      ".protected,.protected *{-webkit-user-select:none;-moz-user-select:none;" +
+        "-ms-user-select:none;user-select:none;-webkit-touch-callout:none}" +
+      ".protected input,.protected textarea,.protected select," +
+      ".protected [contenteditable=true]{-webkit-user-select:text;user-select:text}" +
+      ".protected-watermark{position:relative;overflow:hidden;isolation:isolate}" +
+      ".protected-watermark::after{content:\"ClearGlassInc. • Confidential • © 2026\";" +
+        "position:absolute;inset:0;z-index:20;display:grid;place-items:center;" +
+        "font-size:clamp(14px,2vw,28px);font-weight:700;letter-spacing:.35em;" +
+        "text-transform:uppercase;color:rgba(255,255,255,.08);" +
+        "transform:rotate(-18deg);pointer-events:none;white-space:nowrap}" +
+      ".protected-watermark::before{content:\"\";position:absolute;inset:0;z-index:19;" +
+        "background-image:linear-gradient(135deg,transparent 0%," +
+        "rgba(255,255,255,.03) 50%,transparent 100%);background-size:120px 120px;" +
+        "opacity:.7;pointer-events:none}" +
+      ".blur-preview{filter:blur(6px);transition:filter 180ms ease}" +
+      ".blur-preview:hover,.blur-preview:focus-within{filter:blur(0)}" +
+      "@media (prefers-reduced-motion:reduce){.blur-preview{transition:none}}" +
       "@media print{[data-cg-watermark]::after{position:fixed;right:1cm;bottom:1cm;color:#777}}";
     document.head.appendChild(style);
   }
 
   function closestProtected(el) {
     return el && el.closest ? el.closest("[data-cg-protected]") : null;
+  }
+
+  function closestClassProtected(el) {
+    return el && el.closest ? el.closest(".protected") : null;
   }
 
   function isEditable(el) {
@@ -96,6 +117,26 @@
     shieldAll(document);
     loadCyberEditorialVisual();
 
+    // A non-identifying, per-page token helps correlate an authorized preview
+    // with client-side diagnostics without fingerprinting the visitor.
+    var sessionToken;
+    if (window.crypto && window.crypto.getRandomValues) {
+      var randomBytes = new Uint8Array(8);
+      window.crypto.getRandomValues(randomBytes);
+      sessionToken = Array.prototype.map.call(randomBytes, function (byte) {
+        return byte.toString(16).padStart(2, "0");
+      }).join("").toUpperCase();
+    } else {
+      sessionToken = Math.random().toString(36).slice(2, 10).toUpperCase();
+    }
+    document.documentElement.dataset.sessionWatermark = sessionToken;
+    if (!document.querySelector('meta[name="session-watermark"]')) {
+      var sessionMeta = document.createElement("meta");
+      sessionMeta.name = "session-watermark";
+      sessionMeta.content = sessionToken;
+      document.head.appendChild(sessionMeta);
+    }
+
     // Cover images that arrive after load (badges, carousels, lazy content).
     if (window.MutationObserver) {
       new MutationObserver(function () { shieldAll(document); })
@@ -115,6 +156,25 @@
 
     document.addEventListener("dragstart", function (e) {
       if (isImage(e.target)) e.preventDefault();
+    });
+
+    document.addEventListener("contextmenu", function (e) {
+      if (closestClassProtected(e.target) && !isEditable(e.target)) e.preventDefault();
+    });
+
+    document.addEventListener("dragstart", function (e) {
+      if (e.target.closest && e.target.closest(".protected .drag-block")) e.preventDefault();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      var key = String(e.key || "").toLowerCase();
+      var isCopyShortcut = (e.ctrlKey || e.metaKey) &&
+        ["c", "u", "s", "p"].indexOf(key) !== -1;
+      if (!isCopyShortcut || isEditable(e.target)) return;
+
+      var protectedTarget = closestProtected(e.target) || closestClassProtected(e.target) ||
+        document.querySelector("[data-cg-protected]:hover,.protected:hover");
+      if (protectedTarget) e.preventDefault();
     });
   }
 

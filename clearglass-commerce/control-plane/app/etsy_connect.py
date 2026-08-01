@@ -17,6 +17,7 @@ secret, local ``.env`` that is *not* committed).
 from __future__ import annotations
 
 import argparse
+import secrets
 import sys
 import urllib.parse
 
@@ -52,21 +53,57 @@ def _print_status() -> int:
     return 0 if status["connected"] else 1
 
 
-def _code_from_input(raw: str) -> str:
-    """Accept either the bare ``code`` or the whole redirect URL pasted from the browser."""
+def _parse_redirect(raw: str) -> tuple[str, str | None]:
+    """Split a pasted redirect URL (or a bare code) into ``(code, returned_state)``.
+
+    ``returned_state`` is ``None`` when only the code was supplied — which is exactly why
+    the interactive flow insists on the full URL, so :func:`_check_state` has something
+    to verify against.
+    """
     raw = raw.strip()
     if raw.startswith("http://") or raw.startswith("https://"):
-        query = urllib.parse.urlparse(raw).query
-        params = urllib.parse.parse_qs(query)
+        params = urllib.parse.parse_qs(urllib.parse.urlparse(raw).query)
         if "error" in params:
             raise EtsyOAuthError(f"Etsy returned an error on the redirect: {params['error'][0]}")
         if "code" not in params:
             raise EtsyOAuthError("That redirect URL has no ?code= parameter.")
-        return params["code"][0]
-    return raw
+        return params["code"][0], (params["state"][0] if "state" in params else None)
+    return raw, None
 
 
-def _print_tokens(tokens: dict, scopes: tuple[str, ...]) -> None:
+def _check_state(returned: str | None, expected: str) -> None:
+    """Fail closed unless the redirect's state matches the one we generated.
+
+    This binds the response to *this* request. It is checked in code rather than left to
+    the operator's eyes, so a mismatched or absent state aborts before any exchange.
+    """
+    if returned is None:
+        raise EtsyOAuthError(
+            "The redirect carried no ?state= value, so it cannot be bound to this "
+            "request. Paste the full redirect URL exactly as the browser received it."
+        )
+    if not secrets.compare_digest(returned, expected):
+        raise EtsyOAuthError(
+            f"state mismatch (expected {expected!r}, got {returned!r}) — this response "
+            "did not originate from this request. Nothing was exchanged."
+        )
+
+
+def _scopes_after_refresh(tokens: dict, settings) -> tuple[str, ...] | None:
+    """The scopes to report after a refresh — never the *requested* set.
+
+    A refresh carries the original grant forward unchanged and cannot widen it, so the
+    only honest sources are what Etsy returned or what was already stored. Returns
+    ``None`` when neither exists, so the ``ETSY_SCOPES`` line is omitted rather than
+    guessed — ``verify_connection`` reads that value to decide what the token may do.
+    """
+    if tokens.get("scope"):
+        return tuple(tokens["scope"])
+    stored = tuple(s.strip() for s in settings.etsy_scopes.split(",") if s.strip())
+    return stored or None
+
+
+def _print_tokens(tokens: dict, scopes: tuple[str, ...] | None) -> None:
     print("\nConnected. Set these as RUNTIME env vars (never commit them):\n")
     print(env_exports(tokens, scopes))
     if tokens.get("expires_in"):
@@ -76,13 +113,32 @@ def _print_tokens(tokens: dict, scopes: tuple[str, ...]) -> None:
           "shop identity, listing/order permissions, and sync status.")
 
 
-def _run_consent_flow(scopes: tuple[str, ...], code: str | None, verifier: str | None) -> int:
+def _run_consent_flow(
+    scopes: tuple[str, ...],
+    code: str | None,
+    verifier: str | None,
+    expected_state: str | None = None,
+) -> int:
     settings = get_settings()
 
     if code and verifier:
-        # Split-machine path: the browser half happened elsewhere.
-        tokens = exchange_code(_code_from_input(code), verifier, settings)
-        _print_tokens(tokens, scopes)
+        # Split-machine path: the browser half happened elsewhere. If the operator
+        # brought the whole redirect URL across, its state is still checkable here.
+        parsed_code, returned_state = _parse_redirect(code)
+        if returned_state is not None:
+            if not expected_state:
+                raise EtsyOAuthError(
+                    "That redirect URL carries a ?state= value but --state was not given. "
+                    "Pass --state <value printed by the authorize step> so it is verified."
+                )
+            _check_state(returned_state, expected_state)
+        elif expected_state:
+            raise EtsyOAuthError(
+                "--state was given but --code carries no state to check it against. "
+                "Pass the full redirect URL rather than the bare code."
+            )
+        tokens = exchange_code(parsed_code, verifier, settings)
+        _print_tokens(tokens, tokens.get("scope") or scopes)
         return 0
 
     verifier, challenge = generate_pkce()
@@ -92,19 +148,20 @@ def _run_consent_flow(scopes: tuple[str, ...], code: str | None, verifier: str |
     print("1. Open this URL as the Etsy shop owner and approve the requested scopes:\n")
     print(f"   {url}\n")
     print(f"2. Etsy redirects to {settings.etsy_redirect_uri} with ?code=...&state=...")
-    print(f"   Confirm the returned state is exactly: {state}")
-    print("   (If it differs, abandon the flow — the response is not ours.)\n")
-    print("   Keep this verifier if you need to finish the exchange elsewhere:")
-    print(f"   --verifier {verifier}\n")
+    print("   The returned state is checked here automatically; a mismatch aborts.\n")
+    print("   To finish the exchange on another machine instead:")
+    print(f"   --verifier {verifier} --state {state}\n")
 
     try:
-        raw = input("3. Paste the full redirect URL (or just the code): ")
+        raw = input("3. Paste the full redirect URL: ")
     except (EOFError, KeyboardInterrupt):
         print("\nAborted — nothing was connected.", file=sys.stderr)
         return 1
 
-    tokens = exchange_code(_code_from_input(raw), verifier, settings)
-    _print_tokens(tokens, scopes)
+    code, returned_state = _parse_redirect(raw)
+    _check_state(returned_state, state)
+    tokens = exchange_code(code, verifier, settings)
+    _print_tokens(tokens, tokens.get("scope") or scopes)
     return 0
 
 
@@ -119,10 +176,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--exchange", action="store_true", help="exchange a code obtained elsewhere")
     parser.add_argument("--code", help="authorization code, or the full redirect URL")
     parser.add_argument("--verifier", help="PKCE code_verifier from the authorize step")
+    parser.add_argument("--state", help="state from the authorize step; verified against the redirect")
     parser.add_argument(
         "--scopes",
         default=",".join(REQUIRED_SCOPES),
-        help="comma-separated OAuth scopes to request (default: the scopes this operator needs)",
+        help="comma-separated OAuth scopes to request (default: the scopes this operator "
+             "needs). Ignored by --refresh, which cannot widen the original grant.",
     )
     args = parser.parse_args(argv)
     scopes = tuple(s.strip() for s in args.scopes.split(",") if s.strip())
@@ -131,12 +190,15 @@ def main(argv: list[str] | None = None) -> int:
         if args.status:
             return _print_status()
         if args.refresh:
-            tokens = refresh_access_token(settings=get_settings())
-            _print_tokens(tokens, scopes)
+            settings = get_settings()
+            tokens = refresh_access_token(settings=settings)
+            # A refresh preserves the original grant, so report what was actually
+            # granted — reporting the requested set would overstate the token.
+            _print_tokens(tokens, _scopes_after_refresh(tokens, settings))
             return 0
         if args.exchange and not (args.code and args.verifier):
             parser.error("--exchange requires both --code and --verifier")
-        return _run_consent_flow(scopes, args.code, args.verifier)
+        return _run_consent_flow(scopes, args.code, args.verifier, args.state)
     except EtsyOAuthError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1

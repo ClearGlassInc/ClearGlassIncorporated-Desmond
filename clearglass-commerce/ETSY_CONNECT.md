@@ -30,12 +30,13 @@ python -m app.etsy_connect              # the consent flow
 ```
 
 The CLI prints a consent URL, you open it as the shop owner and approve, Etsy redirects
-to `ETSY_REDIRECT_URI` with a `code`, and you paste that redirect URL back. It uses
-OAuth2 **PKCE**, so the shared secret is never transmitted and an intercepted code is
-useless without the one-time verifier held in the CLI process.
+to `ETSY_REDIRECT_URI` with a `code`, and you paste **the full redirect URL** back. It
+uses OAuth2 **PKCE**, so the shared secret is never transmitted and an intercepted code
+is useless without the one-time verifier held in the CLI process.
 
-Check that the `state` on the redirect matches the one the CLI printed. If it doesn't,
-abandon the flow — the response didn't originate from your request.
+Paste the whole URL, not just the code: the CLI compares the returned `state` against the
+one it generated and aborts before exchanging anything if it is absent or differs. That
+check is enforced in code, not left to your eyes.
 
 Requested scopes are exactly what the operator needs, no more:
 
@@ -44,11 +45,17 @@ Requested scopes are exactly what the operator needs, no more:
 | `listings_r` / `listings_w` | read the catalog; publish approved listings |
 | `transactions_r` / `transactions_w` | read receipts; act on approved order changes |
 
-Split across machines (browser on one, shell on another) with the verifier the CLI prints:
+Split across machines (browser on one, shell on another) with the verifier and state the
+CLI prints:
 
 ```bash
-python -m app.etsy_connect --exchange --code '<redirect URL or code>' --verifier '<verifier>'
+python -m app.etsy_connect --exchange --code '<full redirect URL>' \
+    --verifier '<verifier>' --state '<state>'
 ```
+
+If you carry the redirect URL across, `--state` is required and verified. A bare `code`
+with no `--state` is accepted only because the state was already checked on the machine
+that held the browser.
 
 ## 3. Store the tokens as runtime secrets
 
@@ -61,6 +68,11 @@ Access tokens lapse after about an hour; refresh tokens last far longer:
 ```bash
 python -m app.etsy_connect --refresh
 ```
+
+A refresh carries the original grant forward and cannot widen it, so it reports the
+scopes Etsy actually granted (or your stored `ETSY_SCOPES`) rather than the ones the CLI
+would request — `verify_connection` reads that value to decide what the token may do, so
+an overstated one would claim a capability the token lacks.
 
 ## 4. Verify
 

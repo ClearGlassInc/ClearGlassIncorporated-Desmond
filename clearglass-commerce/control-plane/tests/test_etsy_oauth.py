@@ -132,26 +132,128 @@ def test_refresh_without_any_token_explains_the_remedy() -> None:
 # --- env rendering ----------------------------------------------------------------
 
 def test_env_exports_lists_what_the_control_plane_reads() -> None:
-    out = etsy_oauth.env_exports({"access_token": "42.a", "refresh_token": "42.r", "user_id": "42"})
+    out = etsy_oauth.env_exports(
+        {"access_token": "42.a", "refresh_token": "42.r", "user_id": "42"}, REQUIRED_SCOPES
+    )
     assert "ETSY_ACCESS_TOKEN=42.a" in out
     assert "ETSY_REFRESH_TOKEN=42.r" in out
     assert "ETSY_SCOPES=" + ",".join(REQUIRED_SCOPES) in out
 
 
+def test_env_exports_omits_scopes_rather_than_guessing_them() -> None:
+    # verify_connection reads ETSY_SCOPES to decide what the token may do, so an unknown
+    # grant must produce no value at all rather than an assumed one.
+    out = etsy_oauth.env_exports({"access_token": "42.a", "refresh_token": "42.r"}, None)
+    assert "ETSY_SCOPES=" not in out
+    assert "unchanged" in out
+
+
+# --- wire format: the token endpoint is form-encoded, not JSON ---------------------
+
+def test_token_request_is_form_encoded(monkeypatch) -> None:
+    """RFC 6749 §4.1.3 and Etsy both require application/x-www-form-urlencoded."""
+    captured = {}
+
+    class _Resp:
+        status = 200
+
+        def read(self):
+            return b'{"access_token": "42.a", "refresh_token": "42.r"}'
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    def fake_urlopen(req, timeout=None):
+        captured["content_type"] = req.headers.get("Content-type")
+        captured["body"] = req.data.decode()
+        return _Resp()
+
+    monkeypatch.setattr(etsy_oauth.urllib.request, "urlopen", fake_urlopen)
+    etsy_oauth.exchange_code("the code", "the+verifier", _settings())
+
+    assert captured["content_type"] == "application/x-www-form-urlencoded"
+    assert "grant_type=authorization_code" in captured["body"]
+    # values must be percent-encoded, not raw
+    assert "code=the+code" in captured["body"]
+    assert "code_verifier=the%2Bverifier" in captured["body"]
+    assert not captured["body"].startswith("{")
+
+
+def test_server_reported_scope_is_captured() -> None:
+    post, _ = _fake_post(200, {"access_token": "42.a", "scope": "listings_r transactions_r"})
+    tokens = etsy_oauth.exchange_code("c", "v", _settings(), post=post)
+    assert tokens["scope"] == ("listings_r", "transactions_r")
+
+
 # --- CLI input handling -----------------------------------------------------------
 
-def test_code_accepted_bare_or_as_full_redirect_url() -> None:
-    assert etsy_connect._code_from_input("  rawcode  ") == "rawcode"
-    assert etsy_connect._code_from_input(
+def test_parse_redirect_handles_bare_code_and_full_url() -> None:
+    assert etsy_connect._parse_redirect("  rawcode  ") == ("rawcode", None)
+    assert etsy_connect._parse_redirect(
         "https://www.clearglassinc.com/etsy/callback?code=abc123&state=xyz"
-    ) == "abc123"
+    ) == ("abc123", "xyz")
 
 
 def test_redirect_url_error_and_missing_code_are_reported() -> None:
     with pytest.raises(etsy_oauth.EtsyOAuthError, match="access_denied"):
-        etsy_connect._code_from_input("https://cb/?error=access_denied")
+        etsy_connect._parse_redirect("https://cb/?error=access_denied")
     with pytest.raises(etsy_oauth.EtsyOAuthError, match="no .code="):
-        etsy_connect._code_from_input("https://cb/?state=xyz")
+        etsy_connect._parse_redirect("https://cb/?state=xyz")
+
+
+# --- state is enforced in code, not by eye ----------------------------------------
+
+def test_state_mismatch_and_absence_both_fail_closed() -> None:
+    etsy_connect._check_state("st4te", "st4te")           # matching state passes
+    with pytest.raises(etsy_oauth.EtsyOAuthError, match="state mismatch"):
+        etsy_connect._check_state("attacker", "st4te")
+    with pytest.raises(etsy_oauth.EtsyOAuthError, match="no .state="):
+        etsy_connect._check_state(None, "st4te")
+
+
+def test_split_machine_exchange_requires_state_when_redirect_carries_one(monkeypatch) -> None:
+    called = {"n": 0}
+    monkeypatch.setattr(etsy_connect, "exchange_code", lambda *a, **k: called.__setitem__("n", 1))
+
+    rc = etsy_connect.main([
+        "--exchange", "--verifier", "v",
+        "--code", "https://cb/?code=abc&state=xyz",   # no --state given
+    ])
+    assert rc == 1                 # errored out
+    assert called["n"] == 0        # and never exchanged
+
+
+def test_split_machine_exchange_rejects_a_state_mismatch(monkeypatch) -> None:
+    called = {"n": 0}
+    monkeypatch.setattr(etsy_connect, "exchange_code", lambda *a, **k: called.__setitem__("n", 1))
+
+    rc = etsy_connect.main([
+        "--exchange", "--verifier", "v", "--state", "expected",
+        "--code", "https://cb/?code=abc&state=attacker",
+    ])
+    assert rc == 1
+    assert called["n"] == 0
+
+
+# --- a refresh must never overstate the grant -------------------------------------
+
+def test_refresh_reports_stored_scopes_not_requested_ones() -> None:
+    # token was granted read-only; the CLI default asks for all four scopes
+    settings = _settings(etsy_scopes="listings_r")
+    assert etsy_connect._scopes_after_refresh({}, settings) == ("listings_r",)
+
+
+def test_refresh_prefers_the_scope_etsy_returned() -> None:
+    settings = _settings(etsy_scopes="listings_r")
+    tokens = {"scope": ("listings_r", "listings_w")}
+    assert etsy_connect._scopes_after_refresh(tokens, settings) == ("listings_r", "listings_w")
+
+
+def test_refresh_with_no_known_scope_reports_none() -> None:
+    assert etsy_connect._scopes_after_refresh({}, _settings()) is None
 
 
 def test_cli_exchange_requires_both_code_and_verifier() -> None:

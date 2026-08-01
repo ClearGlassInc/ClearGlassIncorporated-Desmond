@@ -98,14 +98,21 @@ def build_authorize_url(
 
 
 def _default_post(settings: Settings) -> Poster:
-    """Build a JSON POST caller for the Etsy token endpoint."""
+    """Build a POST caller for the Etsy token endpoint.
+
+    Per RFC 6749 §4.1.3 — and Etsy's own documented examples — the token endpoint takes
+    ``application/x-www-form-urlencoded`` parameters, not JSON. The *response* is JSON.
+    """
 
     def post(url: str, body: dict) -> tuple[int, dict]:
-        data = json.dumps(body).encode("utf-8")
+        data = urllib.parse.urlencode(body).encode("utf-8")
         req = urllib.request.Request(
             url,
             data=data,
-            headers={"Content-Type": "application/json", "Accept": "application/json"},
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": "application/json",
+            },
             method="POST",
         )
         try:
@@ -128,12 +135,16 @@ def _token_result(status: int, body: dict, *, step: str) -> dict:
         detail = body.get("error_description") or body.get("error") or f"status {status}"
         raise EtsyOAuthError(f"{step} failed: {detail}")
     access_token = body["access_token"]
+    # When the server reports the granted scope, it is authoritative — a refresh carries
+    # the original grant forward and can never widen it, so we must not assume otherwise.
+    granted = body.get("scope")
     return {
         "access_token": access_token,
         "refresh_token": body.get("refresh_token", ""),
         "expires_in": body.get("expires_in"),
         # Etsy tokens are "<user_id>.<token>", so the account id falls out for free.
         "user_id": access_token.split(".", 1)[0] if "." in access_token else None,
+        "scope": tuple(granted.replace(",", " ").split()) if granted else None,
     }
 
 
@@ -200,15 +211,23 @@ def refresh_access_token(
 def env_exports(tokens: dict, scopes: tuple[str, ...] | list[str] | None = None) -> str:
     """Render the env vars the control plane needs, ready to paste into a secret store.
 
+    ``scopes`` must be what Etsy actually granted, never what was merely requested:
+    ``verify_connection`` derives ``can_list_products`` / ``can_manage_orders`` straight
+    from ``ETSY_SCOPES``, so an overstated value would report a capability the token does
+    not have. Pass ``None`` when the granted scope is unknown and the line is omitted
+    rather than guessed.
+
     Returned as text for the operator to place in *runtime* configuration. Never write
     this to a file in the repo — the tokens are live credentials for the shop.
     """
-    scopes = scopes or REQUIRED_SCOPES
     lines = [
         f"ETSY_ACCESS_TOKEN={tokens['access_token']}",
         f"ETSY_REFRESH_TOKEN={tokens.get('refresh_token', '')}",
-        f"ETSY_SCOPES={','.join(scopes)}",
     ]
+    if scopes:
+        lines.append(f"ETSY_SCOPES={','.join(scopes)}")
+    else:
+        lines.append("# ETSY_SCOPES unchanged — keep the value from the original grant.")
     if tokens.get("user_id"):
         lines.append(f"# Etsy user id from the token prefix: {tokens['user_id']}")
     return "\n".join(lines)

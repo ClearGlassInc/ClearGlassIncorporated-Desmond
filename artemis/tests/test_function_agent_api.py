@@ -74,7 +74,7 @@ async def test_api_execution_and_operator_approval(tmp_path: Path) -> None:
 
 
 @pytest.mark.asyncio
-async def test_api_ignores_client_supplied_roles(tmp_path: Path) -> None:
+async def test_api_rejects_client_supplied_identity_fields(tmp_path: Path) -> None:
     runtime = build_runtime(
         RuntimeSettings(
             workspace=tmp_path / "workspace",
@@ -95,5 +95,4 @@ async def test_api_ignores_client_supplied_roles(tmp_path: Path) -> None:
             },
         )
 
-    assert response.status_code == 200
-    assert response.json()["status"] == "approval_required"
+    assert response.status_code == 422

@@ -1,8 +1,71 @@
 [
   {
-    "title": "Control Surface Feeds #502",
+    "title": "Control Surface Feeds #503",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "19:32",
+    "timestamp": "2026-08-01T19:32:27Z"
+  },
+  {
+    "title": "Defender Watch #1445",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "19:19",
+    "timestamp": "2026-08-01T19:19:35Z"
+  },
+  {
+    "title": "Health Monitor #253",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:14",
+    "timestamp": "2026-08-01T19:14:04Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #971",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-a9a964a2-d9f6-4d44-b63a-0322daf4007c",
+    "time": "19:00",
+    "timestamp": "2026-08-01T19:00:52Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #33",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "18:59",
+    "timestamp": "2026-08-01T18:59:40Z"
+  },
+  {
+    "title": "Deploy Pages #1462",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "18:11",
+    "timestamp": "2026-08-01T18:11:58Z"
+  },
+  {
+    "title": "pages build and deployment #1956",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:11",
+    "timestamp": "2026-08-01T18:11:50Z"
+  },
+  {
+    "title": "Push on main #3402",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:11",
+    "timestamp": "2026-08-01T18:11:50Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3401",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:11",
+    "timestamp": "2026-08-01T18:11:50Z"
+  },
+  {
+    "title": "Control Surface Feeds #502",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "18:11",
     "timestamp": "2026-08-01T18:11:28Z"
   },
@@ -75,68 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "15:18",
     "timestamp": "2026-08-01T15:18:31Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3398",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "15:18",
-    "timestamp": "2026-08-01T15:18:31Z"
-  },
-  {
-    "title": "Push on main #3397",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "15:18",
-    "timestamp": "2026-08-01T15:18:31Z"
-  },
-  {
-    "title": "Control Surface Feeds #500",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:18",
-    "timestamp": "2026-08-01T15:18:12Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #967",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-e328bdd2-7e67-4e3e-a2f9-a6038e91112d",
-    "time": "15:00",
-    "timestamp": "2026-08-01T15:00:52Z"
-  },
-  {
-    "title": "Agent OS Self-Check #34",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:41",
-    "timestamp": "2026-08-01T14:41:56Z"
-  },
-  {
-    "title": "Commerce Daily Loop #54",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:24",
-    "timestamp": "2026-08-01T14:24:39Z"
-  },
-  {
-    "title": "PR Automation #969",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/senior-eng-ops-agent-cfb7dn",
-    "time": "14:17",
-    "timestamp": "2026-08-01T14:17:25Z"
-  },
-  {
-    "title": "Running Copilot Code Review #6",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on claude/senior-eng-ops-agent-cfb7dn",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:56Z"
-  },
-  {
-    "title": "Artemis Function Agent CI #15",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on claude/senior-eng-ops-agent-cfb7dn",
-    "time": "14:13",
-    "timestamp": "2026-08-01T14:13:51Z"
   }
 ]

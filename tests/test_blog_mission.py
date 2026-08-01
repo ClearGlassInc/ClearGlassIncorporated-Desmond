@@ -46,6 +46,8 @@ def test_rss_and_json_feeds_match_the_post_index() -> None:
     assert {item.findtext("guid") for item in rss_items} == {
         "https://www.clearglassinc.com" + post["url"] for post in posts
     }
+    atom = ET.parse(BLOG / "atom.xml").getroot()
+    assert len(atom.findall("{http://www.w3.org/2005/Atom}entry")) == len(posts)
 
 
 def test_new_styles_and_script_are_mission_scoped() -> None:
@@ -62,3 +64,21 @@ def test_new_styles_and_script_are_mission_scoped() -> None:
     script = (BLOG / "mission.js").read_text(encoding="utf-8")
     assert "document.querySelector('.cg-blog-mission')" in script
     assert "if (!root) return" in script
+
+
+def test_hub_exposes_accessible_modes_and_security_boundary() -> None:
+    index = (BLOG / "index.html").read_text(encoding="utf-8")
+    assert 'Content-Security-Policy' in index
+    assert 'data-mission-page="hub"' in index
+    assert "ARTEMIS FAWL // KNOWLEDGE LINK ESTABLISHED" in index
+    for mode in ("briefing", "signals", "archive", "focus", "graph"):
+        assert f'data-view="{mode}"' in index
+    assert 'data-graph-rows' in index
+    assert '<noscript>' in index
+
+
+def test_client_rendering_avoids_unsafe_html_sinks() -> None:
+    script = (BLOG / "mission.js").read_text(encoding="utf-8")
+    assert ".innerHTML" not in script
+    assert "replaceChildren" in script
+    assert "safeParam" in script

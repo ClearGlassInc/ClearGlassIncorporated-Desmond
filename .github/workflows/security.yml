@@ -34,15 +34,21 @@ jobs:
         id: depgraph
         env:
           GH_TOKEN: ${{ github.token }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          if curl -sfS -o /dev/null \
+          # Probe the comparison endpoint the action itself calls. The SBOM
+          # endpoint is not a valid proxy for availability: it answers 200 on
+          # this repository while the comparison API still rejects the request.
+          code="$(curl -s -o /dev/null -w '%{http_code}' \
               -H "Authorization: Bearer $GH_TOKEN" \
               -H "Accept: application/vnd.github+json" \
-              "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/dependency-graph/sbom"; then
+              "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/dependency-graph/compare/${BASE_SHA}...${HEAD_SHA}")"
+          if [ "$code" = "200" ]; then
             echo "available=true" >> "$GITHUB_OUTPUT"
           else
             echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "::warning title=Dependency Review skipped::Dependency Graph is not enabled for this repository, so dependency review cannot run. Enable it under Settings → Code security and analysis."
+            echo "::warning title=Dependency Review skipped::Dependency graph comparison returned HTTP ${code}; dependency review cannot run. Enable Dependency graph under Settings → Code security and analysis."
           fi
       - if: steps.depgraph.outputs.available == 'true'
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0

@@ -7,7 +7,7 @@ from typing import Annotated, Any
 from uuid import uuid4
 
 from fastapi import APIRouter, FastAPI, Header, HTTPException, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from .models import (
     BatchExecutionRequest,
@@ -20,6 +20,8 @@ from .runtime import AgentRuntime, build_runtime
 
 
 class APIExecutionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     capability: str
     arguments: dict[str, Any] = Field(default_factory=dict)
     approval_token: str | None = None
@@ -27,6 +29,8 @@ class APIExecutionRequest(BaseModel):
 
 
 class APIBatchExecutionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     requests: list[APIExecutionRequest] = Field(min_length=1, max_length=100)
     max_concurrency: int = Field(default=4, ge=1, le=32)
     fail_fast: bool = False

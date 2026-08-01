@@ -1,4 +1,4 @@
-"""LLM client adapter contracts for the Artemis Function Agent."""
+"""LLM client adapters for the Artemis Function Agent."""
 
 from .base import (
     ChatMessage,
@@ -8,6 +8,7 @@ from .base import (
     MessageRole,
     ToolCall,
 )
+from .openai_responses import OpenAIAdapterError, OpenAIResponsesClient
 
 __all__ = [
     "ChatMessage",
@@ -15,5 +16,7 @@ __all__ = [
     "LLMResponse",
     "LLMStreamEvent",
     "MessageRole",
+    "OpenAIAdapterError",
+    "OpenAIResponsesClient",
     "ToolCall",
 ]

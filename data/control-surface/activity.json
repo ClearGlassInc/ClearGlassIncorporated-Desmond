@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "22:09",
-    "timestamp": "2026-08-02T22:09:36Z"
+    "time": "23:10",
+    "timestamp": "2026-08-02T23:10:51Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #519",
+    "time": "23:10",
+    "timestamp": "2026-08-02T23:10:29Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "ok",
+    "detail": "dynamic on copilot/task-272290681-1196426665-973057c1-8a92-47b9-92e1-ddac4dcd2852 \u00b7 run #1000",
+    "time": "23:00",
+    "timestamp": "2026-08-02T23:00:52Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1488",
+    "time": "22:09",
+    "timestamp": "2026-08-02T22:09:51Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #1985",
+    "time": "22:09",
+    "timestamp": "2026-08-02T22:09:44Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3458",
+    "time": "22:09",
+    "timestamp": "2026-08-02T22:09:43Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #518",
     "time": "22:09",
     "timestamp": "2026-08-02T22:09:06Z"
@@ -54,40 +89,5 @@
     "detail": "dynamic on copilot/task-272290681-1196426665-5140e422-b022-40dd-839e-0a98d5082aa0 \u00b7 run #998",
     "time": "21:00",
     "timestamp": "2026-08-02T21:00:52Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1806",
-    "time": "20:50",
-    "timestamp": "2026-08-02T20:50:49Z"
-  },
-  {
-    "title": "SEO Dashboard",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #37",
-    "time": "20:50",
-    "timestamp": "2026-08-02T20:50:48Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #2070",
-    "time": "20:50",
-    "timestamp": "2026-08-02T20:50:48Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1471",
-    "time": "20:50",
-    "timestamp": "2026-08-02T20:50:48Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1836",
-    "time": "20:50",
-    "timestamp": "2026-08-02T20:50:48Z"
   }
 ]

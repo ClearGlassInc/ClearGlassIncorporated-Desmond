@@ -68,7 +68,14 @@ ruff check .                           # lint (must pass)
 python -m pytest tests/ -q             # full suite; payout/resilience tests need the full web stack (httpx)
 uvicorn app.main:app --reload          # http://localhost:8000/docs
 python -m app.daily_loop --json        # governance self-check + executive report (stdlib only)
+python -m app.etsy_connect --status    # Etsy connection state; omit --status for the OAuth flow
 ```
+
+Connecting the Etsy shop is a human OAuth2 (PKCE) step — `app/etsy_oauth.py` +
+`python -m app.etsy_connect`, documented in `clearglass-commerce/ETSY_CONNECT.md`. The
+CLI prints tokens for a runtime secret store and never persists one. Connection state is
+credential presence only; `POST /etsy/verify` is a read-only identity/permission check.
+Connecting unlocks nothing on its own: every Etsy write is in `ALWAYS_ESCALATE`.
 
 Note: `requirements.txt` pins `httpx` because `fastapi.testclient.TestClient`
 needs it. Without it the webhook → DB → `/payouts` integration tests **silently

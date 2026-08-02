@@ -1,8 +1,50 @@
 [
   {
-    "title": "Control Surface Feeds #506",
+    "title": "Control Surface Feeds #507",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "00:11",
+    "timestamp": "2026-08-02T00:11:07Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #976",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-b9663ce9-b65e-47ea-aba6-71ee8b164222",
+    "time": "00:00",
+    "timestamp": "2026-08-02T00:00:54Z"
+  },
+  {
+    "title": "Deploy Pages #1466",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "23:10",
+    "timestamp": "2026-08-01T23:10:23Z"
+  },
+  {
+    "title": "pages build and deployment #1960",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:10",
+    "timestamp": "2026-08-01T23:10:14Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3410",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:10",
+    "timestamp": "2026-08-01T23:10:14Z"
+  },
+  {
+    "title": "Push on main #3409",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:10",
+    "timestamp": "2026-08-01T23:10:14Z"
+  },
+  {
+    "title": "Control Surface Feeds #506",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:09",
     "timestamp": "2026-08-01T23:09:47Z"
   },
@@ -96,47 +138,5 @@
     "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-a0cd293d-d494-46b6-9844-a18e0fdaac73",
     "time": "21:00",
     "timestamp": "2026-08-01T21:00:52Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #972",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-66f48575-0913-4a02-8d35-caa0101950d8",
-    "time": "20:00",
-    "timestamp": "2026-08-01T20:00:52Z"
-  },
-  {
-    "title": "Deploy Pages #1463",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "19:32",
-    "timestamp": "2026-08-01T19:32:56Z"
-  },
-  {
-    "title": "pages build and deployment #1957",
-    "status": "bad",
-    "detail": "failure \u00b7 dynamic on main",
-    "time": "19:32",
-    "timestamp": "2026-08-01T19:32:49Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3404",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:32",
-    "timestamp": "2026-08-01T19:32:49Z"
-  },
-  {
-    "title": "Push on main #3403",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "19:32",
-    "timestamp": "2026-08-01T19:32:48Z"
-  },
-  {
-    "title": "Control Surface Feeds #503",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "19:32",
-    "timestamp": "2026-08-01T19:32:27Z"
   }
 ]

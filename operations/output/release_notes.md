@@ -1,6 +1,6 @@
-# Release Notes — 2026-08-01
+# Release Notes — 2026-08-02
 
-*1472 commit(s) since v1.0.0*
+*1493 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -289,6 +289,11 @@
 
 ## Maintenance
 
+- add workflow_dispatch to commerce-frontend-ci, ip-protection-scan, and security workflows (`a7ac2bc`)
+- Fix max_write_bytes, media query, aria-label, grammar, and CAPTCHA issues (`05220ed`)
+- Initial plan (`26476bb`)
+- Enhance NEXUS with neon command fabric (`c1a7088`)
+- Restore blog to previous design (`502fb79`)
 - Create FUNDING.yml for sponsorship options (`bef9ab9`)
 - Use existing logo asset for browser icons (`5e28484`)
 - Add complete YouTube launch operating system (`9b3dda5`)
@@ -900,6 +905,22 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`38b1eec`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`efff16f`)
+- refresh control-surface data feeds [skip ci] (`6750ce1`)
+- refresh control-surface data feeds [skip ci] (`ed7b591`)
+- refresh control-surface data feeds [skip ci] (`b85ed43`)
+- refresh control-surface data feeds [skip ci] (`f82a98c`)
+- refresh control-surface data feeds [skip ci] (`f5357bd`)
+- refresh control-surface data feeds [skip ci] (`63a3beb`)
+- refresh control-surface data feeds [skip ci] (`ab52fe5`)
+- refresh control-surface data feeds [skip ci] (`7f1fa01`)
+- refresh control-surface data feeds [skip ci] (`f92d509`)
+- refresh control-surface data feeds [skip ci] (`4b62610`)
+- refresh control-surface data feeds [skip ci] (`bcd09bc`)
+- refresh control-surface data feeds [skip ci] (`3b37c03`)
+- refresh control-surface data feeds [skip ci] (`e6a8a5f`)
+- update generated outputs — 2026-08-01 09:05 UTC [skip ci] (`4e85af6`)
 - refresh SEO dashboard feeds [skip ci] (`8bdcb68`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`1cabd75`)
 - refresh control-surface data feeds [skip ci] (`589074f`)

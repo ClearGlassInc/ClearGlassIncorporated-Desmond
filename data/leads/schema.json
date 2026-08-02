@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ClearGlass Lead Schema",
+  "description": "Normalized lead capture from contact forms, emails, and referrals",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string",
+      "description": "Unique identifier (UUID or hash of email+timestamp)"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp when lead was captured"
+    },
+    "source": {
+      "type": "string",
+      "enum": ["formsubmit", "email", "google_referral", "manual", "webhook"],
+      "description": "Lead source channel"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Referring URL or form endpoint"
+    },
+    "form_submission_id": {
+      "type": "string",
+      "description": "FormSubmit.co message ID (for deduplication)"
+    },
+    "first_name": {
+      "type": "string",
+      "description": "Contact first name"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Contact last name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Contact email address"
+    },
+    "company": {
+      "type": "string",
+      "description": "Company name (if provided or inferred)"
+    },
+    "job_title": {
+      "type": "string",
+      "description": "Job title or role"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number (optional)"
+    },
+    "intent": {
+      "type": "string",
+      "description": "Reason for contacting (from form or inferred)"
+    },
+    "message": {
+      "type": "string",
+      "description": "Full message body from form or email"
+    },
+    "classification": {
+      "type": "object",
+      "description": "Automated classification results",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["jobseeker", "employer", "recruiter", "vendor", "press", "unknown"],
+          "description": "Lead type classification"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Classification confidence score (0-1)"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Explanation of classification decision"
+        }
+      },
+      "required": ["type"]
+    },
+    "crm_status": {
+      "type": "object",
+      "description": "CRM integration status",
+      "properties": {
+        "synced": {
+          "type": "boolean",
+          "description": "Whether lead has been synced to CRM"
+        },
+        "hubspot_contact_id": {
+          "type": "string",
+          "description": "HubSpot contact ID (if synced)"
+        },
+        "hubspot_status": {
+          "type": "string",
+          "description": "HubSpot lifecycle stage"
+        },
+        "last_sync_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last CRM sync timestamp"
+        }
+      }
+    },
+    "notification_status": {
+      "type": "object",
+      "description": "Notification dispatch status",
+      "properties": {
+        "slack_notified": {
+          "type": "boolean",
+          "description": "Whether Slack notification was sent"
+        },
+        "slack_ts": {
+          "type": "string",
+          "description": "Slack message timestamp"
+        },
+        "bot_routed": {
+          "type": "boolean",
+          "description": "Whether lead was routed to bot"
+        },
+        "routed_bot": {
+          "type": "string",
+          "enum": ["sales_outreach", "recruiting", "vendor_eval", "press_inquiry"],
+          "description": "Which bot received this lead"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "user_agent": {
+          "type": "string"
+        },
+        "ip_address": {
+          "type": "string"
+        },
+        "utm_source": {
+          "type": "string"
+        },
+        "utm_campaign": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": ["lead_id", "captured_at", "source", "email", "classification"]
+}

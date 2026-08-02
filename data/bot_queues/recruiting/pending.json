@@ -1,0 +1,33 @@
+[
+  {
+    "lead_id": "1de08dc54f600f3a",
+    "queued_at": "2026-08-02T14:40:05.468355+00:00",
+    "lead": {
+      "lead_id": "1de08dc54f600f3a",
+      "captured_at": "2026-08-02T14:39:58.765893+00:00",
+      "source": "manual",
+      "email": "bob.smith@gmail.com",
+      "first_name": "Bob",
+      "last_name": "Smith",
+      "company": null,
+      "job_title": null,
+      "phone": null,
+      "intent": "Looking for job opportunities in cybersecurity",
+      "message": "Looking for job opportunities in cybersecurity",
+      "source_url": "",
+      "form_submission_id": "",
+      "classification": {
+        "type": "jobseeker",
+        "confidence": 1.0,
+        "reason": "Pattern match: JOBSEEKER score 1.00"
+      },
+      "metadata": {},
+      "crm_status": {
+        "synced": true,
+        "hubspot_status": "subscriber",
+        "last_sync_at": "2026-08-02T14:40:05.463119+00:00"
+      },
+      "notification_status": {}
+    }
+  }
+]

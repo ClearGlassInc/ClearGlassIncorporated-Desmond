@@ -1,0 +1,90 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-08-02T14:40:05.469430+00:00",
+  "events": [
+    {
+      "timestamp": "2026-08-02T14:40:05.462541+00:00",
+      "type": "crm_sync_success",
+      "lead_id": "2e371d632d508cfd",
+      "details": {
+        "contact_id": "f6fede09d6",
+        "email": "alice.johnson@techcorp.com",
+        "lifecycle_stage": "subscriber"
+      }
+    },
+    {
+      "timestamp": "2026-08-02T14:40:05.462792+00:00",
+      "type": "crm_sync_success",
+      "lead_id": "1de08dc54f600f3a",
+      "details": {
+        "contact_id": "6294581b88",
+        "email": "bob.smith@gmail.com",
+        "lifecycle_stage": "subscriber"
+      }
+    },
+    {
+      "timestamp": "2026-08-02T14:40:05.463249+00:00",
+      "type": "crm_sync_success",
+      "lead_id": "a3ee76426e93b663",
+      "details": {
+        "contact_id": "6d7326c29b",
+        "email": "carol@recruiterplus.com",
+        "lifecycle_stage": "subscriber"
+      }
+    },
+    {
+      "timestamp": "2026-08-02T14:40:05.467181+00:00",
+      "type": "slack_notified",
+      "lead_id": "2e371d632d508cfd",
+      "details": {
+        "name": "Alice Johnson",
+        "email": "alice.johnson@techcorp.com"
+      }
+    },
+    {
+      "timestamp": "2026-08-02T14:40:05.467781+00:00",
+      "type": "bot_routed",
+      "lead_id": "2e371d632d508cfd",
+      "details": {
+        "bot": "sales_outreach",
+        "type": "employer"
+      }
+    },
+    {
+      "timestamp": "2026-08-02T14:40:05.468030+00:00",
+      "type": "slack_notified",
+      "lead_id": "1de08dc54f600f3a",
+      "details": {
+        "name": "Bob Smith",
+        "email": "bob.smith@gmail.com"
+      }
+    },
+    {
+      "timestamp": "2026-08-02T14:40:05.468548+00:00",
+      "type": "bot_routed",
+      "lead_id": "1de08dc54f600f3a",
+      "details": {
+        "bot": "recruiting",
+        "type": "jobseeker"
+      }
+    },
+    {
+      "timestamp": "2026-08-02T14:40:05.468814+00:00",
+      "type": "slack_notified",
+      "lead_id": "a3ee76426e93b663",
+      "details": {
+        "name": "Carol Chen",
+        "email": "carol@recruiterplus.com"
+      }
+    },
+    {
+      "timestamp": "2026-08-02T14:40:05.469424+00:00",
+      "type": "bot_routed",
+      "lead_id": "a3ee76426e93b663",
+      "details": {
+        "bot": "sales_outreach",
+        "type": "recruiter"
+      }
+    }
+  ]
+}

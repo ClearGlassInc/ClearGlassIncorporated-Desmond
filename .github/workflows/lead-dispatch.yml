@@ -1,0 +1,49 @@
+name: lead-dispatch
+on:
+  push:
+    paths:
+      - 'data/leads/incoming-leads.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch-leads:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffbaf #pin SHA
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0410993404601b3ef6d #pin SHA
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Run lead notification and dispatch bot
+        run: |
+          cd /home/runner/work/ClearGlassIncorporated-Desmond/ClearGlassIncorporated-Desmond
+          python3 bots/lead_notify_and_dispatch.py
+        env:
+          # Slack webhook URL for notifications
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL || '' }}
+          SLACK_SALES_CHANNEL: ${{ secrets.SLACK_SALES_CHANNEL || '#sales-leads' }}
+
+      - name: Commit dispatch results (if any changed)
+        run: |
+          cd /home/runner/work/ClearGlassIncorporated-Desmond/ClearGlassIncorporated-Desmond
+          git config user.name "lead-dispatch-bot"
+          git config user.email "noreply@clearglassinc.com"
+          if git diff --quiet data/; then
+            echo "No dispatch changes"
+          else
+            git add data/
+            git commit -m "Dispatch leads to sales channel and bot queues"
+            git push origin HEAD:main || echo "Push failed; next run will retry"
+          fi
+        if: always()

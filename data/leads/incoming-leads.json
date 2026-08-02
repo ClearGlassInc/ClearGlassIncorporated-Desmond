@@ -1,0 +1,106 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-08-02T14:40:05.469616+00:00",
+  "leads": [
+    {
+      "lead_id": "2e371d632d508cfd",
+      "captured_at": "2026-08-02T14:39:58.764543+00:00",
+      "source": "manual",
+      "email": "alice.johnson@techcorp.com",
+      "first_name": "Alice",
+      "last_name": "Johnson",
+      "company": "TechCorp Inc",
+      "job_title": "CISO",
+      "phone": null,
+      "intent": "We need a security audit for our enterprise",
+      "message": "We need a security audit for our enterprise",
+      "source_url": "",
+      "form_submission_id": "",
+      "classification": {
+        "type": "employer",
+        "confidence": 1.0,
+        "reason": "Pattern match: EMPLOYER score 1.00"
+      },
+      "metadata": {},
+      "crm_status": {
+        "synced": true,
+        "hubspot_status": "subscriber",
+        "last_sync_at": "2026-08-02T14:40:05.462714+00:00"
+      },
+      "notification_status": {
+        "slack_notified": true,
+        "bot_routed": true,
+        "routed_bot": "sales_outreach"
+      }
+    },
+    {
+      "lead_id": "1de08dc54f600f3a",
+      "captured_at": "2026-08-02T14:39:58.765893+00:00",
+      "source": "manual",
+      "email": "bob.smith@gmail.com",
+      "first_name": "Bob",
+      "last_name": "Smith",
+      "company": null,
+      "job_title": null,
+      "phone": null,
+      "intent": "Looking for job opportunities in cybersecurity",
+      "message": "Looking for job opportunities in cybersecurity",
+      "source_url": "",
+      "form_submission_id": "",
+      "classification": {
+        "type": "jobseeker",
+        "confidence": 1.0,
+        "reason": "Pattern match: JOBSEEKER score 1.00"
+      },
+      "metadata": {},
+      "crm_status": {
+        "synced": true,
+        "hubspot_status": "subscriber",
+        "last_sync_at": "2026-08-02T14:40:05.463119+00:00"
+      },
+      "notification_status": {
+        "slack_notified": true,
+        "bot_routed": true,
+        "routed_bot": "recruiting"
+      }
+    },
+    {
+      "lead_id": "a3ee76426e93b663",
+      "captured_at": "2026-08-02T14:39:58.765955+00:00",
+      "source": "manual",
+      "email": "carol@recruiterplus.com",
+      "first_name": "Carol",
+      "last_name": "Chen",
+      "company": "RecruiterPlus",
+      "job_title": null,
+      "phone": null,
+      "intent": "We have talented candidates for your team",
+      "message": "We have talented candidates for your team",
+      "source_url": "",
+      "form_submission_id": "",
+      "classification": {
+        "type": "recruiter",
+        "confidence": 1.0,
+        "reason": "Pattern match: RECRUITER score 1.00"
+      },
+      "metadata": {},
+      "crm_status": {
+        "synced": true,
+        "hubspot_status": "subscriber",
+        "last_sync_at": "2026-08-02T14:40:05.463443+00:00"
+      },
+      "notification_status": {
+        "slack_notified": true,
+        "bot_routed": true,
+        "routed_bot": "sales_outreach"
+      }
+    }
+  ],
+  "stats": {
+    "total_leads": 3,
+    "new_leads": 3,
+    "classified": 3,
+    "crm_synced": 0,
+    "slack_notified": 0
+  }
+}

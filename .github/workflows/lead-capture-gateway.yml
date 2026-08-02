@@ -1,0 +1,48 @@
+name: lead-capture-gateway
+on:
+  schedule:
+    # Run every 15 minutes
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture-leads:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffbaf #pin SHA
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0410993404601b3ef6d #pin SHA
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Run lead capture bot
+        run: |
+          cd /home/runner/work/ClearGlassIncorporated-Desmond/ClearGlassIncorporated-Desmond
+          python3 bots/lead_capture_bot.py
+        env:
+          # Optional: point to FormSubmit inbox if available
+          FORMSUBMIT_INBOX_PATH: ${{ secrets.FORMSUBMIT_INBOX_PATH || '' }}
+
+      - name: Commit captured leads (if any changed)
+        run: |
+          cd /home/runner/work/ClearGlassIncorporated-Desmond/ClearGlassIncorporated-Desmond
+          git config user.name "lead-capture-bot"
+          git config user.email "noreply@clearglassinc.com"
+          if git diff --quiet data/leads/incoming-leads.json; then
+            echo "No new leads captured"
+          else
+            git add data/leads/incoming-leads.json
+            git commit -m "Capture new leads from contact forms"
+            git push origin HEAD:main || echo "Push failed; next run will retry"
+          fi
+        if: always()

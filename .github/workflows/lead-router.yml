@@ -1,0 +1,48 @@
+name: lead-router
+on:
+  push:
+    paths:
+      - 'data/leads/incoming-leads.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  route-leads:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffbaf #pin SHA
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0410993404601b3ef6d #pin SHA
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Run lead routing bot
+        run: |
+          cd /home/runner/work/ClearGlassIncorporated-Desmond/ClearGlassIncorporated-Desmond
+          python3 bots/lead_routing_bot.py
+        env:
+          # HubSpot API key (if available in secrets)
+          HUBSPOT_API_KEY: ${{ secrets.HUBSPOT_API_KEY || '' }}
+
+      - name: Commit routing results (if any changed)
+        run: |
+          cd /home/runner/work/ClearGlassIncorporated-Desmond/ClearGlassIncorporated-Desmond
+          git config user.name "lead-router-bot"
+          git config user.email "noreply@clearglassinc.com"
+          if git diff --quiet data/leads/; then
+            echo "No routing changes"
+          else
+            git add data/leads/
+            git commit -m "Route leads to CRM and prep for dispatch"
+            git push origin HEAD:main || echo "Push failed; next run will retry"
+          fi
+        if: always()

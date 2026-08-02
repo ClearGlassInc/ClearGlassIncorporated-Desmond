@@ -1,8 +1,99 @@
 [
   {
-    "title": "Control Surface Feeds #511",
+    "title": "Control Surface Feeds #512",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "13:53",
+    "timestamp": "2026-08-02T13:53:00Z"
+  },
+  {
+    "title": "Defender Watch #1448",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "13:43",
+    "timestamp": "2026-08-02T13:43:29Z"
+  },
+  {
+    "title": "Health Monitor #256",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "13:36",
+    "timestamp": "2026-08-02T13:36:19Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #36",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "13:06",
+    "timestamp": "2026-08-02T13:06:45Z"
+  },
+  {
+    "title": "Auto-Store #191",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "13:06",
+    "timestamp": "2026-08-02T13:06:02Z"
+  },
+  {
+    "title": "Organic Growth \u2014 Daily Content #9",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "13:02",
+    "timestamp": "2026-08-02T13:02:01Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #989",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-363e8813-2149-40bc-9565-1eeb053ea7a6",
+    "time": "13:00",
+    "timestamp": "2026-08-02T13:00:54Z"
+  },
+  {
+    "title": "Sales-Ops Briefing #40",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "12:15",
+    "timestamp": "2026-08-02T12:15:17Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #988",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-016b2a32-b904-4fd5-8788-46a3ec32bf67",
+    "time": "12:00",
+    "timestamp": "2026-08-02T12:00:52Z"
+  },
+  {
+    "title": "Deploy Pages #1471",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "11:33",
+    "timestamp": "2026-08-02T11:33:59Z"
+  },
+  {
+    "title": "pages build and deployment #1968",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:33",
+    "timestamp": "2026-08-02T11:33:53Z"
+  },
+  {
+    "title": "Code Quality: Push on main #3426",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:33",
+    "timestamp": "2026-08-02T11:33:53Z"
+  },
+  {
+    "title": "Push on main #3425",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:33",
+    "timestamp": "2026-08-02T11:33:53Z"
+  },
+  {
+    "title": "Control Surface Feeds #511",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "11:33",
     "timestamp": "2026-08-02T11:33:28Z"
   },
@@ -47,96 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "09:20",
     "timestamp": "2026-08-02T09:20:13Z"
-  },
-  {
-    "title": "Push on main #3423",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "09:20",
-    "timestamp": "2026-08-02T09:20:13Z"
-  },
-  {
-    "title": "Control Surface Feeds #510",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "09:19",
-    "timestamp": "2026-08-02T09:19:55Z"
-  },
-  {
-    "title": "Daily Marketing Content #17",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "09:13",
-    "timestamp": "2026-08-02T09:13:09Z"
-  },
-  {
-    "title": "Content Pipeline #86",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_run on main",
-    "time": "09:07",
-    "timestamp": "2026-08-02T09:07:25Z"
-  },
-  {
-    "title": "pages build and deployment #1966",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "09:07",
-    "timestamp": "2026-08-02T09:07:19Z"
-  },
-  {
-    "title": "Push on main #3422",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "09:07",
-    "timestamp": "2026-08-02T09:07:19Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3421",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "09:07",
-    "timestamp": "2026-08-02T09:07:19Z"
-  },
-  {
-    "title": "Bot Orchestrator #74",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "09:07",
-    "timestamp": "2026-08-02T09:07:00Z"
-  },
-  {
-    "title": "Running Copilot cloud agent #985",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-0141b225-3cb8-4fa5-9dc2-e6fb6db3c9e8",
-    "time": "09:00",
-    "timestamp": "2026-08-02T09:00:52Z"
-  },
-  {
-    "title": "pages build and deployment #1965",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "08:57",
-    "timestamp": "2026-08-02T08:57:46Z"
-  },
-  {
-    "title": "Code Quality: Push on main #3420",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "08:57",
-    "timestamp": "2026-08-02T08:57:46Z"
-  },
-  {
-    "title": "Push on main #3419",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "08:57",
-    "timestamp": "2026-08-02T08:57:46Z"
-  },
-  {
-    "title": "SEO Dashboard #31",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "08:57",
-    "timestamp": "2026-08-02T08:57:21Z"
   }
 ]

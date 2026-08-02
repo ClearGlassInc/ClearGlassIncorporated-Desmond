@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #517",
+    "title": "Control Surface Feeds #518",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:09",
+    "timestamp": "2026-08-02T22:09:06Z"
+  },
+  {
+    "title": "Running Copilot cloud agent #999",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on copilot/task-272290681-1196426665-3e7b3735-e32c-4b9d-87d8-69e8dba7ac26",
+    "time": "22:00",
+    "timestamp": "2026-08-02T22:00:53Z"
+  },
+  {
+    "title": "Deploy Pages #1487",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:09",
+    "timestamp": "2026-08-02T21:09:53Z"
+  },
+  {
+    "title": "pages build and deployment #1984",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:09",
+    "timestamp": "2026-08-02T21:09:46Z"
+  },
+  {
+    "title": "Push on main #3457",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "21:09",
+    "timestamp": "2026-08-02T21:09:45Z"
+  },
+  {
+    "title": "Control Surface Feeds #517",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:09",
     "timestamp": "2026-08-02T21:09:26Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "20:50",
     "timestamp": "2026-08-02T20:50:48Z"
-  },
-  {
-    "title": "Running Copilot Code Review #18",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on codex/add-advanced-features-to-blog-x9wnkd",
-    "time": "20:40",
-    "timestamp": "2026-08-02T20:40:20Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #2129",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-advanced-features-to-blog-x9wnkd",
-    "time": "20:40",
-    "timestamp": "2026-08-02T20:40:14Z"
-  },
-  {
-    "title": "Internal Link Authority #287",
-    "status": "bad",
-    "detail": "failure \u00b7 pull_request on codex/add-advanced-features-to-blog-x9wnkd",
-    "time": "20:40",
-    "timestamp": "2026-08-02T20:40:14Z"
-  },
-  {
-    "title": "Security #1835",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-advanced-features-to-blog-x9wnkd",
-    "time": "20:40",
-    "timestamp": "2026-08-02T20:40:14Z"
-  },
-  {
-    "title": "Site Reliability Audit #460",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/add-advanced-features-to-blog-x9wnkd",
-    "time": "20:40",
-    "timestamp": "2026-08-02T20:40:14Z"
   }
 ]

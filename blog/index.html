@@ -444,6 +444,10 @@ section{padding:42px 0}
 .desk-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px);opacity:.5}
 .desk-tag{position:absolute;z-index:2;font:600 10.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--soft);background:rgba(5,9,18,.72);border:1px solid var(--line);border-radius:999px;padding:7px 11px;backdrop-filter:blur(8px)}
 .desk-tag.t1{top:18px;left:18px;color:var(--cyan)}
+.desk-toggle{position:absolute;z-index:3;top:14px;right:14px;display:inline-flex;align-items:center;gap:7px;font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text);background:rgba(5,9,18,.78);border:1px solid var(--line2);border-radius:999px;padding:8px 13px;cursor:pointer;backdrop-filter:blur(8px);transition:background .16s var(--ease-soft),border-color .16s var(--ease-soft)}
+.desk-toggle:hover{background:rgba(57,216,255,.18);border-color:var(--cyan)}
+.desk-toggle:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.desk-toggle-icon{font-size:9px;line-height:1}
 .desk-tag.t2{bottom:18px;left:18px}
 .desk-tag.t3{bottom:18px;right:18px;color:var(--violet)}
 .desk-caption{margin-top:12px;font:500 12px/1.5 var(--mono);letter-spacing:.03em;color:var(--muted)}
@@ -494,13 +498,17 @@ section{padding:42px 0}
       <div>
         <div class="desk-stage tilt-card">
           <div class="desk-frame">
-            <video autoplay muted loop playsinline preload="metadata"
+            <video muted loop playsinline preload="metadata"
                    poster="/assets/video/insights-intelligence-desk-poster.jpg"
                    aria-label="An analyst in a dark glass operations room reviewing holographic panels: a global network grid, a cyber threat map, financial models, and a rising trend chart.">
               <source src="/assets/video/insights-intelligence-desk.mp4" type="video/mp4">
               <img src="/assets/video/insights-intelligence-desk-poster.jpg" alt="An analyst reviewing holographic network, threat-map, and financial panels in a dark operations room.">
             </video>
             <div class="desk-scan" aria-hidden="true"></div>
+            <button class="desk-toggle" id="deskToggle" type="button" data-state="paused">
+              <span class="desk-toggle-icon" aria-hidden="true">▶</span>
+              <span class="desk-toggle-label">Play the clip</span>
+            </button>
             <span class="desk-tag t1" aria-hidden="true"><i class="live-dot"></i>Global network grid</span>
             <span class="desk-tag t2" aria-hidden="true">Cyber threat map</span>
             <span class="desk-tag t3" aria-hidden="true">Financial models</span>
@@ -795,18 +803,32 @@ if(!reduceMotion){
   (function loop(){cx+=(tx-cx)*.06;cy+=(ty-cy)*.06;root.style.setProperty('--mx',cx+'px');root.style.setProperty('--my',cy+'px');requestAnimationFrame(loop);})();
 }
 
-/* desk film — hold the poster frame under reduced motion, and never burn
-   cycles decoding a loop that is scrolled off screen */
+/* desk film — the clip has no declarative autoplay, so nothing moves until
+   this runs: reduced-motion visitors keep the poster frame, everyone else
+   gets the loop while it is on screen. The toggle is the WCAG 2.2.2 escape
+   hatch (>5s of looping motion needs a pause control), and an explicit pause
+   sticks — scrolling back must not restart what the reader stopped. */
 const deskFilm=document.querySelector('#desk video');
-if(deskFilm){
-  if(reduceMotion){deskFilm.autoplay=false;deskFilm.removeAttribute('autoplay');deskFilm.pause();}
-  else{
-    const vio=new IntersectionObserver(entries=>{entries.forEach(en=>{
-      if(en.isIntersecting){const p=deskFilm.play();if(p&&p.catch)p.catch(()=>{});}
-      else deskFilm.pause();
-    })},{threshold:.2});
-    vio.observe(deskFilm);
-  }
+const deskToggle=document.getElementById('deskToggle');
+if(deskFilm&&deskToggle){
+  let userPaused=reduceMotion;
+  const setToggle=playing=>{
+    deskToggle.dataset.state=playing?'playing':'paused';
+    deskToggle.querySelector('.desk-toggle-icon').textContent=playing?'❚❚':'▶';
+    deskToggle.querySelector('.desk-toggle-label').textContent=playing?'Pause the clip':'Play the clip';
+  };
+  const start=()=>{const p=deskFilm.play();if(p&&p.catch)p.catch(()=>{});};
+  deskFilm.addEventListener('play',()=>setToggle(true));
+  deskFilm.addEventListener('pause',()=>setToggle(false));
+  deskToggle.addEventListener('click',()=>{
+    if(deskFilm.paused){userPaused=false;start();}
+    else{userPaused=true;deskFilm.pause();}
+  });
+  new IntersectionObserver(entries=>{entries.forEach(en=>{
+    if(en.isIntersecting){if(!userPaused)start();}
+    else deskFilm.pause();
+  })},{threshold:.2}).observe(deskFilm);
+  setToggle(false);
 }
 
 /* scroll-reveal */

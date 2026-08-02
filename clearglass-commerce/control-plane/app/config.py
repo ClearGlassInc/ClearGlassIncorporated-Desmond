@@ -60,9 +60,20 @@ class Settings(BaseSettings):
     etsy_shop_id: str = ""            # numeric shop id; derived from the token if blank
     etsy_shop_name: str = ""          # declared shop name, cross-checked on verify
     etsy_login_email: str = ""        # declared Etsy account email (informational)
+    # Public profile of the Etsy account this control plane is meant to operate. Purely
+    # declarative: Etsy exposes no API to resolve a /people/ handle, so it documents
+    # intent and is echoed back on /etsy/connection for the operator to eyeball against
+    # the account the token actually resolves to.
+    etsy_profile_url: str = "https://www.etsy.com/people/7is7jsngx568dcve"
     # Comma-separated OAuth scopes granted at token-exchange time.
     etsy_scopes: str = ""
     etsy_api_base: str = "https://openapi.etsy.com/v3"
+
+    # OAuth2 (PKCE) handshake — see app/etsy_oauth.py and `python -m app.etsy_connect`.
+    # The redirect URI must match a callback registered on the Etsy app exactly.
+    etsy_redirect_uri: str = ""
+    etsy_oauth_authorize_url: str = "https://www.etsy.com/oauth/connect"
+    etsy_token_url: str = "https://api.etsy.com/v3/public/oauth/token"
 
 
 @lru_cache

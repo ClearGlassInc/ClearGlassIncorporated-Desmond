@@ -83,6 +83,7 @@ def connection_status(settings: Settings | None = None) -> dict:
             "declared_name": settings.etsy_shop_name or None,
             "shop_id": _resolved_shop_id(settings) or _user_id_from_token(settings.etsy_access_token),
             "login_email": settings.etsy_login_email or None,
+            "declared_profile_url": settings.etsy_profile_url or None,
         },
         "required_scopes": list(REQUIRED_SCOPES),
         "granted_scopes": granted,
@@ -95,9 +96,10 @@ def connection_status(settings: Settings | None = None) -> dict:
         )
     else:
         status["next_step"] = (
-            "Etsy is NOT connected. Provide the missing credentials as runtime env "
-            "vars (ETSY_KEYSTRING, ETSY_ACCESS_TOKEN, and the OAuth scopes granted), "
-            "then POST /etsy/verify."
+            "Etsy is NOT connected. A profile URL cannot authorise anything — the shop "
+            "owner must grant OAuth consent. Run `python -m app.etsy_connect` to walk "
+            "the PKCE handshake, set the resulting ETSY_KEYSTRING / ETSY_ACCESS_TOKEN / "
+            "ETSY_SCOPES as runtime env vars, then POST /etsy/verify."
         )
     return status
 

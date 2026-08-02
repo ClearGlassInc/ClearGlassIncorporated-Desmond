@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-08-01T09:05:01.089929+00:00",
+  "run_utc": "2026-08-02T09:07:15.353696+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1472,
+  "commit_count": 1493,
   "sections": {
     "New Features": [
       {
@@ -2420,6 +2420,51 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "a7ac2bc",
+        "type": "chore",
+        "scope": null,
+        "subject": "add workflow_dispatch to commerce-frontend-ci, ip-protection-scan, and security workflows",
+        "author": "copilot-swe-agent[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "05220ed",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix max_write_bytes, media query, aria-label, grammar, and CAPTCHA issues",
+        "author": "copilot-swe-agent[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "26476bb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Initial plan",
+        "author": "copilot-swe-agent[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "c1a7088",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance NEXUS with neon command fabric",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "502fb79",
+        "type": "chore",
+        "scope": null,
+        "subject": "Restore blog to previous design",
+        "author": "Desmond Otieno",
+        "date": "2026-08-01",
+        "breaking": false
+      },
       {
         "sha": "bef9ab9",
         "type": "chore",
@@ -7894,6 +7939,150 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "38b1eec",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "efff16f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "6750ce1",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "ed7b591",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "b85ed43",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "f82a98c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "f5357bd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "63a3beb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "ab52fe5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "7f1fa01",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "f92d509",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "4b62610",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "bcd09bc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "3b37c03",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "e6a8a5f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "4e85af6",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-01 09:05 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
       {
         "sha": "8bdcb68",
         "type": "bot",

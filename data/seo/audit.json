@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-01T08:55:14+00:00",
+  "generated": "2026-08-02T08:57:43+00:00",
   "site": "https://www.clearglassinc.com",
   "score": 78,
   "totals": {
@@ -9,17 +9,17 @@
     "noindex": 10,
     "with_schema": 50,
     "errors": 0,
-    "warnings": 119,
+    "warnings": 120,
     "info": 40
   },
   "by_check": {
-    "description.length": 64,
-    "title.length": 45,
-    "heading.order": 38,
-    "schema.required": 3,
+    "description.length": 65,
+    "title.length": 46,
+    "heading.order": 39,
     "h1.multiple": 3,
     "weight": 2,
-    "image.alt": 2,
+    "schema.required": 2,
+    "image.alt": 1,
     "title.duplicate": 1,
     "description.duplicate": 1
   },
@@ -333,8 +333,14 @@
     {
       "page": "blog/index.html",
       "level": "warn",
-      "check": "schema.required",
-      "message": "Organization is missing required property 'url'"
+      "check": "title.length",
+      "message": "Title is 68 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/index.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 203 chars; Google truncates near 165."
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -430,7 +436,7 @@
       "page": "clearglass-nexus.html",
       "level": "warn",
       "check": "weight",
-      "message": "382 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
+      "message": "391 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
     },
     {
       "page": "clearglass-ultra.html",
@@ -843,8 +849,8 @@
     {
       "page": "blog/index.html",
       "level": "info",
-      "check": "image.alt",
-      "message": "1 image(s) missing alt text."
+      "check": "heading.order",
+      "message": "Heading level jumps from h2 to h4 \u2014 skipped levels weaken outline parsing."
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -1130,7 +1136,7 @@
       "internal_links": 11,
       "images_missing_alt": 0,
       "bytes": 48904,
-      "inbound_links": 44
+      "inbound_links": 45
     },
     {
       "page": "air-control.html",
@@ -1455,8 +1461,8 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 43104,
-      "inbound_links": 34
+      "bytes": 43131,
+      "inbound_links": 33
     },
     {
       "page": "blog/ai-agents-insider-threat.html",
@@ -1481,8 +1487,8 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 44328,
-      "inbound_links": 17
+      "bytes": 44355,
+      "inbound_links": 16
     },
     {
       "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
@@ -1513,7 +1519,7 @@
       ],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 48594,
+      "bytes": 48597,
       "inbound_links": 7
     },
     {
@@ -1532,7 +1538,7 @@
       "schema_types": [],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 44967,
+      "bytes": 44994,
       "inbound_links": 5
     },
     {
@@ -1555,8 +1561,8 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 19404,
-      "inbound_links": 7
+      "bytes": 19431,
+      "inbound_links": 5
     },
     {
       "page": "blog/autonomous-threat-modeling-2026.html",
@@ -1581,7 +1587,7 @@
       ],
       "internal_links": 29,
       "images_missing_alt": 0,
-      "bytes": 42780,
+      "bytes": 42807,
       "inbound_links": 11
     },
     {
@@ -1605,8 +1611,8 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 29759,
-      "inbound_links": 8
+      "bytes": 29774,
+      "inbound_links": 7
     },
     {
       "page": "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
@@ -1630,8 +1636,8 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 31524,
-      "inbound_links": 7
+      "bytes": 31527,
+      "inbound_links": 5
     },
     {
       "page": "blog/clearglass-agentops-microsoft-foundry-future-stack.html",
@@ -1653,7 +1659,7 @@
       ],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 35075,
+      "bytes": 35093,
       "inbound_links": 11
     },
     {
@@ -1676,8 +1682,8 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 17337,
-      "inbound_links": 9
+      "bytes": 17355,
+      "inbound_links": 7
     },
     {
       "page": "blog/clearglass-platform-audit-2026.html",
@@ -1702,8 +1708,8 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 45430,
-      "inbound_links": 9
+      "bytes": 45457,
+      "inbound_links": 8
     },
     {
       "page": "blog/clearglass-secure-deployment-agent.html",
@@ -1728,7 +1734,7 @@
       ],
       "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 48864,
+      "bytes": 48891,
       "inbound_links": 10
     },
     {
@@ -1751,7 +1757,7 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 33385,
+      "bytes": 33412,
       "inbound_links": 7
     },
     {
@@ -1777,8 +1783,8 @@
       ],
       "internal_links": 5,
       "images_missing_alt": 0,
-      "bytes": 26482,
-      "inbound_links": 2
+      "bytes": 26503,
+      "inbound_links": 1
     },
     {
       "page": "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html",
@@ -1827,8 +1833,8 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 43436,
-      "inbound_links": 8
+      "bytes": 43463,
+      "inbound_links": 7
     },
     {
       "page": "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html",
@@ -1853,8 +1859,8 @@
       ],
       "internal_links": 30,
       "images_missing_alt": 0,
-      "bytes": 74010,
-      "inbound_links": 16
+      "bytes": 74037,
+      "inbound_links": 15
     },
     {
       "page": "blog/coffee-and-technology-digital-revolution.html",
@@ -1878,7 +1884,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 28274,
+      "bytes": 28277,
       "inbound_links": 7
     },
     {
@@ -1905,8 +1911,8 @@
       ],
       "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 42915,
-      "inbound_links": 20
+      "bytes": 42942,
+      "inbound_links": 19
     },
     {
       "page": "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
@@ -1932,7 +1938,7 @@
       "internal_links": 17,
       "images_missing_alt": 0,
       "bytes": 24644,
-      "inbound_links": 11
+      "inbound_links": 9
     },
     {
       "page": "blog/ethical-sales-system-100k-revenue-prompt.html",
@@ -1954,7 +1960,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 20092,
+      "bytes": 20119,
       "inbound_links": 8
     },
     {
@@ -1980,7 +1986,7 @@
       ],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 46790,
+      "bytes": 46817,
       "inbound_links": 8
     },
     {
@@ -2003,8 +2009,8 @@
       ],
       "internal_links": 3,
       "images_missing_alt": 0,
-      "bytes": 15902,
-      "inbound_links": 2
+      "bytes": 15905,
+      "inbound_links": 1
     },
     {
       "page": "blog/index.html",
@@ -2013,16 +2019,19 @@
       "noindex": false,
       "in_sitemap": true,
       "robots_blocked": null,
-      "title": "ClearGlass Intelligence | Cyber Defense, Governed AI & OSINT",
-      "title_length": 60,
-      "description": "Mission-ready cyber intelligence, governed AI architecture, OSINT tradecraft, and strategic analysis from ClearGlass Inc.",
-      "description_length": 121,
+      "title": "ClearGlass Intelligence | Governed AI, Cyber Defense & OSINT Systems",
+      "title_length": 68,
+      "description": "ClearGlass Intelligence helps serious builders understand governed AI, cyber defense, OSINT, autonomy, and security playbooks through tactical intelligence briefs and professional-grade systems thinking.",
+      "description_length": 203,
       "canonical": "https://www.clearglassinc.com/blog/",
       "h1_count": 1,
       "schema_types": [
-        "Blog",
+        "WebSite",
+        "SearchAction",
         "Organization",
+        "Blog",
         "BreadcrumbList",
+        "ListItem",
         "ListItem",
         "ListItem",
         "ItemList",
@@ -2037,25 +2046,11 @@
         "ListItem",
         "ListItem",
         "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
-        "ListItem",
         "ListItem"
       ],
-      "internal_links": 70,
-      "images_missing_alt": 1,
-      "bytes": 81898,
+      "internal_links": 58,
+      "images_missing_alt": 0,
+      "bytes": 118103,
       "inbound_links": 117
     },
     {
@@ -2078,7 +2073,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 23871,
+      "bytes": 23889,
       "inbound_links": 6
     },
     {
@@ -2103,7 +2098,7 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 37381,
+      "bytes": 37384,
       "inbound_links": 7
     },
     {
@@ -2130,8 +2125,8 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 42840,
-      "inbound_links": 15
+      "bytes": 42867,
+      "inbound_links": 14
     },
     {
       "page": "blog/post-quantum-security-advisor-clearglass-artemis.html",
@@ -2175,8 +2170,8 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 13724,
-      "inbound_links": 6
+      "bytes": 13751,
+      "inbound_links": 8
     },
     {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
@@ -2200,8 +2195,8 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 27732,
-      "inbound_links": 8
+      "bytes": 27735,
+      "inbound_links": 6
     },
     {
       "page": "blog/zero-trust-is-outdated-adaptive-trust.html",
@@ -2252,8 +2247,8 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 45331,
-      "inbound_links": 10
+      "bytes": 45358,
+      "inbound_links": 9
     },
     {
       "page": "bluedesk-mobile.html",
@@ -2366,7 +2361,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 391891,
+      "bytes": 401196,
       "inbound_links": 22
     },
     {
@@ -2714,7 +2709,7 @@
       "internal_links": 33,
       "images_missing_alt": 0,
       "bytes": 55019,
-      "inbound_links": 43
+      "inbound_links": 44
     },
     {
       "page": "guardian.html",
@@ -2733,7 +2728,7 @@
       "internal_links": 11,
       "images_missing_alt": 0,
       "bytes": 144061,
-      "inbound_links": 68
+      "inbound_links": 69
     },
     {
       "page": "header-mockup-2040.html",
@@ -2770,7 +2765,7 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 19204,
+      "bytes": 19239,
       "inbound_links": 8
     },
     {
@@ -2820,7 +2815,7 @@
       "internal_links": 208,
       "images_missing_alt": 0,
       "bytes": 155141,
-      "inbound_links": 517
+      "inbound_links": 521
     },
     {
       "page": "intelligence-command-surface.html",
@@ -3251,7 +3246,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 15738,
+      "bytes": 15680,
       "inbound_links": 10
     },
     {
@@ -3308,7 +3303,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 13184,
+      "bytes": 13183,
       "inbound_links": 8
     },
     {

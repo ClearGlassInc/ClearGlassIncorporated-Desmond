@@ -1,43 +1,57 @@
 #!/usr/bin/env python3
 """Validate the canonical YouTube catalog and render its production book."""
 from __future__ import annotations
-import argparse, json, re
+import argparse
+import json
+import re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-CATALOG=ROOT/'content_catalog.json'; OUTPUT=ROOT/'generated'/'PRODUCTION_BOOK.md'
+CATALOG=ROOT/'content_catalog.json'
+OUTPUT=ROOT/'generated'/'PRODUCTION_BOOK.md'
 REQUIRED={"long_form":24,"shorts":60,"community_posts":12,"livestreams":13}
 
 def load():
     data=json.loads(CATALOG.read_text())
     errors=[]
     for key,count in REQUIRED.items():
-        if len(data.get(key,[]))!=count: errors.append(f"{key}: expected {count}, got {len(data.get(key,[]))}")
+        if len(data.get(key,[]))!=count:
+            errors.append(f"{key}: expected {count}, got {len(data.get(key,[]))}")
     ids=[]
     for key in REQUIRED:
         for item in data[key]:
             ids.append(item.get('id'))
-    if len(ids)!=len(set(ids)): errors.append('IDs must be unique')
+    if len(ids)!=len(set(ids)):
+        errors.append('IDs must be unique')
     required_long={'id','week','pillar','title','title_alternatives','thumbnail','hook','search_query','viewer_intent','related_service','lead_magnet','steps','case','cta'}
     for v in data.get('long_form',[]):
         missing=required_long-set(v)
-        if missing: errors.append(f"{v.get('id')}: missing {sorted(missing)}")
-        if len(v.get('title_alternatives',[]))!=2: errors.append(f"{v.get('id')}: requires exactly two alternative titles")
-        if len(v.get('thumbnail','').split())>4: errors.append(f"{v.get('id')}: thumbnail exceeds four words")
-        if len(v.get('steps',[]))!=5: errors.append(f"{v.get('id')}: requires five outline steps")
+        if missing:
+            errors.append(f"{v.get('id')}: missing {sorted(missing)}")
+        if len(v.get('title_alternatives',[]))!=2:
+            errors.append(f"{v.get('id')}: requires exactly two alternative titles")
+        if len(v.get('thumbnail','').split())>4:
+            errors.append(f"{v.get('id')}: thumbnail exceeds four words")
+        if len(v.get('steps',[]))!=5:
+            errors.append(f"{v.get('id')}: requires five outline steps")
     for s in data.get('shorts',[]):
-        if len(s.get('title_alternatives',[]))!=2: errors.append(f"{s.get('id')}: requires exactly two alternative titles")
-        if len(s.get('thumbnail','').split())>4: errors.append(f"{s.get('id')}: thumbnail exceeds four words")
-    if errors: raise SystemExit('\n'.join(errors))
+        if len(s.get('title_alternatives',[]))!=2:
+            errors.append(f"{s.get('id')}: requires exactly two alternative titles")
+        if len(s.get('thumbnail','').split())>4:
+            errors.append(f"{s.get('id')}: thumbnail exceeds four words")
+    if errors:
+        raise SystemExit('\n'.join(errors))
     return data
 
-def slug(s): return re.sub(r'[^a-z0-9]+','-',s.lower()).strip('-')
+def slug(s):
+    return re.sub(r'[^a-z0-9]+','-',s.lower()).strip('-')
 def utm(item,placement):
     pillar=slug(item.get('pillar','short'))
     asset=item.get('lead_magnet','resources')
     return f"https://www.clearglassinc.com/resources/{asset}?utm_source=youtube&utm_medium=organic_video&utm_campaign=yt_launch_90d&utm_content={item['id'].lower()}_{placement}&utm_term={pillar}"
 
 def long_script(v):
-    steps=v['steps']; case=v['case']
+    steps=v['steps']
+    case=v['case']
     paragraphs=[
       f"[COLD OPEN — DIRECT TO CAMERA] {v['hook']} On screen: ‘{v['thumbnail']}’. [Hold one beat.] By the end of this field guide, you will have five controls, one worked example, and a next action you can document.",
       f"[SOURCE CARD] Search intent: {v['viewer_intent']} This episode is educational, not legal, investment, or individualized security advice. The evidence links and correction path are in the description. I’m Desmond Otieno Odhiambo, founder of ClearGlassInc. Our method is claim, evidence, decision, control.",
@@ -73,20 +87,29 @@ def render(data):
     out += ["# Part II — 60 Shorts","","Each Short is 30–45 seconds, uses edited burned-in captions plus an uploaded caption file, and points to one related long-form video. Scripts intentionally avoid unsupported statistics.",""]
     for s in data['shorts']:
         script=f"[0:00] {s['hook']} [0:03] {s['beats'][0]} [0:12] {s['beats'][1]} [0:24] {s['beats'][2]} [0:34] {s['cta']}"
-        out += [f"## {s['id']} — {s['title']}","",f"**Week:** {s['week']} · **Intent:** {s['viewer_intent']}  ",f"**Titles:** {s['title']} · Alt A: {s['title_alternatives'][0]} · Alt B: {s['title_alternatives'][1]}  ",f"**Thumbnail:** `{s['thumbnail']}` · **Hook:** “{s['hook']}”  ",f"**Script/retention beats:** {script}  ",f"**Visuals:** founder vertical 9:16; object/diagram at 0:03; large control phrase at 0:12; checklist at 0:24; related-video sticker at 0:34. No unsafe live demo.  ",f"**Description:** {s['viewer_intent']} Watch the complete evidence-led guide: https://www.youtube.com/@ClearGlassInc  ",f"**Tags/hashtags:** ClearGlassInc, {s['topic']}, {s['related_longform']} {' '.join(s['hashtags'])} #Shorts  ",f"**Pinned comment:** What will you verify first? Watch {s['related_longform']}; never share private operational details here.  ",f"**CTA/product:** {s['cta']} Related free resource is linked on {s['related_longform']}.","","---",""]
+        out += [f"## {s['id']} — {s['title']}","",f"**Week:** {s['week']} · **Intent:** {s['viewer_intent']}  ",f"**Titles:** {s['title']} · Alt A: {s['title_alternatives'][0]} · Alt B: {s['title_alternatives'][1]}  ",f"**Thumbnail:** `{s['thumbnail']}` · **Hook:** “{s['hook']}”  ",f"**Script/retention beats:** {script}  ","**Visuals:** founder vertical 9:16; object/diagram at 0:03; large control phrase at 0:12; checklist at 0:24; related-video sticker at 0:34. No unsafe live demo.  ",f"**Description:** {s['viewer_intent']} Watch the complete evidence-led guide: https://www.youtube.com/@ClearGlassInc  ",f"**Tags/hashtags:** ClearGlassInc, {s['topic']}, {s['related_longform']} {' '.join(s['hashtags'])} #Shorts  ",f"**Pinned comment:** What will you verify first? Watch {s['related_longform']}; never share private operational details here.  ",f"**CTA/product:** {s['cta']} Related free resource is linked on {s['related_longform']}.","","---",""]
     out += ["# Part III — Community posts","","| ID | Week | Format | Production-ready copy | Moderation and CTA |","|---|---:|---|---|---|"]
-    for p in data['community_posts']: out.append(f"| {p['id']} | {p['week']} | {p['format']} | {p['copy']} | {p['moderation']} {p['cta']} |")
+    for p in data['community_posts']:
+        out.append(f"| {p['id']} | {p['week']} | {p['format']} | {p['copy']} | {p['moderation']} {p['cta']} |")
     out += ["","# Part IV — Weekly livestreams",""]
-    for l in data['livestreams']:
-        out += [f"## {l['id']} — {l['title']}","",f"**Week:** {l['week']}  ","**Run of show:** "+" → ".join(l['run_of_show'])+"  ",f"**Safety:** {l['safety']}  ",f"**CTA:** {l['cta']}",""]
+    for stream in data['livestreams']:
+        out += [f"## {stream['id']} — {stream['title']}","",f"**Week:** {stream['week']}  ","**Run of show:** "+" → ".join(stream['run_of_show'])+"  ",f"**Safety:** {stream['safety']}  ",f"**CTA:** {stream['cta']}",""]
     return '\n'.join(line.rstrip() for line in out).rstrip()+'\n'
 
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--check',action='store_true'); args=ap.parse_args()
-    data=load(); rendered=render(data)
+    ap=argparse.ArgumentParser()
+    ap.add_argument('--check',action='store_true')
+    args=ap.parse_args()
+    data=load()
+    rendered=render(data)
     if args.check:
-        if not OUTPUT.exists() or OUTPUT.read_text()!=rendered: raise SystemExit('generated/PRODUCTION_BOOK.md is stale; run builder')
+        if not OUTPUT.exists() or OUTPUT.read_text()!=rendered:
+            raise SystemExit('generated/PRODUCTION_BOOK.md is stale; run builder')
         print(f"OK: {sum(REQUIRED.values())} records validated; production book is current")
     else:
-        OUTPUT.parent.mkdir(exist_ok=True); OUTPUT.write_text(rendered); print(f"wrote {OUTPUT}")
-if __name__=='__main__': main()
+        OUTPUT.parent.mkdir(exist_ok=True)
+        OUTPUT.write_text(rendered)
+        print(f"wrote {OUTPUT}")
+
+if __name__=='__main__':
+    main()

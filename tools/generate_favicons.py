@@ -26,7 +26,7 @@ import pathlib
 import sys
 
 try:
-    from PIL import Image
+    from PIL import Image, ImageDraw
 except ImportError:  # pragma: no cover - dependency guard
     sys.exit("Pillow is required: pip install Pillow")
 
@@ -61,16 +61,38 @@ def square_crop(img: Image.Image) -> Image.Image:
     return img.crop((left, top, left + edge, top + edge))
 
 
-def load_source(path: pathlib.Path) -> Image.Image:
+def load_source(path: pathlib.Path, circle: bool) -> Image.Image:
     img = Image.open(path)
-    # Flatten alpha onto white so tabs never render a black halo, then drop to
-    # RGB to match the existing icon assets.
     if img.mode in ("RGBA", "LA", "P"):
         img = img.convert("RGBA")
-        flat = Image.new("RGBA", img.size, (255, 255, 255, 255))
+        # Flatten onto black in circle mode and white otherwise. Circular icons
+        # are cropped to the disc anyway, and these artworks sit on dark fields,
+        # so white would ring the edge with a bright halo.
+        backdrop = (0, 0, 0, 255) if circle else (255, 255, 255, 255)
+        flat = Image.new("RGBA", img.size, backdrop)
         flat.alpha_composite(img)
         img = flat
     return square_crop(img.convert("RGB"))
+
+
+def circle_mask(edge: int, supersample: int = 8) -> Image.Image:
+    """Antialiased circular alpha mask, drawn large and downsampled.
+
+    Built per output size rather than once on the source: resampling an
+    already-masked image softens the disc edge badly at 16px.
+    """
+    big = edge * supersample
+    mask = Image.new("L", (big, big), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, big - 1, big - 1), fill=255)
+    return mask.resize((edge, edge), Image.LANCZOS)
+
+
+def render(base: Image.Image, edge: int, circle: bool) -> Image.Image:
+    out = base.resize((edge, edge), Image.LANCZOS)
+    if circle:
+        out = out.convert("RGBA")
+        out.putalpha(circle_mask(edge))
+    return out
 
 
 def sync_manifest(edge: int, dry_run: bool) -> None:
@@ -101,6 +123,12 @@ def main() -> int:
         help="Path to the source image (square or better; it is center-cropped).",
     )
     parser.add_argument(
+        "--circle",
+        action="store_true",
+        help="Mask each icon to a circle with a transparent surround, so tabs "
+             "render a round badge instead of a square one.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Report what would be written without touching any file.",
@@ -114,21 +142,28 @@ def main() -> int:
         print(f"source image not found: {source}", file=sys.stderr)
         return 1
 
-    img = load_source(source)
-    print(f"source {source.name}: cropped to {img.size[0]}x{img.size[1]}")
+    img = load_source(source, args.circle)
+    src_edge = img.size[0]
+    shape = "circle" if args.circle else "square"
+    print(f"source {source.name}: cropped to {src_edge}x{src_edge} ({shape})")
+
+    # Never upscale past the source: a fake 1024 from a 512 original is just a
+    # blurrier file, so the master is clamped and the manifest follows it.
+    master_edge = min(PNG_TARGETS[0][1], src_edge)
 
     for name, edge in PNG_TARGETS:
+        edge = min(edge, src_edge)
         out = REPO_ROOT / name
         print(f"  {name} -> {edge}x{edge}")
         if not args.dry_run:
-            img.resize((edge, edge), Image.LANCZOS).save(out, "PNG", optimize=True)
+            render(img, edge, args.circle).save(out, "PNG", optimize=True)
 
     ico = REPO_ROOT / ICO_NAME
     print(f"  {ICO_NAME} -> {', '.join(f'{w}x{h}' for w, h in ICO_SIZES)}")
     if not args.dry_run:
-        img.resize((48, 48), Image.LANCZOS).save(ico, "ICO", sizes=ICO_SIZES)
+        render(img, 48, args.circle).save(ico, "ICO", sizes=ICO_SIZES)
 
-    sync_manifest(PNG_TARGETS[0][1], args.dry_run)
+    sync_manifest(master_edge, args.dry_run)
 
     if args.dry_run:
         print("dry run: nothing written")

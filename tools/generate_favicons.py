@@ -50,18 +50,20 @@ ICO_SIZES = [(16, 16), (32, 32), (48, 48)]
 MANIFEST = "site.webmanifest"
 
 
-def square_crop(img: Image.Image) -> Image.Image:
-    """Center-crop to a square so no resize distorts the artwork."""
+def square_crop(img: Image.Image, zoom: float = 1.0) -> Image.Image:
+    """Center-crop to a square so no resize distorts the artwork.
+
+    ``zoom`` above 1.0 crops tighter about the centre before scaling, trading
+    away the artwork's outer margin to keep the central device legible at 16px.
+    """
     width, height = img.size
-    if width == height:
-        return img
-    edge = min(width, height)
+    edge = int(min(width, height) / max(zoom, 1.0))
     left = (width - edge) // 2
     top = (height - edge) // 2
     return img.crop((left, top, left + edge, top + edge))
 
 
-def load_source(path: pathlib.Path, circle: bool) -> Image.Image:
+def load_source(path: pathlib.Path, circle: bool, zoom: float = 1.0) -> Image.Image:
     img = Image.open(path)
     if img.mode in ("RGBA", "LA", "P"):
         img = img.convert("RGBA")
@@ -72,7 +74,7 @@ def load_source(path: pathlib.Path, circle: bool) -> Image.Image:
         flat = Image.new("RGBA", img.size, backdrop)
         flat.alpha_composite(img)
         img = flat
-    return square_crop(img.convert("RGB"))
+    return square_crop(img.convert("RGB"), zoom)
 
 
 def circle_mask(edge: int, supersample: int = 8) -> Image.Image:
@@ -129,11 +131,23 @@ def main() -> int:
              "render a round badge instead of a square one.",
     )
     parser.add_argument(
+        "--zoom",
+        type=float,
+        default=1.0,
+        metavar="FACTOR",
+        help="Crop tighter about the centre before scaling (1.0 = whole image). "
+             "Raises legibility at 16px by dropping the outer margin.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Report what would be written without touching any file.",
     )
     args = parser.parse_args()
+
+    if args.zoom < 1.0:
+        print("--zoom must be >= 1.0", file=sys.stderr)
+        return 1
 
     source = pathlib.Path(args.source)
     if not source.is_absolute():
@@ -142,17 +156,22 @@ def main() -> int:
         print(f"source image not found: {source}", file=sys.stderr)
         return 1
 
-    img = load_source(source, args.circle)
+    img = load_source(source, args.circle, args.zoom)
     src_edge = img.size[0]
     shape = "circle" if args.circle else "square"
-    print(f"source {source.name}: cropped to {src_edge}x{src_edge} ({shape})")
+    print(f"source {source.name}: cropped to {src_edge}x{src_edge} "
+          f"({shape}, zoom {args.zoom:g})")
 
-    # Never upscale past the source: a fake 1024 from a 512 original is just a
-    # blurrier file, so the master is clamped and the manifest follows it.
-    master_edge = min(PNG_TARGETS[0][1], src_edge)
+    # logo.png has no declared size of its own, so clamp it rather than fake a
+    # larger master than the source can support; the manifest then follows it.
+    # Every other target's size is quoted in a manifest or a <link> tag, so it
+    # must be produced at exactly that size even when that means upscaling.
+    master_name, master_default = PNG_TARGETS[0]
+    master_edge = min(master_default, src_edge)
 
     for name, edge in PNG_TARGETS:
-        edge = min(edge, src_edge)
+        if name == master_name:
+            edge = master_edge
         out = REPO_ROOT / name
         print(f"  {name} -> {edge}x{edge}")
         if not args.dry_run:

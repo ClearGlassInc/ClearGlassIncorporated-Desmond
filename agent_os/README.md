@@ -49,10 +49,50 @@ Mission confidence is reported as the **minimum** observed signal — the OS nev
 inflates certainty. The orchestrator performs no external side effects; it
 decides and reports, leaving gated actions behind the human approval gate.
 
+## The Operator (front door)
+
+`orchestrator.py` can plan, score, and report — but it has to be *handed* tasks
+and proposed actions. `operator.py` is the piece that turns a plain-language
+objective into them, so you can ask the OS for something instead of hand-building
+a mission:
+
+```bash
+python -m agent_os.operator --list                  # what it can actually do
+python -m agent_os.operator "audit the site"        # plan only (default)
+python -m agent_os.operator "audit the site" --execute
+python -m agent_os.operator "regenerate links" --execute --allow-writes
+python -m agent_os.operator --sweep                 # every read-only capability
+```
+
+Four properties make it safe to leave running:
+
+1. **The registry is real.** Every `Capability` maps to a command that exists and
+   runs in this repo; `test_agent_os_operator.py` fails if one points at a
+   missing file. An objective that matches nothing returns `unmatched` and a list
+   of what *is* registered — the operator never improvises an action.
+2. **Governance decides.** Each capability becomes a `ProposedAction` scored by
+   `score_action`. Only actions the mission report lists as auto-executable run;
+   unknown action names score 85 (HIGH) and are gated, so new capabilities fail
+   closed until deliberately classified.
+3. **Two locks on writes.** A capability that touches the working tree sets
+   `writes=True` and is additionally refused unless the caller passes
+   `--allow-writes`.
+4. **Opt-in execution.** `handle()` plans; it only shells out with `execute=True`.
+
+### Adding a capability
+
+Append a `Capability` to `CAPABILITIES` in `operator.py` with the phrases that
+should route to it, the governance action name that classifies its risk, and the
+argv to run. Read-only work uses `run_audit`; anything that modifies the repo
+sets `writes=True`. That is the whole extension point — the sweep, the audit
+chain, and the approval gate pick it up automatically.
+
 ## CI
 
-- **Python Tests** (`ci.yml`) runs `pytest tests/`, which includes both
-  `tests/test_agent_os.py` and `tests/test_agent_os_advanced.py`.
-- **Agent OS Self-Check** (`agent-os.yml`) runs the unit tests plus the
-  governance/audit self-check on a schedule, on PRs touching `agent_os/**`, and
-  on demand.
+- **Python Tests** (`ci.yml`) runs `pytest tests/`, which includes
+  `tests/test_agent_os.py`, `tests/test_agent_os_advanced.py`, and
+  `tests/test_agent_os_operator.py`.
+- **Agent OS Self-Check** (`agent-os.yml`) runs the unit tests, the
+  governance/audit self-check, and the **operator sweep** (every read-only
+  capability, with a step-summary table and a `operator-sweep` artifact) on a
+  schedule, on PRs touching `agent_os/**`, and on demand.

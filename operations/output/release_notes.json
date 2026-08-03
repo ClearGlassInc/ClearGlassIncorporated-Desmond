@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-08-02T09:07:15.353696+00:00",
+  "run_utc": "2026-08-03T10:41:28.868361+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1493,
+  "commit_count": 1528,
   "sections": {
     "New Features": [
+      {
+        "sha": "1d22632",
+        "type": "feat",
+        "scope": "agent-os",
+        "subject": "Operator \u2014 plain-language objective in, governed execution out",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
       {
         "sha": "5a3e5ec",
         "type": "feat",
@@ -925,6 +934,15 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "d8c10f7",
+        "type": "fix",
+        "scope": null,
+        "subject": "replace legacy favicon with versioned logo in manifest, sw, and blog pages (#1206)",
+        "author": "copilot-swe-agent[bot]",
+        "date": "2026-08-01",
+        "breaking": false
+      },
       {
         "sha": "4e8f043",
         "type": "fix",
@@ -2149,6 +2167,24 @@
     ],
     "CI/CD": [
       {
+        "sha": "3cd09f0",
+        "type": "ci",
+        "scope": null,
+        "subject": "pin function-agent-ci actions to full commit SHAs",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "64a9230",
+        "type": "ci",
+        "scope": null,
+        "subject": "grant the Pages build job the pages scope",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
         "sha": "9e10804",
         "type": "ci",
         "scope": "agent",
@@ -2420,6 +2456,123 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "5e7abac",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add deployment hardening and private-data safeguards",
+        "author": "Desmond Otieno",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "f632f2b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Connect every indexed page to authority network",
+        "author": "Desmond Otieno",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "c9d064e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Expand live crawl to every product surface",
+        "author": "Desmond Otieno",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "0daad03",
+        "type": "chore",
+        "scope": null,
+        "subject": "Feature Artemis intelligence blueprint in systems catalog",
+        "author": "Desmond Otieno",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "b42e9aa",
+        "type": "chore",
+        "scope": null,
+        "subject": "Crop the tab icon tighter so it stays legible at small sizes",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "b1e5986",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add interactive Artemis architecture explorer",
+        "author": "Desmond Otieno",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "54debcb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Use the holographic ClearGlass seal as a circular tab icon",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "6039e07",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix ruff lint errors in the YouTube production book builder",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "ecb2152",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate sitemap lastmod dates for tab-icon page edits",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "de6ec07",
+        "type": "chore",
+        "scope": null,
+        "subject": "Complete tab-icon coverage and add favicon generator",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "0f32964",
+        "type": "chore",
+        "scope": null,
+        "subject": "regenerate sitemap lastmod dates",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "d3bf508",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix Etsy OAuth wire format, enforce state, stop overstating refreshed scopes",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
+      {
+        "sha": "5decc7a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Etsy OAuth2 (PKCE) connect flow for the commerce control plane",
+        "author": "Claude",
+        "date": "2026-08-01",
+        "breaking": false
+      },
       {
         "sha": "a7ac2bc",
         "type": "chore",
@@ -7940,6 +8093,150 @@
     ],
     "Automation": [
       {
+        "sha": "07eeacb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "3ad4b92",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "7430192",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "ac1a8ab",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "d6e48c9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "c1f6712",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "87c382e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "e3986f6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "fbd77fb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "3d2cd81",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "8b1be0c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "6d32ad8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "8e27c93",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "28bedb2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "11842c2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "3a1b6ab",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-02 09:07 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
         "sha": "38b1eec",
         "type": "bot",
         "scope": null,
@@ -13158,6 +13455,24 @@
       }
     ],
     "Other": [
+      {
+        "sha": "5860819",
+        "type": "blog",
+        "scope": null,
+        "subject": "give the desk clip a real pause control",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
+      {
+        "sha": "2e67f09",
+        "type": "blog",
+        "scope": null,
+        "subject": "add \"Desk in motion\" video section to the Insights hub",
+        "author": "Claude",
+        "date": "2026-08-02",
+        "breaking": false
+      },
       {
         "sha": "3ddda92",
         "type": "seo",

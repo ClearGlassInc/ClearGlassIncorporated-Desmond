@@ -1,9 +1,10 @@
-# Release Notes — 2026-08-02
+# Release Notes — 2026-08-03
 
-*1493 commit(s) since v1.0.0*
+*1528 commit(s) since v1.0.0*
 
 ## New Features
 
+- **agent-os:** Operator — plain-language objective in, governed execution out (`1d22632`)
 - **agent:** expose OpenAI Responses adapter (`5a3e5ec`)
 - **agent:** add OpenAI Responses async and streaming adapter (`7b07e9e`)
 - **agent:** persist local approval signing key securely (`03083a6`)
@@ -109,6 +110,7 @@
 
 ## Bug Fixes
 
+- replace legacy favicon with versioned logo in manifest, sw, and blog pages (#1206) (`d8c10f7`)
 - **agent:** close approval-state SQLite connections (`4e8f043`)
 - **agent:** close SQLite memory connections deterministically (`cfff5f3`)
 - **agent:** avoid mutable test class attributes (`2f16dec`)
@@ -256,6 +258,8 @@
 
 ## CI/CD
 
+- pin function-agent-ci actions to full commit SHAs (`3cd09f0`)
+- grant the Pages build job the pages scope (`64a9230`)
 - **agent:** ignore repository-directory N999 false positive (`9e10804`)
 - **agent:** add multi-version compile lint test and build gate (`c5668f9`)
 - probe Dependency Graph before running dependency review (#1188) (`ed1131a`)
@@ -289,6 +293,19 @@
 
 ## Maintenance
 
+- Add deployment hardening and private-data safeguards (`5e7abac`)
+- Connect every indexed page to authority network (`f632f2b`)
+- Expand live crawl to every product surface (`c9d064e`)
+- Feature Artemis intelligence blueprint in systems catalog (`0daad03`)
+- Crop the tab icon tighter so it stays legible at small sizes (`b42e9aa`)
+- Add interactive Artemis architecture explorer (`b1e5986`)
+- Use the holographic ClearGlass seal as a circular tab icon (`54debcb`)
+- Fix ruff lint errors in the YouTube production book builder (`6039e07`)
+- Regenerate sitemap lastmod dates for tab-icon page edits (`ecb2152`)
+- Complete tab-icon coverage and add favicon generator (`de6ec07`)
+- regenerate sitemap lastmod dates (`0f32964`)
+- Fix Etsy OAuth wire format, enforce state, stop overstating refreshed scopes (`d3bf508`)
+- Add Etsy OAuth2 (PKCE) connect flow for the commerce control plane (`5decc7a`)
 - add workflow_dispatch to commerce-frontend-ci, ip-protection-scan, and security workflows (`a7ac2bc`)
 - Fix max_write_bytes, media query, aria-label, grammar, and CAPTCHA issues (`05220ed`)
 - Initial plan (`26476bb`)
@@ -905,6 +922,22 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`07eeacb`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`3ad4b92`)
+- refresh control-surface data feeds [skip ci] (`7430192`)
+- refresh control-surface data feeds [skip ci] (`ac1a8ab`)
+- refresh control-surface data feeds [skip ci] (`d6e48c9`)
+- refresh control-surface data feeds [skip ci] (`c1f6712`)
+- refresh control-surface data feeds [skip ci] (`87c382e`)
+- refresh control-surface data feeds [skip ci] (`e3986f6`)
+- refresh control-surface data feeds [skip ci] (`fbd77fb`)
+- refresh control-surface data feeds [skip ci] (`3d2cd81`)
+- refresh control-surface data feeds [skip ci] (`8b1be0c`)
+- refresh control-surface data feeds [skip ci] (`6d32ad8`)
+- refresh control-surface data feeds [skip ci] (`8e27c93`)
+- refresh control-surface data feeds [skip ci] (`28bedb2`)
+- refresh control-surface data feeds [skip ci] (`11842c2`)
+- update generated outputs — 2026-08-02 09:07 UTC [skip ci] (`3a1b6ab`)
 - refresh SEO dashboard feeds [skip ci] (`38b1eec`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`efff16f`)
 - refresh control-surface data feeds [skip ci] (`6750ce1`)
@@ -1496,6 +1529,8 @@
 
 ## Other
 
+- give the desk clip a real pause control (`5860819`)
+- add "Desk in motion" video section to the Insights hub (`2e67f09`)
 - preserve directory links in normalize_internal (`3ddda92`)
 - raise postcss floor above GHSA-r28c-9q8g-f849 across all Node apps (`10a0a7a`)
 - regenerate sitemap.xml to match committed history (`c410a87`)

@@ -81,6 +81,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "artemis-2040.html": ("Artemis 2040", "long-horizon intelligence platform"),
     "artemis-ai-cyber-intelligence-platform.html": ("AI Cyber Intelligence Platform", "Artemis applied to cyber intelligence"),
     "artemis-self-evolving-platform.html": ("Self-Evolving Platform", "Artemis's autonomous improvement loop"),
+    "artemis-fawl/index.html": ("ARTEMIS // FAWL", "the governed, self-healing Artemis command platform"),
     "air-control.html": ("ZEPHYR", "air systems control surface"),
     "air-systems-control.html": ("Air Systems Control", "the Artemis airspace control surface"),
 
@@ -197,6 +198,8 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/ai-generated-phishing-54-percent-click-rate.html": ("AI-Generated Phishing Hits a 54% Click Rate", "this week's long read on why identity beats detection"),
     "blog/telecommunications-legal-briefing-30-july-2026.html": ("Telecommunications Legal Briefing", "a source-led Canadian telecommunications law briefing"),
     "blog/canada-digital-control-architecture-charter.html": ("Canada’s Digital-Control Architecture", "a source-led analysis of safety, surveillance and the Charter"),
+    "blog/greenbelt-92-percent-access-beats-process.html": ("92%: When Access Beats Process", "a source-led Ontario Greenbelt accountability brief"),
+    "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": ("Artemis Full-Stack AI Blueprint", "the production architecture for a governed intelligence platform"),
 }
 
 # --------------------------------------------------------------------------
@@ -237,6 +240,7 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "artemis-iv.html", "artemis-ai-cyber-intelligence-platform.html",
             "artemis-self-evolving-platform.html", "artemis-2040.html",
+            "artemis-fawl/index.html",
             "air-control.html", "air-systems-control.html",
         ],
         "cta": [CTA_PRICING, CTA_STORE],
@@ -357,6 +361,8 @@ CLUSTERS: dict[str, dict] = {
             "blog/ai-generated-phishing-54-percent-click-rate.html",
             "blog/telecommunications-legal-briefing-30-july-2026.html",
             "blog/canada-digital-control-architecture-charter.html",
+            "blog/greenbelt-92-percent-access-beats-process.html",
+            "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -439,6 +445,9 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ["ai-operator.html", "blog/ai-agent-governance-governed-autonomy.html"],
     "blog/ai-generated-phishing-54-percent-click-rate.html": ["guardian.html", "blog/ai-agents-insider-threat.html"],
     "blog/canada-digital-control-architecture-charter.html": ["legal/index.html", "aegis.html", "blog/telecommunications-legal-briefing-30-july-2026.html"],
+    "artemis-fawl/index.html": ["artemis-os.html", "artemis-self-evolving-platform.html"],
+    "blog/greenbelt-92-percent-access-beats-process.html": ["blog/index.html", "Ontario-osint.html"],
+    "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": ["blog/index.html", "artemis-iv.html"],
 }
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page

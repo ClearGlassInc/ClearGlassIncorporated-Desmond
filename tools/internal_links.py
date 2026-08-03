@@ -31,6 +31,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+REPORT_PATH = ROOT / "SITE_WIRING_PLAN.md"
 
 START = "<!-- cg-related:start -->"
 END = "<!-- cg-related:end -->"
@@ -50,6 +51,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "authority-network.html": ("Authority Network", "the ClearGlass pillar-and-cluster site graph"),
     "advanced-features-tools-systems.html": ("Advanced Features, Tools & Systems", "the governed systems, agent and audit architecture catalog"),
     "automap.html": ("AutoMap Orchestration", "architecture-aware orchestration and system relationship mapping"),
+    "apps/command-center/index.html": ("Growth Command Centre", "governed Burlington growth operations and approvals"),
 
     # Cyber defense & security operations
     "cyber-defense-console.html": ("Cyber Defense Console", "the ClearGlass command center for defensive operations"),
@@ -73,6 +75,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "intelligence-command-surface.html": ("Intelligence Command Surface", "one unified operational picture"),
     "intelligence-interface.html": ("Intelligence Interface 2027", "next-generation analyst workspace"),
     "intelligence-platform.html": ("Intelligence Platform Architecture", "brand and platform blueprint"),
+    "docs/guardian_command_nexus_spec.html": ("Guardian Command Nexus Spec", "the implementation specification for the Guardian command surface"),
     "xenolith.html": ("XENOLITH", "the sovereign intelligence lattice — governed multi-domain command substrate"),
 
     # Artemis platform
@@ -200,6 +203,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/canada-digital-control-architecture-charter.html": ("Canada’s Digital-Control Architecture", "a source-led analysis of safety, surveillance and the Charter"),
     "blog/greenbelt-92-percent-access-beats-process.html": ("92%: When Access Beats Process", "a source-led Ontario Greenbelt accountability brief"),
     "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": ("Artemis Full-Stack AI Blueprint", "the production architecture for a governed intelligence platform"),
+    "blog/network-orchestration-ai-automation-cybersecurity.html": ("AI-Driven Network Orchestration", "a field guide to safe, governed network automation"),
 }
 
 # --------------------------------------------------------------------------
@@ -231,6 +235,7 @@ CLUSTERS: dict[str, dict] = {
             "clearglass.html", "intelligence-command-surface.html",
             "intelligence-interface.html", "intelligence-platform.html",
             "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html",
+            "docs/guardian_command_nexus_spec.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -303,6 +308,7 @@ CLUSTERS: dict[str, dict] = {
             "smb.html", "offers/security-quick-audit.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html", "revenue-engine.html",
             "side-store.html", "products.html",
+            "apps/command-center/index.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -363,6 +369,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/canada-digital-control-architecture-charter.html",
             "blog/greenbelt-92-percent-access-beats-process.html",
             "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html",
+            "blog/network-orchestration-ai-automation-cybersecurity.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -448,6 +455,8 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "artemis-fawl/index.html": ["artemis-os.html", "artemis-self-evolving-platform.html"],
     "blog/greenbelt-92-percent-access-beats-process.html": ["blog/index.html", "Ontario-osint.html"],
     "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": ["blog/index.html", "artemis-iv.html"],
+    "blog/network-orchestration-ai-automation-cybersecurity.html": ["conduit.html", "agentmesh.html", "cyber-defense-console.html"],
+    "apps/command-center/index.html": ["revenue-engine.html", "offers/index.html"],
 }
 
 SIBLING_WINDOW = 4     # rotated sibling links per member page
@@ -484,6 +493,11 @@ CSS = (
     "#cg-related .cgr-crumb a{color:#67e8f9;text-decoration:none;text-shadow:0 0 12px rgba(34,211,238,.35)}"
     "#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:none}"
     "#cg-related h2{position:relative;margin:0 0 14px;font-size:15.5px;letter-spacing:.08em;text-transform:uppercase;color:#f3f7ff}"
+    "#cg-related .cgr-route{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 16px}"
+    "#cg-related .cgr-route a{display:flex;min-height:46px;align-items:center;padding:8px 10px;border-radius:10px;"
+    "background:rgba(7,14,32,.52);border:1px solid rgba(124,150,255,.15);color:#cfe0ff;text-decoration:none;font-size:12px;line-height:1.35}"
+    "#cg-related .cgr-route a:hover,#cg-related .cgr-route a:focus-visible{border-color:#22d3ee;color:#fff;box-shadow:0 0 18px rgba(34,211,238,.14)}"
+    "#cg-related .cgr-route b{display:block;color:#67e8f9;font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2px}"
     "#cg-related ul{position:relative;list-style:none;margin:0;padding:0;display:grid;"
     "grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:8px 18px}"
     "#cg-related li a{display:block;padding:9px 11px;border-radius:10px;font-size:13.5px;"
@@ -496,6 +510,8 @@ CSS = (
     "font-size:13.5px;color:#a9b8df}"
     "#cg-related .cgr-cta a{color:#67e8f9;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.36)}"
     "#cg-related .cgr-cta a:hover{color:#fff;border-bottom-color:#fff}"
+    "@media(max-width:620px){#cg-related .cgr-box{padding:21px 17px}#cg-related .cgr-route{grid-template-columns:1fr}"
+    "#cg-related ul{grid-template-columns:1fr}}"
     "@keyframes cgr-scan{0%,58%{transform:translateX(-120%) skewX(-18deg);opacity:0}70%{opacity:1}100%{transform:translateX(220%) skewX(-18deg);opacity:0}}"
     "@media(prefers-reduced-motion:reduce){#cg-related .cgr-box:before{animation:none}}"
 )
@@ -568,6 +584,24 @@ def related_targets(page: str) -> tuple[list[str], list[tuple[str, str]], str]:
     return out, c["cta"], c["pillar"] if page != c["pillar"] else ""
 
 
+def journey_targets(page: str) -> tuple[str, str, str]:
+    """Return the previous, hub and next destinations in a page's cluster."""
+    cluster = CLUSTERS[cluster_of(page)]
+    route = [cluster["pillar"], *cluster["members"]]
+    position = route.index(page)
+    previous = route[position - 1] if position else route[-1]
+    following = route[(position + 1) % len(route)]
+    return previous, cluster["pillar"], following
+
+
+def route_link(page: str, target: str, label: str) -> str:
+    title = PAGES[target][0]
+    return (
+        f'<a href="{html.escape(rel(page, target), quote=True)}">'
+        f'<span><b>{html.escape(label)}</b>{html.escape(title)}</span></a>'
+    )
+
+
 def build_block(page: str) -> str:
     targets, cta, pillar = related_targets(page)
     cid = cluster_of(page)
@@ -587,6 +621,12 @@ def build_block(page: str) -> str:
         heading = f"Inside {name}"
 
     items = "\n      ".join(anchor(page, t) for t in targets)
+    previous, hub, following = journey_targets(page)
+    route = "\n      ".join((
+        route_link(page, previous, "Previous"),
+        route_link(page, hub, "Topic hub"),
+        route_link(page, following, "Next in journey"),
+    ))
     cta_html = " · ".join(
         f'<a href="{html.escape(rel(page, path), quote=True)}">{html.escape(label)}</a>'
         for path, label in cta
@@ -608,6 +648,7 @@ def build_block(page: str) -> str:
         f'  <nav class="cgr-box" aria-label="Related ClearGlass pages">\n'
         f'    <p class="cgr-crumb">{crumb}</p>\n'
         f"    <h2>{html.escape(heading)}</h2>\n"
+        f'    <div class="cgr-route" aria-label="Journey navigation">\n      {route}\n    </div>\n'
         f"    <ul>\n      {items}\n    </ul>\n"
         f'    <p class="cgr-cta">Next step: {cta_html}</p>\n'
         f"  </nav>\n"
@@ -664,6 +705,56 @@ def validate() -> list[str]:
     return errors
 
 
+def build_report() -> str:
+    """Build the human-readable, page-by-page information architecture map."""
+    lines = [
+        "# ClearGlass Site-Wide Wiring Plan",
+        "",
+        "> Generated by `python3 tools/internal_links.py`. Edit the site graph in that generator, not this report.",
+        "",
+        "## Experience architecture",
+        "",
+        "Every mapped page keeps its original content and receives one additive, crawlable journey module immediately before `</body>`. The module provides a Home/topic breadcrumb, a deterministic previous–hub–next route, contextual related pages, and two conversion paths. Fixed-viewport command surfaces use the same module as a keyboard-focusable corner dock so their canvas remains intact.",
+        "",
+        "The journey model is: **discover → orient in a topic hub → explore an adjacent capability → deepen through evidence → choose a governed engagement**. High-risk operational actions remain outside this marketing navigation and retain their existing human-approval boundaries.",
+        "",
+        "## Additive navigation system",
+        "",
+        "- **Breadcrumb:** Home and the current topic pillar provide location and semantic hierarchy.",
+        "- **Journey rail:** Previous, topic hub, and next links create a predictable cinematic sequence.",
+        "- **Related module:** Rotated sibling links distribute discovery across every page in a cluster; curated bridges connect adjacent clusters.",
+        "- **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.",
+        "- **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.",
+        "- **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.",
+        "",
+        "## Page-by-page flow map",
+        "",
+        "| Page | Role | Previous | Topic hub | Next | Conversion bridge |",
+        "|---|---|---|---|---|---|",
+    ]
+    for cluster in CLUSTERS.values():
+        lines.append(f"| **{cluster['name']}** | **Topic cluster** |  |  |  |  |")
+        for page in [cluster["pillar"], *cluster["members"]]:
+            previous, hub, following = journey_targets(page)
+            title, description = PAGES[page]
+            ctas = " / ".join(label for _, label in cluster["cta"])
+            lines.append(
+                f"| `{page}` — {title} | {description} | {PAGES[previous][0]} | "
+                f"{PAGES[hub][0]} | {PAGES[following][0]} | {ctas} |"
+            )
+    lines.extend((
+        "", "## Implementation and verification strategy", "",
+        "1. Maintain page metadata, cluster membership, curated bridges, and fixed-viewport exceptions in `tools/internal_links.py`.",
+        "2. Run `python3 tools/internal_links.py` after any page is added, renamed, or repositioned. This regenerates both HTML modules and this report.",
+        "3. Run `python3 tools/internal_links.py --check` in review to reject stale generated modules or a stale flow map.",
+        "4. Validate local destinations, semantic landmarks, keyboard focus, mobile layout, reduced motion, and browser-console output before Pages deployment.",
+        "5. Roll back by reverting the generator commit and regenerating; original page content is never rewritten outside the delimited `cg-related` block.",
+        "", "## Growth rule", "",
+        "New pages must be assigned one clear journey role, one topic cluster, previous/next adjacency, descriptive anchors, and a governed conversion bridge. This keeps the experience extensible without flattening product, editorial, operational, or legal content.", "",
+    ))
+    return "\n".join(lines)
+
+
 def main() -> int:
     check = "--check" in sys.argv
     errors = validate()
@@ -687,6 +778,16 @@ def main() -> int:
                 changed += 1
             if status.startswith("SKIP"):
                 print(f"{status}: {page}")
+
+    report = build_report()
+    current_report = REPORT_PATH.read_text(encoding="utf-8") if REPORT_PATH.exists() else ""
+    if check:
+        if current_report != report:
+            print(f"stale: {REPORT_PATH.name}")
+            changed += 1
+    elif current_report != report:
+        REPORT_PATH.write_text(report, encoding="utf-8")
+        print(f"generated: {REPORT_PATH.name}")
 
     if check:
         print(f"{changed} page(s) stale" if changed else f"all {len(PAGES)} pages current")

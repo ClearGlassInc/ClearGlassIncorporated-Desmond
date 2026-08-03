@@ -884,6 +884,54 @@ ClearGlassInc Artemis should be promoted only through explicit validation gates:
 - **Gate 2 — Operational**: tabletop mission exercise, red-team prompt/tool tests, coalition releasability review, commander approval workflow validation.
 - **Gate 3 — Production**: canary release, live SLO monitoring, audit review, after-action report, and ModelOps promotion decision.
 
+### Incident diagnosis and fault isolation
+
+An incident cannot be assigned a root cause from a symptom template alone. The minimum useful
+intake is one affected trace ID, UTC failure window, expected and actual result, environment and
+release digest, reproduction rate, sanitized error, and earliest known-good boundary. Until those
+facts exist, ClearGlassInc Artemis labels the cause **unconfirmed** rather than converting an AI
+hypothesis into operational truth.
+
+Reconstruct one request and compare expected versus actual state at each trust boundary:
+
+```text
+browser -> gateway -> identity/policy -> API -> workflow -> Foundry Ontology
+        -> AIP model/tool -> action package -> approval -> integration -> audit append
+```
+
+1. Correlate only records with the same trace ID, normalize time to UTC, and preserve clock
+   uncertainty.
+2. Find the earliest boundary divergence; treat downstream errors as effects until proven otherwise.
+3. Rank at least three hypotheses by likelihood and impact: first divergent component,
+   deployment/configuration drift, and timing/retry behavior.
+4. Test each with structured logs, spans, sanitized input/output hashes, runtime assertions,
+   read-only database or ontology checks, and healthy-versus-affected environment diffs.
+5. Reproduce using the smallest redacted input. Vary concurrency, retry timing, cache state, and
+   feature flags independently; never test destructively against a live mission.
+6. Apply the smallest reversible fix, replay regressions, canary through Apollo, and retain the
+   last-known-good artifact and policy bundle for rollback.
+
+`artemis.intelligence.diagnostics` supplies deterministic trace ordering, cross-trace rejection,
+earliest-divergence selection, and explainable hypothesis ranking. It emits no root cause when all
+captured boundaries agree. Inputs must already be authorized and redacted: secrets, prompt bodies,
+raw personal data, and inaccessible entity values never belong in traces.
+
+| Hypothesis | Proof signal | Disproof signal | Minimum instrument |
+|---|---|---|---|
+| Frontend rendering | Correct API payload but divergent rendered state | DOM and state match response | Network capture, React snapshot, console |
+| API/data flow | Contract first diverges in gateway/service | Same normalized payload across boundary | Schema assertion, span, payload digest |
+| Authorization | Decision differs by actor/mission/context | Same signed policy input and decision | OPA decision ID, claims hash, policy digest |
+| Database/query | Correct service input but wrong rows/version | Query and bitemporal snapshot match | Read-only plan, schema and replica-lag check |
+| Deployment/config | Environment has a different artifact, flag, or schema | Digests and effective config match | Apollo evidence and redacted config diff |
+| Integration | Upstream contract, quota, or availability changed | Pinned sandbox contract succeeds | Dependency spans and contract test |
+| Race/timing | Failure changes under load or ordering | Single-thread replay still fails | Attempt, idempotency, lock, lag, and clock metrics |
+
+Regression coverage includes the sanitized repro, forbidden state transitions, authorization
+denials without side effects, duplicate/out-of-order delivery, timeout ambiguity, schema
+compatibility, stale caches, and rollback. Explicitly inspect partial deploys, replica lag,
+cache-key collisions, swallowed async errors, unbounded retries, non-idempotent redelivery, clock
+skew, feature-flag drift, and non-atomic audit/data commits.
+
 ### Drift detector
 
 ```python

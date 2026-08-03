@@ -47,49 +47,11 @@ MAX_CRAWL_DEPTH = 4
 # promoted to a full cluster member in internal_links.py it graduates out of this map.
 # products.html, command-center.html and platform-command-center.html were promoted
 # in that way, so they are registered only in the legacy graph now.
-SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {
-    "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html": (
-        "ClearGlassInc Artemis: Palantir Blueprint for a Self-Evolving AI Intelligence Platform",
-        "A governed, ontology-driven implementation blueprint for Gotham, Foundry, AIP, and Apollo.",
-        "artemis",
-    ),
-    "blog/greenbelt-92-percent-access-beats-process.html": (
-        "92%: When Access Beats Process",
-        "A source-led Ontario Greenbelt accountability brief with an inspectable evidence ledger.",
-        "intelligence",
-    ),
-    "artemis-fawl/index.html": (
-        "ARTEMIS // FAWL",
-        "the revenue-ready, self-healing command platform built on the Artemis core.",
-        "artemis",
-    ),
-    "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": (
-        "Artemis Full-Stack AI Intelligence Platform Blueprint",
-        "a production architecture and implementation blueprint for the Artemis platform.",
-        "artemis",
-    ),
-}
+SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {}
 
 # Explicit lateral relationships for new pages. These are not inferred at run
 # time; they are reviewed architecture decisions with descriptive destinations.
-SUPPLEMENTAL_BRIDGES: dict[str, list[str]] = {
-    "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html": [
-        "blog/index.html",
-        "artemis-self-evolving-platform.html",
-    ],
-    "blog/greenbelt-92-percent-access-beats-process.html": [
-        "blog/index.html",
-        "Ontario-osint.html",
-    ],
-    "artemis-fawl/index.html": [
-        "artemis-os.html",
-        "artemis-self-evolving-platform.html",
-    ],
-    "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": [
-        "blog/index.html",
-        "artemis-iv.html",
-    ],
-}
+SUPPLEMENTAL_BRIDGES: dict[str, list[str]] = {}
 
 CONVERSION_TARGETS = {
     "offers/index.html",

@@ -42,8 +42,10 @@ python3 -m pytest tests/ -q
 
 ## 3. Deploy
 
-Deploys are automatic: a merge to `main` triggers the **Deploy GitHub Pages**
-workflow (`.github/workflows/pages.yml`). There is no manual step.
+Deploys are automatic: a merge to `main` triggers the **Deploy Pages** workflow
+(`.github/workflows/pages.yml`). It is the repository's only Pages artifact
+producer and deployment workflow. The separate **Site Integrity Guard** validates
+pull requests and pushes but cannot publish.
 
 1. Branch from `main`, make changes.
 2. Open a PR → CI runs (`CI`, `Policy Gate`, `Security`, `IP Protection`).
@@ -56,9 +58,8 @@ workflow (`.github/workflows/pages.yml`). There is no manual step.
 > **Deploy GitHub Pages** workflow is the real (green) publisher. Fix it once by
 > setting the source to **GitHub Actions**: run `scripts/fix_pages_source.sh`
 > with an admin-scoped `GITHUB_TOKEN` (fine-grained PAT: Pages-write +
-> Administration-write), or flip it in the UI. Wiring the same PAT up as the
-> `PAGES_ADMIN_TOKEN` repo secret lets `pages.yml` self-heal the source on every
-> run.
+> Administration-write), or flip it in the UI. This administrative setting is
+> deliberately not mutated by the deployment workflow.
 
 **New indexable pages must be added to `sitemap.xml`** (or marked exempt in
 `bots/site_health_bot.py::SITEMAP_EXEMPT`); the site-health test enforces this.

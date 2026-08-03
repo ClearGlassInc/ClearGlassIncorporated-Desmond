@@ -36,6 +36,31 @@ REPORT_PATH = ROOT / "SITE_WIRING_PLAN.md"
 START = "<!-- cg-related:start -->"
 END = "<!-- cg-related:end -->"
 
+# HTML utilities and private/non-indexable operational surfaces are deliberately
+# outside the public journey graph. Keeping this inventory beside PAGES makes
+# the site-wide audit exhaustive without leaking private consoles into search or
+# adding conversion UI to redirects, loaders, and transactional completion pages.
+# path -> (journey role, reason it must not receive the generated module)
+EXCLUDED_PAGES: dict[str, tuple[str, str]] = {
+    "404.html": ("Error recovery", "noindex redirect and route-recovery page"),
+    "cg-loader.html": ("Application utility", "noindex branded loading surface"),
+    "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html": (
+        "Site verification", "Google ownership verification artifact"
+    ),
+    "header-mockup-2040.html": ("Design prototype", "noindex, nofollow header study"),
+    "loader.html": ("Application utility", "noindex branded loading surface"),
+    "offers/thank-you.html": ("Conversion completion", "noindex form-success destination"),
+    "offline.html": ("Error recovery", "noindex service-worker fallback"),
+    "platform-command-center.html": ("Private operations", "noindex command surface"),
+    "sentinel/ARTEMIS_FAWL_COMMAND_SURFACE.html": (
+        "Private operations", "noindex, nofollow governance console"
+    ),
+    "sentinel/PHOENIX_DASHBOARD.html": (
+        "Private operations", "noindex, nofollow recovery console"
+    ),
+    "seo-dashboard.html": ("Private operations", "noindex, nofollow SEO console"),
+}
+
 # --------------------------------------------------------------------------
 # Site graph: every indexable page, with descriptive anchor text.
 # path -> (short title, description used to build the anchor)
@@ -702,6 +727,19 @@ def validate() -> list[str]:
         for t in [src, *targets]:
             if t not in PAGES:
                 errors.append(f"EXTRA_LINKS: unknown page {t}")
+    overlap = set(PAGES) & set(EXCLUDED_PAGES)
+    for page in sorted(overlap):
+        errors.append(f"{page}: both mapped and excluded")
+    discovered = {
+        path.relative_to(ROOT).as_posix()
+        for path in ROOT.rglob("*.html")
+        if ".git" not in path.parts and "node_modules" not in path.parts
+    }
+    classified = set(PAGES) | set(EXCLUDED_PAGES)
+    for page in sorted(discovered - classified):
+        errors.append(f"{page}: HTML page is not classified")
+    for page in sorted(set(EXCLUDED_PAGES) - discovered):
+        errors.append(f"{page}: excluded HTML page not found")
     return errors
 
 
@@ -726,6 +764,7 @@ def build_report() -> str:
         "- **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.",
         "- **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.",
         "- **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.",
+        f"- **Audit coverage:** {len(PAGES)} public pages are connected and {len(EXCLUDED_PAGES)} utility, completion, prototype, or private pages are explicitly excluded.",
         "",
         "## Page-by-page flow map",
         "",
@@ -742,6 +781,13 @@ def build_report() -> str:
                 f"| `{page}` — {title} | {description} | {PAGES[previous][0]} | "
                 f"{PAGES[hub][0]} | {PAGES[following][0]} | {ctas} |"
             )
+    lines.extend((
+        "", "## Explicitly excluded surfaces", "",
+        "These pages remain intact but are not eligible for generated journey updates. Existing markup is preserved; excluding them prevents future search leakage, conversion loops after form completion, and interference with loaders or recovery states.",
+        "", "| Page | Role | Exclusion rationale |", "|---|---|---|",
+    ))
+    for page, (role, reason) in EXCLUDED_PAGES.items():
+        lines.append(f"| `{page}` | {role} | {reason} |")
     lines.extend((
         "", "## Implementation and verification strategy", "",
         "1. Maintain page metadata, cluster membership, curated bridges, and fixed-viewport exceptions in `tools/internal_links.py`.",

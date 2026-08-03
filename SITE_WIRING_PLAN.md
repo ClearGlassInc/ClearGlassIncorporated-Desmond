@@ -16,6 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
+- **Audit coverage:** 140 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -173,6 +174,24 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `operations/hubspot-handoff.html` — HubSpot Handoff | CRM connection runbook | Client Onboarding | ClearGlass Inc. | Ontario Incorporation Handoff | Book a security engagement / See pricing & plans |
 | `operations/ontario-incorporation-handoff.html` — Ontario Incorporation Handoff | corporate filing runbook | HubSpot Handoff | ClearGlass Inc. | Stripe Handoff | Book a security engagement / See pricing & plans |
 | `operations/stripe-handoff.html` — Stripe Handoff | payments connection runbook | Ontario Incorporation Handoff | ClearGlass Inc. | ClearGlass Inc. | Book a security engagement / See pricing & plans |
+
+## Explicitly excluded surfaces
+
+These pages remain intact but are not eligible for generated journey updates. Existing markup is preserved; excluding them prevents future search leakage, conversion loops after form completion, and interference with loaders or recovery states.
+
+| Page | Role | Exclusion rationale |
+|---|---|---|
+| `404.html` | Error recovery | noindex redirect and route-recovery page |
+| `cg-loader.html` | Application utility | noindex branded loading surface |
+| `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | Site verification | Google ownership verification artifact |
+| `header-mockup-2040.html` | Design prototype | noindex, nofollow header study |
+| `loader.html` | Application utility | noindex branded loading surface |
+| `offers/thank-you.html` | Conversion completion | noindex form-success destination |
+| `offline.html` | Error recovery | noindex service-worker fallback |
+| `platform-command-center.html` | Private operations | noindex command surface |
+| `sentinel/ARTEMIS_FAWL_COMMAND_SURFACE.html` | Private operations | noindex, nofollow governance console |
+| `sentinel/PHOENIX_DASHBOARD.html` | Private operations | noindex, nofollow recovery console |
+| `seo-dashboard.html` | Private operations | noindex, nofollow SEO console |
 
 ## Implementation and verification strategy
 

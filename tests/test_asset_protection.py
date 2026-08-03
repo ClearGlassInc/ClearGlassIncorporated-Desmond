@@ -22,16 +22,22 @@ def test_asset_protection_remains_idempotent() -> None:
     assert 'getElementById("cg-asset-protection-styles")' in SCRIPT
 
 
-def test_class_based_copy_friction_and_watermark_are_available() -> None:
-    assert ".protected,.protected *" in SCRIPT
+def test_class_based_watermark_is_available_without_selection_blocking() -> None:
+    assert ".protected,.protected *" not in SCRIPT
     assert ".protected-watermark::after" in SCRIPT
     assert "ClearGlassInc. • Confidential • © 2026" in SCRIPT
     assert ".blur-preview:hover,.blur-preview:focus-within" in SCRIPT
     assert "prefers-reduced-motion:reduce" in SCRIPT
 
 
-def test_protected_shortcuts_and_session_token_preserve_form_use() -> None:
-    assert '["c", "u", "s", "p"].indexOf(key)' in SCRIPT
-    assert "if (!isCopyShortcut || isEditable(e.target)) return" in SCRIPT
+def test_shortcuts_are_not_intercepted_and_session_token_is_random() -> None:
+    assert '["c", "u", "s", "p"].indexOf(key)' not in SCRIPT
+    assert 'document.addEventListener("keydown"' not in SCRIPT
     assert 'meta[name="session-watermark"]' in SCRIPT
     assert "window.crypto.getRandomValues" in SCRIPT
+
+
+def test_page_specific_licence_and_provenance_metadata_are_published() -> None:
+    assert 'link[rel="canonical"]' in SCRIPT
+    assert 'license.href = "/legal/content-policy.html"' in SCRIPT
+    assert 'provenance.href = "/provenance/release-manifest.json"' in SCRIPT

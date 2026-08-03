@@ -10,8 +10,8 @@
      links, and everything else on the page behave normally.
    - Adds an unobtrusive ClearGlass watermark to opt-in
      [data-cg-watermark] regions.
-   - Adds casual-copy friction to opt-in [data-cg-protected] regions while
-     preserving forms, editable content, keyboard navigation, and global UX.
+   - Adds a subtle, page-specific ownership mark to opt-in
+     [data-cg-watermark] regions without intercepting browser controls.
    - Stamps a machine-readable ownership notice on window.__cgAssetNotice.
 
    This is a deterrent for casual right-click/drag copying; the authoritative
@@ -55,15 +55,6 @@
         "font:700 10px/1.2 Inter,system-ui,sans-serif;letter-spacing:.16em;" +
         "text-transform:uppercase;text-shadow:0 0 12px rgba(34,211,238,.45)" +
       "}" +
-      "[data-cg-protected],[data-cg-protected] *{-webkit-user-select:none;user-select:none}" +
-      "[data-cg-protected] input,[data-cg-protected] textarea," +
-      "[data-cg-protected] select,[data-cg-protected] [contenteditable=true]{" +
-        "-webkit-user-select:text;user-select:text" +
-      "}" +
-      ".protected,.protected *{-webkit-user-select:none;-moz-user-select:none;" +
-        "-ms-user-select:none;user-select:none;-webkit-touch-callout:none}" +
-      ".protected input,.protected textarea,.protected select," +
-      ".protected [contenteditable=true]{-webkit-user-select:text;user-select:text}" +
       ".protected-watermark{position:relative;overflow:hidden;isolation:isolate}" +
       ".protected-watermark::after{content:\"ClearGlassInc. • Confidential • © 2026\";" +
         "position:absolute;inset:0;z-index:20;display:grid;place-items:center;" +
@@ -117,6 +108,31 @@
     shieldAll(document);
     loadCyberEditorialVisual();
 
+    var canonical = document.querySelector('link[rel="canonical"]');
+    var pageIdentity = canonical ? canonical.href : location.origin + location.pathname;
+    var watermarkRegions = document.querySelectorAll("[data-cg-watermark]");
+    for (var regionIndex = 0; regionIndex < watermarkRegions.length; regionIndex++) {
+      if (!watermarkRegions[regionIndex].getAttribute("data-cg-watermark")) {
+        watermarkRegions[regionIndex].setAttribute(
+          "data-cg-watermark", "© 2026 ClearGlassInc · " + pageIdentity
+        );
+      }
+    }
+
+    if (!document.querySelector('link[rel="license"]')) {
+      var license = document.createElement("link");
+      license.rel = "license";
+      license.href = "/legal/content-policy.html";
+      document.head.appendChild(license);
+    }
+    if (!document.querySelector('link[rel="describedby"][href="/provenance/release-manifest.json"]')) {
+      var provenance = document.createElement("link");
+      provenance.rel = "describedby";
+      provenance.type = "application/json";
+      provenance.href = "/provenance/release-manifest.json";
+      document.head.appendChild(provenance);
+    }
+
     // A non-identifying, per-page token helps correlate an authorized preview
     // with client-side diagnostics without fingerprinting the visitor.
     var sessionToken;
@@ -166,16 +182,8 @@
       if (e.target.closest && e.target.closest(".protected .drag-block")) e.preventDefault();
     });
 
-    document.addEventListener("keydown", function (e) {
-      var key = String(e.key || "").toLowerCase();
-      var isCopyShortcut = (e.ctrlKey || e.metaKey) &&
-        ["c", "u", "s", "p"].indexOf(key) !== -1;
-      if (!isCopyShortcut || isEditable(e.target)) return;
-
-      var protectedTarget = closestProtected(e.target) || closestClassProtected(e.target) ||
-        document.querySelector("[data-cg-protected]:hover,.protected:hover");
-      if (protectedTarget) e.preventDefault();
-    });
+    // Do not intercept copy, print, save, or view-source shortcuts. Those are
+    // ineffective security boundaries and interfere with assistive technology.
   }
 
   if (document.readyState === "loading") {

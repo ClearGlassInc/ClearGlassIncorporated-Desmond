@@ -1,6 +1,11 @@
 [
   {
     "status": "warn",
+    "title": "API Security Audit failing",
+    "detail": "Latest run #19 concluded failure (2026-08-03)."
+  },
+  {
+    "status": "warn",
     "title": "CI failing",
     "detail": "Latest run #2076 concluded failure (2026-08-03)."
   },
@@ -11,17 +16,12 @@
   },
   {
     "status": "warn",
-    "title": "Deploy Pages failing",
-    "detail": "Latest run #1493 concluded failure (2026-08-03)."
-  },
-  {
-    "status": "warn",
     "title": "Security failing",
     "detail": "Latest run #1842 concluded failure (2026-08-03)."
   },
   {
     "status": "warn",
     "title": "Workflow Doctor failing",
-    "detail": "Latest run #442 concluded failure (2026-08-03)."
+    "detail": "Latest run #443 concluded failure (2026-08-03)."
   }
 ]

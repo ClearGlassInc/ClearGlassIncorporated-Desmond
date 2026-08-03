@@ -1,10 +1,13 @@
 import { agents, claims, sources } from "../lib/research";
+import { NextStepCTA } from "../components/navigation/NextStepCTA";
+import { RelatedLinks } from "../components/navigation/RelatedLinks";
+import { routeFlow } from "../lib/navigation";
 
 const metrics = ["Local-first vault", "Cited summaries", "RBAC + audit", "Public OSINT only"];
 
 export default function Page() {
   return (
-    <main className="stage">
+    <main id="main-content" className="stage">
       <div className="aurora" />
       <section className="hero">
         <p className="eyebrow"><span /> ClearGlassInc Artemis · Browser Security AI</p>
@@ -31,6 +34,8 @@ export default function Page() {
           <p><span className="glyph">▣</span> Immutable audit chain, RBAC, policy-as-code, eval dashboards, Apollo rollback, and hardening runbooks.</p>
         </div>
       </section>
+      <RelatedLinks hrefs={routeFlow["/"].related} />
+      <NextStepCTA href={routeFlow["/"].next} />
     </main>
   );
 }

@@ -35,27 +35,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          rm -rf dist
-
-          if [ -f package.json ]; then
-            if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then
-              npm ci
-            else
-              npm install
-            fi
-            npm run build
-          elif [ -d build ]; then
-            cp -a build dist
-          elif [ -d public ]; then
-            cp -a public dist
-          else
-            mkdir -p dist
-            rsync -a ./ dist/ \
-              --exclude .git/ \
-              --exclude .github/ \
-              --exclude node_modules/ \
-              --exclude dist/
-          fi
+          python3 tools/build_pages.py dist
 
           if [ ! -s dist/index.html ]; then
             echo "::error file=dist/index.html::GitHub Pages artifact is missing a non-empty index.html"

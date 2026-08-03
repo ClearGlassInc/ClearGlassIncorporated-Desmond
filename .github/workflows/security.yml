@@ -13,6 +13,31 @@ permissions:
   contents: read
 
 jobs:
+  pages-artifact-safety:
+    name: Pages Artifact Safety and Provenance
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: Verify provenance and production artifact boundary
+        run: |
+          set -euo pipefail
+          python3 tools/security_release_manifest.py --check
+          python3 tools/build_pages.py dist
+          if find dist -type f \( \
+              -name '*.py' -o -name '*.pyc' -o -name '*.map' -o -name '*.env*' -o \
+              -name '*.sql' -o -name '*.tf' -o -name '*.yml' -o -name '*.yaml' -o \
+              -name 'package*.json' -o -name 'pyproject.toml' -o -name 'requirements*.txt' \
+            \) -print -quit | grep -q .; then
+            echo '::error::Production artifact contains a forbidden development or sensitive file'
+            exit 1
+          fi
+          test ! -e dist/.git
+          test ! -e dist/.github
+          test ! -e dist/operations/private-data
+
   dependency-review:
     name: Dependency Review
     if: github.event_name == 'pull_request'

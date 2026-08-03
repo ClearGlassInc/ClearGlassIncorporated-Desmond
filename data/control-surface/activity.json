@@ -3,12 +3,54 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "19:56",
-    "timestamp": "2026-08-03T19:56:48Z"
+    "time": "21:29",
+    "timestamp": "2026-08-03T21:29:28Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #527",
+    "time": "21:29",
+    "timestamp": "2026-08-03T21:29:08Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "bad",
+    "detail": "dynamic on copilot/task-272290681-1196426665-2fa3c6ed-bc5c-4243-a499-91c340aeac91 \u00b7 run #1022",
+    "time": "21:01",
+    "timestamp": "2026-08-03T21:01:02Z"
+  },
+  {
+    "title": "Running Copilot cloud agent",
+    "status": "ok",
+    "detail": "dynamic on copilot/task-272290681-1196426665-739b081a-0ae3-4dcc-9cf0-ad5cf16b6071 \u00b7 run #1021",
+    "time": "20:00",
+    "timestamp": "2026-08-03T20:00:53Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1513",
+    "time": "19:57",
+    "timestamp": "2026-08-03T19:57:07Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2013",
+    "time": "19:56",
+    "timestamp": "2026-08-03T19:56:54Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3501",
+    "time": "19:56",
+    "timestamp": "2026-08-03T19:56:54Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #526",
     "time": "19:56",
     "timestamp": "2026-08-03T19:56:23Z"
@@ -45,48 +87,6 @@
     "title": "Workflow Doctor",
     "status": "ok",
     "detail": "push on main \u00b7 run #448",
-    "time": "19:51",
-    "timestamp": "2026-08-03T19:51:03Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1512",
-    "time": "19:51",
-    "timestamp": "2026-08-03T19:51:03Z"
-  },
-  {
-    "title": "Site Reliability Audit",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #480",
-    "time": "19:51",
-    "timestamp": "2026-08-03T19:51:03Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #2163",
-    "time": "19:51",
-    "timestamp": "2026-08-03T19:51:03Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #2102",
-    "time": "19:51",
-    "timestamp": "2026-08-03T19:51:03Z"
-  },
-  {
-    "title": "Security",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1869",
-    "time": "19:51",
-    "timestamp": "2026-08-03T19:51:03Z"
-  },
-  {
-    "title": "Site Integrity Guard",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #28",
     "time": "19:51",
     "timestamp": "2026-08-03T19:51:03Z"
   }

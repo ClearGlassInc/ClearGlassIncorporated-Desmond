@@ -37,6 +37,7 @@ Long-form blueprints, platform designs, and corporate documentation supporting t
 - `CLEARGLASSINC_ARTEMIS_SELF_EVOLVING_AI_PLATFORM_DESIGN_2026-05-06.md`
 
 ## Revenue, intelligence, and automation
+- `GITHUB_GROWTH_LAUNCH_PLAYBOOK.md`
 - `clearglass_monetization_engine_deploy_now.md`
 - `clearglassinc_artemis_ethics_first_revenue_and_intelligence_engine.md`
 - `clearglassinc_artemis_lead_scraping_architecture_python.md`

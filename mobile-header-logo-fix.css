@@ -1,0 +1,35 @@
+/* ClearGlass homepage mobile logo/wordmark overlap correction.
+   Additive-only override: preserves all existing markup and styles. */
+@media(max-width:620px){
+  .nav{
+    padding-left:84px!important;
+  }
+
+  .nav-brand{
+    width:100%!important;
+    min-width:0!important;
+    gap:10px!important;
+  }
+
+  .nav-mark{
+    left:12px!important;
+    transform:translateY(-50%)!important;
+    width:54px!important;
+    height:54px!important;
+    flex-shrink:0!important;
+  }
+
+  .nav-mark img{
+    object-fit:contain!important;
+    transform:scale(.92)!important;
+  }
+
+  .nav-name{
+    position:relative!important;
+    z-index:4!important;
+    max-width:calc(100vw - 170px)!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    white-space:nowrap!important;
+  }
+}

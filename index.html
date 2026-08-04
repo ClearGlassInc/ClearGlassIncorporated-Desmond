@@ -367,6 +367,15 @@ body{background:#f7f8fd;}
 @media(max-width:620px){.nav{height:66px!important;padding-left:76px!important;padding-right:12px!important;border-radius:26px!important}.nav-mark{left:15px!important;width:50px!important;height:50px!important;box-shadow:0 0 0 6px rgba(155,92,255,.22),0 0 24px rgba(185,93,255,.75),inset 0 3px 10px rgba(255,255,255,.62)!important}.nav-name{font-size:20px!important;letter-spacing:-.025em!important}.nav-name em{display:inline!important}.hero{padding-top:96px!important}.hero-video{width:calc(100% - 20px)!important;height:260px!important;border-radius:22px!important}.mobile-menu{background:linear-gradient(160deg,rgba(12,19,42,.98),rgba(31,24,61,.98))!important;border-color:rgba(214,225,255,.26)!important}.mobile-menu a{color:#eef4ff!important}.mob-label{color:rgba(199,210,254,.68)!important}}
 @media(prefers-reduced-motion:reduce){.nav-mark::before{animation:none!important}.nav-links a::after,.nav-drop-btn::after{transition:none!important}}
 
+/* Homepage reliability: contain narrow layouts and keep keyboard focus visible. */
+html{scroll-padding-top:clamp(92px,9vw,150px);overflow-x:hidden}
+body{overflow-x:clip}
+:where(a,button,input):focus-visible{outline:3px solid #22d3ee;outline-offset:3px}
+.mobile-menu{max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain}
+body.mobile-nav-open{overflow:hidden}
+@media(max-width:620px){.nav-name{max-width:calc(100vw - 150px);overflow:hidden;text-overflow:ellipsis}.hero h1{overflow-wrap:anywhere}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{transition:none!important}.mobile-menu{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -433,7 +442,7 @@ body{background:#f7f8fd;}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
   </button>
 </nav>
-<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu" aria-modal="true">
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation" aria-hidden="true" inert>
   <a href="#vision" onclick="closeMob()">Vision</a>
   <a href="#services" onclick="closeMob()">Services</a>
   <div class="mob-sep"></div>
@@ -834,9 +843,12 @@ document.getElementById('year').textContent=new Date().getFullYear();
 var nb=document.getElementById('navbar');window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>28)},{passive:true});
 /* ── mobile toggle ── */
 var toggle=document.getElementById('navToggle');var mobMenu=document.getElementById('mobileMenu');
-toggle.addEventListener('click',function(){var isOpen=mobMenu.classList.toggle('open');toggle.setAttribute('aria-expanded',String(isOpen));toggle.setAttribute('aria-label',isOpen?'Close menu':'Open menu');});
-function closeMob(){mobMenu.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open menu');}
+function setMobileMenu(isOpen){mobMenu.classList.toggle('open',isOpen);mobMenu.toggleAttribute('inert',!isOpen);mobMenu.setAttribute('aria-hidden',String(!isOpen));document.body.classList.toggle('mobile-nav-open',isOpen);toggle.setAttribute('aria-expanded',String(isOpen));toggle.setAttribute('aria-label',isOpen?'Close menu':'Open menu');if(isOpen){var firstLink=mobMenu.querySelector('a');if(firstLink)firstLink.focus();}}
+toggle.addEventListener('click',function(){setMobileMenu(!mobMenu.classList.contains('open'));});
+function closeMob(){setMobileMenu(false);}
 document.addEventListener('click',function(e){if(!mobMenu.contains(e.target)&&!toggle.contains(e.target)){closeMob();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mobMenu.classList.contains('open')){closeMob();toggle.focus();}});
+window.addEventListener('resize',function(){if(window.innerWidth>1240&&mobMenu.classList.contains('open'))closeMob();},{passive:true});
 /* ── glide cursor ── */
 var navLinksEl=document.getElementById('navLinks');var navCursor=document.getElementById('navCursor');
 function moveCursor(el){if(!navCursor||!navLinksEl)return;var pr=navLinksEl.getBoundingClientRect();var er=el.getBoundingClientRect();navCursor.style.opacity='1';navCursor.style.left=(er.left-pr.left)+'px';navCursor.style.top=(er.top-pr.top)+'px';navCursor.style.width=er.width+'px';navCursor.style.height=er.height+'px';}
@@ -846,19 +858,21 @@ if(navLinksEl&&navCursor){navLinksEl.querySelectorAll('a:not(.nav-cta),.nav-drop
 var navAnchors=document.querySelectorAll('.nav-links a[href^="#"]');var sectionObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){var id='#'+entry.target.id;navAnchors.forEach(function(link){link.classList.toggle('is-active',link.getAttribute('href')===id);});if(navLinksEl&&!navLinksEl.matches(':hover'))restoreCursor();}});},{rootMargin:'-35% 0px -55% 0px',threshold:0.01});['vision','technology','artemis-command','products','founder','contact','government'].forEach(function(id){var section=document.getElementById(id);if(section)sectionObserver.observe(section);});
 var glow=document.getElementById('cursorGlow');if(window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'})}
 var rvEls=document.querySelectorAll('.rv');var rvObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)entry.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});rvEls.forEach(function(el){rvObs.observe(el)});
-document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var href=this.getAttribute('href');if(href==='#')return;var t=document.querySelector(href);if(t){e.preventDefault();closeMob();t.scrollIntoView({behavior:'smooth'})}})});
+var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var href=this.getAttribute('href');if(href==='#')return;var t=document.querySelector(href);if(t){e.preventDefault();closeMob();t.scrollIntoView({behavior:reduceMotion.matches?'auto':'smooth'});history.replaceState(null,'',href);}})});
 
 </script>
 <script>
 (function(){var f=document.getElementById('subscribeForm');if(!f)return;var s=document.getElementById('status');
-f.addEventListener('submit',function(e){e.preventDefault();var email=(f.email&&f.email.value||'').trim();if(!email)return;
+f.addEventListener('submit',function(e){e.preventDefault();if(!f.reportValidity())return;var email=(f.email&&f.email.value||'').trim();if(!email)return;
 var btn=f.querySelector('button[type=submit]');if(btn){btn.disabled=true;}
 if(s){s.textContent='Subscribing…';s.style.color='';}
-fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
-.then(function(r){return r.json();})
+var controller=new AbortController();var timeout=window.setTimeout(function(){controller.abort();},10000);
+fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f),signal:controller.signal})
+.then(function(r){if(!r.ok)throw new Error('Subscription request failed with status '+r.status);return r.json();})
 .then(function(){if(s){s.textContent='Thanks — you are on the list. Check your inbox to confirm.';s.style.color='#34d399';}f.reset();})
 .catch(function(){if(s){s.textContent='Could not submit just now. Email desmondotieno@icloud.com and we will add you.';s.style.color='#f472b6';}})
-.then(function(){if(btn){btn.disabled=false;}});
+.finally(function(){window.clearTimeout(timeout);if(btn){btn.disabled=false;}});
 });})();
 </script>
   <script defer src="stealth-glass.js"></script>
@@ -893,6 +907,5 @@ fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'
   </nav>
 </aside>
 <!-- cg-related:end -->
-<script defer src="nav.js"></script>
 </body>
 </html>

@@ -41,3 +41,16 @@ def test_page_specific_licence_and_provenance_metadata_are_published() -> None:
     assert 'link[rel="canonical"]' in SCRIPT
     assert 'license.href = "/legal/content-policy.html"' in SCRIPT
     assert 'provenance.href = "/provenance/release-manifest.json"' in SCRIPT
+
+
+def test_sensitive_previews_blur_on_exit_and_inactivity() -> None:
+    assert 'querySelectorAll("[data-cg-sensitive]")' in SCRIPT
+    assert 'addEventListener("blur"' in SCRIPT
+    assert "45000" in SCRIPT
+    assert ".cg-sensitive-obscured" in SCRIPT
+
+
+def test_copy_friction_is_limited_to_opt_in_regions() -> None:
+    assert 'addEventListener("copy"' in SCRIPT
+    assert 'addEventListener("cut"' in SCRIPT
+    assert "closestProtected(e.target) && !isEditable(e.target)" in SCRIPT

@@ -12,6 +12,9 @@
      [data-cg-watermark] regions.
    - Adds a subtle, page-specific ownership mark to opt-in
      [data-cg-watermark] regions without intercepting browser controls.
+   - Temporarily softens opt-in [data-cg-sensitive] previews when the page
+     loses focus or the visitor has been inactive, while keeping controls and
+     assistive-technology access intact.
    - Stamps a machine-readable ownership notice on window.__cgAssetNotice.
 
    This is a deterrent for casual right-click/drag copying; the authoritative
@@ -67,7 +70,10 @@
         "opacity:.7;pointer-events:none}" +
       ".blur-preview{filter:blur(6px);transition:filter 180ms ease}" +
       ".blur-preview:hover,.blur-preview:focus-within{filter:blur(0)}" +
-      "@media (prefers-reduced-motion:reduce){.blur-preview{transition:none}}" +
+      "[data-cg-sensitive]{transition:filter 220ms ease}" +
+      "[data-cg-sensitive].cg-sensitive-obscured{filter:blur(7px);user-select:none}" +
+      "[data-cg-sensitive].cg-sensitive-obscured:focus-within{filter:none;user-select:auto}" +
+      "@media (prefers-reduced-motion:reduce){.blur-preview,[data-cg-sensitive]{transition:none}}" +
       "@media print{[data-cg-watermark]::after{position:fixed;right:1cm;bottom:1cm;color:#777}}";
     document.head.appendChild(style);
   }
@@ -181,6 +187,38 @@
     document.addEventListener("dragstart", function (e) {
       if (e.target.closest && e.target.closest(".protected .drag-block")) e.preventDefault();
     });
+
+    // Restrict copy/cut friction to explicitly protected presentation regions.
+    // Form controls remain usable, and no keyboard shortcuts are intercepted.
+    document.addEventListener("copy", function (e) {
+      if (closestProtected(e.target) && !isEditable(e.target)) e.preventDefault();
+    });
+    document.addEventListener("cut", function (e) {
+      if (closestProtected(e.target) && !isEditable(e.target)) e.preventDefault();
+    });
+
+    var sensitiveRegions = document.querySelectorAll("[data-cg-sensitive]");
+    if (sensitiveRegions.length) {
+      var inactivityTimer;
+      var setSensitiveState = function (obscured) {
+        for (var index = 0; index < sensitiveRegions.length; index++) {
+          sensitiveRegions[index].classList.toggle("cg-sensitive-obscured", obscured);
+        }
+      };
+      var scheduleInactivity = function () {
+        window.clearTimeout(inactivityTimer);
+        setSensitiveState(false);
+        inactivityTimer = window.setTimeout(function () {
+          setSensitiveState(true);
+        }, 45000);
+      };
+      window.addEventListener("blur", function () { setSensitiveState(true); });
+      window.addEventListener("focus", scheduleInactivity);
+      ["pointerdown", "pointermove", "touchstart"].forEach(function (eventName) {
+        document.addEventListener(eventName, scheduleInactivity, { passive: true });
+      });
+      scheduleInactivity();
+    }
 
     // Do not intercept copy, print, save, or view-source shortcuts. Those are
     // ineffective security boundaries and interfere with assistive technology.

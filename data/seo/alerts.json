@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-03T10:25:34+00:00",
+  "generated": "2026-08-04T09:24:14+00:00",
   "counts": {
     "critical": 0,
     "warning": 1,
@@ -10,22 +10,22 @@
       "level": "info",
       "kind": "connector",
       "message": "google_search_console not connected \u2014 No credentials. Set GSC_ACCESS_TOKEN, or GSC_CLIENT_ID + GSC_CLIENT_SECRET + GSC_REFRESH_TOKEN.",
-      "detected": "2026-08-03T10:25:34+00:00",
+      "detected": "2026-08-04T09:24:14+00:00",
       "source": "google_search_console"
     },
     {
       "level": "info",
       "kind": "connector",
       "message": "bing_webmaster_tools not connected \u2014 No BING_API_KEY set.",
-      "detected": "2026-08-03T10:25:34+00:00",
+      "detected": "2026-08-04T09:24:14+00:00",
       "source": "bing_webmaster_tools"
     },
     {
       "level": "warning",
       "kind": "schema",
-      "message": "2 structured-data issue(s) detected \u2014 rich results at risk.",
-      "detected": "2026-08-03T10:25:34+00:00",
-      "count": 2
+      "message": "3 structured-data issue(s) detected \u2014 rich results at risk.",
+      "detected": "2026-08-04T09:24:14+00:00",
+      "count": 3
     }
   ]
 }

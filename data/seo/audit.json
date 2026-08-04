@@ -1,24 +1,24 @@
 {
-  "generated": "2026-08-03T10:25:34+00:00",
+  "generated": "2026-08-04T09:24:14+00:00",
   "site": "https://www.clearglassinc.com",
   "score": 78,
   "totals": {
-    "pages": 148,
-    "indexable": 137,
-    "in_sitemap": 137,
+    "pages": 150,
+    "indexable": 139,
+    "in_sitemap": 139,
     "noindex": 10,
-    "with_schema": 50,
+    "with_schema": 52,
     "errors": 0,
-    "warnings": 120,
+    "warnings": 125,
     "info": 40
   },
   "by_check": {
-    "description.length": 65,
-    "title.length": 46,
+    "description.length": 67,
+    "title.length": 48,
     "heading.order": 39,
+    "schema.required": 3,
     "h1.multiple": 3,
     "weight": 2,
-    "schema.required": 2,
     "image.alt": 1,
     "title.duplicate": 1,
     "description.duplicate": 1
@@ -34,7 +34,7 @@
       "page": "ClearGlass-NEXUS-v12-FINAL.html",
       "level": "warn",
       "check": "weight",
-      "message": "307 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
+      "message": "308 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
     },
     {
       "page": "ClearGlass-NEXUS-v12-FINAL.html, clearglass-nexus.html",
@@ -211,6 +211,24 @@
       "message": "Meta description is 267 chars; Google truncates near 165."
     },
     {
+      "page": "blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
+    },
+    {
+      "page": "blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 71 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 190 chars; Google truncates near 165."
+    },
+    {
       "page": "blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
       "level": "warn",
       "check": "title.length",
@@ -355,6 +373,18 @@
       "message": "Meta description is 211 chars; Google truncates near 165."
     },
     {
+      "page": "blog/network-orchestration-ai-automation-cybersecurity.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 87 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/network-orchestration-ai-automation-cybersecurity.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 172 chars; Google truncates near 165."
+    },
+    {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
       "level": "warn",
       "check": "title.length",
@@ -436,7 +466,7 @@
       "page": "clearglass-nexus.html",
       "level": "warn",
       "check": "weight",
-      "message": "391 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
+      "message": "393 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
     },
     {
       "page": "clearglass-ultra.html",
@@ -1002,7 +1032,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 3925,
+      "bytes": 4073,
       "inbound_links": 0
     },
     {
@@ -1019,10 +1049,10 @@
       "canonical": "https://www.clearglassinc.com/CG-os.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 56133,
-      "inbound_links": 7
+      "bytes": 57405,
+      "inbound_links": 9
     },
     {
       "page": "ClearGlass-NEXUS-v12-FINAL.html",
@@ -1038,10 +1068,10 @@
       "canonical": "https://www.clearglassinc.com/ClearGlass-NEXUS-v12-FINAL.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 314435,
-      "inbound_links": 8
+      "bytes": 315786,
+      "inbound_links": 10
     },
     {
       "page": "Ontario-osint.html",
@@ -1057,10 +1087,10 @@
       "canonical": "https://www.clearglassinc.com/Ontario-osint.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 92809,
-      "inbound_links": 11
+      "bytes": 94125,
+      "inbound_links": 12
     },
     {
       "page": "advanced-features-tools-systems.html",
@@ -1076,10 +1106,10 @@
       "canonical": "https://www.clearglassinc.com/advanced-features-tools-systems.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 52193,
-      "inbound_links": 17
+      "bytes": 53463,
+      "inbound_links": 19
     },
     {
       "page": "aegis.html",
@@ -1095,10 +1125,10 @@
       "canonical": "https://www.clearglassinc.com/aegis.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 24987,
-      "inbound_links": 14
+      "bytes": 26272,
+      "inbound_links": 16
     },
     {
       "page": "agentmesh.html",
@@ -1114,10 +1144,10 @@
       "canonical": "https://www.clearglassinc.com/agentmesh.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 11,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 22470,
-      "inbound_links": 22
+      "bytes": 23734,
+      "inbound_links": 25
     },
     {
       "page": "ai-operator.html",
@@ -1133,10 +1163,10 @@
       "canonical": "https://www.clearglassinc.com/ai-operator.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 11,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 48904,
-      "inbound_links": 45
+      "bytes": 50202,
+      "inbound_links": 47
     },
     {
       "page": "air-control.html",
@@ -1152,10 +1182,10 @@
       "canonical": "https://www.clearglassinc.com/air-control.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 58283,
-      "inbound_links": 10
+      "bytes": 59636,
+      "inbound_links": 12
     },
     {
       "page": "air-systems-control.html",
@@ -1171,10 +1201,10 @@
       "canonical": "https://www.clearglassinc.com/air-systems-control.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 25947,
-      "inbound_links": 12
+      "bytes": 27192,
+      "inbound_links": 14
     },
     {
       "page": "artemis-2040.html",
@@ -1190,10 +1220,10 @@
       "canonical": "https://www.clearglassinc.com/artemis-2040.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 22148,
-      "inbound_links": 9
+      "bytes": 23441,
+      "inbound_links": 11
     },
     {
       "page": "artemis-ai-cyber-intelligence-platform.html",
@@ -1216,10 +1246,10 @@
         "Thing",
         "Thing"
       ],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 23015,
-      "inbound_links": 12
+      "bytes": 24258,
+      "inbound_links": 14
     },
     {
       "page": "artemis-blue-team.html",
@@ -1235,10 +1265,10 @@
       "canonical": "https://www.clearglassinc.com/artemis-blue-team.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 31079,
-      "inbound_links": 9
+      "bytes": 32345,
+      "inbound_links": 11
     },
     {
       "page": "artemis-fawl/index.html",
@@ -1257,10 +1287,10 @@
         "SoftwareApplication",
         "Organization"
       ],
-      "internal_links": 11,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 10634,
-      "inbound_links": 7
+      "bytes": 12085,
+      "inbound_links": 9
     },
     {
       "page": "artemis-iv.html",
@@ -1276,10 +1306,10 @@
       "canonical": "https://www.clearglassinc.com/artemis-iv.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 169473,
-      "inbound_links": 40
+      "bytes": 170769,
+      "inbound_links": 42
     },
     {
       "page": "artemis-os.html",
@@ -1295,10 +1325,10 @@
       "canonical": "https://www.clearglassinc.com/artemis-os.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 30,
+      "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 49917,
-      "inbound_links": 25
+      "bytes": 51183,
+      "inbound_links": 34
     },
     {
       "page": "artemis-percival.html",
@@ -1314,10 +1344,10 @@
       "canonical": "https://www.clearglassinc.com/artemis-percival.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 124462,
-      "inbound_links": 13
+      "bytes": 125713,
+      "inbound_links": 15
     },
     {
       "page": "artemis-self-evolving-platform.html",
@@ -1333,10 +1363,10 @@
       "canonical": "https://www.clearglassinc.com/artemis-self-evolving-platform.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 17279,
-      "inbound_links": 18
+      "bytes": 18542,
+      "inbound_links": 20
     },
     {
       "page": "artemis.html",
@@ -1352,10 +1382,10 @@
       "canonical": "https://www.clearglassinc.com/artemis.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 43529,
-      "inbound_links": 27
+      "bytes": 44839,
+      "inbound_links": 29
     },
     {
       "page": "attack-prompt-core.html",
@@ -1371,10 +1401,10 @@
       "canonical": "https://www.clearglassinc.com/attack-prompt-core.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 17040,
-      "inbound_links": 8
+      "bytes": 18338,
+      "inbound_links": 10
     },
     {
       "page": "authority-network.html",
@@ -1392,10 +1422,10 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 168,
+      "internal_links": 171,
       "images_missing_alt": 0,
-      "bytes": 35801,
-      "inbound_links": 10
+      "bytes": 37013,
+      "inbound_links": 12
     },
     {
       "page": "automap.html",
@@ -1414,10 +1444,10 @@
         "SoftwareApplication",
         "Organization"
       ],
-      "internal_links": 13,
+      "internal_links": 16,
       "images_missing_alt": 1,
-      "bytes": 51577,
-      "inbound_links": 8
+      "bytes": 52870,
+      "inbound_links": 10
     },
     {
       "page": "banking-law-advisor.html",
@@ -1433,10 +1463,10 @@
       "canonical": "https://www.clearglassinc.com/banking-law-advisor.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 35,
+      "internal_links": 38,
       "images_missing_alt": 0,
-      "bytes": 69107,
-      "inbound_links": 11
+      "bytes": 70375,
+      "inbound_links": 13
     },
     {
       "page": "blog/ai-agent-governance-governed-autonomy.html",
@@ -1459,10 +1489,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 31,
+      "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 43116,
-      "inbound_links": 33
+      "bytes": 44419,
+      "inbound_links": 35
     },
     {
       "page": "blog/ai-agents-insider-threat.html",
@@ -1485,10 +1515,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 31,
+      "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 44340,
-      "inbound_links": 16
+      "bytes": 45667,
+      "inbound_links": 18
     },
     {
       "page": "blog/ai-generated-phishing-54-percent-click-rate.html",
@@ -1517,10 +1547,10 @@
         "CreativeWork",
         "Organization"
       ],
-      "internal_links": 21,
+      "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 48647,
-      "inbound_links": 7
+      "bytes": 49914,
+      "inbound_links": 9
     },
     {
       "page": "blog/almach-scalp-engine.html",
@@ -1536,10 +1566,10 @@
       "canonical": "https://www.clearglassinc.com/blog/almach-scalp-engine.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 17,
+      "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 44979,
-      "inbound_links": 5
+      "bytes": 46324,
+      "inbound_links": 7
     },
     {
       "page": "blog/artemis-governed-ai-gtm-visual-growth-engine.html",
@@ -1559,10 +1589,10 @@
         "Person",
         "Organization"
       ],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 19416,
-      "inbound_links": 5
+      "bytes": 20693,
+      "inbound_links": 7
     },
     {
       "page": "blog/autonomous-threat-modeling-2026.html",
@@ -1585,10 +1615,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 29,
+      "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 42792,
-      "inbound_links": 11
+      "bytes": 44055,
+      "inbound_links": 13
     },
     {
       "page": "blog/canada-digital-control-architecture-charter.html",
@@ -1609,10 +1639,10 @@
         "Organization",
         "ImageObject"
       ],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 29834,
-      "inbound_links": 7
+      "bytes": 31162,
+      "inbound_links": 9
     },
     {
       "page": "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
@@ -1634,10 +1664,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 13,
+      "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 31501,
-      "inbound_links": 5
+      "bytes": 32755,
+      "inbound_links": 7
     },
     {
       "page": "blog/clearglass-agentops-microsoft-foundry-future-stack.html",
@@ -1657,10 +1687,10 @@
         "Person",
         "Organization"
       ],
-      "internal_links": 24,
+      "internal_links": 27,
       "images_missing_alt": 0,
-      "bytes": 35087,
-      "inbound_links": 11
+      "bytes": 36823,
+      "inbound_links": 13
     },
     {
       "page": "blog/clearglass-command-center-cyber-defense-console.html",
@@ -1680,10 +1710,10 @@
         "Person",
         "Organization"
       ],
-      "internal_links": 13,
+      "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 17349,
-      "inbound_links": 7
+      "bytes": 19041,
+      "inbound_links": 9
     },
     {
       "page": "blog/clearglass-platform-audit-2026.html",
@@ -1706,10 +1736,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 34,
+      "internal_links": 37,
       "images_missing_alt": 0,
-      "bytes": 45442,
-      "inbound_links": 8
+      "bytes": 46737,
+      "inbound_links": 10
     },
     {
       "page": "blog/clearglass-secure-deployment-agent.html",
@@ -1732,10 +1762,34 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 32,
+      "internal_links": 35,
       "images_missing_alt": 0,
-      "bytes": 48876,
-      "inbound_links": 10
+      "bytes": 50171,
+      "inbound_links": 12
+    },
+    {
+      "page": "blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
+      "url": "https://www.clearglassinc.com/blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "ClearGlass Workplace Surveillance Intelligence & Defense System (WSIDS)",
+      "title_length": 71,
+      "description": "WSIDS is ClearGlass Inc.'s defensive, investigative, educational, and compliance-focused framework for examining workplace surveillance while protecting lawful worker organizing and privacy.",
+      "description_length": 190,
+      "canonical": "https://www.clearglassinc.com/blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
+      "h1_count": 1,
+      "schema_types": [
+        "Article",
+        "Person",
+        "Organization",
+        "ImageObject"
+      ],
+      "internal_links": 14,
+      "images_missing_alt": 0,
+      "bytes": 20520,
+      "inbound_links": 9
     },
     {
       "page": "blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
@@ -1755,10 +1809,10 @@
         "Person",
         "Organization"
       ],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 33397,
-      "inbound_links": 7
+      "bytes": 34711,
+      "inbound_links": 9
     },
     {
       "page": "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html",
@@ -1781,10 +1835,10 @@
         "WebPage",
         "Organization"
       ],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 30832,
-      "inbound_links": 6
+      "bytes": 32193,
+      "inbound_links": 8
     },
     {
       "page": "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html",
@@ -1805,10 +1859,10 @@
         "Organization",
         "ImageObject"
       ],
-      "internal_links": 12,
+      "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 34804,
-      "inbound_links": 8
+      "bytes": 40005,
+      "inbound_links": 10
     },
     {
       "page": "blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html",
@@ -1831,10 +1885,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 31,
+      "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 43448,
-      "inbound_links": 7
+      "bytes": 44741,
+      "inbound_links": 9
     },
     {
       "page": "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html",
@@ -1857,10 +1911,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 30,
+      "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 74022,
-      "inbound_links": 15
+      "bytes": 75403,
+      "inbound_links": 17
     },
     {
       "page": "blog/coffee-and-technology-digital-revolution.html",
@@ -1882,10 +1936,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 14,
+      "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 28274,
-      "inbound_links": 7
+      "bytes": 29552,
+      "inbound_links": 9
     },
     {
       "page": "blog/cybersecurity-architecture-for-agentic-software.html",
@@ -1909,10 +1963,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 33,
+      "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 42927,
-      "inbound_links": 19
+      "bytes": 44230,
+      "inbound_links": 21
     },
     {
       "page": "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
@@ -1935,10 +1989,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 17,
+      "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 24644,
-      "inbound_links": 9
+      "bytes": 26154,
+      "inbound_links": 11
     },
     {
       "page": "blog/ethical-sales-system-100k-revenue-prompt.html",
@@ -1958,10 +2012,10 @@
         "Person",
         "Organization"
       ],
-      "internal_links": 14,
+      "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 20104,
-      "inbound_links": 8
+      "bytes": 21391,
+      "inbound_links": 10
     },
     {
       "page": "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html",
@@ -1984,10 +2038,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 21,
+      "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 46932,
-      "inbound_links": 8
+      "bytes": 48269,
+      "inbound_links": 10
     },
     {
       "page": "blog/greenbelt-92-percent-access-beats-process.html",
@@ -2007,10 +2061,10 @@
         "Person",
         "Organization"
       ],
-      "internal_links": 13,
+      "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 20332,
-      "inbound_links": 6
+      "bytes": 21727,
+      "inbound_links": 8
     },
     {
       "page": "blog/index.html",
@@ -2047,12 +2101,13 @@
         "ListItem",
         "ListItem",
         "ListItem",
+        "ListItem",
         "ListItem"
       ],
-      "internal_links": 58,
+      "internal_links": 63,
       "images_missing_alt": 0,
-      "bytes": 125464,
-      "inbound_links": 122
+      "bytes": 129594,
+      "inbound_links": 162
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -2072,9 +2127,37 @@
         "Person",
         "Organization"
       ],
-      "internal_links": 13,
+      "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 23921,
+      "bytes": 25637,
+      "inbound_links": 8
+    },
+    {
+      "page": "blog/network-orchestration-ai-automation-cybersecurity.html",
+      "url": "https://www.clearglassinc.com/blog/network-orchestration-ai-automation-cybersecurity.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "AI-Driven Network Orchestration: What Serious Automation Requires | ClearGlass Insights",
+      "title_length": 87,
+      "description": "A ClearGlass long-read briefing on AI-driven network orchestration, human-in-the-loop control, cybersecurity, staged autonomy, and production-grade automation architecture.",
+      "description_length": 172,
+      "canonical": "https://www.clearglassinc.com/blog/network-orchestration-ai-automation-cybersecurity.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage",
+        "Thing",
+        "Thing",
+        "Thing"
+      ],
+      "internal_links": 16,
+      "images_missing_alt": 0,
+      "bytes": 18278,
       "inbound_links": 6
     },
     {
@@ -2097,10 +2180,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 17,
+      "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 37441,
-      "inbound_links": 7
+      "bytes": 38729,
+      "inbound_links": 9
     },
     {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
@@ -2124,10 +2207,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 34,
+      "internal_links": 37,
       "images_missing_alt": 0,
-      "bytes": 42852,
-      "inbound_links": 14
+      "bytes": 44162,
+      "inbound_links": 16
     },
     {
       "page": "blog/post-quantum-security-advisor-clearglass-artemis.html",
@@ -2150,10 +2233,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 20696,
-      "inbound_links": 7
+      "bytes": 22305,
+      "inbound_links": 9
     },
     {
       "page": "blog/resume-builder.html",
@@ -2169,10 +2252,10 @@
       "canonical": "https://www.clearglassinc.com/blog/resume-builder.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 13736,
-      "inbound_links": 8
+      "bytes": 15080,
+      "inbound_links": 10
     },
     {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
@@ -2194,10 +2277,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 27810,
-      "inbound_links": 6
+      "bytes": 29112,
+      "inbound_links": 8
     },
     {
       "page": "blog/zero-trust-is-outdated-adaptive-trust.html",
@@ -2220,10 +2303,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 28,
+      "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 36423,
-      "inbound_links": 9
+      "bytes": 37965,
+      "inbound_links": 11
     },
     {
       "page": "blog/zero-trust-is-outdated.html",
@@ -2246,10 +2329,10 @@
         "ImageObject",
         "WebPage"
       ],
-      "internal_links": 31,
+      "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 45343,
-      "inbound_links": 9
+      "bytes": 46647,
+      "inbound_links": 11
     },
     {
       "page": "bluedesk-mobile.html",
@@ -2265,10 +2348,10 @@
       "canonical": "https://www.clearglassinc.com/bluedesk-mobile.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 25272,
-      "inbound_links": 9
+      "bytes": 26592,
+      "inbound_links": 11
     },
     {
       "page": "bluedesk.html",
@@ -2284,10 +2367,10 @@
       "canonical": "https://www.clearglassinc.com/bluedesk.html",
       "h1_count": 8,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 148169,
-      "inbound_links": 39
+      "bytes": 149431,
+      "inbound_links": 41
     },
     {
       "page": "button-lab.html",
@@ -2303,10 +2386,10 @@
       "canonical": "https://www.clearglassinc.com/button-lab.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 14671,
-      "inbound_links": 8
+      "bytes": 15945,
+      "inbound_links": 10
     },
     {
       "page": "button-system.html",
@@ -2322,10 +2405,10 @@
       "canonical": "https://www.clearglassinc.com/button-system.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 12,
+      "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 7482,
-      "inbound_links": 10
+      "bytes": 8748,
+      "inbound_links": 12
     },
     {
       "page": "cg-loader.html",
@@ -2343,7 +2426,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 28664,
+      "bytes": 28812,
       "inbound_links": 0
     },
     {
@@ -2360,10 +2443,10 @@
       "canonical": "https://www.clearglassinc.com/clearglass-nexus.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 11,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 401196,
-      "inbound_links": 22
+      "bytes": 402455,
+      "inbound_links": 23
     },
     {
       "page": "clearglass-ultra.html",
@@ -2382,10 +2465,10 @@
         "WebPage",
         "Organization"
       ],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 28193,
-      "inbound_links": 8
+      "bytes": 29426,
+      "inbound_links": 10
     },
     {
       "page": "clearglass.html",
@@ -2401,10 +2484,10 @@
       "canonical": "https://www.clearglassinc.com/clearglass.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 44512,
-      "inbound_links": 9
+      "bytes": 45848,
+      "inbound_links": 10
     },
     {
       "page": "clearpulse-architecture.html",
@@ -2424,10 +2507,10 @@
         "Organization",
         "Organization"
       ],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 44534,
-      "inbound_links": 7
+      "bytes": 45799,
+      "inbound_links": 9
     },
     {
       "page": "clearpulse.html",
@@ -2443,10 +2526,10 @@
       "canonical": "https://www.clearglassinc.com/clearpulse.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 11,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 36920,
-      "inbound_links": 19
+      "bytes": 38231,
+      "inbound_links": 24
     },
     {
       "page": "clearsight.html",
@@ -2462,10 +2545,10 @@
       "canonical": "https://www.clearglassinc.com/clearsight.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 40772,
-      "inbound_links": 7
+      "bytes": 42038,
+      "inbound_links": 9
     },
     {
       "page": "command-center.html",
@@ -2481,10 +2564,10 @@
       "canonical": "https://www.clearglassinc.com/command-center.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 29107,
-      "inbound_links": 12
+      "bytes": 30322,
+      "inbound_links": 14
     },
     {
       "page": "command-console.html",
@@ -2500,10 +2583,10 @@
       "canonical": "https://www.clearglassinc.com/command-console.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 49955,
-      "inbound_links": 9
+      "bytes": 51224,
+      "inbound_links": 11
     },
     {
       "page": "conduit.html",
@@ -2519,10 +2602,10 @@
       "canonical": "https://www.clearglassinc.com/conduit.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 54,
+      "internal_links": 57,
       "images_missing_alt": 0,
-      "bytes": 115915,
-      "inbound_links": 15
+      "bytes": 117169,
+      "inbound_links": 18
     },
     {
       "page": "control-surface.html",
@@ -2538,10 +2621,10 @@
       "canonical": "https://www.clearglassinc.com/control-surface.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 29,
+      "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 46692,
-      "inbound_links": 11
+      "bytes": 48028,
+      "inbound_links": 13
     },
     {
       "page": "corporate-legal-advisor.html",
@@ -2557,10 +2640,10 @@
       "canonical": "https://www.clearglassinc.com/corporate-legal-advisor.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 33,
+      "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 89285,
-      "inbound_links": 8
+      "bytes": 90551,
+      "inbound_links": 10
     },
     {
       "page": "counter-uas-commercialization-os.html",
@@ -2576,10 +2659,10 @@
       "canonical": "https://www.clearglassinc.com/counter-uas-commercialization-os.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 44382,
-      "inbound_links": 11
+      "bytes": 45693,
+      "inbound_links": 13
     },
     {
       "page": "cyber-defense-console.html",
@@ -2595,10 +2678,10 @@
       "canonical": "https://www.clearglassinc.com/cyber-defense-console.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 19,
+      "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 64943,
-      "inbound_links": 33
+      "bytes": 66219,
+      "inbound_links": 44
     },
     {
       "page": "environmental-cyber-risk.html",
@@ -2614,10 +2697,10 @@
       "canonical": "https://www.clearglassinc.com/environmental-cyber-risk.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 20792,
-      "inbound_links": 11
+      "bytes": 22098,
+      "inbound_links": 13
     },
     {
       "page": "flowsint.html",
@@ -2633,10 +2716,10 @@
       "canonical": "https://www.clearglassinc.com/flowsint.html",
       "h1_count": 2,
       "schema_types": [],
-      "internal_links": 28,
+      "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 38375,
-      "inbound_links": 18
+      "bytes": 39643,
+      "inbound_links": 19
     },
     {
       "page": "futuristic.html",
@@ -2652,10 +2735,10 @@
       "canonical": "https://www.clearglassinc.com/futuristic.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 23516,
-      "inbound_links": 8
+      "bytes": 24794,
+      "inbound_links": 10
     },
     {
       "page": "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
@@ -2707,10 +2790,10 @@
         "ListItem",
         "ListItem"
       ],
-      "internal_links": 33,
+      "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 55019,
-      "inbound_links": 44
+      "bytes": 56324,
+      "inbound_links": 51
     },
     {
       "page": "guardian.html",
@@ -2726,10 +2809,10 @@
       "canonical": "https://www.clearglassinc.com/guardian.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 11,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 144061,
-      "inbound_links": 69
+      "bytes": 145341,
+      "inbound_links": 71
     },
     {
       "page": "header-mockup-2040.html",
@@ -2747,7 +2830,7 @@
       "schema_types": [],
       "internal_links": 6,
       "images_missing_alt": 0,
-      "bytes": 21367,
+      "bytes": 21478,
       "inbound_links": 0
     },
     {
@@ -2764,10 +2847,10 @@
       "canonical": "https://www.clearglassinc.com/hover-menu.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 19239,
-      "inbound_links": 8
+      "bytes": 20529,
+      "inbound_links": 10
     },
     {
       "page": "index.html",
@@ -2813,10 +2896,10 @@
         "WebPage",
         "WebPage"
       ],
-      "internal_links": 208,
+      "internal_links": 212,
       "images_missing_alt": 0,
-      "bytes": 155141,
-      "inbound_links": 525
+      "bytes": 160664,
+      "inbound_links": 537
     },
     {
       "page": "intelligence-command-surface.html",
@@ -2832,10 +2915,10 @@
       "canonical": "https://www.clearglassinc.com/intelligence-command-surface.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 19179,
-      "inbound_links": 13
+      "bytes": 20475,
+      "inbound_links": 15
     },
     {
       "page": "intelligence-interface.html",
@@ -2851,10 +2934,10 @@
       "canonical": "https://www.clearglassinc.com/intelligence-interface.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 19,
+      "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 14534,
-      "inbound_links": 11
+      "bytes": 15857,
+      "inbound_links": 13
     },
     {
       "page": "intelligence-platform.html",
@@ -2870,10 +2953,10 @@
       "canonical": "https://www.clearglassinc.com/intelligence-platform.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 20823,
-      "inbound_links": 9
+      "bytes": 22207,
+      "inbound_links": 11
     },
     {
       "page": "intelligence.html",
@@ -2889,10 +2972,10 @@
       "canonical": "https://www.clearglassinc.com/intelligence.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 17,
+      "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 15481,
-      "inbound_links": 27
+      "bytes": 16768,
+      "inbound_links": 38
     },
     {
       "page": "investors/index.html",
@@ -2908,10 +2991,10 @@
       "canonical": "https://www.clearglassinc.com/investors/index.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 6856,
-      "inbound_links": 5
+      "bytes": 8127,
+      "inbound_links": 7
     },
     {
       "page": "legal/accessibility.html",
@@ -2932,10 +3015,10 @@
         "ImageObject",
         "Organization"
       ],
-      "internal_links": 13,
+      "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 12245,
-      "inbound_links": 7
+      "bytes": 13704,
+      "inbound_links": 9
     },
     {
       "page": "legal/ai-liability.html",
@@ -2951,10 +3034,10 @@
       "canonical": "https://www.clearglassinc.com/legal/ai-liability.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 19,
+      "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 26332,
-      "inbound_links": 10
+      "bytes": 27645,
+      "inbound_links": 12
     },
     {
       "page": "legal/articles.html",
@@ -2970,10 +3053,10 @@
       "canonical": "https://www.clearglassinc.com/legal/articles.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 21943,
-      "inbound_links": 9
+      "bytes": 23199,
+      "inbound_links": 11
     },
     {
       "page": "legal/banking-resolution.html",
@@ -2989,10 +3072,10 @@
       "canonical": "https://www.clearglassinc.com/legal/banking-resolution.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25334,
-      "inbound_links": 7
+      "bytes": 26639,
+      "inbound_links": 9
     },
     {
       "page": "legal/bylaws.html",
@@ -3008,10 +3091,10 @@
       "canonical": "https://www.clearglassinc.com/legal/bylaws.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 24802,
-      "inbound_links": 6
+      "bytes": 26080,
+      "inbound_links": 8
     },
     {
       "page": "legal/content-policy.html",
@@ -3032,10 +3115,10 @@
         "ImageObject",
         "Organization"
       ],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 10421,
-      "inbound_links": 8
+      "bytes": 11909,
+      "inbound_links": 10
     },
     {
       "page": "legal/directors-resolution.html",
@@ -3051,10 +3134,10 @@
       "canonical": "https://www.clearglassinc.com/legal/directors-resolution.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 23873,
-      "inbound_links": 6
+      "bytes": 25158,
+      "inbound_links": 8
     },
     {
       "page": "legal/index.html",
@@ -3070,10 +3153,10 @@
       "canonical": "https://www.clearglassinc.com/legal/",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 36,
+      "internal_links": 39,
       "images_missing_alt": 0,
-      "bytes": 22733,
-      "inbound_links": 63
+      "bytes": 23995,
+      "inbound_links": 83
     },
     {
       "page": "legal/ip-assignment.html",
@@ -3089,10 +3172,10 @@
       "canonical": "https://www.clearglassinc.com/legal/ip-assignment.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 24677,
-      "inbound_links": 6
+      "bytes": 25968,
+      "inbound_links": 8
     },
     {
       "page": "legal/legal-council.html",
@@ -3108,10 +3191,10 @@
       "canonical": "https://www.clearglassinc.com/legal/legal-council.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 19,
+      "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 35493,
-      "inbound_links": 7
+      "bytes": 36761,
+      "inbound_links": 9
     },
     {
       "page": "legal/nda.html",
@@ -3127,10 +3210,10 @@
       "canonical": "https://www.clearglassinc.com/legal/nda.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 24035,
-      "inbound_links": 10
+      "bytes": 25306,
+      "inbound_links": 12
     },
     {
       "page": "legal/privacy.html",
@@ -3146,10 +3229,10 @@
       "canonical": "https://www.clearglassinc.com/legal/privacy.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25355,
-      "inbound_links": 37
+      "bytes": 26628,
+      "inbound_links": 39
     },
     {
       "page": "legal/share-subscription.html",
@@ -3165,10 +3248,10 @@
       "canonical": "https://www.clearglassinc.com/legal/share-subscription.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 16,
+      "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 22499,
-      "inbound_links": 6
+      "bytes": 23776,
+      "inbound_links": 8
     },
     {
       "page": "legal/terms.html",
@@ -3184,10 +3267,10 @@
       "canonical": "https://www.clearglassinc.com/legal/terms.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 25085,
-      "inbound_links": 33
+      "bytes": 26352,
+      "inbound_links": 35
     },
     {
       "page": "loader.html",
@@ -3205,7 +3288,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 26814,
+      "bytes": 26962,
       "inbound_links": 0
     },
     {
@@ -3226,10 +3309,10 @@
         "Organization",
         "Country"
       ],
-      "internal_links": 20,
+      "internal_links": 23,
       "images_missing_alt": 0,
-      "bytes": 21805,
-      "inbound_links": 7
+      "bytes": 23096,
+      "inbound_links": 9
     },
     {
       "page": "offers/hardening-sprint.html",
@@ -3245,10 +3328,10 @@
       "canonical": "https://www.clearglassinc.com/offers/hardening-sprint.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 11,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 15680,
-      "inbound_links": 10
+      "bytes": 17032,
+      "inbound_links": 12
     },
     {
       "page": "offers/index.html",
@@ -3264,10 +3347,10 @@
       "canonical": "https://www.clearglassinc.com/offers/",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 23,
+      "internal_links": 26,
       "images_missing_alt": 0,
-      "bytes": 38415,
-      "inbound_links": 68
+      "bytes": 39707,
+      "inbound_links": 79
     },
     {
       "page": "offers/phipa-readiness-checklist.html",
@@ -3283,10 +3366,10 @@
       "canonical": "https://www.clearglassinc.com/offers/phipa-readiness-checklist.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 6,
+      "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 10842,
-      "inbound_links": 6
+      "bytes": 12106,
+      "inbound_links": 8
     },
     {
       "page": "offers/phipa-readiness.html",
@@ -3302,10 +3385,10 @@
       "canonical": "https://www.clearglassinc.com/offers/phipa-readiness.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 13183,
-      "inbound_links": 8
+      "bytes": 14493,
+      "inbound_links": 10
     },
     {
       "page": "offers/security-quick-audit.html",
@@ -3321,10 +3404,10 @@
       "canonical": "https://www.clearglassinc.com/offers/security-quick-audit.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 12466,
-      "inbound_links": 19
+      "bytes": 13752,
+      "inbound_links": 21
     },
     {
       "page": "offers/thank-you.html",
@@ -3342,7 +3425,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 3484,
+      "bytes": 3632,
       "inbound_links": 0
     },
     {
@@ -3361,7 +3444,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 4331,
+      "bytes": 4479,
       "inbound_links": 0
     },
     {
@@ -3378,10 +3461,10 @@
       "canonical": "https://www.clearglassinc.com/opal/",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 15189,
-      "inbound_links": 11
+      "bytes": 16487,
+      "inbound_links": 19
     },
     {
       "page": "operations/client-onboarding.html",
@@ -3397,10 +3480,10 @@
       "canonical": "https://www.clearglassinc.com/operations/client-onboarding.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 7751,
-      "inbound_links": 8
+      "bytes": 9029,
+      "inbound_links": 10
     },
     {
       "page": "operations/federal-supplier-handoff.html",
@@ -3416,10 +3499,10 @@
       "canonical": "https://www.clearglassinc.com/operations/federal-supplier-handoff.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 18,
+      "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 18189,
-      "inbound_links": 10
+      "bytes": 19501,
+      "inbound_links": 12
     },
     {
       "page": "operations/hubspot-handoff.html",
@@ -3435,10 +3518,10 @@
       "canonical": "https://www.clearglassinc.com/operations/hubspot-handoff.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 19,
+      "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 18077,
-      "inbound_links": 6
+      "bytes": 19380,
+      "inbound_links": 8
     },
     {
       "page": "operations/ontario-incorporation-handoff.html",
@@ -3454,10 +3537,10 @@
       "canonical": "https://www.clearglassinc.com/operations/ontario-incorporation-handoff.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 21,
+      "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 18595,
-      "inbound_links": 7
+      "bytes": 19864,
+      "inbound_links": 9
     },
     {
       "page": "operations/procurement-readiness.html",
@@ -3473,10 +3556,10 @@
       "canonical": "https://www.clearglassinc.com/operations/procurement-readiness.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 21,
+      "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 25779,
-      "inbound_links": 37
+      "bytes": 27081,
+      "inbound_links": 39
     },
     {
       "page": "operations/stripe-handoff.html",
@@ -3492,10 +3575,10 @@
       "canonical": "https://www.clearglassinc.com/operations/stripe-handoff.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 18,
+      "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 18003,
-      "inbound_links": 6
+      "bytes": 19295,
+      "inbound_links": 8
     },
     {
       "page": "percival-build.html",
@@ -3511,10 +3594,10 @@
       "canonical": "https://www.clearglassinc.com/percival-build.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 35162,
-      "inbound_links": 7
+      "bytes": 36402,
+      "inbound_links": 9
     },
     {
       "page": "percival-os.html",
@@ -3530,10 +3613,10 @@
       "canonical": "https://www.clearglassinc.com/percival-os.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 21,
+      "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 70872,
-      "inbound_links": 43
+      "bytes": 72132,
+      "inbound_links": 60
     },
     {
       "page": "platform-command-center.html",
@@ -3551,7 +3634,7 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 58125,
+      "bytes": 58236,
       "inbound_links": 4
     },
     {
@@ -3568,10 +3651,10 @@
       "canonical": "https://www.clearglassinc.com/postloop.html",
       "h1_count": 2,
       "schema_types": [],
-      "internal_links": 14,
+      "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 37930,
-      "inbound_links": 10
+      "bytes": 39184,
+      "inbound_links": 12
     },
     {
       "page": "pricing.html",
@@ -3600,10 +3683,10 @@
         "ListItem",
         "ListItem"
       ],
-      "internal_links": 12,
+      "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 26384,
-      "inbound_links": 123
+      "bytes": 27669,
+      "inbound_links": 126
     },
     {
       "page": "procurement-legal-tech.html",
@@ -3619,10 +3702,10 @@
       "canonical": "https://clearglassinc.github.io/procurement-legal-tech.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 22,
+      "internal_links": 25,
       "images_missing_alt": 0,
-      "bytes": 52459,
-      "inbound_links": 15
+      "bytes": 53732,
+      "inbound_links": 17
     },
     {
       "page": "products.html",
@@ -3640,10 +3723,10 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 164,
+      "internal_links": 167,
       "images_missing_alt": 0,
-      "bytes": 41185,
-      "inbound_links": 8
+      "bytes": 42487,
+      "inbound_links": 9
     },
     {
       "page": "products/opal-koboi/artemis-iv-core.html",
@@ -3659,10 +3742,10 @@
       "canonical": "https://www.clearglassinc.com/products/opal-koboi/artemis-iv-core.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 8241,
-      "inbound_links": 9
+      "bytes": 9506,
+      "inbound_links": 11
     },
     {
       "page": "products/opal-koboi/artemis-vi.html",
@@ -3678,10 +3761,10 @@
       "canonical": "https://www.clearglassinc.com/products/opal-koboi/artemis-vi.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 8241,
-      "inbound_links": 9
+      "bytes": 9519,
+      "inbound_links": 11
     },
     {
       "page": "products/opal-koboi/guardian.html",
@@ -3697,10 +3780,10 @@
       "canonical": "https://www.clearglassinc.com/products/opal-koboi/guardian.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 8232,
-      "inbound_links": 9
+      "bytes": 9512,
+      "inbound_links": 11
     },
     {
       "page": "products/opal-koboi/index.html",
@@ -3716,10 +3799,10 @@
       "canonical": "https://www.clearglassinc.com/products/opal-koboi/",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 13,
+      "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 9335,
-      "inbound_links": 8
+      "bytes": 10614,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/revenue-engine.html",
@@ -3735,10 +3818,10 @@
       "canonical": "https://www.clearglassinc.com/products/opal-koboi/revenue-engine.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 8262,
-      "inbound_links": 9
+      "bytes": 9528,
+      "inbound_links": 11
     },
     {
       "page": "products/opal-koboi/smb-suite.html",
@@ -3754,10 +3837,10 @@
       "canonical": "https://www.clearglassinc.com/products/opal-koboi/smb-suite.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 8230,
-      "inbound_links": 10
+      "bytes": 9507,
+      "inbound_links": 12
     },
     {
       "page": "revenue-engine.html",
@@ -3773,10 +3856,10 @@
       "canonical": "https://www.clearglassinc.com/revenue-engine.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 50,
+      "internal_links": 53,
       "images_missing_alt": 0,
-      "bytes": 56852,
-      "inbound_links": 19
+      "bytes": 58175,
+      "inbound_links": 21
     },
     {
       "page": "saas-platform.html",
@@ -3792,10 +3875,10 @@
       "canonical": "https://www.clearglassinc.com/saas-platform.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 26485,
-      "inbound_links": 7
+      "bytes": 27727,
+      "inbound_links": 9
     },
     {
       "page": "sats-digital-twin.html",
@@ -3815,10 +3898,10 @@
         "Organization",
         "ImageObject"
       ],
-      "internal_links": 18,
+      "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 25778,
-      "inbound_links": 16
+      "bytes": 27023,
+      "inbound_links": 18
     },
     {
       "page": "sentinel.html",
@@ -3834,10 +3917,10 @@
       "canonical": "https://www.clearglassinc.com/sentinel.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 57156,
-      "inbound_links": 14
+      "bytes": 58444,
+      "inbound_links": 16
     },
     {
       "page": "sentinel/ARTEMIS_FAWL_COMMAND_SURFACE.html",
@@ -3855,7 +3938,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 14913,
+      "bytes": 15254,
       "inbound_links": 0
     },
     {
@@ -3874,7 +3957,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 15673,
+      "bytes": 16014,
       "inbound_links": 0
     },
     {
@@ -3893,7 +3976,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 40232,
+      "bytes": 40343,
       "inbound_links": 0
     },
     {
@@ -3919,10 +4002,10 @@
         "ListItem",
         "ListItem"
       ],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 107276,
-      "inbound_links": 11
+      "bytes": 108492,
+      "inbound_links": 13
     },
     {
       "page": "smb-cyber-trust-kit.html",
@@ -3942,10 +4025,10 @@
         "Brand",
         "BusinessAudience"
       ],
-      "internal_links": 11,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 94563,
-      "inbound_links": 12
+      "bytes": 95870,
+      "inbound_links": 13
     },
     {
       "page": "smb.html",
@@ -3977,10 +4060,10 @@
         "ListItem",
         "ListItem"
       ],
-      "internal_links": 9,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9527,
-      "inbound_links": 20
+      "bytes": 10838,
+      "inbound_links": 21
     },
     {
       "page": "stegoforge.html",
@@ -3996,10 +4079,10 @@
       "canonical": "https://www.clearglassinc.com/stegoforge.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 8,
+      "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 15933,
-      "inbound_links": 11
+      "bytes": 17243,
+      "inbound_links": 13
     },
     {
       "page": "store.html",
@@ -4030,10 +4113,10 @@
         "UnitPriceSpecification",
         "Service"
       ],
-      "internal_links": 14,
+      "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 32797,
-      "inbound_links": 146
+      "bytes": 34130,
+      "inbound_links": 149
     },
     {
       "page": "systems.html",
@@ -4049,10 +4132,10 @@
       "canonical": "https://www.clearglassinc.com/systems.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 10,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 35057,
-      "inbound_links": 10
+      "bytes": 36344,
+      "inbound_links": 12
     },
     {
       "page": "tax.html",
@@ -4068,10 +4151,10 @@
       "canonical": "https://www.clearglassinc.com/tax.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 31,
+      "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 62830,
-      "inbound_links": 12
+      "bytes": 64144,
+      "inbound_links": 14
     },
     {
       "page": "traffic-enforcement.html",
@@ -4087,10 +4170,10 @@
       "canonical": "https://www.clearglassinc.com/traffic-enforcement.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 12,
+      "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 23072,
-      "inbound_links": 12
+      "bytes": 24444,
+      "inbound_links": 14
     },
     {
       "page": "ultra-glass.html",
@@ -4106,10 +4189,10 @@
       "canonical": "https://www.clearglassinc.com/ultra-glass.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 23,
+      "internal_links": 26,
       "images_missing_alt": 0,
-      "bytes": 36331,
-      "inbound_links": 8
+      "bytes": 37627,
+      "inbound_links": 10
     },
     {
       "page": "web-design.html",
@@ -4160,10 +4243,10 @@
         "ListItem",
         "ListItem"
       ],
-      "internal_links": 15,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 102399,
-      "inbound_links": 18
+      "bytes": 103667,
+      "inbound_links": 26
     },
     {
       "page": "xenolith.html",
@@ -4182,10 +4265,10 @@
         "SoftwareApplication",
         "Organization"
       ],
-      "internal_links": 17,
+      "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 49407,
-      "inbound_links": 7
+      "bytes": 50792,
+      "inbound_links": 8
     }
   ]
 }

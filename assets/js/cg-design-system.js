@@ -118,14 +118,22 @@
     } catch (e) { /* reveal is progressive enhancement only */ }
   }
 
-  /* ── Global top bar — the ClearGlassInc. 2040 identity and menu on every page.
-     It is additive: existing page navigation remains intact and is nudged below
-     the global bar when necessary. The homepage keeps its original single nav.
+  /* ── Global top bar — the ClearGlassInc. 2040 identity and menu on pages
+     that do not already provide primary navigation. Existing page navigation
+     remains the single source of navigation for that page. The homepage keeps
+     its original single nav.
      Opt out only with data-cg-no-topbar on <html> or <body>. Pages can dock
      their own controls into the bar with [data-cg-topbar-slot], and rebrand the
      left side with data-cg-topbar-title / data-cg-topbar-sub on <body>. ── */
   function mountTopbar() {
     if (document.querySelector('.cg-topbar')) return;
+    // Never stack the global bar above a page's own primary navigation. Keep
+    // the selector semantic so table-of-contents and footer navs do not prevent
+    // a page without a primary menu from receiving the global bar.
+    if (document.querySelector(
+      'nav[aria-label*="primary" i], nav[aria-label*="main" i], ' +
+      'header nav, body > nav.nav, body > header.site-header'
+    )) return;
     // nav.js supplies the single global top bar site-wide. When a page also
     // loads nav.js, defer to it so only one navigation bar renders instead of
     // two stacked bars. Checked via the script tag (present in the DOM
@@ -257,8 +265,8 @@
       if (!bar.contains(slots[i])) cta.parentNode.insertBefore(slots[i], cta);
     }
 
-    // Nudge existing fixed navigation and compact top widgets below the
-    // global bar without deleting, restyling, or replacing page content.
+    // Nudge compact fixed widgets below the global bar without deleting,
+    // restyling, or replacing page content.
     function nudgeFixedWidgets() {
       var barH = bar.offsetHeight || 64;
       var cands = document.querySelectorAll('body > *, body > * > *');

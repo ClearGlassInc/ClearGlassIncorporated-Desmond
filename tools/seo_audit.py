@@ -45,6 +45,32 @@ SKIP_DIRS = {
     "bots", ".github", "assets", "docs",
 }
 
+
+def _published_pages() -> frozenset[str]:
+    """Relative paths the site's own page registry declares published.
+
+    ``SKIP_DIRS`` exists to keep source/vendor trees out of the audit, but some of
+    those directories have since gained genuinely published pages (``apps/`` and
+    ``docs/`` each hold one). Skipping them wholesale desynchronised two gates that
+    must agree: ``tools/generate_search_assets.py`` dropped those URLs from
+    ``sitemap.xml`` on every regeneration, while ``tools/authority_network.py``
+    requires every registered page to appear in a sitemap — so regenerating broke the
+    authority gate and not regenerating broke the ``git diff --exit-code`` freshness
+    gate. Deferring to the registry keeps discovery and the site graph in step, and
+    new pages under a skipped directory are picked up automatically.
+    """
+    try:
+        from tools import internal_links
+    except ImportError:  # pragma: no cover - standalone execution without the package
+        try:
+            import internal_links  # type: ignore[no-redef]
+        except ImportError:
+            return frozenset()
+    return frozenset(internal_links.PAGES)
+
+
+PUBLISHED_PAGES = _published_pages()
+
 # Pages that are intentionally not indexable and must not be judged as content.
 # Verification files and app shells are excluded from on-page scoring entirely.
 UTILITY_PAGES = {
@@ -148,7 +174,7 @@ def discover_pages() -> list[Path]:
     pages: list[Path] = []
     for path in ROOT.rglob("*.html"):
         rel = path.relative_to(ROOT)
-        if rel.parts[0] in SKIP_DIRS:
+        if rel.parts[0] in SKIP_DIRS and rel.as_posix() not in PUBLISHED_PAGES:
             continue
         if any(part == "node_modules" for part in rel.parts):
             continue

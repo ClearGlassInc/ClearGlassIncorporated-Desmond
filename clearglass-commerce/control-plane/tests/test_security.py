@@ -7,6 +7,8 @@ exercised directly (not via a live server) so the tests need no DB or web stack.
 """
 from __future__ import annotations
 
+import time
+
 import pytest
 
 from app.config import Settings
@@ -91,3 +93,54 @@ def test_non_bearer_scheme_is_401() -> None:
     with pytest.raises(HTTPException) as exc:
         require_admin(authorization="Basic abc123", settings=s)
     assert exc.value.status_code == 401
+
+
+# --- rate limiter -----------------------------------------------------------
+
+
+def test_limiter_enforces_the_window_limit() -> None:
+    from app.security import SlidingWindowLimiter
+
+    limiter = SlidingWindowLimiter()
+    decisions = [limiter.allow("checkout:198.51.100.7", 3) for _ in range(5)]
+    assert decisions == [True, True, True, False, False]
+
+
+def test_limiter_allows_again_once_the_window_drains() -> None:
+    from app.security import SlidingWindowLimiter
+
+    limiter = SlidingWindowLimiter()
+    assert limiter.allow("checkout:198.51.100.7", 1, window_seconds=0.01) is True
+    assert limiter.allow("checkout:198.51.100.7", 1, window_seconds=0.01) is False
+    time.sleep(0.02)
+    assert limiter.allow("checkout:198.51.100.7", 1, window_seconds=0.01) is True
+
+
+def test_limiter_does_not_grow_without_bound_across_callers() -> None:
+    """Checkout/webhook throttles are keyed by client IP on public endpoints, so
+    retaining a slot per IP that ever called would be an unbounded, stranger-driven
+    leak in a long-running control plane. Drained keys must be reclaimed."""
+    from app.security import SlidingWindowLimiter
+
+    limiter = SlidingWindowLimiter(sweep_interval_seconds=0.01)
+
+    for i in range(2000):
+        limiter.allow(f"checkout:203.0.113.{i % 256}/{i}", 30, window_seconds=0.01)
+    assert limiter.tracked_keys() > 1
+
+    time.sleep(0.02)
+    limiter.allow("checkout:198.51.100.7", 30)
+    assert limiter.tracked_keys() == 1
+
+
+def test_limiter_sweep_keeps_callers_inside_a_longer_window() -> None:
+    """A sweep triggered by a short-window scope must not evict a long-window one."""
+    from app.security import SlidingWindowLimiter
+
+    limiter = SlidingWindowLimiter()
+    assert limiter.allow("slow:198.51.100.7", 5, window_seconds=3600) is True
+
+    limiter._next_sweep = time.monotonic() - 1  # force a sweep on the next call
+    limiter.allow("fast:203.0.113.9", 5, window_seconds=0.001)
+
+    assert limiter.tracked_keys() == 2

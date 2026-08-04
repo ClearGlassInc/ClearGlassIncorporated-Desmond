@@ -27,7 +27,7 @@ import hmac
 import logging
 import threading
 import time
-from collections import defaultdict, deque
+from collections import deque
 
 from fastapi import Depends, Header, HTTPException, Request, status
 
@@ -118,25 +118,90 @@ class SlidingWindowLimiter:
     In-process only, which matches the single-instance Render/Docker deployments this
     repo targets; a shared store (e.g. Redis) can replace the backend later without
     touching call sites.
+
+    Bookkeeping is bounded: the checkout and Stripe-webhook throttles are keyed by
+    client IP on *public* endpoints, so a long-running process would otherwise retain
+    one dict slot per IP that ever called it — an unbounded leak driven by strangers.
+    Keys are dropped as soon as their window drains, and a periodic sweep reclaims
+    keys that simply stopped calling (those never get a lookup to drain them).
     """
 
-    def __init__(self) -> None:
-        self._hits: dict[str, deque[float]] = defaultdict(deque)
+    #: How often (seconds) to walk the whole table reclaiming drained keys. The sweep
+    #: is O(tracked keys) and amortised across requests, so this stays cheap.
+    SWEEP_INTERVAL_SECONDS = 300.0
+
+    def __init__(self, sweep_interval_seconds: float | None = None) -> None:
+        # key -> (window_seconds, hit timestamps). The window is stored per key so the
+        # sweep can never evict a caller that is still inside a longer window than the
+        # one belonging to the request that happened to trigger the sweep.
+        self._hits: dict[str, tuple[float, deque[float]]] = {}
         self._lock = threading.Lock()
+        self._sweep_interval = (
+            self.SWEEP_INTERVAL_SECONDS
+            if sweep_interval_seconds is None
+            else sweep_interval_seconds
+        )
+        self._next_sweep = time.monotonic() + self._sweep_interval
+
+    def _sweep(self, now: float) -> None:
+        """Drop keys whose entire window has expired. Caller must hold the lock."""
+        self._next_sweep = now + self._sweep_interval
+        stale = [
+            key
+            for key, (window, hits) in self._hits.items()
+            if not hits or now - hits[-1] > window
+        ]
+        for key in stale:
+            del self._hits[key]
 
     def allow(self, key: str, limit: int, window_seconds: float = 60.0) -> bool:
         now = time.monotonic()
         with self._lock:
-            hits = self._hits[key]
+            if now >= self._next_sweep:
+                self._sweep(now)
+            # Plain dict lookup (not defaultdict) so probing a key never allocates.
+            entry = self._hits.get(key)
+            hits = entry[1] if entry is not None else deque()
             while hits and now - hits[0] > window_seconds:
                 hits.popleft()
             if len(hits) >= limit:
+                # Still throttled: the surviving hits must stay tracked.
+                self._hits[key] = (window_seconds, hits)
                 return False
             hits.append(now)
+            self._hits[key] = (window_seconds, hits)
             return True
+
+    def tracked_keys(self) -> int:
+        """Number of callers currently held in memory (observability / tests)."""
+        with self._lock:
+            return len(self._hits)
 
 
 _limiter = SlidingWindowLimiter()
+
+
+def client_identity(request: Request, trusted_proxy_hops: int = 0) -> str:
+    """Resolve the caller address the throttles should key on.
+
+    Uvicorn only honours ``X-Forwarded-For`` from ``forwarded_allow_ips`` (127.0.0.1 by
+    default), so behind Render/Cloudflare ``request.client.host`` is the *proxy* — every
+    customer would share a single bucket and one abusive caller could 429 the whole
+    storefront. When operators declare how many proxies they run, read the caller from
+    the header instead, counting back from the right so only the entries those proxies
+    appended are trusted: a client that sends its own ``X-Forwarded-For`` only pollutes
+    positions its proxy has already pushed out of reach.
+    """
+    peer = request.client.host if request.client else "unknown"
+    if trusted_proxy_hops <= 0:
+        return peer
+    forwarded = request.headers.get("x-forwarded-for", "")
+    hops = [part.strip() for part in forwarded.split(",") if part.strip()]
+    if len(hops) < trusted_proxy_hops:
+        # Fewer hops than declared: the header is missing or truncated, so it cannot be
+        # trusted to name the caller. Fall back to the peer rather than guessing.
+        return peer
+    return hops[-trusted_proxy_hops]
 
 
 def rate_limit(scope: str, setting_name: str):
@@ -145,10 +210,11 @@ def rate_limit(scope: str, setting_name: str):
     the throttle for that scope."""
 
     def dependency(request: Request) -> None:
-        limit = getattr(get_settings(), setting_name)
+        settings = get_settings()
+        limit = getattr(settings, setting_name)
         if limit <= 0:
             return
-        client = request.client.host if request.client else "unknown"
+        client = client_identity(request, settings.trusted_proxy_hops)
         if not _limiter.allow(f"{scope}:{client}", limit):
             raise HTTPException(
                 status_code=status.HTTP_429_TOO_MANY_REQUESTS,

@@ -41,6 +41,14 @@ class Settings(BaseSettings):
     rate_limit_checkout_per_minute: int = 30
     rate_limit_webhook_per_minute: int = 240
     rate_limit_decisions_per_minute: int = 60
+    # Number of trusted reverse proxies in front of this service (Render/Cloudflare = 1).
+    # 0 (default) = direct exposure: the throttles key on the TCP peer address.
+    # >0 = read the caller from X-Forwarded-For, counting this many hops back from the
+    # right, so only the entries *your* proxies appended are trusted and a client cannot
+    # spoof its identity by sending its own X-Forwarded-For. Leaving this at 0 behind a
+    # proxy is a real outage risk: every customer collapses into one bucket keyed on the
+    # proxy's address, so one abusive caller 429s the whole storefront.
+    trusted_proxy_hops: int = 0
 
     # Payments (never logged, never echoed in responses)
     stripe_secret_key: str = ""

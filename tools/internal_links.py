@@ -228,6 +228,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/canada-digital-control-architecture-charter.html": ("Canada’s Digital-Control Architecture", "a source-led analysis of safety, surveillance and the Charter"),
     "blog/greenbelt-92-percent-access-beats-process.html": ("92%: When Access Beats Process", "a source-led Ontario Greenbelt accountability brief"),
     "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": ("Artemis Full-Stack AI Blueprint", "the production architecture for a governed intelligence platform"),
+    "blog/clearglass-workplace-surveillance-intelligence-defense-system.html": ("Workplace Surveillance Intelligence & Defense", "defensive research for worker rights, privacy and accountability"),
     "blog/network-orchestration-ai-automation-cybersecurity.html": ("AI-Driven Network Orchestration", "a field guide to safe, governed network automation"),
 }
 
@@ -393,6 +394,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/telecommunications-legal-briefing-30-july-2026.html",
             "blog/canada-digital-control-architecture-charter.html",
             "blog/greenbelt-92-percent-access-beats-process.html",
+            "blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
             "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html",
             "blog/network-orchestration-ai-automation-cybersecurity.html",
         ],

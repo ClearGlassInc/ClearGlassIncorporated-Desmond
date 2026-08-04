@@ -215,3 +215,61 @@ def test_open_mode_falls_back_to_asserted_label(harness) -> None:
     assert event.actor == "desmond"
     # Nothing to disambiguate in open mode: no separate asserted_by annotation.
     assert "asserted_by" not in event.payload
+
+
+# --- caller identity behind a reverse proxy ---------------------------------
+# Render/Cloudflare terminate TLS in front of the container and uvicorn only trusts
+# X-Forwarded-For from 127.0.0.1, so request.client.host is the proxy. Without an
+# explicit hop count every customer shares one throttle bucket.
+
+
+def test_throttle_isolates_callers_behind_a_declared_proxy(harness) -> None:
+    build, _, monkeypatch = harness
+    monkeypatch.setenv("RATE_LIMIT_CHECKOUT_PER_MINUTE", "2")
+    monkeypatch.setenv("TRUSTED_PROXY_HOPS", "1")
+    client = build()
+    body = {"items": [{"name": "Glass", "amount": 1000, "quantity": 1}]}
+
+    def post(caller: str) -> int:
+        # The proxy appends the real peer, so the rightmost entry is the trustworthy one.
+        return client.post(
+            "/checkout/session", json=body, headers={"x-forwarded-for": caller}
+        ).status_code
+
+    assert [post("203.0.113.10") for _ in range(3)] == [200, 200, 429]
+    # A different customer behind the same proxy must not inherit that exhaustion.
+    assert post("198.51.100.22") == 200
+
+
+def test_spoofed_forwarded_for_cannot_evade_the_throttle(harness) -> None:
+    build, _, monkeypatch = harness
+    monkeypatch.setenv("RATE_LIMIT_CHECKOUT_PER_MINUTE", "2")
+    monkeypatch.setenv("TRUSTED_PROXY_HOPS", "1")
+    client = build()
+    body = {"items": [{"name": "Glass", "amount": 1000, "quantity": 1}]}
+
+    # The abuser rotates the value it sends; the proxy still appends its real address,
+    # so the trusted rightmost hop stays constant and the throttle still bites.
+    codes = [
+        client.post(
+            "/checkout/session",
+            json=body,
+            headers={"x-forwarded-for": f"10.0.0.{i}, 203.0.113.99"},
+        ).status_code
+        for i in range(3)
+    ]
+    assert codes == [200, 200, 429]
+
+
+def test_client_identity_defaults_to_peer_without_declared_proxies() -> None:
+    from app.security import client_identity
+
+    class _Req:
+        client = type("C", (), {"host": "192.0.2.5"})()
+        headers = {"x-forwarded-for": "1.2.3.4"}
+
+    # No declared proxies: the header is attacker-controlled and must be ignored.
+    assert client_identity(_Req(), 0) == "192.0.2.5"
+    # Declared proxy, but the header carries fewer hops than promised -> peer.
+    assert client_identity(_Req(), 2) == "192.0.2.5"
+    assert client_identity(_Req(), 1) == "1.2.3.4"

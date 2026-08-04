@@ -5,6 +5,13 @@ export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3001"),
   title: "ClearGlass Commerce — Admin Cockpit",
   description: "Orders, products, inventory, analytics, and the approval gate.",
+  // Same holographic seal the marketing site uses as its tab icon, served from
+  // this app's own public/ since it deploys on a separate origin.
+  icons: {
+    icon: "/clearglass-seal-192.png",
+    shortcut: "/clearglass-seal-192.png",
+    apple: "/clearglass-seal-192.png",
+  },
   alternates: { canonical: "/" },
   openGraph: {
     title: "ClearGlass Commerce — Admin Cockpit",

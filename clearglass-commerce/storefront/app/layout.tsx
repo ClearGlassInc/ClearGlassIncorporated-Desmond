@@ -5,6 +5,13 @@ export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://clearglassinc.github.io"),
   title: "ClearGlass Store",
   description: "A governed, autonomous e-commerce storefront.",
+  // Same holographic seal the marketing site uses as its tab icon, served from
+  // this app's own public/ since it deploys on a separate origin.
+  icons: {
+    icon: "/clearglass-seal-192.png",
+    shortcut: "/clearglass-seal-192.png",
+    apple: "/clearglass-seal-192.png",
+  },
   alternates: { canonical: "/" },
   other: { copyright: "© ClearGlass Inc. All rights reserved." },
 };

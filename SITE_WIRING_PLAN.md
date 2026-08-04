@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 140 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 141 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -163,8 +163,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `blog/ai-generated-phishing-54-percent-click-rate.html` — AI-Generated Phishing Hits a 54% Click Rate | this week's long read on why identity beats detection | ChatGPT Prompt Shortcuts | ClearGlass Intelligence | Telecommunications Legal Briefing | Book a security engagement / See pricing & plans |
 | `blog/telecommunications-legal-briefing-30-july-2026.html` — Telecommunications Legal Briefing | a source-led Canadian telecommunications law briefing | AI-Generated Phishing Hits a 54% Click Rate | ClearGlass Intelligence | Canada’s Digital-Control Architecture | Book a security engagement / See pricing & plans |
 | `blog/canada-digital-control-architecture-charter.html` — Canada’s Digital-Control Architecture | a source-led analysis of safety, surveillance and the Charter | Telecommunications Legal Briefing | ClearGlass Intelligence | 92%: When Access Beats Process | Book a security engagement / See pricing & plans |
-| `blog/greenbelt-92-percent-access-beats-process.html` — 92%: When Access Beats Process | a source-led Ontario Greenbelt accountability brief | Canada’s Digital-Control Architecture | ClearGlass Intelligence | Artemis Full-Stack AI Blueprint | Book a security engagement / See pricing & plans |
-| `blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html` — Artemis Full-Stack AI Blueprint | the production architecture for a governed intelligence platform | 92%: When Access Beats Process | ClearGlass Intelligence | AI-Driven Network Orchestration | Book a security engagement / See pricing & plans |
+| `blog/greenbelt-92-percent-access-beats-process.html` — 92%: When Access Beats Process | a source-led Ontario Greenbelt accountability brief | Canada’s Digital-Control Architecture | ClearGlass Intelligence | Workplace Surveillance Intelligence & Defense | Book a security engagement / See pricing & plans |
+| `blog/clearglass-workplace-surveillance-intelligence-defense-system.html` — Workplace Surveillance Intelligence & Defense | defensive research for worker rights, privacy and accountability | 92%: When Access Beats Process | ClearGlass Intelligence | Artemis Full-Stack AI Blueprint | Book a security engagement / See pricing & plans |
+| `blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html` — Artemis Full-Stack AI Blueprint | the production architecture for a governed intelligence platform | Workplace Surveillance Intelligence & Defense | ClearGlass Intelligence | AI-Driven Network Orchestration | Book a security engagement / See pricing & plans |
 | `blog/network-orchestration-ai-automation-cybersecurity.html` — AI-Driven Network Orchestration | a field guide to safe, governed network automation | Artemis Full-Stack AI Blueprint | ClearGlass Intelligence | ClearGlass Intelligence | Book a security engagement / See pricing & plans |
 | **Company & Operations** | **Topic cluster** |  |  |  |  |
 | `index.html` — ClearGlass Inc. | governed intelligent systems — home | Stripe Handoff | ClearGlass Inc. | Investor Data Room | Book a security engagement / See pricing & plans |

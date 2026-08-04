@@ -95,14 +95,22 @@ TAGS: list[tuple[re.Pattern[str], str]] = [
 # block's last line is the tidiest place to append what it is missing.
 ANCHOR_RE = re.compile(
     r'rel=["\'](icon|alternate icon|apple-touch-icon|mask-icon|manifest)["\']'
-    r'|name=["\'](theme-color|msapplication-[\w-]+)["\']'
-    r'|Browser Tab Icons',
+    r'|name=["\'](theme-color|msapplication-[\w-]+)["\']',
     re.IGNORECASE,
 )
 
 HEAD_OPEN_RE = re.compile(r"<head\b[^>]*>", re.IGNORECASE)
 HEAD_CLOSE_RE = re.compile(r"</head\s*>", re.IGNORECASE)
 CHARSET_RE = re.compile(r"<meta[^>]+charset[^>]*>", re.IGNORECASE)
+
+# Comments, scripts, and styles hold text that only looks like markup. These
+# heads carry a sizeable inline boot script, so a page whose JS swaps favicons
+# would otherwise both satisfy a probe and win the anchor — and a <link>
+# inserted mid-script would break the page.
+INERT_RE = re.compile(
+    r"<!--.*?-->|<script\b.*?</script\s*>|<style\b.*?</style\s*>",
+    re.IGNORECASE | re.DOTALL,
+)
 
 # Directories that never reach the static site: vendored code, and the two
 # Next.js apps, which declare their own icons through framework metadata.
@@ -129,17 +137,33 @@ def head_span(text: str) -> tuple[int, int] | None:
     return (opening.end(), closing.start() if closing else len(text))
 
 
+def mask_inert(text: str) -> str:
+    """Blank out comment/script/style spans, preserving every offset.
+
+    Replacing each character with a space (newlines kept, so line structure and
+    indentation survive) means positions found in the masked copy index the
+    original exactly, and inert text can neither satisfy a probe nor anchor an
+    insertion.
+    """
+    return INERT_RE.sub(
+        lambda m: "".join("\n" if c == "\n" else " " for c in m.group(0)), text
+    )
+
+
 def missing_tags(head: str) -> list[str]:
     return [markup for probe, markup in TAGS if not probe.search(head)]
 
 
 def plan(text: str) -> tuple[int, str, list[str]] | None:
     """Return (insert_at, indent, tags) for a page needing tags, else None."""
-    span = head_span(text)
+    # Work off the masked copy throughout: it also keeps a </head> written
+    # inside a script from truncating the head early.
+    masked = mask_inert(text)
+    span = head_span(masked)
     if span is None:
         return None
     start, end = span
-    head = text[start:end]
+    head = masked[start:end]
     absent = missing_tags(head)
     if not absent:
         return None

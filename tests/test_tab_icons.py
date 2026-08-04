@@ -11,6 +11,7 @@ from tools.tab_icons import (
     apply,
     head_span,
     iter_pages,
+    mask_inert,
     missing_tags,
     plan,
 )
@@ -61,6 +62,68 @@ def test_body_copy_does_not_suppress_a_real_tag():
     page = BARE.replace("<body>", '<body>we set rel="mask-icon" on every page')
     _, added = apply(page)
     assert any("mask-icon" in tag for tag in added)
+
+
+# ── inert spans ───────────────────────────────────────────────────────────────
+
+SCRIPTED = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<script>
+  var l = document.createElement("link");
+  l.rel = "icon";
+  l.setAttribute("rel", "apple-touch-icon");
+</script>
+<title>t</title>
+</head>
+<body></body>
+</html>
+"""
+
+
+def test_masking_preserves_every_offset():
+    masked = mask_inert(SCRIPTED)
+    assert len(masked) == len(SCRIPTED)
+    assert masked.count("\n") == SCRIPTED.count("\n")
+    assert masked.index("<title>") == SCRIPTED.index("<title>")
+
+
+def test_script_text_never_becomes_the_anchor():
+    """A <link> inserted mid-script would break the page."""
+    updated, added = apply(SCRIPTED)
+    assert added
+    script = updated[updated.index("<script>"):updated.index("</script>")]
+    assert SEAL not in script
+    # With the script inert there is no anchor, so the block takes the charset
+    # fallback and lands ahead of the script rather than inside it.
+    assert updated.index("charset") < updated.index(SEAL) < updated.index("<script>")
+    # the script itself is passed through verbatim
+    assert '  l.setAttribute("rel", "apple-touch-icon");' in updated
+
+
+def test_script_text_does_not_satisfy_a_probe():
+    _, added = apply(SCRIPTED)
+    assert any("apple-touch-icon" in tag for tag in added)
+
+
+def test_a_commented_out_tag_is_not_counted_as_present():
+    page = BARE.replace(
+        "<title>", '<!-- <link rel="mask-icon" href="/x.svg"> -->\n<title>'
+    )
+    updated, added = apply(page)
+    assert any("mask-icon" in tag for tag in added)
+    # the commented line survives untouched, and nothing is inserted inside it
+    assert '<!-- <link rel="mask-icon" href="/x.svg"> -->' in updated
+
+
+def test_a_head_close_inside_a_script_does_not_truncate_the_head():
+    page = BARE.replace(
+        "<title>t</title>", '<script>var s = "</head>";</script>\n<title>t</title>'
+    )
+    updated, _ = apply(page)
+    assert updated.index(SEAL) < updated.index("<body>")
+    assert '<script>var s = "</head>";</script>' in updated
 
 
 # ── additive guarantee ────────────────────────────────────────────────────────

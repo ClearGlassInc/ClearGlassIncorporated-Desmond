@@ -1,6 +1,6 @@
-# Release Notes — 2026-08-03
+# Release Notes — 2026-08-04
 
-*1528 commit(s) since v1.0.0*
+*1564 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -110,6 +110,7 @@
 
 ## Bug Fixes
 
+- prevent duplicate page navigation bars (`f0ff58c`)
 - replace legacy favicon with versioned logo in manifest, sw, and blog pages (#1206) (`d8c10f7`)
 - **agent:** close approval-state SQLite connections (`4e8f043`)
 - **agent:** close SQLite memory connections deterministically (`cfff5f3`)
@@ -203,6 +204,7 @@
 
 ## Documentation
 
+- launch Artemis GitHub growth playbook (`4258482`)
 - **agent:** add operating and security manual (`fcb1fdb`)
 - **artemis:** add integration evidence gate (`484be5b`)
 - add ARTEMIS governed intelligence platform core SITREP (`7ae7641`)
@@ -258,6 +260,7 @@
 
 ## CI/CD
 
+- add centralized deterministic repository health gate (`365ead4`)
 - pin function-agent-ci actions to full commit SHAs (`3cd09f0`)
 - grant the Pages build job the pages scope (`64a9230`)
 - **agent:** ignore repository-directory N999 false positive (`9e10804`)
@@ -293,6 +296,28 @@
 
 ## Maintenance
 
+- Fix mobile header logo and wordmark visibility (`34f9538`)
+- Repair homepage navigation and form reliability (`1f9627a`)
+- Reduce homepage circle logo size (`ff321f2`)
+- Match homepage logo to button size (`a03d858`)
+- Reduce homepage navigation logo size (`98c8870`)
+- Polish Artemis mission visual presentation (`92414ba`)
+- Enhance Artemis attack cycle visual (`e229590`)
+- Add WSIDS worker surveillance defense brief (`b463127`)
+- Reference existing seal for every browser tab (`6ddf50d`)
+- fix pages deployment single-writer pipeline (`dd02e6a`)
+- Hide global navigation while scrolling (`3d5ed9c`)
+- Harden website security privacy and release provenance (`2d6d3c4`)
+- Make site wiring audit exhaustive (`34211ca`)
+- Make global navigation more compact (`3e3ed00`)
+- Add reusable premium neon pulse effects (`3ceacb2`)
+- Add unified Artemis navigation and system journeys (`ee04b47`)
+- Unify legacy tab icon fallbacks (`ce14acd`)
+- Unify site-wide page journeys (`1151dde`)
+- Add Artemis incident trace diagnostics (`c82a558`)
+- Add advanced AI network orchestration long-read feature (`5a933c3`)
+- Add ClearGlass tab logo to remaining pages (`c53aa2e`)
+- Tab Logo (`9225599`)
 - Add deployment hardening and private-data safeguards (`5e7abac`)
 - Connect every indexed page to authority network (`f632f2b`)
 - Expand live crawl to every product surface (`c9d064e`)
@@ -922,6 +947,17 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`cc98f08`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`12f517f`)
+- refresh control-surface data feeds [skip ci] (`48b5161`)
+- refresh control-surface data feeds [skip ci] (`2ff5644`)
+- refresh control-surface data feeds [skip ci] (`28fdc5b`)
+- refresh control-surface data feeds [skip ci] (`85e8e4a`)
+- refresh control-surface data feeds [skip ci] (`5727948`)
+- refresh control-surface data feeds [skip ci] (`f2c0394`)
+- refresh control-surface data feeds [skip ci] (`41a9e45`)
+- refresh control-surface data feeds [skip ci] (`4e58555`)
+- update generated outputs — 2026-08-03 10:41 UTC [skip ci] (`382dfb2`)
 - refresh SEO dashboard feeds [skip ci] (`07eeacb`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`3ad4b92`)
 - refresh control-surface data feeds [skip ci] (`7430192`)

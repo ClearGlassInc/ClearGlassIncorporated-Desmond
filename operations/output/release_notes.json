@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-08-03T10:41:28.868361+00:00",
+  "run_utc": "2026-08-04T09:37:47.874845+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1528,
+  "commit_count": 1564,
   "sections": {
     "New Features": [
       {
@@ -935,6 +935,15 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "f0ff58c",
+        "type": "fix",
+        "scope": null,
+        "subject": "prevent duplicate page navigation bars",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
         "sha": "d8c10f7",
         "type": "fix",
         "scope": null,
@@ -1722,6 +1731,15 @@
     ],
     "Documentation": [
       {
+        "sha": "4258482",
+        "type": "docs",
+        "scope": null,
+        "subject": "launch Artemis GitHub growth playbook",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
         "sha": "fcb1fdb",
         "type": "docs",
         "scope": "agent",
@@ -2167,6 +2185,15 @@
     ],
     "CI/CD": [
       {
+        "sha": "365ead4",
+        "type": "ci",
+        "scope": null,
+        "subject": "add centralized deterministic repository health gate",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
         "sha": "3cd09f0",
         "type": "ci",
         "scope": null,
@@ -2456,6 +2483,204 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "34f9538",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix mobile header logo and wordmark visibility",
+        "author": "Desmond Otieno",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "1f9627a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Repair homepage navigation and form reliability",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "ff321f2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Reduce homepage circle logo size",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "a03d858",
+        "type": "chore",
+        "scope": null,
+        "subject": "Match homepage logo to button size",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "98c8870",
+        "type": "chore",
+        "scope": null,
+        "subject": "Reduce homepage navigation logo size",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "92414ba",
+        "type": "chore",
+        "scope": null,
+        "subject": "Polish Artemis mission visual presentation",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "e229590",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Artemis attack cycle visual",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "b463127",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add WSIDS worker surveillance defense brief",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "6ddf50d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Reference existing seal for every browser tab",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "dd02e6a",
+        "type": "chore",
+        "scope": null,
+        "subject": "fix pages deployment single-writer pipeline",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "3d5ed9c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Hide global navigation while scrolling",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "2d6d3c4",
+        "type": "chore",
+        "scope": null,
+        "subject": "Harden website security privacy and release provenance",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "34211ca",
+        "type": "chore",
+        "scope": null,
+        "subject": "Make site wiring audit exhaustive",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "3e3ed00",
+        "type": "chore",
+        "scope": null,
+        "subject": "Make global navigation more compact",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "3ceacb2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add reusable premium neon pulse effects",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "ee04b47",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add unified Artemis navigation and system journeys",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "ce14acd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Unify legacy tab icon fallbacks",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "1151dde",
+        "type": "chore",
+        "scope": null,
+        "subject": "Unify site-wide page journeys",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "c82a558",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Artemis incident trace diagnostics",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "5a933c3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add advanced AI network orchestration long-read feature",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "c53aa2e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass tab logo to remaining pages",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "9225599",
+        "type": "chore",
+        "scope": null,
+        "subject": "Tab Logo",
+        "author": "Desmond Otieno",
+        "date": "2026-08-03",
+        "breaking": false
+      },
       {
         "sha": "5e7abac",
         "type": "chore",
@@ -8092,6 +8317,105 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "cc98f08",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "12f517f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "48b5161",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "2ff5644",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "28fdc5b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "85e8e4a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "5727948",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "f2c0394",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "41a9e45",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "4e58555",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
+      {
+        "sha": "382dfb2",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-03 10:41 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-03",
+        "breaking": false
+      },
       {
         "sha": "07eeacb",
         "type": "bot",

@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import pathlib
 import sys
 
@@ -43,6 +44,9 @@ PNG_TARGETS: list[tuple[str, int]] = [
     ("favicon-16.png", 16),
 ]
 
+# Smallest icon produced; a crop below this leaves nothing usable to scale.
+MIN_EDGE = min(edge for _, edge in PNG_TARGETS)
+
 # Windows tiles and legacy browsers read the multi-resolution .ico.
 ICO_NAME = "favicon.ico"
 ICO_SIZES = [(16, 16), (32, 32), (48, 48)]
@@ -55,11 +59,23 @@ def square_crop(img: Image.Image, zoom: float = 1.0) -> Image.Image:
 
     ``zoom`` above 1.0 crops tighter about the centre before scaling, trading
     away the artwork's outer margin to keep the central device legible at 16px.
+
+    Raises ValueError if the factor is not finite or crops away so much that
+    less than the smallest icon remains -- without this, NaN fails the int()
+    conversion and large factors yield a 0x0 crop that dies inside Pillow.
     """
-    width, height = img.size
-    edge = int(min(width, height) / max(zoom, 1.0))
-    left = (width - edge) // 2
-    top = (height - edge) // 2
+    if not math.isfinite(zoom) or zoom < 1.0:
+        raise ValueError(f"zoom must be a finite factor >= 1.0, got {zoom!r}")
+    source_edge = min(img.size)
+    edge = int(source_edge / zoom)
+    if edge < MIN_EDGE:
+        raise ValueError(
+            f"zoom {zoom:g} crops a {source_edge}px source to {edge}px, "
+            f"below the {MIN_EDGE}px smallest icon; use at most "
+            f"{source_edge / MIN_EDGE:.1f}"
+        )
+    left = (img.size[0] - edge) // 2
+    top = (img.size[1] - edge) // 2
     return img.crop((left, top, left + edge, top + edge))
 
 
@@ -145,10 +161,6 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if args.zoom < 1.0:
-        print("--zoom must be >= 1.0", file=sys.stderr)
-        return 1
-
     source = pathlib.Path(args.source)
     if not source.is_absolute():
         source = (REPO_ROOT / source).resolve()
@@ -156,7 +168,11 @@ def main() -> int:
         print(f"source image not found: {source}", file=sys.stderr)
         return 1
 
-    img = load_source(source, args.circle, args.zoom)
+    try:
+        img = load_source(source, args.circle, args.zoom)
+    except ValueError as exc:
+        print(f"--zoom: {exc}", file=sys.stderr)
+        return 1
     src_edge = img.size[0]
     shape = "circle" if args.circle else "square"
     print(f"source {source.name}: cropped to {src_edge}x{src_edge} "

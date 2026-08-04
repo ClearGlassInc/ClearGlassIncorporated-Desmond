@@ -103,4 +103,39 @@
       document.addEventListener("DOMContentLoaded", build);
     } else { build(); }
   }
+
+  /* ── 4) command atmosphere + additive neon classification ──────────────── */
+  function buildCommandLayer() {
+    if (document.getElementById("cg-command-atmosphere")) return;
+    var layer = document.createElement("div");
+    layer.id = "cg-command-atmosphere";
+    layer.className = "cg-command-atmosphere";
+    layer.setAttribute("aria-hidden", "true");
+    document.body.insertBefore(layer, document.body.firstChild);
+
+    var cards = document.querySelectorAll('.card,.panel,.tile,.tech-card,.product-card,.connect-card,.value-card,.founder-card,.credentials-card,.signup-card,.catalog-card,.dcard,.console,.stat,.stat-card,.metric,.kpi,.feature-card,.data-panel');
+    cards.forEach(function (el) { el.classList.add("cg-neon-card"); });
+
+    var focal = document.querySelectorAll('.btn-crystal,.nav-cta,.primary-btn,.btn-dark,.cta-primary,.primary,.hero-actions .btn:first-child');
+    focal.forEach(function (el) { el.classList.add("cg-neon-action"); });
+
+    var labels = document.querySelectorAll('.sh-tag,.eyebrow,.badge,.pill,.chip,.pc-era,.hero-year');
+    labels.forEach(function (el) { el.classList.add("cg-holo-shimmer"); });
+
+    var statusLabels = document.querySelectorAll('.is-active,.active,[aria-current="page"],.clive,.status-live,.live,.online');
+    statusLabels.forEach(function (el) { el.classList.add("cg-signal-active"); });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", buildCommandLayer);
+  } else { buildCommandLayer(); }
+
+  if (finePointer && !reduce) {
+    window.addEventListener("pointermove", function (e) {
+      var layer = document.getElementById("cg-command-atmosphere");
+      if (!layer) return;
+      layer.style.setProperty("--cg-orbit-x", Math.round((e.clientX / Math.max(1, window.innerWidth)) * 100) + "%");
+      layer.style.setProperty("--cg-orbit-y", Math.round((e.clientY / Math.max(1, window.innerHeight)) * 100) + "%");
+    }, { passive: true });
+  }
+
 })();

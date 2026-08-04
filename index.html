@@ -318,7 +318,7 @@ body{background:#f7f8fd;}
   left:50%!important;
   width:min(1740px,calc(100% - clamp(34px,6vw,96px)))!important;
   height:clamp(82px,5.25vw,104px)!important;
-  padding:0 clamp(22px,2.1vw,34px) 0 clamp(132px,8.4vw,172px)!important;
+  padding:0 clamp(22px,2.1vw,34px) 0 clamp(16px,1.5vw,26px)!important;
   border-radius:999px!important;
   isolation:isolate!important;
   background:
@@ -344,9 +344,10 @@ body{background:#f7f8fd;}
 .nav::after{left:10%!important;right:10%!important;top:7px!important;height:2px!important;opacity:.95!important;}
 .nav-neon-rail{position:absolute;inset:auto 19% 7px 40%;height:2px;border-radius:999px;background:linear-gradient(90deg,transparent,rgba(126,219,255,.85),rgba(203,111,255,.78),transparent);box-shadow:0 0 14px rgba(126,219,255,.56),0 0 22px rgba(203,111,255,.48);pointer-events:none;z-index:0;}
 .nav-inner-glow{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(180px 80px at 86% 50%,rgba(127,216,255,.18),transparent 72%),radial-gradient(220px 90px at 3% 50%,rgba(255,255,255,.17),transparent 72%);pointer-events:none;z-index:0;}
-.nav-brand{z-index:2!important;min-width:max-content!important;gap:clamp(18px,1.5vw,28px)!important;}
+.nav-brand{z-index:2!important;display:flex!important;align-items:center!important;min-width:max-content!important;gap:clamp(18px,1.5vw,28px)!important;}
 .nav-brand::before{display:none!important;}
-.nav-mark{position:absolute!important;left:clamp(28px,2.8vw,48px)!important;top:50%!important;transform:translate(-22%,-50%)!important;width:clamp(72px,5vw,96px)!important;height:clamp(72px,5vw,96px)!important;border-radius:50%!important;overflow:hidden!important;z-index:3!important;}
+/* Seal sits in flow beside the wordmark — never over it. */
+.nav-mark{position:relative!important;flex:0 0 auto!important;width:clamp(72px,5vw,96px)!important;height:clamp(72px,5vw,96px)!important;border-radius:50%!important;overflow:hidden!important;z-index:3!important;}
 .nav-mark::before{content:'';position:absolute;inset:-7px;border-radius:inherit;background:conic-gradient(from 0deg,transparent,rgba(127,216,255,.85),transparent 32%,rgba(194,112,255,.86),transparent 68%,rgba(255,255,255,.72),transparent);animation:cgSealPulse 7s ease-in-out infinite;pointer-events:none;}
 .nav-mark img{position:relative;z-index:1;width:100%!important;height:100%!important;object-fit:cover!important;}
 .nav-name{font-family:var(--serif)!important;font-size:clamp(26px,1.95vw,36px)!important;font-weight:650!important;letter-spacing:-.035em!important;line-height:1!important;white-space:nowrap!important;}
@@ -363,8 +364,8 @@ body{background:#f7f8fd;}
 @keyframes heroSealFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
 @media(prefers-reduced-motion:reduce){.hero-seal{animation:none}}
 @keyframes cgSealPulse{0%,100%{filter:drop-shadow(0 0 10px rgba(127,216,255,.42));transform:rotate(0deg)}50%{filter:drop-shadow(0 0 22px rgba(194,112,255,.62));transform:rotate(8deg)}}
-@media(max-width:1240px){.nav{top:18px!important;width:calc(100% - 28px)!important;height:76px!important;padding:0 16px 0 94px!important;border-radius:34px!important}.nav-links{display:none!important}.nav-mark{left:22px!important;width:62px!important;height:62px!important}.nav-name{font-size:clamp(21px,3.2vw,28px)!important}.hero{padding-top:112px!important}.hero-video{width:calc(100% - 28px)!important;height:clamp(300px,42vw,440px)!important;border-radius:28px!important}.nav-toggle{display:flex!important;z-index:3!important}}
-@media(max-width:620px){.nav{height:66px!important;padding-left:76px!important;padding-right:12px!important;border-radius:26px!important}.nav-mark{left:15px!important;width:50px!important;height:50px!important;box-shadow:0 0 0 6px rgba(155,92,255,.22),0 0 24px rgba(185,93,255,.75),inset 0 3px 10px rgba(255,255,255,.62)!important}.nav-name{font-size:20px!important;letter-spacing:-.025em!important}.nav-name em{display:inline!important}.hero{padding-top:96px!important}.hero-video{width:calc(100% - 20px)!important;height:260px!important;border-radius:22px!important}.mobile-menu{background:linear-gradient(160deg,rgba(12,19,42,.98),rgba(31,24,61,.98))!important;border-color:rgba(214,225,255,.26)!important}.mobile-menu a{color:#eef4ff!important}.mob-label{color:rgba(199,210,254,.68)!important}}
+@media(max-width:1240px){.nav{top:18px!important;width:calc(100% - 28px)!important;height:76px!important;padding:0 16px 0 14px!important;border-radius:34px!important}.nav-links{display:none!important}.nav-mark{width:62px!important;height:62px!important}.nav-name{font-size:clamp(21px,3.2vw,28px)!important}.hero{padding-top:112px!important}.hero-video{width:calc(100% - 28px)!important;height:clamp(300px,42vw,440px)!important;border-radius:28px!important}.nav-toggle{display:flex!important;z-index:3!important}}
+@media(max-width:620px){.nav{height:66px!important;padding-left:12px!important;padding-right:12px!important;border-radius:26px!important}.nav-brand{min-width:0!important;gap:12px!important}.nav-mark{width:50px!important;height:50px!important;box-shadow:0 0 0 6px rgba(155,92,255,.22),0 0 24px rgba(185,93,255,.75),inset 0 3px 10px rgba(255,255,255,.62)!important}.nav-name{font-size:20px!important;letter-spacing:-.025em!important}.nav-name em{display:inline!important}.hero{padding-top:96px!important}.hero-video{width:calc(100% - 20px)!important;height:260px!important;border-radius:22px!important}.mobile-menu{background:linear-gradient(160deg,rgba(12,19,42,.98),rgba(31,24,61,.98))!important;border-color:rgba(214,225,255,.26)!important}.mobile-menu a{color:#eef4ff!important}.mob-label{color:rgba(199,210,254,.68)!important}}
 @media(prefers-reduced-motion:reduce){.nav-mark::before{animation:none!important}.nav-links a::after,.nav-drop-btn::after{transition:none!important}}
 
 /* Homepage reliability: contain narrow layouts and keep keyboard focus visible. */
@@ -373,7 +374,7 @@ body{overflow-x:clip}
 :where(a,button,input):focus-visible{outline:3px solid #22d3ee;outline-offset:3px}
 .mobile-menu{max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain}
 body.mobile-nav-open{overflow:hidden}
-@media(max-width:620px){.nav-name{max-width:calc(100vw - 150px);overflow:hidden;text-overflow:ellipsis}.hero h1{overflow-wrap:anywhere}}
+@media(max-width:620px){.nav-name{max-width:calc(100vw - 172px);overflow:hidden;text-overflow:ellipsis}.hero h1{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{transition:none!important}.mobile-menu{transition:none!important}}
 
 </style>

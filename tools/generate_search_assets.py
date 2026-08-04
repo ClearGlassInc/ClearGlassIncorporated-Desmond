@@ -19,6 +19,15 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://www.clearglassinc.com"
 ATOM = "http://www.w3.org/2005/Atom"
 
+# seo_audit.SKIP_DIRS excludes whole trees (apps/, docs/, tools/, …) from on-page
+# scoring because they are mostly app shells and internal notes. A few documents
+# inside those trees are published, registered in the authority graph, and must
+# stay in the sitemap — list them here so discovery does not silently drop them.
+EXTRA_INDEXABLE_PAGES = (
+    "apps/command-center/index.html",
+    "docs/guardian_command_nexus_spec.html",
+)
+
 
 def git_date(path: Path) -> str:
     relative = str(path.relative_to(ROOT))
@@ -53,9 +62,19 @@ def parse_page(path: Path) -> seo_audit.PageParser:
     return parser
 
 
+def discovered_paths() -> list[Path]:
+    paths = list(seo_audit.discover_pages())
+    known = {path.resolve() for path in paths}
+    for relative in EXTRA_INDEXABLE_PAGES:
+        extra = ROOT / relative
+        if extra.is_file() and extra.resolve() not in known:
+            paths.append(extra)
+    return sorted(paths)
+
+
 def indexable_pages() -> list[tuple[Path, seo_audit.PageParser]]:
     pages = []
-    for path in seo_audit.discover_pages():
+    for path in discovered_paths():
         rel = path.relative_to(ROOT).as_posix()
         parser = parse_page(path)
         if (rel in seo_audit.UTILITY_PAGES or seo_audit.VERIFICATION_RE.match(path.name)

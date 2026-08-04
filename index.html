@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
-<link rel="icon" href="/assets/images/clearglass-holographic-seal.png" sizes="any">
-<link rel="icon" type="image/png" href="/assets/images/clearglass-holographic-seal.png">
-<link rel="alternate icon" href="/assets/images/clearglass-holographic-seal.png">
-<link rel="apple-touch-icon" href="/assets/images/clearglass-holographic-seal.png">
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS.
+     The ClearGlass seal, cropped and resized per slot by
+     tools/generate_favicons.py. Serving the 512px master straight to a 16px
+     tab left the mark as an unreadable smudge (and cost 563 KB per load),
+     so each size is declared explicitly and the browser picks its best fit. -->
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#07111f">

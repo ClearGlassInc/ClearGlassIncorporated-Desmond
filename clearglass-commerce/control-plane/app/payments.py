@@ -114,6 +114,19 @@ def create_checkout_session(
 
     stripe_line_items = []
     for item in line_items:
+        quantity = int(item.get("quantity", 1))
+
+        # Preferred path: reference a real Stripe Price. Stripe then owns the amount,
+        # currency, recurrence, tax behaviour and tax code, so there is exactly one
+        # place a price lives and no local value can contradict what is charged.
+        if item.get("stripe_price_id"):
+            stripe_line_items.append(
+                {"quantity": quantity, "price": item["stripe_price_id"]}
+            )
+            continue
+
+        # Fallback for offers with no Stripe Price yet: build the price inline from
+        # the price book. Still server-side, still not caller-supplied.
         price_data: dict[str, Any] = {
             "currency": item.get("currency", "cad"),
             "unit_amount": int(item.get("amount", 0)),
@@ -125,9 +138,7 @@ def create_checkout_session(
             price_data["tax_behavior"] = item["tax_behavior"]
         if checkout_mode == "subscription" and item.get("interval"):
             price_data["recurring"] = {"interval": item["interval"]}
-        stripe_line_items.append(
-            {"quantity": int(item.get("quantity", 1)), "price_data": price_data}
-        )
+        stripe_line_items.append({"quantity": quantity, "price_data": price_data})
 
     metadata = {"skus": skus, "source": "clearglass_storefront"}
     params: dict[str, Any] = {

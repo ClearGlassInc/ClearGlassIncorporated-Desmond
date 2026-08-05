@@ -1,54 +1,47 @@
 // Display catalog for the storefront.
 //
 // These entries drive what the shopper *sees*. They do not drive what they are
-// *charged*: `slug` doubles as the price-book SKU, and the control plane resolves
-// the amount server-side from `app/data/pricebook.json` at checkout. Keep the
-// amounts here in step with that file — if they ever drift, the price book wins and
-// the customer is charged the governed amount.
+// *charged*: `slug` doubles as the price-book SKU, the control plane resolves the
+// offer server-side from `app/data/pricebook.json`, and in live mode Stripe prices it
+// from the Price the offer names. So these amounts are display only — if they drift,
+// Stripe's Price wins and the customer is charged that. Keep them in step anyway;
+// showing one number and charging another is its own kind of broken.
 export interface Product {
   slug: string; // also the price-book SKU
   title: string;
   amount: number; // unit price in cents — display only
   currency: string;
   blurb: string;
-  interval?: "month"; // set when the offer recurs
-  note?: string; // deposit / scoping caveats shown next to the price
+  interval?: "month" | "year"; // set when the offer recurs
+  note?: string; // any caveat shown next to the price
 }
 
 export const CATALOG: Product[] = [
   {
-    slug: "quick-audit",
-    title: "Security Quick-Audit",
-    amount: 24900,
+    slug: "risk-audit-90",
+    title: "ClearGlass 90-Minute Cyber Risk Audit",
+    amount: 29700,
     currency: "cad",
     blurb:
-      "Fixed-scope security review of your Microsoft 365 and Windows estate, delivered as a prioritised findings report.",
+      "A focused 90-minute cybersecurity and AI-risk assessment for small businesses and professionals, followed by prioritized findings and practical next actions.",
   },
   {
-    slug: "hardening",
-    title: "M365 + Windows Hardening Sprint",
-    amount: 250000,
+    slug: "business-protection-monthly",
+    title: "ClearGlass Business Protection — monthly",
+    amount: 10000,
     currency: "cad",
     blurb:
-      "Close the gaps the audit found — identity, endpoint and tenant hardening, executed and documented.",
-    note: "Deposit. Final fixed fee confirmed on a scoping call.",
-  },
-  {
-    slug: "phipa",
-    title: "PHIPA Readiness",
-    amount: 300000,
-    currency: "cad",
-    blurb:
-      "Readiness assessment against Ontario's PHIPA obligations, with a remediation plan you can hand to an auditor.",
-    note: "Deposit. Final fixed fee confirmed on a scoping call.",
-  },
-  {
-    slug: "monitoring",
-    title: "Managed Monitoring",
-    amount: 60000,
-    currency: "cad",
-    blurb: "Ongoing managed monitoring and alert triage. Cancel any time.",
+      "Ongoing cybersecurity guidance, risk monitoring support, and practical defensive recommendations for small businesses.",
     interval: "month",
+  },
+  {
+    slug: "business-protection-annual",
+    title: "ClearGlass Business Protection — annual",
+    amount: 100000,
+    currency: "cad",
+    blurb:
+      "The same ongoing protection, billed yearly instead of monthly.",
+    interval: "year",
   },
 ];
 

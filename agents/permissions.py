@@ -50,6 +50,17 @@ CANONICAL_CAPABILITIES: frozenset[str] = frozenset(
         # audit
         "write_audit_events",
         "write_redacted_audit_events",
+        # RFED audit trail (agents/rfed_audit). Registered deliberately rather than
+        # remapped onto the tokens above: "grounding facts" and the hash-chained
+        # rfed_records ledger are specific things the generic read/audit tokens do
+        # not describe, and blurring them would understate what the agent declares.
+        # All five stay proposal-or-append-only — the engine gates execution, and the
+        # manifest forbids updating or deleting an existing rfed_records row.
+        "read_grounding_facts",
+        "draft_findings",
+        "propose_action",
+        "write_rfed_records",
+        "verify_chain",
     }
 )
 
@@ -89,6 +100,11 @@ NON_MUTATING_CAPABILITIES: frozenset[str] = frozenset(
         "propose_schedule",
         "write_audit_events",
         "write_redacted_audit_events",
+        "read_grounding_facts",
+        "draft_findings",
+        "propose_action",
+        "write_rfed_records",
+        "verify_chain",
     }
 )
 

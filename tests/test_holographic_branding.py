@@ -41,7 +41,7 @@ def test_every_public_html_page_declares_a_tab_icon() -> None:
     public_pages = [
         page
         for page in ROOT.rglob("*.html")
-        if "node_modules" not in page.parts and page.name not in excluded
+        if not {"node_modules", ".next"} & set(page.parts) and page.name not in excluded
     ]
 
     missing = [

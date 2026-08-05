@@ -1,9 +1,10 @@
-# Release Notes — 2026-08-04
+# Release Notes — 2026-08-05
 
-*1564 commit(s) since v1.0.0*
+*1603 commit(s) since v1.0.0*
 
 ## New Features
 
+- add Stripe-ready ClearGlass checkout hub (`483dc40`)
 - **agent-os:** Operator — plain-language objective in, governed execution out (`1d22632`)
 - **agent:** expose OpenAI Responses adapter (`5a3e5ec`)
 - **agent:** add OpenAI Responses async and streaming adapter (`7b07e9e`)
@@ -110,6 +111,8 @@
 
 ## Bug Fixes
 
+- **test:** install async pytest support (`5235e74`)
+- **test:** install async pytest plugin (`adaee4f`)
 - prevent duplicate page navigation bars (`f0ff58c`)
 - replace legacy favicon with versioned logo in manifest, sw, and blog pages (#1206) (`d8c10f7`)
 - **agent:** close approval-state SQLite connections (`4e8f043`)
@@ -204,6 +207,7 @@
 
 ## Documentation
 
+- record live Stripe activation requirements (`2563276`)
 - launch Artemis GitHub growth playbook (`4258482`)
 - **agent:** add operating and security manual (`fcb1fdb`)
 - **artemis:** add integration evidence gate (`484be5b`)
@@ -296,6 +300,29 @@
 
 ## Maintenance
 
+- Serve the live data feeds to the pages that read them, and green the gates (`fe8ea99`)
+- Verify every proxy hop, and stop shipping a too-broad trusted range (`1fbec25`)
+- Require a trusted-proxy allowlist before reading X-Forwarded-For (`e2c5193`)
+- Redeploy Pages after releasing duplicate custom-domain claim (`09423f3`)
+- Force GitHub Pages redeploy for custom domain recovery (`0b1a370`)
+- Integrate network orchestration long read into blog data index (`2de65d9`)
+- Enhance cyberpunk command interface visuals (`d2e1414`)
+- Add ClearGlassInc Agent SDK: Python framework for tool-using LLM agents (`e674265`)
+- Enhance homepage content protection (`2800453`)
+- Cover the seventh app, refresh the sitemap, and ignore inert head spans (`9480cb6`)
+- Show the ClearGlass seal as the tab icon on every page and app (`ac1a2ad`)
+- Let the tab-icon contract accept the sized seal icons (`91f3a4a`)
+- Point the homepage tab icon at the sized ClearGlass seal icons (`3f0f286`)
+- Regenerate sitemap lastmod dates (`97d3099`)
+- Validate --zoom instead of crashing, and add favicon generator tests (`59c2bed`)
+- Give the blog picture the homepage hero seal treatment (`ddd5af2`)
+- Refresh the stale provenance release manifest (`1fb67d0`)
+- Fix red CI gates, a rate-limiter leak, and per-IP throttling behind the proxy (`f8f315f`)
+- Fix the four failing CI gates on main (`9660e64`)
+- Ease the hero seal crop to 140% (`5f7dd33`)
+- Account for margin collapsing in the hero seal offset (`289cbea`)
+- Crop and shrink the hero seal to just the eagle emblem (`89a5d4d`)
+- Fix nav seal overlapping the ClearGlassInc wordmark (`e0ad9c3`)
 - Fix mobile header logo and wordmark visibility (`34f9538`)
 - Repair homepage navigation and form reliability (`1f9627a`)
 - Reduce homepage circle logo size (`ff321f2`)
@@ -947,6 +974,18 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`0d66820`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`26e424b`)
+- refresh control-surface data feeds [skip ci] (`540f511`)
+- refresh control-surface data feeds [skip ci] (`1cb7017`)
+- refresh control-surface data feeds [skip ci] (`747d944`)
+- refresh control-surface data feeds [skip ci] (`7d9868f`)
+- refresh control-surface data feeds [skip ci] (`38c0080`)
+- refresh control-surface data feeds [skip ci] (`66fdc44`)
+- refresh control-surface data feeds [skip ci] (`b10038f`)
+- refresh control-surface data feeds [skip ci] (`ec06d00`)
+- refresh control-surface data feeds [skip ci] (`10f8ac8`)
+- update generated outputs — 2026-08-04 09:37 UTC [skip ci] (`21eed13`)
 - refresh SEO dashboard feeds [skip ci] (`cc98f08`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`12f517f`)
 - refresh control-surface data feeds [skip ci] (`48b5161`)

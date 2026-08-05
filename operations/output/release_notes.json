@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-08-04T09:37:47.874845+00:00",
+  "run_utc": "2026-08-05T09:35:25.570269+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1564,
+  "commit_count": 1603,
   "sections": {
     "New Features": [
+      {
+        "sha": "483dc40",
+        "type": "feat",
+        "scope": null,
+        "subject": "add Stripe-ready ClearGlass checkout hub",
+        "author": "Desmond Otieno",
+        "date": "2026-08-05",
+        "breaking": false
+      },
       {
         "sha": "1d22632",
         "type": "feat",
@@ -935,6 +944,24 @@
     ],
     "Bug Fixes": [
       {
+        "sha": "5235e74",
+        "type": "fix",
+        "scope": "test",
+        "subject": "install async pytest support",
+        "author": "Desmond Otieno",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "adaee4f",
+        "type": "fix",
+        "scope": "test",
+        "subject": "install async pytest plugin",
+        "author": "Desmond Otieno",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
         "sha": "f0ff58c",
         "type": "fix",
         "scope": null,
@@ -1731,6 +1758,15 @@
     ],
     "Documentation": [
       {
+        "sha": "2563276",
+        "type": "docs",
+        "scope": null,
+        "subject": "record live Stripe activation requirements",
+        "author": "Desmond Otieno",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
         "sha": "4258482",
         "type": "docs",
         "scope": null,
@@ -2483,6 +2519,213 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "fe8ea99",
+        "type": "chore",
+        "scope": null,
+        "subject": "Serve the live data feeds to the pages that read them, and green the gates",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "1fbec25",
+        "type": "chore",
+        "scope": null,
+        "subject": "Verify every proxy hop, and stop shipping a too-broad trusted range",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "e2c5193",
+        "type": "chore",
+        "scope": null,
+        "subject": "Require a trusted-proxy allowlist before reading X-Forwarded-For",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "09423f3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Redeploy Pages after releasing duplicate custom-domain claim",
+        "author": "Desmond Otieno",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "0b1a370",
+        "type": "chore",
+        "scope": null,
+        "subject": "Force GitHub Pages redeploy for custom domain recovery",
+        "author": "Desmond Otieno",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "2de65d9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Integrate network orchestration long read into blog data index",
+        "author": "Desmond Otieno",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "d2e1414",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance cyberpunk command interface visuals",
+        "author": "Desmond Otieno",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "e674265",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlassInc Agent SDK: Python framework for tool-using LLM agents",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "2800453",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance homepage content protection",
+        "author": "Desmond Otieno",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "9480cb6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Cover the seventh app, refresh the sitemap, and ignore inert head spans",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "ac1a2ad",
+        "type": "chore",
+        "scope": null,
+        "subject": "Show the ClearGlass seal as the tab icon on every page and app",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "91f3a4a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Let the tab-icon contract accept the sized seal icons",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "3f0f286",
+        "type": "chore",
+        "scope": null,
+        "subject": "Point the homepage tab icon at the sized ClearGlass seal icons",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "97d3099",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate sitemap lastmod dates",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "59c2bed",
+        "type": "chore",
+        "scope": null,
+        "subject": "Validate --zoom instead of crashing, and add favicon generator tests",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "ddd5af2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Give the blog picture the homepage hero seal treatment",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "1fb67d0",
+        "type": "chore",
+        "scope": null,
+        "subject": "Refresh the stale provenance release manifest",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "f8f315f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix red CI gates, a rate-limiter leak, and per-IP throttling behind the proxy",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "9660e64",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix the four failing CI gates on main",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "5f7dd33",
+        "type": "chore",
+        "scope": null,
+        "subject": "Ease the hero seal crop to 140%",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "289cbea",
+        "type": "chore",
+        "scope": null,
+        "subject": "Account for margin collapsing in the hero seal offset",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "89a5d4d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Crop and shrink the hero seal to just the eagle emblem",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "e0ad9c3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix nav seal overlapping the ClearGlassInc wordmark",
+        "author": "Claude",
+        "date": "2026-08-04",
+        "breaking": false
+      },
       {
         "sha": "34f9538",
         "type": "chore",
@@ -8317,6 +8560,114 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "0d66820",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "26e424b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "540f511",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "1cb7017",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "747d944",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "7d9868f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "38c0080",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "66fdc44",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "b10038f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "ec06d00",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "10f8ac8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
+      {
+        "sha": "21eed13",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-04 09:37 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-04",
+        "breaking": false
+      },
       {
         "sha": "cc98f08",
         "type": "bot",

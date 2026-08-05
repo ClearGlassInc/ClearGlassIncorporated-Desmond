@@ -118,6 +118,77 @@
     } catch (e) { /* reveal is progressive enhancement only */ }
   }
 
+  /* Side Store owns its primary header. Consolidate the store identity,
+     section navigation, search/account controls, and cart into one responsive
+     sticky surface. Remove any separately injected global title bar so the two
+     systems can never overlap or hide content. */
+  function mergeSideStoreHeader() {
+    var pagePath = location.pathname.replace(/\/+$/, '').toLowerCase();
+    if (pagePath !== '/side-store' && pagePath !== '/side-store.html') return;
+
+    var header = document.querySelector('header#navbar.st-header, header.st-header#navbar');
+    if (!header) return;
+
+    document.documentElement.setAttribute('data-cg-no-topbar', '');
+    header.classList.add('cg-store-header-merged');
+
+    function removeDuplicateTopbar() {
+      var duplicates = document.querySelectorAll('.cg-topbar, .cg-topbar-spacer');
+      for (var i = 0; i < duplicates.length; i++) {
+        if (duplicates[i] !== header && duplicates[i].parentNode) {
+          duplicates[i].parentNode.removeChild(duplicates[i]);
+        }
+      }
+    }
+
+    removeDuplicateTopbar();
+
+    if (!document.getElementById('cg-store-header-merge-css')) {
+      var style = document.createElement('style');
+      style.id = 'cg-store-header-merge-css';
+      style.textContent =
+        'body>.cg-topbar,body>.cg-topbar-spacer{display:none!important}' +
+        '.cg-store-header-merged{top:0!important;z-index:1200!important}' +
+        '.cg-store-header-merged .st-header-in{display:flex;align-items:center;flex-wrap:nowrap;min-height:64px}' +
+        '@media(max-width:920px){' +
+          'html{scroll-padding-top:112px}' +
+          '.cg-store-header-merged .st-header-in{flex-wrap:wrap;gap:6px 10px;padding:8px 12px;min-height:auto}' +
+          '.cg-store-header-merged .st-brand{flex:1 1 auto;min-width:0}' +
+          '.cg-store-header-merged .st-actions{flex:0 0 auto;margin-left:auto}' +
+          '.cg-store-header-merged .st-navlinks{display:grid!important;order:3;grid-template-columns:repeat(5,minmax(0,1fr));width:100%;margin:0;gap:4px}' +
+          '.cg-store-header-merged .st-navlinks a{min-width:0;text-align:center;line-height:1.15;white-space:normal;padding:7px 4px;font-size:11px}' +
+        '}' +
+        '@media(max-width:560px){' +
+          'html{scroll-padding-top:104px}' +
+          '.cg-store-header-merged .st-header-in{padding:6px 8px;gap:5px 6px}' +
+          '.cg-store-header-merged .st-brand{font-size:11.5px;gap:5px;max-width:calc(100% - 120px)}' +
+          '.cg-store-header-merged .st-brand-mk{width:28px;height:28px;border-radius:8px}' +
+          '.cg-store-header-merged .st-brand-mk svg{width:16px;height:16px}' +
+          '.cg-store-header-merged .st-brand>span:last-child{overflow:hidden;text-overflow:ellipsis}' +
+          '.cg-store-header-merged .st-actions{gap:3px}' +
+          '.cg-store-header-merged .st-iconbtn,.cg-store-header-merged .st-cart{min-height:34px;padding:6px 7px;border-radius:9px}' +
+          '.cg-store-header-merged .st-iconbtn svg,.cg-store-header-merged .st-cart svg{width:15px;height:15px}' +
+          '.cg-store-header-merged .st-cartn{min-width:18px;height:18px;padding:0 4px;font-size:10px}' +
+          '.cg-store-header-merged .st-navlinks{gap:2px}' +
+          '.cg-store-header-merged .st-navlinks a{font-size:9.5px;padding:6px 2px}' +
+        '}' +
+        '@media(max-width:360px){' +
+          '.cg-store-header-merged .st-brand{font-size:10.5px;max-width:calc(100% - 110px)}' +
+          '.cg-store-header-merged .st-iconbtn,.cg-store-header-merged .st-cart{min-width:30px;padding:5px 6px}' +
+          '.cg-store-header-merged .st-navlinks a{font-size:8.8px}' +
+        '}';
+      document.head.appendChild(style);
+    }
+
+    // A second navigation script may execute after this design-system module.
+    // Keep the store header authoritative if that late script tries to stack a
+    // duplicate title bar above it.
+    if ('MutationObserver' in window && document.body) {
+      var observer = new MutationObserver(removeDuplicateTopbar);
+      observer.observe(document.body, { childList: true });
+    }
+  }
+
   /* ── Global top bar — the ClearGlassInc. 2040 identity and menu on pages
      that do not already provide primary navigation. Existing page navigation
      remains the single source of navigation for that page. The homepage keeps
@@ -336,6 +407,7 @@
     if (optedOut()) return;
     if (document.body) document.body.classList.add('cg-neon-ready');
     ensureFonts();
+    mergeSideStoreHeader();
     mountTopbar();
     mountAmbient();
     mountCursorGlow();

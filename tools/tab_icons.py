@@ -150,7 +150,45 @@ def mask_inert(text: str) -> str:
     )
 
 
+# A page may declare the ClearGlass mark either by pointing at the 512px master
+# (what TAGS builds) or through the sized family tools/generate_favicons.py derives
+# from it. The homepage takes the sized route on purpose: the master rendered at
+# 16px is unreadable, so tests/test_holographic_branding.py asserts the master must
+# NOT occupy its icon slots. Adding the master here anyway put two gates in direct
+# conflict — this tool's own test demanded the tag that the branding test forbids.
+# A page carrying the sized family already satisfies the intent, so leave it alone.
+def _link_probe(rel: str, href: str) -> re.Pattern[str]:
+    """Match a <link> carrying both ``rel`` and ``href``, in either order.
+
+    Order matters here: a probe anchored on ``rel`` before ``href`` misses the equally
+    valid reversed spelling and would inject the forbidden master, and one that matches
+    a bare ``href`` anywhere would let an unrelated element (a <link rel="preload">, a
+    <meta>) mark the page complete. Requiring both attributes on the same <link> is what
+    makes the check mean what it says.
+    """
+    rel_attr = rf'rel=["\']{rel}["\']'
+    href_attr = rf'href=["\']{re.escape(href)}["\']'
+    return re.compile(
+        rf'<link\b(?=[^>]*{rel_attr})(?=[^>]*{href_attr})[^>]*>', re.IGNORECASE
+    )
+
+
+SIZED_FAMILY_PROBES = (
+    _link_probe("icon", "/favicon.ico"),
+    _link_probe("icon", "/favicon-32.png"),
+    _link_probe("icon", "/favicon-16.png"),
+    _link_probe("apple-touch-icon", "/apple-touch-icon.png"),
+)
+
+
+def declares_sized_family(head: str) -> bool:
+    """True when the head opts into the derived sized icons instead of the master."""
+    return all(probe.search(head) for probe in SIZED_FAMILY_PROBES)
+
+
 def missing_tags(head: str) -> list[str]:
+    if declares_sized_family(head):
+        return []
     return [markup for probe, markup in TAGS if not probe.search(head)]
 
 

@@ -23,6 +23,7 @@ The flagship backend is the **Autonomous E‑Commerce Operator** in
 | `apps/autostore/` | Earlier/parallel control plane + cockpit. Appears superseded by `clearglass-commerce/` — confirm before extending it |
 | `agents/` | Per‑agent definitions (`agent.json`, `system_prompt.md`, tool schemas) |
 | `bots/` | Standalone Python automation bots invoked by workflows (e.g. `store_smoke_bot.py`) |
+| `deployment/` | Per-product deployment layers: n8n workflow exports, ledger SQL, runbooks (`cashpulse/`, `rfed/`) |
 | `data/` | Committed JSON feeds: `data/store/catalog.json`, `data/control-surface/*` |
 | `operations/` | Generated reports + handoff pages (priority matrix, SEO, health, defender) |
 | `sentinel/` | Named-agent index (PERCIVAL, SENTINEL, AEGIS, PFAS, Agent Mesh) — keyless, stdlib-only, fail-closed Python agents; see `sentinel/PERCIVAL_AGENTS.md`. Includes the real PERCIVAL governor/identity/capability/mission-memory stack plus target-state v9 distributed-architecture docs (nothing in those docs is provisioned — see their own status banners) |
@@ -101,7 +102,17 @@ are documented in `clearglass-commerce/DEPLOY.md` (Render blueprint recommended)
 - **Commerce Frontend CI** (`commerce-frontend-ci.yml`): `tsc --noEmit` +
   `next build` for storefront and admin.
 - **Commerce Daily Loop** (`commerce-daily-loop.yml`): storefront smoke test +
-  governance self‑check + executive report (scheduled 13:00 UTC).
+  governance self‑check + executive report + RFED governance self‑check
+  (scheduled 13:00 UTC).
+- **CI** (`ci.yml`): root `pytest tests/`, which covers the RFED core and the
+  Python↔n8n hash-parity gate.
+
+Two access-control gates are enforced by test rather than convention, because
+convention is what fails silently:
+`clearglass-commerce/control-plane/tests/test_route_auth_coverage.py` asserts
+every mutating route is behind `require_admin` or on a justified allow-list, and
+`tests/test_rfed_hash_parity.py` pins the two RFED implementations together. See
+`security/RMM_AUTH_BYPASS_HARDENING.md` for why.
 
 ## Internal linking system (static site)
 
@@ -119,6 +130,34 @@ live in `tools/internal_links.py` (stdlib only).
   `FIXED_VIEWPORT` and get a fixed corner chip instead of a footer block.
 - When many pages change, bump `VERSION` in `sw.js` so returning visitors'
   service-worker caches refresh.
+
+## The RFED™ audit trail (agentic workflows)
+
+`bots/rfed_audit_bot.py` is the governed audit trail for agentic automation —
+the same safety model as the commerce OS, applied to actions a model influences.
+RFED = **R**ecorded **F**actual **E**vidence of **D**ecision: every action is
+recorded as Request → Facts → Evidence → Decision and sealed into a SHA-256 hash
+chain, so altering any past record breaks every link after it.
+
+```bash
+python -m bots.rfed_audit_bot --self-check          # governance invariants (stdlib only)
+python -m bots.rfed_audit_bot --verify ledger.jsonl # replay a ledger's hash chain
+python -m bots.rfed_audit_bot --summary ledger.jsonl
+```
+
+Same invariant as commerce: **read-only analysis → draft → human approval →
+execution.** Actions touching access, credentials, remote execution, or data
+export score 92–100 and always escalate; `modify_audit_log` is blocked outright;
+unknown actions fail closed at 85. Ungrounded output (no citations), low
+confidence, and injection markers in untrusted facts each hard-gate on their own.
+
+- The n8n layer (`deployment/rfed/workflow_rfed_audit_trail.json`) **mirrors** the
+  Python risk tables. Change one, change both, then run
+  `tests/test_rfed_hash_parity.py` — it asserts byte-identical canonical JSON and
+  identical chain hashes across the two implementations.
+- Approvals **append a new record**; they never mutate the original.
+- Bump `POLICY_VERSION` when the risk table or gating logic changes.
+- Spec: `docs/rfed_audit_trail_spec.md`. Deploy runbook: `deployment/rfed/README.md`.
 
 ## Conventions
 

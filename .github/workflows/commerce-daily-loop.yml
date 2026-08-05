@@ -29,3 +29,6 @@ jobs:
         working-directory: clearglass-commerce/control-plane
         run: |
           python -m app.daily_loop | tee "$GITHUB_STEP_SUMMARY"
+      - name: RFED governance self-check (fails if a privileged agent action is auto-executable)
+        run: |
+          python -m bots.rfed_audit_bot --self-check | tee -a "$GITHUB_STEP_SUMMARY"

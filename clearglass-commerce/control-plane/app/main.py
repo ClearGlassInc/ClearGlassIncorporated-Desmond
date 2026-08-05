@@ -1,13 +1,18 @@
 """FastAPI application factory for the commerce control plane."""
 from __future__ import annotations
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
 from .config import get_settings
 from .routers import approvals, etsy, events, inventory, metrics, orders, payments, store
-from .security import auth_enabled, require_admin, verify_startup_posture
+from .security import (
+    auth_enabled,
+    peer_is_trusted_proxy,
+    require_admin,
+    verify_startup_posture,
+)
 
 
 def create_app() -> FastAPI:
@@ -50,13 +55,29 @@ def create_app() -> FastAPI:
         return response
 
     @app.get("/health", tags=["meta"])
-    def health() -> dict:
-        """Liveness: the process is up. Makes no external calls."""
+    def health(request: Request) -> dict:
+        """Liveness: the process is up. Makes no external calls.
+
+        Also reports the address this request arrived from and whether its
+        ``X-Forwarded-For`` is currently trusted. Behind a reverse proxy the per-IP
+        throttles can only key on the real caller once ``TRUSTED_PROXY_IPS`` names the
+        router, and that address is otherwise hard to discover — this turns it into one
+        curl against the deployed service. It echoes the caller its own address; no
+        other party's data is exposed.
+        """
+        peer = request.client.host if request.client else "unknown"
         return {
             "status": "ok",
             "env": settings.app_env,
             "version": __version__,
             "admin_auth": "enabled" if auth_enabled(settings) else "disabled",
+            "client_peer": peer,
+            "forwarded_for": (
+                "trusted"
+                if settings.trusted_proxy_hops > 0
+                and peer_is_trusted_proxy(peer, settings.trusted_proxy_ips)
+                else "ignored"
+            ),
         }
 
     @app.get("/ready", tags=["meta"])

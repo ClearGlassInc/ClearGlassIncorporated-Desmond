@@ -332,10 +332,45 @@ def test_client_identity_only_reads_the_header_from_an_approved_proxy() -> None:
     assert client_identity(proxy, 1, "") == "10.0.0.9"
     # Peer outside the allowlist -> ignore the header it supplied.
     assert client_identity(stranger, 1, TRUSTED_PROXY_CIDR) == "203.0.113.7"
-    # Approved proxy, but fewer hops than promised -> peer.
-    assert client_identity(proxy, 2, TRUSTED_PROXY_CIDR) == "10.0.0.9"
     # Approved proxy with the promised hops -> the caller it named.
     assert client_identity(proxy, 1, TRUSTED_PROXY_CIDR) == "1.2.3.4"
+    # Raising the bound past the header length changes nothing: the walk stops at the
+    # first untrusted entry, which is the caller. It only falls back to the peer when
+    # it runs out of entries while still traversing trusted proxies (covered by
+    # test_multi_hop_padding_cannot_select_an_attacker_value).
+    assert client_identity(proxy, 2, TRUSTED_PROXY_CIDR) == "1.2.3.4"
+
+
+def test_multi_hop_padding_cannot_select_an_attacker_value() -> None:
+    """Counting back a fixed index was still spoofable above one hop.
+
+    An attacker who reaches the last proxy directly can pad X-Forwarded-For so the
+    counted-back position lands on a value it chose — the proxy only ever appends one
+    address. Walking right to left and stopping at the first entry that is not itself a
+    trusted proxy makes the padding land on the attacker's own address instead.
+    """
+    from app.security import client_identity
+
+    class _Req:
+        def __init__(self, peer: str, forwarded: str) -> None:
+            self.client = type("C", (), {"host": peer})()
+            self.headers = {"x-forwarded-for": forwarded}
+
+    trusted = "10.0.0.0/8"
+
+    # Two hops configured. The attacker connects straight to the last proxy (10.0.0.9)
+    # sending a chosen value; that proxy appends the attacker's real address.
+    attack = _Req("10.0.0.9", "203.0.113.250, 198.51.100.77")
+    assert client_identity(attack, 2, trusted) == "198.51.100.77"  # not the chosen value
+
+    # A genuine two-proxy chain still resolves the real client: the first proxy appends
+    # the client, the second appends the first proxy.
+    chain = _Req("10.0.0.9", "203.0.113.10, 10.0.0.5")
+    assert client_identity(chain, 2, trusted) == "203.0.113.10"
+
+    # All entries within the bound are proxies -> the caller is not identifiable.
+    opaque = _Req("10.0.0.9", "10.0.0.5, 10.0.0.6")
+    assert client_identity(opaque, 2, trusted) == "10.0.0.9"
 
 
 def test_peer_is_trusted_proxy_handles_cidrs_and_junk() -> None:
@@ -351,3 +386,19 @@ def test_peer_is_trusted_proxy_handles_cidrs_and_junk() -> None:
     assert peer_is_trusted_proxy("testclient", "10.0.0.0/8") is False
     # Invalid entries are skipped, not fatal.
     assert peer_is_trusted_proxy("10.1.2.3", "not-an-ip,10.0.0.0/8") is True
+
+
+def test_health_reports_the_peer_and_whether_the_header_is_trusted(harness) -> None:
+    """Behind a proxy the router's address is otherwise hard to discover, and
+    TRUSTED_PROXY_IPS cannot be set safely without it."""
+    build, _, monkeypatch = harness
+    monkeypatch.delenv("TRUSTED_PROXY_IPS", raising=False)
+    monkeypatch.setenv("TRUSTED_PROXY_HOPS", "0")
+    body = build(peer="10.0.0.9").get("/health").json()
+    assert body["client_peer"] == "10.0.0.9"
+    assert body["forwarded_for"] == "ignored"
+
+    monkeypatch.setenv("TRUSTED_PROXY_HOPS", "1")
+    monkeypatch.setenv("TRUSTED_PROXY_IPS", TRUSTED_PROXY_CIDR)
+    assert build(peer="10.0.0.9").get("/health").json()["forwarded_for"] == "trusted"
+    assert build(peer="203.0.113.7").get("/health").json()["forwarded_for"] == "ignored"

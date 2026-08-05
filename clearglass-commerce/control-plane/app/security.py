@@ -246,13 +246,29 @@ def client_identity(
         return peer
     if not peer_is_trusted_proxy(peer, trusted_proxy_ips):
         return peer
+
     forwarded = request.headers.get("x-forwarded-for", "")
     hops = [part.strip() for part in forwarded.split(",") if part.strip()]
-    if len(hops) < trusted_proxy_hops:
-        # Fewer hops than declared: the header is missing or truncated, so it cannot be
-        # trusted to name the caller. Fall back to the peer rather than guessing.
-        return peer
-    return hops[-trusted_proxy_hops]
+
+    # Walk right to left and stop at the first entry that is not itself a trusted
+    # proxy: that is the caller. Selecting a fixed index instead was still spoofable
+    # whenever more than one hop was configured — an attacker who reaches the last
+    # proxy directly can pad the header so the counted-back position lands on a value
+    # it chose, because the proxy only ever appends one address. Verifying each
+    # intermediate makes the padding land on the attacker's own address instead.
+    # ``trusted_proxy_hops`` bounds the walk so an oversized header cannot make the
+    # scan expensive.
+    for index in range(1, trusted_proxy_hops + 1):
+        if len(hops) < index:
+            # Fewer hops than declared: the header is missing or truncated, so it
+            # cannot name the caller. Fall back to the peer rather than guessing.
+            return peer
+        candidate = hops[-index]
+        if not peer_is_trusted_proxy(candidate, trusted_proxy_ips):
+            return candidate
+    # Every entry within the bound was a trusted proxy, so the caller is not
+    # identifiable from the header. Key on the peer rather than trust the remainder.
+    return peer
 
 
 def rate_limit(scope: str, setting_name: str):

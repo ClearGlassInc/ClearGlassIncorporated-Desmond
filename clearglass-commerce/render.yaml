@@ -23,18 +23,29 @@ services:
         generateValue: true
       - key: AUTO_CREATE_TABLES
         value: "true"   # first boot creates tables; switch to migrations for prod hardening
-      # Render terminates TLS at one proxy in front of the container, so the per-IP
-      # throttles must read the caller from X-Forwarded-For. Left at 0, every customer
-      # shares one bucket keyed on the proxy address and one abuser 429s the storefront.
+      # Per-IP throttling behind Render's router.
+      #
+      # Render terminates TLS at a proxy in front of the container, so request.client
+      # is the router and the per-IP throttles collapse: every customer shares one
+      # bucket and one abuser can 429 the storefront. Reading the caller from
+      # X-Forwarded-For fixes that, but ONLY when the TCP peer is a verified router
+      # address — otherwise anything that can reach the container on another ingress
+      # forges its identity and rotates throttle buckets at will.
+      #
+      # An RFC1918-wide allowlist is NOT sufficient: it trusts every address on the
+      # private network, which is exactly the ingress the bypass runs on. So header
+      # trust ships disabled. The throttles key on the TCP peer, which over-throttles
+      # rather than allowing a bypass — the safe direction to fail.
+      #
+      # To enable it, identify the real boundary and set both keys. GET /health
+      # reports `client_peer` (the address Render's router connects from) and
+      # `forwarded_for` (whether the header is currently trusted), so one curl against
+      # the deployed service gives you the value:
+      #     TRUSTED_PROXY_IPS=<that address or its /32>   TRUSTED_PROXY_HOPS=1
       - key: TRUSTED_PROXY_HOPS
-        value: "1"
-      # ...but the header is only honoured when the TCP peer is one of these, so a
-      # request that reaches the service on any other ingress cannot forge its identity
-      # and rotate throttle buckets. Render's router reaches the container over the
-      # private network, so any peer with a public address did not come through it.
-      # Tighten this to Render's published egress range if you have it.
+        value: "0"
       - key: TRUSTED_PROXY_IPS
-        value: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,127.0.0.1/32,::1/128,fd00::/8"
+        value: ""
       - key: DATABASE_URL
         fromDatabase:
           name: clearglass-commerce-db

@@ -97,9 +97,16 @@ require an `Authorization: Bearer <key>` credential set via **`ADMIN_API_KEY`**.
 ## Going from mock to real money
 
 The store runs in **mock mode** with no Stripe key (safe for demos). To take real payments:
+0. **Activate the Stripe account first.** Keys are useless while `charges_enabled` is
+   false — as of the last check this account has not completed onboarding and has no
+   bank account or webhook endpoint. See `STRIPE_SETUP.md` for the verified state, the
+   outstanding requirements, and the full go-live checklist.
 1. Add `STRIPE_SECRET_KEY` (live or test) → `/checkout/session` creates real Stripe Checkout URLs.
 2. Add `STRIPE_WEBHOOK_SECRET` → `/webhooks/stripe` verifies signatures and rejects forgeries.
-3. Refunds stay behind the approval gate; approve via `/approvals/{id}/approve` before any money moves.
+   Leaving it unset in production means a forged `checkout.session.completed` books a fake order.
+3. Register the webhook events listed in `STRIPE_SETUP.md` §5 — `invoice.paid` in particular,
+   or subscription renewals settle in Stripe and never reach the ledger.
+4. Refunds stay behind the approval gate; approve via `/approvals/{id}/approve` before any money moves.
 
 ## Morning sales-ops briefing (email)
 

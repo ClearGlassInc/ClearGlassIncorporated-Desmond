@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from .. import payments
+from .. import payments, pricebook
 from ..audit import log_event
 from ..db import get_session
 from ..models import Order, Payout
@@ -15,6 +15,7 @@ from ..schemas import (
     ActionResult,
     CheckoutRequest,
     CheckoutSessionOut,
+    OfferOut,
     PayoutBankInfoOut,
     PayoutOut,
     RefundRequest,
@@ -26,6 +27,47 @@ router = APIRouter(tags=["payments"])
 
 _checkout_throttle = rate_limit("checkout", "rate_limit_checkout_per_minute")
 _webhook_throttle = rate_limit("stripe_webhook", "rate_limit_webhook_per_minute")
+
+#: Checkout events that decide whether an order's money actually arrived.
+CHECKOUT_SETTLEMENT_EVENTS = frozenset(
+    {
+        "checkout.session.completed",
+        "checkout.session.async_payment_succeeded",
+        "checkout.session.async_payment_failed",
+    }
+)
+
+#: Events that need a human eye but move no money on our side — mapped to the audit
+#: action they are recorded under.
+ATTENTION_EVENTS = {
+    "charge.refunded": "refund_settled",
+    "charge.dispute.created": "dispute_opened",
+    "charge.dispute.closed": "dispute_closed",
+    "payment_intent.payment_failed": "payment_failed",
+    "invoice.payment_failed": "subscription_payment_failed",
+}
+
+
+@router.get("/offers", response_model=list[OfferOut])
+def list_offers() -> list[OfferOut]:
+    """The catalogue the storefront may sell, at the prices the business set.
+
+    Public and read-only: it is the same data the storefront renders, and it is the
+    only place a price legitimately comes from.
+    """
+    return [
+        OfferOut(
+            sku=o.sku,
+            name=o.name,
+            description=o.description,
+            amount=o.amount,
+            currency=o.currency,
+            kind=o.kind,
+            interval=o.interval,
+            max_quantity=o.max_quantity,
+        )
+        for o in pricebook.all_offers()
+    ]
 
 
 @router.post(
@@ -39,19 +81,50 @@ def create_checkout(req: CheckoutRequest, session: Session = Depends(get_session
     Customer-initiated purchases are normal revenue flow, not an autonomous admin action, so
     they are logged but not put behind the approval gate. Returns a mock session when no
     Stripe key is configured.
+
+    Prices are resolved from the server-side price book — the request names SKUs and
+    quantities only, so a tampered cart is rejected rather than charged.
     """
+    try:
+        line_items, checkout_mode = pricebook.resolve_line_items(
+            [i.model_dump() for i in req.items]
+        )
+    except pricebook.PricebookError as exc:
+        # Log the rejection: a run of these is either a broken storefront build or
+        # someone probing the checkout with SKUs and quantities that do not exist.
+        log_event(
+            session,
+            actor="storefront",
+            action="create_checkout_session",
+            target=req.customer_email,
+            payload={"rejected": str(exc), "items": [i.model_dump() for i in req.items]},
+            result="rejected",
+        )
+        # Commit before raising: get_session rolls back on exception, which would
+        # discard the very record that shows someone probing the checkout.
+        session.commit()
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
     result = payments.create_checkout_session(
-        [i.model_dump() for i in req.items],
+        line_items,
         customer_email=req.customer_email,
         success_url=req.success_url,
         cancel_url=req.cancel_url,
+        checkout_mode=checkout_mode,
+        client_reference_id=req.client_reference_id,
+        idempotency_key=req.client_reference_id,
     )
     log_event(
         session,
         actor="storefront",
         action="create_checkout_session",
         target=req.customer_email,
-        payload={"amount_total": result["amount_total"], "mode": result["mode"]},
+        payload={
+            "amount_total": result["amount_total"],
+            "mode": result["mode"],
+            "checkout_mode": checkout_mode,
+            "skus": [i["sku"] for i in line_items],
+        },
         result="executed",
     )
     return CheckoutSessionOut(**result)
@@ -71,38 +144,73 @@ async def stripe_webhook(request: Request, session: Session = Depends(get_sessio
     etype = event.get("type", "unknown")
     obj = (event.get("data") or {}).get("object") or {}
 
-    if etype == "checkout.session.completed":
-        # Stripe redelivers webhooks; key the order on the checkout-session id so a
-        # retry never books the same revenue twice.
-        external_ref = obj.get("id") or obj.get("payment_intent")
-        if external_ref:
-            existing = session.scalar(select(Order).where(Order.external_ref == external_ref))
-            if existing is not None:
-                log_event(
-                    session,
-                    actor="stripe",
-                    action="order_paid_duplicate_skipped",
-                    target=str(existing.id),
-                    payload={"verified": check["verified"], "external_ref": external_ref},
-                    result="skipped",
-                )
-                return {"received": True, "type": etype, "verified": check["verified"]}
-        order = Order(
-            status="paid",
+    if etype in CHECKOUT_SETTLEMENT_EVENTS:
+        # `checkout.session.completed` fires as soon as the customer finishes the page,
+        # which for an asynchronous method (bank debit) is *before* the money settles.
+        # Booking that as paid would report revenue that can still fail, so trust
+        # payment_status and let async_payment_succeeded promote it later.
+        if etype == "checkout.session.async_payment_succeeded":
+            status = "paid"
+        elif etype == "checkout.session.async_payment_failed":
+            status = "failed"
+        else:
+            paid = obj.get("payment_status") in {"paid", "no_payment_required"}
+            status = "paid" if paid else "pending"
+
+        _record_order(
+            session,
+            # Stripe redelivers webhooks; key the order on the checkout-session id so a
+            # retry never books the same revenue twice.
+            external_ref=obj.get("id") or obj.get("payment_intent"),
             total=Decimal(str((obj.get("amount_total") or 0) / 100)),
             currency=(obj.get("currency") or "cad").upper(),
             source="stripe_checkout",
-            external_ref=external_ref,
+            status=status,
+            verified=check["verified"],
+            event=etype,
         )
-        session.add(order)
-        session.flush()
+    elif etype == "invoice.paid":
+        # Subscription renewals arrive as invoices, not checkout sessions. Without this
+        # every month after the first would settle in Stripe and never reach the ledger.
+        if obj.get("billing_reason") != "subscription_create":
+            _record_order(
+                session,
+                external_ref=obj.get("id"),
+                total=Decimal(str((obj.get("amount_paid") or 0) / 100)),
+                currency=(obj.get("currency") or "cad").upper(),
+                source="stripe_subscription",
+                status="paid",
+                verified=check["verified"],
+                event=etype,
+            )
+        else:
+            # The first invoice of a subscription is already booked from its checkout
+            # session; recording it again would double-count the same money.
+            log_event(
+                session,
+                actor="stripe",
+                action="subscription_first_invoice_skipped",
+                target=obj.get("id"),
+                payload={"verified": check["verified"]},
+                result="skipped",
+            )
+    elif etype in ATTENTION_EVENTS:
+        # Refunds, failed payments and disputes do not move the ledger here — refunds
+        # run through the approval gate — but they must be visible in the audit trail
+        # rather than only in the Stripe dashboard.
         log_event(
             session,
             actor="stripe",
-            action="order_paid",
-            target=str(order.id),
-            payload={"verified": check["verified"], "amount_total": obj.get("amount_total")},
-            result="executed",
+            action=ATTENTION_EVENTS[etype],
+            target=obj.get("id"),
+            payload={
+                "verified": check["verified"],
+                "event": etype,
+                "amount": obj.get("amount") or obj.get("amount_refunded"),
+                "currency": obj.get("currency"),
+                "reason": obj.get("reason") or obj.get("failure_message"),
+            },
+            result="flagged",
         )
     elif etype in payments.PAYOUT_EVENT_TYPES:
         payout = _upsert_payout(session, obj, tenant_id=event.get("account"))
@@ -131,6 +239,77 @@ async def stripe_webhook(request: Request, session: Session = Depends(get_sessio
         )
 
     return {"received": True, "type": etype, "verified": check["verified"]}
+
+
+def _record_order(
+    session: Session,
+    *,
+    external_ref: str | None,
+    total: Decimal,
+    currency: str,
+    source: str,
+    status: str,
+    verified: bool,
+    event: str,
+) -> None:
+    """Book (or promote) an order idempotently, keyed on Stripe's own id.
+
+    Redelivery of an event we already handled is a no-op. The one case that is *not*
+    a no-op is a pending order whose payment later settles: that promotes the existing
+    row instead of inserting a second one for the same money.
+    """
+    existing = (
+        session.scalar(select(Order).where(Order.external_ref == external_ref))
+        if external_ref
+        else None
+    )
+
+    if existing is not None:
+        if existing.status == status:
+            log_event(
+                session,
+                actor="stripe",
+                action="order_event_duplicate_skipped",
+                target=str(existing.id),
+                payload={"verified": verified, "external_ref": external_ref, "event": event},
+                result="skipped",
+            )
+            return
+        previous, existing.status = existing.status, status
+        existing.total = total
+        session.flush()
+        log_event(
+            session,
+            actor="stripe",
+            action=f"order_{status}",
+            target=str(existing.id),
+            payload={
+                "verified": verified,
+                "event": event,
+                "from_status": previous,
+                "amount_total": str(total),
+            },
+            result="executed",
+        )
+        return
+
+    order = Order(
+        status=status,
+        total=total,
+        currency=currency,
+        source=source,
+        external_ref=external_ref,
+    )
+    session.add(order)
+    session.flush()
+    log_event(
+        session,
+        actor="stripe",
+        action=f"order_{status}",
+        target=str(order.id),
+        payload={"verified": verified, "event": event, "amount_total": str(total)},
+        result="executed",
+    )
 
 
 def _upsert_payout(session: Session, obj: dict, *, tenant_id: str | None) -> Payout:

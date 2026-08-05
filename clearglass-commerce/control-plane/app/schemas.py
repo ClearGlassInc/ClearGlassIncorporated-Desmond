@@ -29,25 +29,48 @@ class InventoryCheckRequest(BaseModel):
 
 
 class CheckoutLineItem(BaseModel):
-    name: str
-    amount: int = Field(description="Unit price in the smallest currency unit (cents)", ge=0)
+    """What the customer wants, not what it costs.
+
+    Deliberately carries no price: amounts are resolved server-side from
+    :mod:`app.pricebook`. A line item that could name its own ``amount`` would let
+    the browser choose what to pay.
+    """
+
+    sku: str = Field(description="Price-book SKU being purchased")
     quantity: int = Field(default=1, ge=1)
-    currency: str = "cad"
 
 
 class CheckoutRequest(BaseModel):
-    items: list[CheckoutLineItem]
+    items: list[CheckoutLineItem] = Field(min_length=1, max_length=20)
     customer_email: str | None = None
     success_url: str | None = None
     cancel_url: str | None = None
+    # Client-generated attempt id. Passed to Stripe as the idempotency key so a
+    # double-click or a retried request reuses the first session instead of opening
+    # a second one for the same cart.
+    client_reference_id: str | None = Field(default=None, max_length=200)
 
 
 class CheckoutSessionOut(BaseModel):
     id: str
     url: str
     mode: str               # live | mock
+    checkout_mode: str      # payment | subscription
     amount_total: int
     currency: str
+
+
+class OfferOut(BaseModel):
+    """A purchasable offer as advertised to the storefront."""
+
+    sku: str
+    name: str
+    description: str
+    amount: int
+    currency: str
+    kind: str               # one_time | deposit | recurring
+    interval: str | None
+    max_quantity: int
 
 
 class PayoutBankInfoOut(BaseModel):

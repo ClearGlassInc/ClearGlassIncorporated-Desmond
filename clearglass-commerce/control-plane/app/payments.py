@@ -41,55 +41,129 @@ def webhook_secret_set() -> bool:
     return bool(_webhook_secret())
 
 
+def automatic_tax_enabled() -> bool:
+    """Whether to ask Stripe Tax to calculate tax on each session.
+
+    Off by default and opt-in per environment: Stripe rejects a session with
+    ``automatic_tax`` when the account has no origin address or tax settings yet, so
+    defaulting this on would break checkout for an account that has not finished the
+    Tax setup. See ``STRIPE_SETUP.md``.
+    """
+    return os.environ.get("STRIPE_AUTOMATIC_TAX", "").strip().lower() in {"1", "true", "yes"}
+
+
+def _with_session_placeholder(url: str) -> str:
+    """Ensure the success URL carries Stripe's ``{CHECKOUT_SESSION_ID}`` template.
+
+    The success page needs the session id to show a real confirmation. Fulfilment
+    still hangs off the webhook — the redirect is not proof of payment and anyone can
+    open it — but without the id the page cannot even look the order up.
+    """
+    if "{CHECKOUT_SESSION_ID}" in url:
+        return url
+    separator = "&" if "?" in url else "?"
+    return f"{url}{separator}session_id={{CHECKOUT_SESSION_ID}}"
+
+
 def create_checkout_session(
     line_items: list[dict[str, Any]],
     *,
     customer_email: str | None = None,
     success_url: str | None = None,
     cancel_url: str | None = None,
+    checkout_mode: str = "payment",
+    client_reference_id: str | None = None,
+    idempotency_key: str | None = None,
 ) -> dict[str, Any]:
     """Create a Stripe Checkout session, or a deterministic mock when no key is set.
 
-    ``line_items`` use the Stripe shape: each item has ``amount`` (cents), ``currency``,
-    ``name`` and ``quantity``.
+    ``line_items`` are **already priced** — see :mod:`app.pricebook`. Each item carries
+    ``amount`` (cents), ``currency``, ``name`` and ``quantity``, and optionally ``sku``,
+    ``description``, ``tax_behavior`` and ``interval``. This function never accepts an
+    amount from a caller that got it from the browser.
+
+    ``checkout_mode`` is Stripe's session mode (``payment`` or ``subscription``); the
+    returned ``mode`` field is this module's live/mock indicator, which is a different
+    thing and is kept for the existing storefront contract.
     """
     amount_total = sum(int(i.get("amount", 0)) * int(i.get("quantity", 1)) for i in line_items)
     success_url = success_url or os.environ.get("CHECKOUT_SUCCESS_URL", "http://localhost:3000/success")
     cancel_url = cancel_url or os.environ.get("CHECKOUT_CANCEL_URL", "http://localhost:3000/cancel")
+    success_url = _with_session_placeholder(success_url)
+    currency = (line_items[0].get("currency", "cad") if line_items else "cad")
+
+    # A compact record of what was bought, so the webhook can reconstruct the order
+    # without a second API round-trip. Stripe caps a metadata value at 500 chars.
+    skus = ",".join(
+        f"{i.get('sku') or i.get('name', 'item')}x{int(i.get('quantity', 1))}" for i in line_items
+    )[:500]
 
     if not is_live():
         return {
             "id": f"cs_mock_{abs(hash((amount_total, customer_email))) % 10**10:010d}",
             "url": f"{success_url}?mock=1",
             "mode": "mock",
+            "checkout_mode": checkout_mode,
             "amount_total": amount_total,
-            "currency": (line_items[0].get("currency", "cad") if line_items else "cad"),
+            "currency": currency,
         }
 
     import stripe  # noqa: PLC0415 — lazy import; only needed in live mode
 
     stripe.api_key = _secret_key()
-    session = stripe.checkout.Session.create(
-        mode="payment",
-        customer_email=customer_email,
-        success_url=success_url,
-        cancel_url=cancel_url,
-        line_items=[
-            {
-                "quantity": int(i.get("quantity", 1)),
-                "price_data": {
-                    "currency": i.get("currency", "cad"),
-                    "unit_amount": int(i.get("amount", 0)),
-                    "product_data": {"name": i.get("name", "item")},
-                },
-            }
-            for i in line_items
-        ],
-    )
+
+    stripe_line_items = []
+    for item in line_items:
+        price_data: dict[str, Any] = {
+            "currency": item.get("currency", "cad"),
+            "unit_amount": int(item.get("amount", 0)),
+            "product_data": {"name": item.get("name", "item")},
+        }
+        if item.get("description"):
+            price_data["product_data"]["description"] = item["description"]
+        if item.get("tax_behavior"):
+            price_data["tax_behavior"] = item["tax_behavior"]
+        if checkout_mode == "subscription" and item.get("interval"):
+            price_data["recurring"] = {"interval": item["interval"]}
+        stripe_line_items.append(
+            {"quantity": int(item.get("quantity", 1)), "price_data": price_data}
+        )
+
+    metadata = {"skus": skus, "source": "clearglass_storefront"}
+    params: dict[str, Any] = {
+        "mode": checkout_mode,
+        "customer_email": customer_email,
+        "success_url": success_url,
+        "cancel_url": cancel_url,
+        "line_items": stripe_line_items,
+        "metadata": metadata,
+        # Stripe Tax reads the customer's location from an address, and services
+        # collect no shipping address — so the billing address is the only signal.
+        "billing_address_collection": "required",
+        "client_reference_id": client_reference_id,
+    }
+    if automatic_tax_enabled():
+        params["automatic_tax"] = {"enabled": True}
+        params["customer_creation"] = "always"
+    # Carry the metadata onto the object that outlives the session, so a refund or
+    # dispute months later still says what was sold.
+    if checkout_mode == "subscription":
+        params["subscription_data"] = {"metadata": metadata}
+    else:
+        params["payment_intent_data"] = {"metadata": metadata}
+
+    request_options: dict[str, Any] = {}
+    if idempotency_key:
+        # A retried or double-clicked checkout returns the original session instead
+        # of opening a second one against the same cart.
+        request_options["idempotency_key"] = idempotency_key
+
+    session = stripe.checkout.Session.create(**params, **request_options)
     return {
         "id": session.id,
         "url": session.url,
         "mode": "live",
+        "checkout_mode": checkout_mode,
         "amount_total": session.amount_total,
         "currency": session.currency,
     }

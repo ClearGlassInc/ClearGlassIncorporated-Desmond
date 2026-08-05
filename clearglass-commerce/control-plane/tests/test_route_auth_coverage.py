@@ -32,8 +32,10 @@ MUTATING_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
 #: Each entry needs a reason that survives a reviewer asking "why is this open?".
 PUBLIC_MUTATING_ROUTES: dict[tuple[str, str], str] = {
     ("POST", "/checkout/session"): (
-        "Customer checkout. Public by necessity; protected by a per-IP rate limit "
-        "and it creates nothing privileged."
+        "Customer checkout. Public by necessity; protected by a per-IP rate limit, "
+        "and it creates nothing privileged — amounts come from the server-side price "
+        "book (app/pricebook.py), never from the request, so an anonymous caller "
+        "cannot choose what it is charged. See tests/test_pricebook.py."
     ),
     ("POST", "/webhooks/stripe"): (
         "Stripe callback. Cannot carry an operator credential; authenticated by "

@@ -168,6 +168,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "products.html": ("ClearGlass Products", "the unified ClearGlass product catalog"),
     "offers/index.html": ("Services & Engagements", "every ClearGlass offer in one place"),
     "store.html": ("ClearGlass Store", "book a security engagement"),
+    "checkout/index.html": ("Secure Checkout", "purchase an audit or protection plan"),
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
     "smb-cyber-trust-kit.html": ("SMB Cyber Trust Kit", "plain-language cyber resilience for small business"),
     "smb.html": ("SMB Suite", "intelligent systems for small business"),
@@ -220,6 +221,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/resume-builder.html": ("Resume Builder", "PDF-export resume tool"),
     "blog/zero-trust-is-outdated.html": ("Zero Trust Is Outdated", "the original argument"),
     "blog/zero-trust-is-outdated-adaptive-trust.html": ("The Case for Adaptive Trust", "zero trust, revisited for agentic systems"),
+    "blog/rethinking-security-age-of-ai-cyber-stack.html": ("Rethinking Security for the AI Cyber Stack", "a long read on defending AI-era infrastructure"),
     "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html": ("Digital Twin Tools for Storm-Adaptive Transit", "the 2026 platform comparison and hybrid architecture"),
     "blog/coffee-and-technology-digital-revolution.html": ("Coffee & Technology", "how coffee culture and technology grew together"),
     "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html": ("ChatGPT Prompt Shortcuts", "a practical field guide to clearer, faster AI prompts"),
@@ -330,7 +332,7 @@ CLUSTERS: dict[str, dict] = {
         "name": "Services & Engagements",
         "pillar": "offers/index.html",
         "members": [
-            "store.html", "pricing.html", "smb-cyber-trust-kit.html",
+            "store.html", "pricing.html", "checkout/index.html", "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html", "revenue-engine.html",
             "side-store.html", "products.html",
@@ -370,6 +372,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/ai-agents-insider-threat.html",
             "blog/cybersecurity-architecture-for-agentic-software.html",
             "blog/zero-trust-is-outdated-adaptive-trust.html",
+            "blog/rethinking-security-age-of-ai-cyber-stack.html",
             "blog/zero-trust-is-outdated.html",
             "blog/clearglass-secure-deployment-agent.html",
             "blog/clearglass-command-center-cyber-defense-console.html",
@@ -735,7 +738,7 @@ def validate() -> list[str]:
     discovered = {
         path.relative_to(ROOT).as_posix()
         for path in ROOT.rglob("*.html")
-        if ".git" not in path.parts and "node_modules" not in path.parts
+        if not {".git", "node_modules", ".next"} & set(path.parts)
     }
     classified = set(PAGES) | set(EXCLUDED_PAGES)
     for page in sorted(discovered - classified):

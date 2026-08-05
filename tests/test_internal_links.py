@@ -64,7 +64,7 @@ def test_every_html_page_is_mapped_or_explicitly_excluded() -> None:
     discovered = {
         path.relative_to(ROOT).as_posix()
         for path in ROOT.rglob("*.html")
-        if ".git" not in path.parts and "node_modules" not in path.parts
+        if not {".git", "node_modules", ".next"} & set(path.parts)
     }
     mapped = set(internal_links.PAGES)
     excluded = set(internal_links.EXCLUDED_PAGES)

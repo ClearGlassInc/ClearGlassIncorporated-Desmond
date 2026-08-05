@@ -597,6 +597,12 @@ body::after{background:radial-gradient(120% 90% at 50% 38%,transparent 60%,rgba(
 .dk-inv code{color:var(--dk-ink);font-size:9.5px;letter-spacing:.02em}
 .dk-inv .st{margin-left:auto;flex:0 0 auto}
 
+/* visible keyboard focus on every interactive surface the deck adds */
+.dk-tab:focus-visible,.dk-btn:focus-visible,.dk-x:focus-visible,.dk-rh:focus-visible,
+.dk-rb:focus-visible,.dk-ochip:focus-visible,.dk-mitem:focus-visible,.dk-coa td.live:focus-visible,
+.dk-tbl tr.pickable:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:8px}
+.dk-onode:focus-visible{outline:none}
+
 @media (max-width:1000px){
   .dk-cols.c2,.dk-cols.c2b,.dk-cols.c3{grid-template-columns:1fr}
   /* rail drops to a bottom strip, so the window clears the bottom instead of the right */

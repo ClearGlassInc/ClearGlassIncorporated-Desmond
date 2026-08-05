@@ -55,6 +55,14 @@ credential (`ADMIN_API_KEY`, see `app/security.py`). Unset = open dev/mock mode;
 signature-verified Stripe webhook, and read-only telemetry stay open. Don't add a
 mutating admin route without gating it behind `require_admin`.
 
+Prices are resolved server-side. `POST /checkout/session` takes **SKUs and quantities
+only**; amounts come from the price book (`app/pricebook.py`, `app/data/pricebook.json`)
+and never from the request body, because a checkout line item's `amount` goes straight
+into Stripe's `unit_amount`. `tests/test_pricebook.py` enforces this, down to asserting
+the `CheckoutLineItem` OpenAPI schema has exactly `{sku, quantity}` — don't add a
+price-shaped field back to that contract. Stripe account/go-live state is documented in
+`clearglass-commerce/STRIPE_SETUP.md`.
+
 Abuse/resilience controls (also in `app/security.py`): checkout, the Stripe webhook,
 and approval decisions carry per-IP rate limits (`RATE_LIMIT_*_PER_MINUTE`), and the
 webhook is idempotent on redelivery via `orders.external_ref` (migration 004).

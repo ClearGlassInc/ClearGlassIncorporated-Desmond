@@ -1,0 +1,51 @@
+{
+  "schema": "clearglass.commerce.pricebook/v1",
+  "note": "Server-side price authority. The browser names a SKU; only this file sets the amount charged. Prices mirror data/store/catalog.json at the repo root — change both together.",
+  "offers": [
+    {
+      "sku": "quick-audit",
+      "name": "Security Quick-Audit",
+      "description": "Fixed-scope security review of your Microsoft 365 and Windows estate, delivered as a prioritised findings report.",
+      "amount": 24900,
+      "currency": "cad",
+      "kind": "one_time",
+      "max_quantity": 1,
+      "tax_behavior": "exclusive",
+      "active": true
+    },
+    {
+      "sku": "hardening",
+      "name": "M365 + Windows Hardening Sprint",
+      "description": "Deposit for the hardening sprint. Final fixed fee is confirmed on a scoping call before any further amount is invoiced.",
+      "amount": 250000,
+      "currency": "cad",
+      "kind": "deposit",
+      "max_quantity": 1,
+      "tax_behavior": "exclusive",
+      "active": true
+    },
+    {
+      "sku": "phipa",
+      "name": "PHIPA Readiness",
+      "description": "Deposit for the PHIPA readiness assessment. Final fixed fee is confirmed on a scoping call before any further amount is invoiced.",
+      "amount": 300000,
+      "currency": "cad",
+      "kind": "deposit",
+      "max_quantity": 1,
+      "tax_behavior": "exclusive",
+      "active": true
+    },
+    {
+      "sku": "monitoring",
+      "name": "Managed Monitoring",
+      "description": "Ongoing managed monitoring and alert triage, billed monthly. Cancel any time.",
+      "amount": 60000,
+      "currency": "cad",
+      "kind": "recurring",
+      "interval": "month",
+      "max_quantity": 1,
+      "tax_behavior": "exclusive",
+      "active": true
+    }
+  ]
+}

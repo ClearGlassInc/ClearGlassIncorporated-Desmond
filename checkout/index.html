@@ -34,11 +34,11 @@
     <header class="hero">
       <div class="kicker">Revenue Checkout Surface</div>
       <h1>Buy clarity. Reduce risk. Move forward.</h1>
-      <p>Select a focused assessment or recurring protection plan. Stripe-hosted checkout activates automatically once the account’s public profile and legal onboarding are approved.</p>
-      <div class="status" id="checkoutStatus"><span class="dot"></span><span>Secure card checkout awaiting Stripe account activation</span></div>
+      <p>Select a focused assessment or recurring protection plan. Checkout is hosted by Stripe — card details never touch this site.</p>
+      <div class="status" id="checkoutStatus"><span class="dot"></span><span>Secure Stripe-hosted checkout</span></div>
     </header>
 
-    <div class="notice" id="activationNotice"><strong>Current payment path:</strong> request a secure Stripe invoice or checkout link. No card information is collected on this website.</div>
+    <div class="notice" id="activationNotice"><strong>If a button does not open Stripe:</strong> email us and we will send a secure payment link. No card information is collected on this website.</div>
 
     <main class="grid" aria-label="ClearGlass offers">
       <article class="card" data-offer="risk-audit" data-product-id="prod_V0yiCBgBCIm6vC" data-price-id="price_1U0wl3L8uR92FksUMVIa9nUl">
@@ -103,10 +103,14 @@
   (function(){
     "use strict";
     var EMAIL = "desmondotieno@icloud.com";
+    // Live Stripe Payment Links, one per Price in the account. Each points at the
+    // Price it sells, so Stripe — not this page — decides the amount charged.
+    // To retire an offer, deactivate the link in Stripe rather than editing a
+    // number here; blanking a value below drops the button back to the email path.
     var STRIPE_LINKS = {
-      "risk-audit": "",
-      "protection-monthly": "",
-      "protection-annual": ""
+      "risk-audit": "https://buy.stripe.com/6oU9AUfs85GZ8dS0LG4Ni00",
+      "protection-monthly": "https://buy.stripe.com/6oU6oI2Fm7P7cu851W4Ni01",
+      "protection-annual": "https://buy.stripe.com/00waEY7ZGfhz51G9ic4Ni02"
     };
     var LABELS = {
       "risk-audit": "ClearGlass 90-Minute Cyber Risk Audit — CAD $297",

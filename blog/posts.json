@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-08-04",
+  "updated": "2026-08-05",
   "site": "https://www.clearglassinc.com",
   "topics": {
     "governed-ai": "Governed AI",
@@ -16,6 +16,22 @@
   },
   "posts": [
     {
+      "slug": "rethinking-security-age-of-ai-cyber-stack",
+      "url": "/blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "title": "Rethinking Security for the Age of AI",
+      "description": "A ClearGlass strategic brief on Microsoft's AI-native Cyber Stack, Project Perception, multi-model reasoning, specialized security agents, human control, and machine-speed action.",
+      "category": "Cyber Defense",
+      "series": "ClearGlass Long Reads",
+      "topics": ["cyber", "governed-ai", "agents", "automation", "systems"],
+      "tags": ["microsoft-security", "project-perception", "cyber-stack", "agentic-security", "multi-model", "machine-speed-defense", "human-in-the-loop", "security-context"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-08-05",
+      "readMinutes": 10,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
+    {
       "slug": "network-orchestration-ai-automation-cybersecurity",
       "url": "/blog/network-orchestration-ai-automation-cybersecurity.html",
       "title": "AI-Driven Network Orchestration: What Serious Automation Requires",
@@ -28,7 +44,7 @@
       "date": "2026-08-03",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 1,
+      "deskRank": 2,
       "status": "published"
     },
     {
@@ -44,7 +60,7 @@
       "date": "2026-08-03",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 2,
+      "deskRank": 3,
       "status": "published"
     },
     {
@@ -60,7 +76,7 @@
       "date": "2026-07-31",
       "readMinutes": 15,
       "featured": true,
-      "deskRank": 3,
+      "deskRank": 4,
       "status": "published"
     }
   ]

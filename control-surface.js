@@ -17,7 +17,11 @@
   window.__cgCS = true;
   window.__cgNavLoaded = true;            // supersede the legacy hover menu (nav.js)
 
-  var REPO = "ClearGlassInc/ClearGlassInc.github.io";
+  // Published hourly by .github/workflows/control-surface-feeds.yml from the
+  // authenticated Actions API. Same-origin, so no rate limit and no third-party
+  // request — the keyless api.github.com call below is only a fallback.
+  var FEED = "/data/control-surface/";
+  var REPO = "ClearGlassInc/ClearGlassIncorporated-Desmond";
   var EMAIL = "desmondotieno@icloud.com";
 
   // ── destinations (grouped) ──────────────────────────────────────────────
@@ -366,7 +370,26 @@
     dot.className = "cgcs-dot " + ({ NOMINAL: "ok", SYNCING: "sync", DEGRADED: "warn", FAILURE: "fail" }[state] || "");
     st.textContent = text;
   }
-  function pollStatus() {
+  // A feed row is in flight when its conclusion has not landed yet; the
+  // generator writes the raw state ("in_progress", "queued") ahead of the " · ".
+  function inFlight(row) {
+    var head = String(row && row.detail || "").split("·")[0].trim();
+    return head === "in_progress" || head === "queued" || head === "pending" || head === "requested";
+  }
+
+  function applyRuns(runs) {
+    if (!runs.length) { setStatus("DEGRADED", "No runs"); return; }
+    if (runs.some(inFlight)) { setStatus("SYNCING", "Pipeline running"); return; }
+    var s = runs[0].status;
+    if (s === "ok") setStatus("NOMINAL", "Build healthy");
+    else if (s === "bad") setStatus("FAILURE", "Pipeline failure");
+    else setStatus("DEGRADED", "Degraded");
+  }
+
+  // Fallback only. Unauthenticated api.github.com allows 60 requests/hour/IP and
+  // is blocked outright on plenty of corporate networks, which is why the chip
+  // read "Status offline" for most visitors before the feed existed.
+  function pollApi() {
     fetch("https://api.github.com/repos/" + REPO + "/actions/runs?per_page=10", { headers: { Accept: "application/vnd.github+json" } })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (d) {
@@ -380,7 +403,19 @@
       })
       .catch(function () { setStatus("", "Status offline"); });
   }
-  function startStatus() { pollStatus(); setInterval(pollStatus, 120000); }
+
+  function pollStatus() {
+    fetch(FEED + "runs.json", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (rows) {
+        if (!Array.isArray(rows)) throw new Error("shape");
+        applyRuns(rows);
+      })
+      .catch(pollApi);
+  }
+  // The feed is rewritten hourly, so polling faster than that only costs
+  // requests. Two minutes kept the chip lively against the old live API call.
+  function startStatus() { pollStatus(); setInterval(pollStatus, 300000); }
 
   // ── tiny toast ─────────────────────────────────────────────────────────
   function toast(msg) {

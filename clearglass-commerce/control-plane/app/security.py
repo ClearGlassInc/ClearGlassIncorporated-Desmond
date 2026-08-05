@@ -24,10 +24,12 @@ test and reason about.
 from __future__ import annotations
 
 import hmac
+import ipaddress
 import logging
 import threading
 import time
 from collections import deque
+from functools import lru_cache
 
 from fastapi import Depends, Header, HTTPException, Request, status
 
@@ -57,6 +59,14 @@ def verify_startup_posture(settings: Settings | None = None) -> None:
     surprise.
     """
     settings = settings or get_settings()
+    if settings.trusted_proxy_hops > 0 and not _trusted_networks(settings.trusted_proxy_ips):
+        logger.warning(
+            "TRUSTED_PROXY_HOPS is %d but TRUSTED_PROXY_IPS is empty, so X-Forwarded-For is "
+            "ignored and the per-IP throttles key on the TCP peer. Behind a reverse proxy "
+            "that collapses every caller into one bucket. Set TRUSTED_PROXY_IPS to the "
+            "address range your proxy connects from.",
+            settings.trusted_proxy_hops,
+        )
     if auth_enabled(settings):
         return
     if settings.app_env.lower() in {"production", "prod"}:
@@ -181,27 +191,84 @@ class SlidingWindowLimiter:
 _limiter = SlidingWindowLimiter()
 
 
-def client_identity(request: Request, trusted_proxy_hops: int = 0) -> str:
+@lru_cache(maxsize=8)
+def _trusted_networks(spec: str) -> tuple[ipaddress.IPv4Network | ipaddress.IPv6Network, ...]:
+    """Parse the comma-separated proxy allowlist into networks (bare IPs become /32)."""
+    networks = []
+    for raw in spec.split(","):
+        raw = raw.strip()
+        if not raw:
+            continue
+        try:
+            networks.append(ipaddress.ip_network(raw, strict=False))
+        except ValueError:
+            logger.warning(
+                "Ignoring invalid TRUSTED_PROXY_IPS entry %r (expected an IP or CIDR).", raw
+            )
+    return tuple(networks)
+
+
+def peer_is_trusted_proxy(peer: str, trusted_proxy_ips: str) -> bool:
+    """True when the TCP peer is one of the declared reverse proxies."""
+    networks = _trusted_networks(trusted_proxy_ips)
+    if not networks:
+        return False
+    try:
+        address = ipaddress.ip_address(peer)
+    except ValueError:
+        # Non-IP peers (unix sockets, ASGI test transports) are never proxies.
+        return False
+    return any(address in network for network in networks)
+
+
+def client_identity(
+    request: Request, trusted_proxy_hops: int = 0, trusted_proxy_ips: str = ""
+) -> str:
     """Resolve the caller address the throttles should key on.
 
     Uvicorn only honours ``X-Forwarded-For`` from ``forwarded_allow_ips`` (127.0.0.1 by
     default), so behind Render/Cloudflare ``request.client.host`` is the *proxy* — every
     customer would share a single bucket and one abusive caller could 429 the whole
-    storefront. When operators declare how many proxies they run, read the caller from
-    the header instead, counting back from the right so only the entries those proxies
-    appended are trusted: a client that sends its own ``X-Forwarded-For`` only pollutes
-    positions its proxy has already pushed out of reach.
+    storefront. Where operators declare their proxies, read the caller from the header
+    instead, counting back from the right so only the entries those proxies appended are
+    trusted.
+
+    The hop count alone is not sufficient, and trusting it was a throttle bypass: a
+    request arriving on any ingress that is *not* the proxy (a private service address,
+    an internal mesh, a directly reachable container port) has nothing appending the
+    real peer, so the caller owns every hop and can rotate the rightmost value to mint a
+    fresh bucket per request. The header is therefore read only when the TCP peer is an
+    approved proxy; every other peer keys on its own address, which fails toward
+    over-throttling rather than silent bypass.
     """
     peer = request.client.host if request.client else "unknown"
     if trusted_proxy_hops <= 0:
         return peer
+    if not peer_is_trusted_proxy(peer, trusted_proxy_ips):
+        return peer
+
     forwarded = request.headers.get("x-forwarded-for", "")
     hops = [part.strip() for part in forwarded.split(",") if part.strip()]
-    if len(hops) < trusted_proxy_hops:
-        # Fewer hops than declared: the header is missing or truncated, so it cannot be
-        # trusted to name the caller. Fall back to the peer rather than guessing.
-        return peer
-    return hops[-trusted_proxy_hops]
+
+    # Walk right to left and stop at the first entry that is not itself a trusted
+    # proxy: that is the caller. Selecting a fixed index instead was still spoofable
+    # whenever more than one hop was configured — an attacker who reaches the last
+    # proxy directly can pad the header so the counted-back position lands on a value
+    # it chose, because the proxy only ever appends one address. Verifying each
+    # intermediate makes the padding land on the attacker's own address instead.
+    # ``trusted_proxy_hops`` bounds the walk so an oversized header cannot make the
+    # scan expensive.
+    for index in range(1, trusted_proxy_hops + 1):
+        if len(hops) < index:
+            # Fewer hops than declared: the header is missing or truncated, so it
+            # cannot name the caller. Fall back to the peer rather than guessing.
+            return peer
+        candidate = hops[-index]
+        if not peer_is_trusted_proxy(candidate, trusted_proxy_ips):
+            return candidate
+    # Every entry within the bound was a trusted proxy, so the caller is not
+    # identifiable from the header. Key on the peer rather than trust the remainder.
+    return peer
 
 
 def rate_limit(scope: str, setting_name: str):
@@ -214,7 +281,9 @@ def rate_limit(scope: str, setting_name: str):
         limit = getattr(settings, setting_name)
         if limit <= 0:
             return
-        client = client_identity(request, settings.trusted_proxy_hops)
+        client = client_identity(
+            request, settings.trusted_proxy_hops, settings.trusted_proxy_ips
+        )
         if not _limiter.allow(f"{scope}:{client}", limit):
             raise HTTPException(
                 status_code=status.HTTP_429_TOO_MANY_REQUESTS,

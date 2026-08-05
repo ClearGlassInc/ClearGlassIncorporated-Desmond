@@ -1,17 +1,21 @@
 # Site Health Report
 
-**Run:** 2026-08-04T09:37:49.463390+00:00
-**Status:** ✅ Healthy
+**Run:** 2026-08-05T09:35:26.417204+00:00
+**Status:** ⚠️ Issues Detected
 **Pages:** 6/6 healthy
 
 ## Pages
 
-- ✅ `/` (334ms)
-- ✅ `/artemis.html` (198ms)
-- ✅ `/artemis-iv.html` (225ms)
-- ✅ `/guardian.html` (238ms)
-- ✅ `/clearglass-nexus.html` (319ms)
-- ✅ `/government.html` (154ms)
+- ✅ `/` (186ms)
+- ✅ `/artemis.html` (87ms)
+- ✅ `/artemis-iv.html` (118ms)
+- ✅ `/guardian.html` (89ms)
+- ✅ `/clearglass-nexus.html` (159ms)
+- ✅ `/government.html` (104ms)
+
+## Local Issues
+
+- ❌ Page missing ClearGlass logo: checkout/index.html
 
 ## Warnings (non-failing)
 

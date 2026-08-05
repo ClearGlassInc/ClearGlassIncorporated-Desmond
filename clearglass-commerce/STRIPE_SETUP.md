@@ -34,6 +34,36 @@ Outstanding `requirements.past_due`:
 None of these can be set from this repo. They are completed by a human at
 <https://dashboard.stripe.com/account/onboarding>.
 
+## 1a. ⚠️ Two catalogues disagree — reconcile before go-live
+
+The Stripe account already contains three **live, active** Price objects (created
+2026-08-05) that do **not** match the price book in this repo:
+
+| Stripe Price | Product | Amount |
+|---|---|---|
+| `price_1U0wl3L8uR92FksUMVIa9nUl` | ClearGlass 90-Minute Cyber Risk Audit | CAD $297 one-time |
+| `price_1U0wlFL8uR92FksUG6ZT87rG` | ClearGlass Business Protection | CAD $100 / month |
+| `price_1U0wlOL8uR92FksUJjFEMvGT` | ClearGlass Business Protection | CAD $1,000 / year |
+
+The repo prices a different set of services entirely — `quick-audit` CAD $249,
+`hardening` CAD $2,500, `phipa` CAD $3,000, `monitoring` CAD $600/month — sourced
+from `data/store/catalog.json`, which is also what `store.html` advertises.
+
+There are therefore **three** places a price lives: Stripe, `app/data/pricebook.json`,
+and the static site (`data/store/catalog.json` + `checkout/index.html`, which
+hardcodes the Stripe price IDs above and currently falls back to a mailto because its
+`STRIPE_LINKS` are empty).
+
+**Decide which catalogue is canonical before enabling live payments.** If the Stripe
+Prices are authoritative, the stronger fix is to stop inlining amounts altogether and
+have the price book carry `stripe_price_id`, passing `line_items[].price` instead of
+`price_data`. That collapses three sources into one, and lets tax behaviour and tax
+codes be managed on the Price where Stripe expects them — all three Prices currently
+have `tax_behavior: "unspecified"` and `tax_code: null`, which Stripe Tax needs set.
+
+Until that is resolved, the amounts in `app/data/pricebook.json` are the repo's own
+figures and should not be assumed to match what the business intends to charge.
+
 ## 2. Architecture
 
 Stripe **Checkout Sessions**, hosted page, redirect flow. Not Elements, not Connect:

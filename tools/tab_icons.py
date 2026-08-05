@@ -150,7 +150,29 @@ def mask_inert(text: str) -> str:
     )
 
 
+# A page may declare the ClearGlass mark either by pointing at the 512px master
+# (what TAGS builds) or through the sized family tools/generate_favicons.py derives
+# from it. The homepage takes the sized route on purpose: the master rendered at
+# 16px is unreadable, so tests/test_holographic_branding.py asserts the master must
+# NOT occupy its icon slots. Adding the master here anyway put two gates in direct
+# conflict — this tool's own test demanded the tag that the branding test forbids.
+# A page carrying the sized family already satisfies the intent, so leave it alone.
+SIZED_FAMILY_PROBES = (
+    re.compile(r'rel=["\']icon["\'][^>]*href=["\']/favicon\.ico["\']', re.IGNORECASE),
+    re.compile(r'href=["\']/favicon-32\.png["\']', re.IGNORECASE),
+    re.compile(r'href=["\']/favicon-16\.png["\']', re.IGNORECASE),
+    re.compile(r'href=["\']/apple-touch-icon\.png["\']', re.IGNORECASE),
+)
+
+
+def declares_sized_family(head: str) -> bool:
+    """True when the head opts into the derived sized icons instead of the master."""
+    return all(probe.search(head) for probe in SIZED_FAMILY_PROBES)
+
+
 def missing_tags(head: str) -> list[str]:
+    if declares_sized_family(head):
+        return []
     return [markup for probe, markup in TAGS if not probe.search(head)]
 
 

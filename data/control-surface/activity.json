@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:17",
-    "timestamp": "2026-08-04T23:17:52Z"
+    "time": "03:31",
+    "timestamp": "2026-08-05T03:31:29Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #537",
-    "time": "23:17",
-    "timestamp": "2026-08-04T23:17:40Z"
-  },
-  {
-    "title": "Running Copilot cloud agent",
-    "status": "ok",
-    "detail": "dynamic on copilot/task-272290681-1196426665-54272cbb-2819-4460-8711-9df37c057cad \u00b7 run #1048",
-    "time": "23:00",
-    "timestamp": "2026-08-04T23:00:54Z"
-  },
-  {
-    "title": "Repository Health",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #85",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1549",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #2224",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1898",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
-  },
-  {
-    "title": "Site Integrity Guard",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #88",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #2162",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1929",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
+    "detail": "schedule on main \u00b7 run #538",
+    "time": "03:31",
+    "timestamp": "2026-08-05T03:31:20Z"
   },
   {
     "title": "Defender Watch",
     "status": "ok",
-    "detail": "push on main \u00b7 run #1571",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
+    "detail": "schedule on main \u00b7 run #1580",
+    "time": "03:18",
+    "timestamp": "2026-08-05T03:18:32Z"
   },
   {
-    "title": "ClearGlass GitHub Pages Check",
+    "title": "Running Copilot Code Review",
     "status": "ok",
-    "detail": "push on main \u00b7 run #680",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
+    "detail": "dynamic on claude/workflow-components-database-sync-jcmei8 \u00b7 run #70",
+    "time": "03:10",
+    "timestamp": "2026-08-05T03:10:04Z"
   },
   {
-    "title": "pages build and deployment",
+    "title": "Repository Health",
     "status": "ok",
-    "detail": "dynamic on main \u00b7 run #2052",
-    "time": "22:12",
-    "timestamp": "2026-08-04T22:12:12Z"
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #93",
+    "time": "03:10",
+    "timestamp": "2026-08-05T03:10:00Z"
+  },
+  {
+    "title": "PR Automation",
+    "status": "ok",
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #1038",
+    "time": "03:09",
+    "timestamp": "2026-08-05T03:09:59Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #1579",
+    "time": "03:09",
+    "timestamp": "2026-08-05T03:09:59Z"
+  },
+  {
+    "title": "Copilot Setup Steps",
+    "status": "ok",
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #686",
+    "time": "03:09",
+    "timestamp": "2026-08-05T03:09:59Z"
+  },
+  {
+    "title": "CI",
+    "status": "ok",
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #2170",
+    "time": "03:09",
+    "timestamp": "2026-08-05T03:09:59Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #2232",
+    "time": "03:09",
+    "timestamp": "2026-08-05T03:09:59Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #1906",
+    "time": "03:09",
+    "timestamp": "2026-08-05T03:09:59Z"
+  },
+  {
+    "title": "Site Reliability Audit",
+    "status": "ok",
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #528",
+    "time": "03:09",
+    "timestamp": "2026-08-05T03:09:59Z"
+  },
+  {
+    "title": "Site Integrity Guard",
+    "status": "ok",
+    "detail": "pull_request on claude/workflow-components-database-sync-jcmei8 \u00b7 run #96",
+    "time": "03:09",
+    "timestamp": "2026-08-05T03:09:59Z"
   }
 ]

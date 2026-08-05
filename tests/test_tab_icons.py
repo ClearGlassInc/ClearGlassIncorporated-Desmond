@@ -57,6 +57,35 @@ def test_single_quotes_count_as_declared():
     assert TAGS[3][0].search("<link rel='apple-touch-icon' href='/x.png'>")
 
 
+def test_the_classic_ico_fills_the_any_size_and_fallback_slots():
+    """A page on the sized icon family is complete, not "missing" the master.
+
+    tools/generate_favicons.py cuts favicon.ico from the same seal, so a head
+    that declares it already covers the resolution-independent and legacy
+    fallback slots — with real 16/32/48 rasters rather than the 512px master
+    downscaled by the browser. Demanding the master back would undo that.
+    """
+    classic = (
+        '<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">\n'
+        '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">\n'
+        '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">\n'
+        '<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">\n'
+        '<link rel="manifest" href="/site.webmanifest">\n'
+        '<meta name="theme-color" content="#07111f">\n'
+        '<meta name="msapplication-TileColor" content="#07111f">\n'
+        '<meta name="msapplication-TileImage" content="/icon-192.png">\n'
+        '<meta name="msapplication-config" content="/browserconfig.xml">'
+    )
+    page = BARE.replace("<title>t</title>", f"{classic}\n<title>t</title>")
+    assert missing_tags(page) == []
+    assert apply(page) == (page, [])
+
+
+def test_a_head_with_no_icons_at_all_still_fails_the_gate():
+    """Widening the two probes must not blunt the gate for a bare page."""
+    assert len(missing_tags(BARE)) == len(TAGS)
+
+
 def test_body_copy_does_not_suppress_a_real_tag():
     """Detection reads the <head> only, so prose never fakes a declaration."""
     page = BARE.replace("<body>", '<body>we set rel="mask-icon" on every page')

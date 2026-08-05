@@ -415,7 +415,8 @@
 <script>
 (function(){
   "use strict";
-  var REPO="ClearGlassInc/ClearGlassInc.github.io";
+  var FEED="/data/control-surface/";
+  var REPO="ClearGlassInc/ClearGlassIncorporated-Desmond";
   var reduce=false; try{reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;}catch(e){}
   var fine=false; try{fine=matchMedia("(hover:hover) and (pointer:fine)").matches;}catch(e){}
   var $=function(id){return document.getElementById(id);};
@@ -525,18 +526,35 @@
     else if(e.key==="Escape"&&palOv.classList.contains("open")){closePal();}
   },true);
 
-  /* live deploy telemetry (keyless GitHub Actions; degrades to offline) */
+  /* Live deploy telemetry. Reads the hourly same-origin feed published by
+     control-surface-feeds.yml; falls back to the keyless GitHub API (60 req/hr
+     per IP, blocked on many networks) only when the feed cannot be reached. */
   function setDeploy(cls,txt){var d=$("dDeploy"),t=$("tDeploy");if(d)d.className="dot "+cls;if(t)t.textContent="Deploy · "+txt;}
-  fetch("https://api.github.com/repos/"+REPO+"/actions/runs?per_page=10",{headers:{Accept:"application/vnd.github+json"}})
+  function feedInFlight(row){var h=String(row&&row.detail||"").split("·")[0].trim();
+    return h==="in_progress"||h==="queued"||h==="pending"||h==="requested";}
+  function deployFromApi(){
+    fetch("https://api.github.com/repos/"+REPO+"/actions/runs?per_page=10",{headers:{Accept:"application/vnd.github+json"}})
+      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(d){var runs=(d&&d.workflow_runs)||[];
+        if(!runs.length){setDeploy("warn","no runs");return;}
+        if(runs.some(function(r){return r.status!=="completed";})){setDeploy("sync","pipeline running");return;}
+        var c=runs[0].conclusion;
+        if(c==="success")setDeploy("ok","build healthy");
+        else if(c==="failure"||c==="timed_out"||c==="startup_failure")setDeploy("bad","pipeline failure");
+        else setDeploy("warn","degraded");})
+      .catch(function(){setDeploy("","offline");});
+  }
+  fetch(FEED+"runs.json",{cache:"no-store"})
     .then(function(r){if(!r.ok)throw 0;return r.json();})
-    .then(function(d){var runs=(d&&d.workflow_runs)||[];
-      if(!runs.length){setDeploy("warn","no runs");return;}
-      if(runs.some(function(r){return r.status!=="completed";})){setDeploy("sync","pipeline running");return;}
-      var c=runs[0].conclusion;
-      if(c==="success")setDeploy("ok","build healthy");
-      else if(c==="failure"||c==="timed_out"||c==="startup_failure")setDeploy("bad","pipeline failure");
+    .then(function(rows){
+      if(!Array.isArray(rows))throw 0;
+      if(!rows.length){setDeploy("warn","no runs");return;}
+      if(rows.some(feedInFlight)){setDeploy("sync","pipeline running");return;}
+      var s=rows[0].status;
+      if(s==="ok")setDeploy("ok","build healthy");
+      else if(s==="bad")setDeploy("bad","pipeline failure");
       else setDeploy("warn","degraded");})
-    .catch(function(){setDeploy("","offline");});
+    .catch(deployFromApi);
 
   /* ── animated constellation canvas (light theme) ── */
   var cv=$("bg"); if(cv && !reduce){

@@ -25,6 +25,32 @@ DENIED_TOP_LEVEL = {
     "youtube_launch",
 }
 PUBLIC_DENIED_TREE_EXCEPTIONS = {Path("apps/command-center")}
+
+# `data/` stays denied as a tree — it also holds internal working state (marketing
+# shared memory, campaign packages, SEO targeting config). These specific feeds are
+# the ones live pages fetch to render, so denying them left every dashboard on the
+# site showing its "unavailable" fallback against a 404. Allowlisted file by file:
+# adding a feed here is a deliberate decision to publish it.
+PUBLIC_DATA_FEEDS = {
+    # Control Surface contract feeds, refreshed hourly by control-surface-feeds.yml
+    # and consumed by web-design.html, control-surface.{html,js}, systems.html.
+    "data/control-surface/activity.json",
+    "data/control-surface/alerts.json",
+    "data/control-surface/health.json",
+    "data/control-surface/metrics.json",
+    "data/control-surface/pipeline.json",
+    "data/control-surface/runs.json",
+    # Page-specific feeds, each fetched by the page named beside it.
+    "data/Ontario-osint/intel.json",      # Ontario-osint.html, web-design.html
+    "data/platform/registry.json",        # intelligence-platform.html
+    "data/store/catalog.json",            # web-design.html
+    "data/xenolith/lattice.json",         # xenolith.html
+    # Linked as downloads from the (noindex) SEO dashboard.
+    "data/seo/alerts.json",
+    "data/seo/audit.json",
+    "data/seo/performance.json",
+}
+
 DENIED_PARTS = {"node_modules", "__pycache__", ".pytest_cache", ".mypy_cache"}
 DENIED_NAMES = {"package.json", "package-lock.json", "pyproject.toml", "requirements.txt"}
 
@@ -35,13 +61,16 @@ def public_relative_paths() -> list[Path]:
         if not source.is_file():
             continue
         relative = source.relative_to(ROOT)
-        inside_public_exception = any(relative.is_relative_to(path) for path in PUBLIC_DENIED_TREE_EXCEPTIONS)
+        relative_text = relative.as_posix()
+        inside_public_exception = (
+            any(relative.is_relative_to(path) for path in PUBLIC_DENIED_TREE_EXCEPTIONS)
+            or relative_text in PUBLIC_DATA_FEEDS
+        )
         if (
             relative.parts[0] in DENIED_TOP_LEVEL
             and not inside_public_exception
         ) or any(p in DENIED_PARTS for p in relative.parts):
             continue
-        relative_text = relative.as_posix()
         if source.name in DENIED_NAMES:
             continue
         if (

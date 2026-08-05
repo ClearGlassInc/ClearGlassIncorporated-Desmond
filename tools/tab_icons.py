@@ -40,6 +40,17 @@ SEAL = "/assets/images/clearglass-holographic-seal.png"
 
 BLOCK_COMMENT = "<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->"
 
+# The classic multi-size ``favicon.ico`` generated from the same seal by
+# tools/generate_favicons.py. A page that declares it already fills both the
+# resolution-independent slot and the legacy fallback slot — with real 16/32/48
+# rasters instead of the 512px master downscaled by the browser — so the two
+# probes below accept it in place of their own tag. Without this a page that
+# picked the sized icon family would be told to re-add the master it
+# deliberately dropped.
+CLASSIC_ICO = re.compile(
+    r'rel=["\']icon["\'][^>]*href=["\']/favicon\.ico["\']'
+    r'|href=["\']/favicon\.ico["\'][^>]*rel=["\']icon["\']', re.IGNORECASE)
+
 # (probe, markup). ``probe`` decides whether the page already declares this
 # tag; it is matched against the <head> only, so a favicon string inside body
 # copy or a script never suppresses a real tag. Order defines how a freshly
@@ -48,7 +59,8 @@ TAGS: list[tuple[re.Pattern[str], str]] = [
     (
         re.compile(
             r'rel=["\']icon["\'][^>]*sizes=["\']any["\']'
-            r'|sizes=["\']any["\'][^>]*rel=["\']icon["\']', re.IGNORECASE),
+            r'|sizes=["\']any["\'][^>]*rel=["\']icon["\']'
+            r'|' + CLASSIC_ICO.pattern, re.IGNORECASE),
         f'<link rel="icon" href="{SEAL}" sizes="any">',
     ),
     (
@@ -58,7 +70,9 @@ TAGS: list[tuple[re.Pattern[str], str]] = [
         f'<link rel="icon" type="image/png" href="{SEAL}">',
     ),
     (
-        re.compile(r'rel=["\']alternate icon["\']', re.IGNORECASE),
+        re.compile(
+            r'rel=["\']alternate icon["\']'
+            r'|' + CLASSIC_ICO.pattern, re.IGNORECASE),
         f'<link rel="alternate icon" href="{SEAL}">',
     ),
     (

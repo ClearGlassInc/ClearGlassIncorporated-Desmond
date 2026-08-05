@@ -24,6 +24,7 @@ var PRECACHE = [
   "/platform.js",
   "/nav.js",
   "/asset-protection.js",
+  "/cg-content-shield.js",
   "/Ontario-osint.html",
   "/data/Ontario-osint/intel.json",
   "/data/control-surface/runs.json",

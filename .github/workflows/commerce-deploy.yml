@@ -70,14 +70,27 @@ jobs:
     timeout-minutes: 15
     environment: production
     steps:
+      # The Render hook is optional by design (see CLAUDE.md): the gates above are
+      # what protect main. Hard-failing here when no hook is configured painted the
+      # whole workflow red on every run, so a real ruff/pytest/build regression was
+      # indistinguishable from an unset secret. Skip cleanly instead — and still
+      # fail hard when a hook IS configured and the call does not go through.
       - name: Trigger Render deploy
         env:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           set -euo pipefail
           if [ -z "$HOOK" ]; then
-            echo "::error::RENDER_DEPLOY_HOOK_URL is required for Commerce production deploys."
-            echo "Add a Render Deploy Hook URL as a repo secret before dispatching this deploy."
-            exit 1
+            echo "::notice::No RENDER_DEPLOY_HOOK_URL configured — gates passed, deploy skipped."
+            {
+              echo "### Commerce deploy skipped"
+              echo
+              echo "Test, lint, and frontend build gates all passed."
+              echo "No \`RENDER_DEPLOY_HOOK_URL\` repo secret is set, so no Render deploy was triggered."
+              echo "Add that secret to turn this run into a real production deploy."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
           fi
-          curl -fsS -X POST "$HOOK" >/dev/null && echo "Render deploy triggered."
+          curl -fsS -X POST "$HOOK" >/dev/null
+          echo "Render deploy triggered."
+          echo "### Commerce deploy triggered on Render" >> "$GITHUB_STEP_SUMMARY"

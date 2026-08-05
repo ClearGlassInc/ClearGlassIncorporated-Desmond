@@ -281,7 +281,8 @@
    sentinel/sentinel/percival.py, plus public GitHub telemetry. */
 (function () {
   "use strict";
-  var REPO = "ClearGlassInc/ClearGlassInc.github.io";
+  var FEED = "/data/control-surface/";
+  var REPO = "ClearGlassInc/ClearGlassIncorporated-Desmond";
   var EXEMPT = ["404.html","offline.html","cg-loader.html","button-system.html",
     "hover-menu.html","button-lab.html","ClearGlass-NEXUS-v12-FINAL.html",
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html"];
@@ -456,47 +457,94 @@
     }).join(""), "No active alerts. Estate nominal.");
   }
 
-  /* ── GitHub telemetry (keyless; degrades to offline) ── */
+  /* ── Run telemetry ──────────────────────────────────────────────────────
+     Primary source is the same-origin feed published hourly by
+     control-surface-feeds.yml, which the Actions API fills in authenticated.
+     The keyless api.github.com path below stays as a fallback: it allows 60
+     requests/hour/IP and is blocked outright on many corporate networks, so on
+     its own it left these panels reading "offline" for most visitors. */
   function gh(path) {
     return fetch("https://api.github.com/repos/" + REPO + path,
       { headers: { Accept: "application/vnd.github+json" } })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
   }
-  function telemetry() {
-    gh("/actions/runs?per_page=20").then(function (d) {
-      var runs = d.workflow_runs || [];
-      var latest = runs[0];
-      var running = runs.some(function (r) { return r.status !== "completed"; });
-      var state = running ? ["sync", "Pipeline running"] :
-        latest && latest.conclusion === "success" ? ["ok", "Build healthy"] :
-        latest ? ["bad", "Pipeline failure"] : ["warn", "No runs"];
-      $("dDeploy").className = "dot " + state[0];
-      $("tDeploy").textContent = "Deploy: " + state[1];
-      $("kDeploy").innerHTML = '<span class="badge ' +
-        (state[0] === "ok" ? "b-ok" : state[0] === "sync" ? "b-info" : "b-bad") + '">' +
-        state[1].toUpperCase() + "</span>";
-      var seen = {};
-      fill("autoRows", runs.filter(function (r) {
-        if (seen[r.name]) return false; seen[r.name] = 1; return true;
-      }).map(function (r) {
-        var ok = r.conclusion === "success";
-        return row(new Date(r.run_started_at).toISOString().slice(5, 16).replace("T", " "),
-          esc(r.name), r.status !== "completed" ? "RUNNING" : ok ? "PASS" : "FAIL",
-          r.status !== "completed" ? "b-info" : ok ? "b-ok" : "b-bad");
-      }).join(""));
-      fill("deployRows", runs.filter(function (r) { return /pages/i.test(r.name); }).slice(0, 8)
-        .map(function (r) {
-          var ok = r.conclusion === "success";
-          return row("#" + r.run_number, esc(r.name) + " <small>· " + r.head_sha.slice(0, 7) + "</small>",
-            r.status !== "completed" ? "DEPLOYING" : ok ? "LIVE" : "FAILED",
-            r.status !== "completed" ? "b-info" : ok ? "b-ok" : "b-bad");
-        }).join(""), "No deploy runs visible.");
-    }).catch(function () {
-      $("dDeploy").className = "dot"; $("tDeploy").textContent = "Deploy: offline";
-      $("kDeploy").innerHTML = '<span class="badge b-dim">STATUS OFFLINE</span>';
-      fill("autoRows", "", "GitHub telemetry offline (keyless rate limit or network).");
-      fill("deployRows", "", "GitHub telemetry offline.");
+
+  /* Both sources normalise to { name, label, running, ok } before rendering. */
+  function renderRuns(items) {
+    var latest = items[0];
+    var running = items.some(function (r) { return r.running; });
+    var state = running ? ["sync", "Pipeline running"] :
+      latest && latest.ok ? ["ok", "Build healthy"] :
+      latest ? ["bad", "Pipeline failure"] : ["warn", "No runs"];
+    $("dDeploy").className = "dot " + state[0];
+    $("tDeploy").textContent = "Deploy: " + state[1];
+    $("kDeploy").innerHTML = '<span class="badge ' +
+      (state[0] === "ok" ? "b-ok" : state[0] === "sync" ? "b-info" : "b-bad") + '">' +
+      state[1].toUpperCase() + "</span>";
+    var seen = {};
+    fill("autoRows", items.filter(function (r) {
+      if (seen[r.name]) return false; seen[r.name] = 1; return true;
+    }).map(function (r) {
+      return row(r.when, esc(r.name), r.running ? "RUNNING" : r.ok ? "PASS" : "FAIL",
+        r.running ? "b-info" : r.ok ? "b-ok" : "b-bad");
+    }).join(""));
+    fill("deployRows", items.filter(function (r) { return /pages/i.test(r.name); }).slice(0, 8)
+      .map(function (r) {
+        return row(r.label, esc(r.name) + (r.note ? ' <small>· ' + esc(r.note) + "</small>" : ""),
+          r.running ? "DEPLOYING" : r.ok ? "LIVE" : "FAILED",
+          r.running ? "b-info" : r.ok ? "b-ok" : "b-bad");
+      }).join(""), "No deploy runs visible.");
+  }
+
+  function telemetryOffline() {
+    $("dDeploy").className = "dot"; $("tDeploy").textContent = "Deploy: offline";
+    $("kDeploy").innerHTML = '<span class="badge b-dim">STATUS OFFLINE</span>';
+    fill("autoRows", "", "Run telemetry offline (feed unreachable and keyless API rate limited).");
+    fill("deployRows", "", "Run telemetry offline.");
+  }
+
+  function telemetryFromApi() {
+    return gh("/actions/runs?per_page=20").then(function (d) {
+      renderRuns((d.workflow_runs || []).map(function (r) {
+        return {
+          name: r.name,
+          label: "#" + r.run_number,
+          note: (r.head_sha || "").slice(0, 7),
+          when: new Date(r.run_started_at).toISOString().slice(5, 16).replace("T", " "),
+          running: r.status !== "completed",
+          ok: r.conclusion === "success"
+        };
+      }));
     });
+  }
+
+  /* Feed titles read "Workflow Name #1234"; detail leads with the raw state
+     ("in_progress · schedule on main") until a conclusion lands. */
+  function telemetryFromFeed() {
+    return fetch(FEED + "runs.json", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (rows) {
+        if (!Array.isArray(rows)) throw new Error("shape");
+        renderRuns(rows.map(function (r) {
+          var title = String(r.title || "");
+          var hash = title.lastIndexOf(" #");
+          var head = String(r.detail || "").split("·")[0].trim();
+          return {
+            name: hash > 0 ? title.slice(0, hash) : title,
+            label: hash > 0 ? title.slice(hash + 1) : "—",
+            note: "",
+            when: String(r.timestamp || "").slice(5, 16).replace("T", " ") || r.time,
+            running: head === "in_progress" || head === "queued" || head === "pending" || head === "requested",
+            ok: r.status === "ok"
+          };
+        }));
+      });
+  }
+
+  function telemetry() {
+    telemetryFromFeed().catch(telemetryFromApi).catch(telemetryOffline);
+    /* No published feed carries commit history yet, so this panel is still
+       keyless-API-only and shows its offline note when that is unavailable. */
     gh("/commits?per_page=12").then(function (commits) {
       fill("actRows", commits.map(function (c) {
         var msg = (c.commit.message || "").split("\n")[0];
@@ -509,7 +557,7 @@
 
   $("btnRescan").addEventListener("click", audit);
   audit(); telemetry();
-  setInterval(telemetry, 120000);
+  setInterval(telemetry, 300000);   // the feed is rewritten hourly
 })();
 </script>
 <script defer src="control-surface.js"></script>

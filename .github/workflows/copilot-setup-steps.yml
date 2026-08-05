@@ -1,35 +1,52 @@
-name: ClearGlass GitHub Pages Check
+# Environment prep for the GitHub Copilot coding agent.
+#
+# GitHub reads this exact filename and requires a job literally named
+# `copilot-setup-steps`; the steps run before the agent starts, in the same
+# workspace it then works in. The filename previously held an unrelated Pages
+# check (now .github/workflows/pages-check.yml), so every Copilot request failed
+# with "no supported setup-steps job found in your workflow file".
+#
+# Keep the installs in step with the CI jobs the agent's changes have to pass:
+# ci.yml's Python Tests (pytest, pytest-cov, pyyaml) and Lint (ruff, pinned).
+# https://gh.io/copilot/actions-setup-steps
+name: Copilot Setup Steps
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
 
-# Least-privilege: this workflow only reads the repo to validate the static
-# site and upload it as an artifact. It never writes back, so contents: read
-# is sufficient.
 permissions:
   contents: read
 
 jobs:
-  validate-site:
+  # Name is fixed by GitHub — do not rename this job.
+  copilot-setup-steps:
+    name: Copilot setup steps
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-
+    timeout-minutes: 15
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
 
-      - name: Verify required files
-        run: |
-          test -f index.html
-          echo "✓ index.html found"
-
-      - name: Upload site artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          name: clearglass-site
-          path: .
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install the toolchain CI gates the agent's work against
+        run: |
+          # ruff is pinned for the same reason ci.yml pins it: an unpinned
+          # install pulls a newer default rule set and turns `ruff check .` red
+          # with no code change. Bump both together, deliberately.
+          pip install pytest pytest-cov pyyaml "ruff==0.15.8"
+
+      - name: Verify the gates run in this environment
+        run: |
+          python -m pytest tests/ -q --no-header
+          ruff check .

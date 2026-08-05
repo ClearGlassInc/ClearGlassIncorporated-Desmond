@@ -34,35 +34,42 @@ Outstanding `requirements.past_due`:
 None of these can be set from this repo. They are completed by a human at
 <https://dashboard.stripe.com/account/onboarding>.
 
-## 1a. ⚠️ Two catalogues disagree — reconcile before go-live
+## 1a. The catalogue: Stripe is the source of truth
 
-The Stripe account already contains three **live, active** Price objects (created
-2026-08-05) that do **not** match the price book in this repo:
+The price book names the three **live, active** Stripe Prices in the account. Live
+checkout passes `line_items[].price` — Stripe owns the amount, currency, recurrence
+and tax treatment, so no number in this repo can contradict what is charged:
 
-| Stripe Price | Product | Amount |
+| SKU | Stripe Price | Amount |
 |---|---|---|
-| `price_1U0wl3L8uR92FksUMVIa9nUl` | ClearGlass 90-Minute Cyber Risk Audit | CAD $297 one-time |
-| `price_1U0wlFL8uR92FksUG6ZT87rG` | ClearGlass Business Protection | CAD $100 / month |
-| `price_1U0wlOL8uR92FksUJjFEMvGT` | ClearGlass Business Protection | CAD $1,000 / year |
+| `risk-audit-90` | `price_1U0wl3L8uR92FksUMVIa9nUl` | CAD $297 one-time |
+| `business-protection-monthly` | `price_1U0wlFL8uR92FksUG6ZT87rG` | CAD $100 / month |
+| `business-protection-annual` | `price_1U0wlOL8uR92FksUJjFEMvGT` | CAD $1,000 / year |
 
-The repo prices a different set of services entirely — `quick-audit` CAD $249,
-`hardening` CAD $2,500, `phipa` CAD $3,000, `monitoring` CAD $600/month — sourced
-from `data/store/catalog.json`, which is also what `store.html` advertises.
+`amount` in `app/data/pricebook.json` is display and mock-mode arithmetic only.
+`tests/test_pricebook.py::test_every_offer_names_a_real_stripe_price` fails if an
+offer is added without a Price, because an inline amount reintroduces a second place
+a price can live.
 
-There are therefore **three** places a price lives: Stripe, `app/data/pricebook.json`,
-and the static site (`data/store/catalog.json` + `checkout/index.html`, which
-hardcodes the Stripe price IDs above and currently falls back to a mailto because its
-`STRIPE_LINKS` are empty).
+**Superseded:** the repo previously priced a different set of services —
+`quick-audit` CAD $249, `hardening` CAD $2,500, `phipa` CAD $3,000, `monitoring`
+CAD $600/month — from `data/store/catalog.json` (generated 2026-06-21,
+`live_checkout_enabled: false`, empty `checkout_url`s). Those have no Stripe Price
+and were never sellable. They remain advertised on `store.html` and `offers/*.html`
+as quote-driven engagements, which is a reasonable thing for them to be — but they
+are **not** purchasable through this control plane. If you want them sellable,
+create a Stripe Price for each and add it to the price book.
 
-**Decide which catalogue is canonical before enabling live payments.** If the Stripe
-Prices are authoritative, the stronger fix is to stop inlining amounts altogether and
-have the price book carry `stripe_price_id`, passing `line_items[].price` instead of
-`price_data`. That collapses three sources into one, and lets tax behaviour and tax
-codes be managed on the Price where Stripe expects them — all three Prices currently
-have `tax_behavior: "unspecified"` and `tax_code: null`, which Stripe Tax needs set.
+### Two follow-ups that need a human
 
-Until that is resolved, the amounts in `app/data/pricebook.json` are the repo's own
-figures and should not be assumed to match what the business intends to charge.
+1. **Tax fields are unset on all three Prices** — `tax_behavior: "unspecified"` and
+   `tax_code: null` on both products. Stripe Tax needs them. `tax_behavior` is
+   effectively **immutable once set**, so this is a one-way door on live pricing
+   objects and is deliberately left for you rather than changed from here.
+2. **`checkout/index.html` is a second checkout surface.** It hardcodes the same
+   three price IDs but its `STRIPE_LINKS` are empty, so every button currently falls
+   back to a `mailto:`. Either wire it to Payment Links, or point it at this control
+   plane, so there is one checkout path rather than two that can drift.
 
 ## 2. Architecture
 
@@ -79,8 +86,8 @@ Stripe **Checkout Sessions**, hosted page, redirect flow. Not Elements, not Conn
   Link, Apple Pay, Google Pay) are enabled from the Dashboard with no code change,
   and Apple/Google Pay give the one-click flow without an Express Checkout Element.
 
-Subscription support is in place: `monitoring` is a recurring offer, and a cart
-containing it produces a `subscription`-mode session.
+Subscription support is in place: the two Business Protection offers are recurring,
+and a cart containing either produces a `subscription`-mode session.
 
 ## 3. Required Stripe Dashboard settings
 
@@ -158,9 +165,10 @@ could post `amount: 1` and take a CAD $2,500 engagement for a cent.
 OpenAPI schema has exactly the fields `{sku, quantity}`. If you add a price-shaped
 field back to that contract, the suite fails on purpose.
 
-Changing a price means editing `app/data/pricebook.json` (and the display copy in
-`storefront/lib/catalog.ts`, plus `data/store/catalog.json` at the repo root). Live
-price changes through the API remain HIGH risk and stay behind the approval gate.
+Changing a live price means changing the **Stripe Price** — that is what customers are
+charged. Update the display copy in `app/data/pricebook.json` and
+`storefront/lib/catalog.ts` to match. Live price changes through the API remain HIGH
+risk and stay behind the approval gate.
 
 ## 7. Validation checklist
 
@@ -169,12 +177,12 @@ Run in order. Do not skip 1 — everything after it fails while the account is i
 - [ ] `charges_enabled: true` and `payouts_enabled: true` on the account
 - [ ] Payout bank account attached; `GET /payments/payout-account` returns `configured: true` with no warnings
 - [ ] `STRIPE_SECRET_KEY` set; `POST /checkout/session` returns `"mode": "live"` and a `checkout.stripe.com` URL
-- [ ] Tampered cart refused: `{"items":[{"sku":"quick-audit","quantity":1,"amount":1}]}` still totals `24900`
+- [ ] Tampered cart refused: `{"items":[{"sku":"risk-audit-90","quantity":1,"amount":1}]}` still totals `29700`
 - [ ] Unknown SKU returns 400 and leaves a `rejected` row in `/events`
 - [ ] Webhook endpoint registered; `STRIPE_WEBHOOK_SECRET` set; a forged unsigned POST to `/webhooks/stripe` returns 400
 - [ ] A real test-mode purchase produces an `orders` row with `status: paid` and the matching `external_ref`
 - [ ] Redelivering that same webhook produces **no** second order (`order_event_duplicate_skipped` in `/events`)
-- [ ] Subscription: `{"items":[{"sku":"monitoring","quantity":1}]}` returns `checkout_mode: "subscription"`
+- [ ] Subscription: `{"items":[{"sku":"business-protection-monthly","quantity":1}]}` returns `checkout_mode: "subscription"`
 - [ ] A subscription renewal (`invoice.paid`, `billing_reason: subscription_cycle`) books a second order
 - [ ] `GET /ready` reports the database reachable
 - [ ] If Stripe Tax is on: a session shows non-zero `total_details.amount_tax` for a registered jurisdiction

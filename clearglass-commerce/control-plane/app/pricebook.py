@@ -41,7 +41,13 @@ class PricebookError(ValueError):
 
 @dataclass(frozen=True)
 class Offer:
-    """One purchasable thing, at the price the business set."""
+    """One purchasable thing, at the price the business set.
+
+    ``stripe_price_id`` points at a real Stripe Price. When it is set, live checkout
+    passes that id to Stripe instead of an inline amount, which makes the Price the
+    single source of truth for what is charged — ``amount`` below is then display and
+    mock-mode arithmetic only, and drift between the two cannot overcharge anyone.
+    """
 
     sku: str
     name: str
@@ -51,7 +57,9 @@ class Offer:
     kind: str            # one_time | deposit | recurring
     max_quantity: int
     tax_behavior: str    # exclusive | inclusive — required when Stripe Tax is on
-    interval: str | None = None   # recurring only
+    interval: str | None = None            # recurring only
+    stripe_price_id: str | None = None     # authoritative price in live mode
+    stripe_product_id: str | None = None   # informational; for reconciliation
     active: bool = True
 
     @property
@@ -86,6 +94,8 @@ def _parse_offer(raw: dict[str, Any]) -> Offer:
         max_quantity=max(1, int(raw.get("max_quantity", 1))),
         tax_behavior=str(raw.get("tax_behavior", "exclusive")),
         interval=interval,
+        stripe_price_id=raw.get("stripe_price_id") or None,
+        stripe_product_id=raw.get("stripe_product_id") or None,
         active=bool(raw.get("active", True)),
     )
 
@@ -167,6 +177,7 @@ def resolve_line_items(requested: list[dict[str, Any]]) -> tuple[list[dict[str, 
                 "quantity": quantity,
                 "tax_behavior": offer.tax_behavior,
                 "interval": offer.interval,
+                "stripe_price_id": offer.stripe_price_id,
             }
         )
 

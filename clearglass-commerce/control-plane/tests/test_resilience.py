@@ -83,7 +83,7 @@ def test_checkout_rate_limit_returns_429(harness) -> None:
     build, _, monkeypatch = harness
     monkeypatch.setenv("RATE_LIMIT_CHECKOUT_PER_MINUTE", "2")
     client = build()
-    body = {"items": [{"sku": "quick-audit", "quantity": 1}]}
+    body = {"items": [{"sku": "risk-audit-90", "quantity": 1}]}
     codes = [client.post("/checkout/session", json=body).status_code for _ in range(3)]
     assert codes[:2] == [200, 200]
     assert codes[-1] == 429
@@ -110,7 +110,7 @@ def test_rate_limit_zero_disables_throttle(harness) -> None:
     build, _, monkeypatch = harness
     monkeypatch.setenv("RATE_LIMIT_CHECKOUT_PER_MINUTE", "0")
     client = build()
-    body = {"items": [{"sku": "quick-audit", "quantity": 1}]}
+    body = {"items": [{"sku": "risk-audit-90", "quantity": 1}]}
     codes = [client.post("/checkout/session", json=body).status_code for _ in range(5)]
     assert 429 not in codes
 
@@ -238,7 +238,7 @@ def test_throttle_isolates_callers_behind_a_declared_proxy(harness) -> None:
     monkeypatch.setenv("TRUSTED_PROXY_HOPS", "1")
     monkeypatch.setenv("TRUSTED_PROXY_IPS", TRUSTED_PROXY_CIDR)
     client = build()  # peer 10.0.0.9 is inside the allowlist
-    body = {"items": [{"sku": "quick-audit", "quantity": 1}]}
+    body = {"items": [{"sku": "risk-audit-90", "quantity": 1}]}
 
     def post(caller: str) -> int:
         # The proxy appends the real peer, so the rightmost entry is the trustworthy one.
@@ -257,7 +257,7 @@ def test_spoofed_forwarded_for_cannot_evade_the_throttle(harness) -> None:
     monkeypatch.setenv("TRUSTED_PROXY_HOPS", "1")
     monkeypatch.setenv("TRUSTED_PROXY_IPS", TRUSTED_PROXY_CIDR)
     client = build()
-    body = {"items": [{"sku": "quick-audit", "quantity": 1}]}
+    body = {"items": [{"sku": "risk-audit-90", "quantity": 1}]}
 
     # The abuser rotates the value it sends; the proxy still appends its real address,
     # so the trusted rightmost hop stays constant and the throttle still bites.
@@ -286,7 +286,7 @@ def test_forwarded_for_from_an_untrusted_peer_cannot_rotate_buckets(harness) -> 
     monkeypatch.setenv("TRUSTED_PROXY_HOPS", "1")
     monkeypatch.setenv("TRUSTED_PROXY_IPS", TRUSTED_PROXY_CIDR)
     client = build(peer="203.0.113.7")  # public peer, outside the allowlist
-    body = {"items": [{"sku": "quick-audit", "quantity": 1}]}
+    body = {"items": [{"sku": "risk-audit-90", "quantity": 1}]}
 
     codes = [
         client.post(
@@ -304,7 +304,7 @@ def test_forwarded_for_ignored_when_no_proxy_allowlist_is_configured(harness) ->
     monkeypatch.setenv("TRUSTED_PROXY_HOPS", "1")
     monkeypatch.delenv("TRUSTED_PROXY_IPS", raising=False)
     client = build()
-    body = {"items": [{"sku": "quick-audit", "quantity": 1}]}
+    body = {"items": [{"sku": "risk-audit-90", "quantity": 1}]}
 
     codes = [
         client.post(

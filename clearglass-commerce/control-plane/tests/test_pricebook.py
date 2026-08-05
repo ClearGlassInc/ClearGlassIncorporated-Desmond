@@ -2,9 +2,12 @@
 
 `/checkout/session` hands its line items to Stripe, so whatever sets ``amount``
 decides the charge. Before the price book that was the request body: a buyer could
-post ``amount: 1`` and take a CAD $2,500 engagement for a cent. These tests pin the
+post ``amount: 1`` and take a CAD $297 engagement for a cent. These tests pin the
 amount to the server-side price book and fail if a price-shaped field ever finds its
 way back into the checkout contract.
+
+They also pin the second half of the guarantee: every offer names a real Stripe
+Price, so live charges are set by Stripe rather than by any local number.
 """
 from __future__ import annotations
 
@@ -33,27 +36,27 @@ except (ImportError, RuntimeError):  # pragma: no cover - minimal env runs the p
     _HAS_WEB_STACK = False
 
 
-QUICK_AUDIT_CENTS = 24900
+RISK_AUDIT_CENTS = 29700
 
 
 # --------------------------------------------------------------------------- pure
 
 
 def test_resolve_prices_from_the_book() -> None:
-    items, mode = pricebook.resolve_line_items([{"sku": "quick-audit", "quantity": 1}])
+    items, mode = pricebook.resolve_line_items([{"sku": "risk-audit-90", "quantity": 1}])
     assert mode == "payment"
-    assert items[0]["amount"] == QUICK_AUDIT_CENTS
+    assert items[0]["amount"] == RISK_AUDIT_CENTS
     assert items[0]["currency"] == "cad"
 
 
 def test_client_supplied_amount_is_ignored_entirely() -> None:
     """The core guarantee: extra price-shaped keys change nothing about the charge."""
     items, _ = pricebook.resolve_line_items(
-        [{"sku": "quick-audit", "quantity": 1, "amount": 1, "currency": "usd", "name": "Free"}]
+        [{"sku": "risk-audit-90", "quantity": 1, "amount": 1, "currency": "usd", "name": "Free"}]
     )
-    assert items[0]["amount"] == QUICK_AUDIT_CENTS
+    assert items[0]["amount"] == RISK_AUDIT_CENTS
     assert items[0]["currency"] == "cad"
-    assert items[0]["name"] == "Security Quick-Audit"
+    assert items[0]["name"] == "ClearGlass 90-Minute Cyber Risk Audit"
 
 
 def test_unknown_sku_is_refused() -> None:
@@ -63,7 +66,7 @@ def test_unknown_sku_is_refused() -> None:
 
 def test_quantity_above_the_offer_maximum_is_refused() -> None:
     with pytest.raises(pricebook.PricebookError, match="exceeds the maximum"):
-        pricebook.resolve_line_items([{"sku": "quick-audit", "quantity": 99}])
+        pricebook.resolve_line_items([{"sku": "risk-audit-90", "quantity": 99}])
 
 
 def test_empty_cart_is_refused() -> None:
@@ -72,7 +75,7 @@ def test_empty_cart_is_refused() -> None:
 
 
 def test_recurring_offer_selects_subscription_mode() -> None:
-    items, mode = pricebook.resolve_line_items([{"sku": "monitoring", "quantity": 1}])
+    items, mode = pricebook.resolve_line_items([{"sku": "business-protection-monthly", "quantity": 1}])
     assert mode == "subscription"
     assert items[0]["interval"] == "month"
 
@@ -81,7 +84,7 @@ def test_mixing_recurring_and_one_time_is_refused() -> None:
     """Stripe bills a session once or on a schedule — never both."""
     with pytest.raises(pricebook.PricebookError, match="mix recurring and one-time"):
         pricebook.resolve_line_items(
-            [{"sku": "monitoring", "quantity": 1}, {"sku": "quick-audit", "quantity": 1}]
+            [{"sku": "business-protection-monthly", "quantity": 1}, {"sku": "risk-audit-90", "quantity": 1}]
         )
 
 
@@ -94,6 +97,24 @@ def test_every_offer_is_priced_and_well_formed() -> None:
         assert offer.tax_behavior in {"inclusive", "exclusive"}, offer.sku
         if offer.recurring:
             assert offer.interval, f"{offer.sku} recurs but has no interval"
+
+
+def test_every_offer_names_a_real_stripe_price() -> None:
+    """One price, one home.
+
+    An offer without a `stripe_price_id` falls back to an inline amount, which
+    reintroduces a second place a price lives and can silently drift from Stripe.
+    New offers should get a Stripe Price rather than an inline number.
+    """
+    for offer in pricebook.all_offers():
+        assert offer.stripe_price_id, f"{offer.sku} has no Stripe Price id"
+        assert offer.stripe_price_id.startswith("price_"), offer.stripe_price_id
+
+
+def test_resolved_line_items_carry_the_stripe_price_id() -> None:
+    """This is what makes Stripe — not this repo — the authority on live amounts."""
+    items, _ = pricebook.resolve_line_items([{"sku": "risk-audit-90", "quantity": 1}])
+    assert items[0]["stripe_price_id"] == "price_1U0wl3L8uR92FksUMVIa9nUl"
 
 
 # ------------------------------------------------------------------------ the API
@@ -133,10 +154,10 @@ def test_checkout_charges_the_book_price_not_the_posted_one(client) -> None:
     """The regression this whole module exists for."""
     response = client.post(
         "/checkout/session",
-        json={"items": [{"sku": "quick-audit", "quantity": 1, "amount": 1}]},
+        json={"items": [{"sku": "risk-audit-90", "quantity": 1, "amount": 1}]},
     )
     assert response.status_code == 200
-    assert response.json()["amount_total"] == QUICK_AUDIT_CENTS
+    assert response.json()["amount_total"] == RISK_AUDIT_CENTS
 
 
 def test_checkout_rejects_an_unknown_sku(client) -> None:
@@ -159,8 +180,8 @@ def test_offers_endpoint_advertises_the_same_prices(client) -> None:
     response = client.get("/offers")
     assert response.status_code == 200
     offers = {o["sku"]: o for o in response.json()}
-    assert offers["quick-audit"]["amount"] == QUICK_AUDIT_CENTS
-    assert offers["monitoring"]["interval"] == "month"
+    assert offers["risk-audit-90"]["amount"] == RISK_AUDIT_CENTS
+    assert offers["business-protection-monthly"]["interval"] == "month"
 
 
 def test_checkout_contract_exposes_no_price_field(client) -> None:
@@ -173,7 +194,7 @@ def test_checkout_contract_exposes_no_price_field(client) -> None:
 
 def test_subscription_sku_produces_a_subscription_session(client) -> None:
     response = client.post(
-        "/checkout/session", json={"items": [{"sku": "monitoring", "quantity": 1}]}
+        "/checkout/session", json={"items": [{"sku": "business-protection-monthly", "quantity": 1}]}
     )
     assert response.status_code == 200
     assert response.json()["checkout_mode"] == "subscription"

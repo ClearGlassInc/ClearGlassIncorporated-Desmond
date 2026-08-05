@@ -235,6 +235,175 @@ body:has(.hero-prism) :is(.mission-strip, .tl-item, .cta-sect) {
   50% { opacity: .92; transform: scaleX(1); }
 }
 
+
+
+/* ── Artemis command-interface atmosphere ──────────────────────────────────
+   Additive cyberpunk layer: neon edge lighting, glass refraction, scan lines,
+   orbital bloom, and precision microinteractions without removing content. */
+.cg-command-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: .78;
+  mix-blend-mode: screen;
+}
+.cg-command-atmosphere::before,
+.cg-command-atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(circle at var(--cg-orbit-x, 18%) var(--cg-orbit-y, 24%), rgba(var(--cg-cyber-cyan, 34,211,238), .18), transparent 24%),
+    radial-gradient(circle at 78% 18%, rgba(var(--cg-cyber-magenta, 244,114,182), .14), transparent 26%),
+    radial-gradient(circle at 50% 88%, rgba(var(--cg-cyber-violet, 167,139,250), .16), transparent 32%);
+  filter: blur(10px);
+  animation: cg-orbital-drift 18s ease-in-out infinite alternate;
+}
+.cg-command-atmosphere::after {
+  inset: 0;
+  background: var(--cg-cyber-grid), var(--cg-cyber-scanline);
+  background-size: 44px 44px, 44px 44px, auto;
+  opacity: .22;
+  filter: none;
+  animation: cg-scan-drift 10s linear infinite;
+}
+
+.cg-holo-shimmer,
+.cg-neon-card,
+.cg-signal-active {
+  position: relative;
+  isolation: isolate;
+}
+
+.cg-holo-shimmer::after,
+.cg-neon-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  padding: 1px;
+  background: var(--cg-cyber-edge);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: .42;
+  transition: opacity .28s var(--cg-cyber-ease), filter .28s var(--cg-cyber-ease);
+}
+
+.cg-holo-shimmer::before,
+.cg-neon-card::before {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  z-index: -1;
+  pointer-events: none;
+  background: conic-gradient(from 140deg, transparent, rgba(var(--cg-cyber-cyan, 34,211,238), .18), transparent 28%, rgba(var(--cg-cyber-magenta, 244,114,182), .14), transparent 58%, rgba(var(--cg-cyber-violet, 167,139,250), .16), transparent);
+  filter: blur(24px);
+  opacity: .2;
+  animation: cg-halo-rotate 16s linear infinite;
+}
+
+.cg-signal-active::before {
+  content: "";
+  display: inline-block;
+  width: .58em;
+  height: .58em;
+  margin-right: .55em;
+  border-radius: 999px;
+  background: rgb(var(--cg-cyber-mint, 52,211,153));
+  box-shadow: 0 0 10px rgba(var(--cg-cyber-mint, 52,211,153), .8), 0 0 24px rgba(var(--cg-cyber-cyan, 34,211,238), .42);
+  animation: cg-signal-pulse 1.8s ease-in-out infinite;
+}
+
+:is(.nav, .navbar, header nav, #cg-nav, .mobile-menu) {
+  --cg-nav-bloom: 0 0 0 1px rgba(var(--cg-cyber-cyan, 34,211,238), .16), 0 0 30px rgba(var(--cg-cyber-cyan, 34,211,238), .11), 0 0 60px rgba(var(--cg-cyber-violet, 167,139,250), .10);
+}
+:is(.nav, .navbar, header nav, #cg-nav) {
+  box-shadow: var(--cg-nav-bloom), 0 18px 52px rgba(3, 7, 18, .12);
+}
+
+:is(.hero, .hero-section, .masthead, main > section:first-of-type) {
+  position: relative;
+  isolation: isolate;
+}
+:is(.hero, .hero-section, .masthead, main > section:first-of-type)::after {
+  content: "";
+  position: absolute;
+  inset: 4% 3%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: clamp(28px, 6vw, 84px);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(var(--cg-cyber-cyan, 34,211,238), .16), transparent 28%),
+    radial-gradient(circle at 82% 16%, rgba(var(--cg-cyber-magenta, 244,114,182), .12), transparent 30%),
+    radial-gradient(circle at 54% 76%, rgba(var(--cg-cyber-violet, 167,139,250), .14), transparent 34%);
+  filter: blur(24px);
+  opacity: .72;
+  animation: cg-neon-breathe var(--cg-cyber-pulse, 7.2s) ease-in-out infinite;
+}
+
+:is(.card, .panel, .tile, .tech-card, .product-card, .connect-card, .value-card,
+  .founder-card, .credentials-card, .signup-card, .catalog-card, .dcard, .console,
+  .stat, .stat-card, .metric, .kpi, .feature-card, .data-panel) {
+  position: relative;
+  isolation: isolate;
+  transition: transform .28s var(--cg-cyber-ease), border-color .28s var(--cg-cyber-ease), box-shadow .28s var(--cg-cyber-ease), filter .28s var(--cg-cyber-ease);
+}
+:is(.card, .panel, .tile, .tech-card, .product-card, .connect-card, .value-card,
+  .founder-card, .credentials-card, .signup-card, .catalog-card, .dcard, .console,
+  .stat, .stat-card, .metric, .kpi, .feature-card, .data-panel)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,.16), transparent 34%, rgba(var(--cg-cyber-cyan, 34,211,238), .08) 52%, transparent 72%, rgba(var(--cg-cyber-magenta, 244,114,182), .08));
+  opacity: 0;
+  transition: opacity .28s var(--cg-cyber-ease);
+}
+@media (hover: hover) {
+  :is(.card, .panel, .tile, .tech-card, .product-card, .connect-card, .value-card,
+    .founder-card, .credentials-card, .signup-card, .catalog-card, .dcard, .console,
+    .stat, .stat-card, .metric, .kpi, .feature-card, .data-panel):hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--cg-cyber-cyan, 34,211,238), .34) !important;
+    box-shadow: var(--cg-cyber-halo), 0 20px 58px rgba(2, 6, 23, .14);
+  }
+  :is(.card, .panel, .tile, .tech-card, .product-card, .connect-card, .value-card,
+    .founder-card, .credentials-card, .signup-card, .catalog-card, .dcard, .console,
+    .stat, .stat-card, .metric, .kpi, .feature-card, .data-panel):hover::after { opacity: .82; }
+  :is(a, button, [role="button"], .btn, .cta, .button):hover {
+    text-shadow: 0 0 16px rgba(var(--cg-cyber-cyan, 34,211,238), .26);
+  }
+}
+
+:is(.btn, .cta, .button, button, [role="button"], input[type="submit"], .nav-cta):focus-visible {
+  box-shadow: 0 0 0 3px rgba(255,255,255,.86), 0 0 0 6px rgba(var(--cg-cyber-cyan, 34,211,238), .46), var(--cg-cyber-halo) !important;
+}
+
+:is(.sh-tag, .eyebrow, .badge, .pill, .tag, .chip, .tc-tags span, .pc-era, .hero-year) {
+  text-shadow: 0 0 14px rgba(var(--cg-cyber-cyan, 34,211,238), .22);
+}
+
+@keyframes cg-orbital-drift {
+  0% { transform: translate3d(-1.5%, -1%, 0) rotate(0deg) scale(1); opacity: .58; }
+  100% { transform: translate3d(1.5%, 1%, 0) rotate(2deg) scale(1.05); opacity: .9; }
+}
+@keyframes cg-scan-drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(44px); }
+}
+@keyframes cg-halo-rotate {
+  to { transform: rotate(360deg); }
+}
+@keyframes cg-signal-pulse {
+  0%, 100% { transform: scale(1); opacity: .78; }
+  50% { transform: scale(1.22); opacity: 1; }
+}
+
 /* ── magnetic-capable controls get a snappier transform curve ─────────────── */
 .cg-magnetic { transition: transform .22s cubic-bezier(.16,1,.3,1), box-shadow .25s ease, filter .25s ease !important; }
 
@@ -365,6 +534,12 @@ body:has(#kit-fallback) .eyebrow .dot {
   .cg-ripple { display: none !important; }
   #cg-spotlight { display: none !important; }
   body:has(#kit-fallback) .hero::before,
+  .cg-command-atmosphere::before,
+  .cg-command-atmosphere::after,
+  .cg-holo-shimmer::before,
+  .cg-neon-card::before,
+  .cg-signal-active::before,
+  :is(.hero, .hero-section, .masthead, main > section:first-of-type)::after,
   body:has(#kit-fallback) .clive i,
   body:has(#kit-fallback) .eyebrow .dot,
   .cg-neon-surface::before,

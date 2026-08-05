@@ -44,11 +44,19 @@ class Settings(BaseSettings):
     # Number of trusted reverse proxies in front of this service (Render/Cloudflare = 1).
     # 0 (default) = direct exposure: the throttles key on the TCP peer address.
     # >0 = read the caller from X-Forwarded-For, counting this many hops back from the
-    # right, so only the entries *your* proxies appended are trusted and a client cannot
-    # spoof its identity by sending its own X-Forwarded-For. Leaving this at 0 behind a
-    # proxy is a real outage risk: every customer collapses into one bucket keyed on the
-    # proxy's address, so one abusive caller 429s the whole storefront.
+    # right, so only the entries *your* proxies appended are trusted. Leaving this at 0
+    # behind a proxy is a real outage risk: every customer collapses into one bucket
+    # keyed on the proxy's address, so one abusive caller 429s the whole storefront.
     trusted_proxy_hops: int = 0
+    # Addresses/CIDRs the proxies above actually connect from. The hop count alone is
+    # NOT enough to trust the header: a request arriving on any other ingress (a private
+    # service address, an internal mesh, a directly reachable container port) has no
+    # proxy appending the real peer, so the caller controls every hop and can rotate the
+    # rightmost value to get a fresh throttle bucket per request. X-Forwarded-For is
+    # therefore honoured only when the TCP peer matches this allowlist; every other peer
+    # falls back to its own address, which fails toward over-throttling rather than
+    # silent bypass. Unset = the header is never trusted.
+    trusted_proxy_ips: str = ""
 
     # Payments (never logged, never echoed in responses)
     stripe_secret_key: str = ""

@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
-<link rel="icon" href="/assets/images/clearglass-holographic-seal.png" sizes="any">
-<link rel="icon" type="image/png" href="/assets/images/clearglass-holographic-seal.png">
-<link rel="alternate icon" href="/assets/images/clearglass-holographic-seal.png">
-<link rel="apple-touch-icon" href="/assets/images/clearglass-holographic-seal.png">
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS.
+     The ClearGlass seal, cropped and resized per slot by
+     tools/generate_favicons.py. Serving the 512px master straight to a 16px
+     tab left the mark as an unreadable smudge (and cost 563 KB per load),
+     so each size is declared explicitly and the browser picks its best fit. -->
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#07111f">
@@ -614,7 +618,7 @@ body.mobile-nav-open{overflow:hidden}
   <a href="#contact" onclick="closeMob()">Contact</a>
   <a href="store.html" onclick="closeMob()" style="background:var(--dark);color:#fff!important;margin-top:4px;justify-content:center">Book a Security Engagement</a>
 </div>
-<section class="hero" id="hero">
+<section class="hero" id="hero" data-cg-watermark="CLEARGLASSINC · OFFICIAL EXPERIENCE · © 2026">
   <div class="artemis-grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <div class="artemis-reticle artemis-reticle--west" aria-hidden="true"><i></i></div>
   <div class="artemis-reticle artemis-reticle--east" aria-hidden="true"><i></i></div>
@@ -624,7 +628,7 @@ body.mobile-nav-open{overflow:hidden}
   <div class="hero-lines"><div class="hero-line" style="top:25%;width:60%;left:20%;animation-delay:0s"></div><div class="hero-line" style="top:50%;width:45%;left:30%;animation-delay:4s"></div><div class="hero-line" style="top:75%;width:55%;left:15%;animation-delay:8s"></div></div>
   <!-- preload="metadata": the 2.8 MB hero.mp4 previously downloaded eagerly and
        competed with the poster, which is the LCP paint. Autoplay still fires. -->
-  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" aria-label="ClearGlass Ontario" style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;box-shadow:0 20px 70px rgba(0,0,0,.12);margin-bottom:42px;position:relative;z-index:1;">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-poster.jpg" aria-label="ClearGlass Ontario" data-cg-watermark="© 2026 CLEARGLASSINC · AUTHORIZED VIEW" data-cg-protected style="max-width:min(1200px,96vw);width:100%;border-radius:28px;display:block;box-shadow:0 20px 70px rgba(0,0,0,.12);margin-bottom:42px;position:relative;z-index:1;">
     <source src="assets/video/hero.mp4" type="video/mp4">
     <!-- The <picture> fallback that used to sit here only renders in a browser
          with no <video> element at all, yet Chrome's preload scanner fetched
@@ -689,14 +693,15 @@ body.mobile-nav-open{overflow:hidden}
   </div>
 </section>
 <section class="sect sect-dark" id="services"><div class="container"><div class="sh sh-dark rv"><div class="sh-tag">SERVICES</div><h2>Focused advisory and build work for <strong>high-trust systems</strong></h2><p>ClearGlass engages where architecture, risk, automation, and executive execution intersect.</p></div><div class="tech-grid"><div class="tech-card rv"><div class="tc-icon">🧠</div><h3>AI Automation Architecture</h3><p>Design governed agent workflows, evaluations, tool boundaries, deployment patterns, and operating models.</p><div class="tc-tags"><span>AGENTS</span><span>EVALS</span><span>HUMAN GATES</span></div></div><div class="tech-card rv"><div class="tc-icon">🔒</div><h3>Cybersecurity & Risk</h3><p>Translate risk into controls, policies, detection priorities, and executive-ready security decisions.</p><div class="tc-tags"><span>ZERO TRUST</span><span>GRC</span><span>IR READY</span></div></div><div class="tech-card rv"><div class="tc-icon">⚖</div><h3>Legal-Tech & OSINT Systems</h3><p>Build investigation workflows with provenance, case context, evidence trails, and repeatable reporting.</p><div class="tc-tags"><span>LEGAL OPS</span><span>OSINT</span><span>LINEAGE</span></div></div></div></div></section>
-<section class="sect command-surface" id="artemis-command" data-cg-protect="dark">
+<section class="sect command-surface" id="artemis-command" data-cg-watermark="CLEARGLASSINC ARTEMIS · PROTECTED COMMAND CONCEPT · © 2026" data-cg-protected>
   <div class="container">
     <div class="sh sh-dark rv">
       <div class="sh-tag">ARTEMIS COMMAND INTELLIGENCE</div>
       <h2>Secure automation with <strong>verified control</strong></h2>
       <p>ClearGlassInc Artemis is a governed operating layer for AI workflows, evidence handling, approvals, and audit-ready command in sensitive environments.</p>
+      <p class="legal-note">Protected concept preview · Screenshots retain an ownership mark. Detailed mission surfaces are available only through an authorized private briefing.</p>
     </div>
-    <div class="command-grid">
+    <div class="command-grid" data-cg-sensitive aria-label="Protected Artemis command concept preview">
       <article class="command-panel rv"><div class="command-kicker">System Architecture</div><h3>Event-driven, provenance-linked, and resilient by design.</h3><p>Data enters through controlled interfaces, resolves against a governed ontology, triggers deterministic execution graphs, and writes every decision, tool call, approval, and handoff into immutable audit trails.</p><ul class="feature-lines"><li>Secure-by-design automation with explicit trusted execution boundaries.</li><li>Policy-aware orchestration across agents, APIs, pipelines, and human approvals.</li><li>Provenance-linked workflows that preserve source lineage and evidence chains.</li><li>Deterministic execution paths for repeatable mission-critical operations.</li><li>Audit-grade logging with traceable system behavior and replayable state.</li><li>Fault isolation and resilient handoffs for degraded-mode continuity.</li><li>Private deployment readiness across enterprise, government, and coalition domains.</li><li>Low-latency interaction design for analysts, operators, and executive command.</li><li>Operational observability with drift detection and escalation telemetry.</li><li>Modular future infrastructure for model routing, retrieval, evals, and runtime control.</li></ul></article>
       <article class="command-panel rv"><div class="command-kicker">Governance &amp; Control</div><h3>Autonomy stays inside the boundary.</h3><p>The system can recommend, triage, enrich, summarize, and prepare action packages, but operationally significant execution remains gated by human approval checkpoints and policy enforcement layers.</p><ul class="trust-lines"><li>Every autonomous recommendation is linked to evidence, confidence, and lineage.</li><li>Every escalation path is controlled, logged, and reviewable by an operator.</li><li>Every workflow version is governed before promotion into production.</li><li>Every identity, entity, and data object respects need-to-know boundaries.</li><li>Every model route can be evaluated, rolled back, or isolated from runtime.</li><li>Every failure state degrades into safe review, not silent automation.</li><li>Every interface state reflects verification, uncertainty, or required action.</li><li>Every audit trail is built for executive, legal, and technical scrutiny.</li></ul><div class="cta-variants"><span>Request secure briefing</span><span>Open command demo</span><span>Assess workflow readiness</span><span>Review governance model</span><span>Deploy private pilot</span></div></article>
     </div>
@@ -1029,7 +1034,7 @@ body.mobile-nav-open{overflow:hidden}
     <div class="footer-div"></div>
     <div class="footer-bottom">
       <div class="footer-legal">
-        <span class="footer-copy">© <span id="year"></span> ClearGlass Inc. All rights reserved.</span>
+        <span class="footer-copy">© <span id="year"></span> ClearGlass Inc. All Rights Reserved.</span>
         <a href="legal/terms.html">Terms</a>
         <a href="legal/content-policy.html">Content Policy</a>
         <a href="legal/privacy.html">Privacy</a>

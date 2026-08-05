@@ -2,6 +2,13 @@ import "./globals.css";
 import type { ReactNode } from "react";
 
 export const metadata = {
+  // Same holographic seal the marketing site uses as its tab icon, served from
+  // this app's own public/ since it deploys on a separate origin.
+  icons: {
+    icon: "/clearglass-seal-192.png",
+    shortcut: "/clearglass-seal-192.png",
+    apple: "/clearglass-seal-192.png",
+  },
   title: "PERCIVAL Autostore · Control Cockpit",
   description: "Read-first cockpit over the Autostore control plane.",
 };

@@ -234,6 +234,10 @@ body{background:#f7f8fd;}
 <link rel="stylesheet" href="/assets/css/cg-design-system.css">
 <script defer src="/assets/js/cg-design-system.js"></script>
   <script defer src="/asset-protection.js"></script>
+  <!-- Text-side companion to asset-protection.js: provenance stamping, copy
+       attribution, and veiled previews. Must load after it so both share one
+       session reference token. -->
+  <script defer src="/cg-content-shield.js"></script>
   <link rel="stylesheet" href="brand-system.css">
 <style>
 /* ── Center all page text — homepage alignment pass ─────────────────
@@ -384,6 +388,126 @@ body.mobile-nav-open{overflow:hidden}
 @media(max-width:620px){.nav-name{max-width:calc(100vw - 172px);overflow:hidden;text-overflow:ellipsis}.hero h1{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{transition:none!important}.mobile-menu{transition:none!important}}
 
+</style>
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   CONTENT SHIELD + COMMAND NARRATIVE — additive homepage layer.
+   Presentation only; the behaviour lives in /cg-content-shield.js. Nothing in
+   this block removes or overrides an existing homepage rule.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Provenance layers ──────────────────────────────────────────────────
+   .cg-mark (tiled ownership texture) and .cg-stamp (corner reference line) are
+   injected into every [data-cg-protect] region by the shield script. Both are
+   out of flow and pointer-events:none, so they cannot shift layout when they
+   arrive and cannot intercept a click. They are elements rather than
+   pseudo-elements because several sections they cover already spend both
+   ::before and ::after on their own background treatment. */
+[data-cg-protect]{position:relative}
+.cg-mark{position:absolute;inset:0;z-index:4;pointer-events:none;
+  background-color:var(--cg-mark-ink,rgba(10,12,16,.05));
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Ctext x='4' y='152' transform='rotate(-24 150 150)' font-family='ui-monospace,SFMono-Regular,Menlo,monospace' font-size='13' letter-spacing='3' fill='%23fff'%3ECLEARGLASS INC / PROPRIETARY%3C/text%3E%3C/svg%3E");
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Ctext x='4' y='152' transform='rotate(-24 150 150)' font-family='ui-monospace,SFMono-Regular,Menlo,monospace' font-size='13' letter-spacing='3' fill='%23fff'%3ECLEARGLASS INC / PROPRIETARY%3C/text%3E%3C/svg%3E");
+  -webkit-mask-size:300px 300px;mask-size:300px 300px;
+  -webkit-mask-repeat:repeat;mask-repeat:repeat}
+/* Without mask support the tile would flatten into a solid wash over the whole
+   section, so drop the layer rather than tint the section. */
+@supports not ((-webkit-mask-image:url("#m")) or (mask-image:url("#m"))){.cg-mark{display:none}}
+.cg-stamp{display:block;position:absolute;right:clamp(14px,2.5vw,28px);bottom:clamp(10px,1.5vw,18px);
+  z-index:5;margin:0;pointer-events:none;font-family:var(--mono);font-size:9.5px;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--cg-stamp-ink,rgba(58,63,74,.62))}
+[data-cg-protect="dark"]{--cg-mark-ink:rgba(255,255,255,.06);--cg-stamp-ink:rgba(226,232,240,.5)}
+@media(max-width:640px){.cg-stamp{font-size:8px;letter-spacing:.08em}}
+
+/* ── Veiled preview ─────────────────────────────────────────────────────
+   Softens a sensitive preview when the tab loses focus or the visitor goes
+   idle, so a page left open on a shared screen is not a standing capture
+   target. Visual only: nothing leaves the DOM or the accessibility tree, and
+   keyboard focus inside the preview holds it open. */
+.cg-veil{position:relative}
+.cg-veil__body{transition:filter .3s ease}
+.cg-veil.is-veiled .cg-veil__body{filter:blur(10px) saturate(.7)}
+.cg-veil.is-veiled::after{content:attr(data-cg-veil-label);position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);z-index:6;pointer-events:none;white-space:nowrap;
+  padding:9px 16px;border-radius:999px;border:1px solid rgba(125,211,252,.38);
+  background:rgba(8,13,20,.86);color:#d4e9ff;font-family:var(--mono);font-size:10px;
+  font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+@media(prefers-reduced-motion:reduce){.cg-veil__body{transition:none}}
+
+/* ── Doctrine + engagement paths ─────────────────────────────────────── */
+.cg-doctrine{background:linear-gradient(180deg,#fff,rgba(243,245,248,.65))}
+.cg-lede{font-family:var(--serif);font-size:clamp(1.4rem,2.8vw,2.2rem);font-weight:300;
+  line-height:1.5;letter-spacing:-.015em;color:var(--text-2);max-width:840px;margin:0 auto;
+  text-align:center}
+.cg-lede strong{font-weight:600;color:var(--text)}
+.cg-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(40px,5vw,64px)}
+.cg-card{padding:clamp(24px,3vw,34px);border-radius:20px;border:1px solid var(--glass-border);
+  background:rgba(255,255,255,.74);backdrop-filter:blur(16px);
+  box-shadow:0 12px 38px rgba(10,12,16,.04);transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease}
+.cg-card:hover{transform:translateY(-3px);box-shadow:0 20px 52px rgba(10,12,16,.08);
+  border-color:rgba(56,189,248,.24)}
+.cg-card .k{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--text-4)}
+.cg-card h3{font-family:var(--serif);font-size:clamp(1.3rem,2.2vw,1.75rem);font-weight:500;
+  margin:12px 0 10px;letter-spacing:-.01em}
+.cg-card p{color:var(--text-3);font-size:14px;line-height:1.75}
+.cg-next{display:inline-flex;align-items:center;gap:7px;margin-top:18px;font-size:13px;
+  font-weight:700;color:var(--text);text-decoration:none;padding-bottom:2px;
+  border-bottom:1px solid rgba(0,0,0,.2);transition:border-color .2s ease}
+.cg-next:hover,.cg-next:focus-visible{border-bottom-color:var(--text);outline:none}
+.cg-footnote{margin:clamp(32px,4vw,48px) auto 0;max-width:720px;text-align:center;
+  font-size:13.5px;line-height:1.8;color:var(--text-3)}
+@media(prefers-reduced-motion:reduce){.cg-card{transition:none}.cg-card:hover{transform:none}}
+@media(max-width:900px){.cg-cards{grid-template-columns:1fr}}
+
+/* ── Proof / assurance ──────────────────────────────────────────────── */
+.cg-assurance{display:grid;gap:10px;margin:22px 0 0;padding:0;list-style:none}
+.cg-assurance li{position:relative;padding:13px 16px 13px 40px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);
+  color:rgba(255,255,255,.72);font-size:13.5px;line-height:1.6}
+.cg-assurance li::before{content:'';position:absolute;left:16px;top:19px;width:8px;height:8px;
+  border-radius:50%;background:#34d399;box-shadow:0 0 12px rgba(52,211,153,.55)}
+.cg-live{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;font-family:var(--mono);
+  font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#7dd3fc}
+.cg-live i{width:7px;height:7px;border-radius:50%;background:#34d399;
+  box-shadow:0 0 10px rgba(52,211,153,.75);animation:cgPulse 2.6s ease-in-out infinite}
+@keyframes cgPulse{0%,100%{opacity:.35}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.cg-live i{animation:none;opacity:.95}}
+.cg-readout{margin-top:18px;padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,.09);
+  background:rgba(4,8,14,.55);font-family:var(--mono);font-size:12px;line-height:1.95;
+  color:rgba(255,255,255,.62)}
+.cg-readout b{color:#7dd3fc;font-weight:600}
+.cg-rights{margin-top:20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  line-height:1.7;color:rgba(255,255,255,.5)}
+.cg-rights a{color:#9fd8ff;text-decoration:none;border-bottom:1px solid rgba(159,216,255,.35)}
+.cg-rights a:hover,.cg-rights a:focus-visible{color:#fff;border-bottom-color:#fff}
+
+/* ── Dark-surface heading contrast ───────────────────────────────────────
+   assets/css/glass.css sets `h1,…,h6{color:#0c0e12!important}` plus a matching
+   `.sh-dark h2` rule for its light-glass redesign. On the dark command
+   surfaces that lands as near-black text on rgb(8,13,20), leaving those
+   section headings effectively invisible. Restore contrast for those sections
+   only. Additive — no existing rule is removed, and it raises the
+   accessibility budget rather than altering an intended look. */
+#artemis-command .sh h2,
+#wsids .sh h2,
+#proof .sh h2,
+#banking-law-strategist .sh h2{color:#f8fbff!important}
+
+/* ── Print ───────────────────────────────────────────────────────────────
+   A printed or "save as PDF" capture carries the ownership mark at full
+   strength plus a fixed footer notice. glass.css disables body::before/after
+   globally with !important, so the notice is a real element. */
+.cg-print-notice{display:none}
+@media print{
+  .cg-mark{background-color:rgba(10,12,16,.2)}
+  .cg-stamp{color:#333}
+  .cg-veil.is-veiled .cg-veil__body{filter:none}
+  .cg-veil.is-veiled::after{display:none}
+  .cg-print-notice{display:block;position:fixed;left:0;right:0;bottom:6mm;margin:0;
+    text-align:center;color:#444;
+    font:600 8.5pt/1.35 ui-monospace,SFMono-Regular,Menlo,monospace}
+}
 </style>
 </head>
 <body>
@@ -536,8 +660,36 @@ body.mobile-nav-open{overflow:hidden}
 <section class="mission-strip"><div class="container"><div class="mission-inner rv"><div class="mission-label">MISSION</div><div class="mission-text">I help organizations merge <strong>strategy, security, automation, and operations</strong> into systems that are faster to run, easier to govern, and harder to break.</div></div></div></section>
 <section class="manifesto" id="vision"><div class="manifesto-bg"></div><div class="container"><div class="rv"><blockquote>"Clear systems beat complex presentations."</blockquote><cite>CLEARGLASS INC. · FOUNDING PRINCIPLE</cite></div></div></section>
 <section id="values"><h2 class="sr-only">Founding principles</h2><div class="values-grid"><div class="value-card rv"><div class="vc-num">01</div><h3>Transparency</h3><p>Map the system, expose the risk, and make the next decision obvious.</p></div><div class="value-card rv"><div class="vc-num">02</div><h3>Integrity</h3><p>Governance, audit trails, and approval boundaries are designed before automation scales.</p></div><div class="value-card rv"><div class="vc-num">03</div><h3>Intelligence</h3><p>Agents are useful only when they improve decisions, reduce manual drag, and stay accountable.</p></div></div></section>
+<!-- ── DOCTRINE — the promise behind the capability list. Additive: sits between
+     the founding principles and the services grid without altering either. ── -->
+<section class="sect cg-doctrine" id="doctrine" data-cg-protect="light">
+  <div class="container">
+    <div class="sh sh-center rv">
+      <div class="sh-tag" style="justify-content:center">DOCTRINE</div>
+      <h2>Most systems fail quietly. <strong>These are built to be watched.</strong></h2>
+    </div>
+    <p class="cg-lede rv">ClearGlass builds operating systems for decisions that carry consequence &mdash; where an automation that drifts, a control that lapses, or an approval that never happened becomes somebody's very bad quarter. <strong>We design for the audit before we design for the demo.</strong></p>
+    <div class="cg-cards">
+      <article class="cg-card rv">
+        <p class="k">01 · SCOPE</p>
+        <h3>Nothing runs unbounded.</h3>
+        <p>Every agent is issued a blast radius, a policy boundary, and a named human who owns the outcome. Capability without a limit is just a liability with a countdown.</p>
+      </article>
+      <article class="cg-card rv">
+        <p class="k">02 · EVIDENCE</p>
+        <h3>Every action leaves a record.</h3>
+        <p>Decisions, approvals, and executions land in an append-only ledger with a risk score attached. If it happened, it is provable &mdash; and if it is not provable, it does not ship.</p>
+      </article>
+      <article class="cg-card rv">
+        <p class="k">03 · CONTROL</p>
+        <h3>Speed that survives scrutiny.</h3>
+        <p>Automation earns autonomy tier by tier. Low-risk work runs clean and unattended; anything touching money, law, or safety stops at a human gate by design, not by exception.</p>
+      </article>
+    </div>
+  </div>
+</section>
 <section class="sect sect-dark" id="services"><div class="container"><div class="sh sh-dark rv"><div class="sh-tag">SERVICES</div><h2>Focused advisory and build work for <strong>high-trust systems</strong></h2><p>ClearGlass engages where architecture, risk, automation, and executive execution intersect.</p></div><div class="tech-grid"><div class="tech-card rv"><div class="tc-icon">🧠</div><h3>AI Automation Architecture</h3><p>Design governed agent workflows, evaluations, tool boundaries, deployment patterns, and operating models.</p><div class="tc-tags"><span>AGENTS</span><span>EVALS</span><span>HUMAN GATES</span></div></div><div class="tech-card rv"><div class="tc-icon">🔒</div><h3>Cybersecurity & Risk</h3><p>Translate risk into controls, policies, detection priorities, and executive-ready security decisions.</p><div class="tc-tags"><span>ZERO TRUST</span><span>GRC</span><span>IR READY</span></div></div><div class="tech-card rv"><div class="tc-icon">⚖</div><h3>Legal-Tech & OSINT Systems</h3><p>Build investigation workflows with provenance, case context, evidence trails, and repeatable reporting.</p><div class="tc-tags"><span>LEGAL OPS</span><span>OSINT</span><span>LINEAGE</span></div></div></div></div></section>
-<section class="sect command-surface" id="artemis-command">
+<section class="sect command-surface" id="artemis-command" data-cg-protect="dark">
   <div class="container">
     <div class="sh sh-dark rv">
       <div class="sh-tag">ARTEMIS COMMAND INTELLIGENCE</div>
@@ -562,10 +714,58 @@ body.mobile-nav-open{overflow:hidden}
 </section>
 <section class="sect" id="products"><div class="container"><div class="sh sh-center rv"><div class="sh-tag" style="justify-content:center">PLATFORMS</div><h2>Selected <strong>systems and prototypes</strong></h2><p>Representative ClearGlass surfaces for governed automation, intelligence workflows, cyber risk, legal-tech operations, and executive command.</p></div><div class="products-grid"><div class="product-card rv" style="grid-column:1/-1;background:linear-gradient(145deg,rgba(56,189,248,.08),rgba(167,139,250,.08),rgba(250,251,252,.92))"><div class="pc-era" style="color:#2563eb">CLEARGLASS AGENTOPS PLATFORM · MICROSOFT-ALIGNED</div><h3>Governed AgentOps for Enterprise Workflows</h3><p class="pd">A practical operating model for designing, testing, deploying, and governing AI agents across enterprise workflows.</p><div class="pc-feats" style="grid-template-columns:1fr 1fr;gap:8px"><div class="pc-feat"><span class="ck">✓</span> Agent Academy — hands-on courses, labs, certifications</div><div class="pc-feat"><span class="ck">✓</span> Workflow Builder — visual chains, approvals, tool-calls, RPA/API actions</div><div class="pc-feat"><span class="ck">✓</span> Agent Marketplace — sell and license enterprise-ready templates</div><div class="pc-feat"><span class="ck">✓</span> Enterprise Console — deploy, monitor, govern, evaluate, secure</div><div class="pc-feat"><span class="ck">✓</span> Knowledge Hub — SharePoint, OneDrive, Teams, SQL, CRM, PDFs</div><div class="pc-feat"><span class="ck">✓</span> Simulation Lab — test real business scenarios before deployment</div><div class="pc-feat"><span class="ck">✓</span> Partner Studio — co-build with Microsoft-aligned experts</div><div class="pc-feat"><span class="ck">✓</span> Revenue Engine — subscriptions, templates, workshops, private deployments</div></div><div style="margin-top:18px" class="pd"><strong>MVP focus:</strong> Workflow Builder, Training Academy, Template Marketplace, Azure Deployment Pipeline, Admin Dashboard.<br><strong>Monetization:</strong> Starter $99/mo · Pro $499/mo · Business $2,500/mo · Enterprise Custom · Workshops $5K–$25K · Templates $49–$999 · Private Deployment $15K–$100K+.</div><div style="margin-top:22px"><a href="artemis-iv.html" class="btn btn-dark">Launch AgentOps Blueprint →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(94,231,255,.09),rgba(93,255,180,.05),rgba(250,251,252,.9))"><div class="pc-era" style="color:#0891b2">AIR SYSTEMS CONTROL · GLASS UI</div><h3>Artemis Air Systems Control</h3><p class="pd">A cinematic, interactive glassmorphism control surface for airflow, pressure, temperature, humidity, filtration, vent vectors, and selectable operating zones.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(8,145,178,.1);color:#0891b2">✓</span> Live sliders, animated gauges, and pulsing telemetry</div><div class="pc-feat"><span class="ck" style="background:rgba(16,185,129,.1);color:#10b981">✓</span> Premium cockpit-style 1920×1080 visual direction</div></div><div style="margin-top:22px"><a href="air-systems-control.html" class="btn btn-dark">Open Air Control Surface →</a></div></div><div class="product-card rv"><div class="pc-era">TACTICAL PAGE</div><h3>Artemis IV Core</h3><p class="pd">High-intensity command shell for tactical intelligence workflows, threat matrix navigation, and mission logging.</p><div class="pc-feats"><div class="pc-feat"><span class="ck">✓</span> Dashboard + threat matrix tabs</div><div class="pc-feat"><span class="ck">✓</span> Console quick-action commands</div></div><div style="margin-top:22px"><a href="artemis-iv.html" class="btn btn-glass">Open Artemis IV Core</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(16,185,129,.05),rgba(14,165,233,.04),rgba(250,251,252,.9))"><div class="pc-era" style="color:#10b981">GUARDIAN PLATFORM</div><h3>ClearGlass Guardian Platform</h3><p class="pd">A complete financial intelligence platform built for Canadian small and medium businesses — six integrated modules replacing disconnected tools.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(16,185,129,.1);color:#10b981">✓</span> Unified dashboard + forecasting + health score</div><div class="pc-feat"><span class="ck" style="background:rgba(139,92,246,.1);color:#8b5cf6">✓</span> AI summaries + anomaly alerts + bank integrations</div></div><div style="margin-top:22px"><a href="guardian.html" class="btn btn-dark">Explore Guardian →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(190,18,60,.08),rgba(88,28,135,.08),rgba(250,251,252,.92));border-color:rgba(147,51,234,.16)"><div class="pc-era" style="color:#7e22ce">BLUEDESK · CISO RISK &amp; BLUE TEAM CONSOLE</div><h3>BLUEDESK</h3><p class="pd">A futuristic defensive console for CISO risk intelligence, exposure linkage, detection coverage, control assurance, and audit-ready blue-team action.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(190,18,60,.1);color:#be123c">✓</span> Live executive risk, KEV, IOC, and triage surfaces</div><div class="pc-feat"><span class="ck" style="background:rgba(126,34,206,.1);color:#7e22ce">✓</span> Provenance-first evidence, coverage gaps, and approval workflows</div></div><div style="margin-top:22px"><a href="bluedesk.html" class="btn btn-dark">Open BLUEDESK →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(255,176,0,.06),rgba(255,136,0,.04),rgba(250,251,252,.9))"><div class="pc-era" style="color:#d97706">CLEARGLASS NEXUS v12 · INTELLIGENCE COMMAND PLATFORM</div><h3>ClearGlass NEXUS v12</h3><p class="pd">Intelligence command prototype for monitoring, analysis, evidence review, and executive action.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(255,176,0,.12);color:#d97706">✓</span> Real-time intelligence command surface</div><div class="pc-feat"><span class="ck" style="background:rgba(255,136,0,.12);color:#ea580c">✓</span> Operations center monitoring + analysis</div></div><div style="margin-top:22px"><a href="clearglass-nexus.html" class="btn btn-dark">Open NEXUS v12 →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(14,165,233,.07),rgba(99,102,241,.06),rgba(250,251,252,.92));border-color:rgba(14,165,233,.16)"><div class="pc-era" style="color:#0284c7">CLEARPULSE · REAL-TIME SIGNAL INTELLIGENCE</div><h3>ClearPulse</h3><p class="pd">A pulse-grade intelligence surface for live operational signals, anomaly detection, and fast executive awareness across ClearGlass workflows.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(14,165,233,.12);color:#0284c7">✓</span> Live signal monitoring and operational pulse views</div><div class="pc-feat"><span class="ck" style="background:rgba(99,102,241,.12);color:#4f46e5">✓</span> Rapid situational awareness for analysts and leaders</div></div><div style="margin-top:22px"><a href="clearpulse.html" class="btn btn-dark">Open ClearPulse →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(14,165,233,.06),rgba(20,184,166,.06),rgba(250,251,252,.92));border-color:rgba(14,165,233,.18)"><div class="pc-era" style="color:#0f766e">FLOWSINT · OSINT INVESTIGATION GRAPH</div><h3>Flowsint</h3><p class="pd">An investigative intelligence graph for domains, IPs, indicators, transforms, evidence trails, and analyst-ready OSINT workflows.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(14,165,233,.12);color:#0284c7">✓</span> Entity graphing for domains, infrastructure, and correlated leads</div><div class="pc-feat"><span class="ck" style="background:rgba(20,184,166,.12);color:#0d9488">✓</span> Transform-driven enrichment with provenance-first case context</div></div><div style="margin-top:22px"><a href="flowsint.html" class="btn btn-dark">Open Flowsint →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(0,213,255,.09),rgba(139,92,246,.07),rgba(250,251,252,.94));border-color:rgba(0,213,255,.22)"><div class="pc-era" style="color:#0891b2">ARTEMIS COMMAND CENTER · LIVE SYSTEM CHART</div><h3>Live Enterprise Operations Console</h3><p class="pd">A premium command dashboard unifying business performance, agent activity, security posture, infrastructure health, automation throughput, market intelligence, and executive priorities.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(0,213,255,.12);color:#0891b2">✓</span> KPI strip, system map, live metrics, alerts, insights, and event stream</div><div class="pc-feat"><span class="ck" style="background:rgba(139,92,246,.12);color:#7c3aed">✓</span> Filters, drill-down mode, dark mode, high contrast, and reduced-motion support</div></div><div style="margin-top:22px"><a href="command-center.html" class="btn btn-dark">Open Command Center →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(124,58,237,.07),rgba(20,184,166,.06),rgba(250,251,252,.92));border-color:rgba(124,58,237,.16)"><div class="pc-era" style="color:#7c3aed">CONDUIT · ENTERPRISE WORKFLOW AUTOMATION</div><h3>Conduit</h3><p class="pd">A flagship automation layer for turning business operations into governed, auditable workflows across tools, teams, approvals, and AI-assisted execution.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(124,58,237,.12);color:#7c3aed">✓</span> Workflow orchestration with approvals and handoffs</div><div class="pc-feat"><span class="ck" style="background:rgba(20,184,166,.12);color:#0d9488">✓</span> Enterprise automation for repeatable operational execution</div></div><div style="margin-top:22px"><a href="conduit.html" class="btn btn-dark">Open Conduit →</a></div></div><div class="product-card rv" style="background:linear-gradient(145deg,rgba(59,130,246,.07),rgba(139,92,246,.07),rgba(250,251,252,.92));border-color:rgba(139,92,246,.16)"><div class="pc-era" style="color:#7c3aed">CRYSTAL KNOWLEDGE VAULT · CLAUDE + OBSIDIAN</div><h3>Second Brain System</h3><p class="pd">An AI-powered knowledge system that turns scattered notes into a connected, searchable mind — Obsidian for structure, Claude for intelligence, and a repeatable weekly review loop that compounds what you know.</p><div class="pc-feats"><div class="pc-feat"><span class="ck" style="background:rgba(59,130,246,.1);color:#3b82f6">✓</span> PARA vault structure, knowledge graph, and Maps of Content</div><div class="pc-feat"><span class="ck" style="background:rgba(139,92,246,.1);color:#8b5cf6">✓</span> Claude prompts, MCP connection steps, and best plugins</div></div><div style="margin-top:22px"><a href="guardian.html#second-brain" class="btn btn-dark">Explore Second Brain →</a></div></div><div style="margin-top:52px" class="sh sh-center rv"><div class="sh-tag" style="justify-content:center">FULL CATALOG</div><h2>Every <strong>ClearGlass product surface</strong></h2><p>The homepage is now the catalog source of truth: each product below uses the same premium card rhythm, direct naming, and clear action path as the rest of the ClearGlass experience.</p></div><div class="cg-catalog-grid"><a class="cg-catalog-card" href="artemis-iv.html"><span class="cg-catalog-icon">◎</span><span><b>Artemis IV Core</b><span>Tactical Intelligence</span></span></a><a class="cg-catalog-card" href="artemis-os.html"><span class="cg-catalog-icon">◈</span><span><b>Artemis OS</b><span>Governed Agent OS</span></span></a><a class="cg-catalog-card" href="artemis-self-evolving-platform.html"><span class="cg-catalog-icon">✦</span><span><b>Artemis Self-Evolving Platform</b><span>AI Improvement Loop</span></span></a><a class="cg-catalog-card" href="artemis-ai-cyber-intelligence-platform.html"><span class="cg-catalog-icon">⚡</span><span><b>Artemis AI Cyber Intelligence</b><span>Cyber Intelligence</span></span></a><a class="cg-catalog-card" href="guardian.html"><span class="cg-catalog-icon">🌐</span><span><b>Guardian</b><span>Financial Intelligence</span></span></a><a class="cg-catalog-card" href="bluedesk.html"><span class="cg-catalog-icon">🛡️</span><span><b>BLUEDESK</b><span>CISO Risk &amp; Blue Team</span></span></a><a class="cg-catalog-card" href="clearglass-nexus.html"><span class="cg-catalog-icon">◇</span><span><b>ClearGlass NEXUS v12</b><span>Command Platform</span></span></a><a class="cg-catalog-card" href="clearpulse.html"><span class="cg-catalog-icon">📡</span><span><b>ClearPulse</b><span>Signal Intelligence</span></span></a><a class="cg-catalog-card" href="flowsint.html"><span class="cg-catalog-icon">🕸️</span><span><b>Flowsint</b><span>OSINT Investigation Graph</span></span></a><a class="cg-catalog-card" href="command-center.html"><span class="cg-catalog-icon">⌁</span><span><b>Command Center</b><span>Live Operations Console</span></span></a><a class="cg-catalog-card" href="conduit.html"><span class="cg-catalog-icon">⟿</span><span><b>Conduit</b><span>Workflow Automation</span></span></a><a class="cg-catalog-card" href="air-systems-control.html"><span class="cg-catalog-icon">◌</span><span><b>Air Systems Control</b><span>Glass Control Surface</span></span></a><a class="cg-catalog-card" href="sats-digital-twin.html"><span class="cg-catalog-icon">◍</span><span><b>SATS Digital Twin</b><span>Storm-Adaptive Simulation</span></span></a><a class="cg-catalog-card" href="counter-uas-commercialization-os.html"><span class="cg-catalog-icon">⦿</span><span><b>Counter-UAS OS</b><span>Commercialization System</span></span></a><a class="cg-catalog-card" href="procurement-legal-tech.html"><span class="cg-catalog-icon">§</span><span><b>Procurement Legal Tech</b><span>Public-Sector Legal Ops</span></span></a><a class="cg-catalog-card" href="traffic-enforcement.html"><span class="cg-catalog-icon">◆</span><span><b>Traffic Enforcement</b><span>Safety Intelligence</span></span></a><a class="cg-catalog-card" href="smb.html"><span class="cg-catalog-icon">▣</span><span><b>SMB Suite</b><span>Small Business Systems</span></span></a><a class="cg-catalog-card" href="smb-cyber-trust-kit.html"><span class="cg-catalog-icon">🔐</span><span><b>SMB Cyber Trust Kit</b><span>Plain-Language Security</span></span></a><a class="cg-catalog-card" href="web-design.html"><span class="cg-catalog-icon">💻</span><span><b>Web Design &amp; Dev</b><span>Growth Infrastructure</span></span></a><a class="cg-catalog-card" href="side-store.html"><span class="cg-catalog-icon">🔌</span><span><b>Side Store</b><span>Electronics Catalog</span></span></a><a class="cg-catalog-card" href="revenue-engine.html"><span class="cg-catalog-icon">$</span><span><b>Revenue Engine</b><span>Commercial Automation</span></span></a><a class="cg-catalog-card" href="stegoforge.html"><span class="cg-catalog-icon">▧</span><span><b>StegoForge</b><span>Media Assurance</span></span></a><a class="cg-catalog-card" href="percival-os.html"><span class="cg-catalog-icon">♜</span><span><b>PERCIVAL OS</b><span>Mission-Ready Agent Governance</span></span></a><a class="cg-catalog-card" href="sentinel.html"><span class="cg-catalog-icon">◬</span><span><b>SENTINEL</b><span>Geospatial Intelligence</span></span></a></div></div></div></section>
 <section class="sect" id="timeline"><div class="container"><div class="sh rv"><div class="sh-tag">EVOLUTION</div><h2>From prototype to <strong>operational system</strong></h2></div><div class="timeline"><div class="tl-item rv"><div class="tl-year">2024</div><div class="tl-content"><h3>ClearGlass Founded</h3><p>Initial dashboards and cybersecurity assessment tools deployed.</p></div></div><div class="tl-item rv"><div class="tl-year">2025</div><div class="tl-content"><h3>NEXUS & ARTEMIS Launch</h3><p>Unified command dashboards moved from concept to operational products.</p></div></div><div class="tl-item rv"><div class="tl-year">NEXT</div><div class="tl-content"><h3>High-Trust Operating Systems</h3><p>Governed AI, cyber risk, legal-tech, OSINT, and enterprise workflows unified into accountable execution surfaces.</p></div></div></div></div></section>
-<section class="sect" id="founder"><div class="container"><div class="sh rv"><div class="sh-tag">LEADERSHIP</div><h2>Software architect and operator for <strong>high-trust systems</strong></h2><p>Executive-level architecture, automation, cybersecurity, legal-tech, OSINT, and operating strategy under one accountable lead.</p></div><div class="founder-grid"><article class="founder-card rv"><img src="assets/images/desmond-cg-profile-picture.jpg" alt="Desmond ClearGlassInc profile picture" class="hero-profile" width="1320" height="2263" loading="lazy" decoding="async"><div class="founder-kicker">Founder Profile</div><h3 class="founder-name">Desmond Otieno Odhiambo</h3><div class="founder-role">Software Architect & COO · Founder</div><div class="founder-copy"><p><strong>Desmond Otieno Odhiambo</strong> leads ClearGlass as a software architect and operator focused on AI automation, cybersecurity, legal-tech systems, OSINT workflows, and enterprise execution.</p><p>His work turns ambiguous operational problems into mapped systems, governed workflows, and decision surfaces leaders can trust.</p><p>The operating principle is simple: ship systems that clarify risk, reduce manual drag, preserve accountability, and improve decision speed.</p></div><div class="founder-actions"><a href="mailto:desmondotieno@icloud.com" class="btn btn-dark">Email Desmond →</a><a href="#contact" class="btn btn-glass">Start a Conversation</a></div></article><aside class="credentials-card rv"><div class="founder-kicker">Founder Credentials</div><h3>Architecture, operations, security, and automation.</h3><div class="credentials-list"><div class="credential-item"><div class="credential-label">Role</div><div class="credential-value">Software Architect & COO, ClearGlass Inc.</div></div><div class="credential-item"><div class="credential-label">Education</div><div class="credential-value">University of Pennsylvania — Associate's Degree, Artificial Intelligence <span class="credential-sub">Oct 2022 — Jun 2025</span></div></div><div class="credential-item"><div class="credential-label">Certificate</div><div class="credential-value">Macquarie University — Cyber Security: Essentials for Forensics <span class="credential-sub">Oct 2025 — Oct 2025 · Grade: 94.68%</span></div></div><div class="credential-item"><div class="credential-label">License & Certification</div><div class="credential-value">Coursera — Introduction to Agile Development and Scrum <span class="credential-sub">Issued Apr 2026</span></div></div><div class="credential-item"><div class="credential-label">Professional Designations</div><div class="credential-value">Registered Trademark Agent, Canada | USPTO Patent Agent</div></div><div class="credential-item"><div class="credential-label">Accuracy Note</div><div class="credential-value">Trademark Agent licensed by CPATA | Patent Agent registered with the USPTO.</div></div><div class="credential-item"><div class="credential-label">Focus</div><div class="credential-value">AI automation, cybersecurity, legal-tech automation, OSINT, enterprise systems, and operational strategy.</div></div><div class="credential-item"><div class="credential-label">Operating Style</div><div class="credential-value">Direct, systems-oriented, security-aware, and execution-focused.</div></div><div class="credential-item"><div class="credential-label">Contact</div><div class="credential-value"><a href="mailto:desmondotieno@icloud.com">desmondotieno@icloud.com</a></div></div></div></aside></div></div></section>
+<section class="sect" id="founder" data-cg-protect="light"><div class="container"><div class="sh rv"><div class="sh-tag">LEADERSHIP</div><h2>Software architect and operator for <strong>high-trust systems</strong></h2><p>Executive-level architecture, automation, cybersecurity, legal-tech, OSINT, and operating strategy under one accountable lead.</p></div><div class="founder-grid"><article class="founder-card rv"><img src="assets/images/desmond-cg-profile-picture.jpg" alt="Desmond ClearGlassInc profile picture" class="hero-profile" width="1320" height="2263" loading="lazy" decoding="async"><div class="founder-kicker">Founder Profile</div><h3 class="founder-name">Desmond Otieno Odhiambo</h3><div class="founder-role">Software Architect & COO · Founder</div><div class="founder-copy"><p><strong>Desmond Otieno Odhiambo</strong> leads ClearGlass as a software architect and operator focused on AI automation, cybersecurity, legal-tech systems, OSINT workflows, and enterprise execution.</p><p>His work turns ambiguous operational problems into mapped systems, governed workflows, and decision surfaces leaders can trust.</p><p>The operating principle is simple: ship systems that clarify risk, reduce manual drag, preserve accountability, and improve decision speed.</p></div><div class="founder-actions"><a href="mailto:desmondotieno@icloud.com" class="btn btn-dark">Email Desmond →</a><a href="#contact" class="btn btn-glass">Start a Conversation</a></div></article><aside class="credentials-card rv"><div class="founder-kicker">Founder Credentials</div><h3>Architecture, operations, security, and automation.</h3><div class="credentials-list"><div class="credential-item"><div class="credential-label">Role</div><div class="credential-value">Software Architect & COO, ClearGlass Inc.</div></div><div class="credential-item"><div class="credential-label">Education</div><div class="credential-value">University of Pennsylvania — Associate's Degree, Artificial Intelligence <span class="credential-sub">Oct 2022 — Jun 2025</span></div></div><div class="credential-item"><div class="credential-label">Certificate</div><div class="credential-value">Macquarie University — Cyber Security: Essentials for Forensics <span class="credential-sub">Oct 2025 — Oct 2025 · Grade: 94.68%</span></div></div><div class="credential-item"><div class="credential-label">License & Certification</div><div class="credential-value">Coursera — Introduction to Agile Development and Scrum <span class="credential-sub">Issued Apr 2026</span></div></div><div class="credential-item"><div class="credential-label">Professional Designations</div><div class="credential-value">Registered Trademark Agent, Canada | USPTO Patent Agent</div></div><div class="credential-item"><div class="credential-label">Accuracy Note</div><div class="credential-value">Trademark Agent licensed by CPATA | Patent Agent registered with the USPTO.</div></div><div class="credential-item"><div class="credential-label">Focus</div><div class="credential-value">AI automation, cybersecurity, legal-tech automation, OSINT, enterprise systems, and operational strategy.</div></div><div class="credential-item"><div class="credential-label">Operating Style</div><div class="credential-value">Direct, systems-oriented, security-aware, and execution-focused.</div></div><div class="credential-item"><div class="credential-label">Contact</div><div class="credential-value"><a href="mailto:desmondotieno@icloud.com">desmondotieno@icloud.com</a></div></div></div></aside></div></div></section>
 
 
-<section class="sect legal-strategist" id="banking-law-strategist" aria-labelledby="banking-law-title">
+<!-- ── PROOF — credibility built on what is enforced in code rather than on
+     claimed numbers. Client outcome figures and named references are
+     deliberately absent: add them here only once they can be attributed and
+     evidenced. Suggested slots are marked below. ── -->
+<section class="sect command-surface" id="proof" data-cg-protect="dark" aria-labelledby="proof-title">
+  <div class="container">
+    <div class="sh sh-dark rv">
+      <div class="sh-tag">VERIFIED POSTURE</div>
+      <h2 id="proof-title">Trust is a <strong>build artifact</strong>, not a claim.</h2>
+      <p>The governance model below is not a brochure promise. It is enforced in code, exercised by tests, and it fails the build when violated &mdash; which is the only version of a guarantee worth quoting.</p>
+    </div>
+    <div class="command-grid">
+      <article class="command-panel rv">
+        <p class="cg-live"><i aria-hidden="true"></i>Governance self-check · runs daily</p>
+        <h3>What the system guarantees.</h3>
+        <p>Five invariants hold across every governed engagement. They are structural, not aspirational.</p>
+        <ul class="cg-assurance">
+          <li>Read-only analysis, then draft, then human approval, then execution. High-risk actions cannot execute without a recorded approval.</li>
+          <li>Every material change writes to an append-only audit ledger with a risk score attached to it.</li>
+          <li>Mutating administrative routes require an authenticated credential. Production refuses to start without one.</li>
+          <li>Money-movement paths are exercised by integration tests in continuous integration, not asserted in prose.</li>
+          <li>Pricing, payment, tax, refund, and fulfilment changes escalate to a human gate every time, without an override path.</li>
+        </ul>
+      </article>
+      <article class="command-panel rv">
+        <p class="cg-live"><i aria-hidden="true"></i>Restricted · released under NDA</p>
+        <h3>The rest is shared privately.</h3>
+        <p>Command telemetry, model routing maps, evaluation harnesses, and client architecture stay behind an engagement. What follows is a redacted shape of the operating readout, not live data.</p>
+        <div class="cg-veil" data-cg-veil>
+          <div class="cg-veil__body">
+            <div class="cg-readout">
+              <b>OPERATOR</b> desmond.o · session sealed<br>
+              <b>MODE</b> governed · policy boundary active<br>
+              <b>QUEUE</b> 3 drafts pending approval · 0 auto-executed at high risk<br>
+              <b>LEDGER</b> append-only · every entry risk-scored<br>
+              <b>ESCALATION</b> pricing · payments · refunds · fulfilment
+            </div>
+          </div>
+        </div>
+        <p class="cg-rights">© <span class="cg-year">2026</span> ClearGlass Inc. All rights reserved. This section, its frameworks, and its wording are proprietary. Reuse requires written permission &mdash; see the <a href="legal/content-policy.html">content policy</a>.</p>
+      </article>
+    </div>
+    <!-- SOCIAL PROOF SLOT — add client logos, named references, or outcome
+         metrics here when each one can be attributed and substantiated. Leave
+         empty rather than filling with placeholder figures: an unverifiable
+         number on this page undermines every verifiable claim above it. -->
+  </div>
+</section>
+<section class="sect legal-strategist" id="banking-law-strategist" aria-labelledby="banking-law-title" data-cg-protect="dark">
   <div class="container">
     <div class="sh rv">
       <div class="sh-tag" style="color:#7dd3fc">BANKING &amp; FINANCIAL LAW STRATEGY</div>
@@ -613,7 +813,7 @@ body.mobile-nav-open{overflow:hidden}
   </div>
 </section>
 
-<section class="sect command-surface" id="wsids" aria-labelledby="wsids-title">
+<section class="sect command-surface" id="wsids" aria-labelledby="wsids-title" data-cg-protect="dark">
   <div class="container">
     <div class="sh rv" style="margin-bottom:32px"><div class="sh-tag" style="color:#53e6b4">WORKER RIGHTS · DEFENSIVE INTELLIGENCE</div><h2 id="wsids-title" style="color:#fff">ClearGlass Workplace Surveillance<br><strong>Intelligence &amp; Defense System.</strong></h2><p style="color:rgba(255,255,255,.68);max-width:780px">WSIDS is a defensive, investigative, educational, and compliance-focused framework for examining workplace surveillance while protecting lawful organizing, collective action, privacy, and worker safety.</p></div>
     <div class="command-grid">
@@ -624,6 +824,38 @@ body.mobile-nav-open{overflow:hidden}
 </section>
 
 <section class="sect catalog-sect" id="full-catalog"><div class="container"><div class="sh sh-center rv"><div class="sh-tag" style="justify-content:center">FULL PRODUCT CATALOG</div><h2>Every <strong>ClearGlass surface</strong> in one system</h2><p>The global product catalog mirrors the navigation menu, so every platform, prototype, product sheet, offer, interface, and command surface is reachable from the homepage and from every page through the shared glass navigation.</p></div><div class="catalog-grid"><a class="catalog-card rv" href="artemis-iv.html"><span class="catalog-icon">🧭</span><span><b>Artemis IV Core</b><small>Tactical intelligence core</small></span></a><a class="catalog-card rv" href="artemis.html"><span class="catalog-icon">🛰</span><span><b>Artemis VI</b><small>Ontario intelligence deployment</small></span></a><a class="catalog-card rv" href="artemis-os.html"><span class="catalog-icon">◎</span><span><b>Artemis OS</b><small>Intelligence operating system</small></span></a><a class="catalog-card rv" href="artemis-2040.html"><span class="catalog-icon">◌</span><span><b>Artemis 2040</b><small>Long-horizon intelligence</small></span></a><a class="catalog-card rv" href="artemis-self-evolving-platform.html"><span class="catalog-icon">↻</span><span><b>Artemis Self-Evolving</b><small>Governed improvement loop</small></span></a><a class="catalog-card rv" href="artemis-ai-cyber-intelligence-platform.html"><span class="catalog-icon">✦</span><span><b>AI Cyber Intelligence</b><small>Cyber intelligence platform</small></span></a><a class="catalog-card rv" href="artemis-percival.html"><span class="catalog-icon">⬣</span><span><b>AVALON · Artemis + Percival</b><small>Unified fusion core</small></span></a><a class="catalog-card rv" href="percival-os.html"><span class="catalog-icon">◐</span><span><b>PERCIVAL OS</b><small>Governed command center</small></span></a><a class="catalog-card rv" href="sentinel.html"><span class="catalog-icon">◉</span><span><b>SENTINEL</b><small>Live geospatial command</small></span></a><a class="catalog-card rv" href="guardian.html"><span class="catalog-icon">🌐</span><span><b>GUARDIAN</b><small>Intelligence command interface</small></span></a><a class="catalog-card rv" href="bluedesk.html"><span class="catalog-icon">🛡</span><span><b>BLUEDESK</b><small>CISO risk console</small></span></a><a class="catalog-card rv" href="bluedesk-mobile.html"><span class="catalog-icon">▣</span><span><b>BLUEDESK Mobile</b><small>Phone-first risk console</small></span></a><a class="catalog-card rv" href="clearglass-nexus.html"><span class="catalog-icon">◆</span><span><b>ClearGlass NEXUS</b><small>Full-spectrum intelligence</small></span></a><a class="catalog-card rv" href="ClearGlass-NEXUS-v12-FINAL.html"><span class="catalog-icon">◇</span><span><b>NEXUS v12</b><small>Flagship platform build</small></span></a><a class="catalog-card rv" href="intelligence-command-surface.html"><span class="catalog-icon">🗺</span><span><b>Intelligence Command Surface</b><small>Unified operational picture</small></span></a><a class="catalog-card rv" href="intelligence-interface.html"><span class="catalog-icon">🖥</span><span><b>Intelligence Interface</b><small>Analyst workspace</small></span></a><a class="catalog-card rv" href="flowsint.html"><span class="catalog-icon">🕸</span><span><b>Flowsint</b><small>OSINT investigation graph</small></span></a><a class="catalog-card rv" href="clearglass.html"><span class="catalog-icon">⌁</span><span><b>Network Flow Intelligence</b><small>Living network structure</small></span></a><a class="catalog-card rv" href="Ontario-osint.html"><span class="catalog-icon">⌖</span><span><b>Ontario OSINT Deck</b><small>Regional OSINT control</small></span></a><a class="catalog-card rv" href="agentmesh.html"><span class="catalog-icon">⌗</span><span><b>Agent Mesh</b><small>Multi-agent orchestration</small></span></a><a class="catalog-card rv" href="ai-operator.html"><span class="catalog-icon">🜂</span><span><b>AI Operator Workspace</b><small>Human-in-the-loop ops</small></span></a><a class="catalog-card rv" href="conduit.html"><span class="catalog-icon">⟿</span><span><b>CONDUIT</b><small>Self-hosted automation</small></span></a><a class="catalog-card rv" href="postloop.html"><span class="catalog-icon">⟲</span><span><b>PostLoop</b><small>Content engine</small></span></a><a class="catalog-card rv" href="automap.html"><span class="catalog-icon">⌘</span><span><b>AutoMap</b><small>Architecture orchestration</small></span></a><a class="catalog-card rv" href="command-console.html"><span class="catalog-icon">▤</span><span><b>Command Console</b><small>Cyber operations hub</small></span></a><a class="catalog-card rv" href="saas-platform.html"><span class="catalog-icon">◆</span><span><b>Event Control Surface</b><small>Event-driven operations</small></span></a><a class="catalog-card rv" href="systems.html"><span class="catalog-icon">▦</span><span><b>Systems Console</b><small>PERCIVAL operations</small></span></a><a class="catalog-card rv" href="control-surface.html"><span class="catalog-icon">▧</span><span><b>Control Surface</b><small>Live command dashboard</small></span></a><a class="catalog-card rv" href="CG-os.html"><span class="catalog-icon">◫</span><span><b>CG OS</b><small>ClearGlass command HUD</small></span></a><a class="catalog-card rv" href="clearsight.html"><span class="catalog-icon">🎥</span><span><b>CLEARSIGHT</b><small>Edge-AI camera vision</small></span></a><a class="catalog-card rv" href="air-control.html"><span class="catalog-icon">🜁</span><span><b>ZEPHYR Air Control</b><small>Air systems control</small></span></a><a class="catalog-card rv" href="air-systems-control.html"><span class="catalog-icon">✈</span><span><b>Air Systems Control</b><small>Airspace control surface</small></span></a><a class="catalog-card rv" href="clearpulse.html"><span class="catalog-icon">📡</span><span><b>ClearPulse</b><small>Healthcare intelligence</small></span></a><a class="catalog-card rv" href="clearpulse-architecture.html"><span class="catalog-icon">✚</span><span><b>ClearPulse Architecture</b><small>Forensic-AI whitepaper</small></span></a><a class="catalog-card rv" href="aegis.html"><span class="catalog-icon">⚖</span><span><b>AEGIS</b><small>Legal process shield</small></span></a><a class="catalog-card rv" href="corporate-legal-advisor.html"><span class="catalog-icon">§</span><span><b>ClearCounsel</b><small>Corporate legal AI</small></span></a><a class="catalog-card rv" href="banking-law-advisor.html"><span class="catalog-icon">🏦</span><span><b>ClearBank Legal AI</b><small>Banking law intelligence</small></span></a><a class="catalog-card rv" href="tax.html"><span class="catalog-icon">🧾</span><span><b>ClearTax AI</b><small>Tax intelligence</small></span></a><a class="catalog-card rv" href="government.html"><span class="catalog-icon">🏛</span><span><b>Government Solutions</b><small>Public-sector systems</small></span></a><a class="catalog-card rv" href="counter-uas-commercialization-os.html"><span class="catalog-icon">◎</span><span><b>Counter-UAS OS</b><small>Counter-drone platform</small></span></a><a class="catalog-card rv" href="traffic-enforcement.html"><span class="catalog-icon">◈</span><span><b>Speed Vision AI</b><small>Traffic enforcement AI</small></span></a><a class="catalog-card rv" href="sats-digital-twin.html"><span class="catalog-icon">▱</span><span><b>SATS Digital Twin</b><small>Transit simulation</small></span></a><a class="catalog-card rv" href="smb.html"><span class="catalog-icon">▰</span><span><b>SMB Suite</b><small>Small-business systems</small></span></a><a class="catalog-card rv" href="smb-cyber-trust-kit.html"><span class="catalog-icon">🔐</span><span><b>SMB Cyber Trust Kit</b><small>Cyber resilience kit</small></span></a><a class="catalog-card rv" href="revenue-engine.html"><span class="catalog-icon">💹</span><span><b>Revenue Engine</b><small>AI growth system</small></span></a><a class="catalog-card rv" href="products/opal-koboi/index.html"><span class="catalog-icon">✧</span><span><b>Opal-Koboi Assets</b><small>Product asset library</small></span></a><a class="catalog-card rv" href="products/opal-koboi/artemis-iv-core.html"><span class="catalog-icon">🧭</span><span><b>Artemis IV Core · Asset</b><small>Product sheet</small></span></a><a class="catalog-card rv" href="products/opal-koboi/artemis-vi.html"><span class="catalog-icon">🛰</span><span><b>Artemis VI · Asset</b><small>Product sheet</small></span></a><a class="catalog-card rv" href="products/opal-koboi/guardian.html"><span class="catalog-icon">🌐</span><span><b>Guardian · Asset</b><small>Product sheet</small></span></a><a class="catalog-card rv" href="products/opal-koboi/revenue-engine.html"><span class="catalog-icon">💹</span><span><b>Revenue Engine · Asset</b><small>Product sheet</small></span></a><a class="catalog-card rv" href="products/opal-koboi/smb-suite.html"><span class="catalog-icon">▰</span><span><b>SMB Suite · Asset</b><small>Product sheet</small></span></a><a class="catalog-card rv" href="ultra-glass.html"><span class="catalog-icon">◫</span><span><b>Ultra Glass</b><small>Glass intelligence UI</small></span></a><a class="catalog-card rv" href="clearglass-ultra.html"><span class="catalog-icon">◩</span><span><b>ClearGlass Ultra</b><small>See-through command UI</small></span></a><a class="catalog-card rv" href="futuristic.html"><span class="catalog-icon">✺</span><span><b>Aurora Glass</b><small>Design study</small></span></a><a class="catalog-card rv" href="button-system.html"><span class="catalog-icon">◍</span><span><b>Button System</b><small>Glass UI components</small></span></a><a class="catalog-card rv" href="button-lab.html"><span class="catalog-icon">◌</span><span><b>Button Lab</b><small>Control components</small></span></a><a class="catalog-card rv" href="web-design.html"><span class="catalog-icon">💻</span><span><b>Web Design &amp; Development</b><small>Growth infrastructure</small></span></a><a class="catalog-card rv" href="store.html"><span class="catalog-icon">🛒</span><span><b>Store</b><small>Book an engagement</small></span></a><a class="catalog-card rv" href="side-store.html"><span class="catalog-icon">🔌</span><span><b>Side Store</b><small>Electronics and components</small></span></a><a class="catalog-card rv" href="pricing.html"><span class="catalog-icon">₵</span><span><b>Pricing</b><small>Plans and engagements</small></span></a><a class="catalog-card rv" href="command-center.html"><span class="catalog-icon">⌁</span><span><b>Command Center</b><small>Executive operations deck</small></span></a><a class="catalog-card rv" href="platform-command-center.html"><span class="catalog-icon">🗂</span><span><b>Platform Command Center</b><small>Live monorepo dashboard</small></span></a><a class="catalog-card rv" href="authority-network.html"><span class="catalog-icon">🔗</span><span><b>Authority Network</b><small>Connected knowledge graph</small></span></a><a class="catalog-card rv" href="stegoforge.html"><span class="catalog-icon">🖼</span><span><b>StegoForge</b><small>Media assurance terminal</small></span></a><a class="catalog-card rv" href="attack-prompt-core.html"><span class="catalog-icon">🎯</span><span><b>ATT&amp;CK Prompt Core</b><small>Threat-informed prompt core</small></span></a><a class="catalog-card rv" href="hover-menu.html"><span class="catalog-icon">◔</span><span><b>Hover Menu</b><small>Glass interaction study</small></span></a></div></div></section>
+<!-- ── ENGAGE — makes the next step concrete ahead of the existing closing CTA,
+     which is left exactly as it was. ── -->
+<section class="sect cg-doctrine" id="engage" data-cg-protect="light">
+  <div class="container">
+    <div class="sh sh-center rv">
+      <div class="sh-tag" style="justify-content:center">ENGAGE</div>
+      <h2>Three ways to <strong>start</strong>.</h2>
+      <p>Pick the smallest one that answers your question. Scope grows from evidence, not from an assumption about what you need.</p>
+    </div>
+    <div class="cg-cards">
+      <article class="cg-card rv">
+        <p class="k">PATH 01</p>
+        <h3>Strategic brief.</h3>
+        <p>A working session on the decision in front of you &mdash; the architecture, the risk, and the sequence. You leave with a written point of view whether or not we work together.</p>
+        <a class="cg-next" href="mailto:desmondotieno@icloud.com">Request a brief →</a>
+      </article>
+      <article class="cg-card rv">
+        <p class="k">PATH 02</p>
+        <h3>System review.</h3>
+        <p>An assessment of what you already run: where automation drifts, where controls thin out, and where governance is assumed rather than enforced. Findings ranked by consequence.</p>
+        <a class="cg-next" href="offers/index.html">See engagements →</a>
+      </article>
+      <article class="cg-card rv">
+        <p class="k">PATH 03</p>
+        <h3>Build engagement.</h3>
+        <p>Design and delivery of the governed system itself &mdash; agents, approval gates, audit trail, and the operating model that keeps it accountable after handover.</p>
+        <a class="cg-next" href="pricing.html">Review pricing →</a>
+      </article>
+    </div>
+    <p class="cg-footnote rv">What happens next: a scoped reply, a written summary of what we heard, and a fixed-scope proposal before any work begins. No retainer is required to have the first conversation.</p>
+  </div>
+</section>
 <section class="cta-sect" id="contact"><div class="container"><h2 class="rv">Build the system before the complexity compounds.</h2><p class="rv">Contact Desmond Otieno Odhiambo for AI automation, cybersecurity, legal-tech, OSINT, or enterprise architecture work that needs senior judgment and governed execution.</p><div class="cta-actions rv"><a href="mailto:desmondotieno@icloud.com" class="btn btn-crystal">Email Desmond →</a><a href="offers/index.html" class="btn btn-glass">Services &amp; Engagements →</a><a href="#services" class="btn btn-glass">Review Capabilities</a></div></div></section>
 <section class="signup-sect">
   <div class="container">
@@ -797,8 +1029,9 @@ body.mobile-nav-open{overflow:hidden}
     <div class="footer-div"></div>
     <div class="footer-bottom">
       <div class="footer-legal">
-        <span class="footer-copy">© <span id="year"></span> ClearGlass Inc.</span>
+        <span class="footer-copy">© <span id="year"></span> ClearGlass Inc. All rights reserved.</span>
         <a href="legal/terms.html">Terms</a>
+        <a href="legal/content-policy.html">Content Policy</a>
         <a href="legal/privacy.html">Privacy</a>
         <a href="legal/accessibility.html">Accessibility Statement</a>
         <a href="authority-network.html">Site Map</a>
@@ -844,6 +1077,8 @@ body.mobile-nav-open{overflow:hidden}
 </footer>
 
 <div class="unclass-banner">UNCLASSIFIED / NON-CLASSIFIÉ — END OF DOCUMENT</div>
+<!-- Screen-hidden; appears only on print and "save as PDF" captures. -->
+<div class="cg-print-notice">© <span class="cg-year">2026</span> ClearGlass Inc. All rights reserved. Retrieved from www.clearglassinc.com — reuse requires written permission.</div>
 
 <script>
 document.getElementById('year').textContent=new Date().getFullYear();

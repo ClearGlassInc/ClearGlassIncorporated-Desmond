@@ -188,3 +188,42 @@ class MetricsOverview(BaseModel):
     refund_rate: float
     open_approvals: int
     window_days: int
+
+
+class SideStoreCartLine(BaseModel):
+    """A Side Store cart line: what, and how many. Never how much."""
+
+    id: str = Field(description="Catalogue item id, e.g. sku_001")
+    quantity: int = Field(default=1, ge=1)
+
+
+class SideStoreCartRequest(BaseModel):
+    items: list[SideStoreCartLine] = Field(min_length=1, max_length=40)
+    customer_email: str | None = None
+    success_url: str | None = None
+    cancel_url: str | None = None
+    client_reference_id: str | None = Field(default=None, max_length=200)
+
+
+class SideStoreCatalogItemOut(BaseModel):
+    id: str
+    sku: str
+    name: str
+    category: str
+    description: str
+    amount: int
+
+
+class SideStoreQuoteOut(BaseModel):
+    """A priced cart. Every field is in the smallest currency unit (cents)."""
+
+    quantity: int
+    subtotal: int
+    discount_rate: str
+    discount: int
+    discounted_subtotal: int
+    shipping: int
+    free_shipping_applied: bool
+    tax: int
+    total: int
+    currency: str

@@ -74,6 +74,10 @@ def create_checkout_session(
     checkout_mode: str = "payment",
     client_reference_id: str | None = None,
     idempotency_key: str | None = None,
+    shipping_countries: list[str] | None = None,
+    shipping_amount: int | None = None,
+    shipping_label: str = "Standard shipping",
+    extra_metadata: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     """Create a Stripe Checkout session, or a deterministic mock when no key is set.
 
@@ -87,6 +91,9 @@ def create_checkout_session(
     thing and is kept for the existing storefront contract.
     """
     amount_total = sum(int(i.get("amount", 0)) * int(i.get("quantity", 1)) for i in line_items)
+    # Stripe adds the shipping rate to the session total, so the mock must too —
+    # otherwise mock mode quietly under-reports what a live session would charge.
+    amount_total += int(shipping_amount or 0)
     success_url = success_url or os.environ.get("CHECKOUT_SUCCESS_URL", "http://localhost:3000/success")
     cancel_url = cancel_url or os.environ.get("CHECKOUT_CANCEL_URL", "http://localhost:3000/cancel")
     success_url = _with_session_placeholder(success_url)
@@ -141,6 +148,10 @@ def create_checkout_session(
         stripe_line_items.append({"quantity": quantity, "price_data": price_data})
 
     metadata = {"skus": skus, "source": "clearglass_storefront"}
+    if extra_metadata:
+        # e.g. the bundle tier a Side Store cart earned, so reconciliation can
+        # explain a discounted unit price months later.
+        metadata.update({k: str(v)[:500] for k, v in extra_metadata.items()})
     params: dict[str, Any] = {
         "mode": checkout_mode,
         "customer_email": customer_email,
@@ -153,6 +164,23 @@ def create_checkout_session(
         "billing_address_collection": "required",
         "client_reference_id": client_reference_id,
     }
+    # Physical goods need somewhere to go. Collecting the address here is the only
+    # chance to get it: the webhook can read it off the session afterwards, but
+    # nothing can invent it later, and a paid parcel with no destination is a
+    # refund waiting to happen.
+    if shipping_countries:
+        params["shipping_address_collection"] = {"allowed_countries": shipping_countries}
+    if shipping_amount is not None:
+        params["shipping_options"] = [
+            {
+                "shipping_rate_data": {
+                    "type": "fixed_amount",
+                    "display_name": shipping_label,
+                    "fixed_amount": {"amount": int(shipping_amount), "currency": currency},
+                }
+            }
+        ]
+
     if automatic_tax_enabled():
         params["automatic_tax"] = {"enabled": True}
         params["customer_creation"] = "always"

@@ -41,6 +41,19 @@ PUBLIC_MUTATING_ROUTES: dict[tuple[str, str], str] = {
         "Stripe callback. Cannot carry an operator credential; authenticated by "
         "Stripe signature verification, rate limited, and idempotent on redelivery."
     ),
+    ("POST", "/sidestore/quote"): (
+        "Prices a Side Store cart without charging anything. POST only because a "
+        "cart does not fit in a query string; it writes nothing, creates nothing, "
+        "and returns arithmetic the storefront already performs in the browser. "
+        "Quantities are bounds-checked so it cannot be used as a compute sink."
+    ),
+    ("POST", "/sidestore/checkout/session"): (
+        "Customer checkout for the Side Store. Public by necessity, same as "
+        "/checkout/session; per-IP rate limited, and every amount — unit price, "
+        "bundle tier, shipping — is computed server-side from app/cart.py against "
+        "app/data/sidestore.json. The request names item ids and quantities only, "
+        "so an anonymous caller cannot choose what it is charged. See tests/test_cart.py."
+    ),
     ("POST", "/fulfillment/webhooks/printful/{secret}"): (
         "Printful shipment callback. Cannot carry an operator credential, and unlike "
         "Stripe, Printful signs nothing — so the URL itself is the credential: the "

@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-08-05T09:35:25.671047+00:00",
+  "run_utc": "2026-08-06T09:38:09.846684+00:00",
   "files_audited": 78,
-  "average_score": 87.8,
+  "average_score": 87.7,
   "pages": [
     {
       "file": "404.html",
@@ -1106,12 +1106,14 @@
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
-      "img_without_alt": 0,
+      "img_without_alt": 1,
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 90,
+      "issues": [
+        "1 image(s) missing alt text"
+      ]
     },
     {
       "file": "platform-command-center.html",
@@ -1549,7 +1551,7 @@
     "7x \u2014 Missing og:title",
     "4x \u2014 Multiple <hN> tags (N)",
     "4x \u2014 Missing canonical link tag",
-    "2x \u2014 N image(s) missing alt text",
+    "3x \u2014 N image(s) missing alt text",
     "1x \u2014 Missing <title>",
     "1x \u2014 Missing meta description"
   ]

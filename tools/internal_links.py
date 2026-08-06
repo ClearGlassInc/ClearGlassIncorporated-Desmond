@@ -171,6 +171,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "seo-authority-hub.html": ("Cybersecurity & AI Automation in Burlington", "the local authority hub for ClearGlass services"),
     "checkout/index.html": ("Secure Checkout", "purchase an audit or protection plan"),
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
+    "plans.html": ("Guardian Plans & Pricing", "per-seat subscription tiers for the Guardian console"),
     "smb-cyber-trust-kit.html": ("SMB Cyber Trust Kit", "plain-language cyber resilience for small business"),
     "smb.html": ("SMB Suite", "intelligent systems for small business"),
     "side-store.html": ("Side Store", "electronics, cables and components"),
@@ -335,7 +336,7 @@ CLUSTERS: dict[str, dict] = {
         "name": "Services & Engagements",
         "pillar": "offers/index.html",
         "members": [
-            "store.html", "pricing.html", "checkout/index.html", "seo-authority-hub.html",
+            "store.html", "pricing.html", "plans.html", "checkout/index.html", "seo-authority-hub.html",
             "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html",

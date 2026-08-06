@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 146 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 147 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -106,8 +106,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | **Services & Engagements** | **Topic cluster** |  |  |  |  |
 | `offers/index.html` — Services & Engagements | every ClearGlass offer in one place | Growth Command Centre | Services & Engagements | ClearGlass Store | Book a security engagement / See pricing & plans |
 | `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
-| `pricing.html` — Pricing & Engagements | plans and engagement models | ClearGlass Store | Services & Engagements | Secure Checkout | Book a security engagement / See pricing & plans |
-| `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | Pricing & Engagements | Services & Engagements | Cybersecurity & AI Automation in Burlington | Book a security engagement / See pricing & plans |
+| `pricing.html` — Pricing & Engagements | plans and engagement models | ClearGlass Store | Services & Engagements | Guardian Plans & Pricing | Book a security engagement / See pricing & plans |
+| `plans.html` — Guardian Plans & Pricing | per-seat subscription tiers for the Guardian console | Pricing & Engagements | Services & Engagements | Secure Checkout | Book a security engagement / See pricing & plans |
+| `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | Guardian Plans & Pricing | Services & Engagements | Cybersecurity & AI Automation in Burlington | Book a security engagement / See pricing & plans |
 | `seo-authority-hub.html` — Cybersecurity & AI Automation in Burlington | the local authority hub for ClearGlass services | Secure Checkout | Services & Engagements | SMB Cyber Trust Kit | Book a security engagement / See pricing & plans |
 | `smb-cyber-trust-kit.html` — SMB Cyber Trust Kit | plain-language cyber resilience for small business | Cybersecurity & AI Automation in Burlington | Services & Engagements | SMB Suite | Book a security engagement / See pricing & plans |
 | `smb.html` — SMB Suite | intelligent systems for small business | SMB Cyber Trust Kit | Services & Engagements | Security Quick-Audit | Book a security engagement / See pricing & plans |

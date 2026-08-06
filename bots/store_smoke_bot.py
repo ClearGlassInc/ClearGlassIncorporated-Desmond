@@ -143,6 +143,22 @@ def check_pricing(store_html: str, pricing_html: str) -> list[str]:
             "live card checkout enabled for different SKUs across pages "
             f"(store={sorted(live_store)}, pricing={sorted(live_pricing)})"
         )
+
+    # Matching SKU *names* is not enough. If store.html sends `quick-audit` to one
+    # Payment Link and pricing.html sends it to another, both pages look "live" for
+    # the same SKU and the check above passes — while half the buyers are charged
+    # for the wrong service. Compare the destinations, not just which SKUs have one.
+    store_links = extract_checkout_links(store_html)
+    pricing_links = extract_checkout_links(pricing_html)
+    for sku in sorted(live_store & live_pricing):
+        store_url = store_links.get(sku, "").strip()
+        pricing_url = pricing_links.get(sku, "").strip()
+        if store_url != pricing_url:
+            errors.append(
+                f"checkout link for '{sku}' differs across pages "
+                f"(store={store_url!r}, pricing={pricing_url!r}) — one of them "
+                "charges for the wrong product"
+            )
     return errors
 
 

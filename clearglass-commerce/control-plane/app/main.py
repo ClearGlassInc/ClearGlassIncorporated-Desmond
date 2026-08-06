@@ -6,7 +6,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
 from .config import get_settings
-from .routers import approvals, etsy, events, inventory, metrics, orders, payments, store
+from .routers import (
+    approvals,
+    etsy,
+    events,
+    fulfillment,
+    inventory,
+    metrics,
+    orders,
+    payments,
+    store,
+)
 from .security import (
     auth_enabled,
     peer_is_trusted_proxy,
@@ -116,6 +126,11 @@ def create_app() -> FastAPI:
     # Etsy is an operator surface end to end: connection state and verification read
     # credential-backed shop identity, and the write endpoints propose live-shop changes.
     app.include_router(etsy.router, dependencies=admin)
+    # Fulfillment mixes surfaces, so it is gated per endpoint rather than wholesale:
+    # the supplier catalogue and an order's tracking are read-only, confirming a
+    # supplier order is admin-gated, and the shipment webhook cannot carry an
+    # operator credential (it is authenticated by its URL secret instead).
+    app.include_router(fulfillment.router)
     return app
 
 

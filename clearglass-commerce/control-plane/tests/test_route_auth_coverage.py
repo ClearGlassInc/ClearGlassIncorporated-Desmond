@@ -41,6 +41,15 @@ PUBLIC_MUTATING_ROUTES: dict[tuple[str, str], str] = {
         "Stripe callback. Cannot carry an operator credential; authenticated by "
         "Stripe signature verification, rate limited, and idempotent on redelivery."
     ),
+    ("POST", "/fulfillment/webhooks/printful/{secret}"): (
+        "Printful shipment callback. Cannot carry an operator credential, and unlike "
+        "Stripe, Printful signs nothing — so the URL itself is the credential: the "
+        "path segment is compared against PRINTFUL_WEBHOOK_SECRET with "
+        "hmac.compare_digest, and an unset secret rejects every call rather than "
+        "accepting all of them. It records tracking on an existing order and is "
+        "idempotent on (supplier, supplier_order_id); it cannot create an order, "
+        "move money, or confirm a supplier order — confirmation is ALWAYS_ESCALATE."
+    ),
 }
 
 

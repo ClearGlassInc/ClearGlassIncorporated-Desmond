@@ -75,7 +75,55 @@ class Order(Base):
     external_ref: Mapped[str | None] = mapped_column(
         String(160), nullable=True, unique=True, index=True
     )
+    # Where the parcel goes. Held on the order rather than the customer because a
+    # customer can ship to a different address each time, and a dropship supplier
+    # is handed the address that was given at *this* checkout — reusing a stale
+    # one sends someone else's parcel to a previous address.
+    ship_to_name: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    ship_to_address1: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    ship_to_address2: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    ship_to_city: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    ship_to_state: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    ship_to_country: Mapped[str | None] = mapped_column(String(2), nullable=True)
+    ship_to_zip: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    ship_to_email: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    # pending → drafted → awaiting_approval → confirmed → shipped (see fulfillment.py)
+    fulfillment_status: Mapped[str] = mapped_column(String(32), default="pending")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+
+
+class Shipment(Base):
+    """A supplier's fulfillment of an order, and the tracking it produced.
+
+    Separate from ``Order`` because one order can ship in several parcels — a
+    print-on-demand supplier routes items to whichever facility can make them, so
+    a two-item order regularly arrives as two shipments with different carriers.
+    Collapsing that into columns on ``Order`` would lose one of the tracking
+    numbers, and the customer would be chasing a parcel we never told them about.
+    """
+
+    __tablename__ = "shipments"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id", ondelete="CASCADE"), index=True)
+    supplier: Mapped[str] = mapped_column(String(32), default="printful")
+    # The supplier's own order id. Unique per supplier so a redelivered shipment
+    # webhook updates the existing row instead of inserting a duplicate.
+    supplier_order_id: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
+    status: Mapped[str] = mapped_column(String(32), default="draft")
+    tracking_number: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    tracking_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    carrier: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    service: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    # What the supplier charged us, against Order.total the customer paid — the
+    # two together are the margin, which is the whole economics of dropshipping.
+    supplier_cost: Mapped[Decimal | None] = mapped_column(Numeric(12, 2), nullable=True)
+    currency: Mapped[str] = mapped_column(String(3), default="CAD")
+    shipped_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=_utcnow, onupdate=_utcnow
+    )
 
 
 class Payout(Base):

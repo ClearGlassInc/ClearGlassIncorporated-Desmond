@@ -109,8 +109,6 @@ def create_checkout(req: CheckoutRequest, session: Session = Depends(get_session
     result = payments.create_checkout_session(
         line_items,
         customer_email=req.customer_email,
-        success_url=req.success_url,
-        cancel_url=req.cancel_url,
         checkout_mode=checkout_mode,
         client_reference_id=req.client_reference_id,
         idempotency_key=req.client_reference_id,

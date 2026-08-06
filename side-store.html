@@ -1137,13 +1137,28 @@
       '<div class="st-sline"><span>Shipping</span>'+shipTxt+'</div>'+
       '<div class="st-sline"><span>HST (13%)</span><span class="st-mono">'+fmt(p.tax)+'</span></div>'+
       '<div class="st-sline tot"><span>Total</span><span class="st-mono">'+fmt(p.tot)+'</span></div>'+
-      '<a class="st-checkout" id="checkout">Order by Interac e-Transfer →</a>'+
-      '<p class="st-paynote">Checkout opens a pre-filled order email. No card details are collected on this site.</p>';
+      '<a class="st-checkout" id="checkout">'+(API_BASE?"Pay securely by card →":"Order by Interac e-Transfer →")+'</a>'+
+      '<p class="st-paynote" id="checkoutError" role="alert" hidden style="color:#ff8095"></p>'+
+      '<p class="st-paynote">'+(API_BASE
+        ?"Card payment is handled by Stripe on their secure page. No card details are entered on this site."
+        :"Checkout opens a pre-filled order email. No card details are collected on this site.")+'</p>';
     $("#checkout").addEventListener("click",placeOrder);
   }
+  // Control plane base URL. When set, checkout goes through Stripe: the server
+  // re-prices the cart from its own catalogue (app/cart.py) and opens a Checkout
+  // Session, so the amount charged never depends on anything in this page or in
+  // localStorage. Left empty — or unreachable — the buttons keep the existing
+  // e-Transfer flow, so the store never becomes unusable because an API is down.
+  var API_BASE="";
+
   function placeOrder(e){
     var p=price(cart);
     if(!p.lines.length){if(e)e.preventDefault();return;}
+    if(API_BASE){
+      if(e)e.preventDefault();
+      cardCheckout(p);
+      return;
+    }
     var body="ClearGlass Side Store — Order request%0D%0A%0D%0A";
     p.lines.forEach(function(l){body+=encodeURIComponent(l.qty+" x "+l.name+" ("+fmt(l.unit)+" ea) = "+fmt(l.lt))+"%0D%0A";});
     body+="%0D%0A"+encodeURIComponent("Subtotal: "+fmt(p.sub));
@@ -1155,6 +1170,40 @@
     var href="mailto:"+ORDER_EMAIL+"?subject="+encodeURIComponent("Side Store order — "+fmt(p.tot))+"&body="+body;
     $("#checkout").setAttribute("href",href);
     // allow the mailto to proceed via the anchor href
+  }
+
+  // Send ids and quantities only. The server prices the cart; the totals shown
+  // above are a preview, and if the two ever disagree the server's number is the
+  // one charged. Any failure falls back to the e-Transfer flow rather than
+  // stranding a shopper who is ready to buy.
+  function cardCheckout(p){
+    var btn=$("#checkout");
+    var original=btn.textContent;
+    btn.textContent="Opening secure checkout…";
+    var items=p.lines.map(function(l){return {id:l.id,quantity:l.qty};});
+    var attempt="cg_"+(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now()+"_"+Math.random().toString(36).slice(2,10));
+    fetch(API_BASE+"/sidestore/checkout/session",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({items:items,client_reference_id:attempt})
+    }).then(function(r){
+      return r.json().then(function(b){
+        if(!r.ok)throw new Error(b&&b.detail?b.detail:"checkout failed ("+r.status+")");
+        return b;
+      });
+    }).then(function(session){
+      window.location.href=session.url;
+    }).catch(function(err){
+      btn.textContent=original;
+      // Rebuild the e-Transfer mailto and let the shopper complete the order.
+      var saved=API_BASE;API_BASE="";placeOrder(null);API_BASE=saved;
+      var note=$("#checkoutError");
+      if(note){
+        note.textContent="Card checkout is unavailable ("+err.message+"). Use the e-Transfer option below.";
+        note.hidden=false;
+      }
+      window.location.href=btn.getAttribute("href");
+    });
   }
   var lastFocus=null;
   function openCart(){

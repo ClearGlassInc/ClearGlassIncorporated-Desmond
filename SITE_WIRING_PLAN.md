@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 145 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 146 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -113,8 +113,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `smb.html` — SMB Suite | intelligent systems for small business | SMB Cyber Trust Kit | Services & Engagements | Security Quick-Audit | Book a security engagement / See pricing & plans |
 | `offers/security-quick-audit.html` — Security Quick-Audit | a focused $249 security review | SMB Suite | Services & Engagements | Autonomous Threat Modeling | Book a security engagement / See pricing & plans |
 | `offers/autonomous-threat-modeling.html` — Autonomous Threat Modeling | continuous threat-modeling assessment and implementation services | Security Quick-Audit | Services & Engagements | Hardening Sprint | Book a security engagement / See pricing & plans |
-| `offers/hardening-sprint.html` — Hardening Sprint | Microsoft 365 + Windows hardening engagement | Autonomous Threat Modeling | Services & Engagements | Revenue Engine | Book a security engagement / See pricing & plans |
-| `revenue-engine.html` — Revenue Engine | AI-driven business growth system | Hardening Sprint | Services & Engagements | Side Store | Book a security engagement / See pricing & plans |
+| `offers/hardening-sprint.html` — Hardening Sprint | Microsoft 365 + Windows hardening engagement | Autonomous Threat Modeling | Services & Engagements | Guardian Command Nexus Blueprint | Book a security engagement / See pricing & plans |
+| `offers/guardian-command-nexus-blueprint.html` — Guardian Command Nexus Blueprint | the full SPEC-1 architecture blueprint, sold as a digital deliverable | Hardening Sprint | Services & Engagements | Revenue Engine | Book a security engagement / See pricing & plans |
+| `revenue-engine.html` — Revenue Engine | AI-driven business growth system | Guardian Command Nexus Blueprint | Services & Engagements | Side Store | Book a security engagement / See pricing & plans |
 | `side-store.html` — Side Store | electronics, cables and components | Revenue Engine | Services & Engagements | ClearGlass Products | Book a security engagement / See pricing & plans |
 | `products.html` — ClearGlass Products | the unified ClearGlass product catalog | Side Store | Services & Engagements | Growth Command Centre | Book a security engagement / See pricing & plans |
 | `apps/command-center/index.html` — Growth Command Centre | governed Burlington growth operations and approvals | ClearGlass Products | Services & Engagements | Services & Engagements | Book a security engagement / See pricing & plans |

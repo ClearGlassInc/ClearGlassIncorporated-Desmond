@@ -232,11 +232,228 @@ cd ../admin && npm ci && npm run build
 cd ../../apps/autostore/cockpit && npm ci && npm run build
 ```
 
+## Stripe product-catalogue sync
+
+`scripts/sync-stripe-products.ts` reads the products published on the GitHub
+Pages site and creates or updates the matching Stripe Products and Prices. It
+reads structured data only — it never scrapes rendered HTML for a price — and it
+is idempotent: running it ten times produces the same one Stripe Product per SKU.
+
+**Every run is a dry run until you pass `--apply`.** Nothing is ever deleted.
+
+### Product sources and their schemas
+
+| `--source` | File | Shape |
+|---|---|---|
+| `side-store` | `side-store.html` | `<script id="catalog" type="application/json">` — the same JSON island the page itself renders |
+| `store` | `data/store/catalog.json` | Generated from `store.html` by `scripts/store_sync.py` |
+| `pricebook` | `clearglass-commerce/control-plane/app/data/pricebook.json` | Commerce control-plane price book — **opt-in**, see below |
+
+Default is `side-store,store` (everything on Pages). `--source all` adds the
+price book. A `side-store` entry looks like this:
+
+```json
+{
+  "id": "sku_001",
+  "sku": "USB-C-C-1M",
+  "name": "USB-C to USB-C Cable 1m",
+  "category": "USB Cables",
+  "price": 6.99,
+  "description": "60W fast-charge, braided."
+}
+```
+
+`sku` and `name` are required. `price` is major units (dollars) and is converted
+to integer cents on the decimal string, not by multiplying a float. `image` or
+`images` are optional; relative paths resolve against the Pages base URL. There
+is no stock field, so no inventory status is sent to Stripe — the sync will not
+invent availability it cannot read.
+`data/store/catalog.json` differs in one way that matters: its `amount_cents`
+is already in minor units, and its `price_display` copy is what decides whether
+the amount is exact or quote-driven.
+
+The price book is opt-in because its offers already name Stripe Prices in the
+**live** account. Those ids mean nothing against a test key, so the sync verifies
+any source-supplied id against the target account before reusing it and falls
+back to creating a fresh record when it does not resolve.
+
+### How the mapping works
+
+| Source | Stripe |
+|---|---|
+| `<adapter>:<sku>` | `product.metadata.source_id` — the stable external identifier |
+| Page URL of the listing | `product.metadata.source_url` |
+| `owner/repo` | `product.metadata.source_repository` |
+| sha256 of the normalised product | `product.metadata.source_hash` — drives update-vs-no-op |
+| `name`, `description`, `images` | Product `name`, `description`, `images` |
+| `category` | `product.metadata.source_category` |
+| inventory status, **only where a source states one** | `product.metadata.inventory_status` |
+| One variant | One Price, tagged `price.metadata.variant_key` |
+| `price` / `amount_cents` | `unit_amount`, integer minor units |
+| Billing interval, where the source states one | `price.recurring` |
+
+Everything this tool creates carries `metadata.managed_by = clearglass-site-sync`,
+and that marker is what the sync searches on. There is one deliberate exception:
+when a source *names* a Stripe id — as the price book does — that id is checked
+against the target account and adopted if it resolves, marker or not. That is the
+point of the hint: those Stripe objects predate this tool and it must not create
+second copies of them. Adoption is still narrow — a hinted Product owned by a
+different `source_id` is refused, and a hinted Price that charges something other
+than what the source says **blocks that product** rather than minting a new Price
+at the source's amount. Unmarked, unhinted Stripe records are never touched,
+adopted, or reported as orphans.
+
+Orphan reporting is scoped to the sources a run actually read. A
+`--source side-store` run will not describe your price-book products as removed
+from the site — it never looked at them.
+
+Lookup is by `source_id` over a full paginated `products.list`, not
+`products.search`: the search index is eventually consistent, and a stale miss
+there would create a duplicate. Creates additionally carry a content-derived
+idempotency key, so a run that dies mid-flight and is retried reuses the
+original object rather than minting a second one.
+
+### Prices change by addition, never mutation
+
+A Stripe Price is immutable in amount and currency. When a listed price changes,
+the sync creates a **new** Price and leaves the old one active — existing
+subscriptions keep billing against it. Pass `--deactivate-old-prices` to retire
+the superseded Price once you have confirmed nothing references it; without the
+flag, the plan still lists it so you can see what was left behind.
+
+A product removed from the site produces an `orphan-warning` row. It is never
+archived or deleted automatically — archive it in the Stripe Dashboard if that
+is what you want.
+
+### Running it locally
+
+```bash
+npm ci
+
+# Review the mapping with no credential and no network at all:
+npm run sync:stripe -- --source all --offline
+
+# Dry run against your Stripe test account (reads Stripe, writes nothing):
+export STRIPE_SECRET_KEY=sk_test_...
+npm run sync:stripe
+
+# Write to Stripe test mode:
+npm run sync:stripe -- --apply
+
+# One source, and retire superseded prices:
+npm run sync:stripe -- --source side-store --apply --deactivate-old-prices
+
+npm test          # offline, fully mocked — no Stripe credential required
+npm run typecheck
+```
+
+Options: `--source`, `--apply`, `--live`, `--deactivate-old-prices`,
+`--offline`, `--check-images`, `--base-url`, `--repository`, `--currency`,
+`--report`, `--expect-plan-hash`, `--json`, `--help`. Exit codes: `0` clean,
+`1` a product failed or needs manual correction, `2` refused for a configuration
+or safety reason.
+
+### Environment variables
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `STRIPE_SECRET_KEY` | for anything that reaches Stripe | Read from the environment only. Never commit it, never put it in client-side JS. |
+| `ALLOW_STRIPE_LIVE_SYNC` | only for `--live` | Must be exactly `true`. |
+| `SITE_BASE_URL` | no | Pages origin. Defaults to `https://www.clearglassinc.com`. |
+| `GITHUB_REPOSITORY` | no | Written to `source_repository` metadata. |
+
+The runtime dependency surface is deliberately small — `stripe`, `typescript`,
+and `@types/node`, nothing else. `npm run sync:stripe` compiles with `tsc` and
+runs the output rather than transpiling on the fly, which keeps a bundler (and
+its transitive dependencies) out of the tree entirely.
+
+`typescript` sits in `dependencies` rather than `devDependencies` on purpose:
+`clearglassinc-military-op.yml` runs `npm ci` with `NODE_ENV=production`, which
+omits dev dependencies, and the type check and tests must still run there.
+
+### Test mode versus live mode
+
+Test mode is the default and needs nothing but an `sk_test_…` key. Live mode
+requires **three independent signals to agree**, and any two without the third
+is a refusal:
+
+1. `--live` on the command line,
+2. `ALLOW_STRIPE_LIVE_SYNC=true` in the environment,
+3. a genuinely live (`sk_live_…` / `rk_live_…`) secret key.
+
+A live key with no `--live` is also refused, so a mis-filed secret cannot quietly
+write to production. In CI there is a fourth gate: the applying live job is bound
+to the `stripe-live` environment and reads a separate `STRIPE_LIVE_SECRET_KEY`.
+
+**Live changes go plan → approve → apply, and the approval is bound to the plan.**
+The workflow computes the live plan in a job with no environment gate, which
+writes nothing and publishes the plan plus its `plan_hash` to the run summary.
+Only then does the applying job request `stripe-live` approval — so the reviewer
+is approving a plan they can read. That job recomputes the plan and passes
+`--expect-plan-hash`; if the catalogue or the Stripe account moved in between, the
+hash no longer matches and the run stops with exit 2 rather than applying changes
+nobody signed off on. `live=true, apply=false` gives you the live plan on its own.
+
+### Running it from GitHub Actions
+
+`.github/workflows/sync-stripe-products.yml` runs on `workflow_dispatch` with
+`apply` (default `false`) and `live` (default `false`) inputs, plus `sources` and
+`deactivate_old_prices`. It installs with `npm ci`, runs the type check and the
+test suite **before** any sync job, and uploads the JSON report as a workflow
+artifact. Test-mode runs are a single job; live runs split into the planning and
+applying jobs described above. It also runs automatically after a successful
+`Deploy Pages` run — as a dry-run drift check, which cannot write because
+`workflow_run` carries no inputs.
+
+To add the credential: **Settings → Secrets and variables → Actions → New
+repository secret**, named `STRIPE_SECRET_KEY`, holding your `sk_test_…` key.
+For live sync, add `STRIPE_LIVE_SECRET_KEY` as a secret **on the `stripe-live`
+environment** (Settings → Environments), and add a repository *variable*
+`ALLOW_STRIPE_LIVE_SYNC` set to `true`. Keeping the opt-in in a variable rather
+than an input means turning live sync on is a separate, auditable act from
+requesting a run.
+
+The secret is never interpolated into a `run:` script, never printed, and never
+reaches the report. Any key-shaped string in an error message is redacted before
+it is logged.
+
+### Recovering from a failed sync
+
+The script is safe to re-run: that is the recovery procedure. A failure on one
+product is recorded and the rest of the catalogue continues, so a partial run
+leaves a consistent Stripe account, not a half-written one.
+
+1. Read `stripe-sync-report.json` (the workflow artifact) — `failures` names what
+   broke, `manual_correction_required` what was withheld for bad source data,
+   `blocked` what Stripe itself contradicted, and `resolved` the exact Product
+   and Price ids that were written before the run stopped. Nothing in the report
+   contains credential material; the whole document is redacted before it is
+   written.
+2. Fix the source data, or the Stripe-side cause.
+3. Re-run the dry run and confirm the plan says what you expect.
+4. Re-run with `--apply`. Content-derived idempotency keys mean products that
+   already synced are not duplicated; they show as `product-unchanged`.
+
+If the plan reports `several Stripe products claim this source_id`, the sync
+refuses to apply until you merge them by hand in the Dashboard — it will not
+guess which record is the real one. Nothing in this tool deletes a Stripe object,
+so a bad run is always recoverable by editing the source and syncing again.
+
+### Products that currently need manual correction
+
+Three engagements in `data/store/catalog.json` are withheld because their listed
+price is a floor rather than an amount: `hardening` ("from CAD $2,500"), `phipa`
+("from CAD $3,000") and `monitoring` ("from CAD $600 / month"). A Stripe Price
+needs one exact number. Give each a fixed amount in `store.html` and re-run
+`python scripts/store_sync.py --write`, or leave them as quote-driven
+engagements outside Stripe.
+
 ## Continuous integration
 
 Workflows in `.github/workflows/` cover the active CI/CD paths, including:
 
 - `ci.yml` — Python tests, Ruff lint, site reliability audit, workflow doctor, and OSINT deck validation.
+- `sync-stripe-products.yml` — manual Stripe catalogue sync (dry run by default) plus a post-deploy drift check.
 - `pages.yml` — GitHub Pages deployment for the static site.
 - `commerce-frontend-ci.yml` and `commerce-deploy.yml` — commerce frontend validation and deployment.
 - `auto-store.yml` — Autostore validation/deployment path.

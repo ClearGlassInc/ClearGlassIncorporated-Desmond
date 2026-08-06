@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-08-05T09:35:26.417204+00:00",
+  "run_utc": "2026-08-06T09:38:10.906300+00:00",
   "site_url": "https://www.clearglassinc.com",
-  "overall_healthy": false,
+  "overall_healthy": true,
   "pages_checked": 6,
   "pages_healthy": 6,
   "pages_unreachable": 0,
@@ -11,7 +11,7 @@
       "url": "https://www.clearglassinc.com/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 186,
+      "response_ms": 210,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://www.clearglassinc.com/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 87,
+      "response_ms": 154,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://www.clearglassinc.com/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 118,
+      "response_ms": 131,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://www.clearglassinc.com/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 89,
+      "response_ms": 161,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://www.clearglassinc.com/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 159,
+      "response_ms": 147,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,15 +61,13 @@
       "url": "https://www.clearglassinc.com/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 104,
+      "response_ms": 235,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
-  "local_issues": [
-    "Page missing ClearGlass logo: checkout/index.html"
-  ],
+  "local_issues": [],
   "local_warnings": [
     "HTML page not referenced in sitemap.xml: header-mockup-2040.html",
     "HTML page not referenced in sitemap.xml: seo-dashboard.html"

@@ -1,7 +1,7 @@
 # SEO Optimization Report
 
-**Run:** 2026-08-05T09:35:25.671047+00:00
-**Average Score:** 87.8/100
+**Run:** 2026-08-06T09:38:09.846684+00:00
+**Average Score:** 87.7/100
 **Files Audited:** 78
 
 ## Page Scores
@@ -43,6 +43,7 @@
 | `environmental-cyber-risk.html` | 90/100 | 1 |
 | `futuristic.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
+| `percival-os.html` | 90/100 | 1 |
 | `procurement-legal-tech.html` | 90/100 | 1 |
 | `sentinel.html` | 90/100 | 1 |
 | `tax.html` | 90/100 | 1 |
@@ -79,7 +80,6 @@
 | `loader.html` | 100/100 | 0 |
 | `offline.html` | 100/100 | 0 |
 | `percival-build.html` | 100/100 | 0 |
-| `percival-os.html` | 100/100 | 0 |
 | `pricing.html` | 100/100 | 0 |
 | `revenue-engine.html` | 100/100 | 0 |
 | `saas-platform.html` | 100/100 | 0 |
@@ -96,6 +96,6 @@
 - 7x — Missing og:title
 - 4x — Multiple <hN> tags (N)
 - 4x — Missing canonical link tag
-- 2x — N image(s) missing alt text
+- 3x — N image(s) missing alt text
 - 1x — Missing <title>
 - 1x — Missing meta description

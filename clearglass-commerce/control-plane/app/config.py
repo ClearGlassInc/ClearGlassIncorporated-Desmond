@@ -91,6 +91,21 @@ class Settings(BaseSettings):
     etsy_oauth_authorize_url: str = "https://www.etsy.com/oauth/connect"
     etsy_token_url: str = "https://api.etsy.com/v3/public/oauth/token"
 
+    # ── Printful (print-on-demand fulfillment) ──────────────────────────────
+    # Unset = mock mode: no supplier order is ever placed and no network call is
+    # made, mirroring the no-Stripe-key behaviour of payments.
+    printful_api_key: str = ""         # OAuth token, sent as `Authorization: Bearer`
+    printful_store_id: str = ""        # required only on multi-store accounts
+    printful_api_base: str = "https://api.printful.com"
+    # Confirming a draft debits the Printful wallet and starts production, so it
+    # is an ALWAYS_ESCALATE action gated on a human approval. This flag does NOT
+    # bypass that gate — it exists so the admin surface can show operators
+    # whether hands-off confirmation has been requested, and so enabling it is a
+    # deliberate, reviewable change rather than a silent default.
+    printful_auto_confirm: bool = False
+    # Shared secret on the webhook URL Printful calls with shipment notices.
+    printful_webhook_secret: str = ""
+
 
 @lru_cache
 def get_settings() -> Settings:

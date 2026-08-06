@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-08-05T09:35:25.570269+00:00",
+  "run_utc": "2026-08-06T09:38:09.766673+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1603,
+  "commit_count": 1633,
   "sections": {
     "New Features": [
+      {
+        "sha": "24732f8",
+        "type": "feat",
+        "scope": null,
+        "subject": "ship RFED audit-trail module + harden RMM auth-bypass coverage",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
       {
         "sha": "483dc40",
         "type": "feat",
@@ -2520,10 +2529,154 @@
     ],
     "Maintenance": [
       {
+        "sha": "2050875",
+        "type": "chore",
+        "scope": null,
+        "subject": "Wire the checkout hub to live Stripe Payment Links (#1283)",
+        "author": "Desmond Otieno",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "f5a9c5b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Wire the checkout hub to live Stripe Payment Links",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "5a6a75c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Regenerate the search assets after the page updates",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "fb8212e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix the pre-existing static-site CI failures",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "d5830e1",
+        "type": "chore",
+        "scope": null,
+        "subject": "Point the price book at the live Stripe Prices",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "90bb544",
+        "type": "chore",
+        "scope": null,
+        "subject": "Document the catalogue discrepancy between Stripe and the repo price book",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "6047b45",
+        "type": "chore",
+        "scope": null,
+        "subject": "Resolve checkout prices server-side; broaden Stripe webhook coverage",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "310d06f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Index Microsoft AI security long-read in blog registry",
+        "author": "Desmond Otieno",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "88b775b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add advanced Microsoft AI security long-read brief",
+        "author": "Desmond Otieno",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "5eb60d9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Update index.html",
+        "author": "Desmond Otieno",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "e46fe77",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix Side Store unified header visibility",
+        "author": "Desmond Otieno",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "6e4e145",
+        "type": "chore",
+        "scope": null,
+        "subject": "Refresh percival-os.html lastmod in the sitemap",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "c6ca657",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add visible keyboard focus styles to deck controls",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "e91908d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add advanced warfighting deck to PERCIVAL OS",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "ad8c64f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Refresh the release manifest, and give Copilot back its setup-steps file",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
         "sha": "fe8ea99",
         "type": "chore",
         "scope": null,
         "subject": "Serve the live data feeds to the pages that read them, and green the gates",
+        "author": "Claude",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "282e94a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add homepage narrative sections and a content protection layer",
         "author": "Claude",
         "date": "2026-08-05",
         "breaking": false
@@ -8560,6 +8713,123 @@
       }
     ],
     "Automation": [
+      {
+        "sha": "7398bde",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "76703ff",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "3c79ece",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "50dc7f2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "8f7624b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "911da4a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "d11d342",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "b7b72c8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "464b457",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "97f34ed",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "1565684",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "d834aad",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
+      {
+        "sha": "e11867c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-05 09:35 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-05",
+        "breaking": false
+      },
       {
         "sha": "0d66820",
         "type": "bot",

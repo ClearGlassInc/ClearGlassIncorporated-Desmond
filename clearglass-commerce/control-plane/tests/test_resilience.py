@@ -402,3 +402,45 @@ def test_health_reports_the_peer_and_whether_the_header_is_trusted(harness) -> N
     monkeypatch.setenv("TRUSTED_PROXY_IPS", TRUSTED_PROXY_CIDR)
     assert build(peer="10.0.0.9").get("/health").json()["forwarded_for"] == "trusted"
     assert build(peer="203.0.113.7").get("/health").json()["forwarded_for"] == "ignored"
+
+
+def _shipment_notice(parcel: str = "ship_1") -> dict:
+    return {
+        "type": "package_shipped",
+        "data": {
+            "order": {"id": 999, "external_id": "cs_test_ship"},
+            "shipment": {"id": parcel, "tracking_number": "1Z999", "carrier": "UPS"},
+        },
+    }
+
+
+def test_printful_webhook_rate_limit_returns_429(harness) -> None:
+    """The supplier webhook writes to the database and appends an audit event on
+    every accepted delivery, so a retry storm — or a leaked URL secret — must not
+    buy unbounded writes. Same throttle the Stripe webhook carries."""
+    build, _, monkeypatch = harness
+    monkeypatch.setenv("PRINTFUL_WEBHOOK_SECRET", "pf_hook_secret")
+    monkeypatch.setenv("RATE_LIMIT_WEBHOOK_PER_MINUTE", "2")
+    client = build()
+
+    codes = [
+        client.post("/fulfillment/webhooks/printful/pf_hook_secret", json=_shipment_notice()).status_code
+        for _ in range(3)
+    ]
+    assert codes[-1] == 429, codes
+
+
+def test_printful_webhook_rejects_a_wrong_or_unset_secret(harness) -> None:
+    """The URL is the credential — Printful signs nothing. An unset secret must
+    reject every call rather than accept all of them."""
+    build, _, monkeypatch = harness
+    monkeypatch.setenv("RATE_LIMIT_WEBHOOK_PER_MINUTE", "0")
+
+    monkeypatch.setenv("PRINTFUL_WEBHOOK_SECRET", "pf_hook_secret")
+    client = build()
+    assert client.post("/fulfillment/webhooks/printful/wrong", json=_shipment_notice()).status_code == 404
+
+    monkeypatch.setenv("PRINTFUL_WEBHOOK_SECRET", "")
+    client = build()
+    assert client.post("/fulfillment/webhooks/printful/", json=_shipment_notice()).status_code in (404, 405)
+    assert client.post("/fulfillment/webhooks/printful/anything", json=_shipment_notice()).status_code == 404

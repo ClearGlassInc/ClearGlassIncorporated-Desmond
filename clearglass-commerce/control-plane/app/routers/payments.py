@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from .. import payments, pricebook
 from ..audit import log_event
 from ..db import get_session
+from ..fulfillment import apply_shipping_details
 from ..models import Order, Payout
 from ..schemas import (
     ActionResult,
@@ -168,6 +169,10 @@ async def stripe_webhook(request: Request, session: Session = Depends(get_sessio
             status=status,
             verified=check["verified"],
             event=etype,
+            # A checkout session is the only place the destination address exists.
+            # If it is not captured here it is gone, and a paid physical order has
+            # nowhere to ship.
+            shipping_source=obj,
         )
     elif etype == "invoice.paid":
         # Subscription renewals arrive as invoices, not checkout sessions. Without this
@@ -251,6 +256,7 @@ def _record_order(
     status: str,
     verified: bool,
     event: str,
+    shipping_source: dict | None = None,
 ) -> None:
     """Book (or promote) an order idempotently, keyed on Stripe's own id.
 
@@ -277,6 +283,11 @@ def _record_order(
             return
         previous, existing.status = existing.status, status
         existing.total = total
+        # A pending order settling is the point at which an async payment method
+        # finally yields a shippable order, so re-apply the address here too:
+        # the promoting event carries it and the original may not have.
+        if shipping_source is not None:
+            apply_shipping_details(existing, shipping_source)
         session.flush()
         log_event(
             session,
@@ -300,6 +311,8 @@ def _record_order(
         source=source,
         external_ref=external_ref,
     )
+    if shipping_source is not None:
+        apply_shipping_details(order, shipping_source)
     session.add(order)
     session.flush()
     log_event(

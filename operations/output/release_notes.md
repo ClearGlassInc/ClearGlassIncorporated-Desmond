@@ -1,9 +1,10 @@
-# Release Notes — 2026-08-05
+# Release Notes — 2026-08-06
 
-*1603 commit(s) since v1.0.0*
+*1633 commit(s) since v1.0.0*
 
 ## New Features
 
+- ship RFED audit-trail module + harden RMM auth-bypass coverage (`24732f8`)
 - add Stripe-ready ClearGlass checkout hub (`483dc40`)
 - **agent-os:** Operator — plain-language objective in, governed execution out (`1d22632`)
 - **agent:** expose OpenAI Responses adapter (`5a3e5ec`)
@@ -300,7 +301,23 @@
 
 ## Maintenance
 
+- Wire the checkout hub to live Stripe Payment Links (#1283) (`2050875`)
+- Wire the checkout hub to live Stripe Payment Links (`f5a9c5b`)
+- Regenerate the search assets after the page updates (`5a6a75c`)
+- Fix the pre-existing static-site CI failures (`fb8212e`)
+- Point the price book at the live Stripe Prices (`d5830e1`)
+- Document the catalogue discrepancy between Stripe and the repo price book (`90bb544`)
+- Resolve checkout prices server-side; broaden Stripe webhook coverage (`6047b45`)
+- Index Microsoft AI security long-read in blog registry (`310d06f`)
+- Add advanced Microsoft AI security long-read brief (`88b775b`)
+- Update index.html (`5eb60d9`)
+- Fix Side Store unified header visibility (`e46fe77`)
+- Refresh percival-os.html lastmod in the sitemap (`6e4e145`)
+- Add visible keyboard focus styles to deck controls (`c6ca657`)
+- Add advanced warfighting deck to PERCIVAL OS (`e91908d`)
+- Refresh the release manifest, and give Copilot back its setup-steps file (`ad8c64f`)
 - Serve the live data feeds to the pages that read them, and green the gates (`fe8ea99`)
+- Add homepage narrative sections and a content protection layer (`282e94a`)
 - Verify every proxy hop, and stop shipping a too-broad trusted range (`1fbec25`)
 - Require a trusted-proxy allowlist before reading X-Forwarded-For (`e2c5193`)
 - Redeploy Pages after releasing duplicate custom-domain claim (`09423f3`)
@@ -974,6 +991,19 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`7398bde`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`76703ff`)
+- refresh control-surface data feeds [skip ci] (`3c79ece`)
+- refresh control-surface data feeds [skip ci] (`50dc7f2`)
+- refresh control-surface data feeds [skip ci] (`8f7624b`)
+- refresh control-surface data feeds [skip ci] (`911da4a`)
+- refresh control-surface data feeds [skip ci] (`d11d342`)
+- refresh control-surface data feeds [skip ci] (`b7b72c8`)
+- refresh control-surface data feeds [skip ci] (`464b457`)
+- refresh control-surface data feeds [skip ci] (`97f34ed`)
+- refresh control-surface data feeds [skip ci] (`1565684`)
+- refresh control-surface data feeds [skip ci] (`d834aad`)
+- update generated outputs — 2026-08-05 09:35 UTC [skip ci] (`e11867c`)
 - refresh SEO dashboard feeds [skip ci] (`0d66820`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`26e424b`)
 - refresh control-surface data feeds [skip ci] (`540f511`)

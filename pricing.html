@@ -278,11 +278,14 @@
   // ── PAYMENT CONFIG ───────────────────────────────────────────────────────
   // Paste a Stripe Payment Link (https://buy.stripe.com/...) for any SKU to turn
   // its button into live card checkout. Empty = books via confirmed-invoice flow.
+  // Live Stripe Payment Links — must stay identical to store.html, which the
+  // storefront smoke bot enforces: a SKU purchasable on one page and not the other
+  // is a broken promise to whichever visitor lands on the wrong one.
   var CHECKOUT = {
-    "quick-audit": "",
-    "hardening":   "",
-    "phipa":       "",
-    "monitoring":  ""
+    "quick-audit": "https://buy.stripe.com/8x2eVe7ZG0mFam00LG4Ni03",
+    "hardening":   "https://buy.stripe.com/cNi7sMa7Ob1j2Ty8e84Ni04",
+    "phipa":       "https://buy.stripe.com/fZu14o6VC4CV0Lq9ic4Ni05",
+    "monitoring":  "https://buy.stripe.com/dRm28sa7OglDbq41PK4Ni06"
   };
 
   var LABEL = {
@@ -335,9 +338,9 @@
     </div>
     <ul>
       <li><a href="checkout/index.html"><b>Secure Checkout</b> — purchase an audit or protection plan</a></li>
+      <li><a href="seo-authority-hub.html"><b>Cybersecurity &amp; AI Automation in Burlington</b> — the local authority hub for ClearGlass services</a></li>
       <li><a href="smb-cyber-trust-kit.html"><b>SMB Cyber Trust Kit</b> — plain-language cyber resilience for small business</a></li>
       <li><a href="smb.html"><b>SMB Suite</b> — intelligent systems for small business</a></li>
-      <li><a href="offers/security-quick-audit.html"><b>Security Quick-Audit</b> — a focused $249 security review</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
   </nav>

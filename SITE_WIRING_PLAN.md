@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 143 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 145 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -107,8 +107,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `offers/index.html` — Services & Engagements | every ClearGlass offer in one place | Growth Command Centre | Services & Engagements | ClearGlass Store | Book a security engagement / See pricing & plans |
 | `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
 | `pricing.html` — Pricing & Engagements | plans and engagement models | ClearGlass Store | Services & Engagements | Secure Checkout | Book a security engagement / See pricing & plans |
-| `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | Pricing & Engagements | Services & Engagements | SMB Cyber Trust Kit | Book a security engagement / See pricing & plans |
-| `smb-cyber-trust-kit.html` — SMB Cyber Trust Kit | plain-language cyber resilience for small business | Secure Checkout | Services & Engagements | SMB Suite | Book a security engagement / See pricing & plans |
+| `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | Pricing & Engagements | Services & Engagements | Cybersecurity & AI Automation in Burlington | Book a security engagement / See pricing & plans |
+| `seo-authority-hub.html` — Cybersecurity & AI Automation in Burlington | the local authority hub for ClearGlass services | Secure Checkout | Services & Engagements | SMB Cyber Trust Kit | Book a security engagement / See pricing & plans |
+| `smb-cyber-trust-kit.html` — SMB Cyber Trust Kit | plain-language cyber resilience for small business | Cybersecurity & AI Automation in Burlington | Services & Engagements | SMB Suite | Book a security engagement / See pricing & plans |
 | `smb.html` — SMB Suite | intelligent systems for small business | SMB Cyber Trust Kit | Services & Engagements | Security Quick-Audit | Book a security engagement / See pricing & plans |
 | `offers/security-quick-audit.html` — Security Quick-Audit | a focused $249 security review | SMB Suite | Services & Engagements | Autonomous Threat Modeling | Book a security engagement / See pricing & plans |
 | `offers/autonomous-threat-modeling.html` — Autonomous Threat Modeling | continuous threat-modeling assessment and implementation services | Security Quick-Audit | Services & Engagements | Hardening Sprint | Book a security engagement / See pricing & plans |
@@ -141,8 +142,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `blog/ai-agents-insider-threat.html` — AI Agents Are the New Insider Threat | why agent identity is a security boundary | The ClearGlass Platform Audit | ClearGlass Intelligence | Security Architecture for Agentic Software | Book a security engagement / See pricing & plans |
 | `blog/cybersecurity-architecture-for-agentic-software.html` — Security Architecture for Agentic Software | designing defenses for autonomous systems | AI Agents Are the New Insider Threat | ClearGlass Intelligence | The Case for Adaptive Trust | Book a security engagement / See pricing & plans |
 | `blog/zero-trust-is-outdated-adaptive-trust.html` — The Case for Adaptive Trust | zero trust, revisited for agentic systems | Security Architecture for Agentic Software | ClearGlass Intelligence | Rethinking Security for the AI Cyber Stack | Book a security engagement / See pricing & plans |
-| `blog/rethinking-security-age-of-ai-cyber-stack.html` — Rethinking Security for the AI Cyber Stack | a long read on defending AI-era infrastructure | The Case for Adaptive Trust | ClearGlass Intelligence | Zero Trust Is Outdated | Book a security engagement / See pricing & plans |
-| `blog/zero-trust-is-outdated.html` — Zero Trust Is Outdated | the original argument | Rethinking Security for the AI Cyber Stack | ClearGlass Intelligence | The Secure Deployment Agent | Book a security engagement / See pricing & plans |
+| `blog/rethinking-security-age-of-ai-cyber-stack.html` — Rethinking Security for the AI Cyber Stack | a long read on defending AI-era infrastructure | The Case for Adaptive Trust | ClearGlass Intelligence | Shadow AI: Enterprise Security’s Biggest Blind Spot | Book a security engagement / See pricing & plans |
+| `blog/shadow-ai-enterprise-security-blind-spot.html` — Shadow AI: Enterprise Security’s Biggest Blind Spot | the unsanctioned-AI exposure most estates cannot see | Rethinking Security for the AI Cyber Stack | ClearGlass Intelligence | Zero Trust Is Outdated | Book a security engagement / See pricing & plans |
+| `blog/zero-trust-is-outdated.html` — Zero Trust Is Outdated | the original argument | Shadow AI: Enterprise Security’s Biggest Blind Spot | ClearGlass Intelligence | The Secure Deployment Agent | Book a security engagement / See pricing & plans |
 | `blog/clearglass-secure-deployment-agent.html` — The Secure Deployment Agent | governed authorization for every production push | Zero Trust Is Outdated | ClearGlass Intelligence | Inside the Command Center | Book a security engagement / See pricing & plans |
 | `blog/clearglass-command-center-cyber-defense-console.html` — Inside the Command Center | designing a cyber defense console | The Secure Deployment Agent | ClearGlass Intelligence | ClearGlass AgentOps | Book a security engagement / See pricing & plans |
 | `blog/clearglass-agentops-microsoft-foundry-future-stack.html` — ClearGlass AgentOps | the Microsoft Foundry future stack | Inside the Command Center | ClearGlass Intelligence | The OSINT Workflow That Survives Contact With Reality | Book a security engagement / See pricing & plans |

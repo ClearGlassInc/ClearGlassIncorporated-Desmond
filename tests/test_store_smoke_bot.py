@@ -111,6 +111,43 @@ class TestCheckPricing:
         pricing = (ROOT / "pricing.html").read_text(encoding="utf-8")
         assert check_pricing(store, pricing) == []
 
+    @staticmethod
+    def _pages(store_url: str, pricing_url: str) -> tuple[str, str]:
+        """Both pages selling `alpha` live, each with its own checkout destination."""
+        store = GOOD_STORE.replace('"alpha": "", "beta": ""', f'"alpha": "{store_url}", "beta": ""')
+        pricing = GOOD_PRICING + (
+            '\n<script>var CHECKOUT = { "alpha": "%s", "beta": "" };</script>\n' % pricing_url
+        )
+        return store, pricing
+
+    def test_swapped_checkout_url_is_detected(self) -> None:
+        """Matching SKU names across pages is not the same as matching destinations.
+
+        Both pages advertise `alpha` as live, so the SKU-set comparison is happy —
+        but they point at different Payment Links, so one page charges buyers for
+        the wrong service. That has to fail.
+        """
+        store, pricing = self._pages("https://buy.stripe.com/aaa", "https://buy.stripe.com/bbb")
+        errors = check_pricing(store, pricing)
+        assert any("charges for the wrong product" in e for e in errors), errors
+
+    def test_identical_checkout_urls_pass(self) -> None:
+        """The guard must not fire when both pages agree — otherwise it is noise."""
+        same = "https://buy.stripe.com/aaa"
+        store, pricing = self._pages(same, same)
+        assert not any("charges for the wrong product" in e for e in check_pricing(store, pricing))
+
+    def test_real_pages_agree_on_every_live_checkout_url(self) -> None:
+        """The live site: every SKU sold on both pages points at the same Stripe link."""
+        store = (ROOT / "store.html").read_text(encoding="utf-8")
+        pricing = (ROOT / "pricing.html").read_text(encoding="utf-8")
+        store_links = extract_checkout_links(store)
+        pricing_links = extract_checkout_links(pricing)
+        live = {s for s, link in store_links.items() if link.strip()}
+        assert live, "expected at least one live checkout link on store.html"
+        for sku in sorted(live):
+            assert store_links[sku].strip() == pricing_links.get(sku, "").strip(), sku
+
 
 LIVE_LINK = "https://buy.stripe.com/test_abc123"
 STORE_WITH_LIVE = GOOD_STORE.replace('"alpha": "", "beta": ""',

@@ -362,19 +362,20 @@
     var EMAIL = "desmondotieno@icloud.com";
 
     // ── PAYMENT CONFIG ─────────────────────────────────────────────────────────
-    // To take live card payments, create a Stripe Payment Link for each SKU in the
-    // Stripe Dashboard (Products → Payment links), then paste the resulting
-    // https://buy.stripe.com/… URL beside its SKU below. An empty string keeps the
-    // button on the secure confirmed-invoice flow. No API keys live in this file —
-    // Payment Links inherit your account's payment-method configuration
-    // (e.g. pmc_1TG2rP65MGeeiD4Kmrr8aZ9i) automatically.
-    // NOTE: live charging also requires your Stripe account capabilities to be
-    // active (the dashboard currently shows "Multiple capabilities paused").
+    // One live Stripe Payment Link per SKU. Each points at a Stripe Price, so Stripe
+    // — not this file — decides the amount charged; blanking a value drops that
+    // button back to the confirmed-invoice email flow. No API keys live here, and
+    // Payment Links inherit the account's payment-method configuration automatically.
+    // To retire an offer, deactivate its link in Stripe rather than editing a price.
+    //
+    // `hardening` and `phipa` are advertised "from" prices and charge a deposit; the
+    // Stripe product description states that the final fixed fee is confirmed on a
+    // scoping call before any further amount is invoiced.
     var CHECKOUT = {
-      "quick-audit": "",   // e.g. "https://buy.stripe.com/xxxxxxxx"
-      "hardening":   "",
-      "phipa":       "",
-      "monitoring":  ""
+      "quick-audit": "https://buy.stripe.com/8x2eVe7ZG0mFam00LG4Ni03",
+      "hardening":   "https://buy.stripe.com/cNi7sMa7Ob1j2Ty8e84Ni04",
+      "phipa":       "https://buy.stripe.com/fZu14o6VC4CV0Lq9ic4Ni05",
+      "monitoring":  "https://buy.stripe.com/dRm28sa7OglDbq41PK4Ni06"
     };
 
     var LABEL = {
@@ -502,7 +503,7 @@
       <li><a href="smb-cyber-trust-kit.html"><b>SMB Cyber Trust Kit</b> — plain-language cyber resilience for small business</a></li>
       <li><a href="pricing.html"><b>Pricing &amp; Engagements</b> — plans and engagement models</a></li>
       <li><a href="checkout/index.html"><b>Secure Checkout</b> — purchase an audit or protection plan</a></li>
-      <li><a href="smb.html"><b>SMB Suite</b> — intelligent systems for small business</a></li>
+      <li><a href="seo-authority-hub.html"><b>Cybersecurity &amp; AI Automation in Burlington</b> — the local authority hub for ClearGlass services</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
   </nav>

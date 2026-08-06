@@ -1,28 +1,26 @@
 {
-  "generated": "2026-08-05T09:21:42+00:00",
+  "generated": "2026-08-06T09:25:54+00:00",
   "site": "https://www.clearglassinc.com",
   "score": 77,
   "totals": {
-    "pages": 153,
-    "indexable": 142,
-    "in_sitemap": 141,
+    "pages": 154,
+    "indexable": 143,
+    "in_sitemap": 143,
     "noindex": 10,
-    "with_schema": 53,
+    "with_schema": 54,
     "errors": 0,
-    "warnings": 130,
+    "warnings": 131,
     "info": 41
   },
   "by_check": {
-    "description.length": 67,
+    "description.length": 68,
     "title.length": 48,
     "heading.order": 39,
+    "schema.required": 5,
     "h1.multiple": 4,
-    "schema.required": 3,
     "weight": 2,
     "canonical.missing": 2,
     "image.alt": 2,
-    "sitemap.missing": 1,
-    "orphan": 1,
     "title.duplicate": 1,
     "description.duplicate": 1
   },
@@ -418,6 +416,24 @@
       "message": "Meta description is 208 chars; Google truncates near 165."
     },
     {
+      "page": "blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Article is missing required property 'headline'"
+    },
+    {
+      "page": "blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
+    },
+    {
+      "page": "blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 174 chars; Google truncates near 165."
+    },
+    {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
       "level": "warn",
       "check": "title.length",
@@ -464,18 +480,6 @@
       "level": "warn",
       "check": "h1.multiple",
       "message": "Page has 8 <h1> elements \u2014 one primary heading is clearer."
-    },
-    {
-      "page": "checkout/index.html",
-      "level": "warn",
-      "check": "sitemap.missing",
-      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
-    },
-    {
-      "page": "checkout/index.html",
-      "level": "warn",
-      "check": "orphan",
-      "message": "No internal links point to this page \u2014 it receives no internal link equity."
     },
     {
       "page": "clearglass-nexus.html",
@@ -1261,7 +1265,7 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 11915,
+      "bytes": 11930,
       "inbound_links": 7
     },
     {
@@ -1480,9 +1484,9 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 174,
+      "internal_links": 176,
       "images_missing_alt": 0,
-      "bytes": 37825,
+      "bytes": 38014,
       "inbound_links": 12
     },
     {
@@ -1575,7 +1579,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 45667,
+      "bytes": 45687,
       "inbound_links": 18
     },
     {
@@ -1748,7 +1752,7 @@
       "internal_links": 27,
       "images_missing_alt": 0,
       "bytes": 37049,
-      "inbound_links": 13
+      "inbound_links": 12
     },
     {
       "page": "blog/clearglass-command-center-cyber-defense-console.html",
@@ -1796,7 +1800,7 @@
       ],
       "internal_links": 37,
       "images_missing_alt": 0,
-      "bytes": 46737,
+      "bytes": 46801,
       "inbound_links": 10
     },
     {
@@ -2023,7 +2027,7 @@
       ],
       "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 44230,
+      "bytes": 44254,
       "inbound_links": 21
     },
     {
@@ -2164,8 +2168,8 @@
       ],
       "internal_links": 63,
       "images_missing_alt": 1,
-      "bytes": 131145,
-      "inbound_links": 162
+      "bytes": 131171,
+      "inbound_links": 165
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -2316,6 +2320,33 @@
       "inbound_links": 10
     },
     {
+      "page": "blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "url": "https://www.clearglassinc.com/blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Rethinking Security for the Age of AI | ClearGlass Insights",
+      "title_length": 59,
+      "description": "A ClearGlass strategic brief on Microsoft's new AI-native Cyber Stack: continuous perception, multi-model reasoning, agentic defense, human control, and machine-speed action.",
+      "description_length": 174,
+      "canonical": "https://www.clearglassinc.com/blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage",
+        "Article",
+        "Organization"
+      ],
+      "internal_links": 13,
+      "images_missing_alt": 0,
+      "bytes": 17485,
+      "inbound_links": 8
+    },
+    {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
       "url": "https://www.clearglassinc.com/blog/telecommunications-legal-briefing-30-july-2026.html",
       "indexable": true,
@@ -2363,7 +2394,7 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 38389,
+      "bytes": 38454,
       "inbound_links": 11
     },
     {
@@ -2389,7 +2420,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 46647,
+      "bytes": 46666,
       "inbound_links": 11
     },
     {
@@ -2492,7 +2523,7 @@
       "url": "https://www.clearglassinc.com/checkout/index.html",
       "indexable": true,
       "noindex": false,
-      "in_sitemap": false,
+      "in_sitemap": true,
       "robots_blocked": null,
       "title": "Secure Checkout \u2014 ClearGlass Inc.",
       "title_length": 33,
@@ -2506,10 +2537,10 @@
         "Offer",
         "Offer"
       ],
-      "internal_links": 3,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 10760,
-      "inbound_links": 0
+      "bytes": 17041,
+      "inbound_links": 8
     },
     {
       "page": "clearglass-nexus.html",
@@ -2997,10 +3028,10 @@
         "WebPage",
         "WebPage"
       ],
-      "internal_links": 212,
+      "internal_links": 216,
       "images_missing_alt": 0,
-      "bytes": 162081,
-      "inbound_links": 540
+      "bytes": 179079,
+      "inbound_links": 543
     },
     {
       "page": "intelligence-command-surface.html",
@@ -3219,7 +3250,7 @@
       "internal_links": 13,
       "images_missing_alt": 0,
       "bytes": 12333,
-      "inbound_links": 10
+      "inbound_links": 12
     },
     {
       "page": "legal/directors-resolution.html",
@@ -3451,7 +3482,7 @@
       "internal_links": 26,
       "images_missing_alt": 0,
       "bytes": 39707,
-      "inbound_links": 83
+      "inbound_links": 86
     },
     {
       "page": "offers/phipa-readiness-checklist.html",
@@ -3716,7 +3747,7 @@
       "schema_types": [],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 72132,
+      "bytes": 188538,
       "inbound_links": 60
     },
     {
@@ -3786,8 +3817,8 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 27669,
-      "inbound_links": 130
+      "bytes": 27601,
+      "inbound_links": 133
     },
     {
       "page": "procurement-legal-tech.html",
@@ -3826,8 +3857,8 @@
       ],
       "internal_links": 167,
       "images_missing_alt": 0,
-      "bytes": 42911,
-      "inbound_links": 10
+      "bytes": 42888,
+      "inbound_links": 9
     },
     {
       "page": "products/opal-koboi/artemis-iv-core.html",
@@ -4128,7 +4159,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 95870,
+      "bytes": 95867,
       "inbound_links": 14
     },
     {
@@ -4216,8 +4247,8 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 34130,
-      "inbound_links": 152
+      "bytes": 34118,
+      "inbound_links": 154
     },
     {
       "page": "systems.html",

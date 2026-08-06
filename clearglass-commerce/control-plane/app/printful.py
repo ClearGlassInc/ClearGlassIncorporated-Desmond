@@ -447,10 +447,17 @@ def parse_shipment_webhook(payload: dict[str, Any]) -> dict[str, Any]:
     if not external_id:
         raise PrintfulError("package_shipped carries no order.external_id — cannot match an order")
 
+    # Identity of this *parcel*. A split order sends one notice per parcel with
+    # the same order id, so the shipment id is what keeps them apart. Printful
+    # does not always populate it; the tracking number is the natural fallback,
+    # being unique per parcel by definition.
+    shipment_id = shipment.get("id") or shipment.get("tracking_number")
+
     return {
         "supplier": "printful",
         "external_id": str(external_id),
         "supplier_order_id": str(order.get("id")) if order.get("id") is not None else None,
+        "supplier_shipment_id": str(shipment_id) if shipment_id is not None else None,
         "status": "shipped",
         "tracking_number": shipment.get("tracking_number"),
         "tracking_url": shipment.get("tracking_url"),

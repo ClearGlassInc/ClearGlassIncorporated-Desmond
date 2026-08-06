@@ -1,13 +1,19 @@
 """Fulfillment routes — supplier connection, catalogue, and order routing.
 
-Read paths (``/connection``, ``/catalog``, ``/orders/{id}``) are safe and always
-available. Every write goes through the governance gate, so confirming a supplier
-order — the step that spends money and starts an irreversible print run — cannot
-happen without a human approval row.
+Only ``/connection`` is open: it reports whether a credential is configured and
+touches nothing. The other reads are admin-gated even though they mutate nothing
+— ``/catalog`` because each call is a full paginated scan of the supplier store,
+and ``/orders/{id}`` because it exposes tracking, supplier ids and our cost basis
+behind a guessable integer.
 
-The shipment webhook is the one open mutating route here, for the same reason the
+Confirming a supplier order — the step that spends money and starts an
+irreversible print run — requires an *approved* approval row bound to that
+shipment, which the confirm path claims exactly once.
+
+The shipment webhook is the one open mutating route, for the same reason the
 Stripe one is: a supplier callback cannot carry an operator credential. It is
-authenticated by a shared secret in the path and is idempotent on redelivery.
+authenticated by a shared secret in the path, rate limited per IP, and
+idempotent on redelivery.
 """
 from __future__ import annotations
 
@@ -23,7 +29,7 @@ from ..config import get_settings
 from ..db import get_session
 from ..governance import score_action
 from ..models import Order, Shipment
-from ..security import require_admin
+from ..security import rate_limit, require_admin
 
 router = APIRouter(prefix="/fulfillment", tags=["fulfillment"])
 
@@ -52,12 +58,16 @@ def verify(session: Session = Depends(get_session)) -> dict:
     return result
 
 
-@router.get("/catalog")
+@router.get("/catalog", dependencies=[Depends(require_admin)])
 def catalog(session: Session = Depends(get_session)) -> dict:
     """The supplier's real catalogue: their products, variants, images, prices.
 
     Read-only, and the only source of product data fit to publish. Nothing here
     is synthesised — a supplier we cannot read is a catalogue we do not show.
+
+    Admin-gated, because one call is a full paginated scan of the supplier store
+    plus a detail request per product. Anonymous access would let a stranger
+    burn the Printful API quota and tie up workers for minutes at a time.
     """
     settings = get_settings()
     status = printful.connection_status(settings)
@@ -84,9 +94,17 @@ def catalog(session: Session = Depends(get_session)) -> dict:
     return {"supplier": "printful", "count": len(products), "products": products}
 
 
-@router.get("/orders/{order_id}")
+@router.get("/orders/{order_id}", dependencies=[Depends(require_admin)])
 def order_fulfillment(order_id: int, session: Session = Depends(get_session)) -> dict:
-    """Fulfillment state and tracking for one order. Read-only."""
+    """Fulfillment state and tracking for one order. Read-only, admin-gated.
+
+    The order id is a sequential integer, and this returns tracking, supplier
+    order ids and what the supplier charged us — so an open version of this
+    route would let anyone walk the range and read the whole order book, cost
+    basis included. A customer-facing "where is my parcel" view needs a
+    per-order capability token rather than an integer; until that exists this
+    stays behind the admin credential.
+    """
     order = session.get(Order, order_id)
     if order is None:
         raise HTTPException(status_code=404, detail="order not found")
@@ -125,7 +143,10 @@ def confirm(shipment_id: int, session: Session = Depends(get_session)) -> dict:
     return fulfillment.confirm_shipment(session, shipment)
 
 
-@router.post("/webhooks/printful/{secret}")
+@router.post(
+    "/webhooks/printful/{secret}",
+    dependencies=[Depends(rate_limit("printful_webhook", "rate_limit_webhook_per_minute"))],
+)
 async def printful_webhook(
     secret: str,
     request: Request,

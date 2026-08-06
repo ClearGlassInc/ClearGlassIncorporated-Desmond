@@ -54,9 +54,8 @@ hands-off confirmation; it does **not** open the gate, and
 6. **Activate Stripe.** Still the hard blocker — see `STRIPE_SETUP.md`. The
    account cannot accept a payment today, so no order can reach fulfillment at
    all until `charges_enabled: true`.
-7. **Enable shipping-address collection** on Stripe Checkout
-   (`shipping_address_collection`). Without it, Stripe returns no address and
-   every physical order lands `unfulfillable`.
+There is no eighth step you can do from a dashboard: shipping-address collection
+is **code**, and it is not written yet — see below.
 
 ## Environment variables
 
@@ -100,6 +99,16 @@ fulfillment works; only a real test order is.
 Being explicit, because a half-integration that looks complete is worse than one
 that doesn't:
 
+- **Shipping addresses are not collected at checkout.** `create_checkout_session`
+  in `app/payments.py` passes `billing_address_collection` but not
+  `shipping_address_collection`, so Stripe returns no destination and
+  `apply_shipping_details` has nothing to capture. Every physical order would
+  therefore land `unfulfillable` — correctly, but uselessly. This is not a
+  dashboard toggle: it is a per-session API parameter, and it cannot simply be
+  switched on for everything, because demanding a shipping address for a
+  90-minute consultation is wrong. Closing it needs a `requires_shipping` flag
+  per price-book offer plus an allowed-countries policy, which is the same
+  missing distinction as the next item.
 - **Automatic draft booking on payment is not connected.** `book_supplier_draft`
   is written and tested, but the Stripe webhook does not call it, because an
   order does not yet record *what was bought*. `Order` has a total and no line

@@ -297,6 +297,29 @@ class TestShipmentWebhook:
         assert notice["tracking_number"] == "1Z999"
         assert notice["status"] == "shipped"
 
+    def test_carries_the_parcel_id_so_split_shipments_stay_distinct(self):
+        notice = printful.parse_shipment_webhook(
+            {
+                "type": "package_shipped",
+                "data": {
+                    "order": {"id": 999, "external_id": "cs_1"},
+                    "shipment": {"id": 4321, "tracking_number": "1Z999"},
+                },
+            }
+        )
+        assert notice["supplier_shipment_id"] == "4321"
+
+    def test_falls_back_to_the_tracking_number_as_the_parcel_id(self):
+        # Printful does not always populate the shipment id; a tracking number is
+        # unique per parcel by definition, so it is the natural substitute.
+        notice = printful.parse_shipment_webhook(
+            {
+                "type": "package_shipped",
+                "data": {"order": {"external_id": "cs_1"}, "shipment": {"tracking_number": "1Z999"}},
+            }
+        )
+        assert notice["supplier_shipment_id"] == "1Z999"
+
     def test_rejects_a_notice_with_no_order_reference(self):
         # Guessing which order this belongs to would email the wrong customer a
         # tracking number.

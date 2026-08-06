@@ -107,9 +107,13 @@ class Shipment(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     order_id: Mapped[int] = mapped_column(ForeignKey("orders.id", ondelete="CASCADE"), index=True)
     supplier: Mapped[str] = mapped_column(String(32), default="printful")
-    # The supplier's own order id. Unique per supplier so a redelivered shipment
-    # webhook updates the existing row instead of inserting a duplicate.
+    # The supplier's own order id. Deliberately NOT unique: one supplier order
+    # can produce several parcels, which is the entire reason this is a table.
     supplier_order_id: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
+    # The supplier's id for *this parcel*. This is the idempotency key — unique
+    # per supplier — so a redelivered `package_shipped` updates its own row while
+    # a genuine second parcel still gets one of its own.
+    supplier_shipment_id: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
     status: Mapped[str] = mapped_column(String(32), default="draft")
     tracking_number: Mapped[str | None] = mapped_column(String(160), nullable=True)
     tracking_url: Mapped[str | None] = mapped_column(Text, nullable=True)

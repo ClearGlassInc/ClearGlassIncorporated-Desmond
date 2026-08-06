@@ -20,9 +20,10 @@ ALTER TABLE orders ADD COLUMN IF NOT EXISTS fulfillment_status VARCHAR(32) NOT N
 
 CREATE TABLE IF NOT EXISTS shipments (
     id                SERIAL PRIMARY KEY,
-    order_id          INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
-    supplier          VARCHAR(32)  NOT NULL DEFAULT 'printful',
-    supplier_order_id VARCHAR(120),
+    order_id             INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+    supplier             VARCHAR(32)  NOT NULL DEFAULT 'printful',
+    supplier_order_id    VARCHAR(120),
+    supplier_shipment_id VARCHAR(120),
     status            VARCHAR(32)  NOT NULL DEFAULT 'draft',
     tracking_number   VARCHAR(160),
     tracking_url      TEXT,
@@ -36,9 +37,13 @@ CREATE TABLE IF NOT EXISTS shipments (
 );
 
 CREATE INDEX IF NOT EXISTS idx_shipments_order_id ON shipments(order_id);
+CREATE INDEX IF NOT EXISTS idx_shipments_supplier_order
+    ON shipments(supplier, supplier_order_id);
 
--- Idempotency for shipment webhooks: Printful redelivers `package_shipped`, and
--- without this a retry inserts a second shipment row and the customer is told
--- about a parcel that does not exist.
-CREATE UNIQUE INDEX IF NOT EXISTS idx_shipments_supplier_order
-    ON shipments(supplier, supplier_order_id) WHERE supplier_order_id IS NOT NULL;
+-- Idempotency for shipment webhooks, keyed on the *parcel* rather than the
+-- order. Printful redelivers `package_shipped`, so a retry must update its own
+-- row; but a split order emits one notice per parcel with the same order id, so
+-- keying on the order would let the second parcel overwrite the first one's
+-- tracking number and leave a customer chasing a parcel we never mentioned.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_shipments_supplier_shipment
+    ON shipments(supplier, supplier_shipment_id) WHERE supplier_shipment_id IS NOT NULL;

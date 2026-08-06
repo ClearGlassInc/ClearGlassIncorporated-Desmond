@@ -21,14 +21,14 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
 from . import printful
 from .audit import log_event
 from .config import Settings, get_settings
 from .governance import score_action
-from .models import Order, Shipment
+from .models import Approval, Order, Shipment
 from .service import run_governed_action
 
 #: Terminal-ish states that a re-run must not disturb.
@@ -177,14 +177,22 @@ def book_supplier_draft(
             request=request,
         )
 
-    result = run_governed_action(
-        session,
-        actor=actor,
-        action="printful_draft_order",
-        target=str(order.id),
-        payload={"order_id": order.id, "item_count": len(items), "external_ref": order.external_ref},
-        execute=execute,
-    )
+    try:
+        result = run_governed_action(
+            session,
+            actor=actor,
+            action="printful_draft_order",
+            target=str(order.id),
+            payload={"order_id": order.id, "item_count": len(items), "external_ref": order.external_ref},
+            execute=execute,
+        )
+    except printful.PrintfulError as exc:
+        # A supplier rejection or outage must not escape: an exception here
+        # aborts the request and rolls the transaction back, leaving a *paid*
+        # order sitting at `pending` with nothing recorded anywhere. That is
+        # precisely the silent failure this module exists to prevent, so the
+        # error becomes a recorded, visible obligation instead.
+        return _mark_unfulfillable(session, order, f"supplier rejected or was unreachable: {exc}")
 
     detail = result.data or {}
     if not isinstance(detail, dict) or not detail.get("supplier_order_id"):
@@ -223,6 +231,36 @@ def _as_decimal(value: Any) -> Decimal | None:
         return None
 
 
+def claim_approval(session: Session, *, action: str, target: str) -> Approval | None:
+    """Atomically claim one approved approval for this action and target.
+
+    The gate only works if an approval is spent exactly once. The claim is a
+    conditional ``UPDATE ... WHERE status = 'approved'`` whose row count is the
+    proof: two concurrent confirmations race on the same row and exactly one
+    wins, so a single human decision cannot be replayed into two supplier
+    charges. An approval is bound to its target, so approving one shipment can
+    never confirm a different one.
+    """
+    candidate = session.scalar(
+        select(Approval)
+        .where(Approval.action == action, Approval.target == target, Approval.status == "approved")
+        .order_by(Approval.id)
+        .limit(1)
+    )
+    if candidate is None:
+        return None
+
+    claimed = session.execute(
+        update(Approval)
+        .where(Approval.id == candidate.id, Approval.status == "approved")
+        .values(status="executed")
+    )
+    if claimed.rowcount != 1:
+        return None  # another worker claimed it first
+    session.flush()
+    return candidate
+
+
 def confirm_shipment(
     session: Session,
     shipment: Shipment,
@@ -233,45 +271,93 @@ def confirm_shipment(
 ) -> dict[str, Any]:
     """Confirm a drafted supplier order. Spends money; always human-gated.
 
-    ``printful_confirm_order`` is in ``ALWAYS_ESCALATE``, so calling this without
-    an approved approval row queues one instead of confirming — which is the
-    point. The caller should surface the returned approval id to the operator.
+    Two-phase, because ``printful_confirm_order`` is in ``ALWAYS_ESCALATE``:
+
+    1. No approved approval for this shipment ⇒ queue one and return its id.
+       Nothing is sent to the supplier.
+    2. An approved approval exists ⇒ claim it (single-use) and confirm.
+
+    Without the second phase the gate would be a dead end: the governed runner
+    always queues an escalated action, so an approval could be granted and never
+    acted on, and every retry would pile up another pending row.
     """
     settings = settings or get_settings()
 
     if shipment.status in ("confirmed", "fulfilled", "shipped"):
         return {"status": shipment.status, "shipment_id": shipment.id, "skipped": "already confirmed"}
 
-    def execute() -> dict[str, Any]:
-        return printful.confirm_order(shipment.supplier_order_id or "", settings=settings, request=request)
+    payload = {
+        "shipment_id": shipment.id,
+        "order_id": shipment.order_id,
+        "supplier_order_id": shipment.supplier_order_id,
+        "supplier_cost": str(shipment.supplier_cost) if shipment.supplier_cost is not None else None,
+    }
+    approval = claim_approval(session, action="printful_confirm_order", target=str(shipment.id))
 
-    result = run_governed_action(
+    if approval is None:
+        result = run_governed_action(
+            session,
+            actor=actor,
+            action="printful_confirm_order",
+            target=str(shipment.id),
+            payload=payload,
+            # No executor: an unapproved confirmation must not be able to reach
+            # the supplier even if the scoring were ever loosened.
+            execute=None,
+        )
+        return {
+            "shipment_id": shipment.id,
+            "status": shipment.status,
+            "approval_id": result.approval_id,
+            "requires_approval": True,
+        }
+
+    try:
+        detail = printful.confirm_order(
+            shipment.supplier_order_id or "", settings=settings, request=request
+        )
+    except printful.PrintfulError as exc:
+        # The approval stays spent — re-confirming needs a fresh human decision,
+        # because the first one was acted on and the supplier may have partially
+        # applied it.
+        log_event(
+            session,
+            actor=actor,
+            action="printful_confirm_order",
+            target=str(shipment.id),
+            payload={**payload, "approval_id": approval.id, "error": str(exc)},
+            result="error",
+            assessment=score_action("printful_confirm_order", payload),
+        )
+        return {
+            "shipment_id": shipment.id,
+            "status": shipment.status,
+            "approval_id": approval.id,
+            "requires_approval": False,
+            "error": str(exc),
+        }
+
+    shipment.status = detail.get("status") or "confirmed"
+    shipment.supplier_cost = _as_decimal(detail.get("supplier_cost")) or shipment.supplier_cost
+    order = session.get(Order, shipment.order_id)
+    if order is not None:
+        order.fulfillment_status = "confirmed"
+
+    log_event(
         session,
         actor=actor,
         action="printful_confirm_order",
         target=str(shipment.id),
-        payload={
-            "shipment_id": shipment.id,
-            "order_id": shipment.order_id,
-            "supplier_order_id": shipment.supplier_order_id,
-            "supplier_cost": str(shipment.supplier_cost) if shipment.supplier_cost is not None else None,
-        },
-        execute=execute,
+        payload={**payload, "approval_id": approval.id, "supplier_status": shipment.status},
+        result="executed",
+        assessment=score_action("printful_confirm_order", payload),
     )
-
-    detail = result.data or {}
-    if isinstance(detail, dict) and detail.get("status"):
-        shipment.status = detail.get("status") or shipment.status
-        shipment.supplier_cost = _as_decimal(detail.get("supplier_cost")) or shipment.supplier_cost
-        order = session.get(Order, shipment.order_id)
-        if order is not None:
-            order.fulfillment_status = "confirmed"
-
     return {
         "shipment_id": shipment.id,
         "status": shipment.status,
-        "approval_id": result.approval_id,
-        "requires_approval": result.requires_approval,
+        "approval_id": approval.id,
+        "requires_approval": False,
+        "confirmed": True,
     }
 
 
@@ -301,17 +387,35 @@ def record_shipment_notice(
         )
         return {"matched": False, "external_id": external_id}
 
-    shipment = session.scalar(
-        select(Shipment).where(
-            Shipment.supplier == notice.get("supplier", "printful"),
-            Shipment.supplier_order_id == notice.get("supplier_order_id"),
+    supplier = notice.get("supplier", "printful")
+    parcel_id = notice.get("supplier_shipment_id")
+
+    # Match on the parcel first — that is what makes a redelivery update its own
+    # row. Only fall back to an unshipped draft row for this order, so a second
+    # parcel of a split order cannot overwrite the first one's tracking.
+    shipment = (
+        session.scalar(
+            select(Shipment).where(
+                Shipment.supplier == supplier,
+                Shipment.supplier_shipment_id == parcel_id,
+            )
         )
-    ) or session.scalar(select(Shipment).where(Shipment.order_id == order.id))
+        if parcel_id
+        else None
+    )
+    if shipment is None:
+        shipment = session.scalar(
+            select(Shipment).where(
+                Shipment.order_id == order.id,
+                Shipment.supplier_shipment_id.is_(None),
+            )
+        )
 
     if shipment is None:
-        shipment = Shipment(order_id=order.id, supplier=notice.get("supplier", "printful"))
+        shipment = Shipment(order_id=order.id, supplier=supplier)
         session.add(shipment)
 
+    shipment.supplier_shipment_id = parcel_id or shipment.supplier_shipment_id
     shipment.supplier_order_id = notice.get("supplier_order_id") or shipment.supplier_order_id
     shipment.status = "shipped"
     shipment.tracking_number = notice.get("tracking_number") or shipment.tracking_number

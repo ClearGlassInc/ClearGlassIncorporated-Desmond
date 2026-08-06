@@ -12,7 +12,7 @@ import pytest
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
-from app import fulfillment
+from app import fulfillment, printful
 from app.config import Settings
 from app.models import Approval, Base, Event, Order, Shipment
 
@@ -172,6 +172,36 @@ class TestOrdersThatCannotShip:
         )
         assert result["status"] == "unfulfillable"
 
+    def test_a_supplier_rejection_is_recorded_not_raised(self, session):
+        # An exception escaping here would abort the request and roll the
+        # transaction back, leaving a *paid* order at `pending` with nothing
+        # written anywhere — the exact silent failure this module prevents.
+        order = make_order(session)
+
+        def rejecting(method: str, path: str, body: dict | None):
+            return 400, {"error": {"message": "Variant 501 is out of stock"}}
+
+        result = fulfillment.book_supplier_draft(
+            session, order, ITEMS, settings=connected(), request=rejecting
+        )
+
+        assert result["status"] == "unfulfillable"
+        assert "out of stock" in result["reason"]
+        assert order.fulfillment_status == "unfulfillable"
+        assert session.scalars(select(Event)).all()[-1].result == "rejected"
+
+    def test_a_supplier_outage_is_recorded_not_raised(self, session):
+        order = make_order(session)
+
+        def unreachable(method: str, path: str, body: dict | None):
+            raise printful.PrintfulError("could not reach Printful: timed out")
+
+        result = fulfillment.book_supplier_draft(
+            session, order, ITEMS, settings=connected(), request=unreachable
+        )
+        assert result["status"] == "unfulfillable"
+        assert order.fulfillment_status == "unfulfillable"
+
 
 class TestConfirmation:
     def test_confirming_queues_an_approval_instead_of_spending_money(self, session):
@@ -207,6 +237,95 @@ class TestConfirmation:
             session, shipment, settings=settings, request=draft_responder()
         )
         assert result["requires_approval"] is True
+
+    def test_an_approved_confirmation_actually_reaches_the_supplier(self, session):
+        # The gate is only a gate if approving something makes it happen. Without
+        # a path that consumes the approved row, every retry would queue another
+        # pending approval and the supplier would never be called at all.
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+        shipment = session.scalar(select(Shipment))
+
+        queued = fulfillment.confirm_shipment(session, shipment, settings=connected())
+        approval = session.get(Approval, queued["approval_id"])
+        approval.status = "approved"
+        session.flush()
+
+        calls: list[str] = []
+
+        def request(method: str, path: str, body: dict | None):
+            calls.append(path)
+            return 200, {"result": {"id": 999, "status": "pending", "costs": {"total": "12.50", "currency": "cad"}}}
+
+        result = fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+
+        assert result["confirmed"] is True
+        assert calls == ["/orders/999/confirm"]
+        assert shipment.status == "pending"
+        assert order.fulfillment_status == "confirmed"
+
+    def test_an_approval_is_spent_exactly_once(self, session):
+        # One human decision must not be replayable into two supplier charges.
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+        shipment = session.scalar(select(Shipment))
+
+        queued = fulfillment.confirm_shipment(session, shipment, settings=connected())
+        session.get(Approval, queued["approval_id"]).status = "approved"
+        session.flush()
+
+        calls: list[str] = []
+
+        def request(method: str, path: str, body: dict | None):
+            calls.append(path)
+            return 200, {"result": {"id": 999, "status": "pending"}}
+
+        fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+        shipment.status = "draft"  # pretend the supplier state was reverted
+        again = fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+
+        assert len(calls) == 1, "the spent approval must not authorise a second confirmation"
+        assert again["requires_approval"] is True
+        assert session.get(Approval, queued["approval_id"]).status == "executed"
+
+    def test_an_approval_for_another_shipment_does_not_authorise_this_one(self, session):
+        order_a = make_order(session)
+        order_b = make_order(session, external_ref="cs_test_2")
+        fulfillment.book_supplier_draft(session, order_a, ITEMS, settings=connected(), request=draft_responder(1))
+        fulfillment.book_supplier_draft(session, order_b, ITEMS, settings=connected(), request=draft_responder(2))
+        first, second = session.scalars(select(Shipment).order_by(Shipment.id)).all()
+
+        queued = fulfillment.confirm_shipment(session, first, settings=connected())
+        session.get(Approval, queued["approval_id"]).status = "approved"
+        session.flush()
+
+        calls: list[str] = []
+
+        def request(method: str, path: str, body: dict | None):
+            calls.append(path)
+            return 200, {"result": {"id": 2, "status": "pending"}}
+
+        result = fulfillment.confirm_shipment(session, second, settings=connected(), request=request)
+        assert result["requires_approval"] is True
+        assert calls == [], "approvals are bound to their target shipment"
+
+    def test_a_supplier_failure_during_confirmation_is_recorded(self, session):
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+        shipment = session.scalar(select(Shipment))
+        queued = fulfillment.confirm_shipment(session, shipment, settings=connected())
+        session.get(Approval, queued["approval_id"]).status = "approved"
+        session.flush()
+
+        def failing(method: str, path: str, body: dict | None):
+            return 400, {"error": {"message": "insufficient funds in wallet"}}
+
+        result = fulfillment.confirm_shipment(session, shipment, settings=connected(), request=failing)
+
+        assert "insufficient funds" in result["error"]
+        assert order.fulfillment_status != "confirmed"
+        event = session.scalars(select(Event)).all()[-1]
+        assert event.result == "error"
 
     def test_an_already_confirmed_shipment_is_not_confirmed_twice(self, session):
         order = make_order(session)
@@ -248,12 +367,51 @@ class TestShipmentNotices:
             "supplier": "printful",
             "external_id": "cs_test_1",
             "supplier_order_id": "999",
+            "supplier_shipment_id": "ship_1",
             "tracking_number": "1Z999",
         }
         fulfillment.record_shipment_notice(session, notice)
         fulfillment.record_shipment_notice(session, notice)
 
         assert len(session.scalars(select(Shipment)).all()) == 1
+
+    def test_a_split_order_gets_a_row_per_parcel(self, session):
+        # Print-on-demand routes items to whichever facility can make them, so
+        # one order arrives as several parcels. Keying idempotency on the order
+        # id would let the second parcel overwrite the first one's tracking and
+        # leave a customer chasing a parcel we never told them about.
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+
+        for parcel, tracking in (("ship_1", "1Z111"), ("ship_2", "1Z222")):
+            fulfillment.record_shipment_notice(
+                session,
+                {
+                    "supplier": "printful",
+                    "external_id": "cs_test_1",
+                    "supplier_order_id": "999",
+                    "supplier_shipment_id": parcel,
+                    "tracking_number": tracking,
+                },
+            )
+
+        shipments = session.scalars(select(Shipment)).all()
+        assert len(shipments) == 2
+        assert sorted(s.tracking_number for s in shipments) == ["1Z111", "1Z222"]
+        assert {s.supplier_order_id for s in shipments} == {"999"}
+
+    def test_a_notice_without_a_parcel_id_still_lands_on_the_draft_row(self, session):
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+
+        fulfillment.record_shipment_notice(
+            session,
+            {"supplier": "printful", "external_id": "cs_test_1", "supplier_order_id": "999",
+             "tracking_number": "1Z999"},
+        )
+        shipments = session.scalars(select(Shipment)).all()
+        assert len(shipments) == 1
+        assert shipments[0].tracking_number == "1Z999"
 
     def test_an_unmatched_notice_is_logged_not_guessed_at(self, session):
         # Attaching this to the closest-looking order would send one customer

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-08-05",
+  "updated": "2026-08-06",
   "site": "https://www.clearglassinc.com",
   "topics": {
     "governed-ai": "Governed AI",
@@ -16,19 +16,35 @@
   },
   "posts": [
     {
+      "slug": "shadow-ai-enterprise-security-blind-spot",
+      "url": "/blog/shadow-ai-enterprise-security-blind-spot.html",
+      "title": "Shadow AI: Enterprise Security’s Biggest Blind Spot",
+      "description": "A strategic briefing on unauthorized data movement, invisible agent access, AI discovery, non-human identity governance, and why the governed path must be the fastest path.",
+      "category": "AI Governance",
+      "series": "ClearGlass Long Reads",
+      "topics": ["governed-ai", "agents", "automation", "systems", "cyber"],
+      "tags": ["shadow-ai", "ai-discovery", "non-human-identity", "data-governance", "identity-governance", "mcp", "api-security", "long-read"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-08-06",
+      "readMinutes": 9,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
+    {
       "slug": "rethinking-security-age-of-ai-cyber-stack",
       "url": "/blog/rethinking-security-age-of-ai-cyber-stack.html",
       "title": "Rethinking Security for the Age of AI",
-      "description": "A ClearGlass strategic brief on Microsoft's AI-native Cyber Stack, Project Perception, multi-model reasoning, specialized security agents, human control, and machine-speed action.",
-      "category": "Cyber Defense",
+      "description": "A ClearGlass strategic brief on Microsoft's AI-native Cyber Stack, multi-model security reasoning, agentic defense, and human-controlled action.",
+      "category": "AI Security Architecture",
       "series": "ClearGlass Long Reads",
-      "topics": ["cyber", "governed-ai", "agents", "automation", "systems"],
-      "tags": ["microsoft-security", "project-perception", "cyber-stack", "agentic-security", "multi-model", "machine-speed-defense", "human-in-the-loop", "security-context"],
+      "topics": ["governed-ai", "agents", "automation", "systems", "cyber"],
+      "tags": ["ai-native-security", "cyber-stack", "agentic-defense", "human-in-the-loop", "security-architecture", "microsoft", "long-read"],
       "author": "Desmond Otieno Odhiambo",
       "date": "2026-08-05",
       "readMinutes": 10,
       "featured": true,
-      "deskRank": 1,
+      "deskRank": 2,
       "status": "published"
     },
     {
@@ -44,7 +60,7 @@
       "date": "2026-08-03",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 2,
+      "deskRank": 3,
       "status": "published"
     },
     {
@@ -60,7 +76,7 @@
       "date": "2026-08-03",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 3,
+      "deskRank": 4,
       "status": "published"
     },
     {
@@ -76,7 +92,7 @@
       "date": "2026-07-31",
       "readMinutes": 15,
       "featured": true,
-      "deskRank": 4,
+      "deskRank": 5,
       "status": "published"
     }
   ]

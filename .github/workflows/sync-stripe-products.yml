@@ -1,0 +1,247 @@
+name: Sync Stripe Products
+
+# Publishes the product catalogue on the GitHub Pages site into Stripe.
+#
+# Safety model, in the order the gates apply:
+#   1. Tests and the type check run first; nothing reaches Stripe if they fail.
+#   2. Every run is a dry run unless `apply: true` was requested.
+#   3. Live mode needs THREE independent things to agree — the `live: true`
+#      input, the repository variable ALLOW_STRIPE_LIVE_SYNC=true, and a live
+#      secret key in a protected environment. The workflow input alone cannot
+#      reach live data, and neither can a mis-filed secret.
+#   4. The automatic post-deploy run is dry-run only, by construction: it fires
+#      from `workflow_run`, which carries no inputs at all.
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Write to Stripe. Leave false for a dry run."
+        type: boolean
+        default: false
+      live:
+        description: "Target LIVE Stripe. Also needs ALLOW_STRIPE_LIVE_SYNC=true and approval."
+        type: boolean
+        default: false
+      sources:
+        description: "Comma-separated sources: side-store, store, pricebook, or all."
+        type: string
+        default: "side-store,store"
+      deactivate_old_prices:
+        description: "Deactivate Prices superseded by a new amount."
+        type: boolean
+        default: false
+  # Optional automatic run after the site deploys. Reports drift; never writes.
+  workflow_run:
+    workflows: ["Deploy Pages"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-stripe-products
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Type check and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - name: Type check
+        run: npm run typecheck
+      # Offline and fully mocked — no Stripe credential is available to this job.
+      - name: Unit tests
+        run: npm test
+
+  # Test-mode run. Dry run by default; writes only when apply: true was asked for.
+  sync-test-mode:
+    name: Sync (Stripe test mode)
+    needs: verify
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      inputs.live != true
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+
+      - name: Confirm the credential is a test key
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+        # Compares a prefix only. The key itself is never echoed, and `set +x`
+        # keeps the shell from tracing the expansion into the log.
+        run: |
+          set +x
+          if [ -z "${STRIPE_SECRET_KEY}" ]; then
+            echo "::error::STRIPE_SECRET_KEY is not configured in repository secrets."
+            exit 1
+          fi
+          case "${STRIPE_SECRET_KEY}" in
+            sk_test_*|rk_test_*) echo "Credential is a Stripe test-mode key." ;;
+            *) echo "::error::STRIPE_SECRET_KEY is not a test-mode key. This job refuses to run with it."; exit 1 ;;
+          esac
+
+      - name: Sync
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://www.clearglassinc.com' }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          APPLY: ${{ inputs.apply }}
+          SOURCES: ${{ inputs.sources }}
+          DEACTIVATE: ${{ inputs.deactivate_old_prices }}
+        run: |
+          set -euo pipefail
+          args=(--source "${SOURCES}" --report stripe-sync-report.json)
+          if [ "${APPLY}" = "true" ]; then args+=(--apply); fi
+          if [ "${DEACTIVATE}" = "true" ]; then args+=(--deactivate-old-prices); fi
+          echo "Running: sync-stripe-products ${args[*]}"
+          npm run --silent sync:stripe -- "${args[@]}"
+
+      - name: Upload sync report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: stripe-sync-report-test
+          path: stripe-sync-report.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  # Live-mode run. Bound to the `stripe-live` environment so a reviewer approves
+  # it, and refused outright unless the repository variable is also set.
+  sync-live-mode:
+    name: Sync (Stripe LIVE mode)
+    needs: verify
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      inputs.live == true &&
+      inputs.apply == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: stripe-live
+    permissions:
+      contents: read
+    steps:
+      - name: Refuse unless the repository opt-in is set
+        env:
+          ALLOW_STRIPE_LIVE_SYNC: ${{ vars.ALLOW_STRIPE_LIVE_SYNC }}
+        run: |
+          if [ "${ALLOW_STRIPE_LIVE_SYNC}" != "true" ]; then
+            echo "::error::live sync requires repository variable ALLOW_STRIPE_LIVE_SYNC=true (Settings → Variables)."
+            exit 1
+          fi
+
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+
+      - name: Sync (live)
+        env:
+          # A separate secret from the test key, so a live credential can never
+          # be reached by the test-mode job and vice versa.
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_LIVE_SECRET_KEY }}
+          ALLOW_STRIPE_LIVE_SYNC: ${{ vars.ALLOW_STRIPE_LIVE_SYNC }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://www.clearglassinc.com' }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          SOURCES: ${{ inputs.sources }}
+          DEACTIVATE: ${{ inputs.deactivate_old_prices }}
+        run: |
+          set -euo pipefail
+          args=(--source "${SOURCES}" --apply --live --report stripe-sync-report.json)
+          if [ "${DEACTIVATE}" = "true" ]; then args+=(--deactivate-old-prices); fi
+          npm run --silent sync:stripe -- "${args[@]}"
+
+      - name: Upload sync report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: stripe-sync-report-live
+          path: stripe-sync-report.json
+          if-no-files-found: warn
+          retention-days: 90
+
+  # Fires after a successful Pages deploy. Reports catalogue drift into the job
+  # summary; cannot write, because `workflow_run` supplies no `apply` input.
+  post-deploy-drift-check:
+    name: Post-deploy drift check (dry run)
+    needs: verify
+    if: >-
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+
+      - name: Dry run against Stripe test mode
+        id: drift
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://www.clearglassinc.com' }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        # Falls back to --offline when no test key is configured, so the check
+        # still validates the catalogue on a repository that has no secret yet.
+        run: |
+          set -uo pipefail
+          if [ -z "${STRIPE_SECRET_KEY}" ]; then
+            echo "No STRIPE_SECRET_KEY configured — planning offline." >> "$GITHUB_STEP_SUMMARY"
+            npm run --silent sync:stripe -- --offline --report stripe-sync-report.json | tee drift.txt
+          else
+            npm run --silent sync:stripe -- --report stripe-sync-report.json | tee drift.txt
+          fi
+          status=$?
+          {
+            echo "### Stripe catalogue drift (dry run)"
+            echo ""
+            echo '```'
+            tail -n 60 drift.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status
+
+      - name: Upload sync report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: stripe-sync-report-post-deploy
+          path: stripe-sync-report.json
+          if-no-files-found: warn
+          retention-days: 14

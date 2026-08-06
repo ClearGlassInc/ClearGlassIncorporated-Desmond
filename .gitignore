@@ -37,6 +37,10 @@ htmlcov/
 # JS dependencies
 node_modules/
 
+# Stripe catalogue sync output (regenerated on every run; upload as a CI artifact
+# instead of committing it)
+stripe-sync-report.json
+
 # Archives (build artifacts should not be committed)
 *.zip
 # Exception: intentional static download assets served from /downloads/

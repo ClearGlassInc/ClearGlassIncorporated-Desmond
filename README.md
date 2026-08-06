@@ -346,9 +346,14 @@ needs manual correction, `2` refused for a configuration or safety reason.
 | `SITE_BASE_URL` | no | Pages origin. Defaults to `https://www.clearglassinc.com`. |
 | `GITHUB_REPOSITORY` | no | Written to `source_repository` metadata. |
 
-`typescript` and `tsx` sit in `dependencies` rather than `devDependencies` on
-purpose: `clearglassinc-military-op.yml` runs `npm ci` with `NODE_ENV=production`,
-which omits dev dependencies, and the type check and tests must still run there.
+The runtime dependency surface is deliberately small — `stripe`, `typescript`,
+and `@types/node`, nothing else. `npm run sync:stripe` compiles with `tsc` and
+runs the output rather than transpiling on the fly, which keeps a bundler (and
+its transitive dependencies) out of the tree entirely.
+
+`typescript` sits in `dependencies` rather than `devDependencies` on purpose:
+`clearglassinc-military-op.yml` runs `npm ci` with `NODE_ENV=production`, which
+omits dev dependencies, and the type check and tests must still run there.
 
 ### Test mode versus live mode
 

@@ -73,6 +73,8 @@ def quote_cart(req: SideStoreCartRequest) -> SideStoreQuoteOut:
         tax=totals.tax,
         total=totals.total,
         currency=totals.currency,
+        tax_basis=totals.tax_basis,
+        tax_is_estimate=totals.tax_is_estimate,
     )
 
 
@@ -117,8 +119,6 @@ def create_sidestore_checkout(
     result = payments.create_checkout_session(
         cart.to_stripe_line_items(totals),
         customer_email=req.customer_email,
-        success_url=req.success_url,
-        cancel_url=req.cancel_url,
         client_reference_id=req.client_reference_id,
         idempotency_key=req.client_reference_id,
         shipping_countries=SHIPPING_COUNTRIES,

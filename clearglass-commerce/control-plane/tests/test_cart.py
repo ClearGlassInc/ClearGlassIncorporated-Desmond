@@ -138,12 +138,19 @@ def test_duplicate_line_is_refused() -> None:
 
 
 def test_stripe_line_items_carry_the_discounted_unit_price() -> None:
+    """5 x $6.99 at 15% off.
+
+    The naive unit price is round(699 x 0.85) = 594, which extends to 2970 against
+    a quote of 2971. So the line is split — one unit absorbs the odd cent — and the
+    prices stay within a cent of the discounted unit either way.
+    """
     totals = cart.price_cart([{"id": "sku_001", "quantity": 5}])
     lines = cart.to_stripe_line_items(totals)
-    assert len(lines) == 1
-    assert lines[0]["quantity"] == 5
-    assert lines[0]["amount"] == cart._round_cents(Decimal(699) * Decimal("0.85"))
-    assert lines[0]["currency"] == "cad"
+    naive = cart._round_cents(Decimal(699) * Decimal("0.85"))
+    assert sum(li["quantity"] for li in lines) == 5
+    assert all(abs(li["amount"] - naive) <= 1 for li in lines)
+    assert all(li["currency"] == "cad" for li in lines)
+    assert sum(li["amount"] * li["quantity"] for li in lines) == totals.discounted_subtotal
 
 
 def test_stripe_line_items_match_the_undiscounted_price_without_a_tier() -> None:
@@ -315,3 +322,130 @@ def test_live_checkout_refuses_while_stripe_tax_is_off(client, monkeypatch) -> N
     r = client.post("/sidestore/checkout/session", json={"items": [{"id": "sku_001", "quantity": 1}]})
     assert r.status_code == 503
     assert "Stripe Tax" in r.json()["detail"]
+
+
+def test_stripe_line_items_extend_to_the_quoted_subtotal_across_many_baskets() -> None:
+    """The rounding remainder must be allocated, not dropped.
+
+    The quote rounds the discount once over the subtotal; Stripe multiplies a
+    rounded unit price by quantity. 5 x $6.99 at 15% off quotes $29.71 and naively
+    extends to $29.70 — a customer charged something other than what they saw.
+    """
+    ids = [i["id"] for i in cart.catalog()]
+    baskets = [[{"id": i, "quantity": q}] for i in ids[:10] for q in range(1, 13)]
+    baskets.append([{"id": ids[0], "quantity": 5}, {"id": ids[1], "quantity": 3}])
+    for basket in baskets:
+        totals = cart.price_cart(basket)
+        lines = cart.to_stripe_line_items(totals)
+        extended = sum(li["amount"] * li["quantity"] for li in lines)
+        assert extended == totals.discounted_subtotal, basket
+        # Splitting a line to absorb the remainder must not invent or lose units.
+        assert sum(li["quantity"] for li in lines) == totals.quantity, basket
+
+
+def test_the_known_one_cent_divergence_is_gone() -> None:
+    totals = cart.price_cart([{"id": "sku_001", "quantity": 5}])
+    assert totals.discounted_subtotal == 2971
+    assert sum(li["amount"] * li["quantity"] for li in cart.to_stripe_line_items(totals)) == 2971
+
+
+def test_quote_marks_tax_as_an_ontario_estimate() -> None:
+    """The store ships Canada-wide; Stripe Tax charges the destination's rate."""
+    totals = cart.price_cart([{"id": "sku_001", "quantity": 1}])
+    assert totals.tax_basis == "CA-ON"
+    assert totals.tax_is_estimate is True
+
+
+def test_checkout_contract_has_no_caller_supplied_return_urls(client) -> None:
+    """A public endpoint that accepts success_url lets anyone mint a genuine
+    ClearGlass Stripe session that redirects the buyer to their own domain."""
+    schema = client.get("/openapi.json").json()
+    for model in ("SideStoreCartRequest", "CheckoutRequest"):
+        props = set(schema["components"]["schemas"][model]["properties"])
+        assert "success_url" not in props, model
+        assert "cancel_url" not in props, model
+
+
+def test_live_session_forwards_shipping_and_metadata(monkeypatch) -> None:
+    """Exercise the live Stripe branch, which mock mode never reaches.
+
+    A malformed shipping payload would otherwise pass CI and only surface after
+    activation, on a real customer's order.
+    """
+    import sys
+    import types
+
+    captured: dict = {}
+
+    class _Session:
+        @staticmethod
+        def create(**kwargs):
+            captured.update(kwargs)
+            return types.SimpleNamespace(
+                id="cs_live_stub", url="https://checkout.stripe.com/c/stub",
+                amount_total=1234, currency="cad",
+            )
+
+    stub = types.ModuleType("stripe")
+    stub.api_key = None
+    stub.checkout = types.SimpleNamespace(Session=_Session)
+    monkeypatch.setitem(sys.modules, "stripe", stub)
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_live_stub")
+
+    from app import payments
+
+    totals = cart.price_cart([{"id": "sku_001", "quantity": 1}])
+    payments.create_checkout_session(
+        cart.to_stripe_line_items(totals),
+        shipping_countries=["CA"],
+        shipping_amount=totals.shipping,
+        shipping_label="Standard shipping",
+        extra_metadata={"store": "side_store", "bundle_rate": totals.discount_rate},
+    )
+
+    assert captured["shipping_address_collection"] == {"allowed_countries": ["CA"]}
+    rate = captured["shipping_options"][0]["shipping_rate_data"]
+    assert rate["type"] == "fixed_amount"
+    assert rate["fixed_amount"] == {"amount": totals.shipping, "currency": "cad"}
+    assert rate["display_name"] == "Standard shipping"
+    assert captured["metadata"]["store"] == "side_store"
+    assert captured["metadata"]["bundle_rate"] == totals.discount_rate
+    # The return URL must come from config, never from a caller.
+    assert captured["success_url"].startswith("http")
+    assert "{CHECKOUT_SESSION_ID}" in captured["success_url"]
+
+
+def test_free_shipping_session_sends_a_zero_rate(monkeypatch) -> None:
+    """Free shipping still needs an explicit option, or Stripe offers none."""
+    import sys
+    import types
+
+    captured: dict = {}
+
+    class _Session:
+        @staticmethod
+        def create(**kwargs):
+            captured.update(kwargs)
+            return types.SimpleNamespace(
+                id="cs", url="https://checkout.stripe.com/c/x", amount_total=1, currency="cad"
+            )
+
+    stub = types.ModuleType("stripe")
+    stub.api_key = None
+    stub.checkout = types.SimpleNamespace(Session=_Session)
+    monkeypatch.setitem(sys.modules, "stripe", stub)
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_live_stub")
+
+    from app import payments
+
+    totals = cart.price_cart([{"id": "sku_002", "quantity": 5}])
+    assert totals.free_shipping_applied is True
+    payments.create_checkout_session(
+        cart.to_stripe_line_items(totals),
+        shipping_countries=["CA"],
+        shipping_amount=totals.shipping,
+        shipping_label="Free shipping",
+    )
+    rate = captured["shipping_options"][0]["shipping_rate_data"]
+    assert rate["fixed_amount"]["amount"] == 0
+    assert rate["display_name"] == "Free shipping"

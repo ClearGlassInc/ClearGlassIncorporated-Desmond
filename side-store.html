@@ -1137,9 +1137,11 @@
       '<div class="st-sline"><span>Shipping</span>'+shipTxt+'</div>'+
       '<div class="st-sline"><span>HST (13%)</span><span class="st-mono">'+fmt(p.tax)+'</span></div>'+
       '<div class="st-sline tot"><span>Total</span><span class="st-mono">'+fmt(p.tot)+'</span></div>'+
-      '<a class="st-checkout" id="checkout">Order by Interac e-Transfer →</a>'+
+      '<a class="st-checkout" id="checkout">'+(API_BASE?"Pay securely by card →":"Order by Interac e-Transfer →")+'</a>'+
       '<p class="st-paynote" id="checkoutError" role="alert" hidden style="color:#ff8095"></p>'+
-      '<p class="st-paynote">Checkout opens a pre-filled order email. No card details are collected on this site.</p>';
+      '<p class="st-paynote">'+(API_BASE
+        ?"Card payment is handled by Stripe on their secure page. No card details are entered on this site."
+        :"Checkout opens a pre-filled order email. No card details are collected on this site.")+'</p>';
     $("#checkout").addEventListener("click",placeOrder);
   }
   // Control plane base URL. When set, checkout goes through Stripe: the server

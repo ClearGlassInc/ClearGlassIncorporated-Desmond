@@ -71,6 +71,13 @@ class CartTotals:
     total: int = 0
     currency: str = "cad"
     free_shipping_applied: bool = False
+    #: The rate basis this quote used, and whether it is final. The catalogue
+    #: carries a single Ontario HST rate, but the store ships Canada-wide and
+    #: Stripe Tax charges the destination's rate. Outside Ontario this figure
+    #: is an estimate and the real tax is computed at checkout — callers must
+    #: not present it as the definitive total.
+    tax_basis: str = "CA-ON"
+    tax_is_estimate: bool = True
 
 
 def _catalog_path() -> Path:
@@ -204,6 +211,8 @@ def price_cart(requested: list[dict[str, Any]]) -> CartTotals:
         total=discounted + shipping + tax,
         currency=str(document.get("currency", "cad")).lower(),
         free_shipping_applied=free_shipping,
+        tax_basis=str(rules.get("tax_basis", "CA-ON")),
+        tax_is_estimate=True,
     )
 
 
@@ -216,22 +225,61 @@ def to_stripe_line_items(totals: CartTotals) -> list[dict[str, Any]]:
     discount the customer can see on the page but not on the invoice is worse than
     one folded into the price. ``discount_rate`` rides along in the session
     metadata so the reconciliation still knows a tier was applied.
+
+    **The rounding has to be allocated, not just applied.** The quote rounds the
+    discount once over the whole subtotal; Stripe multiplies a rounded unit price
+    by the quantity. Those are not the same number — 5 x $6.99 at 15% off quotes
+    $29.71 but extends to $29.70 — and the gap is a customer charged something
+    other than what they were shown. So the remainder is distributed a cent at a
+    time across individual units, splitting a line where necessary, until the
+    extended total equals ``discounted_subtotal`` exactly.
     """
     rate = Decimal(totals.discount_rate)
-    line_items: list[dict[str, Any]] = []
-    for item in totals.items:
-        unit = item.unit_amount
-        if rate:
-            unit = _round_cents(Decimal(unit) * (Decimal("1") - rate))
-        line_items.append(
-            {
-                "sku": item.sku,
-                "name": item.name,
-                "description": item.description,
-                "amount": unit,
-                "currency": totals.currency,
-                "quantity": item.quantity,
-                "tax_behavior": "exclusive",
-            }
+
+    def _line(item: CartItem, unit: int, quantity: int) -> dict[str, Any]:
+        return {
+            "sku": item.sku,
+            "name": item.name,
+            "description": item.description,
+            "amount": unit,
+            "currency": totals.currency,
+            "quantity": quantity,
+            "tax_behavior": "exclusive",
+        }
+
+    if not rate:
+        line_items = [_line(i, i.unit_amount, i.quantity) for i in totals.items]
+    else:
+        draft = [
+            (item, _round_cents(Decimal(item.unit_amount) * (Decimal("1") - rate)), item.quantity)
+            for item in totals.items
+        ]
+        delta = totals.discounted_subtotal - sum(unit * qty for _, unit, qty in draft)
+
+        line_items = []
+        for item, unit, qty in draft:
+            if delta:
+                # Each adjusted unit absorbs exactly one cent, so at most `qty` of
+                # this line's units are needed before moving to the next.
+                step = 1 if delta > 0 else -1
+                adjusted = min(abs(delta), qty)
+                line_items.append(_line(item, unit + step, adjusted))
+                delta -= step * adjusted
+                qty -= adjusted
+            if qty:
+                line_items.append(_line(item, unit, qty))
+
+        if delta:  # pragma: no cover - impossible while |delta| < total units
+            raise CartError(
+                f"could not allocate the rounding remainder ({delta} cents left over)"
+            )
+
+    # The invariant this function exists to hold. A silent mismatch here is the
+    # customer being charged a different number from the one on the page.
+    extended = sum(li["amount"] * li["quantity"] for li in line_items)
+    if extended != totals.discounted_subtotal:  # pragma: no cover - guarded above
+        raise CartError(
+            f"line items extend to {extended} but the cart quotes "
+            f"{totals.discounted_subtotal}"
         )
     return line_items

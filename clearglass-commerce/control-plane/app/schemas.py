@@ -41,10 +41,17 @@ class CheckoutLineItem(BaseModel):
 
 
 class CheckoutRequest(BaseModel):
+    """A cart, and who to email. Deliberately not where to return to.
+
+    `success_url` and `cancel_url` used to be accepted here and passed straight to
+    Stripe. On a public, unauthenticated endpoint that is a brand-abuse vector: an
+    anonymous caller could mint a genuine `checkout.stripe.com` session under the
+    ClearGlass account that redirects the buyer to any domain once they have paid.
+    The return URLs now come only from CHECKOUT_SUCCESS_URL / CHECKOUT_CANCEL_URL.
+    """
+
     items: list[CheckoutLineItem] = Field(min_length=1, max_length=20)
     customer_email: str | None = None
-    success_url: str | None = None
-    cancel_url: str | None = None
     # Client-generated attempt id. Passed to Stripe as the idempotency key so a
     # double-click or a retried request reuses the first session instead of opening
     # a second one for the same cart.
@@ -198,10 +205,10 @@ class SideStoreCartLine(BaseModel):
 
 
 class SideStoreCartRequest(BaseModel):
+    """Same reasoning as CheckoutRequest: no caller-supplied return URLs."""
+
     items: list[SideStoreCartLine] = Field(min_length=1, max_length=40)
     customer_email: str | None = None
-    success_url: str | None = None
-    cancel_url: str | None = None
     client_reference_id: str | None = Field(default=None, max_length=200)
 
 
@@ -227,3 +234,8 @@ class SideStoreQuoteOut(BaseModel):
     tax: int
     total: int
     currency: str
+    #: Tax is quoted at the Ontario HST rate. The store ships Canada-wide and
+    #: Stripe Tax charges the destination's rate, so outside Ontario this is an
+    #: estimate and the final amount is computed at checkout.
+    tax_basis: str
+    tax_is_estimate: bool

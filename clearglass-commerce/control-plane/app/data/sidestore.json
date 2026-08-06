@@ -16,7 +16,9 @@
         "min_qty": 3,
         "rate": "0.10"
       }
-    ]
+    ],
+    "tax_basis": "CA-ON",
+    "tax_note": "Single Ontario HST rate. The store ships Canada-wide, so for destinations outside Ontario this is an estimate and Stripe Tax computes the real amount at checkout from the collected address."
   },
   "items": [
     {

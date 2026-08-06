@@ -1,9 +1,9 @@
 {
   "schema": "clearglass.store.catalog/v1",
-  "generated_utc": "2026-06-21T13:06:24+00:00",
-  "content_hash": "sha256:f084caa0b502b391b4b8a4a6fbd029eaf4a6d8913f5493adebd25521c6baef6b",
+  "generated_utc": "2026-08-06T14:56:58+00:00",
+  "content_hash": "sha256:e8561e80e4bb4f52247f944b139429f363b6a164266231da5e4045ec8fc14bfb",
   "source": "store.html",
-  "live_checkout_enabled": false,
+  "live_checkout_enabled": true,
   "products": [
     {
       "sku": "quick-audit",
@@ -14,8 +14,8 @@
       "amount_cents": 24900,
       "currency": "CAD",
       "etransfer_amount": "CAD $249",
-      "checkout_url": "",
-      "live_checkout": false
+      "checkout_url": "https://buy.stripe.com/8x2eVe7ZG0mFam00LG4Ni03",
+      "live_checkout": true
     },
     {
       "sku": "hardening",
@@ -26,8 +26,8 @@
       "amount_cents": 250000,
       "currency": "CAD",
       "etransfer_amount": "CAD $2,500 (deposit · scope confirmed on call)",
-      "checkout_url": "",
-      "live_checkout": false
+      "checkout_url": "https://buy.stripe.com/cNi7sMa7Ob1j2Ty8e84Ni04",
+      "live_checkout": true
     },
     {
       "sku": "phipa",
@@ -38,8 +38,8 @@
       "amount_cents": 300000,
       "currency": "CAD",
       "etransfer_amount": "CAD $3,000 (deposit · scope confirmed on call)",
-      "checkout_url": "",
-      "live_checkout": false
+      "checkout_url": "https://buy.stripe.com/fZu14o6VC4CV0Lq9ic4Ni05",
+      "live_checkout": true
     },
     {
       "sku": "monitoring",
@@ -50,13 +50,12 @@
       "amount_cents": 60000,
       "currency": "CAD",
       "etransfer_amount": "CAD $600 (first month)",
-      "checkout_url": "",
-      "live_checkout": false
+      "checkout_url": "https://buy.stripe.com/dRm28sa7OglDbq41PK4Ni06",
+      "live_checkout": true
     }
   ],
   "summary": {
     "sku_count": 4,
-    "live_checkout_skus": 0
-  },
-  "fallback_note": "Live card checkout disabled (no Stripe Payment Links configured). Interac e-Transfer + confirmed-invoice flow active — revenue continuity preserved."
+    "live_checkout_skus": 4
+  }
 }

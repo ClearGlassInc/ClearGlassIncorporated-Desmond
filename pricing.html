@@ -278,11 +278,14 @@
   // ── PAYMENT CONFIG ───────────────────────────────────────────────────────
   // Paste a Stripe Payment Link (https://buy.stripe.com/...) for any SKU to turn
   // its button into live card checkout. Empty = books via confirmed-invoice flow.
+  // Live Stripe Payment Links — must stay identical to store.html, which the
+  // storefront smoke bot enforces: a SKU purchasable on one page and not the other
+  // is a broken promise to whichever visitor lands on the wrong one.
   var CHECKOUT = {
-    "quick-audit": "",
-    "hardening":   "",
-    "phipa":       "",
-    "monitoring":  ""
+    "quick-audit": "https://buy.stripe.com/8x2eVe7ZG0mFam00LG4Ni03",
+    "hardening":   "https://buy.stripe.com/cNi7sMa7Ob1j2Ty8e84Ni04",
+    "phipa":       "https://buy.stripe.com/fZu14o6VC4CV0Lq9ic4Ni05",
+    "monitoring":  "https://buy.stripe.com/dRm28sa7OglDbq41PK4Ni06"
   };
 
   var LABEL = {

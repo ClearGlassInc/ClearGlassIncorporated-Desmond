@@ -176,6 +176,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "side-store.html": ("Side Store", "electronics, cables and components"),
     "offers/hardening-sprint.html": ("Hardening Sprint", "Microsoft 365 + Windows hardening engagement"),
     "offers/security-quick-audit.html": ("Security Quick-Audit", "a focused $249 security review"),
+    "offers/guardian-command-nexus-blueprint.html": ("Guardian Command Nexus Blueprint", "the full SPEC-1 architecture blueprint, sold as a digital deliverable"),
     "offers/autonomous-threat-modeling.html": ("Autonomous Threat Modeling", "continuous threat-modeling assessment and implementation services"),
     "revenue-engine.html": ("Revenue Engine", "AI-driven business growth system"),
 
@@ -337,7 +338,8 @@ CLUSTERS: dict[str, dict] = {
             "store.html", "pricing.html", "checkout/index.html", "seo-authority-hub.html",
             "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
-            "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html", "revenue-engine.html",
+            "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html",
+            "offers/guardian-command-nexus-blueprint.html", "revenue-engine.html",
             "side-store.html", "products.html",
             "apps/command-center/index.html",
         ],

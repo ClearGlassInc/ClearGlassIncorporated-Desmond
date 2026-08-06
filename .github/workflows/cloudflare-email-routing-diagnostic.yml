@@ -1,0 +1,114 @@
+name: Diagnose Cloudflare Email Routing
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/cloudflare-email-routing-diagnostic.yml
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      DOMAIN: clearglassinc.com
+      ISSUE_NUMBER: "1288"
+    steps:
+      - name: Check Cloudflare access
+        id: check
+        shell: bash
+        run: |
+          set +e
+          report="$RUNNER_TEMP/cloudflare-report.md"
+          {
+            echo "## Cloudflare execution check"
+            echo
+            echo "- Workflow run: \`$GITHUB_RUN_ID\`"
+            echo "- Commit: \`$GITHUB_SHA\`"
+            echo "- Checked at: \`$(date -u +'%Y-%m-%dT%H:%M:%SZ')\`"
+            echo
+          } > "$report"
+
+          if [[ -z "${CF_API_TOKEN:-}" ]]; then
+            echo "**FAILED:** GitHub secret \`CLOUDFLARE_API_TOKEN\` is missing or empty." >> "$report"
+            echo "outcome=missing_secret" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          verify=$(curl -sS --request GET \
+            "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+            --header "Authorization: Bearer $CF_API_TOKEN" \
+            --header "Content-Type: application/json")
+
+          if ! jq -e '.success == true and .result.status == "active"' >/dev/null <<<"$verify"; then
+            echo "**FAILED:** Cloudflare rejected the token or it is inactive." >> "$report"
+            echo >> "$report"
+            echo '```json' >> "$report"
+            jq '{success, errors, messages, result: {status: .result.status}}' <<<"$verify" >> "$report"
+            echo '```' >> "$report"
+            echo "outcome=invalid_token" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          zones=$(curl -sS --request GET \
+            "https://api.cloudflare.com/client/v4/zones?name=$DOMAIN&status=active&per_page=50" \
+            --header "Authorization: Bearer $CF_API_TOKEN" \
+            --header "Content-Type: application/json")
+
+          count=$(jq '.result | length' <<<"$zones" 2>/dev/null)
+          if [[ "${count:-0}" -ne 1 ]]; then
+            echo "**FAILED:** Token is active but cannot resolve exactly one active zone named \`$DOMAIN\`. Check Zone Read permission and zone scope." >> "$report"
+            echo >> "$report"
+            echo '```json' >> "$report"
+            jq '{success, errors, result_count: (.result | length)}' <<<"$zones" >> "$report"
+            echo '```' >> "$report"
+            echo "outcome=zone_access_failed" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          zone_id=$(jq -r '.result[0].id' <<<"$zones")
+          account_name=$(jq -r '.result[0].account.name // "unknown"' <<<"$zones")
+          routing=$(curl -sS --request GET \
+            "https://api.cloudflare.com/client/v4/zones/$zone_id/email/routing" \
+            --header "Authorization: Bearer $CF_API_TOKEN" \
+            --header "Content-Type: application/json")
+
+          routing_success=$(jq -r '.success // false' <<<"$routing")
+          routing_enabled=$(jq -r '.result.enabled // false' <<<"$routing")
+          routing_status=$(jq -r '.result.status // "unknown"' <<<"$routing")
+
+          {
+            echo "**PASSED:** Cloudflare accepted the token and the zone is accessible."
+            echo
+            echo "- Account: **$account_name**"
+            echo "- Zone: **$DOMAIN**"
+            echo "- Token status: **active**"
+            echo "- Email Routing API accessible: **$routing_success**"
+            echo "- Email Routing enabled: **$routing_enabled**"
+            echo "- Email Routing status: **$routing_status**"
+          } >> "$report"
+
+          echo "outcome=passed" >> "$GITHUB_OUTPUT"
+
+      - name: Post result to issue 1288
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          report="$RUNNER_TEMP/cloudflare-report.md"
+          if [[ ! -f "$report" ]]; then
+            printf '## Cloudflare execution check\n\n**FAILED:** Diagnostic step terminated before producing a report. Run ID: `%s`.\n' "$GITHUB_RUN_ID" > "$report"
+          fi
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/comments" \
+            -f body="$(cat "$report")"

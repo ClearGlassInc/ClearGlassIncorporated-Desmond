@@ -265,7 +265,9 @@ price book. A `side-store` entry looks like this:
 
 `sku` and `name` are required. `price` is major units (dollars) and is converted
 to integer cents on the decimal string, not by multiplying a float. `image` or
-`images` are optional; relative paths resolve against the Pages base URL.
+`images` are optional; relative paths resolve against the Pages base URL. There
+is no stock field, so no inventory status is sent to Stripe — the sync will not
+invent availability it cannot read.
 `data/store/catalog.json` differs in one way that matters: its `amount_cents`
 is already in minor units, and its `price_display` copy is what decides whether
 the amount is exact or quote-driven.
@@ -284,13 +286,26 @@ back to creating a fresh record when it does not resolve.
 | `owner/repo` | `product.metadata.source_repository` |
 | sha256 of the normalised product | `product.metadata.source_hash` — drives update-vs-no-op |
 | `name`, `description`, `images` | Product `name`, `description`, `images` |
-| `category`, inventory status | `product.metadata.source_category`, `.inventory_status` |
+| `category` | `product.metadata.source_category` |
+| inventory status, **only where a source states one** | `product.metadata.inventory_status` |
 | One variant | One Price, tagged `price.metadata.variant_key` |
 | `price` / `amount_cents` | `unit_amount`, integer minor units |
 | Billing interval, where the source states one | `price.recurring` |
 
-Everything this tool creates carries `metadata.managed_by = clearglass-site-sync`.
-Stripe records without that marker are never touched, adopted, or reported.
+Everything this tool creates carries `metadata.managed_by = clearglass-site-sync`,
+and that marker is what the sync searches on. There is one deliberate exception:
+when a source *names* a Stripe id — as the price book does — that id is checked
+against the target account and adopted if it resolves, marker or not. That is the
+point of the hint: those Stripe objects predate this tool and it must not create
+second copies of them. Adoption is still narrow — a hinted Product owned by a
+different `source_id` is refused, and a hinted Price that charges something other
+than what the source says **blocks that product** rather than minting a new Price
+at the source's amount. Unmarked, unhinted Stripe records are never touched,
+adopted, or reported as orphans.
+
+Orphan reporting is scoped to the sources a run actually read. A
+`--source side-store` run will not describe your price-book products as removed
+from the site — it never looked at them.
 
 Lookup is by `source_id` over a full paginated `products.list`, not
 `products.search`: the search index is eventually consistent, and a stale miss
@@ -334,8 +349,9 @@ npm run typecheck
 
 Options: `--source`, `--apply`, `--live`, `--deactivate-old-prices`,
 `--offline`, `--check-images`, `--base-url`, `--repository`, `--currency`,
-`--report`, `--json`, `--help`. Exit codes: `0` clean, `1` a product failed or
-needs manual correction, `2` refused for a configuration or safety reason.
+`--report`, `--expect-plan-hash`, `--json`, `--help`. Exit codes: `0` clean,
+`1` a product failed or needs manual correction, `2` refused for a configuration
+or safety reason.
 
 ### Environment variables
 
@@ -366,8 +382,17 @@ is a refusal:
 3. a genuinely live (`sk_live_…` / `rk_live_…`) secret key.
 
 A live key with no `--live` is also refused, so a mis-filed secret cannot quietly
-write to production. In CI there is a fourth gate: the live job is bound to the
-`stripe-live` environment and reads a separate `STRIPE_LIVE_SECRET_KEY` secret.
+write to production. In CI there is a fourth gate: the applying live job is bound
+to the `stripe-live` environment and reads a separate `STRIPE_LIVE_SECRET_KEY`.
+
+**Live changes go plan → approve → apply, and the approval is bound to the plan.**
+The workflow computes the live plan in a job with no environment gate, which
+writes nothing and publishes the plan plus its `plan_hash` to the run summary.
+Only then does the applying job request `stripe-live` approval — so the reviewer
+is approving a plan they can read. That job recomputes the plan and passes
+`--expect-plan-hash`; if the catalogue or the Stripe account moved in between, the
+hash no longer matches and the run stops with exit 2 rather than applying changes
+nobody signed off on. `live=true, apply=false` gives you the live plan on its own.
 
 ### Running it from GitHub Actions
 
@@ -375,8 +400,10 @@ write to production. In CI there is a fourth gate: the live job is bound to the
 `apply` (default `false`) and `live` (default `false`) inputs, plus `sources` and
 `deactivate_old_prices`. It installs with `npm ci`, runs the type check and the
 test suite **before** any sync job, and uploads the JSON report as a workflow
-artifact. It also runs automatically after a successful `Deploy Pages` run — as a
-dry-run drift check, which cannot write because `workflow_run` carries no inputs.
+artifact. Test-mode runs are a single job; live runs split into the planning and
+applying jobs described above. It also runs automatically after a successful
+`Deploy Pages` run — as a dry-run drift check, which cannot write because
+`workflow_run` carries no inputs.
 
 To add the credential: **Settings → Secrets and variables → Actions → New
 repository secret**, named `STRIPE_SECRET_KEY`, holding your `sk_test_…` key.
@@ -396,8 +423,12 @@ The script is safe to re-run: that is the recovery procedure. A failure on one
 product is recorded and the rest of the catalogue continues, so a partial run
 leaves a consistent Stripe account, not a half-written one.
 
-1. Read `stripe-sync-report.json` (the workflow artifact) — `failures` names
-   what broke and `manual_correction_required` names what was withheld.
+1. Read `stripe-sync-report.json` (the workflow artifact) — `failures` names what
+   broke, `manual_correction_required` what was withheld for bad source data,
+   `blocked` what Stripe itself contradicted, and `resolved` the exact Product
+   and Price ids that were written before the run stopped. Nothing in the report
+   contains credential material; the whole document is redacted before it is
+   written.
 2. Fix the source data, or the Stripe-side cause.
 3. Re-run the dry run and confirm the plan says what you expect.
 4. Re-run with `--apply`. Content-derived idempotency keys mean products that

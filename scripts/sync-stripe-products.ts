@@ -22,7 +22,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { verifyImagesReachable } from "./stripe-sync/images.js";
-import { applyPlan, buildPlan, planRows } from "./stripe-sync/planner.js";
+import { applyPlan, buildPlan, planHash, planRows } from "./stripe-sync/planner.js";
 import { buildReport, renderTable } from "./stripe-sync/report.js";
 import { findRepoRoot } from "./stripe-sync/repo-root.js";
 import {
@@ -61,6 +61,8 @@ export interface CliOptions {
   reportPath: string;
   json: boolean;
   help: boolean;
+  /** Refuse to proceed unless the computed plan still hashes to this value. */
+  expectPlanHash?: string;
 }
 
 export class UsageError extends Error {}
@@ -127,6 +129,9 @@ export function parseArgs(argv: string[], env: NodeJS.ProcessEnv = {}): CliOptio
       case "--report":
         options.reportPath = next();
         break;
+      case "--expect-plan-hash":
+        options.expectPlanHash = next().trim().toLowerCase();
+        break;
       case "--json":
         options.json = true;
         break;
@@ -150,6 +155,11 @@ export function parseArgs(argv: string[], env: NodeJS.ProcessEnv = {}): CliOptio
   }
   if (options.offline && (options.apply || options.live)) {
     throw new UsageError("--offline consults no Stripe account, so it cannot be combined with --apply or --live");
+  }
+  // --check-images makes HEAD requests, which would break the no-network
+  // promise that is the whole point of --offline.
+  if (options.offline && options.checkImages) {
+    throw new UsageError("--offline makes no network requests, so it cannot be combined with --check-images");
   }
   return options;
 }
@@ -179,6 +189,8 @@ Options:
   --repository <owner/repo>  Written to Stripe metadata. Default: ${DEFAULT_REPOSITORY}
   --currency <iso>           Fallback currency for sources without one. Default: ${DEFAULT_CURRENCY}
   --report <path>            JSON report path. Default: stripe-sync-report.json
+  --expect-plan-hash <hex>   Refuse to run unless the plan still hashes to this
+                             value. Binds an approval to the plan that was reviewed.
   --json                     Print the report to stdout instead of the table.
   -h, --help                 This text.
 
@@ -286,9 +298,15 @@ export async function run(argv: string[], dependencies: RunDependencies = {}): P
   const planOptions = {
     repository: options.repository,
     deactivateOldPrices: options.deactivateOldPrices,
+    adapters: options.sources,
   };
   const plan = await buildPlan(gateway, products, planOptions);
   const rows = planRows(plan, options.deactivateOldPrices);
+  const hash = planHash(plan);
+
+  for (const entry of plan.blocked) {
+    errorLog(`BLOCKED  ${entry.sourceId}: ${redactSecrets(entry.reason)}`);
+  }
 
   if (!options.json) {
     log("");
@@ -305,6 +323,20 @@ export async function run(argv: string[], dependencies: RunDependencies = {}): P
     log("");
     log(renderTable(rows));
     log("");
+    log(`Plan hash: ${hash}`);
+  }
+
+  // Bind an approval to the plan it was granted for. If the catalogue or the
+  // Stripe account moved between the review and this run, the approval no longer
+  // describes what would happen, so the run stops rather than applying changes
+  // nobody signed off on.
+  if (options.expectPlanHash && options.expectPlanHash !== hash) {
+    errorLog(
+      `\nRefusing to run: the plan changed since it was approved.\n` +
+        `  approved: ${options.expectPlanHash}\n  current:  ${hash}\n` +
+        "Re-run the planning step, review the new plan, and approve that one.",
+    );
+    return 2;
   }
 
   /* 5 ── apply, or explain why not ---------------------------------------- */
@@ -342,20 +374,27 @@ export async function run(argv: string[], dependencies: RunDependencies = {}): P
     products,
     issues,
     rows,
+    planHash: hash,
+    blocked: plan.blocked,
     ...(applied ? { apply: applied } : {}),
     startedAt,
     finishedAt: new Date().toISOString(),
   });
 
-  const serialized = `${JSON.stringify(report, null, 2)}\n`;
+  // Redact the serialised document, not just the console lines. Issue and
+  // failure messages carry text straight from Stripe, which occasionally quotes
+  // the request that produced an error — and this file is uploaded as a CI
+  // artifact, so it outlives the log.
+  const serialized = `${redactSecrets(JSON.stringify(report, null, 2))}\n`;
   writeFileSync(path.resolve(root, options.reportPath), serialized, "utf8");
   if (options.json) log(serialized.trimEnd());
   else log(`Report written to ${options.reportPath}`);
 
   const failures = applied?.failures.length ?? 0;
-  if (failures > 0 || blocking.length > 0) {
+  if (failures > 0 || blocking.length > 0 || plan.blocked.length > 0) {
     errorLog(
-      `\n${blocking.length} product(s) withheld for manual correction, ${failures} failed during apply.`,
+      `\n${blocking.length} product(s) withheld for manual correction, ` +
+        `${plan.blocked.length} blocked by a Stripe mismatch, ${failures} failed during apply.`,
     );
     return 1;
   }

@@ -129,27 +129,28 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-  # Live-mode run. Bound to the `stripe-live` environment so a reviewer approves
-  # it, and refused outright unless the repository variable is also set.
-  sync-live-mode:
-    name: Sync (Stripe LIVE mode)
+  # Live planning. NO environment gate and it writes nothing: it exists so that a
+  # human has the actual plan in front of them before being asked to approve one.
+  # The plan's hash is published for the applying job to verify.
+  plan-live-mode:
+    name: Plan (Stripe LIVE mode, read-only)
     needs: verify
     if: >-
       github.event_name == 'workflow_dispatch' &&
-      inputs.live == true &&
-      inputs.apply == true
+      inputs.live == true
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment: stripe-live
     permissions:
       contents: read
+    outputs:
+      plan_hash: ${{ steps.plan.outputs.plan_hash }}
     steps:
       - name: Refuse unless the repository opt-in is set
         env:
           ALLOW_STRIPE_LIVE_SYNC: ${{ vars.ALLOW_STRIPE_LIVE_SYNC }}
         run: |
           if [ "${ALLOW_STRIPE_LIVE_SYNC}" != "true" ]; then
-            echo "::error::live sync requires repository variable ALLOW_STRIPE_LIVE_SYNC=true (Settings → Variables)."
+            echo "::error::live sync requires repository variable ALLOW_STRIPE_LIVE_SYNC=true (Settings -> Variables)."
             exit 1
           fi
 
@@ -163,19 +164,92 @@ jobs:
           cache-dependency-path: package-lock.json
       - run: npm ci
 
-      - name: Sync (live)
+      - name: Compute the live plan
+        id: plan
         env:
-          # A separate secret from the test key, so a live credential can never
-          # be reached by the test-mode job and vice versa.
+          # A separate secret from the test key, so a live credential is never
+          # reachable from the test-mode job and vice versa.
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_LIVE_SECRET_KEY }}
           ALLOW_STRIPE_LIVE_SYNC: ${{ vars.ALLOW_STRIPE_LIVE_SYNC }}
           SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://www.clearglassinc.com' }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           SOURCES: ${{ inputs.sources }}
           DEACTIVATE: ${{ inputs.deactivate_old_prices }}
+        # No --apply anywhere here: this reads live Stripe and writes nothing.
+        run: |
+          set -uo pipefail
+          args=(--source "${SOURCES}" --live --report stripe-sync-report.json)
+          if [ "${DEACTIVATE}" = "true" ]; then args+=(--deactivate-old-prices); fi
+          npm run --silent sync:stripe -- "${args[@]}" | tee plan.txt
+          status=${PIPESTATUS[0]}
+          hash="$(sed -n 's/^Plan hash: //p' plan.txt | tail -n 1)"
+          echo "plan_hash=${hash}" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Live plan awaiting approval"
+            echo ""
+            echo "Plan hash: \`${hash}\`"
+            echo ""
+            echo "Read this before approving the stripe-live environment. The applying job"
+            echo "recomputes the plan and refuses to run if the hash no longer matches."
+            echo ""
+            echo '```'
+            cat plan.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status
+
+      - name: Upload live plan
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: stripe-sync-plan-live
+          path: stripe-sync-report.json
+          if-no-files-found: warn
+          retention-days: 90
+
+  # Live execution. Gated on the `stripe-live` environment, so the approval
+  # prompt appears *after* the plan above exists and can be read. The plan hash
+  # is carried across, and the sync refuses to write when it no longer matches --
+  # that is what binds the approval to the changes that were actually reviewed.
+  apply-live-mode:
+    name: Apply (Stripe LIVE mode)
+    needs: [verify, plan-live-mode]
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      inputs.live == true &&
+      inputs.apply == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: stripe-live
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+
+      - name: Apply the approved plan
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_LIVE_SECRET_KEY }}
+          ALLOW_STRIPE_LIVE_SYNC: ${{ vars.ALLOW_STRIPE_LIVE_SYNC }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://www.clearglassinc.com' }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          SOURCES: ${{ inputs.sources }}
+          DEACTIVATE: ${{ inputs.deactivate_old_prices }}
+          PLAN_HASH: ${{ needs.plan-live-mode.outputs.plan_hash }}
         run: |
           set -euo pipefail
-          args=(--source "${SOURCES}" --apply --live --report stripe-sync-report.json)
+          if [ -z "${PLAN_HASH}" ]; then
+            echo "::error::the planning job published no plan hash; refusing to apply."
+            exit 1
+          fi
+          args=(--source "${SOURCES}" --apply --live --expect-plan-hash "${PLAN_HASH}" --report stripe-sync-report.json)
           if [ "${DEACTIVATE}" = "true" ]; then args+=(--deactivate-old-prices); fi
           npm run --silent sync:stripe -- "${args[@]}"
 
@@ -187,6 +261,7 @@ jobs:
           path: stripe-sync-report.json
           if-no-files-found: warn
           retention-days: 90
+
 
   # Fires after a successful Pages deploy. Reports catalogue drift into the job
   # summary; cannot write, because `workflow_run` supplies no `apply` input.

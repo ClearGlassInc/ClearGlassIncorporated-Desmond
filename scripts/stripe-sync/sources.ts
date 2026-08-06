@@ -237,7 +237,10 @@ const sideStoreAdapter: SourceAdapter = {
           category: typeof item.category === "string" ? item.category.trim() : undefined,
           sourceUrl: `${context.baseUrl}/side-store.html#${encodeURIComponent(sku)}`,
           images,
-          inventoryStatus: "in_stock",
+          // No inventory status. The catalogue carries no stock field, and
+          // stamping "in_stock" on every item would be inventing availability —
+          // exactly what the operating rules forbid. Add an authoritative stock
+          // field to the source first if this needs to reach Stripe.
           variants: [variant],
           notes,
         }),
@@ -380,8 +383,11 @@ const pricebookAdapter: SourceAdapter = {
       const first = bucket[0];
       if (!first) continue;
       const groupSku = typeof first.sku === "string" ? first.sku : "";
-      // Group id keeps the source_id stable when a second interval is added.
-      const sku = key.startsWith("product:") ? sharedSku(bucket, groupSku) : groupSku;
+      // The product key must not depend on which intervals happen to be on sale
+      // today. Deriving it from the offers present would rename the product —
+      // and orphan the old one — the moment an annual plan is added or dropped,
+      // so the cadence suffix is stripped whether or not the group has one offer.
+      const sku = key.startsWith("product:") ? productSku(groupSku) : groupSku;
       const sourceId = `pricebook:${sku}`;
 
       if (!sku) {
@@ -432,12 +438,15 @@ const pricebookAdapter: SourceAdapter = {
       if (failed || variants.length === 0) continue;
 
       const name = typeof first.name === "string" ? first.name : sku;
+      const descriptions = bucket
+        .map((offer) => (typeof offer.description === "string" ? offer.description : ""))
+        .filter(Boolean);
       const product: Omit<SourceProduct, "sourceHash"> = {
         sourceId,
         adapter: "pricebook",
         sku,
         name: baseName(name),
-        description: typeof first.description === "string" ? first.description : undefined,
+        description: sharedDescription(descriptions),
         category: "Professional services",
         sourceUrl: `${context.baseUrl}/checkout/`,
         images: [],
@@ -456,26 +465,44 @@ const pricebookAdapter: SourceAdapter = {
   },
 };
 
-/** Longest common sku prefix of a group, so `…-monthly`/`…-annual` share one id. */
-function sharedSku(bucket: Record<string, unknown>[], fallback: string): string {
-  const skus = bucket
-    .map((offer) => (typeof offer.sku === "string" ? offer.sku : ""))
-    .filter(Boolean);
-  if (skus.length <= 1) return skus[0] ?? fallback;
-  const parts = skus.map((sku) => sku.split("-"));
-  const head = parts[0] ?? [];
-  const shared: string[] = [];
-  for (let index = 0; index < head.length; index += 1) {
-    const segment = head[index];
-    if (parts.every((part) => part[index] === segment)) shared.push(segment as string);
-    else break;
-  }
-  return shared.length > 0 ? shared.join("-") : (skus[0] ?? fallback);
+/** Trailing billing-cadence token on an offer sku, e.g. `…-monthly`. */
+const CADENCE_SUFFIX = /-(?:monthly|annual|annually|yearly|weekly|daily|quarterly|month|year)$/i;
+
+/**
+ * The product-level key for an offer sku.
+ *
+ * Offers of one product differ by cadence (`business-protection-monthly` and
+ * `-annual`); the product itself is `business-protection`. Stripping the suffix
+ * unconditionally — rather than diffing the skus present — is what makes the key
+ * independent of which intervals are currently on sale.
+ */
+export function productSku(offerSku: string): string {
+  const stripped = offerSku.replace(CADENCE_SUFFIX, "");
+  return stripped || offerSku;
 }
 
 /** Drop the "— monthly" / "— annual" suffix so grouped offers share a product name. */
 function baseName(name: string): string {
   return name.split(/\s+[—–-]\s+/)[0]?.trim() || name;
+}
+
+/** Trailing sentence naming one billing cadence, e.g. "Billed monthly." */
+const CADENCE_SENTENCE = /\s*\bBilled\s+(?:monthly|yearly|annually|weekly|daily|quarterly)\s*\.?\s*$/i;
+
+/**
+ * A description that is true of every variant on the shared Stripe Product.
+ *
+ * One Stripe Product carries several Prices, so a description copied from the
+ * first offer would tell an annual subscriber their plan is "Billed monthly".
+ * The cadence belongs to the Price, not the Product, so it is stripped when the
+ * offers are grouped; if what remains still differs between offers, no product
+ * description is set rather than asserting one variant's copy over the others.
+ */
+export function sharedDescription(descriptions: string[]): string | undefined {
+  const neutral = descriptions.map((text) => text.replace(CADENCE_SENTENCE, "").trim()).filter(Boolean);
+  if (neutral.length === 0) return undefined;
+  const [first] = neutral;
+  return neutral.every((text) => text === first) ? first : undefined;
 }
 
 function normalizeTaxBehavior(value: unknown): SourceVariant["taxBehavior"] {

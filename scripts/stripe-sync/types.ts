@@ -137,6 +137,8 @@ export interface StripeGateway {
   listAllProducts(): AsyncIterable<StripeProductLike>;
   /** Resolves to null when the id does not exist in this account/mode. */
   retrieveProduct(id: string): Promise<StripeProductLike | null>;
+  /** Resolves to null when the id does not exist in this account/mode. */
+  retrievePrice(id: string): Promise<StripePriceLike | null>;
   /** Every price of a product, active and inactive, following pagination. */
   listPrices(productId: string): Promise<StripePriceLike[]>;
   createProduct(params: ProductCreateParams, options?: RequestOptions): Promise<StripeProductLike>;
@@ -197,4 +199,6 @@ export interface SyncPlan {
   orphans: { productId: string; sourceId: string; name: string }[];
   /** Two Stripe products claiming the same source_id — needs a human. */
   duplicates: { sourceId: string; productIds: string[] }[];
+  /** Products withheld during planning because Stripe contradicts the source. */
+  blocked: { sourceId: string; name: string; reason: string }[];
 }

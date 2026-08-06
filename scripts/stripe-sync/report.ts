@@ -44,6 +44,8 @@ export interface ReportInput {
   issues: ProductIssue[];
   rows: PlanRow[];
   apply?: ApplyResult;
+  planHash: string;
+  blocked: { sourceId: string; name: string; reason: string }[];
   startedAt: string;
   finishedAt: string;
 }
@@ -68,9 +70,17 @@ export interface SyncReport {
     notes: string[];
   }[];
   plan: PlanRow[];
+  plan_hash: string;
   issues: ProductIssue[];
   manual_correction_required: ProductIssue[];
+  blocked: { sourceId: string; name: string; reason: string }[];
   failures: { sourceId: string; message: string }[];
+  /**
+   * Stripe ids actually written, per source_id. Empty on a dry run — this is
+   * what makes an applied report an audit record rather than a restatement of
+   * the plan, whose rows still read `(new)`.
+   */
+  resolved: Record<string, { productId: string; priceIds: Record<string, string> }>;
 }
 
 /** Build the artifact-safe JSON report. Contains no secret material by design. */
@@ -94,6 +104,7 @@ export function buildReport(input: ReportInput): SyncReport {
       planned_product_updates: input.rows.filter((row) => row.action === "update-product").length,
       planned_price_creates: input.rows.filter((row) => row.action === "create-price").length,
       orphan_warnings: input.rows.filter((row) => row.action === "orphan-warning").length,
+      blocked_by_stripe_mismatch: input.blocked.length,
       created_products: input.apply?.createdProducts ?? 0,
       updated_products: input.apply?.updatedProducts ?? 0,
       created_prices: input.apply?.createdPrices ?? 0,
@@ -117,8 +128,11 @@ export function buildReport(input: ReportInput): SyncReport {
       notes: product.notes,
     })),
     plan: input.rows,
+    plan_hash: input.planHash,
     issues: input.issues,
     manual_correction_required: errors,
+    blocked: input.blocked,
     failures: input.apply?.failures ?? [],
+    resolved: input.apply?.resolved ?? {},
   };
 }

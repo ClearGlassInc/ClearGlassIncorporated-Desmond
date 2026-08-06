@@ -22,6 +22,8 @@ import {
   detectInterval,
   extractJsonIsland,
   hashProduct,
+  productSku,
+  sharedDescription,
 } from "../sources.js";
 import type { AdapterContext } from "../sources.js";
 
@@ -63,6 +65,12 @@ describe("side-store.html catalogue", () => {
 
   it("carries no images, so none are invented", () => {
     assert.ok(products.every((product) => product.images.length === 0));
+  });
+
+  it("invents no inventory status", () => {
+    // The catalogue has no stock field. Stamping one on would be fabricating
+    // availability, which the operating rules forbid outright.
+    assert.ok(products.every((product) => product.inventoryStatus === undefined));
   });
 });
 
@@ -108,6 +116,15 @@ describe("price-book adapter", () => {
     const monthly = protection.variants.find((variant) => variant.variantKey.endsWith("monthly"));
     assert.deepEqual(monthly?.recurring, { interval: "month", interval_count: 1 });
     assert.equal(monthly?.amountMinor, 10000);
+  });
+
+  it("does not tell annual subscribers their plan bills monthly", () => {
+    // Both offers describe the same service and differ only by the trailing
+    // cadence sentence, which belongs to the Price, not the shared Product.
+    const protection = products.find((product) => product.sku.startsWith("business-protection"));
+    assert.ok(protection?.description, "the grouped product should keep a neutral description");
+    assert.doesNotMatch(protection.description, /billed (monthly|yearly)/i);
+    assert.match(protection.description, /cybersecurity guidance/i);
   });
 
   it("keeps the audit offer one-time", () => {
@@ -201,6 +218,39 @@ describe("malformed and missing source data", () => {
   it("rejects an unknown source name", () => {
     const { issues } = collectProducts(["not-a-source"], context);
     assert.match(issues[0]?.message ?? "", /unknown source/);
+  });
+});
+
+describe("product key stability for grouped offers", () => {
+  it("is the same whether or not a second interval is on sale", () => {
+    // Adding or dropping an annual plan must not rename the product — that
+    // would mint a new Stripe Product and orphan the old one.
+    assert.equal(productSku("business-protection-monthly"), "business-protection");
+    assert.equal(productSku("business-protection-annual"), "business-protection");
+    assert.equal(productSku("business-protection-yearly"), "business-protection");
+  });
+
+  it("leaves a sku with no cadence suffix alone", () => {
+    assert.equal(productSku("risk-audit-90"), "risk-audit-90");
+    assert.equal(productSku("quick-audit"), "quick-audit");
+  });
+});
+
+describe("shared description for grouped offers", () => {
+  it("strips the cadence sentence that belongs to the Price", () => {
+    assert.equal(
+      sharedDescription(["Ongoing support. Billed monthly.", "Ongoing support. Billed yearly."]),
+      "Ongoing support.",
+    );
+  });
+
+  it("sets no description when the offers genuinely disagree", () => {
+    assert.equal(sharedDescription(["One thing.", "A different thing."]), undefined);
+    assert.equal(sharedDescription([]), undefined);
+  });
+
+  it("passes a single description through untouched", () => {
+    assert.equal(sharedDescription(["A focused 90-minute assessment."]), "A focused 90-minute assessment.");
   });
 });
 

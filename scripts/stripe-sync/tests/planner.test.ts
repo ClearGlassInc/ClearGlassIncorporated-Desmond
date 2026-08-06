@@ -9,6 +9,7 @@ import {
   applyPlan,
   buildPlan,
   indexManagedProducts,
+  planHash,
   planRows,
   priceIdempotencyKey,
   productIdempotencyKey,
@@ -17,7 +18,11 @@ import { hashProduct } from "../sources.js";
 import type { SourceProduct, SourceVariant } from "../types.js";
 import { FakeStripe } from "./fake-stripe.js";
 
-const OPTIONS = { repository: "ClearGlassInc/ClearGlassIncorporated-Desmond", deactivateOldPrices: false };
+const OPTIONS = {
+  repository: "ClearGlassInc/ClearGlassIncorporated-Desmond",
+  deactivateOldPrices: false,
+  adapters: ["side-store", "store", "pricebook"],
+};
 
 function product(overrides: Partial<SourceProduct> = {}): SourceProduct {
   const variants: SourceVariant[] = overrides.variants ?? [
@@ -117,7 +122,22 @@ describe("idempotency", () => {
     assert.match(productIdempotencyKey(item), /^clearglass-site-sync:product:side-store:USB-C-C-1M:[0-9a-f]{32}$/);
     assert.equal(
       priceIdempotencyKey(item, item.variants[0] as SourceVariant),
-      "clearglass-site-sync:price:side-store:USB-C-C-1M:default:cad:699:one_time",
+      "clearglass-site-sync:price:side-store:USB-C-C-1M:default:cad:699:one_time:unspecified",
+    );
+  });
+
+  it("changes the price key when tax behaviour changes", () => {
+    // tax_behavior goes into the create request, so it has to go into the key —
+    // otherwise Stripe replays the old Price or rejects the mismatched replay.
+    const exclusive = product({
+      variants: [{ variantKey: "default", amountMinor: 699, currency: "cad", taxBehavior: "exclusive" }],
+    });
+    const inclusive = product({
+      variants: [{ variantKey: "default", amountMinor: 699, currency: "cad", taxBehavior: "inclusive" }],
+    });
+    assert.notEqual(
+      priceIdempotencyKey(exclusive, exclusive.variants[0] as SourceVariant),
+      priceIdempotencyKey(inclusive, inclusive.variants[0] as SourceVariant),
     );
   });
 });
@@ -311,14 +331,42 @@ describe("multi-variant products", () => {
 });
 
 describe("source-supplied Stripe ids", () => {
-  it("adopts a hinted product that exists in the target account", async () => {
+  it("adopts an unmarked hinted product when a hinted Price corroborates it", async () => {
     const stripe = new FakeStripe();
     stripe.seedProduct({ id: "prod_hinted", name: "Existing", active: true, metadata: {} });
-    const item = product({ stripeProductIdHint: "prod_hinted" });
+    stripe.seedPrice({
+      id: "price_hinted",
+      product: "prod_hinted",
+      active: true,
+      currency: "cad",
+      unit_amount: 699,
+      recurring: null,
+      tax_behavior: null,
+      metadata: {},
+    });
+    const item = product({
+      stripeProductIdHint: "prod_hinted",
+      variants: [{ variantKey: "default", amountMinor: 699, currency: "cad", stripePriceIdHint: "price_hinted" }],
+    });
 
     const plan = await buildPlan(stripe, [item], OPTIONS);
     assert.equal(plan.steps[0]?.existingProductId, "prod_hinted");
     assert.equal(plan.steps[0]?.kind, "update");
+  });
+
+  it("refuses to overwrite an unmarked product that nothing corroborates", async () => {
+    // A mistyped id resolves exactly as well as a correct one. Without a second
+    // pointer from the same source, adopting it would rewrite someone's
+    // hand-managed product.
+    const stripe = new FakeStripe();
+    stripe.seedProduct({ id: "prod_hinted", name: "Hand-managed", active: true, metadata: {} });
+    const plan = await buildPlan(stripe, [product({ stripeProductIdHint: "prod_hinted" })], OPTIONS);
+
+    assert.equal(plan.steps.length, 0);
+    assert.match(plan.blocked[0]?.reason ?? "", /Refusing to overwrite it/);
+
+    await applyPlan(stripe, plan, OPTIONS);
+    assert.equal(stripe.products.get("prod_hinted")?.name, "Hand-managed");
   });
 
   it("ignores a hinted id that does not resolve, rather than failing the run", async () => {
@@ -331,7 +379,7 @@ describe("source-supplied Stripe ids", () => {
     assert.equal(plan.steps[0]?.existingProductId, undefined);
   });
 
-  it("refuses to adopt a product owned by a different source_id", async () => {
+  it("blocks when the hinted product already belongs to another source_id", async () => {
     const stripe = new FakeStripe();
     stripe.seedProduct({
       id: "prod_other",
@@ -340,7 +388,267 @@ describe("source-supplied Stripe ids", () => {
       metadata: { [META.managedBy]: MANAGED_BY, [META.sourceId]: "side-store:OTHER" },
     });
     const plan = await buildPlan(stripe, [product({ stripeProductIdHint: "prod_other" })], OPTIONS);
-    assert.equal(plan.steps[0]?.kind, "create");
+
+    assert.equal(plan.steps.length, 0);
+    assert.match(plan.blocked[0]?.reason ?? "", /already synced from source_id side-store:OTHER/);
+  });
+});
+
+describe("tax behaviour", () => {
+  it("does not reuse a Price whose tax treatment differs", async () => {
+    // tax_behavior is effectively immutable on a Stripe Price, so reusing one
+    // with the wrong treatment would report the catalogue as synced forever.
+    const stripe = new FakeStripe();
+    const exclusive = product({
+      variants: [{ variantKey: "default", amountMinor: 699, currency: "cad", taxBehavior: "exclusive" }],
+    });
+    await applyPlan(stripe, await buildPlan(stripe, [exclusive], OPTIONS), OPTIONS);
+
+    const inclusive = product({
+      variants: [{ variantKey: "default", amountMinor: 699, currency: "cad", taxBehavior: "inclusive" }],
+    });
+    const plan = await buildPlan(stripe, [inclusive], OPTIONS);
+    assert.equal(plan.steps[0]?.prices[0]?.kind, "create");
+
+    await applyPlan(stripe, plan, OPTIONS);
+    assert.equal(stripe.prices.size, 2);
+  });
+});
+
+describe("metadata that the source stopped supplying", () => {
+  it("clears a removed category instead of leaving the old value in Stripe", async () => {
+    // Stripe merges metadata updates, so a key we stop sending keeps its old
+    // value. Clearing requires explicitly sending an empty string.
+    const stripe = new FakeStripe();
+    await applyPlan(stripe, await buildPlan(stripe, [product({ category: "USB Cables" })], OPTIONS), OPTIONS);
+    const productId = [...stripe.products.keys()][0] as string;
+    assert.equal(stripe.products.get(productId)?.metadata?.source_category, "USB Cables");
+
+    const uncategorised = product({ category: undefined });
+    const plan = await buildPlan(stripe, [uncategorised], OPTIONS);
+    assert.ok(plan.steps[0]?.changedFields.includes("metadata.source_category"));
+
+    await applyPlan(stripe, plan, OPTIONS);
+    assert.equal(stripe.products.get(productId)?.metadata?.source_category, "");
+  });
+
+  it("reports no change when a product simply has no category", async () => {
+    const stripe = new FakeStripe();
+    const plain = product({ category: undefined });
+    await applyPlan(stripe, await buildPlan(stripe, [plain], OPTIONS), OPTIONS);
+
+    const plan = await buildPlan(stripe, [plain], OPTIONS);
+    assert.equal(plan.steps[0]?.kind, "unchanged", "an absent key must not look like a pending edit");
+  });
+});
+
+describe("orphan scoping", () => {
+  async function twoSources() {
+    const stripe = new FakeStripe();
+    const items = [
+      product(),
+      product({ sourceId: "store:quick-audit", adapter: "store", sku: "quick-audit", name: "Security Quick-Audit" }),
+    ];
+    await applyPlan(stripe, await buildPlan(stripe, items, OPTIONS), OPTIONS);
+    return stripe;
+  }
+
+  it("does not call another source's products orphans", async () => {
+    // A --source side-store run has never read the store catalogue, so it
+    // cannot know whether store products are still published.
+    const stripe = await twoSources();
+    const plan = await buildPlan(stripe, [product()], { ...OPTIONS, adapters: ["side-store"] });
+    assert.deepEqual(plan.orphans, []);
+  });
+
+  it("still reports an orphan from a source it did read", async () => {
+    const stripe = await twoSources();
+    const plan = await buildPlan(stripe, [], { ...OPTIONS, adapters: ["side-store"] });
+    assert.deepEqual(
+      plan.orphans.map((orphan) => orphan.sourceId),
+      ["side-store:USB-C-C-1M"],
+    );
+  });
+});
+
+describe("source-supplied Price ids", () => {
+  it("reuses the named Price when it agrees with the source", async () => {
+    const stripe = new FakeStripe();
+    stripe.seedProduct({ id: "prod_hinted", name: "Audit", active: true, metadata: {} });
+    stripe.seedPrice({
+      id: "price_hinted",
+      product: "prod_hinted",
+      active: true,
+      currency: "cad",
+      unit_amount: 29700,
+      recurring: null,
+      tax_behavior: "exclusive",
+      metadata: {},
+    });
+
+    const item = product({
+      sourceId: "pricebook:risk-audit-90",
+      sku: "risk-audit-90",
+      stripeProductIdHint: "prod_hinted",
+      variants: [
+        {
+          variantKey: "risk-audit-90",
+          amountMinor: 29700,
+          currency: "cad",
+          taxBehavior: "exclusive",
+          stripePriceIdHint: "price_hinted",
+        },
+      ],
+    });
+
+    const plan = await buildPlan(stripe, [item], OPTIONS);
+    assert.equal(plan.steps[0]?.prices[0]?.kind, "reuse");
+    assert.equal(plan.steps[0]?.prices[0]?.existingPriceId, "price_hinted");
+    assert.deepEqual(plan.blocked, []);
+  });
+
+  it("blocks the product when the named Price charges something else", async () => {
+    // The price book calls its own `amount` display data and the Stripe Price
+    // the authority. When they disagree, creating a second Price at the display
+    // amount would start charging a number nobody approved.
+    const stripe = new FakeStripe();
+    stripe.seedProduct({ id: "prod_hinted", name: "Audit", active: true, metadata: {} });
+    stripe.seedPrice({
+      id: "price_hinted",
+      product: "prod_hinted",
+      active: true,
+      currency: "cad",
+      unit_amount: 29700,
+      recurring: null,
+      tax_behavior: "exclusive",
+      metadata: {},
+    });
+
+    const stale = product({
+      sourceId: "pricebook:risk-audit-90",
+      sku: "risk-audit-90",
+      stripeProductIdHint: "prod_hinted",
+      variants: [
+        {
+          variantKey: "risk-audit-90",
+          amountMinor: 19700, // display data drifted from the live Price
+          currency: "cad",
+          taxBehavior: "exclusive",
+          stripePriceIdHint: "price_hinted",
+        },
+      ],
+    });
+
+    const plan = await buildPlan(stripe, [stale], OPTIONS);
+    assert.equal(plan.steps.length, 0, "a blocked product produces no step");
+    assert.equal(plan.blocked.length, 1);
+    assert.match(plan.blocked[0]?.reason ?? "", /29700 CAD/);
+    assert.match(plan.blocked[0]?.reason ?? "", /19700 CAD/);
+
+    await applyPlan(stripe, plan, OPTIONS);
+    assert.equal(stripe.prices.size, 1, "no second Price was minted");
+  });
+
+  it("falls back to normal matching when the named Price is not in this account", async () => {
+    // A live-mode price id against a test key resolves to nothing.
+    const stripe = new FakeStripe();
+    const item = product({
+      variants: [
+        {
+          variantKey: "default",
+          amountMinor: 699,
+          currency: "cad",
+          stripePriceIdHint: "price_1U0wl3L8uR92FksUMVIa9nUl",
+        },
+      ],
+    });
+    const plan = await buildPlan(stripe, [item], OPTIONS);
+    assert.deepEqual(plan.blocked, []);
+    assert.equal(plan.steps[0]?.prices[0]?.kind, "create");
+  });
+
+  it("blocks one product without stranding the rest of the catalogue", async () => {
+    const stripe = new FakeStripe();
+    stripe.seedProduct({ id: "prod_hinted", name: "Audit", active: true, metadata: {} });
+    stripe.seedPrice({
+      id: "price_hinted",
+      product: "prod_hinted",
+      active: true,
+      currency: "cad",
+      unit_amount: 29700,
+      recurring: null,
+      tax_behavior: null,
+      metadata: {},
+    });
+    const stale = product({
+      sourceId: "pricebook:risk-audit-90",
+      sku: "risk-audit-90",
+      stripeProductIdHint: "prod_hinted",
+      variants: [{ variantKey: "a", amountMinor: 100, currency: "cad", stripePriceIdHint: "price_hinted" }],
+    });
+
+    const plan = await buildPlan(stripe, [stale, product()], OPTIONS);
+    assert.equal(plan.blocked.length, 1);
+    assert.equal(plan.steps.length, 1);
+    assert.equal(plan.steps[0]?.product.sourceId, "side-store:USB-C-C-1M");
+  });
+});
+
+describe("hand-made Stripe prices", () => {
+  it("does not adopt an untagged Price that happens to match the amount", async () => {
+    // Someone created this Price in the Dashboard. Same product, same amount —
+    // but it is not ours, so reusing it would put a record we do not own under
+    // this tool's rotation logic.
+    const stripe = new FakeStripe();
+    await applyPlan(stripe, await buildPlan(stripe, [product()], OPTIONS), OPTIONS);
+    const productId = [...stripe.products.keys()][0] as string;
+    const ourPriceId = [...stripe.prices.keys()][0] as string;
+
+    stripe.seedPrice({
+      id: "price_handmade",
+      product: productId,
+      active: true,
+      currency: "cad",
+      unit_amount: 699,
+      recurring: null,
+      tax_behavior: null,
+      metadata: {},
+    });
+
+    const plan = await buildPlan(stripe, [product()], OPTIONS);
+    assert.equal(plan.steps[0]?.prices[0]?.existingPriceId, ourPriceId, "our own Price is the one reused");
+
+    // And it is never a rotation candidate either.
+    const repriced = product({ variants: [{ variantKey: "default", amountMinor: 749, currency: "cad" }] });
+    const rotation = await buildPlan(stripe, [repriced], { ...OPTIONS, deactivateOldPrices: true });
+    assert.deepEqual(rotation.steps[0]?.stalePriceIds, [ourPriceId]);
+
+    await applyPlan(stripe, rotation, { ...OPTIONS, deactivateOldPrices: true });
+    assert.equal(stripe.prices.get("price_handmade")?.active, true, "a hand-made Price is left alone");
+  });
+});
+
+describe("plan hashing", () => {
+  it("is stable for an unchanged plan and moves when the plan does", async () => {
+    const stripe = new FakeStripe();
+    const first = await buildPlan(stripe, [product()], OPTIONS);
+    const again = await buildPlan(stripe, [product()], OPTIONS);
+    assert.equal(planHash(first), planHash(again));
+
+    const repriced = await buildPlan(
+      stripe,
+      [product({ variants: [{ variantKey: "default", amountMinor: 749, currency: "cad" }] })],
+      OPTIONS,
+    );
+    assert.notEqual(planHash(first), planHash(repriced));
+  });
+
+  it("changes once the plan has been applied", async () => {
+    const stripe = new FakeStripe();
+    const before = await buildPlan(stripe, [product()], OPTIONS);
+    await applyPlan(stripe, before, OPTIONS);
+    const after = await buildPlan(stripe, [product()], OPTIONS);
+    assert.notEqual(planHash(before), planHash(after), "create then unchanged are different plans");
   });
 });
 

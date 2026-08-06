@@ -289,6 +289,12 @@ describe("CLI options", () => {
     assert.throws(() => parseArgs(["--offline", "--apply"]), /cannot be combined/);
     assert.throws(() => parseArgs(["--offline", "--live"]), /cannot be combined/);
   });
+
+  it("refuses --offline with the flag that makes network calls", () => {
+    // --check-images issues HEAD requests, which would break the no-network
+    // promise --offline exists to make.
+    assert.throws(() => parseArgs(["--offline", "--check-images"]), /no network requests/);
+  });
 });
 
 describe("end-to-end run", () => {
@@ -374,6 +380,67 @@ describe("end-to-end run", () => {
     await run(argv, dependencies);
     assert.equal(stripe.products.size, productsAfterFirst);
     assert.equal(stripe.prices.size, pricesAfterFirst);
+  });
+
+  it("redacts a Stripe error message before it reaches the report artifact", async () => {
+    // Stripe error text occasionally quotes the request that produced it. The
+    // report outlives the log as a CI artifact, so it is redacted too.
+    const { stripe, dependencies, reportDir } = harness();
+    stripe.createPrice = async () => {
+      throw new Error(`request failed with ${FAKE_LIVE_KEY}`);
+    };
+    const reportPath = path.join(reportDir, "report.json");
+    const code = await run(
+      ["--source", "store", "--apply", "--report", reportPath],
+      dependencies,
+    );
+
+    assert.equal(code, 1);
+    const raw = readFileSync(reportPath, "utf8");
+    assert.ok(!raw.includes("sk_live_"), "a key-shaped string must never survive into the artifact");
+    assert.match(raw, /\[redacted\]/);
+  });
+
+  it("refuses to apply a plan that changed since it was approved", async () => {
+    const { dependencies, reportDir } = harness();
+    const code = await run(
+      [
+        "--source", "side-store",
+        "--apply",
+        "--expect-plan-hash", "0".repeat(64),
+        "--report", path.join(reportDir, "r.json"),
+      ],
+      dependencies,
+    );
+    assert.equal(code, 2);
+  });
+
+  it("proceeds when the plan still hashes to the approved value", async () => {
+    const { stripe, out, dependencies, reportDir } = harness();
+    const reportPath = path.join(reportDir, "r.json");
+
+    await run(["--source", "side-store", "--report", reportPath], dependencies);
+    const approved = JSON.parse(readFileSync(reportPath, "utf8")).plan_hash;
+    assert.match(approved, /^[0-9a-f]{64}$/);
+    assert.ok(out.join("\n").includes(`Plan hash: ${approved}`));
+
+    const code = await run(
+      ["--source", "side-store", "--apply", "--expect-plan-hash", approved, "--report", reportPath],
+      dependencies,
+    );
+    assert.equal(code, 0);
+    assert.ok(stripe.products.size > 0, "the approved plan was applied");
+  });
+
+  it("records the Stripe ids it actually wrote", async () => {
+    const { dependencies, reportDir } = harness();
+    const reportPath = path.join(reportDir, "r.json");
+    await run(["--source", "side-store", "--apply", "--report", reportPath], dependencies);
+
+    const report = JSON.parse(readFileSync(reportPath, "utf8"));
+    const resolved = report.resolved["side-store:USB-C-C-1M"];
+    assert.match(resolved.productId, /^prod_/);
+    assert.match(resolved.priceIds.default, /^price_/);
   });
 
   it("exits 2 when the credential is missing, before reaching Stripe", async () => {

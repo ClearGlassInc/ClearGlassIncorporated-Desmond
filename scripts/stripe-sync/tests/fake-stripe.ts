@@ -55,6 +55,11 @@ export class FakeStripe implements StripeGateway {
     return this.products.get(id) ?? null;
   }
 
+  async retrievePrice(id: string): Promise<StripePriceLike | null> {
+    this.calls.push(`prices.retrieve:${id}`);
+    return this.prices.get(id) ?? null;
+  }
+
   async listPrices(productId: string): Promise<StripePriceLike[]> {
     this.calls.push(`prices.list:${productId}`);
     return [...this.prices.values()].filter(

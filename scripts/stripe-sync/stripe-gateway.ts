@@ -185,6 +185,10 @@ export class OfflineStripeGateway implements StripeGateway {
     return null;
   }
 
+  async retrievePrice(): Promise<StripePriceLike | null> {
+    return null;
+  }
+
   async listPrices(): Promise<StripePriceLike[]> {
     return [];
   }
@@ -222,10 +226,31 @@ export class LiveStripeGateway implements StripeGateway {
     this.retry = retry;
   }
 
+  /**
+   * Walk the product list a page at a time, retrying each page.
+   *
+   * The SDK's auto-pagination is not used here: it issues its own requests, and
+   * with `maxNetworkRetries: 0` a single 429 partway through would abort the
+   * whole sync before a plan or report existed. Paging by hand puts every
+   * request behind the same bounded backoff as the rest of the gateway.
+   */
   async *listAllProducts(): AsyncIterable<StripeProductLike> {
-    // autoPagingEach follows `has_more`/`starting_after` to the end of the list.
-    for await (const product of this.client.products.list({ limit: 100 })) {
-      yield product as unknown as StripeProductLike;
+    let startingAfter: string | undefined;
+    for (;;) {
+      const page = await withRetry(
+        () =>
+          this.client.products.list({
+            limit: 100,
+            ...(startingAfter ? { starting_after: startingAfter } : {}),
+          }),
+        this.retry,
+      );
+      for (const product of page.data) {
+        yield product as unknown as StripeProductLike;
+      }
+      if (!page.has_more || page.data.length === 0) return;
+      startingAfter = page.data[page.data.length - 1]?.id;
+      if (!startingAfter) return;
     }
   }
 
@@ -240,12 +265,38 @@ export class LiveStripeGateway implements StripeGateway {
     }
   }
 
+  async retrievePrice(id: string): Promise<StripePriceLike | null> {
+    try {
+      const price = await withRetry(() => this.client.prices.retrieve(id), this.retry);
+      return price as unknown as StripePriceLike;
+    } catch (error) {
+      if ((error as { statusCode?: number })?.statusCode === 404) return null;
+      if ((error as { code?: string })?.code === "resource_missing") return null;
+      throw error;
+    }
+  }
+
+  /** Paged by hand for the same reason as `listAllProducts`. */
   async listPrices(productId: string): Promise<StripePriceLike[]> {
     const prices: StripePriceLike[] = [];
-    for await (const price of this.client.prices.list({ product: productId, limit: 100 })) {
-      prices.push(price as unknown as StripePriceLike);
+    let startingAfter: string | undefined;
+    for (;;) {
+      const page = await withRetry(
+        () =>
+          this.client.prices.list({
+            product: productId,
+            limit: 100,
+            ...(startingAfter ? { starting_after: startingAfter } : {}),
+          }),
+        this.retry,
+      );
+      for (const price of page.data) {
+        prices.push(price as unknown as StripePriceLike);
+      }
+      if (!page.has_more || page.data.length === 0) return prices;
+      startingAfter = page.data[page.data.length - 1]?.id;
+      if (!startingAfter) return prices;
     }
-    return prices;
   }
 
   async createProduct(

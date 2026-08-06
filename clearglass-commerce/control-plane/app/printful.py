@@ -79,6 +79,29 @@ def connection_status(settings: Settings | None = None) -> dict[str, Any]:
     }
 
 
+def _decode_body(raw: bytes) -> dict[str, Any]:
+    """Decode a response body into a JSON object, or raise ``PrintfulError``.
+
+    A 200 carrying truncated JSON or invalid UTF-8 must not escape as a bare
+    ``ValueError``: callers catch ``PrintfulError`` to turn a failed booking into
+    a recorded ``unfulfillable`` obligation, and anything else propagates out,
+    rolls the transaction back, and leaves a paid order looking untouched.
+    """
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise PrintfulError(f"Printful returned a body that is not valid UTF-8: {exc}") from exc
+    if not text.strip():
+        return {}
+    try:
+        payload = json.loads(text)
+    except ValueError as exc:
+        raise PrintfulError(f"Printful returned a body that is not valid JSON: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise PrintfulError(f"Printful returned {type(payload).__name__}, expected a JSON object")
+    return payload
+
+
 def _default_requester(settings: Settings) -> Requester:
     """urllib-backed transport. The token goes in a header and is never logged."""
 
@@ -95,15 +118,18 @@ def _default_requester(settings: Settings) -> Requester:
         req = urllib.request.Request(url, data=data, headers=headers, method=method)
         try:
             with urllib.request.urlopen(req, timeout=30) as response:  # noqa: S310 - fixed https base
-                return response.status, json.loads(response.read().decode("utf-8") or "{}")
+                raw = response.read()
+                return response.status, _decode_body(raw)
         except urllib.error.HTTPError as exc:  # Printful puts the reason in the body
             try:
-                payload = json.loads(exc.read().decode("utf-8") or "{}")
-            except (ValueError, OSError):
+                payload = _decode_body(exc.read())
+            except (PrintfulError, OSError):
                 payload = {}
             return exc.code, payload
         except urllib.error.URLError as exc:
             raise PrintfulError(f"could not reach Printful: {exc.reason}") from exc
+        except OSError as exc:  # socket timeouts and connection resets
+            raise PrintfulError(f"could not reach Printful: {exc}") from exc
 
     return request
 
@@ -157,12 +183,20 @@ def verify_connection(
 
 
 def _decimal(value: Any) -> Decimal | None:
-    """Printful sends money as decimal strings; refuse anything else."""
+    """Printful sends money as decimal strings; refuse anything else.
+
+    ``Decimal`` happily accepts ``"NaN"`` and ``"Infinity"``. The first makes the
+    comparison below raise, and the second would sail through as a valid price —
+    so finiteness is checked before anything else. A price is a finite number or
+    it is not a price.
+    """
     if value is None or value == "":
         return None
     try:
         amount = Decimal(str(value))
     except (InvalidOperation, ValueError):
+        return None
+    if not amount.is_finite():
         return None
     return amount if amount >= 0 else None
 

@@ -94,6 +94,38 @@ def catalog(session: Session = Depends(get_session)) -> dict:
     return {"supplier": "printful", "count": len(products), "products": products}
 
 
+@router.get("/exceptions", dependencies=[Depends(require_admin)])
+def exceptions(session: Session = Depends(get_session)) -> dict:
+    """Paid orders that cannot ship, oldest first.
+
+    Marking an order ``unfulfillable`` and writing an audit event is not enough
+    on its own — nothing queries either, so the obligation would sit unnoticed
+    while the customer's money stays taken. This is the queue that makes it
+    visible, and every row here is an open debt to someone.
+    """
+    orders = session.scalars(
+        select(Order)
+        .where(Order.fulfillment_status == "unfulfillable")
+        .order_by(Order.created_at)
+    ).all()
+    return {
+        "count": len(orders),
+        "orders": [
+            {
+                "order_id": o.id,
+                "external_ref": o.external_ref,
+                "status": o.status,
+                "total": str(o.total),
+                "currency": o.currency,
+                "ship_to_country": o.ship_to_country,
+                "created_utc": o.created_at.isoformat() if o.created_at else None,
+            }
+            for o in orders
+        ],
+        "note": "each of these is a paid order with no parcel — resolve or refund",
+    }
+
+
 @router.get("/orders/{order_id}", dependencies=[Depends(require_admin)])
 def order_fulfillment(order_id: int, session: Session = Depends(get_session)) -> dict:
     """Fulfillment state and tracking for one order. Read-only, admin-gated.

@@ -43,6 +43,21 @@ def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
 
 
+def _parse_ship_date(value: Any) -> datetime | None:
+    """Parse a supplier ship date (``2026-08-07`` or a full ISO timestamp).
+
+    Returns ``None`` rather than raising on anything unparseable: a malformed
+    date is worth falling back on, not worth losing the whole tracking update.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
+
+
 def shipping_from_stripe_session(obj: dict[str, Any]) -> dict[str, Any]:
     """Pull the destination address out of a Stripe Checkout Session.
 
@@ -212,7 +227,10 @@ def book_supplier_draft(
     session.add(shipment)
     session.flush()
 
-    order.fulfillment_status = "awaiting_approval" if not settings.printful_auto_confirm else "drafted"
+    # `drafted` regardless of the auto-confirm flag. Reporting
+    # `awaiting_approval` here would name a state with nothing in the approval
+    # queue — no Approval row exists until `confirm_shipment` is called.
+    order.fulfillment_status = "drafted"
     return {
         "status": order.fulfillment_status,
         "order_id": order.id,
@@ -257,7 +275,15 @@ def claim_approval(session: Session, *, action: str, target: str) -> Approval | 
     )
     if claimed.rowcount != 1:
         return None  # another worker claimed it first
-    session.flush()
+
+    # Commit the claim *before* the caller spends money. A flush alone lives
+    # inside the request transaction, so a crash between the supplier accepting
+    # the confirmation and the request committing would roll the row back to
+    # `approved` and let the same decision authorise a second charge.
+    # Committing here trades that for the opposite failure: a claim that is
+    # spent without the call having demonstrably happened, which needs a fresh
+    # human decision rather than silently paying twice.
+    session.commit()
     return candidate
 
 
@@ -337,7 +363,12 @@ def confirm_shipment(
             "error": str(exc),
         }
 
-    shipment.status = detail.get("status") or "confirmed"
+    # Local lifecycle state, not the supplier's. Printful reports `pending`
+    # immediately after a successful confirmation, and storing that would make
+    # the "already confirmed" guard above fail to recognise its own work — so a
+    # second approved request could confirm, and pay for, the same order twice.
+    supplier_status = detail.get("status")
+    shipment.status = "confirmed"
     shipment.supplier_cost = _as_decimal(detail.get("supplier_cost")) or shipment.supplier_cost
     order = session.get(Order, shipment.order_id)
     if order is not None:
@@ -348,13 +379,14 @@ def confirm_shipment(
         actor=actor,
         action="printful_confirm_order",
         target=str(shipment.id),
-        payload={**payload, "approval_id": approval.id, "supplier_status": shipment.status},
+        payload={**payload, "approval_id": approval.id, "supplier_status": supplier_status},
         result="executed",
         assessment=score_action("printful_confirm_order", payload),
     )
     return {
         "shipment_id": shipment.id,
         "status": shipment.status,
+        "supplier_status": supplier_status,
         "approval_id": approval.id,
         "requires_approval": False,
         "confirmed": True,
@@ -403,6 +435,35 @@ def record_shipment_notice(
         if parcel_id
         else None
     )
+
+    # The parcel lookup spans every order, so a replayed or inconsistent notice
+    # could name parcel P (belonging to order A) alongside order B's
+    # external_id. Attaching it would update A's tracking *and* mark B shipped —
+    # two customers wrong from one bad message. If the two disagree, nothing is
+    # written and the conflict is recorded for a human.
+    if shipment is not None and shipment.order_id != order.id:
+        log_event(
+            session,
+            actor="printful",
+            action="printful_order_status",
+            target=str(order.id),
+            payload={
+                "reason": "parcel belongs to a different order",
+                "parcel_shipment_id": parcel_id,
+                "parcel_order_id": shipment.order_id,
+                "notice_external_id": external_id,
+                "notice_order_id": order.id,
+            },
+            result="rejected",
+            assessment=score_action("printful_order_status", {}),
+        )
+        return {
+            "matched": False,
+            "conflict": "parcel_order_mismatch",
+            "order_id": order.id,
+            "parcel_order_id": shipment.order_id,
+        }
+
     if shipment is None:
         shipment = session.scalar(
             select(Shipment).where(
@@ -422,7 +483,9 @@ def record_shipment_notice(
     shipment.tracking_url = notice.get("tracking_url") or shipment.tracking_url
     shipment.carrier = notice.get("carrier") or shipment.carrier
     shipment.service = notice.get("service") or shipment.service
-    shipment.shipped_at = shipment.shipped_at or _utcnow()
+    # Prefer the supplier's own ship date. A webhook can be delayed or retried
+    # hours later, so receipt time would quietly misdate the shipment.
+    shipment.shipped_at = shipment.shipped_at or _parse_ship_date(notice.get("shipped_at")) or _utcnow()
     session.flush()
 
     order.fulfillment_status = "shipped"

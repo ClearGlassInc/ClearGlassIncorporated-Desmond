@@ -11,10 +11,12 @@ from sqlalchemy import (
     JSON,
     DateTime,
     ForeignKey,
+    Index,
     Integer,
     Numeric,
     String,
     Text,
+    text,
 )
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -87,7 +89,7 @@ class Order(Base):
     ship_to_country: Mapped[str | None] = mapped_column(String(2), nullable=True)
     ship_to_zip: Mapped[str | None] = mapped_column(String(32), nullable=True)
     ship_to_email: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    # pending → drafted → awaiting_approval → confirmed → shipped (see fulfillment.py)
+    # pending → drafted → confirmed → shipped, or unfulfillable (see fulfillment.py)
     fulfillment_status: Mapped[str] = mapped_column(String(32), default="pending")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
 
@@ -104,16 +106,32 @@ class Shipment(Base):
 
     __tablename__ = "shipments"
 
+    # Mirrors the partial unique index in migrations/005_fulfillment.sql. Without
+    # it here, `Base.metadata.create_all` (SQLite dev, demo and the whole test
+    # suite) would build a weaker schema than production, so the idempotency this
+    # table claims would be untested exactly where it is cheapest to test.
+    __table_args__ = (
+        Index(
+            "idx_shipments_supplier_shipment",
+            "supplier",
+            "supplier_shipment_id",
+            unique=True,
+            sqlite_where=text("supplier_shipment_id IS NOT NULL"),
+            postgresql_where=text("supplier_shipment_id IS NOT NULL"),
+        ),
+        Index("idx_shipments_supplier_order", "supplier", "supplier_order_id"),
+    )
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     order_id: Mapped[int] = mapped_column(ForeignKey("orders.id", ondelete="CASCADE"), index=True)
     supplier: Mapped[str] = mapped_column(String(32), default="printful")
     # The supplier's own order id. Deliberately NOT unique: one supplier order
     # can produce several parcels, which is the entire reason this is a table.
-    supplier_order_id: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
+    supplier_order_id: Mapped[str | None] = mapped_column(String(120), nullable=True)
     # The supplier's id for *this parcel*. This is the idempotency key — unique
     # per supplier — so a redelivered `package_shipped` updates its own row while
     # a genuine second parcel still gets one of its own.
-    supplier_shipment_id: Mapped[str | None] = mapped_column(String(120), nullable=True, index=True)
+    supplier_shipment_id: Mapped[str | None] = mapped_column(String(120), nullable=True)
     status: Mapped[str] = mapped_column(String(32), default="draft")
     tracking_number: Mapped[str | None] = mapped_column(String(160), nullable=True)
     tracking_url: Mapped[str | None] = mapped_column(Text, nullable=True)

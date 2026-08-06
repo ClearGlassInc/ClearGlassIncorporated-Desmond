@@ -77,10 +77,23 @@ orders shipped and suppress the tracking a customer is waiting for.
 |---|---|---|
 | `GET /fulfillment/connection` | open | Credential presence. No network call |
 | `POST /fulfillment/verify` | admin | Read-only store identity check |
-| `GET /fulfillment/catalog` | open | The supplier's real products, variants, images, prices |
-| `GET /fulfillment/orders/{id}` | open | Fulfillment state and tracking for one order |
-| `POST /fulfillment/shipments/{id}/confirm` | admin | Queues an approval; **never confirms directly** |
-| `POST /fulfillment/webhooks/printful/{secret}` | URL secret | Applies `package_shipped` tracking. Idempotent |
+| `GET /fulfillment/catalog` | admin | The supplier's real products, variants, images, prices |
+| `GET /fulfillment/exceptions` | admin | Paid orders that cannot ship — the queue to work |
+| `GET /fulfillment/orders/{id}` | admin | Fulfillment state and tracking for one order |
+| `POST /fulfillment/shipments/{id}/confirm` | admin | Queues an approval, or spends one — see below |
+| `POST /fulfillment/webhooks/printful/{secret}` | URL secret | Applies `package_shipped` tracking. Idempotent, rate limited |
+
+Only `/connection` is open. `/catalog` is gated because each call is a full
+paginated scan of the supplier store; `/orders/{id}` because it exposes tracking,
+supplier ids and our cost basis behind a sequential integer. A customer-facing
+"where is my parcel" view needs a per-order capability token, which does not
+exist yet.
+
+`POST /shipments/{id}/confirm` is two-phase. With no approved approval for that
+shipment it queues one and returns its id, sending nothing to the supplier. Once
+a human approves, calling it again claims that approval — exactly once — and
+confirms with Printful. So the same endpoint both proposes and executes,
+depending on whether a human has decided yet.
 
 ## Running it
 

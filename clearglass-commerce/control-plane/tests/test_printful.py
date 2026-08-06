@@ -108,6 +108,14 @@ class TestCatalogue:
         product = printful.normalize_sync_product({"id": 1}, [{"id": 2, "retail_price": "-5.00"}])
         assert product["variants"][0]["retail_price"] is None
 
+    def test_rejects_non_finite_prices(self):
+        # Decimal accepts both of these. "Infinity" would otherwise pass the
+        # non-negative check and be published as a price; "NaN" makes the
+        # comparison itself raise.
+        for value in ("NaN", "Infinity", "-Infinity", "sNaN"):
+            product = printful.normalize_sync_product({"id": 1}, [{"id": 2, "retail_price": value}])
+            assert product["variants"][0]["retail_price"] is None, value
+
     def test_follows_paging_to_the_end(self):
         # A store larger than one page must not import as a partial catalogue.
         pages = {
@@ -128,6 +136,31 @@ class TestCatalogue:
         request = responder(status=401, error={"message": "Invalid token"})
         with pytest.raises(printful.PrintfulError, match="Invalid token"):
             printful.store_products(settings(), request)
+
+
+class TestMalformedResponses:
+    """A 2xx carrying junk must surface as PrintfulError, not a bare ValueError.
+
+    Callers catch PrintfulError to turn a failed booking into a recorded
+    `unfulfillable` obligation; anything else escapes, rolls the transaction
+    back, and leaves a paid order looking untouched.
+    """
+
+    def test_truncated_json_is_a_printful_error(self):
+        with pytest.raises(printful.PrintfulError, match="not valid JSON"):
+            printful._decode_body(b'{"result": ')
+
+    def test_invalid_utf8_is_a_printful_error(self):
+        with pytest.raises(printful.PrintfulError, match="not valid UTF-8"):
+            printful._decode_body(b"\xff\xfe\x00")
+
+    def test_a_non_object_envelope_is_a_printful_error(self):
+        with pytest.raises(printful.PrintfulError, match="expected a JSON object"):
+            printful._decode_body(b"[1, 2, 3]")
+
+    def test_an_empty_body_decodes_to_an_empty_object(self):
+        assert printful._decode_body(b"") == {}
+        assert printful._decode_body(b"   ") == {}
 
 
 class TestAddressValidation:

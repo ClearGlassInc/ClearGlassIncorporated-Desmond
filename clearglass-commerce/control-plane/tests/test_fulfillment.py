@@ -10,6 +10,7 @@ from decimal import Decimal
 
 import pytest
 from sqlalchemy import create_engine, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app import fulfillment, printful
@@ -119,7 +120,10 @@ class TestBookingADraft:
         shipment = session.scalar(select(Shipment).where(Shipment.order_id == order.id))
         assert shipment.supplier == "printful"
         assert shipment.supplier_cost == Decimal("12.50"), "margin needs the supplier's cost"
-        assert order.fulfillment_status == "awaiting_approval"
+        # `drafted`, not `awaiting_approval` — no Approval row exists until
+        # confirmation is requested, so naming that state here would advertise
+        # something the approval queue cannot show.
+        assert order.fulfillment_status == "drafted"
 
     def test_a_second_call_does_not_book_a_second_parcel(self, session):
         # Payment webhooks are redelivered; double-booking would print twice.
@@ -261,8 +265,35 @@ class TestConfirmation:
 
         assert result["confirmed"] is True
         assert calls == ["/orders/999/confirm"]
-        assert shipment.status == "pending"
+        # Local lifecycle, not the supplier's word for it: Printful says
+        # "pending" right after a successful confirm, and storing that would make
+        # the already-confirmed guard fail to recognise its own work.
+        assert shipment.status == "confirmed"
+        assert result["supplier_status"] == "pending"
         assert order.fulfillment_status == "confirmed"
+
+    def test_a_confirmed_shipment_is_not_reconfirmed_by_a_second_approval(self, session):
+        # The guard has to hold against the supplier's own vocabulary, or a
+        # second approved request pays for the same print run twice.
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+        shipment = session.scalar(select(Shipment))
+
+        queued = fulfillment.confirm_shipment(session, shipment, settings=connected())
+        session.get(Approval, queued["approval_id"]).status = "approved"
+        session.flush()
+
+        calls: list[str] = []
+
+        def request(method: str, path: str, body: dict | None):
+            calls.append(path)
+            return 200, {"result": {"id": 999, "status": "pending"}}
+
+        fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+        again = fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+
+        assert again["skipped"] == "already confirmed"
+        assert len(calls) == 1
 
     def test_an_approval_is_spent_exactly_once(self, session):
         # One human decision must not be replayable into two supplier charges.
@@ -413,6 +444,61 @@ class TestShipmentNotices:
         assert len(shipments) == 1
         assert shipments[0].tracking_number == "1Z999"
 
+    def test_a_parcel_belonging_to_another_order_is_refused(self, session):
+        # The parcel lookup spans every order, so a replayed or inconsistent
+        # notice could name order B's external_id alongside order A's parcel.
+        # Attaching it would rewrite A's tracking *and* mark B shipped — two
+        # customers wrong from one bad message.
+        order_a = make_order(session)
+        order_b = make_order(session, external_ref="cs_test_2")
+        fulfillment.book_supplier_draft(session, order_a, ITEMS, settings=connected(), request=draft_responder(1))
+        fulfillment.book_supplier_draft(session, order_b, ITEMS, settings=connected(), request=draft_responder(2))
+
+        fulfillment.record_shipment_notice(
+            session,
+            {"supplier": "printful", "external_id": "cs_test_1", "supplier_order_id": "1",
+             "supplier_shipment_id": "parcel_a", "tracking_number": "1Z-A"},
+        )
+
+        result = fulfillment.record_shipment_notice(
+            session,
+            {"supplier": "printful", "external_id": "cs_test_2", "supplier_order_id": "2",
+             "supplier_shipment_id": "parcel_a", "tracking_number": "1Z-HIJACK"},
+        )
+
+        assert result["matched"] is False
+        assert result["conflict"] == "parcel_order_mismatch"
+        assert order_b.fulfillment_status != "shipped"
+        parcel = session.scalar(select(Shipment).where(Shipment.supplier_shipment_id == "parcel_a"))
+        assert parcel.tracking_number == "1Z-A", "order A's tracking must be untouched"
+        assert parcel.order_id == order_a.id
+        assert session.scalars(select(Event)).all()[-1].result == "rejected"
+
+    def test_the_suppliers_ship_date_is_preferred_over_receipt_time(self, session):
+        # A webhook can arrive hours late or be retried, so receipt time would
+        # quietly misdate the shipment.
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+
+        fulfillment.record_shipment_notice(
+            session,
+            {"supplier": "printful", "external_id": "cs_test_1", "supplier_shipment_id": "p1",
+             "tracking_number": "1Z999", "shipped_at": "2026-08-01"},
+        )
+        shipment = session.scalar(select(Shipment))
+        assert shipment.shipped_at.year == 2026
+        assert (shipment.shipped_at.month, shipment.shipped_at.day) == (8, 1)
+
+    def test_an_unparseable_ship_date_falls_back_to_now(self, session):
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+        fulfillment.record_shipment_notice(
+            session,
+            {"supplier": "printful", "external_id": "cs_test_1", "supplier_shipment_id": "p1",
+             "tracking_number": "1Z999", "shipped_at": "not-a-date"},
+        )
+        assert session.scalar(select(Shipment)).shipped_at is not None
+
     def test_an_unmatched_notice_is_logged_not_guessed_at(self, session):
         # Attaching this to the closest-looking order would send one customer
         # another customer's tracking number.
@@ -425,3 +511,28 @@ class TestShipmentNotices:
         assert session.scalars(select(Shipment)).all() == []
         event = session.scalars(select(Event)).all()[-1]
         assert event.result == "rejected"
+
+
+class TestSchemaMatchesProduction:
+    def test_the_parcel_uniqueness_constraint_exists_in_the_orm_schema(self, session):
+        """The migration creates a partial unique index on
+        (supplier, supplier_shipment_id). If the ORM metadata did not mirror it,
+        SQLite dev/demo/test databases would be weaker than production and this
+        idempotency would go untested exactly where it is cheapest to test."""
+        order = make_order(session)
+        session.add(Shipment(order_id=order.id, supplier="printful", supplier_shipment_id="dup"))
+        session.flush()
+        session.add(Shipment(order_id=order.id, supplier="printful", supplier_shipment_id="dup"))
+
+        with pytest.raises(IntegrityError):
+            session.flush()
+        session.rollback()
+
+    def test_several_parcels_without_an_id_are_still_allowed(self, session):
+        """The index is partial — NULL parcel ids must not collide, or an order
+        could never hold two rows before their shipment ids arrive."""
+        order = make_order(session)
+        session.add(Shipment(order_id=order.id, supplier="printful"))
+        session.add(Shipment(order_id=order.id, supplier="printful"))
+        session.flush()
+        assert len(session.scalars(select(Shipment)).all()) == 2

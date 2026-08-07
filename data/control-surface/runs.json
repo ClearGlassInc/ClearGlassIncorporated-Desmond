@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #571",
+    "title": "Control Surface Feeds #572",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:47",
+    "timestamp": "2026-08-07T23:47:41Z"
+  },
+  {
+    "title": "Deploy Pages #1634",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "22:55",
+    "timestamp": "2026-08-07T22:55:27Z"
+  },
+  {
+    "title": "pages build and deployment #2151",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:55",
+    "timestamp": "2026-08-07T22:55:14Z"
+  },
+  {
+    "title": "Push on main #3725",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "22:55",
+    "timestamp": "2026-08-07T22:55:13Z"
+  },
+  {
+    "title": "Control Surface Feeds #571",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:54",
     "timestamp": "2026-08-07T22:54:57Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 dynamic on main",
     "time": "22:34",
     "timestamp": "2026-08-07T22:34:17Z"
-  },
-  {
-    "title": "pages build and deployment #2150",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:17Z"
-  },
-  {
-    "title": "Sync Stripe Products #31",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "22:21",
-    "timestamp": "2026-08-07T22:21:39Z"
-  },
-  {
-    "title": "Repository Health #178",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "22:21",
-    "timestamp": "2026-08-07T22:21:21Z"
-  },
-  {
-    "title": "Policy Gate #1991",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "22:21",
-    "timestamp": "2026-08-07T22:21:21Z"
   }
 ]

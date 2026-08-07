@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-08-06",
+  "updated": "2026-08-07",
   "site": "https://www.clearglassinc.com",
   "topics": {
     "governed-ai": "Governed AI",
@@ -16,6 +16,22 @@
   },
   "posts": [
     {
+      "slug": "shadow-ai-incident-response-logs-gone",
+      "url": "/blog/shadow-ai-incident-response-logs-gone.html",
+      "title": "Shadow AI Incident Response: When the Logs Are Already Gone",
+      "description": "A forensic-readiness briefing on Shadow AI incidents, log rollover, endpoint preservation, evidence retention, regulator expectations, and defensible AI governance.",
+      "category": "AI Forensics",
+      "series": "ClearGlass Long Reads",
+      "topics": ["governed-ai", "automation", "systems", "cyber"],
+      "tags": ["shadow-ai", "incident-response", "forensic-readiness", "log-retention", "endpoint-preservation", "ai-governance", "regulatory-defensibility", "long-read"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-08-07",
+      "readMinutes": 9,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
+    {
       "slug": "shadow-ai-enterprise-security-blind-spot",
       "url": "/blog/shadow-ai-enterprise-security-blind-spot.html",
       "title": "Shadow AI: Enterprise Security’s Biggest Blind Spot",
@@ -28,7 +44,7 @@
       "date": "2026-08-06",
       "readMinutes": 9,
       "featured": true,
-      "deskRank": 1,
+      "deskRank": 2,
       "status": "published"
     },
     {
@@ -44,7 +60,7 @@
       "date": "2026-08-05",
       "readMinutes": 10,
       "featured": true,
-      "deskRank": 2,
+      "deskRank": 3,
       "status": "published"
     },
     {
@@ -60,7 +76,7 @@
       "date": "2026-08-03",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 3,
+      "deskRank": 4,
       "status": "published"
     },
     {
@@ -76,7 +92,7 @@
       "date": "2026-08-03",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 4,
+      "deskRank": 5,
       "status": "published"
     },
     {
@@ -92,7 +108,7 @@
       "date": "2026-07-31",
       "readMinutes": 15,
       "featured": true,
-      "deskRank": 5,
+      "deskRank": 6,
       "status": "published"
     }
   ]

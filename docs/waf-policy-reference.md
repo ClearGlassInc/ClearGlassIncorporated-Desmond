@@ -73,6 +73,15 @@ Defaults are intentionally generous and should be tuned from observed legitimate
 
 For authenticated dynamic origins, prefer identity/session/token counters over source IP when supported. Never replace application-side authentication or authorization with edge rate limiting.
 
+## Rate-limit/provider failure behavior
+
+- A CI/API control-plane failure must fail closed for configuration change: no new Terraform apply occurs and the last successfully deployed provider policy remains authoritative.
+- Do not respond to a provider API failure by installing a broad `allow` rule or disabling the WAF.
+- If a provider-managed rate-limit service or data plane is impaired, preserve application-side authentication, authorization, account lock/risk controls, and local route limits as defense in depth for dynamic origins.
+- Static GitHub Pages delivery does not depend on an application rate-limit datastore; edge-rate-limit unavailability therefore must not trigger a repository-side denial policy.
+- For future APIs, sensitive routes such as login, password reset, admin, forms, and webhooks must retain server-side abuse controls so provider rate limiting is supplemental rather than a single point of failure.
+- During a provider-wide outage, follow `docs/incident-response-edge.md` and `docs/dns-cutover-runbook.md`; use the recorded DNS rollback only when the operational risk of bypassing the edge is explicitly accepted.
+
 ## Geo/ASN
 
 All geographic deny/challenge controls are disabled by default. Administrative/API routes may enable narrow geo/ASN rules after operator approval. Emergency regional restrictions must expire automatically or have an explicit review timestamp.

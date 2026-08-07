@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "00:14",
-    "timestamp": "2026-08-07T00:14:58Z"
+    "time": "03:16",
+    "timestamp": "2026-08-07T03:16:32Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #555",
+    "time": "03:16",
+    "timestamp": "2026-08-07T03:16:16Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #54",
+    "time": "02:22",
+    "timestamp": "2026-08-07T02:22:00Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1601",
+    "time": "00:15",
+    "timestamp": "2026-08-07T00:15:10Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2115",
+    "time": "00:15",
+    "timestamp": "2026-08-07T00:15:04Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3675",
+    "time": "00:15",
+    "timestamp": "2026-08-07T00:15:03Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #554",
     "time": "00:14",
     "timestamp": "2026-08-07T00:14:44Z"
@@ -52,41 +87,6 @@
     "title": "CI",
     "status": "bad",
     "detail": "push on main \u00b7 run #2226",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
-  },
-  {
-    "title": "Site Integrity Guard",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #152",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1600",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #27",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #2290",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1993",
     "time": "23:11",
     "timestamp": "2026-08-06T23:11:38Z"
   }

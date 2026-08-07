@@ -57,6 +57,25 @@ resource "cloudflare_ruleset" "custom_waf" {
     enabled     = true
   }
 
+  rules {
+    ref         = "request_metadata_size_anomaly"
+    description = "Oversized URI, query string, individual header value, or truncated header set"
+    expression  = "(${local.host_scope} and not (${local.trusted_ip_expr}) and (len(raw.http.request.uri) gt ${var.max_uri_bytes} or len(raw.http.request.uri.query) gt ${var.max_query_bytes} or http.request.headers.truncated or any(len(http.request.headers.values[*])[*] gt ${var.max_single_header_value_bytes})))"
+    action      = var.custom_waf_action
+    enabled     = true
+  }
+
+  dynamic "rules" {
+    for_each = var.enable_enterprise_body_size_rule ? [1] : []
+    content {
+      ref         = "request_body_size_anomaly"
+      description = "Plan-specific oversized or truncated request-body detection"
+      expression  = "(${local.host_scope} and not (${local.trusted_ip_expr}) and (http.request.body.size gt ${var.max_request_body_bytes} or http.request.body.truncated))"
+      action      = var.custom_waf_action
+      enabled     = true
+    }
+  }
+
   dynamic "rules" {
     for_each = var.enable_geo_asn_rules && length(var.denied_countries) > 0 ? [1] : []
     content {

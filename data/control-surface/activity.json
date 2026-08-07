@@ -3,12 +3,40 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "17:06",
-    "timestamp": "2026-08-07T17:06:22Z"
+    "time": "18:00",
+    "timestamp": "2026-08-07T18:00:57Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #566",
+    "time": "18:00",
+    "timestamp": "2026-08-07T18:00:44Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1618",
+    "time": "17:06",
+    "timestamp": "2026-08-07T17:06:39Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2135",
+    "time": "17:06",
+    "timestamp": "2026-08-07T17:06:31Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3697",
+    "time": "17:06",
+    "timestamp": "2026-08-07T17:06:30Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #565",
     "time": "17:06",
     "timestamp": "2026-08-07T17:06:07Z"
@@ -61,33 +89,5 @@
     "detail": "push on main \u00b7 run #2001",
     "time": "16:24",
     "timestamp": "2026-08-07T16:24:16Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #2299",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:16Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #2234",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:15Z"
-  },
-  {
-    "title": "Site Integrity Guard",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #160",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:15Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #33",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:15Z"
   }
 ]

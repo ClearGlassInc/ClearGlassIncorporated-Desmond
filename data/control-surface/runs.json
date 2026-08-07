@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #563",
+    "title": "Control Surface Feeds #564",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "16:08",
+    "timestamp": "2026-08-07T16:08:03Z"
+  },
+  {
+    "title": "Deploy Pages #1613",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "15:08",
+    "timestamp": "2026-08-07T15:08:47Z"
+  },
+  {
+    "title": "pages build and deployment #2130",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "15:08",
+    "timestamp": "2026-08-07T15:08:32Z"
+  },
+  {
+    "title": "Push on main #3692",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "15:08",
+    "timestamp": "2026-08-07T15:08:32Z"
+  },
+  {
+    "title": "Control Surface Feeds #563",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "15:08",
     "timestamp": "2026-08-07T15:08:05Z"
   },
@@ -106,34 +134,6 @@
   },
   {
     "title": "Security #1997",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on security/site-hardening-2026-08-07",
-    "time": "14:37",
-    "timestamp": "2026-08-07T14:37:12Z"
-  },
-  {
-    "title": "Defender Watch #1649",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on security/site-hardening-2026-08-07",
-    "time": "14:37",
-    "timestamp": "2026-08-07T14:37:12Z"
-  },
-  {
-    "title": "PR Automation #1066",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on security/site-hardening-2026-08-07",
-    "time": "14:37",
-    "timestamp": "2026-08-07T14:37:12Z"
-  },
-  {
-    "title": "Policy Gate #1966",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on security/site-hardening-2026-08-07",
-    "time": "14:37",
-    "timestamp": "2026-08-07T14:37:12Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #2295",
     "status": "ok",
     "detail": "success \u00b7 pull_request on security/site-hardening-2026-08-07",
     "time": "14:37",

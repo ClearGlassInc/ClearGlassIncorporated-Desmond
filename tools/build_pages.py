@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 from pathlib import Path
 
@@ -54,6 +55,59 @@ PUBLIC_DATA_FEEDS = {
 DENIED_PARTS = {"node_modules", "__pycache__", ".pytest_cache", ".mypy_cache"}
 DENIED_NAMES = {"package.json", "package-lock.json", "pyproject.toml", "requirements.txt"}
 
+# GitHub Pages does not process Netlify/Cloudflare-style `_headers` files. Keep the
+# header policy for hosts that support it, but also inject a CSP meta policy into
+# every deployable HTML document so the browser receives a baseline policy on
+# GitHub Pages itself. `frame-ancestors`, HSTS, X-Frame-Options, Permissions-Policy,
+# and other response-header-only controls remain in `_headers` for capable edges.
+CSP_POLICY = (
+    "default-src 'self'; "
+    "base-uri 'self'; "
+    "object-src 'none'; "
+    "form-action 'self' https://formspree.io; "
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
+    "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
+    "img-src 'self' data: blob: https:; "
+    "media-src 'self' https:; "
+    "connect-src 'self' https://formspree.io https://api.github.com; "
+    "frame-src 'self' https://www.youtube-nocookie.com; "
+    "manifest-src 'self'; "
+    "worker-src 'self' blob:; "
+    "upgrade-insecure-requests"
+)
+
+
+def _harden_html(path: Path) -> None:
+    """Inject browser-enforced security metadata into a published HTML file."""
+    text = path.read_text(encoding="utf-8")
+    head = re.search(r"<head(?:\s[^>]*)?>", text, flags=re.IGNORECASE)
+    if not head:
+        return
+
+    tags: list[str] = []
+    if not re.search(
+        r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]",
+        text,
+        flags=re.IGNORECASE,
+    ):
+        tags.append(
+            f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
+        )
+    if not re.search(
+        r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"]",
+        text,
+        flags=re.IGNORECASE,
+    ):
+        tags.append('<meta name="referrer" content="strict-origin-when-cross-origin">')
+
+    if not tags:
+        return
+
+    injection = "\n" + "\n".join(tags)
+    text = text[: head.end()] + injection + text[head.end() :]
+    path.write_text(text, encoding="utf-8")
+
 
 def public_relative_paths() -> list[Path]:
     paths: list[Path] = []
@@ -91,6 +145,8 @@ def build(destination: Path) -> int:
         target = destination / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / relative, target)
+        if target.suffix.lower() == ".html":
+            _harden_html(target)
     (destination / ".nojekyll").touch()
     if not (destination / "index.html").is_file():
         raise FileNotFoundError("Pages artifact is missing index.html")

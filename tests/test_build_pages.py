@@ -1,5 +1,6 @@
 from tools.build_pages import (
     ROOT,
+    CSP_POLICY,
     DENIED_TOP_LEVEL,
     PUBLIC_DATA_FEEDS,
     PUBLIC_DENIED_TREE_EXCEPTIONS,
@@ -61,3 +62,20 @@ def test_build_contains_required_pages_artifacts(tmp_path) -> None:
     assert (destination / ".nojekyll").is_file()
     assert (destination / ".well-known" / "security.txt").is_file()
     assert not (destination / ".github").exists()
+
+
+def test_published_html_receives_browser_security_policy(tmp_path) -> None:
+    destination = tmp_path / "dist"
+    build(destination)
+
+    checked = 0
+    for page in destination.rglob("*.html"):
+        text = page.read_text(encoding="utf-8")
+        if "<head" not in text.lower():
+            continue
+        checked += 1
+        assert 'http-equiv="Content-Security-Policy"' in text, page
+        assert f'content="{CSP_POLICY}"' in text, page
+        assert '<meta name="referrer" content="strict-origin-when-cross-origin">' in text, page
+
+    assert checked > 0

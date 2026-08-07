@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #556",
+    "title": "Control Surface Feeds #557",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "06:18",
+    "timestamp": "2026-08-07T06:18:10Z"
+  },
+  {
+    "title": "Multi-Repo Audit #52",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "05:49",
+    "timestamp": "2026-08-07T05:49:03Z"
+  },
+  {
+    "title": "Deploy Pages #1603",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "05:04",
+    "timestamp": "2026-08-07T05:04:41Z"
+  },
+  {
+    "title": "pages build and deployment #2117",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "05:04",
+    "timestamp": "2026-08-07T05:04:34Z"
+  },
+  {
+    "title": "Push on main #3677",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "05:04",
+    "timestamp": "2026-08-07T05:04:34Z"
+  },
+  {
+    "title": "Control Surface Feeds #556",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "05:04",
     "timestamp": "2026-08-07T05:04:04Z"
   },
@@ -103,40 +138,5 @@
     "detail": "failure \u00b7 workflow_run on main",
     "time": "23:31",
     "timestamp": "2026-08-06T23:31:15Z"
-  },
-  {
-    "title": "Repository Health #149",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:39Z"
-  },
-  {
-    "title": "CI #2226",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
-  },
-  {
-    "title": "Site Integrity Guard #152",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
-  },
-  {
-    "title": "Deploy Pages #1600",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #27",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
   }
 ]

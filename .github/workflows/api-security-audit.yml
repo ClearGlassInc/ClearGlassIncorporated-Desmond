@@ -32,7 +32,6 @@ jobs:
     environment: staging   # requires environment-level secret approval
     permissions:
       contents: read
-      security-events: write
       issues: write
 
     steps:

@@ -1,8 +1,36 @@
 [
   {
-    "title": "Control Surface Feeds #568",
+    "title": "Control Surface Feeds #569",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "20:57",
+    "timestamp": "2026-08-07T20:57:41Z"
+  },
+  {
+    "title": "Deploy Pages #1621",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "19:59",
+    "timestamp": "2026-08-07T19:59:57Z"
+  },
+  {
+    "title": "pages build and deployment #2138",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:59",
+    "timestamp": "2026-08-07T19:59:49Z"
+  },
+  {
+    "title": "Push on main #3700",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "19:59",
+    "timestamp": "2026-08-07T19:59:49Z"
+  },
+  {
+    "title": "Control Surface Feeds #568",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "19:59",
     "timestamp": "2026-08-07T19:59:24Z"
   },
@@ -110,33 +138,5 @@
     "detail": "success \u00b7 schedule on main",
     "time": "17:06",
     "timestamp": "2026-08-07T17:06:07Z"
-  },
-  {
-    "title": "Sync Stripe Products #22",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:44Z"
-  },
-  {
-    "title": "Repository Health #157",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:17Z"
-  },
-  {
-    "title": "Deploy Pages #1617",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:16Z"
-  },
-  {
-    "title": "SEO Continuous Audit #14",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:16Z"
   }
 ]

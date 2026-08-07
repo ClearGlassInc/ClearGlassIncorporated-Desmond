@@ -20,15 +20,27 @@ variable "public_hostname" {
   default     = "www.clearglassinc.com"
 }
 
+variable "api_hostname" {
+  type        = string
+  description = "Optional future dynamic API hostname. Empty disables API-specific Terraform rules."
+  default     = ""
+}
+
+variable "admin_hostname" {
+  type        = string
+  description = "Optional future administrative hostname. Empty disables admin-specific Terraform rules."
+  default     = ""
+}
+
 variable "enable_custom_waf" {
   type        = bool
-  description = "Create custom WAF rules. Leave false for the first plan until feature/action support is confirmed."
+  description = "Create custom WAF rules. Leave false for the first plan until phase ownership/action support is confirmed."
   default     = false
 }
 
 variable "enable_managed_waf" {
   type        = bool
-  description = "Execute Cloudflare Managed Ruleset when the zone plan supports it."
+  description = "Execute Cloudflare Managed Ruleset when zone plan and phase ownership are confirmed."
   default     = false
 }
 
@@ -41,7 +53,7 @@ variable "enable_rate_limits" {
 variable "enable_security_headers" {
   type        = bool
   description = "Create response-header transform rules."
-  default     = true
+  default     = false
 }
 
 variable "enable_logpush" {
@@ -69,6 +81,16 @@ variable "custom_waf_action" {
   validation {
     condition     = contains(["log", "managed_challenge", "block"], var.custom_waf_action)
     error_message = "custom_waf_action must be log, managed_challenge, or block."
+  }
+}
+
+variable "managed_waf_override_action" {
+  type        = string
+  description = "Override for Cloudflare Managed/OWASP rules. Start with log where the plan supports it."
+  default     = "log"
+  validation {
+    condition     = contains(["log", "managed_challenge", "block"], var.managed_waf_override_action)
+    error_message = "managed_waf_override_action must be log, managed_challenge, or block."
   }
 }
 
@@ -168,10 +190,20 @@ variable "mitigation_timeout_seconds" {
   default = 600
 }
 
+variable "hsts_include_subdomains" {
+  type        = bool
+  description = "Add includeSubDomains only after every subdomain is confirmed HTTPS-ready."
+  default     = false
+}
+
 variable "hsts_preload" {
   type        = bool
-  description = "Add HSTS preload only after all subdomains are permanently HTTPS-ready."
+  description = "Add HSTS preload only after includeSubDomains is approved and preload requirements are met."
   default     = false
+  validation {
+    condition     = !var.hsts_preload || var.hsts_include_subdomains
+    error_message = "hsts_preload requires hsts_include_subdomains=true."
+  }
 }
 
 variable "logpush_destination" {
@@ -186,4 +218,10 @@ variable "logpush_ownership_challenge" {
   description = "Optional ownership challenge string required by some Logpush destinations."
   default     = ""
   sensitive   = true
+}
+
+variable "log_full_client_ip" {
+  type        = bool
+  description = "Include full ClientIP in exported firewall events only when incident/retention requirements justify it."
+  default     = false
 }

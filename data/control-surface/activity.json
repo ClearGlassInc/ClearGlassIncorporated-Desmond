@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "03:16",
-    "timestamp": "2026-08-07T03:16:32Z"
+    "time": "05:04",
+    "timestamp": "2026-08-07T05:04:27Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #556",
+    "time": "05:04",
+    "timestamp": "2026-08-07T05:04:04Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #2291",
+    "time": "04:28",
+    "timestamp": "2026-08-07T04:28:58Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1602",
+    "time": "03:16",
+    "timestamp": "2026-08-07T03:16:48Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2116",
+    "time": "03:16",
+    "timestamp": "2026-08-07T03:16:39Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3676",
+    "time": "03:16",
+    "timestamp": "2026-08-07T03:16:39Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #555",
     "time": "03:16",
     "timestamp": "2026-08-07T03:16:16Z"
@@ -54,40 +89,5 @@
     "detail": "schedule on main \u00b7 run #1643",
     "time": "00:09",
     "timestamp": "2026-08-07T00:09:00Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #273",
-    "time": "00:05",
-    "timestamp": "2026-08-07T00:05:02Z"
-  },
-  {
-    "title": "4-D Dominance Pipeline",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #53",
-    "time": "23:52",
-    "timestamp": "2026-08-06T23:52:47Z"
-  },
-  {
-    "title": "Sync Stripe Products",
-    "status": "bad",
-    "detail": "workflow_run on main \u00b7 run #16",
-    "time": "23:31",
-    "timestamp": "2026-08-06T23:31:15Z"
-  },
-  {
-    "title": "Repository Health",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #149",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:39Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #2226",
-    "time": "23:11",
-    "timestamp": "2026-08-06T23:11:38Z"
   }
 ]

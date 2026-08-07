@@ -66,6 +66,52 @@ variable "challenge_asns" {
   default     = []
 }
 
+variable "max_uri_bytes" {
+  type        = number
+  description = "Observe/challenge requests whose raw URI exceeds this byte length. Tune from legitimate traffic before blocking."
+  default     = 16384
+  validation {
+    condition     = var.max_uri_bytes >= 4096
+    error_message = "max_uri_bytes must be at least 4096 to avoid an unsafe low limit."
+  }
+}
+
+variable "max_query_bytes" {
+  type        = number
+  description = "Observe/challenge requests whose raw query string exceeds this byte length."
+  default     = 8192
+  validation {
+    condition     = var.max_query_bytes >= 2048
+    error_message = "max_query_bytes must be at least 2048 to avoid an unsafe low limit."
+  }
+}
+
+variable "max_single_header_value_bytes" {
+  type        = number
+  description = "Observe/challenge requests containing an individual header value larger than this threshold."
+  default     = 8192
+  validation {
+    condition     = var.max_single_header_value_bytes >= 2048
+    error_message = "max_single_header_value_bytes must be at least 2048."
+  }
+}
+
+variable "enable_enterprise_body_size_rule" {
+  type        = bool
+  description = "Enable body-size/truncation custom-rule fields that require the applicable Cloudflare plan."
+  default     = false
+}
+
+variable "max_request_body_bytes" {
+  type        = number
+  description = "Maximum request body byte threshold when the plan-specific body-size rule is enabled."
+  default     = 1048576
+  validation {
+    condition     = var.max_request_body_bytes >= 65536
+    error_message = "max_request_body_bytes must be at least 65536."
+  }
+}
+
 check "temporary_quarantine_has_future_expiry" {
   assert {
     condition = length(concat(var.quarantine_ipv4_cidrs, var.quarantine_ipv6_cidrs)) == 0 ? true : (

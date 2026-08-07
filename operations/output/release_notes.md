@@ -1,9 +1,10 @@
-# Release Notes — 2026-08-06
+# Release Notes — 2026-08-07
 
-*1633 commit(s) since v1.0.0*
+*1671 commit(s) since v1.0.0*
 
 ## New Features
 
+- **sales:** add site-wide Stripe checkout launcher (`686bf20`)
 - ship RFED audit-trail module + harden RMM auth-bypass coverage (`24732f8`)
 - add Stripe-ready ClearGlass checkout hub (`483dc40`)
 - **agent-os:** Operator — plain-language objective in, governed execution out (`1d22632`)
@@ -208,6 +209,7 @@
 
 ## Documentation
 
+- add ClearGlass Workspace subscription business design (`9fcf456`)
 - record live Stripe activation requirements (`2563276`)
 - launch Artemis GitHub growth playbook (`4258482`)
 - **agent:** add operating and security manual (`fcb1fdb`)
@@ -301,6 +303,30 @@
 
 ## Maintenance
 
+- Integrate Business Productivity Suite into product catalog (`f5c38b2`)
+- Run one-time Business Productivity Suite catalog integration (`ced9095`)
+- Add Business Productivity Suite product integration (`8ddbe93`)
+- Create ClearPath_Workspace_Build_Spec.md (`d8fd826`)
+- Add ClearGlass Workspace — an independent productivity subscription brand (`a6b1c18`)
+- Add the Guardian per-seat subscription pricing page (`de52e6d`)
+- Make the blueprint page discoverable: structured data, social cards, hub listing (`6387e88`)
+- Sell the Guardian Command Nexus blueprint as a digital deliverable (`be81bb3`)
+- Fix a 1-cent charge divergence and close a checkout-URL redirect hole (`3ff20fa`)
+- Price the Side Store cart on the server and check it out through Stripe (`7391d53`)
+- Compare checkout destinations, not just SKU names, and fix inherited breakage (`fdd3e81`)
+- Connect the services store to live Stripe checkout (`3a0cfae`)
+- Index Shadow AI long read in blog registry (`2f34ff6`)
+- Add Shadow AI enterprise security long read (`3a071bc`)
+- Normalize Cloudflare token and execute email routing (`810921a`)
+- Add self-reporting Cloudflare execution diagnostic (`6e0db33`)
+- Trigger Cloudflare email routing after token setup (`2d09153`)
+- Address second review: parcel/order binding, response hardening, lifecycle fixes (`7df29e8`)
+- Address review: close the approval dead-end and five other fulfillment gaps (`08ec054`)
+- Add Printful dropship fulfillment: supplier adapter, shipments, tracking (`05c2d42`)
+- Trigger Cloudflare email routing deployment (`32189ea`)
+- Address review: adoption safety, orphan scoping, tax behaviour, audit trail (`f088fc9`)
+- Drop tsx to clear the esbuild advisory in dependency review (`9e69e20`)
+- Add governed Stripe product-catalogue sync for the Pages site (`af6ab8c`)
 - Wire the checkout hub to live Stripe Payment Links (#1283) (`2050875`)
 - Wire the checkout hub to live Stripe Payment Links (`f5a9c5b`)
 - Regenerate the search assets after the page updates (`5a6a75c`)
@@ -991,6 +1017,16 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`066e311`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`7b18a88`)
+- refresh control-surface data feeds [skip ci] (`658567e`)
+- refresh control-surface data feeds [skip ci] (`b8820ed`)
+- refresh control-surface data feeds [skip ci] (`605e14e`)
+- refresh control-surface data feeds [skip ci] (`f7f396f`)
+- refresh control-surface data feeds [skip ci] (`89dc3f3`)
+- refresh control-surface data feeds [skip ci] (`6f3ee11`)
+- refresh control-surface data feeds [skip ci] (`9bd7948`)
+- update generated outputs — 2026-08-06 09:38 UTC [skip ci] (`0032f11`)
 - refresh SEO dashboard feeds [skip ci] (`7398bde`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`76703ff`)
 - refresh control-surface data feeds [skip ci] (`3c79ece`)
@@ -1634,6 +1670,8 @@
 
 ## Other
 
+- add search authority and continuous audit layer (#1290) (`249d596`)
+- automate Cloudflare email routing for Desmond (`ea6b053`)
 - give the desk clip a real pause control (`5860819`)
 - add "Desk in motion" video section to the Insights hub (`2e67f09`)
 - preserve directory links in normalize_internal (`3ddda92`)

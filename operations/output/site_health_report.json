@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-08-06T09:38:10.906300+00:00",
+  "run_utc": "2026-08-07T08:11:56.825593+00:00",
   "site_url": "https://www.clearglassinc.com",
-  "overall_healthy": true,
+  "overall_healthy": false,
   "pages_checked": 6,
   "pages_healthy": 6,
   "pages_unreachable": 0,
@@ -11,7 +11,7 @@
       "url": "https://www.clearglassinc.com/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 210,
+      "response_ms": 304,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://www.clearglassinc.com/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 154,
+      "response_ms": 166,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://www.clearglassinc.com/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 131,
+      "response_ms": 163,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://www.clearglassinc.com/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 161,
+      "response_ms": 196,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://www.clearglassinc.com/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 147,
+      "response_ms": 200,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,14 +61,17 @@
       "url": "https://www.clearglassinc.com/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 235,
+      "response_ms": 160,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
-  "local_issues": [],
+  "local_issues": [
+    "Page missing ClearGlass logo: business-productivity-suite.html"
+  ],
   "local_warnings": [
+    "HTML page not referenced in sitemap.xml: business-productivity-suite.html",
     "HTML page not referenced in sitemap.xml: header-mockup-2040.html",
     "HTML page not referenced in sitemap.xml: seo-dashboard.html"
   ]

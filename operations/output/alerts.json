@@ -1,8 +1,16 @@
 {
-  "run_utc": "2026-08-06T09:38:10.929433+00:00",
-  "total_alerts": 0,
+  "run_utc": "2026-08-07T08:11:56.849925+00:00",
+  "total_alerts": 1,
   "critical": 0,
-  "warnings": 0,
+  "warnings": 1,
   "github_issue_created": false,
-  "alerts": []
+  "alerts": [
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: business-productivity-suite.html",
+      "detail": "",
+      "detected_utc": "2026-08-07T08:11:56.847908+00:00"
+    }
+  ]
 }

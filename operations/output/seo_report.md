@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-08-06T09:38:09.846684+00:00
-**Average Score:** 87.7/100
-**Files Audited:** 78
+**Run:** 2026-08-07T08:11:55.704549+00:00
+**Average Score:** 87.8/100
+**Files Audited:** 82
 
 ## Page Scores
 
@@ -36,6 +36,7 @@
 | `air-systems-control.html` | 90/100 | 1 |
 | `automap.html` | 90/100 | 1 |
 | `bluedesk.html` | 90/100 | 1 |
+| `business-productivity-suite.html` | 90/100 | 1 |
 | `clearglass-nexus.html` | 90/100 | 1 |
 | `clearglass-ultra.html` | 90/100 | 1 |
 | `clearsight.html` | 90/100 | 1 |
@@ -44,11 +45,14 @@
 | `futuristic.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
 | `percival-os.html` | 90/100 | 1 |
+| `plans.html` | 90/100 | 1 |
 | `procurement-legal-tech.html` | 90/100 | 1 |
 | `sentinel.html` | 90/100 | 1 |
+| `seo-authority-hub.html` | 90/100 | 1 |
 | `tax.html` | 90/100 | 1 |
 | `traffic-enforcement.html` | 90/100 | 1 |
 | `web-design.html` | 90/100 | 1 |
+| `workspace.html` | 90/100 | 1 |
 | `404.html` | 100/100 | 0 |
 | `CG-os.html` | 100/100 | 0 |
 | `Ontario-osint.html` | 100/100 | 0 |
@@ -89,9 +93,9 @@
 
 ## Top Issues Across All Pages
 
-- 29x — Description length N chars (ideal N–N)
-- 21x — Title length N chars (ideal N–N)
-- 15x — Missing og:image
+- 31x — Description length N chars (ideal N–N)
+- 22x — Title length N chars (ideal N–N)
+- 16x — Missing og:image
 - 8x — Missing og:description
 - 7x — Missing og:title
 - 4x — Multiple <hN> tags (N)

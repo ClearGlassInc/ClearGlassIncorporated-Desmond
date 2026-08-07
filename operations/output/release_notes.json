@@ -1,10 +1,19 @@
 {
-  "run_utc": "2026-08-06T09:38:09.766673+00:00",
+  "run_utc": "2026-08-07T08:11:55.578839+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1633,
+  "commit_count": 1671,
   "sections": {
     "New Features": [
+      {
+        "sha": "686bf20",
+        "type": "feat",
+        "scope": "sales",
+        "subject": "add site-wide Stripe checkout launcher",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
       {
         "sha": "24732f8",
         "type": "feat",
@@ -1767,6 +1776,15 @@
     ],
     "Documentation": [
       {
+        "sha": "9fcf456",
+        "type": "docs",
+        "scope": null,
+        "subject": "add ClearGlass Workspace subscription business design",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
         "sha": "2563276",
         "type": "docs",
         "scope": null,
@@ -2528,6 +2546,222 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "f5c38b2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Integrate Business Productivity Suite into product catalog",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "ced9095",
+        "type": "chore",
+        "scope": null,
+        "subject": "Run one-time Business Productivity Suite catalog integration",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "8ddbe93",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Business Productivity Suite product integration",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "d8fd826",
+        "type": "chore",
+        "scope": null,
+        "subject": "Create ClearPath_Workspace_Build_Spec.md",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "a6b1c18",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Workspace \u2014 an independent productivity subscription brand",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "de52e6d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add the Guardian per-seat subscription pricing page",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "6387e88",
+        "type": "chore",
+        "scope": null,
+        "subject": "Make the blueprint page discoverable: structured data, social cards, hub listing",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "be81bb3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Sell the Guardian Command Nexus blueprint as a digital deliverable",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "3ff20fa",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix a 1-cent charge divergence and close a checkout-URL redirect hole",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "7391d53",
+        "type": "chore",
+        "scope": null,
+        "subject": "Price the Side Store cart on the server and check it out through Stripe",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "fdd3e81",
+        "type": "chore",
+        "scope": null,
+        "subject": "Compare checkout destinations, not just SKU names, and fix inherited breakage",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "3a0cfae",
+        "type": "chore",
+        "scope": null,
+        "subject": "Connect the services store to live Stripe checkout",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "2f34ff6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Index Shadow AI long read in blog registry",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "3a071bc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Shadow AI enterprise security long read",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "810921a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Normalize Cloudflare token and execute email routing",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "6e0db33",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add self-reporting Cloudflare execution diagnostic",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "2d09153",
+        "type": "chore",
+        "scope": null,
+        "subject": "Trigger Cloudflare email routing after token setup",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "7df29e8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Address second review: parcel/order binding, response hardening, lifecycle fixes",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "08ec054",
+        "type": "chore",
+        "scope": null,
+        "subject": "Address review: close the approval dead-end and five other fulfillment gaps",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "05c2d42",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Printful dropship fulfillment: supplier adapter, shipments, tracking",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "32189ea",
+        "type": "chore",
+        "scope": null,
+        "subject": "Trigger Cloudflare email routing deployment",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "f088fc9",
+        "type": "chore",
+        "scope": null,
+        "subject": "Address review: adoption safety, orphan scoping, tax behaviour, audit trail",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "9e69e20",
+        "type": "chore",
+        "scope": null,
+        "subject": "Drop tsx to clear the esbuild advisory in dependency review",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "af6ab8c",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add governed Stripe product-catalogue sync for the Pages site",
+        "author": "Claude",
+        "date": "2026-08-06",
+        "breaking": false
+      },
       {
         "sha": "2050875",
         "type": "chore",
@@ -8714,6 +8948,96 @@
     ],
     "Automation": [
       {
+        "sha": "066e311",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "7b18a88",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "658567e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "b8820ed",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "605e14e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "f7f396f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "89dc3f3",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "6f3ee11",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "9bd7948",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "0032f11",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-06 09:38 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
         "sha": "7398bde",
         "type": "bot",
         "scope": null,
@@ -14400,6 +14724,24 @@
       }
     ],
     "Other": [
+      {
+        "sha": "249d596",
+        "type": "seo",
+        "scope": null,
+        "subject": "add search authority and continuous audit layer (#1290)",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
+      {
+        "sha": "ea6b053",
+        "type": "ops",
+        "scope": null,
+        "subject": "automate Cloudflare email routing for Desmond",
+        "author": "Desmond Otieno",
+        "date": "2026-08-06",
+        "breaking": false
+      },
       {
         "sha": "5860819",
         "type": "blog",

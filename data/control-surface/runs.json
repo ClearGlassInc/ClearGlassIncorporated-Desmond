@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #566",
+    "title": "Control Surface Feeds #567",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "19:14",
+    "timestamp": "2026-08-07T19:14:13Z"
+  },
+  {
+    "title": "Defender Watch #1654",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "19:06",
+    "timestamp": "2026-08-07T19:06:13Z"
+  },
+  {
+    "title": "Health Monitor #276",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "19:01",
+    "timestamp": "2026-08-07T19:01:58Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #57",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "18:45",
+    "timestamp": "2026-08-07T18:45:19Z"
+  },
+  {
+    "title": "Deploy Pages #1619",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "18:01",
+    "timestamp": "2026-08-07T18:01:11Z"
+  },
+  {
+    "title": "Push on main #3698",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:01",
+    "timestamp": "2026-08-07T18:01:05Z"
+  },
+  {
+    "title": "pages build and deployment #2136",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "18:01",
+    "timestamp": "2026-08-07T18:01:05Z"
+  },
+  {
+    "title": "Control Surface Feeds #566",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "18:00",
     "timestamp": "2026-08-07T18:00:44Z"
   },
@@ -89,54 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "16:24",
     "timestamp": "2026-08-07T16:24:16Z"
-  },
-  {
-    "title": "CI #2234",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:15Z"
-  },
-  {
-    "title": "Site Integrity Guard #160",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:15Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #33",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:15Z"
-  },
-  {
-    "title": "pages build and deployment #2134",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:15Z"
-  },
-  {
-    "title": "Push on main #3696",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:15Z"
-  },
-  {
-    "title": "Sync Stripe Products #21",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:08Z"
-  },
-  {
-    "title": "Repository Health #156",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:23",
-    "timestamp": "2026-08-07T16:23:57Z"
   }
 ]

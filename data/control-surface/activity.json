@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "18:00",
-    "timestamp": "2026-08-07T18:00:57Z"
+    "time": "19:14",
+    "timestamp": "2026-08-07T19:14:32Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #567",
+    "time": "19:14",
+    "timestamp": "2026-08-07T19:14:13Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #1654",
+    "time": "19:06",
+    "timestamp": "2026-08-07T19:06:13Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #276",
+    "time": "19:01",
+    "timestamp": "2026-08-07T19:01:58Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #57",
+    "time": "18:45",
+    "timestamp": "2026-08-07T18:45:19Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1619",
+    "time": "18:01",
+    "timestamp": "2026-08-07T18:01:11Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3698",
+    "time": "18:01",
+    "timestamp": "2026-08-07T18:01:05Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2136",
+    "time": "18:01",
+    "timestamp": "2026-08-07T18:01:05Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #566",
     "time": "18:00",
     "timestamp": "2026-08-07T18:00:44Z"
@@ -40,54 +89,5 @@
     "detail": "schedule on main \u00b7 run #565",
     "time": "17:06",
     "timestamp": "2026-08-07T17:06:07Z"
-  },
-  {
-    "title": "Sync Stripe Products",
-    "status": "bad",
-    "detail": "workflow_run on main \u00b7 run #22",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:44Z"
-  },
-  {
-    "title": "Repository Health",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #157",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:17Z"
-  },
-  {
-    "title": "Deploy Pages",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #1617",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:16Z"
-  },
-  {
-    "title": "SEO Continuous Audit",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #14",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:16Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1653",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:16Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #1970",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:16Z"
-  },
-  {
-    "title": "Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #2001",
-    "time": "16:24",
-    "timestamp": "2026-08-07T16:24:16Z"
   }
 ]

@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:22Z"
-  },
-  {
-    "title": "Repository Health",
-    "status": "ok",
-    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #202",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "PR Automation",
-    "status": "warn",
-    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #1089",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Security",
-    "status": "warn",
-    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #2046",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "CI",
-    "status": "warn",
-    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #2279",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Policy Gate",
-    "status": "warn",
-    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #2015",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Site Integrity Guard",
-    "status": "warn",
-    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #205",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "warn",
-    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #2345",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "warn",
-    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #1702",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
+    "time": "14:48",
+    "timestamp": "2026-08-08T14:48:47Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
-    "detail": "schedule on main \u00b7 run #583",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:06Z"
+    "detail": "schedule on main \u00b7 run #584",
+    "time": "14:48",
+    "timestamp": "2026-08-08T14:48:33Z"
   },
   {
-    "title": "PR #1317",
+    "title": "Sync Stripe Products",
+    "status": "bad",
+    "detail": "workflow_run on main \u00b7 run #46",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:45Z"
+  },
+  {
+    "title": "npm_and_yarn in /clearglass-commerce/storefront, /clearglass-commerce/admin, /clearglass-air-control, /apps/autostore/cockpit, /apps/air-control for nanoid, nanoid, nanoid, nanoid, nanoid - Update #1513788538",
     "status": "warn",
-    "detail": "dynamic on refs/pull/1317/head \u00b7 run #3762",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:06Z"
+    "detail": "dynamic on main \u00b7 run #77",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:27Z"
   },
   {
-    "title": ".github/workflows/auto-heal.yml",
-    "status": "bad",
-    "detail": "push on codex/aegis-glass-global \u00b7 run #33",
-    "time": "13:55",
-    "timestamp": "2026-08-08T13:55:59Z"
+    "title": "npm_and_yarn in /apps/artemis-browser, /apps/procurement-legal-tech for nanoid, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next - Update #1513788537",
+    "status": "warn",
+    "detail": "dynamic on main \u00b7 run #76",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:27Z"
   },
   {
-    "title": ".github/workflows/auto-heal.yml",
+    "title": "Repository Health",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #205",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Security",
     "status": "bad",
-    "detail": "push on codex/aegis-glass-global \u00b7 run #32",
-    "time": "13:55",
-    "timestamp": "2026-08-08T13:55:35Z"
+    "detail": "push on main \u00b7 run #2049",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #2018",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #2348",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #1660",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Site Integrity Guard",
+    "status": "ok",
+    "detail": "push on main \u00b7 run #208",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "CI",
+    "status": "bad",
+    "detail": "push on main \u00b7 run #2282",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "bad",
+    "detail": "push on main \u00b7 run #1705",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
   }
 ]

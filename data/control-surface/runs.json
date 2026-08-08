@@ -1,142 +1,142 @@
 [
   {
-    "title": "Repository Health #202",
-    "status": "ok",
-    "detail": "success \u00b7 pull_request on codex/aegis-glass-global",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "PR Automation #1089",
-    "status": "warn",
-    "detail": "in_progress \u00b7 pull_request on codex/aegis-glass-global",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Security #2046",
-    "status": "warn",
-    "detail": "queued \u00b7 pull_request on codex/aegis-glass-global",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "CI #2279",
-    "status": "warn",
-    "detail": "queued \u00b7 pull_request on codex/aegis-glass-global",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Policy Gate #2015",
-    "status": "warn",
-    "detail": "in_progress \u00b7 pull_request on codex/aegis-glass-global",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Site Integrity Guard #205",
-    "status": "warn",
-    "detail": "in_progress \u00b7 pull_request on codex/aegis-glass-global",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #2345",
-    "status": "warn",
-    "detail": "in_progress \u00b7 pull_request on codex/aegis-glass-global",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Defender Watch #1702",
-    "status": "warn",
-    "detail": "in_progress \u00b7 pull_request on codex/aegis-glass-global",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:09Z"
-  },
-  {
-    "title": "Control Surface Feeds #583",
+    "title": "Control Surface Feeds #584",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:06Z"
+    "time": "14:48",
+    "timestamp": "2026-08-08T14:48:33Z"
   },
   {
-    "title": "PR #1317 #3762",
+    "title": "Sync Stripe Products #46",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_run on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:45Z"
+  },
+  {
+    "title": "npm_and_yarn in /clearglass-commerce/storefront, /clearglass-commerce/admin, /clearglass-air-control, /apps/autostore/cockpit, /apps/air-control for nanoid, nanoid, nanoid, nanoid, nanoid - Update #1513788538 #77",
     "status": "warn",
-    "detail": "in_progress \u00b7 dynamic on refs/pull/1317/head",
-    "time": "13:56",
-    "timestamp": "2026-08-08T13:56:06Z"
+    "detail": "queued \u00b7 dynamic on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:27Z"
   },
   {
-    "title": ".github/workflows/auto-heal.yml #33",
-    "status": "bad",
-    "detail": "failure \u00b7 push on codex/aegis-glass-global",
-    "time": "13:55",
-    "timestamp": "2026-08-08T13:55:59Z"
+    "title": "npm_and_yarn in /apps/artemis-browser, /apps/procurement-legal-tech for nanoid, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next, next - Update #1513788537 #76",
+    "status": "warn",
+    "detail": "queued \u00b7 dynamic on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:27Z"
   },
   {
-    "title": ".github/workflows/auto-heal.yml #32",
-    "status": "bad",
-    "detail": "failure \u00b7 push on codex/aegis-glass-global",
-    "time": "13:55",
-    "timestamp": "2026-08-08T13:55:35Z"
-  },
-  {
-    "title": ".github/workflows/auto-heal.yml #31",
-    "status": "bad",
-    "detail": "failure \u00b7 push on codex/aegis-glass-global",
-    "time": "13:55",
-    "timestamp": "2026-08-08T13:55:10Z"
-  },
-  {
-    "title": ".github/workflows/auto-heal.yml #30",
-    "status": "bad",
-    "detail": "failure \u00b7 push on codex/aegis-glass-global",
-    "time": "13:54",
-    "timestamp": "2026-08-08T13:54:46Z"
-  },
-  {
-    "title": ".github/workflows/auto-heal.yml #29",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "13:54",
-    "timestamp": "2026-08-08T13:54:28Z"
-  },
-  {
-    "title": "Sync Stripe Products #44",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "13:46",
-    "timestamp": "2026-08-08T13:46:04Z"
-  },
-  {
-    "title": "Sync Stripe Products #43",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "13:45",
-    "timestamp": "2026-08-08T13:45:25Z"
-  },
-  {
-    "title": "Repository Health #201",
+    "title": "Repository Health #205",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "13:45",
-    "timestamp": "2026-08-08T13:45:18Z"
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
   },
   {
-    "title": "Policy Gate #2014",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "13:45",
-    "timestamp": "2026-08-08T13:45:18Z"
-  },
-  {
-    "title": "Internal Link Authority #391",
+    "title": "Security #2049",
     "status": "bad",
     "detail": "failure \u00b7 push on main",
-    "time": "13:45",
-    "timestamp": "2026-08-08T13:45:18Z"
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Policy Gate #2018",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #2348",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Deploy Pages #1660",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Site Integrity Guard #208",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "CI #2282",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "Defender Watch #1705",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": "ClearGlass GitHub Pages Check #57",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:11Z"
+  },
+  {
+    "title": ".github/workflows/auto-heal.yml #36",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:10Z"
+  },
+  {
+    "title": "pages build and deployment #2180",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:10Z"
+  },
+  {
+    "title": "Push on main #3766",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "14:29",
+    "timestamp": "2026-08-08T14:29:10Z"
+  },
+  {
+    "title": "Repository Health #204",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on codex/create-production-ready-website-for-procurement-legal-tech",
+    "time": "14:28",
+    "timestamp": "2026-08-08T14:28:36Z"
+  },
+  {
+    "title": "Defender Watch #1704",
+    "status": "bad",
+    "detail": "failure \u00b7 pull_request on codex/create-production-ready-website-for-procurement-legal-tech",
+    "time": "14:28",
+    "timestamp": "2026-08-08T14:28:36Z"
+  },
+  {
+    "title": "Policy Gate #2017",
+    "status": "ok",
+    "detail": "success \u00b7 pull_request on codex/create-production-ready-website-for-procurement-legal-tech",
+    "time": "14:28",
+    "timestamp": "2026-08-08T14:28:36Z"
+  },
+  {
+    "title": "Security #2048",
+    "status": "bad",
+    "detail": "failure \u00b7 pull_request on codex/create-production-ready-website-for-procurement-legal-tech",
+    "time": "14:28",
+    "timestamp": "2026-08-08T14:28:36Z"
   }
 ]

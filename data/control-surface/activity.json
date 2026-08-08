@@ -3,91 +3,91 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "13:11",
-    "timestamp": "2026-08-08T13:11:21Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "warn",
-    "detail": "schedule on main \u00b7 run #582",
-    "time": "13:11",
-    "timestamp": "2026-08-08T13:11:01Z"
-  },
-  {
-    "title": "Defender Watch",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #1696",
-    "time": "13:02",
-    "timestamp": "2026-08-08T13:02:43Z"
-  },
-  {
-    "title": "Health Monitor",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #279",
-    "time": "12:55",
-    "timestamp": "2026-08-08T12:55:22Z"
-  },
-  {
-    "title": "4-D Dominance Pipeline",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #60",
-    "time": "12:34",
-    "timestamp": "2026-08-08T12:34:09Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #234",
-    "time": "12:33",
-    "timestamp": "2026-08-08T12:33:34Z"
-  },
-  {
-    "title": "Organic Growth \u2014 Daily Content",
-    "status": "bad",
-    "detail": "schedule on main \u00b7 run #15",
-    "time": "12:29",
-    "timestamp": "2026-08-08T12:29:36Z"
-  },
-  {
-    "title": "Sync Stripe Products",
-    "status": "bad",
-    "detail": "workflow_run on main \u00b7 run #41",
-    "time": "12:06",
-    "timestamp": "2026-08-08T12:06:28Z"
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:22Z"
   },
   {
     "title": "Repository Health",
     "status": "ok",
-    "detail": "push on main \u00b7 run #196",
-    "time": "12:05",
-    "timestamp": "2026-08-08T12:05:53Z"
+    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #202",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:09Z"
   },
   {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #2339",
-    "time": "12:05",
-    "timestamp": "2026-08-08T12:05:52Z"
+    "title": "PR Automation",
+    "status": "warn",
+    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #1089",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:09Z"
   },
   {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #52",
-    "time": "12:05",
-    "timestamp": "2026-08-08T12:05:52Z"
+    "title": "Security",
+    "status": "warn",
+    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #2046",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:09Z"
   },
   {
-    "title": "SEO Continuous Audit",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #22",
-    "time": "12:05",
-    "timestamp": "2026-08-08T12:05:52Z"
+    "title": "CI",
+    "status": "warn",
+    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #2279",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:09Z"
+  },
+  {
+    "title": "Policy Gate",
+    "status": "warn",
+    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #2015",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:09Z"
   },
   {
     "title": "Site Integrity Guard",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #199",
-    "time": "12:05",
-    "timestamp": "2026-08-08T12:05:52Z"
+    "status": "warn",
+    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #205",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:09Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "warn",
+    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #2345",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:09Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "warn",
+    "detail": "pull_request on codex/aegis-glass-global \u00b7 run #1702",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:09Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "warn",
+    "detail": "schedule on main \u00b7 run #583",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:06Z"
+  },
+  {
+    "title": "PR #1317",
+    "status": "warn",
+    "detail": "dynamic on refs/pull/1317/head \u00b7 run #3762",
+    "time": "13:56",
+    "timestamp": "2026-08-08T13:56:06Z"
+  },
+  {
+    "title": ".github/workflows/auto-heal.yml",
+    "status": "bad",
+    "detail": "push on codex/aegis-glass-global \u00b7 run #33",
+    "time": "13:55",
+    "timestamp": "2026-08-08T13:55:59Z"
+  },
+  {
+    "title": ".github/workflows/auto-heal.yml",
+    "status": "bad",
+    "detail": "push on codex/aegis-glass-global \u00b7 run #32",
+    "time": "13:55",
+    "timestamp": "2026-08-08T13:55:35Z"
   }
 ]

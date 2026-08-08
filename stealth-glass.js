@@ -122,6 +122,9 @@
     "#cg-stealth-btn.is-on .cg-sg-glow{background:radial-gradient(60% 120% at 18% 50%,rgba(120,224,200,.28),transparent 70%)}",
     "#cg-stealth-btn.is-on::after{background:linear-gradient(150deg,rgba(160,255,238,.6),rgba(120,224,200,.06) 45%,rgba(120,224,200,.2))}",
 
+    /* shared Aegis/Stealth wrapper — retain fixed offsets as standalone fallbacks */
+    "#cg-security-stack #cg-stealth-btn{position:relative;right:auto;bottom:auto;align-self:flex-end;pointer-events:auto}",
+
     /* mobile — a touch smaller, still ≥24px (WCAG 2.2 target size) */
     "@media(max-width:640px){#cg-stealth-btn{right:var(--cg-security-edge,14px);bottom:var(--cg-security-bottom,72px);height:25px;font-size:9px;padding:0 10px 0 8px}}",
 
@@ -195,6 +198,13 @@
      mounted by a separate deferred script, so measure its real rendered size
      rather than duplicating its responsive dimensions here. */
   function alignWithAegis(btn) {
+    var stack = document.getElementById("cg-security-stack");
+    if (stack) {
+      if (btn.parentNode !== stack) stack.insertBefore(btn, stack.firstChild);
+      btn.style.removeProperty("--cg-security-bottom");
+      btn.style.removeProperty("--cg-security-edge");
+      return;
+    }
     var status = document.getElementById("aegis-glass-status");
     if (!status) {
       var mountObserver = new MutationObserver(function () {

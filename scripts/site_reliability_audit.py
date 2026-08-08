@@ -211,7 +211,7 @@ def check_sitemap() -> list[AuditIssue]:
     issues: list[AuditIssue] = []
     sitemap = REPO_ROOT / "sitemap.xml"
     if not sitemap.exists():
-        return [AuditIssue("WARN", "No sitemap.xml found")
+        return [AuditIssue("WARN", "No sitemap.xml found")]
 
     try:
         tree = ET.parse(sitemap)

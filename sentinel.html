@@ -108,6 +108,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;bac
 .center{display:grid;grid-template-rows:1fr auto;gap:12px;min-height:0}
 .stage{position:relative;border-radius:13px;overflow:hidden;border:1px solid var(--line);background:#0a0309}
 #map{position:absolute;inset:0;width:100%;height:100%;background:#0a0309}
+.fusion{position:absolute;inset:0;z-index:850;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 50% 45%,rgba(54,182,255,.16),transparent 34%),rgba(3,6,16,.88);backdrop-filter:blur(9px);transition:opacity .28s ease,visibility .28s ease}
+.fusion[hidden]{display:none}.fusion-grid{position:relative;display:grid;grid-template-columns:repeat(2,minmax(150px,210px));gap:42px 74px}.fusion-grid::before{content:"";position:absolute;inset:50% -9%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--violet),transparent);box-shadow:0 0 18px var(--cyan);animation:fusion-flow 3s linear infinite}.fusion-core{position:absolute;left:50%;top:50%;z-index:2;display:grid;place-items:center;width:82px;height:82px;border:1px solid var(--cyan);border-radius:50%;background:#071326;transform:translate(-50%,-50%);box-shadow:0 0 0 10px rgba(54,182,255,.05),0 0 35px rgba(54,182,255,.3);font:800 10px/1.35 var(--display);letter-spacing:.12em;text-align:center}.fusion-core::after{content:"";position:absolute;inset:-12px;border:1px dashed rgba(167,139,250,.55);border-radius:50%;animation:fusion-orbit 10s linear infinite}.fusion-node{position:relative;z-index:3;padding:13px;border:1px solid rgba(124,150,255,.27);border-radius:11px;background:linear-gradient(145deg,rgba(18,29,56,.96),rgba(10,12,31,.96));box-shadow:0 12px 28px rgba(0,0,0,.25)}.fusion-node b{display:block;color:#fff;font:700 11px var(--display);letter-spacing:.08em}.fusion-node span{display:block;margin-top:5px;color:var(--dim);font:9px/1.45 var(--mono)}.fusion-node i{position:absolute;right:10px;top:10px;width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 9px var(--ok)}.fusion-badge{position:absolute;left:12px;bottom:10px;color:#8ca1c5;font:8px var(--mono);letter-spacing:.1em;text-transform:uppercase}.fusion-close{position:absolute;right:12px;top:10px;z-index:4;border:1px solid var(--line-2);border-radius:8px;background:rgba(7,10,23,.9);color:#fff;padding:7px 10px;cursor:pointer}.fusion-close:focus-visible{outline:3px solid #fff;outline-offset:2px}@keyframes fusion-orbit{to{transform:rotate(360deg)}}@keyframes fusion-flow{50%{filter:brightness(1.9);transform:scaleX(.92)}}
 .leaflet-container{background:#0a0309!important;font-family:var(--mono)!important}
 .mtag{position:absolute;z-index:800;font-family:var(--mono);font-size:9px;letter-spacing:.13em;color:rgba(188,212,255,.75);text-transform:uppercase;background:rgba(7,9,20,.6);padding:3px 7px;border-radius:5px;pointer-events:none}
 .mtag.tl{top:11px;left:11px;line-height:1.7}.mtag.br{bottom:11px;right:11px;text-align:right}
@@ -173,6 +175,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;bac
 .toast .i{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;border:1px solid var(--line)}
 .toast b{font-size:12px;display:block}.toast span{font-family:var(--mono);font-size:9px;color:var(--dim)}
 @media(max-width:1080px){.main{grid-template-columns:1fr}.rail,.rightcol{display:none}.clock{display:none}}
+@media(max-width:620px){.fusion-grid{grid-template-columns:1fr 1fr;gap:76px 12px}.fusion-node{padding:10px}.fusion-node span{font-size:8px}.fusion-core{width:70px;height:70px}}
+@media(prefers-reduced-motion:reduce){.dot,.feedstat .led.live,.fusion-grid::before,.fusion-core::after,.feedbox .rec::before{animation:none!important}.drawer,.toast{transition:none}}
 </style>
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="theme.css">
@@ -206,6 +210,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;bac
       <button class="btn amber" id="btnCam">📷 Connect owned camera</button>
       <button class="btn" id="btnPfas">⬡ PERCIVAL · PFAS (Burlington)</button>
       <button class="btn" id="btnRefresh">↻ Refresh live feeds</button>
+      <button class="btn amber" id="btnFusion" aria-controls="fusionLayer" aria-expanded="false">◈ Artemis agent mesh</button>
       <div class="railsub">Map layers</div>
       <div id="layers"></div>
     </div>
@@ -219,6 +224,17 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:61;bac
           <p>SENTINEL runs on live data: your device location (with consent), real map tiles, and live <b>USGS earthquake</b> + <b>NWS weather-alert</b> feeds. No hardcoded data. Asset/hazard focus only — never person identification.</p>
           <button class="btn" id="btnLoc2" style="margin:0">⬢ Enable location awareness</button>
         </div></div>
+        <section class="fusion" id="fusionLayer" aria-label="ClearGlassInc Artemis architecture preview" hidden>
+          <button class="fusion-close" id="fusionClose" type="button">Close mesh</button>
+          <div class="fusion-grid">
+            <div class="fusion-core">ARTEMIS<br>POLICY CORE</div>
+            <article class="fusion-node"><i></i><b>GOTHAM</b><span>Operational intelligence<br>entities · cases · tracking</span></article>
+            <article class="fusion-node"><i></i><b>FOUNDRY</b><span>Ontology + pipelines<br>lineage · temporal state</span></article>
+            <article class="fusion-node"><i></i><b>AIP</b><span>Governed copilots<br>evals · agent workflows</span></article>
+            <article class="fusion-node"><i></i><b>APOLLO</b><span>Controlled delivery<br>health · rollback · policy</span></article>
+          </div>
+          <div class="fusion-badge">Target-state blueprint · consequential actions require human approval</div>
+        </section>
       </div>
       <div class="panel console">
         <div class="p-t"><span class="i"></span>Command Console <small>live · fail-closed</small></div>
@@ -586,6 +602,26 @@ function startPresence(){
 }
 $('drX').onclick=()=>{$('drawer').classList.remove('open');};
 
+/* ---------- Artemis governed agent-mesh blueprint ---------- */
+function setFusion(open){
+  const layer=$('fusionLayer'),button=$('btnFusion');
+  layer.hidden=!open;button.setAttribute('aria-expanded',String(open));
+  if(open){
+    addTL('ok','Artemis target-state agent mesh opened','local blueprint');
+    toast('◈','Artemis mesh','Governed architecture preview');
+    $('fusionClose').focus();
+  }else button.focus();
+}
+function openArtemisBlueprint(){
+  $('drIc').textContent='◈';$('drIc').style.color='#36b6ff';
+  $('drNm').textContent='ClearGlassInc Artemis';$('drTy').textContent='governed intelligence architecture · target state';
+  $('drBody').innerHTML=`<div class="privacy">This is an <b style="color:#7fe8db">implementation blueprint</b>, not evidence of a provisioned Palantir environment. Model output proposes; deterministic policy and an authorized human approve consequential actions.</div>
+    <div class="meta"><div class="c"><div class="k">Gotham</div><div class="v">Investigations + entity operations</div></div><div class="c"><div class="k">Foundry</div><div class="v">Ontology + governed data pipelines</div></div><div class="c"><div class="k">AIP</div><div class="v">Copilots, agents + evaluation</div></div><div class="c"><div class="k">Apollo</div><div class="v">Deployment, health + rollback</div></div></div>
+    <div class="note"><b>Self-improvement loop</b><br>1. Capture corrections and outcomes with provenance.<br>2. Build versioned evaluation sets.<br>3. Propose prompt, routing, or workflow changes.<br>4. Run offline safety, quality, latency, and drift gates.<br>5. Require human approval for promotion.<br>6. Canary through Apollo and automatically roll back on guardrail regression.</div>
+    <div class="note"><b>Operational state machine</b><br>OBSERVE → CORRELATE → DRAFT → POLICY CHECK → HUMAN REVIEW → EXECUTE → AUDIT. Unknown or denied transitions fail closed; approvals append records and never rewrite history.</div>`;
+  $('drawer').classList.add('open');
+}
+
 /* ---------- console + deny gate ---------- */
 const cfeed=$('cfeed');
 function aref(){return 'SENT-'+Math.random().toString(16).slice(2,8).toUpperCase();}
@@ -629,6 +665,7 @@ function handle(raw){const q=raw.trim();if(!q)return;userSay(q);const t=q.toLowe
       <div class="ln"><span class="k">Risk</span><span>${a0?(a0.sev||'weather')+' — '+a0.event:(q0&&q0.mag>=4?'significant seismic activity':'nominal')}</span></div>
       <div class="ln"><span class="k">Next step</span><span>${a0?'brief site teams on '+a0.event:'monitor; no action required'}.</span></div>
       <div class="ln"><span class="k">Audit</span><span>${r}</span></div></div>`);toast('🧾','Live report','Real feeds, timestamped');return;}
+  if(/artemis|agent mesh|palantir|gotham|foundry|aip|apollo|self.?improv/.test(t)){openArtemisBlueprint();say('<b>ClearGlassInc Artemis blueprint opened.</b> The mesh separates operational intelligence, ontology, governed AI, and deployment control. Improvements remain proposals until evaluation and explicit human approval.');return;}
   if(/status|health|online/.test(t)){say(`<b>Status: ARMED · fail-closed.</b> Location ${state.feeds.location.toUpperCase()}, USGS ${state.feeds.quakes.toUpperCase()}, NWS ${state.feeds.weather.toUpperCase()}, camera ${state.feeds.camera.toUpperCase()}. ${state.juris?('Jurisdiction '+state.juris+'.'):''} All sources live + public; no person identification active.`);return;}
   if(/help|what can|capab/.test(t)){say(`I run on <b>live public data</b>: device location, real map tiles, live <b>USGS</b> quakes + <b>NWS</b> alerts, and on-device <b>anonymous</b> camera presence. Try: <i>enable location</i> · <i>quakes near me</i> · <i>weather alerts</i> · <i>connect camera</i> · <i>report</i>. I never identify or track people.`);return;}
   say(`Acknowledged. I operate on <b>live, lawful, asset-focused sources</b> only. Try: <i>status</i> · <i>quakes</i> · <i>weather alerts</i> · <i>report</i>. Person identification is denied by design.`);
@@ -644,6 +681,8 @@ $('btnLoc').onclick=enableLocation;$('btnLoc2').onclick=enableLocation;
 $('btnCam').onclick=connectCamera;
 $('btnPfas').onclick=()=>{toast('⬡','PFAS','Loading Burlington demo layer');loadPfas();};
 $('btnRefresh').onclick=()=>{toast('↻','Refresh','Reloading live feeds');loadAll();};
+$('btnFusion').onclick=()=>setFusion($('fusionLayer').hidden);
+$('fusionClose').onclick=()=>setFusion(false);
 $('jurisPill').onclick=enableLocation;
 
 renderFeeds();renderLayers();initMap();

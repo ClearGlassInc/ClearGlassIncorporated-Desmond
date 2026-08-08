@@ -1,0 +1,58 @@
+{
+  "run": {
+    "run_utc": "2026-08-08T10:47:52+00:00",
+    "app_name": "ClearGlassInc Artemis",
+    "total_threads": 5,
+    "total_assets": 5,
+    "output_dir": "marketing/output",
+    "site_page": "threads.html",
+    "publication_mode": "manual-review-only"
+  },
+  "assets": [
+    {
+      "channel": "linkedin",
+      "asset": "launch_post",
+      "objective": "Drive qualified repository and website visits",
+      "copy": "ClearGlassInc Artemis is built for teams that need AI systems to remain auditable when decisions become consequential.\n\nThe system separates model output from authority through evidence lineage, deterministic policy, explicit approvals, and reversible execution.\n\nThe repository includes the architecture map, implementation surfaces, security model, tests, and contribution path.\n\nExplore the live platform: https://www.clearglassinc.com/?utm_source=linkedin&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=launch_post\n\nTechnical question: which trust boundary would you inspect first?",
+      "destination": "https://www.clearglassinc.com/?utm_source=linkedin&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=launch_post",
+      "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"],
+      "review_required": true
+    },
+    {
+      "channel": "x",
+      "asset": "launch_post",
+      "objective": "Create technical curiosity without unsupported claims",
+      "copy": "A model can recommend the next move. It should not manufacture the authority to execute it.\n\nClearGlassInc Artemis separates evidence → policy → approval → execution → audit.\n\nArchitecture + live platform: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=launch_post\n\nWhat trust boundary would you challenge first?",
+      "destination": "https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=launch_post",
+      "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"],
+      "review_required": true
+    },
+    {
+      "channel": "reddit",
+      "asset": "technical_feedback",
+      "objective": "Request architecture feedback in relevant communities",
+      "copy": "ClearGlassInc Artemis — governed agentic infrastructure for high-assurance workflows.\n\nI built this around a specific design constraint: model output is untrusted until deterministic policy and, where required, human approval make the transition valid.\n\nI would especially value technical feedback on setup friction, trust boundaries, missing integrations, and production-readiness concerns.\n\nRepository and live platform: https://www.clearglassinc.com/?utm_source=reddit&utm_medium=community&utm_campaign=artemis_launch&utm_content=technical_feedback\n\nThis is a focused request for technical criticism, not bulk promotion.",
+      "destination": "https://www.clearglassinc.com/?utm_source=reddit&utm_medium=community&utm_campaign=artemis_launch&utm_content=technical_feedback",
+      "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"],
+      "review_required": true
+    },
+    {
+      "channel": "devto",
+      "asset": "article_brief",
+      "objective": "Convert repository architecture into an educational article",
+      "copy": "Title: Building an AI Control Plane That Cannot Manufacture Its Own Authority\n\nCover the problem, trust boundaries, typed tools, deterministic policy, approval states, audit evidence, rollback, and what remains target-state rather than deployed.\n\nCanonical project destination: https://www.clearglassinc.com/?utm_source=devto&utm_medium=earned_content&utm_campaign=artemis_launch&utm_content=architecture_article",
+      "destination": "https://www.clearglassinc.com/?utm_source=devto&utm_medium=earned_content&utm_campaign=artemis_launch&utm_content=architecture_article",
+      "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md", "docs/clearglassinc_artemis_self_evolving_platform.md"],
+      "review_required": true
+    },
+    {
+      "channel": "hackernews",
+      "asset": "show_hn",
+      "objective": "Invite architecture and operational-model critique",
+      "copy": "Show HN: ClearGlassInc Artemis — governed agent infrastructure with explicit authorization boundaries\n\nI built Artemis to separate model recommendations from operational authority. The repository combines policy-constrained agents, evidence lineage, approval gates, audit trails, and deployable product surfaces.\n\nThe part I would value criticism on most is the boundary between autonomous analysis and consequential execution.\n\nProject: https://www.clearglassinc.com/?utm_source=hackernews&utm_medium=community&utm_campaign=artemis_launch&utm_content=show_hn",
+      "destination": "https://www.clearglassinc.com/?utm_source=hackernews&utm_medium=community&utm_campaign=artemis_launch&utm_content=show_hn",
+      "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"],
+      "review_required": true
+    }
+  ]
+}

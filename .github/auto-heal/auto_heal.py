@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Conservative GitHub Actions self-healing controller.
-
-Uses only Python stdlib. It classifies failed jobs, retries transient infrastructure
-failures, invokes deterministic workflow repair through an output flag, records an
-audit trail, learns stable unknown signatures, and escalates unsafe fixes to issues.
-"""
+"""Conservative GitHub Actions self-healing controller."""
 from __future__ import annotations
 
 import json
@@ -12,7 +7,6 @@ import os
 import re
 import sys
 import urllib.error
-import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -46,7 +40,7 @@ def save_json(path: Path, value: Any) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=False) + "\n", encoding="utf-8")
 
 
-def api(method: str, path: str, payload: dict[str, Any] | None = None, accept: str = "application/vnd.github+json") -> Any:
+def api(method: str, path: str, payload: dict[str, Any] | None = None) -> Any:
     if not TOKEN or not REPOSITORY:
         raise RuntimeError("GITHUB_TOKEN and GITHUB_REPOSITORY are required")
     body = None if payload is None else json.dumps(payload).encode("utf-8")
@@ -56,7 +50,7 @@ def api(method: str, path: str, payload: dict[str, Any] | None = None, accept: s
         method=method,
         headers={
             "Authorization": f"Bearer {TOKEN}",
-            "Accept": accept,
+            "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
             "User-Agent": "clearglass-auto-heal/1.0",
         },
@@ -113,7 +107,7 @@ def signature(log_text: str) -> str:
         line for line in lines
         if re.search(r"error|failed|failure|exception|fatal|timed out|cancelled|cannot|invalid", line, re.IGNORECASE)
     ]
-    candidate = (interesting[-1] if interesting else (lines[-1] if lines else "unknown failure"))
+    candidate = interesting[-1] if interesting else (lines[-1] if lines else "unknown failure")
     candidate = re.sub(r"\b[0-9a-f]{40}\b", "<sha>", candidate, flags=re.IGNORECASE)
     candidate = re.sub(r"\d{4}-\d{2}-\d{2}T\S+", "<timestamp>", candidate)
     return candidate[:300]
@@ -167,9 +161,11 @@ def create_issue(run: dict[str, Any], category: str, strategy: str, diagnostics:
         labels.append("tests")
     if category == "DEPENDENCY_ERROR":
         labels.append("deps")
-    excerpts = "\n".join(
-        f"- `{d['job']}`: `{d['signature'].replace('`', "'")}`" for d in diagnostics[:8]
-    ) or "- No failed-job log excerpt was available."
+    excerpt_lines: list[str] = []
+    for diag in diagnostics[:8]:
+        clean_sig = str(diag.get("signature", "")).replace("`", "'")
+        excerpt_lines.append(f"- `{diag.get('job', 'unknown')}`: `{clean_sig}`")
+    excerpts = "\n".join(excerpt_lines) or "- No failed-job log excerpt was available."
     body = f"""<!-- auto-heal-run:{run_id} -->
 ## Auto-heal diagnostics
 
@@ -285,14 +281,17 @@ def main() -> int:
         if (run_id, attempt) in seen:
             continue
         category, strategy, diagnostics = job_diagnostics(run_id, compiled)
-        cfg = strategy_config.get("strategies", {}).get(category, strategy_config.get("strategies", {}).get("UNKNOWN_FAILURE", {}))
+        cfg = strategy_config.get("strategies", {}).get(
+            category,
+            strategy_config.get("strategies", {}).get("UNKNOWN_FAILURE", {}),
+        )
         retry_limit = int(cfg.get("retry_limit", 0))
         action = "diagnosed"
         issue_number = None
 
         if category == "INFRASTRUCTURE_ERROR" and attempt <= retry_limit:
-            result = try_api("POST", f"/repos/{REPOSITORY}/actions/runs/{run_id}/rerun-failed-jobs", {})
-            action = "rerun_requested" if result is None else "rerun_requested"
+            try_api("POST", f"/repos/{REPOSITORY}/actions/runs/{run_id}/rerun-failed-jobs", {})
+            action = "rerun_requested"
         elif category == "CONFIG_ERROR" and "workflow_doctor" in cfg.get("automatic_actions", []):
             needs_doctor = True
             action = "workflow_doctor_requested"

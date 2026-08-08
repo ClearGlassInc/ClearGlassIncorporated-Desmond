@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-08-07T08:11:56.825593+00:00",
+  "run_utc": "2026-08-08T07:47:17.961001+00:00",
   "site_url": "https://www.clearglassinc.com",
   "overall_healthy": false,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://www.clearglassinc.com/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 304,
+      "response_ms": 332,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://www.clearglassinc.com/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 166,
+      "response_ms": 154,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://www.clearglassinc.com/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 163,
+      "response_ms": 206,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://www.clearglassinc.com/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 196,
+      "response_ms": 202,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://www.clearglassinc.com/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 200,
+      "response_ms": 205,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,13 +61,15 @@
       "url": "https://www.clearglassinc.com/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 160,
+      "response_ms": 113,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
   "local_issues": [
+    "Page missing ClearGlass logo: blog/ontario-influence-environment-august-2026.html",
+    "Page missing ClearGlass logo: blog/shadow-ai-incident-response-logs-gone.html",
     "Page missing ClearGlass logo: business-productivity-suite.html"
   ],
   "local_warnings": [

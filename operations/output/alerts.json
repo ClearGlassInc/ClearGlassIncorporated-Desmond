@@ -1,16 +1,30 @@
 {
-  "run_utc": "2026-08-07T08:11:56.849925+00:00",
-  "total_alerts": 1,
+  "run_utc": "2026-08-08T07:47:17.983856+00:00",
+  "total_alerts": 3,
   "critical": 0,
-  "warnings": 1,
+  "warnings": 3,
   "github_issue_created": false,
   "alerts": [
     {
       "severity": "warning",
       "source": "site_health",
+      "message": "Page missing ClearGlass logo: blog/ontario-influence-environment-august-2026.html",
+      "detail": "",
+      "detected_utc": "2026-08-08T07:47:17.981935+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: blog/shadow-ai-incident-response-logs-gone.html",
+      "detail": "",
+      "detected_utc": "2026-08-08T07:47:17.981945+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
       "message": "Page missing ClearGlass logo: business-productivity-suite.html",
       "detail": "",
-      "detected_utc": "2026-08-07T08:11:56.847908+00:00"
+      "detected_utc": "2026-08-08T07:47:17.981949+00:00"
     }
   ]
 }

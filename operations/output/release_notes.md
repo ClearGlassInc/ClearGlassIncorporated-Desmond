@@ -1,6 +1,6 @@
-# Release Notes — 2026-08-07
+# Release Notes — 2026-08-08
 
-*1671 commit(s) since v1.0.0*
+*1746 commit(s) since v1.0.0*
 
 ## New Features
 
@@ -303,6 +303,17 @@
 
 ## Maintenance
 
+- Publish workstation integrity checksums (`08836df`)
+- Upgrade Ontario influence brief into high-assurance OSINT workstation (`d25dd2f`)
+- Add high-assurance Ontario OSINT analyst workbench (`fe91389`)
+- Add cryptographic provenance manifest for Ontario OSINT brief (`d7c65a8`)
+- Upgrade Ontario influence evidence ledger to v2 (`1ac3138`)
+- Add Shadow AI incident response to Atom feed (`e05933e`)
+- Index Shadow AI incident response long read (`adf83a2`)
+- Add Shadow AI incident response long read (`9d086ff`)
+- Security hardening: enforce CSP and block public secret leakage (#1303) (`9ce42a3`)
+- Remove unnecessary Advanced Security permission from enterprise workflow (`f4539f5`)
+- Remove unnecessary Advanced Security permission from API audit (`d4ca7bd`)
 - Integrate Business Productivity Suite into product catalog (`f5c38b2`)
 - Run one-time Business Productivity Suite catalog integration (`ced9095`)
 - Add Business Productivity Suite product integration (`8ddbe93`)
@@ -1017,6 +1028,28 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`57bcdc5`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`e769bf6`)
+- refresh control-surface data feeds [skip ci] (`f93aadd`)
+- refresh control-surface data feeds [skip ci] (`9f15d25`)
+- refresh control-surface data feeds [skip ci] (`253d562`)
+- refresh control-surface data feeds [skip ci] (`5324a70`)
+- refresh control-surface data feeds [skip ci] (`ec17cef`)
+- refresh control-surface data feeds [skip ci] (`41781c2`)
+- refresh control-surface data feeds [skip ci] (`805d4dc`)
+- refresh control-surface data feeds [skip ci] (`54a7300`)
+- refresh control-surface data feeds [skip ci] (`260f4e0`)
+- refresh control-surface data feeds [skip ci] (`42cd026`)
+- refresh control-surface data feeds [skip ci] (`13bc7cd`)
+- refresh control-surface data feeds [skip ci] (`a0ec140`)
+- refresh control-surface data feeds [skip ci] (`ccf16e7`)
+- refresh control-surface data feeds [skip ci] (`b3d1919`)
+- refresh control-surface data feeds [skip ci] (`e4cbbcc`)
+- refresh control-surface data feeds [skip ci] (`c6f0284`)
+- refresh control-surface data feeds [skip ci] (`d412518`)
+- refresh control-surface data feeds [skip ci] (`9bc66ed`)
+- refresh control-surface data feeds [skip ci] (`925a4a7`)
+- update generated outputs — 2026-08-07 08:11 UTC [skip ci] (`ae63d74`)
 - refresh SEO dashboard feeds [skip ci] (`066e311`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`7b18a88`)
 - refresh control-surface data feeds [skip ci] (`658567e`)
@@ -1654,6 +1687,43 @@
 
 ## Security
 
+- **edge:** document rate-limit and provider failure behavior (`bb8a63a`)
+- **edge:** add complete safe edge test matrix (`faaf045`)
+- **edge:** add safe CDN cache and origin-shield policy template (`84f8e50`)
+- **edge:** detect oversized request metadata and optional body anomalies (`800244b`)
+- **edge:** add conservative request-size controls (`52e1cf8`)
+- **edge:** expose bot reputation quarantine and ASN example controls (`4cc5356`)
+- **edge:** implement explicit IP quarantine geo and ASN controls (`cb6a640`)
+- **edge:** add reusable IP ASN and restricted-host expressions (`112b2be`)
+- **edge:** add optional Cloudflare bot-management baseline (`267111c`)
+- **edge:** add bot IP quarantine and ASN controls (`277b409`)
+- **edge:** document phase ownership CI environments and least privilege (`d7c515c`)
+- **edge:** add validated plan-approved edge deployment workflow (`5f528f3`)
+- **edge:** make policy regression tests dependency-free (`6f77681`)
+- **edge:** add policy safety regression tests (`3ca21cb`)
+- **edge:** add provider-neutral observability and alert template (`53bd047`)
+- **edge:** add safe dry-run negative security probes (`c13a631`)
+- **edge:** add low-volume functional edge smoke tests (`cce29b9`)
+- **edge:** add dependency-free policy safety validator (`7988f1f`)
+- **edge:** make example configuration non-enforcing by default (`a3e7119`)
+- **edge:** tighten default-off gates and add dynamic-origin variables (`9e3dd8b`)
+- **edge:** add privacy-minimized firewall event logging (`7c31adc`)
+- **edge:** enforce edge security headers with report-only CSP (`f65b721`)
+- **edge:** add route-specific Cloudflare rate limits (`b35538e`)
+- **edge:** add staged custom and managed Cloudflare WAF (`d4822b5`)
+- **edge:** add Cloudflare provider and shared expressions (`87bd276`)
+- **edge:** add typed Terraform perimeter variables (`50c5728`)
+- **edge:** add operator variable template (`acfbc8c`)
+- **edge:** add baseline provider-neutral edge policy (`2b25954`)
+- **edge:** add provider-neutral policy schema (`6c51669`)
+- **edge:** add executable edge perimeter README (`7db55cf`)
+- **edge:** add rollback and recovery procedures (`a2e7237`)
+- **edge:** add edge incident response runbooks (`3c96e18`)
+- **edge:** define WAF bot reputation and rate-limit policy (`4f9ea20`)
+- **edge:** add DNS cutover and rollback checklist (`46104fd`)
+- **edge:** add provider setup and manual control guidance (`d301fc0`)
+- **edge:** document target architecture and control ownership (`aa81baf`)
+- **edge:** assess current perimeter and Pages constraints (`2e81051`)
 - restrict Artemis canary promotion reviews (`2fdb8c4`)
 - enforce dependency audit failures (`6a1db72`)
 - harden ClearGlass Artemis audit controls (`66fe6b2`)
@@ -1662,6 +1732,7 @@
 
 ## Style
 
+- **edge:** apply Terraform formatting to bot management (`44ca2c3`)
 - **outreach:** make draft banner string concatenation explicit (`d4e5147`)
 
 ## Build
@@ -1670,6 +1741,10 @@
 
 ## Other
 
+- syndicate Ontario influence OSINT brief (`2a2273a`)
+- register Ontario influence OSINT brief (`378e521`)
+- add Ontario influence evidence ledger (`4bb21fc`)
+- publish Ontario influence environment OSINT brief (`6d3bbaa`)
 - add search authority and continuous audit layer (#1290) (`249d596`)
 - automate Cloudflare email routing for Desmond (`ea6b053`)
 - give the desk clip a real pause control (`5860819`)

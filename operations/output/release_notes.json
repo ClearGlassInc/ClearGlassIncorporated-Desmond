@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-08-07T08:11:55.578839+00:00",
+  "run_utc": "2026-08-08T07:47:16.641722+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1671,
+  "commit_count": 1746,
   "sections": {
     "New Features": [
       {
@@ -2546,6 +2546,105 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "08836df",
+        "type": "chore",
+        "scope": null,
+        "subject": "Publish workstation integrity checksums",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "d25dd2f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade Ontario influence brief into high-assurance OSINT workstation",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "fe91389",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add high-assurance Ontario OSINT analyst workbench",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "d7c65a8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add cryptographic provenance manifest for Ontario OSINT brief",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "1ac3138",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade Ontario influence evidence ledger to v2",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "e05933e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Shadow AI incident response to Atom feed",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "adf83a2",
+        "type": "chore",
+        "scope": null,
+        "subject": "Index Shadow AI incident response long read",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "9d086ff",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Shadow AI incident response long read",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "9ce42a3",
+        "type": "chore",
+        "scope": null,
+        "subject": "Security hardening: enforce CSP and block public secret leakage (#1303)",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "f4539f5",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove unnecessary Advanced Security permission from enterprise workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "d4ca7bd",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove unnecessary Advanced Security permission from API audit",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
       {
         "sha": "f5c38b2",
         "type": "chore",
@@ -8948,6 +9047,204 @@
     ],
     "Automation": [
       {
+        "sha": "57bcdc5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "e769bf6",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "f93aadd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "9f15d25",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "253d562",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "5324a70",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "ec17cef",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "41781c2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "805d4dc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "54a7300",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "260f4e0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "42cd026",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "13bc7cd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "a0ec140",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "ccf16e7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "b3d1919",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "e4cbbcc",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "c6f0284",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "d412518",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "9bc66ed",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "925a4a7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "ae63d74",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-07 08:11 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
         "sha": "066e311",
         "type": "bot",
         "scope": null,
@@ -14656,6 +14953,339 @@
     ],
     "Security": [
       {
+        "sha": "bb8a63a",
+        "type": "security",
+        "scope": "edge",
+        "subject": "document rate-limit and provider failure behavior",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "faaf045",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add complete safe edge test matrix",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "84f8e50",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add safe CDN cache and origin-shield policy template",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "800244b",
+        "type": "security",
+        "scope": "edge",
+        "subject": "detect oversized request metadata and optional body anomalies",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "52e1cf8",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add conservative request-size controls",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "4cc5356",
+        "type": "security",
+        "scope": "edge",
+        "subject": "expose bot reputation quarantine and ASN example controls",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "cb6a640",
+        "type": "security",
+        "scope": "edge",
+        "subject": "implement explicit IP quarantine geo and ASN controls",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "112b2be",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add reusable IP ASN and restricted-host expressions",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "267111c",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add optional Cloudflare bot-management baseline",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "277b409",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add bot IP quarantine and ASN controls",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "d7c515c",
+        "type": "security",
+        "scope": "edge",
+        "subject": "document phase ownership CI environments and least privilege",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "5f528f3",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add validated plan-approved edge deployment workflow",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "6f77681",
+        "type": "security",
+        "scope": "edge",
+        "subject": "make policy regression tests dependency-free",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "3ca21cb",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add policy safety regression tests",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "53bd047",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add provider-neutral observability and alert template",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "c13a631",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add safe dry-run negative security probes",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "cce29b9",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add low-volume functional edge smoke tests",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "7988f1f",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add dependency-free policy safety validator",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "a3e7119",
+        "type": "security",
+        "scope": "edge",
+        "subject": "make example configuration non-enforcing by default",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "9e3dd8b",
+        "type": "security",
+        "scope": "edge",
+        "subject": "tighten default-off gates and add dynamic-origin variables",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "7c31adc",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add privacy-minimized firewall event logging",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "f65b721",
+        "type": "security",
+        "scope": "edge",
+        "subject": "enforce edge security headers with report-only CSP",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "b35538e",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add route-specific Cloudflare rate limits",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "d4822b5",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add staged custom and managed Cloudflare WAF",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "87bd276",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add Cloudflare provider and shared expressions",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "50c5728",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add typed Terraform perimeter variables",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "acfbc8c",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add operator variable template",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "2b25954",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add baseline provider-neutral edge policy",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "6c51669",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add provider-neutral policy schema",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "7db55cf",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add executable edge perimeter README",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "a2e7237",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add rollback and recovery procedures",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "3c96e18",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add edge incident response runbooks",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "4f9ea20",
+        "type": "security",
+        "scope": "edge",
+        "subject": "define WAF bot reputation and rate-limit policy",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "46104fd",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add DNS cutover and rollback checklist",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "d301fc0",
+        "type": "security",
+        "scope": "edge",
+        "subject": "add provider setup and manual control guidance",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "aa81baf",
+        "type": "security",
+        "scope": "edge",
+        "subject": "document target architecture and control ownership",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "2e81051",
+        "type": "security",
+        "scope": "edge",
+        "subject": "assess current perimeter and Pages constraints",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
         "sha": "2fdb8c4",
         "type": "security",
         "scope": null,
@@ -14703,6 +15333,15 @@
     ],
     "Style": [
       {
+        "sha": "44ca2c3",
+        "type": "style",
+        "scope": "edge",
+        "subject": "apply Terraform formatting to bot management",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
         "sha": "d4e5147",
         "type": "style",
         "scope": "outreach",
@@ -14724,6 +15363,42 @@
       }
     ],
     "Other": [
+      {
+        "sha": "2a2273a",
+        "type": "feed",
+        "scope": null,
+        "subject": "syndicate Ontario influence OSINT brief",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "378e521",
+        "type": "blog",
+        "scope": null,
+        "subject": "register Ontario influence OSINT brief",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "4bb21fc",
+        "type": "data",
+        "scope": null,
+        "subject": "add Ontario influence evidence ledger",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
+      {
+        "sha": "6d3bbaa",
+        "type": "blog",
+        "scope": null,
+        "subject": "publish Ontario influence environment OSINT brief",
+        "author": "Desmond Otieno",
+        "date": "2026-08-07",
+        "breaking": false
+      },
       {
         "sha": "249d596",
         "type": "seo",

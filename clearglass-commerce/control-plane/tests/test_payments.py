@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+import sys
+from types import SimpleNamespace
 
 from app import payments
 
@@ -28,6 +30,60 @@ def test_mock_checkout_when_no_key(monkeypatch) -> None:
     assert session["mode"] == "mock"
     assert session["amount_total"] == 9800
     assert session["id"].startswith("cs_mock_")
+
+
+def test_subscription_metadata_is_standardized_and_test_safe(monkeypatch) -> None:
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_example")
+    metadata = payments.subscription_metadata(
+        [{"sku": "guardian_pro_monthly", "interval": "month", "product": "guardian"}]
+    )
+    assert metadata["environment"] == "test"
+    assert metadata["business"] == "ClearGlassInc"
+    assert metadata["plan"] == "guardian_pro_monthly"
+    assert metadata["product"] == "guardian"
+    assert metadata["integration_version"] == "v1"
+
+
+def test_billing_portal_resolves_customer_from_checkout(monkeypatch) -> None:
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_example")
+    create_calls = []
+    fake_stripe = SimpleNamespace(
+        api_key=None,
+        checkout=SimpleNamespace(
+            Session=SimpleNamespace(
+                retrieve=lambda session_id: SimpleNamespace(
+                    id=session_id, mode="subscription", customer="cus_safe"
+                )
+            )
+        ),
+        billing_portal=SimpleNamespace(
+            Session=SimpleNamespace(
+                create=lambda **kwargs: create_calls.append(kwargs)
+                or SimpleNamespace(url="https://billing.stripe.com/session/test")
+            )
+        ),
+    )
+    monkeypatch.setitem(sys.modules, "stripe", fake_stripe)
+    result = payments.create_billing_portal_session("cs_test_safe", "https://example.com/account")
+    assert result == {"url": "https://billing.stripe.com/session/test", "mode": "live"}
+    assert create_calls == [{"customer": "cus_safe", "return_url": "https://example.com/account"}]
+
+
+def test_billing_portal_rejects_non_subscription_checkout(monkeypatch) -> None:
+    import pytest
+
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_example")
+    fake_stripe = SimpleNamespace(
+        api_key=None,
+        checkout=SimpleNamespace(
+            Session=SimpleNamespace(
+                retrieve=lambda _session_id: SimpleNamespace(mode="payment", customer="cus_safe")
+            )
+        ),
+    )
+    monkeypatch.setitem(sys.modules, "stripe", fake_stripe)
+    with pytest.raises(ValueError, match="customer-backed subscription"):
+        payments.create_billing_portal_session("cs_test_payment")
 
 
 def test_webhook_signature_roundtrip(monkeypatch) -> None:

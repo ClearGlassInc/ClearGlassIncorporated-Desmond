@@ -118,6 +118,8 @@ Each of these is a human step; none can be done from code.
 | `STRIPE_WEBHOOK_SECRET` | **yes, in production** | Unset ⇒ webhooks are accepted but marked unverified |
 | `STRIPE_PUBLISHABLE_KEY` | no | Not used by the hosted-page flow |
 | `STRIPE_AUTOMATIC_TAX` | no (default off) | `true` turns on Stripe Tax; requires §3.5 first |
+| `STRIPE_PORTAL_RETURN_URL` | yes for subscriptions in production | Return destination after the hosted customer portal |
+| `STRIPE_INTEGRATION_VERSION` | no (default `v1`) | Subscription metadata contract version |
 | `PRICEBOOK_PATH` | no | Overrides the bundled `app/data/pricebook.json` |
 | `CHECKOUT_SUCCESS_URL` / `CHECKOUT_CANCEL_URL` | yes in production | `{CHECKOUT_SESSION_ID}` is appended automatically if absent |
 | `PAYOUT_EXTERNAL_ACCOUNT_ID` | for payout reconciliation | Stripe `ba_…` token |
@@ -139,6 +141,8 @@ Endpoint: `https://<control-plane-host>/webhooks/stripe`
 | `checkout.session.async_payment_failed` | Marks it failed |
 | `invoice.paid` | Subscription renewals — without it, only month one is ever recorded |
 | `invoice.payment_failed` | Failed renewal, needs dunning |
+| `customer.subscription.created` / `.updated` / `.deleted` | Lifecycle visibility, scheduled changes, and cancellation |
+| `customer.subscription.paused` / `.resumed` | Pause/resume lifecycle visibility |
 | `charge.refunded` | Audit trail for settled refunds |
 | `charge.dispute.created` / `charge.dispute.closed` | Chargebacks |
 | `payment_intent.payment_failed` | Failed payment visibility |
@@ -153,6 +157,17 @@ Local testing:
 stripe listen --forward-to localhost:8000/webhooks/stripe
 stripe trigger checkout.session.completed
 ```
+
+Enable Stripe's hosted **Customer portal** in Dashboard → Settings → Billing →
+Customer portal. `POST /billing/portal` accepts only the Checkout Session id returned
+to that buyer, resolves the Stripe Customer server-side, and refuses one-time-payment
+sessions. Configure cancellation at period end and payment-method updates in the
+Dashboard; the portal never grants administrative price or refund authority.
+
+Recurring Checkout sessions carry stable `business`, `source`, `environment`,
+`subscription_type`, `billing_channel`, `customer_source`, `plan`, `product`, and
+`integration_version` metadata. Environment is derived from the Stripe key prefix,
+so test-mode subscriptions cannot be mislabeled as production.
 
 ## 6. Pricing is server-side — do not undo this
 

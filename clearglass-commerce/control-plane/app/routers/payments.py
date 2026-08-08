@@ -14,6 +14,8 @@ from ..fulfillment import apply_shipping_details
 from ..models import Order, Payout
 from ..schemas import (
     ActionResult,
+    BillingPortalOut,
+    BillingPortalRequest,
     CheckoutRequest,
     CheckoutSessionOut,
     OfferOut,
@@ -46,6 +48,11 @@ ATTENTION_EVENTS = {
     "charge.dispute.closed": "dispute_closed",
     "payment_intent.payment_failed": "payment_failed",
     "invoice.payment_failed": "subscription_payment_failed",
+    "customer.subscription.created": "subscription_created",
+    "customer.subscription.updated": "subscription_updated",
+    "customer.subscription.deleted": "subscription_canceled",
+    "customer.subscription.paused": "subscription_paused",
+    "customer.subscription.resumed": "subscription_resumed",
 }
 
 
@@ -127,6 +134,37 @@ def create_checkout(req: CheckoutRequest, session: Session = Depends(get_session
         result="executed",
     )
     return CheckoutSessionOut(**result)
+
+
+@router.post(
+    "/billing/portal",
+    response_model=BillingPortalOut,
+    dependencies=[Depends(_checkout_throttle)],
+)
+def create_billing_portal(req: BillingPortalRequest, session: Session = Depends(get_session)) -> BillingPortalOut:
+    """Open the hosted portal without accepting a caller-supplied Stripe customer id."""
+    try:
+        result = payments.create_billing_portal_session(req.checkout_session_id)
+    except ValueError as exc:
+        log_event(
+            session,
+            actor="customer",
+            action="create_billing_portal_session",
+            target=req.checkout_session_id,
+            payload={"reason": str(exc)},
+            result="rejected",
+        )
+        session.commit()
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    log_event(
+        session,
+        actor="customer",
+        action="create_billing_portal_session",
+        target=req.checkout_session_id,
+        payload={"mode": result["mode"]},
+        result="executed",
+    )
+    return BillingPortalOut(**result)
 
 
 @router.post("/webhooks/stripe", dependencies=[Depends(_webhook_throttle)])

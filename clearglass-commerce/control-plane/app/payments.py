@@ -52,6 +52,23 @@ def automatic_tax_enabled() -> bool:
     return os.environ.get("STRIPE_AUTOMATIC_TAX", "").strip().lower() in {"1", "true", "yes"}
 
 
+def subscription_metadata(line_items: list[dict[str, Any]]) -> dict[str, str]:
+    """Return the stable, non-sensitive metadata contract used by billing automation."""
+    recurring = [item for item in line_items if item.get("interval")]
+    plan = str(recurring[0].get("sku", "subscription")) if len(recurring) == 1 else "multi_plan"
+    return {
+        "source": "website",
+        "business": "ClearGlassInc",
+        "subscription_type": "recurring",
+        "environment": "production" if _secret_key().startswith(("sk_live_", "rk_live_")) else "test",
+        "billing_channel": "stripe",
+        "customer_source": "direct_web",
+        "integration_version": os.environ.get("STRIPE_INTEGRATION_VERSION", "v1")[:40],
+        "plan": plan[:500],
+        "product": str(recurring[0].get("product", "clearglass"))[:500] if recurring else "clearglass",
+    }
+
+
 def _with_session_placeholder(url: str) -> str:
     """Ensure the success URL carries Stripe's ``{CHECKOUT_SESSION_ID}`` template.
 
@@ -147,7 +164,9 @@ def create_checkout_session(
             price_data["recurring"] = {"interval": item["interval"]}
         stripe_line_items.append({"quantity": quantity, "price_data": price_data})
 
-    metadata = {"skus": skus, "source": "clearglass_storefront"}
+    metadata = {"skus": skus, "source": "website", "business": "ClearGlassInc"}
+    if checkout_mode == "subscription":
+        metadata.update(subscription_metadata(line_items))
     if extra_metadata:
         # e.g. the bundle tier a Side Store cart earned, so reconciliation can
         # explain a discounted unit price months later.
@@ -206,6 +225,25 @@ def create_checkout_session(
         "amount_total": session.amount_total,
         "currency": session.currency,
     }
+
+
+def create_billing_portal_session(checkout_session_id: str, return_url: str | None = None) -> dict[str, str]:
+    """Open the hosted portal for the customer attached to a subscription Checkout session."""
+    safe_return_url = return_url or os.environ.get(
+        "STRIPE_PORTAL_RETURN_URL", "http://localhost:3000/account"
+    )
+    if not is_live():
+        return {"url": f"{safe_return_url}?portal=mock", "mode": "mock"}
+
+    import stripe  # noqa: PLC0415 — lazy import; only needed in live mode
+
+    stripe.api_key = _secret_key()
+    checkout = stripe.checkout.Session.retrieve(checkout_session_id)
+    customer = getattr(checkout, "customer", None)
+    if getattr(checkout, "mode", None) != "subscription" or not customer:
+        raise ValueError("checkout session is not a customer-backed subscription")
+    portal = stripe.billing_portal.Session.create(customer=customer, return_url=safe_return_url)
+    return {"url": portal.url, "mode": "live"}
 
 
 def payout_bank_info() -> dict[str, Any]:

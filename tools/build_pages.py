@@ -77,6 +77,13 @@ CSP_POLICY = (
     "upgrade-insecure-requests"
 )
 
+# Aegis Glass is intentionally injected at build time so every deployable page
+# receives the same additive client-side deterrence/attribution layer without
+# modifying or deleting the source page body. The custom domain makes root-relative
+# asset paths stable for nested pages.
+AEGIS_STYLESHEET = '<link rel="stylesheet" href="/aegis-glass.css" data-aegis-global="true">'
+AEGIS_SCRIPT = '<script src="/aegis-glass.js" defer data-aegis-global="true"></script>'
+
 
 def _harden_html(path: Path) -> None:
     """Inject browser-enforced security metadata into a published HTML file."""
@@ -100,6 +107,18 @@ def _harden_html(path: Path) -> None:
         flags=re.IGNORECASE,
     ):
         tags.append('<meta name="referrer" content="strict-origin-when-cross-origin">')
+    if not re.search(
+        r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]",
+        text,
+        flags=re.IGNORECASE,
+    ):
+        tags.append(AEGIS_STYLESHEET)
+    if not re.search(
+        r"<script\b[^>]*src\s*=\s*['\"]/aegis-glass\.js['\"]",
+        text,
+        flags=re.IGNORECASE,
+    ):
+        tags.append(AEGIS_SCRIPT)
 
     if not tags:
         return

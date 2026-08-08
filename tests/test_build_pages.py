@@ -1,5 +1,7 @@
 from tools.build_pages import (
     ROOT,
+    AEGIS_SCRIPT,
+    AEGIS_STYLESHEET,
     CSP_POLICY,
     DENIED_TOP_LEVEL,
     PUBLIC_DATA_FEEDS,
@@ -61,6 +63,8 @@ def test_build_contains_required_pages_artifacts(tmp_path) -> None:
     assert (destination / "index.html").is_file()
     assert (destination / ".nojekyll").is_file()
     assert (destination / ".well-known" / "security.txt").is_file()
+    assert (destination / "aegis-glass.css").is_file()
+    assert (destination / "aegis-glass.js").is_file()
     assert not (destination / ".github").exists()
 
 
@@ -77,5 +81,9 @@ def test_published_html_receives_browser_security_policy(tmp_path) -> None:
         assert 'http-equiv="Content-Security-Policy"' in text, page
         assert f'content="{CSP_POLICY}"' in text, page
         assert '<meta name="referrer" content="strict-origin-when-cross-origin">' in text, page
+        assert AEGIS_STYLESHEET in text, page
+        assert AEGIS_SCRIPT in text, page
+        assert text.count('/aegis-glass.css') == 1, page
+        assert text.count('/aegis-glass.js') == 1, page
 
     assert checked > 0

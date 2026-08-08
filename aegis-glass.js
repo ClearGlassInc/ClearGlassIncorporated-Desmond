@@ -158,8 +158,20 @@
     printNotice.id = 'aegis-print-notice';
     printNotice.textContent = `Protected ClearGlass content. Printing is disabled for this classified view. Trace ${traceFragment}.`;
 
-    root.append(mesh, watermarks, status, printNotice);
+    let securityStack = document.getElementById('cg-security-stack');
+    if (!securityStack) {
+      securityStack = document.createElement('div');
+      securityStack.id = 'cg-security-stack';
+      securityStack.setAttribute('role', 'group');
+      securityStack.setAttribute('aria-label', 'ClearGlass security controls');
+    }
+
+    root.append(mesh, watermarks, printNotice);
     document.body.appendChild(root);
+    document.body.appendChild(securityStack);
+    const stealthButton = document.getElementById('cg-stealth-btn');
+    if (stealthButton) securityStack.appendChild(stealthButton);
+    securityStack.appendChild(status);
     updateStatus();
     rotateWatermarks();
 

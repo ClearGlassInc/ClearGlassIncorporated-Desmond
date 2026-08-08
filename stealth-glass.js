@@ -68,7 +68,7 @@
 
     /* ── the chip: a compact, premium glass secondary button ────────────────── */
     "#cg-stealth-btn{--cg-mx:0px;--cg-my:0px;",
-    "position:fixed;right:18px;bottom:84px;z-index:2147483647;",
+    "position:fixed;right:var(--cg-security-edge,18px);bottom:var(--cg-security-bottom,84px);z-index:2147483647;",
     "display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px 0 9px;",
     "margin:0;border:0;border-radius:999px;cursor:pointer;white-space:nowrap;line-height:1;",
     "overflow:hidden;isolation:isolate;-webkit-tap-highlight-color:transparent;",
@@ -122,8 +122,11 @@
     "#cg-stealth-btn.is-on .cg-sg-glow{background:radial-gradient(60% 120% at 18% 50%,rgba(120,224,200,.28),transparent 70%)}",
     "#cg-stealth-btn.is-on::after{background:linear-gradient(150deg,rgba(160,255,238,.6),rgba(120,224,200,.06) 45%,rgba(120,224,200,.2))}",
 
+    /* shared Aegis/Stealth wrapper — retain fixed offsets as standalone fallbacks */
+    "#cg-security-stack #cg-stealth-btn{position:relative;right:auto;bottom:auto;align-self:flex-end;pointer-events:auto}",
+
     /* mobile — a touch smaller, still ≥24px (WCAG 2.2 target size) */
-    "@media(max-width:640px){#cg-stealth-btn{right:14px;bottom:72px;height:25px;font-size:9px;padding:0 10px 0 8px}}",
+    "@media(max-width:640px){#cg-stealth-btn{right:var(--cg-security-edge,14px);bottom:var(--cg-security-bottom,72px);height:25px;font-size:9px;padding:0 10px 0 8px}}",
 
     /* reduced motion — drop loops, sweep & drift; keep instant states */
     "@media (prefers-reduced-motion:reduce){#cg-stealth-btn,#cg-stealth-btn:hover,#cg-stealth-btn:active{transition:none}",
@@ -191,6 +194,43 @@
     });
   }
 
+  /* Keep the two global security controls in one intentional stack. Aegis is
+     mounted by a separate deferred script, so measure its real rendered size
+     rather than duplicating its responsive dimensions here. */
+  function alignWithAegis(btn) {
+    var stack = document.getElementById("cg-security-stack");
+    if (stack) {
+      if (btn.parentNode !== stack) stack.insertBefore(btn, stack.firstChild);
+      btn.style.removeProperty("--cg-security-bottom");
+      btn.style.removeProperty("--cg-security-edge");
+      return;
+    }
+    var status = document.getElementById("aegis-glass-status");
+    if (!status) {
+      var mountObserver = new MutationObserver(function () {
+        status = document.getElementById("aegis-glass-status");
+        if (!status) return;
+        mountObserver.disconnect();
+        alignWithAegis(btn);
+      });
+      mountObserver.observe(document.body, { childList: true });
+      return;
+    }
+
+    function align() {
+      var viewportGap = window.innerWidth <= 640 ? 8 : 10;
+      var rect = status.getBoundingClientRect();
+      var bottom = Math.max(0, window.innerHeight - rect.bottom);
+      var right = Math.max(0, window.innerWidth - rect.right);
+      btn.style.setProperty("--cg-security-bottom", (bottom + rect.height + viewportGap) + "px");
+      btn.style.setProperty("--cg-security-edge", right + "px");
+    }
+
+    align();
+    window.addEventListener("resize", align, { passive: true });
+    if (window.ResizeObserver) new ResizeObserver(align).observe(status);
+  }
+
   function build() {
     if (document.getElementById("cg-stealth-btn")) return;
 
@@ -223,6 +263,7 @@
     var on = stored() === ON;
     apply(on, btn);
     magnetize(btn);
+    alignWithAegis(btn);
 
     btn.addEventListener("click", function () {
       on = !on;

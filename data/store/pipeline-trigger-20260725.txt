@@ -1,2 +1,3 @@
-Auto-store validation trigger for the 2026-07-25 authority-network repair.
+Auto-store validation trigger refreshed 2026-08-08 after failed Auto-Store #229.
+Purpose: force a clean PR validation run against current main so checkout-health and store-critical tests can be diagnosed and verified before production deployment.
 Remove after the patched main deployment is verified.

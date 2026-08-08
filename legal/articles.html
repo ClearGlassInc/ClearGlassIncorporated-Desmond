@@ -55,6 +55,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);-webkit-f
 .doc-tag{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.18em;color:var(--text-4);margin-bottom:14px;display:flex;align-items:center;gap:10px}.doc-tag::before{content:'';width:20px;height:1px;background:var(--text-4)}
 .doc-title{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}.doc-title strong{font-weight:600}
 .doc-meta{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--text-4);letter-spacing:.05em}
+.doc-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:24px}.download-button{appearance:none;border:1px solid var(--dark);border-radius:999px;background:var(--dark);color:#fff;cursor:pointer;font:700 13px/1 var(--sans);padding:13px 20px;transition:background .2s,box-shadow .2s,transform .2s}.download-button:hover{background:var(--dark-2);box-shadow:0 8px 24px rgba(0,0,0,.14);transform:translateY(-1px)}.download-button:focus-visible{outline:3px solid var(--prism-1);outline-offset:3px}.download-help{color:var(--text-3);font-size:12px;line-height:1.5}
 .disclaimer{margin:clamp(20px,3vw,32px) 0;padding:13px 17px;border-radius:10px;background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);font-size:13px;color:var(--text-3);line-height:1.72}.disclaimer strong{color:var(--text-2)}
 .doc-layout{display:grid;grid-template-columns:210px 1fr;gap:clamp(32px,5vw,56px);padding-bottom:clamp(80px,10vw,120px)}
 .doc-toc{position:sticky;top:90px}.toc-label{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.18em;color:var(--text-4);margin-bottom:10px}.toc-items{list-style:none;display:flex;flex-direction:column;gap:1px}.toc-items a{font-size:12px;color:var(--text-3);text-decoration:none;padding:6px 10px;border-radius:6px;display:block;border-left:2px solid transparent;transition:all .2s}.toc-items a:hover{color:var(--text);background:var(--off);border-color:var(--glass-border)}
@@ -69,6 +70,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);-webkit-f
 .site-footer{border-top:1px solid var(--glass-border);padding:clamp(22px,4vw,32px) 0}.site-footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.site-footer p{font-size:12px;color:var(--text-4)}.site-footer-links{display:flex;gap:16px}.site-footer-links a{font-size:12px;color:var(--text-3);text-decoration:none;font-weight:500}.site-footer-links a:hover{color:var(--text)}
 @media(max-width:768px){.doc-layout{grid-template-columns:1fr}.doc-toc{display:none}.field-table td:first-child{white-space:normal}}
 @media(max-width:600px){.nav-name{display:none}}
+@media print{.nav,.doc-actions,.site-footer,#cg-related{display:none!important}.page-wrap{max-width:none;padding:0}.doc-header{padding:0 0 24px}.doc-layout{display:block;padding:0}.doc-toc{display:none}.doc-body section{break-inside:avoid}.disclaimer{break-inside:avoid}body{background:#fff}}
 </style>
 <link rel="stylesheet" href="/assets/css/glass.css">
 <!-- ClearGlass Global Design System — homepage is the design source of truth -->
@@ -99,10 +101,14 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);-webkit-f
       <span>Statute: Ontario Business Corporations Act, R.S.O. 1990, c. B.16</span>
       <span>Jurisdiction: Ontario, Canada</span>
     </div>
+    <div class="doc-actions" aria-label="Document actions">
+      <button class="download-button" type="button" onclick="window.print()">Download / save as PDF</button>
+      <span class="download-help">In the print dialog, choose <strong>Save as PDF</strong>. No document data leaves your browser.</span>
+    </div>
   </header>
 
   <div class="disclaimer">
-    <strong>Informational Summary.</strong> This page summarizes the key provisions of ClearGlass Inc.'s Articles of Incorporation filed under the Ontario Business Corporations Act. The authoritative record is the original Form 1 filed with and accepted by the Ontario Business Registry. This is not legal advice — consult a licensed Ontario lawyer for formal incorporation.
+    <strong>Working Draft — Not a Filed Record.</strong> This page summarizes proposed provisions for ClearGlass Inc.'s Articles of Incorporation under the Ontario Business Corporations Act. It is not a Certificate of Incorporation or an Ontario Business Registry record. Confirm all details with a licensed Ontario lawyer before filing.
   </div>
 
   <div class="doc-layout">
@@ -129,7 +135,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);-webkit-f
           <tr><td>Corporate Type</td><td>Business Corporation</td></tr>
           <tr><td>Governing Statute</td><td><em>Ontario Business Corporations Act</em>, R.S.O. 1990, c. B.16 (OBCA)</td></tr>
           <tr><td>Jurisdiction</td><td>Province of Ontario, Canada</td></tr>
-          <tr><td>Status</td><td>Active</td></tr>
+          <tr><td>Status</td><td>Working draft — filing not verified</td></tr>
         </table>
       </section>
 
@@ -229,7 +235,7 @@ body{font-family:var(--sans);color:var(--text);background:var(--white);-webkit-f
           <tr><td>Residence</td><td>Burlington, Ontario, Canada</td></tr>
           <tr><td>Capacity</td><td>Founder and First Director</td></tr>
         </table>
-        <p>The incorporator signed the Articles of Incorporation and authorized the filing with the Ontario Business Registry. Upon filing and acceptance by the Registrar, ClearGlass Inc. became a corporation with all the rights, powers, and privileges, and subject to all the liabilities, of a natural person.</p>
+        <p>Before filing, the named incorporator must review and sign the Articles and authorize submission to the Ontario Business Registry. Corporate existence begins only if and when the Registrar accepts the filing and issues a Certificate of Incorporation.</p>
       </section>
 
     </div>

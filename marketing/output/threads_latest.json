@@ -1,155 +1,97 @@
 {
   "run": {
-    "run_utc": "2026-04-24T20:51:39+00:00",
+    "run_utc": "2026-08-08T10:47:52+00:00",
     "app_name": "ClearGlassInc Artemis",
     "total_threads": 5,
+    "total_assets": 5,
     "output_dir": "marketing/output",
-    "site_page": "threads.html"
+    "site_page": "threads.html",
+    "publication_mode": "manual-review-only"
   },
   "threads": [
     {
       "thread_number": 1,
       "app_name": "ClearGlassInc Artemis",
-      "app_category": "productivity",
-      "audience": "young professionals and founders",
-      "emotional_benefit": "feeling in control under pressure",
-      "pain_points": [
-        "task overload",
-        "context switching fatigue",
-        "forgetting high-impact follow-ups"
-      ],
+      "audience": "AI/platform engineers",
+      "objective": "Explain the governance boundary",
+      "cta_url": "https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=proof_thread",
       "tweets": [
         {
-          "text": "I almost missed the one message that could've changed my week. \ud83d\ude35\u200d\ud83d\udcab"
+          "text": "A model can recommend the next move. That does not mean it should be allowed to authorize it.",
+          "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]
         },
         {
-          "text": "I had 17 tabs open, 42 unread pings, and zero idea what actually mattered. \ud83d\udcc9"
+          "text": "Artemis separates evidence, policy, approval, execution, and audit instead of treating model confidence as authority.",
+          "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]
         },
         {
-          "text": "Then I ran my day through ClearGlassInc Artemis. It flagged one convo as high-stakes in 8 seconds."
+          "text": "The practical question is simple: where does authorization live when an agent can call tools?",
+          "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]
         },
         {
-          "text": "That single reply turned into a signed deal before lunch. Relief hit hard. \u26a1"
+          "text": "Architecture and implementation map: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=proof_thread",
+          "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]
         },
         {
-          "text": "Be honest: how often does noise hide your biggest opportunity? \ud83d\udc47"
+          "text": "Technical criticism is welcome. Point to the trust boundary you would change first.",
+          "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]
         }
       ]
     },
     {
       "thread_number": 2,
       "app_name": "ClearGlassInc Artemis",
-      "app_category": "productivity",
-      "audience": "young professionals and founders",
-      "emotional_benefit": "feeling in control under pressure",
-      "pain_points": [
-        "task overload",
-        "context switching fatigue",
-        "forgetting high-impact follow-ups"
-      ],
+      "audience": "security architects",
+      "objective": "Show security posture",
+      "cta_url": "https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=security_thread",
       "tweets": [
-        {
-          "text": "I looked productive. I was actually drowning. \ud83e\udee0"
-        },
-        {
-          "text": "Color-coded calendar. Fancy to-do app. Still ended each day feeling behind and guilty."
-        },
-        {
-          "text": "What changed? Artemis showed me where my time leaked, not where it looked busy."
-        },
-        {
-          "text": "Two weeks later: fewer tasks, better output, calmer brain. That's the part no one tells you. \ud83e\udde0"
-        },
-        {
-          "text": "Are you optimizing for busy\u2026 or for peace + results?"
-        }
+        {"text": "Agentic systems fail when policy exists only in prompts.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "Artemis treats model output as untrusted data and keeps consequential authorization in deterministic controls outside the model.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "That means typed tools, risk gates, explicit approval paths, provenance, and reversible deployment.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "Review the live product surface and repository evidence: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=security_thread", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "The standard is not 'does the demo work?' It is 'can the decision path be audited and reversed?'", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]}
       ]
     },
     {
       "thread_number": 3,
       "app_name": "ClearGlassInc Artemis",
-      "app_category": "productivity",
-      "audience": "young professionals and founders",
-      "emotional_benefit": "feeling in control under pressure",
-      "pain_points": [
-        "task overload",
-        "context switching fatigue",
-        "forgetting high-impact follow-ups"
-      ],
+      "audience": "technical founders",
+      "objective": "Frame the repository as a product system",
+      "cta_url": "https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=founder_thread",
       "tweets": [
-        {
-          "text": "The worst part of burnout? You don't notice it until you snap. \ud83d\udd25"
-        },
-        {
-          "text": "I stopped sleeping well. Started forgetting small promises. Confidence dropped quietly."
-        },
-        {
-          "text": "Artemis started surfacing promise-risk moments before they became trust damage."
-        },
-        {
-          "text": "Catching those early gave me my reputation back. And honestly, myself back too. \ud83d\ude4f"
-        },
-        {
-          "text": "Who's felt their credibility slip from tiny misses, not big failures?"
-        }
+        {"text": "A repository earns adoption when a visitor can understand the problem, verify the proof, run the system, and know where to contribute.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "That is why Artemis is being operated as a conversion funnel: discovery → README trust → live product → activation → contribution.", "evidence": ["docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "No fake stars. No bulk promotion. No invented customer proof. The growth engine is documentation, demos, releases, and useful technical artifacts.", "evidence": ["docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "Explore the current system: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=founder_thread", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "If the quick start or architecture map creates friction, open a focused issue with the exact failing step.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]}
       ]
     },
     {
       "thread_number": 4,
       "app_name": "ClearGlassInc Artemis",
-      "app_category": "productivity",
-      "audience": "young professionals and founders",
-      "emotional_benefit": "feeling in control under pressure",
-      "pain_points": [
-        "task overload",
-        "context switching fatigue",
-        "forgetting high-impact follow-ups"
-      ],
+      "audience": "automation builders",
+      "objective": "Invite reproducible use cases",
+      "cta_url": "https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=automation_thread",
       "tweets": [
-        {
-          "text": "My team said we need clarity. I heard you're failing us. \ud83d\ude36"
-        },
-        {
-          "text": "We kept re-explaining priorities in every standup. Same confusion, new day."
-        },
-        {
-          "text": "We built a shared Artemis mission board: one truth, live updates, zero guessing."
-        },
-        {
-          "text": "Meetings got shorter. Tension dropped. Momentum came back fast. \ud83d\ude80"
-        },
-        {
-          "text": "Team leads: what creates more drag for you\u2014unclear priorities or unclear ownership?"
-        }
+        {"text": "The useful agent loop is not 'prompt → magic.'", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "It is evidence → bounded plan → policy check → approval where required → execution → audit.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "That structure makes failures observable and recovery possible.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "See how the pieces fit together: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=automation_thread", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "If you adapt the pattern to another domain, document the trust boundary and failure mode. That is the contribution worth sharing.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]}
       ]
     },
     {
       "thread_number": 5,
       "app_name": "ClearGlassInc Artemis",
-      "app_category": "productivity",
-      "audience": "young professionals and founders",
-      "emotional_benefit": "feeling in control under pressure",
-      "pain_points": [
-        "task overload",
-        "context switching fatigue",
-        "forgetting high-impact follow-ups"
-      ],
+      "audience": "open-source contributors",
+      "objective": "Convert attention into contribution",
+      "cta_url": "https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=contributor_thread",
       "tweets": [
-        {
-          "text": "I used to panic every Sunday night. No plan felt real. \ud83d\ude2c"
-        },
-        {
-          "text": "I'd write goals, then spend Monday reacting to everyone else's emergencies."
-        },
-        {
-          "text": "Now Artemis prebuilds my week by impact, urgency, and energy level."
-        },
-        {
-          "text": "I still work hard. I just don't feel hunted anymore. That shift is everything. \ud83d\udc8e"
-        },
-        {
-          "text": "Sunday check: are you starting tomorrow with intention or survival mode?"
-        }
+        {"text": "Launch week is not the finish line. It is an evaluation window.", "evidence": ["docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "The useful signals are setup failures, architecture critiques, missing docs, reproducible bugs, and real integrations.", "evidence": ["docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "Stars are interest. They are not proof of adoption.", "evidence": ["docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "Start with the repository map and live platform: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=contributor_thread", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]},
+        {"text": "Contribute one focused improvement with verification evidence. That compounds better than engagement tricks.", "evidence": ["README.md", "docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md"]}
       ]
     }
   ]

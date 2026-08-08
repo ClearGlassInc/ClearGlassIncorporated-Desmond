@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "23:47",
-    "timestamp": "2026-08-07T23:47:57Z"
+    "time": "02:20",
+    "timestamp": "2026-08-08T02:20:40Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #573",
+    "time": "02:20",
+    "timestamp": "2026-08-08T02:20:26Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #1677",
+    "time": "02:05",
+    "timestamp": "2026-08-08T02:05:32Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #277",
+    "time": "01:53",
+    "timestamp": "2026-08-08T01:53:21Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #58",
+    "time": "01:07",
+    "timestamp": "2026-08-08T01:07:46Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "bad",
+    "detail": "workflow_dispatch on main \u00b7 run #1635",
+    "time": "23:48",
+    "timestamp": "2026-08-07T23:48:12Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2152",
+    "time": "23:48",
+    "timestamp": "2026-08-07T23:48:05Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3726",
+    "time": "23:48",
+    "timestamp": "2026-08-07T23:48:04Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #572",
     "time": "23:47",
     "timestamp": "2026-08-07T23:47:41Z"
@@ -40,54 +89,5 @@
     "detail": "schedule on main \u00b7 run #571",
     "time": "22:54",
     "timestamp": "2026-08-07T22:54:57Z"
-  },
-  {
-    "title": "Sync Stripe Products",
-    "status": "bad",
-    "detail": "workflow_run on main \u00b7 run #32",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:35Z"
-  },
-  {
-    "title": "npm_and_yarn in /apps/artemis-browser for nanoid - Update #1513073162",
-    "status": "warn",
-    "detail": "dynamic on main \u00b7 run #75",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:28Z"
-  },
-  {
-    "title": "Repository Health",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #179",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "Edge Security",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #13",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #2321",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "Workflow Doctor",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #474",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #43",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
   }
 ]

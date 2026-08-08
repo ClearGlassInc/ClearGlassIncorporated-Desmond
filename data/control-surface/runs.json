@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #572",
+    "title": "Control Surface Feeds #573",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "02:20",
+    "timestamp": "2026-08-08T02:20:26Z"
+  },
+  {
+    "title": "Defender Watch #1677",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "02:05",
+    "timestamp": "2026-08-08T02:05:32Z"
+  },
+  {
+    "title": "Health Monitor #277",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "01:53",
+    "timestamp": "2026-08-08T01:53:21Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #58",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "01:07",
+    "timestamp": "2026-08-08T01:07:46Z"
+  },
+  {
+    "title": "Deploy Pages #1635",
+    "status": "bad",
+    "detail": "failure \u00b7 workflow_dispatch on main",
+    "time": "23:48",
+    "timestamp": "2026-08-07T23:48:12Z"
+  },
+  {
+    "title": "pages build and deployment #2152",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:48",
+    "timestamp": "2026-08-07T23:48:05Z"
+  },
+  {
+    "title": "Push on main #3726",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:48",
+    "timestamp": "2026-08-07T23:48:04Z"
+  },
+  {
+    "title": "Control Surface Feeds #572",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:47",
     "timestamp": "2026-08-07T23:47:41Z"
   },
@@ -89,54 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "22:34",
     "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "Site Integrity Guard #182",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "Defender Watch #1676",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "CI #2256",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "Policy Gate #1992",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "Site Reliability Audit #587",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "Deploy Pages #1633",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:18Z"
-  },
-  {
-    "title": "Push on main #3724",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "22:34",
-    "timestamp": "2026-08-07T22:34:17Z"
   }
 ]

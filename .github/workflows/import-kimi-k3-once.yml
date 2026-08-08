@@ -1,0 +1,70 @@
+name: Import Kimi K3 into ClearGlass vendor tree
+
+on:
+  push:
+    branches:
+      - integrate/kimi-k3-in-c-v1
+    paths:
+      - .github/workflows/import-kimi-k3-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout integration branch
+        uses: actions/checkout@v4
+        with:
+          ref: integrate/kimi-k3-in-c-v1
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Configure Git identity
+        run: |
+          git config user.name "ClearGlass Import Bot"
+          git config user.email "actions@users.noreply.github.com"
+
+      - name: Fetch pinned upstream source
+        shell: bash
+        run: |
+          set -euo pipefail
+          upstream="$RUNNER_TEMP/kimi-k3-in-c"
+          git clone --no-checkout https://github.com/FareedKhan-dev/kimi-k3-in-c.git "$upstream"
+          git -C "$upstream" checkout --detach ff11dce858a2eb8a781224facdffd33a1fa48d25
+
+      - name: Vendor exact upstream snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="vendor/kimi-k3-in-c"
+          test ! -e "$target" || { echo "Refusing to overwrite existing $target"; exit 1; }
+          mkdir -p "$target"
+          cp -a "$RUNNER_TEMP/kimi-k3-in-c/." "$target/"
+          rm -rf "$target/.git"
+
+          cat > "$target/CLEARGLASS_IMPORT.md" <<'EOF'
+          # ClearGlass import record
+
+          This directory vendors the upstream project `FareedKhan-dev/kimi-k3-in-c`.
+
+          - Upstream repository: https://github.com/FareedKhan-dev/kimi-k3-in-c
+          - Upstream revision: `ff11dce858a2eb8a781224facdffd33a1fa48d25`
+          - Upstream release state: v1.0.0 at time of import
+          - License: Apache-2.0; upstream `LICENSE` and `NOTICE` are preserved in this directory.
+          - Integration policy: upstream source is isolated under `vendor/` and does not replace ClearGlass application or website files.
+
+          ClearGlass-specific changes should be documented separately from upstream authorship.
+          EOF
+
+          rm -f .github/workflows/import-kimi-k3-once.yml
+
+      - name: Commit imported source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -A
+          git diff --cached --quiet && { echo "No changes to commit"; exit 1; }
+          git commit -m "vendor: import kimi-k3-in-c v1.0.0 at ff11dce [skip ci]"
+          git push origin HEAD:integrate/kimi-k3-in-c-v1

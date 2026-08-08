@@ -30,3 +30,17 @@ def test_security_pills_keep_standalone_fallbacks() -> None:
     assert "position: absolute" in css
     assert "--cg-security-bottom,84px" in stealth
     assert "--cg-security-edge,18px" in stealth
+
+
+def test_mobile_fusion_dock_reserves_control_lane_and_sentinel_clearance() -> None:
+    css = (ROOT / "aegis-glass.css").read_text(encoding="utf-8")
+
+    assert "Aegis × Sentinel Fusion Dock" in css
+    assert "--cg-mobile-fusion-right-lane: 76px" in css
+    assert "grid-template-columns: minmax(0, 1fr) auto" in css
+    assert "right: max(var(--cg-mobile-fusion-right-lane), env(safe-area-inset-right))" in css
+    assert "--cg-mobile-fusion-clearance: 92px" in css
+    assert ".sentinel-hero" in css
+    assert "scroll-margin-block-end" in css
+    assert "touch-action: manipulation" in css
+    assert "prefers-reduced-motion: reduce" in css

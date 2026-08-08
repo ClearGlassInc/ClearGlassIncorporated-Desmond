@@ -16,3 +16,8 @@ body:has(#cg-global-nav) > .nav,
 body:has(#cg-global-nav) > .mobile-menu,
 body:has(#cg-global-nav) > header:has(.nav-links),
 body:has(#cg-global-nav) > header:has(.nav-toggle){display:none!important}
+
+/* Counter-UAS: remove the redundant page-local ClearGlass/ARTEMIS header while preserving the injected global navigation bar. Collapse the duplicate header clearance so the hero sits directly beneath the global bar. */
+body:has(#cockpit):has(> header.topbar) > header.topbar{display:none!important}
+body:has(#cockpit):has(> header.topbar) > main{padding-top:0!important}
+body:has(#cockpit):has(> header.topbar) > main > .hero{padding-top:clamp(88px,10vw,120px)!important}

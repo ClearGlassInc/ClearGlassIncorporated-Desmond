@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-07T07:54:02+00:00",
+  "generated": "2026-08-08T07:32:28+00:00",
   "counts": {
     "critical": 0,
     "warning": 1,
@@ -10,29 +10,29 @@
       "level": "info",
       "kind": "connector",
       "message": "google_search_console not connected \u2014 No credentials. Set GSC_ACCESS_TOKEN, or GSC_CLIENT_ID + GSC_CLIENT_SECRET + GSC_REFRESH_TOKEN.",
-      "detected": "2026-08-07T07:54:02+00:00",
+      "detected": "2026-08-08T07:32:28+00:00",
       "source": "google_search_console"
     },
     {
       "level": "info",
       "kind": "connector",
       "message": "bing_webmaster_tools not connected \u2014 No BING_API_KEY set.",
-      "detected": "2026-08-07T07:54:02+00:00",
+      "detected": "2026-08-08T07:32:28+00:00",
       "source": "bing_webmaster_tools"
     },
     {
       "level": "info",
       "kind": "index_coverage",
-      "message": "1 indexable page(s) are absent from sitemap.xml (1% of the indexable set).",
-      "detected": "2026-08-07T07:54:02+00:00",
-      "missing": 1
+      "message": "3 indexable page(s) are absent from sitemap.xml (2% of the indexable set).",
+      "detected": "2026-08-08T07:32:28+00:00",
+      "missing": 3
     },
     {
       "level": "warning",
       "kind": "schema",
-      "message": "7 structured-data issue(s) detected \u2014 rich results at risk.",
-      "detected": "2026-08-07T07:54:02+00:00",
-      "count": 7
+      "message": "9 structured-data issue(s) detected \u2014 rich results at risk.",
+      "detected": "2026-08-08T07:32:28+00:00",
+      "count": 9
     }
   ]
 }

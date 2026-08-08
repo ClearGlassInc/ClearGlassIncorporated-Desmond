@@ -1,28 +1,28 @@
 {
-  "generated": "2026-08-07T07:54:01+00:00",
+  "generated": "2026-08-08T07:32:28+00:00",
   "site": "https://www.clearglassinc.com",
-  "score": 76,
+  "score": 75,
   "totals": {
-    "pages": 160,
-    "indexable": 149,
+    "pages": 162,
+    "indexable": 151,
     "in_sitemap": 148,
     "noindex": 10,
-    "with_schema": 59,
+    "with_schema": 61,
     "errors": 0,
-    "warnings": 141,
-    "info": 41
+    "warnings": 151,
+    "info": 42
   },
   "by_check": {
-    "description.length": 72,
-    "title.length": 50,
+    "description.length": 74,
+    "title.length": 52,
     "heading.order": 39,
-    "schema.required": 7,
+    "schema.required": 9,
     "h1.multiple": 4,
+    "image.alt": 3,
+    "sitemap.missing": 3,
+    "orphan": 3,
     "weight": 2,
     "canonical.missing": 2,
-    "image.alt": 2,
-    "sitemap.missing": 1,
-    "orphan": 1,
     "title.duplicate": 1,
     "description.duplicate": 1
   },
@@ -394,6 +394,30 @@
       "message": "Meta description is 172 chars; Google truncates near 165."
     },
     {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "warn",
+      "check": "sitemap.missing",
+      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 68 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 212 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "warn",
+      "check": "orphan",
+      "message": "No internal links point to this page \u2014 it receives no internal link equity."
+    },
+    {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
       "level": "warn",
       "check": "title.length",
@@ -458,6 +482,42 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 191 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Article is missing required property 'headline'"
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "sitemap.missing",
+      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 81 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 166 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "orphan",
+      "message": "No internal links point to this page \u2014 it receives no internal link equity."
     },
     {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
@@ -992,6 +1052,12 @@
       "level": "info",
       "check": "heading.order",
       "message": "Heading level jumps from h1 to h3 \u2014 skipped levels weaken outline parsing."
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "info",
+      "check": "image.alt",
+      "message": "1 image(s) missing alt text."
     },
     {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
@@ -2231,7 +2297,7 @@
       "internal_links": 63,
       "images_missing_alt": 1,
       "bytes": 131211,
-      "inbound_links": 170
+      "inbound_links": 171
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -2308,6 +2374,30 @@
       "images_missing_alt": 0,
       "bytes": 39298,
       "inbound_links": 9
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "url": "https://www.clearglassinc.com/blog/ontario-influence-environment-august-2026.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "Ontario Influence Environment, August 2026 | ClearGlass Intelligence",
+      "title_length": 68,
+      "description": "A high-assurance ClearGlass OSINT workstation mapping Ontario government messaging, electoral transparency questions, foreign interference and information-integrity risks with cryptographic evidence verification.",
+      "description_length": 212,
+      "canonical": "https://www.clearglassinc.com/blog/ontario-influence-environment-august-2026.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "WebPage"
+      ],
+      "internal_links": 1,
+      "images_missing_alt": 1,
+      "bytes": 27151,
+      "inbound_links": 0
     },
     {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
@@ -2434,6 +2524,32 @@
       "images_missing_alt": 0,
       "bytes": 18376,
       "inbound_links": 8
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "url": "https://www.clearglassinc.com/blog/shadow-ai-incident-response-logs-gone.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "Shadow AI Incident Response: When the Logs Are Already Gone | ClearGlass Insights",
+      "title_length": 81,
+      "description": "A ClearGlass long-read on Shadow AI incident response, forensic readiness, log retention, endpoint preservation, regulator expectations, and defensible AI governance.",
+      "description_length": 166,
+      "canonical": "https://www.clearglassinc.com/blog/shadow-ai-incident-response-logs-gone.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "WebPage",
+        "Article",
+        "Organization"
+      ],
+      "internal_links": 2,
+      "images_missing_alt": 0,
+      "bytes": 11930,
+      "inbound_links": 0
     },
     {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
@@ -3142,7 +3258,7 @@
       "internal_links": 216,
       "images_missing_alt": 0,
       "bytes": 179079,
-      "inbound_links": 557
+      "inbound_links": 559
     },
     {
       "page": "intelligence-command-surface.html",

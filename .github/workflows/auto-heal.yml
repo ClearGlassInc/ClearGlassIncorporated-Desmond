@@ -77,7 +77,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "${BRANCH}"
           git add .github/auto-heal .github/workflows
-          git commit -m "Auto-heal: record diagnostics and deterministic repairs [skip ci]"
+          git commit -m "Auto-heal: record diagnostics and deterministic repairs"
           git push --set-upstream origin "${BRANCH}"
           echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
 

@@ -37,6 +37,12 @@ PUBLIC_MUTATING_ROUTES: dict[tuple[str, str], str] = {
         "book (app/pricebook.py), never from the request, so an anonymous caller "
         "cannot choose what it is charged. See tests/test_pricebook.py."
     ),
+    ("POST", "/billing/portal"): (
+        "Customer self-service portal. Public by necessity in the current storefront; "
+        "rate limited and capability-bound to Stripe's high-entropy Checkout Session "
+        "id. The server retrieves that session and accepts only a customer-backed "
+        "subscription, so callers cannot supply or enumerate Stripe customer ids."
+    ),
     ("POST", "/webhooks/stripe"): (
         "Stripe callback. Cannot carry an operator credential; authenticated by "
         "Stripe signature verification, rate limited, and idempotent on redelivery."

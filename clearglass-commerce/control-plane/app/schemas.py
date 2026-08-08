@@ -67,6 +67,15 @@ class CheckoutSessionOut(BaseModel):
     currency: str
 
 
+class BillingPortalRequest(BaseModel):
+    checkout_session_id: str = Field(min_length=8, max_length=255, pattern=r"^cs_[A-Za-z0-9_]+$")
+
+
+class BillingPortalOut(BaseModel):
+    url: str
+    mode: str
+
+
 class OfferOut(BaseModel):
     """A purchasable offer as advertised to the storefront."""
 

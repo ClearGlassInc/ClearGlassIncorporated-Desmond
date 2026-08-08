@@ -219,3 +219,123 @@
   #aegis-glass-watermarks,
   #cg-security-stack { transition: none !important; animation: none !important; }
 }
+
+/* Compact high-assurance mission-control treatment.
+   Additive overrides only: preserve behavior while reducing visual footprint. */
+#cg-security-stack {
+  width: min(292px, calc(100vw - 28px));
+  gap: 6px;
+  padding: 7px;
+  border-radius: 13px;
+  border-color: rgba(105, 231, 255, 0.24);
+  background:
+    linear-gradient(180deg, rgba(7, 16, 28, 0.88), rgba(5, 10, 20, 0.92)),
+    repeating-linear-gradient(90deg, rgba(105,231,255,.025) 0 1px, transparent 1px 18px);
+  box-shadow:
+    0 10px 28px rgba(1, 6, 16, 0.34),
+    0 0 0 1px rgba(255,255,255,.025) inset,
+    0 0 22px rgba(105,231,255,.055);
+  backdrop-filter: blur(14px) saturate(118%);
+  -webkit-backdrop-filter: blur(14px) saturate(118%);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+#cg-security-stack::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  z-index: -1;
+  pointer-events: none;
+  border: 1px solid rgba(105, 231, 255, 0.07);
+  clip-path: inherit;
+}
+
+#cg-security-stack #aegis-glass-status {
+  padding: 6px 8px;
+  border-radius: 7px;
+  border-color: rgba(105, 231, 255, 0.26);
+  background: linear-gradient(180deg, rgba(4, 18, 28, .90), rgba(3, 12, 22, .94));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.018), 0 0 12px rgba(105,231,255,.045);
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 8.6px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: .11em;
+  color: rgba(224, 252, 255, .94);
+}
+
+#cg-security-stack #cg-stealth-btn {
+  width: auto;
+  min-width: 132px;
+  min-height: 32px;
+  height: 32px;
+  align-self: flex-end;
+  padding-inline: 11px;
+  border-radius: 8px;
+  justify-content: center;
+  font-size: 8.6px;
+  letter-spacing: .15em;
+  box-shadow:
+    0 5px 14px rgba(0,0,0,.34),
+    0 0 0 1px rgba(137, 172, 255, .18),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+@media (max-width: 640px) {
+  :root { --cg-mobile-fusion-clearance: 92px; }
+
+  #cg-security-stack {
+    left: auto;
+    right: max(10px, env(safe-area-inset-right));
+    bottom: max(10px, env(safe-area-inset-bottom));
+    width: min(268px, calc(100vw - 20px));
+    max-width: 268px;
+    gap: 5px;
+    padding: 6px;
+    border-radius: 11px;
+    align-items: stretch;
+  }
+
+  #cg-security-stack #aegis-glass-status {
+    order: 2;
+    width: 100%;
+    padding: 5px 7px;
+    font-size: clamp(7px, 2vw, 8.2px);
+    letter-spacing: .09em;
+    line-height: 1.1;
+  }
+
+  #cg-security-stack #cg-stealth-btn {
+    order: 1;
+    width: auto;
+    min-width: 128px;
+    min-height: 32px;
+    height: 32px;
+    align-self: flex-end;
+    padding-inline: 10px;
+    font-size: 8.2px;
+  }
+
+  .sentinel-hero {
+    padding-bottom: calc(clamp(26px, 6vw, 44px) + var(--cg-mobile-fusion-clearance) + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 390px) {
+  :root { --cg-mobile-fusion-clearance: 88px; }
+  #cg-security-stack {
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: min(252px, calc(100vw - 16px));
+    max-width: 252px;
+    gap: 4px;
+    padding: 5px;
+  }
+  #cg-security-stack #aegis-glass-status { font-size: 7px; }
+  #cg-security-stack #cg-stealth-btn {
+    min-width: 122px;
+    min-height: 30px;
+    height: 30px;
+    font-size: 8px;
+  }
+}

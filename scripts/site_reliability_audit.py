@@ -16,6 +16,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from pathlib import Path
+from posixpath import normpath
 import re
 import sys
 from urllib.parse import unquote, urlparse
@@ -98,6 +99,25 @@ def resolve_page_target(path: Path) -> Path:
     return path / "index.html" if path.is_dir() else path
 
 
+def resolve_browser_local_target(html_file: Path, local_ref: str) -> Path:
+    """Map a browser-relative URL path into the repository's Pages origin.
+
+    Browser URL resolution clamps parent traversal at the origin root. Filesystem
+    ``Path.resolve()`` does not: for a root-level page, ``../brand-system.css``
+    would incorrectly escape the repository. Normalize as a POSIX URL first,
+    then map that root-clamped path into the checked-in site tree.
+    """
+
+    root = REPO_ROOT.resolve()
+    if local_ref.startswith("/"):
+        url_path = normpath(local_ref)
+    else:
+        source_rel = html_file.resolve().relative_to(root)
+        source_dir = "/" + source_rel.parent.as_posix().strip("/")
+        url_path = normpath(f"{source_dir}/{local_ref}")
+    return (root / url_path.lstrip("/")).resolve()
+
+
 def check_links() -> list[AuditIssue]:
     issues: list[AuditIssue] = []
     html_files = iter_repo_html_files()
@@ -117,11 +137,9 @@ def check_links() -> list[AuditIssue]:
             local_ref = unquote(parsed_ref.path)
 
             if not local_ref:
-                target = html_file
-            elif local_ref.startswith("/"):
-                target = (REPO_ROOT / local_ref.lstrip("/")).resolve()
+                target = html_file.resolve()
             else:
-                target = (html_file.parent / local_ref).resolve()
+                target = resolve_browser_local_target(html_file, local_ref)
 
             if not str(target).startswith(str(REPO_ROOT.resolve())):
                 issues.append(AuditIssue("ERROR", f"Invalid path outside repository in {html_file.relative_to(REPO_ROOT)}:{line_number} -> {ref}"))
@@ -193,7 +211,7 @@ def check_sitemap() -> list[AuditIssue]:
     issues: list[AuditIssue] = []
     sitemap = REPO_ROOT / "sitemap.xml"
     if not sitemap.exists():
-        return [AuditIssue("WARN", "No sitemap.xml found")]
+        return [AuditIssue("WARN", "No sitemap.xml found")
 
     try:
         tree = ET.parse(sitemap)
@@ -217,7 +235,6 @@ def check_sitemap() -> list[AuditIssue]:
         if value in seen:
             issues.append(AuditIssue("ERROR", f"Duplicate URL in sitemap: {value}"))
         seen.add(value)
-
         parsed = urlparse(value)
         if parsed.scheme != "https" or parsed.hostname != EXPECTED_DOMAIN:
             issues.append(AuditIssue("ERROR", f"Sitemap URL is outside the canonical HTTPS origin: {value}"))

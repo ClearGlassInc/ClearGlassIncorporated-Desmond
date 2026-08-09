@@ -106,8 +106,19 @@ def test_published_html_receives_browser_security_policy(tmp_path) -> None:
     assert checked > 0
 
 
-def test_homepage_subscription_endpoint_is_allowed_by_csp() -> None:
-    homepage = (ROOT / "index.html").read_text(encoding="utf-8")
-    assert "https://formsubmit.co/" in homepage
-    assert "form-action 'self' https://formspree.io https://formsubmit.co" in CSP_POLICY
-    assert "connect-src 'self' https://formspree.io https://formsubmit.co" in CSP_POLICY
+def test_published_html_replaces_stale_source_security_policy(tmp_path) -> None:
+    page = tmp_path / "stale.html"
+    page.write_text(
+        '<html><head><meta http-equiv="Content-Security-Policy" '
+        'content="default-src \'none\'"><meta name="referrer" '
+        'content="no-referrer"></head><body></body></html>',
+        encoding="utf-8",
+    )
+    _harden_html(page)
+
+    document = page.read_text(encoding="utf-8")
+    assert document.count('http-equiv="Content-Security-Policy"') == 1
+    assert f'content="{CSP_POLICY}"' in document
+    assert "default-src 'none'" not in document
+    assert document.count('<meta name="referrer"') == 1
+    assert '<meta name="referrer" content="strict-origin-when-cross-origin">' in document

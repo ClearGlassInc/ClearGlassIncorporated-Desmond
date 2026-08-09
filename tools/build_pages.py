@@ -121,11 +121,12 @@ def _harden_html(path: Path) -> None:
     if not _has_asset(text, r"<script\b[^>]*src\s*=\s*['\"]/fx\.js['\"]"):
         tags.append(FX_SCRIPT)
 
-    if not tags:
+    if not tags and not metadata_replaced:
         return
 
-    injection = "\n" + "\n".join(tags)
-    text = text[: head.end()] + injection + text[head.end() :]
+    if tags:
+        injection = "\n" + "\n".join(tags)
+        text = text[: head.end()] + injection + text[head.end() :]
     path.write_text(text, encoding="utf-8")
 
 

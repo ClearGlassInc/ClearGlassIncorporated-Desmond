@@ -1,15 +1,78 @@
 [
   {
-    "title": "Sales-Ops Briefing #47",
+    "title": "Control Surface Feeds #603",
     "status": "warn",
-    "detail": "queued \u00b7 schedule on main",
+    "detail": "in_progress \u00b7 schedule on main",
+    "time": "13:15",
+    "timestamp": "2026-08-09T13:15:00Z"
+  },
+  {
+    "title": "Defender Watch #1763",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "13:05",
+    "timestamp": "2026-08-09T13:05:20Z"
+  },
+  {
+    "title": "Health Monitor #283",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "12:58",
+    "timestamp": "2026-08-09T12:58:25Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #64",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "12:37",
+    "timestamp": "2026-08-09T12:37:09Z"
+  },
+  {
+    "title": "Auto-Store #239",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "12:35",
+    "timestamp": "2026-08-09T12:35:48Z"
+  },
+  {
+    "title": "Organic Growth \u2014 Daily Content #16",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "12:31",
+    "timestamp": "2026-08-09T12:31:47Z"
+  },
+  {
+    "title": "Deploy Pages #1718",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "11:44",
+    "timestamp": "2026-08-09T11:44:44Z"
+  },
+  {
+    "title": "pages build and deployment #2241",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:44",
+    "timestamp": "2026-08-09T11:44:38Z"
+  },
+  {
+    "title": "Push on main #3843",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "11:44",
+    "timestamp": "2026-08-09T11:44:38Z"
+  },
+  {
+    "title": "Sales-Ops Briefing #47",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "11:44",
     "timestamp": "2026-08-09T11:44:30Z"
   },
   {
     "title": "Control Surface Feeds #602",
-    "status": "warn",
-    "detail": "in_progress \u00b7 schedule on main",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "11:44",
     "timestamp": "2026-08-09T11:44:22Z"
   },
@@ -75,68 +138,5 @@
     "detail": "failure \u00b7 push on main",
     "time": "11:31",
     "timestamp": "2026-08-09T11:31:39Z"
-  },
-  {
-    "title": "Policy Gate #2072",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:31",
-    "timestamp": "2026-08-09T11:31:39Z"
-  },
-  {
-    "title": "Site Integrity Guard #262",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:31",
-    "timestamp": "2026-08-09T11:31:39Z"
-  },
-  {
-    "title": ".github/workflows/auto-heal.yml #103",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "11:31",
-    "timestamp": "2026-08-09T11:31:38Z"
-  },
-  {
-    "title": "pages build and deployment #2240",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "11:31",
-    "timestamp": "2026-08-09T11:31:38Z"
-  },
-  {
-    "title": "Push on main #3842",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "11:31",
-    "timestamp": "2026-08-09T11:31:38Z"
-  },
-  {
-    "title": "Sync Stripe Products #84",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "11:22",
-    "timestamp": "2026-08-09T11:22:46Z"
-  },
-  {
-    "title": "Sync Stripe Products #83",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "11:21",
-    "timestamp": "2026-08-09T11:21:58Z"
-  },
-  {
-    "title": "Sync Stripe Products #82",
-    "status": "warn",
-    "detail": "cancelled \u00b7 workflow_run on main",
-    "time": "11:21",
-    "timestamp": "2026-08-09T11:21:57Z"
-  },
-  {
-    "title": "Repository Health #258",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:21",
-    "timestamp": "2026-08-09T11:21:54Z"
   }
 ]

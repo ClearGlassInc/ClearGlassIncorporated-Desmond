@@ -19,34 +19,27 @@ PUBLIC_MARKDOWN = {"SECURITY.md", "legal/WEBSITE_POLICY_TEMPLATES.md"}
 DENIED_TOP_LEVEL = {
     ".git", ".github", "agent_army", "agent_os", "agents", "apps", "artemis",
     "artemis_platform", "automation", "boq", "bots", "clearglass-agentops",
-    "clearglass-air-control", "clearglass-commerce", "config", "data", "deployment",
-    "docs", "growth-engine", "infra", "jarvis-os", "marketing", "operations",
-    "percival_v9", "platform", "products", "prompts", "runner", "scripts", "sentinel",
-    "services", "strategy", "tests", "threads-growth", "tools", "workflows", "xenolith",
-    "youtube_launch",
+    "clearglass-air-control", "clearglass-commerce", "config", "customer-profiles",
+    "data", "deployment", "docs", "growth-engine", "infra", "jarvis-os",
+    "marketing", "operations", "percival_v9", "platform", "products", "prompts",
+    "runner", "scripts", "sentinel", "services", "strategy", "tests",
+    "threads-growth", "tools", "workflows", "xenolith", "youtube_launch",
 }
 PUBLIC_DENIED_TREE_EXCEPTIONS = {Path("apps/command-center")}
 
-# `data/` stays denied as a tree — it also holds internal working state (marketing
-# shared memory, campaign packages, SEO targeting config). These specific feeds are
-# the ones live pages fetch to render, so denying them left every dashboard on the
-# site showing its "unavailable" fallback against a 404. Allowlisted file by file:
-# adding a feed here is a deliberate decision to publish it.
+# `data/` stays denied as a tree — it also holds internal working state. These
+# exact feeds are live public page inputs and must be deliberately allowlisted.
 PUBLIC_DATA_FEEDS = {
-    # Control Surface contract feeds, refreshed hourly by control-surface-feeds.yml
-    # and consumed by web-design.html, control-surface.{html,js}, systems.html.
     "data/control-surface/activity.json",
     "data/control-surface/alerts.json",
     "data/control-surface/health.json",
     "data/control-surface/metrics.json",
     "data/control-surface/pipeline.json",
     "data/control-surface/runs.json",
-    # Page-specific feeds, each fetched by the page named beside it.
-    "data/Ontario-osint/intel.json",      # Ontario-osint.html, web-design.html
-    "data/platform/registry.json",        # intelligence-platform.html
-    "data/store/catalog.json",            # web-design.html
-    "data/xenolith/lattice.json",         # xenolith.html
-    # Linked as downloads from the (noindex) SEO dashboard.
+    "data/Ontario-osint/intel.json",
+    "data/platform/registry.json",
+    "data/store/catalog.json",
+    "data/xenolith/lattice.json",
     "data/seo/alerts.json",
     "data/seo/audit.json",
     "data/seo/performance.json",
@@ -55,11 +48,6 @@ PUBLIC_DATA_FEEDS = {
 DENIED_PARTS = {"node_modules", "__pycache__", ".pytest_cache", ".mypy_cache"}
 DENIED_NAMES = {"package.json", "package-lock.json", "pyproject.toml", "requirements.txt"}
 
-# GitHub Pages does not process Netlify/Cloudflare-style `_headers` files. Keep the
-# header policy for hosts that support it, but also inject a CSP meta policy into
-# every deployable HTML document so the browser receives a baseline policy on
-# GitHub Pages itself. `frame-ancestors`, HSTS, X-Frame-Options, Permissions-Policy,
-# and other response-header-only controls remain in `_headers` for capable edges.
 CSP_POLICY = (
     "default-src 'self'; "
     "base-uri 'self'; "
@@ -77,10 +65,6 @@ CSP_POLICY = (
     "upgrade-insecure-requests"
 )
 
-# Aegis Glass is intentionally injected at build time so every deployable page
-# receives the same additive client-side deterrence/attribution layer without
-# modifying or deleting the source page body. The custom domain makes root-relative
-# asset paths stable for nested pages.
 AEGIS_STYLESHEET = '<link rel="stylesheet" href="/aegis-glass.css" data-aegis-global="true">'
 AEGIS_SCRIPT = '<script src="/aegis-glass.js" defer data-aegis-global="true"></script>'
 
@@ -98,9 +82,7 @@ def _harden_html(path: Path) -> None:
         text,
         flags=re.IGNORECASE,
     ):
-        tags.append(
-            f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
-        )
+        tags.append(f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">')
     if not re.search(
         r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"]",
         text,

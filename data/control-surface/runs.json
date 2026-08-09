@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #595",
+    "title": "Control Surface Feeds #596",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "05:57",
+    "timestamp": "2026-08-09T05:57:01Z"
+  },
+  {
+    "title": "Multi-Repo Audit #54",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "05:17",
+    "timestamp": "2026-08-09T05:17:00Z"
+  },
+  {
+    "title": "Deploy Pages #1690",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "04:36",
+    "timestamp": "2026-08-09T04:36:19Z"
+  },
+  {
+    "title": "pages build and deployment #2210",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "04:36",
+    "timestamp": "2026-08-09T04:36:10Z"
+  },
+  {
+    "title": "Push on main #3812",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "04:36",
+    "timestamp": "2026-08-09T04:36:10Z"
+  },
+  {
+    "title": "Control Surface Feeds #595",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "04:35",
     "timestamp": "2026-08-09T04:35:41Z"
   },
@@ -103,40 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "23:30",
     "timestamp": "2026-08-08T23:30:46Z"
-  },
-  {
-    "title": "Security #2082",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "Site Integrity Guard #241",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "Defender Watch #1739",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "Policy Gate #2051",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #2381",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
   }
 ]

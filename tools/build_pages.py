@@ -66,7 +66,15 @@ CSP_POLICY = (
 )
 
 AEGIS_STYLESHEET = '<link rel="stylesheet" href="/aegis-glass.css" data-aegis-global="true">'
+SECURITY_STACK_STYLESHEET = '<link rel="stylesheet" href="/security-stack-fusion.css" data-security-stack-fusion="true">'
+FX_STYLESHEET = '<link rel="stylesheet" href="/fx.css" data-fx-global="true">'
 AEGIS_SCRIPT = '<script src="/aegis-glass.js" defer data-aegis-global="true"></script>'
+STEALTH_SCRIPT = '<script src="/stealth-glass.js" defer data-stealth-global="true"></script>'
+FX_SCRIPT = '<script src="/fx.js" defer data-fx-global="true"></script>'
+
+
+def _has_asset(text: str, pattern: str) -> bool:
+    return re.search(pattern, text, flags=re.IGNORECASE) is not None
 
 
 def _harden_html(path: Path) -> None:
@@ -77,30 +85,22 @@ def _harden_html(path: Path) -> None:
         return
 
     tags: list[str] = []
-    if not re.search(
-        r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]",
-        text,
-        flags=re.IGNORECASE,
-    ):
+    if not _has_asset(text, r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]"):
         tags.append(f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">')
-    if not re.search(
-        r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"]",
-        text,
-        flags=re.IGNORECASE,
-    ):
+    if not _has_asset(text, r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"]"):
         tags.append('<meta name="referrer" content="strict-origin-when-cross-origin">')
-    if not re.search(
-        r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]",
-        text,
-        flags=re.IGNORECASE,
-    ):
+    if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]"):
         tags.append(AEGIS_STYLESHEET)
-    if not re.search(
-        r"<script\b[^>]*src\s*=\s*['\"]/aegis-glass\.js['\"]",
-        text,
-        flags=re.IGNORECASE,
-    ):
+    if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/security-stack-fusion\.css['\"]"):
+        tags.append(SECURITY_STACK_STYLESHEET)
+    if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/fx\.css['\"]"):
+        tags.append(FX_STYLESHEET)
+    if not _has_asset(text, r"<script\b[^>]*src\s*=\s*['\"]/aegis-glass\.js['\"]"):
         tags.append(AEGIS_SCRIPT)
+    if not _has_asset(text, r"<script\b[^>]*src\s*=\s*['\"]/stealth-glass\.js['\"]"):
+        tags.append(STEALTH_SCRIPT)
+    if not _has_asset(text, r"<script\b[^>]*src\s*=\s*['\"]/fx\.js['\"]"):
+        tags.append(FX_SCRIPT)
 
     if not tags:
         return

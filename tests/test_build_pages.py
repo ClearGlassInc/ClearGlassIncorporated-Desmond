@@ -1,3 +1,5 @@
+import re
+
 from tools.build_pages import (
     ROOT,
     AEGIS_SCRIPT,
@@ -10,7 +12,6 @@ from tools.build_pages import (
     PUBLIC_DENIED_TREE_EXCEPTIONS,
     PUBLIC_MARKDOWN,
     SECURITY_STACK_STYLESHEET,
-    STEALTH_SCRIPT,
     build,
     public_relative_paths,
 )
@@ -93,13 +94,20 @@ def test_published_html_receives_browser_security_policy(tmp_path) -> None:
         assert SECURITY_STACK_STYLESHEET in text, page
         assert FX_STYLESHEET in text, page
         assert AEGIS_SCRIPT in text, page
-        assert STEALTH_SCRIPT in text, page
+        assert re.search(r'<script\b[^>]*src=["\']/stealth-glass\.js["\'][^>]*>', text), page
         assert FX_SCRIPT in text, page
         assert text.count('/aegis-glass.css') == 1, page
         assert text.count('/security-stack-fusion.css') == 1, page
         assert text.count('/fx.css') == 1, page
         assert text.count('/aegis-glass.js') == 1, page
-        assert text.count('/stealth-glass.js') == 1, page
+        assert len(re.findall(r'<script\b[^>]*src=["\']/stealth-glass\.js["\'][^>]*>', text)) == 1, page
         assert text.count('/fx.js') == 1, page
 
     assert checked > 0
+
+
+def test_homepage_subscription_endpoint_is_allowed_by_csp() -> None:
+    homepage = (ROOT / "index.html").read_text(encoding="utf-8")
+    assert "https://formsubmit.co/" in homepage
+    assert "form-action 'self' https://formspree.io https://formsubmit.co" in CSP_POLICY
+    assert "connect-src 'self' https://formspree.io https://formsubmit.co" in CSP_POLICY

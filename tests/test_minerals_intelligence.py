@@ -5,6 +5,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+CHECKOUT_SHA = "df4cb1c069e1874edd31b4311f1884172cec0e10"
+SETUP_PYTHON_SHA = "a309ff8b426b58ec0e2a45f0f869d46889d02405"
 
 
 def load_json(relative: str):
@@ -93,8 +95,8 @@ def test_workflow_is_non_overlapping_and_non_recursive():
     workflow = (ROOT / ".github/workflows/minerals-data-sync.yml").read_text(encoding="utf-8")
     assert "group: minerals-data-sync" in workflow
     assert "cancel-in-progress: false" in workflow
-    assert "actions/checkout@v6" in workflow
-    assert "actions/setup-python@v6" in workflow
+    assert f"actions/checkout@{CHECKOUT_SHA}" in workflow
+    assert f"actions/setup-python@{SETUP_PYTHON_SHA}" in workflow
     assert "workflow_dispatch:" in workflow
     assert "schedule:" in workflow
     assert "bot(minerals): refresh validated public feeds [skip ci]" in workflow

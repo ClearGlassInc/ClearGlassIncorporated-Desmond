@@ -1,26 +1,26 @@
 {
-  "generated": "2026-08-08T07:32:28+00:00",
+  "generated": "2026-08-09T07:37:43+00:00",
   "site": "https://www.clearglassinc.com",
   "score": 75,
   "totals": {
-    "pages": 162,
-    "indexable": 151,
+    "pages": 164,
+    "indexable": 152,
     "in_sitemap": 148,
-    "noindex": 10,
-    "with_schema": 61,
+    "noindex": 11,
+    "with_schema": 62,
     "errors": 0,
-    "warnings": 151,
+    "warnings": 154,
     "info": 42
   },
   "by_check": {
-    "description.length": 74,
+    "description.length": 75,
     "title.length": 52,
     "heading.order": 39,
     "schema.required": 9,
+    "sitemap.missing": 4,
     "h1.multiple": 4,
+    "orphan": 4,
     "image.alt": 3,
-    "sitemap.missing": 3,
-    "orphan": 3,
     "weight": 2,
     "canonical.missing": 2,
     "title.duplicate": 1,
@@ -637,7 +637,7 @@
       "page": "counter-uas-commercialization-os.html",
       "level": "warn",
       "check": "description.length",
-      "message": "Meta description is 243 chars; Google truncates near 165."
+      "message": "Meta description is 223 chars; Google truncates near 165."
     },
     {
       "page": "cyber-defense-console.html",
@@ -686,6 +686,24 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 176 chars; Google truncates near 165."
+    },
+    {
+      "page": "global-growth-engine.html",
+      "level": "warn",
+      "check": "sitemap.missing",
+      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
+    },
+    {
+      "page": "global-growth-engine.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 198 chars; Google truncates near 165."
+    },
+    {
+      "page": "global-growth-engine.html",
+      "level": "warn",
+      "check": "orphan",
+      "message": "No internal links point to this page \u2014 it receives no internal link equity."
     },
     {
       "page": "guardian.html",
@@ -1203,7 +1221,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 4073,
+      "bytes": 4194,
       "inbound_links": 0
     },
     {
@@ -1222,8 +1240,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 57405,
-      "inbound_links": 9
+      "bytes": 57526,
+      "inbound_links": 8
     },
     {
       "page": "ClearGlass-NEXUS-v12-FINAL.html",
@@ -1241,8 +1259,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 315786,
-      "inbound_links": 10
+      "bytes": 315907,
+      "inbound_links": 9
     },
     {
       "page": "Ontario-osint.html",
@@ -1260,8 +1278,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 94125,
-      "inbound_links": 13
+      "bytes": 94246,
+      "inbound_links": 12
     },
     {
       "page": "advanced-features-tools-systems.html",
@@ -1279,8 +1297,8 @@
       "schema_types": [],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 53463,
-      "inbound_links": 19
+      "bytes": 53584,
+      "inbound_links": 17
     },
     {
       "page": "aegis.html",
@@ -1298,8 +1316,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 26272,
-      "inbound_links": 16
+      "bytes": 26393,
+      "inbound_links": 15
     },
     {
       "page": "agentmesh.html",
@@ -1317,8 +1335,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 23734,
-      "inbound_links": 25
+      "bytes": 23855,
+      "inbound_links": 24
     },
     {
       "page": "ai-operator.html",
@@ -1336,8 +1354,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 50202,
-      "inbound_links": 47
+      "bytes": 50323,
+      "inbound_links": 46
     },
     {
       "page": "air-control.html",
@@ -1355,8 +1373,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 59636,
-      "inbound_links": 12
+      "bytes": 59757,
+      "inbound_links": 10
     },
     {
       "page": "air-systems-control.html",
@@ -1374,8 +1392,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 27192,
-      "inbound_links": 14
+      "bytes": 27313,
+      "inbound_links": 13
     },
     {
       "page": "apps/command-center/index.html",
@@ -1393,7 +1411,7 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 11949,
+      "bytes": 12070,
       "inbound_links": 7
     },
     {
@@ -1412,8 +1430,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 23441,
-      "inbound_links": 11
+      "bytes": 23562,
+      "inbound_links": 10
     },
     {
       "page": "artemis-ai-cyber-intelligence-platform.html",
@@ -1438,8 +1456,8 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 24682,
-      "inbound_links": 14
+      "bytes": 24803,
+      "inbound_links": 13
     },
     {
       "page": "artemis-blue-team.html",
@@ -1457,8 +1475,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 32345,
-      "inbound_links": 11
+      "bytes": 32466,
+      "inbound_links": 10
     },
     {
       "page": "artemis-fawl/index.html",
@@ -1479,7 +1497,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 12509,
+      "bytes": 12630,
       "inbound_links": 9
     },
     {
@@ -1498,8 +1516,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 170769,
-      "inbound_links": 43
+      "bytes": 170890,
+      "inbound_links": 42
     },
     {
       "page": "artemis-os.html",
@@ -1517,8 +1535,8 @@
       "schema_types": [],
       "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 51183,
-      "inbound_links": 34
+      "bytes": 51304,
+      "inbound_links": 33
     },
     {
       "page": "artemis-percival.html",
@@ -1536,8 +1554,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 125713,
-      "inbound_links": 15
+      "bytes": 125834,
+      "inbound_links": 14
     },
     {
       "page": "artemis-self-evolving-platform.html",
@@ -1555,8 +1573,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 18934,
-      "inbound_links": 20
+      "bytes": 19375,
+      "inbound_links": 19
     },
     {
       "page": "artemis.html",
@@ -1574,7 +1592,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 44839,
+      "bytes": 44960,
       "inbound_links": 29
     },
     {
@@ -1593,8 +1611,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 18338,
-      "inbound_links": 10
+      "bytes": 18459,
+      "inbound_links": 9
     },
     {
       "page": "authority-network.html",
@@ -1614,8 +1632,8 @@
       ],
       "internal_links": 181,
       "images_missing_alt": 0,
-      "bytes": 38449,
-      "inbound_links": 12
+      "bytes": 38570,
+      "inbound_links": 11
     },
     {
       "page": "automap.html",
@@ -1636,8 +1654,8 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 1,
-      "bytes": 53178,
-      "inbound_links": 10
+      "bytes": 53299,
+      "inbound_links": 9
     },
     {
       "page": "banking-law-advisor.html",
@@ -1655,8 +1673,8 @@
       "schema_types": [],
       "internal_links": 38,
       "images_missing_alt": 0,
-      "bytes": 70375,
-      "inbound_links": 13
+      "bytes": 70496,
+      "inbound_links": 12
     },
     {
       "page": "blog/ai-agent-governance-governed-autonomy.html",
@@ -1681,7 +1699,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 44419,
+      "bytes": 44540,
       "inbound_links": 35
     },
     {
@@ -1707,7 +1725,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 45767,
+      "bytes": 45888,
       "inbound_links": 18
     },
     {
@@ -1739,7 +1757,7 @@
       ],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 50529,
+      "bytes": 50650,
       "inbound_links": 9
     },
     {
@@ -1758,7 +1776,7 @@
       "schema_types": [],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 46575,
+      "bytes": 46696,
       "inbound_links": 7
     },
     {
@@ -1781,7 +1799,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 20693,
+      "bytes": 20814,
       "inbound_links": 7
     },
     {
@@ -1807,7 +1825,7 @@
       ],
       "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 44363,
+      "bytes": 44484,
       "inbound_links": 13
     },
     {
@@ -1831,7 +1849,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 31631,
+      "bytes": 31752,
       "inbound_links": 9
     },
     {
@@ -1856,7 +1874,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 33370,
+      "bytes": 33491,
       "inbound_links": 7
     },
     {
@@ -1879,7 +1897,7 @@
       ],
       "internal_links": 27,
       "images_missing_alt": 0,
-      "bytes": 37049,
+      "bytes": 37170,
       "inbound_links": 12
     },
     {
@@ -1902,7 +1920,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 19267,
+      "bytes": 19388,
       "inbound_links": 8
     },
     {
@@ -1928,7 +1946,7 @@
       ],
       "internal_links": 37,
       "images_missing_alt": 0,
-      "bytes": 46801,
+      "bytes": 46922,
       "inbound_links": 10
     },
     {
@@ -1954,7 +1972,7 @@
       ],
       "internal_links": 35,
       "images_missing_alt": 0,
-      "bytes": 50171,
+      "bytes": 50292,
       "inbound_links": 12
     },
     {
@@ -1978,7 +1996,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 21182,
+      "bytes": 21303,
       "inbound_links": 10
     },
     {
@@ -2001,7 +2019,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 35053,
+      "bytes": 35174,
       "inbound_links": 9
     },
     {
@@ -2027,7 +2045,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 32617,
+      "bytes": 32738,
       "inbound_links": 8
     },
     {
@@ -2051,7 +2069,7 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 40429,
+      "bytes": 40550,
       "inbound_links": 10
     },
     {
@@ -2077,7 +2095,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 44741,
+      "bytes": 44862,
       "inbound_links": 9
     },
     {
@@ -2103,7 +2121,7 @@
       ],
       "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 75403,
+      "bytes": 75524,
       "inbound_links": 17
     },
     {
@@ -2128,7 +2146,7 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 30167,
+      "bytes": 30288,
       "inbound_links": 9
     },
     {
@@ -2155,7 +2173,7 @@
       ],
       "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 44290,
+      "bytes": 44411,
       "inbound_links": 21
     },
     {
@@ -2181,7 +2199,7 @@
       ],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 26578,
+      "bytes": 26699,
       "inbound_links": 11
     },
     {
@@ -2204,7 +2222,7 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 21733,
+      "bytes": 21854,
       "inbound_links": 10
     },
     {
@@ -2230,7 +2248,7 @@
       ],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 48269,
+      "bytes": 48390,
       "inbound_links": 10
     },
     {
@@ -2253,7 +2271,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 22296,
+      "bytes": 22417,
       "inbound_links": 8
     },
     {
@@ -2296,7 +2314,7 @@
       ],
       "internal_links": 63,
       "images_missing_alt": 1,
-      "bytes": 131211,
+      "bytes": 131332,
       "inbound_links": 171
     },
     {
@@ -2319,7 +2337,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 25871,
+      "bytes": 25992,
       "inbound_links": 8
     },
     {
@@ -2347,7 +2365,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 18875,
+      "bytes": 18996,
       "inbound_links": 7
     },
     {
@@ -2372,7 +2390,7 @@
       ],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 39298,
+      "bytes": 39419,
       "inbound_links": 9
     },
     {
@@ -2396,7 +2414,7 @@
       ],
       "internal_links": 1,
       "images_missing_alt": 1,
-      "bytes": 27151,
+      "bytes": 27272,
       "inbound_links": 0
     },
     {
@@ -2423,7 +2441,7 @@
       ],
       "internal_links": 37,
       "images_missing_alt": 0,
-      "bytes": 44162,
+      "bytes": 44283,
       "inbound_links": 16
     },
     {
@@ -2449,7 +2467,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 22729,
+      "bytes": 22850,
       "inbound_links": 9
     },
     {
@@ -2468,7 +2486,7 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 15080,
+      "bytes": 15201,
       "inbound_links": 10
     },
     {
@@ -2495,7 +2513,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 17576,
+      "bytes": 17697,
       "inbound_links": 8
     },
     {
@@ -2522,7 +2540,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 18376,
+      "bytes": 18497,
       "inbound_links": 8
     },
     {
@@ -2548,7 +2566,7 @@
       ],
       "internal_links": 2,
       "images_missing_alt": 0,
-      "bytes": 11930,
+      "bytes": 12051,
       "inbound_links": 0
     },
     {
@@ -2573,7 +2591,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 29681,
+      "bytes": 29802,
       "inbound_links": 8
     },
     {
@@ -2599,7 +2617,7 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 38494,
+      "bytes": 38615,
       "inbound_links": 11
     },
     {
@@ -2625,7 +2643,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 46676,
+      "bytes": 46797,
       "inbound_links": 11
     },
     {
@@ -2644,8 +2662,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 26592,
-      "inbound_links": 11
+      "bytes": 26713,
+      "inbound_links": 10
     },
     {
       "page": "bluedesk.html",
@@ -2663,8 +2681,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 149431,
-      "inbound_links": 41
+      "bytes": 149552,
+      "inbound_links": 40
     },
     {
       "page": "business-productivity-suite.html",
@@ -2685,7 +2703,7 @@
       ],
       "internal_links": 2,
       "images_missing_alt": 0,
-      "bytes": 11722,
+      "bytes": 11843,
       "inbound_links": 0
     },
     {
@@ -2704,8 +2722,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 15945,
-      "inbound_links": 10
+      "bytes": 16066,
+      "inbound_links": 9
     },
     {
       "page": "button-system.html",
@@ -2723,8 +2741,8 @@
       "schema_types": [],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 8748,
-      "inbound_links": 12
+      "bytes": 8869,
+      "inbound_links": 11
     },
     {
       "page": "cg-loader.html",
@@ -2742,7 +2760,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 28812,
+      "bytes": 28933,
       "inbound_links": 0
     },
     {
@@ -2766,7 +2784,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 17051,
+      "bytes": 17172,
       "inbound_links": 8
     },
     {
@@ -2785,8 +2803,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 402455,
-      "inbound_links": 25
+      "bytes": 402576,
+      "inbound_links": 24
     },
     {
       "page": "clearglass-ultra.html",
@@ -2807,8 +2825,8 @@
       ],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 29806,
-      "inbound_links": 10
+      "bytes": 29927,
+      "inbound_links": 9
     },
     {
       "page": "clearglass.html",
@@ -2826,8 +2844,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 45848,
-      "inbound_links": 11
+      "bytes": 45969,
+      "inbound_links": 10
     },
     {
       "page": "clearpulse-architecture.html",
@@ -2849,8 +2867,8 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 45799,
-      "inbound_links": 9
+      "bytes": 45920,
+      "inbound_links": 8
     },
     {
       "page": "clearpulse.html",
@@ -2868,8 +2886,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 38231,
-      "inbound_links": 24
+      "bytes": 38352,
+      "inbound_links": 23
     },
     {
       "page": "clearsight.html",
@@ -2887,8 +2905,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 42164,
-      "inbound_links": 9
+      "bytes": 42285,
+      "inbound_links": 8
     },
     {
       "page": "command-center.html",
@@ -2906,8 +2924,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 30748,
-      "inbound_links": 14
+      "bytes": 30869,
+      "inbound_links": 13
     },
     {
       "page": "command-console.html",
@@ -2925,8 +2943,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 51224,
-      "inbound_links": 11
+      "bytes": 51345,
+      "inbound_links": 10
     },
     {
       "page": "conduit.html",
@@ -2944,8 +2962,8 @@
       "schema_types": [],
       "internal_links": 57,
       "images_missing_alt": 0,
-      "bytes": 117169,
-      "inbound_links": 19
+      "bytes": 117290,
+      "inbound_links": 18
     },
     {
       "page": "control-surface.html",
@@ -2963,8 +2981,8 @@
       "schema_types": [],
       "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 48964,
-      "inbound_links": 13
+      "bytes": 49085,
+      "inbound_links": 12
     },
     {
       "page": "corporate-legal-advisor.html",
@@ -2982,8 +3000,8 @@
       "schema_types": [],
       "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 90551,
-      "inbound_links": 10
+      "bytes": 90672,
+      "inbound_links": 9
     },
     {
       "page": "counter-uas-commercialization-os.html",
@@ -2992,17 +3010,17 @@
       "noindex": false,
       "in_sitemap": true,
       "robots_blocked": null,
-      "title": "Counter-UAS Commercialization OS \u2014 ClearGlass Inc.",
-      "title_length": 50,
-      "description": "ARTEMIS Commercialization OS: an autonomous, revenue-target-backward operating system for a Counter-UAS EO/IR detection company. Reverse-engineer the $1M plan, score pilots, track risk, and auto-draft investor updates from a handful of inputs.",
-      "description_length": 243,
+      "title": "CLEARGLASS // ARTEMIS \u2014 Future Counter-UAS Operations OS",
+      "title_length": 56,
+      "description": "CLEARGLASS ARTEMIS is a human-supervised operations and commercialization platform for authorized drone detection, airspace awareness, incident coordination, compliance, infrastructure protection, and commercial deployment.",
+      "description_length": 223,
       "canonical": "https://www.clearglassinc.com/counter-uas-commercialization-os.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 13,
+      "internal_links": 5,
       "images_missing_alt": 0,
-      "bytes": 45693,
-      "inbound_links": 13
+      "bytes": 45597,
+      "inbound_links": 12
     },
     {
       "page": "cyber-defense-console.html",
@@ -3020,8 +3038,8 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 66219,
-      "inbound_links": 44
+      "bytes": 66340,
+      "inbound_links": 43
     },
     {
       "page": "docs/guardian_command_nexus_spec.html",
@@ -3039,7 +3057,7 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 15551,
+      "bytes": 15672,
       "inbound_links": 9
     },
     {
@@ -3058,8 +3076,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 22098,
-      "inbound_links": 13
+      "bytes": 22219,
+      "inbound_links": 12
     },
     {
       "page": "flowsint.html",
@@ -3077,8 +3095,8 @@
       "schema_types": [],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 39643,
-      "inbound_links": 20
+      "bytes": 39764,
+      "inbound_links": 19
     },
     {
       "page": "futuristic.html",
@@ -3096,8 +3114,30 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 24794,
-      "inbound_links": 10
+      "bytes": 24915,
+      "inbound_links": 9
+    },
+    {
+      "page": "global-growth-engine.html",
+      "url": "https://www.clearglassinc.com/global-growth-engine.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "Global Growth Engine \u2014 ClearGlass Inc.",
+      "title_length": 38,
+      "description": "ClearGlass Global Growth Engine is a governed multi-channel ecommerce growth operating system for market prioritization, localization, acquisition, CRO, retention, analytics, and experiment control.",
+      "description_length": 198,
+      "canonical": "https://www.clearglassinc.com/global-growth-engine.html",
+      "h1_count": 1,
+      "schema_types": [
+        "SoftwareApplication",
+        "Organization"
+      ],
+      "internal_links": 2,
+      "images_missing_alt": 0,
+      "bytes": 14414,
+      "inbound_links": 0
     },
     {
       "page": "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
@@ -3151,8 +3191,8 @@
       ],
       "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 56324,
-      "inbound_links": 51
+      "bytes": 56445,
+      "inbound_links": 48
     },
     {
       "page": "guardian.html",
@@ -3170,7 +3210,7 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 145341,
+      "bytes": 154264,
       "inbound_links": 72
     },
     {
@@ -3189,7 +3229,7 @@
       "schema_types": [],
       "internal_links": 6,
       "images_missing_alt": 0,
-      "bytes": 21902,
+      "bytes": 22023,
       "inbound_links": 0
     },
     {
@@ -3208,8 +3248,8 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 20529,
-      "inbound_links": 10
+      "bytes": 20650,
+      "inbound_links": 9
     },
     {
       "page": "index.html",
@@ -3257,8 +3297,8 @@
       ],
       "internal_links": 216,
       "images_missing_alt": 0,
-      "bytes": 179079,
-      "inbound_links": 559
+      "bytes": 188849,
+      "inbound_links": 490
     },
     {
       "page": "intelligence-command-surface.html",
@@ -3276,8 +3316,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 20475,
-      "inbound_links": 15
+      "bytes": 20596,
+      "inbound_links": 14
     },
     {
       "page": "intelligence-interface.html",
@@ -3295,8 +3335,8 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 15857,
-      "inbound_links": 13
+      "bytes": 15978,
+      "inbound_links": 12
     },
     {
       "page": "intelligence-platform.html",
@@ -3314,8 +3354,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 22549,
-      "inbound_links": 11
+      "bytes": 22670,
+      "inbound_links": 10
     },
     {
       "page": "intelligence.html",
@@ -3333,8 +3373,8 @@
       "schema_types": [],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 16768,
-      "inbound_links": 41
+      "bytes": 16889,
+      "inbound_links": 40
     },
     {
       "page": "investors/index.html",
@@ -3352,7 +3392,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 8127,
+      "bytes": 8248,
       "inbound_links": 7
     },
     {
@@ -3376,7 +3416,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 14128,
+      "bytes": 14249,
       "inbound_links": 11
     },
     {
@@ -3395,7 +3435,7 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 27645,
+      "bytes": 27766,
       "inbound_links": 12
     },
     {
@@ -3414,7 +3454,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 23199,
+      "bytes": 24455,
       "inbound_links": 11
     },
     {
@@ -3433,7 +3473,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 26639,
+      "bytes": 26760,
       "inbound_links": 9
     },
     {
@@ -3452,7 +3492,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 26080,
+      "bytes": 26201,
       "inbound_links": 8
     },
     {
@@ -3476,7 +3516,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 12333,
+      "bytes": 12454,
       "inbound_links": 14
     },
     {
@@ -3495,7 +3535,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25158,
+      "bytes": 25279,
       "inbound_links": 8
     },
     {
@@ -3514,7 +3554,7 @@
       "schema_types": [],
       "internal_links": 39,
       "images_missing_alt": 0,
-      "bytes": 23995,
+      "bytes": 24116,
       "inbound_links": 83
     },
     {
@@ -3533,7 +3573,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25968,
+      "bytes": 26089,
       "inbound_links": 8
     },
     {
@@ -3552,7 +3592,7 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 36761,
+      "bytes": 36882,
       "inbound_links": 9
     },
     {
@@ -3571,7 +3611,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25306,
+      "bytes": 25427,
       "inbound_links": 12
     },
     {
@@ -3590,7 +3630,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 26628,
+      "bytes": 26749,
       "inbound_links": 41
     },
     {
@@ -3609,7 +3649,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 23776,
+      "bytes": 23897,
       "inbound_links": 8
     },
     {
@@ -3628,7 +3668,7 @@
       "schema_types": [],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 26352,
+      "bytes": 26473,
       "inbound_links": 38
     },
     {
@@ -3647,7 +3687,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 26962,
+      "bytes": 27083,
       "inbound_links": 0
     },
     {
@@ -3670,7 +3710,7 @@
       ],
       "internal_links": 23,
       "images_missing_alt": 0,
-      "bytes": 23469,
+      "bytes": 23590,
       "inbound_links": 9
     },
     {
@@ -3695,7 +3735,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 17225,
+      "bytes": 17346,
       "inbound_links": 9
     },
     {
@@ -3714,7 +3754,7 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 17098,
+      "bytes": 17219,
       "inbound_links": 12
     },
     {
@@ -3733,7 +3773,7 @@
       "schema_types": [],
       "internal_links": 27,
       "images_missing_alt": 0,
-      "bytes": 40759,
+      "bytes": 40880,
       "inbound_links": 96
     },
     {
@@ -3752,7 +3792,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 12106,
+      "bytes": 12227,
       "inbound_links": 8
     },
     {
@@ -3771,7 +3811,7 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 14493,
+      "bytes": 14614,
       "inbound_links": 10
     },
     {
@@ -3790,7 +3830,7 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 13828,
+      "bytes": 13949,
       "inbound_links": 22
     },
     {
@@ -3809,7 +3849,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 3632,
+      "bytes": 3753,
       "inbound_links": 0
     },
     {
@@ -3828,7 +3868,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 4479,
+      "bytes": 4600,
       "inbound_links": 0
     },
     {
@@ -3847,7 +3887,7 @@
       "schema_types": [],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 16487,
+      "bytes": 16608,
       "inbound_links": 19
     },
     {
@@ -3866,7 +3906,7 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9029,
+      "bytes": 9150,
       "inbound_links": 10
     },
     {
@@ -3885,8 +3925,8 @@
       "schema_types": [],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 19501,
-      "inbound_links": 12
+      "bytes": 19622,
+      "inbound_links": 10
     },
     {
       "page": "operations/hubspot-handoff.html",
@@ -3904,7 +3944,7 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 19380,
+      "bytes": 19501,
       "inbound_links": 8
     },
     {
@@ -3923,7 +3963,7 @@
       "schema_types": [],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 19864,
+      "bytes": 19985,
       "inbound_links": 9
     },
     {
@@ -3942,8 +3982,8 @@
       "schema_types": [],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 27081,
-      "inbound_links": 39
+      "bytes": 27202,
+      "inbound_links": 37
     },
     {
       "page": "operations/stripe-handoff.html",
@@ -3961,7 +4001,7 @@
       "schema_types": [],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 19295,
+      "bytes": 19416,
       "inbound_links": 8
     },
     {
@@ -3980,8 +4020,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 36402,
-      "inbound_links": 9
+      "bytes": 36523,
+      "inbound_links": 8
     },
     {
       "page": "percival-os.html",
@@ -3999,8 +4039,8 @@
       "schema_types": [],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 188538,
-      "inbound_links": 61
+      "bytes": 188659,
+      "inbound_links": 60
     },
     {
       "page": "plans.html",
@@ -4018,7 +4058,7 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 30961,
+      "bytes": 31082,
       "inbound_links": 8
     },
     {
@@ -4037,8 +4077,8 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 58660,
-      "inbound_links": 4
+      "bytes": 58781,
+      "inbound_links": 3
     },
     {
       "page": "postloop.html",
@@ -4056,8 +4096,8 @@
       "schema_types": [],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 39184,
-      "inbound_links": 12
+      "bytes": 39305,
+      "inbound_links": 11
     },
     {
       "page": "pricing.html",
@@ -4088,8 +4128,8 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 28091,
-      "inbound_links": 139
+      "bytes": 28212,
+      "inbound_links": 138
     },
     {
       "page": "procurement-legal-tech.html",
@@ -4107,8 +4147,8 @@
       "schema_types": [],
       "internal_links": 25,
       "images_missing_alt": 0,
-      "bytes": 53732,
-      "inbound_links": 17
+      "bytes": 53853,
+      "inbound_links": 16
     },
     {
       "page": "products.html",
@@ -4126,9 +4166,9 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 167,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 42908,
+      "bytes": 15246,
       "inbound_links": 10
     },
     {
@@ -4147,8 +4187,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9506,
-      "inbound_links": 11
+      "bytes": 9627,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/artemis-vi.html",
@@ -4166,8 +4206,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9519,
-      "inbound_links": 11
+      "bytes": 9640,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/guardian.html",
@@ -4185,8 +4225,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9512,
-      "inbound_links": 11
+      "bytes": 9633,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/index.html",
@@ -4204,8 +4244,8 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 10614,
-      "inbound_links": 10
+      "bytes": 10735,
+      "inbound_links": 9
     },
     {
       "page": "products/opal-koboi/revenue-engine.html",
@@ -4223,8 +4263,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9528,
-      "inbound_links": 11
+      "bytes": 9649,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/smb-suite.html",
@@ -4242,8 +4282,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9507,
-      "inbound_links": 12
+      "bytes": 9628,
+      "inbound_links": 11
     },
     {
       "page": "revenue-engine.html",
@@ -4261,8 +4301,8 @@
       "schema_types": [],
       "internal_links": 53,
       "images_missing_alt": 0,
-      "bytes": 58207,
-      "inbound_links": 21
+      "bytes": 58328,
+      "inbound_links": 20
     },
     {
       "page": "saas-platform.html",
@@ -4280,8 +4320,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 27727,
-      "inbound_links": 9
+      "bytes": 27848,
+      "inbound_links": 8
     },
     {
       "page": "sats-digital-twin.html",
@@ -4303,8 +4343,8 @@
       ],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 27356,
-      "inbound_links": 18
+      "bytes": 27477,
+      "inbound_links": 16
     },
     {
       "page": "sentinel.html",
@@ -4322,8 +4362,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 58444,
-      "inbound_links": 17
+      "bytes": 64736,
+      "inbound_links": 16
     },
     {
       "page": "sentinel/ARTEMIS_FAWL_COMMAND_SURFACE.html",
@@ -4341,7 +4381,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 15678,
+      "bytes": 15799,
       "inbound_links": 0
     },
     {
@@ -4360,7 +4400,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 16438,
+      "bytes": 16559,
       "inbound_links": 0
     },
     {
@@ -4401,7 +4441,7 @@
       ],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 16742,
+      "bytes": 16863,
       "inbound_links": 8
     },
     {
@@ -4420,7 +4460,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 40723,
+      "bytes": 40844,
       "inbound_links": 0
     },
     {
@@ -4448,8 +4488,8 @@
       ],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 111251,
-      "inbound_links": 12
+      "bytes": 111372,
+      "inbound_links": 11
     },
     {
       "page": "smb-cyber-trust-kit.html",
@@ -4471,8 +4511,8 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 95902,
-      "inbound_links": 15
+      "bytes": 96023,
+      "inbound_links": 14
     },
     {
       "page": "smb.html",
@@ -4506,7 +4546,7 @@
       ],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 10918,
+      "bytes": 11039,
       "inbound_links": 22
     },
     {
@@ -4525,8 +4565,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 17243,
-      "inbound_links": 13
+      "bytes": 17364,
+      "inbound_links": 12
     },
     {
       "page": "store.html",
@@ -4559,8 +4599,8 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 34467,
-      "inbound_links": 160
+      "bytes": 34588,
+      "inbound_links": 157
     },
     {
       "page": "systems.html",
@@ -4578,8 +4618,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 38408,
-      "inbound_links": 12
+      "bytes": 38529,
+      "inbound_links": 11
     },
     {
       "page": "tax.html",
@@ -4597,8 +4637,27 @@
       "schema_types": [],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 64144,
-      "inbound_links": 14
+      "bytes": 64265,
+      "inbound_links": 13
+    },
+    {
+      "page": "threads.html",
+      "url": "https://www.clearglassinc.com/threads.html",
+      "indexable": false,
+      "noindex": true,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "ClearGlassInc Artemis Campaign Review Kit",
+      "title_length": 41,
+      "description": null,
+      "description_length": 0,
+      "canonical": null,
+      "h1_count": 1,
+      "schema_types": [],
+      "internal_links": 6,
+      "images_missing_alt": 0,
+      "bytes": 11657,
+      "inbound_links": 0
     },
     {
       "page": "traffic-enforcement.html",
@@ -4616,8 +4675,8 @@
       "schema_types": [],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 24444,
-      "inbound_links": 14
+      "bytes": 24565,
+      "inbound_links": 11
     },
     {
       "page": "ultra-glass.html",
@@ -4635,8 +4694,8 @@
       "schema_types": [],
       "internal_links": 26,
       "images_missing_alt": 0,
-      "bytes": 37627,
-      "inbound_links": 10
+      "bytes": 37748,
+      "inbound_links": 9
     },
     {
       "page": "web-design.html",
@@ -4689,8 +4748,8 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 103667,
-      "inbound_links": 26
+      "bytes": 115757,
+      "inbound_links": 25
     },
     {
       "page": "workspace.html",
@@ -4713,7 +4772,7 @@
       ],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 32799,
+      "bytes": 32920,
       "inbound_links": 8
     },
     {
@@ -4735,8 +4794,8 @@
       ],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 51134,
-      "inbound_links": 9
+      "bytes": 51255,
+      "inbound_links": 8
     }
   ]
 }

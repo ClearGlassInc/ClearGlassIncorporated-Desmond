@@ -1,6 +1,8 @@
 """Bounded, auditable retention worker for ClearGlass Live Signal Fabric."""
 from __future__ import annotations
-import argparse, json, os
+import argparse
+import json
+import os
 from dataclasses import dataclass
 from datetime import UTC, datetime
 

@@ -93,20 +93,25 @@ def _harden_html(path: Path) -> None:
         return
 
     tags: list[str] = []
-    if not re.search(
-        r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]",
-        text,
-        flags=re.IGNORECASE,
-    ):
-        tags.append(
-            f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
-        )
-    if not re.search(
-        r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"]",
-        text,
-        flags=re.IGNORECASE,
-    ):
-        tags.append('<meta name="referrer" content="strict-origin-when-cross-origin">')
+    metadata_replaced = False
+    csp_pattern = (
+        r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"][^>]*>"
+    )
+    csp_tag = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
+    if re.search(csp_pattern, text, flags=re.IGNORECASE):
+        # Published pages use one reviewed baseline; otherwise a stale source
+        # tag can silently omit directives added at the deployment boundary.
+        text = re.sub(csp_pattern, csp_tag, text, count=1, flags=re.IGNORECASE)
+        metadata_replaced = True
+    else:
+        tags.append(csp_tag)
+    referrer_pattern = r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"][^>]*>"
+    referrer_tag = '<meta name="referrer" content="strict-origin-when-cross-origin">'
+    if re.search(referrer_pattern, text, flags=re.IGNORECASE):
+        text = re.sub(referrer_pattern, referrer_tag, text, count=1, flags=re.IGNORECASE)
+        metadata_replaced = True
+    else:
+        tags.append(referrer_tag)
     if not re.search(
         r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]",
         text,
@@ -120,11 +125,12 @@ def _harden_html(path: Path) -> None:
     ):
         tags.append(AEGIS_SCRIPT)
 
-    if not tags:
+    if not tags and not metadata_replaced:
         return
 
-    injection = "\n" + "\n".join(tags)
-    text = text[: head.end()] + injection + text[head.end() :]
+    if tags:
+        injection = "\n" + "\n".join(tags)
+        text = text[: head.end()] + injection + text[head.end() :]
     path.write_text(text, encoding="utf-8")
 
 

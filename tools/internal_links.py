@@ -59,6 +59,7 @@ EXCLUDED_PAGES: dict[str, tuple[str, str]] = {
         "Private operations", "noindex, nofollow recovery console"
     ),
     "seo-dashboard.html": ("Private operations", "noindex, nofollow SEO console"),
+    "threads.html": ("Campaign review", "noindex, nofollow draft review surface"),
 }
 
 # --------------------------------------------------------------------------
@@ -75,6 +76,8 @@ PAGES: dict[str, tuple[str, str]] = {
     "operations/stripe-handoff.html": ("Stripe Handoff", "payments connection runbook"),
     "authority-network.html": ("Authority Network", "the ClearGlass pillar-and-cluster site graph"),
     "advanced-features-tools-systems.html": ("Advanced Features, Tools & Systems", "the governed systems, agent and audit architecture catalog"),
+    "business-productivity-suite.html": ("Business Productivity Suite", "Canadian-first business productivity planning"),
+    "global-growth-engine.html": ("Global Growth Engine", "governed multi-market growth intelligence"),
     "automap.html": ("AutoMap Orchestration", "architecture-aware orchestration and system relationship mapping"),
     "apps/command-center/index.html": ("Growth Command Centre", "governed Burlington growth operations and approvals"),
 
@@ -237,6 +240,8 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html": ("Artemis Full-Stack AI Blueprint", "the production architecture for a governed intelligence platform"),
     "blog/clearglass-workplace-surveillance-intelligence-defense-system.html": ("Workplace Surveillance Intelligence & Defense", "defensive research for worker rights, privacy and accountability"),
     "blog/network-orchestration-ai-automation-cybersecurity.html": ("AI-Driven Network Orchestration", "a field guide to safe, governed network automation"),
+    "blog/ontario-influence-environment-august-2026.html": ("Ontario Influence Environment", "verification-first Ontario public-interest intelligence"),
+    "blog/shadow-ai-incident-response-logs-gone.html": ("Shadow AI Incident Response", "forensic readiness before security evidence disappears"),
 }
 
 # --------------------------------------------------------------------------
@@ -344,6 +349,7 @@ CLUSTERS: dict[str, dict] = {
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html",
             "offers/guardian-command-nexus-blueprint.html", "revenue-engine.html",
             "side-store.html", "products.html",
+            "business-productivity-suite.html", "global-growth-engine.html",
             "apps/command-center/index.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
@@ -409,6 +415,8 @@ CLUSTERS: dict[str, dict] = {
             "blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
             "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html",
             "blog/network-orchestration-ai-automation-cybersecurity.html",
+            "blog/ontario-influence-environment-august-2026.html",
+            "blog/shadow-ai-incident-response-logs-gone.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },

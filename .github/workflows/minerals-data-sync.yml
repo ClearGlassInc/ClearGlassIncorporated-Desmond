@@ -1,53 +1,77 @@
-name: Minerals Data Validation
+name: Minerals Data Sync
 
 on:
-  schedule:
-    - cron: '17 10 * * 1'
   workflow_dispatch:
-  pull_request:
-    paths:
-      - 'data/minerals/**'
-      - 'scripts/minerals_pipeline.py'
-      - 'tests/test_minerals_pipeline.py'
-      - '.github/workflows/minerals-data-sync.yml'
+  schedule:
+    - cron: "17 */6 * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
-  group: minerals-data-sync-${{ github.ref }}
+  group: minerals-data-sync
   cancel-in-progress: false
 
 jobs:
-  validate:
-    name: Fetch, validate, normalize, compare, and stage
+  sync:
+    name: Fetch, validate, normalize, publish
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout last-known-good data
+      - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
-          persist-credentials: false
+          fetch-depth: 1
+
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
-          python-version: '3.12'
-      - name: Fetch
-        run: echo 'No authenticated or network feed is configured; preserving repository last-known-good datasets.'
-      - name: Validate and normalize
-        run: python3 scripts/minerals_pipeline.py --summary minerals-pipeline-summary.md
-      - name: Compare and publish decision
-        run: git diff --exit-code -- data/minerals
-      - name: Test failure and fallback behavior
-        run: python3 -m pytest tests/test_minerals_pipeline.py -q
-      - name: Write GitHub Step Summary
-        if: always()
-        run: cat minerals-pipeline-summary.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo 'Validation failed; last-known-good repository data was not modified.' >> "$GITHUB_STEP_SUMMARY"
-      - name: Upload safe pipeline summary
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: minerals-pipeline-summary
-          path: minerals-pipeline-summary.md
-          if-no-files-found: warn
-          retention-days: 14
+          python-version: "3.13"
+
+      - name: Fetch and normalize public mineral signals
+        run: python scripts/minerals_data_sync.py
+
+      - name: Validate production JSON
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('feeds/minerals')
+          files = sorted(root.rglob('*.json'))
+          if not files:
+              raise SystemExit('No minerals JSON files found')
+          for path in files:
+              with path.open('r', encoding='utf-8') as handle:
+                  json.load(handle)
+          print(f'validated {len(files)} minerals JSON files')
+          PY
+
+      - name: Check generated diff
+        id: diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          if git diff --quiet -- feeds/minerals/manifest.json feeds/minerals/latest; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit changed public snapshots
+        if: steps.diff.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "clearglass-minerals-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add feeds/minerals/manifest.json feeds/minerals/latest
+          git commit -m "bot(minerals): refresh validated public feeds [skip ci]"
+          git push
+
+      - name: No data changes
+        if: steps.diff.outputs.changed != 'true'
+        run: echo "No validated Minerals feed changes to publish." >> "$GITHUB_STEP_SUMMARY"

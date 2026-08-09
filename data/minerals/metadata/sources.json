@@ -1,7 +1,13 @@
 {
-  "schema_version": "1.0.0",
-  "sources": [
-    {"id":"nrcan-critical-minerals","name":"Natural Resources Canada — Critical Minerals","url":"https://www.canada.ca/en/campaign/critical-minerals-in-canada/critical-minerals-an-opportunity-for-canada.html","authority":"Government of Canada"},
-    {"id":"usgs-mcs","name":"USGS Mineral Commodity Summaries","url":"https://www.usgs.gov/centers/national-minerals-information-center/mineral-commodity-summaries","authority":"United States Geological Survey"}
+  "schema_version":"1.0",
+  "sources":[
+    {"id":"nrcan-critical-minerals","provider":"Natural Resources Canada","dataset":"Canadian Critical Minerals Strategy and mineral facts","coverage":"Canada; policy and reference profiles","frequency":"periodic","license":"Open Government Licence - Canada","source_url":"https://natural-resources.canada.ca/minerals-mining/critical-minerals","method":"Official web publication; curated snapshot"},
+    {"id":"usgs-mcs","provider":"U.S. Geological Survey","dataset":"Mineral Commodity Summaries","coverage":"Global production and reserves","frequency":"annual","license":"U.S. Government work","source_url":"https://www.usgs.gov/centers/national-minerals-information-center/mineral-commodity-summaries","method":"Official publication; normalization required before metrics"},
+    {"id":"un-comtrade","provider":"United Nations Statistics Division","dataset":"UN Comtrade","coverage":"Reported international merchandise trade","frequency":"monthly/annual by reporter","license":"UN Comtrade terms","source_url":"https://comtradeplus.un.org/","method":"API snapshot; reporting-period data, not live"},
+    {"id":"sanctions-canada","provider":"Global Affairs Canada","dataset":"Consolidated Canadian Autonomous Sanctions List","coverage":"Canadian autonomous sanctions","frequency":"as published","license":"Government of Canada terms","source_url":"https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/consolidated-consolide.aspx","method":"Official reference; legal review required"},
+    {"id":"ofac","provider":"U.S. Department of the Treasury OFAC","dataset":"Sanctions List Service","coverage":"United States sanctions lists","frequency":"as published","license":"U.S. Government work","source_url":"https://ofac.treasury.gov/sanctions-list-service","method":"Official reference; legal review required"},
+    {"id":"eu-sanctions","provider":"European Commission","dataset":"EU Sanctions Map / consolidated list","coverage":"European Union restrictive measures","frequency":"as published","license":"European Commission reuse policy","source_url":"https://www.sanctionsmap.eu/","method":"Official reference; legal review required"},
+    {"id":"uk-sanctions","provider":"UK Government","dataset":"UK Sanctions List","coverage":"United Kingdom sanctions designations","frequency":"as published","license":"Open Government Licence","source_url":"https://www.gov.uk/government/publications/the-uk-sanctions-list","method":"Official reference; legal review required"},
+    {"id":"un-sanctions","provider":"United Nations Security Council","dataset":"UN Security Council Consolidated List","coverage":"UN Security Council sanctions","frequency":"as published","license":"United Nations terms","source_url":"https://main.un.org/securitycouncil/en/content/un-sc-consolidated-list","method":"Official reference; legal review required"}
   ]
 }

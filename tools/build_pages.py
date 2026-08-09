@@ -30,6 +30,20 @@ PUBLIC_DENIED_TREE_EXCEPTIONS = {Path("apps/command-center")}
 # `data/` stays denied as a tree — it also holds internal working state. These
 # exact feeds are live public page inputs and must be deliberately allowlisted.
 PUBLIC_DATA_FEEDS = {
+    "data/minerals/manifest.json",
+    "data/minerals/latest/news.json",
+    "data/minerals/latest/policy.json",
+    "data/minerals/latest/prices.json",
+    "data/minerals/latest/production.json",
+    "data/minerals/latest/provenance.json",
+    "data/minerals/latest/reserves.json",
+    "data/minerals/latest/sanctions.json",
+    "data/minerals/latest/supply-risk.json",
+    "data/minerals/latest/trade.json",
+    "data/minerals/metadata/countries.json",
+    "data/minerals/metadata/methodology.json",
+    "data/minerals/metadata/minerals.json",
+    "data/minerals/metadata/sources.json",
     "data/control-surface/activity.json",
     "data/control-surface/alerts.json",
     "data/control-surface/health.json",
@@ -55,13 +69,13 @@ CSP_POLICY = (
     "default-src 'self'; "
     "base-uri 'self'; "
     "object-src 'none'; "
-    "form-action 'self' https://formspree.io; "
+    "form-action 'self' https://formspree.io https://formsubmit.co; "
     "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
     "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
     "img-src 'self' data: blob: https:; "
     "media-src 'self' https:; "
-    "connect-src 'self' https://formspree.io https://api.github.com; "
+    "connect-src 'self' https://formspree.io https://formsubmit.co https://api.github.com; "
     "frame-src 'self' https://www.youtube-nocookie.com; "
     "manifest-src 'self'; "
     "worker-src 'self' blob:; "
@@ -88,39 +102,30 @@ def _harden_html(path: Path) -> None:
         return
 
     metadata_replaced = False
-    csp_pattern = r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"][^>]*>"
-    referrer_pattern = r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"][^>]*>"
-    if _has_asset(text, csp_pattern):
-        text, count = re.subn(
-            csp_pattern,
-            f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">',
-            text,
-            count=1,
-            flags=re.IGNORECASE,
-        )
-        metadata_replaced = metadata_replaced or count > 0
-    if _has_asset(text, referrer_pattern):
-        text, count = re.subn(
-            referrer_pattern,
-            '<meta name="referrer" content="strict-origin-when-cross-origin">',
-            text,
-            count=1,
-            flags=re.IGNORECASE,
-        )
-        metadata_replaced = metadata_replaced or count > 0
 
-    canonical_assets = {
-        r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"][^>]*>": AEGIS_STYLESHEET,
-        r"<link\b[^>]*href\s*=\s*['\"]/security-stack-fusion\.css['\"][^>]*>": SECURITY_STACK_STYLESHEET,
-        r"<link\b[^>]*href\s*=\s*['\"]/fx\.css['\"][^>]*>": FX_STYLESHEET,
-        r"<script\b[^>]*src\s*=\s*['\"]/aegis-glass\.js['\"][^>]*>\s*</script>": AEGIS_SCRIPT,
-        r"<script\b[^>]*src\s*=\s*['\"]/stealth-glass\.js['\"][^>]*>\s*</script>": STEALTH_SCRIPT,
-        r"<script\b[^>]*src\s*=\s*['\"]/fx\.js['\"][^>]*>\s*</script>": FX_SCRIPT,
-    }
-    for pattern, canonical in canonical_assets.items():
-        if _has_asset(text, pattern):
-            text, count = re.subn(pattern, canonical, text, count=1, flags=re.IGNORECASE)
-            metadata_replaced = metadata_replaced or count > 0
+    # Pages can carry an older inline policy. Normalize it at build time so a
+    # newly allowlisted production integration is not silently blocked on only
+    # part of the site and every published page receives the reviewed policy.
+    csp_meta = re.compile(
+        r"<meta\b(?=[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"])[^>]*>",
+        flags=re.IGNORECASE,
+    )
+    canonical_csp = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
+    metadata_replaced = False
+    if csp_meta.search(text):
+        replaced = csp_meta.sub(canonical_csp, text, count=1)
+        metadata_replaced = metadata_replaced or replaced != text
+        text = replaced
+
+    referrer_meta = re.compile(
+        r"<meta\b(?=[^>]*name\s*=\s*['\"]referrer['\"])[^>]*>",
+        flags=re.IGNORECASE,
+    )
+    canonical_referrer = '<meta name="referrer" content="strict-origin-when-cross-origin">'
+    if referrer_meta.search(text):
+        replaced = referrer_meta.sub(canonical_referrer, text, count=1)
+        metadata_replaced = metadata_replaced or replaced != text
+        text = replaced
 
     tags: list[str] = []
     if not _has_asset(text, csp_pattern):

@@ -1,5 +1,6 @@
 name: Deploy Pages
 
+# Production redeploy trigger: 2026-08-09
 on:
   push:
     branches: [main]

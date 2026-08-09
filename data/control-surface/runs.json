@@ -1,8 +1,43 @@
 [
   {
-    "title": "Control Surface Feeds #594",
+    "title": "Control Surface Feeds #595",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "04:35",
+    "timestamp": "2026-08-09T04:35:41Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #2382",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "03:47",
+    "timestamp": "2026-08-09T03:47:33Z"
+  },
+  {
+    "title": "Deploy Pages #1689",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "02:28",
+    "timestamp": "2026-08-09T02:28:04Z"
+  },
+  {
+    "title": "pages build and deployment #2209",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "02:27",
+    "timestamp": "2026-08-09T02:27:58Z"
+  },
+  {
+    "title": "Push on main #3811",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "02:27",
+    "timestamp": "2026-08-09T02:27:58Z"
+  },
+  {
+    "title": "Control Surface Feeds #594",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "02:27",
     "timestamp": "2026-08-09T02:27:33Z"
   },
@@ -101,41 +136,6 @@
     "title": "IP Protection Bot - Risk Assessment #2381",
     "status": "ok",
     "detail": "success \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "Defensive Security Orchestrator #6",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #75",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "Deploy Pages #1687",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "CI #2315",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": ".github/workflows/auto-heal.yml #82",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
     "time": "23:30",
     "timestamp": "2026-08-08T23:30:45Z"
   }

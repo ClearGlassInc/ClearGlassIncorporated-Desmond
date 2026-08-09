@@ -3,12 +3,47 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "02:27",
-    "timestamp": "2026-08-09T02:27:51Z"
+    "time": "04:36",
+    "timestamp": "2026-08-09T04:36:02Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #595",
+    "time": "04:35",
+    "timestamp": "2026-08-09T04:35:41Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #2382",
+    "time": "03:47",
+    "timestamp": "2026-08-09T03:47:33Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #1689",
+    "time": "02:28",
+    "timestamp": "2026-08-09T02:28:04Z"
+  },
+  {
+    "title": "pages build and deployment",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #2209",
+    "time": "02:27",
+    "timestamp": "2026-08-09T02:27:58Z"
+  },
+  {
+    "title": "Push on main",
+    "status": "ok",
+    "detail": "dynamic on main \u00b7 run #3811",
+    "time": "02:27",
+    "timestamp": "2026-08-09T02:27:58Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #594",
     "time": "02:27",
     "timestamp": "2026-08-09T02:27:33Z"
@@ -54,40 +89,5 @@
     "detail": "dynamic on main \u00b7 run #3810",
     "time": "23:43",
     "timestamp": "2026-08-08T23:43:52Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #593",
-    "time": "23:43",
-    "timestamp": "2026-08-08T23:43:28Z"
-  },
-  {
-    "title": "Sync Stripe Products",
-    "status": "bad",
-    "detail": "workflow_run on main \u00b7 run #64",
-    "time": "23:31",
-    "timestamp": "2026-08-08T23:31:23Z"
-  },
-  {
-    "title": "Repository Health",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #238",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:46Z"
-  },
-  {
-    "title": "Security",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #2082",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "Site Integrity Guard",
-    "status": "ok",
-    "detail": "push on main \u00b7 run #241",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
   }
 ]

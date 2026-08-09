@@ -513,10 +513,23 @@ body.mobile-nav-open{overflow:hidden}
     text-align:center;color:#444;
     font:600 8.5pt/1.35 ui-monospace,SFMono-Regular,Menlo,monospace}
 }
+/* Production interaction and viewport hardening. */
+.skip-link{position:fixed;top:max(8px,env(safe-area-inset-top));left:12px;z-index:1000;padding:12px 16px;border-radius:10px;background:#07111f;color:#fff;font:700 14px var(--sans);text-decoration:none;transform:translateY(-160%);transition:transform .18s ease}
+.skip-link:focus{transform:translateY(0);outline:3px solid #7dd3fc;outline-offset:2px}
+.nav{top:max(clamp(88px,8.5vw,162px),calc(env(safe-area-inset-top) + 12px))}
+.nav-dropdown.is-open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+:where(a,button,input,textarea):focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+#main-content:focus{outline:none}
+.mobile-menu{max-height:calc(100dvh - 104px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.footer-lang{cursor:default}
+@media(max-width:1240px){.nav{top:max(18px,calc(env(safe-area-inset-top) + 8px))!important}.mobile-menu{top:calc(102px + env(safe-area-inset-top));max-height:calc(100dvh - 116px - env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}}
+@media(max-width:620px){.nav-name em{display:none!important}.mobile-menu{top:calc(92px + env(safe-area-inset-top));max-height:calc(100dvh - 104px - env(safe-area-inset-top))}}
+@media(prefers-reduced-motion:reduce){.skip-link{transition:none}.rv{opacity:1!important;transform:none!important}.hero-video{animation:none!important}}
 </style>
 <link rel="stylesheet" href="/assets/css/future-buttons.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <!-- Classification banner — UNCLASSIFIED demo instance -->
 <div class="class-banner" role="banner" aria-label="Document classification">
   UNCLASSIFIED / NON-CLASSIFIÉ
@@ -538,7 +551,7 @@ body.mobile-nav-open{overflow:hidden}
     <a href="#vision" class="is-active">Vision</a>
     <a href="#services">Services</a>
     <div class="nav-drop-wrap">
-      <button class="nav-drop-btn" aria-haspopup="true" aria-expanded="false" id="dropBtn">
+      <button class="nav-drop-btn" aria-haspopup="true" aria-expanded="false" aria-controls="navDropdown" id="dropBtn">
         Products
         <svg class="nav-drop-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>
       </button>
@@ -620,6 +633,7 @@ body.mobile-nav-open{overflow:hidden}
   <a href="#contact" onclick="closeMob()">Contact</a>
   <a href="store.html" onclick="closeMob()" style="background:var(--dark);color:#fff!important;margin-top:4px;justify-content:center">Book a Security Engagement</a>
 </div>
+<main id="main-content" tabindex="-1">
 <section class="hero" id="hero" data-cg-watermark="CLEARGLASSINC. · OFFICIAL EXPERIENCE · © 2026">
   <div class="artemis-grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <div class="artemis-reticle artemis-reticle--west" aria-hidden="true"><i></i></div>
@@ -980,6 +994,7 @@ body.mobile-nav-open{overflow:hidden}
   </div>
 </section>
 
+</main>
 <footer class="footer" role="contentinfo">
   <div class="container">
     <nav class="footer-cols" aria-label="Footer navigation">
@@ -1117,11 +1132,10 @@ body.mobile-nav-open{overflow:hidden}
         <a href="https://github.com/ClearGlassInc" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.35.78 1.05.78 2.12v3.15c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
         </a>
-        <button type="button" class="footer-lang" aria-label="English, select language">
+        <span class="footer-lang">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm7.94 9h-3.03a15.7 15.7 0 0 0-1.2-5.32A8.03 8.03 0 0 1 19.94 11zM12 4.04c.84 1.2 1.5 3.2 1.7 6.96h-3.4c.2-3.76.86-5.76 1.7-6.96zM4.06 11a8.03 8.03 0 0 1 4.23-5.32A15.7 15.7 0 0 0 7.09 11H4.06zm0 2h3.03a15.7 15.7 0 0 0 1.2 5.32A8.03 8.03 0 0 1 4.06 13zM12 19.96c-.84-1.2-1.5-3.2-1.7-6.96h3.4c-.2 3.76-.86 5.76-1.7 6.96zM15.71 18.32A15.7 15.7 0 0 0 16.91 13h3.03a8.03 8.03 0 0 1-4.23 5.32z"/></svg>
-          <span>English</span><!-- accessible name must contain the visible label (WCAG 2.5.3) -->
-          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
-        </button>
+          <span>English</span>
+        </span>
       </div>
     </div>
   </div>
@@ -1147,26 +1161,30 @@ body.mobile-nav-open{overflow:hidden}
 <div class="cg-print-notice">© <span class="cg-year">2026</span> ClearGlass Inc. All rights reserved. Retrieved from www.clearglassinc.com — reuse requires written permission.</div>
 
 <script>
-document.getElementById('year').textContent=new Date().getFullYear();
+var year=document.getElementById('year');if(year)year.textContent=new Date().getFullYear();
 /* ── scroll compression ── */
-var nb=document.getElementById('navbar');window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>28)},{passive:true});
+var nb=document.getElementById('navbar');if(nb)window.addEventListener('scroll',function(){nb.classList.toggle('scrolled',window.scrollY>28)},{passive:true});
 /* ── mobile toggle ── */
 var toggle=document.getElementById('navToggle');var mobMenu=document.getElementById('mobileMenu');
-function setMobileMenu(isOpen){mobMenu.classList.toggle('open',isOpen);mobMenu.toggleAttribute('inert',!isOpen);mobMenu.setAttribute('aria-hidden',String(!isOpen));document.body.classList.toggle('mobile-nav-open',isOpen);toggle.setAttribute('aria-expanded',String(isOpen));toggle.setAttribute('aria-label',isOpen?'Close menu':'Open menu');if(isOpen){var firstLink=mobMenu.querySelector('a');if(firstLink)firstLink.focus();}}
-toggle.addEventListener('click',function(){setMobileMenu(!mobMenu.classList.contains('open'));});
+function setMobileMenu(isOpen){if(!mobMenu||!toggle)return;mobMenu.classList.toggle('open',isOpen);mobMenu.toggleAttribute('inert',!isOpen);mobMenu.setAttribute('aria-hidden',String(!isOpen));document.body.classList.toggle('mobile-nav-open',isOpen);toggle.setAttribute('aria-expanded',String(isOpen));toggle.setAttribute('aria-label',isOpen?'Close menu':'Open menu');if(isOpen){var firstLink=mobMenu.querySelector('a');if(firstLink)firstLink.focus();}}
+if(toggle&&mobMenu)toggle.addEventListener('click',function(){setMobileMenu(!mobMenu.classList.contains('open'));});
 function closeMob(){setMobileMenu(false);}
-document.addEventListener('click',function(e){if(!mobMenu.contains(e.target)&&!toggle.contains(e.target)){closeMob();}});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mobMenu.classList.contains('open')){closeMob();toggle.focus();}});
-window.addEventListener('resize',function(){if(window.innerWidth>1240&&mobMenu.classList.contains('open'))closeMob();},{passive:true});
+document.addEventListener('click',function(e){if(mobMenu&&toggle&&!mobMenu.contains(e.target)&&!toggle.contains(e.target)){closeMob();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mobMenu&&toggle&&mobMenu.classList.contains('open')){closeMob();toggle.focus();}});
+window.addEventListener('resize',function(){if(window.innerWidth>1240&&mobMenu&&mobMenu.classList.contains('open'))closeMob();},{passive:true});
+/* ── desktop products dropdown ── */
+var dropBtn=document.getElementById('dropBtn');var navDropdown=document.getElementById('navDropdown');
+function setProductsMenu(isOpen){if(!dropBtn||!navDropdown)return;dropBtn.setAttribute('aria-expanded',String(isOpen));navDropdown.classList.toggle('is-open',isOpen);}
+if(dropBtn&&navDropdown){dropBtn.addEventListener('click',function(){setProductsMenu(dropBtn.getAttribute('aria-expanded')!=='true');});document.addEventListener('click',function(e){if(!dropBtn.parentElement.contains(e.target))setProductsMenu(false);});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dropBtn.getAttribute('aria-expanded')==='true'){setProductsMenu(false);dropBtn.focus();}});}
 /* ── glide cursor ── */
 var navLinksEl=document.getElementById('navLinks');var navCursor=document.getElementById('navCursor');
 function moveCursor(el){if(!navCursor||!navLinksEl)return;var pr=navLinksEl.getBoundingClientRect();var er=el.getBoundingClientRect();navCursor.style.opacity='1';navCursor.style.left=(er.left-pr.left)+'px';navCursor.style.top=(er.top-pr.top)+'px';navCursor.style.width=er.width+'px';navCursor.style.height=er.height+'px';}
 function restoreCursor(){if(!navCursor||!navLinksEl)return;var a=navLinksEl.querySelector('a.is-active');if(a){moveCursor(a);}else{navCursor.style.opacity='0';}}
 if(navLinksEl&&navCursor){navLinksEl.querySelectorAll('a:not(.nav-cta),.nav-drop-btn').forEach(function(el){el.addEventListener('mouseenter',function(){moveCursor(this);});});navLinksEl.addEventListener('mouseleave',restoreCursor);navCursor.style.transition='none';setTimeout(function(){navCursor.style.transition='';},60);restoreCursor();}
 /* ── active section ── */
-var navAnchors=document.querySelectorAll('.nav-links a[href^="#"]');var sectionObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){var id='#'+entry.target.id;navAnchors.forEach(function(link){link.classList.toggle('is-active',link.getAttribute('href')===id);});if(navLinksEl&&!navLinksEl.matches(':hover'))restoreCursor();}});},{rootMargin:'-35% 0px -55% 0px',threshold:0.01});['vision','technology','artemis-command','products','founder','contact','government'].forEach(function(id){var section=document.getElementById(id);if(section)sectionObserver.observe(section);});
-var glow=document.getElementById('cursorGlow');if(window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'})}
-var rvEls=document.querySelectorAll('.rv');var rvObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)entry.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});rvEls.forEach(function(el){rvObs.observe(el)});
+var navAnchors=document.querySelectorAll('.nav-links a[href^="#"]');if('IntersectionObserver' in window){var sectionObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){var id='#'+entry.target.id;navAnchors.forEach(function(link){link.classList.toggle('is-active',link.getAttribute('href')===id);});if(navLinksEl&&!navLinksEl.matches(':hover'))restoreCursor();}});},{rootMargin:'-35% 0px -55% 0px',threshold:0.01});['vision','technology','artemis-command','products','founder','contact','government'].forEach(function(id){var section=document.getElementById(id);if(section)sectionObserver.observe(section);});}
+var glow=document.getElementById('cursorGlow');if(glow&&window.matchMedia('(pointer:fine)').matches){document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'})}
+var rvEls=document.querySelectorAll('.rv');if('IntersectionObserver' in window){var rvObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('vis');rvObs.unobserve(entry.target);}})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});rvEls.forEach(function(el){rvObs.observe(el)});}else{rvEls.forEach(function(el){el.classList.add('vis');});}
 var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var href=this.getAttribute('href');if(href==='#')return;var t=document.querySelector(href);if(t){e.preventDefault();closeMob();t.scrollIntoView({behavior:reduceMotion.matches?'auto':'smooth'});history.replaceState(null,'',href);}})});
 
@@ -1184,7 +1202,7 @@ fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'
 .finally(function(){window.clearTimeout(timeout);if(btn){btn.disabled=false;}});
 });})();
 </script>
-  <script defer src="stealth-glass.js"></script>
+  <script defer src="/stealth-glass.js"></script>
   <script defer src="ui.js"></script>
   <script defer src="platform.js"></script>
   <script defer src="artemis-command-layer.js"></script>

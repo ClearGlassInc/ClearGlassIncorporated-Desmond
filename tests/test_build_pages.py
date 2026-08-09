@@ -1,3 +1,5 @@
+import re
+
 from tools.build_pages import (
     ROOT,
     AEGIS_SCRIPT,
@@ -10,7 +12,7 @@ from tools.build_pages import (
     PUBLIC_DENIED_TREE_EXCEPTIONS,
     PUBLIC_MARKDOWN,
     SECURITY_STACK_STYLESHEET,
-    STEALTH_SCRIPT,
+    _harden_html,
     build,
     public_relative_paths,
 )
@@ -93,13 +95,31 @@ def test_published_html_receives_browser_security_policy(tmp_path) -> None:
         assert SECURITY_STACK_STYLESHEET in text, page
         assert FX_STYLESHEET in text, page
         assert AEGIS_SCRIPT in text, page
-        assert STEALTH_SCRIPT in text, page
+        assert re.search(r'<script\b[^>]*src=["\']/stealth-glass\.js["\'][^>]*>', text), page
         assert FX_SCRIPT in text, page
         assert text.count('/aegis-glass.css') == 1, page
         assert text.count('/security-stack-fusion.css') == 1, page
         assert text.count('/fx.css') == 1, page
         assert text.count('/aegis-glass.js') == 1, page
-        assert text.count('/stealth-glass.js') == 1, page
+        assert len(re.findall(r'<script\b[^>]*src=["\']/stealth-glass\.js["\'][^>]*>', text)) == 1, page
         assert text.count('/fx.js') == 1, page
 
     assert checked > 0
+
+
+def test_published_html_replaces_stale_source_security_policy(tmp_path) -> None:
+    page = tmp_path / "stale.html"
+    page.write_text(
+        '<html><head><meta http-equiv="Content-Security-Policy" '
+        'content="default-src \'none\'"><meta name="referrer" '
+        'content="no-referrer"></head><body></body></html>',
+        encoding="utf-8",
+    )
+    _harden_html(page)
+
+    document = page.read_text(encoding="utf-8")
+    assert document.count('http-equiv="Content-Security-Policy"') == 1
+    assert f'content="{CSP_POLICY}"' in document
+    assert "default-src 'none'" not in document
+    assert document.count('<meta name="referrer"') == 1
+    assert '<meta name="referrer" content="strict-origin-when-cross-origin">' in document

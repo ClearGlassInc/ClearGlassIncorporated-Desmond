@@ -66,13 +66,13 @@ CSP_POLICY = (
     "default-src 'self'; "
     "base-uri 'self'; "
     "object-src 'none'; "
-    "form-action 'self' https://formspree.io; "
+    "form-action 'self' https://formspree.io https://formsubmit.co; "
     "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
     "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
     "img-src 'self' data: blob: https:; "
     "media-src 'self' https:; "
-    "connect-src 'self' https://formspree.io https://api.github.com; "
+    "connect-src 'self' https://formspree.io https://formsubmit.co https://api.github.com; "
     "frame-src 'self' https://www.youtube-nocookie.com; "
     "manifest-src 'self'; "
     "worker-src 'self' blob:; "
@@ -98,6 +98,32 @@ def _harden_html(path: Path) -> None:
     if not head:
         return
 
+    metadata_replaced = False
+
+    # Pages can carry an older inline policy. Normalize it at build time so a
+    # newly allowlisted production integration is not silently blocked on only
+    # part of the site and every published page receives the reviewed policy.
+    csp_meta = re.compile(
+        r"<meta\b(?=[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"])[^>]*>",
+        flags=re.IGNORECASE,
+    )
+    canonical_csp = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
+    metadata_replaced = False
+    if csp_meta.search(text):
+        replaced = csp_meta.sub(canonical_csp, text, count=1)
+        metadata_replaced = metadata_replaced or replaced != text
+        text = replaced
+
+    referrer_meta = re.compile(
+        r"<meta\b(?=[^>]*name\s*=\s*['\"]referrer['\"])[^>]*>",
+        flags=re.IGNORECASE,
+    )
+    canonical_referrer = '<meta name="referrer" content="strict-origin-when-cross-origin">'
+    if referrer_meta.search(text):
+        replaced = referrer_meta.sub(canonical_referrer, text, count=1)
+        metadata_replaced = metadata_replaced or replaced != text
+        text = replaced
+
     tags: list[str] = []
     if not _has_asset(text, r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]"):
         tags.append(f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">')
@@ -116,11 +142,12 @@ def _harden_html(path: Path) -> None:
     if not _has_asset(text, r"<script\b[^>]*src\s*=\s*['\"]/fx\.js['\"]"):
         tags.append(FX_SCRIPT)
 
-    if not tags:
+    if not tags and not metadata_replaced:
         return
 
-    injection = "\n" + "\n".join(tags)
-    text = text[: head.end()] + injection + text[head.end() :]
+    if tags:
+        injection = "\n" + "\n".join(tags)
+        text = text[: head.end()] + injection + text[head.end() :]
     path.write_text(text, encoding="utf-8")
 
 

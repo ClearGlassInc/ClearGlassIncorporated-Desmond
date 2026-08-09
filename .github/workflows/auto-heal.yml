@@ -8,10 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  actions: write
-  contents: write
-  issues: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: auto-heal-${{ github.repository }}
@@ -25,6 +22,12 @@ jobs:
        github.event.workflow_run.name != 'Auto Heal')
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: automation-write
+    permissions:
+      actions: write
+      contents: write
+      issues: write
+      pull-requests: write
 
     steps:
       - name: Checkout default branch

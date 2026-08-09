@@ -10,7 +10,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 concurrency:
   group: cloudflare-email-routing-executor
@@ -20,6 +19,9 @@ jobs:
   configure:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
     env:
       CF_API_TOKEN_RAW: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       DOMAIN: clearglassinc.com

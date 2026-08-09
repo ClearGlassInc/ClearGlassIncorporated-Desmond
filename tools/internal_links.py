@@ -91,6 +91,7 @@ PAGES: dict[str, tuple[str, str]] = {
 
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
+    "minerals.html": ("Critical Minerals Intelligence", "public-data mineral supply-chain, policy, provenance and compliance intelligence"),
     "flowsint.html": ("Flowsint", "OSINT investigation graph for domains, IPs and transforms"),
     "Ontario-osint.html": ("Ontario OSINT Deck", "regional open-source intelligence control deck"),
     "clearglass.html": ("Network Flow Intelligence", "see network traffic as living structure"),
@@ -268,7 +269,7 @@ CLUSTERS: dict[str, dict] = {
             "clearglass.html", "intelligence-command-surface.html",
             "intelligence-interface.html", "intelligence-platform.html",
             "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html",
-            "docs/guardian_command_nexus_spec.html",
+            "docs/guardian_command_nexus_spec.html", "minerals.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },

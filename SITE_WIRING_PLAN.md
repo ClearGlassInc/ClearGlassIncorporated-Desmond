@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 148 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 149 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -33,7 +33,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `environmental-cyber-risk.html` — Environmental Cyber-Risk | OT and environmental threat monitoring | ATT&CK Prompt Integrator | Cyber Defense Console | BLUEDESK Mobile | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `bluedesk-mobile.html` — BLUEDESK Mobile | the CISO risk console on a phone-first canvas | Environmental Cyber-Risk | Cyber Defense Console | Cyber Defense Console | Book a security engagement / Start with the $249 Security Quick-Audit |
 | **Intelligence & OSINT** | **Topic cluster** |  |  |  |  |
-| `intelligence.html` — Intelligence | the ClearGlass intelligence practice | Guardian Command Nexus Spec | Intelligence | Flowsint | Book a security engagement / See pricing & plans |
+| `intelligence.html` — Intelligence | the ClearGlass intelligence practice | Critical Minerals Intelligence | Intelligence | Flowsint | Book a security engagement / See pricing & plans |
 | `flowsint.html` — Flowsint | OSINT investigation graph for domains, IPs and transforms | Intelligence | Intelligence | ClearGlass NEXUS | Book a security engagement / See pricing & plans |
 | `clearglass-nexus.html` — ClearGlass NEXUS | full-spectrum intelligence platform | Flowsint | Intelligence | Ontario OSINT Deck | Book a security engagement / See pricing & plans |
 | `Ontario-osint.html` — Ontario OSINT Deck | regional open-source intelligence control deck | ClearGlass NEXUS | Intelligence | Network Flow Intelligence | Book a security engagement / See pricing & plans |
@@ -44,7 +44,8 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `ClearGlass-NEXUS-v12-FINAL.html` — NEXUS v12 | the flagship intelligence platform build | Intelligence Platform Architecture | Intelligence | NEXUS v12 · Ontario | Book a security engagement / See pricing & plans |
 | `artemis.html` — NEXUS v12 · Ontario | intelligence platform deployment profile | NEXUS v12 | Intelligence | XENOLITH | Book a security engagement / See pricing & plans |
 | `xenolith.html` — XENOLITH | the sovereign intelligence lattice — governed multi-domain command substrate | NEXUS v12 · Ontario | Intelligence | Guardian Command Nexus Spec | Book a security engagement / See pricing & plans |
-| `docs/guardian_command_nexus_spec.html` — Guardian Command Nexus Spec | the implementation specification for the Guardian command surface | XENOLITH | Intelligence | Intelligence | Book a security engagement / See pricing & plans |
+| `docs/guardian_command_nexus_spec.html` — Guardian Command Nexus Spec | the implementation specification for the Guardian command surface | XENOLITH | Intelligence | Critical Minerals Intelligence | Book a security engagement / See pricing & plans |
+| `minerals.html` — Critical Minerals Intelligence | public-data mineral supply-chain, policy, provenance and compliance intelligence | Guardian Command Nexus Spec | Intelligence | Intelligence | Book a security engagement / See pricing & plans |
 | **Artemis Platform** | **Topic cluster** |  |  |  |  |
 | `artemis-os.html` — Artemis OS | the Artemis intelligence operating system | Air Systems Control | Artemis OS | ARTEMIS IV | See pricing & plans / Book a security engagement |
 | `artemis-iv.html` — ARTEMIS IV | tactical intelligence core | Artemis OS | Artemis OS | AI Cyber Intelligence Platform | See pricing & plans / Book a security engagement |

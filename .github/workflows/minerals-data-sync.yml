@@ -1,0 +1,41 @@
+name: Critical Minerals Data Validation
+
+on:
+  schedule:
+    - cron: '23 9 * * 1'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/minerals/**'
+      - 'scripts/minerals_pipeline.py'
+      - 'tests/test_minerals_pipeline.py'
+      - '.github/workflows/minerals-data-sync.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: minerals-data-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout trusted snapshot source
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.12'
+      - name: Validate snapshots and last-known-good controls
+        run: |
+          set -euo pipefail
+          python3 -m pytest tests/test_minerals_pipeline.py -q
+          python3 scripts/minerals_pipeline.py --validate-only --summary minerals-summary.md
+      - name: Publish safe operational summary
+        if: always()
+        run: cat minerals-summary.md >> "$GITHUB_STEP_SUMMARY"

@@ -30,6 +30,20 @@ PUBLIC_DENIED_TREE_EXCEPTIONS = {Path("apps/command-center")}
 # `data/` stays denied as a tree — it also holds internal working state. These
 # exact feeds are live public page inputs and must be deliberately allowlisted.
 PUBLIC_DATA_FEEDS = {
+    "data/minerals/manifest.json",
+    "data/minerals/latest/news.json",
+    "data/minerals/latest/policy.json",
+    "data/minerals/latest/prices.json",
+    "data/minerals/latest/production.json",
+    "data/minerals/latest/provenance.json",
+    "data/minerals/latest/reserves.json",
+    "data/minerals/latest/sanctions.json",
+    "data/minerals/latest/supply-risk.json",
+    "data/minerals/latest/trade.json",
+    "data/minerals/metadata/countries.json",
+    "data/minerals/metadata/methodology.json",
+    "data/minerals/metadata/minerals.json",
+    "data/minerals/metadata/sources.json",
     "data/control-surface/activity.json",
     "data/control-surface/alerts.json",
     "data/control-surface/health.json",
@@ -37,6 +51,9 @@ PUBLIC_DATA_FEEDS = {
     "data/control-surface/pipeline.json",
     "data/control-surface/runs.json",
     "data/Ontario-osint/intel.json",
+    "data/minerals/manifest.json",
+    "data/minerals/metadata/minerals.json",
+    "data/minerals/metadata/sources.json",
     "data/platform/registry.json",
     "data/store/catalog.json",
     "data/xenolith/lattice.json",
@@ -84,6 +101,8 @@ def _harden_html(path: Path) -> None:
     if not head:
         return
 
+    metadata_replaced = False
+
     # Pages can carry an older inline policy. Normalize it at build time so a
     # newly allowlisted production integration is not silently blocked on only
     # part of the site and every published page receives the reviewed policy.
@@ -94,8 +113,9 @@ def _harden_html(path: Path) -> None:
     canonical_csp = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
     metadata_replaced = False
     if csp_meta.search(text):
-        text = csp_meta.sub(canonical_csp, text, count=1)
-        metadata_replaced = True
+        replaced = csp_meta.sub(canonical_csp, text, count=1)
+        metadata_replaced = metadata_replaced or replaced != text
+        text = replaced
 
     referrer_meta = re.compile(
         r"<meta\b(?=[^>]*name\s*=\s*['\"]referrer['\"])[^>]*>",
@@ -103,13 +123,14 @@ def _harden_html(path: Path) -> None:
     )
     canonical_referrer = '<meta name="referrer" content="strict-origin-when-cross-origin">'
     if referrer_meta.search(text):
-        text = referrer_meta.sub(canonical_referrer, text, count=1)
-        metadata_replaced = True
+        replaced = referrer_meta.sub(canonical_referrer, text, count=1)
+        metadata_replaced = metadata_replaced or replaced != text
+        text = replaced
 
     tags: list[str] = []
-    if not _has_asset(text, r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]"):
+    if not _has_asset(text, csp_pattern):
         tags.append(f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">')
-    if not _has_asset(text, r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"]"):
+    if not _has_asset(text, referrer_pattern):
         tags.append('<meta name="referrer" content="strict-origin-when-cross-origin">')
     if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]"):
         tags.append(AEGIS_STYLESHEET)

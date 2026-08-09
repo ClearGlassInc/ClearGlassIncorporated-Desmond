@@ -40,49 +40,60 @@ jobs:
         run: |
           set -euo pipefail
           python3 - <<'PY'
+          import re
           from pathlib import Path
 
           path = Path('tools/internal_links.py')
           text = path.read_text(encoding='utf-8')
+          marker = 'CLUSTERS: dict[str, dict] = {'
+          pages, sep, clusters = text.partition(marker)
+          if not sep:
+              raise SystemExit('CLUSTERS marker not found')
 
-          replacements = [
-              (
-                  '    "intelligence-platform.html": ("Intelligence Platform Architecture", "brand and platform blueprint"),\n',
-                  '    "intelligence-platform.html": ("Intelligence Platform Architecture", "brand and platform blueprint"),\n'
-                  '    "minerals.html": ("Critical Minerals Intelligence", "source-transparent critical-minerals intelligence, provenance and risk analytics"),\n'
-              ),
-              (
-                  '    "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),\n',
-                  '    "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),\n'
-                  '    "mission-control.html": ("Mission Control", "operational mission gallery for ClearGlass deployments and engineering work"),\n'
-              ),
-              (
-                  '    "blog/ontario-influence-environment-august-2026.html": ("Ontario Influence Environment", "verification-first Ontario public-interest intelligence"),\n',
-                  '    "blog/ontario-influence-environment-august-2026.html": ("Ontario Influence Environment", "verification-first Ontario public-interest intelligence"),\n'
-                  '    "blog/ontario-influence-infrastructure-monitoring.html": ("Ontario Influence Infrastructure Monitoring", "verification-first monitoring of Ontario influence infrastructure"),\n'
-              ),
-              (
-                  '            "docs/guardian_command_nexus_spec.html",\n',
-                  '            "docs/guardian_command_nexus_spec.html", "minerals.html",\n'
-              ),
-              (
-                  '            "command-center.html",\n',
-                  '            "command-center.html", "mission-control.html",\n'
-              ),
-              (
-                  '            "blog/ontario-influence-environment-august-2026.html",\n            "blog/shadow-ai-incident-response-logs-gone.html",\n',
-                  '            "blog/ontario-influence-environment-august-2026.html",\n'
-                  '            "blog/shadow-ai-incident-response-logs-gone.html",\n'
-                  '            "blog/ontario-influence-infrastructure-monitoring.html",\n'
-              ),
-          ]
+          def add_page(source, anchor_key, new_key, new_line):
+              if f'"{new_key}":' in source:
+                  return source
+              pattern = rf'(^\s*"{re.escape(anchor_key)}":.*$)'
+              updated, count = re.subn(pattern, rf'\1\n{new_line}', source, count=1, flags=re.MULTILINE)
+              if count != 1:
+                  raise SystemExit(f'PAGES anchor not found: {anchor_key}')
+              return updated
 
-          for old, new in replacements:
-              if old not in text:
-                  raise SystemExit(f'Expected internal-link mapping fragment not found: {old!r}')
-              text = text.replace(old, new, 1)
+          def add_member(source, anchor_path, new_path):
+              if re.search(rf'^\s*"{re.escape(new_path)}",?\s*$', source, flags=re.MULTILINE):
+                  return source
+              pattern = rf'(^\s*"{re.escape(anchor_path)}",?\s*$)'
+              match = re.search(pattern, source, flags=re.MULTILINE)
+              if not match:
+                  raise SystemExit(f'cluster anchor not found: {anchor_path}')
+              indent = re.match(r'^\s*', match.group(0)).group(0)
+              updated = source[:match.end()] + f'\n{indent}"{new_path}",' + source[match.end():]
+              return updated
 
-          path.write_text(text, encoding='utf-8')
+          pages = add_page(
+              pages,
+              'intelligence-platform.html',
+              'minerals.html',
+              '    "minerals.html": ("Critical Minerals Intelligence", "source-transparent critical-minerals intelligence, provenance and risk analytics"),',
+          )
+          pages = add_page(
+              pages,
+              'clearsight.html',
+              'mission-control.html',
+              '    "mission-control.html": ("Mission Control", "operational mission gallery for ClearGlass deployments and engineering work"),',
+          )
+          pages = add_page(
+              pages,
+              'blog/ontario-influence-environment-august-2026.html',
+              'blog/ontario-influence-infrastructure-monitoring.html',
+              '    "blog/ontario-influence-infrastructure-monitoring.html": ("Ontario Influence Infrastructure Monitoring", "verification-first monitoring of Ontario influence infrastructure"),',
+          )
+
+          clusters = add_member(clusters, 'docs/guardian_command_nexus_spec.html', 'minerals.html')
+          clusters = add_member(clusters, 'command-center.html', 'mission-control.html')
+          clusters = add_member(clusters, 'blog/shadow-ai-incident-response-logs-gone.html', 'blog/ontario-influence-infrastructure-monitoring.html')
+
+          path.write_text(pages + sep + clusters, encoding='utf-8')
           PY
 
       - name: Regenerate internal authority graph

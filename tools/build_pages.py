@@ -52,13 +52,13 @@ CSP_POLICY = (
     "default-src 'self'; "
     "base-uri 'self'; "
     "object-src 'none'; "
-    "form-action 'self' https://formspree.io; "
+    "form-action 'self' https://formspree.io https://formsubmit.co; "
     "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
     "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
     "img-src 'self' data: blob: https:; "
     "media-src 'self' https:; "
-    "connect-src 'self' https://formspree.io https://api.github.com; "
+    "connect-src 'self' https://formspree.io https://formsubmit.co https://api.github.com; "
     "frame-src 'self' https://www.youtube-nocookie.com; "
     "manifest-src 'self'; "
     "worker-src 'self' blob:; "
@@ -83,6 +83,25 @@ def _harden_html(path: Path) -> None:
     head = re.search(r"<head(?:\s[^>]*)?>", text, flags=re.IGNORECASE)
     if not head:
         return
+
+    # Pages can carry an older inline policy. Normalize it at build time so a
+    # newly allowlisted production integration is not silently blocked on only
+    # part of the site and every published page receives the reviewed policy.
+    csp_meta = re.compile(
+        r"<meta\b(?=[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"])[^>]*>",
+        flags=re.IGNORECASE,
+    )
+    canonical_csp = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
+    if csp_meta.search(text):
+        text = csp_meta.sub(canonical_csp, text, count=1)
+
+    referrer_meta = re.compile(
+        r"<meta\b(?=[^>]*name\s*=\s*['\"]referrer['\"])[^>]*>",
+        flags=re.IGNORECASE,
+    )
+    canonical_referrer = '<meta name="referrer" content="strict-origin-when-cross-origin">'
+    if referrer_meta.search(text):
+        text = referrer_meta.sub(canonical_referrer, text, count=1)
 
     tags: list[str] = []
     if not _has_asset(text, r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]"):

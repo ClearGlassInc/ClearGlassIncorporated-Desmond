@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #593",
+    "title": "Control Surface Feeds #594",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "02:27",
+    "timestamp": "2026-08-09T02:27:33Z"
+  },
+  {
+    "title": "Defender Watch #1740",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "02:15",
+    "timestamp": "2026-08-09T02:15:53Z"
+  },
+  {
+    "title": "Health Monitor #281",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "02:00",
+    "timestamp": "2026-08-09T02:00:48Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #62",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "01:12",
+    "timestamp": "2026-08-09T01:12:33Z"
+  },
+  {
+    "title": "Deploy Pages #1688",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "23:44",
+    "timestamp": "2026-08-08T23:44:00Z"
+  },
+  {
+    "title": "pages build and deployment #2208",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:43",
+    "timestamp": "2026-08-08T23:43:53Z"
+  },
+  {
+    "title": "Push on main #3810",
+    "status": "ok",
+    "detail": "success \u00b7 dynamic on main",
+    "time": "23:43",
+    "timestamp": "2026-08-08T23:43:52Z"
+  },
+  {
+    "title": "Control Surface Feeds #593",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "23:43",
     "timestamp": "2026-08-08T23:43:28Z"
   },
@@ -89,54 +138,5 @@
     "detail": "failure \u00b7 push on main",
     "time": "23:30",
     "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "pages build and deployment #2207",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:45Z"
-  },
-  {
-    "title": "Push on main #3809",
-    "status": "ok",
-    "detail": "success \u00b7 dynamic on main",
-    "time": "23:30",
-    "timestamp": "2026-08-08T23:30:44Z"
-  },
-  {
-    "title": "Sync Stripe Products #63",
-    "status": "bad",
-    "detail": "failure \u00b7 workflow_run on main",
-    "time": "23:26",
-    "timestamp": "2026-08-08T23:26:27Z"
-  },
-  {
-    "title": "Repository Health #237",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:25",
-    "timestamp": "2026-08-08T23:25:48Z"
-  },
-  {
-    "title": "Defender Watch #1738",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "23:25",
-    "timestamp": "2026-08-08T23:25:47Z"
-  },
-  {
-    "title": "Policy Gate #2050",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:25",
-    "timestamp": "2026-08-08T23:25:47Z"
-  },
-  {
-    "title": "Deploy Pages #1686",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "23:25",
-    "timestamp": "2026-08-08T23:25:47Z"
   }
 ]

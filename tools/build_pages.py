@@ -94,6 +94,7 @@ def _harden_html(path: Path) -> None:
         flags=re.IGNORECASE,
     )
     canonical_csp = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
+    metadata_replaced = False
     if csp_meta.search(text):
         replaced = csp_meta.sub(canonical_csp, text, count=1)
         metadata_replaced = metadata_replaced or replaced != text

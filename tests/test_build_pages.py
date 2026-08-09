@@ -12,6 +12,7 @@ from tools.build_pages import (
     PUBLIC_DENIED_TREE_EXCEPTIONS,
     PUBLIC_MARKDOWN,
     SECURITY_STACK_STYLESHEET,
+    _harden_html,
     build,
     public_relative_paths,
 )

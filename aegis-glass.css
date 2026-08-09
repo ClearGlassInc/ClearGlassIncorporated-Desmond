@@ -305,7 +305,440 @@
   }
 }
 
+/* Aegis command-directory fusion layer. Additive only: upgrades existing command cards without removing markup. */
+body.cg-command-directory-active {
+  --cg-command-clearance: clamp(116px, 18vh, 172px);
+}
+
+body.cg-command-directory-active::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--cg-command-pointer-x, 50%) var(--cg-command-pointer-y, 42%), rgba(80, 200, 255, .11), transparent 22rem),
+    linear-gradient(180deg, rgba(230, 247, 255, .25), transparent 48%);
+  opacity: .58;
+}
+
+.cg-command-card {
+  position: relative !important;
+  isolation: isolate;
+  min-height: 92px;
+  min-width: 0;
+  padding-right: clamp(118px, 28vw, 168px) !important;
+  overflow: visible !important;
+  border-color: rgba(119, 214, 255, .36) !important;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.72), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.80), rgba(219,239,255,.54) 46%, rgba(232,219,255,.32)) !important;
+  backdrop-filter: blur(24px) saturate(155%) contrast(106%);
+  -webkit-backdrop-filter: blur(24px) saturate(155%) contrast(106%);
+  box-shadow:
+    0 16px 42px rgba(15, 23, 42, .10),
+    0 0 0 1px rgba(255,255,255,.58),
+    inset 0 1px 0 rgba(255,255,255,.86),
+    inset 0 -1px 0 rgba(61, 189, 255, .10) !important;
+  transform: translateZ(0);
+  transition:
+    transform .18s cubic-bezier(.2,.8,.2,1),
+    border-color .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
+  touch-action: manipulation;
+  scroll-margin-bottom: calc(var(--cg-command-clearance, 132px) + env(safe-area-inset-bottom));
+}
+
+.cg-command-card::before,
+.cg-command-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cg-command-card::before {
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(105,231,255,.58), rgba(167,139,250,.24), rgba(52,211,153,.22));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: .48;
+}
+
+.cg-command-card::after {
+  inset: -1px;
+  background:
+    linear-gradient(90deg, transparent 0 48%, rgba(105,231,255,.16) 50%, transparent 52% 100%),
+    repeating-linear-gradient(0deg, rgba(15,23,42,.035) 0 1px, transparent 1px 7px);
+  opacity: .24;
+  mix-blend-mode: multiply;
+}
+
+.cg-command-card:hover,
+.cg-command-card:focus-visible,
+.cg-command-card.is-cg-open {
+  border-color: rgba(105,231,255,.64) !important;
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, .15),
+    0 0 0 1px rgba(255,255,255,.70),
+    0 0 34px rgba(105,231,255,.14),
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -1px 0 rgba(105,231,255,.16) !important;
+}
+
+.cg-command-card:hover { transform: translate3d(0,-3px,0) scale(1.006); }
+.cg-command-card:active { transform: translate3d(0,0,0) scale(.985); }
+.cg-command-card:focus-visible { outline: 3px solid rgba(58, 220, 255, .78); outline-offset: 4px; }
+
+.cg-command-card.cg-perimeter-flash::before { animation: cg-command-flash .44s ease both; }
+@keyframes cg-command-flash { 0% { opacity: .18; } 45% { opacity: .95; } 100% { opacity: .48; } }
+
+.cg-command-card [class*="icon"],
+.cg-command-card [class*="mark"],
+.cg-command-card [class*="glyph"],
+.cg-command-card .cg-existing-icon-well {
+  position: relative;
+  min-width: 56px;
+  min-height: 56px;
+  border-radius: 18px;
+}
+
+.cg-command-card .cg-existing-icon-well::before,
+.cg-command-card .cg-existing-icon-well::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.cg-command-card .cg-existing-icon-well::before {
+  border: 1px solid rgba(105,231,255,.42);
+  background:
+    radial-gradient(circle at 50% 8%, rgba(105,231,255,.24), transparent 44%),
+    conic-gradient(from 0deg, transparent, rgba(105,231,255,.18), transparent 34%);
+  opacity: .72;
+  animation: cg-command-ring 9s linear infinite;
+}
+
+.cg-command-card .cg-existing-icon-well::after {
+  left: 18%;
+  right: 18%;
+  width: auto;
+  background: linear-gradient(180deg, transparent, rgba(105,231,255,.24), transparent);
+  transform: translateY(-100%);
+  animation: cg-command-scan 3.8s ease-in-out infinite;
+}
+
+@keyframes cg-command-ring { to { transform: rotate(360deg); } }
+@keyframes cg-command-scan { 50% { transform: translateY(100%); } 100% { transform: translateY(100%); } }
+
+.cg-card-status-cluster {
+  position: absolute;
+  top: 50%;
+  right: clamp(12px, 3vw, 20px);
+  transform: translate3d(0,-50%,0);
+  z-index: 3;
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  width: clamp(94px, 25vw, 138px);
+  min-width: 0;
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  pointer-events: none;
+}
+
+.cg-status-topline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.cg-live-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--cg-command-accent, #69e7ff);
+  box-shadow: 0 0 12px var(--cg-command-accent, #69e7ff);
+  animation: cg-command-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes cg-command-dot { 50% { opacity: .36; transform: scale(.82); } }
+
+.cg-status-badge {
+  max-width: 88px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 4px 7px;
+  border: 1px solid rgba(58, 220, 255, .32);
+  border-radius: 999px;
+  background: rgba(255,255,255,.48);
+  color: rgba(15,23,42,.76);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.cg-metric-line,
+.cg-hash-line {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(76, 88, 112, .88);
+  font-size: clamp(7px, 1.72vw, 9px);
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-align: right;
+}
+
+.cg-telemetry-ticker {
+  position: relative;
+  z-index: 2;
+  margin-top: 7px;
+  max-width: min(100%, 470px);
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-mask-image: linear-gradient(90deg, #000 0 84%, transparent);
+  mask-image: linear-gradient(90deg, #000 0 84%, transparent);
+  color: rgba(61, 76, 102, .86);
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(8px, 1.85vw, 10px);
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.cg-telemetry-ticker span {
+  display: inline-block;
+  transform: translateZ(0);
+  transition: opacity .22s ease, transform .22s ease;
+}
+
+.cg-command-card.is-cg-open .cg-telemetry-ticker span { color: rgba(16, 98, 131, .92); }
+
+.cg-command-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+  opacity: 0;
+  transition: grid-template-rows .24s cubic-bezier(.2,.8,.2,1), opacity .2s ease;
+}
+
+.cg-command-drawer > div {
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(105,231,255,.24);
+  background:
+    radial-gradient(circle at 0 0, rgba(105,231,255,.12), transparent 38%),
+    linear-gradient(135deg, rgba(255,255,255,.48), rgba(218,236,255,.34));
+}
+
+.cg-command-card.is-cg-open .cg-command-drawer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.cg-drawer-inner {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.cg-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.cg-metric {
+  min-width: 0;
+  border: 1px solid rgba(105,231,255,.18);
+  border-radius: 12px;
+  padding: 8px 7px;
+  background: rgba(255,255,255,.42);
+}
+
+.cg-metric b,
+.cg-metric span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.cg-metric b {
+  color: rgba(15,23,42,.90);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+
+.cg-metric span {
+  margin-bottom: 2px;
+  color: rgba(76, 88, 112, .78);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.cg-sparkline {
+  width: 100%;
+  height: 34px;
+  overflow: visible;
+}
+
+.cg-sparkline path {
+  fill: none;
+  stroke: var(--cg-command-accent, #69e7ff);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px rgba(105,231,255,.26));
+}
+
+.cg-event-feed {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cg-event-feed li {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(41, 55, 82, .86);
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.cg-drawer-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  width: 100%;
+  padding: 0 14px;
+  border: 1px solid rgba(105,231,255,.34);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(20, 38, 64, .90), rgba(11, 19, 37, .78));
+  color: #eefcff;
+  font: 800 10px/1 "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 10px 24px rgba(15,23,42,.18);
+  cursor: pointer;
+}
+
+.cg-drawer-action:focus-visible {
+  outline: 2px solid rgba(105,231,255,.88);
+  outline-offset: 3px;
+}
+
+body.cg-command-directory-active #cg-security-stack {
+  width: min(252px, calc(100vw - 24px));
+  border-color: rgba(105,231,255,.32);
+}
+
+@media (prefers-color-scheme: dark) {
+  .cg-command-card {
+    border-color: rgba(105,231,255,.28) !important;
+    background:
+      radial-gradient(circle at 12% 16%, rgba(105,231,255,.12), transparent 38%),
+      linear-gradient(135deg, rgba(15,23,42,.70), rgba(2,6,23,.56) 58%, rgba(25,17,55,.42)) !important;
+    color: rgba(242, 248, 255, .94);
+    box-shadow:
+      0 18px 46px rgba(0,0,0,.28),
+      0 0 0 1px rgba(255,255,255,.06),
+      inset 0 1px 0 rgba(255,255,255,.12) !important;
+  }
+
+  .cg-command-card::after { mix-blend-mode: screen; opacity: .18; }
+  .cg-status-badge,
+  .cg-metric { background: rgba(15,23,42,.46); color: rgba(229,246,255,.88); }
+  .cg-metric b { color: rgba(242,248,255,.94); }
+  .cg-metric-line,
+  .cg-hash-line,
+  .cg-telemetry-ticker,
+  .cg-event-feed li { color: rgba(201, 218, 244, .78); }
+  .cg-command-drawer > div { background: linear-gradient(135deg, rgba(15,23,42,.72), rgba(2,6,23,.50)); }
+}
+
+@media (max-width: 640px) {
+  body.cg-command-directory-active {
+    padding-bottom: calc(var(--cg-command-clearance, 136px) + env(safe-area-inset-bottom));
+  }
+
+  .cg-command-card {
+    min-height: 102px;
+    padding-right: clamp(104px, 31vw, 128px) !important;
+  }
+
+  .cg-card-status-cluster {
+    right: 12px;
+    width: clamp(82px, 27vw, 112px);
+  }
+
+  .cg-status-badge { max-width: 74px; font-size: 7px; padding: 3px 6px; }
+  .cg-metric-grid { grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+  .cg-metric { padding: 7px 5px; }
+  .cg-metric b { font-size: 10px; }
+  .cg-event-feed li { font-size: 7.5px; }
+
+  body.cg-command-directory-active #cg-security-stack {
+    right: max(8px, env(safe-area-inset-right));
+    width: clamp(184px, 60vw, 214px);
+    transform: translateZ(0) scale(.86);
+  }
+}
+
+@media (max-width: 390px) {
+  .cg-command-card {
+    padding-right: 98px !important;
+  }
+
+  .cg-card-status-cluster { width: 86px; right: 9px; }
+  .cg-hash-line { display: none; }
+  .cg-telemetry-ticker { font-size: 7.4px; }
+}
+
+@media (hover: none) {
+  .cg-command-card:hover { transform: translateZ(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #aegis-glass-watermarks,
-  #cg-security-stack { transition: none !important; animation: none !important; }
+  #cg-security-stack,
+  .cg-command-card,
+  .cg-command-card::before,
+  .cg-command-card::after,
+  .cg-command-card .cg-existing-icon-well::before,
+  .cg-command-card .cg-existing-icon-well::after,
+  .cg-live-dot,
+  .cg-telemetry-ticker span,
+  .cg-command-drawer {
+    transition: none !important;
+    animation: none !important;
+  }
 }

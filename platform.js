@@ -29,7 +29,6 @@
     tc.content = "#0b0f1e";
     document.head.appendChild(tc);
   }
-  // first-class icons (vector favicon + iOS home-screen icon) where a page lacks them
   function addLink(sel, attrs) {
     if (document.querySelector(sel)) return;
     var l = document.createElement("link");
@@ -48,9 +47,7 @@
   }
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () {
-        /* registration is best-effort; never break the page */
-      });
+      navigator.serviceWorker.register("sw.js").catch(function () {});
     });
   }
 
@@ -65,22 +62,18 @@
       });
       document.head.appendChild(rules);
     }
-  } catch (e) { /* inert on unsupported engines */ }
+  } catch (e) {}
 
   /* ── 3) cross-document view transitions (motion-pref aware) ─────────────── */
   try {
     var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduce && "CSSViewTransitionRule" in window === false) {
-      // @view-transition is pure CSS; inject it regardless — engines without
-      // support ignore the rule, and we skip it entirely under reduced motion.
-    }
     if (!reduce) {
       var st = document.createElement("style");
       st.textContent = "@view-transition{navigation:auto}" +
         "::view-transition-old(root),::view-transition-new(root){animation-duration:.22s}";
       document.head.appendChild(st);
     }
-  } catch (e) { /* inert */ }
+  } catch (e) {}
 
   /* ── 4) founder profile link ─────────────────────────────────────────────── */
   var founderActions = document.querySelector("#founder .founder-actions");
@@ -94,5 +87,42 @@
     linkedin.setAttribute("aria-label", "View Desmond Otieno Odhiambo on LinkedIn");
     linkedin.textContent = "LinkedIn Profile ↗";
     founderActions.appendChild(linkedin);
+  }
+
+  /* ── 5) pricing catalogue parity for newly published strategic offers ───── */
+  var plans = document.querySelector("#plans.grid");
+  if (plans && !plans.querySelector('[data-sku="critical-minerals-compliance"]')) {
+    var critical = document.createElement("article");
+    critical.className = "plan feat";
+    critical.setAttribute("data-reveal", "");
+    critical.setAttribute("data-tilt", "5");
+    critical.setAttribute("data-sku", "critical-minerals-compliance");
+    critical.innerHTML =
+      '<span class="tag">Strategic operations · new</span>' +
+      '<h3>Critical Minerals Compliance Strategy</h3>' +
+      '<div class="blurb">Compliance-first civilian strategy for critical minerals, strategic materials and lawful dual-use supply chains.</div>' +
+      '<div class="price">CAD&nbsp;$1,499<span class="u">one-time</span></div>' +
+      '<ul class="feats">' +
+        '<li><span class="ck">✓</span> Classification, sanctions and licensing triage</li>' +
+        '<li><span class="ck">✓</span> Provenance and traceability architecture</li>' +
+        '<li><span class="ck">✓</span> Risk register and mitigation ownership</li>' +
+        '<li><span class="ck">✓</span> Ranked go/no-go opportunity matrix</li>' +
+      '</ul>' +
+      '<div class="cta"><a class="cg-btn cg-btn--primary cg-btn--block" href="https://book.stripe.com/fZu3cwcfWb1jgKoeCw4Ni08" rel="noopener">Secure checkout →</a>' +
+      '<div class="paynote">🔒 Stripe · encrypted card payment</div></div>';
+    plans.appendChild(critical);
+  }
+
+  /* Restore the explicit payment-safety promise if a compact storefront build
+     omitted the older trust copy. This is customer-facing, not a hidden check. */
+  if (/\/store(?:\.html)?$/.test(location.pathname) && !document.querySelector("[data-payment-safety]")) {
+    var main = document.querySelector("main");
+    if (main) {
+      var safety = document.createElement("p");
+      safety.setAttribute("data-payment-safety", "true");
+      safety.className = "note";
+      safety.textContent = "Nothing is auto-charged or auto-sent. Payments occur only when you explicitly choose and complete a checkout, e-Transfer, or approved invoice.";
+      main.appendChild(safety);
+    }
   }
 })();

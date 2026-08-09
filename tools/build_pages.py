@@ -30,6 +30,20 @@ PUBLIC_DENIED_TREE_EXCEPTIONS = {Path("apps/command-center")}
 # `data/` stays denied as a tree — it also holds internal working state. These
 # exact feeds are live public page inputs and must be deliberately allowlisted.
 PUBLIC_DATA_FEEDS = {
+    "data/minerals/manifest.json",
+    "data/minerals/latest/news.json",
+    "data/minerals/latest/policy.json",
+    "data/minerals/latest/prices.json",
+    "data/minerals/latest/production.json",
+    "data/minerals/latest/provenance.json",
+    "data/minerals/latest/reserves.json",
+    "data/minerals/latest/sanctions.json",
+    "data/minerals/latest/supply-risk.json",
+    "data/minerals/latest/trade.json",
+    "data/minerals/metadata/countries.json",
+    "data/minerals/metadata/methodology.json",
+    "data/minerals/metadata/minerals.json",
+    "data/minerals/metadata/sources.json",
     "data/control-surface/activity.json",
     "data/control-surface/alerts.json",
     "data/control-surface/health.json",

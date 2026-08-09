@@ -62,12 +62,12 @@
       "amount_cents": 149900,
       "currency": "CAD",
       "etransfer_amount": "CAD $1,499",
-      "checkout_url": "",
-      "live_checkout": false
+      "checkout_url": "https://book.stripe.com/fZu3cwcfWb1jgKoeCw4Ni08",
+      "live_checkout": true
     }
   ],
   "summary": {
     "sku_count": 5,
-    "live_checkout_skus": 4
+    "live_checkout_skus": 5
   }
 }

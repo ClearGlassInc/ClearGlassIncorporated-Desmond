@@ -1,6 +1,11 @@
 name: Minerals Link Authority Sync
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/minerals-link-authority-sync.yml
   push:
     branches:
       - fix/minerals-production-hardening-20260809
@@ -23,6 +28,7 @@ jobs:
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
+          ref: fix/minerals-production-hardening-20260809
 
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -105,4 +111,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "fix(minerals): classify production authority graph [skip ci]"
-          git push
+          git push origin HEAD:fix/minerals-production-hardening-20260809

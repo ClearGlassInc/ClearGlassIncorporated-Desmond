@@ -1,7 +1,7 @@
 {
   "schema": "clearglass.store.catalog/v1",
-  "generated_utc": "2026-08-06T15:03:21+00:00",
-  "content_hash": "sha256:e8561e80e4bb4f52247f944b139429f363b6a164266231da5e4045ec8fc14bfb",
+  "generated_utc": "2026-08-09T14:39:00+00:00",
+  "content_hash": "sha256:manual-2026-08-09-critical-minerals-compliance",
   "source": "store.html",
   "live_checkout_enabled": true,
   "products": [
@@ -52,10 +52,22 @@
       "etransfer_amount": "CAD $600 (first month)",
       "checkout_url": "https://buy.stripe.com/dRm28sa7OglDbq41PK4Ni06",
       "live_checkout": true
+    },
+    {
+      "sku": "critical-minerals-compliance",
+      "name": "ClearGlass Critical Minerals Compliance Strategy",
+      "label": "Critical Minerals Compliance Strategy (CAD $1,499)",
+      "short": "Compliance-first civilian critical-minerals and dual-use operations strategy covering classification triage, lawful sourcing, provenance, risk controls, business models, secure data architecture, and ranked go/no-go opportunities.",
+      "price_display": "CAD $1,499 one-time",
+      "amount_cents": 149900,
+      "currency": "CAD",
+      "etransfer_amount": "CAD $1,499",
+      "checkout_url": "",
+      "live_checkout": false
     }
   ],
   "summary": {
-    "sku_count": 4,
+    "sku_count": 5,
     "live_checkout_skus": 4
   }
 }

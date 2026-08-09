@@ -92,8 +92,10 @@ def _harden_html(path: Path) -> None:
         flags=re.IGNORECASE,
     )
     canonical_csp = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
+    metadata_replaced = False
     if csp_meta.search(text):
         text = csp_meta.sub(canonical_csp, text, count=1)
+        metadata_replaced = True
 
     referrer_meta = re.compile(
         r"<meta\b(?=[^>]*name\s*=\s*['\"]referrer['\"])[^>]*>",
@@ -102,6 +104,7 @@ def _harden_html(path: Path) -> None:
     canonical_referrer = '<meta name="referrer" content="strict-origin-when-cross-origin">'
     if referrer_meta.search(text):
         text = referrer_meta.sub(canonical_referrer, text, count=1)
+        metadata_replaced = True
 
     tags: list[str] = []
     if not _has_asset(text, r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]"):

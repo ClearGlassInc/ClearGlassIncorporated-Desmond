@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 152 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 154 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -55,7 +55,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `air-control.html` — ZEPHYR | air systems control surface | ARTEMIS // FAWL | Artemis OS | Air Systems Control | See pricing & plans / Book a security engagement |
 | `air-systems-control.html` — Air Systems Control | the Artemis airspace control surface | ZEPHYR | Artemis OS | Artemis OS | See pricing & plans / Book a security engagement |
 | **Command & Autonomous Operations** | **Topic cluster** |  |  |  |  |
-| `percival-os.html` — PERCIVAL OS | mission-ready governed command center | Command Center | PERCIVAL OS | AVALON | Browse services & engagements / See pricing & plans |
+| `percival-os.html` — PERCIVAL OS | mission-ready governed command center | Mission Control | PERCIVAL OS | AVALON | Browse services & engagements / See pricing & plans |
 | `artemis-percival.html` — AVALON | the ARTEMIS ⊕ PERCIVAL unified fusion core | PERCIVAL OS | PERCIVAL OS | Agent Mesh | Browse services & engagements / See pricing & plans |
 | `agentmesh.html` — Agent Mesh | multi-agent OSINT orchestration | AVALON | PERCIVAL OS | AI Operator Workspace | Browse services & engagements / See pricing & plans |
 | `ai-operator.html` — AI Operator Workspace | human-in-the-loop agent operations | Agent Mesh | PERCIVAL OS | Advanced Features, Tools & Systems | Browse services & engagements / See pricing & plans |
@@ -70,7 +70,8 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `CG-os.html` — CG OS | the ClearGlass command HUD | Event Control Surface | PERCIVAL OS | PERCIVAL BUILD | Browse services & engagements / See pricing & plans |
 | `percival-build.html` — PERCIVAL BUILD | spatial engineering workspace | CG OS | PERCIVAL OS | CLEARSIGHT | Browse services & engagements / See pricing & plans |
 | `clearsight.html` — CLEARSIGHT | edge-AI camera vision & object detection | PERCIVAL BUILD | PERCIVAL OS | Command Center | Browse services & engagements / See pricing & plans |
-| `command-center.html` — Command Center | executive security operations deck | CLEARSIGHT | PERCIVAL OS | PERCIVAL OS | Browse services & engagements / See pricing & plans |
+| `command-center.html` — Command Center | executive security operations deck | CLEARSIGHT | PERCIVAL OS | Mission Control | Browse services & engagements / See pricing & plans |
+| `mission-control.html` — Mission Control | the operational portfolio and mission archive | Command Center | PERCIVAL OS | PERCIVAL OS | Browse services & engagements / See pricing & plans |
 | **Legal, Tax & Compliance** | **Topic cluster** |  |  |  |  |
 | `legal/index.html` — Legal Infrastructure | the ClearGlass corporate legal stack | Accessibility Statement | Legal Infrastructure | AEGIS | Book a security engagement / Browse services & engagements |
 | `aegis.html` — AEGIS | legal process shield | Legal Infrastructure | Legal Infrastructure | ClearCounsel | Book a security engagement / Browse services & engagements |
@@ -140,7 +141,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `products/opal-koboi/revenue-engine.html` — Revenue Engine · Asset | product sheet | Guardian · Asset | Opal-Koboi | SMB Suite · Asset | Book a security engagement / See pricing & plans |
 | `products/opal-koboi/smb-suite.html` — SMB Suite · Asset | product sheet | Revenue Engine · Asset | Opal-Koboi | Opal-Koboi | Book a security engagement / See pricing & plans |
 | **ClearGlass Intelligence · Insights** | **Topic cluster** |  |  |  |  |
-| `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | Shadow AI Incident Response | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
+| `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | AI Safety Beyond the Black Box | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
 | `blog/autonomous-threat-modeling-2026.html` — Autonomous Threat Modeling in 2026 | continuous architecture-grounded security for agentic and cyber-physical systems | ClearGlass Intelligence | ClearGlass Intelligence | AI Agent Governance | Book a security engagement / See pricing & plans |
 | `blog/ai-agent-governance-governed-autonomy.html` — AI Agent Governance | the governed-autonomy playbook | Autonomous Threat Modeling in 2026 | ClearGlass Intelligence | The ClearGlass Platform Audit | Book a security engagement / See pricing & plans |
 | `blog/clearglass-platform-audit-2026.html` — The ClearGlass Platform Audit | keep, simplify, gate, build — the platform upgrade doctrine | AI Agent Governance | ClearGlass Intelligence | AI Agents Are the New Insider Threat | Book a security engagement / See pricing & plans |
@@ -177,7 +178,8 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html` — Artemis Full-Stack AI Blueprint | the production architecture for a governed intelligence platform | Workplace Surveillance Intelligence & Defense | ClearGlass Intelligence | AI-Driven Network Orchestration | Book a security engagement / See pricing & plans |
 | `blog/network-orchestration-ai-automation-cybersecurity.html` — AI-Driven Network Orchestration | a field guide to safe, governed network automation | Artemis Full-Stack AI Blueprint | ClearGlass Intelligence | Ontario Influence Environment | Book a security engagement / See pricing & plans |
 | `blog/ontario-influence-environment-august-2026.html` — Ontario Influence Environment | verification-first Ontario public-interest intelligence | AI-Driven Network Orchestration | ClearGlass Intelligence | Shadow AI Incident Response | Book a security engagement / See pricing & plans |
-| `blog/shadow-ai-incident-response-logs-gone.html` — Shadow AI Incident Response | forensic readiness before security evidence disappears | Ontario Influence Environment | ClearGlass Intelligence | ClearGlass Intelligence | Book a security engagement / See pricing & plans |
+| `blog/shadow-ai-incident-response-logs-gone.html` — Shadow AI Incident Response | forensic readiness before security evidence disappears | Ontario Influence Environment | ClearGlass Intelligence | AI Safety Beyond the Black Box | Book a security engagement / See pricing & plans |
+| `blog/ai-safety-black-box-activation-analysis-gavel.html` — AI Safety Beyond the Black Box | activation analysis and governed AI defense in depth | Shadow AI Incident Response | ClearGlass Intelligence | ClearGlass Intelligence | Book a security engagement / See pricing & plans |
 | **Company & Operations** | **Topic cluster** |  |  |  |  |
 | `index.html` — ClearGlass Inc. | governed intelligent systems — home | Stripe Handoff | ClearGlass Inc. | Investor Data Room | Book a security engagement / See pricing & plans |
 | `investors/index.html` — Investor Data Room | corporate documents and diligence materials | ClearGlass Inc. | ClearGlass Inc. | Authority Network | Book a security engagement / See pricing & plans |

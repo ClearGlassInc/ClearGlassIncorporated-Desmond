@@ -129,6 +129,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "systems.html": ("Systems Console", "PERCIVAL operations console"),
     "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
     "command-center.html": ("Command Center", "executive security operations deck"),
+    "mission-control.html": ("Mission Control", "the operational portfolio and mission archive"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
     "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),
 
@@ -242,6 +243,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/network-orchestration-ai-automation-cybersecurity.html": ("AI-Driven Network Orchestration", "a field guide to safe, governed network automation"),
     "blog/ontario-influence-environment-august-2026.html": ("Ontario Influence Environment", "verification-first Ontario public-interest intelligence"),
     "blog/shadow-ai-incident-response-logs-gone.html": ("Shadow AI Incident Response", "forensic readiness before security evidence disappears"),
+    "blog/ai-safety-black-box-activation-analysis-gavel.html": ("AI Safety Beyond the Black Box", "activation analysis and governed AI defense in depth"),
 }
 
 # --------------------------------------------------------------------------
@@ -298,6 +300,7 @@ CLUSTERS: dict[str, dict] = {
             "control-surface.html", "systems.html", "saas-platform.html",
             "CG-os.html", "percival-build.html", "clearsight.html",
             "command-center.html",
+            "mission-control.html",
         ],
         "cta": [CTA_OFFERS, CTA_PRICING],
     },
@@ -417,6 +420,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/network-orchestration-ai-automation-cybersecurity.html",
             "blog/ontario-influence-environment-august-2026.html",
             "blog/shadow-ai-incident-response-logs-gone.html",
+            "blog/ai-safety-black-box-activation-analysis-gavel.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },

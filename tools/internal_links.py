@@ -80,6 +80,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "global-growth-engine.html": ("Global Growth Engine", "governed multi-market growth intelligence"),
     "automap.html": ("AutoMap Orchestration", "architecture-aware orchestration and system relationship mapping"),
     "apps/command-center/index.html": ("Growth Command Centre", "governed Burlington growth operations and approvals"),
+    "mission-control.html": ("Mission Control", "the ClearGlass operational engineering portfolio"),
 
     # Cyber defense & security operations
     "cyber-defense-console.html": ("Cyber Defense Console", "the ClearGlass command center for defensive operations"),
@@ -356,6 +357,7 @@ CLUSTERS: dict[str, dict] = {
             "side-store.html", "products.html",
             "business-productivity-suite.html", "global-growth-engine.html",
             "apps/command-center/index.html",
+            "mission-control.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -481,6 +483,7 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "offers/autonomous-threat-modeling.html": ["blog/autonomous-threat-modeling-2026.html", "cyber-defense-console.html", "bluedesk.html", "offers/index.html"],
     "blog/ai-agent-governance-governed-autonomy.html": ["percival-os.html", "ai-operator.html"],
     "blog/ai-agents-insider-threat.html": ["bluedesk.html", "cyber-defense-console.html"],
+    "blog/ai-safety-black-box-activation-analysis-gavel.html": ["cyber-defense-console.html", "ai-operator.html"],
     "blog/cybersecurity-architecture-for-agentic-software.html": ["agentmesh.html", "cyber-defense-console.html"],
     "blog/zero-trust-is-outdated-adaptive-trust.html": ["cyber-defense-console.html"],
     "blog/zero-trust-is-outdated.html": ["blog/zero-trust-is-outdated-adaptive-trust.html", "cyber-defense-console.html"],

@@ -1,0 +1,108 @@
+name: Minerals Link Authority Sync
+
+on:
+  push:
+    branches:
+      - fix/minerals-production-hardening-20260809
+    paths:
+      - .github/workflows/minerals-link-authority-sync.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: minerals-link-authority-sync
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.13"
+
+      - name: Classify indexable pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('tools/internal_links.py')
+          text = path.read_text(encoding='utf-8')
+
+          replacements = [
+              (
+                  '    "intelligence-platform.html": ("Intelligence Platform Architecture", "brand and platform blueprint"),\n',
+                  '    "intelligence-platform.html": ("Intelligence Platform Architecture", "brand and platform blueprint"),\n'
+                  '    "minerals.html": ("Critical Minerals Intelligence", "source-transparent critical-minerals intelligence, provenance and risk analytics"),\n'
+              ),
+              (
+                  '    "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),\n',
+                  '    "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),\n'
+                  '    "mission-control.html": ("Mission Control", "operational mission gallery for ClearGlass deployments and engineering work"),\n'
+              ),
+              (
+                  '    "blog/ontario-influence-environment-august-2026.html": ("Ontario Influence Environment", "verification-first Ontario public-interest intelligence"),\n',
+                  '    "blog/ontario-influence-environment-august-2026.html": ("Ontario Influence Environment", "verification-first Ontario public-interest intelligence"),\n'
+                  '    "blog/ontario-influence-infrastructure-monitoring.html": ("Ontario Influence Infrastructure Monitoring", "verification-first monitoring of Ontario influence infrastructure"),\n'
+              ),
+              (
+                  '            "docs/guardian_command_nexus_spec.html",\n',
+                  '            "docs/guardian_command_nexus_spec.html", "minerals.html",\n'
+              ),
+              (
+                  '            "command-center.html",\n',
+                  '            "command-center.html", "mission-control.html",\n'
+              ),
+              (
+                  '            "blog/ontario-influence-environment-august-2026.html",\n            "blog/shadow-ai-incident-response-logs-gone.html",\n',
+                  '            "blog/ontario-influence-environment-august-2026.html",\n'
+                  '            "blog/shadow-ai-incident-response-logs-gone.html",\n'
+                  '            "blog/ontario-influence-infrastructure-monitoring.html",\n'
+              ),
+          ]
+
+          for old, new in replacements:
+              if old not in text:
+                  raise SystemExit(f'Expected internal-link mapping fragment not found: {old!r}')
+              text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Regenerate internal authority graph
+        run: python3 tools/internal_links.py
+
+      - name: Regenerate search assets
+        run: python3 tools/generate_search_assets.py
+
+      - name: Validate generated state
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/internal_links.py --check
+          python3 tools/generate_search_assets.py --check
+          git diff --check
+
+      - name: Commit generated authority graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "No authority-graph changes required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix(minerals): classify production authority graph [skip ci]"
+          git push

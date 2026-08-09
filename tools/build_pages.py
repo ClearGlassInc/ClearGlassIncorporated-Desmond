@@ -51,6 +51,9 @@ PUBLIC_DATA_FEEDS = {
     "data/control-surface/pipeline.json",
     "data/control-surface/runs.json",
     "data/Ontario-osint/intel.json",
+    "data/minerals/manifest.json",
+    "data/minerals/metadata/minerals.json",
+    "data/minerals/metadata/sources.json",
     "data/platform/registry.json",
     "data/store/catalog.json",
     "data/xenolith/lattice.json",
@@ -125,9 +128,9 @@ def _harden_html(path: Path) -> None:
         text = replaced
 
     tags: list[str] = []
-    if not _has_asset(text, r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]"):
+    if not _has_asset(text, csp_pattern):
         tags.append(f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">')
-    if not _has_asset(text, r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"]"):
+    if not _has_asset(text, referrer_pattern):
         tags.append('<meta name="referrer" content="strict-origin-when-cross-origin">')
     if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]"):
         tags.append(AEGIS_STYLESHEET)

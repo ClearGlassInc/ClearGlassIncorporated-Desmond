@@ -37,6 +37,9 @@ PUBLIC_DATA_FEEDS = {
     "data/control-surface/pipeline.json",
     "data/control-surface/runs.json",
     "data/Ontario-osint/intel.json",
+    "data/minerals/manifest.json",
+    "data/minerals/metadata/minerals.json",
+    "data/minerals/metadata/sources.json",
     "data/platform/registry.json",
     "data/store/catalog.json",
     "data/xenolith/lattice.json",
@@ -84,10 +87,45 @@ def _harden_html(path: Path) -> None:
     if not head:
         return
 
+    metadata_replaced = False
+    csp_pattern = r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"][^>]*>"
+    referrer_pattern = r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"][^>]*>"
+    if _has_asset(text, csp_pattern):
+        text, count = re.subn(
+            csp_pattern,
+            f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">',
+            text,
+            count=1,
+            flags=re.IGNORECASE,
+        )
+        metadata_replaced = metadata_replaced or count > 0
+    if _has_asset(text, referrer_pattern):
+        text, count = re.subn(
+            referrer_pattern,
+            '<meta name="referrer" content="strict-origin-when-cross-origin">',
+            text,
+            count=1,
+            flags=re.IGNORECASE,
+        )
+        metadata_replaced = metadata_replaced or count > 0
+
+    canonical_assets = {
+        r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"][^>]*>": AEGIS_STYLESHEET,
+        r"<link\b[^>]*href\s*=\s*['\"]/security-stack-fusion\.css['\"][^>]*>": SECURITY_STACK_STYLESHEET,
+        r"<link\b[^>]*href\s*=\s*['\"]/fx\.css['\"][^>]*>": FX_STYLESHEET,
+        r"<script\b[^>]*src\s*=\s*['\"]/aegis-glass\.js['\"][^>]*>\s*</script>": AEGIS_SCRIPT,
+        r"<script\b[^>]*src\s*=\s*['\"]/stealth-glass\.js['\"][^>]*>\s*</script>": STEALTH_SCRIPT,
+        r"<script\b[^>]*src\s*=\s*['\"]/fx\.js['\"][^>]*>\s*</script>": FX_SCRIPT,
+    }
+    for pattern, canonical in canonical_assets.items():
+        if _has_asset(text, pattern):
+            text, count = re.subn(pattern, canonical, text, count=1, flags=re.IGNORECASE)
+            metadata_replaced = metadata_replaced or count > 0
+
     tags: list[str] = []
-    if not _has_asset(text, r"<meta\b[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"]"):
+    if not _has_asset(text, csp_pattern):
         tags.append(f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">')
-    if not _has_asset(text, r"<meta\b[^>]*name\s*=\s*['\"]referrer['\"]"):
+    if not _has_asset(text, referrer_pattern):
         tags.append('<meta name="referrer" content="strict-origin-when-cross-origin">')
     if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]"):
         tags.append(AEGIS_STYLESHEET)

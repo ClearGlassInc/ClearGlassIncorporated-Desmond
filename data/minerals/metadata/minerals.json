@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "records": [
+    {"id":"lithium","name":"Lithium","symbol":"Li","category":"Battery material","uses":["Rechargeable batteries","Glass and ceramics"]},
+    {"id":"copper","name":"Copper","symbol":"Cu","category":"Conductor","uses":["Electrical networks","Electronics"]},
+    {"id":"nickel","name":"Nickel","symbol":"Ni","category":"Battery and alloy material","uses":["Stainless steel","Battery cathodes"]},
+    {"id":"cobalt","name":"Cobalt","symbol":"Co","category":"Battery and alloy material","uses":["Battery cathodes","Superalloys"]},
+    {"id":"graphite","name":"Graphite","symbol":"C","category":"Battery material","uses":["Battery anodes","Refractories"]},
+    {"id":"gallium","name":"Gallium","symbol":"Ga","category":"Semiconductor material","uses":["Compound semiconductors","LEDs"]},
+    {"id":"germanium","name":"Germanium","symbol":"Ge","category":"Semiconductor material","uses":["Fibre optics","Infrared optics"]},
+    {"id":"rare-earth-elements","name":"Rare Earth Elements","symbol":"REE","category":"Mineral group","uses":["Permanent magnets","Electronics"]},
+    {"id":"neodymium","name":"Neodymium","symbol":"Nd","category":"Rare earth element","uses":["Permanent magnets","Electric motors"]},
+    {"id":"uranium","name":"Uranium","symbol":"U","category":"Nuclear fuel","uses":["Nuclear energy"]},
+    {"id":"tungsten","name":"Tungsten","symbol":"W","category":"Industrial metal","uses":["Cutting tools","High-temperature alloys"]},
+    {"id":"antimony","name":"Antimony","symbol":"Sb","category":"Industrial mineral","uses":["Flame retardants","Alloys"]}
+  ]
+}

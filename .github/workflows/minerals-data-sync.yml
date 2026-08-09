@@ -1,0 +1,53 @@
+name: Minerals Data Validation
+
+on:
+  schedule:
+    - cron: '17 10 * * 1'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'data/minerals/**'
+      - 'scripts/minerals_pipeline.py'
+      - 'tests/test_minerals_pipeline.py'
+      - '.github/workflows/minerals-data-sync.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: minerals-data-sync-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Fetch, validate, normalize, compare, and stage
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout last-known-good data
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.12'
+      - name: Fetch
+        run: echo 'No authenticated or network feed is configured; preserving repository last-known-good datasets.'
+      - name: Validate and normalize
+        run: python3 scripts/minerals_pipeline.py --summary minerals-pipeline-summary.md
+      - name: Compare and publish decision
+        run: git diff --exit-code -- data/minerals
+      - name: Test failure and fallback behavior
+        run: python3 -m pytest tests/test_minerals_pipeline.py -q
+      - name: Write GitHub Step Summary
+        if: always()
+        run: cat minerals-pipeline-summary.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo 'Validation failed; last-known-good repository data was not modified.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload safe pipeline summary
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: minerals-pipeline-summary
+          path: minerals-pipeline-summary.md
+          if-no-files-found: warn
+          retention-days: 14

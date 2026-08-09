@@ -12,6 +12,7 @@ from tools.build_pages import (
     SECURITY_STACK_STYLESHEET,
     STEALTH_SCRIPT,
     build,
+    _harden_html,
     public_relative_paths,
 )
 

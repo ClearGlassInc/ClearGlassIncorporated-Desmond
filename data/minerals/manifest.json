@@ -1,0 +1,68 @@
+{
+  "system": "ClearGlass Critical Minerals Intelligence",
+  "generated_at": "2026-08-09T00:00:00Z",
+  "version": "1.0.0",
+  "overall_status": "DEGRADED",
+  "feeds": [
+    {
+      "id": "mineral-reference",
+      "name": "Mineral reference directory",
+      "source": "Natural Resources Canada",
+      "source_url": "https://www.canada.ca/en/campaign/critical-minerals-in-canada/critical-minerals-an-opportunity-for-canada.html",
+      "retrieved_at": "2026-08-09T00:00:00Z",
+      "source_updated_at": null,
+      "expected_frequency": "STATIC REFERENCE",
+      "warning_threshold_hours": 8760,
+      "stale_threshold_hours": 17520,
+      "status": "STATIC REFERENCE",
+      "record_count": 12,
+      "schema_version": "1.0.0",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "market-prices",
+      "name": "Mineral benchmark prices",
+      "source": "No approved provider configured",
+      "source_url": null,
+      "retrieved_at": null,
+      "source_updated_at": null,
+      "expected_frequency": "UNAVAILABLE",
+      "warning_threshold_hours": null,
+      "stale_threshold_hours": null,
+      "status": "UNAVAILABLE",
+      "record_count": 0,
+      "schema_version": "1.0.0",
+      "confidence": "UNKNOWN"
+    },
+    {
+      "id": "production-reserves",
+      "name": "Production and reserves",
+      "source": "No normalized production dataset published",
+      "source_url": "https://www.usgs.gov/centers/national-minerals-information-center/mineral-commodity-summaries",
+      "retrieved_at": null,
+      "source_updated_at": null,
+      "expected_frequency": "ANNUAL",
+      "warning_threshold_hours": 9500,
+      "stale_threshold_hours": 13140,
+      "status": "UNAVAILABLE",
+      "record_count": 0,
+      "schema_version": "1.0.0",
+      "confidence": "UNKNOWN"
+    },
+    {
+      "id": "trade-policy-sanctions",
+      "name": "Trade, policy, and sanctions intelligence",
+      "source": "No normalized compliance dataset published",
+      "source_url": null,
+      "retrieved_at": null,
+      "source_updated_at": null,
+      "expected_frequency": "UNAVAILABLE",
+      "warning_threshold_hours": null,
+      "stale_threshold_hours": null,
+      "status": "UNAVAILABLE",
+      "record_count": 0,
+      "schema_version": "1.0.0",
+      "confidence": "UNKNOWN"
+    }
+  ]
+}

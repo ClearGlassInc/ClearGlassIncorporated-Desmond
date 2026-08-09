@@ -94,6 +94,7 @@ PAGES: dict[str, tuple[str, str]] = {
 
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
+    "minerals.html": ("Critical Minerals Intelligence", "transparent mineral supply-chain data and provenance"),
     "flowsint.html": ("Flowsint", "OSINT investigation graph for domains, IPs and transforms"),
     "Ontario-osint.html": ("Ontario OSINT Deck", "regional open-source intelligence control deck"),
     "clearglass.html": ("Network Flow Intelligence", "see network traffic as living structure"),
@@ -129,6 +130,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "systems.html": ("Systems Console", "PERCIVAL operations console"),
     "control-surface.html": ("Systems Control Surface v3.1", "the live command dashboard"),
     "command-center.html": ("Command Center", "executive security operations deck"),
+    "mission-control.html": ("Mission Control", "engineering mission outcomes and operational status"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
     "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),
 
@@ -242,6 +244,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/network-orchestration-ai-automation-cybersecurity.html": ("AI-Driven Network Orchestration", "a field guide to safe, governed network automation"),
     "blog/ontario-influence-environment-august-2026.html": ("Ontario Influence Environment", "verification-first Ontario public-interest intelligence"),
     "blog/shadow-ai-incident-response-logs-gone.html": ("Shadow AI Incident Response", "forensic readiness before security evidence disappears"),
+    "blog/ai-safety-black-box-activation-analysis-gavel.html": ("AI Safety Beyond the Black Box", "activation analysis and layered AI guardrails"),
 }
 
 # --------------------------------------------------------------------------
@@ -273,7 +276,7 @@ CLUSTERS: dict[str, dict] = {
             "clearglass.html", "intelligence-command-surface.html",
             "intelligence-interface.html", "intelligence-platform.html",
             "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html",
-            "docs/guardian_command_nexus_spec.html",
+            "docs/guardian_command_nexus_spec.html", "minerals.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -298,6 +301,7 @@ CLUSTERS: dict[str, dict] = {
             "control-surface.html", "systems.html", "saas-platform.html",
             "CG-os.html", "percival-build.html", "clearsight.html",
             "command-center.html",
+            "mission-control.html",
         ],
         "cta": [CTA_OFFERS, CTA_PRICING],
     },
@@ -417,6 +421,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/network-orchestration-ai-automation-cybersecurity.html",
             "blog/ontario-influence-environment-august-2026.html",
             "blog/shadow-ai-incident-response-logs-gone.html",
+            "blog/ai-safety-black-box-activation-analysis-gavel.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },

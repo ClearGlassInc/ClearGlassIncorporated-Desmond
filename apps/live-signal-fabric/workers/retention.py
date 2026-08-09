@@ -1,10 +1,13 @@
 """Bounded, auditable retention worker for ClearGlass Live Signal Fabric."""
+
 from __future__ import annotations
+
 import argparse
 import json
 import os
 from dataclasses import dataclass
 from datetime import UTC, datetime
+
 
 @dataclass(frozen=True)
 class RetentionResult:
@@ -12,11 +15,17 @@ class RetentionResult:
     deleted: int
     mode: str
 
+
 def retention_run(*, execute: bool = False) -> RetentionResult:
     """Default to a no-op; deletion requires explicit operator approval and DB integration."""
     if execute and os.getenv("LIVE_FABRIC_RETENTION_APPROVED") != "true":
         raise PermissionError("retention execution requires recorded owner approval")
-    return RetentionResult(datetime.now(UTC).isoformat(), 0, "approved-not-integrated" if execute else "dry-run")
+    return RetentionResult(
+        datetime.now(UTC).isoformat(),
+        0,
+        "approved-not-integrated" if execute else "dry-run",
+    )
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

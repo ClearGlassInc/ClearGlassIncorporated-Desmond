@@ -4,10 +4,13 @@ from tools.build_pages import (
     AEGIS_STYLESHEET,
     CSP_POLICY,
     DENIED_TOP_LEVEL,
+    FX_SCRIPT,
+    FX_STYLESHEET,
     PUBLIC_DATA_FEEDS,
     PUBLIC_DENIED_TREE_EXCEPTIONS,
     PUBLIC_MARKDOWN,
-    _harden_html,
+    SECURITY_STACK_STYLESHEET,
+    STEALTH_SCRIPT,
     build,
     public_relative_paths,
 )
@@ -66,6 +69,10 @@ def test_build_contains_required_pages_artifacts(tmp_path) -> None:
     assert (destination / ".well-known" / "security.txt").is_file()
     assert (destination / "aegis-glass.css").is_file()
     assert (destination / "aegis-glass.js").is_file()
+    assert (destination / "security-stack-fusion.css").is_file()
+    assert (destination / "stealth-glass.js").is_file()
+    assert (destination / "fx.css").is_file()
+    assert (destination / "fx.js").is_file()
     assert not (destination / ".github").exists()
 
 
@@ -83,9 +90,17 @@ def test_published_html_receives_browser_security_policy(tmp_path) -> None:
         assert f'content="{CSP_POLICY}"' in text, page
         assert '<meta name="referrer" content="strict-origin-when-cross-origin">' in text, page
         assert AEGIS_STYLESHEET in text, page
+        assert SECURITY_STACK_STYLESHEET in text, page
+        assert FX_STYLESHEET in text, page
         assert AEGIS_SCRIPT in text, page
+        assert STEALTH_SCRIPT in text, page
+        assert FX_SCRIPT in text, page
         assert text.count('/aegis-glass.css') == 1, page
+        assert text.count('/security-stack-fusion.css') == 1, page
+        assert text.count('/fx.css') == 1, page
         assert text.count('/aegis-glass.js') == 1, page
+        assert text.count('/stealth-glass.js') == 1, page
+        assert text.count('/fx.js') == 1, page
 
     assert checked > 0
 

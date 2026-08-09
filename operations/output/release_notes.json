@@ -1,10 +1,46 @@
 {
-  "run_utc": "2026-08-08T07:47:16.641722+00:00",
+  "run_utc": "2026-08-09T07:52:36.406970+00:00",
   "from_tag": "v1.0.0",
   "to_ref": "HEAD",
-  "commit_count": 1746,
+  "commit_count": 1807,
   "sections": {
     "New Features": [
+      {
+        "sha": "aebf5e0",
+        "type": "feat",
+        "scope": null,
+        "subject": "add fail-closed live signal fabric foundation",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "52b7b5c",
+        "type": "feat",
+        "scope": null,
+        "subject": "add governed growth infrastructure experience",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "8d1ba18",
+        "type": "feat",
+        "scope": null,
+        "subject": "add procurement legal tech subscription funnel",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "4c522e2",
+        "type": "feat",
+        "scope": null,
+        "subject": "add unified GUARDIAN command environment",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
       {
         "sha": "686bf20",
         "type": "feat",
@@ -961,6 +997,24 @@
       }
     ],
     "Bug Fixes": [
+      {
+        "sha": "f2bd686",
+        "type": "fix",
+        "scope": null,
+        "subject": "merge glass controls into flex stack",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "9f8b93c",
+        "type": "fix",
+        "scope": null,
+        "subject": "align global security controls",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
       {
         "sha": "5235e74",
         "type": "fix",
@@ -2248,6 +2302,15 @@
     ],
     "CI/CD": [
       {
+        "sha": "f011900",
+        "type": "ci",
+        "scope": null,
+        "subject": "clear stale Auto-Store trigger after clean rerun",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
         "sha": "365ead4",
         "type": "ci",
         "scope": null,
@@ -2546,6 +2609,258 @@
       }
     ],
     "Maintenance": [
+      {
+        "sha": "b972098",
+        "type": "chore",
+        "scope": null,
+        "subject": "Restore translucent glass styling for mobile security stack",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "8b63648",
+        "type": "chore",
+        "scope": null,
+        "subject": "Polish and fuse mobile security control stack",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "a392750",
+        "type": "chore",
+        "scope": null,
+        "subject": "Compact security HUD for mobile mission-control layout",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "e63b0d8",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add autonomous defensive security orchestrator",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "e519600",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix mobile security controls stacking only",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "6f00d0b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add future-tech glass button system",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "67143bc",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add governed Stripe subscription self-service",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "15d9336",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fix Sentinel mobile rendering and elevate command UI",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "0114ae6",
+        "type": "chore",
+        "scope": null,
+        "subject": "Test responsive Aegis Sentinel fusion dock behavior",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "ef08c61",
+        "type": "chore",
+        "scope": null,
+        "subject": "Fuse Aegis and Sentinel mobile controls without removing existing UI",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "7d3e6eb",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade Sentinel command interface",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "eaa744e",
+        "type": "chore",
+        "scope": null,
+        "subject": "Vendor kimi-k3-in-c v1.0.0 into ClearGlass",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "531a1fa",
+        "type": "chore",
+        "scope": null,
+        "subject": "Enhance Sentinel with governed Artemis agent mesh",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "c47026b",
+        "type": "chore",
+        "scope": null,
+        "subject": "Upgrade product catalog command center",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "241c4e7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add adaptive Artemis action overflow system",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "f56ac27",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add homepage ClearGlass Sentinel concierge",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "8073009",
+        "type": "chore",
+        "scope": null,
+        "subject": "Test Aegis Glass global page injection",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "2349d7a",
+        "type": "chore",
+        "scope": null,
+        "subject": "Inject Aegis Glass into every published HTML page",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "9285128",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Aegis Glass global runtime",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "28ba84f",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add Aegis Glass global protection styles",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "e51f219",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add articles download action and draft safeguards",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "e6df696",
+        "type": "chore",
+        "scope": null,
+        "subject": "Merge BLUEDESK with global ClearGlass command bar",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "18b5a14",
+        "type": "chore",
+        "scope": null,
+        "subject": "Add ClearGlass Global Growth Engine product",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "6316b19",
+        "type": "chore",
+        "scope": null,
+        "subject": "Remove duplicate Counter-UAS page header and retain global nav",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "cb36a4d",
+        "type": "chore",
+        "scope": null,
+        "subject": "Auto-heal: keep generated repairs subject to CI",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "f67a742",
+        "type": "chore",
+        "scope": null,
+        "subject": "Merge ARTEMIS Future Operations OS into Counter-UAS page",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "88952a7",
+        "type": "chore",
+        "scope": null,
+        "subject": "Auto-heal: fix Site Integrity Guard URL resolution",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "6c50742",
+        "type": "chore",
+        "scope": null,
+        "subject": "Auto-heal: add governed self-healing GitHub Actions control plane",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
       {
         "sha": "08836df",
         "type": "chore",
@@ -9047,6 +9362,222 @@
     ],
     "Automation": [
       {
+        "sha": "f75365e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-09",
+        "breaking": false
+      },
+      {
+        "sha": "436b021",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-09",
+        "breaking": false
+      },
+      {
+        "sha": "8873e45",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-09",
+        "breaking": false
+      },
+      {
+        "sha": "546df46",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-09",
+        "breaking": false
+      },
+      {
+        "sha": "cea28e2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-09",
+        "breaking": false
+      },
+      {
+        "sha": "02af3eb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-09",
+        "breaking": false
+      },
+      {
+        "sha": "e2489a7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "7d5d057",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "7107cb4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "93c5efb",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "0605c90",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "94b2cfe",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "cc1d7fe",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "f97a280",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "90489b0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "e500265",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "d7f973d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "57e806d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "af1a836",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "7f980fe",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "9e03e21",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "716d0a4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "952c19e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "424655c",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-08 07:47 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
         "sha": "57bcdc5",
         "type": "bot",
         "scope": null,
@@ -15363,6 +15894,24 @@
       }
     ],
     "Other": [
+      {
+        "sha": "925404b",
+        "type": "growth",
+        "scope": null,
+        "subject": "materialize Artemis launch campaign assets",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
+      {
+        "sha": "a865aeb",
+        "type": "growth",
+        "scope": null,
+        "subject": "ship proof-led Artemis conversion engine",
+        "author": "Desmond Otieno",
+        "date": "2026-08-08",
+        "breaking": false
+      },
       {
         "sha": "2a2273a",
         "type": "feed",

@@ -1,14 +1,15 @@
 # SEO Optimization Report
 
-**Run:** 2026-08-08T07:47:16.775911+00:00
-**Average Score:** 87.8/100
-**Files Audited:** 82
+**Run:** 2026-08-09T07:52:36.536515+00:00
+**Average Score:** 87.3/100
+**Files Audited:** 84
 
 ## Page Scores
 
 | File | Score | Issues |
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
+| `threads.html` | 40/100 | 5 |
 | `command-center.html` | 50/100 | 5 |
 | `header-mockup-2040.html` | 50/100 | 5 |
 | `intelligence-platform.html` | 50/100 | 5 |
@@ -43,6 +44,7 @@
 | `counter-uas-commercialization-os.html` | 90/100 | 1 |
 | `environmental-cyber-risk.html` | 90/100 | 1 |
 | `futuristic.html` | 90/100 | 1 |
+| `global-growth-engine.html` | 90/100 | 1 |
 | `index.html` | 90/100 | 1 |
 | `percival-os.html` | 90/100 | 1 |
 | `plans.html` | 90/100 | 1 |
@@ -93,13 +95,13 @@
 
 ## Top Issues Across All Pages
 
-- 31x — Description length N chars (ideal N–N)
+- 32x — Description length N chars (ideal N–N)
 - 22x — Title length N chars (ideal N–N)
-- 16x — Missing og:image
-- 8x — Missing og:description
-- 7x — Missing og:title
+- 17x — Missing og:image
+- 9x — Missing og:description
+- 8x — Missing og:title
+- 5x — Missing canonical link tag
 - 4x — Multiple <hN> tags (N)
-- 4x — Missing canonical link tag
 - 3x — N image(s) missing alt text
+- 2x — Missing meta description
 - 1x — Missing <title>
-- 1x — Missing meta description

@@ -1,9 +1,13 @@
-# Release Notes — 2026-08-08
+# Release Notes — 2026-08-09
 
-*1746 commit(s) since v1.0.0*
+*1807 commit(s) since v1.0.0*
 
 ## New Features
 
+- add fail-closed live signal fabric foundation (`aebf5e0`)
+- add governed growth infrastructure experience (`52b7b5c`)
+- add procurement legal tech subscription funnel (`8d1ba18`)
+- add unified GUARDIAN command environment (`4c522e2`)
 - **sales:** add site-wide Stripe checkout launcher (`686bf20`)
 - ship RFED audit-trail module + harden RMM auth-bypass coverage (`24732f8`)
 - add Stripe-ready ClearGlass checkout hub (`483dc40`)
@@ -113,6 +117,8 @@
 
 ## Bug Fixes
 
+- merge glass controls into flex stack (`f2bd686`)
+- align global security controls (`9f8b93c`)
 - **test:** install async pytest support (`5235e74`)
 - **test:** install async pytest plugin (`adaee4f`)
 - prevent duplicate page navigation bars (`f0ff58c`)
@@ -267,6 +273,7 @@
 
 ## CI/CD
 
+- clear stale Auto-Store trigger after clean rerun (`f011900`)
 - add centralized deterministic repository health gate (`365ead4`)
 - pin function-agent-ci actions to full commit SHAs (`3cd09f0`)
 - grant the Pages build job the pages scope (`64a9230`)
@@ -303,6 +310,34 @@
 
 ## Maintenance
 
+- Restore translucent glass styling for mobile security stack (`b972098`)
+- Polish and fuse mobile security control stack (`8b63648`)
+- Compact security HUD for mobile mission-control layout (`a392750`)
+- Add autonomous defensive security orchestrator (`e63b0d8`)
+- Fix mobile security controls stacking only (`e519600`)
+- Add future-tech glass button system (`6f00d0b`)
+- Add governed Stripe subscription self-service (`67143bc`)
+- Fix Sentinel mobile rendering and elevate command UI (`15d9336`)
+- Test responsive Aegis Sentinel fusion dock behavior (`0114ae6`)
+- Fuse Aegis and Sentinel mobile controls without removing existing UI (`ef08c61`)
+- Upgrade Sentinel command interface (`7d3e6eb`)
+- Vendor kimi-k3-in-c v1.0.0 into ClearGlass (`eaa744e`)
+- Enhance Sentinel with governed Artemis agent mesh (`531a1fa`)
+- Upgrade product catalog command center (`c47026b`)
+- Add adaptive Artemis action overflow system (`241c4e7`)
+- Add homepage ClearGlass Sentinel concierge (`f56ac27`)
+- Test Aegis Glass global page injection (`8073009`)
+- Inject Aegis Glass into every published HTML page (`2349d7a`)
+- Add Aegis Glass global runtime (`9285128`)
+- Add Aegis Glass global protection styles (`28ba84f`)
+- Add articles download action and draft safeguards (`e51f219`)
+- Merge BLUEDESK with global ClearGlass command bar (`e6df696`)
+- Add ClearGlass Global Growth Engine product (`18b5a14`)
+- Remove duplicate Counter-UAS page header and retain global nav (`6316b19`)
+- Auto-heal: keep generated repairs subject to CI (`cb36a4d`)
+- Merge ARTEMIS Future Operations OS into Counter-UAS page (`f67a742`)
+- Auto-heal: fix Site Integrity Guard URL resolution (`88952a7`)
+- Auto-heal: add governed self-healing GitHub Actions control plane (`6c50742`)
 - Publish workstation integrity checksums (`08836df`)
 - Upgrade Ontario influence brief into high-assurance OSINT workstation (`d25dd2f`)
 - Add high-assurance Ontario OSINT analyst workbench (`fe91389`)
@@ -1028,6 +1063,30 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`f75365e`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`436b021`)
+- refresh control-surface data feeds [skip ci] (`8873e45`)
+- refresh control-surface data feeds [skip ci] (`546df46`)
+- refresh control-surface data feeds [skip ci] (`cea28e2`)
+- refresh control-surface data feeds [skip ci] (`02af3eb`)
+- refresh control-surface data feeds [skip ci] (`e2489a7`)
+- refresh control-surface data feeds [skip ci] (`7d5d057`)
+- refresh control-surface data feeds [skip ci] (`7107cb4`)
+- refresh control-surface data feeds [skip ci] (`93c5efb`)
+- refresh control-surface data feeds [skip ci] (`0605c90`)
+- refresh control-surface data feeds [skip ci] (`94b2cfe`)
+- refresh control-surface data feeds [skip ci] (`cc1d7fe`)
+- refresh control-surface data feeds [skip ci] (`f97a280`)
+- refresh control-surface data feeds [skip ci] (`90489b0`)
+- refresh control-surface data feeds [skip ci] (`e500265`)
+- refresh control-surface data feeds [skip ci] (`d7f973d`)
+- refresh control-surface data feeds [skip ci] (`57e806d`)
+- refresh control-surface data feeds [skip ci] (`af1a836`)
+- refresh control-surface data feeds [skip ci] (`7f980fe`)
+- refresh control-surface data feeds [skip ci] (`9e03e21`)
+- refresh control-surface data feeds [skip ci] (`716d0a4`)
+- refresh control-surface data feeds [skip ci] (`952c19e`)
+- update generated outputs — 2026-08-08 07:47 UTC [skip ci] (`424655c`)
 - refresh SEO dashboard feeds [skip ci] (`57bcdc5`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`e769bf6`)
 - refresh control-surface data feeds [skip ci] (`f93aadd`)
@@ -1741,6 +1800,8 @@
 
 ## Other
 
+- materialize Artemis launch campaign assets (`925404b`)
+- ship proof-led Artemis conversion engine (`a865aeb`)
 - syndicate Ontario influence OSINT brief (`2a2273a`)
 - register Ontario influence OSINT brief (`378e521`)
 - add Ontario influence evidence ledger (`4bb21fc`)

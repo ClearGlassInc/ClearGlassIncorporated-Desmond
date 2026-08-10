@@ -47,6 +47,7 @@ on:
       - "security/**"
       - "vendor/**"
       - "scripts/verify_site.py"
+      - "scripts/production_probe.py"
       - "tools/build_pages.py"
       - "SECURITY.md"
       - ".github/workflows/pages.yml"
@@ -120,6 +121,8 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Configure Pages deployment
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
@@ -130,3 +133,79 @@ jobs:
 
       - name: Record deployment URL
         run: echo "Published ${{ steps.deployment.outputs.page_url }}"
+
+  verify-production:
+    name: Production verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: deploy
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout verification tooling
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.12'
+
+      - name: Resolve canonical production URL
+        id: target
+        shell: bash
+        env:
+          PAGES_URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          host="$(tr -d '\r\n[:space:]' < CNAME)"
+          if [ -z "$host" ]; then
+            echo "::error file=CNAME::CNAME is empty; production target cannot be verified."
+            exit 1
+          fi
+          case "$host" in
+            http://*|https://*) canonical="$host" ;;
+            *) canonical="https://$host" ;;
+          esac
+          echo "url=$canonical" >> "$GITHUB_OUTPUT"
+          {
+            echo "### ClearGlass production verification"
+            echo "- Pages deployment URL: ${PAGES_URL}"
+            echo "- Canonical production URL: ${canonical}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Probe canonical production routes
+        run: >-
+          python3 scripts/production_probe.py
+          "${{ steps.target.outputs.url }}"
+          --sitemap-limit 30
+          --report operations/reports/production-probe.json
+
+      - name: Record probe summary
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -s operations/reports/production-probe.json ]; then
+            echo "- Production probe report: NOT PRODUCED" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          report = json.loads(Path("operations/reports/production-probe.json").read_text())
+          state = "PASS" if report.get("passed") else "FAIL"
+          print(f"- Production probe: {state}")
+          print(f"- URLs checked: {report.get('checked', 0)}")
+          PY
+
+      - name: Upload production verification report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: production-probe-report
+          path: operations/reports/production-probe.json
+          if-no-files-found: warn
+          retention-days: 14

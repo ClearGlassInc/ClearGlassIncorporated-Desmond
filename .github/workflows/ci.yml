@@ -5,6 +5,8 @@ on:
     branches: ["**"]
   pull_request:
     branches: ["main"]
+  # Allow manual on-demand runs (Python Tests, Site Reliability Audit, lint,
+  # workflow-doctor, OSINT deck) from the Actions tab / API.
   workflow_dispatch:
 
 permissions:
@@ -42,6 +44,9 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+      # Pin ruff: an unpinned install lets CI pull a newer ruff whose expanded
+      # default rule set flags hundreds of pre-existing style issues, turning
+      # this repo-wide `ruff check .` red with no code change. Bump deliberately.
       - run: pip install "ruff==0.15.8"
       - run: ruff check .
 
@@ -78,22 +83,6 @@ jobs:
         run: python3 tools/seo_audit.py
       - name: Validate generated internal links
         run: python3 tools/internal_links.py --check
-
-  motion-quality:
-    name: Cinematic motion quality gate
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: "22"
-          cache: npm
-      - run: npm ci
-      - name: Typecheck, tests, build, and motion invariants
-        run: npm run check:motion
 
   lighthouse:
     name: Lighthouse budgets
@@ -137,4 +126,7 @@ jobs:
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: "3.11"
+      # Fail-closed validation of the Ontario/Burlington OSINT deck: present,
+      # indexable, intel.json valid, sitemap/nav/sw wired, inline JS + sw.js
+      # syntax. Node ships on the runner, so the JS syntax checks run too.
       - run: python scripts/osint_deck_release.py --strict

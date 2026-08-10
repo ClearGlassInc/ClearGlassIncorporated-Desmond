@@ -4,6 +4,10 @@ import json
 import re
 from pathlib import Path
 
+import pytest
+
+from scripts import minerals_data_sync
+
 ROOT = Path(__file__).resolve().parents[1]
 CHECKOUT_SHA = "df4cb1c069e1874edd31b4311f1884172cec0e10"
 SETUP_PYTHON_SHA = "a309ff8b426b58ec0e2a45f0f869d46889d02405"
@@ -108,3 +112,44 @@ def test_pages_hardener_tracks_replacement_state():
     source = (ROOT / "tools/build_pages.py").read_text(encoding="utf-8")
     assert "metadata_replaced = False" in source
     assert "if not tags and not metadata_replaced:" in source
+
+
+def test_empty_filtered_feed_is_never_reported_as_healthy():
+    assert minerals_data_sync.status_for_feed([]) == "UNAVAILABLE"
+
+
+def test_atom_schema_drift_fails_closed():
+    with pytest.raises(ValueError, match="schema drift"):
+        minerals_data_sync.parse_atom(b"<response><item>not Atom</item></response>")
+
+    with pytest.raises(ValueError, match="contained no entries"):
+        minerals_data_sync.parse_atom(b'<feed xmlns="http://www.w3.org/2005/Atom"/>')
+
+
+def test_source_failure_marks_browser_snapshot_degraded_without_losing_lkg(tmp_path, monkeypatch):
+    latest = tmp_path / "latest"
+    latest.mkdir()
+    snapshot = {
+        "schema": "clearglass.minerals.policy/v1",
+        "status": "DAILY",
+        "retrieved_at": "2026-08-09T00:00:00Z",
+        "source_updated_at": "2026-08-08T00:00:00Z",
+        "source": "Official source",
+        "records": [{
+            "id": "official-1",
+            "title": "Critical minerals policy",
+            "source": "Official source",
+            "affected_minerals": ["lithium"],
+            "impact_category": "POLICY",
+        }],
+    }
+    (latest / "policy.json").write_text(json.dumps(snapshot), encoding="utf-8")
+    monkeypatch.setattr(minerals_data_sync, "LATEST", latest)
+
+    result = minerals_data_sync.preserve_on_failure(("policy",), TimeoutError("upstream timeout"))
+    preserved = json.loads((latest / "policy.json").read_text(encoding="utf-8"))
+
+    assert result["policy"]["status"] == "DEGRADED"
+    assert preserved["status"] == "DEGRADED"
+    assert preserved["retrieved_at"] == snapshot["retrieved_at"]
+    assert preserved["records"] == snapshot["records"]

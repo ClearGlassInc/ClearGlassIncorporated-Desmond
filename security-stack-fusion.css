@@ -12,6 +12,13 @@
 
 body.cg-security-dock-mounted{padding-bottom:calc(var(--cg-security-reserve) + env(safe-area-inset-bottom))}
 
+/* The security control must float above the page without reserving or visually
+   erasing a right-hand content lane. The base Stealth Glass aura adds a 340px
+   fixed bloom beyond the control; on short/wide viewports that bloom reads as
+   an empty white panel and obscures content below it. The dock already carries
+   its own bounded glow, so suppress only that redundant, unbounded bloom. */
+body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
+
 /* Aegis × Sentinel Fusion Dock */
 #cg-security-stack{
   position:fixed!important;

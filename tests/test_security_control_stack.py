@@ -44,6 +44,13 @@ def test_mobile_fusion_dock_reserves_control_lane_and_clears_content() -> None:
     assert "prefers-reduced-motion:reduce" in css
 
 
+def test_security_dock_does_not_create_a_blank_right_hand_lane() -> None:
+    css = (ROOT / "security-stack-fusion.css").read_text(encoding="utf-8")
+
+    assert "body.cg-security-dock-mounted #cg-neon-aura::after" in css
+    assert "display:none!important" in css
+
+
 def test_scroll_controls_include_top_and_bottom_arrows() -> None:
     css = (ROOT / "fx.css").read_text(encoding="utf-8")
     js = (ROOT / "fx.js").read_text(encoding="utf-8")

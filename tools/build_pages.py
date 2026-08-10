@@ -89,6 +89,9 @@ AEGIS_SCRIPT = '<script src="/aegis-glass.js" defer data-aegis-global="true"></s
 STEALTH_SCRIPT = '<script src="/stealth-glass.js" defer data-stealth-global="true"></script>'
 FX_SCRIPT = '<script src="/fx.js" defer data-fx-global="true"></script>'
 
+CSP_META_PATTERN = r"<meta\b(?=[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"])[^>]*>"
+REFERRER_META_PATTERN = r"<meta\b(?=[^>]*name\s*=\s*['\"]referrer['\"])[^>]*>"
+
 
 def _has_asset(text: str, pattern: str) -> bool:
     return re.search(pattern, text, flags=re.IGNORECASE) is not None
@@ -106,21 +109,14 @@ def _harden_html(path: Path) -> None:
     # Pages can carry an older inline policy. Normalize it at build time so a
     # newly allowlisted production integration is not silently blocked on only
     # part of the site and every published page receives the reviewed policy.
-    csp_meta = re.compile(
-        r"<meta\b(?=[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"])[^>]*>",
-        flags=re.IGNORECASE,
-    )
+    csp_meta = re.compile(CSP_META_PATTERN, flags=re.IGNORECASE)
     canonical_csp = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
-    metadata_replaced = False
     if csp_meta.search(text):
         replaced = csp_meta.sub(canonical_csp, text, count=1)
         metadata_replaced = metadata_replaced or replaced != text
         text = replaced
 
-    referrer_meta = re.compile(
-        r"<meta\b(?=[^>]*name\s*=\s*['\"]referrer['\"])[^>]*>",
-        flags=re.IGNORECASE,
-    )
+    referrer_meta = re.compile(REFERRER_META_PATTERN, flags=re.IGNORECASE)
     canonical_referrer = '<meta name="referrer" content="strict-origin-when-cross-origin">'
     if referrer_meta.search(text):
         replaced = referrer_meta.sub(canonical_referrer, text, count=1)
@@ -128,10 +124,10 @@ def _harden_html(path: Path) -> None:
         text = replaced
 
     tags: list[str] = []
-    if not _has_asset(text, csp_pattern):
-        tags.append(f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">')
-    if not _has_asset(text, referrer_pattern):
-        tags.append('<meta name="referrer" content="strict-origin-when-cross-origin">')
+    if not _has_asset(text, CSP_META_PATTERN):
+        tags.append(canonical_csp)
+    if not _has_asset(text, REFERRER_META_PATTERN):
+        tags.append(canonical_referrer)
     if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]"):
         tags.append(AEGIS_STYLESHEET)
     if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/security-stack-fusion\.css['\"]"):

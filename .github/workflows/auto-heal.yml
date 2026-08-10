@@ -2,8 +2,13 @@ name: Auto Heal
 
 on:
   workflow_run:
-    workflows: ["CI", "Security", "CodeQL", "Deploy Pages", "Policy Gate"]
-    branches: [main]
+    workflows:
+      - CI
+      - Security
+      - CodeQL
+      - Deploy Pages
+      - Policy Gate
+      - Site Integrity Guard
     types: [completed]
   schedule:
     - cron: "17 */6 * * *"

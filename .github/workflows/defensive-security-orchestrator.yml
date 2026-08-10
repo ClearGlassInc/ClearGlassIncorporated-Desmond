@@ -64,10 +64,13 @@ jobs:
           exit-code: '1'
 
       - name: Upload vulnerability results
+        # security-events is read-only for fork PRs; the scanner still gates the
+        # job, but SARIF publication must not fail solely because GitHub removes
+        # token write permissions in an untrusted context.
         if: >-
           always() &&
-          hashFiles('security-evidence/trivy-results.sarif') != '' &&
-          (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+          (github.event_name != 'pull_request' ||
+           github.event.pull_request.head.repo.full_name == github.repository)
         uses: github/codeql-action/upload-sarif@03e4368ac7daa2bd82b3e85262f3bf87ee112f57 # v3.36.0
         with:
           sarif_file: security-evidence/trivy-results.sarif

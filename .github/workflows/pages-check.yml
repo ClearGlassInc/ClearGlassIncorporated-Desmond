@@ -1,15 +1,54 @@
 name: ClearGlass GitHub Pages Check
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches:
+      - main
     paths:
-      - "**.html"
-      - "**.css"
-      - "**.js"
+      - "*.html"
+      - "*.css"
+      - "*.gif"
+      - "*.ico"
+      - "*.js"
+      - "*.jpeg"
+      - "*.jpg"
+      - "*.json"
+      - "*.mp4"
+      - "*.pdf"
+      - "*.png"
+      - "*.svg"
+      - "*.xml"
+      - "*.txt"
+      - "*.webm"
+      - "*.webmanifest"
+      - "*.webp"
+      - ".nojekyll"
+      - ".well-known/**"
       - "assets/**"
-      - "tools/build_pages.py"
+      - "apps/command-center/**"
+      - "artemis-fawl/**"
+      - "blog/**"
+      - "checkout/**"
+      - "content/**"
+      - "data/control-surface/**"
+      - "data/minerals/**"
+      - "data/Ontario-osint/**"
+      - "data/platform/registry.json"
+      - "data/seo/**"
+      - "data/store/catalog.json"
+      - "data/xenolith/lattice.json"
+      - "feeds/**"
+      - "four_d_dominance/**"
+      - "investors/**"
+      - "legal/**"
+      - "offers/**"
+      - "opal/**"
+      - "provenance/**"
+      - "security/**"
+      - "vendor/**"
       - "scripts/verify_site.py"
+      - "tools/build_pages.py"
+      - "SECURITY.md"
       - ".github/workflows/pages-check.yml"
   workflow_dispatch:
 
@@ -34,14 +73,19 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Verify required files
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Verify and build the production artifact
         run: |
           python3 scripts/verify_site.py
           python3 tools/build_pages.py dist
           test -s dist/index.html
-          test -s dist/CNAME
-          test -e dist/.nojekyll
-          echo "Pages artifact prerequisites are valid." >> "$GITHUB_STEP_SUMMARY"
+          test -f dist/.nojekyll
+          test -f dist/CNAME
+          echo "✓ sanitized Pages artifact is ready"
 
       - name: Upload site artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

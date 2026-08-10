@@ -1,29 +1,24 @@
 /* ClearGlass · Security Stack Fusion Dock
-   Additive override for Aegis Glass + Stealth Glass. Keeps the controls fused,
-   readable, touch-safe, and clear of the paired scroll arrows. */
+   Compact fused mobile launcher for Aegis + Stealth controls.
+   Keeps controls CTA-safe, viewport-safe, touch-safe, and visually integrated. */
 
 :root{
-  --cg-security-edge:18px;
-  --cg-security-bottom:18px;
-  --cg-security-reserve:118px;
-  --cg-mobile-fusion-clearance:92px;
-  --cg-mobile-fusion-right-lane:76px;
+  --cg-security-edge:16px;
+  --cg-security-bottom:16px;
+  --cg-security-reserve:104px;
+  --cg-mobile-fusion-clearance:84px;
 }
 
-body.cg-security-dock-mounted{padding-bottom:calc(var(--cg-security-reserve) + env(safe-area-inset-bottom))}
+body.cg-security-dock-mounted{
+  padding-bottom:calc(var(--cg-security-reserve) + env(safe-area-inset-bottom));
+}
 
-/* The security control must float above the page without reserving or visually
-   erasing a right-hand content lane. The base Stealth Glass aura adds a 340px
-   fixed bloom beyond the control; on short/wide viewports that bloom reads as
-   an empty white panel and obscures content below it. The dock already carries
-   its own bounded glow, so suppress only that redundant, unbounded bloom. */
 body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
 
-/* Aegis × Sentinel Fusion Dock */
 #cg-security-stack{
   position:fixed!important;
   right:max(var(--cg-security-edge),env(safe-area-inset-right))!important;
-  bottom:max(var(--cg-security-bottom),env(safe-area-inset-bottom))!important;
+  bottom:calc(var(--cg-security-bottom) + env(safe-area-inset-bottom))!important;
   left:auto!important;
   top:auto!important;
   z-index:2147483647!important;
@@ -32,24 +27,23 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   align-items:stretch!important;
   justify-content:flex-end!important;
   gap:0!important;
-  width:min(292px,calc(100vw - 36px))!important;
+  width:min(248px,calc(100vw - 32px))!important;
+  max-width:calc(100vw - 32px)!important;
   min-width:0!important;
-  padding:8px!important;
-  border:1px solid rgba(211,238,255,.30)!important;
-  border-radius:24px!important;
+  padding:6px!important;
+  border:1px solid rgba(211,238,255,.28)!important;
+  border-radius:20px!important;
   background:
-    radial-gradient(circle at 18% 8%,rgba(255,255,255,.22),transparent 38%),
-    radial-gradient(circle at 86% 18%,rgba(115,204,255,.18),transparent 42%),
-    radial-gradient(circle at 18% 100%,rgba(167,139,250,.16),transparent 48%),
-    linear-gradient(145deg,rgba(24,36,58,.58),rgba(6,13,28,.46) 55%,rgba(13,19,38,.52))!important;
-  -webkit-backdrop-filter:blur(34px) saturate(190%) contrast(110%)!important;
-  backdrop-filter:blur(34px) saturate(190%) contrast(110%)!important;
+    radial-gradient(circle at 18% 8%,rgba(255,255,255,.18),transparent 38%),
+    radial-gradient(circle at 86% 18%,rgba(115,204,255,.14),transparent 42%),
+    linear-gradient(145deg,rgba(24,36,58,.64),rgba(6,13,28,.54) 58%,rgba(13,19,38,.58))!important;
+  -webkit-backdrop-filter:blur(22px) saturate(175%)!important;
+  backdrop-filter:blur(22px) saturate(175%)!important;
   box-shadow:
-    0 18px 44px rgba(0,0,0,.34),
-    0 0 0 1px rgba(118,218,255,.10),
-    0 0 34px rgba(96,165,250,.12),
-    inset 0 1px 0 rgba(255,255,255,.26),
-    inset 0 -1px 0 rgba(116,211,255,.08)!important;
+    0 16px 38px rgba(0,0,0,.30),
+    0 0 0 1px rgba(118,218,255,.08),
+    0 0 24px rgba(96,165,250,.10),
+    inset 0 1px 0 rgba(255,255,255,.22)!important;
   pointer-events:none!important;
   isolation:isolate!important;
   overflow:hidden!important;
@@ -64,46 +58,44 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   inset:0;
   border-radius:inherit;
   pointer-events:none;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.035) 44%,rgba(105,231,255,.13) 72%,rgba(167,139,250,.14)),
-    linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
-  opacity:.78;
+  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.025) 45%,rgba(105,231,255,.10) 74%,rgba(167,139,250,.10));
+  opacity:.72;
   mix-blend-mode:screen;
 }
 
 #cg-security-stack::after{
   content:"";
   position:absolute;
-  inset:3px;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:20px;
+  inset:2px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:17px;
   pointer-events:none;
-  box-shadow:inset 0 0 22px rgba(255,255,255,.035);
 }
 
-#cg-security-stack>*{pointer-events:auto!important;position:relative!important;z-index:1!important;max-width:100%!important;min-width:0!important;margin:0!important}
+#cg-security-stack>*{
+  pointer-events:auto!important;
+  position:relative!important;
+  z-index:1!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
 
 #cg-security-stack #cg-stealth-btn{
   align-self:stretch!important;
   width:100%!important;
-  height:36px!important;
-  min-height:36px!important;
+  height:34px!important;
+  min-height:34px!important;
   right:auto!important;
   bottom:auto!important;
   justify-content:center!important;
-  padding:0 15px!important;
-  border-radius:12px 12px 0 0!important;
-  border:1px solid rgba(193,219,255,.28)!important;
-  background:
-    radial-gradient(circle at 16% 18%,rgba(255,255,255,.22),transparent 36%),
-    linear-gradient(155deg,rgba(42,54,88,.58),rgba(11,18,36,.46))!important;
-  -webkit-backdrop-filter:blur(24px) saturate(175%)!important;
-  backdrop-filter:blur(24px) saturate(175%)!important;
-  box-shadow:
-    0 10px 22px rgba(0,0,0,.22),
-    0 0 0 1px rgba(150,178,255,.08),
-    inset 0 1px 0 rgba(255,255,255,.22),
-    inset 0 -1px 0 rgba(255,255,255,.05)!important;
+  padding:0 12px!important;
+  border-radius:11px 11px 0 0!important;
+  border:1px solid rgba(193,219,255,.26)!important;
+  background:linear-gradient(155deg,rgba(42,54,88,.60),rgba(11,18,36,.50))!important;
+  -webkit-backdrop-filter:blur(18px) saturate(165%)!important;
+  backdrop-filter:blur(18px) saturate(165%)!important;
+  box-shadow:0 7px 16px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.18)!important;
 }
 
 #cg-security-stack #cg-capability-controls{
@@ -111,13 +103,13 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   flex-direction:column!important;
   width:100%!important;
   overflow:hidden!important;
-  border:1px solid rgba(193,219,255,.28)!important;
+  border:1px solid rgba(193,219,255,.26)!important;
   border-top:0!important;
-  border-radius:0 0 12px 12px!important;
-  background:linear-gradient(180deg,rgba(35,48,76,.48),rgba(7,15,31,.54))!important;
-  -webkit-backdrop-filter:blur(24px) saturate(175%)!important;
-  backdrop-filter:blur(24px) saturate(175%)!important;
-  box-shadow:0 12px 24px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.08)!important;
+  border-radius:0 0 11px 11px!important;
+  background:linear-gradient(180deg,rgba(35,48,76,.46),rgba(7,15,31,.54))!important;
+  -webkit-backdrop-filter:blur(18px) saturate(165%)!important;
+  backdrop-filter:blur(18px) saturate(165%)!important;
+  box-shadow:0 8px 18px rgba(0,0,0,.18)!important;
 }
 
 #cg-security-stack .cg-capability-control{
@@ -125,51 +117,48 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   align-items:center!important;
   justify-content:center!important;
   width:100%!important;
-  min-height:44px!important;
-  padding:10px 12px!important;
+  min-height:38px!important;
+  padding:8px 10px!important;
   border:0!important;
   border-radius:0!important;
   background:transparent!important;
   color:#f4f8ff!important;
   font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
-  font-size:11px!important;
+  font-size:10px!important;
   font-weight:700!important;
   letter-spacing:.08em!important;
   cursor:pointer!important;
   transform:translateY(0)!important;
-  transition:transform 80ms ease,background 80ms ease,color 80ms ease,box-shadow 80ms ease!important;
+  transition:transform 120ms ease,background 120ms ease,color 120ms ease,opacity 180ms ease!important;
 }
 
-#cg-security-stack .cg-capability-control+ .cg-capability-control{
-  border-top:1px solid rgba(255,255,255,.12)!important;
+#cg-security-stack .cg-capability-control + .cg-capability-control{
+  border-top:1px solid rgba(255,255,255,.10)!important;
 }
 
 #cg-security-stack .cg-capability-control:hover{
-  z-index:1!important;
-  transform:translateY(-1px)!important;
-  background:rgba(105,231,255,.11)!important;
-  box-shadow:0 4px 12px rgba(0,0,0,.18)!important;
+  background:rgba(105,231,255,.10)!important;
 }
-#cg-security-stack .cg-capability-control.is-selected{background:rgba(96,165,250,.18)!important;color:#fff!important}
+#cg-security-stack .cg-capability-control.is-selected{background:rgba(96,165,250,.17)!important;color:#fff!important}
 #cg-security-stack .cg-capability-control:focus-visible{
-  position:relative!important;
-  z-index:2!important;
   outline:2px solid #8fffe0!important;
   outline-offset:-3px!important;
-  box-shadow:inset 0 0 0 1px rgba(3,12,25,.9)!important;
 }
-#cg-security-stack .cg-capability-control:disabled{cursor:not-allowed!important;opacity:.48!important}
-#cg-security-stack .cg-capability-control--arrow svg{width:20px!important;height:20px!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+#cg-security-stack .cg-capability-control:disabled{cursor:not-allowed!important;opacity:.45!important}
+#cg-security-stack .cg-capability-control--arrow svg{
+  width:17px!important;
+  height:17px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
 
 #cg-security-stack #cg-stealth-btn.is-on{
-  border-color:rgba(150,255,235,.42)!important;
-  background:
-    radial-gradient(circle at 16% 18%,rgba(210,255,248,.24),transparent 36%),
-    linear-gradient(155deg,rgba(12,48,48,.62),rgba(5,20,28,.50))!important;
-  box-shadow:
-    0 10px 24px rgba(0,0,0,.26),
-    0 0 26px rgba(120,224,200,.18),
-    inset 0 1px 0 rgba(220,255,250,.22)!important;
+  border-color:rgba(150,255,235,.40)!important;
+  background:linear-gradient(155deg,rgba(12,48,48,.62),rgba(5,20,28,.52))!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.22),0 0 20px rgba(120,224,200,.14),inset 0 1px 0 rgba(220,255,250,.18)!important;
 }
 
 #cg-security-stack #aegis-glass-status{
@@ -179,50 +168,84 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   text-overflow:ellipsis!important;
   white-space:nowrap!important;
   text-align:center!important;
-  padding:7px 10px!important;
-  border:1px solid rgba(105,231,255,.24)!important;
+  padding:6px 8px!important;
+  border:1px solid rgba(105,231,255,.22)!important;
   border-radius:999px!important;
-  background:linear-gradient(180deg,rgba(8,30,42,.34),rgba(4,19,31,.24))!important;
-  -webkit-backdrop-filter:blur(18px) saturate(165%)!important;
-  backdrop-filter:blur(18px) saturate(165%)!important;
+  background:linear-gradient(180deg,rgba(8,30,42,.30),rgba(4,19,31,.22))!important;
   color:rgba(225,252,255,.94)!important;
   font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
-  font-size:8px!important;
+  font-size:7.5px!important;
   font-weight:700!important;
-  line-height:1.1!important;
-  letter-spacing:.09em!important;
+  letter-spacing:.08em!important;
   text-transform:uppercase!important;
 }
 
+/* Mobile: compact command launcher. It stays in the corner and deliberately
+   occupies less than half the viewport width so CTA rows remain visible. */
 @media(max-width:720px){
-  body.cg-security-dock-mounted{padding-bottom:calc(var(--cg-mobile-fusion-clearance) + env(safe-area-inset-bottom))}
+  body.cg-security-dock-mounted{
+    padding-bottom:calc(var(--cg-mobile-fusion-clearance) + env(safe-area-inset-bottom));
+  }
+
   #cg-security-stack{
-    right:max(10px,env(safe-area-inset-right))!important;
+    right:max(12px,env(safe-area-inset-right))!important;
     bottom:calc(12px + env(safe-area-inset-bottom))!important;
-    width:clamp(148px,44vw,188px)!important;
-    padding:5px!important;
-    gap:0!important;
-    border-radius:19px!important;
-    -webkit-backdrop-filter:blur(30px) saturate(190%) contrast(110%)!important;
-    backdrop-filter:blur(30px) saturate(190%) contrast(110%)!important;
+    width:min(156px,calc(100vw - 24px))!important;
+    max-width:min(156px,calc(100vw - 24px))!important;
+    padding:4px!important;
+    border-radius:17px!important;
+    box-shadow:0 12px 28px rgba(0,0,0,.28),0 0 18px rgba(96,165,250,.08)!important;
   }
-  #cg-security-stack::after{inset:2px;border-radius:16px}
+
+  #cg-security-stack::after{inset:2px;border-radius:14px}
+
   #cg-security-stack #cg-stealth-btn{
-    height:44px!important;
-    min-height:44px!important;
-    padding:0 10px!important;
+    height:38px!important;
+    min-height:38px!important;
+    padding:0 8px!important;
     gap:5px!important;
-    font-size:clamp(7px,1.8vw,8px)!important;
-    letter-spacing:.13em!important;
+    font-size:7.3px!important;
+    letter-spacing:.11em!important;
   }
-  #cg-security-stack #cg-stealth-btn .cg-sg-ic{width:11px!important;height:11px!important}
+
+  #cg-security-stack #cg-stealth-btn .cg-sg-ic{
+    width:10px!important;
+    height:10px!important;
+  }
+
   #cg-security-stack #aegis-glass-status{display:none!important}
-  #cg-security-stack .cg-capability-control{min-height:44px!important;font-size:9px!important}
+
+  #cg-security-stack .cg-capability-control{
+    min-height:36px!important;
+    padding:7px 8px!important;
+    font-size:8.5px!important;
+  }
+
+  #cg-security-stack .cg-capability-control--arrow{
+    min-height:32px!important;
+  }
+
+  /* Scroll-aware compact state, toggled by stealth-glass.js below. */
+  #cg-security-stack.cg-is-scrolling{
+    opacity:.42!important;
+    transform:translate3d(0,8px,0) scale(.96)!important;
+    pointer-events:none!important;
+  }
 }
 
 @media(max-width:390px){
-  #cg-security-stack{right:max(8px,env(safe-area-inset-right))!important;width:clamp(142px,46vw,176px)!important}
-  #cg-security-stack #cg-stealth-btn{height:44px!important;min-height:44px!important;font-size:6.8px!important}
+  #cg-security-stack{
+    right:max(10px,env(safe-area-inset-right))!important;
+    width:min(144px,calc(100vw - 20px))!important;
+    max-width:min(144px,calc(100vw - 20px))!important;
+  }
+  #cg-security-stack #cg-stealth-btn{height:36px!important;min-height:36px!important;font-size:6.7px!important}
+  #cg-security-stack .cg-capability-control{min-height:34px!important;font-size:8px!important}
+  #cg-security-stack .cg-capability-control--arrow{min-height:30px!important}
+}
+
+@media(min-width:721px){
+  #cg-security-stack{width:min(248px,calc(100vw - 32px))!important}
 }
 
 @media(prefers-reduced-motion:reduce){

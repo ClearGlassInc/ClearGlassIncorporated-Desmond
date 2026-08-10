@@ -136,14 +136,20 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   font-weight:700!important;
   letter-spacing:.08em!important;
   cursor:pointer!important;
-  transition:background .16s ease,color .16s ease,box-shadow .16s ease!important;
+  transform:translateY(0)!important;
+  transition:transform 80ms ease,background 80ms ease,color 80ms ease,box-shadow 80ms ease!important;
 }
 
 #cg-security-stack .cg-capability-control+ .cg-capability-control{
   border-top:1px solid rgba(255,255,255,.12)!important;
 }
 
-#cg-security-stack .cg-capability-control:hover{background:rgba(105,231,255,.09)!important}
+#cg-security-stack .cg-capability-control:hover{
+  z-index:1!important;
+  transform:translateY(-1px)!important;
+  background:rgba(105,231,255,.11)!important;
+  box-shadow:0 4px 12px rgba(0,0,0,.18)!important;
+}
 #cg-security-stack .cg-capability-control.is-selected{background:rgba(96,165,250,.18)!important;color:#fff!important}
 #cg-security-stack .cg-capability-control:focus-visible{
   position:relative!important;

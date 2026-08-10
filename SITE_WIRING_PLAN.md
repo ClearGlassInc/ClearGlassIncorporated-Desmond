@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 156 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 157 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -144,8 +144,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | **ClearGlass Intelligence · Insights** | **Topic cluster** |  |  |  |  |
 | `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | Shadow AI Incident Response | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
 | `blog/autonomous-threat-modeling-2026.html` — Autonomous Threat Modeling in 2026 | continuous architecture-grounded security for agentic and cyber-physical systems | ClearGlass Intelligence | ClearGlass Intelligence | AI Agent Governance | Book a security engagement / See pricing & plans |
-| `blog/ai-agent-governance-governed-autonomy.html` — AI Agent Governance | the governed-autonomy playbook | Autonomous Threat Modeling in 2026 | ClearGlass Intelligence | The ClearGlass Platform Audit | Book a security engagement / See pricing & plans |
-| `blog/clearglass-platform-audit-2026.html` — The ClearGlass Platform Audit | keep, simplify, gate, build — the platform upgrade doctrine | AI Agent Governance | ClearGlass Intelligence | AI Agents Are the New Insider Threat | Book a security engagement / See pricing & plans |
+| `blog/ai-agent-governance-governed-autonomy.html` — AI Agent Governance | the governed-autonomy playbook | Autonomous Threat Modeling in 2026 | ClearGlass Intelligence | AI Agents as a Digital Workforce | Book a security engagement / See pricing & plans |
+| `blog/ai-agents-digital-workforce-small-business.html` — AI Agents as a Digital Workforce | governed digital workers for small businesses | AI Agent Governance | ClearGlass Intelligence | The ClearGlass Platform Audit | Book a security engagement / See pricing & plans |
+| `blog/clearglass-platform-audit-2026.html` — The ClearGlass Platform Audit | keep, simplify, gate, build — the platform upgrade doctrine | AI Agents as a Digital Workforce | ClearGlass Intelligence | AI Agents Are the New Insider Threat | Book a security engagement / See pricing & plans |
 | `blog/ai-agents-insider-threat.html` — AI Agents Are the New Insider Threat | why agent identity is a security boundary | The ClearGlass Platform Audit | ClearGlass Intelligence | AI Safety Beyond the Black Box | Book a security engagement / See pricing & plans |
 | `blog/ai-safety-black-box-activation-analysis-gavel.html` — AI Safety Beyond the Black Box | activation analysis and layered AI guardrails | AI Agents Are the New Insider Threat | ClearGlass Intelligence | Security Architecture for Agentic Software | Book a security engagement / See pricing & plans |
 | `blog/cybersecurity-architecture-for-agentic-software.html` — Security Architecture for Agentic Software | designing defenses for autonomous systems | AI Safety Beyond the Black Box | ClearGlass Intelligence | The Case for Adaptive Trust | Book a security engagement / See pricing & plans |

@@ -111,6 +111,7 @@ PAGES: dict[str, tuple[str, str]] = {
     # Artemis platform
     "artemis-os.html": ("Artemis OS", "the Artemis intelligence operating system"),
     "artemis-iv.html": ("ARTEMIS IV", "tactical intelligence core"),
+    "artemis-arctic-readiness.html": ("Artemis Northstar", "Arctic readiness evidence and resilience platform"),
     "artemis-2040.html": ("Artemis 2040", "long-horizon intelligence platform"),
     "artemis-ai-cyber-intelligence-platform.html": ("AI Cyber Intelligence Platform", "Artemis applied to cyber intelligence"),
     "artemis-self-evolving-platform.html": ("Self-Evolving Platform", "Artemis's autonomous improvement loop"),
@@ -288,6 +289,7 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "artemis-iv.html", "artemis-ai-cyber-intelligence-platform.html",
             "artemis-self-evolving-platform.html", "artemis-2040.html",
+            "artemis-arctic-readiness.html",
             "artemis-fawl/index.html",
             "air-control.html", "air-systems-control.html",
         ],
@@ -357,7 +359,6 @@ CLUSTERS: dict[str, dict] = {
             "side-store.html", "products.html",
             "business-productivity-suite.html", "global-growth-engine.html",
             "apps/command-center/index.html",
-            "mission-control.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -425,7 +426,6 @@ CLUSTERS: dict[str, dict] = {
             "blog/network-orchestration-ai-automation-cybersecurity.html",
             "blog/ontario-influence-environment-august-2026.html",
             "blog/shadow-ai-incident-response-logs-gone.html",
-            "blog/ai-safety-black-box-activation-analysis-gavel.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },

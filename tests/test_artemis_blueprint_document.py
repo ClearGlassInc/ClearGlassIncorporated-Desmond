@@ -4,6 +4,7 @@ from pathlib import Path
 def test_full_stack_blueprint_contains_requested_sections_and_controls():
     markdown = Path("CLEARGLASSINC_ARTEMIS_FULL_STACK_INTELLIGENCE_BLUEPRINT.md").read_text()
     required_sections = [
+        "## Federal Cyber Control Plane Product Profile",
         "## System Architecture",
         "## Data and Ontology",
         "## AI and Agent Design",
@@ -42,6 +43,10 @@ def test_full_stack_blueprint_contains_requested_sections_and_controls():
         "BLOCKED — tenant and identity not evidenced",
         "Architecture intent is not connection proof",
         "Operational promotion remains fail-closed",
+        "ClearGlass AEGIS Federal",
+        "Requirement → Control → Evidence → Owner → Risk → Remediation → Verification",
+        "RECONCILIATION_REQUIRED",
+        "compliance engineering—not legal advice",
     ]
     for control in required_controls:
         assert control in markdown

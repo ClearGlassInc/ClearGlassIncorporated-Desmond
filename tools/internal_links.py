@@ -111,7 +111,6 @@ PAGES: dict[str, tuple[str, str]] = {
     # Artemis platform
     "artemis-os.html": ("Artemis OS", "the Artemis intelligence operating system"),
     "artemis-iv.html": ("ARTEMIS IV", "tactical intelligence core"),
-    "artemis-arctic-readiness.html": ("Artemis Northstar", "Arctic readiness evidence and resilience platform"),
     "artemis-2040.html": ("Artemis 2040", "long-horizon intelligence platform"),
     "artemis-ai-cyber-intelligence-platform.html": ("AI Cyber Intelligence Platform", "Artemis applied to cyber intelligence"),
     "artemis-self-evolving-platform.html": ("Self-Evolving Platform", "Artemis's autonomous improvement loop"),
@@ -290,7 +289,6 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "artemis-iv.html", "artemis-ai-cyber-intelligence-platform.html",
             "artemis-self-evolving-platform.html", "artemis-2040.html",
-            "artemis-arctic-readiness.html",
             "artemis-fawl/index.html",
             "air-control.html", "air-systems-control.html",
         ],

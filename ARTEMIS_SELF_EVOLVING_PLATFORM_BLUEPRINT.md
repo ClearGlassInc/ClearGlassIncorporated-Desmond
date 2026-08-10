@@ -771,6 +771,327 @@ class ApolloRolloutClient:
 
 This appendix turns the architecture into an implementable Python control plane: feedback becomes typed evidence, evidence becomes evals, evals become reviewable proposals, and only signed human approval can trigger Apollo canaries or rollback.
 
+## Flagship Product 1 — Zero-Trust Intelligence and Provenance Gateway
+
+### Assurance boundary and measurable invariants
+
+This is a **target-state specification**, not evidence that Palantir services, cryptographic modules, protected environments, or host controls are provisioned. “NSA-grade” is not a verifiable product property; Artemis instead uses public, testable CNSA 2.0-aligned choices where interoperability permits and records every exception. The security authority must approve the final algorithm suite, module validations, data classification, and operating environment.
+
+The gateway is split into four trust planes so compromise of the browser or a parser cannot confer execution authority:
+
+| Plane | Services | Invariants |
+|---|---|---|
+| Data | `ingress-broker`, `content-normalizer`, `provenance-verifier`, `risk-engine`, Foundry datasets | Raw bytes are immutable; parsers are sandboxed; unverified data is quarantined and never silently promoted. |
+| Control | `policy-decision`, `workflow-controller`, AIP tool broker | Default deny; models propose but do not authorize; consequential state transitions require a signed human approval. |
+| Management | Apollo release controller, identity/configuration authorities | Separate administrator identity; two-person approval for production policy, key, or privileged-host changes. |
+| Audit | append-only event writer, transparency-log witness, SIEM exporter | No workload can update or delete prior decisions; every material transition is hash-linked and externally witnessed. |
+
+Acceptance targets are: zero unauthorized cross-compartment reads in negative-policy tests; 100% provenance-envelope coverage; zero unsigned production artifacts; risk-event processing p95 below 1.5 seconds at the approved load profile; RPO ≤ 5 minutes and RTO ≤ 30 minutes for the hot operational view; and deterministic replay of a risk decision from its versioned evidence, features, policy, and scoring artifacts.
+
+### Microservices and intelligence parsing flow
+
+```mermaid
+flowchart LR
+  S[Allowlisted source] -->|mTLS + signed envelope| EB[Enclave ingress broker]
+  EB --> RAW[(Immutable raw object store)]
+  EB --> Q[Quarantine topic]
+  Q --> AV[Malware / archive / MIME validator]
+  AV --> SB[Ephemeral parser sandbox]
+  SB --> PV[Provenance verifier]
+  PV -->|valid| N[Canonical normalizer]
+  PV -->|invalid or unknown| HOLD[Evidence hold queue]
+  N --> ER[Entity resolution]
+  ER --> RE[Deterministic risk engine]
+  RE --> PE[Policy enforcement point]
+  PE --> FO[Foundry ontology write]
+  FO --> GO[Gotham operational picture]
+  RE --> AIP[AIP triage proposal]
+  AIP --> AP[Human approval package]
+  RAW --> AL[Append-only audit plane]
+  PV --> AL
+  RE --> AL
+  PE --> AL
+  AP --> AL
+```
+
+1. **Ingress broker** authenticates a workload identity, enforces source, size, rate, content-type, schema-version, and replay-window allowlists, then calculates the content digest before persisting bytes.
+2. **Content safety stage** expands archives with file-count, nesting, ratio, CPU, and memory bounds; rejects ambiguous encodings and duplicate JSON keys; scans active content; and parses in a networkless, read-only, seccomp/AppContainer sandbox.
+3. **Provenance verifier** validates the detached signature, certificate path, revocation status, issuer authorization, transparency inclusion proof, and digest. A valid signature establishes origin and integrity—not truth—so source reliability remains an independent feature.
+4. **Normalizer** maps accepted observations into versioned canonical schemas, preserving original evidence references, valid time, transaction time, classification, handling caveats, and transformation lineage.
+5. **Entity resolver** emits candidate links with confidence and supporting features. Low-confidence merges remain suggestions for an operator; records are never destructively coalesced.
+6. **Risk engine** combines versioned deterministic rules and calibrated statistical signals. AIP may produce an advisory feature, but deterministic policy caps it, records abstentions, and prevents model output from directly changing authority.
+7. **Policy enforcement** evaluates principal, workload, mission, purpose, classification, compartment, coalition releasability, device posture, and requested action adjacent to every read or mutation.
+
+### Provenance envelope and cryptographic profile
+
+Every feed item, procurement signal, source-code commit, build artifact, prompt, policy bundle, and report receives a DSSE-compatible signed envelope. Canonical payloads use RFC 8785 JSON Canonicalization; large objects are addressed by SHA-384 digest. Software attestations use in-toto Statement/SLSA provenance predicates and an OCI transparency log. Git accepts only protected-branch commits whose signing identity maps to the workforce identity; CI independently signs the resulting artifact, so a developer signature cannot manufacture build provenance.
+
+| Purpose | Required profile | Operational rule |
+|---|---|---|
+| Service transport | TLS 1.3; AES-256-GCM or ChaCha20-Poly1305; X25519 or NIST P-384 ECDHE; mTLS with SPIFFE-style workload identities | Disable TLS 1.0–1.2 for enclave-native links; no bearer credential without sender constraint; certificate lifetime ≤ 24 hours. |
+| CNSA 2.0 migration track | ML-KEM-1024 key establishment and ML-DSA-87 signatures where approved implementations and peers support them | Deploy hybrid interoperability profiles first; inventory and rehearse crypto-agility; never invent a hybrid combiner. |
+| Payload signing | ECDSA P-384/SHA-384 today; ML-DSA-87 migration target | Keys live in validated HSM/KMS boundaries; signatures include tenant, source, schema, sequence, time, classification, and digest. |
+| At-rest protection | AES-256-GCM envelope encryption with per-dataset DEKs wrapped by enclave/tenant KEKs | Separate keys by classification and coalition; rotate KEKs at least annually and immediately on compromise; retain old decrypt-only versions per retention policy. |
+| Audit integrity | SHA-384 hash chain plus signed Merkle-tree checkpoints sent to an independent witness | Append only; checkpoint gaps page security operations; deletion follows authorized cryptographic erasure and retention evidence, never row mutation. |
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from hashlib import sha384
+from typing import Protocol
+
+
+@dataclass(frozen=True)
+class ProvenanceEnvelope:
+    source_id: str
+    tenant_id: str
+    schema_version: str
+    sequence: int
+    issued_at_epoch: int
+    classification: str
+    payload_sha384: str
+    key_id: str
+    signature: bytes
+
+
+class SignatureVerifier(Protocol):
+    def verify(self, *, key_id: str, message: bytes, signature: bytes) -> bool: ...
+
+
+def verify_envelope(
+    envelope: ProvenanceEnvelope,
+    canonical_statement: bytes,
+    payload: bytes,
+    verifier: SignatureVerifier,
+    last_sequence: int,
+    now_epoch: int,
+) -> None:
+    if len(payload) > 16 * 1024 * 1024:
+        raise ValueError("payload exceeds source limit")
+    if envelope.sequence <= last_sequence:
+        raise ValueError("replayed or out-of-order provenance sequence")
+    if abs(now_epoch - envelope.issued_at_epoch) > 300:
+        raise ValueError("provenance timestamp outside replay window")
+    if sha384(payload).hexdigest() != envelope.payload_sha384:
+        raise ValueError("payload digest mismatch")
+    if not verifier.verify(
+        key_id=envelope.key_id,
+        message=canonical_statement,
+        signature=envelope.signature,
+    ):
+        raise PermissionError("untrusted provenance signature")
+```
+
+### Continuous risk scoring and enforcement
+
+The scoring contract is versioned and monotonic for hard risk indicators. It preserves raw features and calibration metadata so a decision can be replayed. Missing security evidence increases uncertainty rather than becoming zero risk.
+
+```python
+from dataclasses import dataclass
+from math import prod
+
+
+@dataclass(frozen=True)
+class RiskFeatures:
+    source_unreliability: float
+    provenance_failure: float
+    behavior_anomaly: float
+    fraud_probability: float
+    asset_criticality: float
+    lateral_movement_signal: float
+    evidence_completeness: float
+
+
+def risk_score(features: RiskFeatures) -> int:
+    bounded = [
+        max(0.0, min(1.0, features.source_unreliability)),
+        max(0.0, min(1.0, features.provenance_failure)),
+        max(0.0, min(1.0, features.behavior_anomaly)),
+        max(0.0, min(1.0, features.fraud_probability)),
+        max(0.0, min(1.0, features.asset_criticality)),
+        max(0.0, min(1.0, features.lateral_movement_signal)),
+        1.0 - max(0.0, min(1.0, features.evidence_completeness)),
+    ]
+    # Noisy-OR keeps each material signal monotonic and avoids one low feature
+    # cancelling an independently critical signal.
+    return round(100 * (1.0 - prod(1.0 - value for value in bounded)))
+
+
+def enforcement_for(score: int, provenance_valid: bool) -> str:
+    if not provenance_valid or score >= 90:
+        return "contain_and_require_dual_approval"
+    if score >= 70:
+        return "queue_human_review"
+    if score >= 40:
+        return "increase_collection_read_only"
+    return "observe"
+```
+
+Production calibration must use representative, time-separated data. Dashboards show score, uncertainty, top contributing evidence, model/rule versions, and policy outcome—not a false claim of certainty. Shadow evaluation monitors precision, recall, calibration error, population drift, source outages, policy denials, and subgroup error; threshold changes use the governed self-improvement loop.
+
+### Secure local-to-dashboard telemetry
+
+The preferred design is **outbound-only**: a least-privileged local collector writes to a bounded spool, then establishes mTLS to an enclave relay through a fixed egress proxy. The dashboard subscribes to the relay and never connects to a workstation. Messages contain allowlisted health aggregates, fraud/risk scores, monotonic sequence numbers, and coarse component states—never process lists, routes, local addresses, usernames, registry contents, secrets, or unrestricted logs.
+
+Where a legacy Windows `HttpListener` is unavoidable, it binds only to `https://127.0.0.1:<port>/artemis/`, uses an OS-reserved URL ACL for a dedicated virtual service account, requires a pinned local client certificate, enforces request-size/time/rate limits, and exposes no remote URL prefix. Windows Firewall denies inbound remote traffic. The adapter forwards through the outbound relay; it is not a network management endpoint. ASP.NET Core/Kestrel with supported TLS and authentication middleware is preferred for new deployments.
+
+Telemetry batches are canonical CBOR or protobuf, signed by a device-attested key, encrypted by TLS 1.3, and replay-protected with `{device_pseudonym, boot_id, sequence, observed_at}`. Relay responses disclose only acknowledgement and signed configuration version. A full queue pauses collection and emits one local health event rather than overwriting unacknowledged records; exponential backoff is bounded and jittered.
+
+### Lateral-movement threat controls
+
+- Microsegment ingress, parser, data, model, management, and audit workloads with default-deny east-west policy; authorize explicit service identity and method, not subnet membership.
+- Remove shared administrator accounts, interactive service logon, NTLM fallback, unconstrained delegation, remote registry, and broad SMB/RDP/WinRM paths. Privileged access uses phishing-resistant MFA, just-in-time elevation, hardened jump hosts, and recorded sessions.
+- Issue audience-bound, short-lived credentials; prevent a parser credential from reading ontology data or invoking actions. Rotate and revoke workload identity automatically on posture failure.
+- Constrain egress by workload and DNS name/IP allowlist; block link-local/cloud metadata endpoints and apply SSRF-resistant resolvers and proxies.
+- Deploy application control, Credential Guard/LSA protection, tamper protection, host firewall, EDR, and signed configuration baselines. Alert on credential access, service creation, remote scheduled tasks, abnormal ticket use, and east-west authentication fan-out.
+- Preserve a break-glass path using offline-held credentials, two-person release, bounded duration, and immediate audit. Test isolation, credential rotation, rebuild-from-known-good, and witness-ledger recovery quarterly.
+
+## Flagship Product 2 — Governed Repair and Ingestion Daemon
+
+### Worker architecture and authority model
+
+Workers are observable, named services—not invisible persistence. Each ephemeral worker receives one repository, one immutable input commit, one task type, a read-only token, an egress allowlist, CPU/memory/time budgets, and a disposable workspace. It can produce evidence, a patch, tests, and a report. It cannot push to protected branches, approve itself, alter policy, obtain new tools, touch host configuration, or deploy production.
+
+```mermaid
+stateDiagram-v2
+  [*] --> Claimed
+  Claimed --> Attested: verify worker + task signatures
+  Attested --> Analyzed: read-only checkout and inventory
+  Analyzed --> Proposed: create deterministic patch
+  Proposed --> Validated: sandbox tests + policy checks
+  Validated --> AwaitingApproval: material change
+  Validated --> Reported: no safe repair
+  AwaitingApproval --> Staged: dual approval + signed ticket
+  AwaitingApproval --> Rejected
+  Staged --> Canary: Apollo ring 0
+  Canary --> Promoted: health gates pass
+  Canary --> RolledBack: gate fails
+  Promoted --> Reported
+  RolledBack --> Reported
+  Rejected --> Reported
+```
+
+The `scheduler` leases idempotent tasks from the queue; `repo-analyzer` inventories manifests and workflow dependencies; `repair-planner` creates a typed proposal; `patch-builder` writes only beneath its temporary checkout; `validation-runner` executes networkless tests; `policy-gate` verifies scope and forbidden paths; `reporter` emits signed evidence; and `deployment-controller` accepts only independently approved artifacts. Leases expire safely, heartbeats carry no authority, and duplicate workers converge on the same content-addressed result.
+
+### Ingestion scrapers
+
+Collectors obey source terms, robots policy where applicable, classification and privacy rules, explicit destination allowlists, and per-source rate budgets. HTTP fetches use connect/read/total timeouts, a maximum redirect count, DNS rebinding protection, response byte limits, content-type checks, conditional requests, and bounded retry only for idempotent failures. Raw responses and collection metadata enter Product 1 through the same quarantine and provenance boundary; scraped text is untrusted data and can never issue agent instructions.
+
+Each connector implements `discover → fetch → hash → sign collection receipt → quarantine → parse → normalize → deduplicate → publish`. Its receipt records URL, retrieval time, response status, declared type, byte length, digest, collector version, policy basis, and source licence/handling label. Credentials are source-scoped and loaded from runtime secret stores.
+
+### Safe `agent.yml` parsing and repair
+
+CI must not silently “strip flags,” because accepting altered intent can conceal a dangerous or broken configuration. The validator rejects duplicate keys, aliases, unknown fields, oversized documents, unexpected types, shell strings, absolute/traversal paths, unpinned images, unknown tools, and privilege/egress expansion. An autofix command may generate a minimal candidate file that removes only schema-declared deprecated fields and canonicalizes formatting; it writes a diff artifact and requires review before merge.
+
+```python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from pathlib import PurePosixPath
+from typing import Any, Mapping
+
+
+ALLOWED_KEYS = frozenset({"version", "name", "tools", "workspace", "budgets", "egress"})
+ALLOWED_TOOLS = frozenset({"repo.read", "patch.propose", "tests.run", "report.write"})
+
+
+@dataclass(frozen=True)
+class AgentConfig:
+    version: int
+    name: str
+    tools: tuple[str, ...]
+    workspace: str
+    max_steps: int
+    egress: tuple[str, ...]
+
+
+def validate_agent_config(document: Mapping[str, Any]) -> AgentConfig:
+    unknown = set(document) - ALLOWED_KEYS
+    if unknown:
+        raise ValueError(f"unknown agent.yml fields: {sorted(unknown)}")
+    if document.get("version") != 1:
+        raise ValueError("unsupported agent.yml version")
+    tools = tuple(document.get("tools", ()))
+    if not tools or not set(tools).issubset(ALLOWED_TOOLS):
+        raise ValueError("agent.yml requests an unknown or empty tool set")
+    workspace = str(document.get("workspace", ""))
+    path = PurePosixPath(workspace)
+    if not workspace or path.is_absolute() or ".." in path.parts:
+        raise ValueError("workspace must be a repository-relative path")
+    budgets = document.get("budgets")
+    if not isinstance(budgets, Mapping):
+        raise ValueError("budgets must be a mapping")
+    max_steps = int(budgets.get("max_steps", 0))
+    if not 1 <= max_steps <= 50:
+        raise ValueError("max_steps must be between 1 and 50")
+    egress = tuple(document.get("egress", ()))
+    if egress:
+        raise ValueError("egress requires a separately approved policy binding")
+    return AgentConfig(1, str(document.get("name", "")), tools, workspace, max_steps, egress)
+```
+
+Use a YAML 1.2 parser configured for safe construction, duplicate-key rejection, and disabled custom tags before passing the resulting mapping to this function. Parsing is a non-privileged CI stage; an approved policy bundle, not `agent.yml`, grants actual capabilities.
+
+### Filesystem write handler
+
+The patch builder never writes arbitrary host paths. It opens a pre-created workspace by trusted directory handle, normalizes repository-relative paths, rejects symlinks/hardlinks/devices, limits file count and total bytes, uses create-new temporary files, `fsync`s content and directory metadata, atomically renames, and records old/new SHA-384 digests. Forbidden paths include `.git/`, credential files, policy/approval stores, workflow governance, and deployment keys unless the signed task explicitly names that path and a separate reviewer approves it.
+
+Before publication it reopens and rehashes every output to prevent time-of-check/time-of-use substitution. Reports and patches go to a content-addressed artifact store; the worker workspace is destroyed. A partial batch is never presented as successful: the journal either commits all expected outputs or leaves a recoverable, clearly failed transaction.
+
+### Privileged Windows host integration
+
+The web tier never executes PowerShell, touches the registry, or accepts arbitrary script text. It creates a typed, expiring `HostChangeProposal`; policy validates the device group, exact allowlisted setting, desired value, baseline, maintenance window, rollback value, ticket, and approvers. A separate local broker running as a constrained virtual service account pulls signed proposals outbound, verifies device targeting and freshness, and invokes a signed, version-pinned PowerShell module under JEA (Just Enough Administration).
+
+Registry access is restricted to exact approved values beneath product-owned policy keys. Changes to MMCSS priorities or WDDM graphics parameters are **disabled by default** because unsupported tuning can reduce stability or security and cannot guarantee “absolute” resource availability. Enabling one requires vendor documentation, lab evidence, an operational owner, dual approval, a restore point/export where supported, a bounded maintenance window, and an automatic rollback condition. The broker denies wildcard paths, provider-qualified escape, remote registry, encoded commands, child processes, downloads, and values outside a typed range.
+
+```powershell
+function Set-ArtemisApprovedSetting {
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    param(
+        [Parameter(Mandatory)][ValidateSet('TelemetryBufferMb')][string]$Setting,
+        [Parameter(Mandatory)][ValidateRange(16, 256)][int]$Value,
+        [Parameter(Mandatory)][ValidatePattern('^chg-[0-9a-f]{32}$')][string]$ChangeId
+    )
+
+    $ErrorActionPreference = 'Stop'
+    $path = 'HKLM:\SOFTWARE\Policies\ClearGlassInc\Artemis'
+    if (-not (Test-ArtemisSignedApproval -ChangeId $ChangeId -Setting $Setting -Value $Value)) {
+        throw 'Signed approval does not match this exact host change.'
+    }
+    $previous = Get-ItemPropertyValue -Path $path -Name $Setting -ErrorAction SilentlyContinue
+    Write-ArtemisAppendOnlyAudit -ChangeId $ChangeId -Phase 'before' -Previous $previous
+    if ($PSCmdlet.ShouldProcess("$path::$Setting", "Set approved value to $Value")) {
+        Set-ItemProperty -Path $path -Name $Setting -Type DWord -Value $Value
+        if ((Get-ItemPropertyValue -Path $path -Name $Setting) -ne $Value) {
+            throw 'Post-change verification failed; rollback is required.'
+        }
+        Write-ArtemisAppendOnlyAudit -ChangeId $ChangeId -Phase 'verified' -Current $Value
+    }
+}
+```
+
+The illustrative function deliberately exposes only a benign product-owned buffer setting. MMCSS/WDDM-specific setters must remain absent until the applicable vendor-supported values and review gates exist.
+
+### Deployment, failover, and rollback pipeline
+
+1. Pin source commit and dependencies; verify commit signature, branch protection evidence, task signature, and clean workspace.
+2. Build in an isolated, ephemeral runner with no production secrets; emit SBOM, test results, SAST/dependency findings, and in-toto/SLSA provenance.
+3. Sign the immutable artifact in a separate identity boundary. The build worker cannot sign or approve.
+4. Run contract, negative authorization, parser fuzz, policy, provenance replay, idempotency, and recovery tests. Any required gate fails closed.
+5. Create a human-readable change package containing diff, affected trust domains, risk score, test evidence, data migration, observability, owner, maintenance window, and exact rollback digest.
+6. Obtain the required human approvals. Apollo verifies signatures and promotes the same digest to a non-production validation ring, then ring 0, 1%, 10%, and full deployment with observation windows.
+7. Health gates compare error rate, latency, queue age, risk-score distribution, policy denials, provenance failures, resource pressure, and operator-impact metrics against the signed baseline.
+8. On breach, freeze new leases, route ingestion to the durable queue, restore the last known-good artifact/config, verify ledger continuity and consumer offsets, and open an incident. Never “repair forward” autonomously after a security gate fails.
+
+The active/passive control plane uses quorum-backed durable queues and fenced leader leases to prevent split brain. Workers are stateless; a replacement reclaims an expired lease using the same idempotency key. Foundry datasets remain the durable canonical state, the operational cache is rebuildable, and cross-enclave failover never crosses classification or coalition policy. Disaster recovery is promoted only after identity, policy bundle, keys, audit witness, data freshness, and functional probes pass.
+
+### Automated technical report sequence
+
+For every run, the reporter gathers immutable task metadata, source and artifact digests, worker identity/attestation, policy bundle, config schema, tool calls, file manifest, patch, test commands and exit codes, findings, approvals, Apollo ring outcomes, telemetry window, rollback status, and residual risks. It redacts by field policy, renders JSON plus human-readable HTML/PDF from the same schema, signs both, stores them under the run digest, appends the report reference to the audit chain, and exposes only policy-filtered links in Gotham/Foundry.
+
+Reports distinguish **observed**, **inferred**, **simulated**, and **not verified** facts. A failed or unavailable check remains explicit; report generation cannot turn an incomplete deployment into success. Weekly control health verifies signing-key age, policy/version drift, stale workers, queue age, ledger checkpoints, restore rehearsal age, expiring exceptions, and canary rollback readiness.
+
 ## Production Implementation Addendum
 
 This addendum makes the ClearGlassInc Artemis blueprint directly implementable by defining concrete service contracts, Python-first control-plane modules, TypeScript UI boundaries, SQL schemas, and deployment guardrails. The design assumes Gotham, Foundry, AIP, and Apollo are the system-of-record platforms, while Artemis-owned services provide narrowly scoped orchestration, policy checks, event normalization, and operator experience.

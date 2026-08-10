@@ -151,9 +151,14 @@ def parse_atom(body: bytes) -> list[dict[str, Any]]:
         raise ValueError(f"invalid XML: {exc}") from exc
 
     ns = "{http://www.w3.org/2005/Atom}"
+    if root.tag != f"{ns}feed":
+        raise ValueError(f"schema drift: expected Atom feed root, received {root.tag!r}")
+    entries = root.findall(f"{ns}entry")
+    if not entries:
+        raise ValueError("schema drift: authoritative Atom response contained no entries")
     records: list[dict[str, Any]] = []
     seen: set[str] = set()
-    for entry in root.findall(f"{ns}entry"):
+    for entry in entries:
         title = _entry_text(entry, "title")
         summary = _entry_text(entry, "summary") or _entry_text(entry, "content")
         published = parse_datetime(_entry_text(entry, "published"))
@@ -247,7 +252,10 @@ def newest_record_timestamp(records: list[dict[str, Any]]) -> str | None:
 
 def status_for_feed(records: list[dict[str, Any]]) -> str:
     if not records:
-        return "DAILY"
+        # A successful upstream request is not evidence that this filtered feed
+        # contains publishable intelligence. Never represent an empty result as
+        # a healthy DAILY dataset.
+        return "UNAVAILABLE"
     newest = newest_record_timestamp(records)
     if not newest:
         return "DEGRADED"
@@ -322,7 +330,7 @@ def publish_nrcan() -> tuple[dict[str, dict[str, Any]], dict[str, int]]:
             "source_updated_at": payload["source_updated_at"],
             "status": status,
             "record_count": len(selected),
-            "confidence": "HIGH",
+            "confidence": "HIGH" if selected else "UNKNOWN",
         }
     return results, metrics
 
@@ -337,10 +345,23 @@ def preserve_on_failure(feed_ids: tuple[str, ...], error: Exception) -> dict[str
             if not isinstance(records, list):
                 raise ValueError("records is not an array")
             validate_records(records)
+            status = "DEGRADED" if records else "UNAVAILABLE"
+            # Preserve the last successful timestamps and records while making
+            # the browser-visible snapshot truthfully describe this failed run.
+            # The diagnostic is bounded because upstream exceptions are
+            # untrusted operational input.
+            existing["status"] = status
+            existing["message"] = (
+                "Source retrieval failed; preserved the last-known-good records. "
+                f"Diagnostic: {type(error).__name__}: {str(error)[:160]}"
+                if records
+                else "Source retrieval failed and no last-known-good records are available."
+            )
+            write_json_atomic(path, existing)
             results[feed_id] = {
                 "retrieved_at": existing.get("retrieved_at"),
                 "source_updated_at": existing.get("source_updated_at"),
-                "status": "DEGRADED" if records else "UNAVAILABLE",
+                "status": status,
                 "record_count": len(records),
                 "confidence": "MEDIUM" if records else "UNKNOWN",
             }

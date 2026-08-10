@@ -1,4 +1,4 @@
-# ClearGlassInc Artemis
+# ClearGlassInc.
 
 <div align="center">
 

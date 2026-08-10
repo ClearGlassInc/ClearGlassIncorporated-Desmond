@@ -148,6 +148,70 @@
     btn.style.removeProperty("bottom");
   }
 
+  function buildCapabilityControls(stack, stealthButton) {
+    if (document.getElementById("cg-capability-controls")) return;
+
+    var toolbar = document.createElement("div");
+    toolbar.id = "cg-capability-controls";
+    toolbar.setAttribute("role", "toolbar");
+    toolbar.setAttribute("aria-orientation", "vertical");
+    toolbar.setAttribute("aria-label", "Capability controls");
+    toolbar.innerHTML =
+      '<button type="button" class="cg-capability-control cg-capability-control--arrow" data-action="up" aria-label="Move up" title="Move up">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6.5 14.5 5.5-5 5.5 5"/></svg>' +
+      '</button>' +
+      '<button type="button" class="cg-capability-control" data-action="action-1" aria-label="Action 1" aria-pressed="true">Action 1</button>' +
+      '<button type="button" class="cg-capability-control" data-action="action-2" aria-label="Action 2" aria-pressed="false">Action 2</button>' +
+      '<button type="button" class="cg-capability-control cg-capability-control--arrow" data-action="down" aria-label="Move down" title="Move down">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6.5 9.5 5.5 5 5.5-5"/></svg>' +
+      '</button>';
+
+    if (stealthButton.nextSibling) stack.insertBefore(toolbar, stealthButton.nextSibling);
+    else stack.appendChild(toolbar);
+
+    var actionButtons = Array.prototype.slice.call(toolbar.querySelectorAll('[data-action^="action-"]'));
+    var upButton = toolbar.querySelector('[data-action="up"]');
+    var downButton = toolbar.querySelector('[data-action="down"]');
+    var selectedIndex = 0;
+
+    function updateSelection(focusSelection) {
+      actionButtons.forEach(function (button, index) {
+        var selected = index === selectedIndex;
+        button.classList.toggle("is-selected", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+      upButton.disabled = selectedIndex === 0;
+      downButton.disabled = selectedIndex === actionButtons.length - 1;
+      if (focusSelection) actionButtons[selectedIndex].focus();
+    }
+
+    function select(index, source, focusSelection) {
+      selectedIndex = Math.max(0, Math.min(actionButtons.length - 1, index));
+      updateSelection(focusSelection);
+      window.dispatchEvent(new CustomEvent("clearglass:capability-control", {
+        detail: { action: actionButtons[selectedIndex].getAttribute("data-action"), source: source }
+      }));
+    }
+
+    upButton.addEventListener("click", function () { select(selectedIndex - 1, "up", true); });
+    downButton.addEventListener("click", function () { select(selectedIndex + 1, "down", true); });
+    actionButtons.forEach(function (button, index) {
+      button.addEventListener("click", function () { select(index, "direct", false); });
+    });
+    toolbar.addEventListener("keydown", function (event) {
+      var nextIndex = null;
+      if (event.key === "ArrowUp") nextIndex = selectedIndex - 1;
+      else if (event.key === "ArrowDown") nextIndex = selectedIndex + 1;
+      else if (event.key === "Home") nextIndex = 0;
+      else if (event.key === "End") nextIndex = actionButtons.length - 1;
+      if (nextIndex === null) return;
+      event.preventDefault();
+      select(nextIndex, "keyboard", true);
+    });
+
+    updateSelection(false);
+  }
+
   function build() {
     if (!document.body || document.getElementById("cg-stealth-btn")) return;
     injectStyle();
@@ -169,6 +233,7 @@
       '<span class="cg-sg-tx">Stealth Glass</span>';
 
     alignWithAegis(btn);
+    buildCapabilityControls(getStack(), btn);
     magnetize(btn);
 
     var active = stored() === ON;

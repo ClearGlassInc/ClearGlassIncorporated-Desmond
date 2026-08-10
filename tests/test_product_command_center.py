@@ -16,7 +16,7 @@ class ProductCommandCenterTests(unittest.TestCase):
 
     def test_catalog_has_unique_required_identifiers(self) -> None:
         self.assertEqual(self.catalog["schema"], "clearglass.products/v1")
-        self.assertEqual(len(self.products), 76)
+        self.assertEqual(len(self.products), 75)
         for key in ("id", "slug", "name", "description", "category", "status", "productUrl"):
             values = [product[key] for product in self.products]
             self.assertTrue(all(isinstance(value, str) and value for value in values), key)

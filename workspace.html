@@ -185,11 +185,11 @@ footer.site a{color:#39d0c3}
 
 <section class="pl-sect" id="compare" style="background:#fff;border-top:1px solid #e4eaf1;border-bottom:1px solid #e4eaf1"><div class="pl-wrap">
   <h2>Compare plans</h2>
-  <p class="lede">Compare the collaboration, desktop application, security and support options included with each plan.</p>
+  <p class="lede">Everything in a lower plan is included in the plans above it.</p>
   <div class="pl-table-scroll">
     <table class="pl-cmp">
-      <caption style="position:absolute;left:-9999px">ClearGlass Workspace feature comparison across Business Basic, Business Basic Without Teams and Business Standard</caption>
-      <thead><tr><th scope="col">Included</th><th scope="col">Business Basic</th><th scope="col">Business Basic Without Teams</th><th scope="col">Business Standard</th></tr></thead>
+      <caption style="position:absolute;left:-9999px">ClearGlass Workspace feature comparison across Essentials, Collaborate and Complete</caption>
+      <thead><tr><th scope="col">Included</th><th scope="col">Essentials</th><th scope="col">Collaborate</th><th scope="col">Complete</th></tr></thead>
       <tbody>
         <tr><th scope="row">Business email on your own domain</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
         <tr><th scope="row">Encrypted file storage and sharing</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
@@ -197,9 +197,9 @@ footer.site a{color:#39d0c3}
         <tr><th scope="row">Documents and spreadsheets in the browser</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
         <tr><th scope="row">Mobile access</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
         <tr><th scope="row">Spam filtering and account security</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Video meetings</th><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Team chat and channels</th><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Shared team drives</th><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Video meetings</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Team chat and channels</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Shared team drives</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
         <tr><th scope="row">Desktop apps with offline access</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
         <tr><th scope="row">Advanced retention and audit controls</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
         <tr><th scope="row">Guided onboarding and migration</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
@@ -238,7 +238,7 @@ footer.site a{color:#39d0c3}
   <details class="faq"><summary>What happens after the 14-day trial?</summary><p>Nothing is charged during the trial. At the end, the plan you chose begins billing at the number of people you set. Cancel before the trial ends and you are not charged at all.</p></details>
   <details class="faq"><summary>Can I change the number of people mid-month?</summary><p>Yes. People added mid-period bill pro-rata for the remainder. People removed credit against your next invoice rather than being refunded outright.</p></details>
   <details class="faq"><summary>What is the difference between monthly and annual?</summary><p>Annual is billed once for twelve months and works out about 17% cheaper — roughly two months free. Monthly is billed every month with no commitment and can be cancelled at any renewal.</p></details>
-  <details class="faq"><summary>Can I move my existing email and files across?</summary><p>Yes. Migration from an existing provider is included with Business Standard and available as a one-time service on the other plans. We do the move with you rather than handing you a guide.</p></details>
+  <details class="faq"><summary>Can I move my existing email and files across?</summary><p>Yes. Migration from an existing provider is included with Complete and available as a one-time service on the other plans. We do the move with you rather than handing you a guide.</p></details>
   <details class="faq"><summary>How do I cancel, and what is the refund position?</summary><p>Cancel from your account in one step. Access continues to the end of the period you have already paid for. Refund and cancellation terms are set out in the <a href="legal/terms.html">terms of service</a>.</p></details>
   <details class="faq"><summary>Who is behind this?</summary><p>ClearGlass Inc., an Ontario company. The same team that does the security work on this site runs the platform, which is why the security section above talks about specifics rather than logos.</p></details>
 </div></section>
@@ -268,17 +268,18 @@ footer.site a{color:#39d0c3}
   // ── PLAN CONFIG ────────────────────────────────────────────────────────────
   // CAD cents per person per month. `annual` is the effective monthly rate when
   // paying twelve months up front; `monthly` is pay-as-you-go. Plan names are
-  // shown in the same order as the accessible comparison table.
+  // deliberately original — no third-party product names — and the ladder runs
+  // cheapest first so the comparison table reads left to right.
   var PLANS = [
-    { id:"business-basic", name:"Business Basic", annual:810, monthly:972,
-      who:"Cloud productivity, collaboration and meetings for connected teams.",
-      features:["Business email on your own domain","Encrypted file storage and sharing","Video meetings and team chat","Browser and mobile access","Security and basic admin controls"] },
-    { id:"business-basic-without-teams", name:"Business Basic Without Teams", annual:600, monthly:720,
-      who:"Core business productivity at a lower price when built-in conferencing is not needed.",
-      features:["Business email on your own domain","Encrypted file storage and sharing","Shared calendars and contacts","Browser and mobile access","No Teams or video conferencing"] },
-    { id:"business-standard", name:"Business Standard", annual:1700, monthly:2040, popular:true,
-      who:"Advanced productivity, desktop applications and offline access for growing teams.",
-      features:["Everything in Business Basic","Desktop apps with offline access","Advanced productivity tools","Enhanced business capabilities","Priority support"] }
+    { id:"essentials", name:"Essentials", annual:600, monthly:720,
+      who:"Email, files and calendars for a small team that does not need meetings built in.",
+      features:["Business email on your own domain","Encrypted file storage and sharing","Shared calendars and contacts","Documents and spreadsheets in the browser","Mobile access","Spam filtering and account security"] },
+    { id:"collaborate", name:"Collaborate", annual:810, monthly:972, popular:true,
+      who:"Everything in Essentials plus the tools a distributed team actually meets in.",
+      features:["Everything in Essentials","Video meetings","Team chat and channels","Shared team drives","Priority email support"] },
+    { id:"complete", name:"Complete", annual:1700, monthly:2040,
+      who:"For teams that need desktop applications, offline work and tighter controls.",
+      features:["Everything in Collaborate","Desktop apps with offline access","Advanced retention and audit controls","Guided onboarding and migration","Named support contact"] }
   ];
 
   var period = "annual", seats = 5;
@@ -305,8 +306,7 @@ footer.site a{color:#39d0c3}
           '&body=' + encodeURIComponent('Hi Desmond,\n\nWe would like to start a ClearGlass Workspace subscription.\n\nPlan: ' +
             p.name + '\nPeople: ' + seats + '\nBilling: ' + period + '\nEstimated: ' + fmt(month) +
             ' / month before tax\n\nOrganization: \nCurrent email provider: \n') +
-          '">Start your subscription</a>' +
-        '<a href="#compare" style="text-align:center;margin-top:12px;font-weight:700">Compare plans</a></div>';
+          '">Start your subscription</a></div>';
     }).join('');
   }
 

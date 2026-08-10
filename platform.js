@@ -58,6 +58,18 @@
     document.body.appendChild(cinematic);
   }
 
+  /* ── enterprise fusion: isolated navigation, search, trust, portal demo ──── */
+  addLink('link[href="/cg-enterprise-fusion.css"]', {
+    rel: "stylesheet",
+    href: "/cg-enterprise-fusion.css"
+  });
+  if (!document.querySelector('script[src="/cg-enterprise-fusion.js"]')) {
+    var enterpriseFusion = document.createElement("script");
+    enterpriseFusion.src = "/cg-enterprise-fusion.js";
+    enterpriseFusion.defer = true;
+    document.body.appendChild(enterpriseFusion);
+  }
+
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("sw.js").catch(function () {});

@@ -12,6 +12,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "build": "tsc -p tsconfig.json",
     "test": "node scripts/stripe-sync/run-tests.mjs",
+    "validate:motion": "node scripts/validate-cinematic-motion.mjs",
+    "check:motion": "npm run typecheck && npm test && npm run build && npm run validate:motion",
     "sync:stripe": "tsc -p tsconfig.json && node dist/scripts/sync-stripe-products.js"
   },
   "dependencies": {

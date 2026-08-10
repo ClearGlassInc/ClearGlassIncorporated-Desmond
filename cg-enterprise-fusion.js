@@ -9,21 +9,21 @@
   root.setAttribute("data-cg-enterprise","true");
 
   var siteIndex=[
-    {title:"ClearGlass Inc.",url:"index.html",summary:"Governed AI, cybersecurity, digital governance, operational intelligence, and strategic technology systems.",terms:"home company governed ai cyber strategy digital trust enterprise"},
+    {title:"ClearGlass Inc.",url:"/",summary:"Governed AI, cybersecurity, digital governance, operational intelligence, and strategic technology systems.",terms:"home company governed ai cyber strategy digital trust enterprise"},
     {title:"AI Automation Architecture",url:"#services",summary:"Governed agent workflows, evaluations, tool boundaries, human approval gates, and production deployment strategy.",terms:"ai automation agents workflows orchestration evals human gates"},
     {title:"Cybersecurity & Risk",url:"#services",summary:"Security architecture, exposure reduction, control assurance, incident readiness, and executive risk clarity.",terms:"cybersecurity security risk zero trust incident readiness assessment"},
-    {title:"Artemis",url:"artemis.html",summary:"ClearGlass governed AI and operational-intelligence ecosystem.",terms:"artemis ai automation intelligence operating system agents"},
-    {title:"BlueDesk",url:"bluedesk.html",summary:"CISO risk and blue-team operating surface.",terms:"bluedesk blue team ciso security cyber risk"},
-    {title:"Flowsint",url:"flowsint.html",summary:"OSINT investigation and intelligence-graph capability.",terms:"osint investigations intelligence research graph provenance"},
-    {title:"Government Solutions",url:"government.html",summary:"Public-sector strategy, governance, procurement, security, and operational systems.",terms:"government public sector digital governance procurement compliance"},
-    {title:"Procurement Legal Tech",url:"procurement-legal-tech.html",summary:"Public-sector legal operations and procurement workflow systems.",terms:"legal tech procurement legal operations compliance"},
-    {title:"Web Design & Development",url:"web-design.html",summary:"Accessible, secure, high-performance digital systems and application experiences.",terms:"website web application portal performance accessibility development"},
+    {title:"Artemis",url:"/artemis.html",summary:"ClearGlass governed AI and operational-intelligence ecosystem.",terms:"artemis ai automation intelligence operating system agents"},
+    {title:"BlueDesk",url:"/bluedesk.html",summary:"CISO risk and blue-team operating surface.",terms:"bluedesk blue team ciso security cyber risk"},
+    {title:"Flowsint",url:"/flowsint.html",summary:"OSINT investigation and intelligence-graph capability.",terms:"osint investigations intelligence research graph provenance"},
+    {title:"Government Solutions",url:"/government.html",summary:"Public-sector strategy, governance, procurement, security, and operational systems.",terms:"government public sector digital governance procurement compliance"},
+    {title:"Procurement Legal Tech",url:"/procurement-legal-tech.html",summary:"Public-sector legal operations and procurement workflow systems.",terms:"legal tech procurement legal operations compliance"},
+    {title:"Web Design & Development",url:"/web-design.html",summary:"Accessible, secure, high-performance digital systems and application experiences.",terms:"website web application portal performance accessibility development"},
     {title:"Strategic Brief",url:"#contact",summary:"Start a scoped conversation with ClearGlass about a strategic technology, cyber, governance, or automation requirement.",terms:"contact strategic brief consultation assessment project"},
-    {title:"Services & Engagements",url:"offers/index.html",summary:"Published ClearGlass services and engagement pathways.",terms:"services offers engagements advisory consulting"},
-    {title:"Pricing",url:"pricing.html",summary:"Published pricing and payment-method information where available.",terms:"pricing price cost budget payment"},
-    {title:"ClearGlass Intelligence",url:"blog/",summary:"Field notes and essays on governed AI, cyber defense, OSINT, automation, and digital strategy.",terms:"blog insights articles research cyber ai osint"},
-    {title:"ClearGlass NEXUS",url:"clearglass-nexus.html",summary:"ClearGlass command-platform experience.",terms:"nexus command platform operations intelligence"},
-    {title:"ClearPulse",url:"clearpulse.html",summary:"Signal and healthcare-intelligence capability within the ClearGlass ecosystem.",terms:"clearpulse signal healthcare intelligence"}
+    {title:"Services & Engagements",url:"/offers/index.html",summary:"Published ClearGlass services and engagement pathways.",terms:"services offers engagements advisory consulting"},
+    {title:"Pricing",url:"/pricing.html",summary:"Published pricing and payment-method information where available.",terms:"pricing price cost budget payment"},
+    {title:"ClearGlass Intelligence",url:"/blog/",summary:"Field notes and essays on governed AI, cyber defense, OSINT, automation, and digital strategy.",terms:"blog insights articles research cyber ai osint"},
+    {title:"ClearGlass NEXUS",url:"/clearglass-nexus.html",summary:"ClearGlass command-platform experience.",terms:"nexus command platform operations intelligence"},
+    {title:"ClearPulse",url:"/clearpulse.html",summary:"Signal and healthcare-intelligence capability within the ClearGlass ecosystem.",terms:"clearpulse signal healthcare intelligence"}
   ];
 
   function createEl(tag,className,text){
@@ -37,6 +37,15 @@
     if(!target)return false;
     var tag=(target.tagName||"").toLowerCase();
     return tag==="input"||tag==="textarea"||tag==="select"||target.isContentEditable;
+  }
+
+  function resolveSiteHref(href){
+    if(!href)return "/";
+    if(href.charAt(0)==="#"){
+      try{if(document.querySelector(href))return href;}catch(error){}
+      return "/"+href;
+    }
+    return href;
   }
 
   /* ---------- Existing desktop products menu: capability layer + keyboard traversal ---------- */
@@ -53,14 +62,14 @@
     group.setAttribute("aria-label","Capability index");
     var capabilities=[
       ["Governed AI","Agent systems","#services"],
-      ["Cybersecurity","Risk + readiness","bluedesk.html"],
-      ["Digital Governance","Public-sector systems","government.html"],
-      ["OSINT","Investigation workflows","flowsint.html"],
+      ["Cybersecurity","Risk + readiness","/bluedesk.html"],
+      ["Digital Governance","Public-sector systems","/government.html"],
+      ["OSINT","Investigation workflows","/flowsint.html"],
       ["Strategic Brief","Human scoping","#contact"]
     ];
     capabilities.forEach(function(item){
       var link=createEl("a","");
-      link.href=item[2];
+      link.href=resolveSiteHref(item[2]);
       link.setAttribute("role","menuitem");
       var strong=createEl("strong","",item[0]);
       var small=createEl("small","",item[1]);
@@ -94,7 +103,7 @@
 
   function renderSearch(query){
     if(!searchState.results||!searchState.status)return;
-    searchState.results.replaceChildren();
+    searchState.results.replaceChildren(searchState.status);
     var normalized=String(query||"").trim().toLowerCase();
     var tokens=normalized.split(/\s+/).filter(Boolean);
     var results=siteIndex.map(function(item){
@@ -116,7 +125,7 @@
     }
     results.forEach(function(row){
       var link=createEl("a","cg-search-result");
-      link.href=row.item.url;
+      link.href=resolveSiteHref(row.item.url);
       var wrap=createEl("div","");
       var title=createEl("strong","",row.item.title);
       var desc=createEl("p","",row.item.summary);
@@ -340,7 +349,7 @@
       ["05","Privacy-Aware Operations","Data collection and handling should remain proportionate to the service being delivered and its documented purpose."],
       ["06","Controlled Automation","Automation is introduced with explicit boundaries, safe failure behavior, and rollback considerations."],
       ["07","Reversible Execution","Where practical, changes are structured so operators can stop, inspect, recover, or reverse them without hidden state."],
-      ["08","Operational Clarity","Interfaces and procedures should make system state, responsibility, uncertainty, and next actions understandable." ]
+      ["08","Operational Clarity","Interfaces and procedures should make system state, responsibility, uncertainty, and next actions understandable."]
     ];
     cards.forEach(function(item){
       var card=createEl("article","cg-trust-card");
@@ -378,7 +387,7 @@
       ["GOVERNANCE CONTROLS","Example controls","Shows where approvals and policy boundaries could be surfaced to authorized users."],
       ["SYSTEM HEALTH","No live telemetry","The website does not claim an authenticated monitoring or infrastructure connection."],
       ["STRATEGIC BRIEF","Illustrative record","Demonstrates structured advisory context without using customer information."],
-      ["COMMUNICATIONS","Human-governed","Represents an authorized communication area; no messaging backend is implied." ]
+      ["COMMUNICATIONS","Human-governed","Represents an authorized communication area; no messaging backend is implied."]
     ];
     modules.forEach(function(item){
       var card=createEl("article","cg-portal-card");
@@ -387,8 +396,8 @@
     });
     shell.appendChild(grid);
     var actions=createEl("div","cg-portal-actions");
-    var brief=createEl("a","","Request Strategic Brief →");brief.href="#contact";
-    var capabilities=createEl("a","","View Capabilities");capabilities.href="#services";
+    var brief=createEl("a","","Request Strategic Brief →");brief.href=resolveSiteHref("#contact");
+    var capabilities=createEl("a","","View Capabilities");capabilities.href=resolveSiteHref("#services");
     actions.append(brief,capabilities);
     shell.appendChild(actions);
     section.appendChild(shell);
@@ -398,11 +407,12 @@
   /* ---------- Capability cards: additive links only ---------- */
   function enhanceCapabilityCards(){
     var cards=document.querySelectorAll("#services .tech-card");
-    var destinations=["artemis.html","bluedesk.html","procurement-legal-tech.html"];
+    var destinations=["/artemis.html","/bluedesk.html","/procurement-legal-tech.html"];
     Array.prototype.forEach.call(cards,function(card,index){
       if(card.querySelector(".cg-capability-link")||!destinations[index])return;
-      var link=createEl("a","cg-capability-link","Explore capability →");
+      var link=createEl("a","btn btn-glass cg-capability-link","Explore capability →");
       link.href=destinations[index];
+      link.style.marginTop="18px";
       card.appendChild(link);
     });
   }

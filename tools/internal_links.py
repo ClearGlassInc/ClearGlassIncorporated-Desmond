@@ -246,6 +246,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/clearglass-workplace-surveillance-intelligence-defense-system.html": ("Workplace Surveillance Intelligence & Defense", "defensive research for worker rights, privacy and accountability"),
     "blog/network-orchestration-ai-automation-cybersecurity.html": ("AI-Driven Network Orchestration", "a field guide to safe, governed network automation"),
     "blog/ontario-influence-environment-august-2026.html": ("Ontario Influence Environment", "verification-first Ontario public-interest intelligence"),
+    "blog/us-army-hades-me-11b-osint-dossier.html": ("U.S. Army HADES / ME-11B Dossier", "a verification-aware public-record deep-sensing program assessment"),
     "blog/shadow-ai-incident-response-logs-gone.html": ("Shadow AI Incident Response", "forensic readiness before security evidence disappears"),
     "blog/ai-safety-black-box-activation-analysis-gavel.html": ("AI Safety Beyond the Black Box", "activation analysis and layered AI guardrails"),
 }
@@ -425,6 +426,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html",
             "blog/network-orchestration-ai-automation-cybersecurity.html",
             "blog/ontario-influence-environment-august-2026.html",
+            "blog/us-army-hades-me-11b-osint-dossier.html",
             "blog/shadow-ai-incident-response-logs-gone.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],

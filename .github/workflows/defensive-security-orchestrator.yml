@@ -52,6 +52,7 @@ jobs:
           output-file: security-evidence/sbom.cdx.json
 
       - name: Scan repository for vulnerabilities
+        id: trivy
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           scan-type: fs
@@ -75,6 +76,8 @@ jobs:
           sarif_file: security-evidence/trivy-results.sarif
 
       - name: Detect committed secrets
+        id: gitleaks
+        if: always()
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -95,6 +98,23 @@ jobs:
           path: security-evidence/
           if-no-files-found: error
           retention-days: 90
+
+      - name: Enforce confirmed scanner findings
+        if: always()
+        env:
+          TRIVY_OUTCOME: ${{ steps.trivy.outcome }}
+          GITLEAKS_OUTCOME: ${{ steps.gitleaks.outcome }}
+        run: |
+          set -euo pipefail
+          {
+            echo "### Defensive scanner results"
+            echo "- Trivy: ${TRIVY_OUTCOME}"
+            echo "- Gitleaks: ${GITLEAKS_OUTCOME}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$TRIVY_OUTCOME" != success ] || [ "$GITLEAKS_OUTCOME" != success ]; then
+            echo "::error::A defensive scanner reported a confirmed finding or runtime failure; inspect its step and preserved evidence."
+            exit 1
+          fi
 
   policy-gate:
     name: Repository policy gate

@@ -4,6 +4,52 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "*.html"
+      - "*.css"
+      - "*.gif"
+      - "*.ico"
+      - "*.js"
+      - "*.jpeg"
+      - "*.jpg"
+      - "*.json"
+      - "*.mp4"
+      - "*.pdf"
+      - "*.png"
+      - "*.svg"
+      - "*.xml"
+      - "*.txt"
+      - "*.webm"
+      - "*.webmanifest"
+      - "*.webp"
+      - ".nojekyll"
+      - ".well-known/**"
+      - "assets/**"
+      - "apps/command-center/**"
+      - "artemis-fawl/**"
+      - "blog/**"
+      - "checkout/**"
+      - "content/**"
+      - "data/control-surface/**"
+      - "data/minerals/**"
+      - "data/Ontario-osint/**"
+      - "data/platform/registry.json"
+      - "data/seo/**"
+      - "data/store/catalog.json"
+      - "data/xenolith/lattice.json"
+      - "feeds/**"
+      - "four_d_dominance/**"
+      - "investors/**"
+      - "legal/**"
+      - "offers/**"
+      - "opal/**"
+      - "provenance/**"
+      - "security/**"
+      - "vendor/**"
+      - "scripts/verify_site.py"
+      - "tools/build_pages.py"
+      - "SECURITY.md"
+      - ".github/workflows/pages-check.yml"
   workflow_dispatch:
 
 # Least-privilege: this workflow only reads the repo to validate the static
@@ -11,6 +57,10 @@ on:
 # is sufficient.
 permissions:
   contents: read
+
+concurrency:
+  group: pages-check-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate-site:
@@ -23,13 +73,24 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Verify required files
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+
+      - name: Verify and build the production artifact
         run: |
-          test -f index.html
-          echo "✓ index.html found"
+          set -euo pipefail
+          python3 scripts/verify_site.py
+          python3 tools/build_pages.py dist
+          test -s dist/index.html
+          test -f dist/CNAME
+          test -f dist/.nojekyll
 
       - name: Upload site artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: clearglass-site
-          path: .
+          path: dist
+          if-no-files-found: error
+          retention-days: 7

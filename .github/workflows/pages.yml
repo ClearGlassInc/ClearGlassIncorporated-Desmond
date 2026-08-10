@@ -4,6 +4,52 @@ name: Deploy Pages
 on:
   push:
     branches: [main]
+    paths:
+      - "*.html"
+      - "*.css"
+      - "*.gif"
+      - "*.ico"
+      - "*.js"
+      - "*.jpeg"
+      - "*.jpg"
+      - "*.json"
+      - "*.mp4"
+      - "*.pdf"
+      - "*.png"
+      - "*.svg"
+      - "*.xml"
+      - "*.txt"
+      - "*.webm"
+      - "*.webmanifest"
+      - "*.webp"
+      - ".nojekyll"
+      - ".well-known/**"
+      - "assets/**"
+      - "apps/command-center/**"
+      - "artemis-fawl/**"
+      - "blog/**"
+      - "checkout/**"
+      - "content/**"
+      - "data/control-surface/**"
+      - "data/minerals/**"
+      - "data/Ontario-osint/**"
+      - "data/platform/registry.json"
+      - "data/seo/**"
+      - "data/store/catalog.json"
+      - "data/xenolith/lattice.json"
+      - "feeds/**"
+      - "four_d_dominance/**"
+      - "investors/**"
+      - "legal/**"
+      - "offers/**"
+      - "opal/**"
+      - "provenance/**"
+      - "security/**"
+      - "vendor/**"
+      - "scripts/verify_site.py"
+      - "tools/build_pages.py"
+      - "SECURITY.md"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -11,7 +57,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:

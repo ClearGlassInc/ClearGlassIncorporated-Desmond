@@ -271,7 +271,7 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${STRIPE_SECRET_KEY}" ]; then
-            echo "No STRIPE_SECRET_KEY configured — planning offline." >> "$GITHUB_STEP_SUMMARY"
+            echo "Stripe synchronization skipped because STRIPE_SECRET_KEY is not configured; an offline drift plan was generated instead." >> "$GITHUB_STEP_SUMMARY"
             npm run --silent sync:stripe -- --offline --report stripe-sync-report.json | tee drift.txt
           else
             npm run --silent sync:stripe -- --report stripe-sync-report.json | tee drift.txt

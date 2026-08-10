@@ -14,6 +14,9 @@ concurrency:
 jobs:
   triage:
     name: Label & Triage PR
+    # Fork and Dependabot pull requests receive a read-only token. Triage is
+    # advisory, so do not turn an otherwise safe PR red when writes are denied.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:

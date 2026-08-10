@@ -6,7 +6,7 @@ on:
     - cron: "17 */6 * * *"
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: minerals-data-sync
@@ -17,11 +17,17 @@ jobs:
     name: Fetch, validate, normalize, publish
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment: automation-write
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 1
+          # This protected-environment job intentionally publishes only the
+          # validated, allowlisted feed paths below.
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0

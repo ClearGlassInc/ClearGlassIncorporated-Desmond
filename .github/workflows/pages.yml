@@ -4,6 +4,23 @@ name: Deploy Pages
 on:
   push:
     branches: [main]
+    paths:
+      - "**.html"
+      - "**.css"
+      - "**.js"
+      - "**.json"
+      - "assets/**"
+      - "data/control-surface/**"
+      - "data/minerals/**"
+      - "data/Ontario-osint/**"
+      - "data/platform/registry.json"
+      - "data/store/catalog.json"
+      - "data/xenolith/lattice.json"
+      - "tools/build_pages.py"
+      - "scripts/verify_site.py"
+      - ".github/workflows/pages.yml"
+      - "CNAME"
+      - ".nojekyll"
   workflow_dispatch:
 
 permissions:
@@ -11,7 +28,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:

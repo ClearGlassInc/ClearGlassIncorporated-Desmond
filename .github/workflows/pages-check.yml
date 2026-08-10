@@ -1,9 +1,16 @@
 name: ClearGlass GitHub Pages Check
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    branches: [main]
+    paths:
+      - "**.html"
+      - "**.css"
+      - "**.js"
+      - "assets/**"
+      - "tools/build_pages.py"
+      - "scripts/verify_site.py"
+      - ".github/workflows/pages-check.yml"
   workflow_dispatch:
 
 # Least-privilege: this workflow only reads the repo to validate the static
@@ -11,6 +18,10 @@ on:
 # is sufficient.
 permissions:
   contents: read
+
+concurrency:
+  group: pages-check-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate-site:
@@ -25,11 +36,17 @@ jobs:
 
       - name: Verify required files
         run: |
-          test -f index.html
-          echo "✓ index.html found"
+          python3 scripts/verify_site.py
+          python3 tools/build_pages.py dist
+          test -s dist/index.html
+          test -s dist/CNAME
+          test -e dist/.nojekyll
+          echo "Pages artifact prerequisites are valid." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload site artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: clearglass-site
-          path: .
+          path: dist
+          if-no-files-found: error
+          retention-days: 7

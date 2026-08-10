@@ -7,17 +7,16 @@ on:
     paths:
       - .github/workflows/minerals-link-authority-sync.yml
   push:
-    branches:
-      - fix/minerals-production-hardening-20260809
+    branches: [main]
     paths:
       - .github/workflows/minerals-link-authority-sync.yml
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: minerals-link-authority-sync
-  cancel-in-progress: false
+  group: minerals-link-authority-sync-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   generate:
@@ -28,7 +27,7 @@ jobs:
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
-          ref: fix/minerals-production-hardening-20260809
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
@@ -110,16 +109,13 @@ jobs:
           python3 tools/generate_search_assets.py --check
           git diff --check
 
-      - name: Commit generated authority graph
+      - name: Require generated authority graph to be committed
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet; then
-            echo "No authority-graph changes required."
-            exit 0
+          if ! git diff --quiet; then
+            echo "::error::Generated authority assets are stale. Run tools/internal_links.py and tools/generate_search_assets.py, then commit the result."
+            git diff --stat
+            exit 1
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "fix(minerals): classify production authority graph [skip ci]"
-          git push origin HEAD:fix/minerals-production-hardening-20260809
+          echo "Authority graph is current." >> "$GITHUB_STEP_SUMMARY"

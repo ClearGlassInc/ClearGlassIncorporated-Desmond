@@ -6,10 +6,6 @@ name: Defender Watch
 # token, SHA-pinned actions, no pull_request_target, no untrusted interpolation.
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
   schedule:
     - cron: "0 */6 * * *"   # every 6 hours — drift + periodic incident sweep
   workflow_dispatch:
@@ -19,7 +15,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: defender-watch-${{ github.ref }}
+  group: defender-watch-${{ github.repository }}
   cancel-in-progress: false
 
 jobs:

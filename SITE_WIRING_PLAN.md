@@ -51,8 +51,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `artemis-iv.html` — ARTEMIS IV | tactical intelligence core | Artemis OS | Artemis OS | AI Cyber Intelligence Platform | See pricing & plans / Book a security engagement |
 | `artemis-ai-cyber-intelligence-platform.html` — AI Cyber Intelligence Platform | Artemis applied to cyber intelligence | ARTEMIS IV | Artemis OS | Self-Evolving Platform | See pricing & plans / Book a security engagement |
 | `artemis-self-evolving-platform.html` — Self-Evolving Platform | Artemis's autonomous improvement loop | AI Cyber Intelligence Platform | Artemis OS | Artemis 2040 | See pricing & plans / Book a security engagement |
-| `artemis-2040.html` — Artemis 2040 | long-horizon intelligence platform | Self-Evolving Platform | Artemis OS | ARTEMIS // FAWL | See pricing & plans / Book a security engagement |
-| `artemis-fawl/index.html` — ARTEMIS // FAWL | the governed, self-healing Artemis command platform | Artemis 2040 | Artemis OS | ZEPHYR | See pricing & plans / Book a security engagement |
+| `artemis-2040.html` — Artemis 2040 | long-horizon intelligence platform | Self-Evolving Platform | Artemis OS | Artemis Northstar | See pricing & plans / Book a security engagement |
+| `artemis-arctic-readiness.html` — Artemis Northstar | Arctic readiness evidence and resilience platform | Artemis 2040 | Artemis OS | ARTEMIS // FAWL | See pricing & plans / Book a security engagement |
+| `artemis-fawl/index.html` — ARTEMIS // FAWL | the governed, self-healing Artemis command platform | Artemis Northstar | Artemis OS | ZEPHYR | See pricing & plans / Book a security engagement |
 | `air-control.html` — ZEPHYR | air systems control surface | ARTEMIS // FAWL | Artemis OS | Air Systems Control | See pricing & plans / Book a security engagement |
 | `air-systems-control.html` — Air Systems Control | the Artemis airspace control surface | ZEPHYR | Artemis OS | Artemis OS | See pricing & plans / Book a security engagement |
 | **Command & Autonomous Operations** | **Topic cluster** |  |  |  |  |

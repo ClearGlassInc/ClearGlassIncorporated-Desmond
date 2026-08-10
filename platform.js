@@ -45,6 +45,19 @@
     fx.src = "fx.js"; fx.defer = true;
     document.body.appendChild(fx);
   }
+
+  /* ── cinematic system: purpose-driven hero + motion hierarchy ───────────── */
+  addLink('link[href="/assets/css/cinematic-motion.css"]', {
+    rel: "stylesheet",
+    href: "/assets/css/cinematic-motion.css"
+  });
+  if (!document.querySelector('script[src="/assets/js/cinematic-motion.js"]')) {
+    var cinematic = document.createElement("script");
+    cinematic.src = "/assets/js/cinematic-motion.js";
+    cinematic.defer = true;
+    document.body.appendChild(cinematic);
+  }
+
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("sw.js").catch(function () {});

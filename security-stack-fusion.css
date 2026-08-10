@@ -31,7 +31,7 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   flex-direction:column!important;
   align-items:stretch!important;
   justify-content:flex-end!important;
-  gap:.46rem!important;
+  gap:0!important;
   width:min(292px,calc(100vw - 36px))!important;
   min-width:0!important;
   padding:8px!important;
@@ -92,7 +92,7 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   bottom:auto!important;
   justify-content:center!important;
   padding:0 15px!important;
-  border-radius:999px!important;
+  border-radius:12px 12px 0 0!important;
   border:1px solid rgba(193,219,255,.28)!important;
   background:
     radial-gradient(circle at 16% 18%,rgba(255,255,255,.22),transparent 36%),
@@ -105,6 +105,55 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
     inset 0 1px 0 rgba(255,255,255,.22),
     inset 0 -1px 0 rgba(255,255,255,.05)!important;
 }
+
+#cg-security-stack #cg-capability-controls{
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  overflow:hidden!important;
+  border:1px solid rgba(193,219,255,.28)!important;
+  border-top:0!important;
+  border-radius:0 0 12px 12px!important;
+  background:linear-gradient(180deg,rgba(35,48,76,.48),rgba(7,15,31,.54))!important;
+  -webkit-backdrop-filter:blur(24px) saturate(175%)!important;
+  backdrop-filter:blur(24px) saturate(175%)!important;
+  box-shadow:0 12px 24px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+
+#cg-security-stack .cg-capability-control{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-height:44px!important;
+  padding:10px 12px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#f4f8ff!important;
+  font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
+  font-size:11px!important;
+  font-weight:700!important;
+  letter-spacing:.08em!important;
+  cursor:pointer!important;
+  transition:background .16s ease,color .16s ease,box-shadow .16s ease!important;
+}
+
+#cg-security-stack .cg-capability-control+ .cg-capability-control{
+  border-top:1px solid rgba(255,255,255,.12)!important;
+}
+
+#cg-security-stack .cg-capability-control:hover{background:rgba(105,231,255,.09)!important}
+#cg-security-stack .cg-capability-control.is-selected{background:rgba(96,165,250,.18)!important;color:#fff!important}
+#cg-security-stack .cg-capability-control:focus-visible{
+  position:relative!important;
+  z-index:2!important;
+  outline:2px solid #8fffe0!important;
+  outline-offset:-3px!important;
+  box-shadow:inset 0 0 0 1px rgba(3,12,25,.9)!important;
+}
+#cg-security-stack .cg-capability-control:disabled{cursor:not-allowed!important;opacity:.48!important}
+#cg-security-stack .cg-capability-control--arrow svg{width:20px!important;height:20px!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 
 #cg-security-stack #cg-stealth-btn.is-on{
   border-color:rgba(150,255,235,.42)!important;
@@ -146,15 +195,15 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
     bottom:calc(12px + env(safe-area-inset-bottom))!important;
     width:clamp(148px,44vw,188px)!important;
     padding:5px!important;
-    gap:4px!important;
+    gap:0!important;
     border-radius:19px!important;
     -webkit-backdrop-filter:blur(30px) saturate(190%) contrast(110%)!important;
     backdrop-filter:blur(30px) saturate(190%) contrast(110%)!important;
   }
   #cg-security-stack::after{inset:2px;border-radius:16px}
   #cg-security-stack #cg-stealth-btn{
-    height:32px!important;
-    min-height:32px!important;
+    height:44px!important;
+    min-height:44px!important;
     padding:0 10px!important;
     gap:5px!important;
     font-size:clamp(7px,1.8vw,8px)!important;
@@ -162,11 +211,12 @@ body.cg-security-dock-mounted #cg-neon-aura::after{display:none!important}
   }
   #cg-security-stack #cg-stealth-btn .cg-sg-ic{width:11px!important;height:11px!important}
   #cg-security-stack #aegis-glass-status{display:none!important}
+  #cg-security-stack .cg-capability-control{min-height:44px!important;font-size:9px!important}
 }
 
 @media(max-width:390px){
   #cg-security-stack{right:max(8px,env(safe-area-inset-right))!important;width:clamp(142px,46vw,176px)!important}
-  #cg-security-stack #cg-stealth-btn{height:30px!important;min-height:30px!important;font-size:6.8px!important}
+  #cg-security-stack #cg-stealth-btn{height:44px!important;min-height:44px!important;font-size:6.8px!important}
 }
 
 @media(prefers-reduced-motion:reduce){

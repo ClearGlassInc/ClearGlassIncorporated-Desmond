@@ -10,13 +10,18 @@
       <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".32"/>
     </filter>
   </defs>
-  <g filter="url(#shadow)">
+  <!-- Placement reference: x=0, y=0 is exactly the STEALTH GLASS bottom edge. -->
+  <g id="background-layer" data-layer="backgrounds" filter="url(#shadow)">
     <rect x="1" y="1" width="148" height="174" rx="12" fill="url(#glass)" stroke="#c1dbff" stroke-opacity=".32"/>
     <path d="M1 44.5h148M1 88.5h148M1 132.5h148" stroke="#fff" stroke-opacity=".12"/>
-    <path d="m68 27 7-6 7 6" fill="none" stroke="#f4f8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="text-layer" data-layer="labels">
     <text x="75" y="70" fill="#fff" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700" text-anchor="middle">Action 1</text>
     <text x="75" y="114" fill="#f4f8ff" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700" text-anchor="middle">Action 2</text>
+  </g>
+  <g id="icon-layer" data-layer="icons" fill="none" stroke="#f4f8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m68 27 7-6 7 6" fill="none" stroke="#f4f8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="m68 149 7 6 7-6" fill="none" stroke="#f4f8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <metadata>{"developerReference":["aria-label=Move up","aria-label=Action 1","aria-label=Action 2","aria-label=Move down"]}</metadata>
+  <metadata>{"offsetFromStealthGlassBottom":{"x":0,"y":0,"unit":"px"},"controlHeight":44,"developerReference":["aria-label=Move up","aria-label=Action 1","aria-label=Action 2","aria-label=Move down"]}</metadata>
 </svg>

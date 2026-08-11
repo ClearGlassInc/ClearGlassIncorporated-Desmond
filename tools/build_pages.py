@@ -31,6 +31,8 @@ PUBLIC_DENIED_TREE_EXCEPTIONS = {Path("apps/command-center")}
 # exact feeds are live public page inputs and must be deliberately allowlisted.
 PUBLIC_DATA_FEEDS = {
     "data/minerals/manifest.json",
+    "data/minerals/platform/config.json",
+    "data/minerals/platform/demo.json",
     "data/minerals/latest/news.json",
     "data/minerals/latest/policy.json",
     "data/minerals/latest/prices.json",

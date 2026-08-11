@@ -9,6 +9,7 @@ export const sourceEnvelopeSchema = z.object({
   license: z.string().nullable(),
   attribution: z.string().nullable(),
   records: z.array(z.record(z.string(), z.json())),
+  rawPayload: z.json().nullable(),
   errors: z.array(z.string()).default([])
 });
 
@@ -44,6 +45,7 @@ export class PublicSnapshotAdapter implements SourceAdapter {
         license: null,
         attribution: null,
         records: [],
+        rawPayload: null,
         errors: [`HTTP ${response.status} from ${url.origin}`]
       });
     }
@@ -66,6 +68,7 @@ export class PublicSnapshotAdapter implements SourceAdapter {
       license: typeof metadata.license === "string" ? metadata.license : null,
       attribution,
       records,
+      rawPayload: payload,
       errors: payload.message ? [payload.message] : []
     });
   }

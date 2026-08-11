@@ -10,11 +10,11 @@ def test_security_controls_share_a_fused_glass_dock() -> None:
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
     assert "#cg-security-stack" in css
-    assert "Aegis × Sentinel Fusion Dock" in css
+    assert "Security Stack Fusion Dock" in css
     assert "display:flex" in css or "display: flex" in css
     assert "flex-direction:column" in css or "flex-direction: column" in css
     assert "justify-content:flex-end" in css or "justify-content: flex-end" in css
-    assert "backdrop-filter:blur(34px)" in css or "backdrop-filter: blur(34px)" in css
+    assert "backdrop-filter:blur(22px)" in css or "backdrop-filter: blur(22px)" in css
     assert "securityStack.appendChild(status)" in aegis
     assert "securityStack.appendChild(stealthButton)" in aegis
     assert "stack.insertBefore(btn, stack.firstChild)" in stealth
@@ -33,11 +33,16 @@ def test_security_pills_keep_standalone_fallbacks() -> None:
     assert "--cg-security-edge,18px" in stealth
 
 
-def test_mobile_fusion_dock_reserves_control_lane_and_clears_content() -> None:
+def test_mobile_fusion_dock_reserves_bottom_clearance_and_stays_compact() -> None:
     css = (ROOT / "security-stack-fusion.css").read_text(encoding="utf-8")
 
-    assert "--cg-mobile-fusion-right-lane:76px" in css or "--cg-mobile-fusion-right-lane: 76px" in css
-    assert "--cg-mobile-fusion-clearance:92px" in css or "--cg-mobile-fusion-clearance: 92px" in css
+    # The dock clears content by reserving bottom padding, not by reserving a
+    # right-hand lane -- the lane approach overlapped CTA rows on small screens.
+    assert "--cg-mobile-fusion-clearance:84px" in css or "--cg-mobile-fusion-clearance: 84px" in css
+    assert "padding-bottom:calc(var(--cg-mobile-fusion-clearance)" in css
+    assert "--cg-mobile-fusion-right-lane" not in css
+    # Compact corner launcher: under half the viewport so CTA rows stay visible.
+    assert "width:min(156px,calc(100vw - 24px))" in css
     assert "body.cg-security-dock-mounted" in css
     assert "#cg-security-stack #aegis-glass-status{display:none!important}" in css
     assert "@media(max-width:720px)" in css

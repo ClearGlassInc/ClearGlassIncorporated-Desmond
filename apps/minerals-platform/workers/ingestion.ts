@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { Worker } from "bullmq";
-import type { RecordStatus } from "@prisma/client";
+import type { Prisma, RecordStatus } from "@prisma/client";
 import { db } from "@/lib/db";
 import { getRedis } from "@/lib/redis";
 import { configuredPublicAdapters } from "@/lib/sources";
@@ -34,6 +34,8 @@ const worker = new Worker<{ sourceKey: string; runId: string }>(
       const persistedStatus = toRecordStatus(envelope.status);
       const raw = JSON.stringify(envelope.records);
       const contentHash = createHash("sha256").update(raw).digest("hex");
+      const documentMetadata = JSON.parse(JSON.stringify({ upstreamStatus: envelope.status, attribution: envelope.attribution, errors: envelope.errors, recordCount: envelope.records.length })) as Prisma.InputJsonObject;
+      const transformLog = JSON.parse(JSON.stringify({ adapter: adapter.id, upstreamStatus: envelope.status, persistedStatus, transformedAt: envelope.transformedAt, contentHash, errors: envelope.errors })) as Prisma.InputJsonObject;
       const document = await db.sourceDocument.create({
         data: {
           sourceId: source.id,
@@ -44,7 +46,7 @@ const worker = new Worker<{ sourceKey: string; runId: string }>(
           contentHash,
           license: envelope.license,
           status: persistedStatus,
-          metadata: { upstreamStatus: envelope.status, attribution: envelope.attribution, errors: envelope.errors, recordCount: envelope.records.length }
+          metadata: documentMetadata
         }
       });
       if (envelope.records.length) {
@@ -66,7 +68,7 @@ const worker = new Worker<{ sourceKey: string; runId: string }>(
       }
       await db.$transaction([
         db.dataSource.update({ where: { id: source.id }, data: { lastSuccessAt: new Date(), freshnessStatus: envelope.status } }),
-        db.ingestionRun.update({ where: { id: runId }, data: { status: envelope.errors.length ? "COMPLETED_WITH_WARNINGS" : "COMPLETED", finishedAt: new Date(), recordsRead: envelope.records.length, recordsWritten: envelope.records.length, recordsRejected: 0, transformLog: { adapter: adapter.id, upstreamStatus: envelope.status, persistedStatus, transformedAt: envelope.transformedAt, contentHash, errors: envelope.errors } } })
+        db.ingestionRun.update({ where: { id: runId }, data: { status: envelope.errors.length ? "COMPLETED_WITH_WARNINGS" : "COMPLETED", finishedAt: new Date(), recordsRead: envelope.records.length, recordsWritten: envelope.records.length, recordsRejected: 0, transformLog } })
       ]);
       return { sourceKey, records: envelope.records.length, status: envelope.status };
     } catch (error) {

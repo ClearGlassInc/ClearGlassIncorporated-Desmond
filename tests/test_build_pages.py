@@ -14,7 +14,6 @@ from tools.build_pages import (
     SECURITY_STACK_STYLESHEET,
     _harden_html,
     build,
-    _harden_html,
     public_relative_paths,
 )
 

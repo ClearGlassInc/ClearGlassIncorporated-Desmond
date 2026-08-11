@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -19,7 +20,13 @@ def test_capability_layer_ships_and_is_precached() -> None:
     # capability layer, so both assets are precached behind a bumped VERSION.
     assert '"/aegis-omega.css"' in sw
     assert '"/aegis-omega.js"' in sw
-    assert 'var VERSION = "cg-v47"' in sw
+    # Pin the floor, not the exact value. VERSION is bumped on every deploy that
+    # touches many pages (see CLAUDE.md), so an exact match fails on each
+    # legitimate bump while proving nothing extra — what matters is that the
+    # cache generation is at or past the one that introduced this layer.
+    version = re.search(r'var VERSION = "cg-v(\d+)"', sw)
+    assert version, "sw.js must declare a cg-v<N> cache VERSION"
+    assert int(version.group(1)) >= 47
 
 
 def test_capability_layer_is_fault_contained() -> None:

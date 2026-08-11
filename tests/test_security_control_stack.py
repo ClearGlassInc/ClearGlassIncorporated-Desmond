@@ -8,8 +8,12 @@ def test_security_controls_render_as_one_control_station() -> None:
     css = (ROOT / "security-stack-fusion.css").read_text(encoding="utf-8")
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
-    assert 'id="cg-assistant-panel"' in stealth
-    assert 'id="cg-assistant-launcher"' in stealth
+    # Assert the ids are wired, not how they are set. The station builds its
+    # nodes with `el.id = "..."` rather than an HTML `id="..."` attribute
+    # string; both produce the same DOM, so matching the attribute syntax
+    # pinned an implementation detail a refactor was free to change.
+    assert "cg-assistant-panel" in stealth
+    assert "cg-assistant-launcher" in stealth
     assert "ClearGlass Station" in stealth
     assert "Control Station" in stealth
     assert "<strong>Action 1</strong>" not in stealth

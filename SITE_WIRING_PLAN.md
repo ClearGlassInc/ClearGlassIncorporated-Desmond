@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 157 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 158 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -99,12 +99,13 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `offers/phipa-readiness.html` — PHIPA Readiness | free checklist and assessment for Ontario health data | ClearPulse Architecture | ClearPulse | PHIPA Readiness Checklist | Get the free PHIPA readiness checklist / Book a security engagement |
 | `offers/phipa-readiness-checklist.html` — PHIPA Readiness Checklist | the printable compliance checklist | PHIPA Readiness | ClearPulse | ClearPulse | Get the free PHIPA readiness checklist / Book a security engagement |
 | **Government & Procurement** | **Topic cluster** |  |  |  |  |
-| `government.html` — Government Solutions | federal and public-sector systems | SATS Digital Twin | Government Solutions | Procurement Readiness | Book a security engagement / Check our procurement readiness |
+| `government.html` — Government Solutions | federal and public-sector systems | Minerals Intelligence Platform | Government Solutions | Procurement Readiness | Book a security engagement / Check our procurement readiness |
 | `operations/procurement-readiness.html` — Procurement Readiness | verified supplier-registration status | Government Solutions | Government Solutions | Federal Supplier Handoff | Book a security engagement / Check our procurement readiness |
 | `operations/federal-supplier-handoff.html` — Federal Supplier Handoff | supplier registration runbook | Procurement Readiness | Government Solutions | Counter-UAS OS | Book a security engagement / Check our procurement readiness |
 | `counter-uas-commercialization-os.html` — Counter-UAS OS | counter-drone commercialization platform | Federal Supplier Handoff | Government Solutions | Speed Vision AI | Book a security engagement / Check our procurement readiness |
 | `traffic-enforcement.html` — Speed Vision AI | AI traffic-enforcement platform | Counter-UAS OS | Government Solutions | SATS Digital Twin | Book a security engagement / Check our procurement readiness |
-| `sats-digital-twin.html` — SATS Digital Twin | storm-adaptive transit simulation with governed operations | Speed Vision AI | Government Solutions | Government Solutions | Book a security engagement / Check our procurement readiness |
+| `sats-digital-twin.html` — SATS Digital Twin | storm-adaptive transit simulation with governed operations | Speed Vision AI | Government Solutions | Minerals Intelligence Platform | Book a security engagement / Check our procurement readiness |
+| `minerals-platform.html` — Minerals Intelligence Platform | source-transparent critical-minerals command center | SATS Digital Twin | Government Solutions | Government Solutions | Book a security engagement / Check our procurement readiness |
 | **Services & Engagements** | **Topic cluster** |  |  |  |  |
 | `offers/index.html` — Services & Engagements | every ClearGlass offer in one place | Growth Command Centre | Services & Engagements | ClearGlass Store | Book a security engagement / See pricing & plans |
 | `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |

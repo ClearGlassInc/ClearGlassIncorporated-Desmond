@@ -38,6 +38,10 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
       await writeAudit(principal, "alert.comment", "Alert", id, { commentId: comment.id });
       return success({ alert: existing, comment });
     }
+    if (input.action === "ASSIGN") {
+      const membership = await db.organizationMember.findUnique({ where: { organizationId_userId: { organizationId: principal.organizationId, userId: input.userId } } });
+      if (!membership) return Response.json({ ok: false, error: { code: "INVALID_ASSIGNEE", message: "Assignee must belong to the same organization" } }, { status: 400 });
+    }
     const data = input.action === "ACKNOWLEDGE"
       ? { status: "ACKNOWLEDGED" as const, acknowledgedAt: new Date() }
       : input.action === "ASSIGN"

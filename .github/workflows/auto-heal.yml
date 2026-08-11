@@ -79,6 +79,7 @@ jobs:
           set -euo pipefail
           if [[ -z "$(git status --porcelain .github/auto-heal .github/workflows)" ]]; then
             echo "branch=" >> "$GITHUB_OUTPUT"
+            echo "writeback=none" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -88,8 +89,18 @@ jobs:
           git checkout -b "${BRANCH}"
           git add .github/auto-heal .github/workflows
           git commit -m "Auto-heal: record diagnostics and deterministic repairs"
-          git push --set-upstream origin "${BRANCH}"
-          echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
+
+          # Diagnostic persistence is useful, but repository policy must never
+          # turn the healer itself into another failed workflow. Preserve the
+          # local diagnosis and emit a warning when writeback is blocked.
+          if git push --set-upstream origin "${BRANCH}"; then
+            echo "branch=${BRANCH}" >> "$GITHUB_OUTPUT"
+            echo "writeback=pushed" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Auto-heal diagnosis completed, but GitHub policy/token permissions blocked review-branch push."
+            echo "branch=" >> "$GITHUB_OUTPUT"
+            echo "writeback=blocked" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Open auto-heal pull request
         if: steps.changes.outputs.branch != ''
@@ -101,7 +112,7 @@ jobs:
           SOURCE_RUN_URL: ${{ github.event.workflow_run.html_url || '' }}
         run: |
           set -euo pipefail
-          gh pr create \
+          if gh pr create \
             --base "${DEFAULT_BRANCH}" \
             --head "${BRANCH}" \
             --title "Auto-heal: repair GitHub Actions failure" \
@@ -109,4 +120,31 @@ jobs:
 
           Source run: ${SOURCE_RUN_URL:-scheduled scan}
 
-          This PR contains only generated diagnostics/history and deterministic workflow repairs permitted by .github/auto-heal/healing-strategies.json. No secrets are changed, no protected branch is force-pushed, and auto-merge is disabled."
+          This PR contains only generated diagnostics/history and deterministic workflow repairs permitted by .github/auto-heal/healing-strategies.json. No secrets are changed, no protected branch is force-pushed, and auto-merge is disabled."; then
+            echo "Auto-heal review PR opened successfully." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::Review branch was pushed, but automatic PR creation is disabled or blocked by repository policy."
+            {
+              echo "### Auto-heal review branch ready"
+              echo ""
+              echo "Branch: \`${BRANCH}\`"
+              echo ""
+              echo "Diagnosis and deterministic repairs were preserved. Automatic PR creation was blocked by repository policy; the healer remains healthy instead of recursively failing."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Auto-heal execution summary
+        if: always()
+        shell: bash
+        env:
+          PROCESSED: ${{ steps.heal.outputs.processed || '0' }}
+          WRITEBACK: ${{ steps.changes.outputs.writeback || 'not-run' }}
+        run: |
+          {
+            echo "### Auto Heal"
+            echo ""
+            echo "- Failures processed: ${PROCESSED}"
+            echo "- Diagnostic writeback: ${WRITEBACK}"
+            echo "- Security controls: preserved"
+            echo "- Protected branch force-push: disabled"
+          } >> "$GITHUB_STEP_SUMMARY"

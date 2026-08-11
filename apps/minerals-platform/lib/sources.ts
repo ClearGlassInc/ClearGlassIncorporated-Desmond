@@ -55,7 +55,7 @@ export class PublicSnapshotAdapter implements SourceAdapter {
     const collectedAt = typeof candidateCollectedAt === "string" ? candidateCollectedAt : null;
     const attribution = typeof metadata.provider === "string" ? metadata.provider : typeof metadata.source === "string" ? metadata.source : null;
     const records = Array.isArray(payload.records)
-      ? payload.records.filter((item): item is Record<string, z.infer<ReturnType<typeof z.json>>> => !!item && typeof item === "object" && !Array.isArray(item))
+      ? payload.records.filter((item): item is Record<string, unknown> => !!item && typeof item === "object" && !Array.isArray(item))
       : [];
     return sourceEnvelopeSchema.parse({
       sourceId: this.id,

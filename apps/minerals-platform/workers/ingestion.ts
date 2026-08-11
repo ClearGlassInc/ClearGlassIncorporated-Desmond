@@ -20,15 +20,19 @@ function toRecordStatus(status: string): RecordStatus {
   }
 }
 
-const worker = new Worker<{ sourceKey: string; runId: string }>(
+const worker = new Worker<{ sourceKey: string; runId?: string }>(
   "minerals-ingestion",
   async (job) => {
-    const { sourceKey, runId } = job.data;
+    const { sourceKey } = job.data;
     const adapter = adapters.get(sourceKey);
     if (!adapter) throw new Error(`No configured adapter for ${sourceKey}`);
     const source = await db.dataSource.findUnique({ where: { key: sourceKey } });
-    if (!source) throw new Error(`DataSource ${sourceKey} is not registered`);
-    await db.ingestionRun.update({ where: { id: runId }, data: { status: "RUNNING" } });
+    if (!source || !source.enabled) throw new Error(`DataSource ${sourceKey} is not registered or enabled`);
+    const run = job.data.runId
+      ? await db.ingestionRun.update({ where: { id: job.data.runId }, data: { status: "RUNNING" } })
+      : await db.ingestionRun.create({ data: { sourceId: source.id, status: "RUNNING" } });
+    const runId = run.id;
+    await db.dataSource.update({ where: { id: source.id }, data: { lastAttemptAt: new Date() } });
     try {
       const envelope = await adapter.fetch();
       const persistedStatus = toRecordStatus(envelope.status);
@@ -66,11 +70,14 @@ const worker = new Worker<{ sourceKey: string; runId: string }>(
           }))
         });
       }
+      const redis = getRedis();
+      if (redis.status === "wait") await redis.connect();
+      await redis.set(`minerals:source-cache:${source.key}`, JSON.stringify({ cachedAt: new Date().toISOString(), envelope }), "EX", source.ttlSeconds ?? 300);
       await db.$transaction([
         db.dataSource.update({ where: { id: source.id }, data: { lastSuccessAt: new Date(), freshnessStatus: envelope.status } }),
         db.ingestionRun.update({ where: { id: runId }, data: { status: envelope.errors.length ? "COMPLETED_WITH_WARNINGS" : "COMPLETED", finishedAt: new Date(), recordsRead: envelope.records.length, recordsWritten: envelope.records.length, recordsRejected: 0, transformLog } })
       ]);
-      return { sourceKey, records: envelope.records.length, status: envelope.status };
+      return { sourceKey, runId, records: envelope.records.length, status: envelope.status };
     } catch (error) {
       await db.ingestionRun.update({ where: { id: runId }, data: { status: "FAILED", finishedAt: new Date(), error: error instanceof Error ? error.message : String(error) } });
       throw error;

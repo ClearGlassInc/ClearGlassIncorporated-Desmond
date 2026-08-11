@@ -3,12 +3,14 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { failure, queryObject, success } from "@/lib/api";
 import { requireRole, resolvePrincipal } from "@/lib/auth";
+import { assertRateLimit } from "@/lib/rate-limit";
 
 const schema = z.object({ q: z.string().trim().min(2).max(160), limit: z.coerce.number().int().min(1).max(50).default(10) });
 
 export async function GET(request: NextRequest) {
   try {
-    requireRole(resolvePrincipal(request), "VIEWER");
+    const principal = requireRole(resolvePrincipal(request), "VIEWER");
+    await assertRateLimit(`search:${principal.organizationId}:${principal.userId}`, 120, 60);
     const input = schema.parse(queryObject(new URL(request.url)));
     const contains = { contains: input.q, mode: "insensitive" as const };
     const [minerals, projects, mines, companies, facilities] = await Promise.all([

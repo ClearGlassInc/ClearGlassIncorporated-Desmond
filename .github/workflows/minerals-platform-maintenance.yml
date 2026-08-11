@@ -6,6 +6,15 @@ on:
     branches: [main]
     paths:
       - .github/workflows/minerals-platform-maintenance.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - minerals-platform.html
+      - minerals-platform.css
+      - minerals-platform.js
+      - data/minerals/platform/**
+      - scripts/wire_minerals_platform.py
+      - tests/test_minerals_platform.py
 
 permissions:
   contents: write
@@ -16,6 +25,7 @@ concurrency:
 
 jobs:
   wire-feature-branch:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

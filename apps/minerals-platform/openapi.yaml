@@ -89,6 +89,7 @@ paths:
         '200': { description: Assessments }
     post:
       summary: Calculate or persist a transparent risk assessment
+      description: Calculation requires Analyst. Persisting platform-level history requires Administrator.
       requestBody:
         required: true
         content:
@@ -134,6 +135,12 @@ paths:
       parameters: [ { $ref: '#/components/parameters/Id' } ]
       responses:
         '200': { description: Updated workflow state }
+  /alerts/{id}/deliver:
+    post:
+      summary: Deliver an alert by email, webhook, Slack, or Teams
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Delivery accepted }
   /watchlists:
     get:
       summary: Organization watchlists
@@ -190,6 +197,29 @@ paths:
         - { name: limit, in: query, schema: { type: integer, maximum: 5000, default: 1000 } }
       responses:
         '200': { description: Export file }
+  /saved-views:
+    get:
+      summary: Personal and organization-shared saved analytical views
+      responses:
+        '200': { description: Saved views }
+    post:
+      summary: Create or update a saved view
+      responses:
+        '201': { description: Saved view persisted }
+  /analyst:
+    post:
+      summary: Retrieve source-grounded evidence for a natural-language analyst question
+      description: Returns uncertainty and structured evidence; does not invent an answer when evidence is absent.
+      responses:
+        '200': { description: Grounded analyst evidence }
+  /stream:
+    get:
+      summary: Server-sent source-health freshness stream
+      responses:
+        '200':
+          description: SSE source-health events
+          content:
+            text/event-stream: {}
 components:
   securitySchemes:
     trustedIdentityGateway:
@@ -197,8 +227,9 @@ components:
       in: header
       name: x-cg-user-id
       description: >-
-        Production identity headers must be injected only by a trusted OIDC/SAML-capable ingress.
-        Direct client injection must be stripped at the edge.
+        Production identity claims are accepted only behind a trusted OIDC/SAML-capable ingress.
+        The ingress must strip client-supplied x-cg-* headers, inject verified user/org/role claims,
+        and supply the private x-cg-gateway-secret matching IDENTITY_GATEWAY_SECRET.
   parameters:
     Page:
       name: page

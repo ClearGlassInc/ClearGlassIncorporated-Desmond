@@ -8,10 +8,6 @@ def test_security_controls_render_as_one_control_station() -> None:
     css = (ROOT / "security-stack-fusion.css").read_text(encoding="utf-8")
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
-    # Assert the ids are wired, not how they are set. The station builds its
-    # nodes with `el.id = "..."` rather than an HTML `id="..."` attribute
-    # string; both produce the same DOM, so matching the attribute syntax
-    # pinned an implementation detail a refactor was free to change.
     assert "cg-assistant-panel" in stealth
     assert "cg-assistant-launcher" in stealth
     assert "ClearGlass Station" in stealth
@@ -36,6 +32,7 @@ def test_aegis_cannot_pull_stealth_out_of_the_station() -> None:
 
 
 def test_scattered_legacy_controls_are_quarantined() -> None:
+    css = (ROOT / "security-stack-fusion.css").read_text(encoding="utf-8")
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
     assert "oldStationPattern" in stealth
@@ -44,6 +41,8 @@ def test_scattered_legacy_controls_are_quarantined() -> None:
     assert "move\\s*up" in stealth
     assert "floatingHost" in stealth
     assert "hidden-by-control-station" in stealth
+    assert "body.cg-security-dock-mounted .sentinel-launcher" in css
+    assert "body.cg-security-dock-mounted #sentinelLauncher" in css
 
 
 def test_station_owns_page_navigation_without_duplicate_floaters() -> None:
@@ -67,4 +66,5 @@ def test_mobile_station_is_safe_area_aware_and_contained() -> None:
     assert "env(safe-area-inset-bottom)" in css
     assert "width:min(272px,calc(100vw - 24px))!important" in css
     assert "max-height:min(450px,calc(100dvh - 112px))!important" in css
+    assert "#cg-assistant-launcher{width:154px!important" in css
     assert "prefers-reduced-motion:reduce" in css

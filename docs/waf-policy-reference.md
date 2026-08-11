@@ -1,119 +1,127 @@
 # WAF Policy Reference
 
-Source of truth: `infra/edge/policies/baseline.json` validated by `infra/edge/policy.schema.json`.
+Provider-neutral source of truth: `infra/edge/policies/baseline.json`, validated against `infra/edge/policy.schema.json`. Cloudflare mapping: `infra/edge/*.tf`. Both committed environments disable all provider mutations and retain log-only actions.
+
+## Rule record
+
+Every neutral rule carries:
+
+- stable identifier, description, category, match intent, and scope
+- priority, enabled state, action, rollout mode, and log level
+- exception list and optional threshold
+- expiry, owner, rationale, and change ticket
+
+The validator rejects unknown fields, missing route classes, duplicate IDs/priorities, enabled broad allow/block rules, default geo enforcement, sensitive logging, permanent reputation-only blocks, indefinite bot/emergency blocks, enabled disabled-rollout templates, and terminal actions without review metadata.
 
 ## Rollout semantics
 
-- `observe`: record a match without terminating the request where provider capabilities permit.
-- `challenge`: use managed challenge for uncertain malicious/automated traffic.
-- `block`: terminate only high-confidence malicious traffic after review.
-- `allow`: narrow trusted exception; never use as a broad bypass.
-- `rate_limit`: apply route-specific request controls.
+| Neutral state | Provider behavior | Promotion requirement |
+|---|---|---|
+| `disabled` | No provider resource/rule | Phase ownership and plan support confirmed |
+| `observe` | Log/nonterminating override where supported | Event delivery and baseline measured |
+| `challenge` | Managed challenge for uncertain browser traffic | False-positive and challenge-success review |
+| `enforce` | Rate limit/block only reviewed high-confidence behavior | Owner, ticket, telemetry, tests, rollback |
 
-A rule may declare a different provider-native action while retaining the neutral rollout state.
+If the selected plan cannot log a rule nonterminatingly, leave that rule disabled or use a narrow staging-only managed challenge. Do not silently turn an intended observation rule into block.
 
-## Baseline categories
+## WAF detection coverage
 
-| Category | Baseline behavior |
-|---|---|
-| SQL injection | managed WAF, observe then block high-confidence matches |
-| XSS | managed WAF, observe then block high-confidence matches |
-| local/remote file inclusion | managed WAF, observe then block |
-| command injection | managed WAF, observe then block |
-| path traversal | custom + managed detection, observe/challenge first |
-| protocol anomalies | managed WAF, observe/challenge |
-| malformed requests | challenge/block based on confidence |
-| suspicious user agents | log or challenge; never blanket-deny automation |
-| exploit signatures | managed rules, promote on evidence |
-| scanner/probing behavior | challenge/rate-limit, then block repeat offenders |
-| unexpected methods | allow GET/HEAD/OPTIONS on static host; route-specific methods elsewhere |
-| oversized request metadata | conservative limits; provider/app body-size limits remain authoritative |
+| Threat category | Implementation | Initial treatment |
+|---|---|---|
+| SQL injection | Provider managed + OWASP rulesets | managed override `log` |
+| XSS | Provider managed + OWASP rulesets | managed override `log` |
+| local/remote file inclusion | Provider managed signatures | `log`, then high-confidence block |
+| command injection | Provider managed signatures | `log`, then high-confidence block |
+| path traversal | Managed rules plus `../`, encoded traversal, secret-file and common admin-probe paths | `log`, then challenge |
+| protocol anomalies/malformed requests | Provider managed rules; provider L7 protections | observe/challenge by confidence |
+| known exploit signatures | Provider managed rules | block only validated high-confidence signatures |
+| scanner/probing | Path probes plus `sqlmap`, `nikto`, `nuclei`, `masscan` and scripted-agent signals | `log`, then challenge/rate limit |
+| unexpected methods | Public static hostname accepts GET/HEAD/OPTIONS | `log`; dynamic routes keep route methods |
+| oversized URL/query/header | 16 KiB URI, 8 KiB query, 8 KiB individual header, truncated-header signal | `log`, tune from real traffic |
+| oversized body | Optional plan-specific 1 MiB/truncation rule | disabled until plan/route review |
+
+The suspicious-user-agent rule does not assert that `curl`, headless Chrome, Python, Go, or an empty user agent is malicious. It is an observe/challenge signal, excludes verified bots and trusted operations, and is never a blanket non-browser deny.
 
 ## Bot decision model
 
-Order of precedence:
+| Class | Identification | Baseline action |
+|---|---|---|
+| Provider-verified crawler | Native verified-bot identity | allowed within bot layer; managed WAF retained |
+| Approved monitoring | Explicit reviewed CIDR | exempt generic bot/rate challenges; managed WAF retained |
+| Internal automation | Explicit controlled CIDR | same narrow exemption |
+| Normal browser | No adverse corroborating signal | allow/log normal telemetry |
+| Headless/automation | UA/fingerprint/behavior/bot score | log or managed challenge |
+| Suspicious automation | Low bot score plus behavior/reputation | managed challenge, route rate limit |
+| Credential stuffing | Login velocity plus account/app signals | login rate limit, challenge, application controls |
+| High-volume scraping | Route velocity, traversal pattern, headless/reputation signals | rate limit/challenge, temporary quarantine |
+| Repeated challenge failure | Provider challenge telemetry | short-lived escalation template after review |
 
-1. explicit narrow trusted exception
-2. provider-verified search crawler
-3. approved monitoring/internal automation identity
-4. normal browser
-5. headless/automation signal
-6. suspicious automation
-7. credential-stuffing or high-volume scraping pattern
-8. repeated challenge failure
+Actions supported by the neutral model are allow, log, managed challenge, interactive challenge, rate limit, and block. Interactive challenge is not used for APIs, webhooks, monitoring, or internal automation. Zone-wide bot mode remains disabled by default because it can affect non-browser clients.
 
-Actions are configurable: allow/skip, log, managed challenge, interactive challenge, rate-limit, block.
+## IP reputation and lists
 
-User-agent text alone is not trustworthy. Where available use provider-verified bot identity, bot score, JA3/JA4/fingerprint data, behavior and reputation signals.
+- `trusted_*`: explicit minimal CIDRs with owner/review record; never a broad managed-WAF bypass.
+- `monitoring_*` and `internal_automation_*`: separate narrow exemptions for generic bot/rate handling.
+- `deny_*`: confirmed abusive CIDRs only, not an unverified feed entry.
+- `quarantine_*`: managed challenge plus future `quarantine_expires_at`.
+- provider threat score: optional log/managed challenge; `block` is not a valid configuration.
+- anonymous proxy/VPN and Tor: optional pre-existing provider IP lists, off by default, log/challenge only.
+- trusted ASN/country exceptions: evaluated before explicitly enabled geo/ASN actions.
 
-## IP reputation
+Named IP-list creation, feed quality, expiry, and stewardship remain provider-side/operator responsibilities.
 
-- Provider threat intelligence is a signal, not the sole basis for a permanent deny.
-- Tor policy defaults to challenge, not permanent block.
-- VPN/proxy/hosting-provider signals default to log/challenge depending on route sensitivity.
-- Trusted IPs must be explicit CIDRs with owner and review date.
-- Temporary quarantines require expiry timestamps.
-- Permanent deny entries require confirmed abuse evidence and review.
+## Rate limits
 
-## Route rate limits
+Thresholds are deliberately generous starting points and all committed actions are `log`:
 
-Defaults are intentionally generous and should be tuned from observed legitimate p99 traffic.
+| Route class | Match | Default threshold | Notes |
+|---|---|---:|---|
+| static assets | public GET/HEAD with static extension | 600/min | verified bots/trusted operations exempt |
+| HTML/documents | remaining public GET/HEAD | 120/min | tune from legitimate navigation |
+| login/auth | API `/login`, `/api/login*`, `/api/auth/*`; POST/PUT | 20/min | application account/risk controls remain |
+| password reset | API path containing reset; POST/PUT | 8/10 min | avoid account-discovery responses |
+| search | API `/search`/`/api/search*`; GET/POST | 60/min | consider cost-weighted app quota |
+| contact/form | API `/contact`/`/api/contact*`; POST | 10/10 min | third-party static forms are separately governed |
+| API | other `/api/*` | 120/min | excludes sensitive route classes/webhooks |
+| admin | configured admin hostname | 60/min | pair with strong auth and optional approved geo/ASN |
+| webhook | `/webhooks*` or `/api/webhook*`; POST | 300/min | default `log`; managed browser challenge is forbidden |
 
-| Route class | Example | Baseline per-IP policy |
-|---|---|---:|
-| static assets | `/assets/*`, common extensions | 600/min observe |
-| HTML documents | `/`, `/*.html` | 120/min observe |
-| login/auth | `/api/auth/*`, `/login*` | 20/min challenge/rate-limit |
-| password reset | `/api/*reset*` | 8/10 min challenge/rate-limit |
-| search | `/api/search*`, `/search*` | 60/min observe |
-| contact/forms | `/api/contact*`, `/contact*` | 10/10 min challenge/rate-limit |
-| APIs | `/api/*` | 120/min observe; route-specific overrides required |
-| admin | `/admin*` | 60/min plus optional geo/ASN restriction |
-| webhooks | `/api/webhook*`, `/webhooks*` | source-auth aware; do not challenge valid signed webhooks |
+The default characteristic is source IP plus provider colocation. `rate_limit_characteristics` is a per-route map so supported providers/plans can key by session/token, authenticated identity, route, method, country, ASN, bot score, or reputation. Edge expressions cannot safely trust a client-supplied identity header unless the origin/edge authentication design makes it authoritative.
 
-For authenticated dynamic origins, prefer identity/session/token counters over source IP when supported. Never replace application-side authentication or authorization with edge rate limiting.
+When provider rate-limit storage/data plane is unavailable, retain the last successful policy and application-side authentication, authorization, account-risk, signature, and local route limits. Control-plane failure blocks a new apply; it does not install a broad allow or default-deny rule.
 
-## Rate-limit/provider failure behavior
+## Geographic and ASN policy
 
-- A CI/API control-plane failure must fail closed for configuration change: no new Terraform apply occurs and the last successfully deployed provider policy remains authoritative.
-- Do not respond to a provider API failure by installing a broad `allow` rule or disabling the WAF.
-- If a provider-managed rate-limit service or data plane is impaired, preserve application-side authentication, authorization, account lock/risk controls, and local route limits as defense in depth for dynamic origins.
-- Static GitHub Pages delivery does not depend on an application rate-limit datastore; edge-rate-limit unavailability therefore must not trigger a repository-side denial policy.
-- For future APIs, sensitive routes such as login, password reset, admin, forms, and webhooks must retain server-side abuse controls so provider rate limiting is supplemental rather than a single point of failure.
-- During a provider-wide outage, follow `docs/incident-response-edge.md` and `docs/dns-cutover-runbook.md`; use the recorded DNS rollback only when the operational risk of bypassing the edge is explicitly accepted.
+All geo/ASN features and lists are disabled/empty by default. When explicitly enabled:
 
-## Geo/ASN
-
-All geographic deny/challenge controls are disabled by default. Administrative/API routes may enable narrow geo/ASN rules after operator approval. Emergency regional restrictions must expire automatically or have an explicit review timestamp.
+- denied countries/confirmed-abuse ASNs block only after exception/trusted evaluation
+- challenge countries/ASNs use managed challenge
+- allowed-country boundaries affect configured API/admin hostnames only and challenge outside traffic; they do not default-deny the public site
+- exception countries, trusted IPs, and trusted ASNs remain explicit
+- emergency regional policy requires the same short expiry/review discipline as other emergency controls
 
 ## Headers and CSP
 
-The initial CSP is Report-Only and derived from the existing repository header baseline:
+`csp-inventory.json` is generated from/checked against the sanitized Pages build and rendered as `Content-Security-Policy-Report-Only`. It covers the observed script, style, font, image, media, form, connect, frame, manifest, and worker sources. No WebSocket source was detected.
 
-```text
-default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self';
-form-action 'self' https://formspree.io;
-script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
-style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
-font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:;
-img-src 'self' data: blob: https:; media-src 'self' https:;
-connect-src 'self' https://formspree.io https://api.github.com;
-frame-src 'self' https://www.youtube-nocookie.com;
-manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests
-```
+Before enforcement:
 
-Do not promote to enforcing CSP until violations from all supported pages have been reviewed and inline script/style handling has been addressed.
+1. collect report-only events across every supported page
+2. resolve direct browser Anthropic and third-party CORS-proxy use
+3. decide whether disabled analytics sources should remain
+4. migrate inline scripts/styles to nonces/hashes before removing `unsafe-inline`
+5. narrow broad HTTPS image/media schemes
+6. reconcile the build-time enforcing CSP meta and `_headers` intent with the edge header
+7. validate form, frame, API, analytics, WebSocket, COOP, CORP, and frame-ancestor behavior
 
-## Change-control requirements
+The edge also adds HSTS (without subdomain/preload by default), nosniff, referrer, permissions, compatible COOP/CORP, CSP frame protection, and identifying-header removal. The application owns CORS and sensitive route cache semantics.
 
-Every broad promotion to block must record:
+## DDoS, caching, and origin shielding
 
-- rule ID/version
-- owner
-- rationale/change ticket
-- observed match volume
-- false-positive review
-- rollback command/procedure
-- operator and timestamp
+Managed DDoS is a provider/account capability and is not represented as successfully enabled by Terraform. `cache-policy.example.json` defines aggressive versioned-asset caching, short HTML caching, and sensitive/API bypass. Provider tiered cache/origin shield is a manual/adapter-specific mapping. Pages remains bypassable; dynamic origins must validate edge identity and reject direct ingress.
 
-Emergency rules additionally require an expiry.
+## Change-control evidence
+
+Every promotion to challenge/block records rule/version, owner, rationale/ticket, match volume, false-positive analysis, exceptions, test results, rollback, operator, and timestamp. CI creates a reviewable plan digest. Apply reconstructs the same inputs, locks remote state, recomputes the plan, and refuses a changed digest.
+
+Emergency mode is managed challenge only, excludes verified/trusted/webhook traffic, requires custom-WAF ownership, and expires within 24 hours.

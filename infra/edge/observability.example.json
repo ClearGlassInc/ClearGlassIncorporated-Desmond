@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "retention": {
     "raw_security_events_days": 30,
     "normalized_metrics_days": 90,
@@ -12,9 +12,13 @@
       "Authorization",
       "request_body",
       "password_fields",
-      "complete_sensitive_query_values"
+      "complete_sensitive_query_values",
+      "raw_paths_with_identifiers_or_tokens",
+      "raw_user_agents_when_a_category_is_sufficient"
     ],
-    "ip_strategy": "omit-or-pseudonymize unless incident response requires full address"
+    "ip_strategy": "omit-or-pseudonymize unless incident response requires full address",
+    "path_strategy": "use route templates/classes; never retain reset tokens, IDs, or secrets embedded in paths",
+    "user_agent_strategy": "classify at the provider or controlled processor and discard raw values when practical"
   },
   "dashboards": [
     "requests_by_action",
@@ -69,6 +73,30 @@
       "window_minutes": 15,
       "severity": "warning",
       "note": "A high solve rate can indicate false positives; a low solve rate can indicate automation."
+    },
+    {
+      "id": "edge.repeated-attack-source",
+      "metric": "high_confidence_waf_matches_by_pseudonymous_source",
+      "condition": "sustained_repeat_across_routes",
+      "window_minutes": 15,
+      "severity": "warning",
+      "note": "Corroborate before quarantine or deny; provider reputation alone is insufficient."
+    },
+    {
+      "id": "edge.cache-ratio-collapse",
+      "metric": "cache_hit_ratio",
+      "condition": "materially_below_recent_baseline",
+      "window_minutes": 10,
+      "severity": "warning",
+      "note": "Correlate with deploys, cache-policy changes, traffic mix, and origin load."
+    },
+    {
+      "id": "edge.security-header-drift",
+      "metric": "synthetic_expected_security_headers",
+      "condition": "missing_or_unexpected_change",
+      "window_minutes": 5,
+      "severity": "critical",
+      "note": "Check edge transforms, application CSP, cache variants, and direct-origin bypass."
     },
     {
       "id": "edge.config-drift",

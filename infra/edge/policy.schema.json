@@ -10,12 +10,15 @@
     "environment": {"enum": ["staging", "production", "shared"]},
     "defaults": {
       "type": "object",
-      "required": ["geo_enforcement_enabled", "csp_mode", "log_sensitive_fields"],
+      "required": ["geo_enforcement_enabled", "csp_mode", "log_sensitive_fields", "verified_crawlers_challenged", "broad_automation_block_enabled", "provider_changes_applied"],
       "additionalProperties": false,
       "properties": {
         "geo_enforcement_enabled": {"type": "boolean"},
         "csp_mode": {"enum": ["report-only", "enforce"]},
-        "log_sensitive_fields": {"const": false}
+        "log_sensitive_fields": {"const": false},
+        "verified_crawlers_challenged": {"const": false},
+        "broad_automation_block_enabled": {"const": false},
+        "provider_changes_applied": {"const": false}
       }
     },
     "rules": {
@@ -27,12 +30,12 @@
   "$defs": {
     "rule": {
       "type": "object",
-      "required": ["id", "description", "category", "scope", "priority", "action", "rollout_mode", "log_level", "enabled", "exceptions", "owner", "rationale"],
+      "required": ["id", "description", "category", "scope", "priority", "action", "rollout_mode", "log_level", "enabled", "match", "exceptions", "expires_at", "owner", "change_ticket", "rationale"],
       "additionalProperties": false,
       "properties": {
         "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,63}$"},
         "description": {"type": "string", "minLength": 5},
-        "category": {"enum": ["ddos", "managed_waf", "custom_waf", "bot", "ip_reputation", "rate_limit", "geo_asn", "headers", "origin", "logging", "emergency"]},
+        "category": {"enum": ["ddos", "managed_waf", "custom_waf", "bot", "ip_reputation", "rate_limit", "geo_asn", "headers", "cache", "origin", "logging", "emergency"]},
         "scope": {"type": "string", "minLength": 1},
         "priority": {"type": "integer", "minimum": 1, "maximum": 100000},
         "action": {"enum": ["allow", "log", "managed_challenge", "interactive_challenge", "rate_limit", "block", "set_header", "remove_header", "cache", "route"]},

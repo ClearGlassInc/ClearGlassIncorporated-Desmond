@@ -77,6 +77,7 @@
     ["Environmental Cyber Risk", "environmental-cyber-risk.html", "Environmental threat model", "♧"],
     ["StegoForge", "stegoforge.html", "Media assurance terminal", "🖼"],
     ["ATT&CK Prompt Core", "attack-prompt-core.html", "Threat-informed prompt core", "🎯"],
+    ["Minerals Intelligence Platform", "minerals-platform.html", "Critical-minerals command center", "⛏"],
     ["Intelligence Platform", "intelligence-platform.html", "Full-stack intel architecture", "✦"],
     ["Intelligence Services", "intelligence.html", "Advisory and OSINT", "◈"],
     ["Percival Build", "percival-build.html", "Build architecture", "◐"],

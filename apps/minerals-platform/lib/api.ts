@@ -9,6 +9,10 @@ export const pageSchema = z.object({
   order: z.enum(["asc", "desc"]).default("asc")
 });
 
+export class ApiError extends Error {
+  constructor(public readonly status: number, public readonly code: string, message: string, public readonly headers?: HeadersInit) { super(message); }
+}
+
 export function queryObject(url: URL): Record<string, string> {
   return Object.fromEntries(url.searchParams.entries());
 }
@@ -23,6 +27,7 @@ export function paginated<T>(items: T[], page: number, pageSize: number, total: 
 
 export function failure(error: unknown) {
   if (error instanceof AuthError) return NextResponse.json({ ok: false, error: { code: error.status === 401 ? "UNAUTHENTICATED" : "FORBIDDEN", message: error.message } }, { status: error.status });
+  if (error instanceof ApiError) return NextResponse.json({ ok: false, error: { code: error.code, message: error.message } }, { status: error.status, headers: error.headers });
   if (error instanceof z.ZodError) return NextResponse.json({ ok: false, error: { code: "INVALID_INPUT", message: "Request validation failed", issues: error.issues } }, { status: 400 });
   console.error(error);
   return NextResponse.json({ ok: false, error: { code: "INTERNAL_ERROR", message: "Request could not be completed" } }, { status: 500 });

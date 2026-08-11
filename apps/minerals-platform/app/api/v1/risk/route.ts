@@ -34,9 +34,11 @@ export async function POST(request: NextRequest) {
   try {
     const principal = requireRole(resolvePrincipal(request), "ANALYST");
     const input = postSchema.parse(await request.json());
-    if (input.analystOverride) requireRole(principal, "SENIOR_ANALYST");
     const result = calculateRisk(input.components);
     if (!input.persist) return success({ persisted: false, result });
+    // The initial data model stores platform-level risk history. Until tenant-specific
+    // assessment ownership is added, only administrators may persist or override it.
+    requireRole(principal, "ADMINISTRATOR");
     const assessment = await db.riskAssessment.create({
       data: {
         mineId: input.mineId,
@@ -53,7 +55,7 @@ export async function POST(request: NextRequest) {
       },
       include: { factors: true }
     });
-    await writeAudit(principal, "risk.assessment.create", "RiskAssessment", assessment.id, { severity: assessment.severity, score: assessment.score?.toString(), methodologyVersion: input.methodologyVersion });
+    await writeAudit(principal, "risk.assessment.create", "RiskAssessment", assessment.id, { severity: assessment.severity, score: assessment.score?.toString(), methodologyVersion: input.methodologyVersion, analystOverride: input.analystOverride });
     return success({ persisted: true, assessment }, { status: 201 });
   } catch (error) { return failure(error); }
 }

@@ -138,7 +138,7 @@
     panel.setAttribute("aria-hidden", "true");
     panel.innerHTML =
       '<div class="cg-assistant-head">' +
-        '<div class="cg-assistant-brand"><span class="cg-assistant-live" aria-hidden="true"></span><strong>ClearGlass</strong></div>' +
+        '<div class="cg-assistant-brand"><span class="cg-assistant-live" aria-hidden="true"></span><strong>ClearGlass Station</strong></div>' +
         '<span id="cg-stealth-status" class="cg-stealth-status" aria-label="Stealth Glass off"><span class="cg-stealth-status-dot" aria-hidden="true"></span><span class="cg-stealth-status-text">Stealth Glass</span></span>' +
       '</div>' +
       '<nav class="cg-assistant-actions" aria-label="ClearGlass assistant actions">' +
@@ -148,13 +148,17 @@
         '<button type="button" id="cg-stealth-btn" class="cg-assistant-action" data-cg-action="stealth" aria-label="Toggle Stealth Glass visual mode" aria-pressed="false">' +
           '<span class="cg-action-icon cg-action-icon--moon" aria-hidden="true">◐</span><span class="cg-action-copy"><strong>Stealth Glass</strong><small>Privacy visual mode</small></span><span class="cg-action-state">Off</span>' +
         '</button>' +
-        '<a class="cg-assistant-action cg-capability-control" href="/web-design.html" data-action="action-1" data-cg-action="web-design" aria-label="Action 1, Web Design and Development">' +
-          '<span class="cg-action-index" aria-hidden="true">01</span><span class="cg-action-copy"><strong>Action 1</strong><small>Web Design &amp; Development</small></span><span class="cg-action-arrow" aria-hidden="true">↗</span>' +
+        '<a class="cg-assistant-action cg-capability-control" href="/web-design.html" data-action="action-1" data-cg-action="web-design" aria-label="Open Web Design and Development">' +
+          '<span class="cg-action-index" aria-hidden="true">01</span><span class="cg-action-copy"><strong>Web Design</strong><small>Design &amp; Development</small></span><span class="cg-action-arrow" aria-hidden="true">↗</span>' +
         '</a>' +
-        '<a class="cg-assistant-action cg-capability-control" href="/blog/" data-action="action-2" data-cg-action="insights" aria-label="Action 2, ClearGlass Insights">' +
-          '<span class="cg-action-index" aria-hidden="true">02</span><span class="cg-action-copy"><strong>Action 2</strong><small>ClearGlass Insights</small></span><span class="cg-action-arrow" aria-hidden="true">↗</span>' +
+        '<a class="cg-assistant-action cg-capability-control" href="/blog/" data-action="action-2" data-cg-action="insights" aria-label="Open ClearGlass Insights">' +
+          '<span class="cg-action-index" aria-hidden="true">02</span><span class="cg-action-copy"><strong>Insights</strong><small>ClearGlass Intelligence</small></span><span class="cg-action-arrow" aria-hidden="true">↗</span>' +
         '</a>' +
       '</nav>' +
+      '<div class="cg-assistant-scroll-row" role="group" aria-label="Page navigation">' +
+        '<button type="button" id="cg-station-top" class="cg-assistant-scroll" aria-label="Back to top"><span aria-hidden="true">↑</span><strong>Top</strong></button>' +
+        '<button type="button" id="cg-station-bottom" class="cg-assistant-scroll" aria-label="Scroll to bottom"><span aria-hidden="true">↓</span><strong>Bottom</strong></button>' +
+      '</div>' +
       '<div class="cg-assistant-status-slot" aria-live="polite"></div>';
 
     stack.appendChild(panel);
@@ -168,12 +172,12 @@
     launcher = document.createElement("button");
     launcher.id = "cg-assistant-launcher";
     launcher.type = "button";
-    launcher.setAttribute("aria-label", "Open ClearGlass assistant");
+    launcher.setAttribute("aria-label", "Open ClearGlass control station");
     launcher.setAttribute("aria-controls", "cg-assistant-panel");
     launcher.setAttribute("aria-expanded", "false");
     launcher.innerHTML =
       '<span class="cg-launcher-icon" aria-hidden="true"><span class="cg-launcher-pulse"></span>💬</span>' +
-      '<span class="cg-launcher-copy"><strong>Ask Sentinel</strong><small>ClearGlass</small></span>' +
+      '<span class="cg-launcher-copy"><strong>Control Station</strong><small>ClearGlass</small></span>' +
       '<span class="cg-launcher-chevron" aria-hidden="true">⌃</span>';
     stack.appendChild(launcher);
     return launcher;
@@ -185,30 +189,65 @@
     if (status && slot && status.parentNode !== slot) slot.appendChild(status);
   }
 
+  function adoptUnifiedControls(panel) {
+    if (!panel) return;
+    var actions = panel.querySelector(".cg-assistant-actions");
+    var stealthButton = document.getElementById("cg-stealth-btn");
+    if (actions && stealthButton && stealthButton.parentNode !== actions) {
+      var firstCapability = actions.querySelector('[data-action="action-1"]');
+      actions.insertBefore(stealthButton, firstCapability);
+    }
+    adoptAegisStatus(panel);
+  }
+
+  function markLegacyHidden(node) {
+    if (!node || node.id === "cg-security-stack") return;
+    node.classList.add("cg-legacy-assistant-hidden");
+    node.setAttribute("data-cg-legacy-assistant", "hidden-by-control-station");
+    node.setAttribute("aria-hidden", "true");
+    if (node.tagName !== "IFRAME") node.setAttribute("tabindex", "-1");
+  }
+
+  function floatingHost(node, stack) {
+    var current = node;
+    while (current && current !== document.body && current !== stack) {
+      var cs;
+      try { cs = window.getComputedStyle(current); } catch (e) { return null; }
+      if (cs && (cs.position === "fixed" || cs.position === "sticky")) return current;
+      current = current.parentElement;
+    }
+    return null;
+  }
+
   function hideLegacyAssistantControls(stack) {
     if (!document.body) return;
     var nodes = document.querySelectorAll("button,a,[role='button'],iframe");
     var w = window.innerWidth || document.documentElement.clientWidth;
     var h = window.innerHeight || document.documentElement.clientHeight;
+    var assistantPattern = /(ask\s*sentinel|sentinel.*chat|chat.*sentinel|open.*chat|chat.*widget|assistant.*chat|chat.*assistant)/i;
+    var oldStationPattern = /(stealth\s*glass|action\s*1|action\s*2|move\s*up|move\s*down)/i;
 
     Array.prototype.forEach.call(nodes, function (node) {
-      if (!node || stack.contains(node) || node.classList.contains("cg-legacy-assistant-hidden")) return;
+      if (!node || node.classList.contains("cg-legacy-assistant-hidden")) return;
       var label = [node.textContent || "", node.getAttribute("aria-label") || "", node.getAttribute("title") || "", node.id || "", node.className || ""].join(" ").toLowerCase();
-      if (!/(ask\s*sentinel|sentinel.*chat|chat.*sentinel|open.*chat|chat.*widget|assistant.*chat|chat.*assistant)/i.test(label)) return;
+      if (!assistantPattern.test(label) && !oldStationPattern.test(label)) return;
 
-      var cs;
-      try { cs = window.getComputedStyle(node); } catch (e) { return; }
-      if (!cs || (cs.position !== "fixed" && cs.position !== "sticky")) return;
+      if (stack.contains(node)) {
+        if (node.closest("#cg-assistant-panel,#cg-assistant-launcher")) return;
+        var stackChild = node;
+        while (stackChild.parentElement && stackChild.parentElement !== stack) stackChild = stackChild.parentElement;
+        markLegacyHidden(stackChild);
+        return;
+      }
+
+      var host = floatingHost(node, stack);
+      if (!host) return;
 
       var rect;
-      try { rect = node.getBoundingClientRect(); } catch (e2) { return; }
+      try { rect = host.getBoundingClientRect(); } catch (e2) { return; }
       if (!rect || rect.width < 20 || rect.height < 20) return;
       if (rect.right < w * 0.55 || rect.bottom < h * 0.55) return;
-
-      node.classList.add("cg-legacy-assistant-hidden");
-      node.setAttribute("data-cg-legacy-assistant", "hidden-by-unified-fixture");
-      node.setAttribute("aria-hidden", "true");
-      if (node.tagName !== "IFRAME") node.setAttribute("tabindex", "-1");
+      markLegacyHidden(host);
     });
   }
 
@@ -276,14 +315,14 @@
     var active = stored() === ON;
 
     apply(active, stealthButton, stealthStatus);
-    adoptAegisStatus(panel);
+    adoptUnifiedControls(panel);
     hideLegacyAssistantControls(stack);
     updateModalState();
 
     launcher.addEventListener("click", function () {
       var expanded = launcher.getAttribute("aria-expanded") !== "true";
       setExpanded(stack, launcher, panel, expanded, false);
-      launcher.setAttribute("aria-label", expanded ? "Close ClearGlass assistant" : "Open ClearGlass assistant");
+      launcher.setAttribute("aria-label", expanded ? "Close ClearGlass control station" : "Open ClearGlass control station");
     });
 
     if (stealthButton) {
@@ -294,6 +333,19 @@
         window.dispatchEvent(new CustomEvent("clearglass:stealth", { detail: { active: active } }));
       });
     }
+
+    function stationScroll(destination) {
+      var root = document.documentElement;
+      var max = Math.max(0, root.scrollHeight - root.clientHeight);
+      window.scrollTo({ top: destination === "bottom" ? max : 0, behavior: reduce ? "auto" : "smooth" });
+      setExpanded(stack, launcher, panel, false, false);
+      launcher.focus();
+    }
+
+    var stationTop = document.getElementById("cg-station-top");
+    var stationBottom = document.getElementById("cg-station-bottom");
+    if (stationTop) stationTop.addEventListener("click", function () { stationScroll("top"); });
+    if (stationBottom) stationBottom.addEventListener("click", function () { stationScroll("bottom"); });
 
     Array.prototype.forEach.call(panel.querySelectorAll("[data-action^='action-']"), function (control) {
       control.addEventListener("click", function () {
@@ -323,7 +375,7 @@
     window.addEventListener("scroll", scheduleCollisionCheck, { passive: true });
 
     legacyObserver = new MutationObserver(function () {
-      adoptAegisStatus(panel);
+      adoptUnifiedControls(panel);
       hideLegacyAssistantControls(stack);
       updateModalState();
       scheduleCollisionCheck();
@@ -336,7 +388,7 @@
   window.__cgRefreshSecurityStack = function () {
     var stack = getStack();
     var panel = document.getElementById("cg-assistant-panel");
-    if (panel) adoptAegisStatus(panel);
+    if (panel) adoptUnifiedControls(panel);
     hideLegacyAssistantControls(stack);
     updateModalState();
     scheduleCollisionCheck();

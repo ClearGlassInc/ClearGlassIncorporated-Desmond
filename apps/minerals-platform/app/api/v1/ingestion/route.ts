@@ -6,6 +6,7 @@ import { failure, success } from "@/lib/api";
 import { requireRole, resolvePrincipal } from "@/lib/auth";
 import { getRedis } from "@/lib/redis";
 import { writeAudit } from "@/lib/audit";
+import { assertRateLimit } from "@/lib/rate-limit";
 
 const schema = z.object({ sourceKey: z.string().min(1).max(100), force: z.boolean().default(false) });
 
@@ -20,7 +21,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const principal = requireRole(resolvePrincipal(request), "DATA_STEWARD");
+    await assertRateLimit(`ingestion:${principal.organizationId}:${principal.userId}`, 20, 60);
     const input = schema.parse(await request.json());
+    if (input.force) requireRole(principal, "ADMINISTRATOR");
     const source = await db.dataSource.findUnique({ where: { key: input.sourceKey } });
     if (!source || !source.enabled) return Response.json({ ok: false, error: { code: "SOURCE_UNAVAILABLE", message: "Source not found or disabled" } }, { status: 404 });
     if (!input.force && source.lastAttemptAt && source.ttlSeconds) {

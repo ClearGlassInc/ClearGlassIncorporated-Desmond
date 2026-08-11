@@ -1,0 +1,69 @@
+{
+  "schema": "clearglass.minerals.platform/v1",
+  "product": {
+    "name": "ClearGlass Minerals Intelligence Platform",
+    "slug": "minerals-intelligence-platform",
+    "route": "/minerals-platform.html",
+    "status": "operational-mvp"
+  },
+  "default_mode": "verified",
+  "modes": [
+    {"id":"verified","label":"Verified / source-grounded","description":"Uses only loaded source records and preserves unavailable states."},
+    {"id":"demo","label":"Demo mode","description":"Uses explicitly synthetic records from demo.json for interface evaluation only."}
+  ],
+  "modules": [
+    {"id":"command","label":"Command Center"},
+    {"id":"map","label":"Global Map"},
+    {"id":"markets","label":"Mineral Markets"},
+    {"id":"projects","label":"Mines and Projects"},
+    {"id":"supply","label":"Supply Chains"},
+    {"id":"trade","label":"Trade Intelligence"},
+    {"id":"risk","label":"Risk Radar"},
+    {"id":"exploration","label":"Exploration Monitor"},
+    {"id":"companies","label":"Companies"},
+    {"id":"alerts","label":"Alerts"},
+    {"id":"reports","label":"Reports"},
+    {"id":"sources","label":"Data Sources"},
+    {"id":"admin","label":"Administration"}
+  ],
+  "map_layers": [
+    "mines",
+    "exploration",
+    "processing",
+    "refining",
+    "ports",
+    "trade-flows",
+    "risk-zones"
+  ],
+  "risk_components": [
+    "geopolitical",
+    "regulatory",
+    "sanctions",
+    "conflict",
+    "ownership-concentration",
+    "supply-concentration",
+    "infrastructure",
+    "logistics",
+    "climate",
+    "water-stress",
+    "environmental",
+    "labor",
+    "community",
+    "cybersecurity-disclosed",
+    "financial",
+    "production-decline",
+    "permit",
+    "data-confidence"
+  ],
+  "public_feeds": [
+    "prices",
+    "production",
+    "reserves",
+    "trade",
+    "policy",
+    "sanctions",
+    "supply-risk",
+    "news",
+    "provenance"
+  ]
+}

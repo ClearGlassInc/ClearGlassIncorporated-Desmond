@@ -1,0 +1,20 @@
+{
+  "schema": "clearglass.minerals.retention/v1",
+  "policies": {
+    "audit_logs": { "days": 2555, "deletion_mode": "policy_review_required" },
+    "source_documents": { "days": 1825, "license_override": true },
+    "provenance_records": { "days": 2555, "license_override": true },
+    "ingestion_runs": { "days": 365 },
+    "resolved_alerts": { "days": 730 },
+    "analyst_annotations": { "days": 1825, "organization_override": true },
+    "reports": { "days": 2555, "organization_override": true },
+    "temporary_uploads": { "hours": 24 },
+    "queue_job_metadata": { "completed_count": 200, "failed_count": 500 }
+  },
+  "rules": [
+    "Provider license restrictions override default retention.",
+    "Legal hold and audit obligations suspend deletion.",
+    "Soft-deleted evidence remains access-controlled until retention eligibility is confirmed.",
+    "Demo data may be deleted independently of verified evidence."
+  ]
+}

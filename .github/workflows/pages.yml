@@ -1,6 +1,6 @@
 name: Deploy Pages
 
-# Production redeploy trigger: 2026-08-09
+# Production redeploy trigger: 2026-08-10
 on:
   push:
     branches: [main]
@@ -64,10 +64,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # Artifact construction is read-only; Pages and OIDC writes are isolated to
-    # the environment-bound deployment job below.
+    # pages:write is required only for the idempotent source-mode correction
+    # below. Artifact construction remains read-only; OIDC is isolated to deploy.
     permissions:
       contents: read
+      pages: write
     steps:
       - name: Checkout site source
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -75,15 +76,40 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
+      - name: Pin Pages source to GitHub Actions
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.PAGES_ADMIN_TOKEN || github.token }}
+        run: |
+          set -euo pipefail
+          code="$(curl -sS -o /tmp/pages-source.json -w '%{http_code}' -X PUT \
+            -H 'Accept: application/vnd.github+json' \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'X-GitHub-Api-Version: 2026-03-10' \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages" \
+            -d '{"build_type":"workflow"}' || true)"
+
+          case "${code}" in
+            204)
+              echo "Pages publishing source is GitHub Actions (build_type=workflow)." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            403)
+              echo "::warning::Pages source correction was blocked by token scope (HTTP 403). Add repository secret PAGES_ADMIN_TOKEN with Pages/admin permission once; the workflow will self-correct on the next run."
+              echo "Pages source correction: blocked by token scope (HTTP 403)." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            *)
+              echo "::warning::Pages source correction returned HTTP ${code}; deployment will continue through the explicit Actions artifact path."
+              echo "Pages source correction: HTTP ${code}." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+          esac
+          cat /tmp/pages-source.json 2>/dev/null || true
+
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: '3.12'
 
-      - name: Verify links, assets, and exposed secrets
-        run: python3 scripts/verify_site.py
-
-      - name: Build site artifact
+      - name: Build sanitized site artifact
         shell: bash
         run: |
           set -euo pipefail
@@ -93,17 +119,32 @@ jobs:
             echo "::error file=dist/index.html::GitHub Pages artifact is missing a non-empty index.html"
             exit 1
           fi
-
-          touch dist/.nojekyll
+          test -f dist/.nojekyll
+          test -f dist/CNAME
           chmod -R +rX dist
 
-          echo "Pages artifact validated:"
+          echo "Pages artifact built:"
           du -sh dist
-          # sed (not head) caps the listing: head exits early and SIGPIPEs sort,
-          # which under `set -o pipefail` intermittently fails this step with
-          # exit 2 ("sort: write failed: Broken pipe") even though the artifact
-          # is valid. sed consumes all input, so the pipeline is race-free.
           find dist -maxdepth 2 -type f | sort | sed -n '1,100p'
+
+      - name: Verify exact production artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p operations/reports
+          python3 scripts/verify_site.py \
+            --root dist \
+            --report "$GITHUB_WORKSPACE/operations/reports/pages-deploy-integrity.json"
+          echo "Production artifact integrity: PASS" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload build integrity diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pages-deploy-integrity
+          path: operations/reports/pages-deploy-integrity.json
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0

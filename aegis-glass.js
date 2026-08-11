@@ -168,10 +168,24 @@
 
     root.append(mesh, watermarks, printNotice);
     document.body.appendChild(root);
-    document.body.appendChild(securityStack);
+    if (!securityStack.isConnected) document.body.appendChild(securityStack);
+
+    const assistantPanel = document.getElementById('cg-assistant-panel');
+    const assistantActions = assistantPanel?.querySelector('.cg-assistant-actions');
+    const assistantStatusSlot = assistantPanel?.querySelector('.cg-assistant-status-slot');
     const stealthButton = document.getElementById('cg-stealth-btn');
-    if (stealthButton) securityStack.appendChild(stealthButton);
-    securityStack.appendChild(status);
+
+    if (stealthButton && assistantActions && stealthButton.parentNode !== assistantActions) {
+      const firstCapability = assistantActions.querySelector('[data-action="action-1"]');
+      assistantActions.insertBefore(stealthButton, firstCapability);
+    } else if (stealthButton && !assistantPanel) {
+      securityStack.appendChild(stealthButton);
+    }
+
+    (assistantStatusSlot || securityStack).appendChild(status);
+    if (typeof window.__cgRefreshSecurityStack === 'function') {
+      window.__cgRefreshSecurityStack();
+    }
     updateStatus();
     rotateWatermarks();
 

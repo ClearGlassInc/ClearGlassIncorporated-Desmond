@@ -1,0 +1,22 @@
+{
+  "schema": "clearglass.minerals.demo/v1",
+  "demo": true,
+  "warning": "SYNTHETIC DEMONSTRATION DATA — NOT LIVE, NOT OBSERVED, NOT FOR INVESTMENT OR COMPLIANCE DECISIONS.",
+  "generated_at": "2026-08-10T00:00:00Z",
+  "entities": [
+    {"id":"demo-mine-a","type":"mine","name":"Demo Lithium North","mineral":"Lithium","country":"Canada","lat":52.1,"lon":-106.7,"stage":"Operating","production":"DEMO","risk":24,"confidence":"DEMO"},
+    {"id":"demo-mine-b","type":"mine","name":"Demo Cobalt Central","mineral":"Cobalt","country":"Democratic Republic of the Congo","lat":-10.7,"lon":25.5,"stage":"Operating","production":"DEMO","risk":72,"confidence":"DEMO"},
+    {"id":"demo-refinery-a","type":"refinery","name":"Demo Battery Materials East","mineral":"Lithium","country":"Canada","lat":45.5,"lon":-73.6,"stage":"Operating","production":"DEMO","risk":18,"confidence":"DEMO"},
+    {"id":"demo-port-a","type":"port","name":"Demo Pacific Export Node","mineral":"Multiple","country":"Canada","lat":49.3,"lon":-123.1,"stage":"Operating","production":"N/A","risk":21,"confidence":"DEMO"},
+    {"id":"demo-project-a","type":"exploration","name":"Demo Rare Earths Project","mineral":"Rare earth elements","country":"Australia","lat":-23.7,"lon":133.9,"stage":"Exploration","production":"N/A","risk":31,"confidence":"DEMO"},
+    {"id":"demo-refinery-b","type":"refinery","name":"Demo Graphite Processing Hub","mineral":"Graphite","country":"United States","lat":35.2,"lon":-80.8,"stage":"Development","production":"DEMO","risk":27,"confidence":"DEMO"}
+  ],
+  "flows": [
+    {"id":"demo-flow-1","from":"demo-mine-a","to":"demo-refinery-a","mineral":"Lithium","share":42,"verified":false,"demo":true},
+    {"id":"demo-flow-2","from":"demo-port-a","to":"demo-refinery-b","mineral":"Graphite","share":28,"verified":false,"demo":true}
+  ],
+  "events": [
+    {"id":"demo-event-1","severity":"high","title":"Synthetic permit-review escalation","entity":"demo-project-a","category":"regulatory","timestamp":"2026-08-09T15:00:00Z","demo":true},
+    {"id":"demo-event-2","severity":"medium","title":"Synthetic logistics congestion signal","entity":"demo-port-a","category":"logistics","timestamp":"2026-08-09T11:30:00Z","demo":true}
+  ]
+}

@@ -168,6 +168,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "counter-uas-commercialization-os.html": ("Counter-UAS OS", "counter-drone commercialization platform"),
     "traffic-enforcement.html": ("Speed Vision AI", "AI traffic-enforcement platform"),
     "sats-digital-twin.html": ("SATS Digital Twin", "storm-adaptive transit simulation with governed operations"),
+    "minerals-platform.html": ("Minerals Intelligence Platform", "source-transparent critical-minerals command center"),
 
     # Services & conversion
     "products.html": ("ClearGlass Products", "the unified ClearGlass product catalog"),
@@ -341,6 +342,7 @@ CLUSTERS: dict[str, dict] = {
             "counter-uas-commercialization-os.html",
             "traffic-enforcement.html",
             "sats-digital-twin.html",
+            "minerals-platform.html",
         ],
         "cta": [CTA_STORE, ("operations/procurement-readiness.html", "Check our procurement readiness")],
     },

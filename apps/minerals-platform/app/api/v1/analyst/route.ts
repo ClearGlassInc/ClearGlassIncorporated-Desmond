@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { failure, success } from "@/lib/api";
 import { requireRole, resolvePrincipal } from "@/lib/auth";
 import { writeAudit } from "@/lib/audit";
+import { assertRateLimit } from "@/lib/rate-limit";
 
 const schema = z.object({ question: z.string().trim().min(3).max(1200) });
 
@@ -14,6 +15,7 @@ function terms(question: string) {
 export async function POST(request: NextRequest) {
   try {
     const principal = requireRole(resolvePrincipal(request), "ANALYST");
+    await assertRateLimit(`analyst:${principal.organizationId}:${principal.userId}`, 30, 60);
     const input = schema.parse(await request.json());
     const tokens = terms(input.question);
     const OR = tokens.flatMap((term) => [{ name: { contains: term, mode: "insensitive" as const } }]);

@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { failure, queryObject } from "@/lib/api";
 import { requireRole, resolvePrincipal } from "@/lib/auth";
 import { writeAudit } from "@/lib/audit";
+import { assertRateLimit } from "@/lib/rate-limit";
 
 const schema = z.object({ entity: z.enum(["projects", "mines", "trade"]), format: z.enum(["csv", "json"]).default("csv"), limit: z.coerce.number().int().min(1).max(5000).default(1000) });
 
@@ -15,6 +16,7 @@ function csvCell(value: unknown): string {
 export async function GET(request: NextRequest) {
   try {
     const principal = requireRole(resolvePrincipal(request), "ANALYST");
+    await assertRateLimit(`export:${principal.organizationId}:${principal.userId}`, 20, 60);
     const input = schema.parse(queryObject(new URL(request.url)));
     const rows = input.entity === "projects"
       ? await db.project.findMany({ where: { deletedAt: null }, take: input.limit, include: { mineral: true, country: true, operator: true } })

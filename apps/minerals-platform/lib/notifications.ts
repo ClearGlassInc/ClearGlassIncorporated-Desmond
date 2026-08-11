@@ -1,10 +1,12 @@
+import { createHmac } from "node:crypto";
 import nodemailer from "nodemailer";
 
 export type AlertChannel = "email" | "webhook" | "slack" | "teams";
 export type AlertMessage = { subject: string; body: string; severity: string; alertId: string; link?: string };
 
-async function postJson(url: string, payload: unknown) {
-  const response = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: AbortSignal.timeout(10_000) });
+async function postJson(url: string, payload: unknown, extraHeaders: Record<string, string> = {}) {
+  const body = JSON.stringify(payload);
+  const response = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json", ...extraHeaders }, body, signal: AbortSignal.timeout(10_000) });
   if (!response.ok) throw new Error(`Notification endpoint returned HTTP ${response.status}`);
 }
 
@@ -30,6 +32,10 @@ export async function deliverAlert(channel: AlertChannel, message: AlertMessage,
     return;
   }
   const url = process.env.ALERT_WEBHOOK_URL;
-  if (!url) throw new Error("ALERT_WEBHOOK_URL is not configured");
-  await postJson(url, message);
+  const secret = process.env.ALERT_WEBHOOK_SIGNING_SECRET;
+  if (!url || !secret) throw new Error("ALERT_WEBHOOK_URL and ALERT_WEBHOOK_SIGNING_SECRET are required");
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const body = JSON.stringify(message);
+  const signature = createHmac("sha256", secret).update(`${timestamp}.${body}`).digest("hex");
+  await postJson(url, message, { "X-ClearGlass-Timestamp": timestamp, "X-ClearGlass-Signature": `sha256=${signature}` });
 }

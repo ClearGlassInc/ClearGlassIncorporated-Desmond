@@ -17,9 +17,12 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
   try {
     const principal = requireRole(resolvePrincipal(request), "VIEWER");
     const { id } = await context.params;
-    const alert = await db.alert.findFirst({ where: { id, organizationId: principal.organizationId }, include: { assignedTo: { select: { id: true, name: true, email: true } }, comments: { include: { author: { select: { id: true, name: true, email: true } } }, orderBy: { createdAt: "asc" } } } });
+    const [alert, comments] = await Promise.all([
+      db.alert.findFirst({ where: { id, organizationId: principal.organizationId }, include: { assignedTo: { select: { id: true, name: true, email: true } } } }),
+      db.analystAnnotation.findMany({ where: { organizationId: principal.organizationId, entityType: "Alert", entityId: id, deletedAt: null }, include: { author: { select: { id: true, name: true, email: true } } }, orderBy: { createdAt: "asc" } })
+    ]);
     if (!alert) return Response.json({ ok: false, error: { code: "NOT_FOUND", message: "Alert not found" } }, { status: 404 });
-    return success(alert);
+    return success({ ...alert, comments });
   } catch (error) { return failure(error); }
 }
 
@@ -31,7 +34,7 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
     const existing = await db.alert.findFirst({ where: { id, organizationId: principal.organizationId } });
     if (!existing) return Response.json({ ok: false, error: { code: "NOT_FOUND", message: "Alert not found" } }, { status: 404 });
     if (input.action === "COMMENT") {
-      const comment = await db.alertComment.create({ data: { alertId: id, authorId: principal.userId, body: input.body } });
+      const comment = await db.analystAnnotation.create({ data: { organizationId: principal.organizationId, authorId: principal.userId, entityType: "Alert", entityId: id, body: input.body } });
       await writeAudit(principal, "alert.comment", "Alert", id, { commentId: comment.id });
       return success({ alert: existing, comment });
     }

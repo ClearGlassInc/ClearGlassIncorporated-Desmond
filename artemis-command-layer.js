@@ -359,3 +359,176 @@
 
   scheduleSweep();
 })();
+
+/* AEGIS-X Mission Control augmentation.
+   Decorative states are explicitly UI presentation states, never fabricated infrastructure telemetry. */
+(function(){
+  'use strict';
+  if(document.documentElement.dataset.aegisX==='ready') return;
+  document.documentElement.dataset.aegisX='ready';
+
+  var reduceQuery=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var mobileQuery=window.matchMedia('(max-width:760px)');
+  var connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  var saveData=Boolean(connection&&connection.saveData);
+  var constrainedCpu=typeof navigator.hardwareConcurrency==='number'&&navigator.hardwareConcurrency<=4;
+  var performanceLite=saveData||constrainedCpu;
+  document.documentElement.classList.toggle('aegis-performance-lite',performanceLite);
+
+  var style=document.createElement('style');
+  style.id='aegis-x-runtime';
+  style.textContent=`
+    :root{
+      --motion-instant:120ms;
+      --motion-fast:220ms;
+      --motion-standard:480ms;
+      --motion-cinematic:800ms;
+      --ease-command:cubic-bezier(.22,1,.36,1);
+      --ease-system:cubic-bezier(.4,0,.2,1);
+      --aegis-cyan:#56e7ff;
+      --aegis-blue:#38bdf8;
+      --aegis-violet:#a78bfa;
+      --aegis-green:#34d399;
+    }
+    html[data-aegis-x="ready"] .aegis-scroll-rail{
+      position:fixed;z-index:86;right:14px;top:50%;width:4px;height:min(42vh,360px);
+      transform:translateY(-50%);border-radius:999px;pointer-events:none;
+      background:rgba(86,231,255,.10);box-shadow:0 0 0 1px rgba(86,231,255,.08);
+      overflow:hidden;
+    }
+    html[data-aegis-x="ready"] .aegis-scroll-rail>i{
+      position:absolute;inset:0;display:block;transform-origin:50% 0;transform:scaleY(var(--aegis-progress,0));
+      background:linear-gradient(180deg,var(--aegis-cyan),var(--aegis-violet));
+      box-shadow:0 0 14px rgba(86,231,255,.44);will-change:transform;
+    }
+    html[data-aegis-x="ready"] .aegis-boot-status{
+      position:absolute;z-index:5;top:104px;left:50%;display:flex;align-items:center;gap:9px;
+      min-height:30px;padding:7px 12px;border:1px solid rgba(86,231,255,.20);border-radius:999px;
+      transform:translate3d(-50%,-8px,0);opacity:0;pointer-events:none;color:#bcefff;
+      background:linear-gradient(135deg,rgba(5,12,28,.72),rgba(25,15,54,.54));
+      box-shadow:inset 0 1px rgba(255,255,255,.06),0 10px 28px rgba(7,17,31,.12),0 0 24px rgba(86,231,255,.08);
+      -webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);
+      font:700 8px/1 var(--mono,monospace);letter-spacing:.13em;text-transform:uppercase;
+      animation:aegisBoot var(--motion-cinematic) var(--ease-command) .12s forwards,aegisBootExit .42s var(--ease-system) 1.7s forwards;
+    }
+    html[data-aegis-x="ready"] .aegis-boot-status i{
+      width:7px;height:7px;border-radius:50%;background:var(--aegis-green);
+      box-shadow:0 0 0 4px rgba(52,211,153,.12),0 0 14px rgba(52,211,153,.70);
+      animation:aegisSignal 2.35s var(--ease-system) infinite;
+    }
+    html[data-aegis-x="ready"] .aegis-acquire-target{
+      position:relative;isolation:isolate;
+    }
+    html[data-aegis-x="ready"] .aegis-acquire-target::after{
+      content:"";position:absolute;z-index:0;left:3%;right:3%;top:0;height:1px;pointer-events:none;
+      opacity:0;transform:scaleX(.18);transform-origin:left;
+      background:linear-gradient(90deg,transparent,rgba(86,231,255,.82),rgba(167,139,250,.58),transparent);
+      box-shadow:0 0 16px rgba(86,231,255,.16);
+      transition:opacity var(--motion-standard) var(--ease-system),transform var(--motion-cinematic) var(--ease-command);
+    }
+    html[data-aegis-x="ready"] .aegis-acquire-target.aegis-acquired::after{opacity:.72;transform:scaleX(1)}
+    html[data-aegis-x="ready"] .aegis-acquire-target>.container{position:relative;z-index:1}
+    html[data-aegis-x="ready"] .aegis-ui-state{
+      position:fixed;z-index:85;left:14px;bottom:14px;display:inline-flex;align-items:center;gap:7px;
+      min-height:30px;padding:7px 10px;border-radius:999px;pointer-events:none;
+      border:1px solid rgba(86,231,255,.16);background:rgba(5,12,28,.70);color:#a8d9e8;
+      box-shadow:0 8px 30px rgba(7,17,31,.16),inset 0 1px rgba(255,255,255,.04);
+      -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+      font:700 7px/1 var(--mono,monospace);letter-spacing:.12em;text-transform:uppercase;
+    }
+    html[data-aegis-x="ready"] .aegis-ui-state i{width:6px;height:6px;border-radius:50%;background:var(--aegis-cyan);box-shadow:0 0 11px rgba(86,231,255,.72)}
+    html.aegis-performance-lite .aegis-ui-state,
+    html.aegis-performance-lite .aegis-scroll-rail{box-shadow:none}
+    html.aegis-performance-lite .aegis-acquire-target::after{box-shadow:none}
+    @keyframes aegisBoot{to{opacity:1;transform:translate3d(-50%,0,0)}}
+    @keyframes aegisBootExit{to{opacity:0;transform:translate3d(-50%,-6px,0)}}
+    @keyframes aegisSignal{55%{box-shadow:0 0 0 8px rgba(52,211,153,0),0 0 18px rgba(52,211,153,.76)}}
+    @media(max-width:760px){
+      html[data-aegis-x="ready"] .aegis-scroll-rail{display:none}
+      html[data-aegis-x="ready"] .aegis-ui-state{left:10px;bottom:10px;opacity:.86}
+      html[data-aegis-x="ready"] .aegis-boot-status{top:96px;max-width:calc(100vw - 32px);white-space:nowrap}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html[data-aegis-x="ready"] .aegis-boot-status{display:none!important;animation:none!important}
+      html[data-aegis-x="ready"] .aegis-boot-status i{animation:none!important}
+      html[data-aegis-x="ready"] .aegis-acquire-target::after{transition:none!important}
+      html[data-aegis-x="ready"] .aegis-scroll-rail>i{will-change:auto}
+    }
+  `;
+  document.head.appendChild(style);
+
+  var hero=document.querySelector('.hero,#hero');
+  if(hero&&!hero.querySelector('.aegis-boot-status')&&!reduceQuery.matches){
+    var boot=document.createElement('div');
+    boot.className='aegis-boot-status';
+    boot.setAttribute('aria-hidden','true');
+    boot.innerHTML='<i></i><span>AEGIS-X / Interface Ready</span>';
+    hero.appendChild(boot);
+    window.setTimeout(function(){if(boot.parentNode)boot.parentNode.removeChild(boot);},2400);
+  }
+
+  var state=document.querySelector('.aegis-ui-state');
+  if(!state){
+    state=document.createElement('div');
+    state.className='aegis-ui-state';
+    state.setAttribute('aria-hidden','true');
+    state.title='Decorative interface state; not live infrastructure telemetry.';
+    state.innerHTML='<i></i><span>UI / ACTIVE</span>';
+    document.body.appendChild(state);
+  }
+
+  var rail=document.querySelector('.aegis-scroll-rail');
+  if(!rail&&!mobileQuery.matches){
+    rail=document.createElement('div');
+    rail.className='aegis-scroll-rail';
+    rail.setAttribute('aria-hidden','true');
+    rail.innerHTML='<i></i>';
+    document.body.appendChild(rail);
+  }
+
+  var ticking=false;
+  function syncProgress(){
+    ticking=false;
+    if(!rail)return;
+    var max=Math.max(document.documentElement.scrollHeight-window.innerHeight,1);
+    var progress=Math.max(0,Math.min(1,window.scrollY/max));
+    rail.style.setProperty('--aegis-progress',String(progress));
+  }
+  function requestProgress(){
+    if(ticking||document.hidden)return;
+    ticking=true;
+    window.requestAnimationFrame(syncProgress);
+  }
+  if(rail){
+    syncProgress();
+    window.addEventListener('scroll',requestProgress,{passive:true});
+    window.addEventListener('resize',requestProgress,{passive:true});
+  }
+
+  var sections=document.querySelectorAll('main>section,.sect,.cta-sect,.signup-sect');
+  sections.forEach(function(section){section.classList.add('aegis-acquire-target');});
+  if(reduceQuery.matches||!('IntersectionObserver' in window)){
+    sections.forEach(function(section){section.classList.add('aegis-acquired');});
+  }else{
+    var acquisitionObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting)entry.target.classList.add('aegis-acquired');
+      });
+    },{threshold:.08,rootMargin:'0px 0px -12% 0px'});
+    sections.forEach(function(section){acquisitionObserver.observe(section);});
+  }
+
+  function syncVisibility(){
+    document.documentElement.classList.toggle('aegis-paused',document.hidden);
+    if(!document.hidden)requestProgress();
+  }
+  document.addEventListener('visibilitychange',syncVisibility);
+
+  function syncReducedMotion(){
+    if(reduceQuery.matches){
+      document.querySelectorAll('.aegis-acquire-target').forEach(function(section){section.classList.add('aegis-acquired');});
+    }
+  }
+  if(typeof reduceQuery.addEventListener==='function')reduceQuery.addEventListener('change',syncReducedMotion);
+  else if(typeof reduceQuery.addListener==='function')reduceQuery.addListener(syncReducedMotion);
+})();

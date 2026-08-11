@@ -1,5 +1,6 @@
 import GlobalMap from "@/components/GlobalMap";
 import MarketChart from "@/components/MarketChart";
+import MotionPanel from "@/components/MotionPanel";
 
 const modules = [
   ["Command Center", "Executive operational picture"],
@@ -34,7 +35,7 @@ export default function Page() {
         </header>
 
         <section className="cg-hero" id="command-center">
-          <article className="cg-panel cg-hero-copy">
+          <MotionPanel className="cg-panel cg-hero-copy">
             <p className="cg-kicker">ClearGlass · Enterprise Intelligence Service</p>
             <h1>Critical minerals.<br/>One operational picture.</h1>
             <p className="cg-lede">Authenticated command infrastructure for mineral markets, mine and project intelligence, trade, supply-chain exposure, risk, alerts, provenance, and governed analyst workflows. Missing evidence remains unknown.</p>
@@ -43,7 +44,7 @@ export default function Page() {
               <a className="cg-button" href="/api/v1/minerals">Open API</a>
               <a className="cg-button" href="https://www.clearglassinc.com/minerals-platform.html">Public command surface</a>
             </div>
-          </article>
+          </MotionPanel>
           <aside className="cg-panel cg-metrics" aria-label="Architecture status">
             <div className="cg-metric"><span>API</span><strong>v1</strong></div>
             <div className="cg-metric"><span>Spatial</span><strong>PostGIS</strong></div>
@@ -55,14 +56,14 @@ export default function Page() {
         </section>
 
         <section className="cg-grid">
-          <article className="cg-panel cg-map-card" id="global-map"><div className="cg-card-head"><div><h2>Global Mineral Map</h2><p>Clustered geospatial features from authenticated source records</p></div><span className="cg-kicker">MapLibre + PostGIS</span></div><GlobalMap/></article>
-          <article className="cg-panel cg-chart-card" id="mineral-markets"><div className="cg-card-head"><div><h2>Market Series</h2><p>Observed benchmark records; no invented prices</p></div><span className="cg-kicker">ECharts</span></div><MarketChart/></article>
+          <MotionPanel className="cg-panel cg-map-card" id="global-map"><div className="cg-card-head"><div><h2>Global Mineral Map</h2><p>Clustered geospatial features from authenticated source records</p></div><span className="cg-kicker">MapLibre + PostGIS</span></div><GlobalMap/></MotionPanel>
+          <MotionPanel className="cg-panel cg-chart-card" id="mineral-markets"><div className="cg-card-head"><div><h2>Market Series</h2><p>Observed benchmark records; no invented prices</p></div><span className="cg-kicker">ECharts</span></div><MarketChart/></MotionPanel>
         </section>
 
         <section className="cg-footer-grid" aria-label="Platform modules">
           {modules.slice(3).map(([name, description]) => {
             const id = name.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-");
-            return <article key={name} className="cg-panel cg-module" id={id}><h3>{name}</h3><p>{description}</p><code>/api/v1/{id === "mines-projects" ? "projects" : id === "data-sources" ? "sources" : id}</code></article>;
+            return <MotionPanel key={name} className="cg-panel cg-module" id={id}><h3>{name}</h3><p>{description}</p><code>/api/v1/{id === "mines-projects" ? "projects" : id === "data-sources" ? "sources" : id}</code></MotionPanel>;
           })}
         </section>
       </section>

@@ -1,5 +1,6 @@
 # Response headers are edge-enforced because GitHub Pages cannot reliably set
-# application-controlled security headers. CSP remains Report-Only initially.
+# application-controlled security headers. CSP remains Report-Only until a
+# reviewed evidence window supports an explicit enforce-stage promotion.
 
 resource "cloudflare_ruleset" "security_headers" {
   count = var.enable_security_headers ? 1 : 0
@@ -12,13 +13,13 @@ resource "cloudflare_ruleset" "security_headers" {
 
   rules {
     ref         = "public_security_headers"
-    description = "Set baseline security headers and CSP Report-Only"
+    description = "Set baseline security headers and reviewed CSP mode"
     expression  = local.host_scope
     action      = "rewrite"
 
     action_parameters {
       headers {
-        name      = "Content-Security-Policy-Report-Only"
+        name      = var.csp_mode == "enforce" ? "Content-Security-Policy" : "Content-Security-Policy-Report-Only"
         operation = "set"
         value     = local.csp
       }

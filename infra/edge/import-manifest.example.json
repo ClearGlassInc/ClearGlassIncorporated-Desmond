@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "environment": "staging",
+  "zone_id": "00000000000000000000000000000000",
+  "change_ticket": "CHG-REPLACE-ME",
+  "captured_at": "2026-01-01T00:00:00Z",
+  "legacy_state": {
+    "stack_path": "clearglass-commerce/infra/cloudflare",
+    "serial": 0,
+    "snapshot_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "resources_detached": true,
+    "stack_frozen": true,
+    "frozen_commit": "0000000000000000000000000000000000000000"
+  },
+  "imports": [
+    {
+      "address": "cloudflare_ruleset.custom_waf[0]",
+      "id": "zone/00000000000000000000000000000000/00000000000000000000000000000000"
+    }
+  ]
+}

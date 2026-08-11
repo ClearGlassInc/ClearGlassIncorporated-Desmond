@@ -1,5 +1,7 @@
 {
   "version": "2.0.0",
+  "deployment_status": "not-applied",
+  "deployment_note": "Provider dashboards and alert routes require account access and an owned notification destination. This reviewed specification does not claim they are live.",
   "retention": {
     "raw_security_events_days": 30,
     "normalized_metrics_days": 90,
@@ -32,6 +34,51 @@
     "security_header_drift",
     "configuration_drift",
     "dns_certificate_health"
+  ],
+  "dashboard_specs": [
+    {
+      "id": "cloudflare-security-operations",
+      "provider_surface": "Cloudflare Security Analytics and Security Events",
+      "data_sources": ["firewall_events", "provider_security_analytics"],
+      "filters": ["configured protected hostnames", "reviewed environment", "policy deployment window"],
+      "widgets": [
+        "matches by rule and action over time",
+        "legitimate/malicious/unknown reviewer labels by rule",
+        "challenge issued, solved, failed, and solve rate by rule",
+        "country and ASN aggregates without exporting full client IP by default",
+        "verified-bot and monitoring exceptions",
+        "origin response status and cache status"
+      ],
+      "promotion_use": "Export and reviewer-label bounded JSONL, then run analyze_security_events.py. Dashboard counts alone cannot authorize enforcement."
+    },
+    {
+      "id": "cloudflare-csp-readiness",
+      "provider_surface": "Protected API CSP collector and log analytics",
+      "data_sources": ["csp_violation normalized logs"],
+      "filters": ["effective directive", "blocked origin", "report-only disposition"],
+      "widgets": [
+        "violations by effective directive",
+        "configured sources still reporting violations",
+        "unreviewed blocked origins",
+        "report volume and collector errors"
+      ],
+      "promotion_use": "Run analyze_csp_reports.py; never auto-add a reported source to policy."
+    },
+    {
+      "id": "edge-availability-and-drift",
+      "provider_surface": "GitHub Actions Edge Assurance evidence",
+      "data_sources": ["edge-assurance-result.json", "edge-drift-plan.txt"],
+      "filters": ["environment", "hostname", "workflow run"],
+      "widgets": [
+        "DNS resolution success",
+        "certificate days remaining and issuer",
+        "Cloudflare Ray header presence",
+        "security-header and CSP-mode conformance",
+        "bounded smoke status",
+        "Terraform detailed-exitcode drift status"
+      ],
+      "promotion_use": "Operational health only; a clean dashboard does not replace plan review or protected apply approval."
+    }
   ],
   "alerts": [
     {

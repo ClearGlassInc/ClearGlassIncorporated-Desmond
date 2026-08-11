@@ -11,13 +11,17 @@ from __future__ import annotations
 import json
 import re
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = ROOT.parents[1]
 WORKFLOW = REPOSITORY_ROOT / ".github" / "workflows" / "edge-security.yml"
+STATE_IMPORT_WORKFLOW = REPOSITORY_ROOT / ".github" / "workflows" / "edge-state-import.yml"
+ASSURANCE_WORKFLOW = REPOSITORY_ROOT / ".github" / "workflows" / "edge-assurance.yml"
 ENVIRONMENTS = ROOT / "environments"
+LEGACY_EDGE = REPOSITORY_ROOT / "clearglass-commerce" / "infra" / "cloudflare"
 
 
 def require(condition: bool, message: str, errors: list[str]) -> None:
@@ -49,6 +53,19 @@ def actions(config: dict[str, object], name: str) -> list[str]:
     return list(value.values()) if isinstance(value, dict) else []
 
 
+def rfc3339(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value:
+        return None
+    normalized = value[:-1] + "+00:00" if value.endswith("Z") else value
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return None
+    return parsed.astimezone(timezone.utc)
+
+
 def validate_environment(path: Path, policy_version: str, errors: list[str]) -> dict[str, object] | None:
     try:
         config = json.loads(path.read_text(encoding="utf-8"))
@@ -65,6 +82,7 @@ def validate_environment(path: Path, policy_version: str, errors: list[str]) -> 
     stage = config.get("rollout_stage")
     require(stage in STAGE_RANK, f"{path}: rollout_stage must be disabled/observe/challenge/enforce", errors)
     require(config.get("policy_version") == policy_version, f"{path}: policy_version must match neutral policy {policy_version}", errors)
+    require(config.get("csp_mode") in {"report-only", "enforce"}, f"{path}: csp_mode must be report-only or enforce", errors)
     mutation_enabled = any(config.get(key) is True for key in FEATURE_FLAGS)
     require(
         (stage == "disabled") == (not mutation_enabled),
@@ -98,6 +116,7 @@ def validate_environment(path: Path, policy_version: str, errors: list[str]) -> 
         require(config.get("managed_waf_override_action") == "log", f"{path}: disabled baseline managed WAF action must be log", errors)
         require(config.get("bot_score_action") == "log", f"{path}: disabled baseline bot-score action must be log", errors)
         require(config.get("provider_reputation_action") == "log", f"{path}: disabled baseline reputation action must be log", errors)
+        require(config.get("csp_mode") == "report-only", f"{path}: disabled baseline CSP must be report-only", errors)
 
     if stage == "observe":
         require(not config.get("enable_custom_waf") or all(action == "log" for action in custom_actions), f"{path}: observe custom WAF must be log-only", errors)
@@ -107,6 +126,21 @@ def validate_environment(path: Path, policy_version: str, errors: list[str]) -> 
         require(not config.get("enable_provider_reputation_rules") or config.get("provider_reputation_action") == "log", f"{path}: observe reputation must be log-only", errors)
         for feature in ("enable_bot_management", "enable_geo_asn_rules", "enable_emergency_mode"):
             require(not config.get(feature), f"{path}: {feature} cannot run in observe stage", errors)
+        require(config.get("csp_mode") == "report-only", f"{path}: observe CSP must be report-only", errors)
+
+    if stage in {"challenge", "enforce"}:
+        evidence = config.get("promotion_evidence_sha256")
+        start = rfc3339(config.get("observation_window_start"))
+        end = rfc3339(config.get("observation_window_end"))
+        require(
+            isinstance(evidence, str) and re.fullmatch(r"[0-9a-f]{64}", evidence) is not None,
+            f"{path}: challenge/enforce promotion requires promotion_evidence_sha256",
+            errors,
+        )
+        require(start is not None and end is not None, f"{path}: promotion observation timestamps must be RFC3339", errors)
+        if start is not None and end is not None:
+            require(end - start >= timedelta(days=7), f"{path}: promotion observation window must span at least seven days", errors)
+            require(end <= datetime.now(timezone.utc), f"{path}: promotion observation window cannot end in the future", errors)
 
     terminal = (
         (config.get("enable_custom_waf") and "block" in custom_actions)
@@ -140,6 +174,7 @@ def validate_environment(path: Path, policy_version: str, errors: list[str]) -> 
 
     high_impact = (
         config.get("enable_origin_auth_header")
+        or (config.get("enable_security_headers") and config.get("csp_mode") == "enforce")
         or config.get("log_full_client_ip")
         or config.get("hsts_include_subdomains")
         or config.get("hsts_preload")
@@ -167,6 +202,9 @@ def main() -> int:
     terraform_files = sorted(ROOT.glob("*.tf"))
     terraform = "\n".join(path.read_text(encoding="utf-8") for path in terraform_files)
     workflow = WORKFLOW.read_text(encoding="utf-8")
+    state_import_workflow = STATE_IMPORT_WORKFLOW.read_text(encoding="utf-8")
+    assurance_workflow = ASSURANCE_WORKFLOW.read_text(encoding="utf-8")
+    legacy_guard = (LEGACY_EDGE / "ownership_guard.tf").read_text(encoding="utf-8")
 
     require('version = "= 4.40.0"' in terraform, "Cloudflare provider must remain exactly pinned", errors)
     require('required_version = ">= 1.10.0, < 2.0.0"' in terraform, "Terraform version must support native S3 lock files", errors)
@@ -175,6 +213,37 @@ def main() -> int:
     require('resource "cloudflare_dns_record"' not in terraform, "edge module must not manage DNS records", errors)
     require("terraform destroy" not in workflow.lower(), "workflow must not expose Terraform destroy", errors)
     require("cloudflare_record" not in workflow, "workflow must not make DNS changes", errors)
+    require("terraform apply" not in state_import_workflow, "state-import workflow must never apply provider changes", errors)
+    require("terraform destroy" not in state_import_workflow, "state-import workflow must never destroy resources", errors)
+    require("cloudflare_record" not in state_import_workflow, "state-import workflow must not make DNS changes", errors)
+    for token, label in {
+        'name: edge-${{ inputs.environment }}': "protected write environment",
+        "EDGE_TF_IMPORT_MANIFEST_B64": "sealed import manifest",
+        "EXPECTED_MANIFEST_SHA256": "reviewed manifest digest",
+        "infra/edge/scripts/import_state.py": "allowlisted import validator",
+        "Provider apply was not attempted": "no-apply audit statement",
+    }.items():
+        require(token in state_import_workflow, f"state-import workflow is missing {label}", errors)
+    require("terraform apply" not in assurance_workflow, "assurance workflow must never apply provider changes", errors)
+    require("terraform destroy" not in assurance_workflow, "assurance workflow must never destroy resources", errors)
+    require("--execute" not in assurance_workflow, "scheduled assurance must not execute negative probes", errors)
+    for token, label in {
+        "schedule:": "periodic schedule",
+        "EDGE_ASSURANCE_ENABLED": "explicit schedule enable gate",
+        "EDGE_DRIFT_ENABLED": "explicit drift enable gate",
+        "assurance_check.py": "DNS/TLS/certificate assurance",
+        "-detailed-exitcode": "drift-sensitive Terraform plan",
+        'name: edge-${{ inputs.environment || \'staging\' }}-plan': "protected read environment",
+        "negative_security_test.py --base-url \"$BASE_URL\" --dry-run": "bounded dry-run negative check",
+    }.items():
+        require(token in assurance_workflow, f"assurance workflow is missing {label}", errors)
+    require(
+        'variable "allow_legacy_edge_stack_mutation"' in legacy_guard
+        and "default     = false" in legacy_guard
+        and "precondition" in legacy_guard,
+        "legacy Cloudflare stack must remain frozen behind a default-deny precondition",
+        errors,
+    )
 
     phase_expectations = {
         "http_request_firewall_custom": 1,
@@ -217,6 +286,7 @@ def main() -> int:
         "production approval environment": 'name: edge-${{ inputs.environment }}',
         "rollback ancestry guard": "git merge-base --is-ancestor",
         "emergency expiry": "EMERGENCY_EXPIRES_AT",
+        "protected CSP report URI": "EDGE_CSP_REPORT_URI",
     }
     for label, token in workflow_invariants.items():
         require(token in workflow, f"workflow is missing {label}", errors)

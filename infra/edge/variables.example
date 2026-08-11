@@ -13,6 +13,9 @@ admin_hostname = ""
 # provider feature. rollout_stage controls allowable active actions.
 policy_version            = "2.0.0"
 rollout_stage             = "disabled"
+promotion_evidence_sha256 = ""
+observation_window_start  = ""
+observation_window_end    = ""
 deployment_owner          = "platform-security"
 deployment_change_ticket  = ""
 configuration_rationale   = "Safe repository baseline; no provider mutation enabled."
@@ -27,6 +30,7 @@ enable_bot_score_rule   = false
 enable_provider_reputation_rules = false
 enable_rate_limits      = false
 enable_security_headers = false
+csp_mode               = "report-only"
 enable_logpush          = false
 enable_geo_asn_rules    = false
 enable_origin_auth_header = false
@@ -113,6 +117,9 @@ log_full_client_ip  = false
 # Dynamic origins only. GitHub Pages cannot validate this header. Supply the
 # value through EDGE_ORIGIN_AUTH_HEADER_VALUE / TF_VAR_, never in this file.
 origin_auth_header_name = "X-ClearGlass-Edge-Origin"
+
+# Set only after the protected API hostname serves the bounded collector.
+csp_report_uri = ""
 
 # Introduce HSTS scope deliberately. Preload requires includeSubDomains.
 hsts_include_subdomains = false

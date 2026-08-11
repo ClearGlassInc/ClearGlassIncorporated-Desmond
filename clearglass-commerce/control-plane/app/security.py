@@ -26,8 +26,10 @@ from __future__ import annotations
 import hmac
 import ipaddress
 import logging
+import re
 import threading
 import time
+import urllib.parse
 from collections import deque
 from functools import lru_cache
 
@@ -38,11 +40,23 @@ from .config import Settings, get_settings
 logger = logging.getLogger("clearglass.security")
 
 _BEARER_PREFIX = "bearer "
+_HTTP_HEADER_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9-]{1,62}$")
 
 
 def _configured_keys(settings: Settings) -> list[str]:
     """Non-empty admin keys, split on commas and trimmed (supports rotation)."""
     return [k.strip() for k in settings.admin_api_key.split(",") if k.strip()]
+
+
+def _configured_origin_secrets(settings: Settings) -> list[str]:
+    """Return the active origin secrets without logging or otherwise exposing them."""
+    return [value.strip() for value in settings.edge_origin_auth_secrets.split(",") if value.strip()]
+
+
+def origin_auth_enabled(settings: Settings | None = None) -> bool:
+    """True only when the origin is configured to reject non-edge requests."""
+    settings = settings or get_settings()
+    return settings.edge_origin_auth_required
 
 
 def auth_enabled(settings: Settings | None = None) -> bool:
@@ -59,6 +73,56 @@ def verify_startup_posture(settings: Settings | None = None) -> None:
     surprise.
     """
     settings = settings or get_settings()
+    origin_secrets = _configured_origin_secrets(settings)
+    if _HTTP_HEADER_NAME.fullmatch(settings.edge_origin_auth_header_name) is None:
+        raise RuntimeError(
+            "EDGE_ORIGIN_AUTH_HEADER_NAME is not a conventional HTTP header name."
+        )
+    if settings.edge_origin_auth_required:
+        if not origin_secrets:
+            raise RuntimeError(
+                "EDGE_ORIGIN_AUTH_REQUIRED is true but EDGE_ORIGIN_AUTH_SECRETS is empty. "
+                "The control plane refuses to start without an edge-to-origin secret."
+            )
+        if any(len(secret) < 32 for secret in origin_secrets):
+            raise RuntimeError(
+                "Every EDGE_ORIGIN_AUTH_SECRETS value must contain at least 32 characters."
+            )
+        if len(origin_secrets) != len(set(origin_secrets)):
+            raise RuntimeError("EDGE_ORIGIN_AUTH_SECRETS contains a duplicate value.")
+    if settings.public_forms_enabled:
+        if not settings.edge_origin_auth_required:
+            raise RuntimeError(
+                "PUBLIC_FORMS_ENABLED requires EDGE_ORIGIN_AUTH_REQUIRED so direct origin "
+                "ingress cannot bypass edge rate limits and inspection."
+            )
+        relay = urllib.parse.urlsplit(settings.public_form_relay_url)
+        allowed_hosts = {
+            host.strip().lower()
+            for host in settings.public_form_relay_allowed_hosts.split(",")
+            if host.strip()
+        }
+        relay_is_ip = False
+        if relay.hostname:
+            try:
+                ipaddress.ip_address(relay.hostname)
+                relay_is_ip = True
+            except ValueError:
+                relay_is_ip = False
+        if (
+            relay.scheme != "https"
+            or not relay.hostname
+            or relay.hostname.lower() not in allowed_hosts
+            or relay.username
+            or relay.password
+            or relay.query
+            or relay.fragment
+            or relay_is_ip
+        ):
+            raise RuntimeError(
+                "PUBLIC_FORM_RELAY_URL must be an HTTPS URL on a host explicitly listed "
+                "in PUBLIC_FORM_RELAY_ALLOWED_HOSTS, without credentials or a fragment."
+            )
     if settings.trusted_proxy_hops > 0 and not _trusted_networks(settings.trusted_proxy_ips):
         logger.warning(
             "TRUSTED_PROXY_HOPS is %d but TRUSTED_PROXY_IPS is empty, so X-Forwarded-For is "
@@ -80,6 +144,30 @@ def verify_startup_posture(settings: Settings | None = None) -> None:
         "local/dev/mock use only — every mutating admin endpoint is open. Set ADMIN_API_KEY "
         "before exposing this service."
     )
+
+
+def verify_origin_request(request: Request, settings: Settings | None = None) -> None:
+    """Reject requests that did not traverse the configured edge.
+
+    Cloudflare's late request transform uses ``set`` rather than ``add``, so a
+    browser-supplied value is overwritten at the edge. The origin compares the
+    resulting value against every accepted rotation secret in constant time and
+    deliberately performs no early exit.
+    """
+    settings = settings or get_settings()
+    if not settings.edge_origin_auth_required:
+        return
+
+    presented = request.headers.get(settings.edge_origin_auth_header_name, "")
+    secrets = _configured_origin_secrets(settings)
+    matched = False
+    for secret in secrets:
+        matched = hmac.compare_digest(presented, secret) or matched
+    if not matched:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="request did not arrive through the approved edge",
+        )
 
 
 def _extract_bearer(authorization: str | None) -> str | None:

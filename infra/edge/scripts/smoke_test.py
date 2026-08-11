@@ -17,7 +17,6 @@ EXPECTED_HEADERS = {
     "referrer-policy": "strict-origin-when-cross-origin",
     "permissions-policy": None,
     "strict-transport-security": None,
-    "content-security-policy-report-only": None,
     "cross-origin-opener-policy": None,
     "cross-origin-resource-policy": None,
 }
@@ -93,6 +92,7 @@ def main() -> int:
     parser.add_argument("--api-url", default="", help="Optional non-destructive API health/read endpoint.")
     parser.add_argument("--cors-origin", default="", help="Optional expected browser Origin for an API preflight.")
     parser.add_argument("--skip-http-redirect", action="store_true", help="Do not derive and test the HTTP-to-HTTPS redirect.")
+    parser.add_argument("--csp-mode", choices=["none", "report-only", "enforce"], default="report-only")
     args = parser.parse_args()
 
     try:
@@ -126,6 +126,15 @@ def main() -> int:
             (failures if args.require_edge else warnings).append(message)
         elif expected is not None and value.lower() != expected.lower():
             failures.append(f"unexpected {name}: {value!r}")
+
+    report_only_csp = headers.get("content-security-policy-report-only")
+    enforcing_csp = headers.get("content-security-policy")
+    if args.csp_mode == "report-only" and (not report_only_csp or enforcing_csp):
+        message = "CSP is not exclusively in report-only mode"
+        (failures if args.require_edge else warnings).append(message)
+    elif args.csp_mode == "enforce" and not enforcing_csp:
+        message = "enforcing Content-Security-Policy is missing"
+        (failures if args.require_edge else warnings).append(message)
 
     # Legacy frame header is intentionally checked while the rollout retains it.
     if headers.get("x-frame-options", "").upper() != "SAMEORIGIN":

@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,6 +13,7 @@ VALIDATOR_PATH = ROOT / "infra" / "edge" / "scripts" / "validate_policy.py"
 POLICY_PATH = ROOT / "infra" / "edge" / "policies" / "baseline.json"
 SCHEMA_PATH = ROOT / "infra" / "edge" / "policy.schema.json"
 SAFETY_PATH = ROOT / "infra" / "edge" / "scripts" / "validate_terraform_safety.py"
+IMPORT_PATH = ROOT / "infra" / "edge" / "scripts" / "import_state.py"
 
 spec = importlib.util.spec_from_file_location("edge_policy_validator", VALIDATOR_PATH)
 assert spec and spec.loader
@@ -22,6 +24,12 @@ safety_spec = importlib.util.spec_from_file_location("edge_terraform_safety", SA
 assert safety_spec and safety_spec.loader
 safety = importlib.util.module_from_spec(safety_spec)
 safety_spec.loader.exec_module(safety)
+
+import_spec = importlib.util.spec_from_file_location("edge_state_import", IMPORT_PATH)
+assert import_spec and import_spec.loader
+state_import = importlib.util.module_from_spec(import_spec)
+sys.modules[import_spec.name] = state_import
+import_spec.loader.exec_module(state_import)
 
 
 def baseline() -> dict:
@@ -131,6 +139,36 @@ class EdgePolicySafetyTests(unittest.TestCase):
         errors = self.validate_environment(config)
         self.assertTrue(any("observe custom WAF must be log-only" in error for error in errors))
 
+    def test_challenge_promotion_requires_observation_evidence(self) -> None:
+        config = json.loads((ROOT / "infra" / "edge" / "environments" / "staging.tfvars.json").read_text())
+        config.update(
+            {
+                "rollout_stage": "challenge",
+                "deployment_change_ticket": "CHG-1234",
+                "configuration_rationale": "Challenge a selected rule after observation.",
+                "enable_custom_waf": True,
+            }
+        )
+        config["custom_waf_actions"]["path_probe"] = "managed_challenge"
+        errors = self.validate_environment(config)
+        self.assertTrue(any("promotion_evidence_sha256" in error for error in errors))
+
+    def test_completed_seven_day_evidence_window_can_support_challenge(self) -> None:
+        config = json.loads((ROOT / "infra" / "edge" / "environments" / "staging.tfvars.json").read_text())
+        config.update(
+            {
+                "rollout_stage": "challenge",
+                "deployment_change_ticket": "CHG-1234",
+                "configuration_rationale": "Challenge a selected rule after observation.",
+                "enable_custom_waf": True,
+                "promotion_evidence_sha256": "a" * 64,
+                "observation_window_start": "2025-01-01T00:00:00Z",
+                "observation_window_end": "2025-01-08T00:00:00Z",
+            }
+        )
+        config["custom_waf_actions"]["path_probe"] = "managed_challenge"
+        self.assertEqual(self.validate_environment(config), [])
+
     def test_disabled_templates_cannot_be_silently_enabled(self) -> None:
         policy = baseline()
         emergency = next(rule for rule in policy["rules"] if rule["category"] == "emergency")
@@ -168,9 +206,67 @@ class EdgePolicySafetyTests(unittest.TestCase):
         backend = (ROOT / "infra" / "edge" / "backend.tf").read_text(encoding="utf-8")
         self.assertIn('backend "s3"', backend)
 
+    def test_state_import_requires_allowlisted_enabled_destination(self) -> None:
+        zone = "a" * 32
+        policy = json.loads((ROOT / "infra" / "edge" / "environments" / "staging.tfvars.json").read_text())
+        policy.update(
+            {
+                "deployment_change_ticket": "CHG-1234",
+                "enable_custom_waf": True,
+            }
+        )
+        manifest = {
+            "schema_version": 1,
+            "environment": "staging",
+            "zone_id": zone,
+            "change_ticket": "CHG-1234",
+            "captured_at": "2025-01-08T00:00:00Z",
+            "legacy_state": {
+                "stack_path": "clearglass-commerce/infra/cloudflare",
+                "serial": 7,
+                "snapshot_sha256": "b" * 64,
+                "resources_detached": True,
+                "stack_frozen": True,
+                "frozen_commit": "c" * 40,
+            },
+            "imports": [
+                {
+                    "address": "cloudflare_ruleset.custom_waf[0]",
+                    "id": f"zone/{zone}/{'d' * 32}",
+                }
+            ],
+        }
+        self.assertEqual(
+            state_import.validate_manifest(manifest, policy, zone),
+            [("cloudflare_ruleset.custom_waf[0]", f"zone/{zone}/{'d' * 32}")],
+        )
+
+        policy["enable_custom_waf"] = False
+        with self.assertRaisesRegex(ValueError, "enable_custom_waf=true"):
+            state_import.validate_manifest(manifest, policy, zone)
+
+    def test_legacy_cloudflare_stack_is_frozen(self) -> None:
+        guard = (ROOT / "clearglass-commerce" / "infra" / "cloudflare" / "ownership_guard.tf").read_text()
+        self.assertIn("allow_legacy_edge_stack_mutation", guard)
+        self.assertIn("default     = false", guard)
+        self.assertIn("precondition", guard)
+
     def test_policy_schema_is_current_and_parseable(self) -> None:
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
         self.assertEqual(schema["$schema"], "https://json-schema.org/draft/2020-12/schema")
+
+    def test_observability_spec_covers_security_csp_and_drift(self) -> None:
+        spec = json.loads((ROOT / "infra" / "edge" / "observability.example.json").read_text())
+        self.assertEqual(spec["deployment_status"], "not-applied")
+        dashboard_ids = {dashboard["id"] for dashboard in spec["dashboard_specs"]}
+        self.assertEqual(
+            dashboard_ids,
+            {
+                "cloudflare-security-operations",
+                "cloudflare-csp-readiness",
+                "edge-availability-and-drift",
+            },
+        )
 
 
 if __name__ == "__main__":

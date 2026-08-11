@@ -355,6 +355,23 @@ check "origin_auth_is_dynamic_only_and_configured" {
   }
 }
 
+check "csp_reporting_is_protected_and_enforcement_is_gated" {
+  assert {
+    condition = (
+      (var.csp_report_uri == "" || (
+        var.api_hostname != "" &&
+        startswith(lower(var.csp_report_uri), "https://${lower(var.api_hostname)}/")
+      )) &&
+      (var.csp_mode != "enforce" || (
+        var.enable_security_headers &&
+        var.rollout_stage == "enforce" &&
+        var.csp_report_uri != ""
+      ))
+    )
+    error_message = "CSP reports must use the configured protected API hostname; enforcement requires enabled headers, enforce stage, and a report URI."
+  }
+}
+
 check "emergency_mode_is_time_bounded" {
   assert {
     condition = !var.enable_emergency_mode ? true : (
@@ -403,6 +420,20 @@ check "enabled_configuration_has_change_control" {
       length(trimspace(var.configuration_rationale)) >= 10
     )
     error_message = "Enabled provider features require a non-disabled rollout_stage, deployment owner, change ticket, and meaningful rationale."
+  }
+}
+
+check "terminal_promotion_has_observation_evidence" {
+  assert {
+    condition = !contains(["challenge", "enforce"], var.rollout_stage) ? true : (
+      can(regex("^[0-9a-f]{64}$", var.promotion_evidence_sha256)) &&
+      (can(timecmp(var.observation_window_start, var.observation_window_end)) ? (
+        timecmp(var.observation_window_start, var.observation_window_end) < 0 &&
+        timecmp(timeadd(var.observation_window_start, "168h"), var.observation_window_end) <= 0 &&
+        timecmp(var.observation_window_end, plantimestamp()) <= 0
+      ) : false)
+    )
+    error_message = "Challenge/enforce promotion requires a reviewed evidence SHA and a completed RFC3339 observation window of at least seven days."
   }
 }
 
@@ -466,10 +497,11 @@ check "high_impact_controls_require_enforce_stage" {
   assert {
     condition = var.rollout_stage == "enforce" || !(
       var.enable_origin_auth_header ||
+      (var.enable_security_headers && var.csp_mode == "enforce") ||
       var.log_full_client_ip ||
       var.hsts_include_subdomains ||
       var.hsts_preload
     )
-    error_message = "Origin authentication, full client-IP export, and expanded HSTS scope require rollout_stage=enforce and explicit change control."
+    error_message = "Origin authentication, CSP enforcement, full client-IP export, and expanded HSTS scope require rollout_stage=enforce and explicit change control."
   }
 }

@@ -10,9 +10,16 @@ from __future__ import annotations
 import time
 
 import pytest
+from starlette.requests import Request
 
 from app.config import Settings
-from app.security import auth_enabled, require_admin, verify_startup_posture
+from app.security import (
+    auth_enabled,
+    origin_auth_enabled,
+    require_admin,
+    verify_origin_request,
+    verify_startup_posture,
+)
 
 
 def _settings(**overrides) -> Settings:
@@ -43,6 +50,78 @@ def test_production_with_key_boots() -> None:
 
 def test_dev_without_key_is_allowed() -> None:
     verify_startup_posture(_settings())  # no raise, warning only
+
+
+# --- edge-to-origin authentication ------------------------------------------
+
+
+def _request(headers: list[tuple[bytes, bytes]] | None = None) -> Request:
+    return Request(
+        {
+            "type": "http",
+            "method": "GET",
+            "path": "/health",
+            "headers": headers or [],
+            "client": ("198.51.100.8", 443),
+        }
+    )
+
+
+def test_origin_auth_disabled_by_default() -> None:
+    settings = _settings()
+    assert origin_auth_enabled(settings) is False
+    verify_origin_request(_request(), settings)
+
+
+def test_required_origin_auth_without_secret_fails_startup() -> None:
+    with pytest.raises(RuntimeError, match="EDGE_ORIGIN_AUTH_SECRETS is empty"):
+        verify_startup_posture(
+            _settings(edge_origin_auth_required=True, admin_api_key="configured")
+        )
+
+
+def test_origin_auth_accepts_current_and_previous_rotation_secrets() -> None:
+    current = "c" * 40
+    previous = "p" * 40
+    settings = _settings(
+        edge_origin_auth_required=True,
+        edge_origin_auth_secrets=f"{current},{previous}",
+    )
+    for value in (current, previous):
+        verify_origin_request(
+            _request([(b"x-clearglass-edge-origin", value.encode())]), settings
+        )
+
+
+def test_origin_auth_rejects_missing_or_invalid_header() -> None:
+    from fastapi import HTTPException
+
+    settings = _settings(
+        edge_origin_auth_required=True,
+        edge_origin_auth_secrets="s" * 40,
+    )
+    for request in (_request(), _request([(b"x-clearglass-edge-origin", b"wrong")])):
+        with pytest.raises(HTTPException) as exc:
+            verify_origin_request(request, settings)
+        assert exc.value.status_code == 403
+
+
+def test_origin_auth_rejects_weak_duplicate_or_invalid_configuration() -> None:
+    base = {"edge_origin_auth_required": True, "admin_api_key": "configured"}
+    with pytest.raises(RuntimeError, match="at least 32"):
+        verify_startup_posture(_settings(**base, edge_origin_auth_secrets="short"))
+    with pytest.raises(RuntimeError, match="duplicate"):
+        verify_startup_posture(
+            _settings(**base, edge_origin_auth_secrets=f"{'a' * 40},{'a' * 40}")
+        )
+    with pytest.raises(RuntimeError, match="HTTP header name"):
+        verify_startup_posture(
+            _settings(
+                **base,
+                edge_origin_auth_secrets="a" * 40,
+                edge_origin_auth_header_name="bad header",
+            )
+        )
 
 
 # --- the guard dependency ---------------------------------------------------

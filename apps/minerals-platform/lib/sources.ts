@@ -8,7 +8,7 @@ export const sourceEnvelopeSchema = z.object({
   confidence: z.number().min(0).max(1).nullable(),
   license: z.string().nullable(),
   attribution: z.string().nullable(),
-  records: z.array(z.record(z.string(), z.unknown())),
+  records: z.array(z.record(z.string(), z.json())),
   errors: z.array(z.string()).default([])
 });
 
@@ -49,17 +49,23 @@ export class PublicSnapshotAdapter implements SourceAdapter {
     }
     const payload = await response.json() as { metadata?: Record<string, unknown>; records?: unknown[]; message?: string };
     const metadata = payload.metadata ?? {};
-    const rawStatus = String(metadata.status ?? "UNKNOWN").toUpperCase().replaceAll(" ", "_");
+    const rawStatus = String(metadata.status ?? "UNKNOWN").toUpperCase().replace(/[\s-]+/g, "_");
     const status = sourceEnvelopeSchema.shape.status.safeParse(rawStatus).success ? rawStatus : "UNKNOWN";
+    const candidateCollectedAt = metadata.retrieved_at ?? metadata.last_updated ?? null;
+    const collectedAt = typeof candidateCollectedAt === "string" ? candidateCollectedAt : null;
+    const attribution = typeof metadata.provider === "string" ? metadata.provider : typeof metadata.source === "string" ? metadata.source : null;
+    const records = Array.isArray(payload.records)
+      ? payload.records.filter((item): item is Record<string, z.infer<ReturnType<typeof z.json>>> => !!item && typeof item === "object" && !Array.isArray(item))
+      : [];
     return sourceEnvelopeSchema.parse({
       sourceId: this.id,
       status,
-      collectedAt: metadata.retrieved_at ?? metadata.last_updated ?? null,
+      collectedAt,
       transformedAt: new Date().toISOString(),
       confidence: typeof metadata.confidence === "number" ? metadata.confidence : null,
       license: typeof metadata.license === "string" ? metadata.license : null,
-      attribution: typeof metadata.provider === "string" ? metadata.provider : null,
-      records: Array.isArray(payload.records) ? payload.records.filter((item): item is Record<string, unknown> => !!item && typeof item === "object" && !Array.isArray(item)) : [],
+      attribution,
+      records,
       errors: payload.message ? [payload.message] : []
     });
   }

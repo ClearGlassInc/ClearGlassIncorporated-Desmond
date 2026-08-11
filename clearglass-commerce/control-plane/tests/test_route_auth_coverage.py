@@ -66,7 +66,9 @@ PUBLIC_MUTATING_ROUTES: dict[tuple[str, str], str] = {
         "path segment is compared against PRINTFUL_WEBHOOK_SECRET with "
         "hmac.compare_digest, and an unset secret rejects every call rather than "
         "accepting all of them. It records tracking on an existing order and is "
-        "idempotent on (supplier, supplier_order_id); it cannot create an order, "
+        "idempotent on (supplier, supplier_shipment_id) — the parcel, since "
+        "supplier_order_id repeats across the parcels of a split shipment; it "
+        "cannot create an order, "
         "move money, or confirm a supplier order — confirmation is ALWAYS_ESCALATE."
     ),
 }

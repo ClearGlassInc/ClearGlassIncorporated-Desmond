@@ -23,10 +23,18 @@ control plane cannot read is a catalogue that does not get published.
 | Status | Meaning | Who moves it |
 |---|---|---|
 | `pending` | Paid; nothing sent to the supplier | — |
-| `drafted` / `awaiting_approval` | Draft booked at Printful. Costs nothing, prints nothing, deletable | automatic |
+| `drafted` | Draft booked at Printful. Costs nothing, prints nothing, deletable | automatic |
 | `confirmed` | Human approved. Printful is printing and will ship | **human approval** |
 | `shipped` | Tracking received from the supplier | supplier webhook |
 | `unfulfillable` | Cannot ship — needs a human, possibly a refund | — |
+
+The shipment row carries one more state of its own, `confirming`: an approval has
+been spent and the supplier call is in flight. It exists so a crash mid-call
+leaves evidence instead of a row that looks untouched. The next confirmation
+attempt reconciles it against Printful — if production started the row settles to
+`confirmed` with no second charge; if the call never landed it returns to `draft`
+for a fresh approval; if Printful cannot be read it stays `confirming`, which is
+the safe stuck state.
 
 Drafting is automatic on purpose: the customer has already paid, the draft costs
 nothing, and gating the free half of the work would strand a paid order in a
@@ -54,7 +62,7 @@ hands-off confirmation; it does **not** open the gate, and
 6. **Activate Stripe.** Still the hard blocker — see `STRIPE_SETUP.md`. The
    account cannot accept a payment today, so no order can reach fulfillment at
    all until `charges_enabled: true`.
-There is no eighth step you can do from a dashboard: shipping-address collection
+There is no seventh step you can do from a dashboard: shipping-address collection
 is **code**, and it is not written yet — see below.
 
 ## Environment variables
@@ -99,7 +107,7 @@ depending on whether a human has decided yet.
 
 ```bash
 cd clearglass-commerce/control-plane
-python -m pytest tests/test_printful.py tests/test_fulfillment.py -q   # 48 tests, offline
+python -m pytest tests/test_printful.py tests/test_fulfillment.py -q   # 77 tests, offline
 psql "$DATABASE_URL" -f migrations/005_fulfillment.sql                 # shipping + shipments
 ```
 

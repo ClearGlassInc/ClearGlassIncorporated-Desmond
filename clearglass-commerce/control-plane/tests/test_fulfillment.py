@@ -528,11 +528,153 @@ class TestSchemaMatchesProduction:
             session.flush()
         session.rollback()
 
-    def test_several_parcels_without_an_id_are_still_allowed(self, session):
-        """The index is partial — NULL parcel ids must not collide, or an order
-        could never hold two rows before their shipment ids arrive."""
+    def test_one_order_cannot_hold_two_placeholder_rows(self, session):
+        """Booking a draft is a check-then-insert, so two overlapping calls can
+        both find nothing and both insert. `supplier_order_id` is deliberately
+        non-unique for split parcels and cannot prevent it, so the placeholder
+        index is what makes the database the arbiter."""
         order = make_order(session)
         session.add(Shipment(order_id=order.id, supplier="printful"))
+        session.flush()
         session.add(Shipment(order_id=order.id, supplier="printful"))
+
+        with pytest.raises(IntegrityError):
+            session.flush()
+        session.rollback()
+
+    def test_different_orders_may_each_hold_a_placeholder(self, session):
+        """The index is partial and scoped to the order — two *different* orders
+        each awaiting their first parcel id must not collide."""
+        first = make_order(session)
+        second = make_order(session, external_ref="cs_test_2")
+        session.add(Shipment(order_id=first.id, supplier="printful"))
+        session.add(Shipment(order_id=second.id, supplier="printful"))
         session.flush()
         assert len(session.scalars(select(Shipment)).all()) == 2
+
+
+class TestUnpaidOrders:
+    def test_an_unpaid_order_is_never_drafted(self, session):
+        # Everything downstream assumes settled payment; drafting a pending
+        # order would let it walk the confirmation gate and start production on
+        # money that never arrived.
+        for status in ("pending", "failed"):
+            order = make_order(session, status=status, external_ref=f"cs_{status}")
+            result = fulfillment.book_supplier_draft(
+                session, order, ITEMS, settings=connected(), request=draft_responder()
+            )
+            assert "not paid" in result["skipped"], status
+        assert session.scalars(select(Shipment)).all() == []
+
+
+class TestConfirmationConcurrency:
+    def _drafted(self, session):
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+        return order, session.scalar(select(Shipment))
+
+    def test_repeated_requests_reuse_one_pending_approval(self, session):
+        # Several pending rows for one shipment means several approvable rows,
+        # and two approved ones let two callers each claim one.
+        _, shipment = self._drafted(session)
+        first = fulfillment.confirm_shipment(session, shipment, settings=connected())
+        second = fulfillment.confirm_shipment(session, shipment, settings=connected())
+
+        assert second["approval_id"] == first["approval_id"]
+        assert second["skipped"] == "approval already queued"
+        approvals = session.scalars(
+            select(Approval).where(Approval.action == "printful_confirm_order")
+        ).all()
+        assert len(approvals) == 1
+
+    def test_a_second_approved_claim_cannot_call_the_supplier(self, session):
+        """Two approvals approved out of band must still yield one supplier call.
+
+        Claiming an approval does not by itself serialise the shipment; the
+        atomic draft→confirming transition is what does.
+        """
+        order, shipment = self._drafted(session)
+        for _ in range(2):
+            session.add(
+                Approval(
+                    action="printful_confirm_order",
+                    target=str(shipment.id),
+                    status="approved",
+                    risk_score=88,
+                    risk_tier="high",
+                )
+            )
+        session.flush()
+
+        calls: list[str] = []
+
+        def request(method: str, path: str, body: dict | None):
+            calls.append(path)
+            return 200, {"result": {"id": 999, "status": "pending"}}
+
+        fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+        again = fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+
+        assert len(calls) == 1
+        assert again["skipped"] == "already confirmed"
+        assert order.fulfillment_status == "confirmed"
+
+    def test_a_zero_confirmed_cost_is_recorded_not_discarded(self, session):
+        # A covered reprint really can cost 0; `or` would keep the stale estimate.
+        _, shipment = self._drafted(session)
+        queued = fulfillment.confirm_shipment(session, shipment, settings=connected())
+        session.get(Approval, queued["approval_id"]).status = "approved"
+        session.flush()
+
+        def request(method: str, path: str, body: dict | None):
+            return 200, {"result": {"id": 999, "status": "pending", "costs": {"total": "0.00"}}}
+
+        fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+        assert shipment.supplier_cost == Decimal("0")
+
+
+class TestInFlightReconciliation:
+    def _in_flight(self, session):
+        order = make_order(session)
+        fulfillment.book_supplier_draft(session, order, ITEMS, settings=connected(), request=draft_responder())
+        shipment = session.scalar(select(Shipment))
+        shipment.status = "confirming"
+        session.flush()
+        return order, shipment
+
+    def test_a_crashed_attempt_that_did_reach_the_supplier_settles_confirmed(self, session):
+        # Retrying blind here would pay for the same print run twice.
+        order, shipment = self._in_flight(session)
+
+        def request(method: str, path: str, body: dict | None):
+            return 200, {"result": {"id": 999, "external_id": "cs_test_1", "status": "inprocess"}}
+
+        result = fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+
+        assert result["reconciled"] is True
+        assert shipment.status == "confirmed"
+        assert order.fulfillment_status == "confirmed"
+        assert result["requires_approval"] is False
+
+    def test_a_crashed_attempt_that_never_landed_returns_to_draft(self, session):
+        # Giving up here would strand a paid order that nobody is printing.
+        _, shipment = self._in_flight(session)
+
+        def request(method: str, path: str, body: dict | None):
+            return 200, {"result": {"id": 999, "external_id": "cs_test_1", "status": "draft"}}
+
+        result = fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+
+        assert shipment.status == "draft"
+        assert result["requires_approval"] is True, "a retry needs a fresh human decision"
+
+    def test_an_unreadable_supplier_leaves_it_stuck_rather_than_guessing(self, session):
+        _, shipment = self._in_flight(session)
+
+        def request(method: str, path: str, body: dict | None):
+            return 500, {"error": {"message": "upstream unavailable"}}
+
+        result = fulfillment.confirm_shipment(session, shipment, settings=connected(), request=request)
+
+        assert shipment.status == "confirming"
+        assert result["needs_reconciliation"] is True

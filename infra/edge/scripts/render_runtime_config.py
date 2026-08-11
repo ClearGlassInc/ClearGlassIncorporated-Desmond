@@ -9,6 +9,7 @@ import json
 import os
 import re
 import sys
+import urllib.parse
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable
@@ -116,6 +117,7 @@ def main() -> int:
             "logpush_destination": os.getenv("EDGE_LOGPUSH_DESTINATION", ""),
             "origin_auth_header_name": os.getenv("EDGE_ORIGIN_AUTH_HEADER_NAME", "").strip() or "X-ClearGlass-Edge-Origin",
             "origin_auth_header_value": os.getenv("EDGE_ORIGIN_AUTH_HEADER_VALUE", ""),
+            "csp_report_uri": os.getenv("EDGE_CSP_REPORT_URI", "").strip(),
         }
 
         zone_name = data["zone_name"]
@@ -140,6 +142,24 @@ def main() -> int:
                 raise ValueError("enable_origin_auth_header=true requires EDGE_API_HOSTNAME or EDGE_ADMIN_HOSTNAME")
             if len(data["origin_auth_header_value"]) < 32:
                 raise ValueError("enable_origin_auth_header=true requires a 32+ character EDGE_ORIGIN_AUTH_HEADER_VALUE")
+
+        if data["csp_report_uri"]:
+            report_uri = urllib.parse.urlsplit(data["csp_report_uri"])
+            if (
+                report_uri.scheme != "https"
+                or report_uri.hostname != data["api_hostname"]
+                or report_uri.path != "/api/security/csp-report"
+                or report_uri.query
+                or report_uri.fragment
+                or report_uri.username
+                or report_uri.password
+            ):
+                raise ValueError(
+                    "EDGE_CSP_REPORT_URI must be the HTTPS /api/security/csp-report endpoint "
+                    "on EDGE_API_HOSTNAME without credentials, query, or fragment"
+                )
+        if policy_inputs.get("csp_mode") == "enforce" and not data["csp_report_uri"]:
+            raise ValueError("csp_mode=enforce requires EDGE_CSP_REPORT_URI")
 
         if args.emergency:
             if not policy_inputs.get("enable_custom_waf"):

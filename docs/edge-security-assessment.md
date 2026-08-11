@@ -41,7 +41,15 @@ Empty API/admin hostnames disable their route-specific resources. No speculative
 
 The built Pages artifact contains FormSubmit form posts, including an AJAX submission. Repository documentation also references Formspree. Both are inventory entries pending owner confirmation; neither should be removed from an enforcing policy until the supported form provider is decided.
 
-Because those submissions go directly from the browser to a third-party hostname, this application's edge cannot rate-limit or WAF-inspect the submitted request. Move the form to a separately protected first-party API endpoint if centralized abuse control, validation, or logging is required; otherwise rely on the form provider's controls and avoid sending sensitive data.
+Because those submissions currently go directly from the browser to a
+third-party hostname, this application's edge cannot rate-limit or WAF-inspect
+the submitted request. The control plane now includes a disabled-by-default,
+schema-bounded `/api/forms/submit` relay that requires consent, throttles by
+trusted client identity, rejects unapproved/non-HTTPS relay hosts, and can run
+only when edge-origin authentication is enabled. The three public forms contain
+an empty first-party API migration switch; their existing provider actions stay
+active until a real non-production API hostname passes origin-denial and relay
+tests. This avoids breaking the live site while keeping the cutover reviewable.
 
 Observed source classes include:
 
@@ -59,7 +67,7 @@ Observed source classes include:
 - `_headers` records useful intent, but GitHub Pages does not apply Netlify-style `_headers` as HTTP response headers.
 - `tools/build_pages.py` injects an enforcing CSP meta element and referrer meta into HTML. CSP directives that require HTTP headers, such as `frame-ancestors`, cannot be reliably supplied by a meta element.
 - The current injected CSP source list is narrower than the observed artifact. Some optional pages/integrations can already be blocked by the browser.
-- The new edge CSP remains `Content-Security-Policy-Report-Only`. It is derived from `csp-inventory.json`, so adding the edge configuration cannot itself tighten or break the frontend.
+- The new edge CSP remains `Content-Security-Policy-Report-Only`. It is derived from `csp-inventory.json`, so adding the edge configuration cannot itself tighten or break the frontend. A bounded protected API collector strips paths, queries, snippets, and client IPs; the analyzer never auto-widens policy.
 - The edge may enforce HSTS, nosniff, referrer, permissions, frame, COOP, and CORP only after compatibility validation. HSTS `includeSubDomains` and `preload` remain off in both committed environments.
 - Application/origin code remains authoritative for route-specific CSP, CORS, `Cache-Control`, and sensitive responses.
 
@@ -88,6 +96,14 @@ Existing repository security tooling includes Pages artifact hardening, Terrafor
 7. CSP documentation did not match the built artifact.
 8. Zone-wide bot controls could challenge non-browser API clients.
 9. A single global rate-limit action could inappropriately challenge assets or webhooks.
+10. The historical Cloudflare stack could still be independently applied and
+    create a second owner for zone ruleset phases.
+11. Dynamic origins received an edge header but the FastAPI/admin origins did
+    not validate it or support rotation overlap.
+12. CSP had no report collector/evidence gate, and challenge/block promotion had
+    no machine-checked observation-window evidence.
+13. DNS, certificate, header, smoke, and Terraform drift checks were manual and
+    unscheduled.
 
 ## Residual risks and limitations
 
@@ -103,7 +119,13 @@ The neutral policy includes a disabled repeated-challenge-failure escalation tem
 
 ### Configuration status
 
-Committed staging and production files disable every provider-mutating feature. A successful local or CI validation proves only syntax and safety invariants. It does not prove DNS proxying, certificate issuance, provider activation, origin privacy, log delivery, or runtime policy effectiveness.
+Committed staging and production files disable every provider-mutating feature.
+The import and assurance workflows are inert until protected environment
+credentials, variables, reviewed feature flags, and explicit enable gates exist.
+A successful local or CI validation proves only syntax and safety invariants. It
+does not prove DNS proxying, certificate issuance, provider activation, origin
+privacy, log delivery, dashboard/alert provisioning, or runtime policy
+effectiveness.
 
 ## Prioritized risk treatment
 
@@ -115,3 +137,5 @@ Committed staging and production files disable every provider-mutating feature. 
 6. Route API/admin services through distinct hostnames with origin authentication and application-side enforcement.
 7. Resolve browser-side Anthropic/CORS-proxy usage and then converge application and edge CSP.
 8. Migrate the static artifact from Pages if non-bypassable origin access becomes mandatory.
+9. Provision the reviewed dashboard/alert specification and enable weekly
+   assurance/drift only after the staging hostname and single-owner state exist.

@@ -76,6 +76,28 @@ variable "rollout_stage" {
   }
 }
 
+variable "promotion_evidence_sha256" {
+  type        = string
+  description = "SHA-256 of the reviewed observation report supporting challenge/enforce promotion."
+  default     = ""
+  validation {
+    condition     = var.promotion_evidence_sha256 == "" || can(regex("^[0-9a-f]{64}$", var.promotion_evidence_sha256))
+    error_message = "promotion_evidence_sha256 must be empty or a lowercase SHA-256 digest."
+  }
+}
+
+variable "observation_window_start" {
+  type        = string
+  description = "RFC3339 start of the evidence window supporting a challenge/enforce promotion."
+  default     = ""
+}
+
+variable "observation_window_end" {
+  type        = string
+  description = "RFC3339 end of the evidence window supporting a challenge/enforce promotion."
+  default     = ""
+}
+
 variable "deployment_owner" {
   type        = string
   description = "Accountable owner for an enabled provider configuration."
@@ -124,6 +146,29 @@ variable "enable_security_headers" {
   type        = bool
   description = "Create response-header transform rules."
   default     = false
+}
+
+variable "csp_mode" {
+  type        = string
+  description = "CSP response mode. Enforcement is allowed only after reviewed report evidence in the enforce rollout stage."
+  default     = "report-only"
+  validation {
+    condition     = contains(["report-only", "enforce"], var.csp_mode)
+    error_message = "csp_mode must be report-only or enforce."
+  }
+}
+
+variable "csp_report_uri" {
+  type        = string
+  description = "Optional HTTPS CSP collector URI on the protected API hostname. Runtime rendering restricts it to /api/security/csp-report."
+  default     = ""
+  validation {
+    condition = var.csp_report_uri == "" || can(regex(
+      "^https://[A-Za-z0-9.-]+(?::[0-9]{1,5})?/api/security/csp-report$",
+      var.csp_report_uri
+    ))
+    error_message = "csp_report_uri must be empty or an HTTPS /api/security/csp-report URL without query or fragment."
+  }
 }
 
 variable "enable_logpush" {

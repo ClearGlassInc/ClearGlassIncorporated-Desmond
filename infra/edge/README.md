@@ -29,14 +29,27 @@ This directory contains no DNS resource and does not prove provider activation. 
 | `scripts/validate_terraform_safety.py` | State, DNS, phase ownership, workflow and safe-environment guard |
 | `scripts/render_runtime_config.py` | Protected environment inputs to ephemeral mode-0600 tfvars |
 | `scripts/audit_csp_sources.py` | Compares exact built artifact with CSP inventory |
+| `scripts/analyze_csp_reports.py` | Aggregates privacy-minimized reports without auto-widening policy |
+| `scripts/analyze_security_events.py` | Reviewer-labeled false-positive analysis and non-mutating action recommendations |
+| `scripts/import_state.py` | Allowlisted single-owner state import with manifest/change-control validation |
+| `scripts/assurance_check.py` | Bounded DNS, TLS/certificate, proxy, CSP and header checks |
 | `scripts/smoke_test.py` | Navigation, assets, headers, HTTPS, cache, API/CORS checks |
 | `scripts/negative_security_test.py` | Dry-run by default; bounded WAF/rate/size/origin/cache probes |
 
 ## Critical state-ownership rule
 
-Cloudflare ruleset phases are zone-level entry points. `clearglass-commerce/infra/cloudflare` may already own custom WAF, managed WAF, or rate-limit phases for the same zone.
+Cloudflare ruleset phases are zone-level entry points. The historical
+`clearglass-commerce/infra/cloudflare` stack contains custom WAF, managed WAF,
+rate-limit, bot, and Logpush resources for the same zone. It is now frozen by a
+default-deny Terraform precondition; `infra/edge` is the sole target owner.
 
-Do not enable the same phase in two Terraform states. Inventory live resources and existing state, choose one owner, and import/consolidate before changing any committed feature flag to true. The safety baseline cannot automate this operator decision.
+Do not enable the same phase in two Terraform states. Capture and hash the
+legacy state, detach the exact resources from that state without destroying
+them, enable their reviewed destination resources, and use the protected
+`Edge State Import` workflow. The sealed manifest is checked against the zone,
+change ticket, legacy snapshot metadata, allowlisted resource address/import
+format, and destination feature flags. The workflow imports into locked state,
+uploads a post-import plan, and never runs provider apply.
 
 ## Safe defaults
 
@@ -49,6 +62,7 @@ Do not enable the same phase in two Terraform states. Inventory live resources a
 - CSP Report-Only; HSTS includeSubDomains/preload false
 - no full client-IP export or sensitive request fields
 - emergency mode requires reviewed custom-WAF ownership, operator, ticket, and expiry within 24 hours
+- challenge/enforce requires a reviewed evidence SHA and completed observation window of at least seven days
 
 ## Reviewed promotion model
 
@@ -94,6 +108,7 @@ Configure in the appropriate protected environments; never commit values.
 | `CLOUDFLARE_EDGE_APPLY_TOKEN` | apply only | Minimum writes for enabled resources; no DNS write |
 | `EDGE_LOGPUSH_DESTINATION` | plan + apply when enabled | Pre-created destination, treated as secret when it embeds credentials |
 | `EDGE_ORIGIN_AUTH_HEADER_VALUE` | plan + apply when enabled | 32+ character high-entropy dynamic-origin identity |
+| `EDGE_TF_IMPORT_MANIFEST_B64` | apply environment, import only | Sealed single-owner import manifest; decoded digest must match the dispatch input |
 
 ## Required and optional variables
 
@@ -116,6 +131,7 @@ Optional host and allow/reputation inputs:
 - `EDGE_ALLOWED_COUNTRIES_JSON`, `EDGE_DENIED_COUNTRIES_JSON`, `EDGE_CHALLENGE_COUNTRIES_JSON`, `EDGE_GEO_EXCEPTION_COUNTRIES_JSON`
 - `EDGE_ANONYMOUS_NETWORK_IP_LIST_NAME`, `EDGE_TOR_EXIT_IP_LIST_NAME`
 - `EDGE_ORIGIN_AUTH_HEADER_NAME`
+- `EDGE_CSP_REPORT_URI` (must be the protected API `/api/security/csp-report` URL)
 - `EDGE_SMOKE_ALLOWED_HOSTS_JSON` for additional approved smoke targets
 
 Every `*_JSON` variable must be a JSON array. Country codes are two letters; ASNs are JSON integers; network values are CIDRs. Runtime rendering validates types, hosts, CIDRs, time bounds, and feature prerequisites without printing values.
@@ -176,6 +192,28 @@ terraform -chdir=infra/edge show -no-color /secure/path/edge.tfplan
 
 The first plan should show no provider mutation because all feature groups are false. Unexpected imports/deletes/replacements indicate unresolved state ownership.
 
+## Protected state import
+
+The import workflow is intentionally unusable while the committed destination
+feature remains false. That prevents importing a resource only to have the next
+normal plan propose its destruction.
+
+1. Pull the legacy state through its approved backend, preserve a recoverable
+   copy outside the repository, and record its serial and SHA-256.
+2. Freeze the legacy stack and detach only the mapped live resources from its
+   state; do not destroy provider objects.
+3. Copy `import-manifest.example.json` outside the repository and replace every
+   placeholder with reviewed values and Cloudflare import IDs.
+4. Promote the destination environment in a PR with the same change ticket and
+   observation-safe actions.
+5. Store the base64 manifest as `EDGE_TF_IMPORT_MANIFEST_B64`, dispatch
+   `Edge State Import` with its decoded SHA-256 and the exact confirmation
+   `<environment>:<ticket>:IMPORT`, then review the post-import plan artifact.
+
+Partial import failure is recoverable but requires inspecting destination state
+before retry. The workflow serializes state operations and retains import
+evidence for 365 days.
+
 ## Controlled deployment
 
 Preferred path: GitHub Actions `Edge Security` manual dispatch.
@@ -206,6 +244,21 @@ gh workflow run edge-security.yml \
 ```
 
 The workflow uses locked state, uploads a reviewable plan, records version/SHA/operator/timestamp, waits at the protected apply environment, rebuilds configuration, recomputes the plan, and refuses a changed digest. A successful apply still does not prove DNS is proxied or manual provider prerequisites are complete.
+
+## Periodic assurance and drift
+
+`Edge Assurance` is scheduled weekly but remains inert until the protected plan
+environment sets `EDGE_ASSURANCE_ENABLED=true`. Set `EDGE_STAGING_BASE_URL`, the
+approved hostname variables, and `EDGE_EXPECTED_CSP_MODE` only after the
+non-production hostname exists. `EDGE_DRIFT_ENABLED=true` additionally enables
+a locked read-token Terraform plan; detailed exit code 2 fails the job after a
+reviewable plan artifact is uploaded. Scheduled negative security probes remain
+dry-run only.
+
+The live probe performs one bounded DNS/TLS/HTTP sequence, verifies certificate
+expiry, same-host redirects, Cloudflare evidence, CSP mode, and security
+headers, then exercises the existing low-volume smoke suite. It does not mutate
+DNS, provider configuration, origins, or state.
 
 ## Emergency mode
 

@@ -90,11 +90,15 @@ locals {
 
   csp_inventory = jsondecode(file("${path.module}/csp-inventory.json"))
   csp_sources   = local.csp_inventory.csp_sources
+  csp_connect_sources = distinct(concat(
+    local.csp_sources["connect-src"],
+    var.api_hostname != "" ? ["https://${var.api_hostname}"] : []
+  ))
 
   # The committed inventory is derived from the exact Pages artifact. The edge
   # policy remains Report-Only until browser telemetry and route owners approve
   # enforcement; the application still owns route-specific CSP exceptions.
-  csp = join(" ", [
+  csp = join(" ", compact([
     "default-src ${join(" ", local.csp_sources["default-src"])};",
     "base-uri ${join(" ", local.csp_sources["base-uri"])};",
     "object-src ${join(" ", local.csp_sources["object-src"])};",
@@ -105,10 +109,11 @@ locals {
     "font-src ${join(" ", local.csp_sources["font-src"])};",
     "img-src ${join(" ", local.csp_sources["img-src"])};",
     "media-src ${join(" ", local.csp_sources["media-src"])};",
-    "connect-src ${join(" ", local.csp_sources["connect-src"])};",
+    "connect-src ${join(" ", local.csp_connect_sources)};",
     "frame-src ${join(" ", local.csp_sources["frame-src"])};",
     "manifest-src ${join(" ", local.csp_sources["manifest-src"])};",
     "worker-src ${join(" ", local.csp_sources["worker-src"])};",
-    "upgrade-insecure-requests"
-  ])
+    "upgrade-insecure-requests;",
+    var.csp_report_uri != "" ? "report-uri ${var.csp_report_uri};" : ""
+  ]))
 }

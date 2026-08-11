@@ -25,10 +25,23 @@ Cloudflare ruleset phases are zone-level resources. Before planning:
 
 1. Inventory live zone rulesets and every Terraform state that manages this zone.
 2. Compare them with `clearglass-commerce/infra/cloudflare` and `infra/edge`.
-3. Choose one authoritative state per phase: custom WAF, managed WAF, rate limit, response headers, and late request transform.
-4. Import/consolidate existing live resources into that state. Never enable duplicate phase owners.
-5. Record the state owner and import evidence in the change ticket.
-6. Keep all feature flags false until a refresh-only/ordinary plan proves ownership is clean.
+3. Treat `infra/edge` as the sole target owner. The historical
+   `clearglass-commerce/infra/cloudflare` configuration is frozen by
+   `ownership_guard.tf` and must not be independently planned/applied.
+4. Pull the legacy state, preserve it in recoverable protected storage, and
+   record its serial and SHA-256. Detach only the mapped resources from the
+   legacy state without destroying provider objects.
+5. Promote the matching `infra/edge` resource flags in a reviewed configuration
+   with observation-safe actions and the import change ticket.
+6. Complete an external copy of `infra/edge/import-manifest.example.json`, seal
+   it as `EDGE_TF_IMPORT_MANIFEST_B64`, and dispatch `Edge State Import` with the
+   decoded manifest digest and exact confirmation string. The workflow validates
+   allowlisted addresses/import formats, uses locked state, produces a
+   post-import plan, and never applies provider changes.
+7. Record the import run, manifest digest, legacy snapshot digest, destination
+   state serial, and post-import plan decision in the change ticket.
+8. Do not proceed if any normal plan proposes an unexplained create/delete or a
+   second owner for a zone phase.
 
 ## 2. Create the locked remote-state backend
 
@@ -100,10 +113,46 @@ GitHub Pages cannot consume `origin.tf` authentication. For API/admin hosts:
 2. If using the shared-header template, generate at least 256 bits of random secret material.
 3. Store the value in `EDGE_ORIGIN_AUTH_HEADER_VALUE`; never commit it.
 4. Configure the edge to overwrite the header for dynamic hostnames only.
-5. Configure the load balancer/origin to reject missing or invalid values before application routing.
+5. Configure the load balancer/origin to reject missing or invalid values before application routing. The FastAPI control plane now enforces
+   `EDGE_ORIGIN_AUTH_REQUIRED`, `EDGE_ORIGIN_AUTH_HEADER_NAME`, and
+   `EDGE_ORIGIN_AUTH_SECRETS`; the Next.js admin middleware enforces the same
+   variables before public/session routing. Both accept current + previous
+   secrets and fail closed on invalid production configuration.
 6. Remove public ingress where the platform permits it.
 7. Test direct-origin denial and edge-origin success before production cutover.
-8. Rotate the secret after suspected disclosure, origin compromise, personnel/provider change, and on the approved schedule. Update edge and origin atomically with an overlap mechanism if supported.
+8. Rotate the secret after suspected disclosure, origin compromise,
+   personnel/provider change, and on the approved schedule:
+   - add the new value before the current value in each origin's accepted-secret list;
+   - deploy and verify both values are accepted at the origin through a private test path;
+   - update `EDGE_ORIGIN_AUTH_HEADER_VALUE` at the edge and apply the reviewed transform;
+   - prove proxied requests succeed and direct-origin/missing/old-only requests fail;
+   - remove the previous value from origins after the overlap window and record
+     both deployments in the change ticket.
+
+## 8A. Move forms and CSP reports behind the API hostname
+
+The control plane exposes two disabled-by-default public surfaces:
+
+- `/api/forms/submit`: schema-bounded JSON, consent required, honeypot handling,
+  per-client throttle, no redirect following, and an HTTPS relay host allowlist.
+- `/api/security/csp-report`: 16 KiB maximum, CSP/Reporting API content types,
+  normalized origins/directives only, with paths, queries, snippets, and client
+  IPs omitted from application logs.
+
+For form rollout, set `PUBLIC_FORMS_ENABLED=true`, an HTTPS
+`PUBLIC_FORM_RELAY_URL`, `PUBLIC_FORM_RELAY_ALLOWED_HOSTS`, and optional relay
+bearer token only on an origin that also has edge-origin authentication enabled.
+The static pages contain an empty `clearglass-api-base` migration switch; set it
+first in the non-production artifact only after the API hostname passes edge
+success and direct-origin denial. Remove FormSubmit/Formspree actions and CSP
+sources only after every supported form succeeds through the first-party API.
+
+Set `EDGE_CSP_REPORT_URI` to the protected API collector and keep
+`csp_mode=report-only`. Export normalized logs to
+`analyze_csp_reports.py`; reported sources are never automatically added to CSP.
+Enforcement requires a reviewed report, no unresolved source classes, completion
+of the inventory's manual-review items, a seven-day evidence window, and an
+enforce-stage configuration.
 
 ## 9. Configure logging, dashboards, and alerts
 
@@ -111,9 +160,17 @@ GitHub Pages cannot consume `origin.tf` authentication. For API/admin hosts:
 2. Configure `EDGE_LOGPUSH_DESTINATION` only after the destination exists.
 3. Exclude cookies, authorization headers, bodies, passwords, and complete sensitive query values.
 4. Leave full client-IP export off. Where feasible, omit/truncate IPs at source or keyed-hash them in a controlled downstream processor.
-5. Implement all dashboards and alerts in `observability.example.json`, including action/rule, country/ASN, reputation, bot/challenge, cache, origin, auth abuse, drift, DNS, and certificate views.
+5. Implement the three exact dashboard specifications in
+   `observability.example.json`: Cloudflare security operations, CSP readiness,
+   and edge availability/drift. Its `deployment_status=not-applied` must change
+   only after provider/dashboard owners verify the live objects and alert routes.
 6. Route critical alerts to an owned on-call destination and warning alerts to the operational queue. Test delivery without fabricating an attack.
 7. Recommended defaults: raw events 14–30 days, normalized metrics 90 days, configuration audit 365 days. Apply legal/privacy requirements and make retention configurable.
+8. Set `EDGE_ASSURANCE_ENABLED=true` only after an approved staging hostname is
+   live and configure `EDGE_STAGING_BASE_URL`, allowed hosts, and expected CSP
+   mode. Set `EDGE_DRIFT_ENABLED=true` only after remote state/import is complete.
+   The weekly workflow uploads certificate/DNS/header/smoke and Terraform plan
+   evidence; drift exit code 2 fails after artifact upload.
 
 ## 10. Configure GitHub environments and credentials
 
@@ -130,12 +187,17 @@ Use different plan/read and apply/write Cloudflare tokens, scoped to the exact a
 
 1. Merge only safe, disabled environment configuration.
 2. Dispatch `operation=plan`, `environment=staging`; verify no unexpected imports/deletes/replacements.
-3. In staging, set `rollout_stage=observe` plus owner/ticket/rationale and enable logging only in a reviewed PR; plan, approve, and apply.
-4. Enable managed/custom WAF in log mode in a reviewed PR while remaining at `observe`; plan, approve, and apply.
-5. Validate a proxied staging hostname using the full test matrix.
-6. Move staging to `challenge` and promote uncertain signals one rule class at a time.
-7. Move to `enforce` and promote high-confidence managed signatures to block only after telemetry and false-positive review.
-8. Complete the manual DNS cutover runbook for production.
+3. Import any existing zone-phase resources through the protected state workflow
+   before the first destination apply.
+4. In staging, set `rollout_stage=observe` plus owner/ticket/rationale and enable logging only in a reviewed PR; plan, approve, and apply.
+5. Enable managed/custom WAF in log mode in a reviewed PR while remaining at `observe`; plan, approve, and apply.
+6. Validate a proxied staging hostname using the full test matrix.
+7. Run `analyze_security_events.py` on reviewer-labeled evidence. Move staging to
+   `challenge` and promote only selected rule classes whose gates pass.
+8. Move selected high-confidence rules to `block` only with zero-FP evidence,
+   adequate malicious samples, low unknown rate, low challenge solve rate, and
+   an enforce-stage PR carrying the evidence SHA/window.
+9. Complete the manual DNS cutover runbook for production.
 
 ## Alternative provider mapping
 

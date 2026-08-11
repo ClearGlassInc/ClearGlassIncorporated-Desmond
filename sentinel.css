@@ -25,3 +25,16 @@
 @media(max-width:390px){.sentinel-hero{padding:20px 16px}.sentinel-session span{display:none}.sentinel-command-rail button{padding-inline:7px}.sentinel-hero h2{font-size:26px}.sentinel-recommendation>span{display:none}}
 @media(prefers-reduced-motion:reduce){.sentinel-hero:before{opacity:.3}.sentinel-vector-orbit{animation:none!important}.sentinel-hero-open,.sentinel-cta-arrow{transition:none}}
 [data-skin=stealth] .sentinel-hero{--cg-panel-alpha:.96;--cg-grid-alpha:.02;backdrop-filter:blur(8px)}[data-skin=stealth] .sentinel-vector{opacity:.35}
+
+/* Homepage/mobile viewport hardening — prevents iOS scroll-width drift and duplicate floating controls. */
+html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+@supports (overflow:clip){html,body{overflow-x:clip!important}}
+.class-banner,.unclass-banner{box-sizing:border-box!important;width:100%!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important;padding-left:max(12px,env(safe-area-inset-left))!important;padding-right:max(12px,env(safe-area-inset-right))!important}
+.class-banner span,.unclass-banner span{max-width:100%!important;white-space:normal!important}
+.sentinel-launcher{right:calc(12px + env(safe-area-inset-right))!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;max-width:calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right))!important}
+.sentinel-launcher-button{max-width:100%!important}
+.sentinel-launcher-close{right:0!important;top:-8px!important;transform:translateX(0)!important}
+body.cg-security-dock-mounted .sentinel-launcher{display:none!important;visibility:hidden!important;pointer-events:none!important}
+body.cg-security-dock-mounted #cg-security-stack{right:calc(var(--cg-security-edge,12px) + env(safe-area-inset-right))!important;max-width:calc(100vw - var(--cg-security-edge,12px) - var(--cg-security-edge,12px) - env(safe-area-inset-left) - env(safe-area-inset-right))!important}
+body.cg-security-dock-mounted #cg-assistant-launcher,body.cg-security-dock-mounted #cg-assistant-panel{max-width:100%!important}
+@media(max-width:480px){.class-banner{font-size:9px!important;line-height:1.45!important;letter-spacing:.08em!important;padding-top:6px!important;padding-bottom:6px!important}.class-banner span{margin-left:4px!important;margin-right:4px!important}.sentinel-launcher{right:calc(10px + env(safe-area-inset-right))!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;max-width:calc(100vw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right))!important}.sentinel-launcher-button{min-height:54px!important;padding:7px 12px 7px 7px!important}.sentinel-mark{width:36px!important;height:36px!important;border-radius:12px!important}}

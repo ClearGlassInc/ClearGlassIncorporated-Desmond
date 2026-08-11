@@ -1,0 +1,42 @@
+{
+  "name": "@clearglass/minerals-platform",
+  "version": "0.1.0",
+  "private": true,
+  "engines": { "node": ">=20.11.0" },
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
+    "worker": "tsx workers/ingestion.ts",
+    "openapi:check": "node scripts/check-openapi.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.14.0",
+    "bullmq": "^5.58.0",
+    "ioredis": "^5.7.0",
+    "next": "^15.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "prisma": "^6.14.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.2.0"
+  },
+  "prisma": { "seed": "tsx prisma/seed.ts" }
+}

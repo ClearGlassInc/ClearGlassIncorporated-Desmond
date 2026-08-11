@@ -47,3 +47,11 @@ CREATE INDEX IF NOT EXISTS idx_shipments_supplier_order
 -- tracking number and leave a customer chasing a parcel we never mentioned.
 CREATE UNIQUE INDEX IF NOT EXISTS idx_shipments_supplier_shipment
     ON shipments(supplier, supplier_shipment_id) WHERE supplier_shipment_id IS NOT NULL;
+
+-- At most one un-parcelled ("placeholder") shipment per order and supplier.
+-- Booking a draft is a check-then-insert, so two overlapping payment webhooks
+-- can both observe no shipment and both insert one; `supplier_order_id` is
+-- deliberately non-unique for split parcels and cannot prevent it. This makes
+-- the database the arbiter, and the loser adopts the winner's row.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_shipments_order_placeholder
+    ON shipments(order_id, supplier) WHERE supplier_shipment_id IS NULL;

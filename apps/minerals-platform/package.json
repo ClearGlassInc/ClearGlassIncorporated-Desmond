@@ -17,6 +17,8 @@
     "db:migrate:dev": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "worker": "tsx workers/ingestion.ts",
+    "worker:digests": "tsx workers/digests.ts",
+    "digests:register": "tsx scripts/register-digests.ts",
     "openapi:check": "node scripts/check-openapi.mjs"
   },
   "dependencies": {

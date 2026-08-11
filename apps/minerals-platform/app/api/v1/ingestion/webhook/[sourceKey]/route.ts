@@ -34,7 +34,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ so
     const contentHash = createHash("sha256").update(body).digest("hex");
     const existing = await db.sourceDocument.findFirst({ where: { sourceId: source.id, contentHash }, orderBy: { collectedAt: "desc" } });
     if (existing) return success({ staged: true, deduplicated: true, documentId: existing.id, contentHash });
-    const metadata = JSON.parse(JSON.stringify({ transport: "signed-webhook", normalizationStatus: "STAGED_RAW_PROVENANCE", receivedAt: new Date().toISOString() })) as Prisma.InputJsonObject;
+    const metadata = JSON.parse(JSON.stringify({ transport: "signed-webhook", normalizationStatus: "STAGED_RAW_PROVENANCE", receivedAt: new Date().toISOString(), rawByteLength: Buffer.byteLength(body, "utf8"), rawPayload: parsed })) as Prisma.InputJsonObject;
     const transformLog = JSON.parse(JSON.stringify({ transport: "signed-webhook", contentHash, normalizationStatus: "STAGED_RAW_PROVENANCE", domainRowsWritten: 0 })) as Prisma.InputJsonObject;
     const [document, run] = await db.$transaction(async (tx) => {
       const createdDocument = await tx.sourceDocument.create({ data: { sourceId: source.id, title: `${source.provider} ${source.dataset} webhook payload`, url: source.sourceUrl, reference: `${source.key}:webhook:${contentHash.slice(0, 16)}`, collectedAt: new Date(), contentHash, license: source.license, status: "UNKNOWN", metadata } });

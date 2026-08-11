@@ -36,11 +36,19 @@ const worker = new Worker<{ sourceKey: string; runId?: string }>(
     try {
       const envelope = await adapter.fetch();
       const persistedStatus = toRecordStatus(envelope.status);
-      const raw = JSON.stringify(envelope.records);
+      const raw = JSON.stringify(envelope.rawPayload ?? envelope.records);
       const contentHash = createHash("sha256").update(raw).digest("hex");
       const existingDocument = await db.sourceDocument.findFirst({ where: { sourceId: source.id, contentHash }, orderBy: { collectedAt: "desc" } });
       const deduplicated = Boolean(existingDocument);
-      const documentMetadata = JSON.parse(JSON.stringify({ upstreamStatus: envelope.status, attribution: envelope.attribution, errors: envelope.errors, recordCount: envelope.records.length, normalizationStatus: "STAGED_RAW_PROVENANCE" })) as Prisma.InputJsonObject;
+      const documentMetadata = JSON.parse(JSON.stringify({
+        upstreamStatus: envelope.status,
+        attribution: envelope.attribution,
+        errors: envelope.errors,
+        recordCount: envelope.records.length,
+        rawByteLength: Buffer.byteLength(raw, "utf8"),
+        rawPayload: envelope.rawPayload,
+        normalizationStatus: "STAGED_RAW_PROVENANCE"
+      })) as Prisma.InputJsonObject;
       const document = existingDocument ?? await db.sourceDocument.create({
         data: {
           sourceId: source.id,

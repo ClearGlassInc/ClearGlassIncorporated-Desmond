@@ -16,6 +16,12 @@
   if (window.__cgPlatform) return;
   window.__cgPlatform = true;
 
+  var platformBase = (document.currentScript && document.currentScript.src) || location.href;
+  function platformAsset(name) {
+    try { return new URL(name, platformBase).href; }
+    catch (e) { return name; }
+  }
+
   /* ── 1) PWA: manifest link + service worker ─────────────────────────────── */
   if (!document.querySelector('link[rel="manifest"]')) {
     var mf = document.createElement("link");
@@ -56,6 +62,25 @@
     cinematic.src = "/assets/js/cinematic-motion.js";
     cinematic.defer = true;
     document.body.appendChild(cinematic);
+  }
+
+  /* ── AEGIS-OMEGA control plane: fault-contained progressive enhancement ── */
+  var omegaCss = platformAsset("aegis-omega.css");
+  var omegaJs = platformAsset("aegis-omega.js");
+  addLink('link[data-cg-aegis-omega="true"]', {
+    rel: "stylesheet",
+    href: omegaCss,
+    "data-cg-aegis-omega": "true"
+  });
+  if (!document.querySelector('script[data-cg-aegis-omega="true"]')) {
+    var omega = document.createElement("script");
+    omega.src = omegaJs;
+    omega.defer = true;
+    omega.setAttribute("data-cg-aegis-omega", "true");
+    omega.addEventListener("error", function () {
+      document.documentElement.setAttribute("data-aegis-omega", "degraded");
+    }, { once: true });
+    document.body.appendChild(omega);
   }
 
   if ("serviceWorker" in navigator) {

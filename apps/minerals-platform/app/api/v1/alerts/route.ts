@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import type { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { failure, pageSchema, paginated, queryObject, success } from "@/lib/api";
@@ -14,7 +15,7 @@ const createSchema = z.object({
   dedupeKey: z.string().max(240).optional(),
   entityType: z.string().max(80).optional(),
   entityId: z.string().max(160).optional(),
-  threshold: z.record(z.string(), z.unknown()).optional()
+  threshold: z.record(z.string(), z.json()).optional()
 });
 
 export async function GET(request: NextRequest) {
@@ -38,7 +39,8 @@ export async function POST(request: NextRequest) {
       const existing = await db.alert.findFirst({ where: { organizationId: principal.organizationId, dedupeKey: input.dedupeKey, status: { notIn: ["RESOLVED", "SUPPRESSED"] } } });
       if (existing) return success({ deduplicated: true, alert: existing });
     }
-    const alert = await db.alert.create({ data: { organizationId: principal.organizationId, ...input } });
+    const threshold = input.threshold ? JSON.parse(JSON.stringify(input.threshold)) as Prisma.InputJsonObject : undefined;
+    const alert = await db.alert.create({ data: { organizationId: principal.organizationId, type: input.type, severity: input.severity, title: input.title, body: input.body, dedupeKey: input.dedupeKey, entityType: input.entityType, entityId: input.entityId, threshold } });
     await writeAudit(principal, "alert.create", "Alert", alert.id, { severity: alert.severity, type: alert.type });
     return success({ deduplicated: false, alert }, { status: 201 });
   } catch (error) { return failure(error); }

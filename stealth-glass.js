@@ -229,10 +229,8 @@
     collisionRaf = 0;
     var stack = document.getElementById("cg-security-stack");
     var launcher = document.getElementById("cg-assistant-launcher");
-    if (!stack || !launcher || stack.classList.contains("is-expanded")) {
-      if (stack) stack.style.setProperty("--cg-assistant-lift", "0px");
-      return;
-    }
+    if (!stack || !launcher) return;
+    if (stack.classList.contains("is-expanded")) return;
 
     stack.style.setProperty("--cg-assistant-lift", "0px");
     var base = launcher.getBoundingClientRect();
@@ -330,7 +328,7 @@
       updateModalState();
       scheduleCollisionCheck();
     });
-    legacyObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "aria-modal", "class", "style"] });
+    legacyObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "aria-modal", "class"] });
 
     scheduleCollisionCheck();
   }

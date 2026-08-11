@@ -68,6 +68,56 @@ resource "cloudflare_ruleset" "security_headers" {
         name      = "X-Powered-By"
         operation = "remove"
       }
+      headers {
+        name      = "X-AspNet-Version"
+        operation = "remove"
+      }
+      headers {
+        name      = "X-AspNetMvc-Version"
+        operation = "remove"
+      }
+    }
+  }
+
+  dynamic "rules" {
+    for_each = local.dynamic_host_scope != "false" ? [1] : []
+    content {
+      ref         = "dynamic_origin_transport_headers"
+      description = "Set transport/content headers on dynamic origins; route-specific CSP/CORS/cache policy stays application-owned"
+      expression  = local.dynamic_host_scope
+      action      = "rewrite"
+
+      action_parameters {
+        headers {
+          name      = "X-Content-Type-Options"
+          operation = "set"
+          value     = "nosniff"
+        }
+        headers {
+          name      = "Referrer-Policy"
+          operation = "set"
+          value     = "strict-origin-when-cross-origin"
+        }
+        headers {
+          name      = "Strict-Transport-Security"
+          operation = "set"
+          value = var.hsts_include_subdomains ? (
+            var.hsts_preload ? "max-age=31536000; includeSubDomains; preload" : "max-age=31536000; includeSubDomains"
+          ) : "max-age=31536000"
+        }
+        headers {
+          name      = "X-Powered-By"
+          operation = "remove"
+        }
+        headers {
+          name      = "X-AspNet-Version"
+          operation = "remove"
+        }
+        headers {
+          name      = "X-AspNetMvc-Version"
+          operation = "remove"
+        }
+      }
     }
   }
 }

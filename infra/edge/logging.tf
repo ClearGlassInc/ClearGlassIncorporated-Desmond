@@ -7,17 +7,15 @@ locals {
     "ClientASN",
     "ClientCountry",
     "ClientRequestHTTPHost",
-    "ClientRequestPath",
-    "ClientRequestUserAgent",
-    "ClientRequestReferer",
     "ClientRequestMethod",
     "EdgeResponseStatus"
   ], var.log_full_client_ip ? ["ClientIP"] : [])
 }
 
 # Privacy-preserving default: export firewall/security events only, omit request
-# bodies, cookies, authorization data and full query strings. Full client IP is
-# opt-in and should have a documented retention/need justification.
+# bodies, cookies, authorization data, referrers, raw paths/user agents and full
+# query strings. Use provider aggregates or a controlled normalizer for route and
+# user-agent classes. Full client IP is opt-in and needs documented justification.
 resource "cloudflare_logpush_job" "firewall_events" {
   count = var.enable_logpush && var.logpush_destination != "" ? 1 : 0
 

@@ -9,22 +9,67 @@ public_hostname = "www.clearglassinc.com"
 api_hostname   = ""
 admin_hostname = ""
 
+# Versioned deployment metadata. Populate ticket/rationale before enabling any
+# provider feature. rollout_stage controls allowable active actions.
+policy_version            = "2.0.0"
+rollout_stage             = "disabled"
+deployment_owner          = "platform-security"
+deployment_change_ticket  = ""
+configuration_rationale   = "Safe repository baseline; no provider mutation enabled."
+
 # FIRST PLAN: all provider-mutating feature groups disabled. Enable one group at
 # a time only after confirming zone-phase/resource ownership, plan support and
 # reviewing the exact Terraform plan.
 enable_custom_waf       = false
 enable_managed_waf      = false
 enable_bot_management   = false
+enable_bot_score_rule   = false
+enable_provider_reputation_rules = false
 enable_rate_limits      = false
 enable_security_headers = false
 enable_logpush          = false
 enable_geo_asn_rules    = false
+enable_origin_auth_header = false
+enable_enterprise_body_size_rule = false
 enable_emergency_mode   = false
 
-# Observe first where the Cloudflare plan supports the log action.
-custom_waf_action           = "log"
+# Observe first where the Cloudflare plan supports the log action. Promote one
+# rule/route at a time; do not turn every detection into a block together.
+custom_waf_actions = {
+  unexpected_method = "log"
+  path_probe         = "log"
+  suspicious_ua      = "log"
+  request_size       = "log"
+  request_body       = "log"
+}
 managed_waf_override_action = "log"
-rate_limit_action           = "managed_challenge"
+rate_limit_actions = {
+  static_assets  = "log"
+  html           = "log"
+  login          = "log"
+  password_reset = "log"
+  search         = "log"
+  contact_form   = "log"
+  api            = "log"
+  admin          = "log"
+  webhook        = "log"
+}
+
+# Counter fields are provider/plan-specific. Defaults are per source IP and
+# edge colocation; use only authoritative session/token/identity fields.
+rate_limit_characteristics = {
+  static_assets  = ["ip.src", "cf.colo.id"]
+  html           = ["ip.src", "cf.colo.id"]
+  login          = ["ip.src", "cf.colo.id"]
+  password_reset = ["ip.src", "cf.colo.id"]
+  search         = ["ip.src", "cf.colo.id"]
+  contact_form   = ["ip.src", "cf.colo.id"]
+  api            = ["ip.src", "cf.colo.id"]
+  admin          = ["ip.src", "cf.colo.id"]
+  webhook        = ["ip.src", "cf.colo.id"]
+}
+bot_score_action                = "log"
+provider_reputation_action      = "log"
 bot_definitely_automated_action = "managed_challenge"
 bot_likely_automated_action     = "managed_challenge"
 
@@ -33,6 +78,10 @@ bot_likely_automated_action     = "managed_challenge"
 # require a future RFC3339 quarantine_expires_at.
 trusted_ipv4_cidrs    = []
 trusted_ipv6_cidrs    = []
+monitoring_ipv4_cidrs = []
+monitoring_ipv6_cidrs = []
+internal_automation_ipv4_cidrs = []
+internal_automation_ipv6_cidrs = []
 deny_ipv4_cidrs       = []
 deny_ipv6_cidrs       = []
 quarantine_ipv4_cidrs = []
@@ -49,12 +98,28 @@ challenge_asns = []
 allowed_countries   = []
 denied_countries    = []
 challenge_countries = []
+geo_exception_countries = []
+
+# Optional provider-managed/reviewed IP List names. The lists themselves are
+# created and maintained manually; these signals cannot cause permanent blocks.
+anonymous_network_ip_list_name = ""
+tor_exit_ip_list_name          = ""
 
 # Optional Logpush destination. Depending on the destination this may embed a
 # credential and should then be supplied as a secret/env var rather than tfvars.
 logpush_destination = ""
 log_full_client_ip  = false
 
+# Dynamic origins only. GitHub Pages cannot validate this header. Supply the
+# value through EDGE_ORIGIN_AUTH_HEADER_VALUE / TF_VAR_, never in this file.
+origin_auth_header_name = "X-ClearGlass-Edge-Origin"
+
 # Introduce HSTS scope deliberately. Preload requires includeSubDomains.
 hsts_include_subdomains = false
 hsts_preload             = false
+
+# Emergency mode stays false in committed baseline files. If manually enabled,
+# set all three fields and keep expiry within 24 hours.
+emergency_expires_at    = ""
+emergency_owner        = ""
+emergency_change_ticket = ""

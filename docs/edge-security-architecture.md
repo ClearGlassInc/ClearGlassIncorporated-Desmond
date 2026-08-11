@@ -1,110 +1,125 @@
 # Edge Security Architecture
 
+Status: target design and reproducible configuration only. No provider or DNS change is represented as complete.
+
 ## Target state
 
-```text
-Internet
-  |
-  v
-Managed DNS / CDN / WAF
-  |-- DDoS mitigation
-  |-- managed WAF
-  |-- bot classification / challenge
-  |-- IP reputation / allow / deny / quarantine
-  |-- rate limiting
-  |-- geo / ASN policy
-  |-- response-header transforms
-  |-- cache / origin shielding
-  |-- security analytics / logs / alerts
-  |
-  +--> static origin: GitHub Pages (current, bypassable origin limitation)
-  |
-  +--> API/admin origin(s): future/private-capable origin with authenticated origin access
+```mermaid
+flowchart TD
+    U["Public clients"] --> E["Managed edge DNS / CDN / WAF"]
+    E --> P["Static site: GitHub Pages"]
+    E --> A["API origin: private-capable"]
+    E --> M["Admin origin: private-capable"]
+    E --> L["Privacy-filtered logs and alerts"]
+    C["Reviewed policy + protected CI"] --> E
 ```
 
-Cloudflare is the reference implementation. The policy model in `infra/edge/policies/baseline.json` is provider-neutral and is intended to map to Fastly, CloudFront + AWS WAF, Azure Front Door, or another enterprise edge.
+Cloudflare is the reference adapter. `infra/edge/policies/baseline.json` is the provider-neutral intent, while Terraform isolates Cloudflare expressions and resources. Fastly, AWS CloudFront plus AWS WAF, Azure Front Door, or another enterprise provider must preserve the same scopes, rollout states, exceptions, ownership, expiry, logging, and origin-control semantics.
+
+## Edge request path
+
+The managed edge is responsible for:
+
+- provider-managed L3/L4/L7 DDoS mitigation and emergency security posture
+- TLS termination, HTTPS redirect, caching, and plan-appropriate tiered/origin shielding
+- managed exploit rules for SQL injection, XSS, LFI/RFI, command injection, protocol anomalies, malformed requests, and known exploit signatures
+- custom method, traversal/scanner, user-agent, reputation, size, geo/ASN, and emergency rules
+- verified-bot classification, scoped bot-score handling, challenges, and challenge telemetry
+- per-route rate limits for assets, HTML, auth, reset, search, forms, API, admin, and webhooks
+- response-header transforms and removal of selected identifying headers
+- security-event export, metrics, dashboards, alerts, and configuration audit evidence
+
+The static Pages origin remains publicly reachable through GitHub infrastructure. CDN caching lowers normal origin load but is not equivalent to a private origin shield. API/admin origins should reject direct ingress using private connectivity, mTLS/authenticated pulls, provider egress allow lists, or the edge-overwritten high-entropy header template in `origin.tf`.
 
 ## Control ownership
 
-| Control | Edge provider | GitHub Actions | Application | Manual operator |
-|---|---:|---:|---:|---:|
-| L3/L4/L7 DDoS | yes | no | no | enable/plan selection |
-| managed WAF | yes | validate/plan/apply | input validation remains | credentials/approval |
-| custom WAF | yes | validate/plan/apply | no | promotion approval |
-| bot challenges | yes | validate/plan/apply | optional app telemetry | feature/plan enablement |
-| IP reputation | yes | validate policy | no | list stewardship |
-| route rate limits | yes | validate/plan/apply | app rate limits remain defense-in-depth | threshold approval |
-| geo/ASN rules | yes | validate/plan/apply | no | disabled by default; explicit enablement |
-| response headers | yes | validate config | app owns route-specific exceptions | rollout approval |
-| origin authentication | provider/origin dependent | deploy templates | API origin must validate token/mTLS if used | origin configuration |
-| DNS cutover | provider | no | no | yes, always manual here |
-| logging/export | yes | config validation | origin logs | destination/retention setup |
-| emergency bypass | yes | rollback workflow/plan | app fallback | operator decision |
+| Control | Edge provider | GitHub Actions | Application/origin | Manual operator |
+|---|---|---|---|---|
+| DDoS mitigation | Enforces managed protection | Validates declared intent only | Capacity/degradation handling | Select plan; activate emergency mode |
+| Managed/custom WAF | Evaluates requests | Schema, static checks, plan, protected apply | Input validation remains mandatory | Approve promotions/exceptions |
+| Bot controls | Verification, score, challenge | Prevents unsafe zone-wide defaults | Identity and abuse context | Confirm plan and trusted services |
+| Reputation/IP lists | Threat signals and list matching | Validates configuration shape | Corroborating abuse evidence | Steward lists and expiry |
+| Rate limiting | Per edge-native characteristics | Enforces reviewed route/action maps | Identity/session/app counters remain | Tune from observed p99 traffic |
+| Geo/ASN | Disabled baseline; scoped rules | Rejects unsafe default enablement | Authorization remains mandatory | Explicit enablement and exceptions |
+| Response headers | Adds/removes HTTP headers | Audits artifact CSP and IaC | Owns route CSP/CORS/cache semantics | Compatibility promotion |
+| Origin access | Injects/verifies provider identity where supported | Keeps secret inputs ephemeral | Must reject missing/invalid identity | Configure network/secret/mTLS |
+| Logs/alerts | Produces/exports security events | Records plan/apply audit evidence | Produces auth/business signals | Create destination and alert routes |
+| DNS/certificates | Serves only after manual setup | Makes no DNS resources | Pages/custom-domain certificate support | All zone, DNS, TLS, and cutover work |
 
-## Policy order
+## Provider policy layers
 
-1. explicit trusted allow/skip exceptions with narrow scope
-2. verified crawler handling
-3. emergency rules with mandatory expiry
-4. malformed/protocol/method checks
-5. IP reputation and quarantine signals
-6. geo/ASN policy if explicitly enabled
-7. bot classification/challenge
-8. route-specific rate limiting
-9. managed WAF
-10. cache/header transforms
+Rules are modeled as layers rather than as a broad default-deny list:
 
-A provider's actual evaluation phases may differ; mappings must preserve the security intent rather than blindly preserve numeric order.
+1. protect only the explicitly configured public, API, and admin hostnames
+2. preserve narrow trusted monitoring/automation exceptions within bot/rate layers; do not skip managed exploit inspection
+3. evaluate temporary emergency controls with owner, ticket, and expiry
+4. detect malformed methods, traversal/probing, suspicious agents, size anomalies, and confirmed deny/quarantine sources
+5. apply optional reputation and geo/ASN signals, all observe/disabled by default
+6. classify bots and challenge uncertain automation without treating user-agent text as identity
+7. enforce route-specific rate limits with webhook-safe non-browser actions
+8. execute provider managed WAF categories
+9. apply cache, routing, origin-auth, and response-header policies
 
-## Safe rollout
+Providers differ in exact phase order. The adapter must follow provider-native ordering while retaining these security invariants. On Cloudflare, a single Terraform state must own each zone ruleset entry point.
 
-- Phase 0: baseline logging and analytics only.
-- Phase 1: custom detections in `log` where supported; otherwise narrow managed challenges.
-- Phase 2: managed challenge for suspicious automation and high-confidence anomalies.
-- Phase 3: block only confirmed malicious signatures/sources after review.
-- Phase 4: tighten thresholds based on measured legitimate p99 traffic.
+## Rollout state machine
 
-Broad geo blocking, broad ASN blocking, blanket non-browser blocking, and blanket automation denial are prohibited by default.
+```mermaid
+stateDiagram-v2
+    [*] --> Disabled
+    Disabled --> Observe: reviewed enablement
+    Observe --> Challenge: telemetry approved
+    Challenge --> Enforce: false positives accepted
+    Enforce --> Observe: incident rollback
+    Challenge --> Observe: false positive
+    Observe --> Disabled: feature or state conflict
+```
 
-## DDoS and caching
+Committed staging and production configurations start with every provider mutation disabled. Promotion is a version-controlled change to the environment file, followed by validation, a remote-state plan, review, protected approval, apply, and live smoke tests. Broad policies must never jump directly from disabled to block.
 
-Use provider-managed DDoS protection. Cache static immutable assets aggressively when filenames are versioned; cache HTML conservatively so deployments propagate quickly. Never cache authentication, personalized, checkout, webhook, admin, or other sensitive dynamic responses unless the application explicitly marks them safe.
+## DDoS, cache, and shielding
 
-For GitHub Pages the provider acts as a caching proxy, not a private origin shield. For future API origins, use authenticated origin pulls, mTLS, signed origin headers, provider egress allow lists, private links, or equivalent controls.
+- Use the provider's always-on network/application DDoS service; never emulate an attack in testing.
+- Cache versioned static assets with long TTLs only when immutable naming is verified.
+- Cache Pages HTML conservatively so deploys and rollbacks propagate.
+- Bypass auth, account, checkout, admin, webhook, personalized, `Authorization`, `Set-Cookie`, `private`, and `no-store` traffic.
+- Keep cache keys limited to scheme, validated host, normalized path, and explicitly relevant query parameters. Never trust forwarding headers in the cache key.
+- Configure provider tiered cache/origin shield manually or in a provider adapter only after plan and state ownership review. `cache-policy.example.json` is the source template; this Cloudflare v4 adapter does not silently claim those provider-side controls.
+- During a spike, protect the attacked route and use managed challenge for uncertain traffic. Do not equate a popularity spike with an attack.
+
+## Bot and reputation decision model
+
+Verified crawler identity uses the provider's verified-bot field, not a spoofable user-agent. Monitoring and internal automation exceptions are explicit CIDRs and affect generic bot/rate layers only. Optional bot-score rules are hostname-scoped. Zone-wide Super Bot Fight Mode stays disabled; with API/admin hostnames it may be enabled only with automation actions set to allow and scoped custom rules handling browser-oriented challenges.
+
+Provider threat scores, anonymous-proxy/VPN lists, and Tor lists start at log or managed challenge. They cannot produce a permanent reputation-only deny. Confirmed-abuse deny CIDRs require evidence and review; quarantine entries require a future expiry.
 
 ## Header strategy
 
-Initial edge policy:
+The edge candidate is derived from the built artifact in `csp-inventory.json` and starts as `Content-Security-Policy-Report-Only`. Enforcement requires route-owner and browser telemetry approval. Application/origin code remains authoritative for CORS, sensitive `Cache-Control`, and route-specific CSP.
 
-- HSTS: `max-age=31536000; includeSubDomains` after confirming every subdomain supports HTTPS. Add `preload` only after operator review.
-- `X-Content-Type-Options: nosniff`
-- `Referrer-Policy: strict-origin-when-cross-origin`
-- `Permissions-Policy: geolocation=(), microphone=(), camera=()`
-- `Cross-Origin-Opener-Policy: same-origin-allow-popups`
-- `Cross-Origin-Resource-Policy: same-site`
-- `Content-Security-Policy-Report-Only` first, derived from the repository's existing `_headers` baseline.
-- Frame protection through CSP `frame-ancestors`; retain `X-Frame-Options: SAMEORIGIN` as legacy defense-in-depth until compatibility testing permits removal.
-- remove/minimize provider/origin-identifying headers where the provider supports it.
+Baseline transforms include HSTS without subdomain/preload expansion, nosniff, strict-origin referrer policy, a restrictive permissions policy, compatible COOP/CORP, CSP `frame-ancestors`, legacy `X-Frame-Options`, and removal of selected server-identifying headers. HSTS `includeSubDomains` and `preload` are separate promotions because they can affect hostnames outside this site.
 
-## Observability
+## Observability and privacy
 
-Minimum metrics:
+Dashboards and alerts are declared in `observability.example.json`. At minimum, correlate request action, rule ID, bot/challenge outcome, country, ASN, path class, user-agent class, origin error/latency, cache status, authentication abuse, configuration drift, DNS, and certificates.
 
-- request count by action: allow, log, challenge, block, rate-limit
-- rule matches by rule ID
-- challenge solve/fail rates
-- country, ASN, reputation category and user-agent class
-- origin 4xx/5xx, latency and availability
-- cache hit ratio
-- authentication/form/API abuse signals
-- configuration version, drift, certificate state and DNS health
+Default retention is 14–30 days for high-cardinality raw security events, 90 days for normalized metrics, and at least one year for configuration audit records. Do not export cookies, authorization headers, passwords, bodies, or complete sensitive query values. Omit, truncate, or keyed-hash client IPs unless incident response has an approved need for full addresses.
 
-Do not export authorization headers, cookies, passwords, full sensitive query strings, or request bodies by default. Prefer field-level suppression. Where analytics do not require full IP addresses, pseudonymize or truncate them downstream.
+## Configuration and deployment pipeline
 
-## Emergency mode
+```mermaid
+flowchart LR
+    P["Policy PR"] --> V["Schema, tests, CSP, IaC checks"]
+    V --> T["Locked remote-state plan"]
+    T --> R["Human review + protected environment"]
+    R --> A["Recomputed identical plan + apply"]
+    A --> S["Bounded smoke tests + audit evidence"]
+```
 
-Emergency high-security mode is opt-in and time-bounded. It may increase challenge sensitivity, reduce route-specific limits, temporarily restrict admin/API geography/ASNs, and block confirmed abusive indicators. Every temporary rule requires an owner, rationale and expiry. The emergency switch must not become a permanent default-deny perimeter.
+Plan and apply use separate least-privilege provider tokens. Backend configuration and state credentials live in protected GitHub environments. Apply rebuilds the ephemeral inputs, validates their hashes, recomputes the provider plan, and refuses mutation if the reviewed plan digest changes. Pull requests and pushes validate only; they never apply.
 
-## Provider portability
+## Emergency bypass and recovery
 
-The neutral policy schema captures identifier, description, scope, priority, action, rollout mode, logging level, exceptions, expiry, owner and rationale/change ticket. Provider adapters may use native expression languages, managed rule IDs, bot scores and rate-limit primitives, but the source-of-truth security intent remains reviewable in the neutral policy document.
+Emergency mode is a temporary managed challenge, not permanent lockdown. It requires custom-WAF ownership enabled in the reviewed environment file, a change/incident ticket, accountable operator, and expiry no later than 24 hours from plan time. It excludes verified bots, trusted operations, and webhooks.
+
+Rollback order is: revert the narrow rule/action, return the affected layer to observe, apply the last reviewed configuration, and only then consider a recorded DNS-only bypass if the provider itself is unavailable. DNS bypass restores reachability at the cost of the WAF/CDN perimeter and requires explicit risk acceptance.

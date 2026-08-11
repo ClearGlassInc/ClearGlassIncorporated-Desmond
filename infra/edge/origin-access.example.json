@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "github_pages": {
+    "origin_authentication_supported": false,
+    "direct_origin_access_preventable": false,
+    "control": "Route the custom hostname through the edge and track direct Pages reachability as accepted residual risk."
+  },
+  "dynamic_origins": {
+    "enabled": false,
+    "hostnames": [],
+    "preferred_controls": [
+      "private network or private link",
+      "provider authenticated origin pull or mTLS",
+      "provider egress IP allow list",
+      "edge-overwritten high-entropy origin header validated by the origin"
+    ],
+    "required_origin_behavior": [
+      "Reject missing or invalid edge identity before application routing.",
+      "Overwrite, never append, the origin-auth header at the edge.",
+      "Disable direct public ingress where the hosting platform permits it.",
+      "Rotate the credential after suspected disclosure and record the rotation.",
+      "Return Cache-Control: no-store on authentication, admin, checkout, webhook, and personalized responses."
+    ],
+    "failure_mode": "Fail closed at the dynamic origin. A provider control-plane outage must not make direct origin ingress public."
+  }
+}

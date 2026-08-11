@@ -11,9 +11,11 @@ export async function GET(request: NextRequest) {
   try {
     requireRole(resolvePrincipal(request), "VIEWER");
     const input = schema.parse(queryObject(new URL(request.url)));
-    const mineralFilter = input.mineralId ? { mineralId: input.mineralId } : {};
+    const ownershipWhere = input.mineralId
+      ? { verified: true, OR: [{ mine: { mineralId: input.mineralId } }, { project: { mineralId: input.mineralId } }] }
+      : { verified: true };
     const [ownership, routes, facilities, production] = await Promise.all([
-      db.ownershipRelationship.findMany({ where: { verified: true, OR: [{ mine: mineralFilter }, { project: mineralFilter }] }, include: { ownerCompany: true, mine: { include: { mineral: true, country: true } }, project: { include: { mineral: true, country: true } } }, take: input.limit }),
+      db.ownershipRelationship.findMany({ where: ownershipWhere, include: { ownerCompany: true, mine: { include: { mineral: true, country: true } }, project: { include: { mineral: true, country: true } } }, take: input.limit }),
       db.shippingRoute.findMany({ where: { verified: true }, include: { origin: { include: { country: true } }, destination: { include: { country: true } } }, take: input.limit }),
       db.facility.findMany({ where: { deletedAt: null }, include: { operator: true, country: true }, take: input.limit }),
       db.productionRecord.findMany({ where: input.mineralId ? { mineralId: input.mineralId } : {}, include: { country: true, mineral: true }, orderBy: { periodEnd: "desc" }, take: 2000 })

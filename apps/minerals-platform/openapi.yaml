@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: >-
     Versioned, organization-aware API for critical-minerals intelligence.
-    Observed, delayed, estimated, analyst-entered, and demo data must remain distinguishable.
+    Observed, delayed, estimated, analyst-entered, demo, and unknown data remain distinguishable.
 servers:
   - url: /api/v1
 security:
@@ -19,15 +19,16 @@ paths:
         '503': { description: Dependency unavailable }
   /search:
     get:
-      summary: Universal entity search
+      summary: Universal mineral, project, mine, company, and facility search
       parameters:
         - { name: q, in: query, required: true, schema: { type: string, minLength: 2 } }
         - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 50, default: 10 } }
       responses:
         '200': { description: Search results }
+        '429': { description: Rate limited }
   /minerals:
     get:
-      summary: Mineral taxonomy and profiles
+      summary: Mineral taxonomy and forms
       parameters:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/PageSize'
@@ -37,7 +38,7 @@ paths:
         '200': { description: Paginated mineral profiles }
   /projects:
     get:
-      summary: Mines and project registry
+      summary: Project profiles
       parameters:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/PageSize'
@@ -47,6 +48,28 @@ paths:
         - { name: stage, in: query, schema: { type: string } }
       responses:
         '200': { description: Paginated project profiles }
+  /mines:
+    get:
+      summary: Mine profiles with ownership, production, reserves, and current risk
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - { name: q, in: query, schema: { type: string } }
+        - { name: mineralId, in: query, schema: { type: string, format: uuid } }
+        - { name: countryId, in: query, schema: { type: string, format: uuid } }
+        - { name: stage, in: query, schema: { type: string } }
+      responses:
+        '200': { description: Paginated mine profiles }
+  /companies:
+    get:
+      summary: Company operators, ownership, mines, projects, and facilities
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
+        - { name: q, in: query, schema: { type: string } }
+        - { name: ticker, in: query, schema: { type: string } }
+      responses:
+        '200': { description: Paginated company intelligence }
   /map/features:
     get:
       summary: GeoJSON map features
@@ -56,11 +79,12 @@ paths:
         - { name: east, in: query, schema: { type: number, minimum: -180, maximum: 180 } }
         - { name: north, in: query, schema: { type: number, minimum: -90, maximum: 90 } }
         - { name: type, in: query, schema: { type: string, enum: [project, mine, facility, logistics, all] } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 5000, default: 1000 } }
       responses:
         '200': { description: GeoJSON FeatureCollection }
   /markets:
     get:
-      summary: Mineral market price series
+      summary: Observed mineral market price series
       parameters:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/PageSize'
@@ -70,6 +94,16 @@ paths:
         - { name: to, in: query, schema: { type: string, format: date-time } }
       responses:
         '200': { description: Paginated market observations }
+  /markets/analytics:
+    get:
+      summary: Moving averages, observation-distance changes, and observed log-return volatility
+      description: Returns no forecast and no synthetic price series.
+      parameters:
+        - { name: mineralId, in: query, required: true, schema: { type: string, format: uuid } }
+        - { name: benchmark, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 2, maximum: 2000, default: 365 } }
+      responses:
+        '200': { description: Deterministic observed-data analytics }
   /trade:
     get:
       summary: Import/export intelligence
@@ -82,6 +116,24 @@ paths:
         - { name: hsCode, in: query, schema: { type: string } }
       responses:
         '200': { description: Paginated trade records }
+  /supply-chains:
+    get:
+      summary: Verified ownership/logistics relationships and production concentration
+      description: Inferred relationships are returned separately and are empty until supported by evidence.
+      parameters:
+        - { name: mineralId, in: query, schema: { type: string, format: uuid } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 500, default: 150 } }
+      responses:
+        '200': { description: Supply-chain graph data and HHI concentration }
+  /exploration:
+    get:
+      summary: Exploration/development projects and recent discoveries, permits, expansions, acquisitions, and supply agreements
+      parameters:
+        - { name: mineralId, in: query, schema: { type: string, format: uuid } }
+        - { name: countryId, in: query, schema: { type: string, format: uuid } }
+        - { name: days, in: query, schema: { type: integer, minimum: 1, maximum: 3650, default: 180 } }
+      responses:
+        '200': { description: Exploration monitor data }
   /risk:
     get:
       summary: Risk assessment history
@@ -89,32 +141,32 @@ paths:
         '200': { description: Assessments }
     post:
       summary: Calculate or persist a transparent risk assessment
-      description: Calculation requires Analyst. Persisting platform-level history requires Administrator.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required: [components]
-              properties:
-                mineId: { type: string, format: uuid }
-                projectId: { type: string, format: uuid }
-                persist: { type: boolean, default: false }
-                analystOverride: { type: boolean, default: false }
-                components:
-                  type: array
-                  items:
-                    type: object
-                    required: [key, score, weight]
-                    properties:
-                      key: { type: string }
-                      score: { type: [number, 'null'], minimum: 0, maximum: 100 }
-                      weight: { type: number, minimum: 0, maximum: 1 }
-                      confidence: { type: number, minimum: 0, maximum: 1 }
+      description: Analyst may calculate. Persisting platform-level history or overrides requires Administrator.
       responses:
         '200': { description: Calculated result }
         '201': { description: Persisted assessment }
+  /scenarios/supply-disruption:
+    post:
+      summary: Compare deterministic supply-disruption scenarios
+      description: User-supplied scenario arithmetic only; explicitly not a forecast.
+      responses:
+        '200': { description: Scenario comparison }
+  /provenance:
+    get:
+      summary: Field/entity provenance with source, document, license, timestamps, confidence, and method
+      parameters:
+        - { name: entityType, in: query, required: true, schema: { type: string } }
+        - { name: entityId, in: query, required: true, schema: { type: string } }
+        - { name: field, in: query, schema: { type: string } }
+      responses:
+        '200': { description: Provenance records }
+  /provenance/{id}/review:
+    post:
+      summary: Mark reviewed, verify, or flag a provenance record unknown
+      description: Data Steward may review/flag; Administrator is required to promote to VERIFIED.
+      parameters: [ { $ref: '#/components/parameters/Id' } ]
+      responses:
+        '200': { description: Reviewed provenance record }
   /alerts:
     get:
       summary: Organization alerts
@@ -137,7 +189,7 @@ paths:
         '200': { description: Updated workflow state }
   /alerts/{id}/deliver:
     post:
-      summary: Deliver an alert by email, webhook, Slack, or Teams
+      summary: Deliver an alert by email, HMAC-signed webhook, Slack, or Teams
       parameters: [ { $ref: '#/components/parameters/Id' } ]
       responses:
         '200': { description: Delivery accepted }
@@ -178,6 +230,10 @@ paths:
       summary: Data-source health and latest ingestion run
       responses:
         '200': { description: Source registry }
+    patch:
+      summary: Administrator source enablement, TTL, cadence, and restrictions
+      responses:
+        '200': { description: Updated source configuration }
   /ingestion:
     get:
       summary: Recent ingestion runs
@@ -185,18 +241,30 @@ paths:
         '200': { description: Ingestion runs }
     post:
       summary: Queue a source refresh subject to source TTL
+      description: Data Steward may refresh; forced refresh requires Administrator.
       responses:
         '202': { description: Refresh queued }
-        '429': { description: Source still inside TTL }
+        '429': { description: Source TTL or request rate limit }
+  /ingestion/webhook/{sourceKey}:
+    post:
+      security: []
+      summary: Signed machine-ingestion webhook staging
+      description: Requires timestamped HMAC headers; payload remains UNKNOWN raw provenance until reviewed/normalized.
+      parameters:
+        - { name: sourceKey, in: path, required: true, schema: { type: string } }
+      responses:
+        '202': { description: Raw payload staged }
+        '401': { description: Invalid or stale signature }
   /exports:
     get:
-      summary: Permissioned CSV or JSON export
+      summary: Permissioned, audited CSV or JSON export
       parameters:
         - { name: entity, in: query, required: true, schema: { type: string, enum: [projects, mines, trade] } }
         - { name: format, in: query, schema: { type: string, enum: [csv, json], default: csv } }
         - { name: limit, in: query, schema: { type: integer, maximum: 5000, default: 1000 } }
       responses:
         '200': { description: Export file }
+        '429': { description: Rate limited }
   /saved-views:
     get:
       summary: Personal and organization-shared saved analytical views
@@ -212,6 +280,7 @@ paths:
       description: Returns uncertainty and structured evidence; does not invent an answer when evidence is absent.
       responses:
         '200': { description: Grounded analyst evidence }
+        '429': { description: Rate limited }
   /stream:
     get:
       summary: Server-sent source-health freshness stream
@@ -220,6 +289,25 @@ paths:
           description: SSE source-health events
           content:
             text/event-stream: {}
+  /admin/members:
+    get:
+      summary: Administrator organization-member listing
+      responses:
+        '200': { description: Organization members }
+    post:
+      summary: Create/update organization membership and role
+      responses:
+        '201': { description: Membership updated }
+  /admin/audit:
+    get:
+      summary: Administrator organization audit-log query
+      responses:
+        '200': { description: Paginated audit records }
+  /admin/review-queue:
+    get:
+      summary: Data Steward review queue for failed/warning ingestion and low-confidence provenance
+      responses:
+        '200': { description: Human review queue }
 components:
   securitySchemes:
     trustedIdentityGateway:

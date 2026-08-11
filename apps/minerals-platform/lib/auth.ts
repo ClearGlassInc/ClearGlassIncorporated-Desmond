@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
 
 export type Role = "VIEWER" | "ANALYST" | "SENIOR_ANALYST" | "DATA_STEWARD" | "ADMINISTRATOR" | "API_CLIENT";
@@ -21,7 +22,11 @@ export function resolvePrincipal(request: NextRequest): Principal | null {
       role: normalizeRole(request.headers.get("x-cg-role")) ?? "ADMINISTRATOR"
     };
   }
-  // In production, identity headers must be injected only by a trusted OIDC/SAML gateway.
+  // Production identity claims are accepted only when a trusted OIDC/SAML gateway
+  // proves the request crossed the private ingress boundary.
+  const expectedGatewaySecret = process.env.IDENTITY_GATEWAY_SECRET;
+  const presentedGatewaySecret = request.headers.get("x-cg-gateway-secret");
+  if (!expectedGatewaySecret || !presentedGatewaySecret || !safeEqual(expectedGatewaySecret, presentedGatewaySecret)) return null;
   const userId = request.headers.get("x-cg-user-id");
   const organizationId = request.headers.get("x-cg-org-id");
   const role = normalizeRole(request.headers.get("x-cg-role"));
@@ -43,4 +48,10 @@ export class AuthError extends Error {
 function normalizeRole(value: string | null): Role | null {
   const role = value?.toUpperCase() as Role | undefined;
   return role && role in rank ? role : null;
+}
+
+function safeEqual(a: string, b: string): boolean {
+  const left = Buffer.from(a);
+  const right = Buffer.from(b);
+  return left.length === right.length && timingSafeEqual(left, right);
 }

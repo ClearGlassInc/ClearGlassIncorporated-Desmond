@@ -1,10 +1,24 @@
 import { createHash } from "node:crypto";
 import { Worker } from "bullmq";
+import type { RecordStatus } from "@prisma/client";
 import { db } from "@/lib/db";
 import { getRedis } from "@/lib/redis";
 import { configuredPublicAdapters } from "@/lib/sources";
 
 const adapters = new Map(configuredPublicAdapters().map((adapter) => [adapter.id, adapter]));
+
+function toRecordStatus(status: string): RecordStatus {
+  switch (status) {
+    case "LIVE":
+    case "STATIC_REFERENCE": return "VERIFIED";
+    case "DELAYED":
+    case "STALE": return "DELAYED";
+    case "ESTIMATED": return "ESTIMATED";
+    case "ANALYST": return "ANALYST";
+    case "DEMO": return "DEMO";
+    default: return "UNKNOWN";
+  }
+}
 
 const worker = new Worker<{ sourceKey: string; runId: string }>(
   "minerals-ingestion",
@@ -17,6 +31,7 @@ const worker = new Worker<{ sourceKey: string; runId: string }>(
     await db.ingestionRun.update({ where: { id: runId }, data: { status: "RUNNING" } });
     try {
       const envelope = await adapter.fetch();
+      const persistedStatus = toRecordStatus(envelope.status);
       const raw = JSON.stringify(envelope.records);
       const contentHash = createHash("sha256").update(raw).digest("hex");
       const document = await db.sourceDocument.create({
@@ -28,13 +43,13 @@ const worker = new Worker<{ sourceKey: string; runId: string }>(
           collectedAt: envelope.collectedAt ? new Date(envelope.collectedAt) : new Date(),
           contentHash,
           license: envelope.license,
-          status: envelope.status === "STATIC_REFERENCE" ? "VERIFIED" : envelope.status,
-          metadata: { attribution: envelope.attribution, errors: envelope.errors, recordCount: envelope.records.length }
+          status: persistedStatus,
+          metadata: { upstreamStatus: envelope.status, attribution: envelope.attribution, errors: envelope.errors, recordCount: envelope.records.length }
         }
       });
       if (envelope.records.length) {
         await db.provenanceRecord.createMany({
-          data: envelope.records.map((record, index) => ({
+          data: envelope.records.map((_record, index) => ({
             sourceId: source.id,
             documentId: document.id,
             entityType: "RawSourceRecord",
@@ -45,13 +60,13 @@ const worker = new Worker<{ sourceKey: string; runId: string }>(
             confidence: envelope.confidence,
             calculationMethod: "source-adapter-normalization-v1",
             license: envelope.license,
-            status: envelope.status === "STATIC_REFERENCE" ? "VERIFIED" : envelope.status
+            status: persistedStatus
           }))
         });
       }
       await db.$transaction([
         db.dataSource.update({ where: { id: source.id }, data: { lastSuccessAt: new Date(), freshnessStatus: envelope.status } }),
-        db.ingestionRun.update({ where: { id: runId }, data: { status: envelope.errors.length ? "COMPLETED_WITH_WARNINGS" : "COMPLETED", finishedAt: new Date(), recordsRead: envelope.records.length, recordsWritten: envelope.records.length, recordsRejected: 0, transformLog: { adapter: adapter.id, transformedAt: envelope.transformedAt, contentHash, errors: envelope.errors } } })
+        db.ingestionRun.update({ where: { id: runId }, data: { status: envelope.errors.length ? "COMPLETED_WITH_WARNINGS" : "COMPLETED", finishedAt: new Date(), recordsRead: envelope.records.length, recordsWritten: envelope.records.length, recordsRejected: 0, transformLog: { adapter: adapter.id, upstreamStatus: envelope.status, persistedStatus, transformedAt: envelope.transformedAt, contentHash, errors: envelope.errors } } })
       ]);
       return { sourceKey, records: envelope.records.length, status: envelope.status };
     } catch (error) {

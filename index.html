@@ -22,7 +22,9 @@
 <!-- No boot loader on the homepage — it renders immediately.
      Every other page carries the /loader.html boot routing. -->
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>ClearGlass Inc — AI Automation, Cybersecurity & Operational Strategy</title>
+<!-- Empty until the protected API hostname passes staging origin-denial and smoke tests. -->
+<meta name="clearglass-api-base" content=""/>
+<title>ClearGlass Inc — AI Automation, Cybersecurity &amp; Strategy</title>
 <meta name="description" content="ClearGlass Inc. helps leaders design governed AI automation, cybersecurity programs, legal-tech workflows, OSINT systems, and enterprise operating architecture."/>
 <link rel="canonical" href="https://www.clearglassinc.com/"/>
 <meta property="og:title" content="ClearGlass Inc. — AI Automation, Cybersecurity &amp; Operational Strategy"/>
@@ -916,11 +918,12 @@ body.mobile-nav-open{overflow:hidden}
         <p class="eyebrow">Join the update list</p>
         <h2 id="signup-title">Subscribe with GitHub</h2>
         <p class="subtitle">Get product updates, launches, and private beta access.</p>
-        <form id="subscribeForm" class="signup-form" action="https://formsubmit.co/dezzy.231@gmail.com" method="POST">
+        <form id="subscribeForm" class="signup-form" action="https://formsubmit.co/dezzy.231@gmail.com" method="POST" data-cg-form-kind="homepage-subscribe">
           <label for="email">Email address</label>
           <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required/>
           <input type="hidden" name="_subject" value="New subscriber — ClearGlass update list"/>
           <input type="hidden" name="form_source" value="homepage-subscribe"/>
+          <input type="hidden" name="consent" value="true"/>
           <input type="hidden" name="_cc" value="Desmondotieno@icloud.com"/>
           <input type="hidden" name="_captcha" value="false"/>
           <input type="hidden" name="_template" value="table"/>
@@ -1216,6 +1219,7 @@ fetch('https://formsubmit.co/ajax/dezzy.231@gmail.com',{method:'POST',headers:{'
 });})();
 </script>
   <script defer src="/stealth-glass.js"></script>
+  <script defer src="/assets/js/protected-forms.js"></script>
   <script defer src="ui.js"></script>
   <script defer src="platform.js"></script>
   <script defer src="artemis-command-layer.js"></script>

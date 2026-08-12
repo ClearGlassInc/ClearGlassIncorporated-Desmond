@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 157 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 160 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -99,12 +99,13 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `offers/phipa-readiness.html` — PHIPA Readiness | free checklist and assessment for Ontario health data | ClearPulse Architecture | ClearPulse | PHIPA Readiness Checklist | Get the free PHIPA readiness checklist / Book a security engagement |
 | `offers/phipa-readiness-checklist.html` — PHIPA Readiness Checklist | the printable compliance checklist | PHIPA Readiness | ClearPulse | ClearPulse | Get the free PHIPA readiness checklist / Book a security engagement |
 | **Government & Procurement** | **Topic cluster** |  |  |  |  |
-| `government.html` — Government Solutions | federal and public-sector systems | SATS Digital Twin | Government Solutions | Procurement Readiness | Book a security engagement / Check our procurement readiness |
+| `government.html` — Government Solutions | federal and public-sector systems | Minerals Intelligence Platform | Government Solutions | Procurement Readiness | Book a security engagement / Check our procurement readiness |
 | `operations/procurement-readiness.html` — Procurement Readiness | verified supplier-registration status | Government Solutions | Government Solutions | Federal Supplier Handoff | Book a security engagement / Check our procurement readiness |
 | `operations/federal-supplier-handoff.html` — Federal Supplier Handoff | supplier registration runbook | Procurement Readiness | Government Solutions | Counter-UAS OS | Book a security engagement / Check our procurement readiness |
 | `counter-uas-commercialization-os.html` — Counter-UAS OS | counter-drone commercialization platform | Federal Supplier Handoff | Government Solutions | Speed Vision AI | Book a security engagement / Check our procurement readiness |
 | `traffic-enforcement.html` — Speed Vision AI | AI traffic-enforcement platform | Counter-UAS OS | Government Solutions | SATS Digital Twin | Book a security engagement / Check our procurement readiness |
-| `sats-digital-twin.html` — SATS Digital Twin | storm-adaptive transit simulation with governed operations | Speed Vision AI | Government Solutions | Government Solutions | Book a security engagement / Check our procurement readiness |
+| `sats-digital-twin.html` — SATS Digital Twin | storm-adaptive transit simulation with governed operations | Speed Vision AI | Government Solutions | Minerals Intelligence Platform | Book a security engagement / Check our procurement readiness |
+| `minerals-platform.html` — Minerals Intelligence Platform | source-transparent critical-minerals command center | SATS Digital Twin | Government Solutions | Government Solutions | Book a security engagement / Check our procurement readiness |
 | **Services & Engagements** | **Topic cluster** |  |  |  |  |
 | `offers/index.html` — Services & Engagements | every ClearGlass offer in one place | Growth Command Centre | Services & Engagements | ClearGlass Store | Book a security engagement / See pricing & plans |
 | `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
@@ -142,10 +143,11 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `products/opal-koboi/revenue-engine.html` — Revenue Engine · Asset | product sheet | Guardian · Asset | Opal-Koboi | SMB Suite · Asset | Book a security engagement / See pricing & plans |
 | `products/opal-koboi/smb-suite.html` — SMB Suite · Asset | product sheet | Revenue Engine · Asset | Opal-Koboi | Opal-Koboi | Book a security engagement / See pricing & plans |
 | **ClearGlass Intelligence · Insights** | **Topic cluster** |  |  |  |  |
-| `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | Shadow AI Incident Response | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
+| `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | Blue Brain Project | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
 | `blog/autonomous-threat-modeling-2026.html` — Autonomous Threat Modeling in 2026 | continuous architecture-grounded security for agentic and cyber-physical systems | ClearGlass Intelligence | ClearGlass Intelligence | AI Agent Governance | Book a security engagement / See pricing & plans |
-| `blog/ai-agent-governance-governed-autonomy.html` — AI Agent Governance | the governed-autonomy playbook | Autonomous Threat Modeling in 2026 | ClearGlass Intelligence | AI Agents as a Digital Workforce | Book a security engagement / See pricing & plans |
-| `blog/ai-agents-digital-workforce-small-business.html` — AI Agents as a Digital Workforce | governed digital workers for small businesses | AI Agent Governance | ClearGlass Intelligence | The ClearGlass Platform Audit | Book a security engagement / See pricing & plans |
+| `blog/ai-agent-governance-governed-autonomy.html` — AI Agent Governance | the governed-autonomy playbook | Autonomous Threat Modeling in 2026 | ClearGlass Intelligence | Agentic AI Operating Model | Book a security engagement / See pricing & plans |
+| `blog/agentic-ai-business-operating-model.html` — Agentic AI Operating Model | bounded delegation as a business operating model | AI Agent Governance | ClearGlass Intelligence | AI Agents as a Digital Workforce | Book a security engagement / See pricing & plans |
+| `blog/ai-agents-digital-workforce-small-business.html` — AI Agents as a Digital Workforce | governed digital workers for small businesses | Agentic AI Operating Model | ClearGlass Intelligence | The ClearGlass Platform Audit | Book a security engagement / See pricing & plans |
 | `blog/clearglass-platform-audit-2026.html` — The ClearGlass Platform Audit | keep, simplify, gate, build — the platform upgrade doctrine | AI Agents as a Digital Workforce | ClearGlass Intelligence | AI Agents Are the New Insider Threat | Book a security engagement / See pricing & plans |
 | `blog/ai-agents-insider-threat.html` — AI Agents Are the New Insider Threat | why agent identity is a security boundary | The ClearGlass Platform Audit | ClearGlass Intelligence | AI Safety Beyond the Black Box | Book a security engagement / See pricing & plans |
 | `blog/ai-safety-black-box-activation-analysis-gavel.html` — AI Safety Beyond the Black Box | activation analysis and layered AI guardrails | AI Agents Are the New Insider Threat | ClearGlass Intelligence | Security Architecture for Agentic Software | Book a security engagement / See pricing & plans |
@@ -182,7 +184,8 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `blog/network-orchestration-ai-automation-cybersecurity.html` — AI-Driven Network Orchestration | a field guide to safe, governed network automation | Artemis Full-Stack AI Blueprint | ClearGlass Intelligence | Ontario Influence Environment | Book a security engagement / See pricing & plans |
 | `blog/ontario-influence-environment-august-2026.html` — Ontario Influence Environment | verification-first Ontario public-interest intelligence | AI-Driven Network Orchestration | ClearGlass Intelligence | U.S. Army HADES / ME-11B Dossier | Book a security engagement / See pricing & plans |
 | `blog/us-army-hades-me-11b-osint-dossier.html` — U.S. Army HADES / ME-11B Dossier | a verification-aware public-record deep-sensing program assessment | Ontario Influence Environment | ClearGlass Intelligence | Shadow AI Incident Response | Book a security engagement / See pricing & plans |
-| `blog/shadow-ai-incident-response-logs-gone.html` — Shadow AI Incident Response | forensic readiness before security evidence disappears | U.S. Army HADES / ME-11B Dossier | ClearGlass Intelligence | ClearGlass Intelligence | Book a security engagement / See pricing & plans |
+| `blog/shadow-ai-incident-response-logs-gone.html` — Shadow AI Incident Response | forensic readiness before security evidence disappears | U.S. Army HADES / ME-11B Dossier | ClearGlass Intelligence | Blue Brain Project | Book a security engagement / See pricing & plans |
+| `blog/blue-brain-project-digital-brain-simulation.html` — Blue Brain Project | reconstructing the brain in silico | Shadow AI Incident Response | ClearGlass Intelligence | ClearGlass Intelligence | Book a security engagement / See pricing & plans |
 | **Company & Operations** | **Topic cluster** |  |  |  |  |
 | `index.html` — ClearGlass Inc. | governed intelligent systems — home | Stripe Handoff | ClearGlass Inc. | Investor Data Room | Book a security engagement / See pricing & plans |
 | `investors/index.html` — Investor Data Room | corporate documents and diligence materials | ClearGlass Inc. | ClearGlass Inc. | Authority Network | Book a security engagement / See pricing & plans |

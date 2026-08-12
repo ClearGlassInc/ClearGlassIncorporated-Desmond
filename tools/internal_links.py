@@ -168,6 +168,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "counter-uas-commercialization-os.html": ("Counter-UAS OS", "counter-drone commercialization platform"),
     "traffic-enforcement.html": ("Speed Vision AI", "AI traffic-enforcement platform"),
     "sats-digital-twin.html": ("SATS Digital Twin", "storm-adaptive transit simulation with governed operations"),
+    "minerals-platform.html": ("Minerals Intelligence Platform", "source-transparent critical-minerals command center"),
 
     # Services & conversion
     "products.html": ("ClearGlass Products", "the unified ClearGlass product catalog"),
@@ -208,7 +209,9 @@ PAGES: dict[str, tuple[str, str]] = {
     # Insights / blog
     "blog/index.html": ("ClearGlass Intelligence", "essays on governed AI, cyber defense and OSINT"),
     "blog/autonomous-threat-modeling-2026.html": ("Autonomous Threat Modeling in 2026", "continuous architecture-grounded security for agentic and cyber-physical systems"),
+    "blog/blue-brain-project-digital-brain-simulation.html": ("Blue Brain Project", "reconstructing the brain in silico"),
     "blog/ai-agent-governance-governed-autonomy.html": ("AI Agent Governance", "the governed-autonomy playbook"),
+    "blog/agentic-ai-business-operating-model.html": ("Agentic AI Operating Model", "bounded delegation as a business operating model"),
     "blog/ai-agents-digital-workforce-small-business.html": ("AI Agents as a Digital Workforce", "governed digital workers for small businesses"),
     "blog/ai-agents-insider-threat.html": ("AI Agents Are the New Insider Threat", "why agent identity is a security boundary"),
     "blog/almach-scalp-engine.html": ("ALMACH Scalp Engine", "a directional neural-mesh trading study"),
@@ -341,6 +344,7 @@ CLUSTERS: dict[str, dict] = {
             "counter-uas-commercialization-os.html",
             "traffic-enforcement.html",
             "sats-digital-twin.html",
+            "minerals-platform.html",
         ],
         "cta": [CTA_STORE, ("operations/procurement-readiness.html", "Check our procurement readiness")],
     },
@@ -388,6 +392,7 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "blog/autonomous-threat-modeling-2026.html",
             "blog/ai-agent-governance-governed-autonomy.html",
+            "blog/agentic-ai-business-operating-model.html",
             "blog/ai-agents-digital-workforce-small-business.html",
             "blog/clearglass-platform-audit-2026.html",
             "blog/ai-agents-insider-threat.html",
@@ -426,6 +431,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/ontario-influence-environment-august-2026.html",
             "blog/us-army-hades-me-11b-osint-dossier.html",
             "blog/shadow-ai-incident-response-logs-gone.html",
+            "blog/blue-brain-project-digital-brain-simulation.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },

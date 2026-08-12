@@ -24,10 +24,22 @@ locals {
     join(" ", [for asn in var.challenge_asns : tostring(asn)])
   ) : "false"
 
-  restricted_host_expr = length(compact([var.api_hostname, var.admin_hostname])) > 0 ? join(
-    " or ",
-    [for host in compact([var.api_hostname, var.admin_hostname]) : format("http.host eq \"%s\"", host)]
+  geo_exception_country_expr = length(var.geo_exception_countries) > 0 ? format(
+    "ip.src.country in {%s}",
+    join(" ", [for country in var.geo_exception_countries : format("\"%s\"", upper(country))])
   ) : "false"
+
+  anonymous_network_expr = var.anonymous_network_ip_list_name != "" ? format(
+    "ip.src in $%s",
+    var.anonymous_network_ip_list_name
+  ) : "false"
+
+  tor_exit_expr = var.tor_exit_ip_list_name != "" ? format(
+    "ip.src in $%s",
+    var.tor_exit_ip_list_name
+  ) : "false"
+
+  restricted_host_expr = local.dynamic_host_scope
 
   allowed_country_expr = length(var.allowed_countries) > 0 ? format(
     "ip.src.country in {%s}",

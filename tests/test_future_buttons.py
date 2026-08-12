@@ -1,12 +1,19 @@
 """Contract tests for the additive future-glass button enhancement."""
 
+import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from bots.site_health_bot import IGNORED_HTML_DIRS  # noqa: E402
+
 CSS_PATH = ROOT / "assets/css/future-buttons.css"
 JS_PATH = ROOT / "assets/js/future-buttons.js"
-EXCLUDED_PARTS = {".git", "node_modules", "vendor"}
+# Reuse the shipped-page definition so a local `next build` or `tsc` emitting
+# HTML into a gitignored output directory cannot fail this contract.
+EXCLUDED_PARTS = IGNORED_HTML_DIRS | {"vendor", "dist"}
 
 
 def deployable_html_pages() -> list[Path]:

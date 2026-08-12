@@ -307,3 +307,110 @@ html.cg-cinematic-ready .hero:not(.cg-motion-live) .hero-orbit {
 html.cg-low-power .cg-growth-network .cg-net-path { animation: none; }
 html.cg-low-power .cg-growth-network { opacity: .46; }
 html.cg-low-power .cg-signal-core { backdrop-filter: none; }
+
+/* ── Layer 3: restrained neon ambience ──────────────────────────────────── */
+html.cg-cinematic-ready {
+  --cg-neon-cyan: 103,232,249;
+  --cg-neon-blue: 96,165,250;
+  --cg-neon-violet: 167,139,250;
+  --cg-neon-magenta: 244,114,182;
+  --cg-neon-navy: 6,10,18;
+  --cg-neon-border: rgba(var(--cg-neon-cyan),.28);
+  --cg-neon-bloom: 0 0 24px rgba(var(--cg-neon-cyan),.12), 0 0 48px rgba(var(--cg-neon-violet),.06);
+}
+
+html.cg-cinematic-ready .hero.cg-growth-hero::before {
+  opacity: .64;
+  animation: gridDrift 28s linear infinite;
+}
+html.cg-cinematic-ready .hero.cg-growth-hero::after {
+  background:
+    linear-gradient(105deg,transparent 0 43%,rgba(var(--cg-neon-cyan),.045) 49%,rgba(var(--cg-neon-violet),.035) 51%,transparent 57%),
+    radial-gradient(circle at 50% 34%,transparent 0 18%,rgba(2,6,12,.04) 46%,rgba(2,6,12,.54) 100%);
+  background-size: 220% 100%,100% 100%;
+  background-position: 135% 0,0 0;
+  animation: scanSweep 17s cubic-bezier(.45,0,.55,1) infinite;
+}
+
+html.cg-cinematic-ready .cg-signal-core {
+  animation: coreBreathe 8.8s cubic-bezier(.45,0,.55,1) infinite;
+}
+html.cg-cinematic-ready .cg-growth-network :where(.cg-net-node,.cg-net-node-secondary),
+html.cg-cinematic-ready .cg-motion-node::before {
+  animation: signalFlicker 7.6s steps(1,end) infinite;
+}
+
+html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail) {
+  border-color: rgba(var(--cg-neon-cyan),.18);
+}
+html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail):hover,
+html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail):focus-within {
+  border-color: rgba(var(--cg-neon-cyan),.34);
+  box-shadow: var(--cg-neon-bloom);
+  animation: borderTrace 5.4s ease-in-out infinite;
+}
+
+html.cg-cinematic-ready .nav-links a.is-active::after {
+  box-shadow: 0 0 9px rgba(var(--cg-neon-cyan),.48),0 0 18px rgba(var(--cg-neon-violet),.22);
+  animation: neonPulse 5.8s ease-in-out infinite;
+}
+
+@keyframes neonPulse {
+  0%,100% { opacity: .68; filter: saturate(.92); }
+  46% { opacity: .9; filter: saturate(1.04); }
+  54% { opacity: .78; filter: saturate(.98); }
+}
+@keyframes coreBreathe {
+  0%,100% { opacity: .64; box-shadow: 0 0 54px rgba(var(--cg-neon-cyan),.07), inset 0 0 58px rgba(var(--cg-neon-violet),.04); }
+  48% { opacity: .74; box-shadow: 0 0 76px rgba(var(--cg-neon-cyan),.11), inset 0 0 72px rgba(var(--cg-neon-violet),.065); }
+  57% { opacity: .7; }
+}
+@keyframes borderTrace {
+  0%,100% { border-color: rgba(var(--cg-neon-cyan),.25); box-shadow: 0 0 18px rgba(var(--cg-neon-cyan),.08),0 0 34px rgba(var(--cg-neon-violet),.04); }
+  42% { border-color: rgba(var(--cg-neon-violet),.34); box-shadow: 0 0 24px rgba(var(--cg-neon-cyan),.13),0 0 44px rgba(var(--cg-neon-violet),.07); }
+  58% { border-color: rgba(var(--cg-neon-cyan),.31); }
+}
+@keyframes signalFlicker {
+  0%,42%,46%,71%,75%,100% { opacity: .88; }
+  43% { opacity: .62; }
+  44% { opacity: .93; }
+  72% { opacity: .74; }
+  73% { opacity: .9; }
+}
+@keyframes gridDrift {
+  0% { background-position: 0 0,0 0; }
+  100% { background-position: 42px 42px,42px 42px; }
+}
+@keyframes scanSweep {
+  0%,18% { background-position: 135% 0,0 0; opacity: .68; }
+  52% { background-position: -35% 0,0 0; opacity: .82; }
+  82%,100% { background-position: -35% 0,0 0; opacity: .68; }
+}
+
+@media (max-width: 760px) {
+  html.cg-cinematic-ready .hero.cg-growth-hero::before { opacity: .42; }
+  html.cg-cinematic-ready .hero.cg-growth-hero::after { opacity: .56; }
+  html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail):hover,
+  html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail):focus-within {
+    box-shadow: 0 0 16px rgba(var(--cg-neon-cyan),.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.cg-cinematic-ready .hero.cg-growth-hero::before,
+  html.cg-cinematic-ready .hero.cg-growth-hero::after,
+  html.cg-cinematic-ready .cg-signal-core,
+  html.cg-cinematic-ready .cg-growth-network :where(.cg-net-node,.cg-net-node-secondary),
+  html.cg-cinematic-ready .cg-motion-node::before,
+  html.cg-cinematic-ready .nav-links a.is-active::after,
+  html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail) {
+    animation: none !important;
+  }
+}
+
+html.cg-low-power .hero.cg-growth-hero::before,
+html.cg-low-power .hero.cg-growth-hero::after,
+html.cg-low-power .cg-signal-core,
+html.cg-low-power .cg-growth-network :where(.cg-net-node,.cg-net-node-secondary) {
+  animation: none !important;
+}

@@ -4,13 +4,17 @@
                offline.html as the last resort
      • /data feeds (same-origin JSON) → network-first, cached copy only as an
                offline fallback, so the hourly data plane is never served stale
+     • Critical hero/brand images → network-first to recover immediately from
+               stale or corrupted visual cache entries
      • CSS/JS/fonts/images (same-origin) → stale-while-revalidate
+     • Streaming media / Range requests → browser network path, never Cache API.
+               Caching partial 206 responses can break Safari/iOS video playback.
      • cross-origin (live data APIs, CDNs) → untouched: network only, never
        cached, so live feeds stay live and never serve stale intel
    Bump VERSION to invalidate all caches on deploy. */
 "use strict";
 
-var VERSION = "cg-v48";
+var VERSION = "cg-v56";
 var PRECACHE = [
   "/",
   "/index.html",
@@ -39,6 +43,8 @@ var PRECACHE = [
   "/data/Ontario-osint/intel.json",
   "/data/control-surface/runs.json",
   "/assets/images/clearglass-holographic-seal.png",
+  "/assets/images/clearglass-logo-256.webp",
+  "/assets/video/hero-poster.jpg",
   "/manifest.webmanifest"
 ];
 
@@ -68,6 +74,14 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) return;   // live APIs/CDNs: hands off
 
+  // Never proxy streaming media or byte-range requests through Cache API.
+  // Safari/iOS commonly requests video using Range headers. A cached 206
+  // response can be replayed for the wrong byte range and produce an empty
+  // hero frame or failed autoplay. Let the browser/CDN handle these natively.
+  var hasRange = req.headers.has("range");
+  var isStreamingMedia = /\.(?:mp4|webm|mov|m4v|mp3|m4a|wav|ogg)$/i.test(url.pathname);
+  if (hasRange || isStreamingMedia) return;
+
   var isHTML = req.mode === "navigate" ||
     (req.headers.get("accept") || "").indexOf("text/html") > -1;
 
@@ -79,12 +93,21 @@ self.addEventListener("fetch", function (e) {
   // offline fallback.
   var isFeed = url.pathname.indexOf("/data/") === 0;
 
-  if (isHTML || isFeed) {
-    // network-first: fresh page when online, cache then offline page when not
+  // Hero/brand visuals must recover on the first request after a deployment.
+  // These assets are visible above the fold, so returning a stale broken cache
+  // entry while refreshing in the background is the wrong trade-off.
+  var isCriticalVisual = url.pathname === "/assets/video/hero-poster.jpg" ||
+    url.pathname === "/assets/images/clearglass-holographic-seal.png" ||
+    url.pathname === "/assets/images/clearglass-logo-256.webp";
+
+  if (isHTML || isFeed || isCriticalVisual) {
+    // network-first: fresh page/data/critical visual when online, cache fallback
     e.respondWith(
       fetch(req).then(function (res) {
-        var copy = res.clone();
-        caches.open(VERSION).then(function (c) { c.put(req, copy); });
+        if (res && res.ok) {
+          var copy = res.clone();
+          caches.open(VERSION).then(function (c) { c.put(req, copy); });
+        }
         return res;
       }).catch(function () {
         return caches.match(req).then(function (hit) {
@@ -92,7 +115,7 @@ self.addEventListener("fetch", function (e) {
           // A feed with no cached copy must surface as a failed fetch so the
           // page runs its own fallback; handing back the HTML offline page
           // would only fail later inside response.json().
-          if (isFeed) return Response.error();
+          if (isFeed || isCriticalVisual) return Response.error();
           return caches.match("/offline.html");
         });
       })

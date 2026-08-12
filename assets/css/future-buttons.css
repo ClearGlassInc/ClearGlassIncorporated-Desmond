@@ -189,3 +189,46 @@
 @keyframes future-glass-shimmer { 0% { left: -65%; opacity: 0; } 25% { opacity: .52; } 100% { left: 125%; opacity: 0; } }
 @keyframes future-glass-scan { from { left: -50%; } to { left: 120%; } }
 @keyframes future-glass-error { 35% { translate: -2px 0; } 70% { translate: 2px 0; } }
+
+/* Homepage mobile hero containment activation.
+   Kept here because this stylesheet is already loaded after the homepage's inline CSS. */
+@media (max-width: 760px) {
+  html,
+  body,
+  #main-content,
+  #hero {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  #hero {
+    min-width: 0;
+  }
+
+  #hero .hero-video {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    width: min(100%, calc(100vw - 32px)) !important;
+    max-width: calc(100vw - 32px) !important;
+    min-width: 0 !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 !important;
+    transform: none !important;
+    object-fit: cover;
+    object-position: center center;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 390px) {
+  #hero .hero-video {
+    width: min(100%, calc(100vw - 24px)) !important;
+    max-width: calc(100vw - 24px) !important;
+  }
+}

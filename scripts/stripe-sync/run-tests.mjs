@@ -4,10 +4,10 @@
 /**
  * Test entry point for `npm test`.
  *
- * Type-checks first, then compiles to `dist/` and runs the compiled suite with
- * node's built-in test runner. Compiling rather than transpiling on the fly
- * means `npm test` also proves the TypeScript is sound, so a type error cannot
- * reach CI green.
+ * Type-checks first, then compiles to `dist/` and runs all compiled repository
+ * tooling suites with node's built-in test runner. Compiling rather than
+ * transpiling on the fly means `npm test` also proves the TypeScript is sound,
+ * so a type error cannot reach CI green.
  *
  * Extra CLI arguments are ignored on purpose: callers in this repository invoke
  * it as `npm test -- --ci`, and a stray flag must not be mistaken for a file.
@@ -39,14 +39,20 @@ if (!existsSync(tsc)) {
 
 step(tsc, ["-p", "tsconfig.json"]);
 
-const testDir = path.join(ROOT, "dist", "scripts", "stripe-sync", "tests");
-const files = readdirSync(testDir)
-  .filter((name) => name.endsWith(".test.js"))
-  .map((name) => path.join(testDir, name))
-  .sort();
+const testDirs = [
+  path.join(ROOT, "dist", "scripts", "stripe-sync", "tests"),
+  path.join(ROOT, "dist", "scripts", "provenance", "tests"),
+];
+
+const files = testDirs.flatMap((testDir) => {
+  if (!existsSync(testDir)) return [];
+  return readdirSync(testDir)
+    .filter((name) => name.endsWith(".test.js"))
+    .map((name) => path.join(testDir, name));
+}).sort();
 
 if (files.length === 0) {
-  console.error(`no compiled tests found in ${testDir}`);
+  console.error(`no compiled tests found in ${testDirs.join(", ")}`);
   process.exit(1);
 }
 

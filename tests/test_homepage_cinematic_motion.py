@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -71,7 +72,13 @@ def test_homepage_synchronizes_sentinel_modal_with_visible_shell() -> None:
 
 def test_homepage_runtime_cache_is_invalidated() -> None:
     service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-    assert 'var VERSION = "cg-v55";' in service_worker
+    # Pin the floor, not the exact value. VERSION is bumped on every deploy that
+    # touches many pages (CLAUDE.md says to), so an exact match fails on each
+    # legitimate bump while proving nothing extra — what matters is that the
+    # cache generation is at or past the one that shipped this runtime.
+    version = re.search(r'var VERSION = "cg-v(\d+)";', service_worker)
+    assert version, "sw.js must declare a cg-v<N> cache VERSION"
+    assert int(version.group(1)) >= 55
     assert '"/platform.js"' in service_worker
     assert '"/stealth-glass.js"' in service_worker
 

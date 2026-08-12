@@ -189,6 +189,21 @@ class TestLiveSite:
         missing = [f["page"] for f in report["findings"] if f["check"] == "sitemap.missing"]
         assert not missing, f"indexable pages absent from sitemap.xml: {missing}"
 
+    def test_sitemap_has_no_duplicate_urls(self) -> None:
+        """A URL listed twice is an SEO defect, and merges are how it happens.
+
+        Two branches registering the same new page both append a <url> block;
+        the merge keeps both and nothing else notices. The existing coverage
+        only asks whether a page is *present*, so a duplicate stays invisible.
+        """
+        import collections
+        import re as _re
+
+        sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+        locs = _re.findall(r"<loc>(.*?)</loc>", sitemap)
+        duplicates = sorted(url for url, n in collections.Counter(locs).items() if n > 1)
+        assert not duplicates, f"sitemap.xml lists these URLs more than once: {duplicates}"
+
     def test_every_json_ld_block_on_the_site_parses(self) -> None:
         report = seo_audit.build_report()
         assert not [f for f in report["findings"] if f["check"] == "schema.parse"]

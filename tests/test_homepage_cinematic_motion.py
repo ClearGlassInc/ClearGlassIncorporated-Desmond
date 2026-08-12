@@ -40,6 +40,31 @@ def test_cinematic_runtime_fails_static_on_ios_webkit() -> None:
     assert "if (appleMobile)" in runtime
 
 
+def test_homepage_platform_isolates_duplicate_fixed_control_runtimes() -> None:
+    runtime = (ROOT / "platform.js").read_text(encoding="utf-8")
+
+    assert "var isHomepage =" in runtime
+    assert 'data-cg-home-runtime", "stabilized"' in runtime
+
+    fx_section = runtime.split("advanced motion layer", 1)[1].split("cinematic system", 1)[0]
+    assert "if (!isHomepage)" in fx_section
+    assert 'fx.src = "fx.js"' in fx_section
+
+    cinematic_section = runtime.split("cinematic system", 1)[1].split("AEGIS-OMEGA control plane", 1)[0]
+    assert 'cinematic.src = "/assets/js/cinematic-motion.js"' in cinematic_section
+    assert "if (!isHomepage)" not in cinematic_section
+
+    omega_section = runtime.split("AEGIS-OMEGA control plane", 1)[1].split('if ("serviceWorker" in navigator)', 1)[0]
+    assert "if (!isHomepage)" in omega_section
+    assert 'omega.setAttribute("data-cg-aegis-omega", "true")' in omega_section
+
+
+def test_homepage_runtime_cache_is_invalidated() -> None:
+    service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
+    assert 'var VERSION = "cg-v53";' in service_worker
+    assert '"/platform.js"' in service_worker
+
+
 def test_neon_layer_uses_named_restrained_motion_primitives() -> None:
     stylesheet = (ROOT / "assets/css/cinematic-motion.css").read_text(encoding="utf-8")
 

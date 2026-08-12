@@ -724,7 +724,7 @@ body.mobile-nav-open{overflow:hidden}
       <article class="cg-card rv">
         <p class="k">01 · SCOPE</p>
         <h3>Nothing runs unbounded.</h3>
-        <p>Every agent is issued a blast radius, a policy boundary, and a named human who owns the outcome. Capability without a limit is just a liability with a countdown.</p>
+        <p>We give every agent a blast radius, a policy boundary, and a named human who owns the outcome. Capability without a limit is just a liability with a countdown.</p>
       </article>
       <article class="cg-card rv">
         <p class="k">02 · EVIDENCE</p>
@@ -734,7 +734,7 @@ body.mobile-nav-open{overflow:hidden}
       <article class="cg-card rv">
         <p class="k">03 · CONTROL</p>
         <h3>Speed that survives scrutiny.</h3>
-        <p>Automation earns autonomy tier by tier. Low-risk work runs clean and unattended; anything touching money, law, or safety stops at a human gate by design, not by exception.</p>
+        <p>Automation earns autonomy tier by tier. Low-risk, reversible work runs clean and unattended; anything that moves money or cannot be undone stops at a human gate by design, not by exception.</p>
       </article>
     </div>
   </div>
@@ -783,14 +783,14 @@ body.mobile-nav-open{overflow:hidden}
     <div class="command-grid">
       <article class="command-panel rv">
         <p class="cg-live"><i aria-hidden="true"></i>Governance self-check · runs daily</p>
-        <h3>What the system guarantees.</h3>
-        <p>Five invariants hold across every governed engagement. They are structural, not aspirational.</p>
+        <h3>What the commerce control plane enforces.</h3>
+        <p>Five invariants, specific to the ClearGlass commerce control plane. They are structural, not aspirational &mdash; and they are stated at the scope they actually hold.</p>
         <ul class="cg-assurance">
-          <li>Read-only analysis, then draft, then human approval, then execution. High-risk actions cannot execute without a recorded approval.</li>
-          <li>Every material change writes to an append-only audit ledger with a risk score attached to it.</li>
+          <li>Every proposed action is risk-scored 0&ndash;100 and routed by tier. Low-risk, reversible work auto-executes and logs; high and critical actions are hard-gated and cannot execute without a recorded approval.</li>
+          <li>Pricing, payment settings, tax settings, refunds, fulfilment rules, reorders, and every write to the live marketplace sit in an always-escalate set &mdash; gated regardless of score, with no override path.</li>
+          <li>Every material change writes to an append-only audit ledger with its risk score attached.</li>
           <li>Mutating administrative routes require an authenticated credential. Production refuses to start without one.</li>
           <li>Money-movement paths are exercised by integration tests in continuous integration, not asserted in prose.</li>
-          <li>Pricing, payment, tax, refund, and fulfilment changes escalate to a human gate every time, without an override path.</li>
         </ul>
       </article>
       <article class="command-panel rv">

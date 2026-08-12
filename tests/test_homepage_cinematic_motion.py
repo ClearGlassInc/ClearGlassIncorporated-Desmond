@@ -61,8 +61,9 @@ def test_homepage_platform_isolates_duplicate_fixed_control_runtimes() -> None:
 
 def test_homepage_runtime_cache_is_invalidated() -> None:
     service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-    assert 'var VERSION = "cg-v53";' in service_worker
+    assert 'var VERSION = "cg-v54";' in service_worker
     assert '"/platform.js"' in service_worker
+    assert '"/stealth-glass.js"' in service_worker
 
 
 def test_neon_layer_uses_named_restrained_motion_primitives() -> None:

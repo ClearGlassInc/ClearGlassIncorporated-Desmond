@@ -76,13 +76,25 @@ ever revisited.
 
 | | Tenet | Body |
 |---|---|---|
-| 01 · SCOPE | Nothing runs unbounded. | Every agent is issued a blast radius, a policy boundary, and a named human who owns the outcome. Capability without a limit is just a liability with a countdown. |
+| 01 · SCOPE | Nothing runs unbounded. | We give every agent a blast radius, a policy boundary, and a named human who owns the outcome. Capability without a limit is just a liability with a countdown. |
 | 02 · EVIDENCE | Every action leaves a record. | Decisions, approvals, and executions land in an append-only ledger with a risk score attached. If it happened, it is provable — and if it is not provable, it does not ship. |
-| 03 · CONTROL | Speed that survives scrutiny. | Automation earns autonomy tier by tier. Low-risk work runs clean and unattended; anything touching money, law, or safety stops at a human gate by design, not by exception. |
+| 03 · CONTROL | Speed that survives scrutiny. | Automation earns autonomy tier by tier. Low-risk, reversible work runs clean and unattended; anything that moves money or cannot be undone stops at a human gate by design, not by exception. |
 
-Each tenet is a plain-language restatement of something the commerce control
-plane actually enforces (`governance.py` risk tiers, the append-only `events`
-ledger, `ALWAYS_ESCALATE`). The copy is cinematic; the claims are not invented.
+These are **design commitments** — how ClearGlass builds — not a specification
+of what any shipped system already enforces. That distinction is load-bearing,
+and the wording holds it: tenet 01 is first-person ("we give every agent…"), and
+tenet 03 says "moves money or cannot be undone" rather than the earlier "money,
+law, or safety", because law and safety are not modelled anywhere in
+`governance.py`.
+
+Tenets 02 and 03 have real backing in the commerce control plane (`ACTION_RISK`
+scoring, the append-only `events` ledger, `ALWAYS_ESCALATE`). **Tenet 01 does
+not** — there is no per-agent blast radius or named-owner field in the code. It
+is an honest statement of practice, and it sits under "Doctrine" rather than
+under "Proof" for exactly that reason.
+
+The section that *does* claim enforcement is `#proof`, and it is scoped and
+worded to match the implementation — see § 2.3.
 
 ### 2.3 Proof — `#proof` *(shipped)*
 
@@ -92,11 +104,29 @@ ledger, `ALWAYS_ESCALATE`). The copy is cinematic; the claims are not invented.
   in code, exercised by tests, and it fails the build when violated — which is
   the only version of a guarantee worth quoting.
 
-**Panel 1 — "What the system guarantees"** (five invariants, each true of the
-shipped control plane): approval-gated execution, append-only risk-scored audit
-ledger, authenticated admin routes that fail closed in production, money paths
-covered by integration tests, and unconditional escalation for
-pricing/payment/tax/refund/fulfilment.
+**Panel 1 — "What the commerce control plane enforces"**, five invariants scoped
+to that control plane rather than to "every governed engagement":
+
+1. Actions are risk-scored 0–100 and routed by tier — low-risk reversible work
+   auto-executes and logs; **high and critical** are hard-gated.
+2. An always-escalate set (pricing, payment/tax settings, refunds, fulfilment
+   rules, reorders, every live-marketplace write) is gated regardless of score.
+3. Append-only audit ledger with the risk score attached.
+4. Mutating admin routes require a credential; production fails closed without one.
+5. Money-movement paths covered by integration tests.
+
+> **Correction from review.** The first draft said "read-only analysis, then
+> draft, then human approval, then execution" as a universal flow. That was
+> wrong: `requires_approval` in `governance.py` is set only for
+> `HIGH`/`CRITICAL`, membership in `ALWAYS_ESCALATE`, or a low-confidence
+> signal — so **medium-tier actions auto-execute**, despite the
+> `RiskTier.MEDIUM` comment reading "queue for review". The copy now states the
+> tier behaviour as implemented.
+>
+> That gap between the enum comment and the branch logic is worth a look on the
+> control-plane side — the comment documents an approval step the code does not
+> take. Out of scope for a homepage copy change, but it should not sit
+> unexamined.
 
 **Panel 2 — "The rest is shared privately"**: a redacted operating readout
 behind the idle-blur veil, plus the visible rights line and a link to the
@@ -146,21 +176,36 @@ the mark reads on that background.
 | Region | Why it is protected |
 |---|---|
 | `#doctrine` **NEW** | The framing that is easiest to lift wholesale |
-| `#artemis-command` | Proprietary command-surface framework |
 | `#founder` | Biography, credentials, positioning |
 | `#proof` **NEW** | The governance model — the most copied asset on the page |
 | `#banking-law-strategist` | Specialist legal framework |
 | `#wsids` | Mission-boundary doctrine |
 | `#engage` **NEW** | Engagement model and pricing ladder |
 
+`#artemis-command` is **not** in this list. It carries its own explicit
+`data-cg-watermark="CLEARGLASSINC ARTEMIS · PROTECTED COMMAND CONCEPT · © 2026"`
+plus `data-cg-protected`, added separately on `main`. Both marks land in the
+same corner, so the section uses that one rather than the shield's generic
+stamp — one ownership mark per corner, not two stacked on each other.
+
 Each protected region gets, from `/cg-content-shield.js`:
 
 1. **`.cg-mark`** — a tiled diagonal `CLEARGLASS INC / PROPRIETARY` watermark,
    painted as a CSS mask so one tile serves both light and dark sections.
    Survives any screenshot of the region.
-2. **`.cg-stamp`** — a corner line carrying the copyright, a per-session
-   reference token, and the retrieval date. Makes a leaked capture traceable to
-   a session rather than merely branded.
+2. **`.cg-stamp`** — a corner line carrying the copyright, a per-page-load
+   reference token, and the retrieval date.
+
+   **What the token does and does not do.** It is a random value minted in the
+   browser, held in the DOM, and never persisted or transmitted anywhere. It
+   *correlates* artefacts from a single page load — a screenshot, a printout,
+   and a block of copied text captured together carry the same reference, which
+   is useful when someone claims two captures came from different places. It
+   **cannot** be mapped back to a visitor or a session: there is no server-side
+   record to look it up against, and it changes on every reload. Building that
+   lookup would mean recording visitor-linked identifiers server-side — a
+   privacy decision that has not been made and is not part of this work. Treat
+   the token as a correlation aid, not as attribution.
 3. **`data-cg-protected`** — reuses the context-menu shielding that
    `/asset-protection.js` already applies site-wide, rather than registering a
    second handler for the same job.

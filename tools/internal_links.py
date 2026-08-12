@@ -209,7 +209,7 @@ PAGES: dict[str, tuple[str, str]] = {
     # Insights / blog
     "blog/index.html": ("ClearGlass Intelligence", "essays on governed AI, cyber defense and OSINT"),
     "blog/autonomous-threat-modeling-2026.html": ("Autonomous Threat Modeling in 2026", "continuous architecture-grounded security for agentic and cyber-physical systems"),
-    "blog/agentic-ai-business-operating-model.html": ("Agentic AI Operating Model", "bounded delegation with human-approved execution"),
+    "blog/blue-brain-project-digital-brain-simulation.html": ("Blue Brain Project", "reconstructing the brain in silico"),
     "blog/ai-agent-governance-governed-autonomy.html": ("AI Agent Governance", "the governed-autonomy playbook"),
     "blog/agentic-ai-business-operating-model.html": ("Agentic AI Operating Model", "bounded delegation as a business operating model"),
     "blog/ai-agents-digital-workforce-small-business.html": ("AI Agents as a Digital Workforce", "governed digital workers for small businesses"),
@@ -431,7 +431,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/ontario-influence-environment-august-2026.html",
             "blog/us-army-hades-me-11b-osint-dossier.html",
             "blog/shadow-ai-incident-response-logs-gone.html",
-            "blog/agentic-ai-business-operating-model.html",
+            "blog/blue-brain-project-digital-brain-simulation.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },

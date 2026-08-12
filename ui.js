@@ -22,12 +22,6 @@
     finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   } catch (e) {}
 
-  /* The homepage already owns a cursorGlow tracker. Do not mount additional
-     global pointer-follow layers there; reuse the page-owned visual channel
-     and keep command atmosphere static. This prevents three competing global
-     pointermove loops while preserving all localized control interactions. */
-  var hasPagePointerGlow = !!document.getElementById("cursorGlow");
-
   function isControl(node) {
     if (!node || !node.closest) return null;
     var el = node.closest(SEL);
@@ -90,7 +84,7 @@
   }
 
   /* ── 3) ambient pointer spotlight ───────────────────────────────────────── */
-  if (finePointer && !reduce && !hasPagePointerGlow) {
+  if (finePointer && !reduce) {
     var build = function () {
       if (document.getElementById("cg-spotlight")) return;
       var spot = document.createElement("div");
@@ -135,9 +129,7 @@
     document.addEventListener("DOMContentLoaded", buildCommandLayer);
   } else { buildCommandLayer(); }
 
-  /* The homepage's existing cursorGlow is the single global pointer visual.
-     Other pages can still use the command-atmosphere pointer response. */
-  if (finePointer && !reduce && !hasPagePointerGlow) {
+  if (finePointer && !reduce) {
     window.addEventListener("pointermove", function (e) {
       var layer = document.getElementById("cg-command-atmosphere");
       if (!layer) return;

@@ -38,6 +38,30 @@
     document.documentElement.setAttribute("data-cg-home-runtime", "stabilized");
   }
 
+  /* The Sentinel dialog exists in homepage markup with aria-modal="true" even
+     while its parent shell is hidden. The unified assistant intentionally hides
+     whenever a real modal is active, so synchronize aria-modal with the shell's
+     actual hidden state. This prevents a hidden dialog from suppressing the
+     bottom-right control station and avoids stale overlay state on open/close. */
+  if (isHomepage) {
+    var sentinelShell = document.getElementById("sentinelShell");
+    var sentinelDialog = sentinelShell && sentinelShell.querySelector('[role="dialog"]');
+    if (sentinelShell && sentinelDialog) {
+      var syncSentinelModalState = function () {
+        var open = !sentinelShell.hidden;
+        sentinelDialog.setAttribute("aria-modal", String(open));
+        sentinelShell.setAttribute("aria-hidden", String(!open));
+      };
+      syncSentinelModalState();
+      if ("MutationObserver" in window) {
+        new MutationObserver(syncSentinelModalState).observe(sentinelShell, {
+          attributes: true,
+          attributeFilter: ["hidden"]
+        });
+      }
+    }
+  }
+
   /* ── 1) PWA: manifest link + service worker ─────────────────────────────── */
   if (!document.querySelector('link[rel="manifest"]')) {
     var mf = document.createElement("link");

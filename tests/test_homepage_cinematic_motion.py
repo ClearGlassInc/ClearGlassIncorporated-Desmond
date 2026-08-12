@@ -28,17 +28,44 @@ def test_cinematic_motion_remains_accessibility_and_power_aware() -> None:
     assert "prefers-reduced-motion: reduce" in stylesheet
     assert "prefers-reduced-motion: reduce" in runtime
     assert "navigator.connection" in runtime
-    assert "navigator.deviceMemory" in runtime
     assert "IntersectionObserver" in runtime
+    assert '(hover: none) and (pointer: coarse)' in runtime
+    assert "window.innerWidth <= 820" in runtime
+    assert "cgVisualEffects" in runtime
+    assert "localStorage" in runtime
 
 
-def test_cinematic_runtime_fails_static_on_ios_webkit() -> None:
+def test_cinematic_runtime_avoids_user_agent_and_device_memory_classification() -> None:
     runtime = (ROOT / "assets/js/cinematic-motion.js").read_text(encoding="utf-8")
 
-    assert "appleMobile" in runtime
-    assert "navigator.maxTouchPoints" in runtime
-    assert 'data-cg-cinematic-motion", "ios-stability"' in runtime
-    assert "if (appleMobile)" in runtime
+    assert "navigator.userAgent" not in runtime
+    assert "navigator.platform" not in runtime
+    assert "navigator.deviceMemory" not in runtime
+    assert "touchFirstSmall" in runtime
+    assert 'data-cg-performance' in runtime
+
+
+def test_cinematic_runtime_has_visible_motion_control_and_bounded_frame_rate() -> None:
+    runtime = (ROOT / "assets/js/cinematic-motion.js").read_text(encoding="utf-8")
+
+    assert "cg-visual-effects-control" in runtime
+    assert "Visual effects: " in runtime
+    assert 'data-cg-motion-level' in runtime
+    assert "this.fps = 30" in runtime
+    assert "this.fps = 15" in runtime
+    assert "average > 50" in runtime
+    assert "this.downgraded" in runtime
+
+
+def test_cinematic_runtime_pauses_and_cleans_up_resources() -> None:
+    runtime = (ROOT / "assets/js/cinematic-motion.js").read_text(encoding="utf-8")
+
+    assert "visibilitychange" in runtime
+    assert "cg-motion-suspended" in runtime
+    assert "MutationObserver" in runtime
+    assert "cancelAnimationFrame" in runtime
+    assert ".disconnect()" in runtime
+    assert 'window.addEventListener("pagehide"' in runtime
 
 
 def test_homepage_platform_isolates_duplicate_fixed_control_runtimes() -> None:
@@ -72,13 +99,9 @@ def test_homepage_synchronizes_sentinel_modal_with_visible_shell() -> None:
 
 def test_homepage_runtime_cache_is_invalidated() -> None:
     service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-    # Pin the floor, not the exact value. VERSION is bumped on every deploy that
-    # touches many pages (CLAUDE.md says to), so an exact match fails on each
-    # legitimate bump while proving nothing extra — what matters is that the
-    # cache generation is at or past the one that shipped this runtime.
     version = re.search(r'var VERSION = "cg-v(\d+)";', service_worker)
     assert version, "sw.js must declare a cg-v<N> cache VERSION"
-    assert int(version.group(1)) >= 55
+    assert int(version.group(1)) >= 57
     assert '"/platform.js"' in service_worker
     assert '"/stealth-glass.js"' in service_worker
 

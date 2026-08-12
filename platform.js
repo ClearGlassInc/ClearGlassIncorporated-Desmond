@@ -16,6 +16,52 @@
   if (window.__cgPlatform) return;
   window.__cgPlatform = true;
 
+  var platformBase = (document.currentScript && document.currentScript.src) || location.href;
+  function platformAsset(name) {
+    try { return new URL(name, platformBase).href; }
+    catch (e) { return name; }
+  }
+
+  /* The homepage already owns its navigation, Artemis instrumentation,
+     Sentinel surface and unified assistant fixture. Do not mount additional
+     global fixed-control runtimes there: FX adds fixed scroll controls and
+     AEGIS-OMEGA adds fixed telemetry plus a second full-screen command layer.
+     Those systems remain available everywhere else. The canonical check keeps
+     this isolation correct on custom-domain and GitHub Pages preview routes. */
+  var normalizedPath = (location.pathname || "/").replace(/\/+$/, "") || "/";
+  var canonical = document.querySelector('link[rel="canonical"]');
+  var canonicalHref = canonical ? canonical.href : "";
+  var isHomepage = normalizedPath === "/" ||
+    /\/index\.html$/i.test(normalizedPath) ||
+    canonicalHref === "https://www.clearglassinc.com/";
+  if (isHomepage) {
+    document.documentElement.setAttribute("data-cg-home-runtime", "stabilized");
+  }
+
+  /* The Sentinel dialog exists in homepage markup with aria-modal="true" even
+     while its parent shell is hidden. The unified assistant intentionally hides
+     whenever a real modal is active, so synchronize aria-modal with the shell's
+     actual hidden state. This prevents a hidden dialog from suppressing the
+     bottom-right control station and avoids stale overlay state on open/close. */
+  if (isHomepage) {
+    var sentinelShell = document.getElementById("sentinelShell");
+    var sentinelDialog = sentinelShell && sentinelShell.querySelector('[role="dialog"]');
+    if (sentinelShell && sentinelDialog) {
+      var syncSentinelModalState = function () {
+        var open = !sentinelShell.hidden;
+        sentinelDialog.setAttribute("aria-modal", String(open));
+        sentinelShell.setAttribute("aria-hidden", String(!open));
+      };
+      syncSentinelModalState();
+      if ("MutationObserver" in window) {
+        new MutationObserver(syncSentinelModalState).observe(sentinelShell, {
+          attributes: true,
+          attributeFilter: ["hidden"]
+        });
+      }
+    }
+  }
+
   /* ── 1) PWA: manifest link + service worker ─────────────────────────────── */
   if (!document.querySelector('link[rel="manifest"]')) {
     var mf = document.createElement("link");
@@ -29,7 +75,6 @@
     tc.content = "#0b0f1e";
     document.head.appendChild(tc);
   }
-  // first-class icons (vector favicon + iOS home-screen icon) where a page lacks them
   function addLink(sel, attrs) {
     if (document.querySelector(sel)) return;
     var l = document.createElement("link");
@@ -39,18 +84,59 @@
   addLink('link[rel="icon"][type="image/svg+xml"]', { rel: "icon", type: "image/svg+xml", href: "icon.svg" });
   addLink('link[rel="apple-touch-icon"]', { rel: "apple-touch-icon", href: "logo.png" });
 
-  /* ── advanced motion layer (fx.css + fx.js) — progressive enhancement ───── */
-  addLink('link[href="fx.css"]', { rel: "stylesheet", href: "fx.css" });
-  if (!document.querySelector('script[src="fx.js"]')) {
-    var fx = document.createElement("script");
-    fx.src = "fx.js"; fx.defer = true;
-    document.body.appendChild(fx);
+  /* ── advanced motion layer (fx.css + fx.js) — progressive enhancement ─────
+     The homepage intentionally skips this layer because its fixed top/bottom
+     buttons duplicate the unified control station and can stack during boot. */
+  if (!isHomepage) {
+    addLink('link[href="fx.css"]', { rel: "stylesheet", href: "fx.css" });
+    if (!document.querySelector('script[src="fx.js"]')) {
+      var fx = document.createElement("script");
+      fx.src = "fx.js"; fx.defer = true;
+      document.body.appendChild(fx);
+    }
   }
+
+  /* ── cinematic system: purpose-driven hero + motion hierarchy ─────────────
+     Preserved on desktop. cinematic-motion.js itself fails static on iOS/iPadOS
+     so the existing brand direction remains without reintroducing WebKit load. */
+  addLink('link[href="/assets/css/cinematic-motion.css"]', {
+    rel: "stylesheet",
+    href: "/assets/css/cinematic-motion.css"
+  });
+  if (!document.querySelector('script[src="/assets/js/cinematic-motion.js"]')) {
+    var cinematic = document.createElement("script");
+    cinematic.src = "/assets/js/cinematic-motion.js";
+    cinematic.defer = true;
+    document.body.appendChild(cinematic);
+  }
+
+  /* ── AEGIS-OMEGA control plane: fault-contained progressive enhancement ──
+     Skip on the homepage: it appends a second fixed telemetry rail and a
+     second full-screen command-palette surface. Those are redundant with the
+     homepage's existing Sentinel/unified assistant controls. */
+  if (!isHomepage) {
+    var omegaCss = platformAsset("aegis-omega.css");
+    var omegaJs = platformAsset("aegis-omega.js");
+    addLink('link[data-cg-aegis-omega="true"]', {
+      rel: "stylesheet",
+      href: omegaCss,
+      "data-cg-aegis-omega": "true"
+    });
+    if (!document.querySelector('script[data-cg-aegis-omega="true"]')) {
+      var omega = document.createElement("script");
+      omega.src = omegaJs;
+      omega.defer = true;
+      omega.setAttribute("data-cg-aegis-omega", "true");
+      omega.addEventListener("error", function () {
+        document.documentElement.setAttribute("data-aegis-omega", "degraded");
+      }, { once: true });
+      document.body.appendChild(omega);
+    }
+  }
+
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () {
-        /* registration is best-effort; never break the page */
-      });
+      navigator.serviceWorker.register("sw.js").catch(function () {});
     });
   }
 
@@ -65,22 +151,18 @@
       });
       document.head.appendChild(rules);
     }
-  } catch (e) { /* inert on unsupported engines */ }
+  } catch (e) {}
 
   /* ── 3) cross-document view transitions (motion-pref aware) ─────────────── */
   try {
     var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduce && "CSSViewTransitionRule" in window === false) {
-      // @view-transition is pure CSS; inject it regardless — engines without
-      // support ignore the rule, and we skip it entirely under reduced motion.
-    }
     if (!reduce) {
       var st = document.createElement("style");
       st.textContent = "@view-transition{navigation:auto}" +
         "::view-transition-old(root),::view-transition-new(root){animation-duration:.22s}";
       document.head.appendChild(st);
     }
-  } catch (e) { /* inert */ }
+  } catch (e) {}
 
   /* ── 4) founder profile link ─────────────────────────────────────────────── */
   var founderActions = document.querySelector("#founder .founder-actions");
@@ -94,5 +176,42 @@
     linkedin.setAttribute("aria-label", "View Desmond Otieno Odhiambo on LinkedIn");
     linkedin.textContent = "LinkedIn Profile ↗";
     founderActions.appendChild(linkedin);
+  }
+
+  /* ── 5) pricing catalogue parity for newly published strategic offers ───── */
+  var plans = document.querySelector("#plans.grid");
+  if (plans && !plans.querySelector('[data-sku="critical-minerals-compliance"]')) {
+    var critical = document.createElement("article");
+    critical.className = "plan feat";
+    critical.setAttribute("data-reveal", "");
+    critical.setAttribute("data-tilt", "5");
+    critical.setAttribute("data-sku", "critical-minerals-compliance");
+    critical.innerHTML =
+      '<span class="tag">Strategic operations · new</span>' +
+      '<h3>Critical Minerals Compliance Strategy</h3>' +
+      '<div class="blurb">Compliance-first civilian strategy for critical minerals, strategic materials and lawful dual-use supply chains.</div>' +
+      '<div class="price">CAD&nbsp;$1,499<span class="u">one-time</span></div>' +
+      '<ul class="feats">' +
+        '<li><span class="ck">✓</span> Classification, sanctions and licensing triage</li>' +
+        '<li><span class="ck">✓</span> Provenance and traceability architecture</li>' +
+        '<li><span class="ck">✓</span> Risk register and mitigation ownership</li>' +
+        '<li><span class="ck">✓</span> Ranked go/no-go opportunity matrix</li>' +
+      '</ul>' +
+      '<div class="cta"><a class="cg-btn cg-btn--primary cg-btn--block" href="https://book.stripe.com/fZu3cwcfWb1jgKoeCw4Ni08" rel="noopener">Secure checkout →</a>' +
+      '<div class="paynote">🔒 Stripe · encrypted card payment</div></div>';
+    plans.appendChild(critical);
+  }
+
+  /* Restore the explicit payment-safety promise if a compact storefront build
+     omitted the older trust copy. This is customer-facing, not a hidden check. */
+  if (/\/store(?:\.html)?$/.test(location.pathname) && !document.querySelector("[data-payment-safety]")) {
+    var main = document.querySelector("main");
+    if (main) {
+      var safety = document.createElement("p");
+      safety.setAttribute("data-payment-safety", "true");
+      safety.className = "note";
+      safety.textContent = "Nothing is auto-charged or auto-sent. Payments occur only when you explicitly choose and complete a checkout, e-Transfer, or approved invoice.";
+      main.appendChild(safety);
+    }
   }
 })();

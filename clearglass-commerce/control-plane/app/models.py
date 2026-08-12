@@ -11,10 +11,12 @@ from sqlalchemy import (
     JSON,
     DateTime,
     ForeignKey,
+    Index,
     Integer,
     Numeric,
     String,
     Text,
+    text,
 )
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -75,7 +77,86 @@ class Order(Base):
     external_ref: Mapped[str | None] = mapped_column(
         String(160), nullable=True, unique=True, index=True
     )
+    # Where the parcel goes. Held on the order rather than the customer because a
+    # customer can ship to a different address each time, and a dropship supplier
+    # is handed the address that was given at *this* checkout — reusing a stale
+    # one sends someone else's parcel to a previous address.
+    ship_to_name: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    ship_to_address1: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    ship_to_address2: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    ship_to_city: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    ship_to_state: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    ship_to_country: Mapped[str | None] = mapped_column(String(2), nullable=True)
+    ship_to_zip: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    ship_to_email: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    # pending → drafted → confirmed → shipped, or unfulfillable (see fulfillment.py)
+    fulfillment_status: Mapped[str] = mapped_column(String(32), default="pending")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+
+
+class Shipment(Base):
+    """A supplier's fulfillment of an order, and the tracking it produced.
+
+    Separate from ``Order`` because one order can ship in several parcels — a
+    print-on-demand supplier routes items to whichever facility can make them, so
+    a two-item order regularly arrives as two shipments with different carriers.
+    Collapsing that into columns on ``Order`` would lose one of the tracking
+    numbers, and the customer would be chasing a parcel we never told them about.
+    """
+
+    __tablename__ = "shipments"
+
+    # Mirrors the partial unique index in migrations/005_fulfillment.sql. Without
+    # it here, `Base.metadata.create_all` (SQLite dev, demo and the whole test
+    # suite) would build a weaker schema than production, so the idempotency this
+    # table claims would be untested exactly where it is cheapest to test.
+    __table_args__ = (
+        Index(
+            "idx_shipments_supplier_shipment",
+            "supplier",
+            "supplier_shipment_id",
+            unique=True,
+            sqlite_where=text("supplier_shipment_id IS NOT NULL"),
+            postgresql_where=text("supplier_shipment_id IS NOT NULL"),
+        ),
+        Index("idx_shipments_supplier_order", "supplier", "supplier_order_id"),
+        # At most one un-parcelled row per (order, supplier). Draft booking is a
+        # check-then-insert, so two overlapping calls can both find nothing and
+        # both insert; this makes the database the arbiter rather than the race.
+        Index(
+            "idx_shipments_order_placeholder",
+            "order_id",
+            "supplier",
+            unique=True,
+            sqlite_where=text("supplier_shipment_id IS NULL"),
+            postgresql_where=text("supplier_shipment_id IS NULL"),
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id", ondelete="CASCADE"), index=True)
+    supplier: Mapped[str] = mapped_column(String(32), default="printful")
+    # The supplier's own order id. Deliberately NOT unique: one supplier order
+    # can produce several parcels, which is the entire reason this is a table.
+    supplier_order_id: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    # The supplier's id for *this parcel*. This is the idempotency key — unique
+    # per supplier — so a redelivered `package_shipped` updates its own row while
+    # a genuine second parcel still gets one of its own.
+    supplier_shipment_id: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    status: Mapped[str] = mapped_column(String(32), default="draft")
+    tracking_number: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    tracking_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    carrier: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    service: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    # What the supplier charged us, against Order.total the customer paid — the
+    # two together are the margin, which is the whole economics of dropshipping.
+    supplier_cost: Mapped[Decimal | None] = mapped_column(Numeric(12, 2), nullable=True)
+    currency: Mapped[str] = mapped_column(String(3), default="CAD")
+    shipped_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=_utcnow, onupdate=_utcnow
+    )
 
 
 class Payout(Base):

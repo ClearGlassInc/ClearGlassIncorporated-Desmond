@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-08-04T09:37:48.008349+00:00",
-  "files_audited": 78,
-  "average_score": 87.8,
+  "run_utc": "2026-08-09T07:52:36.536515+00:00",
+  "files_audited": 84,
+  "average_score": 87.3,
   "pages": [
     {
       "file": "404.html",
@@ -464,6 +464,26 @@
       ]
     },
     {
+      "file": "business-productivity-suite.html",
+      "title": "Business Productivity Suite | ClearGlass Inc.",
+      "title_length": 45,
+      "title_ok": true,
+      "description": "Explore the ClearGlass Business Productivity Suite: a Canadian-first, CAD-oriented productivity plan experience connected to the ClearGlass product ecosystem.",
+      "description_length": 158,
+      "description_ok": true,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 90,
+      "issues": [
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "button-lab.html",
       "title": "Button Lab \u00b7 ClearGlass \u2014 Machined Glass Control System",
       "title_length": 55,
@@ -735,11 +755,11 @@
     },
     {
       "file": "counter-uas-commercialization-os.html",
-      "title": "Counter-UAS Commercialization OS \u2014 ClearGlass Inc.",
-      "title_length": 50,
+      "title": "CLEARGLASS // ARTEMIS \u2014 Future Counter-UAS Operations OS",
+      "title_length": 56,
       "title_ok": true,
-      "description": "ARTEMIS Commercialization OS: an autonomous, revenue-target-backward operating system for a Counter-UAS EO/IR detection company. Reverse-engineer the $1M plan, score pilots, track risk, and auto-draft investor updates from a handful of inputs.",
-      "description_length": 243,
+      "description": "CLEARGLASS ARTEMIS is a human-supervised operations and commercialization platform for authorized drone detection, airspace awareness, incident coordination, compliance, infrastructure protection, and commercial deployment.",
+      "description_length": 223,
       "description_ok": false,
       "canonical_present": true,
       "h1_count": 1,
@@ -750,7 +770,7 @@
       "og_image": true,
       "score": 90,
       "issues": [
-        "Description length 243 chars (ideal 120\u2013160)"
+        "Description length 223 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -837,6 +857,26 @@
       "score": 90,
       "issues": [
         "Description length 24 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
+      "file": "global-growth-engine.html",
+      "title": "Global Growth Engine \u2014 ClearGlass Inc.",
+      "title_length": 38,
+      "title_ok": true,
+      "description": "ClearGlass Global Growth Engine is a governed multi-channel ecommerce growth operating system for market prioritization, localization, acquisition, CRO, retention, analytics, and experiment control.",
+      "description_length": 198,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 198 chars (ideal 120\u2013160)"
       ]
     },
     {
@@ -1106,12 +1146,34 @@
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
+      "img_without_alt": 1,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "1 image(s) missing alt text"
+      ]
+    },
+    {
+      "file": "plans.html",
+      "title": "Guardian Plans &amp; Pricing \u2014 ClearGlass Inc.",
+      "title_length": 46,
+      "title_ok": true,
+      "description": "Flexible business productivity plans that scale with your team. ClearGlass Guardian security operations console \u2014 Essentials, Professional and Command tiers, billed monthly or annually in Canadian dollars.",
+      "description_length": 205,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
       "img_without_alt": 0,
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 90,
+      "issues": [
+        "Description length 205 chars (ideal 120\u2013160)"
+      ]
     },
     {
       "file": "platform-command-center.html",
@@ -1296,6 +1358,26 @@
       ]
     },
     {
+      "file": "seo-authority-hub.html",
+      "title": "Cybersecurity & AI Automation in Burlington, Ontario | ClearGlass Inc.",
+      "title_length": 70,
+      "title_ok": false,
+      "description": "ClearGlass Inc. provides cybersecurity architecture, governed AI automation, OSINT systems, and secure software engineering from Burlington, Ontario, Canada.",
+      "description_length": 157,
+      "description_ok": true,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Title length 70 chars (ideal 30\u201360)"
+      ]
+    },
+    {
       "file": "seo-dashboard.html",
       "title": "SEO Performance Dashboard | ClearGlass Inc.",
       "title_length": 43,
@@ -1459,6 +1541,30 @@
       ]
     },
     {
+      "file": "threads.html",
+      "title": "ClearGlassInc Artemis Campaign Review Kit",
+      "title_length": 41,
+      "title_ok": true,
+      "description": null,
+      "description_length": 0,
+      "description_ok": false,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 40,
+      "issues": [
+        "Missing meta description",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "traffic-enforcement.html",
       "title": "Traffic Enforcement \u2014 Speed Vision AI | ClearGlass Inc",
       "title_length": 54,
@@ -1520,6 +1626,26 @@
       ]
     },
     {
+      "file": "workspace.html",
+      "title": "ClearGlass Workspace \u2014 Business Productivity Plans",
+      "title_length": 50,
+      "title_ok": true,
+      "description": "Flexible business productivity plans that scale with your team. Business email on your domain, encrypted file storage, shared calendars and collaboration for small businesses, freelancers and remote teams in Canada. From CAD $6.00 per user per month.",
+      "description_length": 250,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 90,
+      "issues": [
+        "Description length 250 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "xenolith.html",
       "title": "XENOLITH \u2014 Sovereign Intelligence Lattice | ClearGlass Inc.",
       "title_length": 59,
@@ -1542,15 +1668,15 @@
     }
   ],
   "top_issues": [
-    "29x \u2014 Description length N chars (ideal N\u2013N)",
-    "21x \u2014 Title length N chars (ideal N\u2013N)",
-    "15x \u2014 Missing og:image",
-    "8x \u2014 Missing og:description",
-    "7x \u2014 Missing og:title",
+    "32x \u2014 Description length N chars (ideal N\u2013N)",
+    "22x \u2014 Title length N chars (ideal N\u2013N)",
+    "17x \u2014 Missing og:image",
+    "9x \u2014 Missing og:description",
+    "8x \u2014 Missing og:title",
+    "5x \u2014 Missing canonical link tag",
     "4x \u2014 Multiple <hN> tags (N)",
-    "4x \u2014 Missing canonical link tag",
-    "2x \u2014 N image(s) missing alt text",
-    "1x \u2014 Missing <title>",
-    "1x \u2014 Missing meta description"
+    "3x \u2014 N image(s) missing alt text",
+    "2x \u2014 Missing meta description",
+    "1x \u2014 Missing <title>"
   ]
 }

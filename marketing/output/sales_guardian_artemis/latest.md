@@ -1,6 +1,6 @@
 # ClearGlassInc — Guardian & Artemis Sales Brain Output
 
-- Generated (UTC): 2026-08-04T09:37:49+00:00
+- Generated (UTC): 2026-08-09T07:52:37+00:00
 - Prompt source: `prompts/sales_guardian_artemis_system_prompt.md`
 - Audiences covered: 3
 

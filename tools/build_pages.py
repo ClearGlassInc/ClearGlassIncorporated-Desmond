@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 from pathlib import Path
 
@@ -18,34 +19,54 @@ PUBLIC_MARKDOWN = {"SECURITY.md", "legal/WEBSITE_POLICY_TEMPLATES.md"}
 DENIED_TOP_LEVEL = {
     ".git", ".github", "agent_army", "agent_os", "agents", "apps", "artemis",
     "artemis_platform", "automation", "boq", "bots", "clearglass-agentops",
-    "clearglass-air-control", "clearglass-commerce", "config", "data", "deployment",
-    "docs", "growth-engine", "infra", "jarvis-os", "marketing", "operations",
-    "percival_v9", "platform", "products", "prompts", "runner", "scripts", "sentinel",
-    "services", "strategy", "tests", "threads-growth", "tools", "workflows", "xenolith",
-    "youtube_launch",
+    "clearglass-air-control", "clearglass-commerce", "config", "customer-profiles",
+    "data", "deployment", "docs", "growth-engine", "infra", "jarvis-os",
+    "marketing", "operations", "percival_v9", "platform", "products", "prompts",
+    "runner", "scripts", "sentinel", "services", "strategy", "tests",
+    "threads-growth", "tools", "workflows", "xenolith", "youtube_launch",
 }
 PUBLIC_DENIED_TREE_EXCEPTIONS = {Path("apps/command-center")}
 
-# `data/` stays denied as a tree — it also holds internal working state (marketing
-# shared memory, campaign packages, SEO targeting config). These specific feeds are
-# the ones live pages fetch to render, so denying them left every dashboard on the
-# site showing its "unavailable" fallback against a 404. Allowlisted file by file:
-# adding a feed here is a deliberate decision to publish it.
+# Individual pages inside an otherwise denied tree. Deliberately file-level, not
+# a tree exception: `products/` also holds shipped product source (opal-koboi's
+# .py/.ps1 and its sibling HTML consoles), so opening the whole tree would
+# publish pages nobody has held to the site's SEO, logo, and linking gates.
+PUBLIC_DENIED_FILE_EXCEPTIONS = {
+    "products/advanced-secure-systems-engineering.html",
+}
+
+# `data/` stays denied as a tree — it also holds internal working state. These
+# exact feeds are live public page inputs and must be deliberately allowlisted.
 PUBLIC_DATA_FEEDS = {
-    # Control Surface contract feeds, refreshed hourly by control-surface-feeds.yml
-    # and consumed by web-design.html, control-surface.{html,js}, systems.html.
+    "data/minerals/manifest.json",
+    "data/minerals/platform/config.json",
+    "data/minerals/platform/demo.json",
+    "data/minerals/latest/news.json",
+    "data/minerals/latest/policy.json",
+    "data/minerals/latest/prices.json",
+    "data/minerals/latest/production.json",
+    "data/minerals/latest/provenance.json",
+    "data/minerals/latest/reserves.json",
+    "data/minerals/latest/sanctions.json",
+    "data/minerals/latest/supply-risk.json",
+    "data/minerals/latest/trade.json",
+    "data/minerals/metadata/countries.json",
+    "data/minerals/metadata/methodology.json",
+    "data/minerals/metadata/minerals.json",
+    "data/minerals/metadata/sources.json",
     "data/control-surface/activity.json",
     "data/control-surface/alerts.json",
     "data/control-surface/health.json",
     "data/control-surface/metrics.json",
     "data/control-surface/pipeline.json",
     "data/control-surface/runs.json",
-    # Page-specific feeds, each fetched by the page named beside it.
-    "data/Ontario-osint/intel.json",      # Ontario-osint.html, web-design.html
-    "data/platform/registry.json",        # intelligence-platform.html
-    "data/store/catalog.json",            # web-design.html
-    "data/xenolith/lattice.json",         # xenolith.html
-    # Linked as downloads from the (noindex) SEO dashboard.
+    "data/Ontario-osint/intel.json",
+    "data/minerals/manifest.json",
+    "data/minerals/metadata/minerals.json",
+    "data/minerals/metadata/sources.json",
+    "data/platform/registry.json",
+    "data/store/catalog.json",
+    "data/xenolith/lattice.json",
     "data/seo/alerts.json",
     "data/seo/audit.json",
     "data/seo/performance.json",
@@ -53,6 +74,90 @@ PUBLIC_DATA_FEEDS = {
 
 DENIED_PARTS = {"node_modules", "__pycache__", ".pytest_cache", ".mypy_cache"}
 DENIED_NAMES = {"package.json", "package-lock.json", "pyproject.toml", "requirements.txt"}
+
+CSP_POLICY = (
+    "default-src 'self'; "
+    "base-uri 'self'; "
+    "object-src 'none'; "
+    "form-action 'self' https://formspree.io https://formsubmit.co; "
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
+    "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; "
+    "img-src 'self' data: blob: https:; "
+    "media-src 'self' https:; "
+    "connect-src 'self' https://formspree.io https://formsubmit.co https://api.github.com; "
+    "frame-src 'self' https://www.youtube-nocookie.com; "
+    "manifest-src 'self'; "
+    "worker-src 'self' blob:; "
+    "upgrade-insecure-requests"
+)
+
+AEGIS_STYLESHEET = '<link rel="stylesheet" href="/aegis-glass.css" data-aegis-global="true">'
+SECURITY_STACK_STYLESHEET = '<link rel="stylesheet" href="/security-stack-fusion.css" data-security-stack-fusion="true">'
+FX_STYLESHEET = '<link rel="stylesheet" href="/fx.css" data-fx-global="true">'
+AEGIS_SCRIPT = '<script src="/aegis-glass.js" defer data-aegis-global="true"></script>'
+STEALTH_SCRIPT = '<script src="/stealth-glass.js" defer data-stealth-global="true"></script>'
+FX_SCRIPT = '<script src="/fx.js" defer data-fx-global="true"></script>'
+
+CSP_META_PATTERN = r"<meta\b(?=[^>]*http-equiv\s*=\s*['\"]Content-Security-Policy['\"])[^>]*>"
+REFERRER_META_PATTERN = r"<meta\b(?=[^>]*name\s*=\s*['\"]referrer['\"])[^>]*>"
+
+
+def _has_asset(text: str, pattern: str) -> bool:
+    return re.search(pattern, text, flags=re.IGNORECASE) is not None
+
+
+def _harden_html(path: Path) -> None:
+    """Inject browser-enforced security metadata into a published HTML file."""
+    text = path.read_text(encoding="utf-8")
+    head = re.search(r"<head(?:\s[^>]*)?>", text, flags=re.IGNORECASE)
+    if not head:
+        return
+
+    metadata_replaced = False
+
+    # Pages can carry an older inline policy. Normalize it at build time so a
+    # newly allowlisted production integration is not silently blocked on only
+    # part of the site and every published page receives the reviewed policy.
+    csp_meta = re.compile(CSP_META_PATTERN, flags=re.IGNORECASE)
+    canonical_csp = f'<meta http-equiv="Content-Security-Policy" content="{CSP_POLICY}">'
+    if csp_meta.search(text):
+        replaced = csp_meta.sub(canonical_csp, text, count=1)
+        metadata_replaced = metadata_replaced or replaced != text
+        text = replaced
+
+    referrer_meta = re.compile(REFERRER_META_PATTERN, flags=re.IGNORECASE)
+    canonical_referrer = '<meta name="referrer" content="strict-origin-when-cross-origin">'
+    if referrer_meta.search(text):
+        replaced = referrer_meta.sub(canonical_referrer, text, count=1)
+        metadata_replaced = metadata_replaced or replaced != text
+        text = replaced
+
+    tags: list[str] = []
+    if not _has_asset(text, CSP_META_PATTERN):
+        tags.append(canonical_csp)
+    if not _has_asset(text, REFERRER_META_PATTERN):
+        tags.append(canonical_referrer)
+    if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/aegis-glass\.css['\"]"):
+        tags.append(AEGIS_STYLESHEET)
+    if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/security-stack-fusion\.css['\"]"):
+        tags.append(SECURITY_STACK_STYLESHEET)
+    if not _has_asset(text, r"<link\b[^>]*href\s*=\s*['\"]/fx\.css['\"]"):
+        tags.append(FX_STYLESHEET)
+    if not _has_asset(text, r"<script\b[^>]*src\s*=\s*['\"]/aegis-glass\.js['\"]"):
+        tags.append(AEGIS_SCRIPT)
+    if not _has_asset(text, r"<script\b[^>]*src\s*=\s*['\"]/stealth-glass\.js['\"]"):
+        tags.append(STEALTH_SCRIPT)
+    if not _has_asset(text, r"<script\b[^>]*src\s*=\s*['\"]/fx\.js['\"]"):
+        tags.append(FX_SCRIPT)
+
+    if not tags and not metadata_replaced:
+        return
+
+    if tags:
+        injection = "\n" + "\n".join(tags)
+        text = text[: head.end()] + injection + text[head.end() :]
+    path.write_text(text, encoding="utf-8")
 
 
 def public_relative_paths() -> list[Path]:
@@ -65,6 +170,7 @@ def public_relative_paths() -> list[Path]:
         inside_public_exception = (
             any(relative.is_relative_to(path) for path in PUBLIC_DENIED_TREE_EXCEPTIONS)
             or relative_text in PUBLIC_DATA_FEEDS
+            or relative_text in PUBLIC_DENIED_FILE_EXCEPTIONS
         )
         if (
             relative.parts[0] in DENIED_TOP_LEVEL
@@ -91,6 +197,8 @@ def build(destination: Path) -> int:
         target = destination / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / relative, target)
+        if target.suffix.lower() == ".html":
+            _harden_html(target)
     (destination / ".nojekyll").touch()
     if not (destination / "index.html").is_file():
         raise FileNotFoundError("Pages artifact is missing index.html")

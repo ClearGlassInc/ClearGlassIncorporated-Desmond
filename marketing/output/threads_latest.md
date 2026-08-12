@@ -1,72 +1,83 @@
-# ClearGlassInc Artemis Threads Pack
+# ClearGlassInc Artemis Proof-Led Threads Pack
 
-## Thread 1
+> DRAFT — HUMAN REVIEW REQUIRED. No asset in this file is approved for automatic publication.
 
-- App: ClearGlassInc Artemis
-- Category: productivity
-- Audience: young professionals and founders
-- Emotional benefit: feeling in control under pressure
-- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+## Thread 1: Explain the governance boundary
 
-1. I almost missed the one message that could've changed my week. 😵‍💫
-2. I had 17 tabs open, 42 unread pings, and zero idea what actually mattered. 📉
-3. Then I ran my day through ClearGlassInc Artemis. It flagged one convo as high-stakes in 8 seconds.
-4. That single reply turned into a signed deal before lunch. Relief hit hard. ⚡
-5. Be honest: how often does noise hide your biggest opportunity? 👇
+- Audience: AI/platform engineers
+- CTA: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=proof_thread
 
-## Thread 2
+1. A model can recommend the next move. That does not mean it should be allowed to authorize it.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+2. Artemis separates evidence, policy, approval, execution, and audit instead of treating model confidence as authority.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+3. The practical question is simple: where does authorization live when an agent can call tools?
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+4. Architecture and implementation map: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=proof_thread
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+5. Technical criticism is welcome. Point to the trust boundary you would change first.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
 
-- App: ClearGlassInc Artemis
-- Category: productivity
-- Audience: young professionals and founders
-- Emotional benefit: feeling in control under pressure
-- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+## Thread 2: Show security posture
 
-1. I looked productive. I was actually drowning. 🫠
-2. Color-coded calendar. Fancy to-do app. Still ended each day feeling behind and guilty.
-3. What changed? Artemis showed me where my time leaked, not where it looked busy.
-4. Two weeks later: fewer tasks, better output, calmer brain. That's the part no one tells you. 🧠
-5. Are you optimizing for busy… or for peace + results?
+- Audience: security architects
+- CTA: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=security_thread
 
-## Thread 3
+1. Agentic systems fail when policy exists only in prompts.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+2. Artemis treats model output as untrusted data and keeps consequential authorization in deterministic controls outside the model.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+3. That means typed tools, risk gates, explicit approval paths, provenance, and reversible deployment.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+4. Review the live product surface and repository evidence: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=security_thread
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+5. The standard is not 'does the demo work?' It is 'can the decision path be audited and reversed?'
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
 
-- App: ClearGlassInc Artemis
-- Category: productivity
-- Audience: young professionals and founders
-- Emotional benefit: feeling in control under pressure
-- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+## Thread 3: Frame the repository as a product system
 
-1. The worst part of burnout? You don't notice it until you snap. 🔥
-2. I stopped sleeping well. Started forgetting small promises. Confidence dropped quietly.
-3. Artemis started surfacing promise-risk moments before they became trust damage.
-4. Catching those early gave me my reputation back. And honestly, myself back too. 🙏
-5. Who's felt their credibility slip from tiny misses, not big failures?
+- Audience: technical founders
+- CTA: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=founder_thread
 
-## Thread 4
+1. A repository earns adoption when a visitor can understand the problem, verify the proof, run the system, and know where to contribute.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+2. That is why Artemis is being operated as a conversion funnel: discovery → README trust → live product → activation → contribution.
+   - Evidence: docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+3. No fake stars. No bulk promotion. No invented customer proof. The growth engine is documentation, demos, releases, and useful technical artifacts.
+   - Evidence: docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+4. Explore the current system: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=founder_thread
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+5. If the quick start or architecture map creates friction, open a focused issue with the exact failing step.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
 
-- App: ClearGlassInc Artemis
-- Category: productivity
-- Audience: young professionals and founders
-- Emotional benefit: feeling in control under pressure
-- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+## Thread 4: Invite reproducible use cases
 
-1. My team said we need clarity. I heard you're failing us. 😶
-2. We kept re-explaining priorities in every standup. Same confusion, new day.
-3. We built a shared Artemis mission board: one truth, live updates, zero guessing.
-4. Meetings got shorter. Tension dropped. Momentum came back fast. 🚀
-5. Team leads: what creates more drag for you—unclear priorities or unclear ownership?
+- Audience: automation builders
+- CTA: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=automation_thread
 
-## Thread 5
+1. The useful agent loop is not 'prompt → magic.'
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+2. It is evidence → bounded plan → policy check → approval where required → execution → audit.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+3. That structure makes failures observable and recovery possible.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+4. See how the pieces fit together: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=automation_thread
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+5. If you adapt the pattern to another domain, document the trust boundary and failure mode. That is the contribution worth sharing.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
 
-- App: ClearGlassInc Artemis
-- Category: productivity
-- Audience: young professionals and founders
-- Emotional benefit: feeling in control under pressure
-- Pain points: task overload, context switching fatigue, forgetting high-impact follow-ups
+## Thread 5: Convert attention into contribution
 
-1. I used to panic every Sunday night. No plan felt real. 😬
-2. I'd write goals, then spend Monday reacting to everyone else's emergencies.
-3. Now Artemis prebuilds my week by impact, urgency, and energy level.
-4. I still work hard. I just don't feel hunted anymore. That shift is everything. 💎
-5. Sunday check: are you starting tomorrow with intention or survival mode?
+- Audience: open-source contributors
+- CTA: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=contributor_thread
 
+1. Launch week is not the finish line. It is an evaluation window.
+   - Evidence: docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+2. The useful signals are setup failures, architecture critiques, missing docs, reproducible bugs, and real integrations.
+   - Evidence: docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+3. Stars are interest. They are not proof of adoption.
+   - Evidence: docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+4. Start with the repository map and live platform: https://www.clearglassinc.com/?utm_source=x&utm_medium=organic_social&utm_campaign=artemis_launch&utm_content=contributor_thread
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md
+5. Contribute one focused improvement with verification evidence. That compounds better than engagement tricks.
+   - Evidence: README.md, docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md

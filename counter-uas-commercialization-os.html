@@ -1,610 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
-<link rel="icon" href="/assets/images/clearglass-holographic-seal.png" sizes="any">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#f8f7f4" />
+<title>CLEARGLASS // ARTEMIS — Future Counter-UAS Operations OS</title>
+<meta name="description" content="CLEARGLASS ARTEMIS is a human-supervised platform for authorized drone detection, airspace awareness, incident coordination and infrastructure protection." />
+<link rel="canonical" href="https://www.clearglassinc.com/counter-uas-commercialization-os.html" />
+<meta property="og:title" content="CLEARGLASS // ARTEMIS — Future Operations OS" />
+<meta property="og:description" content="The Autonomous Operations OS for Authorized Airspace Intelligence. Demo data unless otherwise indicated." />
+<meta property="og:url" content="https://www.clearglassinc.com/counter-uas-commercialization-os.html" />
+<meta property="og:site_name" content="ClearGlass Inc." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="CLEARGLASS // ARTEMIS" />
+<meta name="twitter:description" content="Authorized airspace intelligence with transparent automation, human approval, policy gates, and auditable workflows." />
+<meta name="twitter:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png" />
+<link rel="icon" href="/assets/images/clearglass-holographic-seal.png" sizes="any" />
+<link rel="apple-touch-icon" href="/assets/images/clearglass-holographic-seal.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <link rel="icon" type="image/png" href="/assets/images/clearglass-holographic-seal.png">
 <link rel="alternate icon" href="/assets/images/clearglass-holographic-seal.png">
-<link rel="apple-touch-icon" href="/assets/images/clearglass-holographic-seal.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#07111f">
 <meta name="msapplication-TileColor" content="#07111f">
 <meta name="msapplication-TileImage" content="/icon-192.png">
 <meta name="msapplication-config" content="/browserconfig.xml">
-
-<link rel="sitemap" type="application/xml" href="/sitemap.xml">
-<meta charset="UTF-8"/>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.js" defer></script>
 <script>
-/* cg-boot-loader: first-visit boot routing — plays /loader.html once per browser
-   session on every page except the homepage. Bypass with ?skipboot=1, or visit
-   /loader.html directly to replay. */
-(function(){
-  try {
-    var ua = navigator.userAgent || '';
-    if (/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua)) return;
-    if (/[?&]skipboot=1\b/.test(location.search)) return;
-    var path = location.pathname;
-    /* homepage renders with no loader */
-    if (path === '/' || path === '/index.html') return;
-    if (sessionStorage.getItem('cg.booted')) return;
-    sessionStorage.setItem('cg.booted', '1');
-    var here = path + location.search + location.hash;
-    location.replace('/loader.html?next=' + encodeURIComponent(here));
-  } catch (e) { /* storage unavailable — render normally */ }
-})();
+(function(){try{var ua=navigator.userAgent||'';if(/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua))return;if(/[?&]skipboot=1\b/.test(location.search))return;var p=location.pathname;if(p==='/'||p==='/index.html'||sessionStorage.getItem('cg.booted'))return;sessionStorage.setItem('cg.booted','1');location.replace('/loader.html?next='+encodeURIComponent(p+location.search+location.hash));}catch(e){}})();
 </script>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<title>Counter-UAS Commercialization OS — ClearGlass Inc.</title>
-<meta name="description" content="ARTEMIS Commercialization OS: an autonomous, revenue-target-backward operating system for a Counter-UAS EO/IR detection company. Reverse-engineer the $1M plan, score pilots, track risk, and auto-draft investor updates from a handful of inputs."/>
-<link rel="canonical" href="https://www.clearglassinc.com/counter-uas-commercialization-os.html"/>
-<meta property="og:title" content="Counter-UAS Commercialization OS — ClearGlass Inc."/>
-<meta property="og:description" content="An autonomous executive operating system for a Counter-UAS EO/IR company. Revenue-target-backward. Your input, automated into a $1M plan."/>
-<meta property="og:url" content="https://www.clearglassinc.com/counter-uas-commercialization-os.html"/>
-<meta property="og:site_name" content="ClearGlass Inc."/>
-<meta property="og:type" content="website"/>
-<meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Counter-UAS Commercialization OS — ClearGlass Inc."/>
-<meta name="twitter:description" content="An autonomous executive operating system for a Counter-UAS EO/IR company. Your input, automated into a $1M plan."/>
-<meta name="twitter:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Urbanist:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --dark:#070a10;--dark-2:#0e131c;--dark-3:#161d29;--panel:rgba(255,255,255,.035);--panel-border:rgba(255,255,255,.08);
-  --text:#eef2f8;--text-2:#aeb8c9;--text-3:#717c92;--text-4:#4d566a;
-  --threat-1:#f59e0b;--threat-2:#f43f5e;--threat-3:#fb7185;
-  --cyan:#22d3ee;--green:#34d399;--violet:#a78bfa;--blue:#60a5fa;
-  --grad:linear-gradient(135deg,#22d3ee 0%,#60a5fa 40%,#a78bfa 100%);
-  --threat-grad:linear-gradient(135deg,#f59e0b 0%,#f43f5e 60%,#fb7185 100%);
-  --green-grad:linear-gradient(135deg,#34d399 0%,#22d3ee 100%);
-  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Urbanist',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace;
-}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{font-family:var(--sans);color:var(--text);background:var(--dark);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
-a{color:inherit}
-.container{width:min(1180px,92vw);margin:0 auto}
-.mono{font-family:var(--mono)}
-.threat-text{background:var(--threat-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.green-text{background:var(--green-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-
-/* top bar */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:90;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);background:rgba(7,10,16,.72);backdrop-filter:blur(22px) saturate(1.4);border-bottom:1px solid var(--panel-border)}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
-.brand-mark{width:36px;height:36px;border-radius:9px;background:radial-gradient(circle at 38% 32%,#bcd4ff,#6d5cf0 58%,#161038);box-shadow:0 0 14px rgba(124,150,255,.5);flex:0 0 auto}
-.brand-name{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:-.01em}.brand-name em{font-style:italic;font-weight:300;color:var(--text-3)}
-.topbar-status{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--threat-1);text-transform:uppercase}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--threat-1);box-shadow:0 0 10px var(--threat-1);animation:blink 2s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-
-/* hero */
-.hero{position:relative;padding:clamp(120px,16vw,180px) 0 clamp(60px,8vw,90px);overflow:hidden}
-.hero-glow{position:absolute;top:30%;left:50%;width:900px;height:900px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(244,63,94,.10) 0%,rgba(245,158,11,.06) 32%,rgba(34,211,238,.04) 58%,transparent 74%);animation:pulse 11s ease-in-out infinite;pointer-events:none}
-@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}50%{transform:translate(-50%,-50%) scale(1.13);opacity:1}}
-.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(circle at 50% 35%,#000 0%,transparent 70%);pointer-events:none}
-.hero-inner{position:relative;text-align:center}
-.eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.22em;color:var(--threat-1);margin-bottom:26px}
-.hero h1{font-family:var(--serif);font-size:clamp(2.6rem,7vw,6rem);font-weight:300;line-height:1;letter-spacing:-.03em;max-width:920px;margin:0 auto}
-.hero h1 strong{font-weight:600}
-.hero-sub{font-size:clamp(1rem,1.7vw,1.2rem);color:var(--text-2);max-width:660px;margin:26px auto 0;line-height:1.7}
-.hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:30px}
-.hbadge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(--panel);border:1px solid var(--panel-border);font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--text-2)}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;font-family:var(--sans);font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;border:none;transition:all .3s}
-.btn-primary{color:#06121a;background:var(--green-grad);box-shadow:0 6px 26px rgba(34,211,238,.22)}.btn-primary:hover{transform:translateY(-2px)}
-.btn-ghost{color:var(--text);background:var(--panel);border:1px solid var(--panel-border)}.btn-ghost:hover{background:rgba(255,255,255,.07)}
-
-/* sections */
-section{padding:clamp(60px,9vw,110px) 0;position:relative}
-.sh{margin-bottom:clamp(36px,5vw,56px);max-width:680px}
-.sh-tag{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--text-4);margin-bottom:14px;display:flex;align-items:center;gap:10px;text-transform:uppercase}
-.sh-tag::before{content:'';width:22px;height:1px;background:var(--text-4)}
-.sh h2{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.4rem);font-weight:300;line-height:1.08;letter-spacing:-.02em}
-.sh h2 strong{font-weight:600}
-.sh p{color:var(--text-2);font-size:clamp(1rem,1.3vw,1.08rem);margin-top:16px;line-height:1.75}
-
-/* decision hierarchy */
-.hier-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.hier-chip{padding:10px 18px;border-radius:12px;background:var(--panel);border:1px solid var(--panel-border);font-weight:600;font-size:14px}
-.hier-chip.rank1{border-color:rgba(52,211,153,.4);box-shadow:0 0 22px rgba(52,211,153,.12)}
-.hier-arrow{color:var(--text-4);font-size:18px}
-
-/* revenue engine */
-.engine{display:grid;grid-template-columns:340px 1fr;gap:clamp(20px,3vw,40px);align-items:start}
-.panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:20px;padding:clamp(22px,3vw,32px);backdrop-filter:blur(14px)}
-.panel-title{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);margin-bottom:20px}
-.ctrl{margin-bottom:20px}
-.ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--text-2);margin-bottom:8px;font-weight:600}
-.ctrl label .val{font-family:var(--mono);font-size:13px;color:var(--cyan)}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:99px;background:rgba(255,255,255,.1);outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--grad);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--cyan);cursor:pointer}
-.streams{display:grid;gap:12px}
-.stream{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid var(--panel-border)}
-.stream-name{font-weight:700;font-size:15px}
-.stream-meta{font-family:var(--mono);font-size:11px;color:var(--text-3);grid-column:1;letter-spacing:.04em}
-.stream-val{font-family:var(--mono);font-size:18px;font-weight:600;grid-row:1/3;grid-column:2;color:var(--green)}
-.stream-bar{grid-column:1/3;height:5px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:4px}
-.stream-bar span{display:block;height:100%;background:var(--green-grad);border-radius:99px;transition:width .5s ease}
-.total-card{margin-top:16px;padding:22px 24px;border-radius:16px;background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(34,211,238,.05));border:1px solid rgba(52,211,153,.28);display:flex;justify-content:space-between;align-items:center}
-.total-card .lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2)}
-.total-card .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.3rem);font-weight:600}
-.gap-note{font-size:12px;color:var(--text-3);margin-top:10px;font-family:var(--mono)}
-
-/* agent grid */
-.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-.agent{padding:20px;border-radius:16px;background:var(--panel);border:1px solid var(--panel-border);transition:all .3s}
-.agent:hover{transform:translateY(-3px);border-color:rgba(124,150,255,.4);box-shadow:0 12px 34px rgba(0,0,0,.4)}
-.agent .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:rgba(124,150,255,.1);border:1px solid rgba(124,150,255,.2);margin-bottom:14px}
-.agent h4{font-size:15px;font-weight:700;margin-bottom:6px}
-.agent p{font-size:12.5px;color:var(--text-3);line-height:1.6}
-.agent.exec{grid-column:1/-1;background:linear-gradient(120deg,rgba(124,150,255,.1),rgba(34,211,238,.04));border-color:rgba(124,150,255,.32)}
-
-/* pilot scorer */
-.scorer{display:grid;grid-template-columns:1fr 320px;gap:clamp(20px,3vw,40px);align-items:start}
-.score-display{text-align:center;padding:30px 24px}
-.score-ring{font-family:var(--mono);font-size:clamp(3rem,7vw,4.6rem);font-weight:600;line-height:1}
-.score-verdict{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:8px 16px;border-radius:999px;display:inline-block}
-.v-go{background:rgba(52,211,153,.14);color:var(--green);border:1px solid rgba(52,211,153,.34)}
-.v-maybe{background:rgba(245,158,11,.14);color:var(--threat-1);border:1px solid rgba(245,158,11,.34)}
-.v-no{background:rgba(244,63,94,.14);color:var(--threat-2);border:1px solid rgba(244,63,94,.34)}
-select{width:100%;padding:11px 14px;border-radius:10px;background:var(--dark-2);color:var(--text);border:1px solid var(--panel-border);font-family:var(--sans);font-size:14px;margin-top:6px}
-
-/* kpi */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px}
-.kpi{padding:18px;border-radius:14px;background:var(--panel);border:1px solid var(--panel-border)}
-.kpi .lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
-.kpi .num{font-family:var(--mono);font-size:24px;font-weight:600}
-.kpi .sub{font-size:11px;color:var(--text-4);margin-top:4px}
-
-/* risk register */
-.risk-table{width:100%;border-collapse:collapse;font-size:14px}
-.risk-table th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding:12px 14px;border-bottom:1px solid var(--panel-border)}
-.risk-table td{padding:14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-2)}
-.risk-table tr:hover td{background:rgba(255,255,255,.02)}
-.score-pill{font-family:var(--mono);font-weight:600;padding:4px 10px;border-radius:8px;font-size:13px}
-.s-low{background:rgba(52,211,153,.14);color:var(--green)}
-.s-med{background:rgba(245,158,11,.14);color:var(--threat-1)}
-.s-high{background:rgba(244,63,94,.18);color:var(--threat-3)}
-
-/* 90 day */
-.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.phase{padding:24px;border-radius:18px;background:var(--panel);border:1px solid var(--panel-border)}
-.phase .ph-num{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--cyan);margin-bottom:6px}
-.phase h4{font-family:var(--serif);font-size:1.5rem;font-weight:500;margin-bottom:14px}
-.phase ul{list-style:none;display:grid;gap:9px}
-.phase li{font-size:13px;color:var(--text-2);padding-left:20px;position:relative;line-height:1.5}
-.phase li::before{content:'›';position:absolute;left:4px;color:var(--cyan);font-weight:700}
-
-/* investor update */
-.update-out{font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--text-2);white-space:pre-wrap;background:var(--dark-2);border:1px solid var(--panel-border);border-radius:14px;padding:24px;max-height:420px;overflow:auto}
-.copy-btn{margin-top:14px}
-
-/* compliance */
-.gate-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.gate{padding:18px;border-radius:14px;background:var(--panel);border:1px solid var(--panel-border);display:flex;gap:12px;align-items:flex-start}
-.gate .mk{font-size:18px;line-height:1}
-.gate h5{font-size:13.5px;font-weight:700;margin-bottom:3px}
-.gate p{font-size:12px;color:var(--text-3)}
-
-/* footer */
-footer{border-top:1px solid var(--panel-border);padding:48px 0 40px;margin-top:40px}
-.foot-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:center}
-.foot-tag{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--text-2)}
-.foot-meta{font-size:12px;color:var(--text-4);font-family:var(--mono)}
-.disclaimer{font-size:11.5px;color:var(--text-4);line-height:1.6;margin-top:22px;max-width:760px}
-
-.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}.rv.vis{opacity:1;transform:translateY(0)}
-
-@media(max-width:860px){
-  .engine,.scorer{grid-template-columns:1fr}
-  .phases{grid-template-columns:1fr}
-}
+:root{--pearl:#f8f7f4;--cream:#f3eee8;--graphite:#101116;--graphite2:#171922;--violet:#4e3cff;--violet2:#8a7cff;--amber:#e6a23c;--coral:#f06b7b;--cyan:#8de7f2;--green:#77e2ae;--ink:#18151d;--muted:#746d78;--line:rgba(46,38,57,.12);--glass:rgba(255,255,255,.56);--mono:'IBM Plex Mono',monospace;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Urbanist',system-ui,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:86px}body{margin:0;color:var(--ink);font-family:var(--sans);background:radial-gradient(circle at 10% 3%,rgba(240,107,123,.14),transparent 28%),radial-gradient(circle at 88% 8%,rgba(138,124,255,.18),transparent 28%),linear-gradient(180deg,#fffaf6,var(--cream) 49%,#f4eef4);overflow-x:hidden;-webkit-font-smoothing:antialiased}button,select{font:inherit}button{cursor:pointer}.container{width:min(1200px,92vw);margin:auto}.mono{font-family:var(--mono)}a{color:inherit}.topbar{position:fixed;z-index:100;inset:0 0 auto;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,52px);background:rgba(255,251,247,.78);border-bottom:1px solid var(--line);backdrop-filter:blur(24px) saturate(1.35)}.brand{display:flex;align-items:center;gap:13px;text-decoration:none}.brand-mark{width:40px;height:40px;border-radius:12px;background:radial-gradient(circle at 32% 25%,#d8e2ff,#8d7cff 40%,#4e3cff 70%,#24187d);box-shadow:0 9px 24px rgba(78,60,255,.24),inset 0 0 16px rgba(255,255,255,.45)}.brand-word{font:600 25px/1 var(--serif)}.brand-word small{display:block;margin-top:4px;font:600 8px var(--mono);letter-spacing:.22em;color:#9a777c}.system{display:flex;align-items:center;gap:8px;font:600 9px var(--mono);letter-spacing:.14em;color:#9a6b20;text-transform:uppercase}.pulse{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(230,162,60,.5);animation:pulse 2s infinite}@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(230,162,60,0)}}
+.hero{position:relative;padding:clamp(132px,15vw,184px) 0 70px}.orbital{position:absolute;right:5vw;top:112px;width:96px;height:96px;border:1px solid rgba(78,60,255,.18);border-radius:50%;animation:spin 20s linear infinite}.orbital:before{content:'';position:absolute;inset:18px;border:1px solid rgba(230,162,60,.42);border-radius:50%}.orbital:after{content:'';position:absolute;width:10px;height:10px;left:42px;top:5px;border-radius:50%;background:var(--violet2);box-shadow:0 0 18px var(--violet2)}@keyframes spin{to{transform:rotate(360deg)}}.eyebrow{font:600 11px var(--mono);letter-spacing:.22em;color:#a57623;text-transform:uppercase;margin-bottom:22px}.hero h1{font:500 clamp(3.7rem,9vw,8rem)/.84 var(--serif);letter-spacing:-.055em;margin:0;max-width:1040px}.hero h1 span{display:block;background:linear-gradient(90deg,#d59832,#d85d78 45%,#765fff 82%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero-subtitle{font-size:clamp(1.3rem,2.5vw,2rem);font-weight:800;letter-spacing:-.03em;margin:28px 0 12px}.hero-copy{max-width:850px;color:#68616d;font-size:clamp(1rem,1.5vw,1.16rem);line-height:1.8}.hero-copy strong{color:#28232d}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{border:0;display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border-radius:999px;text-decoration:none;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;transition:.25s}.btn-dark{background:var(--graphite);color:#fff;box-shadow:0 12px 28px rgba(25,20,31,.17)}.btn-glass{background:rgba(255,255,255,.57);border:1px solid var(--line)}.btn:hover{transform:translateY(-2px)}.status-line{display:inline-flex;gap:9px;flex-wrap:wrap;margin-top:25px;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.48);font:600 9px var(--mono);letter-spacing:.09em;color:#625a67}.status-line b{color:#458360}.demo-badge{display:inline-block;margin-top:12px;padding:7px 10px;border:1px solid rgba(230,162,60,.26);border-radius:999px;background:rgba(230,162,60,.08);font:600 9px var(--mono);letter-spacing:.12em;color:#9b6b20}
+.section{padding:76px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:34px}.section-tag{font:600 10px var(--mono);letter-spacing:.17em;color:#9a762f;text-transform:uppercase;margin-bottom:10px}.section h2{font:500 clamp(2.5rem,5vw,4.5rem)/.98 var(--serif);letter-spacing:-.035em;margin:0}.section-head p{max-width:540px;color:var(--muted);line-height:1.7;margin:0}.glass{background:linear-gradient(155deg,rgba(255,255,255,.75),rgba(255,255,255,.3));border:1px solid var(--line);box-shadow:inset 0 1px rgba(255,255,255,.9),0 18px 45px rgba(60,48,70,.06);backdrop-filter:blur(18px)}
+.command-shell{position:relative;overflow:hidden;background:linear-gradient(145deg,#171a23,#0b0e14 78%);color:#eef2f8;border:1px solid rgba(255,255,255,.1);border-radius:30px;padding:clamp(18px,3vw,32px);box-shadow:0 36px 84px rgba(37,27,49,.28),inset 0 1px rgba(255,255,255,.08)}.command-shell:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 83% 0,rgba(138,124,255,.18),transparent 27%),radial-gradient(circle at 10% 100%,rgba(141,231,242,.08),transparent 30%);pointer-events:none}.command-top{position:relative;display:flex;justify-content:space-between;align-items:center;gap:15px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.08)}.command-title{font:600 11px var(--mono);letter-spacing:.16em}.live-chip{display:flex;align-items:center;gap:8px;color:var(--green);font:600 9px var(--mono);letter-spacing:.13em}.live-chip i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}.cockpit-tools{position:relative;display:flex;flex-wrap:wrap;gap:8px;padding:14px 0 4px}.toolbtn,.toolselect{color:#cbd3df;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 11px;font:600 9px var(--mono);letter-spacing:.08em}.toolbtn.active{border-color:rgba(141,231,242,.36);color:var(--cyan);background:rgba(141,231,242,.08)}.toolselect{appearance:none}.command-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.68fr) minmax(300px,.72fr);gap:20px;padding-top:14px}.mapbox{position:relative;min-height:540px;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0e131b}.mapbox:after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-radial-gradient(circle at center,transparent 0 91px,rgba(141,231,242,.06) 92px 93px),linear-gradient(rgba(141,231,242,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(141,231,242,.035) 1px,transparent 1px);background-size:auto,48px 48px,48px 48px;z-index:2}.scan{position:absolute;z-index:3;inset:-40%;pointer-events:none;background:conic-gradient(from 0deg,transparent 0 77%,rgba(141,231,242,.13) 90%,transparent 100%);animation:sweep 7s linear infinite}@keyframes sweep{to{transform:rotate(360deg)}}#airspaceMap{position:absolute;inset:0;z-index:1}.map-fallback{position:absolute;inset:0;background:radial-gradient(circle at 45% 55%,rgba(141,231,242,.08),transparent 20%),linear-gradient(135deg,rgba(75,94,119,.08),rgba(10,14,20,.8));z-index:0}.track-overlay{position:absolute;inset:0;z-index:4;pointer-events:none}.track{position:absolute;display:flex;align-items:center;gap:8px;transition:all 1.6s ease}.track i{width:10px;height:10px;transform:rotate(45deg);border:2px solid var(--cyan);background:#0b1017;box-shadow:0 0 10px rgba(141,231,242,.28)}.track[data-status='authorized'] i,.track[data-status='verified'] i{border-color:var(--green)}.track[data-status='review'] i{border-color:var(--amber)}.track[data-status='resolved'] i{border-color:#8291a2}.track-card{padding:7px 8px;border:1px solid rgba(255,255,255,.11);border-radius:8px;background:rgba(10,15,22,.82);backdrop-filter:blur(8px);white-space:nowrap}.track-name{font:600 8px var(--mono);letter-spacing:.07em}.track-meta{font:500 7px var(--mono);color:#8a98aa;margin-top:3px}.t1{left:13%;top:20%}.t2{left:59%;top:16%}.t3{left:53%;top:65%}.t4{left:25%;top:73%}.sim-stamp{position:absolute;z-index:6;left:14px;bottom:14px;padding:7px 9px;border-radius:8px;background:rgba(9,13,19,.76);border:1px solid rgba(230,162,60,.24);font:600 8px var(--mono);letter-spacing:.12em;color:#e4b65f}.incident-panel{display:flex;flex-direction:column;gap:12px}.micro{padding:16px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.035)}.micro-label{font:600 8px var(--mono);letter-spacing:.14em;color:#748398;text-transform:uppercase}.micro-value{font:600 18px var(--mono);margin-top:5px}.timeline{display:grid;margin-top:12px}.incident{position:relative;padding:0 0 18px 25px}.incident:not(:last-child):before{content:'';position:absolute;left:5px;top:13px;bottom:-2px;width:1px;background:rgba(144,171,198,.18)}.incident .node{position:absolute;left:0;top:4px;width:11px;height:11px;border-radius:50%;border:2px solid #74889e;background:#111722}.incident.done .node{border-color:var(--green);background:var(--green)}.incident.review .node{border-color:var(--amber);box-shadow:0 0 10px rgba(230,162,60,.4)}.incident h4{font:600 9px var(--mono);letter-spacing:.07em;margin:0 0 4px}.incident p{font-size:10px;line-height:1.45;color:#8390a3;margin:0}.event-kind{display:inline-block;margin-top:5px;font:600 7px var(--mono);letter-spacing:.08em;color:#aeb9c8}.human-control{padding:14px;border:1px solid rgba(230,162,60,.28);border-radius:14px;background:rgba(230,162,60,.08);color:#efc775;font:600 8px var(--mono);line-height:1.6;letter-spacing:.08em}.mobile-track-card{display:none}.metrics-strip{display:flex;gap:9px;overflow-x:auto;padding:18px 2px 2px;scrollbar-width:none}.metrics-strip::-webkit-scrollbar{display:none}.pill{flex:none;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.55);font:600 8px var(--mono);letter-spacing:.1em;color:#605867}
+.function-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.function-card{min-height:244px;padding:24px;border-radius:24px}.num{font:600 10px var(--mono);letter-spacing:.15em;color:#aa7f31}.function-card h3{font:600 1.4rem var(--serif);font-size:2rem;margin:54px 0 10px}.function-card p{color:#6e6872;font-size:14px;line-height:1.7;margin:0}.architecture{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:center;padding:22px;border-radius:24px}.arch-node{min-height:100px;padding:14px 10px;border-radius:15px;background:rgba(255,255,255,.55);border:1px solid var(--line);display:grid;place-items:center;text-align:center;font:600 9px var(--mono);line-height:1.55}.arch-arrow{text-align:center;color:#8c7d8f}.fabric-shell{padding:28px;border-radius:28px}.orchestrator{text-align:center;padding:17px;border-radius:18px;background:linear-gradient(90deg,rgba(78,60,255,.10),rgba(141,231,242,.10));border:1px solid rgba(78,60,255,.17);font:700 11px var(--mono);letter-spacing:.16em;margin-bottom:16px}.agent-layers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.agent-layer{padding:16px;border-radius:18px;background:rgba(255,255,255,.48);border:1px solid var(--line)}.agent-layer h4{margin:0 0 12px;font:700 9px var(--mono);letter-spacing:.14em;color:#7c6f80;text-transform:uppercase}.agent{position:relative;padding:10px 10px 10px 22px;border-top:1px solid rgba(50,44,60,.08);font-size:12px;line-height:1.45}.agent:before{content:'';position:absolute;left:7px;top:15px;width:6px;height:6px;border-radius:50%;background:var(--violet2);box-shadow:0 0 10px rgba(138,124,255,.5)}.human-review-node{margin-top:16px;padding:15px;text-align:center;border:1px solid rgba(230,162,60,.3);border-radius:15px;background:rgba(230,162,60,.08);font:700 9px var(--mono);letter-spacing:.14em;color:#9a6b20}.sensor-grid,.policy-grid,.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.sensor-card,.policy-card,.metric-card{padding:20px;border-radius:20px}.sensor-card h4,.policy-card h4{font-size:13px;margin:0 0 13px}.state{font:700 9px var(--mono);letter-spacing:.08em}.good{color:#34825b}.warn{color:#ad741b}.blocked{color:#b34e5c}.sensor-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;font:500 8px var(--mono);color:#837a86}.policy-list{display:grid;gap:8px}.rule{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font:600 9px var(--mono);letter-spacing:.06em}.explain{margin-top:15px;padding:14px;border-radius:14px;background:rgba(230,162,60,.08);border:1px solid rgba(230,162,60,.2);font-size:12px;line-height:1.6;color:#796545}.workflow{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.stage{padding:17px 12px;border-radius:17px;text-align:center}.stage b{display:block;font:700 9px var(--mono);letter-spacing:.08em}.stage small{display:block;color:#827987;font-size:10px;margin-top:7px;line-height:1.4}.metric-card .metric-label{font:700 8px var(--mono);letter-spacing:.12em;color:#817786}.metric-card strong{display:block;font:600 clamp(2rem,4vw,3.1rem) var(--serif);margin-top:14px}.metric-card small{color:#978d99}.chart{margin-top:14px;padding:24px;border-radius:24px}.chart svg{width:100%;height:240px;overflow:visible}.chart-line{fill:none;stroke:url(#chartGradient);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.chart-area{fill:url(#areaGradient);opacity:.42}.chart-grid{stroke:rgba(45,38,54,.08);stroke-width:1}.chart-labels{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:5px;text-align:center;font:600 8px var(--mono);color:#7e7481;line-height:1.45}.illustrative{margin-top:12px;font:600 8px var(--mono);letter-spacing:.12em;color:#9b762e}.console-button{position:fixed;right:22px;bottom:22px;z-index:99;width:112px;height:112px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:linear-gradient(145deg,#17141d,#4e3cff);color:#fff;box-shadow:0 18px 44px rgba(50,34,90,.28),inset 0 1px rgba(255,255,255,.2);font:700 9px var(--mono);letter-spacing:.1em}.cta{padding:95px 0 100px;text-align:center}.cta h2{max-width:900px;margin:0 auto;font-size:clamp(3rem,6.5vw,5.6rem)}.cta p{max-width:720px;margin:22px auto;color:#6f6873;line-height:1.75}.cta .hero-actions{justify-content:center}.footer{border-top:1px solid var(--line);padding:35px 0 48px}.footer-grid{display:flex;justify-content:space-between;gap:25px;align-items:flex-end}.footer-brand{font:600 26px var(--serif)}.footer-status{max-width:760px;text-align:right;font:600 8px var(--mono);letter-spacing:.1em;color:#786f7b;line-height:1.9}
+.drawer{position:fixed;z-index:150;right:0;top:0;height:100%;width:min(460px,94vw);transform:translateX(105%);transition:.3s;background:rgba(16,17,22,.97);color:#edf1f7;border-left:1px solid rgba(255,255,255,.1);box-shadow:-30px 0 70px rgba(0,0,0,.2);padding:86px 24px 24px;overflow:auto}.drawer.open{transform:none}.drawer-close{position:absolute;right:20px;top:22px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;border-radius:50%;width:38px;height:38px}.drawer h3{font:500 2.1rem var(--serif);margin:0 0 15px}.drawer p{color:#aeb8c7;line-height:1.7;font-size:13px}.audit-row{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);font:500 9px var(--mono);line-height:1.6;color:#aab5c4}.drawer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.drawer-actions button{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;border-radius:12px;padding:10px 12px;font:600 9px var(--mono)}
+@media(max-width:950px){.command-grid{grid-template-columns:1fr}.mapbox{min-height:420px}.function-grid,.sensor-grid,.policy-grid,.metric-grid{grid-template-columns:repeat(2,1fr)}.agent-layers{grid-template-columns:repeat(2,1fr)}.architecture{grid-template-columns:1fr}.arch-arrow{transform:rotate(90deg)}.workflow{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.system{display:none}.orbital{width:62px;height:62px;top:100px}.hero h1{font-size:clamp(3rem,16vw,5.5rem)}.section-head{display:block}.section-head p{margin-top:14px}.mapbox{min-height:230px}.track-overlay,.scan,#airspaceMap{display:none}.mapbox:after{display:none}.mobile-track-card{display:grid;position:absolute;inset:15px;z-index:5;grid-template-columns:1fr 1fr;gap:9px}.mobile-track-card div{padding:13px;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:rgba(255,255,255,.035);font:600 8px var(--mono);line-height:1.7}.function-grid,.sensor-grid,.policy-grid,.metric-grid,.agent-layers{grid-template-columns:1fr}.workflow{display:flex;overflow-x:auto;padding-bottom:7px}.stage{min-width:150px}.console-button{width:84px;height:84px;right:14px;bottom:14px}.footer-grid{display:block}.footer-status{text-align:left;margin-top:15px}.cockpit-tools{overflow-x:auto;flex-wrap:nowrap}.toolbtn,.toolselect{flex:none}.status-line{border-radius:18px}.chart-labels{font-size:7px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}}
+@media(prefers-contrast:more){.glass{background:#fff;border-color:#2c2632}.command-shell{border-color:#fff}.muted,.section-head p{color:#403a44}}
 </style>
-<!-- ClearGlass Global Design System — homepage is the design source of truth -->
-<link rel="stylesheet" href="/assets/css/glass.css">
-<link rel="stylesheet" href="/assets/css/cg-design-system.css">
+<link rel="stylesheet" href="/assets/css/glass.css" />
+<link rel="stylesheet" href="/assets/css/cg-design-system.css" />
 <script defer src="/assets/js/cg-design-system.js"></script>
-  <script defer src="/asset-protection.js"></script>
-  <link rel="stylesheet" href="brand-system.css">
+<script defer src="/asset-protection.js"></script>
+<link rel="stylesheet" href="brand-system.css" />
+<link rel="stylesheet" href="/assets/css/future-buttons.css">
 </head>
 <body>
-
-<header class="topbar">
-  <a class="brand" href="index.html">
-    <span class="brand-mark"></span>
-    <span class="brand-name">ClearGlass <em>· OS</em></span>
-  </a>
-  <div class="topbar-status"><span class="dot"></span> ARTEMIS · COMMERCIALIZATION OS · LIVE</div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-grid-bg"></div>
-  <div class="container hero-inner">
-    <div class="eyebrow">COUNTER-UAS · EO/IR · REVENUE-TARGET-BACKWARD</div>
-    <h1>The <strong>Commercialization OS</strong> for <span class="threat-text">Counter-UAS</span></h1>
-    <p class="hero-sub">An autonomous executive operating system that runs a Counter-UAS EO/IR detection company like a COO, CRO, CFO, and Defense Commercialization Director — simultaneously. Technology is subordinate to revenue. You give a few inputs; it computes the plan.</p>
-    <div class="hero-badges">
-      <span class="hbadge">◈ $1M reverse-engineered</span>
-      <span class="hbadge">⚑ 14-agent hierarchy</span>
-      <span class="hbadge">⏱ 90-day mandate</span>
-      <span class="hbadge">⚖ Compliance hard-stops</span>
-    </div>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="#engine">Run the Revenue Engine</a>
-      <a class="btn btn-ghost" href="prompts/artemis_commercialization_os_system_prompt.md">View Orchestrator Prompt</a>
-    </div>
-  </div>
-</section>
-
-<!-- MISSION / DECISION HIERARCHY -->
-<section>
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">Executive Objective</div>
-      <h2>It doesn't <strong>advise</strong>. It <strong>operates</strong>.</h2>
-      <p>No engineering activity proceeds unless it's tied to a customer, pilot, regulatory requirement, or revenue objective. Every decision resolves upward through one fixed hierarchy.</p>
-    </div>
-    <div class="hier-row rv">
-      <span class="hier-chip rank1">1 · Revenue</span><span class="hier-arrow">→</span>
-      <span class="hier-chip">2 · Pilot Success</span><span class="hier-arrow">→</span>
-      <span class="hier-chip">3 · Compliance</span><span class="hier-arrow">→</span>
-      <span class="hier-chip">4 · Engineering</span><span class="hier-arrow">→</span>
-      <span class="hier-chip">5 · Optimization</span>
-    </div>
-  </div>
-</section>
-
-<!-- REVENUE ENGINE -->
-<section id="engine">
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">Revenue Engine · Your Input, Automated</div>
-      <h2>Reverse-engineer the <span class="green-text">$1M</span> target</h2>
-      <p>Move the four levers. The engine recomputes every revenue stream live and shows the gap to target — the same model the Finance Agent re-derives each quarter.</p>
-    </div>
-    <div class="engine rv">
-      <div class="panel">
-        <div class="panel-title">Operator Inputs</div>
-        <div class="ctrl">
-          <label>Paid pilots <span class="val" id="v_pilots">5</span></label>
-          <input type="range" id="pilots" min="0" max="20" value="5"/>
-        </div>
-        <div class="ctrl">
-          <label>Avg pilot fee <span class="val" id="v_pilotfee">$15,000</span></label>
-          <input type="range" id="pilotfee" min="5000" max="50000" step="1000" value="15000"/>
-        </div>
-        <div class="ctrl">
-          <label>Pilot → contract conversions <span class="val" id="v_conv">2</span></label>
-          <input type="range" id="conv" min="0" max="10" value="2"/>
-        </div>
-        <div class="ctrl">
-          <label>Avg contract value <span class="val" id="v_contract">$150,000</span></label>
-          <input type="range" id="contract" min="50000" max="500000" step="10000" value="150000"/>
-        </div>
-        <div class="ctrl">
-          <label>Integrator / channel deals <span class="val" id="v_integ">1</span></label>
-          <input type="range" id="integ" min="0" max="6" value="1"/>
-        </div>
-        <div class="ctrl">
-          <label>Avg integrator deal <span class="val" id="v_integval">$250,000</span></label>
-          <input type="range" id="integval" min="50000" max="600000" step="25000" value="250000"/>
-        </div>
-        <div class="ctrl">
-          <label>SaaS customers <span class="val" id="v_saas">40</span></label>
-          <input type="range" id="saas" min="0" max="200" value="40"/>
-        </div>
-        <div class="ctrl">
-          <label>SaaS price / mo <span class="val" id="v_saasprice">$800</span></label>
-          <input type="range" id="saasprice" min="100" max="3000" step="50" value="800"/>
-        </div>
-      </div>
-      <div>
-        <div class="streams">
-          <div class="stream"><span class="stream-name">Pilot revenue</span><span class="stream-meta" id="m_pilot"></span><span class="stream-val" id="r_pilot"></span><div class="stream-bar"><span id="b_pilot"></span></div></div>
-          <div class="stream"><span class="stream-name">Conversion revenue</span><span class="stream-meta" id="m_conv"></span><span class="stream-val" id="r_conv"></span><div class="stream-bar"><span id="b_conv"></span></div></div>
-          <div class="stream"><span class="stream-name">Integrator deals</span><span class="stream-meta" id="m_integ"></span><span class="stream-val" id="r_integ"></span><div class="stream-bar"><span id="b_integ"></span></div></div>
-          <div class="stream"><span class="stream-name">SaaS revenue (annualized)</span><span class="stream-meta" id="m_saas"></span><span class="stream-val" id="r_saas"></span><div class="stream-bar"><span id="b_saas"></span></div></div>
-        </div>
-        <div class="total-card">
-          <div><div class="lab">Projected annual revenue</div><div class="gap-note" id="gap"></div></div>
-          <div class="num green-text" id="total"></div>
-        </div>
-        <div class="total-card" style="background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(96,165,250,.04));border-color:rgba(167,139,250,.26)">
-          <div><div class="lab">Recurring (ARR from SaaS)</div><div class="gap-note">Tracked weekly · MRR × 12</div></div>
-          <div class="num grad-text" id="arr"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AGENT HIERARCHY -->
-<section>
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">Agent Hierarchy</div>
-      <h2>One orchestrator. <strong>Fourteen specialists.</strong></h2>
-      <p>The Executive Orchestrator owns prioritization, budget enforcement, and risk escalation — and issues a weekly scorecard, monthly board package, and quarterly review.</p>
-    </div>
-    <div class="agent-grid rv">
-      <div class="agent exec"><div class="ic">◎</div><h4>Executive Orchestrator</h4><p>Strategic prioritization · resource allocation · budget enforcement · revenue forecasting · risk escalation. Rejects feature creep, speculative R&D, and vanity spend.</p></div>
-      <div class="agent"><div class="ic">🛠</div><h4>Product Engineering</h4><p>Builds only what a pilot, customer, or regulator requires.</p></div>
-      <div class="agent"><div class="ic">🧠</div><h4>AI / ISP</h4><p>EO/IR detection, image-signal pipeline, accuracy & false-positive rate.</p></div>
-      <div class="agent"><div class="ic">⚖</div><h4>Compliance</h4><p>Export, ITAR, spectrum, privacy. Holds shipment veto.</p></div>
-      <div class="agent"><div class="ic">🎯</div><h4>Pilot Acquisition</h4><p>Scores and ranks targets across Tier 1–3 sectors.</p></div>
-      <div class="agent"><div class="ic">📡</div><h4>Pilot Operations</h4><p>Deploys, runs, and documents pilots to publishable results.</p></div>
-      <div class="agent"><div class="ic">🛡</div><h4>Defense Sales</h4><p>PEOs, DIU, primes, NATO. 100 qualified prospects / quarter.</p></div>
-      <div class="agent"><div class="ic">🏢</div><h4>Commercial Sales</h4><p>Airports, ports, energy, stadiums, campuses.</p></div>
-      <div class="agent"><div class="ic">🤝</div><h4>Channel Partner</h4><p>Integrator LOIs and resale agreements.</p></div>
-      <div class="agent"><div class="ic">🏭</div><h4>Manufacturing</h4><p>Scale on 5 POs / 3 LOIs / $250k backlog. COGS −20%.</p></div>
-      <div class="agent"><div class="ic">📊</div><h4>SaaS</h4><p>Dashboard → Fleet → Threat Network. MRR weekly.</p></div>
-      <div class="agent"><div class="ic">💰</div><h4>Finance</h4><p>Re-derives the $1M model quarterly. Runway, margin, CAC, LTV.</p></div>
-      <div class="agent"><div class="ic">🪙</div><h4>Fundraising</h4><p>Non-dilutive first: grants, SBIR, defense innovation.</p></div>
-      <div class="agent"><div class="ic">🔭</div><h4>Intelligence</h4><p>Tracks Anduril, Dedrone, DroneShield, BlueHalo, Lockheed, RTX.</p></div>
-      <div class="agent"><div class="ic">📈</div><h4>Monitoring</h4><p>Daily KPI dashboard + threshold alerts.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- PILOT SCORER -->
-<section>
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">Pilot Acquisition</div>
-      <h2>Score a target before you spend a <strong>dollar</strong></h2>
-      <p>Priority Score = Budget × Threat Level × Ease of Access × Probability of Conversion. Minimum bar to engage: <strong>Paid ≥ $5,000</strong> or <strong>Strategic Data Value &gt; 80</strong>.</p>
-    </div>
-    <div class="scorer rv">
-      <div class="panel">
-        <div class="panel-title">Target Profile</div>
-        <div class="ctrl"><label>Sector</label>
-          <select id="sector">
-            <optgroup label="Tier 1"><option value="5">Military base</option><option value="5">Border security</option><option value="5">Critical infrastructure</option></optgroup>
-            <optgroup label="Tier 2"><option value="4">Airport</option><option value="4">Port</option><option value="4">Energy facility</option></optgroup>
-            <optgroup label="Tier 3"><option value="3">Prison</option><option value="3">Stadium</option><option value="3">University</option></optgroup>
-          </select>
-        </div>
-        <div class="ctrl"><label>Budget <span class="val" id="v_sbudget">4</span></label><input type="range" id="sbudget" min="1" max="5" value="4"/></div>
-        <div class="ctrl"><label>Threat level <span class="val" id="v_sthreat">4</span></label><input type="range" id="sthreat" min="1" max="5" value="4"/></div>
-        <div class="ctrl"><label>Ease of access <span class="val" id="v_saccess">3</span></label><input type="range" id="saccess" min="1" max="5" value="3"/></div>
-        <div class="ctrl"><label>Probability of conversion <span class="val" id="v_sprob">3</span></label><input type="range" id="sprob" min="1" max="5" value="3"/></div>
-      </div>
-      <div class="panel score-display">
-        <div class="panel-title">Priority Score</div>
-        <div class="score-ring" id="pscore">—</div>
-        <div style="font-size:12px;color:var(--text-3);margin-top:6px">of 625 max</div>
-        <div id="pverdict" class="score-verdict v-maybe">EVALUATING</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- KPI DASHBOARD -->
-<section>
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">KPI Dashboard · Updates Daily</div>
-      <h2>The numbers the board <strong>actually asks about</strong></h2>
-    </div>
-    <div class="kpi-grid rv" id="kpiGrid"></div>
-  </div>
-</section>
-
-<!-- RISK REGISTER -->
-<section>
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">Risk Register</div>
-      <h2>Risk Score = <strong>Likelihood × Impact</strong></h2>
-      <p>Anything scoring above 15 triggers immediate human review. Owners are assigned by domain.</p>
-    </div>
-    <div class="panel rv" style="padding:8px clamp(8px,2vw,18px)">
-      <table class="risk-table">
-        <thead><tr><th>Domain</th><th>Risk</th><th>Owner</th><th>L</th><th>I</th><th>Score</th></tr></thead>
-        <tbody id="riskBody"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- COMPLIANCE GATES -->
-<section>
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">Compliance · Hard Stops</div>
-      <h2>No shipment until the gate is <strong>green</strong></h2>
-      <p>The Compliance Agent holds an absolute veto over export and RF transmission, regardless of revenue at stake.</p>
-    </div>
-    <div class="gate-grid rv">
-      <div class="gate"><span class="mk threat-text">⛔</span><div><h5>Unknown ECCN</h5><p>Export classification unresolved → blocked.</p></div></div>
-      <div class="gate"><span class="mk threat-text">⛔</span><div><h5>Unknown ITAR status</h5><p>Defense-article status unconfirmed → blocked.</p></div></div>
-      <div class="gate"><span class="mk threat-text">⛔</span><div><h5>Unknown spectrum approval</h5><p>No spectrum authorization → blocked.</p></div></div>
-      <div class="gate"><span class="mk threat-text">⛔</span><div><h5>Unapproved RF capability</h5><p>Active RF without approval → blocked.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- 90 DAY MANDATE -->
-<section>
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">90-Day Execution Mandate</div>
-      <h2>From MVP to <strong>paid pilot</strong> in one quarter</h2>
-    </div>
-    <div class="phases rv">
-      <div class="phase"><div class="ph-num">DAYS 1–30 · FOUNDATION</div><h4>Build the funnel</h4><ul><li>Finalize MVP</li><li>Export classification review</li><li>Build CRM</li><li>Identify 100 prospects</li><li>Secure 20 meetings</li></ul></div>
-      <div class="phase"><div class="ph-num">DAYS 31–60 · PROVE</div><h4>First revenue</h4><ul><li>Deploy first prototype</li><li>Close first paid pilot</li><li>Build investor deck</li><li>Submit grants</li></ul></div>
-      <div class="phase"><div class="ph-num">DAYS 61–90 · SCALE</div><h4>Compound it</h4><ul><li>Execute pilot</li><li>Publish results</li><li>Secure second pilot</li><li>Launch SaaS alpha</li><li>Open channel discussions</li></ul></div>
-    </div>
-    <div class="panel rv" style="margin-top:20px">
-      <div class="panel-title">Success at Day 90</div>
-      <div class="hier-row">
-        <span class="hier-chip">2 working prototypes</span>
-        <span class="hier-chip">1–2 paid pilots</span>
-        <span class="hier-chip">100 qualified prospects</span>
-        <span class="hier-chip">20 meetings</span>
-        <span class="hier-chip">$10k–$25k revenue</span>
-        <span class="hier-chip">Investor deck complete</span>
-        <span class="hier-chip">Compliance cleared</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INVESTOR UPDATE -->
-<section>
-  <div class="container">
-    <div class="sh rv">
-      <div class="sh-tag">Automated Weekly Investor Update · Max 1 Page</div>
-      <h2>One click. <strong>Ready to send.</strong></h2>
-      <p>Generated live from your Revenue Engine and pilot inputs above — the 8-section format every investor expects.</p>
-    </div>
-    <div class="rv">
-      <pre class="update-out" id="updateOut"></pre>
-      <button class="btn btn-primary copy-btn" id="copyBtn">Copy investor update</button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="foot-inner">
-      <div class="foot-tag">"Revenue is not luck. Revenue is a system."</div>
-      <div class="foot-meta">© <span id="year"></span> ClearGlass Inc. · Burlington, Ontario</div>
-    </div>
-    <p class="disclaimer">ARTEMIS Commercialization OS is a planning and operations framework. Revenue figures are operator-supplied projections, not forecasts or guarantees. Counter-UAS systems are subject to export controls (ITAR/EAR), spectrum regulation, and procurement law — no shipment, export, or RF transmission should occur without qualified legal and compliance review. This page is for internal planning and investor communication only.</p>
-  </div>
-</footer>
-
+<header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-word">ClearGlass<small>ARTEMIS · FUTURE OPERATIONS OS</small></span></a><div class="system"><span class="pulse"></span>ARTEMIS CORE · OPERATIONAL · DEMO ENVIRONMENT</div></header>
+<main>
+<section class="hero"><div class="orbital" aria-hidden="true"></div><div class="container"><div class="eyebrow">AUTHORIZED AIRSPACE INTELLIGENCE · HUMAN-SUPERVISED AUTOMATION</div><h1>CLEARGLASS <span>// ARTEMIS</span></h1><div class="hero-subtitle">The Live Operations OS for Counter-UAS</div><p class="hero-copy">An autonomous command layer for authorized drone detection, airspace awareness, incident coordination, compliance, and commercial deployment. <strong>Provide the mission parameters. ARTEMIS builds the operating picture, coordinates the workflow, enforces policy, and exposes the business outcome.</strong></p><div class="hero-actions"><a class="btn btn-dark" href="#cockpit">Open Live Airspace</a><a class="btn btn-glass" href="mailto:Desmond@clearglassinc.com?subject=ARTEMIS%20Authorized%20Access">Request Authorized Access</a></div><div class="status-line"><b>ARTEMIS CORE · OPERATIONAL</b><span>· SENSOR FABRIC CONNECTED</span><span>· POLICY ENGINE ENFORCED</span></div><div><span class="demo-badge">DEMO ENVIRONMENT · HUMAN AUTHORIZATION REQUIRED</span></div></div></section>
+<section class="section" id="cockpit"><div class="container"><div class="section-head"><div><div class="section-tag">Live Operations Cockpit</div><h2>One accountable operating picture.</h2></div><p>Browser-generated simulation data demonstrates event routing, transparent policy evaluation, human approval gates, and audit closure. No aircraft-control capability exists in this interface.</p></div><div class="command-shell"><div class="command-top"><div class="command-title">LIVE AIRSPACE OPERATING PICTURE</div><div class="live-chip"><i></i><span id="streamState">SIMULATION MODE · STREAM ACTIVE</span></div></div><div class="cockpit-tools" aria-label="ARTEMIS demo controls"><button class="toolbtn active" id="pauseBtn">Pause Telemetry</button><select class="toolselect" id="statusFilter" aria-label="Filter tracks"><option value="all">All Tracks</option><option value="authorized">Authorized</option><option value="review">Review Required</option><option value="verified">Verified</option><option value="resolved">Resolved</option></select><select class="toolselect" id="zoneSelect" aria-label="Operating zone"><option>ZONE ALPHA · DEMO</option><option>ZONE BRAVO · DEMO</option><option>ZONE CHARLIE · DEMO</option></select><button class="toolbtn" data-view="map">Map View</button><button class="toolbtn" data-view="timeline">Timeline View</button><button class="toolbtn" data-view="audit">Audit View</button><button class="toolbtn" id="reviewBtn">Simulate Human Review</button></div><div class="command-grid"><div class="mapbox" id="mapPanel"><div class="map-fallback"></div><div id="airspaceMap" aria-label="Abstract demonstration airspace map"></div><div class="scan"></div><div class="track-overlay" id="trackOverlay"><div class="track t1" data-status="authorized"><i></i><div class="track-card"><div class="track-name">UAS-042 · AUTHORIZED</div><div class="track-meta">94.8% CONFIDENCE</div></div></div><div class="track t2" data-status="review"><i></i><div class="track-card"><div class="track-name">TRACK-119 · REVIEW REQUIRED</div><div class="track-meta">81.2% CONFIDENCE</div></div></div><div class="track t3" data-status="verified"><i></i><div class="track-card"><div class="track-name">ASSET-012 · VERIFIED</div><div class="track-meta">TELEMETRY LINKED</div></div></div><div class="track t4" data-status="resolved"><i></i><div class="track-card"><div class="track-name">EVENT-077 · RESOLVED</div><div class="track-meta">AUDIT COMPLETE</div></div></div></div><div class="mobile-track-card"><div>UAS-042<br><span class="good">AUTHORIZED</span><br>94.8%</div><div>TRACK-119<br><span class="warn">REVIEW</span><br>81.2%</div><div>ASSET-012<br><span class="good">VERIFIED</span><br>LINKED</div><div>EVENT-077<br>RESOLVED<br>SEALED</div></div><div class="sim-stamp">DEMO DATA · DETERMINISTIC SEEDED TELEMETRY</div></div><aside class="incident-panel" id="timelinePanel"><div class="micro"><div class="micro-label">Event throughput · demo</div><div class="micro-value"><span id="eventCount">128</span> EVENTS</div></div><div class="micro"><div class="micro-label">Incident rail · simulation mode</div><div class="timeline" id="incidentTimeline"><div class="incident done"><span class="node"></span><h4>06:51:04 · Sensor event received</h4><p>Normalized from approved EO/IR adapter.</p><span class="event-kind">AUTOMATED ANALYSIS</span></div><div class="incident done"><span class="node"></span><h4>06:51:06 · Track correlated across 3 sources</h4><p>Cross-source confidence computed.</p><span class="event-kind">AUTOMATED ANALYSIS</span></div><div class="incident done"><span class="node"></span><h4>06:51:08 · Geofence policy evaluated</h4><p>Rule set ARTEMIS-DEMO-01 passed.</p><span class="event-kind">POLICY CHECK</span></div><div class="incident review"><span class="node"></span><h4>06:51:11 · Human review requested</h4><p>Operational response remains blocked.</p><span class="event-kind">HUMAN APPROVAL</span></div><div class="incident"><span class="node"></span><h4>06:51:18 · Operator decision recorded</h4><p>Demo queue awaiting operator action.</p><span class="event-kind">HUMAN APPROVAL</span></div><div class="incident"><span class="node"></span><h4>06:51:24 · Workflow closed and audit sealed</h4><p>Immutable demonstration record prepared.</p><span class="event-kind">AUDIT EVENT</span></div></div></div><div class="human-control">NO OPERATIONAL RESPONSE PROCEEDS WITHOUT AUTHORIZED HUMAN CONTROL.</div></aside></div></div><div class="metrics-strip" aria-label="ARTEMIS platform capabilities"><span class="pill">LIVE SENSOR INGESTION</span><span class="pill">SUB-SECOND EVENT ROUTING</span><span class="pill">HUMAN-APPROVAL GATES</span><span class="pill">FULL AUDIT TRACE</span><span class="pill">PRIVACY-FIRST RETENTION</span><span class="pill">MULTI-SITE COMMAND</span><span class="pill">90-DAY DEPLOYMENT PATH</span><span class="pill">REVENUE-BACKED OPERATIONS</span></div></div></section>
+<section class="section"><div class="container"><div class="section-head"><div><div class="section-tag">Executive Functions</div><h2>One operating layer. Four executive functions.</h2></div></div><div class="function-grid"><article class="function-card glass"><div class="num">01 — DETECT</div><h3>Detect</h3><p>Unify EO/IR, acoustic, radar-style awareness, telemetry, and approved third-party sensor inputs into a single live operating picture.</p></article><article class="function-card glass"><div class="num">02 — DECIDE</div><h3>Decide</h3><p>Use transparent agent workflows to classify events, rank uncertainty, expose confidence, and recommend the next compliant workflow step.</p></article><article class="function-card glass"><div class="num">03 — GOVERN</div><h3>Govern</h3><p>Apply geofencing, privacy controls, authorization checks, retention rules, audit trails, and mandatory human-approval gates.</p></article><article class="function-card glass"><div class="num">04 — COMMERCIALIZE</div><h3>Commercialize</h3><p>Convert validated mission data into deployment plans, customer reporting, service metrics, renewal signals, and revenue forecasts.</p></article></div></div></section>
+<section class="section"><div class="container"><div class="section-head"><div><div class="section-tag">Event-Driven Architecture</div><h2>From approved signal to audited outcome.</h2></div><p>The deployed GitHub Pages demonstration uses deterministic browser simulation and a Web Worker. The architecture mirrors a future real-time service boundary without claiming connection to restricted or government systems.</p></div><div class="architecture glass"><div class="arch-node">SENSOR ADAPTERS</div><div class="arch-arrow">→</div><div class="arch-node">EVENT NORMALIZER</div><div class="arch-arrow">→</div><div class="arch-node">TRACK CORRELATION</div><div class="arch-arrow">→</div><div class="arch-node">POLICY ENGINE</div><div class="arch-arrow">→</div><div class="arch-node">HUMAN REVIEW QUEUE</div><div class="arch-arrow">→</div><div class="arch-node">AUDITED WORKFLOW</div><div class="arch-arrow">→</div><div class="arch-node">EXECUTIVE ANALYTICS</div></div></div></section>
+<section class="section" id="fabric"><div class="container"><div class="section-head"><div><div class="section-tag">Transparent AI Orchestration</div><h2>The ARTEMIS Agent Fabric</h2></div><p>Fourteen specialized software agents coordinate analysis and reporting. High-impact decisions terminate at authorized human review.</p></div><div class="fabric-shell glass"><div class="orchestrator">MISSION ORCHESTRATOR</div><div class="agent-layers"><div class="agent-layer"><h4>Perception Layer</h4><div class="agent">EO/IR Analysis Agent</div><div class="agent">Acoustic Event Agent</div><div class="agent">Track Correlation Agent</div><div class="agent">Sensor Health Agent</div></div><div class="agent-layer"><h4>Context Layer</h4><div class="agent">Airspace Context Agent</div><div class="agent">Weather Context Agent</div><div class="agent">Asset Registry Agent</div><div class="agent">Geofence Policy Agent</div></div><div class="agent-layer"><h4>Governance Layer</h4><div class="agent">Privacy Guard</div><div class="agent">Risk Scoring Agent</div><div class="agent">Human Review Coordinator</div><div class="agent">Compliance Auditor</div></div><div class="agent-layer"><h4>Business Layer</h4><div class="agent">Customer Reporting Agent</div><div class="agent">Revenue Planning Agent</div></div></div><div class="human-review-node">ALL HIGH-IMPACT WORKFLOWS → AUTHORIZED HUMAN REVIEW</div></div></div></section>
+<section class="section" id="sensors"><div class="container"><div class="section-head"><div><div class="section-tag">Sensor Fabric</div><h2>One operating picture from every approved signal.</h2></div><p>Connection states below are demonstration values generated locally in the browser.</p></div><div class="sensor-grid"><article class="sensor-card glass"><h4>EO/IR NODE 01</h4><span class="state good">CONNECTED · DEMO</span><div class="sensor-meta"><span>LATENCY 48ms</span><span>HEALTH 99%</span><span>FRESHNESS 0.3s</span><span>CONF 94.8%</span></div></article><article class="sensor-card glass"><h4>ACOUSTIC ARRAY 04</h4><span class="state good">CONNECTED · DEMO</span><div class="sensor-meta"><span>LATENCY 71ms</span><span>HEALTH 97%</span><span>FRESHNESS 0.5s</span><span>CONF 87.1%</span></div></article><article class="sensor-card glass"><h4>WEATHER CONTEXT</h4><span class="state good">SYNCED · DEMO</span><div class="sensor-meta"><span>LATENCY 112ms</span><span>HEALTH 100%</span><span>FRESHNESS 4.0s</span><span>CONF N/A</span></div></article><article class="sensor-card glass"><h4>ASSET TELEMETRY</h4><span class="state warn">DEGRADED · DEMO</span><div class="sensor-meta"><span>LATENCY 310ms</span><span>HEALTH 82%</span><span>FRESHNESS 1.8s</span><span>CONF 91.0%</span></div></article></div></div></section>
+<section class="section" id="policy"><div class="container"><div class="section-head"><div><div class="section-tag">Policy Gate</div><h2>Automation with a boundary.</h2></div><p>ARTEMIS explains why a workflow can proceed, must pause, or requires an authorized person to approve the next step.</p></div><div class="policy-grid"><div class="policy-card glass"><h4>Privacy + Minimization</h4><div class="policy-list"><div class="rule"><span>PRIVACY POLICY</span><span class="good">PASS</span></div><div class="rule"><span>DATA MINIMIZATION</span><span class="good">PASS</span></div><div class="rule"><span>RETENTION</span><span class="good">PASS</span></div></div></div><div class="policy-card glass"><h4>Airspace Controls</h4><div class="policy-list"><div class="rule"><span>GEOFENCE CHECK</span><span class="good">PASS</span></div><div class="rule"><span>ROLE ACCESS</span><span class="good">PASS</span></div><div class="rule"><span>OPERATOR AUTHORITY</span><span class="warn">REQUIRED</span></div></div></div><div class="policy-card glass"><h4>Response Permission</h4><div class="policy-list"><div class="rule"><span>HUMAN GATE</span><span class="warn">WAITING</span></div><div class="rule"><span>RESPONSE PERMISSION</span><span class="blocked">BLOCKED</span></div><div class="rule"><span>AUDIT RECORD</span><span class="good">ACTIVE</span></div></div></div><div class="policy-card glass"><h4>Rule Explanation</h4><div class="explain">This workflow is paused because the event requires authorized human review before any operational response. The demo does not control physical equipment.</div><button class="btn btn-glass" id="policyExplainBtn" style="margin-top:14px;min-height:40px;padding:0 15px">Inspect Rule</button></div></div></div></section>
+<section class="section"><div class="container"><div class="section-head"><div><div class="section-tag">Mission Workspace</div><h2>From event to accountable resolution.</h2></div></div><div class="workflow"><div class="stage glass"><b>DETECTED</b><small>Sensor Fusion<br>94.8% · 06:51:04</small></div><div class="stage glass"><b>CORRELATED</b><small>Track Correlation<br>3 sources · 06:51:06</small></div><div class="stage glass"><b>CLASSIFIED</b><small>Risk Scoring<br>81.2% · 06:51:08</small></div><div class="stage glass"><b>REVIEWED</b><small>Human Coordinator<br>Approval required</small></div><div class="stage glass"><b>RESOLVED</b><small>Operator Decision<br>Demo state</small></div><div class="stage glass"><b>REPORTED</b><small>Compliance Auditor<br>Audit sealed</small></div></div></div></section>
+<section class="section" id="revenue"><div class="container"><div class="section-head"><div><div class="section-tag">Commercialization Engine</div><h2>Turn operational clarity into commercial momentum.</h2></div><p>Illustrative operating model. Replace every placeholder with verified company data before external claims or investor use.</p></div><div class="metric-grid"><article class="metric-card glass"><div class="metric-label">ACTIVE DEPLOYMENTS</div><strong>08</strong><small>Illustrative</small></article><article class="metric-card glass"><div class="metric-label">CONNECTED OPERATING ZONES</div><strong>24</strong><small>Illustrative</small></article><article class="metric-card glass"><div class="metric-label">OPEN REVIEW QUEUE</div><strong id="reviewQueue">03</strong><small>Demo queue</small></article><article class="metric-card glass"><div class="metric-label">PROJECTED CONTRACT VALUE</div><strong>$1.0M</strong><small>Illustrative target</small></article></div><div class="chart glass"><svg viewBox="0 0 1000 240" role="img" aria-label="Illustrative funnel trend chart"><defs><linearGradient id="chartGradient"><stop offset="0" stop-color="#e6a23c"/><stop offset=".55" stop-color="#f06b7b"/><stop offset="1" stop-color="#4e3cff"/></linearGradient><linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a7cff" stop-opacity=".35"/><stop offset="1" stop-color="#8a7cff" stop-opacity="0"/></linearGradient></defs><path class="chart-grid" d="M0 48H1000M0 96H1000M0 144H1000M0 192H1000"/><path id="chartArea" class="chart-area" d="M0,188 C125,152 170,122 250,132 S420,96 500,105 S660,64 750,78 S890,36 1000,50 L1000,240 L0,240Z"/><path id="chartLine" class="chart-line" d="M0,188 C125,152 170,122 250,132 S420,96 500,105 S660,64 750,78 S890,36 1000,50"/></svg><div class="chart-labels"><span>SENSOR EVENTS</span><span>CORRELATED TRACKS</span><span>VALIDATED INCIDENTS</span><span>HUMAN-REVIEWED WORKFLOWS</span><span>CLOSED CUSTOMER REPORTS</span></div><div class="illustrative">ILLUSTRATIVE DATA · REPLACE WITH VERIFIED COMPANY METRICS</div></div></div></section>
+<section class="cta section"><div class="container"><h2>Make airspace operations observable, accountable, and commercially scalable.</h2><p>Deploy an intelligent, human-supervised command layer for the next generation of authorized airspace operations.</p><div class="hero-actions"><a class="btn btn-dark" href="mailto:Desmond@clearglassinc.com?subject=Enter%20the%20ARTEMIS%20Program">Enter the ARTEMIS Program</a><a class="btn btn-glass" href="#revenue">View the Operating Model</a></div></div></section>
+</main>
+<footer class="footer"><div class="container footer-grid"><div class="footer-brand">CLEARGLASS // ARTEMIS</div><div class="footer-status">AUTHORIZED OPERATIONS ONLY · HUMAN CONTROL REQUIRED · PRIVACY-FIRST BY DESIGN · AUDITABLE FROM EVENT TO OUTCOME · DEMO DATA UNLESS OTHERWISE INDICATED</div></div></footer>
+<button class="console-button" id="consoleBtn" aria-label="Open ARTEMIS console">ARTEMIS<br>CONSOLE</button>
+<aside class="drawer" id="drawer" aria-hidden="true"><button class="drawer-close" id="drawerClose" aria-label="Close panel">×</button><div class="section-tag">ARTEMIS Console</div><h3 id="drawerTitle">Audit + Policy Inspector</h3><p id="drawerCopy">Inspect the simulated workflow, policy basis, human-control gate, and audit state. Nothing in this demo executes a real-world drone command.</p><div id="drawerContent"><div class="audit-row">EVENT ID · DEMO-EVT-077</div><div class="audit-row">SOURCE · approved-feed / simulation</div><div class="audit-row">POLICY · ARTEMIS-DEMO-01</div><div class="audit-row">HUMAN REVIEW · REQUIRED</div><div class="audit-row">AUDIT STATUS · PENDING</div></div><div class="drawer-actions"><button id="sealBtn">Seal Demo Audit Record</button><button id="exportBtn">Export Fictional Customer Report</button></div></aside>
 <script>
-document.getElementById('year').textContent=new Date().getFullYear();
-var nf=new Intl.NumberFormat('en-US');
-function money(n){return '$'+nf.format(Math.round(n));}
-function moneyK(n){return n>=1000000?'$'+(n/1000000).toFixed(2)+'M':'$'+nf.format(Math.round(n));}
-
-// ---- Revenue Engine ----
-var TARGET=1000000;
-var ids=['pilots','pilotfee','conv','contract','integ','integval','saas','saasprice'];
-function $(id){return document.getElementById(id);}
-function engine(){
-  var pilots=+$('pilots').value, pilotfee=+$('pilotfee').value,
-      conv=+$('conv').value, contract=+$('contract').value,
-      integ=+$('integ').value, integval=+$('integval').value,
-      saas=+$('saas').value, saasprice=+$('saasprice').value;
-  // labels
-  $('v_pilots').textContent=pilots;
-  $('v_pilotfee').textContent=money(pilotfee);
-  $('v_conv').textContent=conv;
-  $('v_contract').textContent=money(contract);
-  $('v_integ').textContent=integ;
-  $('v_integval').textContent=money(integval);
-  $('v_saas').textContent=saas;
-  $('v_saasprice').textContent=money(saasprice);
-  var rPilot=pilots*pilotfee, rConv=conv*contract, rInteg=integ*integval, arr=saas*saasprice*12;
-  var total=rPilot+rConv+rInteg+arr;
-  var max=Math.max(total,TARGET,1);
-  function set(pfx,meta,val){$('m_'+pfx).textContent=meta;$('r_'+pfx).textContent=moneyK(val);$('b_'+pfx).style.width=(val/max*100)+'%';}
-  set('pilot',pilots+' × '+money(pilotfee),rPilot);
-  set('conv',conv+' × '+money(contract),rConv);
-  set('integ',integ+' × '+money(integval),rInteg);
-  set('saas',saas+' × '+money(saasprice)+'/mo × 12',arr);
-  $('total').textContent=moneyK(total);
-  $('arr').textContent=moneyK(arr);
-  var gap=TARGET-total;
-  $('gap').textContent = gap<=0 ? '✓ Target cleared by '+moneyK(-gap) : 'Gap to $1M target: '+moneyK(gap);
-  var revEl=$('kpi_rev'); if(revEl) revEl.textContent=moneyK(total);
-  var mrrEl=$('kpi_mrr'); if(mrrEl) mrrEl.textContent=money(saasprice*saas);
-  buildUpdate(total,arr,saasprice*saas,pilots,conv,integ);
-}
-ids.forEach(function(id){$(id).addEventListener('input',engine);});
-
-// ---- Pilot Scorer ----
-var sids=['sbudget','sthreat','saccess','sprob'];
-function scorer(){
-  var tierVal=+$('sector').value; // 5=Tier1, 4=Tier2, 3=Tier3
-  var b=+$('sbudget').value,t=+$('sthreat').value,a=+$('saccess').value,p=+$('sprob').value;
-  $('v_sbudget').textContent=b;$('v_sthreat').textContent=t;$('v_saccess').textContent=a;$('v_sprob').textContent=p;
-  var score=b*t*a*p; // matches stated formula, range 1..625
-  $('pscore').textContent=score;
-  var tier=tierVal>=5?'Tier 1':(tierVal>=4?'Tier 2':'Tier 3');
-  var el=$('pverdict');
-  if(score>=250){el.className='score-verdict v-go';el.textContent='PURSUE · '+tier;}
-  else if(score>=125){el.className='score-verdict v-maybe';el.textContent='QUALIFY · '+tier;}
-  else{el.className='score-verdict v-no';el.textContent='DEPRIORITIZE · '+tier;}
-}
-sids.forEach(function(id){$(id).addEventListener('input',scorer);});
-$('sector').addEventListener('change',scorer);
-
-// ---- KPI dashboard ----
-var kpis=[
-  ['Revenue','—','live from engine','kpi_rev'],['Cash runway','9 mo','target ≥ 12'],
-  ['MRR','—','live from engine','kpi_mrr'],['Pilots','5','active + closed'],
-  ['Pilot conversion','40%','target ≥ 30%'],['Gross margin','62%','target ≥ 70%'],
-  ['CAC','$4.2k','per logo'],['LTV','$38k','LTV:CAC 9:1'],
-  ['Backlog','$250k','scale trigger'],['Mfg capacity','40/mo','units'],
-  ['Detection accuracy','97.4%','EO/IR'],['False-positive rate','1.8%','target < 2%'],
-  ['Compliance','Cleared','ECCN/ITAR'],['Open risks','2','score > 15: 0']
-];
-var kg=$('kpiGrid');
-kpis.forEach(function(k){var d=document.createElement('div');d.className='kpi';d.innerHTML='<div class="lab">'+k[0]+'</div><div class="num"'+(k[3]?' id="'+k[3]+'"':'')+'>'+k[1]+'</div><div class="sub">'+k[2]+'</div>';kg.appendChild(d);});
-
-// ---- Risk register ----
-var risks=[
-  ['Regulatory','Export classification (ECCN/ITAR) delay','Compliance',4,5],
-  ['Supply Chain','EO/IR sensor lead times','Manufacturing',3,4],
-  ['Technical','False-positive rate above 2%','AI / ISP',2,4],
-  ['Financial','Runway under 6 months','Finance',2,5],
-  ['Competitive','Incumbent undercuts pilot pricing','Intelligence',3,3],
-  ['Operational','Pilot site access denied','Pilot Ops',3,3]
-];
-var rb=$('riskBody');
-risks.forEach(function(r){
-  var s=r[3]*r[4];var cls=s>15?'s-high':(s>=9?'s-med':'s-low');
-  var tr=document.createElement('tr');
-  tr.innerHTML='<td style="color:var(--text)">'+r[0]+'</td><td>'+r[1]+'</td><td class="mono" style="font-size:12px">'+r[2]+'</td><td class="mono">'+r[3]+'</td><td class="mono">'+r[4]+'</td><td><span class="score-pill '+cls+'">'+s+(s>15?' ⚑':'')+'</span></td>';
-  rb.appendChild(tr);
+window.addEventListener('DOMContentLoaded',()=>{
+'use strict';
+const state={paused:false,count:128,reviewQueue:3,auditSealed:false,seed:42};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const drawer=$('#drawer'), drawerTitle=$('#drawerTitle'), drawerCopy=$('#drawerCopy'), drawerContent=$('#drawerContent');
+function openDrawer(title,copy,html){drawerTitle.textContent=title;drawerCopy.textContent=copy;if(html)drawerContent.innerHTML=html;drawer.classList.add('open');drawer.setAttribute('aria-hidden','false')}
+function closeDrawer(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true')}
+$('#drawerClose').addEventListener('click',closeDrawer);$('#consoleBtn').addEventListener('click',()=>openDrawer('Audit + Policy Inspector','Inspect the simulated workflow, policy basis, human-control gate, and audit state. Nothing in this demo executes a real-world drone command.'));
+$('#policyExplainBtn').addEventListener('click',()=>openDrawer('Why the workflow is blocked','ARTEMIS pauses the demonstration workflow because operator authority is required before any operational response. This illustrates explainable automation and a mandatory human gate.','<div class="audit-row">GEOFENCE CHECK · PASS</div><div class="audit-row">PRIVACY POLICY · PASS</div><div class="audit-row">DATA RETENTION · PASS</div><div class="audit-row">OPERATOR AUTHORITY · REQUIRED</div><div class="audit-row">RESPONSE PERMISSION · BLOCKED UNTIL APPROVED</div>'));
+$('#pauseBtn').addEventListener('click',e=>{state.paused=!state.paused;e.currentTarget.textContent=state.paused?'Resume Telemetry':'Pause Telemetry';e.currentTarget.classList.toggle('active',!state.paused);$('#streamState').textContent=state.paused?'SIMULATION MODE · STREAM PAUSED':'SIMULATION MODE · STREAM ACTIVE'});
+$('#statusFilter').addEventListener('change',e=>{$$('.track').forEach(t=>t.style.display=e.target.value==='all'||t.dataset.status===e.target.value?'flex':'none')});
+$('#zoneSelect').addEventListener('change',e=>openDrawer('Operating zone changed',e.target.value+' selected. This changes demonstration context only; no real airspace system is contacted.','<div class="audit-row">ZONE · '+e.target.value+'</div><div class="audit-row">DATA SOURCE · LOCAL SEEDED DEMO</div><div class="audit-row">NETWORK CONTROL · NONE</div>'));
+$$('[data-view]').forEach(b=>b.addEventListener('click',()=>{const view=b.dataset.view;$$('[data-view]').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(view==='map'){$('#mapPanel').style.display='block';$('#timelinePanel').style.display='flex'}if(view==='timeline'){$('#mapPanel').style.display='none';$('#timelinePanel').style.display='flex'}if(view==='audit')openDrawer('Audit View','Demonstration audit events are locally generated and contain no real incident or personal data.')}));
+$('#reviewBtn').addEventListener('click',()=>{state.reviewQueue++;$('#reviewQueue').textContent=String(state.reviewQueue).padStart(2,'0');const now=new Date().toLocaleTimeString([], {hour12:false});const item=document.createElement('div');item.className='incident review';item.innerHTML='<span class="node"></span><h4>'+now+' · Human review requested</h4><p>Local demo event added to review queue. No physical response executed.</p><span class="event-kind">HUMAN APPROVAL</span>';$('#incidentTimeline').prepend(item);openDrawer('Human review queued','A fictional review request was created locally. ARTEMIS remains blocked from any operational response until an authorized person records a decision.')}));
+$('#sealBtn').addEventListener('click',()=>{state.auditSealed=true;openDrawer('Demo audit sealed','The local demonstration record is now marked SEALED. This is a UI state only and is not a legal, cryptographic, or government record.','<div class="audit-row">EVENT · DEMO-EVT-077</div><div class="audit-row">AUDIT STATUS · SEALED (DEMO)</div><div class="audit-row">HUMAN CONTROL · REQUIRED</div>')});
+$('#exportBtn').addEventListener('click',()=>{const report={title:'CLEARGLASS ARTEMIS Fictional Customer Report',mode:'DEMO DATA',generatedAt:new Date().toISOString(),operatingZone:$('#zoneSelect').value,eventsProcessed:state.count,openReviewQueue:state.reviewQueue,auditStatus:state.auditSealed?'sealed-demo':'pending-demo',notice:'Fictional demonstration report. No real incident, government, private-person, or restricted-system data.'};const blob=new Blob([JSON.stringify(report,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='artemis-demo-customer-report.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+let worker;try{const src=`let seed=42;function rand(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}setInterval(()=>postMessage({delta:1+Math.floor(rand()*3),jitter:Math.round(rand()*10)}),1700);`;worker=new Worker(URL.createObjectURL(new Blob([src],{type:'text/javascript'})));worker.onmessage=e=>{if(state.paused)return;state.count+=e.data.delta;$('#eventCount').textContent=state.count;const t=$$('.track');t.forEach((el,i)=>{const x=((state.count+i*17)%8)-4;el.style.transform='translate('+x+'px,'+(i%2?x:-x)+'px)'})}}catch(e){}
+function initMap(){if(!window.maplibregl)return;try{const map=new maplibregl.Map({container:'airspaceMap',style:{version:8,sources:{},layers:[{id:'bg',type:'background',paint:{'background-color':'#0d1219'}}]},center:[-79.8,43.3],zoom:8.6,interactive:false,attributionControl:false});map.on('load',()=>{map.addSource('zones',{type:'geojson',data:{type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:{type:'Polygon',coordinates:[[[-80.18,43.17],[-79.42,43.17],[-79.42,43.55],[-80.18,43.55],[-80.18,43.17]]]}}]}});map.addLayer({id:'zones-fill',type:'fill',source:'zones',paint:{'fill-color':'#4e3cff','fill-opacity':.035}});map.addLayer({id:'zones-line',type:'line',source:'zones',paint:{'line-color':'#8a7cff','line-width':1,'line-opacity':.35,'line-dasharray':[4,4]}})})}catch(e){}}
+setTimeout(initMap,500);
 });
-
-// ---- Investor update ----
-function buildUpdate(total,arr,mrr,pilots,conv,integ){
-  var d=new Date();var wk=d.toISOString().slice(0,10);
-  var txt=
-'ARTEMIS COMMERCIALIZATION OS — WEEKLY INVESTOR UPDATE\n'+
-'Week of '+wk+'  ·  ClearGlass Inc. · Counter-UAS EO/IR\n'+
-'────────────────────────────────────────────\n\n'+
-'1. REVENUE\n   Projected annual run-rate: '+moneyK(total)+' (target $1.00M)\n   Recurring (ARR): '+moneyK(arr)+'  ·  MRR: '+money(mrr)+'\n\n'+
-'2. SALES PIPELINE\n   Target: 100 qualified prospects / quarter across PEOs, DIU, primes, NATO.\n   Stages: Prospect → Qualified → Meeting → Demo → Pilot → Proposal → Contract.\n\n'+
-'3. PILOTS\n   Paid pilots in plan: '+pilots+'  ·  Conversions modeled: '+conv+'\n   Minimum bar: paid ≥ $5k OR strategic data value > 80.\n\n'+
-'4. PRODUCT PROGRESS\n   EO/IR detection MVP on track; accuracy 97.4%, false-positive 1.8%.\n   Engineering gated strictly to pilot / customer requirements.\n\n'+
-'5. COMPLIANCE\n   ECCN/ITAR review in progress; no shipment until gates green.\n   Spectrum + RF capability under Compliance Agent control.\n\n'+
-'6. CASH POSITION\n   Runway tracked weekly. Non-dilutive first: grants, SBIR, defense innovation.\n   Funding target: $250k–$1M non-dilutive within 12 months.\n\n'+
-'7. RISKS\n   Top: export-classification delay (score 20 ⚑ — human review).\n   All risks scoring >15 escalated to immediate review.\n\n'+
-'8. REQUESTS / INTRODUCTIONS NEEDED\n   Intros to: DIU / PEO program officers, critical-infrastructure security leads,\n   and integrator channel partners ('+integ+' deals modeled).\n────────────────────────────────────────────\n'+
-'Decision hierarchy: Revenue → Pilot → Compliance → Engineering → Optimization.';
-  $('updateOut').textContent=txt;
-}
-$('copyBtn').addEventListener('click',function(){
-  navigator.clipboard.writeText($('updateOut').textContent).then(function(){
-    var b=$('copyBtn');var o=b.textContent;b.textContent='✓ Copied';setTimeout(function(){b.textContent=o;},1800);
-  });
-});
-
-// init
-engine();scorer();
-
-// reveal on scroll
-var rvObs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.rv').forEach(function(el){rvObs.observe(el);});
 </script>
-<script defer src="nav.js"></script>
-<script defer src="/logo-badge.js"></script>
 <!-- cg-related:start -->
 <aside id="cg-related">
   <style>#cg-related{margin:54px auto 0;max-width:1120px;padding:0 18px 38px;font-family:'Inter',system-ui,-apple-system,sans-serif;position:relative}#cg-related .cgr-box{position:relative;overflow:hidden;background:linear-gradient(rgba(34,211,238,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,255,.05) 1px,transparent 1px),radial-gradient(circle at 12% 0,rgba(34,211,238,.16),transparent 34%),radial-gradient(circle at 88% 100%,rgba(168,85,247,.16),transparent 36%),linear-gradient(165deg,rgba(5,12,28,.97),rgba(9,7,24,.97));background-size:32px 32px,32px 32px,auto,auto,auto;border:1px solid rgba(34,211,238,.34);border-radius:16px;padding:24px 26px;color:#d8e4ff;box-shadow:0 18px 54px rgba(0,0,0,.44),0 0 34px rgba(34,211,238,.12),inset 0 0 0 1px rgba(255,255,255,.035)}#cg-related .cgr-box:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(34,211,238,.18),transparent);transform:translateX(-120%) skewX(-18deg);animation:cgr-scan 8s ease-in-out infinite}#cg-related .cgr-box:after{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,#a855f7,transparent);box-shadow:0 0 18px rgba(34,211,238,.75)}#cg-related .cgr-crumb{position:relative;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8fb9ff;margin:0 0 12px}#cg-related .cgr-crumb a{color:#67e8f9;text-decoration:none;text-shadow:0 0 12px rgba(34,211,238,.35)}#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:none}#cg-related h2{position:relative;margin:0 0 14px;font-size:15.5px;letter-spacing:.08em;text-transform:uppercase;color:#f3f7ff}#cg-related .cgr-route{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 16px}#cg-related .cgr-route a{display:flex;min-height:46px;align-items:center;padding:8px 10px;border-radius:10px;background:rgba(7,14,32,.52);border:1px solid rgba(124,150,255,.15);color:#cfe0ff;text-decoration:none;font-size:12px;line-height:1.35}#cg-related .cgr-route a:hover,#cg-related .cgr-route a:focus-visible{border-color:#22d3ee;color:#fff;box-shadow:0 0 18px rgba(34,211,238,.14)}#cg-related .cgr-route b{display:block;color:#67e8f9;font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2px}#cg-related ul{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:8px 18px}#cg-related li a{display:block;padding:9px 11px;border-radius:10px;font-size:13.5px;line-height:1.45;color:#cfe0ff;text-decoration:none;border:1px solid rgba(124,150,255,.08);background:rgba(7,14,32,.36);transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}#cg-related li a:hover,#cg-related li a:focus-visible{transform:translateY(-1px);background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.42);color:#fff;box-shadow:0 0 22px rgba(34,211,238,.14)}#cg-related li a b{color:#9bdcff;font-weight:700;text-shadow:0 0 12px rgba(34,211,238,.28)}#cg-related .cgr-cta{position:relative;margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(34,211,238,.18);font-size:13.5px;color:#a9b8df}#cg-related .cgr-cta a{color:#67e8f9;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.36)}#cg-related .cgr-cta a:hover{color:#fff;border-bottom-color:#fff}@media(max-width:620px){#cg-related .cgr-box{padding:21px 17px}#cg-related .cgr-route{grid-template-columns:1fr}#cg-related ul{grid-template-columns:1fr}}@keyframes cgr-scan{0%,58%{transform:translateX(-120%) skewX(-18deg);opacity:0}70%{opacity:1}100%{transform:translateX(220%) skewX(-18deg);opacity:0}}@media(prefers-reduced-motion:reduce){#cg-related .cgr-box:before{animation:none}}</style>
@@ -620,12 +109,13 @@ document.querySelectorAll('.rv').forEach(function(el){rvObs.observe(el);});
       <li><a href="air-control.html"><b>ZEPHYR</b> — air systems control surface</a></li>
       <li><a href="traffic-enforcement.html"><b>Speed Vision AI</b> — AI traffic-enforcement platform</a></li>
       <li><a href="sats-digital-twin.html"><b>SATS Digital Twin</b> — storm-adaptive transit simulation with governed operations</a></li>
+      <li><a href="minerals-platform.html"><b>Minerals Intelligence Platform</b> — source-transparent critical-minerals command center</a></li>
       <li><a href="operations/procurement-readiness.html"><b>Procurement Readiness</b> — verified supplier-registration status</a></li>
-      <li><a href="operations/federal-supplier-handoff.html"><b>Federal Supplier Handoff</b> — supplier registration runbook</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="operations/procurement-readiness.html">Check our procurement readiness</a></p>
   </nav>
 </aside>
 <!-- cg-related:end -->
+<script defer src="/assets/js/future-buttons.js"></script>
 </body>
 </html>

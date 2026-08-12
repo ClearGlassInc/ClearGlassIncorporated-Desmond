@@ -5,7 +5,7 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import { createCheckout } from "@/lib/api";
-import { findProduct, formatPrice } from "@/lib/catalog";
+import { findProduct, formatOfferPrice } from "@/lib/catalog";
 import { AddToCart } from "@/lib/AddToCart";
 
 // Next 15/16 turned the `params` prop into a Promise. A Client Component reads
@@ -22,14 +22,8 @@ export default function ProductPage() {
     setLoading(true);
     setError(null);
     try {
-      const session = await createCheckout([
-        {
-          name: product.title,
-          amount: product.amount,
-          quantity: 1,
-          currency: product.currency,
-        },
-      ]);
+      // Send the SKU only — the control plane prices it.
+      const session = await createCheckout([{ sku: product.slug, quantity: 1 }]);
       // Redirect to Stripe Checkout (live) or the mock success URL (dev/CI).
       window.location.href = session.url;
     } catch (e) {
@@ -50,9 +44,14 @@ export default function ProductPage() {
           : "Description rendered from content_assets. Claims are verified — no fabricated reviews or scarcity."}
       </p>
       {product && (
-        <div style={{ fontSize: 22, color: "#a78bfa", marginTop: 8 }}>
-          {formatPrice(product.amount, product.currency)}
-        </div>
+        <>
+          <div style={{ fontSize: 22, color: "#a78bfa", marginTop: 8 }}>
+            {formatOfferPrice(product)}
+          </div>
+          {product.note && (
+            <div style={{ color: "#9aa6c8", fontSize: 13, marginTop: 4 }}>{product.note}</div>
+          )}
+        </>
       )}
       <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
         <button

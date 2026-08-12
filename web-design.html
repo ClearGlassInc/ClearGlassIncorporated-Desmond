@@ -34,7 +34,7 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Website Design & Development — Growth Infrastructure | ClearGlass Inc.</title>
+<title>Website Design and Development | ClearGlass Inc.</title>
 <meta name="description" content="ClearGlass designs and builds fast, secure, accessible websites engineered as business growth infrastructure — architecture, front-end development.">
 <link rel="canonical" href="https://www.clearglassinc.com/web-design.html">
 <meta property="og:title" content="Website Design & Development | ClearGlass Inc">
@@ -46,6 +46,7 @@
 <link rel="stylesheet" href="theme.css">
 <link rel="stylesheet" href="buttons.css">
 <link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="web-growth-system.css">
 <style>
   /* ─────────────────────────────────────────────────────────────────────────
      LIGHT · CRIMSON NEON aesthetic — a bright, rose-white surface lit by red
@@ -116,8 +117,8 @@
 
   /* hero */
   .hero{padding:clamp(90px,14vw,160px) 0 clamp(40px,7vw,72px);position:relative}
-  .hero h1{font-size:clamp(2.8rem,7vw,5.6rem);max-width:14ch;margin:22px 0 0}
-  .hero h1 strong{font-weight:600}
+  .hero .legacy-hero-title{font-size:clamp(2.8rem,7vw,5.6rem);max-width:14ch;margin:22px 0 0}
+  .hero .legacy-hero-title strong{font-weight:600}
   .hero p.lead{font-size:clamp(1.05rem,1.8vw,1.3rem);color:var(--dim);max-width:60ch;margin:26px 0 0;font-weight:400}
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:38px}
   .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:60px;
@@ -426,14 +427,124 @@
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="brand-system.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Service","@id":"https://www.clearglassinc.com/web-design.html#service","name":"Website Design & Development","serviceType":"Website design, front-end engineering and performance optimization","description":"ClearGlass designs and builds fast, secure, accessible websites engineered as business growth infrastructure — architecture, front-end development, Core Web Vitals performance budgets, structured data and CI-validated deployment.","url":"https://www.clearglassinc.com/web-design.html","provider":{"@id":"https://www.clearglassinc.com/#org"},"areaServed":[{"@type":"AdministrativeArea","name":"Ontario, Canada"},{"@type":"Country","name":"Canada"},{"@type":"Country","name":"United States"}],"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://www.clearglassinc.com/pricing.html"},"hasOfferCatalog":{"@type":"OfferCatalog","name":"Web engineering capabilities","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Website architecture","description":"Content models, routing and reusable components designed for clarity and change."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Front-end development","description":"Hand-built, standards-based front-ends with clean, reviewable code and no framework lock-in."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Performance optimization","description":"Asset budgets, caching strategy, image pipelines and Core Web Vitals tuned to real-world devices."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"SEO-ready structure","description":"Semantic headings, metadata, sitemaps and structured data so search engines understand and rank the page."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Accessibility","description":"Keyboard-first interaction, ARIA where needed, contrast and motion preferences respected by default."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Security-minded implementation","description":"Least-privilege automation, hardened headers, no secrets in the client and a documented threat surface."}}]}},{"@type":"FAQPage","@id":"https://www.clearglassinc.com/web-design.html#faq","mainEntity":[{"@type":"Question","name":"Do I own the code?","acceptedAnswer":{"@type":"Answer","text":"Yes — outright. You receive a clean, documented, framework-honest codebase in your own repository. No proprietary page-builder lock-in, no licensing leash, no dependency on us to make a change."}},{"@type":"Question","name":"How fast will it actually be?","acceptedAnswer":{"@type":"Answer","text":"We build to a measurable budget — minimal payload, lazy media, no render-blocking waste — and verify Core Web Vitals in CI. The target is sub-second first-contentful paint on modern connections and a 95+ Lighthouse score for performance and accessibility."}},{"@type":"Question","name":"Will it hold up on mobile?","acceptedAnswer":{"@type":"Answer","text":"Mobile-first is the starting point, not an afterthought. Layouts keep their hierarchy and touch-target sizing from phone to ultrawide, and every interaction is tested with keyboard and reduced-motion preferences."}},{"@type":"Question","name":"Is it secure?","acceptedAnswer":{"@type":"Answer","text":"No secrets ship in client code. Automation runs least-privilege, dependencies are kept current, and the threat surface is documented. Where the host can't set HTTP security headers (e.g. static hosting), we say so and mitigate at the layers we control rather than pretend otherwise."}},{"@type":"Question","name":"Can you maintain it after launch?","acceptedAnswer":{"@type":"Answer","text":"Yes. We offer ongoing optimization — Core Web Vitals tuning, conversion iteration, content and security updates — on a clear cadence. Because the code is documented and yours, you're never locked in to that arrangement."}},{"@type":"Question","name":"How is it deployed?","acceptedAnswer":{"@type":"Answer","text":"CI-validated, reproducible, static-first deploys with a tested rollback path. A bad change is reverted in one step and the previous state redeploys automatically — no servers to babysit."}}]},{"@type":"BreadcrumbList","@id":"https://www.clearglassinc.com/web-design.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.clearglassinc.com/"},{"@type":"ListItem","position":2,"name":"Website Design & Development","item":"https://www.clearglassinc.com/web-design.html"}]}]}</script>
+<link rel="stylesheet" href="/assets/css/future-buttons.css">
 </head>
 <body>
 <div id="glowcursor" aria-hidden="true"></div>
 
+<!-- Growth Infrastructure v2: additive, static-first experience. The legacy page below is preserved. -->
+<main class="growth-system" id="growth-system" data-feature-webgpu="false" data-feature-ai="false" data-feature-experiments="false" data-feature-analytics="false" data-feature-leads="false">
+  <section class="growth-hero" aria-labelledby="growth-title">
+    <div class="growth-shell growth-hero-grid">
+      <div class="growth-copy">
+        <p class="growth-eyebrow">Growth infrastructure / Web engineering / AI systems</p>
+        <h1 id="growth-title">Your website should not just exist. <span>It should evolve, learn, and compound value.</span></h1>
+        <p class="growth-lead">ClearGlass Inc. designs intelligent web platforms that combine high-performance engineering, conversion strategy, automation, discoverability, analytics, and security-conscious architecture.</p>
+        <p class="growth-position">Turn your website into a high-performance system that earns trust, attracts qualified attention, converts demand, and continuously improves.</p>
+        <div class="growth-actions">
+          <a class="growth-button growth-button-primary" href="#readiness-scan">Engineer my growth system</a>
+          <a class="growth-button" href="#digital-twin">Explore the system</a>
+          <a class="growth-text-link" href="#service-layers">View selected capabilities <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="growth-trust">Strategy-led. Performance-engineered. Human-supervised.</p>
+      </div>
+
+      <figure class="control-layer" aria-labelledby="control-layer-title control-layer-caption">
+        <div class="control-layer-head"><span>CG / SYSTEM MAP</span><span id="visual-mode">Static SVG mode</span></div>
+        <h2 id="control-layer-title">Growth Infrastructure Control Layer</h2>
+        <div class="signal-field" role="img" aria-label="Eight connected growth infrastructure capabilities: Attention flows to Trust and Discoverability; Trust and Performance support Conversion; Conversion connects to Automation and Learning; Security supports every layer.">
+          <svg viewBox="0 0 640 410" aria-hidden="true" focusable="false">
+            <g class="signal-lines"><path d="M102 86L260 66L440 84L540 188L452 310L270 336L104 300L70 190Z"/><path d="M102 86L270 336M260 66L452 310M440 84L104 300M540 188L70 190"/><path d="M260 66L540 188L270 336L70 190Z"/></g>
+            <g class="signal-nodes"><circle cx="102" cy="86" r="8"/><circle cx="260" cy="66" r="8"/><circle cx="440" cy="84" r="8"/><circle cx="540" cy="188" r="8"/><circle cx="452" cy="310" r="8"/><circle cx="270" cy="336" r="8"/><circle cx="104" cy="300" r="8"/><circle cx="70" cy="190" r="8"/></g>
+          </svg>
+          <ol class="node-labels">
+            <li style="--x:16%;--y:18%">Attention</li><li style="--x:41%;--y:12%">Trust</li><li style="--x:69%;--y:18%">Conversion</li><li style="--x:82%;--y:44%">Performance</li><li style="--x:70%;--y:74%">Discoverability</li><li style="--x:42%;--y:82%">Automation</li><li style="--x:16%;--y:72%">Security</li><li style="--x:10%;--y:44%">Learning</li>
+          </ol>
+        </div>
+        <figcaption id="control-layer-caption">Illustrative interface. Not live customer data. Relationships are available as equivalent text above.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="growth-section" id="service-layers" aria-labelledby="service-title">
+    <div class="growth-shell">
+      <p class="growth-eyebrow">One interconnected delivery system</p>
+      <h2 id="service-title">Web design and development for organizations that need their website to become a measurable growth asset.</h2>
+      <p class="growth-section-lead">ClearGlass Inc. builds digital growth infrastructure for organizations that need their website to perform like a strategic operating system. Outcomes depend on the offer, market, traffic, execution, and customer behavior.</p>
+      <div class="service-grid">
+        <article><span>01</span><h3>Strategy</h3><p>Digital growth audit, offer positioning, customer research, funnel architecture, measurement planning, and technical roadmap.</p></article>
+        <article><span>02</span><h3>Experience engineering</h3><p>High-performance websites, Next.js applications, secure portals, product experiences, design systems, and mobile-first interfaces.</p></article>
+        <article><span>03</span><h3>Conversion infrastructure</h3><p>Landing pages, lead capture, pricing flows, assessments, experiments, CRM routing, and lifecycle messaging.</p></article>
+        <article><span>04</span><h3>Discoverability</h3><p>Technical SEO, structured data, internal linking, content architecture, monitoring, and editorially reviewed AI briefs.</p></article>
+        <article><span>05</span><h3>Automation and AI</h3><p>Workflow orchestration, document processing, support triage, qualification, agent monitoring, and human-approved publishing.</p></article>
+        <article><span>06</span><h3>Security-conscious delivery</h3><p>Threat modeling, least privilege, secure coding, secrets, dependency monitoring, headers, audit logging, and incident planning.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="growth-section growth-interactive" id="readiness-scan" aria-labelledby="scan-title">
+    <div class="growth-shell split-layout">
+      <div>
+        <p class="growth-eyebrow">Anonymous educational assessment</p>
+        <h2 id="scan-title">System Readiness Scan</h2>
+        <p>Identify a credible starting point before sharing contact details. Answers remain in this browser and are not transmitted.</p>
+        <form id="readiness-form">
+          <div class="scan-grid">
+            <label>Business type<select name="businessType" required><option value="">Select one</option><option>Professional services</option><option>Technology / SaaS</option><option>Commerce</option><option>Nonprofit</option><option>Other organization</option></select></label>
+            <label>Primary growth goal<select name="goal" required><option value="">Select one</option><option value="clarity">Clarify the offer</option><option value="demand">Attract qualified attention</option><option value="conversion">Improve conversion pathways</option><option value="operations">Connect operations</option></select></label>
+            <label>Current website status<select name="status" required><option value="">Select one</option><option value="none">No current website</option><option value="legacy">Legacy or difficult to maintain</option><option value="active">Active but underperforming</option><option value="modern">Modern and actively managed</option></select></label>
+            <label>Main operational constraint<select name="constraint" required><option value="">Select one</option><option value="capacity">Team capacity</option><option value="measurement">Limited measurement</option><option value="technology">Technical debt</option><option value="governance">Security or governance</option></select></label>
+            <label>Desired project stage<select name="stage" required><option value="">Select one</option><option value="discover">Discovery</option><option value="prototype">Prototype</option><option value="build">Build</option><option value="optimize">Optimize</option></select></label>
+            <label>Preferred automation<select name="automation" required><option value="">Select one</option><option value="low">Low — manual control</option><option value="guided">Guided — approval at each step</option><option value="advanced">Advanced — policy-controlled</option></select></label>
+          </div>
+          <button class="growth-button growth-button-primary" type="submit">Generate my starting point</button>
+        </form>
+        <noscript><p class="noscript-note">The interactive calculation requires JavaScript. You can still review every service layer and request an assessment through the existing contact path below.</p></noscript>
+      </div>
+      <aside class="scan-result" id="scan-result" aria-live="polite" aria-atomic="true">
+        <p class="result-label">Transparent recommendation</p>
+        <h3>Complete the six fields to generate an anonymous result.</h3>
+        <p>No personal information is requested or stored.</p>
+      </aside>
+    </div>
+    <p class="growth-disclaimer">This interactive result is an educational starting point, not a guaranteed diagnosis, security audit, legal opinion, or revenue forecast.</p>
+  </section>
+
+  <section class="growth-section" id="digital-twin" aria-labelledby="twin-title">
+    <div class="growth-shell">
+      <div class="section-row"><div><p class="growth-eyebrow">Demo mode / illustrative system</p><h2 id="twin-title">Growth Infrastructure Digital Twin</h2></div><span class="demo-badge">Demo — not live data</span></div>
+      <p class="growth-section-lead">Explore how an evidence-driven delivery team might assess dependencies, effort, ownership, and approval. Select a node for its complete, explicitly illustrative record.</p>
+      <div class="twin-layout">
+        <div class="twin-nodes" id="twin-nodes" role="list" aria-label="Digital ecosystem nodes"></div>
+        <article class="twin-detail" id="twin-detail" aria-live="polite"><p class="result-label">Node record</p><h3>Website</h3><p>Select any node to inspect its purpose, dependencies, possible improvement, effort, relevance, evidence, owner, and approval state.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="growth-section" id="intelligence-layer" aria-labelledby="intelligence-title">
+    <div class="growth-shell intelligence-grid">
+      <div>
+        <p class="growth-eyebrow">Optional / policy-controlled</p><h2 id="intelligence-title">ClearGlass Intelligence Layer</h2>
+        <p>Human-supervised AI may draft evidence-linked recommendations, never production changes. Website content is untrusted input; deterministic policy controls approval and publishing.</p>
+        <div class="state-machine" aria-label="AI recommendation state machine"><span>Observed</span><i>→</i><span>Hypothesis</span><i>→</i><span>Drafted</span><i>→</i><strong>Human review</strong><i>→</i><span>Approved</span><i>→</i><span>Staged</span><i>→</i><span>Verified</span><i>→</i><span>Published</span></div>
+      </div>
+      <div class="governance-card">
+        <p class="result-label">Feature status</p><h3>AI processing is disabled</h3><p>The public page does not send content or visitor data to a model. An authorized workspace owner must configure a reviewed backend before this feature can operate.</p>
+        <button type="button" id="disable-ai" class="growth-button" aria-pressed="true">Disable AI processing for this workspace</button>
+        <dl><div><dt>Evidence</dt><dd>No workspace connected</dd></div><div><dt>Confidence</dt><dd>Not evaluated</dd></div><div><dt>Model / prompt</dt><dd>Not configured</dd></div><div><dt>Approval</dt><dd>Disabled by policy</dd></div><div><dt>Audit history</dt><dd>No processing events</dd></div></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="growth-section experiment-preview" aria-labelledby="lab-title">
+    <div class="growth-shell section-row"><div><p class="growth-eyebrow">Experience Laboratory</p><h2 id="lab-title">Preview safely. Publish deliberately.</h2><p>Experiment EXP-DEMO-001 illustrates a reduced-motion hero comparison. Owner, hypothesis, dates, success metrics, guardrails, immutable versions, approval, and one-action rollback belong in the authorized system—not local browser state.</p></div><div class="feature-lock"><span>Feature flag</span><code>ENABLE_EXPERIMENT_LAB=false</code><strong>Production publishing unavailable</strong></div></div>
+  </section>
+</main>
+
 <header class="hero">
   <div class="wrap">
     <span class="eyebrow">ClearGlass · Web Engineering Studio</span>
-    <h1>We design websites as <strong class="crystal">growth infrastructure.</strong></h1>
+    <h2 class="legacy-hero-title">We design websites as <strong class="crystal">growth infrastructure.</strong></h2>
     <p class="lead">A website should not just look premium — it should work like a business system.
       We architect, build, and maintain fast, secure, accessible sites engineered for clarity,
       performance, and long-term maintainability.</p>
@@ -656,11 +767,11 @@ ALLOWED = {DRAFT: {REVIEWED}, REVIEWED: {APPROVED}, APPROVED: {EXECUTED}, EXECUT
 </section>
 
 <!-- ARTEMIS FULL-STACK CASE STUDY -->
-<section class="band artemis reveal" id="artemis" aria-labelledby="artemis-title">
+<section class="band artemis reveal" id="artemis-case-study" aria-labelledby="artemis-case-study-title">
   <div class="wrap">
     <div class="sh">
       <span class="eyebrow">ClearGlassInc Artemis · Reference architecture</span>
-      <h2 id="artemis-title">A self-evolving intelligence platform, <strong>governed by humans.</strong></h2>
+      <h2 id="artemis-case-study-title">A self-evolving intelligence platform, <strong>governed by humans.</strong></h2>
       <p>A production blueprint for secure, coalition-aware, latency-sensitive operations. Artemis fuses live and historical data, reasons over a permissioned ontology, and proposes evidence-backed improvements without ever manufacturing its own authority.</p>
     </div>
 
@@ -1132,6 +1243,7 @@ Feedback ─corrects→ Decision ─proposes→ Upgrade</pre>
   .cg-btn:focus-visible{outline-color:#ff2d55!important;box-shadow:0 0 0 4px rgba(255,45,85,.28)!important}
 </style>
 <script defer src="control-surface.js"></script>
+<script defer src="web-growth-system.js"></script>
 <script defer src="ui.js"></script>
   <script defer src="platform.js"></script>
   <script defer src="/logo-badge.js"></script>
@@ -1163,5 +1275,6 @@ Feedback ─corrects→ Decision ─proposes→ Upgrade</pre>
 </aside>
 <!-- cg-related:end -->
 <script defer src="nav.js"></script>
+<script defer src="/assets/js/future-buttons.js"></script>
 </body>
 </html>

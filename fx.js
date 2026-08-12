@@ -1,5 +1,6 @@
-/* ClearGlass · FX behaviors. Loaded by platform.js. Progressive enhancement:
-   inert under prefers-reduced-motion; never hides content if IO is unavailable. */
+/* ClearGlass · FX behaviors. Loaded by platform.js or the Pages hardening build.
+   Progressive enhancement: inert under prefers-reduced-motion; never hides content
+   if IntersectionObserver is unavailable. */
 (function () {
   "use strict";
   if (window.__cgFx) return;
@@ -22,7 +23,7 @@
     bar.id = "cg-progress";
     document.body.appendChild(bar);
 
-    /* ── back-to-top ─────────────────────────────────────────────────────── */
+    /* ── precision scroll controls: top + bottom ────────────────────────── */
     var top = document.createElement("button");
     top.id = "cg-top";
     top.type = "button";
@@ -33,23 +34,40 @@
     });
     document.body.appendChild(top);
 
+    var bottom = document.createElement("button");
+    bottom.id = "cg-bottom";
+    bottom.type = "button";
+    bottom.setAttribute("aria-label", "Scroll to bottom");
+    bottom.innerHTML = "↓";
+    bottom.addEventListener("click", function () {
+      var h = document.documentElement;
+      var max = Math.max(0, h.scrollHeight - h.clientHeight);
+      window.scrollTo({ top: max, behavior: reduce ? "auto" : "smooth" });
+    });
+    document.body.appendChild(bottom);
+    document.body.classList.add("cg-scroll-controls-mounted");
+
     var ticking = false;
     function onScroll() {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(function () {
         var h = document.documentElement;
+        var y = h.scrollTop || window.pageYOffset || 0;
         var max = (h.scrollHeight - h.clientHeight) || 1;
-        var pct = Math.min(100, Math.max(0, (h.scrollTop || window.pageYOffset) / max * 100));
+        var pct = Math.min(100, Math.max(0, y / max * 100));
+        var nearBottom = (max - y) < 360;
         bar.style.width = pct + "%";
-        top.classList.toggle("show", (h.scrollTop || window.pageYOffset) > 480);
+        top.classList.toggle("show", y > 480);
+        bottom.classList.toggle("show", max > 900 && !nearBottom);
         ticking = false;
       });
     }
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     onScroll();
 
-    if (reduce) return; // ambient bar/top stay; skip reveal + tilt
+    if (reduce) return; // ambient bar/top/bottom stay; skip reveal + tilt
 
     /* ── scroll reveal (opt-in [data-reveal]) ────────────────────────────── */
     var reveals = [].slice.call(document.querySelectorAll("[data-reveal]"));

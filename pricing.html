@@ -128,6 +128,7 @@
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="brand-system.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://www.clearglassinc.com/pricing.html#page","name":"Pricing & Engagements — ClearGlass Inc.","description":"Fixed-fee cybersecurity and web engineering engagements from ClearGlass Inc, Ontario — security quick-audit, Microsoft 365 hardening sprint, PHIPA readiness.","url":"https://www.clearglassinc.com/pricing.html","isPartOf":{"@id":"https://www.clearglassinc.com/#website"},"about":{"@id":"https://www.clearglassinc.com/#org"}},{"@type":"OfferCatalog","@id":"https://www.clearglassinc.com/pricing.html#catalog","name":"ClearGlass Inc. fixed-fee engagements","provider":{"@id":"https://www.clearglassinc.com/#org"},"itemListElement":[{"@type":"Offer","name":"Security Quick Audit","url":"https://www.clearglassinc.com/offers/security-quick-audit.html","priceCurrency":"CAD","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Security Quick Audit","serviceType":"Cybersecurity assessment","provider":{"@id":"https://www.clearglassinc.com/#org"}}},{"@type":"Offer","name":"Microsoft 365 / Entra ID Hardening Sprint","url":"https://www.clearglassinc.com/offers/hardening-sprint.html","priceCurrency":"CAD","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Hardening Sprint","serviceType":"Microsoft 365 and Entra ID security hardening","provider":{"@id":"https://www.clearglassinc.com/#org"}}},{"@type":"Offer","name":"PHIPA Readiness","url":"https://www.clearglassinc.com/offers/phipa-readiness.html","priceCurrency":"CAD","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"PHIPA Readiness","serviceType":"Ontario health privacy compliance readiness","provider":{"@id":"https://www.clearglassinc.com/#org"}}},{"@type":"Offer","name":"Website Design & Development","url":"https://www.clearglassinc.com/web-design.html","priceCurrency":"CAD","availability":"https://schema.org/InStock","itemOffered":{"@id":"https://www.clearglassinc.com/web-design.html#service"}}]},{"@type":"BreadcrumbList","@id":"https://www.clearglassinc.com/pricing.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.clearglassinc.com/"},{"@type":"ListItem","position":2,"name":"Pricing & Engagements","item":"https://www.clearglassinc.com/pricing.html"}]}]}</script>
+<link rel="stylesheet" href="/assets/css/future-buttons.css">
 </head>
 <body>
 
@@ -278,11 +279,14 @@
   // ── PAYMENT CONFIG ───────────────────────────────────────────────────────
   // Paste a Stripe Payment Link (https://buy.stripe.com/...) for any SKU to turn
   // its button into live card checkout. Empty = books via confirmed-invoice flow.
+  // Live Stripe Payment Links — must stay identical to store.html, which the
+  // storefront smoke bot enforces: a SKU purchasable on one page and not the other
+  // is a broken promise to whichever visitor lands on the wrong one.
   var CHECKOUT = {
-    "quick-audit": "",
-    "hardening":   "",
-    "phipa":       "",
-    "monitoring":  ""
+    "quick-audit": "https://buy.stripe.com/8x2eVe7ZG0mFam00LG4Ni03",
+    "hardening":   "https://buy.stripe.com/cNi7sMa7Ob1j2Ty8e84Ni04",
+    "phipa":       "https://buy.stripe.com/fZu14o6VC4CV0Lq9ic4Ni05",
+    "monitoring":  "https://buy.stripe.com/dRm28sa7OglDbq41PK4Ni06"
   };
 
   var LABEL = {
@@ -329,20 +333,21 @@
     <p class="cgr-crumb"><a href="index.html">ClearGlass Inc.</a> › <a href="offers/index.html">Services &amp; Engagements</a></p>
     <h2>Continue exploring</h2>
     <div class="cgr-route" aria-label="Journey navigation">
-      <a href="store.html"><span><b>Previous</b>ClearGlass Store</span></a>
+      <a href="products/advanced-secure-systems-engineering.html"><span><b>Previous</b>Secure Systems Engineering Workshop</span></a>
       <a href="offers/index.html"><span><b>Topic hub</b>Services &amp; Engagements</span></a>
-      <a href="smb-cyber-trust-kit.html"><span><b>Next in journey</b>SMB Cyber Trust Kit</span></a>
+      <a href="plans.html"><span><b>Next in journey</b>Guardian Plans &amp; Pricing</span></a>
     </div>
     <ul>
-      <li><a href="smb-cyber-trust-kit.html"><b>SMB Cyber Trust Kit</b> — plain-language cyber resilience for small business</a></li>
-      <li><a href="smb.html"><b>SMB Suite</b> — intelligent systems for small business</a></li>
-      <li><a href="offers/security-quick-audit.html"><b>Security Quick-Audit</b> — a focused $249 security review</a></li>
-      <li><a href="offers/autonomous-threat-modeling.html"><b>Autonomous Threat Modeling</b> — continuous threat-modeling assessment and implementation services</a></li>
+      <li><a href="plans.html"><b>Guardian Plans &amp; Pricing</b> — per-seat subscription tiers for the Guardian console</a></li>
+      <li><a href="workspace.html"><b>ClearGlass Workspace</b> — business email, storage and collaboration plans per person</a></li>
+      <li><a href="checkout/index.html"><b>Secure Checkout</b> — purchase an audit or protection plan</a></li>
+      <li><a href="seo-authority-hub.html"><b>Cybersecurity &amp; AI Automation in Burlington</b> — the local authority hub for ClearGlass services</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
   </nav>
 </aside>
 <!-- cg-related:end -->
 <script defer src="nav.js"></script>
+<script defer src="/assets/js/future-buttons.js"></script>
 </body>
 </html>

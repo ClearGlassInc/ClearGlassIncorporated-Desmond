@@ -1,25 +1,28 @@
 {
-  "generated": "2026-08-04T09:24:14+00:00",
+  "generated": "2026-08-09T07:37:43+00:00",
   "site": "https://www.clearglassinc.com",
-  "score": 78,
+  "score": 75,
   "totals": {
-    "pages": 150,
-    "indexable": 139,
-    "in_sitemap": 139,
-    "noindex": 10,
-    "with_schema": 52,
+    "pages": 164,
+    "indexable": 152,
+    "in_sitemap": 148,
+    "noindex": 11,
+    "with_schema": 62,
     "errors": 0,
-    "warnings": 125,
-    "info": 40
+    "warnings": 154,
+    "info": 42
   },
   "by_check": {
-    "description.length": 67,
-    "title.length": 48,
+    "description.length": 75,
+    "title.length": 52,
     "heading.order": 39,
-    "schema.required": 3,
-    "h1.multiple": 3,
+    "schema.required": 9,
+    "sitemap.missing": 4,
+    "h1.multiple": 4,
+    "orphan": 4,
+    "image.alt": 3,
     "weight": 2,
-    "image.alt": 1,
+    "canonical.missing": 2,
     "title.duplicate": 1,
     "description.duplicate": 1
   },
@@ -47,6 +50,12 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 208 chars; Google truncates near 165."
+    },
+    {
+      "page": "apps/command-center/index.html",
+      "level": "warn",
+      "check": "canonical.missing",
+      "message": "No rel=canonical \u2014 duplicate URLs may split ranking signals."
     },
     {
       "page": "artemis-2040.html",
@@ -385,6 +394,30 @@
       "message": "Meta description is 172 chars; Google truncates near 165."
     },
     {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "warn",
+      "check": "sitemap.missing",
+      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 68 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 212 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "warn",
+      "check": "orphan",
+      "message": "No internal links point to this page \u2014 it receives no internal link equity."
+    },
+    {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
       "level": "warn",
       "check": "title.length",
@@ -407,6 +440,84 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 208 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Article is missing required property 'headline'"
+    },
+    {
+      "page": "blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
+    },
+    {
+      "page": "blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 174 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/shadow-ai-enterprise-security-blind-spot.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Article is missing required property 'headline'"
+    },
+    {
+      "page": "blog/shadow-ai-enterprise-security-blind-spot.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
+    },
+    {
+      "page": "blog/shadow-ai-enterprise-security-blind-spot.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 73 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/shadow-ai-enterprise-security-blind-spot.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 191 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Article is missing required property 'headline'"
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "schema.required",
+      "message": "Organization is missing required property 'url'"
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "sitemap.missing",
+      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 81 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 166 chars; Google truncates near 165."
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "level": "warn",
+      "check": "orphan",
+      "message": "No internal links point to this page \u2014 it receives no internal link equity."
     },
     {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
@@ -455,6 +566,18 @@
       "level": "warn",
       "check": "h1.multiple",
       "message": "Page has 8 <h1> elements \u2014 one primary heading is clearer."
+    },
+    {
+      "page": "business-productivity-suite.html",
+      "level": "warn",
+      "check": "sitemap.missing",
+      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
+    },
+    {
+      "page": "business-productivity-suite.html",
+      "level": "warn",
+      "check": "orphan",
+      "message": "No internal links point to this page \u2014 it receives no internal link equity."
     },
     {
       "page": "clearglass-nexus.html",
@@ -514,7 +637,7 @@
       "page": "counter-uas-commercialization-os.html",
       "level": "warn",
       "check": "description.length",
-      "message": "Meta description is 243 chars; Google truncates near 165."
+      "message": "Meta description is 223 chars; Google truncates near 165."
     },
     {
       "page": "cyber-defense-console.html",
@@ -527,6 +650,18 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 201 chars; Google truncates near 165."
+    },
+    {
+      "page": "docs/guardian_command_nexus_spec.html",
+      "level": "warn",
+      "check": "canonical.missing",
+      "message": "No rel=canonical \u2014 duplicate URLs may split ranking signals."
+    },
+    {
+      "page": "docs/guardian_command_nexus_spec.html",
+      "level": "warn",
+      "check": "h1.multiple",
+      "message": "Page has 2 <h1> elements \u2014 one primary heading is clearer."
     },
     {
       "page": "flowsint.html",
@@ -551,6 +686,24 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 176 chars; Google truncates near 165."
+    },
+    {
+      "page": "global-growth-engine.html",
+      "level": "warn",
+      "check": "sitemap.missing",
+      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
+    },
+    {
+      "page": "global-growth-engine.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 198 chars; Google truncates near 165."
+    },
+    {
+      "page": "global-growth-engine.html",
+      "level": "warn",
+      "check": "orphan",
+      "message": "No internal links point to this page \u2014 it receives no internal link equity."
     },
     {
       "page": "guardian.html",
@@ -601,6 +754,12 @@
       "message": "Meta description is 189 chars; Google truncates near 165."
     },
     {
+      "page": "offers/guardian-command-nexus-blueprint.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 217 chars; Google truncates near 165."
+    },
+    {
       "page": "offers/hardening-sprint.html",
       "level": "warn",
       "check": "description.length",
@@ -617,6 +776,12 @@
       "level": "warn",
       "check": "description.length",
       "message": "Meta description is 193 chars; Google truncates near 165."
+    },
+    {
+      "page": "plans.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 205 chars; Google truncates near 165."
     },
     {
       "page": "postloop.html",
@@ -709,6 +874,12 @@
       "message": "Meta description is 192 chars; Google truncates near 165."
     },
     {
+      "page": "seo-authority-hub.html",
+      "level": "warn",
+      "check": "title.length",
+      "message": "Title is 70 chars; over ~62 it is truncated in results."
+    },
+    {
       "page": "side-store.html",
       "level": "warn",
       "check": "title.length",
@@ -767,6 +938,12 @@
       "level": "warn",
       "check": "title.length",
       "message": "Title is 70 chars; over ~62 it is truncated in results."
+    },
+    {
+      "page": "workspace.html",
+      "level": "warn",
+      "check": "description.length",
+      "message": "Meta description is 250 chars; Google truncates near 165."
     },
     {
       "page": "xenolith.html",
@@ -883,10 +1060,22 @@
       "message": "Heading level jumps from h2 to h4 \u2014 skipped levels weaken outline parsing."
     },
     {
+      "page": "blog/index.html",
+      "level": "info",
+      "check": "image.alt",
+      "message": "1 image(s) missing alt text."
+    },
+    {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
       "level": "info",
       "check": "heading.order",
       "message": "Heading level jumps from h1 to h3 \u2014 skipped levels weaken outline parsing."
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "level": "info",
+      "check": "image.alt",
+      "message": "1 image(s) missing alt text."
     },
     {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
@@ -1032,7 +1221,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 4073,
+      "bytes": 4194,
       "inbound_links": 0
     },
     {
@@ -1051,8 +1240,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 57405,
-      "inbound_links": 9
+      "bytes": 57526,
+      "inbound_links": 8
     },
     {
       "page": "ClearGlass-NEXUS-v12-FINAL.html",
@@ -1070,8 +1259,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 315786,
-      "inbound_links": 10
+      "bytes": 315907,
+      "inbound_links": 9
     },
     {
       "page": "Ontario-osint.html",
@@ -1089,7 +1278,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 94125,
+      "bytes": 94246,
       "inbound_links": 12
     },
     {
@@ -1108,8 +1297,8 @@
       "schema_types": [],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 53463,
-      "inbound_links": 19
+      "bytes": 53584,
+      "inbound_links": 17
     },
     {
       "page": "aegis.html",
@@ -1127,8 +1316,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 26272,
-      "inbound_links": 16
+      "bytes": 26393,
+      "inbound_links": 15
     },
     {
       "page": "agentmesh.html",
@@ -1146,8 +1335,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 23734,
-      "inbound_links": 25
+      "bytes": 23855,
+      "inbound_links": 24
     },
     {
       "page": "ai-operator.html",
@@ -1165,8 +1354,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 50202,
-      "inbound_links": 47
+      "bytes": 50323,
+      "inbound_links": 46
     },
     {
       "page": "air-control.html",
@@ -1184,8 +1373,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 59636,
-      "inbound_links": 12
+      "bytes": 59757,
+      "inbound_links": 10
     },
     {
       "page": "air-systems-control.html",
@@ -1203,8 +1392,27 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 27192,
-      "inbound_links": 14
+      "bytes": 27313,
+      "inbound_links": 13
+    },
+    {
+      "page": "apps/command-center/index.html",
+      "url": "https://www.clearglassinc.com/apps/command-center/index.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "ClearGlass Burlington Growth Command Centre",
+      "title_length": 43,
+      "description": "Governed ClearGlass Burlington cybersecurity campaign command centre for approved growth operations.",
+      "description_length": 100,
+      "canonical": null,
+      "h1_count": 1,
+      "schema_types": [],
+      "internal_links": 13,
+      "images_missing_alt": 0,
+      "bytes": 12070,
+      "inbound_links": 7
     },
     {
       "page": "artemis-2040.html",
@@ -1222,8 +1430,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 23441,
-      "inbound_links": 11
+      "bytes": 23562,
+      "inbound_links": 10
     },
     {
       "page": "artemis-ai-cyber-intelligence-platform.html",
@@ -1248,8 +1456,8 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 24258,
-      "inbound_links": 14
+      "bytes": 24803,
+      "inbound_links": 13
     },
     {
       "page": "artemis-blue-team.html",
@@ -1267,8 +1475,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 32345,
-      "inbound_links": 11
+      "bytes": 32466,
+      "inbound_links": 10
     },
     {
       "page": "artemis-fawl/index.html",
@@ -1289,7 +1497,7 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 12085,
+      "bytes": 12630,
       "inbound_links": 9
     },
     {
@@ -1308,7 +1516,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 170769,
+      "bytes": 170890,
       "inbound_links": 42
     },
     {
@@ -1327,8 +1535,8 @@
       "schema_types": [],
       "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 51183,
-      "inbound_links": 34
+      "bytes": 51304,
+      "inbound_links": 33
     },
     {
       "page": "artemis-percival.html",
@@ -1346,8 +1554,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 125713,
-      "inbound_links": 15
+      "bytes": 125834,
+      "inbound_links": 14
     },
     {
       "page": "artemis-self-evolving-platform.html",
@@ -1365,8 +1573,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 18542,
-      "inbound_links": 20
+      "bytes": 19375,
+      "inbound_links": 19
     },
     {
       "page": "artemis.html",
@@ -1384,7 +1592,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 44839,
+      "bytes": 44960,
       "inbound_links": 29
     },
     {
@@ -1403,8 +1611,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 18338,
-      "inbound_links": 10
+      "bytes": 18459,
+      "inbound_links": 9
     },
     {
       "page": "authority-network.html",
@@ -1422,10 +1630,10 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 171,
+      "internal_links": 181,
       "images_missing_alt": 0,
-      "bytes": 37013,
-      "inbound_links": 12
+      "bytes": 38570,
+      "inbound_links": 11
     },
     {
       "page": "automap.html",
@@ -1446,8 +1654,8 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 1,
-      "bytes": 52870,
-      "inbound_links": 10
+      "bytes": 53299,
+      "inbound_links": 9
     },
     {
       "page": "banking-law-advisor.html",
@@ -1465,8 +1673,8 @@
       "schema_types": [],
       "internal_links": 38,
       "images_missing_alt": 0,
-      "bytes": 70375,
-      "inbound_links": 13
+      "bytes": 70496,
+      "inbound_links": 12
     },
     {
       "page": "blog/ai-agent-governance-governed-autonomy.html",
@@ -1491,7 +1699,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 44419,
+      "bytes": 44540,
       "inbound_links": 35
     },
     {
@@ -1517,7 +1725,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 45667,
+      "bytes": 45888,
       "inbound_links": 18
     },
     {
@@ -1549,7 +1757,7 @@
       ],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 49914,
+      "bytes": 50650,
       "inbound_links": 9
     },
     {
@@ -1568,7 +1776,7 @@
       "schema_types": [],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 46324,
+      "bytes": 46696,
       "inbound_links": 7
     },
     {
@@ -1591,7 +1799,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 20693,
+      "bytes": 20814,
       "inbound_links": 7
     },
     {
@@ -1617,7 +1825,7 @@
       ],
       "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 44055,
+      "bytes": 44484,
       "inbound_links": 13
     },
     {
@@ -1641,7 +1849,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 31162,
+      "bytes": 31752,
       "inbound_links": 9
     },
     {
@@ -1666,7 +1874,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 32755,
+      "bytes": 33491,
       "inbound_links": 7
     },
     {
@@ -1689,8 +1897,8 @@
       ],
       "internal_links": 27,
       "images_missing_alt": 0,
-      "bytes": 36823,
-      "inbound_links": 13
+      "bytes": 37170,
+      "inbound_links": 12
     },
     {
       "page": "blog/clearglass-command-center-cyber-defense-console.html",
@@ -1712,8 +1920,8 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 19041,
-      "inbound_links": 9
+      "bytes": 19388,
+      "inbound_links": 8
     },
     {
       "page": "blog/clearglass-platform-audit-2026.html",
@@ -1738,7 +1946,7 @@
       ],
       "internal_links": 37,
       "images_missing_alt": 0,
-      "bytes": 46737,
+      "bytes": 46922,
       "inbound_links": 10
     },
     {
@@ -1764,7 +1972,7 @@
       ],
       "internal_links": 35,
       "images_missing_alt": 0,
-      "bytes": 50171,
+      "bytes": 50292,
       "inbound_links": 12
     },
     {
@@ -1788,8 +1996,8 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 20520,
-      "inbound_links": 9
+      "bytes": 21303,
+      "inbound_links": 10
     },
     {
       "page": "blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
@@ -1811,7 +2019,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 34711,
+      "bytes": 35174,
       "inbound_links": 9
     },
     {
@@ -1837,7 +2045,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 32193,
+      "bytes": 32738,
       "inbound_links": 8
     },
     {
@@ -1861,7 +2069,7 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 40005,
+      "bytes": 40550,
       "inbound_links": 10
     },
     {
@@ -1887,7 +2095,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 44741,
+      "bytes": 44862,
       "inbound_links": 9
     },
     {
@@ -1913,7 +2121,7 @@
       ],
       "internal_links": 33,
       "images_missing_alt": 0,
-      "bytes": 75403,
+      "bytes": 75524,
       "inbound_links": 17
     },
     {
@@ -1938,7 +2146,7 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 29552,
+      "bytes": 30288,
       "inbound_links": 9
     },
     {
@@ -1965,7 +2173,7 @@
       ],
       "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 44230,
+      "bytes": 44411,
       "inbound_links": 21
     },
     {
@@ -1991,7 +2199,7 @@
       ],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 26154,
+      "bytes": 26699,
       "inbound_links": 11
     },
     {
@@ -2014,7 +2222,7 @@
       ],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 21391,
+      "bytes": 21854,
       "inbound_links": 10
     },
     {
@@ -2040,7 +2248,7 @@
       ],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 48269,
+      "bytes": 48390,
       "inbound_links": 10
     },
     {
@@ -2063,7 +2271,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 21727,
+      "bytes": 22417,
       "inbound_links": 8
     },
     {
@@ -2105,9 +2313,9 @@
         "ListItem"
       ],
       "internal_links": 63,
-      "images_missing_alt": 0,
-      "bytes": 129594,
-      "inbound_links": 162
+      "images_missing_alt": 1,
+      "bytes": 131332,
+      "inbound_links": 171
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -2129,7 +2337,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 25637,
+      "bytes": 25992,
       "inbound_links": 8
     },
     {
@@ -2157,8 +2365,8 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 18278,
-      "inbound_links": 6
+      "bytes": 18996,
+      "inbound_links": 7
     },
     {
       "page": "blog/ontario-accountability-sealed-evidence.html",
@@ -2182,8 +2390,32 @@
       ],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 38729,
+      "bytes": 39419,
       "inbound_links": 9
+    },
+    {
+      "page": "blog/ontario-influence-environment-august-2026.html",
+      "url": "https://www.clearglassinc.com/blog/ontario-influence-environment-august-2026.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "Ontario Influence Environment, August 2026 | ClearGlass Intelligence",
+      "title_length": 68,
+      "description": "A high-assurance ClearGlass OSINT workstation mapping Ontario government messaging, electoral transparency questions, foreign interference and information-integrity risks with cryptographic evidence verification.",
+      "description_length": 212,
+      "canonical": "https://www.clearglassinc.com/blog/ontario-influence-environment-august-2026.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "WebPage"
+      ],
+      "internal_links": 1,
+      "images_missing_alt": 1,
+      "bytes": 27272,
+      "inbound_links": 0
     },
     {
       "page": "blog/osint-workflow-that-survives-contact-with-reality.html",
@@ -2209,7 +2441,7 @@
       ],
       "internal_links": 37,
       "images_missing_alt": 0,
-      "bytes": 44162,
+      "bytes": 44283,
       "inbound_links": 16
     },
     {
@@ -2235,7 +2467,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 22305,
+      "bytes": 22850,
       "inbound_links": 9
     },
     {
@@ -2254,8 +2486,88 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 15080,
+      "bytes": 15201,
       "inbound_links": 10
+    },
+    {
+      "page": "blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "url": "https://www.clearglassinc.com/blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Rethinking Security for the Age of AI | ClearGlass Insights",
+      "title_length": 59,
+      "description": "A ClearGlass strategic brief on Microsoft's new AI-native Cyber Stack: continuous perception, multi-model reasoning, agentic defense, human control, and machine-speed action.",
+      "description_length": 174,
+      "canonical": "https://www.clearglassinc.com/blog/rethinking-security-age-of-ai-cyber-stack.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage",
+        "Article",
+        "Organization"
+      ],
+      "internal_links": 13,
+      "images_missing_alt": 0,
+      "bytes": 17697,
+      "inbound_links": 8
+    },
+    {
+      "page": "blog/shadow-ai-enterprise-security-blind-spot.html",
+      "url": "https://www.clearglassinc.com/blog/shadow-ai-enterprise-security-blind-spot.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Shadow AI: Enterprise Security\u2019s Biggest Blind Spot | ClearGlass Insights",
+      "title_length": 73,
+      "description": "A ClearGlass strategic briefing on shadow AI, unauthorized data movement, AI discovery, identity governance, and the controls enterprises need before unsanctioned AI becomes operational debt.",
+      "description_length": 191,
+      "canonical": "https://www.clearglassinc.com/blog/shadow-ai-enterprise-security-blind-spot.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "ImageObject",
+        "WebPage",
+        "Article",
+        "Organization"
+      ],
+      "internal_links": 13,
+      "images_missing_alt": 0,
+      "bytes": 18497,
+      "inbound_links": 8
+    },
+    {
+      "page": "blog/shadow-ai-incident-response-logs-gone.html",
+      "url": "https://www.clearglassinc.com/blog/shadow-ai-incident-response-logs-gone.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "Shadow AI Incident Response: When the Logs Are Already Gone | ClearGlass Insights",
+      "title_length": 81,
+      "description": "A ClearGlass long-read on Shadow AI incident response, forensic readiness, log retention, endpoint preservation, regulator expectations, and defensible AI governance.",
+      "description_length": 166,
+      "canonical": "https://www.clearglassinc.com/blog/shadow-ai-incident-response-logs-gone.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "WebPage",
+        "Article",
+        "Organization"
+      ],
+      "internal_links": 2,
+      "images_missing_alt": 0,
+      "bytes": 12051,
+      "inbound_links": 0
     },
     {
       "page": "blog/telecommunications-legal-briefing-30-july-2026.html",
@@ -2279,7 +2591,7 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 29112,
+      "bytes": 29802,
       "inbound_links": 8
     },
     {
@@ -2305,7 +2617,7 @@
       ],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 37965,
+      "bytes": 38615,
       "inbound_links": 11
     },
     {
@@ -2331,7 +2643,7 @@
       ],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 46647,
+      "bytes": 46797,
       "inbound_links": 11
     },
     {
@@ -2350,8 +2662,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 26592,
-      "inbound_links": 11
+      "bytes": 26713,
+      "inbound_links": 10
     },
     {
       "page": "bluedesk.html",
@@ -2369,8 +2681,30 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 149431,
-      "inbound_links": 41
+      "bytes": 149552,
+      "inbound_links": 40
+    },
+    {
+      "page": "business-productivity-suite.html",
+      "url": "https://www.clearglassinc.com/business-productivity-suite.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "Business Productivity Suite | ClearGlass Inc.",
+      "title_length": 45,
+      "description": "Explore the ClearGlass Business Productivity Suite: a Canadian-first, CAD-oriented productivity plan experience connected to the ClearGlass product ecosystem.",
+      "description_length": 158,
+      "canonical": "https://www.clearglassinc.com/business-productivity-suite.html",
+      "h1_count": 1,
+      "schema_types": [
+        "SoftwareApplication",
+        "Offer"
+      ],
+      "internal_links": 2,
+      "images_missing_alt": 0,
+      "bytes": 11843,
+      "inbound_links": 0
     },
     {
       "page": "button-lab.html",
@@ -2388,8 +2722,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 15945,
-      "inbound_links": 10
+      "bytes": 16066,
+      "inbound_links": 9
     },
     {
       "page": "button-system.html",
@@ -2407,8 +2741,8 @@
       "schema_types": [],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 8748,
-      "inbound_links": 12
+      "bytes": 8869,
+      "inbound_links": 11
     },
     {
       "page": "cg-loader.html",
@@ -2426,8 +2760,32 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 28812,
+      "bytes": 28933,
       "inbound_links": 0
+    },
+    {
+      "page": "checkout/index.html",
+      "url": "https://www.clearglassinc.com/checkout/index.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Secure Checkout \u2014 ClearGlass Inc.",
+      "title_length": 33,
+      "description": "Purchase a ClearGlass cyber-risk audit or subscribe to ongoing business protection using secure Stripe checkout when available.",
+      "description_length": 127,
+      "canonical": "https://www.clearglassinc.com/checkout/",
+      "h1_count": 1,
+      "schema_types": [
+        "OfferCatalog",
+        "Offer",
+        "Offer",
+        "Offer"
+      ],
+      "internal_links": 14,
+      "images_missing_alt": 0,
+      "bytes": 17172,
+      "inbound_links": 8
     },
     {
       "page": "clearglass-nexus.html",
@@ -2445,8 +2803,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 402455,
-      "inbound_links": 23
+      "bytes": 402576,
+      "inbound_links": 24
     },
     {
       "page": "clearglass-ultra.html",
@@ -2467,8 +2825,8 @@
       ],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 29426,
-      "inbound_links": 10
+      "bytes": 29927,
+      "inbound_links": 9
     },
     {
       "page": "clearglass.html",
@@ -2486,7 +2844,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 45848,
+      "bytes": 45969,
       "inbound_links": 10
     },
     {
@@ -2509,8 +2867,8 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 45799,
-      "inbound_links": 9
+      "bytes": 45920,
+      "inbound_links": 8
     },
     {
       "page": "clearpulse.html",
@@ -2528,8 +2886,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 38231,
-      "inbound_links": 24
+      "bytes": 38352,
+      "inbound_links": 23
     },
     {
       "page": "clearsight.html",
@@ -2547,8 +2905,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 42038,
-      "inbound_links": 9
+      "bytes": 42285,
+      "inbound_links": 8
     },
     {
       "page": "command-center.html",
@@ -2566,8 +2924,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 30322,
-      "inbound_links": 14
+      "bytes": 30869,
+      "inbound_links": 13
     },
     {
       "page": "command-console.html",
@@ -2585,8 +2943,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 51224,
-      "inbound_links": 11
+      "bytes": 51345,
+      "inbound_links": 10
     },
     {
       "page": "conduit.html",
@@ -2604,7 +2962,7 @@
       "schema_types": [],
       "internal_links": 57,
       "images_missing_alt": 0,
-      "bytes": 117169,
+      "bytes": 117290,
       "inbound_links": 18
     },
     {
@@ -2623,8 +2981,8 @@
       "schema_types": [],
       "internal_links": 32,
       "images_missing_alt": 0,
-      "bytes": 48028,
-      "inbound_links": 13
+      "bytes": 49085,
+      "inbound_links": 12
     },
     {
       "page": "corporate-legal-advisor.html",
@@ -2642,8 +3000,8 @@
       "schema_types": [],
       "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 90551,
-      "inbound_links": 10
+      "bytes": 90672,
+      "inbound_links": 9
     },
     {
       "page": "counter-uas-commercialization-os.html",
@@ -2652,17 +3010,17 @@
       "noindex": false,
       "in_sitemap": true,
       "robots_blocked": null,
-      "title": "Counter-UAS Commercialization OS \u2014 ClearGlass Inc.",
-      "title_length": 50,
-      "description": "ARTEMIS Commercialization OS: an autonomous, revenue-target-backward operating system for a Counter-UAS EO/IR detection company. Reverse-engineer the $1M plan, score pilots, track risk, and auto-draft investor updates from a handful of inputs.",
-      "description_length": 243,
+      "title": "CLEARGLASS // ARTEMIS \u2014 Future Counter-UAS Operations OS",
+      "title_length": 56,
+      "description": "CLEARGLASS ARTEMIS is a human-supervised operations and commercialization platform for authorized drone detection, airspace awareness, incident coordination, compliance, infrastructure protection, and commercial deployment.",
+      "description_length": 223,
       "canonical": "https://www.clearglassinc.com/counter-uas-commercialization-os.html",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 13,
+      "internal_links": 5,
       "images_missing_alt": 0,
-      "bytes": 45693,
-      "inbound_links": 13
+      "bytes": 45597,
+      "inbound_links": 12
     },
     {
       "page": "cyber-defense-console.html",
@@ -2680,8 +3038,27 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 66219,
-      "inbound_links": 44
+      "bytes": 66340,
+      "inbound_links": 43
+    },
+    {
+      "page": "docs/guardian_command_nexus_spec.html",
+      "url": "https://www.clearglassinc.com/docs/guardian_command_nexus_spec.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "CLEARGLASS Guardian Command Nexus Specification",
+      "title_length": 47,
+      "description": "Specification for the ClearGlass Guardian Command Nexus \u2014 architecture, components, and operational design of the Guardian command platform.",
+      "description_length": 140,
+      "canonical": null,
+      "h1_count": 2,
+      "schema_types": [],
+      "internal_links": 12,
+      "images_missing_alt": 0,
+      "bytes": 15672,
+      "inbound_links": 9
     },
     {
       "page": "environmental-cyber-risk.html",
@@ -2699,8 +3076,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 22098,
-      "inbound_links": 13
+      "bytes": 22219,
+      "inbound_links": 12
     },
     {
       "page": "flowsint.html",
@@ -2718,7 +3095,7 @@
       "schema_types": [],
       "internal_links": 31,
       "images_missing_alt": 0,
-      "bytes": 39643,
+      "bytes": 39764,
       "inbound_links": 19
     },
     {
@@ -2737,8 +3114,30 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 24794,
-      "inbound_links": 10
+      "bytes": 24915,
+      "inbound_links": 9
+    },
+    {
+      "page": "global-growth-engine.html",
+      "url": "https://www.clearglassinc.com/global-growth-engine.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "Global Growth Engine \u2014 ClearGlass Inc.",
+      "title_length": 38,
+      "description": "ClearGlass Global Growth Engine is a governed multi-channel ecommerce growth operating system for market prioritization, localization, acquisition, CRO, retention, analytics, and experiment control.",
+      "description_length": 198,
+      "canonical": "https://www.clearglassinc.com/global-growth-engine.html",
+      "h1_count": 1,
+      "schema_types": [
+        "SoftwareApplication",
+        "Organization"
+      ],
+      "internal_links": 2,
+      "images_missing_alt": 0,
+      "bytes": 14414,
+      "inbound_links": 0
     },
     {
       "page": "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",
@@ -2792,8 +3191,8 @@
       ],
       "internal_links": 36,
       "images_missing_alt": 0,
-      "bytes": 56324,
-      "inbound_links": 51
+      "bytes": 56445,
+      "inbound_links": 48
     },
     {
       "page": "guardian.html",
@@ -2811,8 +3210,8 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 145341,
-      "inbound_links": 71
+      "bytes": 154264,
+      "inbound_links": 72
     },
     {
       "page": "header-mockup-2040.html",
@@ -2830,7 +3229,7 @@
       "schema_types": [],
       "internal_links": 6,
       "images_missing_alt": 0,
-      "bytes": 21478,
+      "bytes": 22023,
       "inbound_links": 0
     },
     {
@@ -2849,8 +3248,8 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 20529,
-      "inbound_links": 10
+      "bytes": 20650,
+      "inbound_links": 9
     },
     {
       "page": "index.html",
@@ -2896,10 +3295,10 @@
         "WebPage",
         "WebPage"
       ],
-      "internal_links": 212,
+      "internal_links": 216,
       "images_missing_alt": 0,
-      "bytes": 160664,
-      "inbound_links": 537
+      "bytes": 188849,
+      "inbound_links": 490
     },
     {
       "page": "intelligence-command-surface.html",
@@ -2917,8 +3316,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 20475,
-      "inbound_links": 15
+      "bytes": 20596,
+      "inbound_links": 14
     },
     {
       "page": "intelligence-interface.html",
@@ -2936,8 +3335,8 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 15857,
-      "inbound_links": 13
+      "bytes": 15978,
+      "inbound_links": 12
     },
     {
       "page": "intelligence-platform.html",
@@ -2955,8 +3354,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 22207,
-      "inbound_links": 11
+      "bytes": 22670,
+      "inbound_links": 10
     },
     {
       "page": "intelligence.html",
@@ -2974,8 +3373,8 @@
       "schema_types": [],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 16768,
-      "inbound_links": 38
+      "bytes": 16889,
+      "inbound_links": 40
     },
     {
       "page": "investors/index.html",
@@ -2993,7 +3392,7 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 8127,
+      "bytes": 8248,
       "inbound_links": 7
     },
     {
@@ -3017,8 +3416,8 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 13704,
-      "inbound_links": 9
+      "bytes": 14249,
+      "inbound_links": 11
     },
     {
       "page": "legal/ai-liability.html",
@@ -3036,7 +3435,7 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 27645,
+      "bytes": 27766,
       "inbound_links": 12
     },
     {
@@ -3055,7 +3454,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 23199,
+      "bytes": 24455,
       "inbound_links": 11
     },
     {
@@ -3074,7 +3473,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 26639,
+      "bytes": 26760,
       "inbound_links": 9
     },
     {
@@ -3093,7 +3492,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 26080,
+      "bytes": 26201,
       "inbound_links": 8
     },
     {
@@ -3117,8 +3516,8 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 11909,
-      "inbound_links": 10
+      "bytes": 12454,
+      "inbound_links": 14
     },
     {
       "page": "legal/directors-resolution.html",
@@ -3136,7 +3535,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25158,
+      "bytes": 25279,
       "inbound_links": 8
     },
     {
@@ -3155,7 +3554,7 @@
       "schema_types": [],
       "internal_links": 39,
       "images_missing_alt": 0,
-      "bytes": 23995,
+      "bytes": 24116,
       "inbound_links": 83
     },
     {
@@ -3174,7 +3573,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25968,
+      "bytes": 26089,
       "inbound_links": 8
     },
     {
@@ -3193,7 +3592,7 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 36761,
+      "bytes": 36882,
       "inbound_links": 9
     },
     {
@@ -3212,7 +3611,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 25306,
+      "bytes": 25427,
       "inbound_links": 12
     },
     {
@@ -3231,8 +3630,8 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 26628,
-      "inbound_links": 39
+      "bytes": 26749,
+      "inbound_links": 41
     },
     {
       "page": "legal/share-subscription.html",
@@ -3250,7 +3649,7 @@
       "schema_types": [],
       "internal_links": 19,
       "images_missing_alt": 0,
-      "bytes": 23776,
+      "bytes": 23897,
       "inbound_links": 8
     },
     {
@@ -3269,8 +3668,8 @@
       "schema_types": [],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 26352,
-      "inbound_links": 35
+      "bytes": 26473,
+      "inbound_links": 38
     },
     {
       "page": "loader.html",
@@ -3288,7 +3687,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 26962,
+      "bytes": 27083,
       "inbound_links": 0
     },
     {
@@ -3311,7 +3710,32 @@
       ],
       "internal_links": 23,
       "images_missing_alt": 0,
-      "bytes": 23096,
+      "bytes": 23590,
+      "inbound_links": 9
+    },
+    {
+      "page": "offers/guardian-command-nexus-blueprint.html",
+      "url": "https://www.clearglassinc.com/offers/guardian-command-nexus-blueprint.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Guardian Command Nexus Blueprint (CAD $199) \u2014 ClearGlass Inc.",
+      "title_length": 61,
+      "description": "The full SPEC-1 architecture blueprint for the Guardian Command Nexus security operations console \u2014 domain model, state fabric, simulation grid, audit ledger and AI command orchestration. CAD $199, delivered by email.",
+      "description_length": 217,
+      "canonical": "https://www.clearglassinc.com/offers/guardian-command-nexus-blueprint.html",
+      "h1_count": 1,
+      "schema_types": [
+        "Product",
+        "Brand",
+        "Offer",
+        "Organization",
+        "CreativeWork"
+      ],
+      "internal_links": 16,
+      "images_missing_alt": 0,
+      "bytes": 17346,
       "inbound_links": 9
     },
     {
@@ -3330,7 +3754,7 @@
       "schema_types": [],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 17032,
+      "bytes": 17219,
       "inbound_links": 12
     },
     {
@@ -3347,10 +3771,10 @@
       "canonical": "https://www.clearglassinc.com/offers/",
       "h1_count": 1,
       "schema_types": [],
-      "internal_links": 26,
+      "internal_links": 27,
       "images_missing_alt": 0,
-      "bytes": 39707,
-      "inbound_links": 79
+      "bytes": 40880,
+      "inbound_links": 96
     },
     {
       "page": "offers/phipa-readiness-checklist.html",
@@ -3368,7 +3792,7 @@
       "schema_types": [],
       "internal_links": 9,
       "images_missing_alt": 0,
-      "bytes": 12106,
+      "bytes": 12227,
       "inbound_links": 8
     },
     {
@@ -3387,7 +3811,7 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 14493,
+      "bytes": 14614,
       "inbound_links": 10
     },
     {
@@ -3406,8 +3830,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 13752,
-      "inbound_links": 21
+      "bytes": 13949,
+      "inbound_links": 22
     },
     {
       "page": "offers/thank-you.html",
@@ -3425,7 +3849,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 3632,
+      "bytes": 3753,
       "inbound_links": 0
     },
     {
@@ -3444,7 +3868,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 4479,
+      "bytes": 4600,
       "inbound_links": 0
     },
     {
@@ -3463,7 +3887,7 @@
       "schema_types": [],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 16487,
+      "bytes": 16608,
       "inbound_links": 19
     },
     {
@@ -3482,7 +3906,7 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9029,
+      "bytes": 9150,
       "inbound_links": 10
     },
     {
@@ -3501,8 +3925,8 @@
       "schema_types": [],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 19501,
-      "inbound_links": 12
+      "bytes": 19622,
+      "inbound_links": 10
     },
     {
       "page": "operations/hubspot-handoff.html",
@@ -3520,7 +3944,7 @@
       "schema_types": [],
       "internal_links": 22,
       "images_missing_alt": 0,
-      "bytes": 19380,
+      "bytes": 19501,
       "inbound_links": 8
     },
     {
@@ -3539,7 +3963,7 @@
       "schema_types": [],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 19864,
+      "bytes": 19985,
       "inbound_links": 9
     },
     {
@@ -3558,8 +3982,8 @@
       "schema_types": [],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 27081,
-      "inbound_links": 39
+      "bytes": 27202,
+      "inbound_links": 37
     },
     {
       "page": "operations/stripe-handoff.html",
@@ -3577,7 +4001,7 @@
       "schema_types": [],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 19295,
+      "bytes": 19416,
       "inbound_links": 8
     },
     {
@@ -3596,8 +4020,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 36402,
-      "inbound_links": 9
+      "bytes": 36523,
+      "inbound_links": 8
     },
     {
       "page": "percival-os.html",
@@ -3615,8 +4039,27 @@
       "schema_types": [],
       "internal_links": 24,
       "images_missing_alt": 0,
-      "bytes": 72132,
+      "bytes": 188659,
       "inbound_links": 60
+    },
+    {
+      "page": "plans.html",
+      "url": "https://www.clearglassinc.com/plans.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Guardian Plans & Pricing \u2014 ClearGlass Inc.",
+      "title_length": 42,
+      "description": "Flexible business productivity plans that scale with your team. ClearGlass Guardian security operations console \u2014 Essentials, Professional and Command tiers, billed monthly or annually in Canadian dollars.",
+      "description_length": 205,
+      "canonical": "https://www.clearglassinc.com/plans.html",
+      "h1_count": 1,
+      "schema_types": [],
+      "internal_links": 13,
+      "images_missing_alt": 0,
+      "bytes": 31082,
+      "inbound_links": 8
     },
     {
       "page": "platform-command-center.html",
@@ -3634,8 +4077,8 @@
       "schema_types": [],
       "internal_links": 10,
       "images_missing_alt": 0,
-      "bytes": 58236,
-      "inbound_links": 4
+      "bytes": 58781,
+      "inbound_links": 3
     },
     {
       "page": "postloop.html",
@@ -3653,8 +4096,8 @@
       "schema_types": [],
       "internal_links": 17,
       "images_missing_alt": 0,
-      "bytes": 39184,
-      "inbound_links": 12
+      "bytes": 39305,
+      "inbound_links": 11
     },
     {
       "page": "pricing.html",
@@ -3685,8 +4128,8 @@
       ],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 27669,
-      "inbound_links": 126
+      "bytes": 28212,
+      "inbound_links": 138
     },
     {
       "page": "procurement-legal-tech.html",
@@ -3704,8 +4147,8 @@
       "schema_types": [],
       "internal_links": 25,
       "images_missing_alt": 0,
-      "bytes": 53732,
-      "inbound_links": 17
+      "bytes": 53853,
+      "inbound_links": 16
     },
     {
       "page": "products.html",
@@ -3723,10 +4166,10 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 167,
+      "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 42487,
-      "inbound_links": 9
+      "bytes": 15246,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/artemis-iv-core.html",
@@ -3744,8 +4187,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9506,
-      "inbound_links": 11
+      "bytes": 9627,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/artemis-vi.html",
@@ -3763,8 +4206,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9519,
-      "inbound_links": 11
+      "bytes": 9640,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/guardian.html",
@@ -3782,8 +4225,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9512,
-      "inbound_links": 11
+      "bytes": 9633,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/index.html",
@@ -3801,8 +4244,8 @@
       "schema_types": [],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 10614,
-      "inbound_links": 10
+      "bytes": 10735,
+      "inbound_links": 9
     },
     {
       "page": "products/opal-koboi/revenue-engine.html",
@@ -3820,8 +4263,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9528,
-      "inbound_links": 11
+      "bytes": 9649,
+      "inbound_links": 10
     },
     {
       "page": "products/opal-koboi/smb-suite.html",
@@ -3839,8 +4282,8 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 9507,
-      "inbound_links": 12
+      "bytes": 9628,
+      "inbound_links": 11
     },
     {
       "page": "revenue-engine.html",
@@ -3858,8 +4301,8 @@
       "schema_types": [],
       "internal_links": 53,
       "images_missing_alt": 0,
-      "bytes": 58175,
-      "inbound_links": 21
+      "bytes": 58328,
+      "inbound_links": 20
     },
     {
       "page": "saas-platform.html",
@@ -3877,8 +4320,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 27727,
-      "inbound_links": 9
+      "bytes": 27848,
+      "inbound_links": 8
     },
     {
       "page": "sats-digital-twin.html",
@@ -3900,8 +4343,8 @@
       ],
       "internal_links": 21,
       "images_missing_alt": 0,
-      "bytes": 27023,
-      "inbound_links": 18
+      "bytes": 27477,
+      "inbound_links": 16
     },
     {
       "page": "sentinel.html",
@@ -3919,7 +4362,7 @@
       "schema_types": [],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 58444,
+      "bytes": 64736,
       "inbound_links": 16
     },
     {
@@ -3938,7 +4381,7 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 15254,
+      "bytes": 15799,
       "inbound_links": 0
     },
     {
@@ -3957,8 +4400,49 @@
       "schema_types": [],
       "internal_links": 0,
       "images_missing_alt": 0,
-      "bytes": 16014,
+      "bytes": 16559,
       "inbound_links": 0
+    },
+    {
+      "page": "seo-authority-hub.html",
+      "url": "https://www.clearglassinc.com/seo-authority-hub.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "Cybersecurity & AI Automation in Burlington, Ontario | ClearGlass Inc.",
+      "title_length": 70,
+      "description": "ClearGlass Inc. provides cybersecurity architecture, governed AI automation, OSINT systems, and secure software engineering from Burlington, Ontario, Canada.",
+      "description_length": 157,
+      "canonical": "https://www.clearglassinc.com/seo-authority-hub.html",
+      "h1_count": 1,
+      "schema_types": [
+        "Organization",
+        "ImageObject",
+        "Person",
+        "PostalAddress",
+        "Country",
+        "AdministrativeArea",
+        "WebSite",
+        "WebPage",
+        "ItemList",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "ListItem",
+        "FAQPage",
+        "Question",
+        "Answer",
+        "Question",
+        "Answer",
+        "Question",
+        "Answer"
+      ],
+      "internal_links": 24,
+      "images_missing_alt": 0,
+      "bytes": 16863,
+      "inbound_links": 8
     },
     {
       "page": "seo-dashboard.html",
@@ -3976,7 +4460,7 @@
       "schema_types": [],
       "internal_links": 1,
       "images_missing_alt": 0,
-      "bytes": 40343,
+      "bytes": 40844,
       "inbound_links": 0
     },
     {
@@ -4004,8 +4488,8 @@
       ],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 108492,
-      "inbound_links": 13
+      "bytes": 111372,
+      "inbound_links": 11
     },
     {
       "page": "smb-cyber-trust-kit.html",
@@ -4027,8 +4511,8 @@
       ],
       "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 95870,
-      "inbound_links": 13
+      "bytes": 96023,
+      "inbound_links": 14
     },
     {
       "page": "smb.html",
@@ -4062,8 +4546,8 @@
       ],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 10838,
-      "inbound_links": 21
+      "bytes": 11039,
+      "inbound_links": 22
     },
     {
       "page": "stegoforge.html",
@@ -4081,8 +4565,8 @@
       "schema_types": [],
       "internal_links": 11,
       "images_missing_alt": 0,
-      "bytes": 17243,
-      "inbound_links": 13
+      "bytes": 17364,
+      "inbound_links": 12
     },
     {
       "page": "store.html",
@@ -4113,10 +4597,10 @@
         "UnitPriceSpecification",
         "Service"
       ],
-      "internal_links": 17,
+      "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 34130,
-      "inbound_links": 149
+      "bytes": 34588,
+      "inbound_links": 157
     },
     {
       "page": "systems.html",
@@ -4134,8 +4618,8 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 36344,
-      "inbound_links": 12
+      "bytes": 38529,
+      "inbound_links": 11
     },
     {
       "page": "tax.html",
@@ -4153,8 +4637,27 @@
       "schema_types": [],
       "internal_links": 34,
       "images_missing_alt": 0,
-      "bytes": 64144,
-      "inbound_links": 14
+      "bytes": 64265,
+      "inbound_links": 13
+    },
+    {
+      "page": "threads.html",
+      "url": "https://www.clearglassinc.com/threads.html",
+      "indexable": false,
+      "noindex": true,
+      "in_sitemap": false,
+      "robots_blocked": null,
+      "title": "ClearGlassInc Artemis Campaign Review Kit",
+      "title_length": 41,
+      "description": null,
+      "description_length": 0,
+      "canonical": null,
+      "h1_count": 1,
+      "schema_types": [],
+      "internal_links": 6,
+      "images_missing_alt": 0,
+      "bytes": 11657,
+      "inbound_links": 0
     },
     {
       "page": "traffic-enforcement.html",
@@ -4172,8 +4675,8 @@
       "schema_types": [],
       "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 24444,
-      "inbound_links": 14
+      "bytes": 24565,
+      "inbound_links": 11
     },
     {
       "page": "ultra-glass.html",
@@ -4191,8 +4694,8 @@
       "schema_types": [],
       "internal_links": 26,
       "images_missing_alt": 0,
-      "bytes": 37627,
-      "inbound_links": 10
+      "bytes": 37748,
+      "inbound_links": 9
     },
     {
       "page": "web-design.html",
@@ -4245,8 +4748,32 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 103667,
-      "inbound_links": 26
+      "bytes": 115757,
+      "inbound_links": 25
+    },
+    {
+      "page": "workspace.html",
+      "url": "https://www.clearglassinc.com/workspace.html",
+      "indexable": true,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "ClearGlass Workspace \u2014 Business Productivity Plans",
+      "title_length": 50,
+      "description": "Flexible business productivity plans that scale with your team. Business email on your domain, encrypted file storage, shared calendars and collaboration for small businesses, freelancers and remote teams in Canada. From CAD $6.00 per user per month.",
+      "description_length": 250,
+      "canonical": "https://www.clearglassinc.com/workspace.html",
+      "h1_count": 1,
+      "schema_types": [
+        "Product",
+        "Brand",
+        "AggregateOffer",
+        "Organization"
+      ],
+      "internal_links": 22,
+      "images_missing_alt": 0,
+      "bytes": 32920,
+      "inbound_links": 8
     },
     {
       "page": "xenolith.html",
@@ -4267,7 +4794,7 @@
       ],
       "internal_links": 20,
       "images_missing_alt": 0,
-      "bytes": 50792,
+      "bytes": 51255,
       "inbound_links": 8
     }
   ]

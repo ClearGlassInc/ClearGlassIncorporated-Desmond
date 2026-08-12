@@ -111,10 +111,22 @@ def audit(result: Result) -> None:
         if "uses" not in job and "timeout-minutes" not in job:
             result.warnings.append(f"job {job_name!r} has no timeout-minutes")
         local_call = job.get("uses")
-        if isinstance(local_call, str) and local_call.startswith("./"):
-            target = ROOT / local_call.removeprefix("./")
-            if not target.is_file():
-                result.errors.append(f"job {job_name!r} references missing reusable workflow {local_call}")
+        if isinstance(local_call, str):
+            if local_call.startswith("./"):
+                target = ROOT / local_call.removeprefix("./")
+                if not target.is_file():
+                    result.errors.append(
+                        f"job {job_name!r} references missing reusable workflow {local_call}"
+                    )
+            else:
+                match = USES.match(local_call)
+                assert match
+                ref = match.group("ref")
+                if not ref or not SHA.fullmatch(ref):
+                    result.errors.append(
+                        "external reusable workflow is not pinned to a full commit SHA: "
+                        f"{local_call}"
+                    )
 
     deploy_jobs_detected: set[str] = set()
     artifact_uploads: set[str] = set()
@@ -257,7 +269,14 @@ def inventory(result: Result) -> str:
     jobs = data.get("jobs") or {}
     permissions = data.get("permissions") or {}
     secret_names = sorted(set(re.findall(r"secrets\.([A-Z0-9_]+)", result.path.read_text())))
-    actions = [step["uses"] for _, _, step in iter_steps(data) if isinstance(step.get("uses"), str)]
+    actions = [
+        job["uses"]
+        for job in jobs.values()
+        if isinstance(job, dict) and isinstance(job.get("uses"), str)
+    ]
+    actions.extend(
+        step["uses"] for _, _, step in iter_steps(data) if isinstance(step.get("uses"), str)
+    )
     artifacts = [action for action in actions if "artifact" in action]
     caches = [
         f"{name}:{step.get('with', {}).get('cache')}"
@@ -305,7 +324,14 @@ def json_inventory(result: Result) -> dict[str, Any]:
     """Return a machine-readable record without exposing secret values."""
     data = result.data
     jobs = data.get("jobs") or {}
-    actions = [step["uses"] for _, _, step in iter_steps(data) if isinstance(step.get("uses"), str)]
+    actions = [
+        job["uses"]
+        for job in jobs.values()
+        if isinstance(job, dict) and isinstance(job.get("uses"), str)
+    ]
+    actions.extend(
+        step["uses"] for _, _, step in iter_steps(data) if isinstance(step.get("uses"), str)
+    )
     artifact_actions = [action for action in actions if "artifact" in action]
     caches = [
         {"job": name, "type": step["with"]["cache"]}

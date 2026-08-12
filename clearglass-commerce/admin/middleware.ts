@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SESSION_COOKIE } from "@/lib/constants";
+import { edgeOriginFailure } from "@/lib/origin-auth";
 
 const PROTECTED_PREFIXES = ["/", "/approvals", "/audit", "/premium", "/api/premium", "/api/assets"];
 const PUBLIC_PREFIXES = ["/login", "/api/login", "/_next", "/favicon.ico"];
@@ -33,6 +34,8 @@ function burstCount(fingerprint: string): number {
 }
 
 export async function middleware(request: NextRequest) {
+  const originFailure = edgeOriginFailure(request);
+  if (originFailure) return originFailure;
   const pathname = request.nextUrl.pathname;
   const fingerprint = await hmac([
     request.headers.get("x-forwarded-for") || "unknown-ip",

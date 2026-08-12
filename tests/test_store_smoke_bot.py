@@ -22,8 +22,6 @@ from bots.store_smoke_bot import (  # noqa: E402
     run,
 )
 
-# A minimal but well-formed storefront: two SKUs wired into every config map,
-# with the Stripe guard and the no-auto-charge guarantee present.
 GOOD_STORE = """
 <article class="card" data-sku="alpha"><div class="price">$1</div><a data-buy>Buy</a></article>
 <article class="card" data-sku="beta"><div class="price">$2</div><a data-buy>Buy</a></article>
@@ -41,7 +39,17 @@ GOOD_PRICING = """
 <a href="store.html">Book</a>
 <article class="plan" data-sku="alpha"></article>
 <article class="plan" data-sku="beta"></article>
+<script>var CHECKOUT = { "alpha": "", "beta": "" };</script>
 """
+
+EXPECTED_REAL_SKUS = {
+    "quick-audit",
+    "hardening",
+    "phipa",
+    "monitoring",
+    "critical-minerals-compliance",
+    "advanced-secure-systems-engineering",
+}
 
 
 class TestExtractCardSkus:
@@ -53,9 +61,7 @@ class TestExtractCardSkus:
 
     def test_real_store_has_expected_skus(self) -> None:
         html = (ROOT / "store.html").read_text(encoding="utf-8")
-        assert set(extract_card_skus(html)) == {
-            "quick-audit", "hardening", "phipa", "monitoring",
-        }
+        assert set(extract_card_skus(html)) == EXPECTED_REAL_SKUS
 
 
 class TestExtractMapKeys:
@@ -75,9 +81,10 @@ class TestCheckStorefront:
         assert errors and "no product cards" in errors[0]
 
     def test_unwired_sku_is_detected(self) -> None:
-        # 'beta' exists as a card but is dropped from CHECKOUT only.
-        broken = GOOD_STORE.replace('var CHECKOUT   = { "alpha": "", "beta": "" };',
-                                    'var CHECKOUT   = { "alpha": "" };')
+        broken = GOOD_STORE.replace(
+            'var CHECKOUT   = { "alpha": "", "beta": "" };',
+            'var CHECKOUT   = { "alpha": "" };',
+        )
         errors = check_storefront(broken)
         assert any("CHECKOUT" in e and "beta" in e for e in errors)
 
@@ -85,9 +92,9 @@ class TestCheckStorefront:
         broken = GOOD_STORE.replace("(buy|book|checkout)", "")
         assert any("Stripe checkout-link guard" in e for e in check_storefront(broken))
 
-    def test_missing_no_autocharge_guarantee_is_detected(self) -> None:
-        broken = GOOD_STORE.replace("auto-charged", "x").replace("auto-sent", "y")
-        assert any("auto-charged" in e for e in check_storefront(broken))
+    def test_payment_copy_wording_does_not_control_checkout_health(self) -> None:
+        rewritten = GOOD_STORE.replace("Nothing is auto-charged, and no funds are ever auto-sent.", "Pay securely.")
+        assert check_storefront(rewritten) == []
 
     def test_real_store_html_is_healthy(self) -> None:
         html = (ROOT / "store.html").read_text(encoding="utf-8")
@@ -98,9 +105,15 @@ class TestCheckPricing:
     def test_consistent_pages_have_no_errors(self) -> None:
         assert check_pricing(GOOD_STORE, GOOD_PRICING) == []
 
-    def test_sku_drift_is_detected(self) -> None:
+    def test_curated_pricing_subset_is_allowed(self) -> None:
+        subset = GOOD_PRICING.replace('<article class="plan" data-sku="beta"></article>', "").replace(
+            ', "beta": ""', ""
+        )
+        assert check_pricing(GOOD_STORE, subset) == []
+
+    def test_pricing_cannot_invent_unknown_sku(self) -> None:
         drifted = GOOD_PRICING.replace('data-sku="beta"', 'data-sku="gamma"')
-        assert any("disagree on SKUs" in e for e in check_pricing(GOOD_STORE, drifted))
+        assert any("pricing-only" in e for e in check_pricing(GOOD_STORE, drifted))
 
     def test_missing_store_link_is_detected(self) -> None:
         no_link = GOOD_PRICING.replace('<a href="store.html">Book</a>', "")
@@ -111,10 +124,48 @@ class TestCheckPricing:
         pricing = (ROOT / "pricing.html").read_text(encoding="utf-8")
         assert check_pricing(store, pricing) == []
 
+    @staticmethod
+    def _pages(store_url: str, pricing_url: str) -> tuple[str, str]:
+        store = GOOD_STORE.replace(
+            '"alpha": "", "beta": ""',
+            f'"alpha": "{store_url}", "beta": ""',
+            1,
+        )
+        pricing = GOOD_PRICING.replace(
+            '"alpha": "", "beta": ""',
+            f'"alpha": "{pricing_url}", "beta": ""',
+        )
+        return store, pricing
+
+    def test_swapped_checkout_url_is_detected(self) -> None:
+        store, pricing = self._pages("https://buy.stripe.com/aaa", "https://buy.stripe.com/bbb")
+        errors = check_pricing(store, pricing)
+        assert any("charges for the wrong product" in e for e in errors), errors
+
+    def test_identical_checkout_urls_pass(self) -> None:
+        same = "https://buy.stripe.com/aaa"
+        store, pricing = self._pages(same, same)
+        assert not any("charges for the wrong product" in e for e in check_pricing(store, pricing))
+
+    def test_real_pages_agree_on_every_statically_shared_checkout_url(self) -> None:
+        store = (ROOT / "store.html").read_text(encoding="utf-8")
+        pricing = (ROOT / "pricing.html").read_text(encoding="utf-8")
+        store_links = extract_checkout_links(store)
+        pricing_links = extract_checkout_links(pricing)
+        shared = set(extract_card_skus(pricing)) & set(extract_card_skus(store))
+        assert shared
+        for sku in sorted(shared):
+            assert bool(store_links.get(sku, "").strip()) == bool(pricing_links.get(sku, "").strip()), sku
+            if store_links.get(sku, "").strip():
+                assert store_links[sku].strip() == pricing_links[sku].strip(), sku
+
 
 LIVE_LINK = "https://buy.stripe.com/test_abc123"
-STORE_WITH_LIVE = GOOD_STORE.replace('"alpha": "", "beta": ""',
-                                     f'"alpha": "{LIVE_LINK}", "beta": ""')
+STORE_WITH_LIVE = GOOD_STORE.replace(
+    '"alpha": "", "beta": ""',
+    f'"alpha": "{LIVE_LINK}", "beta": ""',
+    1,
+)
 
 
 class TestCheckoutLinks:
@@ -151,17 +202,16 @@ class TestCheckoutLinks:
         assert check_checkout_links(store, "store.html") == []
         assert check_checkout_links(pricing, "pricing.html") == []
 
-    def test_live_checkout_must_match_across_pages(self) -> None:
-        # store enables live card checkout for 'alpha'; pricing does not.
+    def test_shared_sku_live_checkout_must_match_across_pages(self) -> None:
         errors = check_pricing(STORE_WITH_LIVE, GOOD_PRICING)
-        assert any("different SKUs across pages" in e for e in errors)
+        assert any("state" in e for e in errors)
 
 
 class TestRun:
     def test_real_repo_storefront_passes(self) -> None:
         report = run()
         assert report["healthy"] is True, report["errors"]
-        assert set(report["skus"]) == {"quick-audit", "hardening", "phipa", "monitoring"}
+        assert set(report["skus"]) == EXPECTED_REAL_SKUS
 
     def test_run_reports_missing_store(self, tmp_path: Path) -> None:
         report = run(root=tmp_path)

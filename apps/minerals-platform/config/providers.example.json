@@ -1,0 +1,42 @@
+{
+  "providers": [
+    {
+      "id": "public-production",
+      "adapter": "public-snapshot",
+      "feed": "production",
+      "enabled": true,
+      "cadence": "daily",
+      "ttl_seconds": 86400,
+      "license": "inherit-upstream-metadata",
+      "coverage": "source-defined",
+      "base_url_env": "PUBLIC_MINERALS_BASE_URL"
+    },
+    {
+      "id": "licensed-market-data",
+      "adapter": "market-provider",
+      "enabled": false,
+      "credential_env": "MARKET_DATA_API_KEY",
+      "cadence": "provider-defined",
+      "redis_ttl_seconds": 300,
+      "redistribution": "confirm-license-before-enabling",
+      "status_when_unconfigured": "OFFLINE"
+    },
+    {
+      "id": "trade-provider",
+      "adapter": "trade-provider",
+      "enabled": false,
+      "credential_env": "TRADE_API_KEY",
+      "cadence": "provider-defined",
+      "classification_mapping_required": true,
+      "status_when_unconfigured": "OFFLINE"
+    },
+    {
+      "id": "satellite-provider",
+      "adapter": "geospatial-provider",
+      "enabled": false,
+      "credential_env": "SATELLITE_API_KEY",
+      "licensed_layers_only": true,
+      "status_when_unconfigured": "OFFLINE"
+    }
+  ]
+}

@@ -58,6 +58,28 @@ class Settings(BaseSettings):
     # silent bypass. Unset = the header is never trusted.
     trusted_proxy_ips: str = ""
 
+    # Edge-to-origin authentication. Cloudflare overwrites this header before a
+    # request reaches the API/admin origin; direct-origin callers do not know the
+    # value and are rejected. Keep ``required`` false until the proxied hostname,
+    # transform rule, and origin secret are deployed together. Comma-separated
+    # secrets permit a current + previous value during a bounded rotation.
+    edge_origin_auth_required: bool = False
+    edge_origin_auth_header_name: str = "X-ClearGlass-Edge-Origin"
+    edge_origin_auth_secrets: str = ""
+
+    # Browser CSP reports arrive through the protected API hostname. The endpoint
+    # accepts only small, privacy-minimized reports and is independently throttled.
+    rate_limit_csp_reports_per_minute: int = 120
+
+    # Public form relay. It is deliberately disabled until the protected API
+    # hostname is live. The relay URL is server-side only; browsers post a small
+    # validated JSON envelope to /api/forms/submit.
+    public_forms_enabled: bool = False
+    public_form_relay_url: str = ""
+    public_form_relay_allowed_hosts: str = ""
+    public_form_relay_bearer_token: str = ""
+    rate_limit_public_forms_per_minute: int = 6
+
     # Payments (never logged, never echoed in responses)
     stripe_secret_key: str = ""
     stripe_webhook_secret: str = ""
@@ -90,6 +112,21 @@ class Settings(BaseSettings):
     etsy_redirect_uri: str = ""
     etsy_oauth_authorize_url: str = "https://www.etsy.com/oauth/connect"
     etsy_token_url: str = "https://api.etsy.com/v3/public/oauth/token"
+
+    # ── Printful (print-on-demand fulfillment) ──────────────────────────────
+    # Unset = mock mode: no supplier order is ever placed and no network call is
+    # made, mirroring the no-Stripe-key behaviour of payments.
+    printful_api_key: str = ""         # OAuth token, sent as `Authorization: Bearer`
+    printful_store_id: str = ""        # required only on multi-store accounts
+    printful_api_base: str = "https://api.printful.com"
+    # Confirming a draft debits the Printful wallet and starts production, so it
+    # is an ALWAYS_ESCALATE action gated on a human approval. This flag does NOT
+    # bypass that gate — it exists so the admin surface can show operators
+    # whether hands-off confirmation has been requested, and so enabling it is a
+    # deliberate, reviewable change rather than a silent default.
+    printful_auto_confirm: bool = False
+    # Shared secret on the webhook URL Printful calls with shipment notices.
+    printful_webhook_secret: str = ""
 
 
 @lru_cache

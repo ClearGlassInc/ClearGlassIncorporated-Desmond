@@ -27,7 +27,7 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ClearGlassInc Artemis — Self-Evolving AI Intelligence Platform</title>
-  <meta name="description" content="A full-stack implementation blueprint for ClearGlassInc Artemis: a secure, coalition-aware, self-improving AI intelligence platform built on Palantir Gotham, Foundry, AIP, and Apollo." />
+  <meta name="description" content="A full-stack implementation blueprint for ClearGlassInc Artemis: a secure, coalition-aware, self-improving AI platform on Gotham, Foundry, AIP and Apollo." />
   <link rel="canonical" href="https://www.clearglassinc.com/artemis-self-evolving-platform.html" />
   <meta property="og:title" content="ClearGlassInc Artemis — Self-Evolving AI Intelligence Platform" />
   <meta property="og:description" content="Production architecture, ontology, agent design, self-improvement loop, governance, code examples, and scenario walkthrough for ClearGlassInc Artemis." />
@@ -45,6 +45,8 @@
   </style>
   <link rel="stylesheet" href="brand-system.css">
 <link rel="stylesheet" href="/assets/css/cg-design-system.css">
+<link rel="stylesheet" href="adaptive-action-bar.css">
+<link rel="stylesheet" href="/assets/css/future-buttons.css">
 </head>
 <body>
   <main class="shell">
@@ -52,11 +54,11 @@
       <div class="eyebrow">ClearGlassInc Artemis · Palantir Gotham / Foundry / AIP / Apollo</div>
       <h1>Self-evolving <span>AI intelligence</span> platform blueprint.</h1>
       <p class="lead">A production-oriented, full-stack architecture for secure, coalition-aware, latency-sensitive intelligence operations that ingest live and historical data, reason over a governed ontology, learn from operator feedback, and propose safe self-upgrades under explicit human approval.</p>
-      <div class="actions">
-        <a class="btn primary" href="CLEARGLASSINC_ARTEMIS_SELF_EVOLVING_PLATFORM_BLUEPRINT.md">Open full technical blueprint →</a>
-        <a class="btn" href="#architecture">Explore architecture</a>
-        <a class="btn" href="#loop">Self-improvement loop</a>
-        <a class="btn" href="tools/windows/ultimate-windows-gpu-advanced-graphics-optimization.ps1">Windows GPU Optimization Script</a>
+      <div class="actions adaptive-action-bar" data-adaptive-action-bar aria-label="Artemis platform actions">
+        <a class="btn primary" data-action-priority="primary" href="CLEARGLASSINC_ARTEMIS_SELF_EVOLVING_PLATFORM_BLUEPRINT.md">Open full technical blueprint →</a>
+        <a class="btn" data-action-priority="secondary" href="#architecture">Explore architecture</a>
+        <a class="btn" data-action-priority="secondary" href="#loop">Self-improvement loop</a>
+        <a class="btn" data-action-priority="overflow" href="tools/windows/ultimate-windows-gpu-advanced-graphics-optimization.ps1">Windows GPU Optimization Script</a>
       </div>
     </section>
 
@@ -122,5 +124,7 @@ powershell -ExecutionPolicy Bypass -File .\tools\windows\safe-windows-gpu-tuning
 <!-- cg-related:end -->
 <script defer src="nav.js"></script>
 <script src="/assets/js/cg-design-system.js" defer></script>
+<script src="adaptive-action-bar.js" defer></script>
+<script defer src="/assets/js/future-buttons.js"></script>
 </body>
 </html>

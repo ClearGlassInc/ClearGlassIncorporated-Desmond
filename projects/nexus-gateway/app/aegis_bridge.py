@@ -52,10 +52,10 @@ async def dispatch_aegis(request: AegisDispatchRequest, settings: Settings) -> A
     )
     try:
         stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=settings.aegis_timeout_seconds)
-    except TimeoutError:
+    except TimeoutError as exc:
         process.kill()
         await process.communicate()
-        raise AegisUnavailable("AEGIS execution exceeded the configured timeout.")
+        raise AegisUnavailable("AEGIS execution exceeded the configured timeout.") from exc
 
     return AegisResult(
         return_code=process.returncode or 0,

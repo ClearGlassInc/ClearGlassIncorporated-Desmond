@@ -1,7 +1,7 @@
 {
   "schema": "clearglass.store.catalog/v1",
-  "generated_utc": "2026-08-12T17:19:00+00:00",
-  "content_hash": "pending-regeneration",
+  "generated_utc": "2026-08-12T22:31:57+00:00",
+  "content_hash": "sha256:6323e93d1779a0b2fa735a772b0f7890382b76b10cec4af3b8df7864a17133ad",
   "source": "store.html",
   "live_checkout_enabled": true,
   "products": [
@@ -68,16 +68,14 @@
     {
       "sku": "advanced-secure-systems-engineering",
       "name": "Advanced Secure Systems Engineering",
-      "label": "Advanced Secure Systems Engineering — Enterprise Workshop",
+      "label": "Advanced Secure Systems Engineering (enterprise, by scope)",
       "short": "Secure Systems Engineering Workshop",
       "price_display": "Enterprise pricing by scope",
       "amount_cents": null,
       "currency": "CAD",
-      "etransfer_amount": null,
-      "checkout_url": "/products/advanced-secure-systems-engineering.html",
-      "live_checkout": false,
-      "product_type": "enterprise_workshop",
-      "subtitle": "Defensive Cybersecurity, Embedded Platforms, AI Automation, and Zero-Trust Infrastructure"
+      "etransfer_amount": "Quoted on scope call",
+      "checkout_url": "",
+      "live_checkout": false
     }
   ],
   "summary": {

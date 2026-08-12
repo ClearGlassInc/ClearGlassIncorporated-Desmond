@@ -1,6 +1,5 @@
 import json
 from dataclasses import dataclass
-from typing import Any
 
 from .config import Settings
 from .models import AIActionRequest
@@ -47,7 +46,11 @@ def evaluate_action(action: AIActionRequest, settings: Settings) -> GovernanceDe
     if schema is not None:
         unexpected = lowered_keys.difference(schema)
         if unexpected:
-            return GovernanceDecision(False, f"Payload contains fields not authorized for this tool: {', '.join(sorted(unexpected))}.")
+            return GovernanceDecision(
+                False,
+                "Payload contains fields not authorized for this tool: "
+                f"{', '.join(sorted(unexpected))}.",
+            )
 
     if action.target_tool == "network_optimizer" and action.payload.get("diagnostic_only") is False:
         return GovernanceDecision(False, "Remote mutating network optimization is disabled at the gateway boundary.")

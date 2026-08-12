@@ -5,6 +5,21 @@
  */
 (function () {
   "use strict";
+
+  /* iOS/iPadOS Safari stability guard.
+   * WebKit on iPhone/iPad does not expose navigator.deviceMemory, so the
+   * generic low-memory heuristic cannot reliably classify these devices.
+   * Keep the recovered homepage fully functional and static instead of
+   * activating the additional cinematic DOM/GPU animation layer. */
+  var ua = navigator.userAgent || "";
+  var platform = navigator.platform || "";
+  var appleMobile = /iP(?:hone|ad|od)/.test(ua) ||
+    (platform === "MacIntel" && (navigator.maxTouchPoints || 0) > 1);
+  if (appleMobile) {
+    document.documentElement.setAttribute("data-cg-cinematic-motion", "ios-stability");
+    return;
+  }
+
   if (window.__cgCinematicMotion) return;
   window.__cgCinematicMotion = true;
 

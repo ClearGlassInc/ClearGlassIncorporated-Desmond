@@ -14,6 +14,40 @@
   const observed = new WeakSet();
   const states = new WeakMap();
 
+  function isHomepage() {
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      try {
+        if (new URL(canonical.href, location.href).pathname === "/") return true;
+      } catch (_) {}
+    }
+    return location.pathname === "/" || /\/index\.html$/.test(location.pathname);
+  }
+
+  function loadHomepageCinematicMotion() {
+    if (!isHomepage()) return;
+
+    const cssHref = "/assets/css/cinematic-motion.css";
+    if (!document.querySelector('link[data-cg-cinematic-motion="true"],link[href="/assets/css/cinematic-motion.css"]')) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = cssHref;
+      link.dataset.cgCinematicMotion = "true";
+      document.head.appendChild(link);
+    }
+
+    if (window.__cgCinematicMotion || document.querySelector('script[data-cg-cinematic-motion="true"],script[src="/assets/js/cinematic-motion.js"]')) return;
+
+    const script = document.createElement("script");
+    script.src = "/assets/js/cinematic-motion.js";
+    script.defer = true;
+    script.dataset.cgCinematicMotion = "true";
+    script.addEventListener("error", () => {
+      document.documentElement.dataset.cgCinematicMotion = "degraded";
+    }, { once: true });
+    document.body.appendChild(script);
+  }
+
   function hasOwnedPseudo(control, pseudo) {
     const content = getComputedStyle(control, pseudo).content;
     return content && content !== "none" && content !== "normal" && content !== '""';
@@ -110,6 +144,7 @@
   }
 
   function init() {
+    loadHomepageCinematicMotion();
     document.documentElement.classList.add("future-glass-ready");
     discover();
     new MutationObserver(records => {

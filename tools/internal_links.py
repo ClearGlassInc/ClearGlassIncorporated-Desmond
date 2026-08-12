@@ -88,6 +88,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "stegoforge.html": ("STEGOFORGE", "steganography and covert-channel analysis terminal"),
     "attack-prompt-core.html": ("ATT&CK Prompt Integrator", "MITRE ATT&CK-aligned analysis prompts"),
     "environmental-cyber-risk.html": ("Environmental Cyber-Risk", "OT and environmental threat monitoring"),
+    "content-shield.html": ("VEILGUARD Content Shield", "watermarking, leak attribution and tamper-evident content protection"),
 
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
@@ -249,7 +250,7 @@ CLUSTERS: dict[str, dict] = {
             "sentinel.html", "bluedesk.html", "guardian.html",
             "artemis-blue-team.html", "stegoforge.html",
             "attack-prompt-core.html", "environmental-cyber-risk.html",
-            "bluedesk-mobile.html",
+            "bluedesk-mobile.html", "content-shield.html",
         ],
         "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")],
     },

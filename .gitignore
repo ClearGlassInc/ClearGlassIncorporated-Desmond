@@ -110,6 +110,9 @@ audit-reports/
 .next/
 out/
 
+# VEILGUARD test compilation output (`npm run test:veilguard` emits here)
+.veilguard-test/
+
 # 4-D Dominance pipeline generated reports
 four_d_dominance/output/
 

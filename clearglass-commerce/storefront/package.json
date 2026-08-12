@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "npm run test:veilguard",
+    "test:veilguard": "tsc -p tsconfig.test.json && node --test .veilguard-test/tests/veilguard/*.test.js"
   },
   "dependencies": {
     "next": "^16.2.10",

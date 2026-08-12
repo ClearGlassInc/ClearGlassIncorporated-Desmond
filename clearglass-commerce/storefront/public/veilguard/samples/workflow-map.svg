@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Q3 workflow map">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#04101c"/><stop offset="1" stop-color="#0a0a1e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#bg2)"/>
+  <g stroke="rgba(124,150,255,.08)"><path d="M0 250h1200M0 500h1200"/></g>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="16" fill="#8fb9ff">
+    <g>
+      <rect x="70" y="300" width="200" height="110" rx="14" fill="rgba(34,211,238,.08)" stroke="rgba(34,211,238,.40)"/>
+      <text x="104" y="348">intake</text><text x="104" y="374" fill="#5f7099" font-size="13">signal capture</text>
+    </g>
+    <g>
+      <rect x="340" y="300" width="200" height="110" rx="14" fill="rgba(124,150,255,.08)" stroke="rgba(124,150,255,.40)"/>
+      <text x="374" y="348">score</text><text x="374" y="374" fill="#5f7099" font-size="13">risk 0-100</text>
+    </g>
+    <g>
+      <rect x="610" y="300" width="200" height="110" rx="14" fill="rgba(168,85,247,.08)" stroke="rgba(168,85,247,.42)"/>
+      <text x="644" y="348">approve</text><text x="644" y="374" fill="#5f7099" font-size="13">human gate</text>
+    </g>
+    <g>
+      <rect x="880" y="300" width="200" height="110" rx="14" fill="rgba(52,211,153,.08)" stroke="rgba(52,211,153,.40)"/>
+      <text x="914" y="348">execute</text><text x="914" y="374" fill="#5f7099" font-size="13">logged action</text>
+    </g>
+  </g>
+  <g stroke="rgba(34,211,238,.5)" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M270 355 L340 355"/><path d="M540 355 L610 355"/><path d="M810 355 L880 355"/>
+  </g>
+  <g stroke="rgba(248,113,113,.45)" stroke-width="2" fill="none" stroke-dasharray="6 6">
+    <path d="M710 300 L710 200 L180 200 L180 300"/>
+  </g>
+  <text x="300" y="188" fill="#f87171" font-family="ui-monospace,Menlo,monospace" font-size="14">rejected → returned to intake</text>
+  <text x="70" y="620" fill="#5f7099" font-family="ui-monospace,Menlo,monospace" font-size="15">Q3 OPERATING WORKFLOW · confidential</text>
+</svg>

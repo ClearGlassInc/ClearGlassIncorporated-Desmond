@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050b12">
+  <title>ClearGlass NEXUS Gateway</title>
+  <link rel="stylesheet" href="./nexus.css">
+</head>
+<body>
+  <div class="scanline" aria-hidden="true"></div>
+  <header class="topbar">
+    <div><strong>CLEARGLASS NEXUS</strong><span>SECURITY GATEWAY // v12.1</span></div>
+    <div class="status"><i></i><span id="health">CHECKING</span></div>
+  </header>
+  <main>
+    <section class="hero panel">
+      <div class="hero-copy">
+        <p class="eyebrow">ZERO TRUST // AI GOVERNANCE // TELEMETRY</p>
+        <h1>Control plane for governed machine action.</h1>
+        <p>Identity is verified before capability. Agent requests are objective-bound, schema-limited and audited. AEGIS execution remains disabled until explicitly configured.</p>
+        <div class="actions"><a href="/docs">OPEN API</a><button id="refresh">REFRESH SITREP</button></div>
+      </div>
+      <figure class="brain"><img src="./assets/brain-reference.jpg" alt="High-tech brain systems reference"></figure>
+    </section>
+    <section class="grid">
+      <article class="panel"><span>01</span><h2>IDENTITY BROKER</h2><p>Entra ID JWT validation with issuer, audience, signature and role/scope enforcement. Production configuration fails closed.</p></article>
+      <article class="panel"><span>02</span><h2>AGENT GOVERNANCE</h2><p>Capability allowlists, objective hashes, payload schemas, size limits and forbidden control-field checks block tool drift.</p></article>
+      <article class="panel"><span>03</span><h2>TELEMETRY BUS</h2><p>Bounded asynchronous ingestion with request IDs, recent-event history and explicit overload behavior.</p></article>
+      <article class="panel"><span>04</span><h2>AEGIS BRIDGE</h2><p>Fixed-argument subprocess execution only. No shell expansion. Disabled by default and restricted to approved operating modes.</p></article>
+    </section>
+    <section class="panel console"><div class="console-head"><span>LIVE PLATFORM STATUS</span><code id="request-id">NO REQUEST</code></div><pre id="output">Public health check loading…</pre></section>
+  </main>
+  <footer>ClearGlass Inc. // Advanced security engineering // No government or military affiliation claimed.</footer>
+  <script src="./nexus.js"></script>
+</body>
+</html>

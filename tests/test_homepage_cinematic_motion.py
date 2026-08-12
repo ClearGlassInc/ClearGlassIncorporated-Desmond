@@ -29,3 +29,21 @@ def test_cinematic_motion_remains_accessibility_and_power_aware() -> None:
     assert "navigator.connection" in runtime
     assert "navigator.deviceMemory" in runtime
     assert "IntersectionObserver" in runtime
+
+
+def test_neon_layer_uses_named_restrained_motion_primitives() -> None:
+    stylesheet = (ROOT / "assets/css/cinematic-motion.css").read_text(encoding="utf-8")
+
+    for keyframe in (
+        "neonPulse",
+        "coreBreathe",
+        "borderTrace",
+        "signalFlicker",
+        "gridDrift",
+        "scanSweep",
+    ):
+        assert f"@keyframes {keyframe}" in stylesheet
+
+    assert "html.cg-low-power" in stylesheet
+    assert "animation: none !important;" in stylesheet
+    assert "pointer-events: none;" in stylesheet

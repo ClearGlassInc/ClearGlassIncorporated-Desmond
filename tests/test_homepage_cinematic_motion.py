@@ -59,9 +59,19 @@ def test_homepage_platform_isolates_duplicate_fixed_control_runtimes() -> None:
     assert 'omega.setAttribute("data-cg-aegis-omega", "true")' in omega_section
 
 
+def test_homepage_synchronizes_sentinel_modal_with_visible_shell() -> None:
+    runtime = (ROOT / "platform.js").read_text(encoding="utf-8")
+
+    assert 'document.getElementById("sentinelShell")' in runtime
+    assert 'sentinelShell.querySelector(\'[role="dialog"]\')' in runtime
+    assert 'sentinelDialog.setAttribute("aria-modal", String(open))' in runtime
+    assert 'sentinelShell.setAttribute("aria-hidden", String(!open))' in runtime
+    assert 'attributeFilter: ["hidden"]' in runtime
+
+
 def test_homepage_runtime_cache_is_invalidated() -> None:
     service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-    assert 'var VERSION = "cg-v54";' in service_worker
+    assert 'var VERSION = "cg-v55";' in service_worker
     assert '"/platform.js"' in service_worker
     assert '"/stealth-glass.js"' in service_worker
 

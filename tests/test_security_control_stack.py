@@ -72,6 +72,12 @@ def test_mobile_station_is_safe_area_aware_and_contained() -> None:
 
 
 def test_station_scroll_collision_work_is_bounded() -> None:
+    """The scroll path must reuse a cached target list, never re-query the DOM.
+
+    The collision targets are resolved once by refreshCollisionTargets() and
+    cached, so avoidCTAOverlap() — which runs per animation frame while
+    scrolling — only measures nodes it already holds.
+    """
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
     # What has to hold is that a scroll-time collision check does bounded work:

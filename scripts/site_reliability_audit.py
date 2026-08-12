@@ -35,11 +35,16 @@ IGNORED_AUDIT_DIRS = {
     "coverage",
     "dist",
     "node_modules",
+    # Separately-deployed services own their HTML and resolve their own routes:
+    # the NEXUS gateway console is served by its container at /console and links
+    # to /docs, the FastAPI schema UI. Auditing it as a Pages page reports that
+    # working link as broken, because no such file exists in this repository.
+    "projects",
 }
 
 
 def iter_repo_html_files() -> list[Path]:
-    """Return repository-owned HTML files, excluding dependency/build output trees."""
+    """Return HTML this repository publishes, excluding deps, builds, and services."""
 
     return sorted(
         path

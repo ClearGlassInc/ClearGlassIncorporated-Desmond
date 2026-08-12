@@ -336,28 +336,18 @@ html.cg-cinematic-ready .cg-signal-core {
   animation: coreBreathe 8.8s cubic-bezier(.45,0,.55,1) infinite;
 }
 html.cg-cinematic-ready .cg-growth-network :where(.cg-net-node,.cg-net-node-secondary),
-html.cg-cinematic-ready .cg-motion-node::before,
-html.cg-cinematic-ready .artemis-toggle__signal {
+html.cg-cinematic-ready .cg-motion-node::before {
   animation: signalFlicker 7.6s steps(1,end) infinite;
 }
 
 html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail) {
-  border-color: color-mix(in srgb,currentColor 0%,rgba(var(--cg-neon-cyan),.18));
+  border-color: rgba(var(--cg-neon-cyan),.18);
 }
 html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail):hover,
 html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail):focus-within {
   border-color: rgba(var(--cg-neon-cyan),.34);
   box-shadow: var(--cg-neon-bloom);
   animation: borderTrace 5.4s ease-in-out infinite;
-}
-
-html.cg-cinematic-ready :where(.btn,.nav-cta,.cg-motion-node,.artemis-chip,.artemis-toggle):hover,
-html.cg-cinematic-ready :where(.btn,.nav-cta,.cg-motion-node,.artemis-chip,.artemis-toggle):focus-visible {
-  box-shadow: 0 0 0 1px rgba(var(--cg-neon-cyan),.12),0 0 22px rgba(var(--cg-neon-cyan),.15),0 0 42px rgba(var(--cg-neon-violet),.08);
-}
-html.cg-cinematic-ready :where(.btn,.nav-cta,.cg-motion-node,.artemis-chip,.artemis-toggle):focus-visible {
-  outline: 2px solid rgba(var(--cg-neon-cyan),.92);
-  outline-offset: 4px;
 }
 
 html.cg-cinematic-ready .nav-links a.is-active::after {
@@ -412,7 +402,6 @@ html.cg-cinematic-ready .nav-links a.is-active::after {
   html.cg-cinematic-ready .cg-signal-core,
   html.cg-cinematic-ready .cg-growth-network :where(.cg-net-node,.cg-net-node-secondary),
   html.cg-cinematic-ready .cg-motion-node::before,
-  html.cg-cinematic-ready .artemis-toggle__signal,
   html.cg-cinematic-ready .nav-links a.is-active::after,
   html.cg-cinematic-ready :where(.value-card,.service-card,.product-card,.tech-card,.command-panel,.ops-card,.hero-option,.cg-capability-detail) {
     animation: none !important;

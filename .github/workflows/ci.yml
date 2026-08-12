@@ -68,8 +68,12 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-      - run: pip install pytest pytest-cov pyyaml
-      - run: pytest tests/ --cov --cov-report=xml -q
+      - name: Install project and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" "PyYAML==6.0.2"
+      - name: Run configured Python test suite
+        run: python -m pytest --cov=artemis --cov-report=xml -q
 
   lint:
     name: Lint (ruff)

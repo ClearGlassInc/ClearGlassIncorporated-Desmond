@@ -424,8 +424,7 @@
 
   function onCapabilityChange() {
     refreshCapabilityState();
-    if (!explicitPreference) applyMotionLevel();
-    if (controller && (touchFirstSmall || saveData)) controller.pause();
+    applyMotionLevel();
   }
 
   refreshCapabilityState();

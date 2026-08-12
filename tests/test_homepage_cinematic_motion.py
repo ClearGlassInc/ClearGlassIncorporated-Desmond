@@ -68,6 +68,21 @@ def test_cinematic_runtime_pauses_and_cleans_up_resources() -> None:
     assert 'window.addEventListener("pagehide"' in runtime
 
 
+def test_cinematic_runtime_reapplies_motion_level_after_capability_changes() -> None:
+    runtime = (ROOT / "assets/js/cinematic-motion.js").read_text(encoding="utf-8")
+    match = re.search(
+        r"function onCapabilityChange\(\) \{(?P<body>.*?)\n  \}",
+        runtime,
+        flags=re.DOTALL,
+    )
+
+    assert match, "onCapabilityChange() must remain present"
+    body = match.group("body")
+    assert "refreshCapabilityState();" in body
+    assert "applyMotionLevel();" in body
+    assert "if (!explicitPreference)" not in body
+
+
 def test_homepage_platform_isolates_duplicate_fixed_control_runtimes() -> None:
     runtime = (ROOT / "platform.js").read_text(encoding="utf-8")
 

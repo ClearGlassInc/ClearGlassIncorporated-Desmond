@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -73,20 +74,39 @@ def test_mobile_station_is_safe_area_aware_and_contained() -> None:
 def test_station_scroll_collision_work_is_bounded() -> None:
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
+    # What has to hold is that a scroll-time collision check does bounded work:
+    # candidates come from the narrow precomputed selector, and the hot path does
+    # no per-node style resolution. Pinning the exact call site made this fail
+    # when the query moved into refreshCollisionTargets() — which caches the list
+    # once instead of re-querying per check, i.e. a tighter bound, not a lost one.
     assert "COLLISION_TARGET_SELECTOR" in stealth
-    collision = stealth.split("function avoidCTAOverlap()", 1)[1].split("function scheduleCollisionCheck()", 1)[0]
-    assert "document.querySelectorAll(COLLISION_TARGET_SELECTOR)" in collision
-    assert "querySelectorAll('a,button,[role=\"button\"]')" not in collision
-    assert "window.getComputedStyle(node)" not in collision
+    assert "document.querySelectorAll(COLLISION_TARGET_SELECTOR)" in stealth
 
-    scheduler = stealth.split("function scheduleCollisionCheck()", 1)[1].split("function scheduleLegacyRefresh", 1)[0]
-    assert "if (collisionRaf) return;" in scheduler
+    # Slice on the bare function name: `scheduleCollisionCheck` later took an
+    # `immediate` parameter, and a boundary spelled with "()" stopped matching —
+    # which silently extended this slice to end-of-file and swept in build()'s
+    # perfectly legitimate queries.
+    collision = stealth.split("function avoidCTAOverlap(", 1)[1].split("function scheduleCollisionCheck(", 1)[0]
+    assert "collisionTargets" in collision, "hot path must walk the cached target list"
+    assert "querySelectorAll" not in collision, "no ad-hoc DOM query per collision check"
+    assert "getComputedStyle" not in collision, "no per-node style resolution on scroll"
+
+    scheduler = stealth.split("function scheduleCollisionCheck(", 1)[1].split("function scheduleLegacyRefresh", 1)[0]
+    # Coalescing is the guarantee; the scheduler may guard on more than the rAF
+    # handle (it now also holds a debounce timer), so assert the early return
+    # covers collisionRaf rather than pinning one exact condition.
+    assert re.search(r"if \([^)]*\bcollisionRaf\b[^)]*\) return;", scheduler)
 
 
 def test_station_observer_ignores_animation_class_churn() -> None:
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
     observer = stealth.split("legacyObserver = new MutationObserver", 1)[1]
-    assert 'attributeFilter: ["open", "aria-modal"]' in observer
-    assert 'attributeFilter: ["open", "aria-modal", "class"]' not in observer
+    # The point of the filter is which attributes are watched, not the exact
+    # literal: "class" must stay out, or every animation frame that toggles a
+    # class re-triggers the observer. Other dialog-state attributes may be added.
+    attribute_filter = observer.split("attributeFilter:", 1)[1].split("]", 1)[0]
+    assert '"open"' in attribute_filter
+    assert '"aria-modal"' in attribute_filter
+    assert '"class"' not in attribute_filter, "watching class re-triggers on animation churn"
     assert "scheduleLegacyRefresh(panel, stack)" in observer

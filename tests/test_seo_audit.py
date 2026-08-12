@@ -199,6 +199,27 @@ class TestLiveSite:
                   if f["check"] == "link.broken"]
         assert not broken, f"broken internal links: {broken}"
 
+    # Checks that change what a searcher actually sees in a result, or that
+    # decide whether a page can be found and ranked at all. These were cleaned
+    # to zero; the audit workflow runs without --strict, so without this gate a
+    # regression here fails nothing and silently costs clicks on every
+    # impression. Deliberately excluded: `weight`, `h1.multiple` and
+    # `heading.order`, which are open style/perf items on the site today.
+    SERP_CRITICAL = (
+        "title.length", "title.duplicate", "title.missing",
+        "description.length", "description.duplicate",
+        "canonical.missing", "canonical.duplicate",
+        "schema.required", "orphan", "index.conflict",
+    )
+
+    def test_serp_critical_checks_stay_clean(self) -> None:
+        report = seo_audit.build_report()
+        regressions = [f"{f['check']} · {f['page']}: {f['message']}"
+                       for f in report["findings"]
+                       if f["check"] in self.SERP_CRITICAL]
+        assert not regressions, (
+            "SERP-critical SEO regressions:\n  " + "\n  ".join(regressions))
+
 
 class TestDashboardHonesty:
     """The dashboard must never present an unsourced number as data."""

@@ -36,6 +36,14 @@ REPORT_PATH = ROOT / "SITE_WIRING_PLAN.md"
 START = "<!-- cg-related:start -->"
 END = "<!-- cg-related:end -->"
 
+# Directory names that never hold a page this repository publishes to GitHub
+# Pages: version control internals, installed or generated dependency trees, and
+# `projects/`, where separately-deployed services keep their own HTML (the NEXUS
+# gateway's container serves `projects/nexus-gateway/web/` at /console). Page
+# discovery is duplicated across several gates, so this constant is the one the
+# others import — a new directory landing here must not fail six audits at once.
+NON_SITE_DIRS = frozenset({".git", "node_modules", ".next", "projects"})
+
 # HTML utilities and private/non-indexable operational surfaces are deliberately
 # outside the public journey graph. Keeping this inventory beside PAGES makes
 # the site-wide audit exhaustive without leaking private consoles into search or
@@ -91,6 +99,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "stegoforge.html": ("STEGOFORGE", "steganography and covert-channel analysis terminal"),
     "attack-prompt-core.html": ("ATT&CK Prompt Integrator", "MITRE ATT&CK-aligned analysis prompts"),
     "environmental-cyber-risk.html": ("Environmental Cyber-Risk", "OT and environmental threat monitoring"),
+    "products/advanced-secure-systems-engineering.html": ("Advanced Secure Systems Engineering", "the defensive secure-systems engineering workshop"),
 
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
@@ -269,7 +278,7 @@ CLUSTERS: dict[str, dict] = {
             "sentinel.html", "bluedesk.html", "guardian.html",
             "artemis-blue-team.html", "stegoforge.html",
             "attack-prompt-core.html", "environmental-cyber-risk.html",
-            "bluedesk-mobile.html",
+            "bluedesk-mobile.html", "products/advanced-secure-systems-engineering.html",
         ],
         "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")],
     },
@@ -771,7 +780,7 @@ def validate() -> list[str]:
     discovered = {
         path.relative_to(ROOT).as_posix()
         for path in ROOT.rglob("*.html")
-        if not {".git", "node_modules", ".next"} & set(path.parts)
+        if not NON_SITE_DIRS & set(path.parts)
     }
     classified = set(PAGES) | set(EXCLUDED_PAGES)
     for page in sorted(discovered - classified):

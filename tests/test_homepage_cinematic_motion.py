@@ -52,7 +52,9 @@ def test_cinematic_runtime_has_visible_motion_control_and_bounded_frame_rate() -
     assert "Visual effects: " in runtime
     assert 'data-cg-motion-level' in runtime
     assert "this.fps = 30" in runtime
-    assert "this.fps = 15" in runtime
+    # The downgrade runs inside the sampling callback, which captures `this` as
+    # `self`, so the bounded rate is assigned through that alias.
+    assert "self.fps = 15" in runtime
     assert "average > 50" in runtime
     assert "this.downgraded" in runtime
 

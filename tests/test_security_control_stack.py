@@ -71,22 +71,37 @@ def test_mobile_station_is_safe_area_aware_and_contained() -> None:
 
 
 def test_station_scroll_collision_work_is_bounded() -> None:
+    """The scroll path must reuse a cached target list, never re-query the DOM.
+
+    The collision targets are resolved once by refreshCollisionTargets() and
+    cached, so avoidCTAOverlap() — which runs per animation frame while
+    scrolling — only measures nodes it already holds.
+    """
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
     assert "COLLISION_TARGET_SELECTOR" in stealth
-    collision = stealth.split("function avoidCTAOverlap()", 1)[1].split("function scheduleCollisionCheck()", 1)[0]
-    assert "document.querySelectorAll(COLLISION_TARGET_SELECTOR)" in collision
-    assert "querySelectorAll('a,button,[role=\"button\"]')" not in collision
+    refresh = stealth.split("function refreshCollisionTargets()", 1)[1].split("function visibleRect", 1)[0]
+    assert "document.querySelectorAll(COLLISION_TARGET_SELECTOR)" in refresh
+
+    collision = stealth.split("function avoidCTAOverlap()", 1)[1].split("function scheduleCollisionCheck(", 1)[0]
+    assert "collisionTargets" in collision
+    assert "querySelectorAll" not in collision
     assert "window.getComputedStyle(node)" not in collision
 
-    scheduler = stealth.split("function scheduleCollisionCheck()", 1)[1].split("function scheduleLegacyRefresh", 1)[0]
-    assert "if (collisionRaf) return;" in scheduler
+    scheduler = stealth.split("function scheduleCollisionCheck(", 1)[1].split("function scheduleLegacyRefresh", 1)[0]
+    # Coalesced by both an in-flight frame and a throttle timer.
+    assert "if (collisionRaf || collisionTimer) return;" in scheduler
+    assert "COLLISION_INTERVAL_MS" in scheduler
 
 
 def test_station_observer_ignores_animation_class_churn() -> None:
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
     observer = stealth.split("legacyObserver = new MutationObserver", 1)[1]
-    assert 'attributeFilter: ["open", "aria-modal"]' in observer
-    assert 'attributeFilter: ["open", "aria-modal", "class"]' not in observer
+    attribute_filter = observer.split("attributeFilter: [", 1)[1].split("]", 1)[0]
+    # "class" churns on every animation frame; observing it would rebuild the
+    # station continuously. Modal/visibility state is what must be watched.
+    assert '"class"' not in attribute_filter
+    for attribute in ('"open"', '"aria-modal"'):
+        assert attribute in attribute_filter
     assert "scheduleLegacyRefresh(panel, stack)" in observer

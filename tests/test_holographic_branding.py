@@ -1,9 +1,14 @@
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from bots.site_health_bot import IGNORED_HTML_DIRS  # noqa: E402
+
 SEAL = "assets/images/clearglass-holographic-seal.png"
 
 # Two ways a page may declare the ClearGlass tab logo, both resolving to the
@@ -41,7 +46,7 @@ def test_every_public_html_page_declares_a_tab_icon() -> None:
     public_pages = [
         page
         for page in ROOT.rglob("*.html")
-        if not {"node_modules", ".next"} & set(page.parts) and page.name not in excluded
+        if not IGNORED_HTML_DIRS & set(page.parts) and page.name not in excluded
     ]
 
     missing = [

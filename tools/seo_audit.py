@@ -42,7 +42,7 @@ OUT = ROOT / "data" / "seo" / "audit.json"
 # Directories that are not part of the indexable marketing site.
 SKIP_DIRS = {
     ".git", "node_modules", "clearglass-commerce", "apps", "tools",
-    "bots", ".github", "assets", "docs",
+    "bots", ".github", "assets", "docs", "projects",
 }
 
 

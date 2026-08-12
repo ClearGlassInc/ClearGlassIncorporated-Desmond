@@ -1,7 +1,7 @@
 {
   "schema": "clearglass.store.catalog/v1",
-  "generated_utc": "2026-08-12T17:19:00+00:00",
-  "content_hash": "pending-regeneration",
+  "generated_utc": "2026-08-12T23:03:58+00:00",
+  "content_hash": "sha256:49f6b49d4b7774d4f9986a88d36838f27b6e74b60963bb5da2779b2c82ac73bd",
   "source": "store.html",
   "live_checkout_enabled": true,
   "products": [
@@ -64,24 +64,10 @@
       "etransfer_amount": "CAD $1,499",
       "checkout_url": "https://book.stripe.com/fZu3cwcfWb1jgKoeCw4Ni08",
       "live_checkout": true
-    },
-    {
-      "sku": "advanced-secure-systems-engineering",
-      "name": "Advanced Secure Systems Engineering",
-      "label": "Advanced Secure Systems Engineering — Enterprise Workshop",
-      "short": "Secure Systems Engineering Workshop",
-      "price_display": "Enterprise pricing by scope",
-      "amount_cents": null,
-      "currency": "CAD",
-      "etransfer_amount": null,
-      "checkout_url": "/products/advanced-secure-systems-engineering.html",
-      "live_checkout": false,
-      "product_type": "enterprise_workshop",
-      "subtitle": "Defensive Cybersecurity, Embedded Platforms, AI Automation, and Zero-Trust Infrastructure"
     }
   ],
   "summary": {
-    "sku_count": 6,
+    "sku_count": 5,
     "live_checkout_skus": 5
   }
 }

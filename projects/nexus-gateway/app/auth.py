@@ -68,7 +68,10 @@ async def verify_managed_identity(
         roles = []
     scopes = _extract_scopes(claims)
     if settings.required_role not in roles and settings.required_scope not in scopes:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Principal lacks NEXUS operator authorization.")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Principal lacks NEXUS operator authorization.",
+        )
 
     return Principal(
         subject=str(claims.get("sub", "")),

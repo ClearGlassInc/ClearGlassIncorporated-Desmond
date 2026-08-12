@@ -11,8 +11,11 @@
   var OFF = "off";
   var reduce = false;
   var collisionRaf = 0;
+  var collisionTimer = 0;
+  var collisionTargets = [];
   var legacyObserver = null;
   var legacyRefreshRaf = 0;
+  var COLLISION_INTERVAL_MS = 96;
   var COLLISION_TARGET_SELECTOR = [
     "[data-cg-assistant-avoid]",
     ".cta-actions a",
@@ -64,6 +67,7 @@
     "[data-skin='stealth'] #cg-neon-aura{box-shadow:inset 0 0 130px rgba(120,224,200,.09),inset 0 0 42px rgba(96,165,250,.06)}",
     "#cg-stealth-veil{position:fixed;inset:0;z-index:9700;pointer-events:none;background:rgba(5,8,12,.26);-webkit-backdrop-filter:saturate(.6) brightness(.86);backdrop-filter:saturate(.6) brightness(.86);opacity:0;animation:cgSgVeil .3s cubic-bezier(.16,1,.3,1) forwards}",
     "@keyframes cgSgVeil{to{opacity:1}}",
+    "@media(max-width:820px){#cg-neon-aura{animation:none;opacity:.6;box-shadow:inset 0 0 54px rgba(96,165,250,.055)}#cg-stealth-veil{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(5,8,12,.42)}}",
     "@media(prefers-reduced-motion:reduce){#cg-neon-aura{animation:none;opacity:.8}#cg-stealth-veil{animation:none;opacity:1}}"
   ].join("");
 
@@ -138,7 +142,7 @@
       var first = panel.querySelector("a[href],button:not([disabled])");
       if (first) window.setTimeout(function () { first.focus(); }, reduce ? 0 : 120);
     }
-    scheduleCollisionCheck();
+    scheduleCollisionCheck(true);
   }
 
   function buildPanel(stack) {
@@ -264,15 +268,31 @@
     });
   }
 
-  function updateModalState() {
-    var modal = document.querySelector('dialog[open],[role="dialog"][aria-modal="true"],[aria-modal="true"]');
-    document.body.classList.toggle("cg-assistant-modal-active", !!modal);
+  function isActuallyVisible(node) {
+    if (!node || node.hidden || node.getAttribute("aria-hidden") === "true") return false;
+    if (node.closest && node.closest("[hidden]")) return false;
+    var cs;
+    try { cs = window.getComputedStyle(node); } catch (e) { return false; }
+    return !!cs && cs.display !== "none" && cs.visibility !== "hidden" && cs.visibility !== "collapse";
   }
 
-  function isVisible(node) {
-    if (!node || !node.getBoundingClientRect || node.hidden || node.getAttribute("aria-hidden") === "true") return false;
-    var rect = node.getBoundingClientRect();
-    return rect.width >= 2 && rect.height >= 2;
+  function updateModalState() {
+    if (!document.body) return;
+    var modals = document.querySelectorAll('dialog[open],[role="dialog"][aria-modal="true"],[aria-modal="true"]');
+    var active = Array.prototype.some.call(modals, isActuallyVisible);
+    document.body.classList.toggle("cg-assistant-modal-active", active);
+  }
+
+  function refreshCollisionTargets() {
+    collisionTargets = Array.prototype.slice.call(document.querySelectorAll(COLLISION_TARGET_SELECTOR));
+  }
+
+  function visibleRect(node) {
+    if (!node || !node.getBoundingClientRect || node.hidden || node.getAttribute("aria-hidden") === "true") return null;
+    var rect;
+    try { rect = node.getBoundingClientRect(); } catch (e) { return null; }
+    if (!rect || rect.width < 2 || rect.height < 2) return null;
+    return rect;
   }
 
   function avoidCTAOverlap() {
@@ -283,14 +303,15 @@
     if (stack.classList.contains("is-expanded")) return;
 
     stack.style.setProperty("--cg-assistant-lift", "0px");
-    var base = launcher.getBoundingClientRect();
-    var candidates = document.querySelectorAll(COLLISION_TARGET_SELECTOR);
+    var base = visibleRect(launcher);
+    if (!base) return;
     var maxLift = Math.min((window.innerHeight || 800) * 0.38, window.innerWidth <= 720 ? 190 : 280);
     var lift = 0;
 
-    Array.prototype.forEach.call(candidates, function (node) {
-      if (stack.contains(node) || node.classList.contains("cg-legacy-assistant-hidden") || !isVisible(node)) return;
-      var r = node.getBoundingClientRect();
+    Array.prototype.forEach.call(collisionTargets, function (node) {
+      if (!node || !node.isConnected || stack.contains(node) || node.classList.contains("cg-legacy-assistant-hidden")) return;
+      var r = visibleRect(node);
+      if (!r) return;
       var horizontal = r.right > base.left - 10 && r.left < base.right + 10;
       var vertical = r.bottom > base.top - 10 && r.top < base.bottom + 10;
       if (!horizontal || !vertical) return;
@@ -300,9 +321,16 @@
     stack.style.setProperty("--cg-assistant-lift", Math.max(0, Math.min(maxLift, lift)) + "px");
   }
 
-  function scheduleCollisionCheck() {
-    if (collisionRaf) return;
-    collisionRaf = requestAnimationFrame(avoidCTAOverlap);
+  function scheduleCollisionCheck(immediate) {
+    if (collisionRaf || collisionTimer) return;
+    if (immediate) {
+      collisionRaf = requestAnimationFrame(avoidCTAOverlap);
+      return;
+    }
+    collisionTimer = window.setTimeout(function () {
+      collisionTimer = 0;
+      collisionRaf = requestAnimationFrame(avoidCTAOverlap);
+    }, COLLISION_INTERVAL_MS);
   }
 
   function scheduleLegacyRefresh(panel, stack) {
@@ -311,8 +339,9 @@
       legacyRefreshRaf = 0;
       adoptUnifiedControls(panel);
       hideLegacyAssistantControls(stack);
+      refreshCollisionTargets();
       updateModalState();
-      scheduleCollisionCheck();
+      scheduleCollisionCheck(true);
     });
   }
 
@@ -337,6 +366,7 @@
     apply(active, stealthButton, stealthStatus);
     adoptUnifiedControls(panel);
     hideLegacyAssistantControls(stack);
+    refreshCollisionTargets();
     updateModalState();
 
     launcher.addEventListener("click", function () {
@@ -390,9 +420,9 @@
       setExpanded(stack, launcher, panel, false, false);
     }, { passive: true });
 
-    window.addEventListener("resize", scheduleCollisionCheck, { passive: true });
-    window.addEventListener("orientationchange", scheduleCollisionCheck, { passive: true });
-    window.addEventListener("scroll", scheduleCollisionCheck, { passive: true });
+    window.addEventListener("resize", function () { refreshCollisionTargets(); scheduleCollisionCheck(true); }, { passive: true });
+    window.addEventListener("orientationchange", function () { refreshCollisionTargets(); scheduleCollisionCheck(true); }, { passive: true });
+    window.addEventListener("scroll", function () { scheduleCollisionCheck(false); }, { passive: true });
 
     legacyObserver = new MutationObserver(function (records) {
       var needsLegacyRefresh = false;
@@ -404,9 +434,9 @@
       if (needsLegacyRefresh) scheduleLegacyRefresh(panel, stack);
       else if (needsModalRefresh) updateModalState();
     });
-    legacyObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "aria-modal"] });
+    legacyObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "hidden", "aria-hidden", "aria-modal"] });
 
-    scheduleCollisionCheck();
+    scheduleCollisionCheck(true);
   }
 
   window.__cgRefreshSecurityStack = function () {
@@ -414,8 +444,9 @@
     var panel = document.getElementById("cg-assistant-panel");
     if (panel) adoptUnifiedControls(panel);
     hideLegacyAssistantControls(stack);
+    refreshCollisionTargets();
     updateModalState();
-    scheduleCollisionCheck();
+    scheduleCollisionCheck(true);
   };
 
   ready(build);

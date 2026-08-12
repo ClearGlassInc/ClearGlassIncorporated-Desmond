@@ -31,6 +31,15 @@ def test_cinematic_motion_remains_accessibility_and_power_aware() -> None:
     assert "IntersectionObserver" in runtime
 
 
+def test_cinematic_runtime_fails_static_on_ios_webkit() -> None:
+    runtime = (ROOT / "assets/js/cinematic-motion.js").read_text(encoding="utf-8")
+
+    assert "appleMobile" in runtime
+    assert "navigator.maxTouchPoints" in runtime
+    assert 'data-cg-cinematic-motion", "ios-stability"' in runtime
+    assert "if (appleMobile)" in runtime
+
+
 def test_neon_layer_uses_named_restrained_motion_primitives() -> None:
     stylesheet = (ROOT / "assets/css/cinematic-motion.css").read_text(encoding="utf-8")
 

@@ -12,12 +12,25 @@
   var reduce = false;
   var collisionRaf = 0;
   var legacyObserver = null;
+  var legacyRefreshRaf = 0;
+  var COLLISION_TARGET_SELECTOR = [
+    "[data-cg-assistant-avoid]",
+    ".cta-actions a",
+    ".cta-actions button",
+    ".cta-sect a",
+    ".cta-sect button",
+    ".signup-sect a",
+    ".signup-sect button",
+    "a.btn",
+    "button.btn",
+    ".primary-btn",
+    ".github-btn"
+  ].join(",");
 
   try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
 
   function stored() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-  function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {}
-  }
+  function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
 
   function ready(fn) {
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, { once: true });
@@ -257,11 +270,9 @@
   }
 
   function isVisible(node) {
-    if (!node || !node.getBoundingClientRect) return false;
+    if (!node || !node.getBoundingClientRect || node.hidden || node.getAttribute("aria-hidden") === "true") return false;
     var rect = node.getBoundingClientRect();
-    if (rect.width < 2 || rect.height < 2) return false;
-    var cs = window.getComputedStyle(node);
-    return cs.display !== "none" && cs.visibility !== "hidden" && Number(cs.opacity || 1) > 0;
+    return rect.width >= 2 && rect.height >= 2;
   }
 
   function avoidCTAOverlap() {
@@ -273,14 +284,12 @@
 
     stack.style.setProperty("--cg-assistant-lift", "0px");
     var base = launcher.getBoundingClientRect();
-    var candidates = document.querySelectorAll('a,button,[role="button"]');
+    var candidates = document.querySelectorAll(COLLISION_TARGET_SELECTOR);
     var maxLift = Math.min((window.innerHeight || 800) * 0.38, window.innerWidth <= 720 ? 190 : 280);
     var lift = 0;
 
     Array.prototype.forEach.call(candidates, function (node) {
       if (stack.contains(node) || node.classList.contains("cg-legacy-assistant-hidden") || !isVisible(node)) return;
-      var label = [node.textContent || "", node.id || "", node.className || "", node.getAttribute("aria-label") || ""].join(" ").toLowerCase();
-      if (!/(cta|book|pricing|plans|contact|demo|get started|request|schedule|checkout|buy now|start now|security engagement)/i.test(label)) return;
       var r = node.getBoundingClientRect();
       var horizontal = r.right > base.left - 10 && r.left < base.right + 10;
       var vertical = r.bottom > base.top - 10 && r.top < base.bottom + 10;
@@ -292,8 +301,19 @@
   }
 
   function scheduleCollisionCheck() {
-    if (collisionRaf) cancelAnimationFrame(collisionRaf);
+    if (collisionRaf) return;
     collisionRaf = requestAnimationFrame(avoidCTAOverlap);
+  }
+
+  function scheduleLegacyRefresh(panel, stack) {
+    if (legacyRefreshRaf) return;
+    legacyRefreshRaf = requestAnimationFrame(function () {
+      legacyRefreshRaf = 0;
+      adoptUnifiedControls(panel);
+      hideLegacyAssistantControls(stack);
+      updateModalState();
+      scheduleCollisionCheck();
+    });
   }
 
   function build() {
@@ -374,13 +394,17 @@
     window.addEventListener("orientationchange", scheduleCollisionCheck, { passive: true });
     window.addEventListener("scroll", scheduleCollisionCheck, { passive: true });
 
-    legacyObserver = new MutationObserver(function () {
-      adoptUnifiedControls(panel);
-      hideLegacyAssistantControls(stack);
-      updateModalState();
-      scheduleCollisionCheck();
+    legacyObserver = new MutationObserver(function (records) {
+      var needsLegacyRefresh = false;
+      var needsModalRefresh = false;
+      Array.prototype.forEach.call(records, function (record) {
+        if (record.type === "childList" && record.addedNodes && record.addedNodes.length) needsLegacyRefresh = true;
+        if (record.type === "attributes") needsModalRefresh = true;
+      });
+      if (needsLegacyRefresh) scheduleLegacyRefresh(panel, stack);
+      else if (needsModalRefresh) updateModalState();
     });
-    legacyObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "aria-modal", "class"] });
+    legacyObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "aria-modal"] });
 
     scheduleCollisionCheck();
   }

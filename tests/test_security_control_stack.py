@@ -68,3 +68,25 @@ def test_mobile_station_is_safe_area_aware_and_contained() -> None:
     assert "max-height:min(450px,calc(100dvh - 112px))!important" in css
     assert "#cg-assistant-launcher{width:154px!important" in css
     assert "prefers-reduced-motion:reduce" in css
+
+
+def test_station_scroll_collision_work_is_bounded() -> None:
+    stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
+
+    assert "COLLISION_TARGET_SELECTOR" in stealth
+    collision = stealth.split("function avoidCTAOverlap()", 1)[1].split("function scheduleCollisionCheck()", 1)[0]
+    assert "document.querySelectorAll(COLLISION_TARGET_SELECTOR)" in collision
+    assert "querySelectorAll('a,button,[role=\"button\"]')" not in collision
+    assert "window.getComputedStyle(node)" not in collision
+
+    scheduler = stealth.split("function scheduleCollisionCheck()", 1)[1].split("function scheduleLegacyRefresh", 1)[0]
+    assert "if (collisionRaf) return;" in scheduler
+
+
+def test_station_observer_ignores_animation_class_churn() -> None:
+    stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
+
+    observer = stealth.split("legacyObserver = new MutationObserver", 1)[1]
+    assert 'attributeFilter: ["open", "aria-modal"]' in observer
+    assert 'attributeFilter: ["open", "aria-modal", "class"]' not in observer
+    assert "scheduleLegacyRefresh(panel, stack)" in observer

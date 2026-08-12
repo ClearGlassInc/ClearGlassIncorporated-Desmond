@@ -99,7 +99,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "stegoforge.html": ("STEGOFORGE", "steganography and covert-channel analysis terminal"),
     "attack-prompt-core.html": ("ATT&CK Prompt Integrator", "MITRE ATT&CK-aligned analysis prompts"),
     "environmental-cyber-risk.html": ("Environmental Cyber-Risk", "OT and environmental threat monitoring"),
-    "products/advanced-secure-systems-engineering.html": ("Advanced Secure Systems Engineering", "the defensive secure-systems engineering workshop"),
+    "projects/nexus-gateway/web/index.html": ("NEXUS Gateway", "hardened self-hosted security gateway console"),
 
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
@@ -183,6 +183,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "products.html": ("ClearGlass Products", "the unified ClearGlass product catalog"),
     "offers/index.html": ("Services & Engagements", "every ClearGlass offer in one place"),
     "store.html": ("ClearGlass Store", "book a security engagement"),
+    "products/advanced-secure-systems-engineering.html": ("Secure Systems Engineering Workshop", "enterprise workshop in defensive cyber, embedded platforms and zero trust"),
     "seo-authority-hub.html": ("Cybersecurity & AI Automation in Burlington", "the local authority hub for ClearGlass services"),
     "checkout/index.html": ("Secure Checkout", "purchase an audit or protection plan"),
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
@@ -278,7 +279,7 @@ CLUSTERS: dict[str, dict] = {
             "sentinel.html", "bluedesk.html", "guardian.html",
             "artemis-blue-team.html", "stegoforge.html",
             "attack-prompt-core.html", "environmental-cyber-risk.html",
-            "bluedesk-mobile.html", "products/advanced-secure-systems-engineering.html",
+            "bluedesk-mobile.html", "projects/nexus-gateway/web/index.html",
         ],
         "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")],
     },
@@ -361,7 +362,8 @@ CLUSTERS: dict[str, dict] = {
         "name": "Services & Engagements",
         "pillar": "offers/index.html",
         "members": [
-            "store.html", "pricing.html", "plans.html", "workspace.html",
+            "store.html", "products/advanced-secure-systems-engineering.html",
+            "pricing.html", "plans.html", "workspace.html",
             "checkout/index.html", "seo-authority-hub.html",
             "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",

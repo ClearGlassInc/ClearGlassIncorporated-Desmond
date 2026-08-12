@@ -16,14 +16,14 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 161 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 162 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
 | Page | Role | Previous | Topic hub | Next | Conversion bridge |
 |---|---|---|---|---|---|
 | **Cyber Defense & Security Operations** | **Topic cluster** |  |  |  |  |
-| `cyber-defense-console.html` — Cyber Defense Console | the ClearGlass command center for defensive operations | Advanced Secure Systems Engineering | Cyber Defense Console | SENTINEL | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `cyber-defense-console.html` — Cyber Defense Console | the ClearGlass command center for defensive operations | NEXUS Gateway | Cyber Defense Console | SENTINEL | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `sentinel.html` — SENTINEL | live geospatial security command center | Cyber Defense Console | Cyber Defense Console | BLUEDESK | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `bluedesk.html` — BLUEDESK | CISO risk and blue-team console | SENTINEL | Cyber Defense Console | GUARDIAN | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `guardian.html` — GUARDIAN | intelligence command interface | BLUEDESK | Cyber Defense Console | Artemis Blue Team | Book a security engagement / Start with the $249 Security Quick-Audit |
@@ -31,8 +31,8 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `stegoforge.html` — STEGOFORGE | steganography and covert-channel analysis terminal | Artemis Blue Team | Cyber Defense Console | ATT&CK Prompt Integrator | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `attack-prompt-core.html` — ATT&CK Prompt Integrator | MITRE ATT&CK-aligned analysis prompts | STEGOFORGE | Cyber Defense Console | Environmental Cyber-Risk | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `environmental-cyber-risk.html` — Environmental Cyber-Risk | OT and environmental threat monitoring | ATT&CK Prompt Integrator | Cyber Defense Console | BLUEDESK Mobile | Book a security engagement / Start with the $249 Security Quick-Audit |
-| `bluedesk-mobile.html` — BLUEDESK Mobile | the CISO risk console on a phone-first canvas | Environmental Cyber-Risk | Cyber Defense Console | Advanced Secure Systems Engineering | Book a security engagement / Start with the $249 Security Quick-Audit |
-| `products/advanced-secure-systems-engineering.html` — Advanced Secure Systems Engineering | the defensive secure-systems engineering workshop | BLUEDESK Mobile | Cyber Defense Console | Cyber Defense Console | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `bluedesk-mobile.html` — BLUEDESK Mobile | the CISO risk console on a phone-first canvas | Environmental Cyber-Risk | Cyber Defense Console | NEXUS Gateway | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `projects/nexus-gateway/web/index.html` — NEXUS Gateway | hardened self-hosted security gateway console | BLUEDESK Mobile | Cyber Defense Console | Cyber Defense Console | Book a security engagement / Start with the $249 Security Quick-Audit |
 | **Intelligence & OSINT** | **Topic cluster** |  |  |  |  |
 | `intelligence.html` — Intelligence | the ClearGlass intelligence practice | Critical Minerals Intelligence | Intelligence | Flowsint | Book a security engagement / See pricing & plans |
 | `flowsint.html` — Flowsint | OSINT investigation graph for domains, IPs and transforms | Intelligence | Intelligence | ClearGlass NEXUS | Book a security engagement / See pricing & plans |
@@ -109,8 +109,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `minerals-platform.html` — Minerals Intelligence Platform | source-transparent critical-minerals command center | SATS Digital Twin | Government Solutions | Government Solutions | Book a security engagement / Check our procurement readiness |
 | **Services & Engagements** | **Topic cluster** |  |  |  |  |
 | `offers/index.html` — Services & Engagements | every ClearGlass offer in one place | Growth Command Centre | Services & Engagements | ClearGlass Store | Book a security engagement / See pricing & plans |
-| `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
-| `pricing.html` — Pricing & Engagements | plans and engagement models | ClearGlass Store | Services & Engagements | Guardian Plans & Pricing | Book a security engagement / See pricing & plans |
+| `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Secure Systems Engineering Workshop | Book a security engagement / See pricing & plans |
+| `products/advanced-secure-systems-engineering.html` — Secure Systems Engineering Workshop | enterprise workshop in defensive cyber, embedded platforms and zero trust | ClearGlass Store | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
+| `pricing.html` — Pricing & Engagements | plans and engagement models | Secure Systems Engineering Workshop | Services & Engagements | Guardian Plans & Pricing | Book a security engagement / See pricing & plans |
 | `plans.html` — Guardian Plans & Pricing | per-seat subscription tiers for the Guardian console | Pricing & Engagements | Services & Engagements | ClearGlass Workspace | Book a security engagement / See pricing & plans |
 | `workspace.html` — ClearGlass Workspace | business email, storage and collaboration plans per person | Guardian Plans & Pricing | Services & Engagements | Secure Checkout | Book a security engagement / See pricing & plans |
 | `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | ClearGlass Workspace | Services & Engagements | Cybersecurity & AI Automation in Burlington | Book a security engagement / See pricing & plans |

@@ -51,10 +51,11 @@ def test_cinematic_runtime_has_visible_motion_control_and_bounded_frame_rate() -
     assert "cg-visual-effects-control" in runtime
     assert "Visual effects: " in runtime
     assert 'data-cg-motion-level' in runtime
-    assert "this.fps = 30" in runtime
-    # The downgrade runs inside the sampling callback, which captures `this` as
-    # `self`, so the bounded rate is assigned through that alias.
-    assert "self.fps = 15" in runtime
+    # The guarantee is that the loop runs at a capped 30fps and drops to 15 when
+    # the device struggles. The downgrade sits in a closure that captures `this`
+    # as `self`, so match either receiver rather than one literal spelling.
+    assert re.search(r"\b(?:this|self)\.fps\s*=\s*30\b", runtime)
+    assert re.search(r"\b(?:this|self)\.fps\s*=\s*15\b", runtime)
     assert "average > 50" in runtime
     assert "this.downgraded" in runtime
 

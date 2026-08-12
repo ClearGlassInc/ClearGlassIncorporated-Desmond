@@ -651,6 +651,14 @@
       "h1": "Automate everything.On your own server."
     },
     {
+      "route": "/content-shield.html",
+      "intent": "VEILGUARD",
+      "title": "VEILGUARD Content Shield · ClearGlass Inc",
+      "description": "VEILGUARD is the ClearGlass content protection layer: per-viewer watermarking, traceable renders, ephemeral previews, and leak attribution from a partial capture.",
+      "canonical": "https://www.clearglassinc.com/content-shield.html",
+      "h1": "VEILGUARD"
+    },
+    {
       "route": "/control-surface.html",
       "intent": "AI Operator",
       "title": "Systems Control Surface v3.1 — Command Dashboard",
@@ -1093,8 +1101,8 @@
     {
       "route": "/products/advanced-secure-systems-engineering.html",
       "intent": "ADVANCED SECURE SYSTEMS ENGINEERING",
-      "title": "Advanced Secure Systems Engineering | ClearGlass",
-      "description": "Defensive cybersecurity workshop covering embedded platforms, AI automation, zero-trust infrastructure, secure architecture, telemetry, and recovery.",
+      "title": "Advanced Secure Systems Engineering | ClearGlass Inc",
+      "description": "Enterprise workshop in defensive cybersecurity, embedded platforms, AI automation and zero-trust infrastructure — architecture to verification.",
       "canonical": "https://www.clearglassinc.com/products/advanced-secure-systems-engineering.html",
       "h1": "ADVANCED SECURE SYSTEMS ENGINEERING"
     },
@@ -1153,6 +1161,14 @@
       "description": "Explore the verified ClearGlass Inc. product ecosystem across intelligence platforms, cybersecurity systems, industry solutions and AI automation.",
       "canonical": "https://www.clearglassinc.com/products.html",
       "h1": "Find the right system. Faster."
+    },
+    {
+      "route": "/projects/nexus-gateway/web/index.html",
+      "intent": "Control plane for governed machine action.",
+      "title": "NEXUS Gateway — Hardened Security Gateway | ClearGlass Inc",
+      "description": "ClearGlass NEXUS Gateway: a hardened, self-hosted security gateway console for governed traffic inspection, policy enforcement and audited access control.",
+      "canonical": "https://www.clearglassinc.com/projects/nexus-gateway/web/index.html",
+      "h1": "Control plane for governed machine action."
     },
     {
       "route": "/revenue-engine.html",

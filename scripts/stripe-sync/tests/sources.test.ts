@@ -9,7 +9,7 @@
  * shape, this is the test that notices.
  */
 import assert from "node:assert/strict";
-import { mkdtempSync, writeFileSync, mkdirSync } from "node:fs";
+import { mkdtempSync, writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, it } from "node:test";
@@ -77,11 +77,17 @@ describe("side-store.html catalogue", () => {
 describe("data/store/catalog.json services", () => {
   const { products, issues } = collectProducts(["store"], context);
 
-  it("syncs the one engagement with an exact price", () => {
-    const skus = products.map((product) => product.sku);
-    assert.deepEqual(skus, ["quick-audit"]);
-    assert.equal(products[0]?.variants[0]?.amountMinor, 24900);
-    assert.equal(products[0]?.variants[0]?.currency, "cad");
+  it("syncs only the engagements with an exact price", () => {
+    // Pinned by sku and amount: these are the engagements approved to become
+    // purchasable. A service picking up an exact price must be added here
+    // deliberately, so nothing becomes chargeable as a side effect of a copy edit.
+    const priced = products
+      .map((product) => [product.sku, product.variants[0]?.amountMinor, product.variants[0]?.currency])
+      .sort((a, b) => String(a[0]).localeCompare(String(b[0])));
+    assert.deepEqual(priced, [
+      ["critical-minerals-compliance", 149900, "cad"],
+      ["quick-audit", 24900, "cad"],
+    ]);
   });
 
   it("withholds quote-driven engagements instead of guessing an amount", () => {
@@ -95,8 +101,23 @@ describe("data/store/catalog.json services", () => {
     }
   });
 
-  it("records that live card checkout is off for the SKU it does sync", () => {
-    assert.ok(products[0]?.notes.some((note) => note.includes("live card checkout disabled")));
+  it("keeps the live-checkout note in step with the catalogue flag", () => {
+    // The note is not decoration: it is how a synced product records whether the
+    // storefront will actually take a card. Asserting both directions means the
+    // note can never drift out of step with live_checkout_enabled -- flipping the
+    // flag without the note following is a bug this catches.
+    const catalogue = JSON.parse(
+      readFileSync(path.join(ROOT, "data/store/catalog.json"), "utf8"),
+    ) as { live_checkout_enabled?: boolean };
+    const disabledNotes = products.filter((product) =>
+      product.notes.some((note) => note.includes("live card checkout disabled")),
+    );
+
+    if (catalogue.live_checkout_enabled) {
+      assert.equal(disabledNotes.length, 0, "live checkout is on, so no product may claim it is off");
+    } else {
+      assert.equal(disabledNotes.length, products.length, "live checkout is off, so every synced product must say so");
+    }
   });
 });
 

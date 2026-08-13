@@ -190,6 +190,10 @@ PAGES: dict[str, tuple[str, str]] = {
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
     "plans.html": ("Guardian Plans & Pricing", "per-seat subscription tiers for the Guardian console"),
     "workspace.html": ("ClearGlass Workspace", "business email, storage and collaboration plans per person"),
+    "workspace-email.html": ("Business Email on Your Own Domain", "what it means, and the four DNS records that decide delivery"),
+    "workspace-migration.html": ("Email Migration Without Downtime", "the nine-step sequence, the rollback, and what it costs"),
+    "workspace-security.html": ("Workspace Security & Data Handling", "encryption, access, payments — and what we do not claim"),
+    "workspace-vs.html": ("Free Email vs Business Email", "when free is the right answer, and when it stops being"),
     "smb-cyber-trust-kit.html": ("SMB Cyber Trust Kit", "plain-language cyber resilience for small business"),
     "smb.html": ("SMB Suite", "intelligent systems for small business"),
     "side-store.html": ("Side Store", "electronics, cables and components"),
@@ -198,6 +202,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "offers/guardian-command-nexus-blueprint.html": ("Guardian Command Nexus Blueprint", "the full SPEC-1 architecture blueprint, sold as a digital deliverable"),
     "offers/autonomous-threat-modeling.html": ("Autonomous Threat Modeling", "continuous threat-modeling assessment and implementation services"),
     "revenue-engine.html": ("Revenue Engine", "AI-driven business growth system"),
+    "streaming-growth-command-center/index.html": ("Signal Engine", "authority-first live-stream acquisition system"),
 
     # Design & UI engineering
     "web-design.html": ("Web Design & Development", "growth infrastructure built by ClearGlass"),
@@ -366,11 +371,14 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "store.html", "products/advanced-secure-systems-engineering.html",
             "pricing.html", "plans.html", "workspace.html",
+            "workspace-email.html", "workspace-migration.html",
+            "workspace-security.html", "workspace-vs.html",
             "checkout/index.html", "seo-authority-hub.html",
             "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html",
             "offers/guardian-command-nexus-blueprint.html", "revenue-engine.html",
+            "streaming-growth-command-center/index.html",
             "side-store.html", "products.html",
             "business-productivity-suite.html", "global-growth-engine.html",
             "apps/command-center/index.html",

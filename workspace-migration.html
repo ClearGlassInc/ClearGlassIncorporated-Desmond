@@ -34,9 +34,9 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guardian Plans &amp; Pricing — ClearGlass Inc.</title>
-<meta name="description" content="ClearGlass Guardian security operations console plans: Essentials, Professional and Command tiers, billed monthly or annually in Canadian dollars.">
-<link rel="canonical" href="https://www.clearglassinc.com/plans.html">
+<title>Email Migration Without Downtime — ClearGlass Workspace</title>
+<meta name="description" content="How to migrate company email to a new provider without losing mail or downtime: the nine-step sequence, the rollback plan, and what migration costs in Canada.">
+<link rel="canonical" href="https://www.clearglassinc.com/workspace-migration.html">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font:16px/1.65 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#0f1722;background:#f6f8fb}
@@ -78,9 +78,9 @@ footer.site a{color:#39d0c3}
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="/brand-system.css">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.clearglassinc.com/plans.html">
-<meta property="og:title" content="Guardian Plans & Pricing — ClearGlass Inc.">
-<meta property="og:description" content="Flexible business productivity plans that scale with your team. Essentials, Professional and Command, billed monthly or annually in CAD.">
+<meta property="og:url" content="https://www.clearglassinc.com/workspace-migration.html">
+<meta property="og:title" content="Email Migration Without Downtime — ClearGlass Workspace">
+<meta property="og:description" content="The nine-step email migration sequence we use, why the order matters, and what it costs.">
 <meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -145,203 +145,91 @@ footer.site a{color:#39d0c3}
   .pl-hero .pl-fine{color:#93a9b8}
   @media (prefers-reduced-motion:no-preference){.pl-card{transition:transform .18s ease,box-shadow .18s ease}.pl-card:hover{transform:translateY(-3px)}}
 </style>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.clearglassinc.com/"},{"@type":"ListItem","position":2,"name":"ClearGlass Workspace","item":"https://www.clearglassinc.com/workspace.html"},{"@type":"ListItem","position":3,"name":"Migration","item":"https://www.clearglassinc.com/workspace-migration.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How long does a migration take?","acceptedAnswer":{"@type":"Answer","text":"For a team of ten, typically one week end to end: two days of inventory and preparation, an overnight seed copy, a cutover that takes under an hour, and then several days of monitoring. The visible disruption to your team is measured in minutes, not days."}},{"@type":"Question","name":"Will we lose email during the move?","acceptedAnswer":{"@type":"Answer","text":"No, if the sequence is followed. Mail keeps arriving at the old server right up to the cutover, and the old mailbox stays reachable read-only for 30 days afterwards. The risk is not lost mail \u2014 it is mail arriving somewhere nobody is watching, which is what step 2 prevents."}},{"@type":"Question","name":"Can we migrate over a weekend?","acceptedAnswer":{"@type":"Answer","text":"Yes, and it is often the right call for a team that lives in email. What we avoid is a Friday-afternoon cutover with nobody available until Monday, which is the worst of both."}},{"@type":"Question","name":"What about our historical email \u2014 do we keep it?","acceptedAnswer":{"@type":"Answer","text":"Yes. Historical mail, folder structure, contacts and calendars are copied across. Message counts are compared per mailbox afterwards so the copy is verified rather than assumed."}},{"@type":"Question","name":"Do you need our domain registrar password?","acceptedAnswer":{"@type":"Answer","text":"No. We give you the exact records to publish, or work alongside you in the registrar's dashboard on a call. We do not ask for and do not want standing credentials to your domain."}},{"@type":"Question","name":"What if something goes wrong mid-migration?","acceptedAnswer":{"@type":"Answer","text":"Before the MX cutover there is nothing to undo \u2014 the old system is still authoritative. After it, reverting the MX record restores the previous state within the DNS TTL we lowered in advance. That rollback is written down before the migration starts, not improvised during it."}}]}</script>
 <link rel="stylesheet" href="/assets/css/future-buttons.css">
 </head>
 <body>
 <header class="site"><div class="wrap"><span class="brand">ClearGlass Inc. <em>CLARITY IS POWER</em></span><a href="index.html" style="color:#9fb3c2;font-size:14px">← Home</a></div></header>
 
 <div class="pl-hero"><div class="pl-wrap">
-  <div class="eyebrow" style="color:#39d0c3;font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700">ClearGlass Guardian · per-operator plans</div>
-  <h1>Flexible business productivity plans that scale with your team.</h1>
-  <p class="sub">Guardian is the security operations console your team runs the day on — live dashboards, pipeline workflows, an append-only audit ledger and an AI command layer. Pay per operator seat. Add and remove seats as the team changes.</p>
-  <div class="pl-ctas">
-    <a class="btn" href="#plans">Start your subscription</a>
-    <a class="btn alt" href="#compare">Compare plans</a>
-  </div>
-
-  <div class="pl-toggle" role="group" aria-label="Billing period">
-    <button type="button" id="billMonthly" aria-pressed="false">Monthly</button>
-    <button type="button" id="billAnnual" aria-pressed="true">Annual</button>
-  </div>
-  <span class="pl-save" id="saveNote">Annual billing saves 16.7% — about two months free.</span>
-
-  <div class="pl-seats">
-    <label for="seats">Operator seats</label>
-    <input type="number" id="seats" name="seats" min="1" max="500" step="1" value="5"
-           inputmode="numeric" aria-describedby="seatsHelp">
-    <span id="seatsHelp" class="muted" style="color:#93a9b8;font-size:13.5px">Change this to see your total.</span>
-  </div>
-  <p class="pl-fine">Prices are in Canadian dollars and are approximate. Applicable taxes are calculated at checkout and are not included above. Amounts may change with currency conversion or provider fees.</p>
+  <div class="eyebrow" style="color:#39d0c3;font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700">ClearGlass Workspace</div>
+  <h1>Move your company email without losing a message.</h1>
+  <p class="sub">Migrations rarely fail for technical reasons. They fail because the steps happened in the wrong order. Here is the order — and the rollback that makes it safe.</p>
+  <div class="pl-ctas"><a class="btn" href="workspace.html">Compare plans</a><a class="btn alt" href="#pricing">What it costs</a></div>
 </div></div>
 
-<section class="pl-sect" id="plans"><div class="pl-wrap">
-  <div class="pl-grid" id="planGrid"></div>
-  <p class="pl-fine">Every plan starts with a 14-day trial. No card is charged during the trial, and you can cancel from the dashboard before it ends.</p>
-</div></section>
-
-<section class="pl-sect" id="compare" style="background:#fff;border-top:1px solid #e4eaf1;border-bottom:1px solid #e4eaf1"><div class="pl-wrap">
-  <h2>Compare plans</h2>
-  <p class="lede">Everything in a lower tier is included in the tiers above it.</p>
-  <div class="pl-table-scroll">
-    <table class="pl-cmp">
-      <caption class="visually-hidden" style="position:absolute;left:-9999px">Guardian feature comparison across Essentials, Professional and Command</caption>
-      <thead><tr><th scope="col">Capability</th><th scope="col">Essentials</th><th scope="col">Professional</th><th scope="col">Command</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">Live operations dashboard</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Pipeline &amp; task workflows</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Alerts &amp; incident timeline</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Append-only audit ledger</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Browser and mobile access</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Simulation grid (training &amp; rehearsal)</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">AI command console</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Governed approval gate</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Audit export &amp; retention controls</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">SSO and role-based access control</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">SOC / SIEM integrations</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Priority support with named contact</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div></section>
-
 <section class="pl-sect"><div class="pl-wrap">
-  <h2>How it works</h2>
-  <ol class="pl-steps">
-    <li><strong>Pick a plan and seat count.</strong> Start on any tier; the trial runs 14 days.</li>
-    <li><strong>Invite your operators.</strong> Seats are assigned per person and can be reassigned.</li>
-    <li><strong>Connect your sources.</strong> We help wire your first feeds during onboarding.</li>
-    <li><strong>Change plans any time.</strong> Upgrades apply immediately and bill pro-rata; downgrades take effect at renewal.</li>
-  </ol>
+  <h2>Why migrations go wrong</h2>
+  <p class="lede">Almost never because the new system is bad. Nearly always because of one of these five, and every one of them is preventable with a checklist.</p>
+  <div class="pl-cards3">
+    <div class="pl-mini"><h3>The cutover happened before the copy finished</h3><p>Mail is redirected to the new server while the historical mailbox is still copying. Now there are two live mailboxes and no single complete one.</p></div>
+    <div class="pl-mini"><h3>Nobody lowered the DNS TTL</h3><p>A 24-hour TTL means some senders keep using the old MX record for a full day after the switch. Mail lands somewhere nobody is watching.</p></div>
+    <div class="pl-mini"><h3>SPF was not updated</h3><p>The new server sends, the old SPF record does not list it, and every outbound message is suddenly unauthenticated. This is the "why is our mail in spam" call, three days late.</p></div>
+    <div class="pl-mini"><h3>Shared calendars and aliases were forgotten</h3><p>Mailboxes copy cleanly. Distribution lists, shared calendars, room bookings and catch-all aliases are the ones that get discovered by their absence.</p></div>
+    <div class="pl-mini"><h3>Mobile devices were never reconfigured</h3><p>Phones keep polling the old server and appear to work, so nobody reports a problem until the old account is shut off.</p></div>
+    <div class="pl-mini"><h3>There was no rollback</h3><p>If the plan has no defined way back, then a problem at 4pm on a weekday becomes an outage instead of an inconvenience.</p></div>
+  </div>
 </div></section>
 
 <section class="pl-sect" style="background:#fff;border-top:1px solid #e4eaf1;border-bottom:1px solid #e4eaf1"><div class="pl-wrap">
-  <h2>Security and compliance</h2>
-  <p class="lede">Guardian is a security product, so the platform is held to the standard it asks of you.</p>
-  <div class="pl-cards3">
-    <div class="pl-mini"><h3>Every action is logged</h3><p>Operator actions, system events and AI commands are written to an append-only ledger with severity and actor, so an audit can reconstruct who decided what.</p></div>
-    <div class="pl-mini"><h3>Consequential actions are gated</h3><p>Anything touching credentials, remote execution or data export is scored and routed to a human approval before it runs. Nothing consequential executes unattended.</p></div>
-    <div class="pl-mini"><h3>Encrypted in transit and at rest</h3><p>TLS 1.2 or better in transit, encryption at rest server-side, scoped sessions with inactivity timeout, and per-endpoint rate limiting.</p></div>
-    <div class="pl-mini"><h3>Card data never touches us</h3><p>Payments are processed by Stripe on their hosted page. ClearGlass never sees, stores or transmits a card number.</p></div>
-    <div class="pl-mini"><h3>Canadian tax handled correctly</h3><p>GST/HST is calculated at checkout from your billing address and itemised on every invoice.</p></div>
-    <div class="pl-mini"><h3>Your data stays yours</h3><p>Export your audit ledger and operational data at any time. Cancelling does not hold your records hostage.</p></div>
+  <h2>The migration sequence we use</h2>
+  <p class="lede">Nine steps, in this order. The order is the method — most of the failures above are step-ordering mistakes, not technical ones.</p>
+  <ol class="pl-steps" style="grid-template-columns:1fr">
+    <li><strong>Inventory first.</strong> Every mailbox, alias, distribution list, shared calendar, forwarding rule and connected app. Written down before anything moves.</li>
+    <li><strong>Lower the TTL</strong> on your MX and related records to 300 seconds, at least 24 hours before the cutover.</li>
+    <li><strong>Provision the new accounts</strong> and configure SPF, DKIM and DMARC — but publish nothing yet.</li>
+    <li><strong>Seed copy.</strong> Historical mail, contacts and calendars are copied while the old system is still live and authoritative. Nobody is disrupted.</li>
+    <li><strong>Verify the copy.</strong> Message counts and folder structure compared per mailbox, not sampled.</li>
+    <li><strong>Delta copy,</strong> catching everything that arrived during the seed.</li>
+    <li><strong>Cut over the MX record.</strong> This is the only irreversible-feeling moment, and it takes minutes because the TTL was already lowered.</li>
+    <li><strong>Reconfigure devices</strong> with the team, in a single session, so nobody is left on the old server.</li>
+    <li><strong>Watch for a week.</strong> DMARC reports, bounce rates and delivery to the major receivers. The old mailbox stays reachable, read-only, for 30 days.</li>
+  </ol>
+  <div class="note"><strong>The rollback:</strong> until step 7, there is nothing to roll back — the old system is still authoritative. After step 7, reverting the MX record restores the previous state within the 300-second TTL. That is why the TTL comes down first.</div>
+</div></section>
+
+<section class="pl-sect" id="pricing"><div class="pl-wrap">
+  <h2>What a migration costs</h2>
+  <div class="pl-table-scroll">
+    <table class="pl-cmp">
+      <caption style="position:absolute;left:-9999px">ClearGlass Workspace migration service pricing</caption>
+      <thead><tr><th scope="col">Service</th><th scope="col">Scope</th><th scope="col">Price (CAD)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Domain &amp; DNS setup</th><td style="text-align:left">Domain, MX, SPF, DKIM, DMARC configured and verified</td><td>$150</td></tr>
+        <tr><th scope="row">Standard migration</th><td style="text-align:left">Up to 10 mailboxes, full sequence above</td><td>$450</td></tr>
+        <tr><th scope="row">Extended migration</th><td style="text-align:left">11–50 mailboxes</td><td>$1,200</td></tr>
+        <tr><th scope="row">Team onboarding session</th><td style="text-align:left">90 minutes, device setup and orientation</td><td>$250</td></tr>
+      </tbody>
+    </table>
   </div>
+  <p class="pl-fine">Prices are approximate, quoted in Canadian dollars and exclusive of applicable GST/HST, which is calculated at checkout from your billing address. Migration is included with the Complete plan. Above 50 mailboxes the work is quoted individually rather than priced from a table.</p>
 </div></section>
 
-<section class="pl-sect"><div class="pl-wrap">
+<section class="pl-sect" style="background:#fff;border-top:1px solid #e4eaf1;border-bottom:1px solid #e4eaf1"><div class="pl-wrap">
   <h2>Frequently asked questions</h2>
-  <details class="faq"><summary>Are these prices final?</summary><p>They are approximate and shown in Canadian dollars, before tax. Applicable GST/HST is calculated at checkout from your billing address. Amounts may change with currency conversion or payment-provider fees, and we will tell you before any change affects a renewal.</p></details>
-  <details class="faq"><summary>What happens after the 14-day trial?</summary><p>Nothing is charged during the trial. At the end, the plan you chose begins billing at the seat count you set. Cancel from the dashboard before the trial ends and you are not charged at all.</p></details>
-  <details class="faq"><summary>Can I change seats mid-month?</summary><p>Yes. Added seats bill pro-rata for the remainder of the period. Removed seats credit against your next invoice rather than being refunded outright.</p></details>
-  <details class="faq"><summary>What is the difference between monthly and annual?</summary><p>Annual is billed once for twelve months and works out about 16.7% cheaper — roughly two months free. Monthly is billed every month with no commitment and can be cancelled at any renewal.</p></details>
-  <details class="faq"><summary>Can I upgrade, downgrade or pause?</summary><p>Upgrades apply immediately and are prorated. Downgrades take effect at your next renewal so you keep what you paid for. Pausing is available on annual plans for up to 60 days once per term.</p></details>
-  <details class="faq"><summary>How do I cancel?</summary><p>From the billing section of your dashboard, in one step, with no phone call. Access continues to the end of the period you have already paid for.</p></details>
-  <details class="faq"><summary>Do you offer a demo instead?</summary><p>Yes. If you would rather see it driven by someone who knows it before committing a team to it, book a walkthrough and we will run your scenarios rather than a canned script.</p></details>
-</div></section>
-
-<section class="pl-sect" style="background:#fff;border-top:1px solid #e4eaf1"><div class="pl-wrap" style="text-align:center">
-  <h2>Not sure which plan fits?</h2>
-  <p class="lede" style="margin:12px auto 22px">Tell us the size of your team and what you are trying to see, and we will tell you honestly which tier covers it — including when the answer is the cheapest one.</p>
-  <a class="btn" href="mailto:desmondotieno@icloud.com?subject=Guardian%20plan%20question&amp;body=Hi%20Desmond%2C%0A%0AWe%20are%20looking%20at%20Guardian.%0A%0ATeam%20size%3A%20%0AWhat%20we%20need%20to%20see%3A%20">Talk to us first</a>
+  <details class="faq"><summary>How long does a migration take?</summary><p>For a team of ten, typically one week end to end: two days of inventory and preparation, an overnight seed copy, a cutover that takes under an hour, and then several days of monitoring. The visible disruption to your team is measured in minutes, not days.</p></details>
+  <details class="faq"><summary>Will we lose email during the move?</summary><p>No, if the sequence is followed. Mail keeps arriving at the old server right up to the cutover, and the old mailbox stays reachable read-only for 30 days afterwards. The risk is not lost mail — it is mail arriving somewhere nobody is watching, which is what step 2 prevents.</p></details>
+  <details class="faq"><summary>Can we migrate over a weekend?</summary><p>Yes, and it is often the right call for a team that lives in email. What we avoid is a Friday-afternoon cutover with nobody available until Monday, which is the worst of both.</p></details>
+  <details class="faq"><summary>What about our historical email — do we keep it?</summary><p>Yes. Historical mail, folder structure, contacts and calendars are copied across. Message counts are compared per mailbox afterwards so the copy is verified rather than assumed.</p></details>
+  <details class="faq"><summary>Do you need our domain registrar password?</summary><p>No. We give you the exact records to publish, or work alongside you in the registrar's dashboard on a call. We do not ask for and do not want standing credentials to your domain.</p></details>
+  <details class="faq"><summary>What if something goes wrong mid-migration?</summary><p>Before the MX cutover there is nothing to undo — the old system is still authoritative. After it, reverting the MX record restores the previous state within the DNS TTL we lowered in advance. That rollback is written down before the migration starts, not improvised during it.</p></details>
 </div></section>
 
 <div class="pl-final"><div class="pl-wrap">
-  <h2>Start with the plan that fits today.</h2>
-  <p>Seats are adjustable and plans change on your schedule, so picking one now costs you nothing later.</p>
-  <div class="pl-ctas"><a class="btn" href="#plans">Start your subscription</a><a class="btn alt" href="#compare">Compare plans</a></div>
+  <h2>Planning a move?</h2>
+  <p>Tell us how many mailboxes you have and what you are on today, and we will tell you honestly how long it will take — including when the answer is that you should stay where you are.</p>
+  <div class="pl-ctas"><a class="btn" href="workspace.html">Start your subscription</a><a class="btn alt" href="workspace-email.html">How business email works</a></div>
 </div></div>
 
 <footer class="site"><div class="wrap">
   ClearGlass Inc. · Ontario, Canada · <a href="index.html">www.clearglassinc.com</a><br>
-  Prices in CAD, approximate and exclusive of tax. Applicable GST/HST is calculated at checkout.
+  <a href="legal/privacy.html">Privacy</a> · <a href="legal/terms.html">Terms, refunds &amp; cancellation</a> · <a href="legal/content-policy.html">Acceptable use</a> · <a href="legal/accessibility.html">Accessibility</a><br>
+  Prices in CAD, approximate and exclusive of tax. Subject to applicable taxes, supplier pricing, licensing requirements, currency changes and payment-provider fees.
 </div></footer>
   <script defer src="/logo-badge.js"></script>
 <script defer src="/stealth-glass.js"></script>
-<script>
-(function(){
-  "use strict";
-  // ── PLAN CONFIG ────────────────────────────────────────────────────────────
-  // Amounts are CAD cents per seat per month. `annual` is the effective monthly
-  // rate when paying for twelve months up front; `monthly` is the pay-as-you-go
-  // rate. The 1.2x relationship (16.7% annual saving) mirrors the ratio in the
-  // brief. Change a number here and the cards, totals and comparison all follow.
-  var PLANS = [
-    { id:"essentials",   name:"Essentials",   annual:2900,  monthly:3480,
-      who:"For a small team that needs one honest view of what is happening.",
-      features:["Live operations dashboard","Pipeline and task workflows","Alerts and incident timeline","Append-only audit ledger","Browser and mobile access","Email support"] },
-    { id:"professional", name:"Professional", annual:7900,  monthly:9480, popular:true,
-      who:"For teams running real operations who need rehearsal and automation.",
-      features:["Everything in Essentials","Simulation grid for training","AI command console","Governed approval gate","Audit export and retention controls","Priority email support"] },
-    { id:"command",      name:"Command",      annual:14900, monthly:17880,
-      who:"For security organisations with compliance obligations and existing tooling.",
-      features:["Everything in Professional","SSO and role-based access control","SOC and SIEM integrations","Custom retention policy","Named support contact","Onboarding and migration help"] }
-  ];
-
-  var period = "annual";
-  var seats  = 5;
-
-  function fmt(cents){
-    return "$" + (cents/100).toLocaleString("en-CA",{minimumFractionDigits:2,maximumFractionDigits:2});
-  }
-  function rate(plan){ return period === "annual" ? plan.annual : plan.monthly; }
-
-  function render(){
-    var grid = document.getElementById("planGrid");
-    grid.innerHTML = PLANS.map(function(p){
-      var per   = rate(p);
-      var month = per * seats;
-      var total = period === "annual" ? month * 12 : month;
-      var label = period === "annual"
-        ? "billed as " + fmt(total) + " once a year"
-        : "billed " + fmt(total) + " every month";
-      return '<div class="pl-card' + (p.popular ? ' pop' : '') + '">' +
-        (p.popular ? '<span class="pl-badge">Most popular</span>' : '') +
-        '<h3>' + p.name + '</h3>' +
-        '<p class="who">' + p.who + '</p>' +
-        '<div class="pl-amt"><span class="cur">CAD</span> ' + fmt(per) + '</div>' +
-        '<div class="pl-per">per seat / month' + (period === "annual" ? ", billed annually" : ", billed monthly") + '</div>' +
-        '<div class="pl-total" aria-live="polite">' + seats + (seats === 1 ? ' seat' : ' seats') +
-          ' · <b>' + fmt(month) + '</b> / month<br><span class="muted">' + label + ' · plus applicable tax</span></div>' +
-        '<ul>' + p.features.map(function(f){ return '<li>' + f + '</li>'; }).join('') + '</ul>' +
-        '<a class="btn" href="mailto:desmondotieno@icloud.com?subject=' +
-          encodeURIComponent('Guardian ' + p.name + ' — ' + seats + ' seats (' + period + ')') +
-          '&body=' + encodeURIComponent(
-            'Hi Desmond,\n\nWe would like to start a Guardian subscription.\n\nPlan: ' + p.name +
-            '\nSeats: ' + seats + '\nBilling: ' + period +
-            '\nEstimated: ' + fmt(month) + ' / month before tax\n\nOrganization: \n') +
-          '">Start your subscription</a>' +
-        '</div>';
-    }).join('');
-  }
-
-  function setPeriod(next){
-    period = next;
-    var a = document.getElementById("billAnnual"), m = document.getElementById("billMonthly");
-    a.setAttribute("aria-pressed", String(next === "annual"));
-    m.setAttribute("aria-pressed", String(next === "monthly"));
-    document.getElementById("saveNote").textContent = next === "annual"
-      ? "Annual billing saves 16.7% — about two months free."
-      : "Switch to annual to save 16.7% — about two months free.";
-    render();
-  }
-
-  document.getElementById("billAnnual").addEventListener("click", function(){ setPeriod("annual"); });
-  document.getElementById("billMonthly").addEventListener("click", function(){ setPeriod("monthly"); });
-
-  var input = document.getElementById("seats");
-  input.addEventListener("input", function(){
-    var v = parseInt(input.value, 10);
-    // Clamp rather than reject, so a stray keystroke never shows a nonsense total.
-    if (!isFinite(v) || v < 1) v = 1;
-    if (v > 500) v = 500;
-    seats = v;
-    render();
-  });
-  input.addEventListener("blur", function(){ input.value = seats; });
-
-  render();
-})();
-</script>
-<script defer src="nav.js"></script>
 <!-- cg-related:start -->
 <aside id="cg-related">
   <style>#cg-related{margin:54px auto 0;max-width:1120px;padding:0 18px 38px;font-family:'Inter',system-ui,-apple-system,sans-serif;position:relative}#cg-related .cgr-box{position:relative;overflow:hidden;background:linear-gradient(rgba(34,211,238,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,255,.05) 1px,transparent 1px),radial-gradient(circle at 12% 0,rgba(34,211,238,.16),transparent 34%),radial-gradient(circle at 88% 100%,rgba(168,85,247,.16),transparent 36%),linear-gradient(165deg,rgba(5,12,28,.97),rgba(9,7,24,.97));background-size:32px 32px,32px 32px,auto,auto,auto;border:1px solid rgba(34,211,238,.34);border-radius:16px;padding:24px 26px;color:#d8e4ff;box-shadow:0 18px 54px rgba(0,0,0,.44),0 0 34px rgba(34,211,238,.12),inset 0 0 0 1px rgba(255,255,255,.035)}#cg-related .cgr-box:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(34,211,238,.18),transparent);transform:translateX(-120%) skewX(-18deg);animation:cgr-scan 8s ease-in-out infinite}#cg-related .cgr-box:after{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,#a855f7,transparent);box-shadow:0 0 18px rgba(34,211,238,.75)}#cg-related .cgr-crumb{position:relative;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8fb9ff;margin:0 0 12px}#cg-related .cgr-crumb a{color:#67e8f9;text-decoration:none;text-shadow:0 0 12px rgba(34,211,238,.35)}#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:none}#cg-related h2{position:relative;margin:0 0 14px;font-size:15.5px;letter-spacing:.08em;text-transform:uppercase;color:#f3f7ff}#cg-related .cgr-route{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 16px}#cg-related .cgr-route a{display:flex;min-height:46px;align-items:center;padding:8px 10px;border-radius:10px;background:rgba(7,14,32,.52);border:1px solid rgba(124,150,255,.15);color:#cfe0ff;text-decoration:none;font-size:12px;line-height:1.35}#cg-related .cgr-route a:hover,#cg-related .cgr-route a:focus-visible{border-color:#22d3ee;color:#fff;box-shadow:0 0 18px rgba(34,211,238,.14)}#cg-related .cgr-route b{display:block;color:#67e8f9;font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2px}#cg-related ul{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:8px 18px}#cg-related li a{display:block;padding:9px 11px;border-radius:10px;font-size:13.5px;line-height:1.45;color:#cfe0ff;text-decoration:none;border:1px solid rgba(124,150,255,.08);background:rgba(7,14,32,.36);transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}#cg-related li a:hover,#cg-related li a:focus-visible{transform:translateY(-1px);background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.42);color:#fff;box-shadow:0 0 22px rgba(34,211,238,.14)}#cg-related li a b{color:#9bdcff;font-weight:700;text-shadow:0 0 12px rgba(34,211,238,.28)}#cg-related .cgr-cta{position:relative;margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(34,211,238,.18);font-size:13.5px;color:#a9b8df}#cg-related .cgr-cta a{color:#67e8f9;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.36)}#cg-related .cgr-cta a:hover{color:#fff;border-bottom-color:#fff}@media(max-width:620px){#cg-related .cgr-box{padding:21px 17px}#cg-related .cgr-route{grid-template-columns:1fr}#cg-related ul{grid-template-columns:1fr}}@keyframes cgr-scan{0%,58%{transform:translateX(-120%) skewX(-18deg);opacity:0}70%{opacity:1}100%{transform:translateX(220%) skewX(-18deg);opacity:0}}@media(prefers-reduced-motion:reduce){#cg-related .cgr-box:before{animation:none}}</style>
@@ -349,21 +237,22 @@ footer.site a{color:#39d0c3}
     <p class="cgr-crumb"><a href="index.html">ClearGlass Inc.</a> › <a href="offers/index.html">Services &amp; Engagements</a></p>
     <h2>Continue exploring</h2>
     <div class="cgr-route" aria-label="Journey navigation">
-      <a href="pricing.html"><span><b>Previous</b>Pricing &amp; Engagements</span></a>
+      <a href="workspace-email.html"><span><b>Previous</b>Business Email on Your Own Domain</span></a>
       <a href="offers/index.html"><span><b>Topic hub</b>Services &amp; Engagements</span></a>
-      <a href="workspace.html"><span><b>Next in journey</b>ClearGlass Workspace</span></a>
+      <a href="workspace-security.html"><span><b>Next in journey</b>Workspace Security &amp; Data Handling</span></a>
     </div>
     <ul>
-      <li><a href="workspace.html"><b>ClearGlass Workspace</b> — business email, storage and collaboration plans per person</a></li>
-      <li><a href="workspace-email.html"><b>Business Email on Your Own Domain</b> — what it means, and the four DNS records that decide delivery</a></li>
-      <li><a href="workspace-migration.html"><b>Email Migration Without Downtime</b> — the nine-step sequence, the rollback, and what it costs</a></li>
       <li><a href="workspace-security.html"><b>Workspace Security &amp; Data Handling</b> — encryption, access, payments — and what we do not claim</a></li>
+      <li><a href="workspace-vs.html"><b>Free Email vs Business Email</b> — when free is the right answer, and when it stops being</a></li>
+      <li><a href="checkout/index.html"><b>Secure Checkout</b> — purchase an audit or protection plan</a></li>
+      <li><a href="seo-authority-hub.html"><b>Cybersecurity &amp; AI Automation in Burlington</b> — the local authority hub for ClearGlass services</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
   </nav>
 </aside>
 <!-- cg-related:end -->
-<script defer src="/assets/js/future-buttons.js"></script>
+<script defer src="/nav.js"></script>
 <script defer src="/cg-a11y.js"></script>
+<script defer src="/assets/js/future-buttons.js"></script>
 </body>
 </html>

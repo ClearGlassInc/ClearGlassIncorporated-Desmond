@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 162 public pages are connected and 13 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 167 public pages are connected and 13 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -113,8 +113,12 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `products/advanced-secure-systems-engineering.html` — Secure Systems Engineering Workshop | enterprise workshop in defensive cyber, embedded platforms and zero trust | ClearGlass Store | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
 | `pricing.html` — Pricing & Engagements | plans and engagement models | Secure Systems Engineering Workshop | Services & Engagements | Guardian Plans & Pricing | Book a security engagement / See pricing & plans |
 | `plans.html` — Guardian Plans & Pricing | per-seat subscription tiers for the Guardian console | Pricing & Engagements | Services & Engagements | ClearGlass Workspace | Book a security engagement / See pricing & plans |
-| `workspace.html` — ClearGlass Workspace | business email, storage and collaboration plans per person | Guardian Plans & Pricing | Services & Engagements | Secure Checkout | Book a security engagement / See pricing & plans |
-| `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | ClearGlass Workspace | Services & Engagements | Cybersecurity & AI Automation in Burlington | Book a security engagement / See pricing & plans |
+| `workspace.html` — ClearGlass Workspace | business email, storage and collaboration plans per person | Guardian Plans & Pricing | Services & Engagements | Business Email on Your Own Domain | Book a security engagement / See pricing & plans |
+| `workspace-email.html` — Business Email on Your Own Domain | what it means, and the four DNS records that decide delivery | ClearGlass Workspace | Services & Engagements | Email Migration Without Downtime | Book a security engagement / See pricing & plans |
+| `workspace-migration.html` — Email Migration Without Downtime | the nine-step sequence, the rollback, and what it costs | Business Email on Your Own Domain | Services & Engagements | Workspace Security & Data Handling | Book a security engagement / See pricing & plans |
+| `workspace-security.html` — Workspace Security & Data Handling | encryption, access, payments — and what we do not claim | Email Migration Without Downtime | Services & Engagements | Free Email vs Business Email | Book a security engagement / See pricing & plans |
+| `workspace-vs.html` — Free Email vs Business Email | when free is the right answer, and when it stops being | Workspace Security & Data Handling | Services & Engagements | Secure Checkout | Book a security engagement / See pricing & plans |
+| `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | Free Email vs Business Email | Services & Engagements | Cybersecurity & AI Automation in Burlington | Book a security engagement / See pricing & plans |
 | `seo-authority-hub.html` — Cybersecurity & AI Automation in Burlington | the local authority hub for ClearGlass services | Secure Checkout | Services & Engagements | SMB Cyber Trust Kit | Book a security engagement / See pricing & plans |
 | `smb-cyber-trust-kit.html` — SMB Cyber Trust Kit | plain-language cyber resilience for small business | Cybersecurity & AI Automation in Burlington | Services & Engagements | SMB Suite | Book a security engagement / See pricing & plans |
 | `smb.html` — SMB Suite | intelligent systems for small business | SMB Cyber Trust Kit | Services & Engagements | Security Quick-Audit | Book a security engagement / See pricing & plans |
@@ -122,8 +126,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `offers/autonomous-threat-modeling.html` — Autonomous Threat Modeling | continuous threat-modeling assessment and implementation services | Security Quick-Audit | Services & Engagements | Hardening Sprint | Book a security engagement / See pricing & plans |
 | `offers/hardening-sprint.html` — Hardening Sprint | Microsoft 365 + Windows hardening engagement | Autonomous Threat Modeling | Services & Engagements | Guardian Command Nexus Blueprint | Book a security engagement / See pricing & plans |
 | `offers/guardian-command-nexus-blueprint.html` — Guardian Command Nexus Blueprint | the full SPEC-1 architecture blueprint, sold as a digital deliverable | Hardening Sprint | Services & Engagements | Revenue Engine | Book a security engagement / See pricing & plans |
-| `revenue-engine.html` — Revenue Engine | AI-driven business growth system | Guardian Command Nexus Blueprint | Services & Engagements | Side Store | Book a security engagement / See pricing & plans |
-| `side-store.html` — Side Store | electronics, cables and components | Revenue Engine | Services & Engagements | ClearGlass Products | Book a security engagement / See pricing & plans |
+| `revenue-engine.html` — Revenue Engine | AI-driven business growth system | Guardian Command Nexus Blueprint | Services & Engagements | Signal Engine | Book a security engagement / See pricing & plans |
+| `streaming-growth-command-center/index.html` — Signal Engine | authority-first live-stream acquisition system | Revenue Engine | Services & Engagements | Side Store | Book a security engagement / See pricing & plans |
+| `side-store.html` — Side Store | electronics, cables and components | Signal Engine | Services & Engagements | ClearGlass Products | Book a security engagement / See pricing & plans |
 | `products.html` — ClearGlass Products | the unified ClearGlass product catalog | Side Store | Services & Engagements | Business Productivity Suite | Book a security engagement / See pricing & plans |
 | `business-productivity-suite.html` — Business Productivity Suite | Canadian-first business productivity planning | ClearGlass Products | Services & Engagements | Global Growth Engine | Book a security engagement / See pricing & plans |
 | `global-growth-engine.html` — Global Growth Engine | governed multi-market growth intelligence | Business Productivity Suite | Services & Engagements | Growth Command Centre | Book a security engagement / See pricing & plans |

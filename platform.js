@@ -38,6 +38,20 @@
     document.documentElement.setAttribute("data-cg-home-runtime", "stabilized");
   }
 
+  /* Global navigation search: additive, non-fixed progressive enhancement.
+     The runtime attaches only when an existing primary nav is present, indexes
+     same-origin public pages lazily, and fails closed without changing routes. */
+  if (!document.querySelector('script[data-cg-global-nav-search="true"]')) {
+    var navSearch = document.createElement("script");
+    navSearch.src = platformAsset("global-nav-search.js");
+    navSearch.defer = true;
+    navSearch.setAttribute("data-cg-global-nav-search", "true");
+    navSearch.addEventListener("error", function () {
+      document.documentElement.setAttribute("data-cg-nav-search", "degraded");
+    }, { once: true });
+    document.body.appendChild(navSearch);
+  }
+
   /* Homepage editorial showcase: intentionally content-only and non-fixed.
      It reads the existing Insights post index, mounts before the timeline,
      and fails closed so editorial enhancement can never destabilize the page. */

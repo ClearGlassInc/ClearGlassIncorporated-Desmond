@@ -133,11 +133,42 @@ live in `tools/internal_links.py` (stdlib only).
 - **Adding/renaming a page?** Add it to `PAGES` and a cluster in
   `tools/internal_links.py`, then run `python3 tools/internal_links.py`
   (idempotent; `--check` verifies freshness). Add the URL to `sitemap.xml`.
+  Then run `python3 tools/design_system.py` (below) — it wires the shared
+  design system, navigation, keyboard contract, and social card onto the page.
 - Don't hand-edit the generated blocks — regenerate them.
 - Full-viewport HUD pages (`body{overflow:hidden}`) are listed in
   `FIXED_VIEWPORT` and get a fixed corner chip instead of a footer block.
 - When many pages change, bump `VERSION` in `sw.js` so returning visitors'
   service-worker caches refresh.
+
+## The ClearGlass Interface System (static site)
+
+The homepage-derived visual language (`assets/css/cg-design-system.css`) only
+holds if every page actually *loads* it, so adoption is enforced rather than
+assumed. `tools/design_system.py` gates four contracts across all 143 routes:
+the design-system CSS, `nav.js`, `cg-a11y.js`, and a Twitter/X card.
+
+```bash
+python3 tools/design_system.py           # apply (idempotent)
+python3 tools/design_system.py --check   # exit 1 if any route is stale
+python3 tools/design_system.py --report  # regenerate DESIGN_SYSTEM_AUDIT.md
+```
+
+Two things to know before editing site chrome:
+
+- **There are two navigation systems.** `control-surface.js` sets
+  `window.__cgNavLoaded = true` to deliberately supersede `nav.js` on 35 pages.
+  Because of that, the keyboard contract (skip link, `aria-current`) lives in
+  `cg-a11y.js`, which runs under either one. Don't move it back into `nav.js`.
+- **Social metadata is derived, never invented** — from `og:*`, then
+  `<title>`/`description`. A page with nothing to borrow is reported, not
+  given filler text.
+
+Exemptions in `EXEMPT`/`NAV_EXEMPT` each need a stated reason; a test enforces
+it. Contracts are gated by `tests/test_design_system.py` (so `pytest tests/`
+fails the build on drift) and by Playwright suites in `tests/browser/` — those
+must load pages with `?skipboot=1` to bypass the first-visit boot loader.
+Full write-up, known gaps, and rollback: `DESIGN_SYSTEM.md`.
 
 ## The RFED™ audit trail (agentic workflows)
 

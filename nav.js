@@ -122,6 +122,231 @@
     });
     document.body.classList.add('cg-global-nav-enabled');
   }
+  /* ── accessibility primitives ────────────────────────────────────────────
+     The injected chrome is the site's only navigation, so it has to carry the
+     full keyboard contract itself: a bypass link, an honest active-route
+     signal, and modal surfaces that trap, restore, and release focus. */
+  var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+  function focusables(root){
+    return Array.prototype.filter.call(root.querySelectorAll(FOCUSABLE), function(el){
+      // checkVisibility also accounts for visibility:hidden and opacity:0,
+      // which still report client rects but are not in the tab order.
+      if (typeof el.checkVisibility === 'function'){
+        return el.checkVisibility({ visibilityProperty: true, opacityProperty: true });
+      }
+      return el.getClientRects().length > 0;
+    });
+  }
+
+  function trapFocus(container, event){
+    var items = focusables(container);
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
+  }
+
+  /* Closing the drawer is also driven by the scroll handler, so the closer is
+     shared rather than duplicated — otherwise a scroll-close would strand focus
+     on an element that is no longer rendered. */
+  var closeDrawer = function(){};
+  var drawerIsOpen = function(){ return false; };
+
+  function installSkipLink(){
+    if (document.querySelector('.cg-skip')) return;
+    var main = document.querySelector('main, [role="main"]') || document.getElementById('main');
+    if (!main) return;
+    if (!main.id) main.id = 'cg-main';
+    if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+    var link = document.createElement('a');
+    link.className = 'cg-skip';
+    link.href = '#' + main.id;
+    link.textContent = 'Skip to main content';
+    // Safari and Firefox move the scroll position on a hash jump but leave
+    // focus on the link, so the next Tab returns to the nav. Move it manually.
+    link.addEventListener('click', function(){
+      window.setTimeout(function(){ main.focus(); }, 0);
+    });
+    document.body.insertBefore(link, document.body.firstChild);
+  }
+
+  function markActiveRoute(scope){
+    var matches = [];
+    Array.prototype.forEach.call(scope.querySelectorAll('a[href]'), function(a){
+      var url;
+      try { url = new URL(a.href, location.href); } catch (e) { return; }
+      if (url.host !== location.host){
+        // Indicate off-site destinations without changing the visual chrome.
+        a.setAttribute('rel', 'noopener noreferrer');
+        a.setAttribute('data-cg-external', 'true');
+        return;
+      }
+      var file = (url.pathname.split('/').pop() || 'index.html').toLowerCase();
+      // Section links (index.html#services) share a file with the page itself;
+      // requiring the hash to match keeps section links from all matching home.
+      if (file === here && (!url.hash || url.hash === location.hash)) matches.push(a);
+    });
+    // The catalog menu repeats destinations that already appear in the top-level
+    // bar (Products → products.html, and "All Products" inside it). Marking every
+    // copy would announce the same page as current several times, so only the
+    // first — the top-level entry — carries the state.
+    if (matches.length) matches[0].setAttribute('aria-current', 'page');
+  }
+
+  function installProductsDisclosure(nav){
+    var drop = nav.querySelector('.cg-drop');
+    var caret = nav.querySelector('.cg-dropcaret');
+    var menu = nav.querySelector('#cg-products-menu');
+    if (!drop || !caret || !menu) return;
+    function setOpen(open){
+      drop.classList.toggle('is-open', open);
+      caret.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    caret.addEventListener('click', function(){
+      var willOpen = caret.getAttribute('aria-expanded') !== 'true';
+      setOpen(willOpen);
+      if (willOpen){ var f = focusables(menu); if (f[0]) f[0].focus(); }
+    });
+    drop.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && drop.classList.contains('is-open')){
+        e.stopPropagation();
+        setOpen(false);
+        caret.focus();
+      }
+    });
+    drop.addEventListener('focusout', function(){
+      window.setTimeout(function(){
+        if (!drop.contains(document.activeElement)) setOpen(false);
+      }, 0);
+    });
+    document.addEventListener('click', function(e){
+      if (drop.classList.contains('is-open') && !drop.contains(e.target)) setOpen(false);
+    });
+  }
+
+  function installMobileDrawer(btn, mob){
+    var lastFocus = null;
+    function setOpen(open){
+      mob.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      if (open){
+        lastFocus = document.activeElement;
+        var f = focusables(mob);
+        if (f[0]) f[0].focus();
+      } else if (lastFocus && lastFocus.focus){
+        lastFocus.focus();
+        lastFocus = null;
+      }
+    }
+    btn.addEventListener('click', function(){ setOpen(!mob.classList.contains('open')); });
+    mob.addEventListener('keydown', function(e){ if (e.key === 'Tab') trapFocus(mob, e); });
+    mob.addEventListener('click', function(e){ if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && mob.classList.contains('open')) setOpen(false);
+    });
+    closeDrawer = function(){ if (mob.classList.contains('open')) setOpen(false); };
+    drawerIsOpen = function(){ return mob.classList.contains('open'); };
+  }
+
+  /* ── command palette (Cmd/Ctrl+K) ────────────────────────────────────────
+     Sourced from the same public route tables the nav renders, so it can never
+     surface an internal console that the menu itself does not already list. */
+  function installCommandPalette(){
+    var routes = [];
+    TOP.forEach(function(t){ routes.push([t[0], href(t[1]), 'Navigate']); });
+    routes.push(['Book a Security Engagement', href('store.html'), 'Action']);
+    PRODUCTS.forEach(function(p){ routes.push([p[0], href(p[1]), p[2]]); });
+    COMPANY.forEach(function(c){ routes.push([c[0], href(c[1]), 'Company']); });
+
+    var overlay = null, input = null, list = null, status = null;
+    var results = [], cursor = 0, lastFocus = null;
+
+    function rows(){ return list ? list.querySelectorAll('a') : []; }
+
+    function render(query){
+      var needle = query.trim().toLowerCase();
+      results = needle
+        ? routes.filter(function(r){ return (r[0] + ' ' + r[2]).toLowerCase().indexOf(needle) > -1; })
+        : routes.slice(0, 12);
+      cursor = 0;
+      if (!results.length){
+        list.innerHTML = '<li class="cg-palette-empty">No matching pages.</li>';
+        status.textContent = 'No results';
+        return;
+      }
+      list.innerHTML = results.map(function(r, i){
+        return '<li><a href="' + r[1] + '" class="' + (i === 0 ? 'is-cursor' : '') + '">' +
+               esc(r[0]) + '<span>' + esc(r[2]) + '</span></a></li>';
+      }).join('');
+      status.textContent = results.length + (results.length === 1 ? ' result' : ' results');
+    }
+
+    function moveCursor(delta){
+      var items = rows();
+      if (!items.length) return;
+      items[cursor].classList.remove('is-cursor');
+      cursor = (cursor + delta + items.length) % items.length;
+      items[cursor].classList.add('is-cursor');
+      items[cursor].scrollIntoView({ block: 'nearest' });
+    }
+
+    function ensureBuilt(){
+      if (overlay) return;
+      overlay = document.createElement('div');
+      overlay.className = 'cg-palette';
+      overlay.hidden = true;
+      overlay.innerHTML =
+        '<div class="cg-palette-box" role="dialog" aria-modal="true" aria-label="Search ClearGlass pages">' +
+        '<input class="cg-palette-input" type="search" autocomplete="off" ' +
+        'placeholder="Search pages, products, actions…" aria-label="Search ClearGlass pages">' +
+        '<ul class="cg-palette-list"></ul>' +
+        '<p class="cg-palette-hint">Enter to open · ↑↓ to move · Esc to close</p>' +
+        '<p class="cg-sr-only" role="status" aria-live="polite"></p></div>';
+      input = overlay.querySelector('.cg-palette-input');
+      list = overlay.querySelector('.cg-palette-list');
+      status = overlay.querySelector('[role="status"]');
+      input.addEventListener('input', function(){ render(input.value); });
+      overlay.addEventListener('click', function(e){ if (e.target === overlay) close(); });
+      overlay.addEventListener('keydown', function(e){
+        if (e.key === 'Escape'){ e.stopPropagation(); close(); }
+        else if (e.key === 'ArrowDown'){ e.preventDefault(); moveCursor(1); }
+        else if (e.key === 'ArrowUp'){ e.preventDefault(); moveCursor(-1); }
+        else if (e.key === 'Tab'){ trapFocus(overlay, e); }
+        else if (e.key === 'Enter' && document.activeElement === input){
+          var items = rows();
+          if (items.length){ e.preventDefault(); items[cursor].click(); }
+        }
+      });
+      document.body.appendChild(overlay);
+    }
+
+    function open(){
+      ensureBuilt();
+      closeDrawer();
+      lastFocus = document.activeElement;
+      overlay.hidden = false;
+      input.value = '';
+      render('');
+      input.focus();
+    }
+
+    function close(){
+      if (!overlay || overlay.hidden) return;
+      overlay.hidden = true;
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+      lastFocus = null;
+    }
+
+    document.addEventListener('keydown', function(e){
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')){
+        e.preventDefault();
+        if (overlay && !overlay.hidden) close(); else open();
+      }
+    });
+  }
+
   function build(){
     if (document.getElementById('cg-global-nav')) return;
     var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);

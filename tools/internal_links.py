@@ -203,7 +203,6 @@ PAGES: dict[str, tuple[str, str]] = {
     "offers/guardian-command-nexus-blueprint.html": ("Guardian Command Nexus Blueprint", "the full SPEC-1 architecture blueprint, sold as a digital deliverable"),
     "offers/autonomous-threat-modeling.html": ("Autonomous Threat Modeling", "continuous threat-modeling assessment and implementation services"),
     "revenue-engine.html": ("Revenue Engine", "AI-driven business growth system"),
-    "streaming-growth-command-center/index.html": ("Signal Engine", "authority-first live-stream acquisition system"),
 
     # Design & UI engineering
     "web-design.html": ("Web Design & Development", "growth infrastructure built by ClearGlass"),
@@ -380,7 +379,6 @@ CLUSTERS: dict[str, dict] = {
             "streaming-growth-command-center/index.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html",
             "offers/guardian-command-nexus-blueprint.html", "revenue-engine.html",
-            "streaming-growth-command-center/index.html",
             "side-store.html", "products.html",
             "business-productivity-suite.html", "global-growth-engine.html",
             "apps/command-center/index.html",

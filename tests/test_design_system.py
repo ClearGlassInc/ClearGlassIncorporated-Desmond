@@ -71,11 +71,24 @@ def test_indexable_routes_carry_social_metadata():
 
 
 def test_generator_is_idempotent():
-    """A second pass must find nothing to do, or the tool rewrites files forever."""
+    """A second pass must find nothing to do, or the tool rewrites files forever.
+
+    ``fix_page`` writes, so every page is snapshotted and restored. Without that
+    this test *repairs* a stale tree as a side effect — it silently edited two
+    pages the first time it ran against drifted content, which is exactly the
+    kind of hidden mutation a test must never perform.
+    """
     for page in ds.pages():
         before = page.read_text(encoding="utf-8", errors="replace")
-        assert ds.fix_page(page) == [], f"{ds.rel_path(page)} still needs changes"
-        assert page.read_text(encoding="utf-8", errors="replace") == before
+        try:
+            changes = ds.fix_page(page)
+        finally:
+            if page.read_text(encoding="utf-8", errors="replace") != before:
+                page.write_text(before, encoding="utf-8")
+        assert changes == [], (
+            f"{ds.rel_path(page)} still needs {changes}; "
+            "run `python3 tools/design_system.py` and commit the result"
+        )
 
 
 def test_every_exemption_names_a_real_page_and_a_reason():
@@ -83,6 +96,23 @@ def test_every_exemption_names_a_real_page_and_a_reason():
     for path, reason in {**ds.EXEMPT, **ds.NAV_EXEMPT}.items():
         assert (ROOT / path).exists(), f"exemption points at a missing page: {path}"
         assert len(reason) > 15, f"exemption for {path} needs a real reason"
+    for directory, reason in ds.EXEMPT_DIRS.items():
+        assert (ROOT / directory).is_dir(), f"exempt directory is gone: {directory}"
+        assert len(reason) > 15, f"exempt directory {directory} needs a real reason"
+
+
+def test_discovery_is_recursive_so_new_sections_are_covered():
+    """An allow-list of known subdirectories is how a whole section gets missed.
+
+    streaming-growth-command-center/ shipped outside every gate because the page
+    walker only looked in four hard-coded folders.
+    """
+    found = {ds.rel_path(p) for p in ds.pages()}
+    assert "streaming-growth-command-center/index.html" in found
+    assert "legal/privacy.html" in found
+    # Exempt subtrees are still discovered — they are classified, not skipped,
+    # so the report can show them rather than pretending they do not exist.
+    assert any(p.startswith("operations/") for p in found)
 
 
 def test_twitter_cards_are_never_invented():
@@ -119,7 +149,6 @@ def a11y_source() -> str:
         ('aria-current', "the active route must be exposed, not just coloured"),
         ("Escape", "modal surfaces must close on Escape"),
         ("trapFocus", "the mobile drawer and palette must trap focus"),
-        ("aria-modal", "the command palette is a modal dialog"),
         ("aria-expanded", "the products disclosure must expose its state"),
         ("prefers-reduced-motion", "motion must be optional"),
     ],
@@ -137,16 +166,48 @@ def test_nav_closed_menu_leaves_the_tab_order(nav_source):
     assert "visibility:hidden" in nav_source
 
 
-def test_command_palette_only_offers_public_routes(nav_source):
-    """The palette must be built from the same tables the visible nav renders."""
-    palette = nav_source[nav_source.index("function installCommandPalette"):]
-    routes = palette[: palette.index("var overlay")]
-    for table in ("TOP", "PRODUCTS", "COMPANY"):
-        assert f"{table}.forEach" in routes, f"palette must source {table}"
-    # Any hard-coded destination would be a route the visible nav never shows.
-    # store.html is the one exception: it is the nav's own CTA target.
-    literals = set(re.findall(r"routes\.push\(\[[^\]]*href\('([^']+)'\)", routes))
-    assert literals <= {"store.html"}, f"palette exposes unlisted routes: {literals}"
+def test_only_one_module_claims_cmd_k():
+    """Cmd/Ctrl+K must open exactly one overlay.
+
+    Three modules have wanted this shortcut at various points: nav.js's own
+    palette (removed — global-nav-search.js supersedes it), global-nav-search.js
+    (the owner: discoverable control in the nav, plus "/"), and aegis-omega.js.
+    platform.js loads the latter two together, so both fired on one keystroke
+    across all 43 pages that load it until aegis-omega learned to yield.
+
+    Scope matters: other modules bind Cmd/Ctrl+K too (control-surface.js,
+    guardian-command.js), but they do not collide because they never co-mount
+    with the search — control-surface.js suppresses the primary nav, and the
+    search only attaches where one exists. Verified in a browser: pricing.html
+    opens exactly one overlay. So this test checks only the modules that
+    platform.js loads *together*, which is where the collision was real.
+    """
+    platform = (ROOT / "platform.js").read_text(encoding="utf-8", errors="replace")
+    co_mounted = {
+        f"{name}.js"
+        for name in re.findall(r'platformAsset\("([\w-]+)\.js"\)', platform)
+    }
+    assert "global-nav-search.js" in co_mounted, "search is no longer loaded by platform.js"
+
+    binder = re.compile(r"(?:metaKey|ctrlKey)[\s\S]{0,120}?[\"']k[\"']", re.I)
+    offenders = []
+    for name in sorted(co_mounted - {"global-nav-search.js"}):
+        module = ROOT / name
+        if not module.exists():
+            continue
+        source = module.read_text(encoding="utf-8", errors="replace")
+        if binder.search(source) and "__cgGlobalNavSearch" not in source:
+            offenders.append(name)
+    assert not offenders, (
+        f"{offenders} bind Cmd/Ctrl+K and are loaded by platform.js alongside "
+        "global-nav-search.js, so both overlays open on one keystroke. Yield by "
+        "returning early when window.__cgGlobalNavSearch is set."
+    )
+
+
+def test_nav_no_longer_ships_a_competing_palette(nav_source):
+    assert "installCommandPalette" not in nav_source
+    assert "cg-palette" not in nav_source
 
 
 def test_a11y_module_covers_both_navigation_systems(a11y_source):

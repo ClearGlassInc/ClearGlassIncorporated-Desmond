@@ -190,6 +190,14 @@
       }
     });
     document.addEventListener('keydown',function(event){
+      /* global-nav-search.js binds the same Cmd/Ctrl+K and is loaded alongside
+         this module by platform.js, so both palettes used to open on one
+         keystroke across all 43 pages that load platform.js. That module owns
+         the shortcut: it is the discoverable one (visible control in the nav,
+         plus "/"), while this palette has no launcher of its own. Checking the
+         flag at keydown rather than at bind time keeps the outcome independent
+         of which of the two deferred scripts happens to execute first. */
+      if(window.__cgGlobalNavSearch){if(!overlay.hidden&&event.key==='Escape')close();return;}
       if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();overlay.hidden?open():close();}
       else if(event.key==='Escape'&&!overlay.hidden)close();
     });

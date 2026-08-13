@@ -1,6 +1,6 @@
 # ClearGlass Interface System
 
-How the site stays one system across 143 pages — what is shared, what is
+How the site stays one system across 177 routes — what is shared, what is
 deliberately not, and how a regression gets caught.
 
 ## What was already here
@@ -39,6 +39,14 @@ python3 tools/design_system.py            # apply fixes in place
 python3 tools/design_system.py --check     # exit 1 if any route is stale (CI)
 python3 tools/design_system.py --report    # regenerate DESIGN_SYSTEM_AUDIT.md
 ```
+
+Discovery is **recursive**. An earlier version walked four hard-coded folders,
+which is how `streaming-growth-command-center/` shipped outside every gate — no
+tab icons, no logo, no link-graph entry. Whole subtrees that are legitimately
+outside the public shell are named in `EXEMPT_DIRS` with reasons (`operations/`
+regenerates and would lose injected tags; `checkout/` is a payment flow where
+extra navigation is a conversion risk; `apps/`, `projects/` ship their own
+shells).
 
 | Contract | Enforced on |
 | --- | --- |
@@ -79,16 +87,42 @@ route marking retries through a `MutationObserver` with a 6-second lifetime.
 
 | Added | Why |
 | --- | --- |
-| Skip link + `<main>` targeting | No bypass mechanism existed (2 of 96 pages had one) |
 | `aria-current="page"` | Active route had no accessible signal |
 | `visibility:hidden` on the closed catalog | **The closed mega-menu kept 76 links in the tab order** — a keyboard user had to tab the entire product catalog to reach the page |
 | Real disclosure button (`aria-expanded`, `aria-controls`) | The catalog was hover/`:focus-within` only, with no way to close it |
 | Escape + focus restore on the catalog | — |
 | Focus trap, Escape, and focus restore on the mobile drawer | Drawer could be scroll-closed while focus was inside it |
-| Command palette (`Cmd/Ctrl+K`) | Sourced from the same public route tables the nav renders, so it can never expose an internal console |
-| Scroll-retract guard | The bar no longer hides while its own drawer is open |
 
-### 4. Content honesty
+> **Note for conflict resolution.** These calls were once lost: a merge kept the
+> function *definitions* but restored the pre-contract `build()` body, so all of
+> them sat as dead code for two releases — the drawer was untrapped and the
+> catalog unopenable by keyboard, while the source still looked correct. The
+> skip link survived only because `cg-a11y.js` is a separate module. When
+> resolving conflicts in `build()`, keep the invocation block with the
+> definitions; `tests/browser/nav-contract.mjs` fails if they drift apart.
+
+### 4. One overlay per shortcut
+
+`Cmd/Ctrl+K` had three claimants. `nav.js` shipped a palette; then
+`global-nav-search.js` landed with site-wide search on the same chord; and
+`aegis-omega.js` had a third. `platform.js` loads the latter two **together**,
+so both opened on a single keystroke across the 43 pages that load it.
+
+Resolved by giving the shortcut one owner:
+
+- `global-nav-search.js` owns it — it is the discoverable one (visible control
+  in the nav, plus `/`).
+- The `nav.js` palette was **removed** rather than left as dead code.
+- `aegis-omega.js` yields when `window.__cgGlobalNavSearch` is set. The check
+  happens at keydown, not at bind time, so the outcome does not depend on which
+  deferred script executes first.
+
+`control-surface.js` and `guardian-command.js` also bind the chord but were left
+alone: they never co-mount with the search, because it only attaches where a
+primary nav exists and `control-surface.js` suppresses that nav. Verified in a
+browser — `pricing.html` opens exactly one overlay.
+
+### 5. Content honesty
 
 Twelve instances across seven pages asserted authority the company does not
 have. All were removed:

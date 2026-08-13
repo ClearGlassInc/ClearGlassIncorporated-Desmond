@@ -55,6 +55,12 @@ const AMBIGUOUS_PRICE_MARKERS = [
   /\bcontact\b/i,
   /\bper (?:hour|day|seat|user)\b/i,
   /\bTBD\b/i,
+  // "Enterprise pricing by scope" names no amount at all. Without this the
+  // listing fell past the quote-driven branch into the numeric check and was
+  // rejected as malformed data, which reads as a catalogue bug rather than the
+  // deliberate decision it is. It is still withheld either way -- this reports
+  // the accurate reason.
+  /\bby scope\b/i,
 ];
 
 const RECURRING_INTERVALS: Record<string, Recurrence["interval"]> = {

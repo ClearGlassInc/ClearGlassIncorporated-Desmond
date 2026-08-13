@@ -23,16 +23,16 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | Page | Role | Previous | Topic hub | Next | Conversion bridge |
 |---|---|---|---|---|---|
 | **Cyber Defense & Security Operations** | **Topic cluster** |  |  |  |  |
-| `cyber-defense-console.html` — Cyber Defense Console | the ClearGlass command center for defensive operations | NEXUS Gateway | Cyber Defense Console | SENTINEL | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `cyber-defense-console.html` — Cyber Defense Console | the ClearGlass command center for defensive operations | BLUEDESK Mobile | Cyber Defense Console | SENTINEL | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `sentinel.html` — SENTINEL | live geospatial security command center | Cyber Defense Console | Cyber Defense Console | BLUEDESK | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `bluedesk.html` — BLUEDESK | CISO risk and blue-team console | SENTINEL | Cyber Defense Console | GUARDIAN | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `guardian.html` — GUARDIAN | intelligence command interface | BLUEDESK | Cyber Defense Console | Artemis Blue Team | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `artemis-blue-team.html` — Artemis Blue Team | OSINT-driven defense command center | GUARDIAN | Cyber Defense Console | STEGOFORGE | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `stegoforge.html` — STEGOFORGE | steganography and covert-channel analysis terminal | Artemis Blue Team | Cyber Defense Console | ATT&CK Prompt Integrator | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `attack-prompt-core.html` — ATT&CK Prompt Integrator | MITRE ATT&CK-aligned analysis prompts | STEGOFORGE | Cyber Defense Console | Environmental Cyber-Risk | Book a security engagement / Start with the $249 Security Quick-Audit |
-| `environmental-cyber-risk.html` — Environmental Cyber-Risk | OT and environmental threat monitoring | ATT&CK Prompt Integrator | Cyber Defense Console | BLUEDESK Mobile | Book a security engagement / Start with the $249 Security Quick-Audit |
-| `bluedesk-mobile.html` — BLUEDESK Mobile | the CISO risk console on a phone-first canvas | Environmental Cyber-Risk | Cyber Defense Console | NEXUS Gateway | Book a security engagement / Start with the $249 Security Quick-Audit |
-| `projects/nexus-gateway/web/index.html` — NEXUS Gateway | hardened self-hosted security gateway console | BLUEDESK Mobile | Cyber Defense Console | Cyber Defense Console | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `environmental-cyber-risk.html` — Environmental Cyber-Risk | OT and environmental threat monitoring | ATT&CK Prompt Integrator | Cyber Defense Console | VEILGUARD Content Shield | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `content-shield.html` — VEILGUARD Content Shield | per-viewer watermarking, traceable renders and leak attribution | Environmental Cyber-Risk | Cyber Defense Console | BLUEDESK Mobile | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `bluedesk-mobile.html` — BLUEDESK Mobile | the CISO risk console on a phone-first canvas | VEILGUARD Content Shield | Cyber Defense Console | Cyber Defense Console | Book a security engagement / Start with the $249 Security Quick-Audit |
 | **Intelligence & OSINT** | **Topic cluster** |  |  |  |  |
 | `intelligence.html` — Intelligence | the ClearGlass intelligence practice | Critical Minerals Intelligence | Intelligence | Flowsint | Book a security engagement / See pricing & plans |
 | `flowsint.html` — Flowsint | OSINT investigation graph for domains, IPs and transforms | Intelligence | Intelligence | ClearGlass NEXUS | Book a security engagement / See pricing & plans |

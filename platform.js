@@ -38,6 +38,20 @@
     document.documentElement.setAttribute("data-cg-home-runtime", "stabilized");
   }
 
+  /* Homepage editorial showcase: intentionally content-only and non-fixed.
+     It reads the existing Insights post index, mounts before the timeline,
+     and fails closed so editorial enhancement can never destabilize the page. */
+  if (isHomepage && !document.querySelector('script[data-cg-home-insights="true"]')) {
+    var homeInsights = document.createElement("script");
+    homeInsights.src = platformAsset("homepage-insights.js");
+    homeInsights.async = true;
+    homeInsights.setAttribute("data-cg-home-insights", "true");
+    homeInsights.addEventListener("error", function () {
+      document.documentElement.setAttribute("data-cg-home-insights", "degraded");
+    }, { once: true });
+    document.body.appendChild(homeInsights);
+  }
+
   /* The Sentinel dialog exists in homepage markup with aria-modal="true" even
      while its parent shell is hidden. The unified assistant intentionally hides
      whenever a real modal is active, so synchronize aria-modal with the shell's

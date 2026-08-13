@@ -56,6 +56,7 @@ SITEMAP_EXEMPT = {
     "loader.html",                # noindex initializer, not a landing page
     "offline.html",               # service-worker offline shell (noindex)
     "platform-command-center.html",  # internal platform HUD dashboard (noindex, not a landing page)
+    "etsy-callback.html",         # OAuth redirect target for the Etsy connect flow (noindex)
     "ClearGlass-NEXUS-v12-FINAL.html",  # build artifact of clearglass-nexus.html
     # Google Search Console verification token — must NOT be in the sitemap
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html",

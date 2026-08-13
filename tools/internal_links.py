@@ -52,6 +52,7 @@ NON_SITE_DIRS = frozenset({".git", "node_modules", ".next", "projects"})
 EXCLUDED_PAGES: dict[str, tuple[str, str]] = {
     "404.html": ("Error recovery", "noindex redirect and route-recovery page"),
     "cg-loader.html": ("Application utility", "noindex branded loading surface"),
+    "etsy-callback.html": ("Application utility", "noindex OAuth redirect target"),
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html": (
         "Site verification", "Google ownership verification artifact"
     ),

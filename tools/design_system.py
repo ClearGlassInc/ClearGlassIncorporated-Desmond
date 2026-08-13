@@ -64,6 +64,21 @@ EXEMPT: dict[str, str] = {
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html": "Google ownership verification artifact",
 }
 
+# Whole subtrees outside the public marketing shell. Discovery is recursive, so
+# these need naming explicitly — otherwise the generator would inject public
+# chrome into generated reports (which regenerate and lose it), into the payment
+# flow (where extra navigation is a conversion and trust risk), and into
+# self-contained apps that ship their own shell.
+EXEMPT_DIRS: dict[str, str] = {
+    "operations": "generated handoff reports; regenerated from source, edits are lost",
+    "apps": "self-contained application shells with their own chrome",
+    "projects": "self-contained project apps with their own chrome",
+    "checkout": "payment flow — minimal distraction, no injected navigation",
+    "docs": "engineering specs, not part of the marketing journey",
+    "artemis-fawl": "private governance console",
+    "sentinel": "private operations consoles",
+}
+
 # Pages that carry a bespoke full-viewport visual study. They keep the design
 # system (tokens) but opt out of the injected top bar, which would overlap a
 # fixed HUD. Listed separately so the CSS contract still applies to them.
@@ -79,12 +94,21 @@ META_RE = re.compile(
 NOINDEX_RE = re.compile(r'content=["\'][^"\']*noindex', re.I)
 
 
+# Directories that hold no shippable page. Everything else is discovered, so a
+# new top-level section is covered the day it lands — an allow-list of known
+# subdirectories silently skipped streaming-growth-command-center/ when it was
+# added, and the page shipped without tab icons, a logo, or a link-graph entry.
+SKIP_DIRS = {".git", "node_modules", "dist", "build", ".github", "coverage", "__pycache__"}
+
+
 def pages() -> list[Path]:
     """Every static page in the site, in a stable order."""
-    found: list[Path] = sorted(ROOT.glob("*.html"))
-    for sub in ("offers", "sentinel", "blog", "products"):
-        found += sorted((ROOT / sub).rglob("*.html"))
-    return [p for p in found if p.is_file()]
+    found = [
+        p
+        for p in ROOT.rglob("*.html")
+        if p.is_file() and not (SKIP_DIRS & set(p.relative_to(ROOT).parts))
+    ]
+    return sorted(found, key=lambda p: p.relative_to(ROOT).as_posix())
 
 
 def meta(text: str, key: str) -> str:
@@ -106,6 +130,11 @@ def is_noindex(text: str) -> bool:
 
 def rel_path(page: Path) -> str:
     return page.relative_to(ROOT).as_posix()
+
+
+def is_exempt(path: str) -> bool:
+    """True for named pages and for anything under an exempt subtree."""
+    return path in EXEMPT or path.split("/", 1)[0] in EXEMPT_DIRS
 
 
 def needs_css(text: str) -> bool:
@@ -163,7 +192,7 @@ def twitter_block(text: str) -> str:
 def audit_page(page: Path) -> dict:
     text = page.read_text(encoding="utf-8", errors="replace")
     path = rel_path(page)
-    exempt = path in EXEMPT
+    exempt = is_exempt(path)
     nav_exempt = exempt or path in NAV_EXEMPT
     noindex = is_noindex(text)
     return {
@@ -194,19 +223,19 @@ def fix_page(page: Path) -> list[str]:
     path = rel_path(page)
     changes: list[str] = []
 
-    if path not in EXEMPT and needs_css(text):
+    if not is_exempt(path) and needs_css(text):
         text = insert_before_head_close(text, CSS_LINK)
         changes.append("design-system css")
 
-    if path not in EXEMPT and path not in NAV_EXEMPT and needs_nav(text):
+    if not is_exempt(path) and path not in NAV_EXEMPT and needs_nav(text):
         text = insert_before_body_close(text, NAV_TAG)
         changes.append("global nav")
 
-    if path not in EXEMPT and needs_a11y(text):
+    if not is_exempt(path) and needs_a11y(text):
         text = insert_before_body_close(text, A11Y_TAG)
         changes.append("a11y contract")
 
-    if path not in EXEMPT and not is_noindex(text) and needs_twitter(text):
+    if not is_exempt(path) and not is_noindex(text) and needs_twitter(text):
         block = twitter_block(text)
         if block:
             text = insert_before_head_close(text, block)

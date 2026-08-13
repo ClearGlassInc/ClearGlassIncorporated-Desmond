@@ -79,6 +79,7 @@ PAGES: dict[str, tuple[str, str]] = {
     # Company / hub
     "index.html": ("ClearGlass Inc.", "governed intelligent systems — home"),
     "investors/index.html": ("Investor Data Room", "corporate documents and diligence materials"),
+    "streaming-growth-command-center/index.html": ("Signal Engine", "authority-first live-stream acquisition system"),
     "operations/client-onboarding.html": ("Client Onboarding", "how engagements start at ClearGlass"),
     "operations/hubspot-handoff.html": ("HubSpot Handoff", "CRM connection runbook"),
     "operations/ontario-incorporation-handoff.html": ("Ontario Incorporation Handoff", "corporate filing runbook"),
@@ -376,6 +377,7 @@ CLUSTERS: dict[str, dict] = {
             "checkout/index.html", "seo-authority-hub.html",
             "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
+            "streaming-growth-command-center/index.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html",
             "offers/guardian-command-nexus-blueprint.html", "revenue-engine.html",
             "streaming-growth-command-center/index.html",

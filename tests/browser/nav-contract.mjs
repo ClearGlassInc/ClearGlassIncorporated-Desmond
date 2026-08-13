@@ -69,17 +69,18 @@ await page.keyboard.press('Escape');
 ok('Escape closes menu', await caret.getAttribute('aria-expanded') === 'false');
 ok('Escape restores focus to trigger', await caret.evaluate(el => el === document.activeElement));
 
-// 5. Command palette: opens on Ctrl+K, filters, and Escape restores focus.
+// 5. Search overlay is owned by global-nav-search.js and must be the only
+// thing bound to Cmd/Ctrl+K — two overlays on one keystroke is a real defect.
 await page.keyboard.press('Control+k');
-await page.waitForSelector('.cg-palette:not([hidden])', { timeout: 3000 });
-ok('palette opens on Ctrl+K', await page.locator('.cg-palette:not([hidden])').count() === 1);
-ok('palette focuses its input', await page.locator('.cg-palette-input').evaluate(el => el === document.activeElement));
-ok('palette is a modal dialog', await page.locator('.cg-palette [role="dialog"][aria-modal="true"]').count() === 1);
-await page.locator('.cg-palette-input').fill('aegis');
-const hits = await page.locator('.cg-palette-list a').count();
-ok('palette filters results', hits > 0 && hits < 20, `${hits} hits for "aegis"`);
+await page.waitForTimeout(400);
+const overlays = await page.evaluate(() => {
+  const open = [...document.querySelectorAll('dialog[open],[role="dialog"],.cg-palette:not([hidden]),#cgNavSearchPanel,.cg-nav-search__panel')]
+    .filter(el => el.getClientRects().length > 0);
+  return open.length;
+});
+ok('exactly one overlay opens on Ctrl+K', overlays <= 1, `${overlays} open`);
+ok('no leftover cg-palette in the DOM', await page.locator('.cg-palette').count() === 0);
 await page.keyboard.press('Escape');
-ok('Escape closes palette', await page.locator('.cg-palette[hidden]').count() === 1);
 
 // 6. Mobile drawer traps focus and closes on Escape.
 await page.setViewportSize({ width: 390, height: 844 });

@@ -97,13 +97,19 @@
     ".cg-topnav *{box-sizing:border-box}.cg-brand{position:relative;display:flex;align-items:center;gap:clamp(9px,1vw,14px);min-width:max-content;color:#f9fbff;text-decoration:none}.cg-mark{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;overflow:hidden;flex:0 0 auto}.cg-mark img{width:96%;height:96%;object-fit:contain;border-radius:50%}.cg-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.15rem,1.55vw,1.75rem);font-weight:650;white-space:nowrap}.cg-name em{font-style:italic;font-weight:400;color:#cbb7ff;margin-left:.32rem}",
     ".cg-links{display:flex;align-items:center;gap:clamp(.15rem,.45vw,.5rem);margin-left:auto}.cg-links a,.cg-dropbtn{color:rgba(242,246,255,.93);text-decoration:none;font-size:clamp(.78rem,.78vw,.9rem);font-weight:650;padding:10px 9px 13px;border-radius:15px;border:0;background:transparent;cursor:pointer}.cg-links a:hover,.cg-dropbtn:hover{color:#fff;background:rgba(255,255,255,.065)}",
     ".cg-cta{display:inline-flex!important;align-items:center;gap:8px;background:linear-gradient(180deg,rgba(11,14,28,.98),rgba(3,5,13,.99))!important;color:#fff!important;margin-left:clamp(.45rem,1vw,1.15rem);padding:11px 16px!important;border:1px solid rgba(205,146,255,.82)!important;border-radius:15px!important}",
-    ".cg-drop{position:relative}.cg-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);width:min(900px,92vw);max-height:min(72vh,720px);overflow:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;background:rgba(16,24,50,.96);border:1px solid rgba(185,156,255,.36);border-radius:24px;opacity:0;pointer-events:none;transition:.18s}.cg-drop:hover .cg-menu,.cg-drop:focus-within .cg-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}.cg-prod{display:flex!important;gap:10px!important;align-items:center!important;padding:8px!important;border-radius:12px!important;color:#eef4ff!important;text-decoration:none}.cg-ic{width:26px;height:26px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;flex:0 0 auto}",
+    ".cg-drop{position:relative}.cg-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);width:min(900px,92vw);max-height:min(72vh,720px);overflow:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;background:rgba(16,24,50,.96);border:1px solid rgba(185,156,255,.36);border-radius:24px;opacity:0;pointer-events:none;visibility:hidden;transition:opacity .18s,transform .18s,visibility 0s linear .18s}.cg-drop:hover .cg-menu,.cg-drop.is-open .cg-menu{opacity:1;pointer-events:auto;visibility:visible;transform:translateX(-50%) translateY(0);transition-delay:0s}.cg-dropcaret{margin-left:-6px;border:0;background:transparent;color:rgba(242,246,255,.93);font-size:.9rem;line-height:1;padding:10px 6px 13px;border-radius:12px;cursor:pointer}.cg-dropcaret:hover{color:#fff;background:rgba(255,255,255,.065)}.cg-dropcaret[aria-expanded='true']{color:#fff;background:rgba(255,255,255,.1)}.cg-prod{display:flex!important;gap:10px!important;align-items:center!important;padding:8px!important;border-radius:12px!important;color:#eef4ff!important;text-decoration:none}.cg-ic{width:26px;height:26px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;flex:0 0 auto}",
     ".cg-toggle{display:none;border:1px solid rgba(196,139,255,.55);background:rgba(7,10,24,.7);color:#fff;border-radius:14px;padding:10px}.cg-mobile{position:fixed;top:104px;left:.75rem;right:.75rem;z-index:2147482999;display:none;grid-template-columns:1fr;gap:4px;max-height:calc(100vh - 120px);overflow:auto;padding:10px;background:rgba(16,24,50,.98);border:1px solid rgba(185,156,255,.36);border-radius:24px}.cg-mobile.open{display:grid}.cg-mobile a{padding:12px 14px;border-radius:12px;text-decoration:none;color:#eef4ff;font-weight:650}.cg-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#aeb9d5;padding:10px 14px 4px}",
     ".cg-topnav+main,.cg-topnav~main{scroll-margin-top:106px}.cg-topnav~:is(main,.page,.wrap){padding-top:max(104px,env(safe-area-inset-top))}@media(max-width:1240px){.cg-links{display:none}.cg-toggle{display:block}.cg-topnav{min-height:68px}.cg-mark{width:48px;height:48px}.cg-menu{grid-template-columns:1fr}}@media(max-width:760px){.cg-topnav{top:6px;width:calc(100% - .75rem);min-height:58px;padding:.35rem .65rem}.cg-name{font-size:18px}.cg-name em{display:none}.cg-mark{width:42px;height:42px}.cg-mobile{top:72px;max-height:calc(100vh - 84px)}}",
     // Motion is optional: the nav slide, the dropdown fades and smooth
     // scrolling collapse to instant state changes when the viewer has
     // asked their OS for reduced motion.
-    "@media (prefers-reduced-motion: reduce){.cg-topnav,.cg-topnav.cg-scroll-hidden,.cg-menu,.cg-mobile,.cg-toggle{transition:none!important;animation:none!important}.cg-topnav{will-change:auto}html{scroll-behavior:auto!important}}"
+    "@media (prefers-reduced-motion: reduce){.cg-topnav,.cg-topnav.cg-scroll-hidden,.cg-menu,.cg-mobile,.cg-toggle{transition:none!important;animation:none!important}.cg-topnav{will-change:auto}html{scroll-behavior:auto!important}}",
+    /* Visually-hidden label for the catalog disclosure button. Without this
+       rule its "Show all products" text renders as literal text beside the
+       caret, so the rule and the markup must ship together. */
+    ".cg-sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}",
+    ".cg-topnav :is(a,button):focus-visible,.cg-mobile a:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px rgba(146,180,255,.55)}",
+    ".cg-links a[aria-current=\"page\"],.cg-mobile a[aria-current=\"page\"]{color:#fff;background:rgba(255,255,255,.12)}.cg-links a[aria-current=\"page\"]:after{opacity:1;transform:translateX(-50%) scaleX(1.35)}.cg-mobile a[aria-current=\"page\"]{box-shadow:inset 3px 0 0 #ca78ff}"
   ].join("");
   function isNativePrimaryNav(el){
     if (!el || el.id === 'cg-global-nav' || el.id === 'cg-mobile-nav') return false;
@@ -157,23 +163,10 @@
   var closeDrawer = function(){};
   var drawerIsOpen = function(){ return false; };
 
-  function installSkipLink(){
-    if (document.querySelector('.cg-skip')) return;
-    var main = document.querySelector('main, [role="main"]') || document.getElementById('main');
-    if (!main) return;
-    if (!main.id) main.id = 'cg-main';
-    if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
-    var link = document.createElement('a');
-    link.className = 'cg-skip';
-    link.href = '#' + main.id;
-    link.textContent = 'Skip to main content';
-    // Safari and Firefox move the scroll position on a hash jump but leave
-    // focus on the link, so the next Tab returns to the nav. Move it manually.
-    link.addEventListener('click', function(){
-      window.setTimeout(function(){ main.focus(); }, 0);
-    });
-    document.body.insertBefore(link, document.body.firstChild);
-  }
+  /* The skip link is owned by cg-a11y.js, not here. That module ships the
+     .cg-skip styles and runs on every page regardless of which navigation
+     system the page loads, so duplicating the injection in nav.js risked an
+     unstyled, permanently visible link whenever nav.js won the race. */
 
   function markActiveRoute(scope){
     var matches = [];
@@ -254,102 +247,10 @@
     drawerIsOpen = function(){ return mob.classList.contains('open'); };
   }
 
-  /* ── command palette (Cmd/Ctrl+K) ────────────────────────────────────────
-     Sourced from the same public route tables the nav renders, so it can never
-     surface an internal console that the menu itself does not already list. */
-  function installCommandPalette(){
-    var routes = [];
-    TOP.forEach(function(t){ routes.push([t[0], href(t[1]), 'Navigate']); });
-    routes.push(['Book a Security Engagement', href('store.html'), 'Action']);
-    PRODUCTS.forEach(function(p){ routes.push([p[0], href(p[1]), p[2]]); });
-    COMPANY.forEach(function(c){ routes.push([c[0], href(c[1]), 'Company']); });
-
-    var overlay = null, input = null, list = null, status = null;
-    var results = [], cursor = 0, lastFocus = null;
-
-    function rows(){ return list ? list.querySelectorAll('a') : []; }
-
-    function render(query){
-      var needle = query.trim().toLowerCase();
-      results = needle
-        ? routes.filter(function(r){ return (r[0] + ' ' + r[2]).toLowerCase().indexOf(needle) > -1; })
-        : routes.slice(0, 12);
-      cursor = 0;
-      if (!results.length){
-        list.innerHTML = '<li class="cg-palette-empty">No matching pages.</li>';
-        status.textContent = 'No results';
-        return;
-      }
-      list.innerHTML = results.map(function(r, i){
-        return '<li><a href="' + r[1] + '" class="' + (i === 0 ? 'is-cursor' : '') + '">' +
-               esc(r[0]) + '<span>' + esc(r[2]) + '</span></a></li>';
-      }).join('');
-      status.textContent = results.length + (results.length === 1 ? ' result' : ' results');
-    }
-
-    function moveCursor(delta){
-      var items = rows();
-      if (!items.length) return;
-      items[cursor].classList.remove('is-cursor');
-      cursor = (cursor + delta + items.length) % items.length;
-      items[cursor].classList.add('is-cursor');
-      items[cursor].scrollIntoView({ block: 'nearest' });
-    }
-
-    function ensureBuilt(){
-      if (overlay) return;
-      overlay = document.createElement('div');
-      overlay.className = 'cg-palette';
-      overlay.hidden = true;
-      overlay.innerHTML =
-        '<div class="cg-palette-box" role="dialog" aria-modal="true" aria-label="Search ClearGlass pages">' +
-        '<input class="cg-palette-input" type="search" autocomplete="off" ' +
-        'placeholder="Search pages, products, actions…" aria-label="Search ClearGlass pages">' +
-        '<ul class="cg-palette-list"></ul>' +
-        '<p class="cg-palette-hint">Enter to open · ↑↓ to move · Esc to close</p>' +
-        '<p class="cg-sr-only" role="status" aria-live="polite"></p></div>';
-      input = overlay.querySelector('.cg-palette-input');
-      list = overlay.querySelector('.cg-palette-list');
-      status = overlay.querySelector('[role="status"]');
-      input.addEventListener('input', function(){ render(input.value); });
-      overlay.addEventListener('click', function(e){ if (e.target === overlay) close(); });
-      overlay.addEventListener('keydown', function(e){
-        if (e.key === 'Escape'){ e.stopPropagation(); close(); }
-        else if (e.key === 'ArrowDown'){ e.preventDefault(); moveCursor(1); }
-        else if (e.key === 'ArrowUp'){ e.preventDefault(); moveCursor(-1); }
-        else if (e.key === 'Tab'){ trapFocus(overlay, e); }
-        else if (e.key === 'Enter' && document.activeElement === input){
-          var items = rows();
-          if (items.length){ e.preventDefault(); items[cursor].click(); }
-        }
-      });
-      document.body.appendChild(overlay);
-    }
-
-    function open(){
-      ensureBuilt();
-      closeDrawer();
-      lastFocus = document.activeElement;
-      overlay.hidden = false;
-      input.value = '';
-      render('');
-      input.focus();
-    }
-
-    function close(){
-      if (!overlay || overlay.hidden) return;
-      overlay.hidden = true;
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-      lastFocus = null;
-    }
-
-    document.addEventListener('keydown', function(e){
-      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')){
-        e.preventDefault();
-        if (overlay && !overlay.hidden) close(); else open();
-      }
-    });
-  }
+  /* The Cmd/Ctrl+K command palette that used to live here was removed when
+     global-nav-search.js landed: that module binds the same Cmd/Ctrl+K (and
+     "/") and provides site-wide search, so keeping both meant two overlays
+     opening on one keystroke. Search is now owned there, not here. */
 
   function build(){
     if (document.getElementById('cg-global-nav')) return;
@@ -358,13 +259,24 @@
     var nav=document.createElement('nav'); nav.id='cg-global-nav'; nav.className='cg-topnav'; nav.setAttribute('aria-label','Primary navigation');
     var menu=PRODUCTS.map(function(p){return '<a class="cg-prod" href="'+href(p[1])+'"><span class="cg-ic">'+p[3]+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span></a>';}).join('');
     menu+=COMPANY.map(function(c){return '<a class="cg-prod" href="'+href(c[1])+'"><span class="cg-ic">'+c[2]+'</span><span><b>'+esc(c[0])+'</b><small>Company</small></span></a>';}).join('');
-    nav.innerHTML='<a class="cg-brand" href="'+href('index.html')+'"><span class="cg-mark logo-orb" aria-hidden="true"><img src="'+href('assets/images/clearglass-logo-256.webp')+'" alt="" class="site-logo"></span><span class="cg-name">ClearGlassInc. <em>2040</em></span></a><div class="cg-links">'+TOP.map(function(t){return t[0]==='Products'?'<span class="cg-drop"><a class="cg-dropbtn" href="'+href('products.html')+'" aria-haspopup="true">Products⌄</a><span class="cg-menu"><a class="cg-prod" href="'+href('products.html')+'"><span class="cg-ic">▨</span><span><b>All Products</b><small>Unified catalog</small></span></a>'+menu+'</span></span>':'<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a class="cg-cta" href="'+href('store.html')+'">Book a Security Engagement</a></div><button class="cg-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>';
+    nav.innerHTML='<a class="cg-brand" href="'+href('index.html')+'"><span class="cg-mark logo-orb" aria-hidden="true"><img src="'+href('assets/images/clearglass-logo-256.webp')+'" alt="" class="site-logo"></span><span class="cg-name">ClearGlassInc. <em>2040</em></span></a><div class="cg-links">'+TOP.map(function(t){return t[0]==='Products'?'<span class="cg-drop"><a class="cg-dropbtn" href="'+href('products.html')+'">Products</a><button type="button" class="cg-dropcaret" aria-expanded="false" aria-controls="cg-products-menu"><span class="cg-sr-only">Show all products</span><span aria-hidden="true">⌄</span></button><span class="cg-menu" id="cg-products-menu"><a class="cg-prod" href="'+href('products.html')+'"><span class="cg-ic">▨</span><span><b>All Products</b><small>Unified catalog</small></span></a>'+menu+'</span></span>':'<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a class="cg-cta" href="'+href('store.html')+'">Book a Security Engagement</a></div><button class="cg-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>';
     var mob=document.createElement('div'); mob.className='cg-mobile'; mob.id='cg-mobile-nav'; mob.innerHTML='<div class="cg-label">Navigation</div>'+TOP.map(function(t){return '<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a href="'+href('store.html')+'">Book a Security Engagement</a><div class="cg-label">Products</div>'+PRODUCTS.map(function(p){return '<a href="'+href(p[1])+'">'+esc(p[0])+'</a>';}).join('');
     document.body.appendChild(nav); document.body.appendChild(mob);
     hideNativeNavigation(document);
     var observer=new MutationObserver(function(mutations){mutations.forEach(function(m){Array.prototype.forEach.call(m.addedNodes,function(node){if(node && node.nodeType===1) hideNativeNavigation(node.parentNode || node);});});});
     observer.observe(document.body,{childList:true,subtree:true});
-    var btn=nav.querySelector('.cg-toggle'); btn.addEventListener('click',function(){var open=mob.classList.toggle('open');btn.setAttribute('aria-expanded',open?'true':'false');});
+    // These wire up the keyboard contract. They were defined but never called
+    // for two releases after a merge resolved this block to the pre-contract
+    // version, leaving the drawer untrapped and the catalog unopenable by
+    // keyboard while the functions sat as dead code. Keep the calls together
+    // with the definitions when resolving conflicts here.
+    mob.setAttribute('aria-label','Site navigation');
+    var btn=nav.querySelector('.cg-toggle');
+    btn.setAttribute('aria-controls','cg-mobile-nav');
+    markActiveRoute(nav);
+    markActiveRoute(mob);
+    installProductsDisclosure(nav);
+    installMobileDrawer(btn,mob);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
 })();

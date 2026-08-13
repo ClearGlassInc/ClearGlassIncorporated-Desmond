@@ -6,6 +6,8 @@
                offline fallback, so the hourly data plane is never served stale
      • Critical hero/brand images → network-first to recover immediately from
                stale or corrupted visual cache entries
+     • Critical homepage runtimes → network-first so a renderer hotfix is never
+               hidden behind a stale JavaScript cache entry
      • CSS/JS/fonts/images (same-origin) → stale-while-revalidate
      • Streaming media / Range requests → browser network path, never Cache API.
                Caching partial 206 responses can break Safari/iOS video playback.
@@ -14,7 +16,7 @@
    Bump VERSION to invalidate all caches on deploy. */
 "use strict";
 
-var VERSION = "cg-v58";
+var VERSION = "cg-v59";
 var PRECACHE = [
   "/",
   "/index.html",
@@ -100,8 +102,15 @@ self.addEventListener("fetch", function (e) {
     url.pathname === "/assets/images/clearglass-holographic-seal.png" ||
     url.pathname === "/assets/images/clearglass-logo-256.webp";
 
-  if (isHTML || isFeed || isCriticalVisual) {
-    // network-first: fresh page/data/critical visual when online, cache fallback
+  // Renderer-stability controls must never be served stale after a hotfix.
+  // A stale platform or cinematic loader can terminate WebKit before the
+  // background revalidation completes, so these use the network-first path.
+  var isCriticalRuntime = url.pathname === "/platform.js" ||
+    url.pathname === "/assets/js/cinematic-motion.js" ||
+    url.pathname === "/assets/js/future-buttons.js";
+
+  if (isHTML || isFeed || isCriticalVisual || isCriticalRuntime) {
+    // network-first: fresh page/data/critical asset/runtime when online
     e.respondWith(
       fetch(req).then(function (res) {
         if (res && res.ok) {
@@ -112,10 +121,10 @@ self.addEventListener("fetch", function (e) {
       }).catch(function () {
         return caches.match(req).then(function (hit) {
           if (hit) return hit;
-          // A feed with no cached copy must surface as a failed fetch so the
-          // page runs its own fallback; handing back the HTML offline page
-          // would only fail later inside response.json().
-          if (isFeed || isCriticalVisual) return Response.error();
+          // A feed/runtime/critical visual with no cached copy must surface as
+          // a failed fetch so the page can keep its static fallback. Returning
+          // offline HTML to a script or JSON consumer would only fail later.
+          if (isFeed || isCriticalVisual || isCriticalRuntime) return Response.error();
           return caches.match("/offline.html");
         });
       })

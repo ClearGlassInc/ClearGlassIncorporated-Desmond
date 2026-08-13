@@ -198,7 +198,10 @@
     launcher.setAttribute("aria-expanded", "false");
     launcher.innerHTML =
       '<span class="cg-launcher-icon" aria-hidden="true"><span class="cg-launcher-pulse"></span>💬</span>' +
-      '<span class="cg-launcher-copy"><strong>Control Station</strong><small>ClearGlass</small></span>' +
+      // The space between </strong> and <small> is load-bearing: axe concatenates
+      // adjacent inline text with no separator, so without it the visible text
+      // reads "Control StationClearGlass" and no aria-label can contain it.
+      '<span class="cg-launcher-copy"><strong>Control Station</strong> <small>ClearGlass</small></span>' +
       '<span class="cg-launcher-chevron" aria-hidden="true">⌃</span>';
     stack.appendChild(launcher);
     return launcher;

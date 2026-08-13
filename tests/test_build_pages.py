@@ -9,12 +9,12 @@ from tools.build_pages import (
     FX_SCRIPT,
     FX_STYLESHEET,
     PUBLIC_DATA_FEEDS,
+    PUBLIC_DENIED_FILE_EXCEPTIONS,
     PUBLIC_DENIED_TREE_EXCEPTIONS,
     PUBLIC_MARKDOWN,
     SECURITY_STACK_STYLESHEET,
     _harden_html,
     build,
-    _harden_html,
     public_relative_paths,
 )
 
@@ -26,6 +26,7 @@ def test_public_inventory_excludes_source_and_private_trees() -> None:
         path.parts[0] not in DENIED_TOP_LEVEL
         or any(path.is_relative_to(exception) for exception in PUBLIC_DENIED_TREE_EXCEPTIONS)
         or path.as_posix() in PUBLIC_DATA_FEEDS
+        or path.as_posix() in PUBLIC_DENIED_FILE_EXCEPTIONS
         for path in paths
     )
     assert not any(path.suffix in {".py", ".sql", ".tf", ".env", ".yml", ".yaml"} for path in paths)

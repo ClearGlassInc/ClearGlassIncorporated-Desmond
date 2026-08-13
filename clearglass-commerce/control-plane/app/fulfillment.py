@@ -4,10 +4,13 @@ The lifecycle, and who is allowed to move it:
 
     pending           order paid, nothing sent to the supplier yet
     drafted           draft booked with Printful (costs nothing, deletable)
-    awaiting_approval draft exists, waiting on a human to confirm it
     confirmed         human approved; Printful is printing and will ship
     shipped           tracking received from the supplier
     unfulfillable     we cannot ship this — needs a human, and possibly a refund
+
+The shipment row carries one extra state of its own, ``confirming``: an approval
+has been spent and the supplier call is in flight. It exists so that a crash
+mid-call leaves evidence rather than a row that looks untouched.
 
 The one rule this module exists to enforce: **money in does not imply a parcel
 out.** A paid order whose address Printful will not accept, or whose items have
@@ -22,6 +25,7 @@ from decimal import Decimal
 from typing import Any
 
 from sqlalchemy import select, update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from . import printful
@@ -158,6 +162,17 @@ def book_supplier_draft(
     if order.fulfillment_status in SETTLED_STATUSES:
         return {"status": order.fulfillment_status, "order_id": order.id, "skipped": "already settled"}
 
+    # This function promises to book a *paid* order, and everything downstream
+    # assumes it. Without the check a pending or failed order could be drafted
+    # and then walked through the confirmation gate, so production would start
+    # on money that never arrived.
+    if order.status != "paid":
+        return {
+            "status": order.fulfillment_status,
+            "order_id": order.id,
+            "skipped": f"order is {order.status!r}, not paid — nothing ships before settlement",
+        }
+
     existing = session.scalar(select(Shipment).where(Shipment.order_id == order.id))
     if existing is not None:
         return {
@@ -225,7 +240,28 @@ def book_supplier_draft(
         currency=(detail.get("currency") or order.currency or "CAD")[:3],
     )
     session.add(shipment)
-    session.flush()
+    try:
+        # The lookup above is a check-then-insert, so two overlapping calls can
+        # both find nothing and both insert. Printful dedupes remotely on
+        # external_id, but locally that would leave two confirmable rows for one
+        # supplier order. The partial unique index on
+        # (order_id, supplier) WHERE supplier_shipment_id IS NULL makes the
+        # database the arbiter; the loser adopts the winner's row.
+        session.flush()
+    except IntegrityError:
+        session.rollback()
+        winner = session.scalar(
+            select(Shipment).where(
+                Shipment.order_id == order.id,
+                Shipment.supplier == "printful",
+            )
+        )
+        return {
+            "status": order.fulfillment_status,
+            "order_id": order.id,
+            "shipment_id": winner.id if winner else None,
+            "skipped": "shipment already recorded (concurrent booking)",
+        }
 
     # `drafted` regardless of the auto-confirm flag. Reporting
     # `awaiting_approval` here would name a state with nothing in the approval
@@ -241,12 +277,23 @@ def book_supplier_draft(
 
 
 def _as_decimal(value: Any) -> Decimal | None:
+    """Parse a supplier money value, or return None.
+
+    Mirrors the connector's price parser rather than trusting anything Decimal
+    will construct: ``Decimal("NaN")`` survives to ``session.flush()`` and fails
+    there — outside the ``PrintfulError`` handler — rolling back the audit entry
+    and leaving a paid order pending. A negative cost would quietly corrupt
+    margin reporting instead.
+    """
     if value in (None, ""):
         return None
     try:
-        return Decimal(str(value))
+        amount = Decimal(str(value))
     except (ValueError, ArithmeticError):
         return None
+    if not amount.is_finite() or amount < 0:
+        return None
+    return amount
 
 
 def claim_approval(session: Session, *, action: str, target: str) -> Approval | None:
@@ -287,6 +334,83 @@ def claim_approval(session: Session, *, action: str, target: str) -> Approval | 
     return candidate
 
 
+#: Supplier order states that mean production has begun — past the point of a
+#: harmless retry.
+SUPPLIER_COMMITTED_STATES = frozenset(
+    {"pending", "inprocess", "onhold", "partial", "fulfilled", "shipped"}
+)
+
+
+def _reconcile_in_flight(
+    session: Session,
+    shipment: Shipment,
+    *,
+    settings: Settings | None = None,
+    request: printful.Requester | None = None,
+    actor: str = "operator",
+) -> dict[str, Any]:
+    """Resolve a shipment left ``confirming`` by a crashed or failed attempt.
+
+    The supplier is the only party that knows whether the confirmation landed,
+    so it is asked. If the order is past draft, production started and the row
+    settles to ``confirmed`` — no second charge. If it is still a draft, nothing
+    happened and the row returns to ``draft`` so a fresh approval can retry.
+    Anything unreadable leaves it ``confirming``, which is the safe stuck state.
+    """
+    settings = settings or get_settings()
+    order = session.get(Order, shipment.order_id)
+
+    try:
+        remote = printful.order_status(
+            (order.external_ref if order else None) or f"order-{shipment.order_id}",
+            settings=settings,
+            request=request,
+        )
+    except printful.PrintfulError as exc:
+        log_event(
+            session,
+            actor=actor,
+            action="printful_order_status",
+            target=str(shipment.id),
+            payload={"shipment_id": shipment.id, "reason": f"reconciliation failed: {exc}"},
+            result="error",
+            assessment=score_action("printful_order_status", {}),
+        )
+        return {
+            "shipment_id": shipment.id,
+            "status": shipment.status,
+            "needs_reconciliation": True,
+            "error": str(exc),
+        }
+
+    remote_status = (remote.get("status") or "").lower()
+    started = remote_status in SUPPLIER_COMMITTED_STATES
+    shipment.status = "confirmed" if started else "draft"
+    if started and order is not None:
+        order.fulfillment_status = "confirmed"
+
+    log_event(
+        session,
+        actor=actor,
+        action="printful_order_status",
+        target=str(shipment.id),
+        payload={
+            "shipment_id": shipment.id,
+            "reconciled_to": shipment.status,
+            "supplier_status": remote_status or None,
+        },
+        result="executed",
+        assessment=score_action("printful_order_status", {}),
+    )
+    return {
+        "shipment_id": shipment.id,
+        "status": shipment.status,
+        "supplier_status": remote_status or None,
+        "reconciled": True,
+        "requires_approval": not started,
+    }
+
+
 def confirm_shipment(
     session: Session,
     shipment: Shipment,
@@ -312,6 +436,13 @@ def confirm_shipment(
     if shipment.status in ("confirmed", "fulfilled", "shipped"):
         return {"status": shipment.status, "shipment_id": shipment.id, "skipped": "already confirmed"}
 
+    # A previous attempt spent an approval and went in flight, then died before
+    # recording the outcome. Whether production started is unknown *to us* but
+    # known to the supplier, so ask rather than guess: retrying blind could pay
+    # twice, and giving up could strand a paid order.
+    if shipment.status == "confirming":
+        return _reconcile_in_flight(session, shipment, settings=settings, request=request, actor=actor)
+
     payload = {
         "shipment_id": shipment.id,
         "order_id": shipment.order_id,
@@ -321,6 +452,25 @@ def confirm_shipment(
     approval = claim_approval(session, action="printful_confirm_order", target=str(shipment.id))
 
     if approval is None:
+        # Reuse a pending approval instead of stacking another. Several pending
+        # rows for one shipment means several *approvable* rows, and two of them
+        # approved lets two requests each claim one and both call the supplier.
+        pending = session.scalar(
+            select(Approval).where(
+                Approval.action == "printful_confirm_order",
+                Approval.target == str(shipment.id),
+                Approval.status == "pending",
+            )
+        )
+        if pending is not None:
+            return {
+                "shipment_id": shipment.id,
+                "status": shipment.status,
+                "approval_id": pending.id,
+                "requires_approval": True,
+                "skipped": "approval already queued",
+            }
+
         result = run_governed_action(
             session,
             actor=actor,
@@ -338,6 +488,29 @@ def confirm_shipment(
             "requires_approval": True,
         }
 
+    # Take the shipment in-flight atomically. Claiming an approval alone does not
+    # serialise the shipment: two approved rows could be claimed concurrently and
+    # both would still see `draft`. The conditional UPDATE's row count is what
+    # makes exactly one caller proceed.
+    in_flight = session.execute(
+        update(Shipment)
+        .where(Shipment.id == shipment.id, Shipment.status == "draft")
+        .values(status="confirming")
+    )
+    if in_flight.rowcount != 1:
+        session.commit()
+        return {
+            "shipment_id": shipment.id,
+            "status": shipment.status,
+            "approval_id": approval.id,
+            "requires_approval": False,
+            "skipped": "another confirmation is already in flight",
+        }
+    # Durable before the money moves: a crash from here on leaves the row visibly
+    # `confirming`, which the reconciliation path above can resolve against the
+    # supplier — rather than `draft`, which would invite a blind second charge.
+    session.commit()
+
     try:
         detail = printful.confirm_order(
             shipment.supplier_order_id or "", settings=settings, request=request
@@ -346,6 +519,10 @@ def confirm_shipment(
         # The approval stays spent — re-confirming needs a fresh human decision,
         # because the first one was acted on and the supplier may have partially
         # applied it.
+        # The row stays `confirming`, not back to `draft`: the call may have
+        # reached Printful before failing, and presenting it as un-started would
+        # invite a second charge. The reconciliation path resolves it against
+        # the supplier on the next attempt.
         log_event(
             session,
             actor=actor,
@@ -360,6 +537,7 @@ def confirm_shipment(
             "status": shipment.status,
             "approval_id": approval.id,
             "requires_approval": False,
+            "needs_reconciliation": True,
             "error": str(exc),
         }
 
@@ -369,7 +547,12 @@ def confirm_shipment(
     # second approved request could confirm, and pay for, the same order twice.
     supplier_status = detail.get("status")
     shipment.status = "confirmed"
-    shipment.supplier_cost = _as_decimal(detail.get("supplier_cost")) or shipment.supplier_cost
+    # Explicit None check: a confirmed cost of exactly 0 is a real value
+    # (a reprint, a covered replacement) and `or` would discard it in favour
+    # of the stale draft estimate.
+    confirmed_cost = _as_decimal(detail.get("supplier_cost"))
+    if confirmed_cost is not None:
+        shipment.supplier_cost = confirmed_cost
     order = session.get(Order, shipment.order_id)
     if order is not None:
         order.fulfillment_status = "confirmed"
@@ -399,9 +582,11 @@ def record_shipment_notice(
 ) -> dict[str, Any]:
     """Apply a supplier ``package_shipped`` notice to our records.
 
-    Idempotent on ``(supplier, supplier_order_id)``: suppliers redeliver
-    webhooks, and a second insert would tell the customer about a parcel that
-    does not exist.
+    Idempotent on ``(supplier, supplier_shipment_id)`` — the *parcel*, not the
+    order. Suppliers redeliver webhooks, and a second insert would tell the
+    customer about a parcel that does not exist; but ``supplier_order_id``
+    deliberately repeats across the parcels of one split shipment, so keying on
+    it would collapse them into a single record.
     """
     external_id = notice.get("external_id")
     order = session.scalar(select(Order).where(Order.external_ref == external_id))
@@ -465,12 +650,29 @@ def record_shipment_notice(
         }
 
     if shipment is None:
-        shipment = session.scalar(
+        placeholder = session.scalar(
             select(Shipment).where(
                 Shipment.order_id == order.id,
                 Shipment.supplier_shipment_id.is_(None),
             )
         )
+        # Two split-shipment notices handled concurrently can both select this
+        # same blank draft row and then assign *different* parcel ids. The ids
+        # differ, so the unique index never fires, and the later commit silently
+        # overwrites the first parcel's tracking. Claim the placeholder
+        # atomically instead: the winner adopts it, the loser falls through and
+        # inserts a row of its own.
+        if placeholder is not None and parcel_id:
+            claimed = session.execute(
+                update(Shipment)
+                .where(Shipment.id == placeholder.id, Shipment.supplier_shipment_id.is_(None))
+                .values(supplier_shipment_id=parcel_id)
+            )
+            if claimed.rowcount == 1:
+                session.refresh(placeholder)
+                shipment = placeholder
+        else:
+            shipment = placeholder
 
     if shipment is None:
         shipment = Shipment(order_id=order.id, supplier=supplier)

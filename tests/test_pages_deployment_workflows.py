@@ -31,7 +31,12 @@ def test_pages_build_runs_integrity_gate_before_artifact_upload() -> None:
     build = workflow.index("python3 tools/build_pages.py dist")
     upload = workflow.index("actions/upload-pages-artifact@")
 
-    assert integrity_check < build < upload
+    # The security property is that nothing is published unverified, so the gate
+    # must precede the upload. It now runs *after* the build (af80a4a) so it
+    # validates the built artifact rather than the source that produced it —
+    # strictly stronger. Only the build/gate order changed; the gate still
+    # stands between the artifact and the world.
+    assert build < integrity_check < upload
 
 
 def test_integrity_guard_has_no_pages_write_capability() -> None:

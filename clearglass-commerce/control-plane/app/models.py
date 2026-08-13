@@ -120,6 +120,17 @@ class Shipment(Base):
             postgresql_where=text("supplier_shipment_id IS NOT NULL"),
         ),
         Index("idx_shipments_supplier_order", "supplier", "supplier_order_id"),
+        # At most one un-parcelled row per (order, supplier). Draft booking is a
+        # check-then-insert, so two overlapping calls can both find nothing and
+        # both insert; this makes the database the arbiter rather than the race.
+        Index(
+            "idx_shipments_order_placeholder",
+            "order_id",
+            "supplier",
+            unique=True,
+            sqlite_where=text("supplier_shipment_id IS NULL"),
+            postgresql_where=text("supplier_shipment_id IS NULL"),
+        ),
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)

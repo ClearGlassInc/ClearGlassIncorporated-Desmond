@@ -1,7 +1,7 @@
 {
   "schema": "clearglass.store.catalog/v1",
-  "generated_utc": "2026-08-09T15:21:00+00:00",
-  "content_hash": "sha256:49f6b49d4b7774d4f9986a88d36838f27b6e74b60963bb5da2779b2c82ac73bd",
+  "generated_utc": "2026-08-12T22:31:57+00:00",
+  "content_hash": "sha256:6323e93d1779a0b2fa735a772b0f7890382b76b10cec4af3b8df7864a17133ad",
   "source": "store.html",
   "live_checkout_enabled": true,
   "products": [
@@ -64,6 +64,18 @@
       "etransfer_amount": "CAD $1,499",
       "checkout_url": "https://book.stripe.com/fZu3cwcfWb1jgKoeCw4Ni08",
       "live_checkout": true
+    },
+    {
+      "sku": "advanced-secure-systems-engineering",
+      "name": "Advanced Secure Systems Engineering",
+      "label": "Advanced Secure Systems Engineering (enterprise, by scope)",
+      "short": "Secure Systems Engineering Workshop",
+      "price_display": "Enterprise pricing by scope",
+      "amount_cents": null,
+      "currency": "CAD",
+      "etransfer_amount": "Quoted on scope call",
+      "checkout_url": "",
+      "live_checkout": false
     }
   ],
   "summary": {

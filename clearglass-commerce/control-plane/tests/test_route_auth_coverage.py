@@ -66,8 +66,24 @@ PUBLIC_MUTATING_ROUTES: dict[tuple[str, str], str] = {
         "path segment is compared against PRINTFUL_WEBHOOK_SECRET with "
         "hmac.compare_digest, and an unset secret rejects every call rather than "
         "accepting all of them. It records tracking on an existing order and is "
-        "idempotent on (supplier, supplier_order_id); it cannot create an order, "
+        "idempotent on (supplier, supplier_shipment_id) — the parcel, since "
+        "supplier_order_id repeats across the parcels of a split shipment; it "
+        "cannot create an order, "
         "move money, or confirm a supplier order — confirmation is ALWAYS_ESCALATE."
+    ),
+    ("POST", "/api/forms/submit"): (
+        "Public visitor intake cannot carry an admin credential. Disabled by default; "
+        "startup refuses enablement unless edge-to-origin authentication is required. "
+        "The route is per-client throttled, schema/length bounded, consent gated, "
+        "honeypot filtered, and relays only to an explicit HTTPS host without following "
+        "redirects. It cannot invoke a governed commerce action."
+    ),
+    ("POST", "/api/security/csp-report"): (
+        "Browsers submit CSP violation reports without application credentials. The route "
+        "is per-client throttled and limited to 16 KiB and CSP/Reporting JSON content "
+        "types; it retains only normalized origins/directives/status, omitting paths, "
+        "queries, source snippets, and client IP. Edge-origin middleware protects the "
+        "deployed origin when enabled, and the route performs no governed action."
     ),
 }
 

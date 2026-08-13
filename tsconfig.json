@@ -17,5 +17,9 @@
     "sourceMap": true,
     "declaration": false
   },
-  "include": ["scripts/sync-stripe-products.ts", "scripts/stripe-sync/**/*.ts"]
+  "include": [
+    "scripts/sync-stripe-products.ts",
+    "scripts/stripe-sync/**/*.ts",
+    "scripts/provenance/**/*.ts"
+  ]
 }

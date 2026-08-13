@@ -364,10 +364,13 @@ describe("end-to-end run", () => {
     const text = err.join("\n");
     assert.match(text, /WITHHELD\s+store:hardening/);
     assert.match(text, /quote-driven/);
-    // The one unambiguous engagement still syncs — a bad neighbour does not
-    // block a good product.
-    assert.equal(stripe.products.size, 1);
-    assert.equal([...stripe.products.values()][0]?.metadata?.source_id, "store:quick-audit");
+    // The unambiguous engagements still sync — a bad neighbour does not block a
+    // good product. Pinned by exact source id so a newly-priced service cannot
+    // start syncing unnoticed; adding one here is a deliberate pricing decision.
+    const synced = [...stripe.products.values()]
+      .map((product) => product.metadata?.source_id)
+      .sort();
+    assert.deepEqual(synced, ["store:critical-minerals-compliance", "store:quick-audit"]);
   });
 
   it("is idempotent across repeated --apply runs", async () => {

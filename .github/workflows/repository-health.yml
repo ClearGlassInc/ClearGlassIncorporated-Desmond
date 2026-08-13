@@ -10,6 +10,7 @@ on:
       - "requirements.txt"
       - "tools/build_pages.py"
       - "scripts/verify_site.py"
+      - "scripts/production_probe.py"
   push:
     branches: ["main"]
     paths:
@@ -20,6 +21,7 @@ on:
       - "requirements.txt"
       - "tools/build_pages.py"
       - "scripts/verify_site.py"
+      - "scripts/production_probe.py"
   schedule:
     - cron: "31 7 * * 1"
   workflow_dispatch:
@@ -46,7 +48,7 @@ jobs:
       - name: Validate critical repository structure
         run: |
           set -euo pipefail
-          required=(index.html .nojekyll CNAME package.json package-lock.json pyproject.toml tools/build_pages.py scripts/verify_site.py)
+          required=(index.html .nojekyll CNAME package.json package-lock.json pyproject.toml tools/build_pages.py scripts/verify_site.py scripts/production_probe.py)
           missing=()
           for path in "${required[@]}"; do
             [[ -e "$path" ]] || missing+=("$path")

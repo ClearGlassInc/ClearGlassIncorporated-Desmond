@@ -73,11 +73,15 @@ IGNORED_HTML_DIRS = {
     ".git",
     ".next",
     "node_modules",
+    # Separately-deployed services keep their own HTML (e.g. the NEXUS gateway
+    # console, which its container serves at /console). Those pages never reach
+    # GitHub Pages, so the site-wide page contracts must not claim them.
+    "projects",
 }
 
 
 def _is_shipped_html(path: Path) -> bool:
-    """Return True for source-controlled HTML pages, not generated deps/builds."""
+    """Return True for HTML this repo publishes to Pages, not deps/builds/services."""
     return not any(part in IGNORED_HTML_DIRS for part in path.relative_to(ROOT).parts)
 
 # Proof that a page carries the ClearGlass logo: either the shared corner-badge

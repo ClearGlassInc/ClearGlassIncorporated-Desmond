@@ -78,16 +78,51 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Verify and build the production artifact
+      - name: Build sanitized production artifact
         run: |
-          python3 scripts/verify_site.py
+          set -euo pipefail
           python3 tools/build_pages.py dist
           test -s dist/index.html
           test -f dist/.nojekyll
           test -f dist/CNAME
-          echo "✓ sanitized Pages artifact is ready"
+          echo "✓ sanitized Pages artifact built"
+
+      - name: Verify the exact production artifact
+        run: |
+          set -euo pipefail
+          mkdir -p operations/reports
+          python3 scripts/verify_site.py \
+            --root dist \
+            --report "$GITHUB_WORKSPACE/operations/reports/pages-integrity.json"
+          echo "✓ production artifact integrity verified"
+
+      - name: Publish validation summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "### ClearGlass GitHub Pages Check"
+            echo ""
+            echo "- Validation scope: exact sanitized \`dist\` artifact"
+            echo "- Internal/non-published repository trees: excluded by the production builder"
+            if [[ -f operations/reports/pages-integrity.json ]]; then
+              echo "- Integrity report: generated"
+            else
+              echo "- Integrity report: unavailable because build failed before validation"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload integrity diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pages-integrity-report
+          path: operations/reports/pages-integrity.json
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Upload site artifact
+        if: success()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: clearglass-site

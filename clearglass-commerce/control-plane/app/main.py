@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
@@ -15,13 +16,17 @@ from .routers import (
     metrics,
     orders,
     payments,
+    public_forms,
+    security_reports,
     sidestore,
     store,
 )
 from .security import (
     auth_enabled,
+    origin_auth_enabled,
     peer_is_trusted_proxy,
     require_admin,
+    verify_origin_request,
     verify_startup_posture,
 )
 
@@ -54,6 +59,14 @@ def create_app() -> FastAPI:
     )
 
     @app.middleware("http")
+    async def edge_origin_authentication(request: Request, call_next):
+        try:
+            verify_origin_request(request, settings)
+        except HTTPException as exc:
+            return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+        return await call_next(request)
+
+    @app.middleware("http")
     async def security_headers(request, call_next):
         response = await call_next(request)
         response.headers.setdefault("X-Content-Type-Options", "nosniff")
@@ -82,6 +95,7 @@ def create_app() -> FastAPI:
             "env": settings.app_env,
             "version": __version__,
             "admin_auth": "enabled" if auth_enabled(settings) else "disabled",
+            "edge_origin_auth": "enforced" if origin_auth_enabled(settings) else "disabled",
             "client_peer": peer,
             "forwarded_for": (
                 "trusted"
@@ -124,6 +138,8 @@ def create_app() -> FastAPI:
     app.include_router(inventory.router, dependencies=admin)
     app.include_router(metrics.router)
     app.include_router(events.router)
+    app.include_router(public_forms.router)
+    app.include_router(security_reports.router)
     app.include_router(approvals.router, dependencies=admin)
     # Etsy is an operator surface end to end: connection state and verification read
     # credential-backed shop identity, and the write endpoints propose live-shop changes.

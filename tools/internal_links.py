@@ -36,6 +36,14 @@ REPORT_PATH = ROOT / "SITE_WIRING_PLAN.md"
 START = "<!-- cg-related:start -->"
 END = "<!-- cg-related:end -->"
 
+# Directory names that never hold a page this repository publishes to GitHub
+# Pages: version control internals, installed or generated dependency trees, and
+# `projects/`, where separately-deployed services keep their own HTML (the NEXUS
+# gateway's container serves `projects/nexus-gateway/web/` at /console). Page
+# discovery is duplicated across several gates, so this constant is the one the
+# others import — a new directory landing here must not fail six audits at once.
+NON_SITE_DIRS = frozenset({".git", "node_modules", ".next", "projects"})
+
 # HTML utilities and private/non-indexable operational surfaces are deliberately
 # outside the public journey graph. Keeping this inventory beside PAGES makes
 # the site-wide audit exhaustive without leaking private consoles into search or
@@ -80,7 +88,6 @@ PAGES: dict[str, tuple[str, str]] = {
     "global-growth-engine.html": ("Global Growth Engine", "governed multi-market growth intelligence"),
     "automap.html": ("AutoMap Orchestration", "architecture-aware orchestration and system relationship mapping"),
     "apps/command-center/index.html": ("Growth Command Centre", "governed Burlington growth operations and approvals"),
-    "mission-control.html": ("Mission Control", "the ClearGlass operational engineering portfolio"),
 
     # Cyber defense & security operations
     "cyber-defense-console.html": ("Cyber Defense Console", "the ClearGlass command center for defensive operations"),
@@ -92,6 +99,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "stegoforge.html": ("STEGOFORGE", "steganography and covert-channel analysis terminal"),
     "attack-prompt-core.html": ("ATT&CK Prompt Integrator", "MITRE ATT&CK-aligned analysis prompts"),
     "environmental-cyber-risk.html": ("Environmental Cyber-Risk", "OT and environmental threat monitoring"),
+    "content-shield.html": ("VEILGUARD Content Shield", "per-viewer watermarking, traceable renders and leak attribution"),
 
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
@@ -169,11 +177,13 @@ PAGES: dict[str, tuple[str, str]] = {
     "counter-uas-commercialization-os.html": ("Counter-UAS OS", "counter-drone commercialization platform"),
     "traffic-enforcement.html": ("Speed Vision AI", "AI traffic-enforcement platform"),
     "sats-digital-twin.html": ("SATS Digital Twin", "storm-adaptive transit simulation with governed operations"),
+    "minerals-platform.html": ("Minerals Intelligence Platform", "source-transparent critical-minerals command center"),
 
     # Services & conversion
     "products.html": ("ClearGlass Products", "the unified ClearGlass product catalog"),
     "offers/index.html": ("Services & Engagements", "every ClearGlass offer in one place"),
     "store.html": ("ClearGlass Store", "book a security engagement"),
+    "products/advanced-secure-systems-engineering.html": ("Secure Systems Engineering Workshop", "enterprise workshop in defensive cyber, embedded platforms and zero trust"),
     "seo-authority-hub.html": ("Cybersecurity & AI Automation in Burlington", "the local authority hub for ClearGlass services"),
     "checkout/index.html": ("Secure Checkout", "purchase an audit or protection plan"),
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
@@ -209,10 +219,11 @@ PAGES: dict[str, tuple[str, str]] = {
     # Insights / blog
     "blog/index.html": ("ClearGlass Intelligence", "essays on governed AI, cyber defense and OSINT"),
     "blog/autonomous-threat-modeling-2026.html": ("Autonomous Threat Modeling in 2026", "continuous architecture-grounded security for agentic and cyber-physical systems"),
+    "blog/blue-brain-project-digital-brain-simulation.html": ("Blue Brain Project", "reconstructing the brain in silico"),
     "blog/ai-agent-governance-governed-autonomy.html": ("AI Agent Governance", "the governed-autonomy playbook"),
+    "blog/agentic-ai-business-operating-model.html": ("Agentic AI Operating Model", "bounded delegation as a business operating model"),
     "blog/ai-agents-digital-workforce-small-business.html": ("AI Agents as a Digital Workforce", "governed digital workers for small businesses"),
     "blog/ai-agents-insider-threat.html": ("AI Agents Are the New Insider Threat", "why agent identity is a security boundary"),
-    "blog/ai-safety-black-box-activation-analysis-gavel.html": ("AI Safety Beyond the Black Box", "activation analysis and layered safeguards for governed AI"),
     "blog/almach-scalp-engine.html": ("ALMACH Scalp Engine", "a directional neural-mesh trading study"),
     "blog/artemis-governed-ai-gtm-visual-growth-engine.html": ("Governed AI Threat Modeling", "the Artemis GTM visual growth engine"),
     "blog/clearglass-agentops-microsoft-foundry-future-stack.html": ("ClearGlass AgentOps", "the Microsoft Foundry future stack"),
@@ -268,6 +279,7 @@ CLUSTERS: dict[str, dict] = {
             "sentinel.html", "bluedesk.html", "guardian.html",
             "artemis-blue-team.html", "stegoforge.html",
             "attack-prompt-core.html", "environmental-cyber-risk.html",
+            "content-shield.html",
             "bluedesk-mobile.html",
         ],
         "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")],
@@ -343,6 +355,7 @@ CLUSTERS: dict[str, dict] = {
             "counter-uas-commercialization-os.html",
             "traffic-enforcement.html",
             "sats-digital-twin.html",
+            "minerals-platform.html",
         ],
         "cta": [CTA_STORE, ("operations/procurement-readiness.html", "Check our procurement readiness")],
     },
@@ -350,7 +363,8 @@ CLUSTERS: dict[str, dict] = {
         "name": "Services & Engagements",
         "pillar": "offers/index.html",
         "members": [
-            "store.html", "pricing.html", "plans.html", "workspace.html",
+            "store.html", "products/advanced-secure-systems-engineering.html",
+            "pricing.html", "plans.html", "workspace.html",
             "checkout/index.html", "seo-authority-hub.html",
             "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
@@ -390,6 +404,7 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "blog/autonomous-threat-modeling-2026.html",
             "blog/ai-agent-governance-governed-autonomy.html",
+            "blog/agentic-ai-business-operating-model.html",
             "blog/ai-agents-digital-workforce-small-business.html",
             "blog/clearglass-platform-audit-2026.html",
             "blog/ai-agents-insider-threat.html",
@@ -428,6 +443,7 @@ CLUSTERS: dict[str, dict] = {
             "blog/ontario-influence-environment-august-2026.html",
             "blog/us-army-hades-me-11b-osint-dossier.html",
             "blog/shadow-ai-incident-response-logs-gone.html",
+            "blog/blue-brain-project-digital-brain-simulation.html",
         ],
         "cta": [CTA_STORE, CTA_PRICING],
     },
@@ -767,7 +783,7 @@ def validate() -> list[str]:
     discovered = {
         path.relative_to(ROOT).as_posix()
         for path in ROOT.rglob("*.html")
-        if not {".git", "node_modules", ".next"} & set(path.parts)
+        if not NON_SITE_DIRS & set(path.parts)
     }
     classified = set(PAGES) | set(EXCLUDED_PAGES)
     for page in sorted(discovered - classified):

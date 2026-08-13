@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,7 +23,36 @@ ALLOWED_ROLLOUT = {"observe", "challenge", "enforce", "disabled"}
 ALLOWED_LOG_LEVELS = {"none", "metadata", "security_event"}
 ALLOWED_CATEGORIES = {
     "ddos", "managed_waf", "custom_waf", "bot", "ip_reputation",
-    "rate_limit", "geo_asn", "headers", "origin", "logging", "emergency",
+    "rate_limit", "geo_asn", "headers", "cache", "origin", "logging", "emergency",
+}
+REQUIRED_RULE_IDS = {
+    "ddos.provider-managed",
+    "waf.managed-baseline",
+    "waf.unexpected-method-static",
+    "waf.path-traversal-probing",
+    "waf.request-size-anomaly",
+    "bot.verified-crawlers",
+    "bot.trusted-operations",
+    "bot.normal-browsers",
+    "bot.suspicious-automation",
+    "reputation.anonymous-network",
+    "ratelimit.static-assets",
+    "ratelimit.html",
+    "ratelimit.login",
+    "ratelimit.password-reset",
+    "ratelimit.search",
+    "ratelimit.contact-form",
+    "ratelimit.api",
+    "ratelimit.admin",
+    "ratelimit.webhooks",
+    "geo.default-disabled",
+    "headers.security-baseline",
+    "cache.static-assets",
+    "cache.sensitive-bypass",
+    "origin.pages-bypass-known",
+    "origin.dynamic-authenticated-pull",
+    "logging.privacy-baseline",
+    "emergency.high-security-template",
 }
 
 
@@ -45,8 +75,85 @@ def parse_expiry(value: str) -> datetime:
     return parsed.astimezone(timezone.utc)
 
 
-def validate(policy: dict[str, Any]) -> list[str]:
+def _is_type(value: Any, expected: str) -> bool:
+    return {
+        "array": isinstance(value, list),
+        "boolean": isinstance(value, bool),
+        "integer": isinstance(value, int) and not isinstance(value, bool),
+        "null": value is None,
+        "number": isinstance(value, (int, float)) and not isinstance(value, bool),
+        "object": isinstance(value, dict),
+        "string": isinstance(value, str),
+    }.get(expected, False)
+
+
+def validate_schema(instance: Any, schema: dict[str, Any], root: dict[str, Any], path: str = "$") -> list[str]:
+    """Validate the deterministic JSON-Schema subset used by policy.schema.json."""
     errors: list[str] = []
+    if "$ref" in schema:
+        reference = schema["$ref"]
+        if not isinstance(reference, str) or not reference.startswith("#/"):
+            return [f"{path}: unsupported schema reference {reference!r}"]
+        target: Any = root
+        try:
+            for part in reference[2:].split("/"):
+                target = target[part.replace("~1", "/").replace("~0", "~")]
+        except (KeyError, TypeError):
+            return [f"{path}: unresolved schema reference {reference!r}"]
+        return validate_schema(instance, target, root, path)
+
+    expected = schema.get("type")
+    expected_types = expected if isinstance(expected, list) else [expected] if expected else []
+    if expected_types and not any(_is_type(instance, item) for item in expected_types):
+        return [f"{path}: expected type {' or '.join(expected_types)}"]
+    if "const" in schema and instance != schema["const"]:
+        errors.append(f"{path}: must equal {schema['const']!r}")
+    if "enum" in schema and instance not in schema["enum"]:
+        errors.append(f"{path}: unsupported value {instance!r}")
+
+    if isinstance(instance, dict):
+        required = schema.get("required", [])
+        for key in required:
+            if key not in instance:
+                errors.append(f"{path}: missing required property {key!r}")
+        properties = schema.get("properties", {})
+        if schema.get("additionalProperties") is False:
+            for key in instance.keys() - properties.keys():
+                errors.append(f"{path}: unknown property {key!r}")
+        for key, value in instance.items():
+            child = properties.get(key)
+            if isinstance(child, dict):
+                errors.extend(validate_schema(value, child, root, f"{path}.{key}"))
+    elif isinstance(instance, list):
+        if len(instance) < int(schema.get("minItems", 0)):
+            errors.append(f"{path}: fewer than minItems")
+        item_schema = schema.get("items")
+        if isinstance(item_schema, dict):
+            for index, value in enumerate(instance):
+                errors.extend(validate_schema(value, item_schema, root, f"{path}[{index}]"))
+    elif isinstance(instance, str):
+        if len(instance) < int(schema.get("minLength", 0)):
+            errors.append(f"{path}: shorter than minLength")
+        pattern = schema.get("pattern")
+        if pattern and re.search(pattern, instance) is None:
+            errors.append(f"{path}: does not match required pattern")
+        if schema.get("format") == "date-time":
+            try:
+                parse_expiry(instance)
+            except ValueError as exc:
+                errors.append(f"{path}: invalid date-time: {exc}")
+    elif isinstance(instance, (int, float)) and not isinstance(instance, bool):
+        if "minimum" in schema and instance < schema["minimum"]:
+            errors.append(f"{path}: below minimum")
+        if "maximum" in schema and instance > schema["maximum"]:
+            errors.append(f"{path}: above maximum")
+    return errors
+
+
+def validate(policy: dict[str, Any], schema: dict[str, Any] | None = None) -> list[str]:
+    if schema is None:
+        schema = load_json(DEFAULT_SCHEMA)
+    errors: list[str] = validate_schema(policy, schema, schema)
     required_top = {"version", "environment", "defaults", "rules"}
     missing = required_top - policy.keys()
     if missing:
@@ -64,6 +171,12 @@ def validate(policy: dict[str, Any]) -> list[str]:
         errors.append("safe default violated: baseline CSP must start report-only")
     if defaults.get("log_sensitive_fields") is not False:
         errors.append("privacy invariant violated: log_sensitive_fields must be false")
+    if defaults.get("verified_crawlers_challenged") is not False:
+        errors.append("safe default violated: verified_crawlers_challenged must be false")
+    if defaults.get("broad_automation_block_enabled") is not False:
+        errors.append("safe default violated: broad_automation_block_enabled must be false")
+    if defaults.get("provider_changes_applied") is not False:
+        errors.append("truth invariant violated: repository policy must not claim provider changes were applied")
 
     rules = policy.get("rules")
     if not isinstance(rules, list) or not rules:
@@ -82,7 +195,8 @@ def validate(policy: dict[str, Any]) -> list[str]:
 
         required = {
             "id", "description", "category", "scope", "priority", "action",
-            "rollout_mode", "log_level", "enabled", "exceptions", "owner", "rationale",
+            "rollout_mode", "log_level", "enabled", "match", "exceptions",
+            "expires_at", "owner", "change_ticket", "rationale",
         }
         missing_rule = required - rule.keys()
         if missing_rule:
@@ -131,13 +245,25 @@ def validate(policy: dict[str, Any]) -> list[str]:
         if enabled and rule.get("scope") == "all" and action in {"allow", "block"}:
             errors.append(f"{where}: broad enabled {action} over scope=all is prohibited")
 
+        if enabled and action == "allow":
+            scope = str(rule.get("scope", ""))
+            exception_text = " ".join(str(item) for item in exceptions).lower() if isinstance(exceptions, list) else ""
+            if "layer" not in scope or "managed waf" not in exception_text:
+                errors.append(f"{where}: allow must be layer-scoped and explicitly retain managed WAF inspection")
+
         # Geo/ASN is disabled in the baseline unless the operator explicitly changes it.
         if category == "geo_asn" and enabled:
             errors.append(f"{where}: geo/ASN rule must be disabled in baseline policy")
 
+        if category == "custom_waf" and enabled and (action != "log" or rollout != "observe"):
+            errors.append(f"{where}: custom WAF baseline rules must start as log/observe")
+
         # Permanent reputation-only blocks are prohibited.
         if category == "ip_reputation" and action == "block" and not rule.get("expires_at"):
             errors.append(f"{where}: reputation-only block requires expiry and review")
+
+        if category == "bot" and enabled and action == "block" and not rule.get("expires_at"):
+            errors.append(f"{where}: enabled bot-only block requires expiry and corroborated review")
 
         # Emergency controls must be temporary.
         if category == "emergency" and enabled:
@@ -165,12 +291,21 @@ def validate(policy: dict[str, Any]) -> list[str]:
 
         if action == "block" and rollout == "observe":
             errors.append(f"{where}: block action cannot be in observe rollout")
+        if rollout == "disabled" and enabled:
+            errors.append(f"{where}: disabled rollout cannot be enabled")
+        if not enabled and rollout != "disabled":
+            errors.append(f"{where}: disabled rule must use rollout_mode=disabled")
+        if enabled and action == "block" and not rule.get("change_ticket"):
+            errors.append(f"{where}: enabled block action requires a change_ticket")
 
         if not str(rule.get("owner", "")).strip():
             errors.append(f"{where}: owner is required")
         if len(str(rule.get("rationale", "")).strip()) < 5:
             errors.append(f"{where}: rationale is too short")
 
+    missing_required_rules = REQUIRED_RULE_IDS - seen_ids
+    if missing_required_rules:
+        errors.append(f"missing required baseline rule IDs: {sorted(missing_required_rules)}")
     return errors
 
 
@@ -192,7 +327,7 @@ def main() -> int:
         print("ERROR: policy schema must use JSON Schema draft 2020-12", file=sys.stderr)
         return 2
 
-    errors = validate(policy)
+    errors = validate(policy, schema)
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)

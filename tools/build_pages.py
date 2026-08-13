@@ -27,10 +27,20 @@ DENIED_TOP_LEVEL = {
 }
 PUBLIC_DENIED_TREE_EXCEPTIONS = {Path("apps/command-center")}
 
+# Individual pages inside an otherwise denied tree. Deliberately file-level, not
+# a tree exception: `products/` also holds shipped product source (opal-koboi's
+# .py/.ps1 and its sibling HTML consoles), so opening the whole tree would
+# publish pages nobody has held to the site's SEO, logo, and linking gates.
+PUBLIC_DENIED_FILE_EXCEPTIONS = {
+    "products/advanced-secure-systems-engineering.html",
+}
+
 # `data/` stays denied as a tree — it also holds internal working state. These
 # exact feeds are live public page inputs and must be deliberately allowlisted.
 PUBLIC_DATA_FEEDS = {
     "data/minerals/manifest.json",
+    "data/minerals/platform/config.json",
+    "data/minerals/platform/demo.json",
     "data/minerals/latest/news.json",
     "data/minerals/latest/policy.json",
     "data/minerals/latest/prices.json",
@@ -160,6 +170,7 @@ def public_relative_paths() -> list[Path]:
         inside_public_exception = (
             any(relative.is_relative_to(path) for path in PUBLIC_DENIED_TREE_EXCEPTIONS)
             or relative_text in PUBLIC_DATA_FEEDS
+            or relative_text in PUBLIC_DENIED_FILE_EXCEPTIONS
         )
         if (
             relative.parts[0] in DENIED_TOP_LEVEL

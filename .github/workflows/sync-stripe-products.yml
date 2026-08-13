@@ -1,6 +1,17 @@
 name: Sync Stripe Products
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/sync-stripe-products.ts"
+      - "scripts/stripe-sync/**"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig.json"
+      - "data/store/catalog.json"
+      - "side-store.html"
+      - ".github/workflows/sync-stripe-products.yml"
   workflow_dispatch:
     inputs:
       apply:
@@ -8,7 +19,7 @@ on:
         type: boolean
         default: false
       live:
-        description: "Target LIVE Stripe. Also needs ALLOW_STRIPE_LIVE_SYNC=true and approval."
+        description: "Target LIVE Stripe. Temporarily locked until test verification passes."
         type: boolean
         default: false
       sources:
@@ -46,18 +57,19 @@ jobs:
           node-version: "22"
           cache: npm
           cache-dependency-path: package-lock.json
-      - run: npm ci
+      - name: Install locked dependencies
+        run: npm ci
       - name: Type check
         run: npm run typecheck
       - name: Unit tests
         run: npm test
 
   sync-test-mode:
-    name: Sync (Stripe test mode)
+    name: Sync (Stripe test mode dry run)
     needs: verify
     if: >-
-      github.event_name == 'workflow_dispatch' &&
-      inputs.live != true
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && inputs.live != true)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -78,15 +90,22 @@ jobs:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://www.clearglassinc.com' }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          APPLY: ${{ inputs.apply }}
-          SOURCES: ${{ inputs.sources }}
-          DEACTIVATE: ${{ inputs.deactivate_old_prices }}
+          APPLY: ${{ github.event_name == 'workflow_dispatch' && inputs.apply || false }}
+          SOURCES: ${{ github.event_name == 'workflow_dispatch' && inputs.sources || 'side-store,store' }}
+          DEACTIVATE: ${{ github.event_name == 'workflow_dispatch' && inputs.deactivate_old_prices || false }}
         run: |
           set -euo pipefail
           args=(--source "${SOURCES}" --report stripe-sync-report.json)
+          use_offline=false
+          test_key=false
 
           if [ "${DEACTIVATE}" = "true" ]; then
             args+=(--deactivate-old-prices)
+          fi
+
+          # Push-triggered validation is permanently dry-run only.
+          if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
+            APPLY=false
           fi
 
           if [ -z "${STRIPE_SECRET_KEY}" ]; then
@@ -94,16 +113,31 @@ jobs:
               echo "::error::STRIPE_SECRET_KEY is required when apply=true."
               exit 1
             fi
+            use_offline=true
             echo "No STRIPE_SECRET_KEY configured — running offline dry run." >> "$GITHUB_STEP_SUMMARY"
-            args+=(--offline)
           else
             case "${STRIPE_SECRET_KEY}" in
-              sk_test_*|rk_test_*) echo "Credential is a Stripe test-mode key." ;;
-              *) echo "::error::STRIPE_SECRET_KEY is not a test-mode key. This job refuses to run with it."; exit 1 ;;
+              sk_test_*|rk_test_*)
+                test_key=true
+                echo "Credential is a Stripe test-mode key."
+                ;;
+              *)
+                if [ "${APPLY}" = "true" ]; then
+                  echo "::error::apply=true requires a Stripe test-mode key in STRIPE_SECRET_KEY."
+                  exit 1
+                fi
+                use_offline=true
+                echo "::warning::STRIPE_SECRET_KEY is not test-mode; automatic validation will ignore it and run offline."
+                echo "A non-test Stripe credential was ignored; safe offline dry-run used instead." >> "$GITHUB_STEP_SUMMARY"
+                ;;
             esac
-            if [ "${APPLY}" = "true" ]; then
-              args+=(--apply)
-            fi
+          fi
+
+          if [ "${use_offline}" = "true" ]; then
+            export STRIPE_SECRET_KEY=""
+            args+=(--offline)
+          elif [ "${test_key}" = "true" ] && [ "${APPLY}" = "true" ]; then
+            args+=(--apply)
           fi
 
           npm run --silent sync:stripe -- "${args[@]}"
@@ -115,12 +149,14 @@ jobs:
           name: stripe-sync-report-test
           path: stripe-sync-report.json
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 7
 
   plan-live-mode:
-    name: Plan (Stripe LIVE mode, read-only)
+    name: Plan (Stripe LIVE mode, read-only) [LOCKED]
     needs: verify
+    # SAFETY LOCK: live mode stays disabled until a clean test-mode dry run is verified.
     if: >-
+      false &&
       github.event_name == 'workflow_dispatch' &&
       inputs.live == true
     runs-on: ubuntu-latest
@@ -186,12 +222,14 @@ jobs:
           name: stripe-sync-plan-live
           path: stripe-sync-report.json
           if-no-files-found: warn
-          retention-days: 90
+          retention-days: 30
 
   apply-live-mode:
-    name: Apply (Stripe LIVE mode)
+    name: Apply (Stripe LIVE mode) [LOCKED]
     needs: [verify, plan-live-mode]
+    # SAFETY LOCK: live writes cannot execute until the test-mode gate is proven clean.
     if: >-
+      false &&
       github.event_name == 'workflow_dispatch' &&
       inputs.live == true &&
       inputs.apply == true
@@ -241,7 +279,7 @@ jobs:
           name: stripe-sync-report-live
           path: stripe-sync-report.json
           if-no-files-found: warn
-          retention-days: 90
+          retention-days: 30
 
   post-deploy-drift-check:
     name: Post-deploy drift check (dry run)
@@ -270,12 +308,23 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
-          if [ -z "${STRIPE_SECRET_KEY}" ]; then
-            echo "Stripe synchronization skipped because STRIPE_SECRET_KEY is not configured; an offline drift plan was generated instead." >> "$GITHUB_STEP_SUMMARY"
-            npm run --silent sync:stripe -- --offline --report stripe-sync-report.json | tee drift.txt
-          else
-            npm run --silent sync:stripe -- --report stripe-sync-report.json | tee drift.txt
-          fi
+          case "${STRIPE_SECRET_KEY:-}" in
+            sk_test_*|rk_test_*)
+              echo "Using Stripe test-mode credential for read-only drift check." >> "$GITHUB_STEP_SUMMARY"
+              npm run --silent sync:stripe -- --report stripe-sync-report.json | tee drift.txt
+              ;;
+            "")
+              echo "Stripe synchronization skipped because STRIPE_SECRET_KEY is not configured; an offline drift plan was generated instead." >> "$GITHUB_STEP_SUMMARY"
+              export STRIPE_SECRET_KEY=""
+              npm run --silent sync:stripe -- --offline --report stripe-sync-report.json | tee drift.txt
+              ;;
+            *)
+              echo "::warning::Non-test STRIPE_SECRET_KEY ignored for automatic drift validation."
+              echo "A non-test Stripe credential was ignored; safe offline drift plan generated instead." >> "$GITHUB_STEP_SUMMARY"
+              export STRIPE_SECRET_KEY=""
+              npm run --silent sync:stripe -- --offline --report stripe-sync-report.json | tee drift.txt
+              ;;
+          esac
           {
             echo "### Stripe catalogue drift (dry run)"
             echo ""
@@ -290,4 +339,4 @@ jobs:
           name: stripe-sync-report-post-deploy
           path: stripe-sync-report.json
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 7

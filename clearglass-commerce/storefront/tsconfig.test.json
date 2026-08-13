@@ -1,0 +1,35 @@
+{
+  // Compiles the VEILGUARD core (the server-safe, framework-free modules) plus
+  // its suite to CommonJS so Node's built-in test runner can execute them
+  // directly. The app's own tsconfig stays noEmit for `next build`; this one
+  // exists purely so the protection logic is covered by real assertions rather
+  // than only by a typecheck.
+  //
+  // Client components and `viewer.ts` are excluded on purpose: they import
+  // React and `next/server`, which belong to the bundler's job, not the test
+  // runner's. What is tested here is the logic those files call into.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "incremental": false,
+    "outDir": ".veilguard-test",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "types": ["node"],
+    "skipLibCheck": true
+  },
+  "include": [
+    "lib/veilguard/policy.ts",
+    "lib/veilguard/tracer.ts",
+    "lib/veilguard/watermark.ts",
+    "lib/veilguard/ledger.ts",
+    "lib/veilguard/risk.ts",
+    "lib/veilguard/honeypot.ts",
+    "lib/veilguard/store.ts",
+    "lib/veilguard/registry.ts",
+    "lib/veilguard/contract.ts",
+    "tests/veilguard/**/*.ts"
+  ],
+  "exclude": ["node_modules", ".next", ".veilguard-test"]
+}

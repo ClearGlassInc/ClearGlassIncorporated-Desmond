@@ -16,6 +16,66 @@
   if (window.__cgPlatform) return;
   window.__cgPlatform = true;
 
+  var platformBase = (document.currentScript && document.currentScript.src) || location.href;
+  function platformAsset(name) {
+    try { return new URL(name, platformBase).href; }
+    catch (e) { return name; }
+  }
+
+  /* The homepage already owns its navigation, Artemis instrumentation,
+     Sentinel surface and unified assistant fixture. Do not mount additional
+     global fixed-control runtimes there: FX adds fixed scroll controls and
+     AEGIS-OMEGA adds fixed telemetry plus a second full-screen command layer.
+     Those systems remain available everywhere else. The canonical check keeps
+     this isolation correct on custom-domain and GitHub Pages preview routes. */
+  var normalizedPath = (location.pathname || "/").replace(/\/+$/, "") || "/";
+  var canonical = document.querySelector('link[rel="canonical"]');
+  var canonicalHref = canonical ? canonical.href : "";
+  var isHomepage = normalizedPath === "/" ||
+    /\/index\.html$/i.test(normalizedPath) ||
+    canonicalHref === "https://www.clearglassinc.com/";
+  if (isHomepage) {
+    document.documentElement.setAttribute("data-cg-home-runtime", "stabilized");
+  }
+
+  /* Homepage editorial showcase: intentionally content-only and non-fixed.
+     It reads the existing Insights post index, mounts before the timeline,
+     and fails closed so editorial enhancement can never destabilize the page. */
+  if (isHomepage && !document.querySelector('script[data-cg-home-insights="true"]')) {
+    var homeInsights = document.createElement("script");
+    homeInsights.src = platformAsset("homepage-insights.js");
+    homeInsights.async = true;
+    homeInsights.setAttribute("data-cg-home-insights", "true");
+    homeInsights.addEventListener("error", function () {
+      document.documentElement.setAttribute("data-cg-home-insights", "degraded");
+    }, { once: true });
+    document.body.appendChild(homeInsights);
+  }
+
+  /* The Sentinel dialog exists in homepage markup with aria-modal="true" even
+     while its parent shell is hidden. The unified assistant intentionally hides
+     whenever a real modal is active, so synchronize aria-modal with the shell's
+     actual hidden state. This prevents a hidden dialog from suppressing the
+     bottom-right control station and avoids stale overlay state on open/close. */
+  if (isHomepage) {
+    var sentinelShell = document.getElementById("sentinelShell");
+    var sentinelDialog = sentinelShell && sentinelShell.querySelector('[role="dialog"]');
+    if (sentinelShell && sentinelDialog) {
+      var syncSentinelModalState = function () {
+        var open = !sentinelShell.hidden;
+        sentinelDialog.setAttribute("aria-modal", String(open));
+        sentinelShell.setAttribute("aria-hidden", String(!open));
+      };
+      syncSentinelModalState();
+      if ("MutationObserver" in window) {
+        new MutationObserver(syncSentinelModalState).observe(sentinelShell, {
+          attributes: true,
+          attributeFilter: ["hidden"]
+        });
+      }
+    }
+  }
+
   /* ── 1) PWA: manifest link + service worker ─────────────────────────────── */
   if (!document.querySelector('link[rel="manifest"]')) {
     var mf = document.createElement("link");
@@ -38,13 +98,56 @@
   addLink('link[rel="icon"][type="image/svg+xml"]', { rel: "icon", type: "image/svg+xml", href: "icon.svg" });
   addLink('link[rel="apple-touch-icon"]', { rel: "apple-touch-icon", href: "logo.png" });
 
-  /* ── advanced motion layer (fx.css + fx.js) — progressive enhancement ───── */
-  addLink('link[href="fx.css"]', { rel: "stylesheet", href: "fx.css" });
-  if (!document.querySelector('script[src="fx.js"]')) {
-    var fx = document.createElement("script");
-    fx.src = "fx.js"; fx.defer = true;
-    document.body.appendChild(fx);
+  /* ── advanced motion layer (fx.css + fx.js) — progressive enhancement ─────
+     The homepage intentionally skips this layer because its fixed top/bottom
+     buttons duplicate the unified control station and can stack during boot. */
+  if (!isHomepage) {
+    addLink('link[href="fx.css"]', { rel: "stylesheet", href: "fx.css" });
+    if (!document.querySelector('script[src="fx.js"]')) {
+      var fx = document.createElement("script");
+      fx.src = "fx.js"; fx.defer = true;
+      document.body.appendChild(fx);
+    }
   }
+
+  /* ── cinematic system: purpose-driven hero + motion hierarchy ─────────────
+     Preserved on desktop. cinematic-motion.js itself fails static on iOS/iPadOS
+     so the existing brand direction remains without reintroducing WebKit load. */
+  addLink('link[href="/assets/css/cinematic-motion.css"]', {
+    rel: "stylesheet",
+    href: "/assets/css/cinematic-motion.css"
+  });
+  if (!document.querySelector('script[src="/assets/js/cinematic-motion.js"]')) {
+    var cinematic = document.createElement("script");
+    cinematic.src = "/assets/js/cinematic-motion.js";
+    cinematic.defer = true;
+    document.body.appendChild(cinematic);
+  }
+
+  /* ── AEGIS-OMEGA control plane: fault-contained progressive enhancement ──
+     Skip on the homepage: it appends a second fixed telemetry rail and a
+     second full-screen command-palette surface. Those are redundant with the
+     homepage's existing Sentinel/unified assistant controls. */
+  if (!isHomepage) {
+    var omegaCss = platformAsset("aegis-omega.css");
+    var omegaJs = platformAsset("aegis-omega.js");
+    addLink('link[data-cg-aegis-omega="true"]', {
+      rel: "stylesheet",
+      href: omegaCss,
+      "data-cg-aegis-omega": "true"
+    });
+    if (!document.querySelector('script[data-cg-aegis-omega="true"]')) {
+      var omega = document.createElement("script");
+      omega.src = omegaJs;
+      omega.defer = true;
+      omega.setAttribute("data-cg-aegis-omega", "true");
+      omega.addEventListener("error", function () {
+        document.documentElement.setAttribute("data-aegis-omega", "degraded");
+      }, { once: true });
+      document.body.appendChild(omega);
+    }
+  }
+
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("sw.js").catch(function () {});

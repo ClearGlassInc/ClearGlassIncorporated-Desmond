@@ -1,0 +1,100 @@
+{
+  "policy_version": "2.0.0",
+  "environment": "staging",
+  "selected_provider": "REPLACE_WITH_cloudflare_fastly_aws_or_azure",
+  "state_owner": "REPLACE_WITH_TEAM_AND_STATE_ID",
+  "manual_prerequisites_confirmed": false,
+  "dns_managed_by_this_adapter": false,
+  "capabilities": [
+    {
+      "intent": "ddos_and_cdn",
+      "cloudflare": "Managed DDoS, CDN cache, Tiered Cache/Cache Reserve as plan-appropriate",
+      "fastly": "Network DDoS service, CDN cache, shielding",
+      "aws": "CloudFront plus Shield Standard/Advanced and Origin Shield",
+      "azure": "Front Door global edge, DDoS platform controls, caching",
+      "required_rollout": "Provider/account activation and cache validation are manual; do not claim completion from policy code."
+    },
+    {
+      "intent": "managed_waf",
+      "cloudflare": "Cloudflare Managed and OWASP rulesets",
+      "fastly": "Next-Gen WAF managed rules",
+      "aws": "AWS WAF managed rule groups on a Web ACL",
+      "azure": "Front Door Premium managed WAF rule sets",
+      "required_rollout": "Observe/count or narrow challenge before block; document managed-rule exclusions."
+    },
+    {
+      "intent": "custom_waf_geo_asn_reputation",
+      "cloudflare": "Zone custom rulesets, IP Lists, threat/bot fields",
+      "fastly": "VCL/edge ACLs/Next-Gen WAF signals",
+      "aws": "AWS WAF statements, IP sets, labels, geo and rate statements",
+      "azure": "Custom WAF rules, geo match, managed bot/reputation capabilities",
+      "required_rollout": "Geo off by default; reputation cannot be a permanent deny without confirmed abuse."
+    },
+    {
+      "intent": "bots_and_challenges",
+      "cloudflare": "Verified bots, Bot Management score, Managed Challenge",
+      "fastly": "Bot Management/Next-Gen WAF signals and response controls",
+      "aws": "Bot Control labels, CAPTCHA/Challenge where compatible",
+      "azure": "Bot Manager managed rule set and WAF actions",
+      "required_rollout": "Preserve verified crawlers and non-browser API/webhook clients; avoid zone-wide blanket challenges."
+    },
+    {
+      "intent": "route_rate_limits",
+      "cloudflare": "http_ratelimit ruleset",
+      "fastly": "Edge Rate Limiting/rate counters",
+      "aws": "AWS WAF rate-based rules, scoped by labels/statements",
+      "azure": "Front Door WAF rate-limit custom rules",
+      "required_rollout": "Independent route/action/characteristic mapping; webhook actions must be non-interactive."
+    },
+    {
+      "intent": "headers_cache_and_routing",
+      "cloudflare": "Transform Rules, Cache Rules, Origin Rules",
+      "fastly": "VCL/Compute response transforms and cache configuration",
+      "aws": "CloudFront response-headers, cache, origin-request policies and Functions/Lambda@Edge where required",
+      "azure": "Front Door Rules Engine and route/cache settings",
+      "required_rollout": "CSP Report-Only first; sensitive response cache bypass remains mandatory."
+    },
+    {
+      "intent": "origin_access",
+      "cloudflare": "Authenticated Origin Pulls/mTLS, Tunnel, egress ACL or overwritten secret header",
+      "fastly": "TLS client identity, private connectivity/ACL or signed secret to origin",
+      "aws": "S3 Origin Access Control, private ALB/API patterns, secret header plus WAF where appropriate",
+      "azure": "Front Door Premium Private Link, origin validation and access restrictions",
+      "required_rollout": "Origin must reject direct ingress. GitHub Pages cannot satisfy this and remains an explicit exception."
+    },
+    {
+      "intent": "logs_metrics_alerts_audit",
+      "cloudflare": "Security Analytics/Events, Logpush, account audit logs",
+      "fastly": "Real-time log streaming, observability integrations, audit logs",
+      "aws": "WAF/CloudFront logs, CloudWatch metrics/alarms, CloudTrail/config controls",
+      "azure": "Diagnostic logs, Log Analytics, Monitor alerts and activity logs",
+      "required_rollout": "Suppress secrets/bodies, minimize IP retention, and retain policy version/operator/timestamp."
+    }
+  ],
+  "rule_mappings": [
+    {
+      "neutral_rule_id": "waf.managed-baseline",
+      "provider_resource_id": "REPLACE_WITH_MANAGED_RULESET_OR_WEB_ACL",
+      "provider_action": "log",
+      "exceptions_preserved": true,
+      "owner": "REPLACE_WITH_OWNER",
+      "change_ticket": null
+    },
+    {
+      "neutral_rule_id": "ratelimit.webhooks",
+      "provider_resource_id": "REPLACE_WITH_ROUTE_RATE_RULE",
+      "provider_action": "log",
+      "exceptions_preserved": true,
+      "owner": "REPLACE_WITH_OWNER",
+      "change_ticket": null
+    },
+    {
+      "neutral_rule_id": "origin.dynamic-authenticated-pull",
+      "provider_resource_id": "REPLACE_WITH_PRIVATE_OR_AUTHENTICATED_ORIGIN_CONTROL",
+      "provider_action": "route",
+      "exceptions_preserved": true,
+      "owner": "REPLACE_WITH_OWNER",
+      "change_ticket": null
+    }
+  ]
+}

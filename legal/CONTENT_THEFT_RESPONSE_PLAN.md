@@ -59,11 +59,18 @@ short-circuits the schedule.
 
 ### 2.2 What the site already does for you
 
-Every protected homepage region carries a session reference (`REF …`) rendered
-into the visible stamp, and copied text from those regions carries a source
-line, the reference, and the retrieval date. When a copy surfaces with that
-block intact, provenance is already established — capture it before the
-infringer notices and strips it.
+Every protected homepage region carries a reference (`REF …`) in its visible
+stamp, and copied text from those regions carries a source line, the reference,
+and the retrieval date. When a copy surfaces with that block intact, it is
+carrying our attribution verbatim — capture it before the infringer notices and
+strips it, because that block is the cleanest evidence you will get.
+
+Be precise about what the reference proves. It is minted in the browser per page
+load and is never persisted or transmitted, so it **cannot** identify who took
+the copy or when they visited. What it does is tie artefacts together: two
+captures bearing the same reference came from one page load. Useful for
+rebutting a claim that material was gathered independently; not a substitute for
+the § 3 evidence package, and not attribution.
 
 Client-side measures are deterrence and provenance only. They are trivially
 bypassed by anyone who wants to bypass them, and nothing sensitive should rely
@@ -82,9 +89,21 @@ Preserve, for each infringing URL:
    system clock.
 2. **Saved HTML** (`Save Page As → Complete`) plus, where relevant, the raw
    response (`curl -sSL <url> -o evidence.html -D headers.txt`).
-3. **An independent archive snapshot** — a third-party archive service creates a
-   timestamped copy you did not author, which is materially stronger than your
-   own screenshot.
+3. **An independent archive snapshot — public material only.** A third-party
+   archive service creates a timestamped copy you did not author, which is
+   materially stronger than your own screenshot.
+
+   > **Never submit non-public material to an external archive.** Submitting a
+   > URL to a public archive *publishes it further*, permanently and outside our
+   > control. Where the leaked material is NDA-covered, authenticated, or
+   > contains client or personal data, an archive submission turns our own
+   > evidence step into a second unauthorised disclosure — one we caused, and
+   > one that undercuts the confidentiality we would be trying to enforce. For
+   > that material, timestamp it internally instead: record a SHA-256 of each
+   > capture (`sha256sum`) in a dated manifest and have a second person
+   > countersign it. Where an independent timestamp genuinely matters, ask
+   > counsel about notarisation or a trusted-timestamping service under
+   > confidentiality.
 4. **The URL, capture timestamp (with timezone), and the capturing person.**
 5. **A side-by-side diff** against the ClearGlass original, with the matching
    passages marked. This is what a host or registrar actually acts on.
@@ -93,9 +112,21 @@ Preserve, for each infringing URL:
    the corresponding `sitemap.xml` `lastmod`. Contemporaneous version history is
    the strongest authorship record available here.
 
-Store under `operations/evidence/<domain>-<YYYY-MM-DD>/` with a short
-`README.md` stating what was captured, when, by whom, and from where. Do not
-edit captured files afterwards; add notes alongside them instead.
+**Store evidence outside this repository.** Use access-controlled storage with
+versioning or object-lock enabled — not a working checkout. Captures routinely
+contain the other party's page data, and in a T3 case our own NDA or client
+material. This monorepo is not access-controlled at that granularity, nothing
+under `operations/` is gitignored, and a stray `git add -A` would commit
+confidential material permanently into history, where deleting the file later
+does not remove it.
+
+Name each incident folder `<domain>-<YYYY-MM-DD>/` and include a short
+`README.md` recording what was captured, when, by whom, and from where, plus a
+`sha256sum` manifest of every file. Do not edit captured files afterwards — add
+notes alongside them instead, so the hashes stay verifiable.
+
+Keep only the incident log (§ 5) in the repo, and keep it free of confidential
+detail: a pointer to the evidence location is enough.
 
 > Per `legal/IP_PROTECTION_NOTICE.md` § 1.1, human-authorship evidence matters
 > for AI-assisted material. Commit history, prompt/revision trail, and editorial

@@ -96,6 +96,14 @@ exports/
 *.tfstate.backup
 .terraform/
 .terraform.lock.hcl
+infra/edge/terraform.tfvars
+infra/edge/terraform.tfvars.json
+infra/edge/*.auto.tfvars
+infra/edge/*.auto.tfvars.json
+infra/edge/ci.runtime.tfvars.json
+infra/edge/*.tfplan
+infra/edge/edge-plan*.txt
+infra/edge/edge-deployment-metadata.json
 
 # Priority Matrix bot runtime artifacts (keep example + latest sample)
 operations/priority_matrix/archive/
@@ -113,6 +121,9 @@ audit-reports/
 # Next.js build output
 .next/
 out/
+
+# VEILGUARD test compilation output (`npm run test:veilguard` emits here)
+.veilguard-test/
 
 # 4-D Dominance pipeline generated reports
 four_d_dominance/output/

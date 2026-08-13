@@ -21,6 +21,7 @@ CRITICAL_FILES = (
     "pyproject.toml",
     "tools/build_pages.py",
     "scripts/verify_site.py",
+    "scripts/production_probe.py",
     ".github/workflows/ci.yml",
     ".github/workflows/pages.yml",
 )

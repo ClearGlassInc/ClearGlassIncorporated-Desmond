@@ -103,9 +103,19 @@
     ".cg-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.15rem,1.55vw,1.75rem);font-weight:650;letter-spacing:-.035em;line-height:1;white-space:nowrap}.cg-name em{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;color:#cbb7ff;letter-spacing:.01em;margin-left:.32rem;text-shadow:0 0 18px rgba(190,160,255,.7)}",
     ".cg-links{display:flex;align-items:center;gap:clamp(.15rem,.45vw,.5rem);margin-left:auto}.cg-links a,.cg-dropbtn{position:relative;color:rgba(242,246,255,.93);text-decoration:none;font-size:clamp(.78rem,.78vw,.9rem);font-weight:650;padding:10px 9px 13px;border-radius:15px;border:0;background:transparent;cursor:pointer;text-shadow:0 2px 16px rgba(255,255,255,.12)}.cg-links a:after,.cg-dropbtn:after{content:\"\";position:absolute;left:50%;bottom:3px;width:28px;height:2px;border-radius:999px;transform:translateX(-50%) scaleX(.72);background:linear-gradient(90deg,transparent,#91b4ff,#ca78ff,transparent);box-shadow:0 0 14px rgba(190,103,255,.92);opacity:.72;transition:.2s}.cg-links a:hover,.cg-dropbtn:hover{color:#fff;background:rgba(255,255,255,.065)}.cg-links a:hover:after,.cg-dropbtn:hover:after{opacity:1;transform:translateX(-50%) scaleX(1.18)}",
     ".cg-cta{display:inline-flex!important;align-items:center;gap:8px;background:linear-gradient(180deg,rgba(11,14,28,.98),rgba(3,5,13,.99))!important;color:#fff!important;margin-left:clamp(.45rem,1vw,1.15rem);padding:11px 16px!important;border:1px solid rgba(205,146,255,.82)!important;border-radius:15px!important;box-shadow:0 0 0 1px rgba(123,92,255,.3),0 0 26px rgba(186,92,255,.78),0 16px 38px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.16)}.cg-cta svg{width:22px;height:22px;flex:0 0 auto;color:#e4c5ff;filter:drop-shadow(0 0 10px rgba(190,103,255,.72))}.cg-cta:after{display:none}",
-    ".cg-drop{position:relative}.cg-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);width:min(900px,92vw);max-height:min(72vh,720px);overflow:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;background:rgba(16,24,50,.96);border:1px solid rgba(185,156,255,.36);border-radius:24px;box-shadow:0 22px 70px rgba(8,13,35,.42),0 0 34px rgba(176,103,255,.22);opacity:0;pointer-events:none;transition:.18s;backdrop-filter:blur(24px)}.cg-drop:hover .cg-menu,.cg-drop:focus-within .cg-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}.cg-prod{display:flex!important;gap:10px!important;align-items:center!important;padding:8px!important;border-radius:12px!important;color:#eef4ff!important;background:transparent!important}.cg-prod:hover{background:rgba(255,255,255,.08)!important}.cg-ic{width:26px;height:26px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;flex:0 0 auto}.cg-prod b{display:block;font-size:13px;line-height:1.15}.cg-prod small{display:block;margin-top:3px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#aeb9d5}",
+    ".cg-drop{position:relative}.cg-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);width:min(900px,92vw);max-height:min(72vh,720px);overflow:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px;background:rgba(16,24,50,.96);border:1px solid rgba(185,156,255,.36);border-radius:24px;box-shadow:0 22px 70px rgba(8,13,35,.42),0 0 34px rgba(176,103,255,.22);opacity:0;pointer-events:none;visibility:hidden;transition:opacity .18s,transform .18s,visibility 0s linear .18s;backdrop-filter:blur(24px)}.cg-drop:hover .cg-menu,.cg-drop.is-open .cg-menu{opacity:1;pointer-events:auto;visibility:visible;transform:translateX(-50%) translateY(0);transition-delay:0s}.cg-dropcaret{margin-left:-6px;border:0;background:transparent;color:rgba(242,246,255,.93);font-size:.9rem;line-height:1;padding:10px 6px 13px;border-radius:12px;cursor:pointer}.cg-dropcaret:hover{color:#fff;background:rgba(255,255,255,.065)}.cg-dropcaret[aria-expanded='true']{color:#fff;background:rgba(255,255,255,.1)}.cg-prod{display:flex!important;gap:10px!important;align-items:center!important;padding:8px!important;border-radius:12px!important;color:#eef4ff!important;background:transparent!important}.cg-prod:hover{background:rgba(255,255,255,.08)!important}.cg-ic{width:26px;height:26px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;flex:0 0 auto}.cg-prod b{display:block;font-size:13px;line-height:1.15}.cg-prod small{display:block;margin-top:3px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#aeb9d5}",
     ".cg-toggle{display:none;border:1px solid rgba(196,139,255,.55);background:rgba(7,10,24,.7);color:#fff;border-radius:14px;padding:10px}.cg-mobile{position:fixed;top:104px;left:.75rem;right:.75rem;z-index:2147482999;display:none;grid-template-columns:1fr;gap:4px;max-height:calc(100vh - 120px);overflow:auto;padding:10px;background:rgba(16,24,50,.98);border:1px solid rgba(185,156,255,.36);border-radius:24px;box-shadow:0 12px 48px rgba(10,12,16,.28)}.cg-mobile.open{display:grid}.cg-mobile a{padding:12px 14px;border-radius:12px;text-decoration:none;color:#eef4ff;font-weight:650}.cg-mobile a:hover{background:rgba(255,255,255,.08)}.cg-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#aeb9d5;padding:10px 14px 4px}",
-    ".cg-topnav+main,.cg-topnav~main{scroll-margin-top:106px}.cg-topnav~:is(main,.page,.wrap){padding-top:max(104px,env(safe-area-inset-top))}.cg-unified-page :is(section,.section,.panel,.card){border-radius:clamp(16px,2vw,24px)}body{--cg-home-rhythm:clamp(80px,12vw,140px)}main :is(h1,h2){letter-spacing:-.025em}main :is(.eyebrow,.kicker,.label,.mono){letter-spacing:.12em;text-transform:uppercase}.btn,.button,a[class*=cta],button[class*=cta]{border-radius:999px}@media(max-width:1240px){.cg-links{display:none}.cg-toggle{display:block}.cg-topnav{min-height:68px}.cg-mark{width:48px;height:48px}.cg-menu{grid-template-columns:1fr}.cg-brand:after{display:none}}@media(max-width:760px){.cg-topnav{top:6px;width:calc(100% - .75rem);min-height:58px;padding:.35rem .65rem}.cg-name{font-size:18px}.cg-name em{display:none}.cg-mark{width:42px;height:42px}.cg-mobile{top:72px;max-height:calc(100vh - 84px)}}@media(prefers-reduced-motion:reduce){.cg-topnav{transition:none}.cg-topnav.cg-scroll-hidden{transition:none}}"
+    ".cg-topnav+main,.cg-topnav~main{scroll-margin-top:106px}.cg-topnav~:is(main,.page,.wrap){padding-top:max(104px,env(safe-area-inset-top))}.cg-unified-page :is(section,.section,.panel,.card){border-radius:clamp(16px,2vw,24px)}body{--cg-home-rhythm:clamp(80px,12vw,140px)}main :is(h1,h2){letter-spacing:-.025em}main :is(.eyebrow,.kicker,.label,.mono){letter-spacing:.12em;text-transform:uppercase}.btn,.button,a[class*=cta],button[class*=cta]{border-radius:999px}@media(max-width:1240px){.cg-links{display:none}.cg-toggle{display:block}.cg-topnav{min-height:68px}.cg-mark{width:48px;height:48px}.cg-menu{grid-template-columns:1fr}.cg-brand:after{display:none}}@media(max-width:760px){.cg-topnav{top:6px;width:calc(100% - .75rem);min-height:58px;padding:.35rem .65rem}.cg-name{font-size:18px}.cg-name em{display:none}.cg-mark{width:42px;height:42px}.cg-mobile{top:72px;max-height:calc(100vh - 84px)}}@media(prefers-reduced-motion:reduce){.cg-topnav{transition:none}.cg-topnav.cg-scroll-hidden{transition:none}}",
+    /* ── accessibility layer: skip link, visible focus, active route ──────── */
+    ".cg-sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}",
+    ".cg-skip{position:fixed;top:8px;left:50%;transform:translate(-50%,-160%);z-index:2147483600;padding:12px 20px;border-radius:14px;background:#0a0c10;color:#fff;font-family:Urbanist,Inter,system-ui,sans-serif;font-size:15px;font-weight:700;text-decoration:none;border:1px solid rgba(205,146,255,.82);box-shadow:0 16px 44px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.4,0,.2,1)}.cg-skip:focus{transform:translate(-50%,0)}",
+    ".cg-topnav :is(a,button):focus-visible,.cg-mobile a:focus-visible,.cg-skip:focus-visible,.cg-palette :is(a,button,input):focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px rgba(146,180,255,.55)}",
+    ".cg-links a[aria-current=\"page\"],.cg-mobile a[aria-current=\"page\"]{color:#fff;background:rgba(255,255,255,.12)}.cg-links a[aria-current=\"page\"]:after{opacity:1;transform:translateX(-50%) scaleX(1.35)}.cg-mobile a[aria-current=\"page\"]{box-shadow:inset 3px 0 0 #ca78ff}",
+    /* ── command palette (Cmd/Ctrl+K) ────────────────────────────────────── */
+    ".cg-palette[hidden]{display:none}.cg-palette{position:fixed;inset:0;z-index:2147483500;display:grid;place-items:start center;padding:12vh 1rem 1rem;background:rgba(5,8,20,.62);backdrop-filter:blur(8px)}.cg-palette-box{width:min(640px,100%);max-height:70vh;display:flex;flex-direction:column;overflow:hidden;background:rgba(16,24,50,.98);border:1px solid rgba(185,156,255,.42);border-radius:22px;box-shadow:0 30px 90px rgba(8,13,35,.6);font-family:Urbanist,Inter,system-ui,sans-serif}",
+    ".cg-palette-input{width:100%;padding:18px 20px;border:0;border-bottom:1px solid rgba(185,156,255,.28);background:transparent;color:#f2f6ff;font-size:17px;font-family:inherit}.cg-palette-input::placeholder{color:#8e9bbd}.cg-palette-list{list-style:none;margin:0;padding:8px;overflow:auto}.cg-palette-list li{margin:0}",
+    ".cg-palette-list a{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 14px;border-radius:12px;color:#eef4ff;text-decoration:none;font-size:14px;font-weight:600}.cg-palette-list a:hover,.cg-palette-list a.is-cursor{background:rgba(255,255,255,.1)}.cg-palette-list a span{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#aeb9d5;flex:0 0 auto}",
+    ".cg-palette-empty{padding:20px;color:#aeb9d5;font-size:14px}.cg-palette-hint{padding:10px 16px;border-top:1px solid rgba(185,156,255,.24);color:#8e9bbd;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}@media(prefers-reduced-motion:reduce){.cg-skip{transition:none}}"
   ].join("");
   function isNativePrimaryNav(el){
     if (!el || el.id === 'cg-global-nav' || el.id === 'cg-mobile-nav') return false;
@@ -129,6 +139,231 @@
     });
     document.body.classList.add('cg-global-nav-enabled');
   }
+  /* ── accessibility primitives ────────────────────────────────────────────
+     The injected chrome is the site's only navigation, so it has to carry the
+     full keyboard contract itself: a bypass link, an honest active-route
+     signal, and modal surfaces that trap, restore, and release focus. */
+  var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+  function focusables(root){
+    return Array.prototype.filter.call(root.querySelectorAll(FOCUSABLE), function(el){
+      // checkVisibility also accounts for visibility:hidden and opacity:0,
+      // which still report client rects but are not in the tab order.
+      if (typeof el.checkVisibility === 'function'){
+        return el.checkVisibility({ visibilityProperty: true, opacityProperty: true });
+      }
+      return el.getClientRects().length > 0;
+    });
+  }
+
+  function trapFocus(container, event){
+    var items = focusables(container);
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
+  }
+
+  /* Closing the drawer is also driven by the scroll handler, so the closer is
+     shared rather than duplicated — otherwise a scroll-close would strand focus
+     on an element that is no longer rendered. */
+  var closeDrawer = function(){};
+  var drawerIsOpen = function(){ return false; };
+
+  function installSkipLink(){
+    if (document.querySelector('.cg-skip')) return;
+    var main = document.querySelector('main, [role="main"]') || document.getElementById('main');
+    if (!main) return;
+    if (!main.id) main.id = 'cg-main';
+    if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+    var link = document.createElement('a');
+    link.className = 'cg-skip';
+    link.href = '#' + main.id;
+    link.textContent = 'Skip to main content';
+    // Safari and Firefox move the scroll position on a hash jump but leave
+    // focus on the link, so the next Tab returns to the nav. Move it manually.
+    link.addEventListener('click', function(){
+      window.setTimeout(function(){ main.focus(); }, 0);
+    });
+    document.body.insertBefore(link, document.body.firstChild);
+  }
+
+  function markActiveRoute(scope){
+    var matches = [];
+    Array.prototype.forEach.call(scope.querySelectorAll('a[href]'), function(a){
+      var url;
+      try { url = new URL(a.href, location.href); } catch (e) { return; }
+      if (url.host !== location.host){
+        // Indicate off-site destinations without changing the visual chrome.
+        a.setAttribute('rel', 'noopener noreferrer');
+        a.setAttribute('data-cg-external', 'true');
+        return;
+      }
+      var file = (url.pathname.split('/').pop() || 'index.html').toLowerCase();
+      // Section links (index.html#services) share a file with the page itself;
+      // requiring the hash to match keeps section links from all matching home.
+      if (file === here && (!url.hash || url.hash === location.hash)) matches.push(a);
+    });
+    // The catalog menu repeats destinations that already appear in the top-level
+    // bar (Products → products.html, and "All Products" inside it). Marking every
+    // copy would announce the same page as current several times, so only the
+    // first — the top-level entry — carries the state.
+    if (matches.length) matches[0].setAttribute('aria-current', 'page');
+  }
+
+  function installProductsDisclosure(nav){
+    var drop = nav.querySelector('.cg-drop');
+    var caret = nav.querySelector('.cg-dropcaret');
+    var menu = nav.querySelector('#cg-products-menu');
+    if (!drop || !caret || !menu) return;
+    function setOpen(open){
+      drop.classList.toggle('is-open', open);
+      caret.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    caret.addEventListener('click', function(){
+      var willOpen = caret.getAttribute('aria-expanded') !== 'true';
+      setOpen(willOpen);
+      if (willOpen){ var f = focusables(menu); if (f[0]) f[0].focus(); }
+    });
+    drop.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && drop.classList.contains('is-open')){
+        e.stopPropagation();
+        setOpen(false);
+        caret.focus();
+      }
+    });
+    drop.addEventListener('focusout', function(){
+      window.setTimeout(function(){
+        if (!drop.contains(document.activeElement)) setOpen(false);
+      }, 0);
+    });
+    document.addEventListener('click', function(e){
+      if (drop.classList.contains('is-open') && !drop.contains(e.target)) setOpen(false);
+    });
+  }
+
+  function installMobileDrawer(btn, mob){
+    var lastFocus = null;
+    function setOpen(open){
+      mob.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      if (open){
+        lastFocus = document.activeElement;
+        var f = focusables(mob);
+        if (f[0]) f[0].focus();
+      } else if (lastFocus && lastFocus.focus){
+        lastFocus.focus();
+        lastFocus = null;
+      }
+    }
+    btn.addEventListener('click', function(){ setOpen(!mob.classList.contains('open')); });
+    mob.addEventListener('keydown', function(e){ if (e.key === 'Tab') trapFocus(mob, e); });
+    mob.addEventListener('click', function(e){ if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && mob.classList.contains('open')) setOpen(false);
+    });
+    closeDrawer = function(){ if (mob.classList.contains('open')) setOpen(false); };
+    drawerIsOpen = function(){ return mob.classList.contains('open'); };
+  }
+
+  /* ── command palette (Cmd/Ctrl+K) ────────────────────────────────────────
+     Sourced from the same public route tables the nav renders, so it can never
+     surface an internal console that the menu itself does not already list. */
+  function installCommandPalette(){
+    var routes = [];
+    TOP.forEach(function(t){ routes.push([t[0], href(t[1]), 'Navigate']); });
+    routes.push(['Book a Security Engagement', href('store.html'), 'Action']);
+    PRODUCTS.forEach(function(p){ routes.push([p[0], href(p[1]), p[2]]); });
+    COMPANY.forEach(function(c){ routes.push([c[0], href(c[1]), 'Company']); });
+
+    var overlay = null, input = null, list = null, status = null;
+    var results = [], cursor = 0, lastFocus = null;
+
+    function rows(){ return list ? list.querySelectorAll('a') : []; }
+
+    function render(query){
+      var needle = query.trim().toLowerCase();
+      results = needle
+        ? routes.filter(function(r){ return (r[0] + ' ' + r[2]).toLowerCase().indexOf(needle) > -1; })
+        : routes.slice(0, 12);
+      cursor = 0;
+      if (!results.length){
+        list.innerHTML = '<li class="cg-palette-empty">No matching pages.</li>';
+        status.textContent = 'No results';
+        return;
+      }
+      list.innerHTML = results.map(function(r, i){
+        return '<li><a href="' + r[1] + '" class="' + (i === 0 ? 'is-cursor' : '') + '">' +
+               esc(r[0]) + '<span>' + esc(r[2]) + '</span></a></li>';
+      }).join('');
+      status.textContent = results.length + (results.length === 1 ? ' result' : ' results');
+    }
+
+    function moveCursor(delta){
+      var items = rows();
+      if (!items.length) return;
+      items[cursor].classList.remove('is-cursor');
+      cursor = (cursor + delta + items.length) % items.length;
+      items[cursor].classList.add('is-cursor');
+      items[cursor].scrollIntoView({ block: 'nearest' });
+    }
+
+    function ensureBuilt(){
+      if (overlay) return;
+      overlay = document.createElement('div');
+      overlay.className = 'cg-palette';
+      overlay.hidden = true;
+      overlay.innerHTML =
+        '<div class="cg-palette-box" role="dialog" aria-modal="true" aria-label="Search ClearGlass pages">' +
+        '<input class="cg-palette-input" type="search" autocomplete="off" ' +
+        'placeholder="Search pages, products, actions…" aria-label="Search ClearGlass pages">' +
+        '<ul class="cg-palette-list"></ul>' +
+        '<p class="cg-palette-hint">Enter to open · ↑↓ to move · Esc to close</p>' +
+        '<p class="cg-sr-only" role="status" aria-live="polite"></p></div>';
+      input = overlay.querySelector('.cg-palette-input');
+      list = overlay.querySelector('.cg-palette-list');
+      status = overlay.querySelector('[role="status"]');
+      input.addEventListener('input', function(){ render(input.value); });
+      overlay.addEventListener('click', function(e){ if (e.target === overlay) close(); });
+      overlay.addEventListener('keydown', function(e){
+        if (e.key === 'Escape'){ e.stopPropagation(); close(); }
+        else if (e.key === 'ArrowDown'){ e.preventDefault(); moveCursor(1); }
+        else if (e.key === 'ArrowUp'){ e.preventDefault(); moveCursor(-1); }
+        else if (e.key === 'Tab'){ trapFocus(overlay, e); }
+        else if (e.key === 'Enter' && document.activeElement === input){
+          var items = rows();
+          if (items.length){ e.preventDefault(); items[cursor].click(); }
+        }
+      });
+      document.body.appendChild(overlay);
+    }
+
+    function open(){
+      ensureBuilt();
+      closeDrawer();
+      lastFocus = document.activeElement;
+      overlay.hidden = false;
+      input.value = '';
+      render('');
+      input.focus();
+    }
+
+    function close(){
+      if (!overlay || overlay.hidden) return;
+      overlay.hidden = true;
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+      lastFocus = null;
+    }
+
+    document.addEventListener('keydown', function(e){
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')){
+        e.preventDefault();
+        if (overlay && !overlay.hidden) close(); else open();
+      }
+    });
+  }
+
   function build(){
     if (document.getElementById('cg-global-nav')) return;
     var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
@@ -136,10 +371,18 @@
     var nav=document.createElement('nav'); nav.id='cg-global-nav'; nav.className='cg-topnav'; nav.setAttribute('aria-label','Primary navigation');
     var menu=PRODUCTS.map(function(p){return '<a class="cg-prod" href="'+href(p[1])+'"><span class="cg-ic">'+p[3]+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span></a>';}).join('');
     menu+=COMPANY.map(function(c){return '<a class="cg-prod" href="'+href(c[1])+'"><span class="cg-ic">'+c[2]+'</span><span><b>'+esc(c[0])+'</b><small>Company</small></span></a>';}).join('');
-    nav.innerHTML='<a class="cg-brand" href="'+href('index.html')+'"><span class="cg-mark logo-orb" aria-hidden="true"><img src="'+href('assets/images/clearglass-logo-256.webp')+'" alt="" class="site-logo"></span><span class="cg-name">ClearGlassInc. <em>2040</em></span></a><div class="cg-links">'+TOP.map(function(t){return t[0]==='Products'?'<span class="cg-drop"><a class="cg-dropbtn" href="'+href('products.html')+'" aria-haspopup="true">Products⌄</a><span class="cg-menu"><a class="cg-prod" href="'+href('products.html')+'"><span class="cg-ic">▨</span><span><b>All Products</b><small>Unified catalog</small></span></a>'+menu+'</span></span>':'<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a class="cg-cta" href="'+href('store.html')+'"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5l10 3.8v7.2c0 6.2-4 11.6-10 14-6-2.4-10-7.8-10-14V7.3l10-3.8z"/><path d="M12.2 15.7l2.5 2.5 5.5-6"/></svg>Book a Security Engagement</a></div><button class="cg-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>';
+    nav.innerHTML='<a class="cg-brand" href="'+href('index.html')+'"><span class="cg-mark logo-orb" aria-hidden="true"><img src="'+href('assets/images/clearglass-logo-256.webp')+'" alt="" class="site-logo"></span><span class="cg-name">ClearGlassInc. <em>2040</em></span></a><div class="cg-links">'+TOP.map(function(t){return t[0]==='Products'?'<span class="cg-drop"><a class="cg-dropbtn" href="'+href('products.html')+'">Products</a><button type="button" class="cg-dropcaret" aria-expanded="false" aria-controls="cg-products-menu"><span class="cg-sr-only">Show all products</span><span aria-hidden="true">⌄</span></button><span class="cg-menu" id="cg-products-menu"><a class="cg-prod" href="'+href('products.html')+'"><span class="cg-ic">▨</span><span><b>All Products</b><small>Unified catalog</small></span></a>'+menu+'</span></span>':'<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a class="cg-cta" href="'+href('store.html')+'"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3.5l10 3.8v7.2c0 6.2-4 11.6-10 14-6-2.4-10-7.8-10-14V7.3l10-3.8z"/><path d="M12.2 15.7l2.5 2.5 5.5-6"/></svg>Book a Security Engagement</a></div><button class="cg-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>';
     var mob=document.createElement('div'); mob.className='cg-mobile'; mob.id='cg-mobile-nav'; mob.innerHTML='<div class="cg-label">Navigation</div>'+TOP.map(function(t){return '<a href="'+href(t[1])+'">'+t[0]+'</a>';}).join('')+'<a href="'+href('store.html')+'">Book a Security Engagement</a><div class="cg-label">Products</div>'+PRODUCTS.map(function(p){return '<a href="'+href(p[1])+'">'+esc(p[0])+'</a>';}).join('')+'<div class="cg-label">Company</div>'+COMPANY.map(function(c){return '<a href="'+href(c[1])+'">'+esc(c[0])+'</a>';}).join('');
     document.body.appendChild(nav); document.body.appendChild(mob);
-    var btn=nav.querySelector('.cg-toggle'); btn.addEventListener('click',function(){var open=mob.classList.toggle('open');btn.setAttribute('aria-expanded',open?'true':'false');});
+    mob.setAttribute('aria-label','Site navigation');
+    var btn=nav.querySelector('.cg-toggle');
+    btn.setAttribute('aria-controls','cg-mobile-nav');
+    installSkipLink();
+    markActiveRoute(nav);
+    markActiveRoute(mob);
+    installProductsDisclosure(nav);
+    installMobileDrawer(btn,mob);
+    installCommandPalette();
     var scrollTimer=0;
     var scrollFrame=0;
     function showNavigation(){
@@ -152,9 +395,10 @@
       if(!scrollFrame){
         scrollFrame=window.requestAnimationFrame(function(){
           scrollFrame=0;
+          // Never retract the bar out from under an open drawer — that would
+          // hide the surface the user's focus is currently inside.
+          if (drawerIsOpen()) { showNavigation(); return; }
           nav.classList.add('cg-scroll-hidden');
-          mob.classList.remove('open');
-          btn.setAttribute('aria-expanded','false');
         });
       }
     }

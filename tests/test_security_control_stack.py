@@ -116,3 +116,35 @@ def test_station_observer_ignores_animation_class_churn() -> None:
     assert '"aria-modal"' in attribute_filter
     assert '"class"' not in attribute_filter, "watching class re-triggers on animation churn"
     assert "scheduleLegacyRefresh(panel, stack)" in observer
+
+
+def test_homepage_platform_gate_blocks_duplicate_fixed_control_runtimes() -> None:
+    """FX and AEGIS-OMEGA must stay behind the homepage isolation boundary."""
+    platform = (ROOT / "platform.js").read_text(encoding="utf-8")
+
+    assert 'data-cg-home-runtime", "stabilized"' in platform
+
+    fx_section = platform.split("/* ── advanced motion layer", 1)[1].split(
+        "/* ── cinematic system", 1
+    )[0]
+    assert "if (!isHomepage)" in fx_section
+    assert 'fx.src = "fx.js"' in fx_section
+    assert 'link[href="fx.css"]' in fx_section
+
+    omega_section = platform.split("/* ── AEGIS-OMEGA control plane", 1)[1].split(
+        'if ("serviceWorker" in navigator)', 1
+    )[0]
+    assert "if (!isHomepage)" in omega_section
+    assert 'platformAsset("aegis-omega.js")' in omega_section
+    assert 'platformAsset("aegis-omega.css")' in omega_section
+
+
+def test_homepage_does_not_bypass_platform_fixed_control_gate() -> None:
+    """The homepage may load the platform gate, never its blocked layers directly."""
+    homepage = (ROOT / "index.html").read_text(encoding="utf-8")
+
+    assert 'src="platform.js"' in homepage
+    assert 'src="fx.js"' not in homepage
+    assert 'href="fx.css"' not in homepage
+    assert 'src="aegis-omega.js"' not in homepage
+    assert 'href="aegis-omega.css"' not in homepage

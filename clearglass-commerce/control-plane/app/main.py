@@ -20,6 +20,7 @@ from .routers import (
     security_reports,
     sidestore,
     store,
+    workspace,
 )
 from .security import (
     auth_enabled,
@@ -134,6 +135,7 @@ def create_app() -> FastAPI:
     app.include_router(store.router, dependencies=admin)
     app.include_router(payments.router)  # per-endpoint: only the refund is gated (see router)
     app.include_router(sidestore.router)  # customer cart: public, rate limited, server-priced
+    app.include_router(workspace.router)  # per-seat subscriptions: public, rate limited, server-priced
     app.include_router(orders.router, dependencies=admin)
     app.include_router(inventory.router, dependencies=admin)
     app.include_router(metrics.router)

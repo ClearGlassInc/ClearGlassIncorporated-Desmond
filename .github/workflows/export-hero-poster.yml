@@ -1,0 +1,31 @@
+name: Export hero poster source
+
+on:
+  push:
+    branches:
+      - surgical/hero-poster-ontario
+    paths:
+      - .github/workflows/export-hero-poster.yml
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact branch state
+        uses: actions/checkout@v5
+      - name: Verify source hero poster
+        run: |
+          test -f assets/video/hero-poster.jpg
+          file assets/video/hero-poster.jpg
+          test "$(wc -c < assets/video/hero-poster.jpg)" -gt 1000
+      - name: Export source image
+        uses: actions/upload-artifact@v4
+        with:
+          name: hero-poster-source
+          path: assets/video/hero-poster.jpg
+          if-no-files-found: error
+          retention-days: 1

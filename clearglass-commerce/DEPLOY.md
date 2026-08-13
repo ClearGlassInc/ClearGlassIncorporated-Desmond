@@ -57,9 +57,11 @@ fly deploy
 ```bash
 BASE=https://<your-host>
 curl $BASE/health
-# customer purchase (mock unless a live Stripe key is set):
+# customer purchase (mock unless a live Stripe key is set). The request names a SKU and
+# a quantity only — the amount comes from app/data/pricebook.json server-side, so a
+# browser-supplied price cannot change what is charged:
 curl -X POST $BASE/checkout/session -H 'Content-Type: application/json' \
-  -d '{"items":[{"name":"Aurora Lamp","amount":4900,"quantity":1}],"customer_email":"a@b.com"}'
+  -d '{"items":[{"sku":"risk-audit-90","quantity":1}],"customer_email":"a@b.com"}'
 # a pricing change is gated — returns queued_for_approval, never executes inline.
 # Admin endpoints require the bearer token in production (see "Admin authentication"):
 curl -X POST $BASE/store/update-pricing -H 'Content-Type: application/json' \

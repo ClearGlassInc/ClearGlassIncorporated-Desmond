@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 162 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 162 public pages are connected and 13 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -205,6 +205,7 @@ These pages remain intact but are not eligible for generated journey updates. Ex
 |---|---|---|
 | `404.html` | Error recovery | noindex redirect and route-recovery page |
 | `cg-loader.html` | Application utility | noindex branded loading surface |
+| `etsy-callback.html` | Application utility | noindex OAuth redirect target |
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | Site verification | Google ownership verification artifact |
 | `header-mockup-2040.html` | Design prototype | noindex, nofollow header study |
 | `loader.html` | Application utility | noindex branded loading surface |

@@ -17,9 +17,25 @@ Target account: **https://www.etsy.com/people/7is7jsngx568dcve** (`ETSY_PROFILE_
 Register at <https://www.etsy.com/developers/your-apps> as the shop owner.
 
 - Copy the **keystring** → `ETSY_KEYSTRING` (and the shared secret → `ETSY_SHARED_SECRET`).
-- Register a **callback URL** and set the identical string as `ETSY_REDIRECT_URI`.
-  Etsy compares it byte for byte; a trailing slash mismatch fails the exchange.
-- Etsy app approval is required before the API returns live shop data.
+- Register this exact **callback URL**, and set `ETSY_REDIRECT_URI` to the identical string:
+
+  ```
+  https://www.clearglassinc.com/etsy-callback.html
+  ```
+
+  Etsy compares it byte for byte — a trailing slash or `http`/`https` mismatch fails the
+  exchange. That page ships from this repo (`etsy-callback.html`): it is a static,
+  `noindex` page that reads the `code` and `state` out of your address bar and shows you
+  what to paste. It transmits nothing anywhere.
+- Etsy reviews app registrations manually, so approval is not instant. Nothing else in
+  this flow can proceed until the keystring exists.
+
+Values to paste into the registration form:
+
+| Field | Value |
+|-------|-------|
+| Callback URL | `https://www.clearglassinc.com/etsy-callback.html` |
+| Scopes | `listings_r` `listings_w` `transactions_r` `transactions_w` |
 
 ## 2. Run the handshake
 

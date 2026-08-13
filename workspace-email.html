@@ -34,9 +34,9 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guardian Plans &amp; Pricing — ClearGlass Inc.</title>
-<meta name="description" content="ClearGlass Guardian security operations console plans: Essentials, Professional and Command tiers, billed monthly or annually in Canadian dollars.">
-<link rel="canonical" href="https://www.clearglassinc.com/plans.html">
+<title>Business Email on Your Own Domain — ClearGlass Workspace</title>
+<meta name="description" content="Business email on your own domain for small businesses in Canada. SPF, DKIM and DMARC configured for you. From CAD $6.00 per person per month, exclusive of tax.">
+<link rel="canonical" href="https://www.clearglassinc.com/workspace-email.html">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font:16px/1.65 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#0f1722;background:#f6f8fb}
@@ -78,9 +78,9 @@ footer.site a{color:#39d0c3}
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="/brand-system.css">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.clearglassinc.com/plans.html">
-<meta property="og:title" content="Guardian Plans & Pricing — ClearGlass Inc.">
-<meta property="og:description" content="Flexible business productivity plans that scale with your team. Essentials, Professional and Command, billed monthly or annually in CAD.">
+<meta property="og:url" content="https://www.clearglassinc.com/workspace-email.html">
+<meta property="og:title" content="Business Email on Your Own Domain — ClearGlass Workspace">
+<meta property="og:description" content="Business email on your own domain, set up for you — including the four DNS records that decide whether your mail arrives.">
 <meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -145,203 +145,96 @@ footer.site a{color:#39d0c3}
   .pl-hero .pl-fine{color:#93a9b8}
   @media (prefers-reduced-motion:no-preference){.pl-card{transition:transform .18s ease,box-shadow .18s ease}.pl-card:hover{transform:translateY(-3px)}}
 </style>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.clearglassinc.com/"},{"@type":"ListItem","position":2,"name":"ClearGlass Workspace","item":"https://www.clearglassinc.com/workspace.html"},{"@type":"ListItem","position":3,"name":"Business Email","item":"https://www.clearglassinc.com/workspace-email.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I keep my existing email address?","acceptedAnswer":{"@type":"Answer","text":"Yes, if it is on a domain you control. The address stays exactly the same \u2014 only the server behind it changes. If your current address is on a free provider's domain, the address itself has to change, because that domain is not yours to move."}},{"@type":"Question","name":"Will I lose mail during the switch?","acceptedAnswer":{"@type":"Answer","text":"A correctly planned cutover does not lose mail. During the DNS propagation window, mail can arrive at either the old or the new server, which is why we keep the old mailbox receiving until the new one has been confirmed for at least 48 hours."}},{"@type":"Question","name":"How long does DNS propagation take?","acceptedAnswer":{"@type":"Answer","text":"Usually under an hour for MX changes, but the published TTL on your existing records sets the floor. We lower the TTL a day before the cutover so the switch is fast when it happens."}},{"@type":"Question","name":"Do I need my own domain first?","acceptedAnswer":{"@type":"Answer","text":"Yes. If you do not have one, registering it is the first step and typically costs CAD $15\u2013$25 per year from a registrar. We can walk you through it, but the domain should be registered in your company's name, not ours."}},{"@type":"Question","name":"What happens to email when an employee leaves?","acceptedAnswer":{"@type":"Answer","text":"Their account is suspended immediately, so nothing new arrives in a mailbox nobody is reading, and the contents are reassigned to whoever takes over their work. Both dates are told to you in writing."}},{"@type":"Question","name":"Is my email encrypted?","acceptedAnswer":{"@type":"Answer","text":"In transit, yes \u2014 TLS 1.2 or better between servers that support it, which in practice is nearly all of them. At rest, stored mail is encrypted on disk. Neither of those is end-to-end encryption, and we say so plainly rather than implying otherwise."}}]}</script>
 <link rel="stylesheet" href="/assets/css/future-buttons.css">
 </head>
 <body>
 <header class="site"><div class="wrap"><span class="brand">ClearGlass Inc. <em>CLARITY IS POWER</em></span><a href="index.html" style="color:#9fb3c2;font-size:14px">← Home</a></div></header>
 
 <div class="pl-hero"><div class="pl-wrap">
-  <div class="eyebrow" style="color:#39d0c3;font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700">ClearGlass Guardian · per-operator plans</div>
-  <h1>Flexible business productivity plans that scale with your team.</h1>
-  <p class="sub">Guardian is the security operations console your team runs the day on — live dashboards, pipeline workflows, an append-only audit ledger and an AI command layer. Pay per operator seat. Add and remove seats as the team changes.</p>
-  <div class="pl-ctas">
-    <a class="btn" href="#plans">Start your subscription</a>
-    <a class="btn alt" href="#compare">Compare plans</a>
-  </div>
-
-  <div class="pl-toggle" role="group" aria-label="Billing period">
-    <button type="button" id="billMonthly" aria-pressed="false">Monthly</button>
-    <button type="button" id="billAnnual" aria-pressed="true">Annual</button>
-  </div>
-  <span class="pl-save" id="saveNote">Annual billing saves 16.7% — about two months free.</span>
-
-  <div class="pl-seats">
-    <label for="seats">Operator seats</label>
-    <input type="number" id="seats" name="seats" min="1" max="500" step="1" value="5"
-           inputmode="numeric" aria-describedby="seatsHelp">
-    <span id="seatsHelp" class="muted" style="color:#93a9b8;font-size:13.5px">Change this to see your total.</span>
-  </div>
-  <p class="pl-fine">Prices are in Canadian dollars and are approximate. Applicable taxes are calculated at checkout and are not included above. Amounts may change with currency conversion or provider fees.</p>
+  <div class="eyebrow" style="color:#39d0c3;font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700">ClearGlass Workspace</div>
+  <h1>Business email on your own domain, set up for you.</h1>
+  <p class="sub">Your address, your domain, your team's accounts — with the mail authentication configured properly, which is the part that decides whether anything you send actually arrives.</p>
+  <div class="pl-ctas"><a class="btn" href="workspace.html">Compare plans</a><a class="btn alt" href="workspace-migration.html">See how migration works</a></div>
 </div></div>
 
-<section class="pl-sect" id="plans"><div class="pl-wrap">
-  <div class="pl-grid" id="planGrid"></div>
-  <p class="pl-fine">Every plan starts with a 14-day trial. No card is charged during the trial, and you can cancel from the dashboard before it ends.</p>
+<section class="pl-sect"><div class="pl-wrap">
+  <h2>What "business email on your own domain" actually means</h2>
+  <p class="lede">It means your address ends in your company's name — <code>you@yourcompany.ca</code> — instead of a free provider's. That is the visible part. The part that matters more is underneath.</p>
+  <div class="pl-cards3">
+    <div class="pl-mini"><h3>The domain is the asset</h3><p>A free address belongs to the provider. A domain belongs to your company, which means you can change who hosts the mail without changing every business card, invoice and directory listing you have ever issued.</p></div>
+    <div class="pl-mini"><h3>Accounts survive people</h3><p>When someone leaves, their mailbox is reassigned rather than lost. With personal accounts, a departure takes the client history with it — and there is no legal route to get it back.</p></div>
+    <div class="pl-mini"><h3>Deliverability is configurable</h3><p>You control SPF, DKIM and DMARC on your own domain. On a shared free domain you inherit whatever reputation the other users built, good or bad.</p></div>
+  </div>
 </div></section>
 
-<section class="pl-sect" id="compare" style="background:#fff;border-top:1px solid #e4eaf1;border-bottom:1px solid #e4eaf1"><div class="pl-wrap">
-  <h2>Compare plans</h2>
-  <p class="lede">Everything in a lower tier is included in the tiers above it.</p>
+<section class="pl-sect" style="background:#fff;border-top:1px solid #e4eaf1;border-bottom:1px solid #e4eaf1"><div class="pl-wrap">
+  <h2>The four DNS records that decide whether your mail arrives</h2>
+  <p class="lede">Most "our email goes to spam" problems are one of these four being absent or wrong. They are not optional in 2026 — major receivers now reject or quarantine unauthenticated bulk mail outright.</p>
   <div class="pl-table-scroll">
     <table class="pl-cmp">
-      <caption class="visually-hidden" style="position:absolute;left:-9999px">Guardian feature comparison across Essentials, Professional and Command</caption>
-      <thead><tr><th scope="col">Capability</th><th scope="col">Essentials</th><th scope="col">Professional</th><th scope="col">Command</th></tr></thead>
+      <caption style="position:absolute;left:-9999px">DNS records required for business email delivery</caption>
+      <thead><tr><th scope="col">Record</th><th scope="col">What it does</th><th scope="col">What breaks without it</th></tr></thead>
       <tbody>
-        <tr><th scope="row">Live operations dashboard</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Pipeline &amp; task workflows</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Alerts &amp; incident timeline</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Append-only audit ledger</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Browser and mobile access</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Simulation grid (training &amp; rehearsal)</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">AI command console</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Governed approval gate</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Audit export &amp; retention controls</th><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">SSO and role-based access control</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">SOC / SIEM integrations</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
-        <tr><th scope="row">Priority support with named contact</th><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">MX</th><td style="text-align:left">Tells the internet which server accepts mail for your domain</td><td style="text-align:left">Nothing arrives at all</td></tr>
+        <tr><th scope="row">SPF</th><td style="text-align:left">Lists which servers are allowed to send as your domain</td><td style="text-align:left">Your mail is treated as unverified; anyone can forge your address</td></tr>
+        <tr><th scope="row">DKIM</th><td style="text-align:left">Cryptographically signs each message so tampering is detectable</td><td style="text-align:left">Receivers cannot confirm the message is unaltered</td></tr>
+        <tr><th scope="row">DMARC</th><td style="text-align:left">Tells receivers what to do when SPF or DKIM fails, and reports it to you</td><td style="text-align:left">Failures happen silently and you never find out</td></tr>
       </tbody>
     </table>
   </div>
+  <p class="pl-fine">A common and expensive mistake: publishing two SPF records. The specification permits exactly one, and a second causes a permanent error that makes <em>all</em> your mail unauthenticated — often after someone adds a marketing tool without checking. If you take one thing from this page, take that.</p>
 </div></section>
 
 <section class="pl-sect"><div class="pl-wrap">
-  <h2>How it works</h2>
+  <h2>What ClearGlass Workspace includes</h2>
+  <p class="lede">Every plan carries business email on your own domain. The difference between plans is what surrounds it.</p>
+  <ul class="check">
+    <li>Business email on your own domain, with SPF, DKIM and DMARC configured for you</li>
+    <li>Encrypted file storage and sharing</li>
+    <li>Shared calendars and contacts across the team</li>
+    <li>Documents and spreadsheets in the browser</li>
+    <li>Mobile access on iOS and Android</li>
+    <li>Spam filtering and per-person account security</li>
+  </ul>
+  <p class="pl-fine">Plans start at CAD $6.00 per person per month with annual billing. Prices are approximate and exclusive of tax — see the <a href="workspace.html">plans page</a> for the full comparison and a per-person calculator.</p>
+</div></section>
+
+<section class="pl-sect" style="background:#fff;border-top:1px solid #e4eaf1;border-bottom:1px solid #e4eaf1"><div class="pl-wrap">
+  <h2>Setting it up — what we do, and what you do</h2>
   <ol class="pl-steps">
-    <li><strong>Pick a plan and seat count.</strong> Start on any tier; the trial runs 14 days.</li>
-    <li><strong>Invite your operators.</strong> Seats are assigned per person and can be reassigned.</li>
-    <li><strong>Connect your sources.</strong> We help wire your first feeds during onboarding.</li>
-    <li><strong>Change plans any time.</strong> Upgrades apply immediately and bill pro-rata; downgrades take effect at renewal.</li>
+    <li><strong>You keep your domain registrar.</strong> We do not take ownership of your domain, and we do not need to.</li>
+    <li><strong>We prepare the records.</strong> MX, SPF, DKIM and DMARC are drafted and checked against your existing mail before anything changes.</li>
+    <li><strong>We cut over together, on your schedule.</strong> Never on a Friday, and never during a billing run.</li>
+    <li><strong>We watch delivery for a week afterwards.</strong> DMARC reports tell us if anything is failing, and we fix it before your customers notice.</li>
   </ol>
 </div></section>
 
 <section class="pl-sect" style="background:#fff;border-top:1px solid #e4eaf1;border-bottom:1px solid #e4eaf1"><div class="pl-wrap">
-  <h2>Security and compliance</h2>
-  <p class="lede">Guardian is a security product, so the platform is held to the standard it asks of you.</p>
-  <div class="pl-cards3">
-    <div class="pl-mini"><h3>Every action is logged</h3><p>Operator actions, system events and AI commands are written to an append-only ledger with severity and actor, so an audit can reconstruct who decided what.</p></div>
-    <div class="pl-mini"><h3>Consequential actions are gated</h3><p>Anything touching credentials, remote execution or data export is scored and routed to a human approval before it runs. Nothing consequential executes unattended.</p></div>
-    <div class="pl-mini"><h3>Encrypted in transit and at rest</h3><p>TLS 1.2 or better in transit, encryption at rest server-side, scoped sessions with inactivity timeout, and per-endpoint rate limiting.</p></div>
-    <div class="pl-mini"><h3>Card data never touches us</h3><p>Payments are processed by Stripe on their hosted page. ClearGlass never sees, stores or transmits a card number.</p></div>
-    <div class="pl-mini"><h3>Canadian tax handled correctly</h3><p>GST/HST is calculated at checkout from your billing address and itemised on every invoice.</p></div>
-    <div class="pl-mini"><h3>Your data stays yours</h3><p>Export your audit ledger and operational data at any time. Cancelling does not hold your records hostage.</p></div>
-  </div>
-</div></section>
-
-<section class="pl-sect"><div class="pl-wrap">
   <h2>Frequently asked questions</h2>
-  <details class="faq"><summary>Are these prices final?</summary><p>They are approximate and shown in Canadian dollars, before tax. Applicable GST/HST is calculated at checkout from your billing address. Amounts may change with currency conversion or payment-provider fees, and we will tell you before any change affects a renewal.</p></details>
-  <details class="faq"><summary>What happens after the 14-day trial?</summary><p>Nothing is charged during the trial. At the end, the plan you chose begins billing at the seat count you set. Cancel from the dashboard before the trial ends and you are not charged at all.</p></details>
-  <details class="faq"><summary>Can I change seats mid-month?</summary><p>Yes. Added seats bill pro-rata for the remainder of the period. Removed seats credit against your next invoice rather than being refunded outright.</p></details>
-  <details class="faq"><summary>What is the difference between monthly and annual?</summary><p>Annual is billed once for twelve months and works out about 16.7% cheaper — roughly two months free. Monthly is billed every month with no commitment and can be cancelled at any renewal.</p></details>
-  <details class="faq"><summary>Can I upgrade, downgrade or pause?</summary><p>Upgrades apply immediately and are prorated. Downgrades take effect at your next renewal so you keep what you paid for. Pausing is available on annual plans for up to 60 days once per term.</p></details>
-  <details class="faq"><summary>How do I cancel?</summary><p>From the billing section of your dashboard, in one step, with no phone call. Access continues to the end of the period you have already paid for.</p></details>
-  <details class="faq"><summary>Do you offer a demo instead?</summary><p>Yes. If you would rather see it driven by someone who knows it before committing a team to it, book a walkthrough and we will run your scenarios rather than a canned script.</p></details>
-</div></section>
-
-<section class="pl-sect" style="background:#fff;border-top:1px solid #e4eaf1"><div class="pl-wrap" style="text-align:center">
-  <h2>Not sure which plan fits?</h2>
-  <p class="lede" style="margin:12px auto 22px">Tell us the size of your team and what you are trying to see, and we will tell you honestly which tier covers it — including when the answer is the cheapest one.</p>
-  <a class="btn" href="mailto:desmondotieno@icloud.com?subject=Guardian%20plan%20question&amp;body=Hi%20Desmond%2C%0A%0AWe%20are%20looking%20at%20Guardian.%0A%0ATeam%20size%3A%20%0AWhat%20we%20need%20to%20see%3A%20">Talk to us first</a>
+  <details class="faq"><summary>Can I keep my existing email address?</summary><p>Yes, if it is on a domain you control. The address stays exactly the same — only the server behind it changes. If your current address is on a free provider's domain, the address itself has to change, because that domain is not yours to move.</p></details>
+  <details class="faq"><summary>Will I lose mail during the switch?</summary><p>A correctly planned cutover does not lose mail. During the DNS propagation window, mail can arrive at either the old or the new server, which is why we keep the old mailbox receiving until the new one has been confirmed for at least 48 hours.</p></details>
+  <details class="faq"><summary>How long does DNS propagation take?</summary><p>Usually under an hour for MX changes, but the published TTL on your existing records sets the floor. We lower the TTL a day before the cutover so the switch is fast when it happens.</p></details>
+  <details class="faq"><summary>Do I need my own domain first?</summary><p>Yes. If you do not have one, registering it is the first step and typically costs CAD $15–$25 per year from a registrar. We can walk you through it, but the domain should be registered in your company's name, not ours.</p></details>
+  <details class="faq"><summary>What happens to email when an employee leaves?</summary><p>Their account is suspended immediately, so nothing new arrives in a mailbox nobody is reading, and the contents are reassigned to whoever takes over their work. Both dates are told to you in writing.</p></details>
+  <details class="faq"><summary>Is my email encrypted?</summary><p>In transit, yes — TLS 1.2 or better between servers that support it, which in practice is nearly all of them. At rest, stored mail is encrypted on disk. Neither of those is end-to-end encryption, and we say so plainly rather than implying otherwise.</p></details>
 </div></section>
 
 <div class="pl-final"><div class="pl-wrap">
-  <h2>Start with the plan that fits today.</h2>
-  <p>Seats are adjustable and plans change on your schedule, so picking one now costs you nothing later.</p>
-  <div class="pl-ctas"><a class="btn" href="#plans">Start your subscription</a><a class="btn alt" href="#compare">Compare plans</a></div>
+  <h2>Ready to move to your own domain?</h2>
+  <p>Plans start at CAD $6.00 per person per month with annual billing, and every plan includes a 14-day trial with no card charged.</p>
+  <div class="pl-ctas"><a class="btn" href="workspace.html">Start your subscription</a><a class="btn alt" href="workspace-vs.html">Should you switch at all?</a></div>
 </div></div>
 
 <footer class="site"><div class="wrap">
   ClearGlass Inc. · Ontario, Canada · <a href="index.html">www.clearglassinc.com</a><br>
-  Prices in CAD, approximate and exclusive of tax. Applicable GST/HST is calculated at checkout.
+  <a href="legal/privacy.html">Privacy</a> · <a href="legal/terms.html">Terms, refunds &amp; cancellation</a> · <a href="legal/content-policy.html">Acceptable use</a> · <a href="legal/accessibility.html">Accessibility</a><br>
+  Prices in CAD, approximate and exclusive of tax. Subject to applicable taxes, supplier pricing, licensing requirements, currency changes and payment-provider fees.
 </div></footer>
   <script defer src="/logo-badge.js"></script>
 <script defer src="/stealth-glass.js"></script>
-<script>
-(function(){
-  "use strict";
-  // ── PLAN CONFIG ────────────────────────────────────────────────────────────
-  // Amounts are CAD cents per seat per month. `annual` is the effective monthly
-  // rate when paying for twelve months up front; `monthly` is the pay-as-you-go
-  // rate. The 1.2x relationship (16.7% annual saving) mirrors the ratio in the
-  // brief. Change a number here and the cards, totals and comparison all follow.
-  var PLANS = [
-    { id:"essentials",   name:"Essentials",   annual:2900,  monthly:3480,
-      who:"For a small team that needs one honest view of what is happening.",
-      features:["Live operations dashboard","Pipeline and task workflows","Alerts and incident timeline","Append-only audit ledger","Browser and mobile access","Email support"] },
-    { id:"professional", name:"Professional", annual:7900,  monthly:9480, popular:true,
-      who:"For teams running real operations who need rehearsal and automation.",
-      features:["Everything in Essentials","Simulation grid for training","AI command console","Governed approval gate","Audit export and retention controls","Priority email support"] },
-    { id:"command",      name:"Command",      annual:14900, monthly:17880,
-      who:"For security organisations with compliance obligations and existing tooling.",
-      features:["Everything in Professional","SSO and role-based access control","SOC and SIEM integrations","Custom retention policy","Named support contact","Onboarding and migration help"] }
-  ];
-
-  var period = "annual";
-  var seats  = 5;
-
-  function fmt(cents){
-    return "$" + (cents/100).toLocaleString("en-CA",{minimumFractionDigits:2,maximumFractionDigits:2});
-  }
-  function rate(plan){ return period === "annual" ? plan.annual : plan.monthly; }
-
-  function render(){
-    var grid = document.getElementById("planGrid");
-    grid.innerHTML = PLANS.map(function(p){
-      var per   = rate(p);
-      var month = per * seats;
-      var total = period === "annual" ? month * 12 : month;
-      var label = period === "annual"
-        ? "billed as " + fmt(total) + " once a year"
-        : "billed " + fmt(total) + " every month";
-      return '<div class="pl-card' + (p.popular ? ' pop' : '') + '">' +
-        (p.popular ? '<span class="pl-badge">Most popular</span>' : '') +
-        '<h3>' + p.name + '</h3>' +
-        '<p class="who">' + p.who + '</p>' +
-        '<div class="pl-amt"><span class="cur">CAD</span> ' + fmt(per) + '</div>' +
-        '<div class="pl-per">per seat / month' + (period === "annual" ? ", billed annually" : ", billed monthly") + '</div>' +
-        '<div class="pl-total" aria-live="polite">' + seats + (seats === 1 ? ' seat' : ' seats') +
-          ' · <b>' + fmt(month) + '</b> / month<br><span class="muted">' + label + ' · plus applicable tax</span></div>' +
-        '<ul>' + p.features.map(function(f){ return '<li>' + f + '</li>'; }).join('') + '</ul>' +
-        '<a class="btn" href="mailto:desmondotieno@icloud.com?subject=' +
-          encodeURIComponent('Guardian ' + p.name + ' — ' + seats + ' seats (' + period + ')') +
-          '&body=' + encodeURIComponent(
-            'Hi Desmond,\n\nWe would like to start a Guardian subscription.\n\nPlan: ' + p.name +
-            '\nSeats: ' + seats + '\nBilling: ' + period +
-            '\nEstimated: ' + fmt(month) + ' / month before tax\n\nOrganization: \n') +
-          '">Start your subscription</a>' +
-        '</div>';
-    }).join('');
-  }
-
-  function setPeriod(next){
-    period = next;
-    var a = document.getElementById("billAnnual"), m = document.getElementById("billMonthly");
-    a.setAttribute("aria-pressed", String(next === "annual"));
-    m.setAttribute("aria-pressed", String(next === "monthly"));
-    document.getElementById("saveNote").textContent = next === "annual"
-      ? "Annual billing saves 16.7% — about two months free."
-      : "Switch to annual to save 16.7% — about two months free.";
-    render();
-  }
-
-  document.getElementById("billAnnual").addEventListener("click", function(){ setPeriod("annual"); });
-  document.getElementById("billMonthly").addEventListener("click", function(){ setPeriod("monthly"); });
-
-  var input = document.getElementById("seats");
-  input.addEventListener("input", function(){
-    var v = parseInt(input.value, 10);
-    // Clamp rather than reject, so a stray keystroke never shows a nonsense total.
-    if (!isFinite(v) || v < 1) v = 1;
-    if (v > 500) v = 500;
-    seats = v;
-    render();
-  });
-  input.addEventListener("blur", function(){ input.value = seats; });
-
-  render();
-})();
-</script>
-<script defer src="nav.js"></script>
 <!-- cg-related:start -->
 <aside id="cg-related">
   <style>#cg-related{margin:54px auto 0;max-width:1120px;padding:0 18px 38px;font-family:'Inter',system-ui,-apple-system,sans-serif;position:relative}#cg-related .cgr-box{position:relative;overflow:hidden;background:linear-gradient(rgba(34,211,238,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,255,.05) 1px,transparent 1px),radial-gradient(circle at 12% 0,rgba(34,211,238,.16),transparent 34%),radial-gradient(circle at 88% 100%,rgba(168,85,247,.16),transparent 36%),linear-gradient(165deg,rgba(5,12,28,.97),rgba(9,7,24,.97));background-size:32px 32px,32px 32px,auto,auto,auto;border:1px solid rgba(34,211,238,.34);border-radius:16px;padding:24px 26px;color:#d8e4ff;box-shadow:0 18px 54px rgba(0,0,0,.44),0 0 34px rgba(34,211,238,.12),inset 0 0 0 1px rgba(255,255,255,.035)}#cg-related .cgr-box:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(34,211,238,.18),transparent);transform:translateX(-120%) skewX(-18deg);animation:cgr-scan 8s ease-in-out infinite}#cg-related .cgr-box:after{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,#a855f7,transparent);box-shadow:0 0 18px rgba(34,211,238,.75)}#cg-related .cgr-crumb{position:relative;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8fb9ff;margin:0 0 12px}#cg-related .cgr-crumb a{color:#67e8f9;text-decoration:none;text-shadow:0 0 12px rgba(34,211,238,.35)}#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:none}#cg-related h2{position:relative;margin:0 0 14px;font-size:15.5px;letter-spacing:.08em;text-transform:uppercase;color:#f3f7ff}#cg-related .cgr-route{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 16px}#cg-related .cgr-route a{display:flex;min-height:46px;align-items:center;padding:8px 10px;border-radius:10px;background:rgba(7,14,32,.52);border:1px solid rgba(124,150,255,.15);color:#cfe0ff;text-decoration:none;font-size:12px;line-height:1.35}#cg-related .cgr-route a:hover,#cg-related .cgr-route a:focus-visible{border-color:#22d3ee;color:#fff;box-shadow:0 0 18px rgba(34,211,238,.14)}#cg-related .cgr-route b{display:block;color:#67e8f9;font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2px}#cg-related ul{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:8px 18px}#cg-related li a{display:block;padding:9px 11px;border-radius:10px;font-size:13.5px;line-height:1.45;color:#cfe0ff;text-decoration:none;border:1px solid rgba(124,150,255,.08);background:rgba(7,14,32,.36);transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}#cg-related li a:hover,#cg-related li a:focus-visible{transform:translateY(-1px);background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.42);color:#fff;box-shadow:0 0 22px rgba(34,211,238,.14)}#cg-related li a b{color:#9bdcff;font-weight:700;text-shadow:0 0 12px rgba(34,211,238,.28)}#cg-related .cgr-cta{position:relative;margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(34,211,238,.18);font-size:13.5px;color:#a9b8df}#cg-related .cgr-cta a{color:#67e8f9;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.36)}#cg-related .cgr-cta a:hover{color:#fff;border-bottom-color:#fff}@media(max-width:620px){#cg-related .cgr-box{padding:21px 17px}#cg-related .cgr-route{grid-template-columns:1fr}#cg-related ul{grid-template-columns:1fr}}@keyframes cgr-scan{0%,58%{transform:translateX(-120%) skewX(-18deg);opacity:0}70%{opacity:1}100%{transform:translateX(220%) skewX(-18deg);opacity:0}}@media(prefers-reduced-motion:reduce){#cg-related .cgr-box:before{animation:none}}</style>
@@ -349,21 +242,22 @@ footer.site a{color:#39d0c3}
     <p class="cgr-crumb"><a href="index.html">ClearGlass Inc.</a> › <a href="offers/index.html">Services &amp; Engagements</a></p>
     <h2>Continue exploring</h2>
     <div class="cgr-route" aria-label="Journey navigation">
-      <a href="pricing.html"><span><b>Previous</b>Pricing &amp; Engagements</span></a>
+      <a href="workspace.html"><span><b>Previous</b>ClearGlass Workspace</span></a>
       <a href="offers/index.html"><span><b>Topic hub</b>Services &amp; Engagements</span></a>
-      <a href="workspace.html"><span><b>Next in journey</b>ClearGlass Workspace</span></a>
+      <a href="workspace-migration.html"><span><b>Next in journey</b>Email Migration Without Downtime</span></a>
     </div>
     <ul>
-      <li><a href="workspace.html"><b>ClearGlass Workspace</b> — business email, storage and collaboration plans per person</a></li>
-      <li><a href="workspace-email.html"><b>Business Email on Your Own Domain</b> — what it means, and the four DNS records that decide delivery</a></li>
       <li><a href="workspace-migration.html"><b>Email Migration Without Downtime</b> — the nine-step sequence, the rollback, and what it costs</a></li>
       <li><a href="workspace-security.html"><b>Workspace Security &amp; Data Handling</b> — encryption, access, payments — and what we do not claim</a></li>
+      <li><a href="workspace-vs.html"><b>Free Email vs Business Email</b> — when free is the right answer, and when it stops being</a></li>
+      <li><a href="checkout/index.html"><b>Secure Checkout</b> — purchase an audit or protection plan</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
   </nav>
 </aside>
 <!-- cg-related:end -->
-<script defer src="/assets/js/future-buttons.js"></script>
+<script defer src="/nav.js"></script>
 <script defer src="/cg-a11y.js"></script>
+<script defer src="/assets/js/future-buttons.js"></script>
 </body>
 </html>

@@ -1,13 +1,20 @@
 {
   "schema": "clearglass.data-fabric/v1",
-  "version": 1,
+  "version": 2,
   "basePath": "/data/",
   "policy": {
     "defaultMode": "on-demand",
     "sameOriginOnly": true,
     "allowParentTraversal": false,
     "integrityScope": ["json", "csv", "md", "txt"],
+    "actionsIndependentFallback": true,
     "note": "Cataloging a dataset integrates it into validation and discovery. It does not assert that upstream automation or external services are currently provisioned."
+  },
+  "diagnostics": {
+    "page": "/data-fabric.html",
+    "runtimeStatus": "runtime-status.json",
+    "offlineValidator": "scripts/validate_data_fabric.py",
+    "runbook": "docs/ACTIONS_BILLING_FALLBACK.md"
   },
   "rootDatasets": [
     {
@@ -23,6 +30,13 @@
       "format": "json",
       "browserLoad": true,
       "purpose": "Canonical product catalog"
+    },
+    {
+      "id": "runtime-status",
+      "path": "runtime-status.json",
+      "format": "json",
+      "browserLoad": true,
+      "purpose": "Public delivery, data-fabric and CI-degradation status"
     }
   ],
   "modules": [

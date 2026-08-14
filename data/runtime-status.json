@@ -1,0 +1,28 @@
+{
+  "schema": "clearglass.runtime-status/v1",
+  "status": "operational-with-ci-degraded",
+  "publicDelivery": {
+    "provider": "github-pages",
+    "sourceBranch": "main",
+    "sourcePath": "/",
+    "mode": "legacy-pages-build",
+    "https": true
+  },
+  "dataFabric": {
+    "status": "active",
+    "catalog": "/data/catalog.json",
+    "diagnostics": "/data-fabric.html",
+    "browserRuntime": "/assets/js/clearglass-data-fabric.js"
+  },
+  "ci": {
+    "status": "externally-blocked",
+    "reason": "github-account-billing-lock",
+    "workaround": "GitHub API branch/PR writes + legacy Pages publication + browser runtime diagnostics",
+    "runbook": "/docs/ACTIONS_BILLING_FALLBACK.md"
+  },
+  "safety": {
+    "billingControlsBypassed": false,
+    "secretsExposed": false,
+    "restrictedLeadDataBrowserLoad": false
+  }
+}

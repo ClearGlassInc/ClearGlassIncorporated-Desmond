@@ -126,6 +126,17 @@
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .72));
 }
 
+/* The contact shadow grounds the tube against its backplate. Keeping this
+   unblurred at the inner edge prevents the practical from reading as a flat
+   composited glow. */
+.cg-neon-contact-shadow {
+  fill: none;
+  stroke: rgba(0, 3, 10, .72);
+  stroke-width: 11;
+  opacity: .72;
+  filter: blur(1.2px);
+}
+
 /* Separate optical falloff layers keep the tube edge sharp: neither halo is
    used as tube geometry, and both remain below the physical glass envelope. */
 .cg-neon-halo-outer,
@@ -174,6 +185,8 @@
     drop-shadow(0 0 2px rgba(102, 234, 255, .92))
     drop-shadow(0 0 7px rgba(111, 140, 255, .60))
     drop-shadow(0 0 17px rgba(180, 119, 255, .28));
+  will-change: opacity;
+  animation: cgNeonGas var(--cg-neon-period) cubic-bezier(.37, 0, .63, 1) infinite;
 }
 
 .cg-neon-core {
@@ -199,29 +212,44 @@
   stroke-dasharray: 13 1.4 7 1.1;
 }
 
+.cg-neon-glass-rim {
+  fill: none;
+  stroke: rgba(99, 171, 196, .34);
+  stroke-width: .7;
+  stroke-linecap: round;
+  opacity: .78;
+}
+
 .cg-neon-joint {
   fill: #07111e;
   stroke: rgba(200, 239, 250, .70);
   stroke-width: .8;
 }
 
+.cg-neon-electrode {
+  fill: none;
+  stroke: rgba(210, 230, 236, .82);
+  stroke-width: .72;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 1px rgba(102, 234, 255, .72));
+}
+
 @keyframes cgNeonCore {
   0%, 100% {
     opacity: .82;
-    filter:
-      brightness(.96) saturate(.96)
-      drop-shadow(0 0 .6px rgba(255, 255, 255, .92))
-      drop-shadow(0 0 3px rgba(102, 234, 255, .82))
-      drop-shadow(0 0 9px rgba(111, 140, 255, .38));
   }
   50% {
     opacity: 1;
-    filter:
-      brightness(1.08) saturate(1.02)
-      drop-shadow(0 0 .8px rgba(255, 255, 255, 1))
-      drop-shadow(0 0 4px rgba(102, 234, 255, .98))
-      drop-shadow(0 0 12px rgba(111, 140, 255, .50));
   }
+}
+
+/* Phase-offset gas response gives the phosphor a subtle afterglow without an
+   exposure jump. Filters remain static so the browser never re-rasterizes the
+   sharp tube edge at a different blur radius during the pulse. */
+@keyframes cgNeonGas {
+  0%, 100% { opacity: .72; }
+  47% { opacity: .84; }
+  54% { opacity: .82; }
 }
 
 @keyframes cgNeonSpill {
@@ -247,6 +275,7 @@
   .hero-seal[data-neon-practical]::before,
   .hero-seal[data-neon-practical] .cg-neon-halo-outer,
   .hero-seal[data-neon-practical] .cg-neon-halo-inner,
+  .hero-seal[data-neon-practical] .cg-neon-phosphor,
   .hero-seal[data-neon-practical] .cg-neon-core {
     animation: none;
   }
@@ -254,6 +283,7 @@
   .hero-seal[data-neon-practical]::before { opacity: .82; }
   .hero-seal[data-neon-practical] .cg-neon-halo-outer { opacity: .075; }
   .hero-seal[data-neon-practical] .cg-neon-halo-inner { opacity: .14; }
+  .hero-seal[data-neon-practical] .cg-neon-phosphor { opacity: .78; }
   .hero-seal[data-neon-practical] .cg-neon-core { opacity: .92; }
 }
 

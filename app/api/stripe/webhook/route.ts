@@ -4,10 +4,15 @@ import Stripe from "stripe";
 
 export const runtime = "nodejs";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripeOptions: Stripe.StripeConfig = {
   apiVersion: "2025-06-30.basil",
   typescript: true,
-});
+};
+
+function requiredEnvironment(name: string): string | null {
+  const value = process.env[name]?.trim();
+  return value ? value : null;
+}
 
 export async function POST(request: Request) {
   const signature = (await headers()).get("stripe-signature");
@@ -17,14 +22,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
   }
 
+  const secretKey = requiredEnvironment("STRIPE_SECRET_KEY");
+  const webhookSecret = requiredEnvironment("STRIPE_WEBHOOK_SECRET");
+  const expectedPriceId = requiredEnvironment("STRIPE_CRITICAL_MINERALS_PRICE_ID");
+
+  if (!secretKey || !webhookSecret || !expectedPriceId) {
+    return NextResponse.json({ error: "Webhook unavailable" }, { status: 503 });
+  }
+
+  const stripe = new Stripe(secretKey, stripeOptions);
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      rawBody,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!,
-    );
+    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
   } catch {
     return NextResponse.json({ error: "Invalid webhook signature" }, { status: 400 });
   }
@@ -44,7 +54,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Payment validation failed" }, { status: 400 });
   }
 
-  const expectedPriceId = process.env.STRIPE_CRITICAL_MINERALS_PRICE_ID!;
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
     expand: ["data.price"],
     limit: 10,
@@ -58,11 +67,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unexpected product" }, { status: 400 });
   }
 
-  // Transactionally:
-  // 1. Reject if event.id was previously processed.
-  // 2. Evaluate compliance/risk gates.
-  // 3. Create a time-bounded, customer-bound fulfillment entitlement.
-  // 4. Append a tamper-evident audit event; never log full payment data.
-
-  return NextResponse.json({ received: true });
+  // Do not acknowledge this paid event until fulfillment is durably committed.
+  // The owning server must transactionally deduplicate event.id, evaluate the
+  // compliance gates, create the entitlement, and append the audit record.
+  // Returning 503 preserves Stripe retry semantics instead of silently losing
+  // fulfillment after a successful payment.
+  return NextResponse.json({ error: "Fulfillment unavailable" }, { status: 503 });
 }

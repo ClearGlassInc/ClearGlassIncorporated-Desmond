@@ -99,7 +99,6 @@ jobs:
           retention-days: 7
 
   database-integration:
-    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:

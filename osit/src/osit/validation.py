@@ -32,7 +32,7 @@ def geodesic_area_km2(geometry: BaseGeometry) -> float:
 def _shape_mapping(value: Any) -> BaseGeometry:
     try:
         return shape(value)
-    except (KeyError, TypeError, ValueError, ShapelyError) as exc:
+    except (AttributeError, KeyError, TypeError, ValueError, ShapelyError) as exc:
         raise AOIValidationError("geometry mapping is malformed") from exc
 
 

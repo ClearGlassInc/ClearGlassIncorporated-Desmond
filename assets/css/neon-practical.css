@@ -9,6 +9,7 @@
   --cg-neon-cyan: #66eaff;
   --cg-neon-blue: #6f8cff;
   --cg-neon-violet: #b477ff;
+  --cg-neon-period: 5.6s;
   isolation: isolate;
   overflow: visible;
   transform: translateZ(0);
@@ -29,7 +30,7 @@
   mix-blend-mode: screen;
   opacity: .82;
   will-change: opacity;
-  animation: cgNeonSpill 5.6s cubic-bezier(.37, 0, .63, 1) infinite;
+  animation: cgNeonSpill var(--cg-neon-period) cubic-bezier(.37, 0, .63, 1) infinite;
 }
 
 .hero-seal[data-neon-practical]::after {
@@ -125,6 +126,34 @@
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .72));
 }
 
+/* Separate optical falloff layers keep the tube edge sharp: neither halo is
+   used as tube geometry, and both remain below the physical glass envelope. */
+.cg-neon-halo-outer,
+.cg-neon-halo-inner {
+  fill: none;
+  stroke: var(--cg-neon-blue);
+  stroke-linecap: round;
+  will-change: opacity;
+  animation: cgNeonHalo var(--cg-neon-period) cubic-bezier(.37, 0, .63, 1) infinite;
+}
+
+.cg-neon-halo-outer {
+  --cg-halo-low: .055;
+  --cg-halo-high: .085;
+  stroke-width: 20;
+  opacity: var(--cg-halo-low);
+  filter: blur(5px);
+}
+
+.cg-neon-halo-inner {
+  --cg-halo-low: .11;
+  --cg-halo-high: .17;
+  stroke: var(--cg-neon-cyan);
+  stroke-width: 10;
+  opacity: var(--cg-halo-low);
+  filter: blur(2.25px);
+}
+
 .cg-neon-tube-glass {
   fill: none;
   stroke: rgba(220, 248, 255, .26);
@@ -158,7 +187,7 @@
     drop-shadow(0 0 3px rgba(102, 234, 255, .94))
     drop-shadow(0 0 10px rgba(111, 140, 255, .46));
   will-change: opacity, filter;
-  animation: cgNeonCore 5.6s cubic-bezier(.37, 0, .63, 1) infinite;
+  animation: cgNeonCore var(--cg-neon-period) cubic-bezier(.37, 0, .63, 1) infinite;
 }
 
 .cg-neon-glass-highlight {
@@ -167,6 +196,7 @@
   stroke-width: .75;
   stroke-linecap: round;
   opacity: .72;
+  stroke-dasharray: 13 1.4 7 1.1;
 }
 
 .cg-neon-joint {
@@ -199,6 +229,11 @@
   50% { opacity: .92; }
 }
 
+@keyframes cgNeonHalo {
+  0%, 100% { opacity: var(--cg-halo-low); }
+  50% { opacity: var(--cg-halo-high); }
+}
+
 @supports (color: color(display-p3 0 0 0)) {
   .hero-seal[data-neon-practical] {
     --cg-neon-core: color(display-p3 .90 1 1);
@@ -210,11 +245,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-seal[data-neon-practical]::before,
+  .hero-seal[data-neon-practical] .cg-neon-halo-outer,
+  .hero-seal[data-neon-practical] .cg-neon-halo-inner,
   .hero-seal[data-neon-practical] .cg-neon-core {
     animation: none;
   }
 
   .hero-seal[data-neon-practical]::before { opacity: .82; }
+  .hero-seal[data-neon-practical] .cg-neon-halo-outer { opacity: .075; }
+  .hero-seal[data-neon-practical] .cg-neon-halo-inner { opacity: .14; }
   .hero-seal[data-neon-practical] .cg-neon-core { opacity: .92; }
 }
 

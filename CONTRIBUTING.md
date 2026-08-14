@@ -26,7 +26,10 @@ Python 3.11 is required. All bot and script logic lives in `bots/` and `scripts/
 ```bash
 # Set up environment
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+# Install the package runtime and test extras while retaining the reviewed
+# pytest/plugin versions used by CI.
+python -m pip install -c requirements.txt -e ".[test]"
 
 # Run all tests
 python -m pytest

@@ -17,13 +17,16 @@ export const DEFAULT_ASSET_TTL_SECONDS = 5 * 60;
 
 function getSecret(): string {
   // Separate secret from session signing so rotating one does not invalidate the
-  // other. Falls back to AUTH_SECRET, then an insecure dev-only default that
-  // production must override (same pattern as auth.ts — never a real credential).
-  return (
-    process.env.ASSET_SIGNING_SECRET ||
-    process.env.AUTH_SECRET ||
-    "clearglass-dev-only-insecure-asset-secret"
-  );
+  // other. Falling back to AUTH_SECRET is supported, but production must never
+  // fall back to the public development key.
+  const value = process.env.ASSET_SIGNING_SECRET || process.env.AUTH_SECRET;
+  const production = process.env.NODE_ENV === "production" || process.env.APP_ENV === "production";
+
+  if (production && (!value || value.length < 16)) {
+    throw new Error("ASSET_SIGNING_SECRET or AUTH_SECRET must be at least 16 characters in production");
+  }
+
+  return value || "clearglass-dev-only-insecure-asset-secret";
 }
 
 function bytesToBase64Url(bytes: Uint8Array): string {
@@ -82,7 +85,15 @@ export async function verifyAssetToken(assetId: string, token: string | null): P
   const [expStr, subjectEnc, providedSig] = parts;
   const exp = Number(expStr);
   if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) return null;
-  const subject = decodeURIComponent(subjectEnc);
+
+  let subject: string;
+  try {
+    subject = decodeURIComponent(subjectEnc);
+  } catch {
+    return null;
+  }
+  if (!subject) return null;
+
   const expectedSig = await sign(`${assetId}.${exp}.${subject}`);
   if (expectedSig.length !== providedSig.length) return null;
   let mismatch = 0;

@@ -3,11 +3,11 @@
 //
 // Two independent checks must both pass:
 //   1. A valid session cookie (enforced by middleware, re-checked here).
-//   2. A signed token that matches THIS asset id and has not expired.
-// The token is bound to the asset id, so it cannot be replayed against another
-// file, and it self-expires so a leaked link dies within minutes. The asset is
-// streamed with no-store + Content-Disposition: attachment and is never exposed
-// at a public/static path.
+//   2. A signed token that matches THIS asset id, THIS session subject, and has not expired.
+// The token is bound to the asset id and operator subject, so it cannot be replayed
+// against another file or another authenticated operator, and it self-expires so
+// a leaked link dies within minutes. The asset is streamed with no-store +
+// Content-Disposition: attachment and is never exposed at a public/static path.
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getSession } from "@/lib/session";
@@ -29,10 +29,10 @@ export async function GET(
     return NextResponse.json({ error: "authentication required" }, { status: 401 });
   }
 
-  // 2. Signed-token check, bound to this asset id.
+  // 2. Signed-token check, bound to this asset id and authenticated subject.
   const token = req.nextUrl.searchParams.get("token");
   const subject = await verifyAssetToken(asset, token);
-  if (!subject) {
+  if (!subject || subject !== session.sub) {
     return NextResponse.json(
       { error: "invalid or expired download token" },
       { status: 403, headers: { "Cache-Control": "no-store" } },

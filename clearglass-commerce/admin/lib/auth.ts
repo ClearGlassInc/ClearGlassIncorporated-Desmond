@@ -76,19 +76,43 @@ export async function createSession(
   return issueSession(sub, roles, ttlSeconds);
 }
 
+function isAdminSession(value: unknown): value is AdminSession {
+  if (!value || typeof value !== "object") return false;
+  const record = value as Record<string, unknown>;
+  return (
+    typeof record.sub === "string" &&
+    record.sub.length > 0 &&
+    Array.isArray(record.roles) &&
+    record.roles.length > 0 &&
+    record.roles.every((role) => typeof role === "string") &&
+    typeof record.exp === "number" &&
+    Number.isFinite(record.exp) &&
+    typeof record.nonce === "string" &&
+    record.nonce.length > 0
+  );
+}
+
 export function verifySessionToken(token: string | undefined): AdminSession | null {
   if (!token) return null;
-  const [payload, mac] = token.split(".");
+  const parts = token.split(".");
+  if (parts.length !== 2) return null;
+  const [payload, mac] = parts;
   if (!payload || !mac) return null;
+
   const expected = sign(payload);
   const macBuffer = Buffer.from(mac);
   const expectedBuffer = Buffer.from(expected);
   const valid = macBuffer.length === expectedBuffer.length && timingSafeEqual(macBuffer, expectedBuffer);
   if (!valid) return null;
 
-  const session = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as AdminSession;
-  if (!session.exp || session.exp < Math.floor(Date.now() / 1000)) return null;
-  return session;
+  try {
+    const parsed: unknown = JSON.parse(Buffer.from(payload, "base64url").toString("utf8"));
+    if (!isAdminSession(parsed)) return null;
+    if (parsed.exp < Math.floor(Date.now() / 1000)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
 }
 
 export async function getSession(): Promise<AdminSession | null> {

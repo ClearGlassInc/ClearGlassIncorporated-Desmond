@@ -28,6 +28,42 @@ executors:
     resource_class: small
     working_directory: ~/project
 
+commands:
+  setup-root-python:
+    steps:
+      - restore_cache:
+          keys:
+            - pip-root-v2-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}-{{ checksum "clearglass-commerce/control-plane/requirements.txt" }}
+            - pip-root-v2-
+      - run:
+          name: Install root Python and commerce dependencies
+          command: |
+            python -m pip install --upgrade pip
+            python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
+            python -m pip install -r clearglass-commerce/control-plane/requirements.txt
+            python -m pip check
+      - save_cache:
+          key: pip-root-v2-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}-{{ checksum "clearglass-commerce/control-plane/requirements.txt" }}
+          paths:
+            - ~/.cache/pip
+
+  setup-osit:
+    steps:
+      - restore_cache:
+          keys:
+            - pip-osit-v1-{{ checksum "osit/pyproject.toml" }}
+            - pip-osit-v1-
+      - run:
+          name: Install OSIT and development dependencies
+          command: |
+            python -m pip install --upgrade pip
+            python -m pip install -e './osit[dev]'
+            python -m pip check
+      - save_cache:
+          key: pip-osit-v1-{{ checksum "osit/pyproject.toml" }}
+          paths:
+            - ~/.cache/pip
+
 jobs:
   node-tooling:
     executor: node22
@@ -60,38 +96,109 @@ jobs:
           path: dist
           destination: node-dist
 
-  python-tests:
+  root-python-deps:
     executor: python311
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - pip-root-v2-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}-{{ checksum "clearglass-commerce/control-plane/requirements.txt" }}
-            - pip-root-v2-
+      - setup-root-python
       - run:
-          name: Install project, commerce, and test dependencies
-          command: |
-            python -m pip install --upgrade pip
-            python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
-            python -m pip install -r clearglass-commerce/control-plane/requirements.txt
-            python -m pip check
-      - save_cache:
-          key: pip-root-v2-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}-{{ checksum "clearglass-commerce/control-plane/requirements.txt" }}
-          paths:
-            - ~/.cache/pip
-      - run:
-          name: Compile Python sources
+          name: Compile configured Python sources
           command: python -m compileall -q artemis sentinel clearglass-commerce/control-plane
+
+  pytest-artemis:
+    executor: python311
+    steps:
+      - checkout
+      - setup-root-python
       - run:
-          name: Run configured Python test suite
+          name: ARTEMIS tests
           command: |
-            mkdir -p test-results/python
-            python -m pytest --cov=artemis --cov-report=xml:coverage.xml --junitxml=test-results/python/junit.xml -q
+            mkdir -p test-results/artemis
+            python -m pytest artemis/tests -q --junitxml=test-results/artemis/junit.xml
       - store_test_results:
           path: test-results
-      - store_artifacts:
-          path: coverage.xml
-          destination: python-coverage.xml
+
+  pytest-sentinel:
+    executor: python311
+    steps:
+      - checkout
+      - setup-root-python
+      - run:
+          name: Sentinel tests
+          command: |
+            mkdir -p test-results/sentinel
+            python -m pytest sentinel/tests -q --junitxml=test-results/sentinel/junit.xml
+      - store_test_results:
+          path: test-results
+
+  pytest-commerce:
+    executor: python311
+    steps:
+      - checkout
+      - setup-root-python
+      - run:
+          name: Commerce control-plane tests
+          command: |
+            mkdir -p test-results/commerce
+            python -m pytest clearglass-commerce/control-plane/tests -q --junitxml=test-results/commerce/junit.xml
+      - store_test_results:
+          path: test-results
+
+  pytest-root-a-f:
+    executor: python311
+    steps:
+      - checkout
+      - setup-root-python
+      - run:
+          name: Root tests A-F
+          command: |
+            set -euo pipefail
+            shopt -s nullglob
+            files=(tests/test_[a-f]*.py)
+            if (( ${#files[@]} == 0 )); then exit 0; fi
+            python -m pytest "${files[@]}" -q
+
+  pytest-root-g-l:
+    executor: python311
+    steps:
+      - checkout
+      - setup-root-python
+      - run:
+          name: Root tests G-L
+          command: |
+            set -euo pipefail
+            shopt -s nullglob
+            files=(tests/test_[g-l]*.py)
+            if (( ${#files[@]} == 0 )); then exit 0; fi
+            python -m pytest "${files[@]}" -q
+
+  pytest-root-m-r:
+    executor: python311
+    steps:
+      - checkout
+      - setup-root-python
+      - run:
+          name: Root tests M-R
+          command: |
+            set -euo pipefail
+            shopt -s nullglob
+            files=(tests/test_[m-r]*.py)
+            if (( ${#files[@]} == 0 )); then exit 0; fi
+            python -m pytest "${files[@]}" -q
+
+  pytest-root-s-z:
+    executor: python311
+    steps:
+      - checkout
+      - setup-root-python
+      - run:
+          name: Root tests S-Z
+          command: |
+            set -euo pipefail
+            shopt -s nullglob
+            files=(tests/test_[s-z]*.py)
+            if (( ${#files[@]} == 0 )); then exit 0; fi
+            python -m pytest "${files[@]}" -q
 
   lint:
     executor: python311
@@ -104,7 +211,41 @@ jobs:
           name: Repository-wide Ruff
           command: ruff check .
 
-  site-integrity:
+  site-reliability:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Site reliability audit
+          command: python scripts/site_reliability_audit.py
+
+  search-assets:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Validate generated search assets are current
+          command: |
+            python tools/generate_search_assets.py
+            git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
+
+  seo-audit:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Validate indexability links metadata and JSON-LD
+          command: python tools/seo_audit.py
+
+  internal-links:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Validate generated internal links
+          command: python tools/internal_links.py --check
+
+  workflow-doctor:
     executor: python311
     steps:
       - checkout
@@ -112,25 +253,24 @@ jobs:
           name: Install workflow audit dependency
           command: python -m pip install "PyYAML==6.0.2"
       - run:
-          name: Site reliability audit
-          command: python scripts/site_reliability_audit.py
-      - run:
-          name: Validate generated search assets are current
-          command: |
-            python tools/generate_search_assets.py
-            git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
-      - run:
-          name: Validate indexability links metadata and JSON-LD
-          command: python tools/seo_audit.py
-      - run:
-          name: Validate generated internal links
-          command: python tools/internal_links.py --check
-      - run:
           name: Workflow Doctor dry run
           command: python scripts/workflow_doctor.py
+
+  actions-audit:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install workflow audit dependency
+          command: python -m pip install "PyYAML==6.0.2"
       - run:
           name: Enforce workflow safety invariants
           command: python scripts/audit_github_actions.py
+
+  osint-deck:
+    executor: python311
+    steps:
+      - checkout
       - run:
           name: OSINT deck strict validation
           command: python scripts/osint_deck_release.py --strict
@@ -150,30 +290,29 @@ jobs:
           path: .lighthouseci
           destination: lighthouse
 
-  osit:
+  osit-deps:
     executor: python311
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - pip-osit-v1-{{ checksum "osit/pyproject.toml" }}
-            - pip-osit-v1-
-      - run:
-          name: Install OSIT and development dependencies
-          command: |
-            python -m pip install --upgrade pip
-            python -m pip install -e './osit[dev]'
-            python -m pip check
-      - save_cache:
-          key: pip-osit-v1-{{ checksum "osit/pyproject.toml" }}
-          paths:
-            - ~/.cache/pip
+      - setup-osit
       - run:
           name: Compile OSIT
           command: python -m compileall -q osit/src osit/tests
+
+  osit-ruff:
+    executor: python311
+    steps:
+      - checkout
+      - setup-osit
       - run:
           name: Ruff OSIT
           command: cd osit && ruff check src tests
+
+  osit-tests:
+    executor: python311
+    steps:
+      - checkout
+      - setup-osit
       - run:
           name: OSIT unit and export tests
           command: |
@@ -204,19 +343,56 @@ workflows:
   full-validation-and-production-smoke:
     jobs:
       - node-tooling
-      - python-tests
+      - root-python-deps
+      - pytest-artemis:
+          requires: [root-python-deps]
+      - pytest-sentinel:
+          requires: [root-python-deps]
+      - pytest-commerce:
+          requires: [root-python-deps]
+      - pytest-root-a-f:
+          requires: [root-python-deps]
+      - pytest-root-g-l:
+          requires: [root-python-deps]
+      - pytest-root-m-r:
+          requires: [root-python-deps]
+      - pytest-root-s-z:
+          requires: [root-python-deps]
       - lint
-      - site-integrity
+      - site-reliability
+      - search-assets
+      - seo-audit
+      - internal-links
+      - workflow-doctor
+      - actions-audit
+      - osint-deck
       - lighthouse
-      - osit
+      - osit-deps
+      - osit-ruff:
+          requires: [osit-deps]
+      - osit-tests:
+          requires: [osit-deps]
       - production-smoke:
           requires:
             - node-tooling
-            - python-tests
+            - pytest-artemis
+            - pytest-sentinel
+            - pytest-commerce
+            - pytest-root-a-f
+            - pytest-root-g-l
+            - pytest-root-m-r
+            - pytest-root-s-z
             - lint
-            - site-integrity
+            - site-reliability
+            - search-assets
+            - seo-audit
+            - internal-links
+            - workflow-doctor
+            - actions-audit
+            - osint-deck
             - lighthouse
-            - osit
+            - osit-ruff
+            - osit-tests
           filters:
             branches:
               only: main

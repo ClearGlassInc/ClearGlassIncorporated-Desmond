@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from pyproj import Geod
-from shapely import make_valid
+from shapely.errors import ShapelyError
 from shapely.geometry import Polygon, box, shape
 from shapely.geometry.base import BaseGeometry
 
@@ -29,12 +29,22 @@ def geodesic_area_km2(geometry: BaseGeometry) -> float:
     return abs(area_m2) / 1_000_000.0
 
 
+def _shape_mapping(value: Any) -> BaseGeometry:
+    try:
+        return shape(value)
+    except (AttributeError, KeyError, TypeError, ValueError, ShapelyError) as exc:
+        raise AOIValidationError("geometry mapping is malformed") from exc
+
+
 def _polygon_from_coordinates(value: Any) -> BaseGeometry:
     if isinstance(value, dict):
-        return shape(value)
+        return _shape_mapping(value)
     if not isinstance(value, list) or len(value) < 3:
         raise AOIValidationError("polygon must contain at least three coordinate pairs")
-    return Polygon(value)
+    try:
+        return Polygon(value)
+    except (TypeError, ValueError, ShapelyError) as exc:
+        raise AOIValidationError("polygon coordinates are malformed") from exc
 
 
 def validate_aoi(aoi: AreaOfInterest, max_area_km2: float) -> AOIValidationResult:
@@ -55,7 +65,7 @@ def validate_aoi(aoi: AreaOfInterest, max_area_km2: float) -> AOIValidationResul
             raise AOIValidationError("bbox must satisfy west < east and south < north in WGS84")
         geometry = box(west, south, east, north)
     elif aoi.mode == "geojson":
-        geometry = shape(aoi.value)
+        geometry = _shape_mapping(aoi.value)
     else:
         geometry = _polygon_from_coordinates(aoi.value)
 
@@ -64,9 +74,6 @@ def validate_aoi(aoi: AreaOfInterest, max_area_km2: float) -> AOIValidationResul
     if geometry.geom_type not in {"Polygon", "MultiPolygon"}:
         raise AOIValidationError("AOI must resolve to a Polygon or MultiPolygon")
     if not geometry.is_valid:
-        repaired = make_valid(geometry)
-        if not repaired.is_valid or repaired.geom_type not in {"Polygon", "MultiPolygon"}:
-            raise AOIValidationError("AOI polygon is invalid or self-intersecting")
         raise AOIValidationError("AOI polygon is invalid; provide a non-self-intersecting geometry")
 
     area_km2 = geodesic_area_km2(geometry)

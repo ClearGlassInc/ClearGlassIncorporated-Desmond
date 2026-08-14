@@ -5,13 +5,19 @@ on:
     paths:
       - "osit/**"
       - ".github/workflows/osit-ci.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "osit/**"
+      - ".github/workflows/osit-ci.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: osit-ci-${{ github.ref }}
+  group: osit-ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -30,7 +36,11 @@ jobs:
           cache-dependency-path: osit/pyproject.toml
       - name: Install
         run: python -m pip install -e '.[dev]'
+      - name: Dependency integrity
+        run: python -m pip check
+      - name: Compile
+        run: python -m compileall -q src tests
       - name: Ruff
-        run: ruff check src tests
-      - name: Unit tests
+        run: ruff check src tests --output-format=github
+      - name: Unit and export tests
         run: pytest --cov=osit --cov-report=term-missing

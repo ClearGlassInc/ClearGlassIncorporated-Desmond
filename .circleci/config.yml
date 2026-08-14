@@ -1,9 +1,18 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.2.3
+
 executors:
   node22:
     docker:
       - image: cimg/node:22.10
+    resource_class: medium
+    working_directory: ~/project
+
+  browser22:
+    docker:
+      - image: cimg/node:22.10-browsers
     resource_class: medium
     working_directory: ~/project
 
@@ -57,16 +66,17 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pip-root-v1-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}
-            - pip-root-v1-
+            - pip-root-v2-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}-{{ checksum "clearglass-commerce/control-plane/requirements.txt" }}
+            - pip-root-v2-
       - run:
-          name: Install project and test dependencies
+          name: Install project, commerce, and test dependencies
           command: |
             python -m pip install --upgrade pip
             python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
+            python -m pip install -r clearglass-commerce/control-plane/requirements.txt
             python -m pip check
       - save_cache:
-          key: pip-root-v1-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}
+          key: pip-root-v2-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}-{{ checksum "clearglass-commerce/control-plane/requirements.txt" }}
           paths:
             - ~/.cache/pip
       - run:
@@ -126,9 +136,13 @@ jobs:
           command: python scripts/osint_deck_release.py --strict
 
   lighthouse:
-    executor: node22
+    executor: browser22
     steps:
       - checkout
+      - browser-tools/install-chrome
+      - run:
+          name: Verify Chrome is available
+          command: google-chrome --version
       - run:
           name: Lighthouse performance accessibility and SEO budgets
           command: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json

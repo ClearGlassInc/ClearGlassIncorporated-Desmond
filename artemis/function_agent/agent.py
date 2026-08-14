@@ -98,11 +98,9 @@ class FunctionAgent:
             )
 
         if policy_result.decision is PolicyDecision.REQUIRE_APPROVAL:
-            approved = bool(request.approval_token) and self.approvals.validate_and_consume(
-                request.approval_token,
-                request.capability,
-                request.arguments,
-                request.context,
+            approval_token = request.approval_token
+            approved = approval_token is not None and self.approvals.validate_and_consume(
+                approval_token, request.capability, request.arguments, request.context
             )
             if not approved:
                 challenge = self.approvals.challenge(

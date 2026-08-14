@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Literal
+from typing import Literal, TypedDict
 
 RiskBand = Literal["GREEN", "YELLOW", "RED"]
 
@@ -32,6 +32,16 @@ class ThreatVector:
     threat_level: str
     impact: str
     mitigation: str
+
+
+class DashboardSnapshot(TypedDict):
+    """Strongly typed contract shared by dashboard and API consumers."""
+
+    band: RiskBand
+    status: str
+    rationale: str
+    observation: EnvironmentalObservation
+    threat_vectors: list[ThreatVector]
 
 
 def classify_log_nf2(log_nf2: float) -> tuple[RiskBand, str]:
@@ -76,7 +86,7 @@ def build_threat_vectors(band: RiskBand) -> list[ThreatVector]:
     ]
 
 
-def dashboard_snapshot(observation: EnvironmentalObservation) -> dict[str, object]:
+def dashboard_snapshot(observation: EnvironmentalObservation) -> DashboardSnapshot:
     """Build the serializable payload consumed by Streamlit, APIs, and tests."""
 
     band, rationale = classify_log_nf2(observation.log_nf2)

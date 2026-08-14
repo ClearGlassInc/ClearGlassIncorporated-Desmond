@@ -13,15 +13,21 @@ const rank: Record<Role, number> = {
   ADMINISTRATOR: 50
 };
 
-export function resolvePrincipal(request: NextRequest): Principal | null {
-  const mode = process.env.AUTH_MODE ?? "development";
+export function resolvePrincipal(request: Pick<NextRequest, "headers">): Principal | null {
+  const mode = process.env.AUTH_MODE?.trim().toLowerCase();
+  if (!mode) return null;
+
   if (mode === "development") {
+    // Development identities are intentionally explicit and must never be
+    // accepted by a production runtime when configuration is missing or wrong.
+    if (process.env.NODE_ENV === "production") return null;
     return {
       userId: request.headers.get("x-cg-user-id") ?? "00000000-0000-0000-0000-000000000001",
       organizationId: request.headers.get("x-cg-org-id") ?? "00000000-0000-0000-0000-000000000001",
       role: normalizeRole(request.headers.get("x-cg-role")) ?? "ADMINISTRATOR"
     };
   }
+
   // Production identity claims are accepted only when a trusted OIDC/SAML gateway
   // proves the request crossed the private ingress boundary.
   const expectedGatewaySecret = process.env.IDENTITY_GATEWAY_SECRET;

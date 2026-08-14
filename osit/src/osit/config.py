@@ -16,15 +16,15 @@ class AreaOfInterest(BaseModel):
     value: Any
 
     @model_validator(mode="after")
-    def validate_shape(self) -> "AreaOfInterest":
+    def validate_shape(self) -> AreaOfInterest:
         if self.mode == "place_name":
             if not isinstance(self.value, str) or len(self.value.strip()) < 3:
                 raise ValueError("place_name AOI must be a non-empty, specific place string")
         elif self.mode == "bbox":
-            if not isinstance(self.value, (list, tuple)) or len(self.value) != 4:
+            if not isinstance(self.value, list | tuple) or len(self.value) != 4:
                 raise ValueError("bbox AOI must be [west, south, east, north]")
         elif self.mode == "polygon":
-            if not isinstance(self.value, (dict, list)):
+            if not isinstance(self.value, dict | list):
                 raise ValueError("polygon AOI must be GeoJSON-like data or coordinate pairs")
         elif self.mode == "geojson" and not isinstance(self.value, dict):
             raise ValueError("geojson AOI must be a GeoJSON geometry mapping")

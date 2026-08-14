@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated
 
@@ -105,7 +105,7 @@ def run(config: ConfigPath = Path("config/analysis.yaml")) -> None:
         "project_name": cfg.project_name,
         "area_of_interest": str(cfg.area_of_interest.value),
         "area_km2": bundle.area_km2,
-        "analysis_date_utc": datetime.now(timezone.utc).isoformat(),
+        "analysis_date_utc": datetime.now(UTC).isoformat(),
         "network_metrics": metrics,
         "classification_note": (
             "All criticality language is graph-model qualified; "

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Annotated
 
 import structlog
 import typer
@@ -25,6 +26,7 @@ from .visualization import (
 
 app = typer.Typer(help="OSIT — Open-Source Infrastructure Topology Intelligence")
 log = structlog.get_logger("osit")
+ConfigPath = Annotated[Path, typer.Option(exists=True, dir_okay=False, readable=True)]
 
 
 def _configure_logging() -> None:
@@ -37,7 +39,7 @@ def _configure_logging() -> None:
 
 
 @app.command()
-def validate(config: Path = typer.Option(Path("config/analysis.yaml"), exists=True)) -> None:
+def validate(config: ConfigPath = Path("config/analysis.yaml")) -> None:
     """Validate deterministic configuration and non-place AOI geometry."""
     cfg = load_config(config)
     result = validate_aoi(cfg.area_of_interest, cfg.max_area_km2)
@@ -56,7 +58,7 @@ def validate(config: Path = typer.Option(Path("config/analysis.yaml"), exists=Tr
 
 
 @app.command()
-def run(config: Path = typer.Option(Path("config/analysis.yaml"), exists=True)) -> None:
+def run(config: ConfigPath = Path("config/analysis.yaml")) -> None:
     """Acquire public OSM data, build bounded analytics, and export reproducible artifacts."""
     _configure_logging()
     cfg = load_config(config)

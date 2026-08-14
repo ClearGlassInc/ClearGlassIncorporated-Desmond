@@ -29,10 +29,17 @@ def export_geopackage(graphs: dict[str, nx.MultiDiGraph], path: str | Path) -> P
     output.parent.mkdir(parents=True, exist_ok=True)
     if output.exists():
         output.unlink()
+    first_layer = True
     for mode, graph in graphs.items():
         nodes, edges = ox.graph_to_gdfs(graph)
-        nodes.to_file(output, layer=f"{mode}_nodes", driver="GPKG")
-        edges.to_file(output, layer=f"{mode}_edges", driver="GPKG")
+        nodes.to_file(
+            output,
+            layer=f"{mode}_nodes",
+            driver="GPKG",
+            mode="w" if first_layer else "a",
+        )
+        first_layer = False
+        edges.to_file(output, layer=f"{mode}_edges", driver="GPKG", mode="a")
     return output
 
 

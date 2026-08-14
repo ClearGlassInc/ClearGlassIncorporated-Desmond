@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -13,7 +13,7 @@ class SourceRecord(BaseModel):
     source_name: str
     source_url: str
     license: str
-    retrieved_at_utc: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    retrieved_at_utc: datetime = Field(default_factory=lambda: datetime.now(UTC))
     query_parameters: dict[str, Any] = Field(default_factory=dict)
     geographic_coverage: str = ""
     coordinate_reference_system: str = "EPSG:4326"
@@ -29,7 +29,7 @@ class ArtifactRecord(BaseModel):
 
 class ProvenanceManifest(BaseModel):
     label: str = "OSIT — Open-Source Infrastructure Topology Intelligence"
-    generated_at_utc: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    generated_at_utc: datetime = Field(default_factory=lambda: datetime.now(UTC))
     project_name: str
     sources: list[SourceRecord] = Field(default_factory=list)
     artifacts: list[ArtifactRecord] = Field(default_factory=list)

@@ -1,0 +1,44 @@
+{
+  "schema": "clearglass.data-fabric/v1",
+  "version": 1,
+  "basePath": "/data/",
+  "policy": {
+    "defaultMode": "on-demand",
+    "sameOriginOnly": true,
+    "allowParentTraversal": false,
+    "integrityScope": ["json", "csv", "md", "txt"],
+    "note": "Cataloging a dataset integrates it into validation and discovery. It does not assert that upstream automation or external services are currently provisioned."
+  },
+  "rootDatasets": [
+    {
+      "id": "corporate-identity",
+      "path": "corporate-identity.json",
+      "format": "json",
+      "browserLoad": true,
+      "purpose": "Canonical public organization identity"
+    },
+    {
+      "id": "products",
+      "path": "products.json",
+      "format": "json",
+      "browserLoad": true,
+      "purpose": "Canonical product catalog"
+    }
+  ],
+  "modules": [
+    {"id": "ontario-osint", "root": "Ontario-osint", "browserLoad": true, "purpose": "Ontario OSINT datasets and regional intelligence assets"},
+    {"id": "analytics", "root": "analytics", "browserLoad": true, "purpose": "Analytics schemas and derived business metrics"},
+    {"id": "audit", "root": "audit", "browserLoad": true, "purpose": "Audit documentation and evidence metadata"},
+    {"id": "campaigns", "root": "campaigns", "browserLoad": true, "purpose": "Campaign planning and measurement datasets"},
+    {"id": "control-surface", "root": "control-surface", "browserLoad": true, "purpose": "Operational control-surface health, alerts, metrics and run state"},
+    {"id": "growth", "root": "growth", "browserLoad": true, "purpose": "Growth engine datasets"},
+    {"id": "leads", "root": "leads", "browserLoad": false, "purpose": "Lead-system documentation and non-public workflow boundary"},
+    {"id": "market-intelligence", "root": "market-intelligence", "browserLoad": true, "purpose": "Market intelligence datasets"},
+    {"id": "marketing-os", "root": "marketing-os", "browserLoad": true, "purpose": "Marketing operating-system datasets"},
+    {"id": "minerals", "root": "minerals", "browserLoad": true, "purpose": "Minerals intelligence datasets"},
+    {"id": "platform", "root": "platform", "browserLoad": true, "purpose": "Canonical platform architecture and registry data"},
+    {"id": "seo", "root": "seo", "browserLoad": true, "purpose": "SEO release and search-performance data"},
+    {"id": "store", "root": "store", "browserLoad": true, "purpose": "Store and commerce data artifacts"},
+    {"id": "xenolith", "root": "xenolith", "browserLoad": true, "purpose": "XENOLITH intelligence-lattice datasets"}
+  ]
+}

@@ -23,8 +23,11 @@ class AreaOfInterest(BaseModel):
         elif self.mode == "bbox":
             if not isinstance(self.value, (list, tuple)) or len(self.value) != 4:
                 raise ValueError("bbox AOI must be [west, south, east, north]")
-        elif self.mode in {"polygon", "geojson"} and not isinstance(self.value, (dict, list)):
-            raise ValueError(f"{self.mode} AOI must be structured geometry data")
+        elif self.mode == "polygon":
+            if not isinstance(self.value, (dict, list)):
+                raise ValueError("polygon AOI must be GeoJSON-like data or coordinate pairs")
+        elif self.mode == "geojson" and not isinstance(self.value, dict):
+            raise ValueError("geojson AOI must be a GeoJSON geometry mapping")
         return self
 
 

@@ -4,7 +4,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-import pandas as pd
 import structlog
 import typer
 
@@ -29,7 +28,12 @@ log = structlog.get_logger("osit")
 
 
 def _configure_logging() -> None:
-    structlog.configure(processors=[structlog.processors.TimeStamper(fmt="iso"), structlog.processors.JSONRenderer()])
+    structlog.configure(
+        processors=[
+            structlog.processors.TimeStamper(fmt="iso"),
+            structlog.processors.JSONRenderer(),
+        ]
+    )
 
 
 @app.command()
@@ -63,9 +67,15 @@ def run(config: Path = typer.Option(Path("config/analysis.yaml"), exists=True)) 
     (output_root / "reports").mkdir(parents=True, exist_ok=True)
     (output_root / "provenance").mkdir(parents=True, exist_ok=True)
 
-    prepared = {mode: prepare_graph(graph, mode, cfg.output_crs) for mode, graph in bundle.graphs.items()}
+    prepared = {
+        mode: prepare_graph(graph, mode, cfg.output_crs)
+        for mode, graph in bundle.graphs.items()
+    }
     multimodal = normalized_multimodal_graph(prepared)
-    graphml_paths = export_graphml({**prepared, "multimodal": multimodal}, output_root / "graphs")
+    graphml_paths = export_graphml(
+        {**prepared, "multimodal": multimodal},
+        output_root / "graphs",
+    )
     gpkg_path = export_geopackage(prepared, output_root / "osit.gpkg")
 
     metrics: dict[str, dict[str, object]] = {}
@@ -75,12 +85,17 @@ def run(config: Path = typer.Option(Path("config/analysis.yaml"), exists=True)) 
         summary = topology_summary(graph)
         summary["quality"] = graph_quality(graph)
         flags = topology_flags(graph)
-        summary["model_identified_articulation_points_count"] = len(flags["model_identified_articulation_points"])
+        summary["model_identified_articulation_points_count"] = len(
+            flags["model_identified_articulation_points"]
+        )
         summary["graph_bridges_count"] = len(flags["graph_bridges"])
         metrics[mode] = summary
 
         centrality = centrality_table(graph, cfg.max_centrality_nodes)
-        centrality_path = export_metric_table(centrality, output_root / "tables" / f"{mode}_node_centrality.parquet")
+        centrality_path = export_metric_table(
+            centrality,
+            output_root / "tables" / f"{mode}_node_centrality.parquet",
+        )
         artifacts.append(register_artifact(centrality_path, "application/vnd.apache.parquet"))
 
     summary_payload = {
@@ -90,15 +105,29 @@ def run(config: Path = typer.Option(Path("config/analysis.yaml"), exists=True)) 
         "area_km2": bundle.area_km2,
         "analysis_date_utc": datetime.now(timezone.utc).isoformat(),
         "network_metrics": metrics,
-        "classification_note": "All criticality language is graph-model qualified; no operational targeting claim is made.",
+        "classification_note": (
+            "All criticality language is graph-model qualified; "
+            "no operational targeting claim is made."
+        ),
     }
     summary_json = output_root / "tables" / "area_summary.json"
     summary_json.write_text(json.dumps(summary_payload, indent=2, default=str), encoding="utf-8")
     artifacts.append(register_artifact(summary_json, "application/json"))
 
-    brief = write_executive_brief(summary_payload, output_root / "reports" / "executive-brief.md")
-    report = write_html_report(summary_payload, output_root / "reports" / "report.html")
-    artifacts.extend([register_artifact(brief, "text/markdown"), register_artifact(report, "text/html")])
+    brief = write_executive_brief(
+        summary_payload,
+        output_root / "reports" / "executive-brief.md",
+    )
+    report = write_html_report(
+        summary_payload,
+        output_root / "reports" / "report.html",
+    )
+    artifacts.extend(
+        [
+            register_artifact(brief, "text/markdown"),
+            register_artifact(report, "text/html"),
+        ]
+    )
 
     manifest = ProvenanceManifest(
         project_name=cfg.project_name,
@@ -112,11 +141,20 @@ def run(config: Path = typer.Option(Path("config/analysis.yaml"), exists=True)) 
         ],
         limitations=[
             "OpenStreetMap completeness and currency vary.",
-            "Estimated speeds/travel times are model assumptions unless a public operational source is supplied.",
-            "Topology flags are structural graph metrics, not real-world operational criticality claims.",
+            (
+                "Estimated speeds/travel times are model assumptions unless a public "
+                "operational source is supplied."
+            ),
+            (
+                "Topology flags are structural graph metrics, not real-world operational "
+                "criticality claims."
+            ),
         ],
     )
-    manifest_path = write_manifest(manifest, output_root / "provenance" / "manifest.json")
+    manifest_path = write_manifest(
+        manifest,
+        output_root / "provenance" / "manifest.json",
+    )
     log.info("osit_run_complete", outputs=str(output_root), manifest=str(manifest_path))
     typer.echo(f"OSIT complete: {output_root}")
 

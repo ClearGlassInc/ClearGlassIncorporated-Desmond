@@ -34,5 +34,6 @@ jobs:
     name: Billing lock circuit breaker
     if: ${{ false }}
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - run: echo "Auto Heal is paused until GitHub Actions account billing access is restored."

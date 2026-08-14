@@ -4,6 +4,12 @@ Federated Autonomous Workflow & Intelligence Layer for ClearGlass Inc.
 
 This additive module provides a GitHub Pages-compatible executive command surface plus a deterministic, permission-gated revenue-opportunity ranker. Existing pages, routes, scripts, metadata, and integrations are not replaced.
 
+## Canonical build specification
+
+The governed, brand-clean target-state engineering prompt is maintained in [`ARTEMIS_FAWL_BUILD_PROMPT.md`](./ARTEMIS_FAWL_BUILD_PROMPT.md).
+
+That specification defines the ARTEMIS FAWL product identity, lawful public-source scope, defensive security controls, provenance requirements, synthetic-data labeling, Next.js target architecture, test gates, and repository-wide brand-audit acceptance criteria. It is a target-state build contract, not evidence that every listed capability is currently deployed.
+
 ## Truth boundary
 
 The interface is a static demonstration. Every visible business metric is labeled **SIMULATED**. It performs no authentication, scraping, trading, payment, outreach, deployment, or background execution. Production sources must be explicitly authorized and registered; absence of authorization fails closed.

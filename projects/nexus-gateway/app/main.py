@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .aegis_bridge import AegisUnavailable, dispatch_aegis
 from .auth import verify_managed_identity
-from .config import Settings, get_settings
+from .config import get_settings
 from .governance import evaluate_action
 from .models import AegisDispatchRequest, AIActionRequest, Principal, TelemetryEvent
 from .telemetry import TelemetryBus
@@ -28,7 +28,10 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(
     title=settings.service_name,
-    description="Zero-trust identity brokering, deterministic AI tool governance, AEGIS dispatch, and asynchronous telemetry.",
+    description=(
+        "Zero-trust identity brokering, deterministic AI tool governance, "
+        "AEGIS dispatch, and asynchronous telemetry."
+    ),
     version=settings.version,
     lifespan=lifespan,
 )
@@ -46,7 +49,11 @@ async def security_interceptor(request: Request, call_next):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Referrer-Policy"] = "no-referrer"
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
-    response.headers["Cache-Control"] = "no-store" if request.url.path.startswith("/api/") else response.headers.get("Cache-Control", "no-cache")
+    response.headers["Cache-Control"] = (
+        "no-store"
+        if request.url.path.startswith("/api/")
+        else response.headers.get("Cache-Control", "no-cache")
+    )
     return response
 
 
@@ -118,7 +125,10 @@ async def execute_agent_action(
         "target_tool": action.target_tool,
         "audit_id": request.state.request_id,
         "objective_hash": action.objective_hash,
-        "message": "Tool request passed gateway policy. Execution remains delegated to the authorized downstream tool runner.",
+        "message": (
+            "Tool request passed gateway policy. Execution remains delegated "
+            "to the authorized downstream tool runner."
+        ),
     }
 
 

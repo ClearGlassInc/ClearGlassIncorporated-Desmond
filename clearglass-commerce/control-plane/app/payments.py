@@ -125,7 +125,10 @@ def create_checkout_session(
     if not is_live():
         return {
             "id": f"cs_mock_{abs(hash((amount_total, customer_email))) % 10**10:010d}",
-            "url": f"{success_url}?mock=1",
+            # success_url already carries ?session_id=… from _with_session_placeholder,
+            # so the mock flag has to extend that query string rather than start a
+            # second one — otherwise session_id parses as "{CHECKOUT_SESSION_ID}?mock=1".
+            "url": f"{success_url}{'&' if '?' in success_url else '?'}mock=1",
             "mode": "mock",
             "checkout_mode": checkout_mode,
             "amount_total": amount_total,

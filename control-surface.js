@@ -22,7 +22,7 @@
   // request — the keyless api.github.com call below is only a fallback.
   var FEED = "/data/control-surface/";
   var REPO = "ClearGlassInc/ClearGlassIncorporated-Desmond";
-  var EMAIL = "desmondotieno@icloud.com";
+  var EMAIL = "desmond@clearglassinc.com";
 
   // ── destinations (grouped) ──────────────────────────────────────────────
   var GROUPS = [

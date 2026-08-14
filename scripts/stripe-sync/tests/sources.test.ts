@@ -95,7 +95,16 @@ describe("data/store/catalog.json services", () => {
       .filter((issue) => issue.severity === "error")
       .map((issue) => issue.sourceId)
       .sort();
-    assert.deepEqual(withheld, ["store:hardening", "store:monitoring", "store:phipa"]);
+    // Pinned by source id for the same reason as the priced list above: a new
+    // quote-driven engagement must be added here deliberately. The secure
+    // systems engineering workshop prices "by scope" and so carries no
+    // amount_cents -- syncing it would mean inventing one.
+    assert.deepEqual(withheld, [
+      "store:advanced-secure-systems-engineering",
+      "store:hardening",
+      "store:monitoring",
+      "store:phipa",
+    ]);
     for (const issue of issues.filter((candidate) => candidate.severity === "error")) {
       assert.match(issue.message, /quote-driven/);
     }

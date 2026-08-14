@@ -54,11 +54,27 @@
   });
 
   if (!window.__cgAnalytics && !document.querySelector("script[data-cg-analytics]")) {
-    var analytics = document.createElement("script");
-    analytics.src = "/analytics.js";
-    analytics.defer = true;
-    analytics.setAttribute("data-cg-analytics", "");
-    (document.head || document.documentElement).appendChild(analytics);
+    var analyticsLoaded = false;
+    var appendAnalytics = function () {
+      if (analyticsLoaded || window.__cgAnalytics || document.querySelector("script[data-cg-analytics]")) return;
+      analyticsLoaded = true;
+      var analytics = document.createElement("script");
+      analytics.src = "/analytics.js";
+      analytics.defer = true;
+      analytics.setAttribute("data-cg-analytics", "");
+      (document.head || document.documentElement).appendChild(analytics);
+    };
+    if (window.CG_ANALYTICS_CONFIG) {
+      appendAnalytics();
+    } else {
+      var analyticsConfig = document.createElement("script");
+      analyticsConfig.src = "/analytics-config.js";
+      analyticsConfig.defer = true;
+      analyticsConfig.setAttribute("data-cg-analytics-config", "");
+      analyticsConfig.onload = appendAnalytics;
+      analyticsConfig.onerror = appendAnalytics;
+      (document.head || document.documentElement).appendChild(analyticsConfig);
+    }
   }
 
   var FX_CSS = [
@@ -189,12 +205,19 @@
     launcher = document.createElement("button");
     launcher.id = "cg-assistant-launcher";
     launcher.type = "button";
-    launcher.setAttribute("aria-label", "Open ClearGlass control station");
+    // WCAG 2.5.3 (Label in Name): the accessible name must CONTAIN the visible
+    // text, contiguously. The button reads "Control Station" / "ClearGlass" on
+    // screen, so the label leads with exactly that before adding the verb —
+    // otherwise voice-control users saying "click Control Station" get no match.
+    launcher.setAttribute("aria-label", "Control Station ClearGlass — open the assistant panel");
     launcher.setAttribute("aria-controls", "cg-assistant-panel");
     launcher.setAttribute("aria-expanded", "false");
     launcher.innerHTML =
       '<span class="cg-launcher-icon" aria-hidden="true"><span class="cg-launcher-pulse"></span>💬</span>' +
-      '<span class="cg-launcher-copy"><strong>Control Station</strong><small>ClearGlass</small></span>' +
+      // The space between </strong> and <small> is load-bearing: axe concatenates
+      // adjacent inline text with no separator, so without it the visible text
+      // reads "Control StationClearGlass" and no aria-label can contain it.
+      '<span class="cg-launcher-copy"><strong>Control Station</strong> <small>ClearGlass</small></span>' +
       '<span class="cg-launcher-chevron" aria-hidden="true">⌃</span>';
     stack.appendChild(launcher);
     return launcher;
@@ -372,7 +395,11 @@
     launcher.addEventListener("click", function () {
       var expanded = launcher.getAttribute("aria-expanded") !== "true";
       setExpanded(stack, launcher, panel, expanded, false);
-      launcher.setAttribute("aria-label", expanded ? "Close ClearGlass control station" : "Open ClearGlass control station");
+      // Keep the visible text ("Control Station ClearGlass") as the leading,
+      // contiguous prefix in both states — see buildLauncher for why.
+      launcher.setAttribute("aria-label", expanded
+        ? "Control Station ClearGlass — close the assistant panel"
+        : "Control Station ClearGlass — open the assistant panel");
     });
 
     if (stealthButton) {

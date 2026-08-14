@@ -36,6 +36,14 @@ REPORT_PATH = ROOT / "SITE_WIRING_PLAN.md"
 START = "<!-- cg-related:start -->"
 END = "<!-- cg-related:end -->"
 
+# Directory names that never hold a page this repository publishes to GitHub
+# Pages: version control internals, installed or generated dependency trees, and
+# `projects/`, where separately-deployed services keep their own HTML (the NEXUS
+# gateway's container serves `projects/nexus-gateway/web/` at /console). Page
+# discovery is duplicated across several gates, so this constant is the one the
+# others import — a new directory landing here must not fail six audits at once.
+NON_SITE_DIRS = frozenset({".git", "node_modules", ".next", "projects"})
+
 # HTML utilities and private/non-indexable operational surfaces are deliberately
 # outside the public journey graph. Keeping this inventory beside PAGES makes
 # the site-wide audit exhaustive without leaking private consoles into search or
@@ -44,6 +52,7 @@ END = "<!-- cg-related:end -->"
 EXCLUDED_PAGES: dict[str, tuple[str, str]] = {
     "404.html": ("Error recovery", "noindex redirect and route-recovery page"),
     "cg-loader.html": ("Application utility", "noindex branded loading surface"),
+    "etsy-callback.html": ("Application utility", "noindex OAuth redirect target"),
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html": (
         "Site verification", "Google ownership verification artifact"
     ),
@@ -70,6 +79,7 @@ PAGES: dict[str, tuple[str, str]] = {
     # Company / hub
     "index.html": ("ClearGlass Inc.", "governed intelligent systems — home"),
     "investors/index.html": ("Investor Data Room", "corporate documents and diligence materials"),
+    "streaming-growth-command-center/index.html": ("Signal Engine", "authority-first live-stream acquisition system"),
     "operations/client-onboarding.html": ("Client Onboarding", "how engagements start at ClearGlass"),
     "operations/hubspot-handoff.html": ("HubSpot Handoff", "CRM connection runbook"),
     "operations/ontario-incorporation-handoff.html": ("Ontario Incorporation Handoff", "corporate filing runbook"),
@@ -91,6 +101,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "stegoforge.html": ("STEGOFORGE", "steganography and covert-channel analysis terminal"),
     "attack-prompt-core.html": ("ATT&CK Prompt Integrator", "MITRE ATT&CK-aligned analysis prompts"),
     "environmental-cyber-risk.html": ("Environmental Cyber-Risk", "OT and environmental threat monitoring"),
+    "content-shield.html": ("VEILGUARD Content Shield", "per-viewer watermarking, traceable renders and leak attribution"),
 
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
@@ -113,6 +124,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "artemis-2040.html": ("Artemis 2040", "long-horizon intelligence platform"),
     "artemis-ai-cyber-intelligence-platform.html": ("AI Cyber Intelligence Platform", "Artemis applied to cyber intelligence"),
     "artemis-self-evolving-platform.html": ("Self-Evolving Platform", "Artemis's autonomous improvement loop"),
+    "quantum-neural-smart-glass.html": ("Quantum-Neural Smart Glass", "governed hybrid smart-glass research platform"),
     "artemis-fawl/index.html": ("ARTEMIS // FAWL", "the governed, self-healing Artemis command platform"),
     "air-control.html": ("ZEPHYR", "air systems control surface"),
     "air-systems-control.html": ("Air Systems Control", "the Artemis airspace control surface"),
@@ -174,16 +186,23 @@ PAGES: dict[str, tuple[str, str]] = {
     "products.html": ("ClearGlass Products", "the unified ClearGlass product catalog"),
     "offers/index.html": ("Services & Engagements", "every ClearGlass offer in one place"),
     "store.html": ("ClearGlass Store", "book a security engagement"),
+    "products/advanced-secure-systems-engineering.html": ("Secure Systems Engineering Workshop", "enterprise workshop in defensive cyber, embedded platforms and zero trust"),
     "seo-authority-hub.html": ("Cybersecurity & AI Automation in Burlington", "the local authority hub for ClearGlass services"),
     "checkout/index.html": ("Secure Checkout", "purchase an audit or protection plan"),
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
     "plans.html": ("Guardian Plans & Pricing", "per-seat subscription tiers for the Guardian console"),
     "workspace.html": ("ClearGlass Workspace", "business email, storage and collaboration plans per person"),
+    "workspace-email.html": ("Business Email on Your Own Domain", "what it means, and the four DNS records that decide delivery"),
+    "workspace-migration.html": ("Email Migration Without Downtime", "the nine-step sequence, the rollback, and what it costs"),
+    "workspace-security.html": ("Workspace Security & Data Handling", "encryption, access, payments — and what we do not claim"),
+    "workspace-vs.html": ("Free Email vs Business Email", "when free is the right answer, and when it stops being"),
     "smb-cyber-trust-kit.html": ("SMB Cyber Trust Kit", "plain-language cyber resilience for small business"),
     "smb.html": ("SMB Suite", "intelligent systems for small business"),
     "side-store.html": ("Side Store", "electronics, cables and components"),
     "offers/hardening-sprint.html": ("Hardening Sprint", "Microsoft 365 + Windows hardening engagement"),
     "offers/security-quick-audit.html": ("Security Quick-Audit", "a focused $249 security review"),
+    "offers/security-quick-audit-sample-report.html": ("Quick-Audit Sample Report", "a clearly labeled synthetic findings report"),
+    "offers/security-quick-audit-methodology.html": ("Quick-Audit Methodology", "the published evidence, scoring and safeguard method"),
     "offers/guardian-command-nexus-blueprint.html": ("Guardian Command Nexus Blueprint", "the full SPEC-1 architecture blueprint, sold as a digital deliverable"),
     "offers/autonomous-threat-modeling.html": ("Autonomous Threat Modeling", "continuous threat-modeling assessment and implementation services"),
     "revenue-engine.html": ("Revenue Engine", "AI-driven business growth system"),
@@ -269,6 +288,7 @@ CLUSTERS: dict[str, dict] = {
             "sentinel.html", "bluedesk.html", "guardian.html",
             "artemis-blue-team.html", "stegoforge.html",
             "attack-prompt-core.html", "environmental-cyber-risk.html",
+            "content-shield.html",
             "bluedesk-mobile.html",
         ],
         "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")],
@@ -291,6 +311,7 @@ CLUSTERS: dict[str, dict] = {
         "members": [
             "artemis-iv.html", "artemis-ai-cyber-intelligence-platform.html",
             "artemis-self-evolving-platform.html", "artemis-2040.html",
+            "quantum-neural-smart-glass.html",
             "artemis-fawl/index.html",
             "air-control.html", "air-systems-control.html",
         ],
@@ -352,10 +373,16 @@ CLUSTERS: dict[str, dict] = {
         "name": "Services & Engagements",
         "pillar": "offers/index.html",
         "members": [
-            "store.html", "pricing.html", "plans.html", "workspace.html",
+            "store.html", "products/advanced-secure-systems-engineering.html",
+            "pricing.html", "plans.html", "workspace.html",
+            "workspace-email.html", "workspace-migration.html",
+            "workspace-security.html", "workspace-vs.html",
             "checkout/index.html", "seo-authority-hub.html",
             "smb-cyber-trust-kit.html",
             "smb.html", "offers/security-quick-audit.html",
+            "offers/security-quick-audit-sample-report.html",
+            "offers/security-quick-audit-methodology.html",
+            "streaming-growth-command-center/index.html",
             "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html",
             "offers/guardian-command-nexus-blueprint.html", "revenue-engine.html",
             "side-store.html", "products.html",
@@ -771,7 +798,7 @@ def validate() -> list[str]:
     discovered = {
         path.relative_to(ROOT).as_posix()
         for path in ROOT.rglob("*.html")
-        if not {".git", "node_modules", ".next"} & set(path.parts)
+        if not NON_SITE_DIRS & set(path.parts)
     }
     classified = set(PAGES) | set(EXCLUDED_PAGES)
     for page in sorted(discovered - classified):

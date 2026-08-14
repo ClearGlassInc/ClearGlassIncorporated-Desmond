@@ -60,6 +60,22 @@ PUBLIC_MUTATING_ROUTES: dict[tuple[str, str], str] = {
         "app/data/sidestore.json. The request names item ids and quantities only, "
         "so an anonymous caller cannot choose what it is charged. See tests/test_cart.py."
     ),
+    ("POST", "/workspace/quote"): (
+        "Prices a Workspace plan and seat count without charging anything. POST "
+        "only for symmetry with the checkout body; it writes nothing and creates "
+        "nothing, and returns arithmetic the pricing page already performs in the "
+        "browser. Seat counts are bounds-checked (1..500) so it cannot be used as "
+        "a compute sink."
+    ),
+    ("POST", "/workspace/checkout/session"): (
+        "Customer subscription checkout. Public by necessity, same as "
+        "/checkout/session; per-IP rate limited, and the amount is resolved "
+        "server-side from app/workspace.py against app/data/workspace_plans.json. "
+        "The request names a plan SKU and a seat count only, so an anonymous "
+        "caller cannot choose what it is charged. Live mode additionally fails "
+        "closed when Stripe Tax is off or no Stripe Price backs the plan. "
+        "See tests/test_workspace.py."
+    ),
     ("POST", "/fulfillment/webhooks/printful/{secret}"): (
         "Printful shipment callback. Cannot carry an operator credential, and unlike "
         "Stripe, Printful signs nothing — so the URL itself is the credential: the "

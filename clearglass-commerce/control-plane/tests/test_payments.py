@@ -32,6 +32,29 @@ def test_mock_checkout_when_no_key(monkeypatch) -> None:
     assert session["id"].startswith("cs_mock_")
 
 
+def test_mock_success_url_keeps_session_id_parseable(monkeypatch) -> None:
+    """The mock flag must extend the existing query string, not open a second one.
+
+    ``success_url`` already carries ``?session_id=…``; appending ``?mock=1`` made the
+    success page parse session_id as ``{CHECKOUT_SESSION_ID}?mock=1``.
+    """
+    monkeypatch.delenv("STRIPE_SECRET_KEY", raising=False)
+    monkeypatch.setenv("CHECKOUT_SUCCESS_URL", "http://localhost:3000/success")
+    session = payments.create_checkout_session(
+        [{"sku": "risk-audit-90", "name": "Audit", "amount": 29700, "quantity": 1, "currency": "cad"}],
+        customer_email="buyer@example.com",
+    )
+    url = session["url"]
+    assert url.count("?") == 1, url
+    assert url.endswith("&mock=1"), url
+
+    from urllib.parse import parse_qs, urlparse  # noqa: PLC0415 — assertion-local
+
+    params = parse_qs(urlparse(url).query)
+    assert params["session_id"] == ["{CHECKOUT_SESSION_ID}"]
+    assert params["mock"] == ["1"]
+
+
 def test_subscription_metadata_is_standardized_and_test_safe(monkeypatch) -> None:
     monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_example")
     metadata = payments.subscription_metadata(

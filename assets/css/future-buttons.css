@@ -232,3 +232,45 @@
     max-width: calc(100vw - 24px) !important;
   }
 }
+
+/* Loader corner ownership.
+   The boot surface is transitional and already routes on click/key input. When
+   Stealth Glass mounts its unified Control Station, suppress only that second
+   fixed launcher on the loader and let the existing commerce dock own the
+   corner. The BUY / BOOK pill and seal are fused into one mobile-safe station.
+   Other pages retain the full Control Station unchanged. */
+@supports selector(body:has(*)) {
+  body:has(> .stage .hex-wrap).cg-security-dock-mounted {
+    padding-bottom: 0 !important;
+  }
+
+  body:has(> .stage .hex-wrap).cg-security-dock-mounted #cg-security-stack {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  body:has(> .stage .hex-wrap) #cg-dock {
+    right: max(12px, env(safe-area-inset-right)) !important;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    gap: 0 !important;
+    align-items: center !important;
+    max-width: calc(100vw - 24px) !important;
+  }
+
+  body:has(> .stage .hex-wrap) #cg-sales-shell {
+    z-index: 1 !important;
+  }
+
+  body:has(> .stage .hex-wrap) #cg-sales-button {
+    padding-right: 30px !important;
+    border-top-right-radius: 22px !important;
+    border-bottom-right-radius: 22px !important;
+  }
+
+  body:has(> .stage .hex-wrap) #cg-logo-badge {
+    z-index: 2 !important;
+    margin-left: -18px !important;
+  }
+}

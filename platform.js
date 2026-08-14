@@ -38,6 +38,66 @@
     document.documentElement.setAttribute("data-cg-home-runtime", "stabilized");
   }
 
+  /* Homepage cinematic fail-static gate.
+     Do not merely ask the motion runtime to reduce itself on constrained
+     touch-first devices: WebKit can still pay the DOM/GPU initialization cost
+     before that downgrade takes effect. Claim the cinematic runtime here,
+     before either platform.js or future-buttons.js can mount it, while loading
+     the stylesheet so its cg-low-power rules also stop decorative CSS motion.
+     This is capability-based rather than user-agent based and also honours
+     reduced-motion and Save-Data. */
+  var staticCinematicHomepage = false;
+  if (isHomepage) {
+    var touchFirstSmall = false;
+    var saveData = false;
+    var reducedMotion = false;
+    try {
+      touchFirstSmall = window.matchMedia("(hover: none) and (pointer: coarse)").matches &&
+        window.innerWidth <= 820;
+    } catch (e) {}
+    try { saveData = !!(navigator.connection && navigator.connection.saveData); } catch (e) {}
+    try { reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+
+    staticCinematicHomepage = touchFirstSmall || saveData || reducedMotion;
+    if (staticCinematicHomepage) {
+      document.documentElement.classList.add("cg-low-power", "cg-motion-reduced");
+      document.documentElement.setAttribute("data-cg-performance", "reduced");
+      document.documentElement.setAttribute("data-cg-motion-level", "minimal");
+      document.documentElement.setAttribute("data-cg-cinematic-motion", "static-capability");
+      /* future-buttons.js uses this same ownership flag before loading the
+         cinematic script, so one early claim protects both loader paths. */
+      window.__cgCinematicMotion = true;
+    }
+  }
+
+  /* Global navigation search: additive, non-fixed progressive enhancement.
+     The runtime attaches only when an existing primary nav is present, indexes
+     same-origin public pages lazily, and fails closed without changing routes. */
+  if (!document.querySelector('script[data-cg-global-nav-search="true"]')) {
+    var navSearch = document.createElement("script");
+    navSearch.src = platformAsset("global-nav-search.js");
+    navSearch.defer = true;
+    navSearch.setAttribute("data-cg-global-nav-search", "true");
+    navSearch.addEventListener("error", function () {
+      document.documentElement.setAttribute("data-cg-nav-search", "degraded");
+    }, { once: true });
+    document.body.appendChild(navSearch);
+  }
+
+  /* Homepage editorial showcase: intentionally content-only and non-fixed.
+     It reads the existing Insights post index, mounts before the timeline,
+     and fails closed so editorial enhancement can never destabilize the page. */
+  if (isHomepage && !document.querySelector('script[data-cg-home-insights="true"]')) {
+    var homeInsights = document.createElement("script");
+    homeInsights.src = platformAsset("homepage-insights.js");
+    homeInsights.async = true;
+    homeInsights.setAttribute("data-cg-home-insights", "true");
+    homeInsights.addEventListener("error", function () {
+      document.documentElement.setAttribute("data-cg-home-insights", "degraded");
+    }, { once: true });
+    document.body.appendChild(homeInsights);
+  }
+
   /* The Sentinel dialog exists in homepage markup with aria-modal="true" even
      while its parent shell is hidden. The unified assistant intentionally hides
      whenever a real modal is active, so synchronize aria-modal with the shell's
@@ -97,13 +157,14 @@
   }
 
   /* ── cinematic system: purpose-driven hero + motion hierarchy ─────────────
-     Preserved on desktop. cinematic-motion.js itself fails static on iOS/iPadOS
-     so the existing brand direction remains without reintroducing WebKit load. */
+     Desktop-capable devices keep the cinematic runtime. Constrained homepage
+     devices remain static before the script is mounted, eliminating the WebKit
+     renderer/GPU initialization path that can terminate the page process. */
   addLink('link[href="/assets/css/cinematic-motion.css"]', {
     rel: "stylesheet",
     href: "/assets/css/cinematic-motion.css"
   });
-  if (!document.querySelector('script[src="/assets/js/cinematic-motion.js"]')) {
+  if (!staticCinematicHomepage && !document.querySelector('script[src="/assets/js/cinematic-motion.js"]')) {
     var cinematic = document.createElement("script");
     cinematic.src = "/assets/js/cinematic-motion.js";
     cinematic.defer = true;

@@ -1,10 +1,10 @@
-# `Desmond@clearglassinc.com` activation runbook
+# `desmond@clearglassinc.com` activation runbook
 
 ## Status and decision
 
 The mailbox is **not provisioned by this repository**. Creating it requires a paid mail-provider account plus authorized changes in the live DNS control plane. Those are human-controlled external actions; do not claim the address is operational until the acceptance checks below pass.
 
-Use **Google Workspace Business Starter** as the initial host and create the primary user `Desmond@clearglassinc.com`. This is the smallest conventional setup for a single business mailbox and can later add aliases such as `hello@` without changing the website deployment. Email local parts are case-insensitive in normal delivery; use lowercase `desmond@clearglassinc.com` in DNS/provider configuration and the requested capitalization in display copy.
+Use **Google Workspace Business Starter** as the initial host and create the primary user `desmond@clearglassinc.com`. This is the smallest conventional setup for a single business mailbox and can later add aliases such as `hello@` without changing the website deployment. Email local parts are case-insensitive in normal delivery; use lowercase `desmond@clearglassinc.com` in DNS/provider configuration and the requested capitalization in display copy.
 
 ## Human-approved activation sequence
 

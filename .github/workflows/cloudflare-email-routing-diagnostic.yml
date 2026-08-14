@@ -25,7 +25,7 @@ jobs:
     env:
       CF_API_TOKEN_RAW: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       DOMAIN: clearglassinc.com
-      CUSTOM_ADDRESS: Desmond@clearglassinc.com
+      CUSTOM_ADDRESS: desmond@clearglassinc.com
       DESTINATION_ADDRESS: desmondodhiambo@hotmail.com
       ISSUE_NUMBER: "1288"
     steps:

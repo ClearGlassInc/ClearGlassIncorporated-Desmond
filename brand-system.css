@@ -21,3 +21,61 @@ body:has(#cg-global-nav) > header:has(.nav-toggle){display:none!important}
 body:has(#cockpit):has(> header.topbar) > header.topbar{display:none!important}
 body:has(#cockpit):has(> header.topbar) > main{padding-top:0!important}
 body:has(#cockpit):has(> header.topbar) > main > .hero{padding-top:clamp(88px,10vw,120px)!important}
+
+/* Insights dark-theme containment.
+   The Insights hub defines its own dark design tokens before this global layer.
+   Do not repaint that page light or leave reveal-gated article cards invisible.
+   The published articles are the primary hub content, so the showcase renders
+   first inside <main> while the command/atlas/briefing modules remain available
+   below it. */
+body[data-ix-page="hub"][data-ix-theme="dark"]{
+  background:
+    radial-gradient(650px 500px at var(--mx,50%) var(--my,35%),rgba(57,216,255,.10),transparent 60%),
+    radial-gradient(circle at 8% -10%,rgba(57,216,255,.22),transparent 34%),
+    radial-gradient(circle at 92% 0%,rgba(157,123,255,.22),transparent 30%),
+    linear-gradient(180deg,#05070d 0%,#08111d 48%,#05070d 100%)!important;
+  color:var(--text,#f8fbff)!important;
+}
+body[data-ix-page="hub"][data-ix-theme="dark"]::before{
+  z-index:1;
+  opacity:.22;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:linear-gradient(to bottom,#000,transparent 78%);
+}
+body[data-ix-page="hub"][data-ix-theme="dark"] main{
+  display:flex;
+  flex-direction:column;
+  padding-top:0!important;
+}
+body[data-ix-page="hub"][data-ix-theme="dark"] main>#latest{
+  order:-100;
+  padding-top:clamp(28px,5vw,58px);
+}
+body[data-ix-page="hub"][data-ix-theme="dark"] #latest .section-head,
+body[data-ix-page="hub"][data-ix-theme="dark"] #latest .feature,
+body[data-ix-page="hub"][data-ix-theme="dark"] #latest .feature>*{
+  opacity:1!important;
+  transform:none!important;
+}
+body[data-ix-page="hub"][data-ix-theme="dark"] #latest .feature{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+}
+body[data-ix-page="hub"][data-ix-theme="dark"] p{color:var(--muted,#a8b4c7)}
+body[data-ix-page="hub"][data-ix-theme="dark"] .panel{
+  border-color:var(--line,rgba(180,214,255,.16));
+  background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
+  box-shadow:0 24px 70px rgba(0,0,0,.24);
+}
+body[data-ix-page="hub"][data-ix-theme="dark"] .btn.primary,
+body[data-ix-page="hub"][data-ix-theme="dark"] .nav-cta{
+  background:linear-gradient(135deg,var(--cyan,#39d8ff),var(--green,#55f2a6))!important;
+  color:#031016!important;
+  border-color:transparent!important;
+}
+@media(max-width:760px){
+  body[data-ix-page="hub"][data-ix-theme="dark"] #latest .feature{grid-template-columns:1fr}
+  body[data-ix-page="hub"][data-ix-theme="dark"] main{padding-top:0!important}
+}

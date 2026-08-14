@@ -1,56 +1,10 @@
 name: Deploy Pages
 
-# Production redeploy trigger: 2026-08-10
+# Production deployment is manual while GitHub-hosted Actions are account-blocked.
+# The live site continues to publish through the repository's legacy Pages source.
+# Re-enabling Actions-backed production deployment requires an explicit Pages source
+# cutover and an intentional workflow_dispatch.
 on:
-  push:
-    branches: [main]
-    paths:
-      - "*.html"
-      - "*.css"
-      - "*.gif"
-      - "*.ico"
-      - "*.js"
-      - "*.jpeg"
-      - "*.jpg"
-      - "*.json"
-      - "*.mp4"
-      - "*.pdf"
-      - "*.png"
-      - "*.svg"
-      - "*.xml"
-      - "*.txt"
-      - "*.webm"
-      - "*.webmanifest"
-      - "*.webp"
-      - ".nojekyll"
-      - ".well-known/**"
-      - "assets/**"
-      - "apps/command-center/**"
-      - "artemis-fawl/**"
-      - "blog/**"
-      - "checkout/**"
-      - "content/**"
-      - "data/control-surface/**"
-      - "data/minerals/**"
-      - "data/Ontario-osint/**"
-      - "data/platform/registry.json"
-      - "data/seo/**"
-      - "data/store/catalog.json"
-      - "data/xenolith/lattice.json"
-      - "feeds/**"
-      - "four_d_dominance/**"
-      - "investors/**"
-      - "legal/**"
-      - "offers/**"
-      - "opal/**"
-      - "provenance/**"
-      - "security/**"
-      - "vendor/**"
-      - "scripts/verify_site.py"
-      - "scripts/production_probe.py"
-      - "tools/build_pages.py"
-      - "SECURITY.md"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -64,11 +18,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # pages:write is required only for the idempotent source-mode correction
-    # below. Artifact construction remains read-only; OIDC is isolated to deploy.
     permissions:
       contents: read
-      pages: write
     steps:
       - name: Checkout site source
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -76,33 +27,29 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
-      - name: Pin Pages source to GitHub Actions
+      - name: Verify Pages source without mutating production
         shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.PAGES_ADMIN_TOKEN || github.token }}
         run: |
           set -euo pipefail
-          code="$(curl -sS -o /tmp/pages-source.json -w '%{http_code}' -X PUT \
+          curl -fsS \
             -H 'Accept: application/vnd.github+json' \
-            -H "Authorization: Bearer ${GH_TOKEN}" \
             -H 'X-GitHub-Api-Version: 2026-03-10' \
             "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages" \
-            -d '{"build_type":"workflow"}' || true)"
+            -o /tmp/pages-source.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
 
-          case "${code}" in
-            204)
-              echo "Pages publishing source is GitHub Actions (build_type=workflow)." >> "$GITHUB_STEP_SUMMARY"
-              ;;
-            403)
-              echo "::warning::Pages source correction was blocked by token scope (HTTP 403). Add repository secret PAGES_ADMIN_TOKEN with Pages/admin permission once; the workflow will self-correct on the next run."
-              echo "Pages source correction: blocked by token scope (HTTP 403)." >> "$GITHUB_STEP_SUMMARY"
-              ;;
-            *)
-              echo "::warning::Pages source correction returned HTTP ${code}; deployment will continue through the explicit Actions artifact path."
-              echo "Pages source correction: HTTP ${code}." >> "$GITHUB_STEP_SUMMARY"
-              ;;
-          esac
-          cat /tmp/pages-source.json 2>/dev/null || true
+          data = json.loads(Path("/tmp/pages-source.json").read_text())
+          mode = data.get("build_type")
+          if mode != "workflow":
+              raise SystemExit(
+                  "Refusing Actions deployment: GitHub Pages build_type is "
+                  f"{mode!r}, not 'workflow'. Change the production Pages source "
+                  "only with explicit approval, then dispatch this workflow."
+              )
+          print("Pages publishing source is explicitly configured for GitHub Actions.")
+          PY
 
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0

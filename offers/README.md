@@ -9,7 +9,9 @@ self-contained (inline CSS) so nothing depends on the main site's stylesheets.
 |------|---------|
 | `index.html` | Services hub linking all offers |
 | `hardening-sprint.html` | Flagship fixed-fee offer (M365 + Windows hardening) + enquiry form |
-| `security-quick-audit.html` | $249 tripwire offer (read-only posture check) |
+| `security-quick-audit.html` | CAD $249 Ontario SMB offer (read-only posture check) |
+| `security-quick-audit-sample-report.html` | Clearly labeled synthetic report example |
+| `security-quick-audit-methodology.html` | Published scope, evidence and scoring method |
 | `phipa-readiness.html` | PHIPA lead magnet (email capture) → drives assessments |
 | `phipa-readiness-checklist.html` | The deliverable; "Save as PDF" button (print-to-PDF) |
 | `thank-you.html` | Post-submit confirmation page |
@@ -23,8 +25,12 @@ Search the `offers/` folder for `REPLACE` (and `data-cg-placeholder`) and fill i
    → your Cal.com / Calendly scheduling URL.
 2. **Stripe deposit link** — `https://buy.stripe.com/REPLACE_DEPOSIT`
    → a [Stripe Payment Link](https://stripe.com/payments/payment-links) for the sprint deposit.
-3. **Stripe Quick-Audit link** — `https://buy.stripe.com/REPLACE_QUICKAUDIT`
-   → Stripe Payment Link for the $249 Quick-Audit (set redirect to `thank-you.html`).
+3. **Stripe Quick-Audit link — configured:** `https://buy.stripe.com/8x2eVe7ZG0mFam00LG4Ni03`
+   → In Stripe, set the post-checkout redirect to
+   `https://www.clearglassinc.com/offers/thank-you.html?source=stripe&offer=quick-audit&status=checkout_return`.
+   A return to this page is an attribution signal, not proof of payment. Confirm
+   revenue from the Stripe dashboard or a verified Stripe webhook before marking
+   the CRM opportunity paid.
 4. **Form endpoint** — `https://formspree.io/f/REPLACE_FORM_ID`
    → a [Formspree](https://formspree.io) or [Tally](https://tally.so) form ID.
    Configure the form's redirect/confirmation to `thank-you.html`, and for the PHIPA
@@ -35,6 +41,15 @@ Quick check that nothing was missed:
 ```bash
 grep -rn "REPLACE" offers/
 ```
+
+The Quick-Audit scope form uses FormSubmit to route a qualified lead to the
+corporate inbox. FormSubmit may send a one-time activation message to that inbox
+before it will forward live submissions. The static form records a generated lead
+ID, offer, pipeline stage and UTM fields, but never copies field values into browser
+analytics or storage.
+
+Use `../operations/quick-audit-crm-pipeline.md` for the stage definitions,
+required fields, payment-verification rule and weekly pipeline view.
 
 ## Payment & delivery model
 

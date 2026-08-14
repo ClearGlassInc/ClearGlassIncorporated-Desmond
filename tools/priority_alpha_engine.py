@@ -130,7 +130,7 @@ class CalendarConflictResolution:
             "the Quantum-Neural Smart Glass control plane work.\n\n"
             "Please send me the full budget review notes and any decision items requiring my approval. "
             "I will review and respond with decisions today before EOD.\n\n"
-            "Thank you,\nDesmond Otieno\nCOO & Founder, ClearGlass Inc."
+            "Thank you,\nDesmond Otieno\nFounder & Software Architect, ClearGlass Inc."
         )
 
 
@@ -174,7 +174,7 @@ def build_priority_alpha_packet() -> dict[str, Any]:
         "organization": "ClearGlassInc Artemis",
         "baselines": asdict(baselines),
         "security": {"classification": security.classify(), "lineage_hash": security.lineage_hash, "hardening": security.recommended_hardening()},
-        "apex": {"decision": apex.decision(), "signoff": apex.signoff_language("Desmond Otieno, COO & Founder")},
+        "apex": {"decision": apex.decision(), "signoff": apex.signoff_language("Desmond Otieno, Founder & Software Architect")},
         "calendar": {"state": calendar.approval_state(), "delegation_note": calendar.delegation_note()},
         "human_gates": ["approve_waf_block", "sign_vendor_assessment", "send_budget_delegation_note"],
     }

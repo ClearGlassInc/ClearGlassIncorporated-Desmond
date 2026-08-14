@@ -27,28 +27,46 @@ on:
   schedule:
     - cron: "17 7 * * *" # daily dry-run health check, 07:17 UTC
 
-# Least privilege: read-only token. This workflow never writes to the repo,
-# never deploys, and never touches secrets.
 permissions:
   contents: read
 
 jobs:
-  release-gate:
-    name: OSINT Deck Release Gate
+  dry-run:
+    name: OSINT Deck Dry Run
+    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.release != true) }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # Production runs go through a protected environment so they require the
-    # reviewers configured on that environment (human approval). Dry-runs and
-    # scheduled checks use staging.
-    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'staging' }}
     steps:
-      # SHA-pinned (supply-chain hardening) — same pins the Policy Gate enforces.
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+      - name: Validate deck (non-release dry-run)
+        run: |
+          set -euo pipefail
+          mkdir -p release
+          python3 scripts/osint_deck_release.py --out release/osint-deck-report.md
+      - name: Publish dry-run report to job summary
+        if: always()
+        run: cat release/osint-deck-report.md >> "$GITHUB_STEP_SUMMARY" || true
+      - name: Upload dry-run report (audit artifact)
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: osint-deck-dry-run-report
+          path: release/osint-deck-report.md
+          if-no-files-found: warn
 
+  release-gate:
+    name: OSINT Deck Release Gate
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release == true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - name: Guard — confirm release authorization
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.release == true }}
         run: |
           set -euo pipefail
           if [ "${{ inputs.confirm }}" != "RELEASE" ]; then
@@ -56,22 +74,17 @@ jobs:
             exit 1
           fi
           echo "Release authorization confirmed for '${{ inputs.environment }}'."
-
-      - name: Validate deck (dry-run unless a release is authorized)
+      - name: Validate deck (authorized release gate)
         run: |
           set -euo pipefail
-          ARGS="--out release/osint-deck-report.md"
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.release }}" = "true" ]; then
-            # Authorized release: fail closed on any failing gate.
-            ARGS="$ARGS --release --strict"
-          fi
-          echo "Running: python3 scripts/osint_deck_release.py $ARGS"
-          python3 scripts/osint_deck_release.py $ARGS
-
-      - name: Publish report to job summary
+          mkdir -p release
+          python3 scripts/osint_deck_release.py \
+            --out release/osint-deck-report.md \
+            --release \
+            --strict
+      - name: Publish release report to job summary
         if: always()
         run: cat release/osint-deck-report.md >> "$GITHUB_STEP_SUMMARY" || true
-
       - name: Upload release report (audit artifact)
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

@@ -48,6 +48,7 @@ EXPECTED_REAL_SKUS = {
     "phipa",
     "monitoring",
     "critical-minerals-compliance",
+    "advanced-secure-systems-engineering",
 }
 
 

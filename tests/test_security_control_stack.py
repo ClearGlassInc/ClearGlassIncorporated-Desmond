@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -71,22 +72,79 @@ def test_mobile_station_is_safe_area_aware_and_contained() -> None:
 
 
 def test_station_scroll_collision_work_is_bounded() -> None:
+    """The scroll path must reuse a cached target list, never re-query the DOM.
+
+    The collision targets are resolved once by refreshCollisionTargets() and
+    cached, so avoidCTAOverlap() — which runs per animation frame while
+    scrolling — only measures nodes it already holds.
+    """
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
+    # What has to hold is that a scroll-time collision check does bounded work:
+    # candidates come from the narrow precomputed selector, and the hot path does
+    # no per-node style resolution. Pinning the exact call site made this fail
+    # when the query moved into refreshCollisionTargets() — which caches the list
+    # once instead of re-querying per check, i.e. a tighter bound, not a lost one.
     assert "COLLISION_TARGET_SELECTOR" in stealth
-    collision = stealth.split("function avoidCTAOverlap()", 1)[1].split("function scheduleCollisionCheck()", 1)[0]
-    assert "document.querySelectorAll(COLLISION_TARGET_SELECTOR)" in collision
-    assert "querySelectorAll('a,button,[role=\"button\"]')" not in collision
-    assert "window.getComputedStyle(node)" not in collision
+    assert "document.querySelectorAll(COLLISION_TARGET_SELECTOR)" in stealth
 
-    scheduler = stealth.split("function scheduleCollisionCheck()", 1)[1].split("function scheduleLegacyRefresh", 1)[0]
-    assert "if (collisionRaf) return;" in scheduler
+    # Slice on the bare function name: `scheduleCollisionCheck` later took an
+    # `immediate` parameter, and a boundary spelled with "()" stopped matching —
+    # which silently extended this slice to end-of-file and swept in build()'s
+    # perfectly legitimate queries.
+    collision = stealth.split("function avoidCTAOverlap(", 1)[1].split("function scheduleCollisionCheck(", 1)[0]
+    assert "collisionTargets" in collision, "hot path must walk the cached target list"
+    assert "querySelectorAll" not in collision, "no ad-hoc DOM query per collision check"
+    assert "getComputedStyle" not in collision, "no per-node style resolution on scroll"
+
+    scheduler = stealth.split("function scheduleCollisionCheck(", 1)[1].split("function scheduleLegacyRefresh", 1)[0]
+    # Coalescing is the guarantee; the scheduler may guard on more than the rAF
+    # handle (it now also holds a debounce timer), so assert the early return
+    # covers collisionRaf rather than pinning one exact condition.
+    assert re.search(r"if \([^)]*\bcollisionRaf\b[^)]*\) return;", scheduler)
 
 
 def test_station_observer_ignores_animation_class_churn() -> None:
     stealth = (ROOT / "stealth-glass.js").read_text(encoding="utf-8")
 
     observer = stealth.split("legacyObserver = new MutationObserver", 1)[1]
-    assert 'attributeFilter: ["open", "aria-modal"]' in observer
-    assert 'attributeFilter: ["open", "aria-modal", "class"]' not in observer
+    # The point of the filter is which attributes are watched, not the exact
+    # literal: "class" must stay out, or every animation frame that toggles a
+    # class re-triggers the observer. Other dialog-state attributes may be added.
+    attribute_filter = observer.split("attributeFilter:", 1)[1].split("]", 1)[0]
+    assert '"open"' in attribute_filter
+    assert '"aria-modal"' in attribute_filter
+    assert '"class"' not in attribute_filter, "watching class re-triggers on animation churn"
     assert "scheduleLegacyRefresh(panel, stack)" in observer
+
+
+def test_homepage_platform_gate_blocks_duplicate_fixed_control_runtimes() -> None:
+    """FX and AEGIS-OMEGA must stay behind the homepage isolation boundary."""
+    platform = (ROOT / "platform.js").read_text(encoding="utf-8")
+
+    assert 'data-cg-home-runtime", "stabilized"' in platform
+
+    fx_section = platform.split("/* ── advanced motion layer", 1)[1].split(
+        "/* ── cinematic system", 1
+    )[0]
+    assert "if (!isHomepage)" in fx_section
+    assert 'fx.src = "fx.js"' in fx_section
+    assert 'link[href="fx.css"]' in fx_section
+
+    omega_section = platform.split("/* ── AEGIS-OMEGA control plane", 1)[1].split(
+        'if ("serviceWorker" in navigator)', 1
+    )[0]
+    assert "if (!isHomepage)" in omega_section
+    assert 'platformAsset("aegis-omega.js")' in omega_section
+    assert 'platformAsset("aegis-omega.css")' in omega_section
+
+
+def test_homepage_does_not_bypass_platform_fixed_control_gate() -> None:
+    """The homepage may load the platform gate, never its blocked layers directly."""
+    homepage = (ROOT / "index.html").read_text(encoding="utf-8")
+
+    assert 'src="platform.js"' in homepage
+    assert 'src="fx.js"' not in homepage
+    assert 'href="fx.css"' not in homepage
+    assert 'src="aegis-omega.js"' not in homepage
+    assert 'href="aegis-omega.css"' not in homepage

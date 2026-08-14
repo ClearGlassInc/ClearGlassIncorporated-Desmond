@@ -2,6 +2,17 @@
 (() => {
   "use strict";
 
+  if (/\/Ontario-osint\.html$/i.test(location.pathname) && !document.querySelector('script[data-cg-osint-network-preview="true"]')) {
+    const networkPreview = document.createElement("script");
+    networkPreview.src = "/assets/js/osint-network-preview.js";
+    networkPreview.defer = true;
+    networkPreview.dataset.cgOsintNetworkPreview = "true";
+    networkPreview.addEventListener("error", () => {
+      document.documentElement.dataset.cgOsintNetworkPreview = "degraded";
+    }, { once: true });
+    document.head.appendChild(networkPreview);
+  }
+
   const SELECTOR = [
     "button", ".btn", ".cg-btn", ".cta", "[role='button']",
     "input[type='submit']", "input[type='button']", "input[type='reset']",

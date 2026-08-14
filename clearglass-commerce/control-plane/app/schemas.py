@@ -248,3 +248,68 @@ class SideStoreQuoteOut(BaseModel):
     #: estimate and the final amount is computed at checkout.
     tax_basis: str
     tax_is_estimate: bool
+
+
+class WorkspacePlanOut(BaseModel):
+    """One subscription tier at one billing interval, at the price the server charges."""
+
+    sku: str
+    tier: str
+    name: str
+    description: str
+    interval: str
+    #: Cents per person per month — the figure the pricing page advertises.
+    monthly_rate: int
+    #: Cents per person per billing period — what Stripe actually charges. For an
+    #: annual plan this is twelve times ``monthly_rate``; conflating the two is the
+    #: easiest way to bill a customer twelve times what they agreed.
+    unit_amount: int
+    currency: str
+    tax_behavior: str
+    #: True once a real Stripe Price backs this plan. Until then live checkout
+    #: refuses rather than pricing a subscription from this repository.
+    purchasable_live: bool
+
+
+class WorkspaceSubscriptionRequest(BaseModel):
+    """Which plan, and for how many people. Deliberately not what it costs.
+
+    Carries no amount, rate, discount or currency, for the same reason
+    :class:`CheckoutLineItem` does not: those are resolved server-side from
+    ``app/data/workspace_plans.json``, and a field here that could name a price
+    would let the browser choose what to pay. ``tests/test_workspace.py`` asserts
+    this schema's shape so a price-shaped field cannot be reintroduced quietly.
+    """
+
+    plan_sku: str = Field(description="Workspace plan SKU being subscribed to")
+    seats: int = Field(ge=1, le=500, description="Number of people on the plan")
+    customer_email: str | None = None
+    #: Client-generated attempt id, passed to Stripe as the idempotency key so a
+    #: double-click reuses the first session instead of opening a second one.
+    client_reference_id: str | None = Field(default=None, max_length=200)
+
+
+class WorkspaceQuoteOut(BaseModel):
+    """A priced subscription. Every amount is in the smallest currency unit (cents)."""
+
+    sku: str
+    tier: str
+    name: str
+    interval: str
+    seats: int
+    monthly_rate: int
+    unit_amount: int
+    #: Cost per month for the whole team, at this seat count.
+    monthly_total: int
+    #: What Stripe charges each billing period — equal to ``monthly_total`` on a
+    #: monthly plan, and twelve times it on an annual one.
+    period_total: int
+    #: Cost across twelve months, so monthly and annual plans can be compared.
+    annual_total: int
+    currency: str
+    trial_days: int
+    tax_behavior: str
+    #: Amounts exclude GST/HST, which Stripe Tax computes at checkout from the
+    #: customer's billing address. False here means the totals above are pre-tax.
+    tax_included: bool
+    purchasable_live: bool

@@ -149,6 +149,8 @@ footer.site a{color:#39d0c3}
 {"@context":"https://schema.org","@type":"Product","name":"ClearGlass Workspace","description":"Business productivity subscription for small businesses, freelancers and remote teams: business email on your own domain, encrypted file storage and sharing, shared calendars, and collaboration tools.","brand":{"@type":"Brand","name":"ClearGlass Inc."},"url":"https://www.clearglassinc.com/workspace.html","offers":{"@type":"AggregateOffer","priceCurrency":"CAD","lowPrice":"6.00","highPrice":"17.00","offerCount":"3","seller":{"@type":"Organization","name":"ClearGlass Inc.","url":"https://www.clearglassinc.com"}}}
 </script>
 <link rel="stylesheet" href="/assets/css/future-buttons.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are these prices final?","acceptedAnswer":{"@type":"Answer","text":"No \u2014 they are approximate, quoted in Canadian dollars and shown before tax. Applicable GST/HST is calculated at checkout from your billing address. Prices are also subject to supplier pricing, licensing requirements, currency movement and payment-provider fees. We will tell you before any change affects a renewal."}},{"@type":"Question","name":"What happens after the 14-day trial?","acceptedAnswer":{"@type":"Answer","text":"Nothing is charged during the trial. At the end, the plan you chose begins billing at the number of people you set. Cancel before the trial ends and you are not charged at all."}},{"@type":"Question","name":"Can I change the number of people mid-month?","acceptedAnswer":{"@type":"Answer","text":"Yes. People added mid-period bill pro-rata for the remainder. People removed credit against your next invoice rather than being refunded outright."}},{"@type":"Question","name":"What is the difference between monthly and annual?","acceptedAnswer":{"@type":"Answer","text":"Annual is billed once for twelve months and works out about 17% cheaper \u2014 roughly two months free. Monthly is billed every month with no commitment and can be cancelled at any renewal."}},{"@type":"Question","name":"Can I move my existing email and files across?","acceptedAnswer":{"@type":"Answer","text":"Yes. Migration from an existing provider is included with Complete and available as a one-time service on the other plans. We do the move with you rather than handing you a guide."}},{"@type":"Question","name":"How do I cancel, and what is the refund position?","acceptedAnswer":{"@type":"Answer","text":"Cancel from your account in one step. Access continues to the end of the period you have already paid for. Refund and cancellation terms are set out in the terms of service."}},{"@type":"Question","name":"Who is behind this?","acceptedAnswer":{"@type":"Answer","text":"ClearGlass Inc., an Ontario company. The same team that does the security work on this site runs the platform, which is why the security section above talks about specifics rather than logos."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.clearglassinc.com/"},{"@type":"ListItem","position":2,"name":"ClearGlass Workspace","item":"https://www.clearglassinc.com/workspace.html"}]}</script>
 </head>
 <body>
 <header class="site"><div class="wrap"><span class="brand">ClearGlass Inc. <em>CLARITY IS POWER</em></span><a href="index.html" style="color:#9fb3c2;font-size:14px">← Home</a></div></header>
@@ -180,6 +182,7 @@ footer.site a{color:#39d0c3}
   <h2 style="text-align:center">Pick the plan that fits how your team works</h2>
   <p class="lede" style="text-align:center;margin:10px auto 0">Every plan includes a 14-day trial. No card is charged during the trial.</p>
   <div class="pl-grid" id="planGrid"></div>
+  <p class="note" id="ckErr" role="alert" hidden></p>
   <p class="pl-fine">Change plan or cancel from your account at any time. Upgrades apply immediately and bill pro-rata; downgrades take effect at your next renewal so you keep what you already paid for.</p>
 </div></section>
 
@@ -246,7 +249,7 @@ footer.site a{color:#39d0c3}
 <section class="pl-sect" style="background:#fff;border-top:1px solid #e4eaf1"><div class="pl-wrap" style="text-align:center">
   <h2>Want to talk it through first?</h2>
   <p class="lede" style="margin:12px auto 22px">Tell us your team size and what you use today, and we will tell you honestly which plan covers it — including when the answer is the cheapest one, or when staying put is the better call.</p>
-  <a class="btn" href="mailto:desmondotieno@icloud.com?subject=ClearGlass%20Workspace%20question&amp;body=Hi%20Desmond%2C%0A%0AWe%20are%20looking%20at%20ClearGlass%20Workspace.%0A%0ATeam%20size%3A%20%0AWhat%20we%20use%20today%3A%20%0AWhat%20we%20need%3A%20">Request a consultation</a>
+  <a class="btn" href="mailto:desmond@clearglassinc.com?subject=ClearGlass%20Workspace%20question&amp;body=Hi%20Desmond%2C%0A%0AWe%20are%20looking%20at%20ClearGlass%20Workspace.%0A%0ATeam%20size%3A%20%0AWhat%20we%20use%20today%3A%20%0AWhat%20we%20need%3A%20">Request a consultation</a>
 </div></section>
 
 <div class="pl-final"><div class="pl-wrap">
@@ -286,6 +289,109 @@ footer.site a{color:#39d0c3}
   function fmt(c){ return "$" + (c/100).toLocaleString("en-CA",{minimumFractionDigits:2,maximumFractionDigits:2}); }
   function rate(p){ return period === "annual" ? p.annual : p.monthly; }
 
+  // ── Control-plane integration ──────────────────────────────────────────────
+  // The page prices itself offline so it works as a static document, but when the
+  // control plane is reachable the SERVER is the authority: it restates every rate
+  // and the page re-renders from that. A price the browser computed is a price a
+  // customer could edit, so the checkout call below sends a plan SKU and a seat
+  // count and nothing else — no amount, no currency, no return URL.
+  //
+  // Set the origin with <meta name="cg-api-base" content="https://api.example.com">.
+  // Unset, unreachable, or a plan with no live Stripe Price all fall back to the
+  // consultation email, which is exactly how this page behaved before.
+  var API = (document.querySelector('meta[name="cg-api-base"]') || {}).content || "";
+  var server = {};   // planId -> { annual|monthly : {sku, live} }
+
+  function skuFor(id, per){ return "ws-" + id + "-" + (per === "annual" ? "annual" : "monthly"); }
+
+  function mailtoHref(p, month){
+    return "mailto:desmond@clearglassinc.com?subject=" +
+      encodeURIComponent("ClearGlass Workspace — " + p.name + ", " + seats + " people (" + period + ")") +
+      "&body=" + encodeURIComponent("Hi Desmond,\n\nWe would like to start a ClearGlass Workspace subscription.\n\nPlan: " +
+        p.name + "\nPeople: " + seats + "\nBilling: " + period + "\nEstimated: " + fmt(month) +
+        " / month before tax\n\nOrganization: \nCurrent email provider: \n");
+  }
+
+  function liveMeta(p){
+    var byPeriod = server[p.id];
+    return byPeriod && byPeriod[period] && byPeriod[period].live ? byPeriod[period] : null;
+  }
+
+  function ctaFor(p, month){
+    return liveMeta(p)
+      ? '<button type="button" class="btn" data-plan="' + p.id + '">Start your subscription</button>'
+      : '<a class="btn" href="' + mailtoHref(p, month) + '">Start your subscription</a>';
+  }
+
+  function adoptServerPlans(list){
+    var matched = 0;
+    list.forEach(function(sp){
+      PLANS.forEach(function(p){
+        ["annual", "monthly"].forEach(function(per){
+          if (sp.sku !== skuFor(p.id, per)) return;
+          server[p.id] = server[p.id] || {};
+          server[p.id][per] = { sku: sp.sku, live: !!sp.purchasable_live };
+          // The server rate wins. If the two ever disagree, the customer must see
+          // the number they will actually be charged, not the one this file
+          // happened to ship with.
+          if (typeof sp.monthly_rate === "number" && sp.monthly_rate > 0) p[per] = sp.monthly_rate;
+          matched++;
+        });
+      });
+    });
+    return matched;
+  }
+
+  function loadServerPlans(){
+    if (!API || typeof fetch !== "function") return;
+    fetch(API + "/workspace/plans", { headers: { "Accept": "application/json" } })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(list){ if (list && list.length && adoptServerPlans(list)) render(); })
+      .catch(function(){ /* not deployed or offline — keep the page's own prices */ });
+  }
+
+  function showCheckoutError(msg){
+    var note = document.getElementById("ckErr");
+    if (!note) return;
+    note.textContent = msg;
+    note.hidden = false;
+  }
+
+  function startCheckout(btn, planId){
+    var meta = liveMeta({ id: planId });
+    if (!meta) return;
+    var original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Opening secure checkout…";
+    showCheckoutError("");
+    document.getElementById("ckErr").hidden = true;
+
+    fetch(API + "/workspace/checkout/session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      // Plan and seats only — deliberately no amount, currency or redirect.
+      body: JSON.stringify({ plan_sku: meta.sku, seats: seats })
+    })
+      .then(function(r){ return r.ok ? r.json() : Promise.reject(r); })
+      .then(function(s){
+        if (s && s.url) { window.location.href = s.url; return; }
+        throw new Error("no session url");
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.textContent = original;
+        showCheckoutError(
+          "Checkout could not be opened just now. Email us and we will set this up with you — " +
+          "you have not been charged."
+        );
+      });
+  }
+
+  document.getElementById("planGrid").addEventListener("click", function(ev){
+    var btn = ev.target.closest ? ev.target.closest("button[data-plan]") : null;
+    if (btn) startCheckout(btn, btn.getAttribute("data-plan"));
+  });
+
   function render(){
     document.getElementById("planGrid").innerHTML = PLANS.map(function(p){
       var per = rate(p), month = per * seats,
@@ -301,12 +407,7 @@ footer.site a{color:#39d0c3}
         '<div class="pl-total" aria-live="polite">' + seats + (seats === 1 ? ' person' : ' people') +
           ' · <b>' + fmt(month) + '</b> / month<br><span>' + label + ' · plus applicable tax</span></div>' +
         '<ul>' + p.features.map(function(f){ return '<li>' + f + '</li>'; }).join('') + '</ul>' +
-        '<a class="btn" href="mailto:desmondotieno@icloud.com?subject=' +
-          encodeURIComponent('ClearGlass Workspace — ' + p.name + ', ' + seats + ' people (' + period + ')') +
-          '&body=' + encodeURIComponent('Hi Desmond,\n\nWe would like to start a ClearGlass Workspace subscription.\n\nPlan: ' +
-            p.name + '\nPeople: ' + seats + '\nBilling: ' + period + '\nEstimated: ' + fmt(month) +
-            ' / month before tax\n\nOrganization: \nCurrent email provider: \n') +
-          '">Start your subscription</a></div>';
+        ctaFor(p, month) + '</div>';
     }).join('');
   }
 
@@ -332,6 +433,7 @@ footer.site a{color:#39d0c3}
   });
   input.addEventListener("blur", function(){ input.value = seats; });
   render();
+  loadServerPlans();
 })();
 </script>
 <script defer src="nav.js"></script>
@@ -344,18 +446,19 @@ footer.site a{color:#39d0c3}
     <div class="cgr-route" aria-label="Journey navigation">
       <a href="plans.html"><span><b>Previous</b>Guardian Plans &amp; Pricing</span></a>
       <a href="offers/index.html"><span><b>Topic hub</b>Services &amp; Engagements</span></a>
-      <a href="checkout/index.html"><span><b>Next in journey</b>Secure Checkout</span></a>
+      <a href="workspace-email.html"><span><b>Next in journey</b>Business Email on Your Own Domain</span></a>
     </div>
     <ul>
-      <li><a href="checkout/index.html"><b>Secure Checkout</b> — purchase an audit or protection plan</a></li>
-      <li><a href="seo-authority-hub.html"><b>Cybersecurity &amp; AI Automation in Burlington</b> — the local authority hub for ClearGlass services</a></li>
-      <li><a href="smb-cyber-trust-kit.html"><b>SMB Cyber Trust Kit</b> — plain-language cyber resilience for small business</a></li>
-      <li><a href="smb.html"><b>SMB Suite</b> — intelligent systems for small business</a></li>
+      <li><a href="workspace-email.html"><b>Business Email on Your Own Domain</b> — what it means, and the four DNS records that decide delivery</a></li>
+      <li><a href="workspace-migration.html"><b>Email Migration Without Downtime</b> — the nine-step sequence, the rollback, and what it costs</a></li>
+      <li><a href="workspace-security.html"><b>Workspace Security &amp; Data Handling</b> — encryption, access, payments — and what we do not claim</a></li>
+      <li><a href="workspace-vs.html"><b>Free Email vs Business Email</b> — when free is the right answer, and when it stops being</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
   </nav>
 </aside>
 <!-- cg-related:end -->
 <script defer src="/assets/js/future-buttons.js"></script>
+<script defer src="/cg-a11y.js"></script>
 </body>
 </html>

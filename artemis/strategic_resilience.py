@@ -136,7 +136,18 @@ class BearCase:
 
     @property
     def exposure(self) -> float:
-        return round(sum(asdict(self).values()) / (len(asdict(self)) * 5) * 100, 1)
+        exposures = (
+            self.country,
+            self.procurement_cycle,
+            self.customer,
+            self.supply_chain,
+            self.cloud_provider,
+            self.hardware_category,
+            self.regulatory_assumption,
+            self.geopolitical_thesis,
+            self.public_funding,
+        )
+        return round(sum(exposures) / (len(exposures) * 5) * 100, 1)
 
     @property
     def diversification_score(self) -> float:

@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 160 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 170 public pages are connected and 13 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -30,8 +30,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `artemis-blue-team.html` — Artemis Blue Team | OSINT-driven defense command center | GUARDIAN | Cyber Defense Console | STEGOFORGE | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `stegoforge.html` — STEGOFORGE | steganography and covert-channel analysis terminal | Artemis Blue Team | Cyber Defense Console | ATT&CK Prompt Integrator | Book a security engagement / Start with the $249 Security Quick-Audit |
 | `attack-prompt-core.html` — ATT&CK Prompt Integrator | MITRE ATT&CK-aligned analysis prompts | STEGOFORGE | Cyber Defense Console | Environmental Cyber-Risk | Book a security engagement / Start with the $249 Security Quick-Audit |
-| `environmental-cyber-risk.html` — Environmental Cyber-Risk | OT and environmental threat monitoring | ATT&CK Prompt Integrator | Cyber Defense Console | BLUEDESK Mobile | Book a security engagement / Start with the $249 Security Quick-Audit |
-| `bluedesk-mobile.html` — BLUEDESK Mobile | the CISO risk console on a phone-first canvas | Environmental Cyber-Risk | Cyber Defense Console | Cyber Defense Console | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `environmental-cyber-risk.html` — Environmental Cyber-Risk | OT and environmental threat monitoring | ATT&CK Prompt Integrator | Cyber Defense Console | VEILGUARD Content Shield | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `content-shield.html` — VEILGUARD Content Shield | per-viewer watermarking, traceable renders and leak attribution | Environmental Cyber-Risk | Cyber Defense Console | BLUEDESK Mobile | Book a security engagement / Start with the $249 Security Quick-Audit |
+| `bluedesk-mobile.html` — BLUEDESK Mobile | the CISO risk console on a phone-first canvas | VEILGUARD Content Shield | Cyber Defense Console | Cyber Defense Console | Book a security engagement / Start with the $249 Security Quick-Audit |
 | **Intelligence & OSINT** | **Topic cluster** |  |  |  |  |
 | `intelligence.html` — Intelligence | the ClearGlass intelligence practice | Critical Minerals Intelligence | Intelligence | Flowsint | Book a security engagement / See pricing & plans |
 | `flowsint.html` — Flowsint | OSINT investigation graph for domains, IPs and transforms | Intelligence | Intelligence | ClearGlass NEXUS | Book a security engagement / See pricing & plans |
@@ -51,8 +52,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `artemis-iv.html` — ARTEMIS IV | tactical intelligence core | Artemis OS | Artemis OS | AI Cyber Intelligence Platform | See pricing & plans / Book a security engagement |
 | `artemis-ai-cyber-intelligence-platform.html` — AI Cyber Intelligence Platform | Artemis applied to cyber intelligence | ARTEMIS IV | Artemis OS | Self-Evolving Platform | See pricing & plans / Book a security engagement |
 | `artemis-self-evolving-platform.html` — Self-Evolving Platform | Artemis's autonomous improvement loop | AI Cyber Intelligence Platform | Artemis OS | Artemis 2040 | See pricing & plans / Book a security engagement |
-| `artemis-2040.html` — Artemis 2040 | long-horizon intelligence platform | Self-Evolving Platform | Artemis OS | ARTEMIS // FAWL | See pricing & plans / Book a security engagement |
-| `artemis-fawl/index.html` — ARTEMIS // FAWL | the governed, self-healing Artemis command platform | Artemis 2040 | Artemis OS | ZEPHYR | See pricing & plans / Book a security engagement |
+| `artemis-2040.html` — Artemis 2040 | long-horizon intelligence platform | Self-Evolving Platform | Artemis OS | Quantum-Neural Smart Glass | See pricing & plans / Book a security engagement |
+| `quantum-neural-smart-glass.html` — Quantum-Neural Smart Glass | governed hybrid smart-glass research platform | Artemis 2040 | Artemis OS | ARTEMIS // FAWL | See pricing & plans / Book a security engagement |
+| `artemis-fawl/index.html` — ARTEMIS // FAWL | the governed, self-healing Artemis command platform | Quantum-Neural Smart Glass | Artemis OS | ZEPHYR | See pricing & plans / Book a security engagement |
 | `air-control.html` — ZEPHYR | air systems control surface | ARTEMIS // FAWL | Artemis OS | Air Systems Control | See pricing & plans / Book a security engagement |
 | `air-systems-control.html` — Air Systems Control | the Artemis airspace control surface | ZEPHYR | Artemis OS | Artemis OS | See pricing & plans / Book a security engagement |
 | **Command & Autonomous Operations** | **Topic cluster** |  |  |  |  |
@@ -108,16 +110,24 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `minerals-platform.html` — Minerals Intelligence Platform | source-transparent critical-minerals command center | SATS Digital Twin | Government Solutions | Government Solutions | Book a security engagement / Check our procurement readiness |
 | **Services & Engagements** | **Topic cluster** |  |  |  |  |
 | `offers/index.html` — Services & Engagements | every ClearGlass offer in one place | Growth Command Centre | Services & Engagements | ClearGlass Store | Book a security engagement / See pricing & plans |
-| `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
-| `pricing.html` — Pricing & Engagements | plans and engagement models | ClearGlass Store | Services & Engagements | Guardian Plans & Pricing | Book a security engagement / See pricing & plans |
+| `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Secure Systems Engineering Workshop | Book a security engagement / See pricing & plans |
+| `products/advanced-secure-systems-engineering.html` — Secure Systems Engineering Workshop | enterprise workshop in defensive cyber, embedded platforms and zero trust | ClearGlass Store | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
+| `pricing.html` — Pricing & Engagements | plans and engagement models | Secure Systems Engineering Workshop | Services & Engagements | Guardian Plans & Pricing | Book a security engagement / See pricing & plans |
 | `plans.html` — Guardian Plans & Pricing | per-seat subscription tiers for the Guardian console | Pricing & Engagements | Services & Engagements | ClearGlass Workspace | Book a security engagement / See pricing & plans |
-| `workspace.html` — ClearGlass Workspace | business email, storage and collaboration plans per person | Guardian Plans & Pricing | Services & Engagements | Secure Checkout | Book a security engagement / See pricing & plans |
-| `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | ClearGlass Workspace | Services & Engagements | Cybersecurity & AI Automation in Burlington | Book a security engagement / See pricing & plans |
+| `workspace.html` — ClearGlass Workspace | business email, storage and collaboration plans per person | Guardian Plans & Pricing | Services & Engagements | Business Email on Your Own Domain | Book a security engagement / See pricing & plans |
+| `workspace-email.html` — Business Email on Your Own Domain | what it means, and the four DNS records that decide delivery | ClearGlass Workspace | Services & Engagements | Email Migration Without Downtime | Book a security engagement / See pricing & plans |
+| `workspace-migration.html` — Email Migration Without Downtime | the nine-step sequence, the rollback, and what it costs | Business Email on Your Own Domain | Services & Engagements | Workspace Security & Data Handling | Book a security engagement / See pricing & plans |
+| `workspace-security.html` — Workspace Security & Data Handling | encryption, access, payments — and what we do not claim | Email Migration Without Downtime | Services & Engagements | Free Email vs Business Email | Book a security engagement / See pricing & plans |
+| `workspace-vs.html` — Free Email vs Business Email | when free is the right answer, and when it stops being | Workspace Security & Data Handling | Services & Engagements | Secure Checkout | Book a security engagement / See pricing & plans |
+| `checkout/index.html` — Secure Checkout | purchase an audit or protection plan | Free Email vs Business Email | Services & Engagements | Cybersecurity & AI Automation in Burlington | Book a security engagement / See pricing & plans |
 | `seo-authority-hub.html` — Cybersecurity & AI Automation in Burlington | the local authority hub for ClearGlass services | Secure Checkout | Services & Engagements | SMB Cyber Trust Kit | Book a security engagement / See pricing & plans |
 | `smb-cyber-trust-kit.html` — SMB Cyber Trust Kit | plain-language cyber resilience for small business | Cybersecurity & AI Automation in Burlington | Services & Engagements | SMB Suite | Book a security engagement / See pricing & plans |
 | `smb.html` — SMB Suite | intelligent systems for small business | SMB Cyber Trust Kit | Services & Engagements | Security Quick-Audit | Book a security engagement / See pricing & plans |
-| `offers/security-quick-audit.html` — Security Quick-Audit | a focused $249 security review | SMB Suite | Services & Engagements | Autonomous Threat Modeling | Book a security engagement / See pricing & plans |
-| `offers/autonomous-threat-modeling.html` — Autonomous Threat Modeling | continuous threat-modeling assessment and implementation services | Security Quick-Audit | Services & Engagements | Hardening Sprint | Book a security engagement / See pricing & plans |
+| `offers/security-quick-audit.html` — Security Quick-Audit | a focused $249 security review | SMB Suite | Services & Engagements | Quick-Audit Sample Report | Book a security engagement / See pricing & plans |
+| `offers/security-quick-audit-sample-report.html` — Quick-Audit Sample Report | a clearly labeled synthetic findings report | Security Quick-Audit | Services & Engagements | Quick-Audit Methodology | Book a security engagement / See pricing & plans |
+| `offers/security-quick-audit-methodology.html` — Quick-Audit Methodology | the published evidence, scoring and safeguard method | Quick-Audit Sample Report | Services & Engagements | Signal Engine | Book a security engagement / See pricing & plans |
+| `streaming-growth-command-center/index.html` — Signal Engine | authority-first live-stream acquisition system | Quick-Audit Methodology | Services & Engagements | Autonomous Threat Modeling | Book a security engagement / See pricing & plans |
+| `offers/autonomous-threat-modeling.html` — Autonomous Threat Modeling | continuous threat-modeling assessment and implementation services | Signal Engine | Services & Engagements | Hardening Sprint | Book a security engagement / See pricing & plans |
 | `offers/hardening-sprint.html` — Hardening Sprint | Microsoft 365 + Windows hardening engagement | Autonomous Threat Modeling | Services & Engagements | Guardian Command Nexus Blueprint | Book a security engagement / See pricing & plans |
 | `offers/guardian-command-nexus-blueprint.html` — Guardian Command Nexus Blueprint | the full SPEC-1 architecture blueprint, sold as a digital deliverable | Hardening Sprint | Services & Engagements | Revenue Engine | Book a security engagement / See pricing & plans |
 | `revenue-engine.html` — Revenue Engine | AI-driven business growth system | Guardian Command Nexus Blueprint | Services & Engagements | Side Store | Book a security engagement / See pricing & plans |
@@ -203,6 +213,7 @@ These pages remain intact but are not eligible for generated journey updates. Ex
 |---|---|---|
 | `404.html` | Error recovery | noindex redirect and route-recovery page |
 | `cg-loader.html` | Application utility | noindex branded loading surface |
+| `etsy-callback.html` | Application utility | noindex OAuth redirect target |
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | Site verification | Google ownership verification artifact |
 | `header-mockup-2040.html` | Design prototype | noindex, nofollow header study |
 | `loader.html` | Application utility | noindex branded loading surface |

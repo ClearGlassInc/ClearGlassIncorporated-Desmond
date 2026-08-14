@@ -432,7 +432,7 @@ subtype for a consultancy). Template for reuse on contact/location pages:
   "logo": "https://www.clearglassinc.com/assets/images/clearglass-logo.png",
   "image": "https://www.clearglassinc.com/assets/images/clearglass-logo.png",
   "telephone": "+1-289-707-0269",
-  "email": "desmondotieno@icloud.com",
+  "email": "desmond@clearglassinc.com",
   "priceRange": "$$$",
   "currenciesAccepted": "CAD",
   "address": {
@@ -455,10 +455,7 @@ subtype for a consultancy). Template for reuse on contact/location pages:
   ],
   "sameAs": [
     "https://github.com/ClearGlassInc",
-    "https://www.linkedin.com/company/clearglassinc",
-    "https://x.com/clearglassinc",
-    "https://www.facebook.com/clearglassinc",
-    "https://www.instagram.com/clearglassinc"
+    "https://www.linkedin.com/company/cleaglassinc"
   ],
   "parentOrganization": { "@id": "https://www.clearglassinc.com/#org" }
 }

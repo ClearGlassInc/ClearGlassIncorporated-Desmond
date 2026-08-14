@@ -1,38 +1,45 @@
 /*
- * CLEARGLASS HERO NEON PRACTICAL
- * Optical stack: glass envelope -> phosphor -> hot gas core -> controlled spill.
+ * CLEARGLASS HERO NEON PRACTICAL — PRODUCTION OPTICAL PASS V2
+ * Optical stack: backplate -> contact shadow -> controlled spill -> glass envelope
+ * -> phosphor -> hot gas core -> glass/rim highlights -> electrodes/hardware.
  * Pulse: 5.6 s / 0.179 Hz, sinusoidal-eased, 82-100% drive. No on/off frames.
+ * Rendering rule: blur belongs only to optical spill layers; physical tube edges stay vector-sharp.
  */
 
 .hero-seal[data-neon-practical] {
-  --cg-neon-core: #e8fdff;
-  --cg-neon-cyan: #66eaff;
-  --cg-neon-blue: #6f8cff;
-  --cg-neon-violet: #b477ff;
+  --cg-neon-core: #effeff;
+  --cg-neon-cyan: #63eaff;
+  --cg-neon-blue: #6b88ff;
+  --cg-neon-violet: #ad74ff;
   --cg-neon-period: 5.6s;
+  --cg-neon-ease: cubic-bezier(.37, 0, .63, 1);
   isolation: isolate;
   overflow: visible;
-  transform: translateZ(0);
   backface-visibility: hidden;
   box-shadow: none;
   animation: none;
 }
 
+/* Large-area practical spill. This is deliberately broad and low-opacity so
+   the tube remains the sharpest element in the shot instead of reading as a
+   synthetic "outer glow" effect. */
 .hero-seal[data-neon-practical]::before {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -85% -125%;
+  inset: -82% -120%;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% 52%, rgba(102, 234, 255, .24) 0 7%, rgba(111, 140, 255, .13) 18%, rgba(180, 119, 255, .055) 34%, transparent 63%),
-    radial-gradient(ellipse at 50% 74%, rgba(102, 234, 255, .14), transparent 44%);
+    radial-gradient(ellipse at 50% 52%, rgba(99, 234, 255, .22) 0 7%, rgba(107, 136, 255, .115) 19%, rgba(173, 116, 255, .046) 36%, transparent 64%),
+    radial-gradient(ellipse at 50% 74%, rgba(99, 234, 255, .12), transparent 45%);
   mix-blend-mode: screen;
-  opacity: .82;
+  opacity: .80;
   will-change: opacity;
-  animation: cgNeonSpill var(--cg-neon-period) cubic-bezier(.37, 0, .63, 1) infinite;
+  animation: cgNeonSpill var(--cg-neon-period) var(--cg-neon-ease) infinite;
 }
 
+/* A narrow lens-facing reflection on the practical. It is static so the pulse
+   never produces a fake moving highlight across the glass. */
 .hero-seal[data-neon-practical]::after {
   content: "";
   position: absolute;
@@ -40,9 +47,9 @@
   inset: 8% 14% 58%;
   border-radius: 50%;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .30), rgba(255, 255, 255, .045) 54%, transparent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .28), rgba(255, 255, 255, .04) 54%, transparent);
   mix-blend-mode: screen;
-  opacity: .68;
+  opacity: .64;
 }
 
 .hero-seal-media {
@@ -53,9 +60,29 @@
   border-radius: 50%;
   background: #07101d;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .52),
+    inset 0 1px 0 rgba(255, 255, 255, .50),
     inset 0 -12px 22px rgba(0, 7, 18, .58),
-    0 10px 28px rgba(0, 9, 24, .42);
+    0 10px 28px rgba(0, 9, 24, .40);
+}
+
+/* Practical bounce inside the seal surface. This gives the emissive ring a
+   believable interaction with adjacent material without blurring the source. */
+.hero-seal-media::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%, transparent 0 54%, rgba(99, 234, 255, .035) 66%, rgba(107, 136, 255, .075) 84%, rgba(173, 116, 255, .038) 100%);
+  box-shadow:
+    inset 0 0 8px rgba(99, 234, 255, .10),
+    inset 0 0 18px rgba(107, 136, 255, .055);
+  mix-blend-mode: screen;
+  opacity: .78;
+  will-change: opacity;
+  animation: cgNeonSurfaceBounce var(--cg-neon-period) var(--cg-neon-ease) infinite;
 }
 
 .hero-seal[data-neon-practical] .hero-seal-media img {
@@ -67,7 +94,7 @@
   height: 140%;
   object-fit: cover;
   image-rendering: auto;
-  filter: saturate(1.04) contrast(1.10) brightness(.92);
+  filter: saturate(1.025) contrast(1.115) brightness(.925);
 }
 
 .hero-neon-rig {
@@ -80,40 +107,40 @@
   pointer-events: none;
   shape-rendering: geometricPrecision;
   text-rendering: geometricPrecision;
-  transform: translateZ(0);
   backface-visibility: hidden;
 }
 
 .hero-neon-rig :where(circle, path, rect, line) {
   vector-effect: non-scaling-stroke;
+  shape-rendering: geometricPrecision;
 }
 
 .cg-neon-backplate {
-  fill: rgba(3, 9, 18, .88);
-  stroke: rgba(183, 215, 230, .26);
+  fill: rgba(3, 9, 18, .90);
+  stroke: rgba(183, 215, 230, .27);
   stroke-width: 1;
 }
 
 .cg-neon-backplate-highlight {
   fill: none;
-  stroke: rgba(236, 250, 255, .20);
+  stroke: rgba(236, 250, 255, .21);
   stroke-width: .8;
 }
 
 .cg-neon-mount {
   fill: url(#cg-neon-metal);
-  stroke: rgba(214, 236, 246, .50);
+  stroke: rgba(214, 236, 246, .54);
   stroke-width: .8;
 }
 
 .cg-neon-fastener {
   fill: #172636;
-  stroke: rgba(232, 247, 255, .72);
+  stroke: rgba(232, 247, 255, .74);
   stroke-width: .7;
 }
 
 .cg-neon-fastener-glint {
-  stroke: rgba(255, 255, 255, .72);
+  stroke: rgba(255, 255, 255, .76);
   stroke-width: .6;
   stroke-linecap: round;
 }
@@ -126,87 +153,92 @@
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .72));
 }
 
-/* The contact shadow grounds the tube against its backplate. Keeping this
-   unblurred at the inner edge prevents the practical from reading as a flat
-   composited glow. */
+/* Contact shadow grounds the real tube against its backplate. Blur is kept
+   below ~1.5px and the dark stroke is wider than the glass envelope, which
+   preserves a hard inner transition instead of a floating halo. */
 .cg-neon-contact-shadow {
   fill: none;
-  stroke: rgba(0, 3, 10, .72);
-  stroke-width: 11;
-  opacity: .72;
-  filter: blur(1.2px);
+  stroke: rgba(0, 3, 10, .76);
+  stroke-width: 10.5;
+  stroke-linecap: round;
+  opacity: .74;
+  filter: blur(1.05px);
 }
 
-/* Separate optical falloff layers keep the tube edge sharp: neither halo is
-   used as tube geometry, and both remain below the physical glass envelope. */
+/* Optical falloff layers sit below the glass envelope. They are intentionally
+   tighter than the old pass so thumbnail rendering keeps a discrete hot tube. */
 .cg-neon-halo-outer,
 .cg-neon-halo-inner {
   fill: none;
   stroke: var(--cg-neon-blue);
   stroke-linecap: round;
   will-change: opacity;
-  animation: cgNeonHalo var(--cg-neon-period) cubic-bezier(.37, 0, .63, 1) infinite;
+  animation: cgNeonHalo var(--cg-neon-period) var(--cg-neon-ease) infinite;
 }
 
 .cg-neon-halo-outer {
-  --cg-halo-low: .055;
-  --cg-halo-high: .085;
-  stroke-width: 20;
+  --cg-halo-low: .046;
+  --cg-halo-high: .078;
+  stroke-width: 18;
   opacity: var(--cg-halo-low);
-  filter: blur(5px);
+  filter: blur(4.15px);
 }
 
 .cg-neon-halo-inner {
-  --cg-halo-low: .11;
-  --cg-halo-high: .17;
+  --cg-halo-low: .10;
+  --cg-halo-high: .16;
   stroke: var(--cg-neon-cyan);
-  stroke-width: 10;
+  stroke-width: 8.75;
   opacity: var(--cg-halo-low);
-  filter: blur(2.25px);
+  filter: blur(1.65px);
 }
 
+/* Physical tube envelope. The primary edge is never blurred. Static shadows
+   provide optical energy outside the vector stroke without changing geometry. */
 .cg-neon-tube-glass {
   fill: none;
-  stroke: rgba(220, 248, 255, .26);
-  stroke-width: 9;
+  stroke: rgba(224, 249, 255, .30);
+  stroke-width: 8.4;
   stroke-linecap: round;
   filter:
-    drop-shadow(0 0 1px rgba(255, 255, 255, .48))
-    drop-shadow(0 0 9px rgba(102, 234, 255, .18));
+    drop-shadow(0 0 .65px rgba(255, 255, 255, .62))
+    drop-shadow(0 0 6px rgba(99, 234, 255, .14));
 }
 
 .cg-neon-phosphor {
   fill: none;
   stroke: var(--cg-neon-cyan);
-  stroke-width: 4.25;
+  stroke-width: 3.85;
   stroke-linecap: round;
-  opacity: .78;
+  opacity: .76;
   filter:
-    drop-shadow(0 0 2px rgba(102, 234, 255, .92))
-    drop-shadow(0 0 7px rgba(111, 140, 255, .60))
-    drop-shadow(0 0 17px rgba(180, 119, 255, .28));
+    drop-shadow(0 0 1.35px rgba(99, 234, 255, .94))
+    drop-shadow(0 0 5px rgba(107, 136, 255, .53))
+    drop-shadow(0 0 12px rgba(173, 116, 255, .22));
   will-change: opacity;
-  animation: cgNeonGas var(--cg-neon-period) cubic-bezier(.37, 0, .63, 1) infinite;
+  animation: cgNeonGas var(--cg-neon-period) var(--cg-neon-ease) infinite;
 }
 
+/* The gas core is intentionally close to white. A narrow, high-luminance core
+   is what makes the cyan edge appear emissive while avoiding cyan clipping. */
 .cg-neon-core {
   fill: none;
   stroke: var(--cg-neon-core);
-  stroke-width: 1.35;
+  stroke-width: 1.18;
   stroke-linecap: round;
   opacity: .88;
   filter:
-    drop-shadow(0 0 .6px rgba(255, 255, 255, .96))
-    drop-shadow(0 0 3px rgba(102, 234, 255, .94))
-    drop-shadow(0 0 10px rgba(111, 140, 255, .46));
-  will-change: opacity, filter;
-  animation: cgNeonCore var(--cg-neon-period) cubic-bezier(.37, 0, .63, 1) infinite;
+    drop-shadow(0 0 .45px rgba(255, 255, 255, .98))
+    drop-shadow(0 0 2.2px rgba(99, 234, 255, .90))
+    drop-shadow(0 0 7px rgba(107, 136, 255, .36));
+  will-change: opacity;
+  animation: cgNeonCore var(--cg-neon-period) var(--cg-neon-ease) infinite;
 }
 
 .cg-neon-glass-highlight {
   fill: none;
-  stroke: rgba(255, 255, 255, .64);
-  stroke-width: .75;
+  stroke: rgba(255, 255, 255, .72);
+  stroke-width: .68;
   stroke-linecap: round;
   opacity: .72;
   stroke-dasharray: 13 1.4 7 1.1;
@@ -214,47 +246,53 @@
 
 .cg-neon-glass-rim {
   fill: none;
-  stroke: rgba(99, 171, 196, .34);
-  stroke-width: .7;
+  stroke: rgba(99, 171, 196, .40);
+  stroke-width: .72;
   stroke-linecap: round;
-  opacity: .78;
+  opacity: .82;
 }
 
 .cg-neon-joint {
   fill: #07111e;
-  stroke: rgba(200, 239, 250, .70);
+  stroke: rgba(200, 239, 250, .74);
   stroke-width: .8;
 }
 
 .cg-neon-electrode {
   fill: none;
-  stroke: rgba(210, 230, 236, .82);
+  stroke: rgba(210, 230, 236, .86);
   stroke-width: .72;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 1px rgba(102, 234, 255, .72));
+  filter: drop-shadow(0 0 .8px rgba(99, 234, 255, .68));
 }
 
+/* Smooth drive curve. Opacity is the only animated optical parameter, so no
+   frame can trigger a changing blur radius, re-rasterized edge, or flicker. */
 @keyframes cgNeonCore {
-  0%, 100% {
-    opacity: .82;
-  }
-  50% {
-    opacity: 1;
-  }
+  0%, 100% { opacity: .82; }
+  18% { opacity: .855; }
+  50% { opacity: 1; }
+  82% { opacity: .855; }
 }
 
-/* Phase-offset gas response gives the phosphor a subtle afterglow without an
-   exposure jump. Filters remain static so the browser never re-rasterizes the
-   sharp tube edge at a different blur radius during the pulse. */
+/* Slightly phase-lagged phosphor response gives a believable afterglow while
+   remaining continuous and monotonic around the peak. */
 @keyframes cgNeonGas {
-  0%, 100% { opacity: .72; }
-  47% { opacity: .84; }
-  54% { opacity: .82; }
+  0%, 100% { opacity: .70; }
+  22% { opacity: .75; }
+  48% { opacity: .855; }
+  56% { opacity: .835; }
+  82% { opacity: .75; }
 }
 
 @keyframes cgNeonSpill {
-  0%, 100% { opacity: .72; }
-  50% { opacity: .92; }
+  0%, 100% { opacity: .70; }
+  50% { opacity: .90; }
+}
+
+@keyframes cgNeonSurfaceBounce {
+  0%, 100% { opacity: .69; }
+  50% { opacity: .84; }
 }
 
 @keyframes cgNeonHalo {
@@ -262,17 +300,40 @@
   50% { opacity: var(--cg-halo-high); }
 }
 
+/* High-density displays can carry a narrower apparent halo without breaking
+   the tube silhouette. This is a perceptual tuning pass, not a resolution hack. */
+@media (min-resolution: 2dppx) {
+  .cg-neon-halo-outer {
+    stroke-width: 17;
+    filter: blur(3.7px);
+  }
+  .cg-neon-halo-inner {
+    stroke-width: 8.25;
+    filter: blur(1.45px);
+  }
+  .cg-neon-core { stroke-width: 1.08; }
+}
+
+@media (dynamic-range: high) {
+  .hero-seal[data-neon-practical] {
+    --cg-neon-core: #f5ffff;
+  }
+  .cg-neon-core { opacity: .90; }
+  .cg-neon-phosphor { opacity: .74; }
+}
+
 @supports (color: color(display-p3 0 0 0)) {
   .hero-seal[data-neon-practical] {
-    --cg-neon-core: color(display-p3 .90 1 1);
-    --cg-neon-cyan: color(display-p3 .35 .91 1);
-    --cg-neon-blue: color(display-p3 .40 .54 1);
-    --cg-neon-violet: color(display-p3 .70 .43 1);
+    --cg-neon-core: color(display-p3 .93 1 1);
+    --cg-neon-cyan: color(display-p3 .34 .91 1);
+    --cg-neon-blue: color(display-p3 .39 .52 1);
+    --cg-neon-violet: color(display-p3 .68 .42 1);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-seal[data-neon-practical]::before,
+  .hero-seal[data-neon-practical] .hero-seal-media::after,
   .hero-seal[data-neon-practical] .cg-neon-halo-outer,
   .hero-seal[data-neon-practical] .cg-neon-halo-inner,
   .hero-seal[data-neon-practical] .cg-neon-phosphor,
@@ -280,19 +341,34 @@
     animation: none;
   }
 
-  .hero-seal[data-neon-practical]::before { opacity: .82; }
-  .hero-seal[data-neon-practical] .cg-neon-halo-outer { opacity: .075; }
-  .hero-seal[data-neon-practical] .cg-neon-halo-inner { opacity: .14; }
-  .hero-seal[data-neon-practical] .cg-neon-phosphor { opacity: .78; }
+  .hero-seal[data-neon-practical]::before { opacity: .80; }
+  .hero-seal[data-neon-practical] .hero-seal-media::after { opacity: .78; }
+  .hero-seal[data-neon-practical] .cg-neon-halo-outer { opacity: .066; }
+  .hero-seal[data-neon-practical] .cg-neon-halo-inner { opacity: .13; }
+  .hero-seal[data-neon-practical] .cg-neon-phosphor { opacity: .76; }
   .hero-seal[data-neon-practical] .cg-neon-core { opacity: .92; }
 }
 
 @media (max-width: 620px) {
-  .hero-neon-rig { inset: -21%; width: 142%; height: 142%; }
+  .hero-neon-rig {
+    inset: -21%;
+    width: 142%;
+    height: 142%;
+  }
   .hero-seal[data-neon-practical]::before { inset: -70% -105%; }
+  .cg-neon-halo-outer { stroke-width: 16; filter: blur(3.5px); }
+  .cg-neon-halo-inner { stroke-width: 7.8; filter: blur(1.35px); }
 }
 
 @media print {
-  .hero-seal[data-neon-practical]::before { display: none; }
-  .hero-seal[data-neon-practical] .cg-neon-core { animation: none; }
+  .hero-seal[data-neon-practical]::before,
+  .hero-seal[data-neon-practical] .hero-seal-media::after {
+    display: none;
+  }
+  .hero-seal[data-neon-practical] .cg-neon-core,
+  .hero-seal[data-neon-practical] .cg-neon-phosphor,
+  .hero-seal[data-neon-practical] .cg-neon-halo-inner,
+  .hero-seal[data-neon-practical] .cg-neon-halo-outer {
+    animation: none;
+  }
 }

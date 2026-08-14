@@ -1,0 +1,71 @@
+name: CodeQL Trial
+
+# Architect checklist item 7 — "Trial one vuln-detection AI tool in a non-prod
+# pipeline." This is a PILOT of GitHub CodeQL (semantic code analysis / SAST).
+#
+# Non-prod by design:
+#   * Analysis-only. It uploads findings to the Code Scanning tab; it does NOT
+#     gate merges or deploys. Do not add this check to branch protection while
+#     it is a trial — evaluate signal-to-noise first, then graduate it.
+#   * Least-privilege token, SHA-pinned actions, no pull_request_target — matches
+#     the estate's Defender policy (bots/defender/engine.py) so the pilot passes
+#     the repo's own security gates.
+#
+# Graduation criteria (see operations/architect-checklist-2026-W33.md):
+#   Once a review confirms the alert stream is actionable (low false-positive
+#   rate), promote by requiring the "CodeQL Trial / Analyze" check in branch
+#   protection and, optionally, moving to GitHub default setup.
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+  schedule:
+    - cron: "30 6 * * 1"   # Monday 06:30 UTC — weekly deep scan
+  workflow_dispatch:
+
+# Least privilege by default; the job widens only to what CodeQL needs.
+permissions:
+  contents: read
+
+concurrency:
+  group: codeql-trial-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read           # read the tree to analyze it
+      security-events: write   # upload SARIF results to Code Scanning
+      actions: read            # read workflow run metadata (private repos)
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: python
+            build-mode: none
+          - language: javascript-typescript
+            build-mode: none
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@67ba681cdcbc95ed0371c210ccf82c4d968ae5eb # v3.37.7
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          # security-extended adds higher-recall queries; appropriate for a trial
+          # where we want to see the full signal before tuning it down.
+          queries: security-extended
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@67ba681cdcbc95ed0371c210ccf82c4d968ae5eb # v3.37.7
+        with:
+          category: "/language:${{ matrix.language }}"

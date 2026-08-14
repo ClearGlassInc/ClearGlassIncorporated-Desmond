@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 169 public pages are connected and 13 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 168 public pages are connected and 13 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -52,8 +52,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `artemis-iv.html` — ARTEMIS IV | tactical intelligence core | Artemis OS | Artemis OS | AI Cyber Intelligence Platform | See pricing & plans / Book a security engagement |
 | `artemis-ai-cyber-intelligence-platform.html` — AI Cyber Intelligence Platform | Artemis applied to cyber intelligence | ARTEMIS IV | Artemis OS | Self-Evolving Platform | See pricing & plans / Book a security engagement |
 | `artemis-self-evolving-platform.html` — Self-Evolving Platform | Artemis's autonomous improvement loop | AI Cyber Intelligence Platform | Artemis OS | Artemis 2040 | See pricing & plans / Book a security engagement |
-| `artemis-2040.html` — Artemis 2040 | long-horizon intelligence platform | Self-Evolving Platform | Artemis OS | ARTEMIS // FAWL | See pricing & plans / Book a security engagement |
-| `artemis-fawl/index.html` — ARTEMIS // FAWL | the governed, self-healing Artemis command platform | Artemis 2040 | Artemis OS | ZEPHYR | See pricing & plans / Book a security engagement |
+| `artemis-2040.html` — Artemis 2040 | long-horizon intelligence platform | Self-Evolving Platform | Artemis OS | Quantum-Neural Smart Glass | See pricing & plans / Book a security engagement |
+| `quantum-neural-smart-glass.html` — Quantum-Neural Smart Glass | governed hybrid smart-glass research platform | Artemis 2040 | Artemis OS | ARTEMIS // FAWL | See pricing & plans / Book a security engagement |
+| `artemis-fawl/index.html` — ARTEMIS // FAWL | the governed, self-healing Artemis command platform | Quantum-Neural Smart Glass | Artemis OS | ZEPHYR | See pricing & plans / Book a security engagement |
 | `air-control.html` — ZEPHYR | air systems control surface | ARTEMIS // FAWL | Artemis OS | Air Systems Control | See pricing & plans / Book a security engagement |
 | `air-systems-control.html` — Air Systems Control | the Artemis airspace control surface | ZEPHYR | Artemis OS | Artemis OS | See pricing & plans / Book a security engagement |
 | **Command & Autonomous Operations** | **Topic cluster** |  |  |  |  |

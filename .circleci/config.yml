@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@2.4.2
+
 executors:
   node22:
     docker:
@@ -18,6 +21,17 @@ executors:
       - image: cimg/base:2026.07
     resource_class: small
     working_directory: ~/project
+
+commands:
+  install-python-test-deps:
+    steps:
+      - run:
+          name: Install root and commerce Python dependencies
+          command: |
+            python -m pip install --upgrade pip
+            python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
+            python -m pip install -r clearglass-commerce/control-plane/requirements.txt
+            python -m pip check
 
 jobs:
   node-tooling:
@@ -51,39 +65,38 @@ jobs:
           path: dist
           destination: node-dist
 
-  python-tests:
+  python-runtime-tests:
     executor: python311
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - pip-root-v1-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}
-            - pip-root-v1-
+      - install-python-test-deps
       - run:
-          name: Install project and test dependencies
-          command: |
-            python -m pip install --upgrade pip
-            python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
-            python -m pip check
-      - save_cache:
-          key: pip-root-v1-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}
-          paths:
-            - ~/.cache/pip
-      - run:
-          name: Compile Python sources
+          name: Compile runtime Python sources
           command: python -m compileall -q artemis sentinel clearglass-commerce/control-plane
       - run:
-          name: Run configured Python test suite
+          name: ARTEMIS tests
+          command: python -m pytest artemis/tests -q
+      - run:
+          name: Sentinel tests
+          command: python -m pytest sentinel/tests -q
+      - run:
+          name: Commerce control-plane tests
+          command: python -m pytest clearglass-commerce/control-plane/tests -q
+
+  python-site-tests:
+    executor: python311
+    steps:
+      - checkout
+      - install-python-test-deps
+      - run:
+          name: Static-site and repository contract tests
           command: |
-            mkdir -p test-results/python
-            python -m pytest --cov=artemis --cov-report=xml:coverage.xml --junitxml=test-results/python/junit.xml -q
+            mkdir -p test-results/site
+            python -m pytest tests -q --junitxml=test-results/site/junit.xml
       - store_test_results:
           path: test-results
-      - store_artifacts:
-          path: coverage.xml
-          destination: python-coverage.xml
 
-  lint:
+  lint-runtime:
     executor: python311
     steps:
       - checkout
@@ -91,10 +104,73 @@ jobs:
           name: Install pinned Ruff
           command: python -m pip install "ruff==0.15.8"
       - run:
-          name: Repository-wide Ruff
-          command: ruff check .
+          name: Runtime Ruff
+          command: ruff check artemis sentinel clearglass-commerce/control-plane
 
-  site-integrity:
+  lint-repository-tests:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install pinned Ruff
+          command: python -m pip install "ruff==0.15.8"
+      - run:
+          name: Repository-test Ruff
+          command: ruff check tests
+
+  lint-automation:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install pinned Ruff
+          command: python -m pip install "ruff==0.15.8"
+      - run:
+          name: Automation Ruff
+          command: ruff check bots scripts tools
+
+  lint-platform:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install pinned Ruff
+          command: python -m pip install "ruff==0.15.8"
+      - run:
+          name: Platform Ruff
+          command: ruff check threads-growth infra automation services four_d_dominance agents
+
+  site-core:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Site reliability audit
+          command: python scripts/site_reliability_audit.py
+      - run:
+          name: Validate indexability links metadata and JSON-LD
+          command: python tools/seo_audit.py
+      - run:
+          name: OSINT deck strict validation
+          command: python scripts/osint_deck_release.py --strict
+
+  generated-assets:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Validate generated search assets are current
+          command: |
+            python tools/generate_search_assets.py
+            git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
+      - run:
+          name: Validate generated internal links
+          command: python tools/internal_links.py --check
+      - run:
+          name: Validate tab-icon synchronization
+          command: python tools/tab_icons.py --check
+
+  workflow-governance:
     executor: python311
     steps:
       - checkout
@@ -102,33 +178,23 @@ jobs:
           name: Install workflow audit dependency
           command: python -m pip install "PyYAML==6.0.2"
       - run:
-          name: Site reliability audit
-          command: python scripts/site_reliability_audit.py
-      - run:
-          name: Validate generated search assets are current
-          command: |
-            python tools/generate_search_assets.py
-            git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
-      - run:
-          name: Validate indexability links metadata and JSON-LD
-          command: python tools/seo_audit.py
-      - run:
-          name: Validate generated internal links
-          command: python tools/internal_links.py --check
-      - run:
           name: Workflow Doctor dry run
           command: python scripts/workflow_doctor.py
       - run:
           name: Enforce workflow safety invariants
           command: python scripts/audit_github_actions.py
-      - run:
-          name: OSINT deck strict validation
-          command: python scripts/osint_deck_release.py --strict
 
   lighthouse:
-    executor: node22
+    docker:
+      - image: cimg/node:22.10-browsers
+    resource_class: medium
+    working_directory: ~/project
     steps:
+      - browser-tools/install_chrome
       - checkout
+      - run:
+          name: Verify Chrome runtime
+          command: google-chrome --version
       - run:
           name: Lighthouse performance accessibility and SEO budgets
           command: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json
@@ -142,8 +208,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pip-osit-v1-{{ checksum "osit/pyproject.toml" }}
-            - pip-osit-v1-
+            - pip-osit-v2-{{ checksum "osit/pyproject.toml" }}
+            - pip-osit-v2-
       - run:
           name: Install OSIT and development dependencies
           command: |
@@ -151,7 +217,7 @@ jobs:
             python -m pip install -e './osit[dev]'
             python -m pip check
       - save_cache:
-          key: pip-osit-v1-{{ checksum "osit/pyproject.toml" }}
+          key: pip-osit-v2-{{ checksum "osit/pyproject.toml" }}
           paths:
             - ~/.cache/pip
       - run:
@@ -190,19 +256,18 @@ workflows:
   full-validation-and-production-smoke:
     jobs:
       - node-tooling
-      - python-tests
-      - lint
-      - site-integrity
+      - python-runtime-tests
+      - python-site-tests
+      - lint-runtime
+      - lint-repository-tests
+      - lint-automation
+      - lint-platform
+      - site-core
+      - generated-assets
+      - workflow-governance
       - lighthouse
       - osit
       - production-smoke:
-          requires:
-            - node-tooling
-            - python-tests
-            - lint
-            - site-integrity
-            - lighthouse
-            - osit
           filters:
             branches:
               only: main

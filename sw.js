@@ -16,7 +16,7 @@
    Bump VERSION to invalidate all caches on deploy. */
 "use strict";
 
-var VERSION = "cg-v63";
+var VERSION = "cg-v64";
 var PRECACHE = [
   "/",
   "/index.html",
@@ -110,10 +110,10 @@ self.addEventListener("fetch", function (e) {
     url.pathname === "/assets/images/clearglass-holographic-seal.png" ||
     url.pathname === "/assets/images/clearglass-logo-256.webp";
 
-  // Renderer-stability controls must never be served stale after a hotfix.
-  // A stale platform or cinematic loader can terminate WebKit before the
-  // background revalidation completes, so these use the network-first path.
+  // Renderer-stability controls and the unified station skin must never be
+  // served stale after a hotfix. These use the network-first path.
   var isCriticalRuntime = url.pathname === "/platform.js" ||
+    url.pathname === "/security-stack-fusion.css" ||
     url.pathname === "/assets/js/cinematic-motion.js" ||
     url.pathname === "/assets/js/future-buttons.js";
 

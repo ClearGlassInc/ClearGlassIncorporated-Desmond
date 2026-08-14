@@ -16,6 +16,18 @@ def test_topology_summary() -> None:
     assert summary["node_count"] == 3
     assert summary["dead_end_node_count"] == 2
     assert summary["connected_components_undirected"] == 1
+    assert summary["total_network_length_m"] == 20.0
+
+
+def test_bidirectional_edges_do_not_double_count_network_length() -> None:
+    graph = nx.MultiDiGraph()
+    graph.add_edge(1, 2, length=10)
+    graph.add_edge(2, 1, length=10)
+    summary = topology_summary(graph)
+    assert summary["edge_count_directed"] == 2
+    assert summary["street_segment_count_undirected"] == 1
+    assert summary["directed_edge_length_sum_m"] == 20.0
+    assert summary["total_network_length_m"] == 10.0
 
 
 def test_centrality_table_is_qualified() -> None:
@@ -23,6 +35,7 @@ def test_centrality_table_is_qualified() -> None:
     middle = table.loc[table["node"] == 2].iloc[0]
     assert middle["betweenness"] > 0
     assert middle["method"] == "exact-within-configured-bound"
+    assert middle["eigenvector_weight_basis"] == "inverse-length connection strength"
 
 
 def test_topology_flags_and_hypothetical_removal() -> None:

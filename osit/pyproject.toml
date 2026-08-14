@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "clearglass-osit"
+version = "0.1.0"
+description = "OSIT — Open-Source Infrastructure Topology Intelligence"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = {text = "Proprietary - ClearGlass Inc."}
+authors = [{name = "ClearGlass Inc."}]
+dependencies = [
+  "geopandas==1.0.1",
+  "httpx==0.28.1",
+  "networkx==3.4.2",
+  "osmnx==2.0.1",
+  "pandas==2.2.3",
+  "pyarrow==18.1.0",
+  "pydantic==2.10.6",
+  "pyproj==3.7.0",
+  "PyYAML==6.0.2",
+  "shapely==2.0.6",
+  "structlog==24.4.0",
+  "tenacity==9.0.0",
+  "typer==0.15.1",
+]
+
+[project.optional-dependencies]
+elevation = ["rasterio==1.4.3"]
+visualization = ["folium==0.19.4"]
+dev = [
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+  "ruff==0.9.6",
+]
+
+[project.scripts]
+osit = "osit.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/osit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers --disable-warnings"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.coverage.run]
+source = ["osit"]
+branch = true

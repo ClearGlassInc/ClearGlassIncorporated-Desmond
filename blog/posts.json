@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-08-11",
+  "updated": "2026-08-14",
   "site": "https://www.clearglassinc.com",
   "topics": {
     "governed-ai": "Governed AI",
@@ -17,6 +17,22 @@
   },
   "posts": [
     {
+      "slug": "graph-topology-multi-agent-research-workflow",
+      "url": "/blog/graph-topology-multi-agent-research-workflow.html",
+      "title": "Graph Topology Beats One Giant Context",
+      "description": "A practical planner-worker-verifier workflow for multi-agent research: isolated contexts, evidence boundaries, benchmark caveats, and copy-ready operating prompts.",
+      "category": "AI Systems & Research Architecture",
+      "series": "ClearGlass Long Reads",
+      "topics": ["governed-ai", "agents", "automation", "systems", "information-integrity"],
+      "tags": ["multi-agent-systems", "multi-agent-research", "context-isolation", "orchestrator-worker", "planner-worker-verifier", "browsecomp", "ai-governance", "evidence-verification", "long-read"],
+      "author": "Desmond Otieno Odhiambo",
+      "date": "2026-08-14",
+      "readMinutes": 10,
+      "featured": true,
+      "deskRank": 1,
+      "status": "published"
+    },
+    {
       "slug": "blue-brain-project-digital-brain-simulation",
       "url": "/blog/blue-brain-project-digital-brain-simulation.html",
       "title": "Blue Brain Project: Reconstructing the Brain in Silico",
@@ -29,7 +45,7 @@
       "date": "2026-08-11",
       "readMinutes": 28,
       "featured": true,
-      "deskRank": 1,
+      "deskRank": 2,
       "status": "published"
     },
     {
@@ -45,7 +61,7 @@
       "date": "2026-08-11",
       "readMinutes": 8,
       "featured": true,
-      "deskRank": 2,
+      "deskRank": 3,
       "status": "published"
     },
     {
@@ -61,7 +77,7 @@
       "date": "2026-08-10",
       "readMinutes": 8,
       "featured": true,
-      "deskRank": 3,
+      "deskRank": 4,
       "status": "published"
     },
     {
@@ -77,7 +93,7 @@
       "date": "2026-08-09",
       "readMinutes": 18,
       "featured": true,
-      "deskRank": 4,
+      "deskRank": 5,
       "status": "published"
     },
     {
@@ -93,7 +109,7 @@
       "date": "2026-08-09",
       "readMinutes": 9,
       "featured": true,
-      "deskRank": 5,
+      "deskRank": 6,
       "status": "published"
     },
     {
@@ -109,7 +125,7 @@
       "date": "2026-08-07",
       "readMinutes": 10,
       "featured": true,
-      "deskRank": 6,
+      "deskRank": 7,
       "status": "published"
     },
     {
@@ -125,7 +141,7 @@
       "date": "2026-08-07",
       "readMinutes": 9,
       "featured": true,
-      "deskRank": 7,
+      "deskRank": 8,
       "status": "published"
     },
     {
@@ -141,7 +157,7 @@
       "date": "2026-08-06",
       "readMinutes": 9,
       "featured": true,
-      "deskRank": 8,
+      "deskRank": 9,
       "status": "published"
     },
     {
@@ -157,7 +173,7 @@
       "date": "2026-08-05",
       "readMinutes": 10,
       "featured": true,
-      "deskRank": 9,
+      "deskRank": 10,
       "status": "published"
     },
     {
@@ -173,7 +189,7 @@
       "date": "2026-08-03",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 10,
+      "deskRank": 11,
       "status": "published"
     },
     {
@@ -189,7 +205,7 @@
       "date": "2026-08-03",
       "readMinutes": 12,
       "featured": true,
-      "deskRank": 11,
+      "deskRank": 12,
       "status": "published"
     },
     {
@@ -205,7 +221,7 @@
       "date": "2026-07-31",
       "readMinutes": 15,
       "featured": true,
-      "deskRank": 12,
+      "deskRank": 13,
       "status": "published"
     }
   ]

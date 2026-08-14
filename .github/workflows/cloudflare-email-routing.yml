@@ -18,13 +18,13 @@ concurrency:
 
 jobs:
   configure:
-    name: Route Desmond@clearglassinc.com to Outlook
+    name: Route desmond@clearglassinc.com to Outlook
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       DOMAIN: clearglassinc.com
-      CUSTOM_ADDRESS: Desmond@clearglassinc.com
+      CUSTOM_ADDRESS: desmond@clearglassinc.com
       DESTINATION_ADDRESS: desmondodhiambo@hotmail.com
 
     steps:

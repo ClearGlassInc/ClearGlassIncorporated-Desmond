@@ -17,9 +17,9 @@ Date: 2026-08-13
 - Official website: https://www.clearglassinc.com/
 - GitHub organization: https://github.com/ClearGlassInc
 - GitHub Pages: https://clearglassinc.github.io
-- Public contact: Desmond@clearglassinc.com
+- Public contact: desmond@clearglassinc.com
 - Primary operating region: Ontario, Canada
-- Public leadership: Desmond Otieno Odhiambo — Founder, Software Architect, and COO
+- Public leadership: Desmond Otieno Odhiambo — Founder & Software Architect
 - Brand position: “Governed AI systems for high-stakes operations.”
 
 ## Repository-backed claims used
@@ -60,7 +60,7 @@ No claims were made for:
 - https://www.clearglassinc.com/
 - https://github.com/ClearGlassInc
 - https://clearglassinc.github.io
-- mailto:Desmond@clearglassinc.com
+- mailto:desmond@clearglassinc.com
 - https://github.com/ClearGlassInc/ClearGlassIncorporated-Desmond
 - Raw logo URL used by the staged README
 - Any individual product URL promoted into the organization profile

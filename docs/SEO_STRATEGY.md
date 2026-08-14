@@ -1,7 +1,7 @@
 # ClearGlass Inc — Full-Spectrum Search Visibility Strategy
 
 **Property:** `https://www.clearglassinc.com` (GitHub Pages, served static via `.nojekyll`)
-**Entity:** Desmond Otieno Odhiambo — Founder & Chairman, Software Architect
+**Entity:** Desmond Otieno Odhiambo — Founder & Software Architect
 **Positioning:** Enterprise cybersecurity · AI automation · autonomous agents · OSINT · digital investigations · financial-crime analysis
 **Prepared:** 2026-06-18
 
@@ -14,7 +14,7 @@
 ClearGlass already has the hard parts most GitHub Pages sites skip: a sitemap (64 URLs), `robots.txt`, security headers (`_headers`), a PWA manifest, inline JSON-LD, and Bing/Google verification files. The site is **not under-built — it is under-disciplined**. The ranking ceiling today is set by four things:
 
 1. **Crawlability risk (highest severity).** The homepage `<head>` ran *two* client-side `window.location.replace()` redirects to cinematic loader pages (`cg-loader.html`, `loader.html`) on cold visits. A search/AI crawler hitting `/` with no cookie/referrer would be bounced into an interstitial — risking the loader being indexed instead of the real page, and tanking LCP. **Fixed** in this branch by adding a crawler user-agent guard, but the loader pattern should be retired on indexable pages entirely (see §3/§4).
-2. **Weak entity grounding for the person.** The brand is a personal-authority play ("Software Architect & COO"), but structured data described only an `Organization`/`LocalBusiness`. **Fixed** by adding a `Person` entity (Desmond) wired via `founder`/`worksFor`, plus `knowsAbout` topics and `sameAs`. This is the #1 lever for AI-search citation and Knowledge-Panel eligibility.
+2. **Weak entity grounding for the person.** The brand is a personal-authority play ("Founder & Software Architect"), but structured data described only an `Organization`/`LocalBusiness`. **Fixed** by adding a `Person` entity (Desmond) wired via `founder`/`worksFor`, plus `knowsAbout` topics and `sameAs`. This is the #1 lever for AI-search citation and Knowledge-Panel eligibility.
 3. **Topical sprawl.** ~80 top-level HTML pages (Artemis IV/VI, Percival, Guardian, Sentinel, Conduit, Nexus, Avalon…) with overlapping names and no clear silo hierarchy. Crawl budget and link equity are diluted across near-duplicate product surfaces. The fastest gains come from **consolidating into silos** and making each page about exactly one topic.
 4. **Backlink/authority vacuum.** A `github.io` subdomain inherits some of github.com's trust but builds none of its own. There is effectively no off-site citation graph yet. Authority work (LinkedIn, dev.to, GitHub org profile, digital PR) is the long-pole for competitive head terms.
 
@@ -70,7 +70,7 @@ ClearGlass already has the hard parts most GitHub Pages sites skip: a sitemap (6
 > Clarity is power. We build zero-trust security platforms, autonomous AI agents, and
 > investigative automation for organizations that cannot afford to guess.
 
-**Founder & Chairman:** [Desmond Otieno Odhiambo](https://www.clearglassinc.com/#founder) —
+**Founder & Software Architect:** [Desmond Otieno Odhiambo](https://www.clearglassinc.com/#founder) —
 software architect working across cybersecurity, AI engineering, OSINT, and financial-crime analysis.
 
 ### What we build
@@ -279,7 +279,7 @@ curl "https://api.indexnow.org/indexnow?url=https://www.clearglassinc.com/&key=Y
 ```
 # ClearGlass Inc
 > Enterprise cybersecurity, AI automation, autonomous agents, OSINT, and software architecture.
-> Founded by Desmond Otieno Odhiambo (Software Architect, Founder & Chairman).
+> Founded by Desmond Otieno Odhiambo (Founder & Software Architect).
 
 ## Core pages
 - Home: https://www.clearglassinc.com/

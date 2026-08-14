@@ -6,7 +6,7 @@
 
 ### Governed AI systems for high-stakes operations.
 
-[Website](https://www.clearglassinc.com/) · [GitHub Organization](https://github.com/ClearGlassInc) · [GitHub Pages](https://clearglassinc.github.io) · [Contact](mailto:Desmond@clearglassinc.com)
+[Website](https://www.clearglassinc.com/) · [GitHub Organization](https://github.com/ClearGlassInc) · [GitHub Pages](https://clearglassinc.github.io) · [Contact](mailto:desmond@clearglassinc.com)
 
 ![Ontario](https://img.shields.io/badge/Operating%20Region-Ontario%2C%20Canada-0a7ea4?style=flat-square)
 ![AI Governance](https://img.shields.io/badge/AI-Governed%20Workflows-4b6bfb?style=flat-square)
@@ -109,7 +109,7 @@ Work is prioritized using expected impact, confidence, urgency, effort, and risk
 ## Leadership
 
 **Desmond Otieno Odhiambo**  
-Founder, Software Architect, and COO
+Founder & Software Architect
 
 Publicly stated focus areas include AI automation, cybersecurity, legal-tech, OSINT, enterprise systems, and governed execution.
 
@@ -137,8 +137,9 @@ ClearGlass provides technical, operational, and compliance-oriented systems and 
 
 - [Official website](https://www.clearglassinc.com/)
 - [GitHub organization](https://github.com/ClearGlassInc)
+- [LinkedIn company page](https://www.linkedin.com/company/cleaglassinc)
 - [GitHub Pages](https://clearglassinc.github.io)
-- [Public contact](mailto:Desmond@clearglassinc.com)
+- [Public contact](mailto:desmond@clearglassinc.com)
 - [Main public engineering repository](https://github.com/ClearGlassInc/ClearGlassIncorporated-Desmond)
 
 ---

@@ -16,7 +16,7 @@ class AreaOfInterest(BaseModel):
     value: Any
 
     @model_validator(mode="after")
-    def validate_shape(self) -> "AreaOfInterest":
+    def validate_shape(self) -> AreaOfInterest:
         if self.mode == "place_name":
             if not isinstance(self.value, str) or len(self.value.strip()) < 3:
                 raise ValueError("place_name AOI must be a non-empty, specific place string")

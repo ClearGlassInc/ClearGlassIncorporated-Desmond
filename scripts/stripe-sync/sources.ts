@@ -515,9 +515,161 @@ function normalizeTaxBehavior(value: unknown): SourceVariant["taxBehavior"] {
   return value === "inclusive" || value === "exclusive" ? value : "unspecified";
 }
 
+/* ── ClearGlass Workspace subscription plans — opt-in ──────────────────── */
+
+const WORKSPACE_PLANS_FILE = "clearglass-commerce/control-plane/app/data/workspace_plans.json";
+
+/**
+ * Workspace per-seat subscriptions.
+ *
+ * Six plans become three Stripe Products — one per tier — each carrying a
+ * monthly and an annual recurring Price. Grouping is by `tier` rather than by
+ * SKU so that adding or retiring a cadence never renames the Product and
+ * orphans the subscriptions already attached to it.
+ *
+ * The amount published here is `unit_amount`: what Stripe charges for ONE seat
+ * for ONE billing period. It is deliberately not `monthly_rate`, which is the
+ * per-person-per-month figure the pricing page advertises — on an annual plan
+ * the two differ by twelve, and sending the wrong one would create a Price that
+ * bills a twelfth of what the customer agreed. The plan book itself refuses to
+ * load unless `unit_amount == monthly_rate x months`, so that invariant is
+ * already guaranteed by the time this adapter reads it; the check below is a
+ * second, independent assertion because this is the code path that writes real
+ * Prices to a real account.
+ *
+ * Opt-in, like the price book: running it writes subscription Prices to the
+ * configured Stripe account, which is never something to do as a side effect of
+ * `--source all`.
+ */
+const workspaceAdapter: SourceAdapter = {
+  name: "workspace",
+  file: WORKSPACE_PLANS_FILE,
+  description:
+    "ClearGlass Workspace per-seat subscription plans. Opt-in: it creates recurring Prices.",
+  optIn: true,
+  parse(context) {
+    const products: SourceProduct[] = [];
+    const issues: ProductIssue[] = [];
+    const book = readJsonFile(context.root, WORKSPACE_PLANS_FILE) as Record<string, unknown>;
+    const plans = Array.isArray(book.plans) ? book.plans : [];
+    const bookCurrency = typeof book.currency === "string" ? book.currency : context.defaultCurrency;
+
+    const groups = new Map<string, Record<string, unknown>[]>();
+    for (const entry of plans) {
+      const plan = (entry ?? {}) as Record<string, unknown>;
+      if (plan.active === false) continue;
+      const tier = String(plan.tier ?? "").trim();
+      if (!tier) {
+        issues.push(issue("workspace:<unknown>", "workspace", "tier", "plan has no tier"));
+        continue;
+      }
+      const bucket = groups.get(tier);
+      if (bucket) bucket.push(plan);
+      else groups.set(tier, [plan]);
+    }
+
+    for (const [tier, bucket] of groups) {
+      const sku = `ws-${tier}`;
+      const sourceId = `workspace:${sku}`;
+      const variants: SourceVariant[] = [];
+      let failed = false;
+
+      for (const plan of bucket) {
+        const planSku = String(plan.sku ?? sku);
+        const interval = RECURRING_INTERVALS[String(plan.interval ?? "")];
+        if (!interval) {
+          issues.push(
+            issue(sourceId, "workspace", `${planSku}.interval`,
+              `subscription plan has no usable interval (${String(plan.interval)})`),
+          );
+          failed = true;
+          continue;
+        }
+
+        let currency: string;
+        let amountMinor: number;
+        try {
+          currency = normalizeCurrency(plan.currency ?? bookCurrency);
+          amountMinor = assertMinorAmount(plan.unit_amount, currency);
+        } catch (error) {
+          issues.push(
+            issue(sourceId, "workspace", `${planSku}.unit_amount`, (error as AmountError).message),
+          );
+          failed = true;
+          continue;
+        }
+
+        // Independent re-check of the advertised-vs-charged invariant. A Price is
+        // durable and customers get attached to it, so being wrong here is far
+        // more expensive than failing the sync.
+        const months = interval === "year" ? 12 : 1;
+        const monthlyRate = Number(plan.monthly_rate);
+        if (Number.isFinite(monthlyRate) && monthlyRate > 0 && monthlyRate * months !== amountMinor) {
+          issues.push(
+            issue(sourceId, "workspace", `${planSku}.unit_amount`,
+              `charges ${amountMinor} per ${interval} but advertises ${monthlyRate} x ${months} ` +
+                `= ${monthlyRate * months}; refusing to create a Price that bills a different ` +
+                "amount from the one published"),
+          );
+          failed = true;
+          continue;
+        }
+
+        const variant: SourceVariant = {
+          variantKey: planSku,
+          label: typeof plan.name === "string" ? plan.name : undefined,
+          amountMinor,
+          currency,
+          taxBehavior: normalizeTaxBehavior(plan.tax_behavior),
+          recurring: { interval, interval_count: 1 },
+        };
+        if (typeof plan.stripe_price_id === "string" && plan.stripe_price_id) {
+          variant.stripePriceIdHint = plan.stripe_price_id;
+        }
+        variants.push(variant);
+      }
+
+      if (failed || variants.length === 0) continue;
+
+      const first = bucket[0]!;
+      const name = typeof first.name === "string" ? first.name : sku;
+      const descriptions = bucket
+        .map((plan) => (typeof plan.description === "string" ? plan.description : ""))
+        .filter(Boolean);
+      const product: Omit<SourceProduct, "sourceHash"> = {
+        sourceId,
+        adapter: "workspace",
+        sku,
+        name: baseName(name),
+        description: sharedDescription(descriptions),
+        category: "Software subscription",
+        sourceUrl: `${context.baseUrl}/workspace.html`,
+        images: [],
+        variants,
+        notes: [
+          "per-seat subscription: the Price is charged per seat and the seat count " +
+            "is the subscription item quantity, so proration works on a change",
+        ],
+      };
+      const productHint = bucket
+        .map((plan) => plan.stripe_product_id)
+        .find((id): id is string => typeof id === "string" && id.length > 0);
+      if (productHint) product.stripeProductIdHint = productHint;
+      products.push(finalize(product));
+    }
+
+    return { products, issues };
+  },
+};
+
 /* ── registry ──────────────────────────────────────────────────────────── */
 
-export const ADAPTERS: SourceAdapter[] = [sideStoreAdapter, storeCatalogAdapter, pricebookAdapter];
+export const ADAPTERS: SourceAdapter[] = [
+  sideStoreAdapter,
+  storeCatalogAdapter,
+  pricebookAdapter,
+  workspaceAdapter,
+];
 
 export function adapterNames(): string[] {
   return ADAPTERS.map((adapter) => adapter.name);

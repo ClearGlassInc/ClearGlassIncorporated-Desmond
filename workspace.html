@@ -182,6 +182,7 @@ footer.site a{color:#39d0c3}
   <h2 style="text-align:center">Pick the plan that fits how your team works</h2>
   <p class="lede" style="text-align:center;margin:10px auto 0">Every plan includes a 14-day trial. No card is charged during the trial.</p>
   <div class="pl-grid" id="planGrid"></div>
+  <p class="note" id="ckErr" role="alert" hidden></p>
   <p class="pl-fine">Change plan or cancel from your account at any time. Upgrades apply immediately and bill pro-rata; downgrades take effect at your next renewal so you keep what you already paid for.</p>
 </div></section>
 
@@ -288,6 +289,109 @@ footer.site a{color:#39d0c3}
   function fmt(c){ return "$" + (c/100).toLocaleString("en-CA",{minimumFractionDigits:2,maximumFractionDigits:2}); }
   function rate(p){ return period === "annual" ? p.annual : p.monthly; }
 
+  // ── Control-plane integration ──────────────────────────────────────────────
+  // The page prices itself offline so it works as a static document, but when the
+  // control plane is reachable the SERVER is the authority: it restates every rate
+  // and the page re-renders from that. A price the browser computed is a price a
+  // customer could edit, so the checkout call below sends a plan SKU and a seat
+  // count and nothing else — no amount, no currency, no return URL.
+  //
+  // Set the origin with <meta name="cg-api-base" content="https://api.example.com">.
+  // Unset, unreachable, or a plan with no live Stripe Price all fall back to the
+  // consultation email, which is exactly how this page behaved before.
+  var API = (document.querySelector('meta[name="cg-api-base"]') || {}).content || "";
+  var server = {};   // planId -> { annual|monthly : {sku, live} }
+
+  function skuFor(id, per){ return "ws-" + id + "-" + (per === "annual" ? "annual" : "monthly"); }
+
+  function mailtoHref(p, month){
+    return "mailto:desmondotieno@icloud.com?subject=" +
+      encodeURIComponent("ClearGlass Workspace — " + p.name + ", " + seats + " people (" + period + ")") +
+      "&body=" + encodeURIComponent("Hi Desmond,\n\nWe would like to start a ClearGlass Workspace subscription.\n\nPlan: " +
+        p.name + "\nPeople: " + seats + "\nBilling: " + period + "\nEstimated: " + fmt(month) +
+        " / month before tax\n\nOrganization: \nCurrent email provider: \n");
+  }
+
+  function liveMeta(p){
+    var byPeriod = server[p.id];
+    return byPeriod && byPeriod[period] && byPeriod[period].live ? byPeriod[period] : null;
+  }
+
+  function ctaFor(p, month){
+    return liveMeta(p)
+      ? '<button type="button" class="btn" data-plan="' + p.id + '">Start your subscription</button>'
+      : '<a class="btn" href="' + mailtoHref(p, month) + '">Start your subscription</a>';
+  }
+
+  function adoptServerPlans(list){
+    var matched = 0;
+    list.forEach(function(sp){
+      PLANS.forEach(function(p){
+        ["annual", "monthly"].forEach(function(per){
+          if (sp.sku !== skuFor(p.id, per)) return;
+          server[p.id] = server[p.id] || {};
+          server[p.id][per] = { sku: sp.sku, live: !!sp.purchasable_live };
+          // The server rate wins. If the two ever disagree, the customer must see
+          // the number they will actually be charged, not the one this file
+          // happened to ship with.
+          if (typeof sp.monthly_rate === "number" && sp.monthly_rate > 0) p[per] = sp.monthly_rate;
+          matched++;
+        });
+      });
+    });
+    return matched;
+  }
+
+  function loadServerPlans(){
+    if (!API || typeof fetch !== "function") return;
+    fetch(API + "/workspace/plans", { headers: { "Accept": "application/json" } })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(list){ if (list && list.length && adoptServerPlans(list)) render(); })
+      .catch(function(){ /* not deployed or offline — keep the page's own prices */ });
+  }
+
+  function showCheckoutError(msg){
+    var note = document.getElementById("ckErr");
+    if (!note) return;
+    note.textContent = msg;
+    note.hidden = false;
+  }
+
+  function startCheckout(btn, planId){
+    var meta = liveMeta({ id: planId });
+    if (!meta) return;
+    var original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Opening secure checkout…";
+    showCheckoutError("");
+    document.getElementById("ckErr").hidden = true;
+
+    fetch(API + "/workspace/checkout/session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      // Plan and seats only — deliberately no amount, currency or redirect.
+      body: JSON.stringify({ plan_sku: meta.sku, seats: seats })
+    })
+      .then(function(r){ return r.ok ? r.json() : Promise.reject(r); })
+      .then(function(s){
+        if (s && s.url) { window.location.href = s.url; return; }
+        throw new Error("no session url");
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.textContent = original;
+        showCheckoutError(
+          "Checkout could not be opened just now. Email us and we will set this up with you — " +
+          "you have not been charged."
+        );
+      });
+  }
+
+  document.getElementById("planGrid").addEventListener("click", function(ev){
+    var btn = ev.target.closest ? ev.target.closest("button[data-plan]") : null;
+    if (btn) startCheckout(btn, btn.getAttribute("data-plan"));
+  });
+
   function render(){
     document.getElementById("planGrid").innerHTML = PLANS.map(function(p){
       var per = rate(p), month = per * seats,
@@ -303,12 +407,7 @@ footer.site a{color:#39d0c3}
         '<div class="pl-total" aria-live="polite">' + seats + (seats === 1 ? ' person' : ' people') +
           ' · <b>' + fmt(month) + '</b> / month<br><span>' + label + ' · plus applicable tax</span></div>' +
         '<ul>' + p.features.map(function(f){ return '<li>' + f + '</li>'; }).join('') + '</ul>' +
-        '<a class="btn" href="mailto:desmondotieno@icloud.com?subject=' +
-          encodeURIComponent('ClearGlass Workspace — ' + p.name + ', ' + seats + ' people (' + period + ')') +
-          '&body=' + encodeURIComponent('Hi Desmond,\n\nWe would like to start a ClearGlass Workspace subscription.\n\nPlan: ' +
-            p.name + '\nPeople: ' + seats + '\nBilling: ' + period + '\nEstimated: ' + fmt(month) +
-            ' / month before tax\n\nOrganization: \nCurrent email provider: \n') +
-          '">Start your subscription</a></div>';
+        ctaFor(p, month) + '</div>';
     }).join('');
   }
 
@@ -334,6 +433,7 @@ footer.site a{color:#39d0c3}
   });
   input.addEventListener("blur", function(){ input.value = seats; });
   render();
+  loadServerPlans();
 })();
 </script>
 <script defer src="nav.js"></script>

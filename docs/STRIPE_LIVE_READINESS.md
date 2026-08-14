@@ -37,7 +37,7 @@ Payment Links also require a public business name. Use:
 - Website: `https://www.clearglassinc.com`
 - Product description: `Cybersecurity, AI-risk advisory, security assessments, defensive automation, and recurring business protection services.`
 - Statement descriptor: `CLEARGLASS`
-- Support email: `desmondotieno@icloud.com`
+- Support email: `desmond@clearglassinc.com`
 - Support phone: account owner must enter and verify a controlled business phone number.
 
 The account owner must personally review and accept Stripe's services agreement. Do not automate, fabricate, or backdate Terms of Service acceptance, IP address, identity information, or bank details.

@@ -54,11 +54,27 @@
   });
 
   if (!window.__cgAnalytics && !document.querySelector("script[data-cg-analytics]")) {
-    var analytics = document.createElement("script");
-    analytics.src = "/analytics.js";
-    analytics.defer = true;
-    analytics.setAttribute("data-cg-analytics", "");
-    (document.head || document.documentElement).appendChild(analytics);
+    var analyticsLoaded = false;
+    var appendAnalytics = function () {
+      if (analyticsLoaded || window.__cgAnalytics || document.querySelector("script[data-cg-analytics]")) return;
+      analyticsLoaded = true;
+      var analytics = document.createElement("script");
+      analytics.src = "/analytics.js";
+      analytics.defer = true;
+      analytics.setAttribute("data-cg-analytics", "");
+      (document.head || document.documentElement).appendChild(analytics);
+    };
+    if (window.CG_ANALYTICS_CONFIG) {
+      appendAnalytics();
+    } else {
+      var analyticsConfig = document.createElement("script");
+      analyticsConfig.src = "/analytics-config.js";
+      analyticsConfig.defer = true;
+      analyticsConfig.setAttribute("data-cg-analytics-config", "");
+      analyticsConfig.onload = appendAnalytics;
+      analyticsConfig.onerror = appendAnalytics;
+      (document.head || document.documentElement).appendChild(analyticsConfig);
+    }
   }
 
   var FX_CSS = [

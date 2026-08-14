@@ -1,0 +1,25 @@
+project_name: "OSIT Urban Network Assessment"
+area_of_interest:
+  mode: "place_name"
+  value: "Burlington, Ontario, Canada"
+network_modes:
+  - drive
+  - walk
+  - bike
+analysis_profile: "multimodal"
+travel_time_thresholds_minutes: [5, 10, 15, 30, 45]
+points_of_interest:
+  - healthcare
+  - schools
+  - transit
+  - public_services
+  - food
+  - parks
+  - shelters
+  - charging
+output_crs: "auto_utm"
+data_currency_requirement: "record retrieval timestamp and OSM snapshot metadata"
+max_area_km2: 5000
+max_centrality_nodes: 7500
+cache_dir: "data/cache"
+output_dir: "outputs"

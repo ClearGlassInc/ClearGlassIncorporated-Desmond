@@ -1,40 +1,42 @@
 version: 2.1
 
 jobs:
-  authoritative_repo_probe:
+  agent_health_external:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
     steps:
       - run:
-          name: Verify authoritative repository access
+          name: Verify ClearGlass Agent health externally
           command: |
             set -euo pipefail
-            git clone --depth 1 --branch main https://github.com/ClearGlassInc/ClearGlassIncorporated-Desmond.git /tmp/primary
-            cd /tmp/primary
-            sha="$(git rev-parse HEAD)"
-            echo "authoritative_sha=${sha}"
-            test -s fly.toml
-            test -s services/clearglass_agent_service/Dockerfile
+            url="https://git-hub-control-plane--dezzy231.replit.app/clearglass-agent/health"
+            curl --fail --silent --show-error --location \
+              --retry 6 --retry-delay 2 --retry-all-errors \
+              "$url" -o /tmp/health.json
+            grep -q 'clearglass-agent-service' /tmp/health.json
+            grep -q '"status"' /tmp/health.json
+            grep -q '"ok"' /tmp/health.json
+            echo "ClearGlass Agent external health: PASS"
 
-  fly_token_probe:
+  control_plane_root_external:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
     steps:
       - run:
-          name: Verify Fly credential presence without disclosure
+          name: Verify existing control plane root externally
           command: |
             set -euo pipefail
-            if [ -n "${FLY_API_TOKEN:-}" ]; then
-              echo "fly_api_token_present=true"
-            else
-              echo "fly_api_token_present=false"
-              exit 2
-            fi
+            curl --fail --silent --show-error --location \
+              --retry 6 --retry-delay 2 --retry-all-errors \
+              https://git-hub-control-plane--dezzy231.replit.app/ \
+              -o /tmp/root.html
+            test -s /tmp/root.html
+            echo "Existing control plane root: PASS"
 
 workflows:
-  production_bridge_prerequisites:
+  external_production_verify:
     jobs:
-      - authoritative_repo_probe
-      - fly_token_probe
+      - agent_health_external
+      - control_plane_root_external

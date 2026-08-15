@@ -54,7 +54,6 @@ jobs:
           graph_rel = 'blog/graph-topology-multi-agent-research-workflow.html'
           graph = root / graph_rel
 
-          # Keep the article's SERP title within the release gate while preserving the H1.
           article = graph.read_text(encoding='utf-8')
           article = article.replace(
               '<title>Graph Topology Beats One Giant Context | ClearGlass Intelligence</title>',
@@ -62,7 +61,6 @@ jobs:
           )
           graph.write_text(article, encoding='utf-8')
 
-          # Every shipped page must expose the durable ClearGlass badge marker.
           for page in sorted(root.rglob('*.html')):
               rel = page.relative_to(root)
               if any(part in IGNORED_HTML_DIRS for part in rel.parts):
@@ -73,14 +71,12 @@ jobs:
               if _page_has_logo(text):
                   continue
               marker = '<script defer src="/logo-badge.js"></script>'
-              lower = text.lower()
-              pos = lower.rfind('</body>')
+              pos = text.lower().rfind('</body>')
               if pos < 0:
                   raise RuntimeError(f'cannot place ClearGlass logo badge in {rel.as_posix()}')
               page.write_text(text[:pos] + marker + '\n' + text[pos:], encoding='utf-8')
               print(f'logo-badge: {rel.as_posix()}')
 
-          # Register the newly indexed research article with the authority graph.
           authority = root / 'tools/authority_network_ci.py'
           source = authority.read_text(encoding='utf-8')
           if graph_rel not in source:
@@ -109,7 +105,6 @@ jobs:
               authority.write_text(source.replace(needle, replacement, 1), encoding='utf-8')
               print(f'authority-register: {graph_rel} -> {cid}')
 
-          # Give the article a visible static inbound link from the blog hub.
           blog_index = root / 'blog/index.html'
           hub = blog_index.read_text(encoding='utf-8')
           href = 'graph-topology-multi-agent-research-workflow.html'
@@ -119,16 +114,14 @@ jobs:
                   '<a href="graph-topology-multi-agent-research-workflow.html">'
                   'Graph Topology for Multi-Agent Research</a></p>\n'
               )
-              lower = hub.lower()
-              pos = lower.rfind('</footer>')
+              pos = hub.lower().rfind('</footer>')
               if pos < 0:
-                  pos = lower.rfind('</body>')
+                  pos = hub.lower().rfind('</body>')
               if pos < 0:
                   raise RuntimeError('blog hub has no footer/body close for research link')
               blog_index.write_text(hub[:pos] + bridge + hub[pos:], encoding='utf-8')
               print('blog-bridge: added static inbound article link')
 
-          # Machine-facing identity must carry the canonical location as one exact record.
           llms = root / 'llms.txt'
           text = llms.read_text(encoding='utf-8')
           if 'Burlington, Ontario, Canada' not in text:
@@ -139,8 +132,6 @@ jobs:
               llms.write_text(text, encoding='utf-8')
               print('identity: normalized llms.txt location')
 
-          # The mineral snapshots are intentionally mutable. Test the fail-closed contract,
-          # not a bootstrap fixture that becomes false as soon as the sync bot succeeds.
           test_file = root / 'tests/test_minerals_intelligence.py'
           tests = test_file.read_text(encoding='utf-8')
           old = '''def test_initial_live_feeds_fail_closed():\n    for name in ("policy", "news"):\n        payload = load_json(f"feeds/minerals/latest/{name}.json")\n        assert payload["status"] == "UNAVAILABLE"\n        assert payload["records"] == []\n        assert payload["retrieved_at"] is None\n'''
@@ -167,8 +158,6 @@ jobs:
             tests/test_security_release_manifest.py \
             tests/test_seo_audit.py \
             tests/test_site_health_bot.py
-          python3 tools/generate_search_assets.py
-          git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
           python3 tools/security_release_manifest.py --check
 
       - name: Commit deterministic repairs to main

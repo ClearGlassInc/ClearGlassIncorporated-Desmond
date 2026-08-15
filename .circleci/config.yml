@@ -1,4 +1,5 @@
 version: 2.1
+# Production verification retrigger after successful Control Plane promotion.
 
 jobs:
   authoritative_repo_verify:

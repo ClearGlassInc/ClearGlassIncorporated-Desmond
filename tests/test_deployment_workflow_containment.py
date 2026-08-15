@@ -2,7 +2,7 @@ import re
 
 import yaml
 
-from scripts.audit_github_actions import GitHubLoader, ROOT
+from scripts.audit_github_actions import ROOT, GitHubLoader
 
 
 def test_pages_deployment_is_manual_and_cannot_mutate_source_mode() -> None:

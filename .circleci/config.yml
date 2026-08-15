@@ -33,6 +33,26 @@ commands:
             python -m pip install -r clearglass-commerce/control-plane/requirements.txt
             python -m pip check
 
+  ensure-full-git-history:
+    steps:
+      - run:
+          name: Ensure full git history
+          command: |
+            set -euo pipefail
+            if [ "$(git rev-parse --is-shallow-repository)" = "true" ]; then
+              git fetch --unshallow --tags origin
+            else
+              git fetch --tags origin
+            fi
+            if [ -n "${CIRCLE_BRANCH:-}" ]; then
+              git fetch origin "${CIRCLE_BRANCH}"
+            fi
+            if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
+              echo "Repository is still shallow after history repair" >&2
+              exit 1
+            fi
+            git log -1 --format='checkout=%H date=%cs' -- HEAD
+
 jobs:
   node-tooling:
     executor: node22
@@ -88,6 +108,7 @@ jobs:
     steps:
       - checkout:
           method: full
+      - ensure-full-git-history
       - install-python-test-deps
       - run:
           name: Static-site and repository contract tests
@@ -160,11 +181,17 @@ jobs:
     steps:
       - checkout:
           method: full
+      - ensure-full-git-history
       - run:
           name: Validate generated search assets are current
           command: |
+            set -euo pipefail
             python tools/generate_search_assets.py
-            git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
+            if ! git diff --quiet -- sitemap.xml feed.xml data/seo/page-intents.json; then
+              echo "Generated search assets are stale. Exact diff follows:" >&2
+              git --no-pager diff -- sitemap.xml feed.xml data/seo/page-intents.json
+              exit 1
+            fi
       - run:
           name: Validate generated internal links
           command: python tools/internal_links.py --check

@@ -155,7 +155,7 @@ jobs:
           name: OSINT deck strict validation
           command: python scripts/osint_deck_release.py --strict
 
-  generated-assets:
+  generated-search-assets:
     executor: python311
     steps:
       - checkout:
@@ -165,9 +165,19 @@ jobs:
           command: |
             python tools/generate_search_assets.py
             git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
+
+  generated-internal-links:
+    executor: python311
+    steps:
+      - checkout
       - run:
           name: Validate generated internal links
           command: python tools/internal_links.py --check
+
+  generated-tab-icons:
+    executor: python311
+    steps:
+      - checkout
       - run:
           name: Validate tab-icon synchronization
           command: python tools/tab_icons.py --check
@@ -265,7 +275,9 @@ workflows:
       - lint-automation
       - lint-platform
       - site-core
-      - generated-assets
+      - generated-search-assets
+      - generated-internal-links
+      - generated-tab-icons
       - workflow-governance
       - lighthouse
       - osit

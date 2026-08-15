@@ -612,43 +612,73 @@ workflows:
     jobs:
       - security_preflight:
           context: ci-readonly
+          filters:
+            tags:
+              only: /.*/
       - checkout_and_lockfile_verify:
           context: ci-readonly
           requires:
             - security_preflight
+          filters:
+            tags:
+              only: /.*/
       - lint_typecheck_unit_test:
           context: ci-readonly
           requires:
             - checkout_and_lockfile_verify
+          filters:
+            tags:
+              only: /.*/
       - dependency_and_secret_scan:
           context: ci-readonly
           requires:
             - lint_typecheck_unit_test
+          filters:
+            tags:
+              only: /.*/
       - github_automation_validation:
           context: ci-readonly
           extended: true
           requires:
             - dependency_and_secret_scan
+          filters:
+            tags:
+              only: /.*/
       - animation_build_and_smoke_test:
           context: ci-readonly
           requires:
             - github_automation_validation
+          filters:
+            tags:
+              only: /.*/
       - agent_health_and_contract_tests:
           context: ci-readonly
           extended: true
           requires:
             - animation_build_and_smoke_test
+          filters:
+            tags:
+              only: /.*/
       - hold_production:
           type: approval
           requires:
             - agent_health_and_contract_tests
+          filters:
+            tags:
+              only: /.*/
       - deploy_production:
           context: production-deploy
           requires:
             - hold_production
+          filters:
+            tags:
+              only: /.*/
       - post_deploy_verify:
           name: post_deploy_verify_production
           context: production-deploy
           target_environment: production
           requires:
             - deploy_production
+          filters:
+            tags:
+              only: /.*/

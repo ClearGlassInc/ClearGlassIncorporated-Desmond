@@ -105,7 +105,7 @@ else
     .
   push_log="$(mktemp)"
   trap 'rm -f "$push_log"' EXIT
-  docker push "$image_tag" | tee "$push_log"
+  docker push "$image_tag" 2>&1 | tee "$push_log"
   digest="$(awk '/digest: sha256:/ {print $3}' "$push_log" | tail -n 1)"
   if [ -z "$digest" ]; then
     echo "ERROR: registry push did not return an immutable digest." >&2

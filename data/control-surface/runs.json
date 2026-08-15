@@ -1,8 +1,22 @@
 [
   {
-    "title": "Control Surface Feeds #11",
+    "title": "Control Surface Feeds #12",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "22:38",
+    "timestamp": "2026-08-15T22:38:48Z"
+  },
+  {
+    "title": "Deploy Pages #11",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "21:36",
+    "timestamp": "2026-08-15T21:36:05Z"
+  },
+  {
+    "title": "Control Surface Feeds #11",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "21:35",
     "timestamp": "2026-08-15T21:35:41Z"
   },
@@ -124,19 +138,5 @@
     "detail": "skipped \u00b7 workflow_run on main",
     "time": "16:57",
     "timestamp": "2026-08-15T16:57:25Z"
-  },
-  {
-    "title": "Defensive Security Orchestrator #28",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-08-15T16:57:10Z"
-  },
-  {
-    "title": "Site Integrity Guard #28",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "16:57",
-    "timestamp": "2026-08-15T16:57:10Z"
   }
 ]

@@ -16,7 +16,7 @@
    Bump VERSION to invalidate all caches on deploy. */
 "use strict";
 
-var VERSION = "cg-v64";
+var VERSION = "cg-v65";
 var PRECACHE = [
   "/",
   "/index.html",
@@ -114,6 +114,7 @@ self.addEventListener("fetch", function (e) {
   // served stale after a hotfix. These use the network-first path.
   var isCriticalRuntime = url.pathname === "/platform.js" ||
     url.pathname === "/security-stack-fusion.css" ||
+    url.pathname === "/assets/css/neon-practical.css" ||
     url.pathname === "/assets/js/cinematic-motion.js" ||
     url.pathname === "/assets/js/future-buttons.js";
 

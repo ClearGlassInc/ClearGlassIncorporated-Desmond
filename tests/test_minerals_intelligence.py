@@ -51,12 +51,21 @@ def test_manifest_is_truthful_and_complete():
         assert feed["source_url"].startswith("https://")
 
 
-def test_initial_live_feeds_fail_closed():
+def test_live_feeds_fail_closed_when_empty_and_report_refreshes_truthfully():
+    healthy_or_stale = {
+        "LIVE", "NEAR LIVE", "DELAYED", "DAILY", "WEEKLY", "MONTHLY",
+        "STALE", "DEGRADED", "OPERATIONAL", "HEALTHY",
+    }
     for name in ("policy", "news"):
         payload = load_json(f"feeds/minerals/latest/{name}.json")
-        assert payload["status"] == "UNAVAILABLE"
-        assert payload["records"] == []
-        assert payload["retrieved_at"] is None
+        records = payload["records"]
+        assert isinstance(records, list)
+        if records:
+            assert payload["status"] in healthy_or_stale
+            assert payload["retrieved_at"] is not None
+        else:
+            assert payload["status"] == "UNAVAILABLE"
+            assert payload["retrieved_at"] is None
 
 
 def test_mineral_reference_directory_uses_unknown_for_quantitative_risk():

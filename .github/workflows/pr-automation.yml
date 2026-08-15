@@ -23,7 +23,6 @@ jobs:
       contents: read
       pull-requests: write
       issues: write
-    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
@@ -89,7 +88,7 @@ jobs:
           echo "$FILES" | grep -q '^infra/'            && add_label "area:infra"     "e11d48"
           echo "$FILES" | grep -q '^deployment/'       && add_label "area:deploy"    "cc317c"
           echo "$FILES" | grep -q '^services/'         && add_label "area:services"  "7057ff"
-          true  # the last grep may return 1 (no match) — ensure step always exits 0
+          true
 
       - name: Post checklist on first open
         if: github.event.action == 'opened' && github.event.pull_request.head.repo.full_name == github.repository

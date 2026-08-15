@@ -45,6 +45,24 @@ async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/clearglass-agent/health")
+@app.get("/api/clearglass-agent/health")
+async def clearglass_agent_health() -> dict[str, str]:
+    """Stable public health aliases for the isolated ClearGlass Agent service."""
+    return {"service": "clearglass-agent-service", "status": "ok", "version": app.version}
+
+
+@app.get("/clearglass-agent/policy")
+@app.get("/api/clearglass-agent/policy")
+async def clearglass_agent_policy(authorization: str | None = Header(default=None)) -> JSONResponse:
+    """Fail closed unless an administrator is authenticated and the agent is mounted."""
+    _guard(authorization)
+    return JSONResponse(
+        status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+        content={"detail": "ClearGlass Agent policy service is not mounted on this controller."},
+    )
+
+
 @app.get("/ready")
 async def ready() -> JSONResponse:
     code = status.HTTP_200_OK if settings.ready else status.HTTP_503_SERVICE_UNAVAILABLE

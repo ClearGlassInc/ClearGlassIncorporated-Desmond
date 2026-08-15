@@ -1,18 +1,12 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.2.3
+  browser-tools: circleci/browser-tools@2.4.2
 
 executors:
   node22:
     docker:
       - image: cimg/node:22.10
-    resource_class: medium
-    working_directory: ~/project
-
-  browser22:
-    docker:
-      - image: cimg/node:22.10-browsers
     resource_class: medium
     working_directory: ~/project
 
@@ -29,40 +23,15 @@ executors:
     working_directory: ~/project
 
 commands:
-  setup-root-python:
+  install-python-test-deps:
     steps:
-      - restore_cache:
-          keys:
-            - pip-root-v2-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}-{{ checksum "clearglass-commerce/control-plane/requirements.txt" }}
-            - pip-root-v2-
       - run:
-          name: Install root Python and commerce dependencies
+          name: Install root and commerce Python dependencies
           command: |
             python -m pip install --upgrade pip
             python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
             python -m pip install -r clearglass-commerce/control-plane/requirements.txt
             python -m pip check
-      - save_cache:
-          key: pip-root-v2-{{ checksum "requirements.txt" }}-{{ checksum "pyproject.toml" }}-{{ checksum "clearglass-commerce/control-plane/requirements.txt" }}
-          paths:
-            - ~/.cache/pip
-
-  setup-osit:
-    steps:
-      - restore_cache:
-          keys:
-            - pip-osit-v1-{{ checksum "osit/pyproject.toml" }}
-            - pip-osit-v1-
-      - run:
-          name: Install OSIT and development dependencies
-          command: |
-            python -m pip install --upgrade pip
-            python -m pip install -e './osit[dev]'
-            python -m pip check
-      - save_cache:
-          key: pip-osit-v1-{{ checksum "osit/pyproject.toml" }}
-          paths:
-            - ~/.cache/pip
 
 jobs:
   node-tooling:
@@ -96,111 +65,38 @@ jobs:
           path: dist
           destination: node-dist
 
-  root-python-deps:
+  python-runtime-tests:
     executor: python311
     steps:
       - checkout
-      - setup-root-python
+      - install-python-test-deps
       - run:
-          name: Compile configured Python sources
+          name: Compile runtime Python sources
           command: python -m compileall -q artemis sentinel clearglass-commerce/control-plane
-
-  pytest-artemis:
-    executor: python311
-    steps:
-      - checkout
-      - setup-root-python
       - run:
           name: ARTEMIS tests
-          command: |
-            mkdir -p test-results/artemis
-            python -m pytest artemis/tests -q --junitxml=test-results/artemis/junit.xml
-      - store_test_results:
-          path: test-results
-
-  pytest-sentinel:
-    executor: python311
-    steps:
-      - checkout
-      - setup-root-python
+          command: python -m pytest artemis/tests -q
       - run:
           name: Sentinel tests
-          command: |
-            mkdir -p test-results/sentinel
-            python -m pytest sentinel/tests -q --junitxml=test-results/sentinel/junit.xml
-      - store_test_results:
-          path: test-results
-
-  pytest-commerce:
-    executor: python311
-    steps:
-      - checkout
-      - setup-root-python
+          command: python -m pytest sentinel/tests -q
       - run:
           name: Commerce control-plane tests
+          command: python -m pytest clearglass-commerce/control-plane/tests -q
+
+  python-site-tests:
+    executor: python311
+    steps:
+      - checkout
+      - install-python-test-deps
+      - run:
+          name: Static-site and repository contract tests
           command: |
-            mkdir -p test-results/commerce
-            python -m pytest clearglass-commerce/control-plane/tests -q --junitxml=test-results/commerce/junit.xml
+            mkdir -p test-results/site
+            python -m pytest tests -q --junitxml=test-results/site/junit.xml
       - store_test_results:
           path: test-results
 
-  pytest-root-a-f:
-    executor: python311
-    steps:
-      - checkout
-      - setup-root-python
-      - run:
-          name: Root tests A-F
-          command: |
-            set -euo pipefail
-            shopt -s nullglob
-            files=(tests/test_[a-f]*.py)
-            if (( ${#files[@]} == 0 )); then exit 0; fi
-            python -m pytest "${files[@]}" -q
-
-  pytest-root-g-l:
-    executor: python311
-    steps:
-      - checkout
-      - setup-root-python
-      - run:
-          name: Root tests G-L
-          command: |
-            set -euo pipefail
-            shopt -s nullglob
-            files=(tests/test_[g-l]*.py)
-            if (( ${#files[@]} == 0 )); then exit 0; fi
-            python -m pytest "${files[@]}" -q
-
-  pytest-root-m-r:
-    executor: python311
-    steps:
-      - checkout
-      - setup-root-python
-      - run:
-          name: Root tests M-R
-          command: |
-            set -euo pipefail
-            shopt -s nullglob
-            files=(tests/test_[m-r]*.py)
-            if (( ${#files[@]} == 0 )); then exit 0; fi
-            python -m pytest "${files[@]}" -q
-
-  pytest-root-s-z:
-    executor: python311
-    steps:
-      - checkout
-      - setup-root-python
-      - run:
-          name: Root tests S-Z
-          command: |
-            set -euo pipefail
-            shopt -s nullglob
-            files=(tests/test_[s-z]*.py)
-            if (( ${#files[@]} == 0 )); then exit 0; fi
-            python -m pytest "${files[@]}" -q
-
-  lint:
+  lint-runtime:
     executor: python311
     steps:
       - checkout
@@ -208,18 +104,57 @@ jobs:
           name: Install pinned Ruff
           command: python -m pip install "ruff==0.15.8"
       - run:
-          name: Repository-wide Ruff
-          command: ruff check .
+          name: Runtime Ruff
+          command: ruff check artemis sentinel clearglass-commerce/control-plane
 
-  site-reliability:
+  lint-repository-tests:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install pinned Ruff
+          command: python -m pip install "ruff==0.15.8"
+      - run:
+          name: Repository-test Ruff
+          command: ruff check tests
+
+  lint-automation:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install pinned Ruff
+          command: python -m pip install "ruff==0.15.8"
+      - run:
+          name: Automation Ruff
+          command: ruff check bots scripts tools
+
+  lint-platform:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install pinned Ruff
+          command: python -m pip install "ruff==0.15.8"
+      - run:
+          name: Platform Ruff
+          command: ruff check threads-growth infra automation services four_d_dominance agents
+
+  site-core:
     executor: python311
     steps:
       - checkout
       - run:
           name: Site reliability audit
           command: python scripts/site_reliability_audit.py
+      - run:
+          name: Validate indexability links metadata and JSON-LD
+          command: python tools/seo_audit.py
+      - run:
+          name: OSINT deck strict validation
+          command: python scripts/osint_deck_release.py --strict
 
-  search-assets:
+  generated-assets:
     executor: python311
     steps:
       - checkout
@@ -228,24 +163,14 @@ jobs:
           command: |
             python tools/generate_search_assets.py
             git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
-
-  seo-audit:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Validate indexability links metadata and JSON-LD
-          command: python tools/seo_audit.py
-
-  internal-links:
-    executor: python311
-    steps:
-      - checkout
       - run:
           name: Validate generated internal links
           command: python tools/internal_links.py --check
+      - run:
+          name: Validate tab-icon synchronization
+          command: python tools/tab_icons.py --check
 
-  workflow-doctor:
+  workflow-governance:
     executor: python311
     steps:
       - checkout
@@ -255,33 +180,20 @@ jobs:
       - run:
           name: Workflow Doctor dry run
           command: python scripts/workflow_doctor.py
-
-  actions-audit:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install workflow audit dependency
-          command: python -m pip install "PyYAML==6.0.2"
       - run:
           name: Enforce workflow safety invariants
           command: python scripts/audit_github_actions.py
 
-  osint-deck:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: OSINT deck strict validation
-          command: python scripts/osint_deck_release.py --strict
-
   lighthouse:
-    executor: browser22
+    docker:
+      - image: cimg/node:22.10-browsers
+    resource_class: medium
+    working_directory: ~/project
     steps:
+      - browser-tools/install_chrome
       - checkout
-      - browser-tools/install-chrome
       - run:
-          name: Verify Chrome is available
+          name: Verify Chrome runtime
           command: google-chrome --version
       - run:
           name: Lighthouse performance accessibility and SEO budgets
@@ -290,29 +202,30 @@ jobs:
           path: .lighthouseci
           destination: lighthouse
 
-  osit-deps:
+  osit:
     executor: python311
     steps:
       - checkout
-      - setup-osit
+      - restore_cache:
+          keys:
+            - pip-osit-v2-{{ checksum "osit/pyproject.toml" }}
+            - pip-osit-v2-
+      - run:
+          name: Install OSIT and development dependencies
+          command: |
+            python -m pip install --upgrade pip
+            python -m pip install -e './osit[dev]'
+            python -m pip check
+      - save_cache:
+          key: pip-osit-v2-{{ checksum "osit/pyproject.toml" }}
+          paths:
+            - ~/.cache/pip
       - run:
           name: Compile OSIT
           command: python -m compileall -q osit/src osit/tests
-
-  osit-ruff:
-    executor: python311
-    steps:
-      - checkout
-      - setup-osit
       - run:
           name: Ruff OSIT
           command: cd osit && ruff check src tests
-
-  osit-tests:
-    executor: python311
-    steps:
-      - checkout
-      - setup-osit
       - run:
           name: OSIT unit and export tests
           command: |
@@ -343,56 +256,18 @@ workflows:
   full-validation-and-production-smoke:
     jobs:
       - node-tooling
-      - root-python-deps
-      - pytest-artemis:
-          requires: [root-python-deps]
-      - pytest-sentinel:
-          requires: [root-python-deps]
-      - pytest-commerce:
-          requires: [root-python-deps]
-      - pytest-root-a-f:
-          requires: [root-python-deps]
-      - pytest-root-g-l:
-          requires: [root-python-deps]
-      - pytest-root-m-r:
-          requires: [root-python-deps]
-      - pytest-root-s-z:
-          requires: [root-python-deps]
-      - lint
-      - site-reliability
-      - search-assets
-      - seo-audit
-      - internal-links
-      - workflow-doctor
-      - actions-audit
-      - osint-deck
+      - python-runtime-tests
+      - python-site-tests
+      - lint-runtime
+      - lint-repository-tests
+      - lint-automation
+      - lint-platform
+      - site-core
+      - generated-assets
+      - workflow-governance
       - lighthouse
-      - osit-deps
-      - osit-ruff:
-          requires: [osit-deps]
-      - osit-tests:
-          requires: [osit-deps]
+      - osit
       - production-smoke:
-          requires:
-            - node-tooling
-            - pytest-artemis
-            - pytest-sentinel
-            - pytest-commerce
-            - pytest-root-a-f
-            - pytest-root-g-l
-            - pytest-root-m-r
-            - pytest-root-s-z
-            - lint
-            - site-reliability
-            - search-assets
-            - seo-audit
-            - internal-links
-            - workflow-doctor
-            - actions-audit
-            - osint-deck
-            - lighthouse
-            - osit-ruff
-            - osit-tests
           filters:
             branches:
               only: main

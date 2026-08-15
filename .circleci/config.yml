@@ -86,7 +86,8 @@ jobs:
   python-site-tests:
     executor: python311
     steps:
-      - checkout
+      - checkout:
+          method: full
       - install-python-test-deps
       - run:
           name: Static-site and repository contract tests
@@ -157,7 +158,8 @@ jobs:
   generated-assets:
     executor: python311
     steps:
-      - checkout
+      - checkout:
+          method: full
       - run:
           name: Validate generated search assets are current
           command: |

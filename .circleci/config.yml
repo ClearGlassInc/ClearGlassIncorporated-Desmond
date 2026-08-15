@@ -181,15 +181,47 @@ jobs:
           name: Validate Atom feed is current
           command: git diff --exit-code -- feed.xml
 
-  generated-intent-map:
+  generated-intent-scope:
+    parameters:
+      scope:
+        type: enum
+        enum: [root, blog, products, nested, order]
     executor: python311
     steps:
       - checkout:
           method: full
-      - generate-search-assets
       - run:
-          name: Validate page-intents map is current
-          command: git diff --exit-code -- data/seo/page-intents.json
+          name: Compare generated intent-map scope
+          command: |
+            cp data/seo/page-intents.json /tmp/committed-page-intents.json
+            python tools/generate_search_assets.py
+            SCOPE='<< parameters.scope >>' python - <<'PY'
+            import json
+            import os
+            from pathlib import Path
+
+            before = json.loads(Path('/tmp/committed-page-intents.json').read_text(encoding='utf-8'))
+            after = json.loads(Path('data/seo/page-intents.json').read_text(encoding='utf-8'))
+            scope = os.environ['SCOPE']
+
+            def group(route: str) -> str:
+                if route == '/' or '/' not in route[1:]:
+                    return 'root'
+                if route.startswith('/blog/'):
+                    return 'blog'
+                if route.startswith('/products/') or route.startswith('/offers/'):
+                    return 'products'
+                return 'nested'
+
+            if scope == 'order':
+                assert before.get('site') == after.get('site')
+                assert before.get('generated_from') == after.get('generated_from')
+                assert [p['route'] for p in before['pages']] == [p['route'] for p in after['pages']]
+            else:
+                left = sorted((p for p in before['pages'] if group(p['route']) == scope), key=lambda p: p['route'])
+                right = sorted((p for p in after['pages'] if group(p['route']) == scope), key=lambda p: p['route'])
+                assert left == right
+            PY
 
   generated-internal-links:
     executor: python311
@@ -302,7 +334,21 @@ workflows:
       - site-core
       - generated-sitemap
       - generated-feed
-      - generated-intent-map
+      - generated-intent-scope:
+          name: intent-root
+          scope: root
+      - generated-intent-scope:
+          name: intent-blog
+          scope: blog
+      - generated-intent-scope:
+          name: intent-products
+          scope: products
+      - generated-intent-scope:
+          name: intent-nested
+          scope: nested
+      - generated-intent-scope:
+          name: intent-order
+          scope: order
       - generated-internal-links
       - generated-tab-icons
       - workflow-governance

@@ -1,40 +1,97 @@
 version: 2.1
 
 jobs:
-  authoritative_repo_probe:
+  authoritative_repo_verify:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
     steps:
       - run:
-          name: Verify authoritative repository access
+          name: Verify authoritative production source
           command: |
             set -euo pipefail
             git clone --depth 1 --branch main https://github.com/ClearGlassInc/ClearGlassIncorporated-Desmond.git /tmp/primary
             cd /tmp/primary
             sha="$(git rev-parse HEAD)"
             echo "authoritative_sha=${sha}"
-            test -s fly.toml
-            test -s services/clearglass_agent_service/Dockerfile
+            test -s .circleci/config.yml
+            test -s services/clearglass_agent_service/main.py
 
-  fly_token_probe:
+  control_plane_health:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
     steps:
       - run:
-          name: Verify Fly credential presence without disclosure
+          name: Verify published GitHub Control Plane
           command: |
             set -euo pipefail
-            if [ -n "${FLY_API_TOKEN:-}" ]; then
-              echo "fly_api_token_present=true"
-            else
-              echo "fly_api_token_present=false"
-              exit 2
-            fi
+            base="https://git-hub-control-plane--dezzy231.replit.app"
+            curl --fail --silent --show-error --location --retry 8 --retry-delay 5 --retry-all-errors "$base/" -o /tmp/root.html
+            test -s /tmp/root.html
+
+            curl --fail --silent --show-error --location --retry 8 --retry-delay 5 --retry-all-errors "$base/clearglass-agent/health" -o /tmp/health-primary.json
+            grep -qi 'clearglass-agent-service' /tmp/health-primary.json
+            grep -qi '"status"' /tmp/health-primary.json
+            grep -qi '"ok"' /tmp/health-primary.json
+
+            curl --fail --silent --show-error --location --retry 8 --retry-delay 5 --retry-all-errors "$base/api/clearglass-agent/health" -o /tmp/health-alias.json
+            grep -qi 'clearglass-agent-service' /tmp/health-alias.json
+            grep -qi '"status"' /tmp/health-alias.json
+            grep -qi '"ok"' /tmp/health-alias.json
+
+            echo "Published Control Plane and ClearGlass Agent health paths: PASS"
+
+  control_plane_auth_boundary:
+    docker:
+      - image: cimg/base:2026.07
+    resource_class: small
+    steps:
+      - run:
+          name: Verify unauthenticated protected agent access fails closed
+          command: |
+            set -euo pipefail
+            base="https://git-hub-control-plane--dezzy231.replit.app"
+            checked=false
+            for path in /clearglass-agent/policy /api/clearglass-agent/policy; do
+              code="$(curl --silent --show-error --location --output /tmp/policy.json --write-out '%{http_code}' --max-time 30 "$base$path" || true)"
+              case "$code" in
+                401|403|404|405|503)
+                  echo "$path fail-closed HTTP $code"
+                  checked=true
+                  ;;
+                200)
+                  echo "ERROR: unauthenticated protected policy endpoint returned HTTP 200 at $path" >&2
+                  exit 1
+                  ;;
+                *)
+                  echo "$path returned HTTP $code; continuing alternate route check"
+                  ;;
+              esac
+            done
+            [ "$checked" = "true" ] || { echo "ERROR: no protected policy route produced a safe fail-closed response" >&2; exit 1; }
+
+  website_production_verify:
+    docker:
+      - image: cimg/base:2026.07
+    resource_class: small
+    steps:
+      - run:
+          name: Verify ClearGlass production website
+          command: |
+            set -euo pipefail
+            curl --fail --silent --show-error --location --retry 8 --retry-delay 5 --retry-all-errors https://www.clearglassinc.com/ -o /tmp/home.html
+            grep -qi 'ClearGlass' /tmp/home.html
+            curl --fail --silent --show-error --location --retry 8 --retry-delay 5 --retry-all-errors https://www.clearglassinc.com/robots.txt -o /tmp/robots.txt
+            curl --fail --silent --show-error --location --retry 8 --retry-delay 5 --retry-all-errors https://www.clearglassinc.com/sitemap.xml -o /tmp/sitemap.xml
+            test -s /tmp/robots.txt
+            test -s /tmp/sitemap.xml
+            echo "ClearGlass production website: PASS"
 
 workflows:
-  production_bridge_prerequisites:
+  production_runtime_verify:
     jobs:
-      - authoritative_repo_probe
-      - fly_token_probe
+      - authoritative_repo_verify
+      - control_plane_health
+      - control_plane_auth_boundary
+      - website_production_verify

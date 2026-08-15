@@ -6,9 +6,6 @@ jobs:
       - image: cimg/base:2026.07
     resource_class: small
     working_directory: ~/project
-
-commands:
-  install-python-test-deps:
     steps:
       - run:
           name: Verify ClearGlass Agent health externally

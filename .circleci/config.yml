@@ -106,5 +106,15 @@ jobs:
 workflows:
   one_time_authorized_production_release:
     jobs:
+      - hold_production:
+          type: approval
+          filters:
+            branches:
+              only: main
       - authorized_production_release:
           context: production-deploy
+          requires:
+            - hold_production
+          filters:
+            branches:
+              only: main

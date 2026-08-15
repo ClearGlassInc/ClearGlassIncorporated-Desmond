@@ -33,6 +33,12 @@ commands:
             python -m pip install -r clearglass-commerce/control-plane/requirements.txt
             python -m pip check
 
+  generate-search-assets:
+    steps:
+      - run:
+          name: Generate search assets
+          command: python tools/generate_search_assets.py
+
 jobs:
   node-tooling:
     executor: node22
@@ -155,16 +161,35 @@ jobs:
           name: OSINT deck strict validation
           command: python scripts/osint_deck_release.py --strict
 
-  generated-search-assets:
+  generated-sitemap:
     executor: python311
     steps:
       - checkout:
           method: full
+      - generate-search-assets
       - run:
-          name: Validate generated search assets are current
-          command: |
-            python tools/generate_search_assets.py
-            git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
+          name: Validate sitemap is current
+          command: git diff --exit-code -- sitemap.xml
+
+  generated-feed:
+    executor: python311
+    steps:
+      - checkout:
+          method: full
+      - generate-search-assets
+      - run:
+          name: Validate Atom feed is current
+          command: git diff --exit-code -- feed.xml
+
+  generated-intent-map:
+    executor: python311
+    steps:
+      - checkout:
+          method: full
+      - generate-search-assets
+      - run:
+          name: Validate page-intents map is current
+          command: git diff --exit-code -- data/seo/page-intents.json
 
   generated-internal-links:
     executor: python311
@@ -275,7 +300,9 @@ workflows:
       - lint-automation
       - lint-platform
       - site-core
-      - generated-search-assets
+      - generated-sitemap
+      - generated-feed
+      - generated-intent-map
       - generated-internal-links
       - generated-tab-icons
       - workflow-governance

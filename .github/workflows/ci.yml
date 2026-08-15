@@ -68,13 +68,19 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-      - name: Install project and test dependencies
+          cache-dependency-path: |
+            requirements.txt
+            pyproject.toml
+            clearglass-commerce/control-plane/requirements.txt
+      - name: Install project, commerce, and test dependencies
         run: |
           python -m pip install --upgrade pip
           # Keep CI on the reviewed test-tool versions in requirements.txt.
-          # Without a constraints file, the broad project extras can silently
-          # upgrade pytest/plugins and make identical revisions non-reproducible.
+          # The configured suite also includes the commerce control-plane tests,
+          # so install their declared runtime dependencies before collection.
           python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
+          python -m pip install -r clearglass-commerce/control-plane/requirements.txt
+          python -m pip check
       - name: Run configured Python test suite
         run: python -m pytest --cov=artemis --cov-report=xml -q
 

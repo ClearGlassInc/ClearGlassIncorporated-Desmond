@@ -1,28 +1,27 @@
 version: 2.1
 
 jobs:
-  credential_probe:
+  fly_credential_present:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
     steps:
       - checkout
       - run:
-          name: Verify production deploy credential presence
+          name: Verify Fly credential presence without disclosure
           command: |
             set -euo pipefail
-            missing=0
             if [ -z "${FLY_API_TOKEN:-}" ]; then
               echo "FLY_API_TOKEN_PRESENT=false"
-              missing=1
-            else
-              echo "FLY_API_TOKEN_PRESENT=true"
-            fi
-            if [ "$missing" -ne 0 ]; then
-              echo "Production credential is not available in the CircleCI project environment."
               exit 2
             fi
-            echo "Production credential presence check: PASS"
+            echo "FLY_API_TOKEN_PRESENT=true"
+
+  agent_health_live:
+    docker:
+      - image: cimg/base:2026.07
+    resource_class: small
+    steps:
       - run:
           name: Verify current public agent health
           command: |
@@ -32,9 +31,11 @@ jobs:
               https://clearglass-agent-service.fly.dev/health \
               -o /tmp/health.json
             grep -q '"status"' /tmp/health.json
+            grep -q '"ok"' /tmp/health.json
             echo "Public agent health endpoint: PASS"
 
 workflows:
-  production_credential_probe:
+  production_probe:
     jobs:
-      - credential_probe
+      - fly_credential_present
+      - agent_health_live

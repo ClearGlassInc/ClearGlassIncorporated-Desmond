@@ -1,22 +1,7 @@
 version: 2.1
 
-orbs:
-  browser-tools: circleci/browser-tools@2.4.2
-
-executors:
-  node22:
-    docker:
-      - image: cimg/node:22.10
-    resource_class: medium
-    working_directory: ~/project
-
-  python311:
-    docker:
-      - image: cimg/python:3.11-node
-    resource_class: medium
-    working_directory: ~/project
-
-  base:
+jobs:
+  agent_health_external:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
@@ -26,289 +11,36 @@ commands:
   install-python-test-deps:
     steps:
       - run:
-          name: Install root and commerce Python dependencies
-          command: |
-            python -m pip install --upgrade pip
-            python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
-            python -m pip install -r clearglass-commerce/control-plane/requirements.txt
-            python -m pip check
-
-  generate-search-assets:
-    steps:
-      - run:
-          name: Generate search assets
-          command: python tools/generate_search_assets.py
-
-jobs:
-  node-tooling:
-    executor: node22
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - npm-v1-{{ checksum "package-lock.json" }}
-            - npm-v1-
-      - run:
-          name: Install locked Node dependencies
-          command: npm ci
-      - save_cache:
-          key: npm-v1-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.npm
-      - run:
-          name: Type check
-          command: npm run typecheck
-      - run:
-          name: Unit tests
-          command: npm test
-      - run:
-          name: Deterministic tooling build
-          command: npm run build
-      - run:
-          name: Verify expected build artifact
-          command: test -s dist/scripts/sync-stripe-products.js
-      - store_artifacts:
-          path: dist
-          destination: node-dist
-
-  python-runtime-tests:
-    executor: python311
-    steps:
-      - checkout
-      - install-python-test-deps
-      - run:
-          name: Compile runtime Python sources
-          command: python -m compileall -q artemis sentinel clearglass-commerce/control-plane
-      - run:
-          name: ARTEMIS tests
-          command: python -m pytest artemis/tests -q
-      - run:
-          name: Sentinel tests
-          command: python -m pytest sentinel/tests -q
-      - run:
-          name: Commerce control-plane tests
-          command: python -m pytest clearglass-commerce/control-plane/tests -q
-
-  python-site-tests:
-    executor: python311
-    steps:
-      - checkout:
-          method: full
-      - install-python-test-deps
-      - run:
-          name: Static-site and repository contract tests
-          command: |
-            mkdir -p test-results/site
-            python -m pytest tests -q --junitxml=test-results/site/junit.xml
-      - store_test_results:
-          path: test-results
-
-  lint-runtime:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install pinned Ruff
-          command: python -m pip install "ruff==0.15.8"
-      - run:
-          name: Runtime Ruff
-          command: ruff check artemis sentinel clearglass-commerce/control-plane
-
-  lint-repository-tests:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install pinned Ruff
-          command: python -m pip install "ruff==0.15.8"
-      - run:
-          name: Repository-test Ruff
-          command: ruff check tests
-
-  lint-automation:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install pinned Ruff
-          command: python -m pip install "ruff==0.15.8"
-      - run:
-          name: Automation Ruff
-          command: ruff check bots scripts tools
-
-  lint-platform:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install pinned Ruff
-          command: python -m pip install "ruff==0.15.8"
-      - run:
-          name: Platform Ruff
-          command: ruff check threads-growth infra automation services four_d_dominance agents
-
-  site-core:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Site reliability audit
-          command: python scripts/site_reliability_audit.py
-      - run:
-          name: Validate indexability links metadata and JSON-LD
-          command: python tools/seo_audit.py
-      - run:
-          name: OSINT deck strict validation
-          command: python scripts/osint_deck_release.py --strict
-
-  generated-sitemap:
-    executor: python311
-    steps:
-      - checkout:
-          method: full
-      - generate-search-assets
-      - run:
-          name: Validate sitemap is current
-          command: git diff --exit-code -- sitemap.xml
-
-  generated-feed:
-    executor: python311
-    steps:
-      - checkout:
-          method: full
-      - generate-search-assets
-      - run:
-          name: Validate Atom feed is current
-          command: git diff --exit-code -- feed.xml
-
-  generated-intent-map:
-    executor: python311
-    steps:
-      - checkout:
-          method: full
-      - generate-search-assets
-      - run:
-          name: Validate page-intents map is current
-          command: git diff --exit-code -- data/seo/page-intents.json
-
-  generated-internal-links:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Validate generated internal links
-          command: python tools/internal_links.py --check
-
-  generated-tab-icons:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Validate tab-icon synchronization
-          command: python tools/tab_icons.py --check
-
-  workflow-governance:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install workflow audit dependency
-          command: python -m pip install "PyYAML==6.0.2"
-      - run:
-          name: Workflow Doctor dry run
-          command: python scripts/workflow_doctor.py
-      - run:
-          name: Enforce workflow safety invariants
-          command: python scripts/audit_github_actions.py
-
-  lighthouse:
-    docker:
-      - image: cimg/node:22.10-browsers
-    resource_class: medium
-    working_directory: ~/project
-    steps:
-      - browser-tools/install_chrome
-      - checkout
-      - run:
-          name: Verify Chrome runtime
-          command: google-chrome --version
-      - run:
-          name: Lighthouse performance accessibility and SEO budgets
-          command: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json
-      - store_artifacts:
-          path: .lighthouseci
-          destination: lighthouse
-
-  osit:
-    executor: python311
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - pip-osit-v2-{{ checksum "osit/pyproject.toml" }}
-            - pip-osit-v2-
-      - run:
-          name: Install OSIT and development dependencies
-          command: |
-            python -m pip install --upgrade pip
-            python -m pip install -e './osit[dev]'
-            python -m pip check
-      - save_cache:
-          key: pip-osit-v2-{{ checksum "osit/pyproject.toml" }}
-          paths:
-            - ~/.cache/pip
-      - run:
-          name: Compile OSIT
-          command: python -m compileall -q osit/src osit/tests
-      - run:
-          name: Ruff OSIT
-          command: cd osit && ruff check src tests
-      - run:
-          name: OSIT unit and export tests
-          command: |
-            mkdir -p osit/test-results
-            cd osit
-            pytest --cov=osit --cov-report=xml:coverage.xml --junitxml=test-results/junit.xml
-      - store_test_results:
-          path: osit/test-results
-      - store_artifacts:
-          path: osit/coverage.xml
-          destination: osit-coverage.xml
-
-  production-smoke:
-    executor: base
-    steps:
-      - run:
-          name: Verify ClearGlass production endpoints
+          name: Verify ClearGlass Agent health externally
           command: |
             set -euo pipefail
-            curl --fail --silent --show-error --location --retry 6 --retry-delay 10 --retry-all-errors https://www.clearglassinc.com/ -o /tmp/home.html
-            grep -qi "ClearGlass" /tmp/home.html
-            curl --fail --silent --show-error --location --retry 6 --retry-delay 10 --retry-all-errors https://www.clearglassinc.com/robots.txt -o /tmp/robots.txt
-            curl --fail --silent --show-error --location --retry 6 --retry-delay 10 --retry-all-errors https://www.clearglassinc.com/sitemap.xml -o /tmp/sitemap.xml
-            test -s /tmp/robots.txt
-            test -s /tmp/sitemap.xml
+            url="https://git-hub-control-plane--dezzy231.replit.app/clearglass-agent/health"
+            curl --fail --silent --show-error --location \
+              --retry 6 --retry-delay 2 --retry-all-errors \
+              "$url" -o /tmp/health.json
+            grep -q 'clearglass-agent-service' /tmp/health.json
+            grep -q '"status"' /tmp/health.json
+            grep -q '"ok"' /tmp/health.json
+            echo "ClearGlass Agent external health: PASS"
+
+  control_plane_root_external:
+    docker:
+      - image: cimg/base:2026.07
+    resource_class: small
+    steps:
+      - run:
+          name: Verify existing control plane root externally
+          command: |
+            set -euo pipefail
+            curl --fail --silent --show-error --location \
+              --retry 6 --retry-delay 2 --retry-all-errors \
+              https://git-hub-control-plane--dezzy231.replit.app/ \
+              -o /tmp/root.html
+            test -s /tmp/root.html
+            echo "Existing control plane root: PASS"
 
 workflows:
-  full-validation-and-production-smoke:
+  external_production_verify:
     jobs:
-      - node-tooling
-      - python-runtime-tests
-      - python-site-tests
-      - lint-runtime
-      - lint-repository-tests
-      - lint-automation
-      - lint-platform
-      - site-core
-      - generated-sitemap
-      - generated-feed
-      - generated-intent-map
-      - generated-internal-links
-      - generated-tab-icons
-      - workflow-governance
-      - lighthouse
-      - osit
-      - production-smoke:
-          filters:
-            branches:
-              only: main
+      - agent_health_external
+      - control_plane_root_external

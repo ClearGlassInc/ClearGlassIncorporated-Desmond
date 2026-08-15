@@ -1,41 +1,43 @@
 version: 2.1
 
 jobs:
-  fly_credential_present:
+  replit_agent_health:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
     steps:
-      - checkout
       - run:
-          name: Verify Fly credential presence without disclosure
+          name: Verify ClearGlass Agent replacement health
           command: |
             set -euo pipefail
-            if [ -z "${FLY_API_TOKEN:-}" ]; then
-              echo "FLY_API_TOKEN_PRESENT=false"
-              exit 2
-            fi
-            echo "FLY_API_TOKEN_PRESENT=true"
+            url="https://git-hub-control-plane--dezzy231.replit.app/clearglass-agent/health"
+            curl --fail --silent --show-error --location \
+              --retry 6 --retry-delay 2 --retry-all-errors \
+              "$url" -o /tmp/health.json
+            grep -q '"service"' /tmp/health.json
+            grep -q 'clearglass-agent-service' /tmp/health.json
+            grep -q '"status"' /tmp/health.json
+            grep -q '"ok"' /tmp/health.json
+            echo "ClearGlass Agent replacement health: PASS"
 
-  agent_health_live:
+  replit_control_plane_root:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
     steps:
       - run:
-          name: Verify current public agent health
+          name: Verify existing GitHub Control Plane still responds
           command: |
             set -euo pipefail
             curl --fail --silent --show-error --location \
-              --retry 4 --retry-delay 2 --retry-all-errors \
-              https://clearglass-agent-service.fly.dev/health \
-              -o /tmp/health.json
-            grep -q '"status"' /tmp/health.json
-            grep -q '"ok"' /tmp/health.json
-            echo "Public agent health endpoint: PASS"
+              --retry 6 --retry-delay 2 --retry-all-errors \
+              https://git-hub-control-plane--dezzy231.replit.app/ \
+              -o /tmp/root.html
+            test -s /tmp/root.html
+            echo "Existing GitHub Control Plane root: PASS"
 
 workflows:
-  production_probe:
+  production_runtime_verify:
     jobs:
-      - fly_credential_present
-      - agent_health_live
+      - replit_agent_health
+      - replit_control_plane_root

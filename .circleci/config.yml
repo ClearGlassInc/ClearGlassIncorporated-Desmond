@@ -1,120 +1,27 @@
 version: 2.1
 
 jobs:
-  authorized_production_release:
+  production_credential_probe:
     docker:
       - image: cimg/base:2026.07
-    resource_class: medium
+    resource_class: small
     steps:
-      - setup_remote_docker
       - run:
-          name: Fetch authoritative production revision
+          name: Verify CircleCI execution and credential presence
           command: |
             set -euo pipefail
             git clone --depth 1 --branch main https://github.com/ClearGlassInc/ClearGlassIncorporated-Desmond.git /tmp/primary
             cd /tmp/primary
-            git rev-parse HEAD | tee /tmp/authoritative-sha.txt
-            test -s fly.toml
-            test -s services/clearglass_agent_service/Dockerfile
-      - run:
-          name: Validate restricted production credentials
-          command: |
-            set -euo pipefail
-            [ -n "${FLY_API_TOKEN:-}" ] || { echo "ERROR: FLY_API_TOKEN missing from production-deploy context" >&2; exit 2; }
-            echo "Production credential presence: PASS"
-      - run:
-          name: Install Fly CLI
-          command: |
-            set -euo pipefail
-            curl -sSfL https://fly.io/install.sh | sh
-            echo "$HOME/.fly/bin" >> "$BASH_ENV"
-            source "$BASH_ENV"
-            flyctl version
-      - run:
-          name: Record rollback image
-          command: |
-            set -euo pipefail
-            source "$BASH_ENV"
-            mkdir -p /tmp/release-evidence
-            status_json="$(flyctl status --app clearglass-agent-service --json)"
-            STATUS_JSON="$status_json" python3 - <<'PY' > /tmp/release-evidence/previous-image.txt
-            import json, os
-            data=json.loads(os.environ['STATUS_JSON'])
-            machines=data.get('Machines') or data.get('machines') or []
-            if not machines:
-                raise SystemExit('No running/known Fly machines found; refusing release without rollback image')
-            m=machines[0]
-            cfg=m.get('config') or m.get('Config') or {}
-            image=cfg.get('image') or cfg.get('Image') or ''
-            if not image:
-                raise SystemExit('Unable to determine previous Fly image; refusing release')
-            print(image)
-            PY
-            test -s /tmp/release-evidence/previous-image.txt
-            printf 'authoritative_sha=%s\n' "$(cat /tmp/authoritative-sha.txt)" > /tmp/release-evidence/release.txt
-      - run:
-          name: Deploy authoritative main to Fly.io
-          command: |
-            set -euo pipefail
-            source "$BASH_ENV"
-            cd /tmp/primary
-            sha="$(cat /tmp/authoritative-sha.txt)"
-            echo "Deploying authoritative ClearGlassInc main revision ${sha}."
-            flyctl deploy --app clearglass-agent-service --remote-only
-      - run:
-          name: Verify production health or rollback
-          command: |
-            set -euo pipefail
-            source "$BASH_ENV"
-            url="https://clearglass-agent-service.fly.dev/health"
-            ok=false
-            for attempt in 1 2 3 4 5 6; do
-              code="$(curl -sS -o /tmp/health.json -w '%{http_code}' --max-time 30 "$url" || true)"
-              if [ "$code" = "200" ]; then
-                ok=true
-                break
-              fi
-              echo "Health attempt ${attempt}: HTTP ${code}; retrying in 10s"
-              sleep 10
-            done
-            if [ "$ok" = "true" ]; then
-              cat /tmp/health.json
-              printf 'health=PASS\n' >> /tmp/release-evidence/release.txt
-              echo "Production release verification: PASS"
-              exit 0
+            sha="$(git rev-parse HEAD)"
+            echo "authoritative_sha=${sha}"
+            if [ -n "${FLY_API_TOKEN:-}" ]; then
+              echo "fly_api_token_present=true"
+            else
+              echo "fly_api_token_present=false"
+              exit 2
             fi
 
-            echo "Production verification failed; rolling back to recorded immutable image." >&2
-            previous="$(cat /tmp/release-evidence/previous-image.txt)"
-            flyctl deploy --app clearglass-agent-service --image "$previous"
-            for attempt in 1 2 3 4 5 6; do
-              code="$(curl -sS -o /tmp/rollback-health.json -w '%{http_code}' --max-time 30 "$url" || true)"
-              if [ "$code" = "200" ]; then
-                printf 'health=FAIL\nrollback=PASS\n' >> /tmp/release-evidence/release.txt
-                echo "Rollback verification: PASS"
-                exit 1
-              fi
-              sleep 10
-            done
-            printf 'health=FAIL\nrollback=FAIL\n' >> /tmp/release-evidence/release.txt
-            echo "ERROR: deployment and rollback verification both failed" >&2
-            exit 1
-      - store_artifacts:
-          path: /tmp/release-evidence
-          destination: production-release-evidence
-
 workflows:
-  one_time_authorized_production_release:
+  production_credential_probe:
     jobs:
-      - hold_production:
-          type: approval
-          filters:
-            branches:
-              only: main
-      - authorized_production_release:
-          context: production-deploy
-          requires:
-            - hold_production
-          filters:
-            branches:
-              only: main
+      - production_credential_probe

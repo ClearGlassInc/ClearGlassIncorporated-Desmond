@@ -1,7 +1,34 @@
 version: 2.1
 
-orbs:
-  browser-tools: circleci/browser-tools@2.4.2
+parameters:
+  run_validation:
+    type: boolean
+    default: true
+  run_github_automation_checks:
+    type: boolean
+    default: false
+  run_agent_health_checks:
+    type: boolean
+    default: false
+  deploy_staging:
+    type: boolean
+    default: false
+  deploy_production:
+    type: boolean
+    default: false
+  enable_agents:
+    type: boolean
+    default: false
+  deploy_animations:
+    type: boolean
+    default: false
+  emergency_stop:
+    type: boolean
+    default: false
+  target_environment:
+    type: enum
+    enum: ["none", "staging", "production"]
+    default: "none"
 
 executors:
   node22:
@@ -16,258 +43,677 @@ executors:
     resource_class: medium
     working_directory: ~/project
 
-  base:
+  deploy311:
     docker:
-      - image: cimg/base:2026.07
-    resource_class: small
+      - image: cimg/python:3.11-node
+    resource_class: medium
     working_directory: ~/project
 
 commands:
-  install-python-test-deps:
+  install_python_test_deps:
     steps:
       - run:
-          name: Install root and commerce Python dependencies
+          name: Install project test dependencies
           command: |
-            python -m pip install --upgrade pip
-            python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
+            set -euo pipefail
+            python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2" "ruff==0.15.8"
             python -m pip install -r clearglass-commerce/control-plane/requirements.txt
             python -m pip check
 
+  run_workflow_yaml_parse:
+    steps:
+      - run:
+          name: Parse every GitHub workflow as YAML
+          command: |
+            set -euo pipefail
+            python - <<'PY'
+            from pathlib import Path
+            import yaml
+
+            failures = []
+            workflows = sorted(Path(".github/workflows").glob("*.y*ml"))
+            if not workflows:
+                raise SystemExit("No .github/workflows YAML files found.")
+            for path in workflows:
+                try:
+                    yaml.safe_load(path.read_text(encoding="utf-8"))
+                except Exception as exc:
+                    failures.append(f"{path}: {exc}")
+            if failures:
+                raise SystemExit("Workflow YAML validation failed:\n" + "\n".join(failures))
+            print(f"Validated YAML syntax for {len(workflows)} GitHub workflow files.")
+            PY
+
 jobs:
-  node-tooling:
-    executor: node22
+  security_preflight:
+    executor: python311
+    environment:
+      RUN_VALIDATION: << pipeline.parameters.run_validation >>
+      RUN_GITHUB_AUTOMATION_CHECKS: << pipeline.parameters.run_github_automation_checks >>
+      RUN_AGENT_HEALTH_CHECKS: << pipeline.parameters.run_agent_health_checks >>
+      DEPLOY_STAGING: << pipeline.parameters.deploy_staging >>
+      DEPLOY_PRODUCTION: << pipeline.parameters.deploy_production >>
+      ENABLE_AGENTS: << pipeline.parameters.enable_agents >>
+      DEPLOY_ANIMATIONS: << pipeline.parameters.deploy_animations >>
+      EMERGENCY_STOP: << pipeline.parameters.emergency_stop >>
+      TARGET_ENVIRONMENT: << pipeline.parameters.target_environment >>
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - npm-v1-{{ checksum "package-lock.json" }}
-            - npm-v1-
+      - run:
+          name: Validate parameters and deployment eligibility
+          command: bash scripts/ci/preflight.sh
+
+  checkout_and_lockfile_verify:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Verify exact checkout revision
+          command: |
+            set -euo pipefail
+            actual="$(git rev-parse HEAD)"
+            test "$actual" = "$CIRCLE_SHA1"
+            printf 'revision=%s\n' "$actual"
+      - run:
+          name: Verify lock and constraint files
+          command: |
+            set -euo pipefail
+            test -s package-lock.json
+            test -s package.json
+            test -s pyproject.toml
+            test -s requirements.txt
+            test -s services/clearglass_agent_service/requirements.txt
+            npm ci --ignore-scripts
+            python3 - <<'PY'
+            from pathlib import Path
+
+            service = Path("services/clearglass_agent_service/requirements.txt")
+            bad = []
+            for raw in service.read_text(encoding="utf-8").splitlines():
+                line = raw.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if "==" not in line:
+                    bad.append(line)
+            if bad:
+                raise SystemExit(
+                    "Agent service requirements must be exact pins; non-pinned entries: "
+                    + ", ".join(bad)
+                )
+            print("Agent service dependency file uses exact version pins.")
+            PY
+            mkdir -p ci-evidence
+            sha256sum package-lock.json pyproject.toml requirements.txt \
+              services/clearglass_agent_service/requirements.txt \
+              > ci-evidence/dependency-input-sha256.txt
+      - store_artifacts:
+          path: ci-evidence
+          destination: dependency-inputs
+
+  lint_typecheck_unit_test:
+    executor: python311
+    steps:
+      - checkout
+      - install_python_test_deps
       - run:
           name: Install locked Node dependencies
           command: npm ci
-      - save_cache:
-          key: npm-v1-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.npm
       - run:
-          name: Type check
+          name: Shell and Python formatting/syntax checks
+          command: |
+            set -euo pipefail
+            bash -n scripts/ci/preflight.sh
+            bash -n scripts/ci/install_flyctl.sh
+            bash -n scripts/ci/fly_deploy.sh
+            bash -n scripts/ci/fly_rollback.sh
+            bash -n scripts/ci/post_deploy_verify.sh
+            ruff format --check scripts/ci/security_gate.py
+            python -m compileall -q artemis sentinel services/clearglass_agent_service scripts/ci
+      - run:
+          name: Lint
+          command: |
+            set -euo pipefail
+            ruff check artemis sentinel clearglass-commerce/control-plane tests bots scripts tools \
+              threads-growth infra automation services four_d_dominance agents
+      - run:
+          name: Type checks
           command: npm run typecheck
       - run:
-          name: Unit tests
-          command: npm test
+          name: Unit and contract tests
+          command: |
+            set -euo pipefail
+            mkdir -p test-results
+            npm test
+            python -m pytest -q --junitxml=test-results/pytest.xml
       - run:
-          name: Deterministic tooling build
-          command: npm run build
+          name: Deterministic project build
+          command: |
+            set -euo pipefail
+            npm run build
+            test -s dist/scripts/sync-stripe-products.js
       - run:
-          name: Verify expected build artifact
-          command: test -s dist/scripts/sync-stripe-products.js
+          name: Repository release gates
+          command: |
+            set -euo pipefail
+            python scripts/site_reliability_audit.py
+            python tools/seo_audit.py
+            python scripts/osint_deck_release.py --strict
+            python tools/generate_search_assets.py
+            git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
+            python tools/internal_links.py --check
+            python tools/tab_icons.py --check
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: tests
       - store_artifacts:
           path: dist
           destination: node-dist
 
-  python-runtime-tests:
+  dependency_and_secret_scan:
     executor: python311
     steps:
       - checkout
-      - install-python-test-deps
+      - install_python_test_deps
       - run:
-          name: Compile runtime Python sources
-          command: python -m compileall -q artemis sentinel clearglass-commerce/control-plane
-      - run:
-          name: ARTEMIS tests
-          command: python -m pytest artemis/tests -q
-      - run:
-          name: Sentinel tests
-          command: python -m pytest sentinel/tests -q
-      - run:
-          name: Commerce control-plane tests
-          command: python -m pytest clearglass-commerce/control-plane/tests -q
-
-  python-site-tests:
-    executor: python311
-    steps:
-      - checkout
-      - install-python-test-deps
-      - run:
-          name: Static-site and repository contract tests
-          command: |
-            mkdir -p test-results/site
-            python -m pytest tests -q --junitxml=test-results/site/junit.xml
-      - store_test_results:
-          path: test-results
-
-  lint-runtime:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install pinned Ruff
-          command: python -m pip install "ruff==0.15.8"
-      - run:
-          name: Runtime Ruff
-          command: ruff check artemis sentinel clearglass-commerce/control-plane
-
-  lint-repository-tests:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install pinned Ruff
-          command: python -m pip install "ruff==0.15.8"
-      - run:
-          name: Repository-test Ruff
-          command: ruff check tests
-
-  lint-automation:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install pinned Ruff
-          command: python -m pip install "ruff==0.15.8"
-      - run:
-          name: Automation Ruff
-          command: ruff check bots scripts tools
-
-  lint-platform:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install pinned Ruff
-          command: python -m pip install "ruff==0.15.8"
-      - run:
-          name: Platform Ruff
-          command: ruff check threads-growth infra automation services four_d_dominance agents
-
-  site-core:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Site reliability audit
-          command: python scripts/site_reliability_audit.py
-      - run:
-          name: Validate indexability links metadata and JSON-LD
-          command: python tools/seo_audit.py
-      - run:
-          name: OSINT deck strict validation
-          command: python scripts/osint_deck_release.py --strict
-
-  generated-assets:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Validate generated search assets are current
-          command: |
-            python tools/generate_search_assets.py
-            git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
-      - run:
-          name: Validate generated internal links
-          command: python tools/internal_links.py --check
-      - run:
-          name: Validate tab-icon synchronization
-          command: python tools/tab_icons.py --check
-
-  workflow-governance:
-    executor: python311
-    steps:
-      - checkout
-      - run:
-          name: Install workflow audit dependency
-          command: python -m pip install "PyYAML==6.0.2"
-      - run:
-          name: Workflow Doctor dry run
-          command: python scripts/workflow_doctor.py
-      - run:
-          name: Enforce workflow safety invariants
-          command: python scripts/audit_github_actions.py
-
-  lighthouse:
-    docker:
-      - image: cimg/node:22.10-browsers
-    resource_class: medium
-    working_directory: ~/project
-    steps:
-      - browser-tools/install_chrome
-      - checkout
-      - run:
-          name: Verify Chrome runtime
-          command: google-chrome --version
-      - run:
-          name: Lighthouse performance accessibility and SEO budgets
-          command: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json
-      - store_artifacts:
-          path: .lighthouseci
-          destination: lighthouse
-
-  osit:
-    executor: python311
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - pip-osit-v2-{{ checksum "osit/pyproject.toml" }}
-            - pip-osit-v2-
-      - run:
-          name: Install OSIT and development dependencies
-          command: |
-            python -m pip install --upgrade pip
-            python -m pip install -e './osit[dev]'
-            python -m pip check
-      - save_cache:
-          key: pip-osit-v2-{{ checksum "osit/pyproject.toml" }}
-          paths:
-            - ~/.cache/pip
-      - run:
-          name: Compile OSIT
-          command: python -m compileall -q osit/src osit/tests
-      - run:
-          name: Ruff OSIT
-          command: cd osit && ruff check src tests
-      - run:
-          name: OSIT unit and export tests
-          command: |
-            mkdir -p osit/test-results
-            cd osit
-            pytest --cov=osit --cov-report=xml:coverage.xml --junitxml=test-results/junit.xml
-      - store_test_results:
-          path: osit/test-results
-      - store_artifacts:
-          path: osit/coverage.xml
-          destination: osit-coverage.xml
-
-  production-smoke:
-    executor: base
-    steps:
-      - run:
-          name: Verify ClearGlass production endpoints
+          name: Install security scanners
           command: |
             set -euo pipefail
-            curl --fail --silent --show-error --location --retry 6 --retry-delay 10 --retry-all-errors https://www.clearglassinc.com/ -o /tmp/home.html
+            python -m pip install "pip-audit==2.10.1" "detect-secrets==1.5.0"
+            npm ci --ignore-scripts
+      - run:
+          name: Dependency vulnerability scans
+          command: |
+            set -euo pipefail
+            mkdir -p security-reports
+            npm audit --json > security-reports/npm-audit.json || true
+            pip-audit --local --format json --output security-reports/pip-audit.json || true
+            python scripts/ci/security_gate.py \
+              --allowlist scripts/ci/security-allowlist.txt \
+              --npm security-reports/npm-audit.json \
+              --pip security-reports/pip-audit.json
+      - run:
+          name: Scan changed files for secrets
+          command: |
+            set -euo pipefail
+            mkdir -p security-reports
+            git fetch --no-tags origin main --depth=200 >/dev/null 2>&1 || true
+            base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            if [ -n "$base" ] && [ "$base" != "$(git rev-parse HEAD)" ]; then
+              mapfile -t candidates < <(
+                git diff --name-only --diff-filter=ACMR "$base"...HEAD |
+                  grep -E '\.(py|js|mjs|cjs|ts|tsx|json|ya?ml|toml|md|html|css|sh|txt)$' || true
+              )
+            else
+              mapfile -t candidates < <(
+                git diff-tree --no-commit-id --name-only -r HEAD |
+                  grep -E '\.(py|js|mjs|cjs|ts|tsx|json|ya?ml|toml|md|html|css|sh|txt)$' || true
+              )
+            fi
+
+            files=()
+            for path in "${candidates[@]:-}"; do
+              [ -f "$path" ] || continue
+              case "$path" in
+                *.example|*.example.*|*/fixtures/*|*/testdata/*) continue ;;
+              esac
+              files+=("$path")
+            done
+
+            if [ "${#files[@]}" -eq 0 ]; then
+              printf '{"results": {}}\n' > security-reports/detect-secrets.json
+            else
+              detect-secrets scan "${files[@]}" > security-reports/detect-secrets.json
+            fi
+
+            python - <<'PY'
+            import json
+            from pathlib import Path
+
+            report = json.loads(
+                Path("security-reports/detect-secrets.json").read_text(encoding="utf-8")
+            )
+            results = report.get("results", {})
+            findings = sum(len(items) for items in results.values())
+            if findings:
+                paths = ", ".join(sorted(results))
+                raise SystemExit(
+                    f"Secret scan found {findings} candidate(s) in changed files: {paths}"
+                )
+            print("Secret scan found no candidates in changed files.")
+            PY
+      - store_artifacts:
+          path: security-reports
+          destination: security
+
+  github_automation_validation:
+    parameters:
+      extended:
+        type: boolean
+        default: false
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install workflow parser
+          command: python -m pip install "PyYAML==6.0.2"
+      - run_workflow_yaml_parse
+      - run:
+          name: Enforce workflow safety and immutable action pins
+          command: python scripts/audit_github_actions.py
+      - when:
+          condition: << parameters.extended >>
+          steps:
+            - run:
+                name: Extended GitHub automation checks
+                command: python scripts/workflow_doctor.py
+      - run:
+          name: Confirm validation-only behavior
+          command: |
+            set -euo pipefail
+            echo "GitHub automation validation is read-only."
+            echo "This CircleCI job does not trigger, rerun, approve, cancel, or modify GitHub Actions."
+
+  animation_build_and_smoke_test:
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install locked Node dependencies
+          command: npm ci
+      - run:
+          name: Build tooling and animation assets
+          command: |
+            set -euo pipefail
+            npm run build
+            while IFS= read -r -d '' file; do
+              node --check "$file"
+            done < <(find assets/js -type f -name '*.js' -print0)
+      - run:
+          name: Static-site smoke test
+          command: |
+            set -euo pipefail
+            python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/clearglass-http.log 2>&1 &
+            server_pid=$!
+            trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+            for attempt in 1 2 3 4 5; do
+              if curl --fail --silent http://127.0.0.1:4173/ -o /tmp/home.html; then
+                break
+              fi
+              sleep 1
+            done
             grep -qi "ClearGlass" /tmp/home.html
-            curl --fail --silent --show-error --location --retry 6 --retry-delay 10 --retry-all-errors https://www.clearglassinc.com/robots.txt -o /tmp/robots.txt
-            curl --fail --silent --show-error --location --retry 6 --retry-delay 10 --retry-all-errors https://www.clearglassinc.com/sitemap.xml -o /tmp/sitemap.xml
-            test -s /tmp/robots.txt
-            test -s /tmp/sitemap.xml
+            test -s assets/js/platform.js
+      - run:
+          name: Package immutable frontend evidence artifact
+          command: |
+            set -euo pipefail
+            mkdir -p release-artifacts
+            paths=(index.html assets/js)
+            [ -d assets/css ] && paths+=(assets/css)
+            tar -czf "release-artifacts/frontend-${CIRCLE_SHA1}.tar.gz" "${paths[@]}"
+            sha256sum "release-artifacts/frontend-${CIRCLE_SHA1}.tar.gz" \
+              > "release-artifacts/frontend-${CIRCLE_SHA1}.sha256"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - release-artifacts
+      - store_artifacts:
+          path: release-artifacts
+          destination: frontend
+
+  agent_health_and_contract_tests:
+    parameters:
+      extended:
+        type: boolean
+        default: false
+    executor: python311
+    steps:
+      - checkout
+      - run:
+          name: Install pinned agent-service dependencies
+          command: |
+            set -euo pipefail
+            python -m pip install -r services/clearglass_agent_service/requirements.txt
+            python -m pip check
+      - run:
+          name: Validate agent import and OpenAPI schema
+          command: |
+            set -euo pipefail
+            PYTHONPATH=services python - <<'PY'
+            from clearglass_agent_service.main import app
+
+            schema = app.openapi()
+            paths = schema.get("paths", {})
+            for required in ("/health", "/policy", "/v1/signal"):
+                assert required in paths, f"missing required agent route: {required}"
+            print("Agent import and OpenAPI route contract: PASS")
+            PY
+      - run:
+          name: Sandbox health, permission, and safe-failure checks
+          command: |
+            set -euo pipefail
+            export PYTHONPATH=services
+            export CLEARGLASS_AGENT_API_KEYS="ci-sandbox-key"
+            export CLEARGLASS_ALLOWED_ORGS="ClearGlassInc"
+            uvicorn clearglass_agent_service.main:app \
+              --host 127.0.0.1 --port 18080 >/tmp/agent.log 2>&1 &
+            pid=$!
+            trap 'kill "$pid" 2>/dev/null || true' EXIT
+
+            for attempt in 1 2 3 4 5 6; do
+              if curl --fail --silent http://127.0.0.1:18080/health \
+                -o /tmp/agent-health.json; then
+                break
+              fi
+              sleep 1
+            done
+            grep -q '"status"' /tmp/agent-health.json
+
+            schema_code="$(curl --silent --output /tmp/agent-openapi.json --write-out '%{http_code}' \
+              http://127.0.0.1:18080/openapi.json)"
+            test "$schema_code" = "200"
+
+            missing_code="$(curl --silent --output /tmp/missing-auth.json --write-out '%{http_code}' \
+              http://127.0.0.1:18080/policy)"
+            case "$missing_code" in 401|403) ;; *) exit 1 ;; esac
+
+            bad_code="$(curl --silent --output /tmp/bad-key.json --write-out '%{http_code}' \
+              -H 'X-ClearGlass-Org: ClearGlassInc' \
+              -H 'X-ClearGlass-API-Key: invalid-key' \
+              http://127.0.0.1:18080/policy)"
+            test "$bad_code" = "401"
+
+            good_code="$(curl --silent --output /tmp/policy.json --write-out '%{http_code}' \
+              -H 'X-ClearGlass-Org: ClearGlassInc' \
+              -H 'X-ClearGlass-API-Key: ci-sandbox-key' \
+              http://127.0.0.1:18080/policy)"
+            test "$good_code" = "200"
+
+            unsafe_code="$(curl --silent --output /tmp/unsafe-signal.json --write-out '%{http_code}' \
+              -H 'Content-Type: application/json' \
+              -H 'X-ClearGlass-Org: ClearGlassInc' \
+              -H 'X-ClearGlass-API-Key: ci-sandbox-key' \
+              --data '{"target":"track person privately","mission":"recon","domain":"web"}' \
+              http://127.0.0.1:18080/v1/signal)"
+            test "$unsafe_code" = "422"
+            echo "Sandbox health, schema, permissions, and safe-failure behavior: PASS"
+      - when:
+          condition: << parameters.extended >>
+          steps:
+            - run:
+                name: Extended sandbox stability checks
+                command: |
+                  set -euo pipefail
+                  export PYTHONPATH=services
+                  export CLEARGLASS_AGENT_API_KEYS="ci-sandbox-key"
+                  export CLEARGLASS_ALLOWED_ORGS="ClearGlassInc"
+                  uvicorn clearglass_agent_service.main:app \
+                    --host 127.0.0.1 --port 18081 >/tmp/agent-extended.log 2>&1 &
+                  pid=$!
+                  trap 'kill "$pid" 2>/dev/null || true' EXIT
+                  for attempt in 1 2 3 4 5 6; do
+                    if curl --fail --silent http://127.0.0.1:18081/health >/dev/null; then
+                      break
+                    fi
+                    sleep 1
+                  done
+                  for _ in $(seq 1 20); do
+                    curl --fail --silent http://127.0.0.1:18081/health >/dev/null
+                  done
+                  for _ in $(seq 1 10); do
+                    code="$(curl --silent --output /dev/null --write-out '%{http_code}' \
+                      http://127.0.0.1:18081/policy)"
+                    case "$code" in 401|403) ;; *) exit 1 ;; esac
+                  done
+                  echo "Extended sandbox stability and repeated fail-closed checks: PASS"
+      - run:
+          name: Agent activation and rate-limit safety assertion
+          command: |
+            set -euo pipefail
+            if [ "<< pipeline.parameters.enable_agents >>" = "true" ]; then
+              echo "ERROR: enable_agents=true requested, but this repository has no audited activation adapter or enforceable production rate-limit control."
+              echo "Configure REPLACE_ME_AGENT_ACTIVATION_ADAPTER and its rate-limit policy before enabling autonomous activation."
+              exit 2
+            fi
+            echo "Runtime rate-limit activation gate: NOT CONFIGURED; autonomous activation remains disabled."
+            echo "Fail-closed outcome: PASS"
+
+  deploy_staging:
+    executor: deploy311
+    environment:
+      TARGET_ENVIRONMENT: staging
+      EMERGENCY_STOP: << pipeline.parameters.emergency_stop >>
+      ENABLE_AGENTS: << pipeline.parameters.enable_agents >>
+      DEPLOY_ANIMATIONS: << pipeline.parameters.deploy_animations >>
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - run:
+          name: Deploy immutable staging artifact
+          command: bash scripts/ci/fly_deploy.sh staging
+      - persist_to_workspace:
+          root: .
+          paths:
+            - deploy-evidence
+      - store_artifacts:
+          path: deploy-evidence
+          destination: deploy-staging
+
+  deploy_production:
+    executor: deploy311
+    environment:
+      TARGET_ENVIRONMENT: production
+      EMERGENCY_STOP: << pipeline.parameters.emergency_stop >>
+      ENABLE_AGENTS: << pipeline.parameters.enable_agents >>
+      DEPLOY_ANIMATIONS: << pipeline.parameters.deploy_animations >>
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - run:
+          name: Deploy immutable production artifact
+          command: bash scripts/ci/fly_deploy.sh production
+      - persist_to_workspace:
+          root: .
+          paths:
+            - deploy-evidence
+      - store_artifacts:
+          path: deploy-evidence
+          destination: deploy-production
+
+  post_deploy_verify:
+    parameters:
+      target_environment:
+        type: enum
+        enum: ["staging", "production"]
+    executor: deploy311
+    environment:
+      VERIFY_ENVIRONMENT: << parameters.target_environment >>
+      EMERGENCY_STOP: << pipeline.parameters.emergency_stop >>
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - run:
+          name: Verify deployed image, health, critical flow, and synthetic error rate
+          command: bash scripts/ci/post_deploy_verify.sh "<< parameters.target_environment >>"
+      - when:
+          condition:
+            equal: [staging, << parameters.target_environment >>]
+          steps:
+            - run:
+                name: Automatic staging rollback on verification failure
+                command: bash scripts/ci/fly_rollback.sh staging
+                when: on_fail
+      - when:
+          condition:
+            equal: [production, << parameters.target_environment >>]
+          steps:
+            - run:
+                name: Record production rollback readiness on verification failure
+                command: |
+                  set -euo pipefail
+                  echo "Production verification failed. Automatic rollback is not executed."
+                  echo "Use the recorded previous immutable image after incident review and approval:"
+                  cat deploy-evidence/production-rollback.txt
+                when: on_fail
+      - store_artifacts:
+          path: deploy-evidence
+          destination: post-deploy
 
 workflows:
-  full-validation-and-production-smoke:
+  validate:
+    when: pipeline.parameters.run_validation and not pipeline.parameters.deploy_staging and not pipeline.parameters.deploy_production
     jobs:
-      - node-tooling
-      - python-runtime-tests
-      - python-site-tests
-      - lint-runtime
-      - lint-repository-tests
-      - lint-automation
-      - lint-platform
-      - site-core
-      - generated-assets
-      - workflow-governance
-      - lighthouse
-      - osit
-      - production-smoke:
+      - security_preflight:
+          context: ci-readonly
+      - checkout_and_lockfile_verify:
+          context: ci-readonly
+          requires:
+            - security_preflight
+      - lint_typecheck_unit_test:
+          context: ci-readonly
+          requires:
+            - checkout_and_lockfile_verify
+      - dependency_and_secret_scan:
+          context: ci-readonly
+          requires:
+            - lint_typecheck_unit_test
+      - github_automation_validation:
+          context: ci-readonly
+          extended: << pipeline.parameters.run_github_automation_checks >>
+          requires:
+            - dependency_and_secret_scan
+      - animation_build_and_smoke_test:
+          context: ci-readonly
+          requires:
+            - github_automation_validation
+      - agent_health_and_contract_tests:
+          context: ci-readonly
+          extended: << pipeline.parameters.run_agent_health_checks >>
+          requires:
+            - animation_build_and_smoke_test
+
+  staging_release:
+    when: pipeline.parameters.deploy_staging
+    jobs:
+      - security_preflight:
+          context: ci-readonly
+      - checkout_and_lockfile_verify:
+          context: ci-readonly
+          requires:
+            - security_preflight
+      - lint_typecheck_unit_test:
+          context: ci-readonly
+          requires:
+            - checkout_and_lockfile_verify
+      - dependency_and_secret_scan:
+          context: ci-readonly
+          requires:
+            - lint_typecheck_unit_test
+      - github_automation_validation:
+          context: ci-readonly
+          extended: true
+          requires:
+            - dependency_and_secret_scan
+      - animation_build_and_smoke_test:
+          context: ci-readonly
+          requires:
+            - github_automation_validation
+      - agent_health_and_contract_tests:
+          context: ci-readonly
+          extended: true
+          requires:
+            - animation_build_and_smoke_test
+      - deploy_staging:
+          context: staging-deploy
+          requires:
+            - agent_health_and_contract_tests
+      - post_deploy_verify:
+          name: post_deploy_verify_staging
+          context: staging-deploy
+          target_environment: staging
+          requires:
+            - deploy_staging
+
+  production_release:
+    when: pipeline.parameters.deploy_production
+    jobs:
+      - security_preflight:
+          context: ci-readonly
           filters:
-            branches:
-              only: main
+            tags:
+              only: /.*/
+      - checkout_and_lockfile_verify:
+          context: ci-readonly
+          requires:
+            - security_preflight
+          filters:
+            tags:
+              only: /.*/
+      - lint_typecheck_unit_test:
+          context: ci-readonly
+          requires:
+            - checkout_and_lockfile_verify
+          filters:
+            tags:
+              only: /.*/
+      - dependency_and_secret_scan:
+          context: ci-readonly
+          requires:
+            - lint_typecheck_unit_test
+          filters:
+            tags:
+              only: /.*/
+      - github_automation_validation:
+          context: ci-readonly
+          extended: true
+          requires:
+            - dependency_and_secret_scan
+          filters:
+            tags:
+              only: /.*/
+      - animation_build_and_smoke_test:
+          context: ci-readonly
+          requires:
+            - github_automation_validation
+          filters:
+            tags:
+              only: /.*/
+      - agent_health_and_contract_tests:
+          context: ci-readonly
+          extended: true
+          requires:
+            - animation_build_and_smoke_test
+          filters:
+            tags:
+              only: /.*/
+      - hold_production:
+          type: approval
+          requires:
+            - agent_health_and_contract_tests
+          filters:
+            tags:
+              only: /.*/
+      - deploy_production:
+          context: production-deploy
+          requires:
+            - hold_production
+          filters:
+            tags:
+              only: /.*/
+      - post_deploy_verify:
+          name: post_deploy_verify_production
+          context: production-deploy
+          target_environment: production
+          requires:
+            - deploy_production
+          filters:
+            tags:
+              only: /.*/

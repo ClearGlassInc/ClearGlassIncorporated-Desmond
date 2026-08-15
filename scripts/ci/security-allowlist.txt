@@ -1,0 +1,8 @@
+# Version-controlled dependency vulnerability exceptions.
+# Keep empty by default. Add only reviewed exact identifiers, one per line:
+#   npm:<numeric-advisory-source>
+#   npm-package:<package>   # fallback only when npm exposes no advisory source
+#   pypa:<PYSEC/CVE/GHSA-ID>
+#
+# Every exception must include justification in the reviewing commit/PR and be
+# removed as soon as the dependency is patched.

@@ -15,7 +15,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  scope-check:
+    name: Deployment scope check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Confirm deployment repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_REPOSITORY" = "ClearGlassInc/ClearGlassIncorporated-Desmond" ]; then
+            echo "Authoritative production repository: Pages deployment is eligible."
+          else
+            echo "Mirror/non-production repository: Pages deployment intentionally skipped."
+            echo "Authoritative production repository is ClearGlassInc/ClearGlassIncorporated-Desmond."
+          fi
+
   build:
+    if: ${{ github.repository == 'ClearGlassInc/ClearGlassIncorporated-Desmond' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -99,6 +116,7 @@ jobs:
           path: dist
 
   deploy:
+    if: ${{ github.repository == 'ClearGlassInc/ClearGlassIncorporated-Desmond' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: build
@@ -123,6 +141,7 @@ jobs:
         run: echo "Published ${{ steps.deployment.outputs.page_url }}"
 
   verify-production:
+    if: ${{ github.repository == 'ClearGlassInc/ClearGlassIncorporated-Desmond' }}
     name: Production verification
     runs-on: ubuntu-latest
     timeout-minutes: 15

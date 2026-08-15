@@ -378,64 +378,98 @@ jobs:
             python -m pip install -r services/clearglass_agent_service/requirements.txt
             python -m pip check
       - run:
-          name: Validate agent import, schemas, and permission boundary
+          name: Validate agent import and OpenAPI schema
           command: |
             set -euo pipefail
             PYTHONPATH=services python - <<'PY'
-            from fastapi.testclient import TestClient
             from clearglass_agent_service.main import app
 
-            client = TestClient(app)
-            health = client.get("/health")
-            assert health.status_code == 200, health.text
-            schema = client.get("/openapi.json")
-            assert schema.status_code == 200, schema.text
-            protected = client.get("/policy")
-            assert protected.status_code in {401, 403, 503}, protected.text
-            print("Agent import, health, schema, and fail-closed permission boundary: PASS")
+            schema = app.openapi()
+            paths = schema.get("paths", {})
+            for required in ("/health", "/policy", "/v1/signal"):
+                assert required in paths, f"missing required agent route: {required}"
+            print("Agent import and OpenAPI route contract: PASS")
             PY
+      - run:
+          name: Sandbox health, permission, and safe-failure checks
+          command: |
+            set -euo pipefail
+            export PYTHONPATH=services
+            export CLEARGLASS_AGENT_API_KEYS="ci-sandbox-key"
+            export CLEARGLASS_ALLOWED_ORGS="ClearGlassInc"
+            uvicorn clearglass_agent_service.main:app \
+              --host 127.0.0.1 --port 18080 >/tmp/agent.log 2>&1 &
+            pid=$!
+            trap 'kill "$pid" 2>/dev/null || true' EXIT
+
+            for attempt in 1 2 3 4 5 6; do
+              if curl --fail --silent http://127.0.0.1:18080/health \
+                -o /tmp/agent-health.json; then
+                break
+              fi
+              sleep 1
+            done
+            grep -q '"status"' /tmp/agent-health.json
+
+            schema_code="$(curl --silent --output /tmp/agent-openapi.json --write-out '%{http_code}' \
+              http://127.0.0.1:18080/openapi.json)"
+            test "$schema_code" = "200"
+
+            missing_code="$(curl --silent --output /tmp/missing-auth.json --write-out '%{http_code}' \
+              http://127.0.0.1:18080/policy)"
+            case "$missing_code" in 401|403) ;; *) exit 1 ;; esac
+
+            bad_code="$(curl --silent --output /tmp/bad-key.json --write-out '%{http_code}' \
+              -H 'X-ClearGlass-Org: ClearGlassInc' \
+              -H 'X-ClearGlass-API-Key: invalid-key' \
+              http://127.0.0.1:18080/policy)"
+            test "$bad_code" = "401"
+
+            good_code="$(curl --silent --output /tmp/policy.json --write-out '%{http_code}' \
+              -H 'X-ClearGlass-Org: ClearGlassInc' \
+              -H 'X-ClearGlass-API-Key: ci-sandbox-key' \
+              http://127.0.0.1:18080/policy)"
+            test "$good_code" = "200"
+
+            unsafe_code="$(curl --silent --output /tmp/unsafe-signal.json --write-out '%{http_code}' \
+              -H 'Content-Type: application/json' \
+              -H 'X-ClearGlass-Org: ClearGlassInc' \
+              -H 'X-ClearGlass-API-Key: ci-sandbox-key' \
+              --data '{"target":"track person privately","mission":"recon","domain":"web"}' \
+              http://127.0.0.1:18080/v1/signal)"
+            test "$unsafe_code" = "422"
+            echo "Sandbox health, schema, permissions, and safe-failure behavior: PASS"
       - when:
           condition: << parameters.extended >>
           steps:
             - run:
-                name: Extended sandbox HTTP contract checks
+                name: Extended sandbox stability checks
                 command: |
                   set -euo pipefail
                   export PYTHONPATH=services
                   export CLEARGLASS_AGENT_API_KEYS="ci-sandbox-key"
                   export CLEARGLASS_ALLOWED_ORGS="ClearGlassInc"
                   uvicorn clearglass_agent_service.main:app \
-                    --host 127.0.0.1 --port 18080 >/tmp/agent.log 2>&1 &
+                    --host 127.0.0.1 --port 18081 >/tmp/agent-extended.log 2>&1 &
                   pid=$!
                   trap 'kill "$pid" 2>/dev/null || true' EXIT
-
                   for attempt in 1 2 3 4 5 6; do
-                    if curl --fail --silent http://127.0.0.1:18080/health \
-                      -o /tmp/agent-health.json; then
+                    if curl --fail --silent http://127.0.0.1:18081/health >/dev/null; then
                       break
                     fi
                     sleep 1
                   done
-                  grep -q '"status"' /tmp/agent-health.json
-
-                  bad_code="$(curl --silent --output /tmp/bad-key.json --write-out '%{http_code}' \
-                    -H 'X-ClearGlass-Org: ClearGlassInc' \
-                    -H 'X-ClearGlass-API-Key: invalid-key' \
-                    http://127.0.0.1:18080/policy)"
-                  test "$bad_code" = "401"
-
-                  good_code="$(curl --silent --output /tmp/policy.json --write-out '%{http_code}' \
-                    -H 'X-ClearGlass-Org: ClearGlassInc' \
-                    -H 'X-ClearGlass-API-Key: ci-sandbox-key' \
-                    http://127.0.0.1:18080/policy)"
-                  test "$good_code" = "200"
-
                   for _ in $(seq 1 20); do
-                    curl --fail --silent http://127.0.0.1:18080/health >/dev/null
+                    curl --fail --silent http://127.0.0.1:18081/health >/dev/null
                   done
-                  echo "Extended sandbox health and permission contract checks: PASS"
+                  for _ in $(seq 1 10); do
+                    code="$(curl --silent --output /dev/null --write-out '%{http_code}' \
+                      http://127.0.0.1:18081/policy)"
+                    case "$code" in 401|403) ;; *) exit 1 ;; esac
+                  done
+                  echo "Extended sandbox stability and repeated fail-closed checks: PASS"
       - run:
-          name: Agent activation safety assertion
+          name: Agent activation and rate-limit safety assertion
           command: |
             set -euo pipefail
             if [ "<< pipeline.parameters.enable_agents >>" = "true" ]; then
@@ -443,7 +477,8 @@ jobs:
               echo "Configure REPLACE_ME_AGENT_ACTIVATION_ADAPTER and its rate-limit policy before enabling autonomous activation."
               exit 2
             fi
-            echo "Autonomous agent activation remains disabled."
+            echo "Runtime rate-limit activation gate: NOT CONFIGURED; autonomous activation remains disabled."
+            echo "Fail-closed outcome: PASS"
 
   deploy_staging:
     executor: deploy311

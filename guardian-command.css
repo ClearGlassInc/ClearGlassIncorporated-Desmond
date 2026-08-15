@@ -17,3 +17,50 @@
 @media(max-width:760px){.gce{padding-inline:10px}.gce-command{grid-template-columns:1fr}.gce-command-actions{grid-row:2;overflow:auto}.gce-status{grid-row:3}.gce-intel-strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}.gce-kpi{min-width:170px;scroll-snap-align:start}.gce-workspace{display:block}.gce-nav{display:flex;overflow-x:auto;margin-bottom:8px}.gce-nav>p,.gce-doctrine{display:none}.gce-nav>button{min-width:max-content}.gce-core-head{display:block}.gce-legend{margin-top:12px}.gce-topology{height:275px}.gce-topology svg{transform:scale(.85)}.gce-node{display:none}.gce-modules{grid-template-columns:1fr}.gce-decisions{display:block;margin-top:8px}.gce-decision{border-left:0;border-top:1px solid var(--gce-line);padding:14px 0}.gce-timeline{display:block}.gce-timeline ol{display:block;margin-top:15px}.gce-timeline li{padding-bottom:12px}.gce-dialog dl{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.gce *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 @media(forced-colors:active){.gce,.gce button{forced-color-adjust:auto}.gce-kpi:after{background:CanvasText}}
+
+/* GUARDIAN MISSION RED — theme-only override.
+   Scoped by :has(.gce) so shared CSS remains untouched on every other page. */
+html:has(.gce){
+  --void:#040206!important;--black:#08050a!important;--depth:#0e0810!important;--lift:#150b14!important;--lift2:#1c1019!important;
+  --bg:#040206!important;--bg0:#040206!important;--bg-0:#040206!important;--bg-1:#08050a!important;--bg2:#0e0810!important;--bg3:#150b14!important;--bg4:#1c1019!important;
+  --card:rgba(17,7,9,.82)!important;--card2:rgba(26,10,12,.82)!important;--panel:rgba(17,7,9,.82)!important;--panel-2:rgba(26,10,12,.82)!important;--surface:rgba(17,7,9,.82)!important;
+  --glass:rgba(14,5,8,.78)!important;--glass-strong:rgba(17,7,9,.92)!important;--glass-2:rgba(26,10,12,.68)!important;--glass-hi:rgba(255,255,255,.04)!important;
+  --glass-border:rgba(255,27,61,.18)!important;--glass-brd:rgba(255,27,61,.18)!important;--glass-brd-strong:rgba(255,64,96,.34)!important;
+  --text:#f5e8dd!important;--text-2:rgba(245,232,221,.72)!important;--text-3:rgba(245,232,221,.55)!important;--text-4:rgba(245,232,221,.32)!important;
+  --txt:#f5e8dd!important;--txt-0:#f5e8dd!important;--txt-1:#f5e8dd!important;--txt-2:rgba(245,232,221,.72)!important;--txt-3:rgba(245,232,221,.55)!important;--fg:#f5e8dd!important;
+  --bone:#f5e8dd!important;--ash:rgba(245,232,221,.55)!important;--ash-d:rgba(245,232,221,.32)!important;--dim:rgba(180,160,170,.18)!important;--muted:rgba(245,232,221,.55)!important;
+  --border:rgba(255,27,61,.18)!important;--border-hi:rgba(255,64,96,.34)!important;--bdr:rgba(255,27,61,.18)!important;--bdr2:rgba(255,27,61,.10)!important;--bdr3:rgba(255,27,61,.06)!important;--line:rgba(255,27,61,.18)!important;--line-2:rgba(255,27,61,.10)!important;
+  --crimson:#ff1b3d!important;--crimson-2:#ff4060!important;--crimson-deep:#b30e2a!important;--crimson-glow:rgba(255,27,61,.45)!important;--crimson-soft:rgba(255,27,61,.12)!important;--crimson-line:rgba(255,27,61,.22)!important;--crimson-dim:rgba(255,27,61,.06)!important;
+  --red:#ff1b3d!important;--red-2:#ff4060!important;--red-light:rgba(255,27,61,.12)!important;--red-border:rgba(255,27,61,.24)!important;--pink:#ff4060!important;--magenta:#ff4060!important;
+  --amber:#f59e0b!important;--green:#10b981!important;
+  --shadow:0 18px 60px rgba(0,0,0,.52)!important;--sh:0 18px 60px rgba(0,0,0,.52)!important;--drop:0 24px 70px rgba(0,0,0,.58)!important;
+  background:#040206!important;
+}
+html:has(.gce) body{background:radial-gradient(circle at 50% 8%,rgba(179,14,42,.13),transparent 34%),linear-gradient(180deg,#040206 0%,#080307 48%,#040206 100%)!important;color:#f5e8dd!important;}
+html:has(.gce) body::before{display:block!important;}
+html:has(.gce) .scanlines{display:block!important;}
+html:has(.gce) .scanlines::before{background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,27,61,.018) 3px,rgba(255,27,61,.018) 4px)!important;}
+html:has(.gce) .scanlines::after{background:linear-gradient(180deg,transparent,rgba(255,27,61,.025),transparent)!important;}
+html:has(.gce) .hero{background:transparent!important;}
+html:has(.gce) .hero::before{background:linear-gradient(rgba(255,27,61,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,27,61,.025) 1px,transparent 1px)!important;}
+html:has(.gce) .hero-orb.o1{background:radial-gradient(circle,rgba(255,27,61,.18) 0%,transparent 70%)!important;}
+html:has(.gce) .hero-orb.o2{background:radial-gradient(circle,rgba(179,14,42,.14) 0%,transparent 70%)!important;}
+html:has(.gce) .nav-inner,html:has(.gce) nav,html:has(.gce) header{background:rgba(8,3,7,.9)!important;border-color:rgba(255,27,61,.2)!important;color:#f5e8dd!important;box-shadow:0 0 0 1px rgba(255,27,61,.05),0 12px 44px rgba(0,0,0,.62),inset 0 1px rgba(255,64,96,.05)!important;}
+html:has(.gce) nav a,html:has(.gce) header a,html:has(.gce) .nav a,html:has(.gce) .nav-logo,html:has(.gce) .nav-back{color:#f5e8dd!important;}
+html:has(.gce) .nav-cta,html:has(.gce) a.nav-cta{background:linear-gradient(135deg,#ff1b3d,#b30e2a)!important;color:#fff!important;border-color:rgba(255,64,96,.45)!important;box-shadow:0 0 28px rgba(255,27,61,.24),0 8px 24px rgba(0,0,0,.45)!important;}
+html:has(.gce) h1,html:has(.gce) h2,html:has(.gce) h3,html:has(.gce) h4,html:has(.gce) h5,html:has(.gce) h6{color:#f5e8dd!important;}
+html:has(.gce) p,html:has(.gce) li{color:rgba(245,232,221,.62)!important;}
+html:has(.gce) a{color:#f5e8dd!important;}
+html:has(.gce) .h-grad,html:has(.gce) .crystal-text,html:has(.gce) .cx{background:linear-gradient(135deg,#ff4060 0%,#ff1b3d 52%,#b30e2a 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;}
+html:has(.gce) .h-version,html:has(.gce) .sec-kicker,html:has(.gce) [class*="kicker"],html:has(.gce) [class*="eyebrow"]{color:#ff7088!important;}
+html:has(.gce) .card,html:has(.gce) .win,html:has(.gce) .window,html:has(.gce) .glass,html:has(.gce) .glass2,html:has(.gce) .glass-card,html:has(.gce) [class*="-card"],html:has(.gce) [class*="card-"],html:has(.gce) [class*="-panel"],html:has(.gce) [class*="panel-"],html:has(.gce) [class*="-tile"],html:has(.gce) [class*="tile-"]{background:linear-gradient(145deg,rgba(20,7,11,.88),rgba(7,3,6,.84))!important;border-color:rgba(255,27,61,.18)!important;color:#f5e8dd!important;box-shadow:inset 0 1px rgba(255,255,255,.035),0 22px 56px rgba(0,0,0,.48)!important;}
+html:has(.gce) .card:hover,html:has(.gce) [class*="-card"]:hover,html:has(.gce) [class*="card-"]:hover{border-color:rgba(255,64,96,.42)!important;box-shadow:0 0 34px rgba(255,27,61,.12),0 28px 64px rgba(0,0,0,.55)!important;}
+html:has(.gce) .btn-primary,html:has(.gce) .btn-dark,html:has(.gce) .cta-btn,html:has(.gce) [class*="btn-primary"],html:has(.gce) [class*="btn-dark"],html:has(.gce) [class*="btn-cta"]{background:linear-gradient(135deg,#ff1b3d,#b30e2a)!important;color:#fff!important;border-color:rgba(255,64,96,.38)!important;box-shadow:0 0 24px rgba(255,27,61,.18),0 8px 22px rgba(0,0,0,.4)!important;}
+html:has(.gce) .btn-glass,html:has(.gce) [class*="btn-glass"]{background:rgba(18,7,10,.76)!important;color:#f5e8dd!important;border-color:rgba(255,27,61,.2)!important;}
+html:has(.gce) .redline{--rl-red:#ff1b3d;--rl-red-2:#ff6170;--rl-red-deep:#8f0f1a;--rl-crimson:#dc143c;--rl-glow:rgba(255,27,61,.42);--rl-soft:rgba(255,27,61,.10);--rl-line:rgba(255,27,61,.26);--rl-dim:rgba(255,27,61,.06);--rl-panel:rgba(17,7,9,.78);--rl-panel-2:rgba(26,10,12,.88);--rl-ink:#ffe9ea;--rl-ash:rgba(255,223,226,.62);--rl-ash-d:rgba(255,210,214,.36);}
+html:has(.gce) .gce{--gce-cyan:#ff4060;--gce-violet:#ff7088;--gce-red:#ff1b3d;--gce-green:#56e3a6;--gce-amber:#ffc56e;--gce-line:rgba(255,27,61,.20);background:radial-gradient(circle at 50% 25%,rgba(179,14,42,.15),transparent 38%),linear-gradient(180deg,rgba(6,2,5,.97),rgba(4,2,4,.99))!important;color:#f5e8dd!important;}
+html:has(.gce) .gce:before{background-image:linear-gradient(rgba(255,27,61,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,27,61,.08) 1px,transparent 1px)!important;}
+html:has(.gce) .guardian-glass-command,html:has(.gce) .guardian-glass-intelligence,html:has(.gce) .guardian-glass-tactical,html:has(.gce) .guardian-glass-modal,html:has(.gce) .guardian-glass-critical{background:linear-gradient(145deg,rgba(20,7,11,.9),rgba(6,3,5,.84))!important;border-color:rgba(255,27,61,.2)!important;}
+html:has(.gce) .gce-sigil,html:has(.gce) .gce-topology-note span,html:has(.gce) .gce-timeline>div>span{color:#ff4060!important;border-color:#ff4060!important;}
+html:has(.gce) .gce-kpi:after,html:has(.gce) .gce-timeline li i{background:#ff1b3d!important;}
+html:has(.gce) .gce-nav>button:hover,html:has(.gce) .gce-nav>button:focus-visible,html:has(.gce) .gce-nav>button.active{background:linear-gradient(90deg,rgba(255,27,61,.12),transparent)!important;border-left-color:#ff1b3d!important;color:#fff!important;}

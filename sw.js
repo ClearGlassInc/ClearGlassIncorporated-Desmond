@@ -112,6 +112,7 @@ self.addEventListener("fetch", function (e) {
 
   // Renderer-stability controls and the unified station skin must never be
   // served stale after a hotfix. These use the network-first path.
+  // Homepage contrast CSS is included so visual hotfixes are visible immediately.
   var isCriticalRuntime = url.pathname === "/platform.js" ||
     url.pathname === "/security-stack-fusion.css" ||
     url.pathname === "/assets/css/neon-practical.css" ||

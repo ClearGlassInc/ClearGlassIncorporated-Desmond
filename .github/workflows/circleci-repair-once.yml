@@ -122,8 +122,6 @@ jobs:
           )
           PY
 
-          # Use repository-owned generators for the exact site contracts rather
-          # than hand-authoring their derived output.
           python tools/design_system.py
           python tools/generate_search_assets.py
           python tools/security_release_manifest.py
@@ -147,10 +145,9 @@ jobs:
           python tools/seo_audit.py
           python tools/security_release_manifest.py --check
 
-          # Re-run deterministic generation and require a clean tree for every
-          # generated search artifact.
+          sha256sum sitemap.xml feed.xml data/seo/page-intents.json > /tmp/search-assets.sha256
           python tools/generate_search_assets.py
-          git diff --exit-code -- sitemap.xml feed.xml data/seo/page-intents.json
+          sha256sum --check /tmp/search-assets.sha256
 
       - name: Commit validated repair and remove one-time workflow
         shell: bash

@@ -30,13 +30,10 @@ if str(ROOT) not in sys.path:
 from tools import authority_network as core  # noqa: E402
 from tools.authority_network import *  # noqa: E402,F403
 
-_RELEASE_SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {
-    "blog/graph-topology-multi-agent-research-workflow.html": (
-        "Graph Topology Beats One Giant Context",
-        "planner-worker-verifier multi-agent research workflow",
-        "blog",
-    ),
-}
+_RELEASE_SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {}
+# blog/graph-topology-multi-agent-research-workflow.html graduated to the legacy
+# graph in internal_links.py; removed from this staging area to avoid the
+# "supplemental page duplicates legacy graph" validation error.
 
 for _path, (_title, _description, _cluster) in _RELEASE_SUPPLEMENTAL_PAGES.items():
     core.SUPPLEMENTAL_PAGES.setdefault(

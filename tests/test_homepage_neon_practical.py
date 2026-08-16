@@ -32,41 +32,36 @@ def test_neon_rig_keeps_physical_detail_layers() -> None:
 
 
 def test_neon_pulse_is_smooth_and_reduced_motion_safe() -> None:
+    # Neon overlay was intentionally disabled; verify it is suppressed, not
+    # partially active. No keyframes should be present, and any animation
+    # declaration must be the suppression rule (animation: none).
     stylesheet = (ROOT / "assets/css/neon-practical.css").read_text(encoding="utf-8")
 
-    assert "--cg-neon-period: 5.6s" in stylesheet
-    assert "--cg-neon-ease: cubic-bezier(.37, 0, .63, 1)" in stylesheet
-    assert "@keyframes cgNeonCore" in stylesheet
-    assert "@keyframes cgNeonGas" in stylesheet
-    assert "@keyframes cgNeonHalo" in stylesheet
-    assert "@keyframes cgNeonSurfaceBounce" in stylesheet
-    assert "prefers-reduced-motion: reduce" in stylesheet
-
-    reduced_motion = stylesheet.split("prefers-reduced-motion: reduce", 1)[1]
-    assert ".cg-neon-phosphor" in reduced_motion
-    assert ".hero-seal-media::after" in reduced_motion
+    assert "@keyframes" not in stylesheet
+    assert "animation: none" in stylesheet
 
 
 def test_core_pulse_does_not_animate_blur_radius() -> None:
+    # No neon keyframes exist in the disabled stylesheet, so no blur can animate.
     stylesheet = (ROOT / "assets/css/neon-practical.css").read_text(encoding="utf-8")
-    core_keyframes = stylesheet.split("@keyframes cgNeonCore", 1)[1].split("@keyframes", 1)[0]
 
-    assert "filter:" not in core_keyframes
-    assert "blur(" not in core_keyframes
+    assert "@keyframes cgNeonCore" not in stylesheet
+    assert "blur(" not in stylesheet
 
 
 def test_physical_tube_edge_remains_unblurred() -> None:
+    # With the overlay disabled the neon rig and tube elements are hidden; the
+    # suppression rule must declare display: none rather than relying on blur removal.
     stylesheet = (ROOT / "assets/css/neon-practical.css").read_text(encoding="utf-8")
-    tube_rule = stylesheet.split(".cg-neon-tube-glass {", 1)[1].split("}", 1)[0]
 
-    assert "stroke-width: 8.4" in tube_rule
-    assert "blur(" not in tube_rule
-    assert "drop-shadow" in tube_rule
+    assert ".hero-neon-rig" in stylesheet
+    assert "display: none" in stylesheet
 
 
 def test_neon_has_density_and_dynamic_range_tuning() -> None:
+    # The neon overlay is disabled; the stylesheet must not activate any
+    # emissive effects regardless of display density or dynamic range.
     stylesheet = (ROOT / "assets/css/neon-practical.css").read_text(encoding="utf-8")
 
-    assert "@media (min-resolution: 2dppx)" in stylesheet
-    assert "@media (dynamic-range: high)" in stylesheet
-    assert "color(display-p3" in stylesheet
+    assert "@media (min-resolution: 2dppx)" not in stylesheet
+    assert "color(display-p3" not in stylesheet

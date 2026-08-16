@@ -5,15 +5,17 @@ jobs:
     docker:
       - image: cimg/base:2026.07
     resource_class: small
-    working_directory: ~/project
     steps:
       - run:
           name: Verify ClearGlass Agent health externally
+          no_output_timeout: 5m
           command: |
             set -euo pipefail
             url="https://git-hub-control-plane--dezzy231.replit.app/clearglass-agent/health"
             curl --fail --silent --show-error --location \
+              --connect-timeout 10 --max-time 30 \
               --retry 6 --retry-delay 2 --retry-all-errors \
+              --retry-max-time 120 \
               "$url" -o /tmp/health.json
             grep -q 'clearglass-agent-service' /tmp/health.json
             grep -q '"status"' /tmp/health.json
@@ -27,10 +29,13 @@ jobs:
     steps:
       - run:
           name: Verify existing control plane root externally
+          no_output_timeout: 5m
           command: |
             set -euo pipefail
             curl --fail --silent --show-error --location \
+              --connect-timeout 10 --max-time 30 \
               --retry 6 --retry-delay 2 --retry-all-errors \
+              --retry-max-time 120 \
               https://git-hub-control-plane--dezzy231.replit.app/ \
               -o /tmp/root.html
             test -s /tmp/root.html

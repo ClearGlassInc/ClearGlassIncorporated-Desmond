@@ -1,0 +1,542 @@
+{
+  "_comment": "AEGIS v6.0 Enhanced Configuration Template",
+  "_version": "6.0",
+  "_build": "20260123-SECURITY-PATCH",
+  "_description": "Complete configuration template for AEGIS deployment",
+  
+  "deployment": {
+    "_description": "Deployment configuration settings",
+    
+    "mode": {
+      "_description": "Primary deployment mode",
+      "_options": ["Dashboard", "Deploy", "Hunt", "Audit", "Enterprise", "Baseline"],
+      "default": "Dashboard"
+    },
+    
+    "burlington_mode": {
+      "_description": "Enable maximum security hardening (stricter thresholds)",
+      "_impact": "Reduces false positive threshold but increases detection sensitivity",
+      "enabled": false
+    },
+    
+    "auto_remediate": {
+      "_description": "Automatically respond to critical threats (Score >= 90)",
+      "_warning": "Can cause service disruption - test thoroughly before enabling",
+      "_actions": [
+        "Network isolation for credential dumping",
+        "Process termination + isolation for ransomware",
+        "IP blocking for brute force attacks",
+        "IP blocking for C2 beaconing"
+      ],
+      "enabled": false,
+      "require_mfa": true
+    }
+  },
+  
+  "features": {
+    "_description": "Feature flags for advanced capabilities",
+    
+    "threat_intelligence": {
+      "_description": "Real-time IP and file hash lookups against threat databases",
+      "_requirements": "API keys required (AbuseIPDB, VirusTotal)",
+      "_benefits": "Adds 10-15 points to threat scores for confirmed malicious indicators",
+      "enabled": false,
+      
+      "providers": {
+        "abuseipdb": {
+          "enabled": true,
+          "api_key_env_variable": "AEGIS_ABUSEIPDB_KEY",
+          "rate_limit": "1000 requests/day (free tier)",
+          "signup_url": "https://www.abuseipdb.com/"
+        },
+        "virustotal": {
+          "enabled": true,
+          "api_key_env_variable": "AEGIS_VIRUSTOTAL_KEY",
+          "rate_limit": "4 requests/minute (free tier)",
+          "signup_url": "https://www.virustotal.com/"
+        }
+      }
+    },
+    
+    "ml_detection": {
+      "_description": "Machine learning-based anomaly detection using behavioral baselines",
+      "_requirements": "Minimum 10 samples over 7 days",
+      "_detects": [
+        "Unusual process counts",
+        "Abnormal network activity",
+        "CPU/Memory spikes",
+        "Unknown processes not in baseline"
+      ],
+      "enabled": false,
+      
+      "baseline": {
+        "collection_interval_hours": 4,
+        "minimum_samples": 10,
+        "recommended_samples": 50,
+        "collection_duration_days": 7,
+        "auto_collect": true
+      }
+    },
+    
+    "cloud_alerts": {
+      "_description": "Cloud-based alerting for critical threats",
+      "_supported": ["Slack"],
+      "enabled": false,
+      
+      "slack": {
+        "webhook_url": "",
+        "_storage": "Encrypted using Windows DPAPI",
+        "_note": "Set via command line: -SlackWebhook parameter or Dashboard Settings",
+        "alert_threshold": 70,
+        "include_metadata": true
+      }
+    }
+  },
+  
+  "thresholds": {
+    "_description": "Detection threshold configuration",
+    "_note": "Burlington mode automatically applies stricter values",
+    
+    "standard_mode": {
+      "failed_logons": {
+        "count": 5,
+        "_description": "Failed logon attempts from same IP before alert",
+        "_window": "15 minutes",
+        "threat_score": 85
+      },
+      "file_modifications": {
+        "count": 100,
+        "_description": "Files modified in user directories before ransomware alert",
+        "_window": "15 minutes",
+        "threat_score": 90
+      },
+      "network_connections": {
+        "count": 15,
+        "_description": "Connections to same remote IP before beaconing alert",
+        "_window": "15 minutes",
+        "threat_score": 75
+      },
+      "privilege_events": {
+        "count": 3,
+        "_description": "Privilege escalation events before alert",
+        "_window": "15 minutes",
+        "threat_score": 88
+      },
+      "lsass_access": {
+        "count": 1,
+        "_description": "LSASS process access attempts (credential dumping)",
+        "_window": "15 minutes",
+        "threat_score": 95
+      }
+    },
+    
+    "burlington_mode": {
+      "_description": "Maximum security mode with strictest thresholds",
+      "failed_logons": {
+        "count": 2,
+        "threat_score": 90
+      },
+      "file_modifications": {
+        "count": 50,
+        "threat_score": 95
+      },
+      "network_connections": {
+        "count": 15,
+        "threat_score": 80
+      },
+      "privilege_events": {
+        "count": 3,
+        "threat_score": 90
+      },
+      "lsass_access": {
+        "count": 1,
+        "threat_score": 98
+      }
+    },
+    
+    "ml_anomaly": {
+      "score_threshold": 75,
+      "_description": "Minimum anomaly score to trigger ML-based alert",
+      "process_deviation_percent": 30,
+      "network_deviation_percent": 50,
+      "cpu_spike_threshold": 90,
+      "unknown_process_limit": 3
+    },
+    
+    "threat_intelligence": {
+      "confidence_threshold": 75,
+      "_description": "Minimum threat intel confidence score to enhance alert",
+      "cache_duration_hours": 24
+    }
+  },
+  
+  "scanning": {
+    "_description": "Threat scanning configuration",
+    
+    "scan_window_minutes": {
+      "default": 15,
+      "minimum": 1,
+      "maximum": 1440,
+      "_description": "Historical time window for event log analysis"
+    },
+    
+    "scan_schedule": {
+      "_description": "Automated scanning schedule (via Task Scheduler)",
+      "enabled": true,
+      "frequency": "hourly",
+      "start_time": "00:00",
+      "randomize_start": true,
+      "randomize_window_minutes": 10
+    },
+    
+    "file_scan_paths": {
+      "_description": "Paths to monitor for ransomware activity",
+      "paths": [
+        "C:\\Users\\*\\Documents",
+        "C:\\Users\\*\\Desktop",
+        "C:\\Users\\*\\Downloads"
+      ],
+      "parallel_jobs": true,
+      "job_timeout_seconds": 30
+    },
+    
+    "event_log_optimization": {
+      "use_xpath_queries": true,
+      "_performance_gain": "5x faster than FilterHashtable",
+      "max_events_per_query": 2000,
+      "cache_events": true,
+      "cache_duration_seconds": 60
+    }
+  },
+  
+  "logging": {
+    "_description": "Logging and forensics configuration",
+    
+    "log_paths": {
+      "base": "C:\\ProgramData\\ClearGlassCorp\\AEGIS",
+      "logs": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Logs",
+      "incidents": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Logs\\Incidents",
+      "forensics": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Forensics",
+      "backups": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Backups",
+      "baseline": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Baseline",
+      "config": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Config"
+    },
+    
+    "log_rotation": {
+      "enabled": true,
+      "compress_after_days": 7,
+      "delete_after_days": 30,
+      "compression_format": "zip"
+    },
+    
+    "log_levels": {
+      "console": "INFO",
+      "file": "DEBUG",
+      "_options": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+    },
+    
+    "forensic_collection": {
+      "auto_collect_on_threat": true,
+      "min_threat_score": 90,
+      "include_processes": true,
+      "include_network": true,
+      "include_services": true,
+      "include_scheduled_tasks": true,
+      "include_registry_autoruns": true
+    },
+    
+    "incident_retention": {
+      "keep_all": false,
+      "retention_days": 90,
+      "archive_after_days": 30
+    }
+  },
+  
+  "backup": {
+    "_description": "Configuration backup settings",
+    
+    "auto_backup": {
+      "enabled": true,
+      "frequency": "daily",
+      "retention_count": 10,
+      "include_baseline": true
+    },
+    
+    "backup_location": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Backups",
+    
+    "backup_contents": {
+      "configuration": true,
+      "baseline_data": true,
+      "thresholds": true,
+      "whitelist": false
+    }
+  },
+  
+  "enterprise": {
+    "_description": "Enterprise deployment settings",
+    
+    "active_directory": {
+      "enabled": false,
+      "default_ou": "OU=Servers,DC=company,DC=com",
+      "deployment_retry_count": 3,
+      "retry_delay_seconds": 5,
+      "skip_offline_hosts": true,
+      "parallel_deployment": true,
+      "max_parallel_jobs": 10
+    },
+    
+    "deployment_package": {
+      "network_share": "\\\\fileserver\\AEGIS-Deploy",
+      "script_name": "AEGIS-v6.0-Enhanced.ps1",
+      "deploy_to_path": "C:\\Program Files\\AEGIS"
+    },
+    
+    "scheduled_task": {
+      "create": true,
+      "task_name": "AEGIS-v6",
+      "run_as": "SYSTEM",
+      "trigger": "At startup",
+      "enabled": true
+    },
+    
+    "group_policy": {
+      "use_gpo": false,
+      "gpo_name": "AEGIS-v6-Deployment",
+      "link_to_ou": "OU=Servers,DC=company,DC=com"
+    }
+  },
+  
+  "performance": {
+    "_description": "Performance tuning options",
+    
+    "resource_limits": {
+      "max_cpu_percent": 15,
+      "max_memory_mb": 512,
+      "scan_timeout_seconds": 300,
+      "parallel_jobs_enabled": true
+    },
+    
+    "optimization": {
+      "garbage_collection_interval": 10,
+      "cache_event_logs": true,
+      "use_parallel_file_scan": true,
+      "dashboard_refresh_seconds": 5
+    }
+  },
+  
+  "security": {
+    "_description": "Security configuration for AEGIS itself",
+    
+    "credential_storage": {
+      "encryption": "DPAPI",
+      "_description": "Windows Data Protection API for webhook encryption",
+      "webhook_storage_path": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Config\\webhook.enc"
+    },
+    
+    "api_keys": {
+      "storage_method": "environment_variables",
+      "_variables": {
+        "abuseipdb": "AEGIS_ABUSEIPDB_KEY",
+        "virustotal": "AEGIS_VIRUSTOTAL_KEY"
+      },
+      "_note": "Set via: [Environment]::SetEnvironmentVariable('NAME', 'value', 'Machine')"
+    },
+    
+    "file_permissions": {
+      "restrict_to_admins": true,
+      "log_permissions": "SYSTEM, Administrators (Read)",
+      "config_permissions": "SYSTEM (Full), Administrators (Read)"
+    }
+  },
+  
+  "notifications": {
+    "_description": "Notification and alerting configuration",
+    
+    "alert_channels": {
+      "slack": {
+        "enabled": false,
+        "min_score": 70,
+        "include_system_info": true,
+        "include_forensics_link": false
+      },
+      "email": {
+        "enabled": false,
+        "smtp_server": "",
+        "from": "aegis@company.com",
+        "to": ["security@company.com"],
+        "min_score": 80,
+        "include_json_incident": true
+      },
+      "event_log": {
+        "enabled": true,
+        "log_name": "AEGIS",
+        "source": "ClearGlassCorp"
+      }
+    },
+    
+    "alert_filtering": {
+      "deduplicate": true,
+      "dedup_window_minutes": 60,
+      "max_alerts_per_hour": 20,
+      "suppress_below_score": 50
+    }
+  },
+  
+  "whitelisting": {
+    "_description": "Exclusions and whitelisting",
+    "_warning": "Use carefully - can bypass threat detection",
+    
+    "process_whitelist": {
+      "enabled": false,
+      "processes": [
+        "backup.exe",
+        "legitapp.exe"
+      ]
+    },
+    
+    "ip_whitelist": {
+      "enabled": false,
+      "addresses": [
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "192.168.0.0/16"
+      ],
+      "description": "Trusted internal networks"
+    },
+    
+    "file_path_exclusions": {
+      "enabled": false,
+      "paths": [
+        "C:\\SafeBackupLocation"
+      ]
+    }
+  },
+  
+  "dashboard": {
+    "_description": "Interactive dashboard settings",
+    
+    "display": {
+      "refresh_rate_seconds": 5,
+      "show_system_metrics": true,
+      "show_feature_status": true,
+      "show_baseline_status": true,
+      "color_scheme": "default"
+    },
+    
+    "menu_options": {
+      "threat_scan": true,
+      "recent_threats": true,
+      "security_audit": true,
+      "health_check": true,
+      "view_logs": true,
+      "network_analysis": true,
+      "process_monitor": true,
+      "baseline_manager": true,
+      "settings": true
+    }
+  },
+  
+  "integration": {
+    "_description": "Third-party integration options",
+    
+    "siem": {
+      "enabled": false,
+      "type": "Splunk",
+      "_options": ["Splunk", "QRadar", "ArcSight", "LogRhythm"],
+      "forward_logs": true,
+      "forward_incidents": true,
+      "syslog_server": "",
+      "syslog_port": 514
+    },
+    
+    "ticketing": {
+      "enabled": false,
+      "system": "ServiceNow",
+      "_options": ["ServiceNow", "Jira", "Remedy"],
+      "auto_create_ticket": true,
+      "min_severity": "HIGH",
+      "api_endpoint": ""
+    }
+  },
+  
+  "_deployment_examples": {
+    "_description": "Example deployment commands",
+    
+    "standard_deployment": {
+      "command": ".\\AEGIS-v6.0-Enhanced.ps1 -Mode Deploy",
+      "description": "Basic deployment with default settings"
+    },
+    
+    "maximum_security": {
+      "command": ".\\AEGIS-v6.0-Enhanced.ps1 -Mode Deploy -Burlington -AutoRemediate -ThreatIntelligence -MLDetection",
+      "description": "Full security deployment with all features"
+    },
+    
+    "dashboard_with_features": {
+      "command": ".\\AEGIS-v6.0-Enhanced.ps1 -Mode Dashboard -ThreatIntelligence -MLDetection -SlackWebhook 'URL'",
+      "description": "Interactive dashboard with advanced detection"
+    },
+    
+    "automated_scan": {
+      "command": ".\\AEGIS-v6.0-Enhanced.ps1 -Mode Hunt -ScanMinutes 30 -ThreatIntelligence",
+      "description": "Automated threat hunt with 30-minute window"
+    },
+    
+    "baseline_collection": {
+      "command": ".\\AEGIS-v6.0-Enhanced.ps1 -Mode Baseline",
+      "description": "7-day baseline collection for ML detection"
+    },
+    
+    "enterprise_deployment": {
+      "command": ".\\AEGIS-v6.0-Enhanced.ps1 -Mode Enterprise -OU 'OU=Servers,DC=corp,DC=com' -Burlington",
+      "description": "Deploy to entire OU with Burlington hardening"
+    }
+  },
+  
+  "_environment_setup": {
+    "_description": "Required environment variable setup",
+    
+    "powershell_commands": {
+      "set_abuseipdb_key": "[Environment]::SetEnvironmentVariable('AEGIS_ABUSEIPDB_KEY', 'your-api-key', 'Machine')",
+      "set_virustotal_key": "[Environment]::SetEnvironmentVariable('AEGIS_VIRUSTOTAL_KEY', 'your-api-key', 'Machine')",
+      "verify_keys": "Get-ChildItem Env:AEGIS_*"
+    }
+  },
+  
+  "_maintenance_schedule": {
+    "_description": "Recommended maintenance tasks",
+    
+    "daily": [
+      "Review threat dashboard",
+      "Check logs for errors"
+    ],
+    
+    "weekly": [
+      "Run security audit",
+      "Update baseline (if using ML)",
+      "Review high-score incidents"
+    ],
+    
+    "monthly": [
+      "Backup configuration",
+      "Review log storage usage",
+      "Update API keys if needed"
+    ],
+    
+    "quarterly": [
+      "Update AEGIS to latest version",
+      "Refresh ML baseline",
+      "Review and adjust thresholds",
+      "Test incident response procedures"
+    ]
+  },
+  
+  "_support": {
+    "contact_email": "desmond.otieno@clearglasscorp.com",
+    "documentation": "See AEGIS-Deployment-Guide.md and AEGIS-Security-Hardening.md",
+    "log_location": "C:\\ProgramData\\ClearGlassCorp\\AEGIS\\Logs",
+    "patent_number": "US-2026-AEGIS-001",
+    "version": "6.0",
+    "build": "20260123-SECURITY-PATCH"
+  }
+}

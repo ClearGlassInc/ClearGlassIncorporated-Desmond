@@ -1,21 +1,11 @@
-# Release Notes — 2026-08-16
+# Release Notes — 2026-08-17
 
-*135 commit(s) since repository start*
+*116 commit(s) since repository start*
 
 ## New Features
 
 - **osit:** add governed urban network intelligence core (`4c63ff4`)
 - **blog:** publish multi-agent graph topology long read (`b4ef82a`)
-- **data:** add live data fabric diagnostics page (`d020b9a`)
-- **data:** add browser data fabric runtime (`fb542cc`)
-- **data:** add canonical data fabric catalog (`4dcd133`)
-- launch Ontario Quick-Audit growth funnel (`78cb0ae`)
-- **stripe:** preflight the account against our own corporate record (`e3b7674`)
-- **workspace:** wire the pricing page to the API, and add a Stripe sync adapter (`b5e3bf8`)
-- **workspace:** server-priced per-seat subscription checkout (`203ee7a`)
-- Workspace SEO cluster (4 pages) + fix internal-links gate already red on main (#1441) (`963e867`)
-- Workspace SEO cluster, and fix the internal-links gate on main (`416efbd`)
-- add streaming signal growth command center (`f49c1d4`)
 
 ## Bug Fixes
 
@@ -30,23 +20,11 @@
 - complete CircleCI runtime recovery and OSIT validation (`175d992`)
 - **osit:** harden validation metrics and CI (`4533bfa`)
 - **osit:** append GeoPackage layers safely (`24c14de`)
-- constrain Python CI test dependencies (`44bd2e9`)
-- strengthen Artemis runtime type contracts (`577077c`)
-- **ci:** add billing-lock circuit breaker to auto-heal (`eb4c525`)
-- **ci:** separate dry-run validation from deployment environment (`9b7827b`)
-- **a11y:** add the space that makes the launcher label match its text (`1a8782e`)
-- **a11y:** repair two axe violations on the homepage (`906805e`)
-- **homepage:** stop iOS Safari renderer crash (`c23656c`)
 
 ## Documentation
 
 - document secure CircleCI orchestration and rollback (`e67d8e3`)
 - **artemis-fawl:** add canonical brand-clean build prompt (`49c4d3a`)
-- align Python setup with CI (`7be83ee`)
-
-## Tests
-
-- **data:** validate every data asset and catalog boundary (`08fceef`)
 
 ## CI/CD
 
@@ -74,7 +52,6 @@
 - add dependency security gate (`40dc7c3`)
 - add secure pipeline preflight (`9a52d7e`)
 - activate full CircleCI recovery pipeline (`4ed9a1f`)
-- **data:** enforce data fabric integrity (`dba2918`)
 
 ## Maintenance
 
@@ -91,35 +68,39 @@
 - add public runtime status for Actions-independent operation (`7c1042f`)
 - document Actions-independent release and recovery path (`cd8c75c`)
 - restore ClearGlass Inc corporate README and document live platform (`b9f5128`)
-- Integrate repository data into unified governed data fabric (#1461) (`ec9b736`)
-- fix site release wiring for quick audit pages (`59993cb`)
-- Sharpen homepage neon practical rig (`3c96c61`)
-- Add governed quantum-neural smart glass project (`51d1d8e`)
-- Refine homepage neon practical bloom (`3082db1`)
-- refresh generated sitemap metadata (`92993f3`)
-- Add docs/PHASE_3_PAID_DOMINATION.md (`b1bdbc6`)
-- Add assets/js/meta-pixel-consent.js (`1f92766`)
-- Add Phase 3 paid growth controls to test_content_agent.py (`5416914`)
-- Add Phase 3 paid growth controls to content_seed.example.json (`31ecc19`)
-- Add Phase 3 paid growth controls to content_agent.py (`c9d38f8`)
-- Add manual content agent workflow (`e3aea72`)
-- Test content allocation and evidence gates (`cd7ac73`)
-- Add content agent seed example (`d9b5d05`)
-- Add governed 50-30-20 content agent (`0ddfa82`)
-- Harden CI checkout and refresh search assets (`352f59d`)
-- Wire neon practical into homepage hero (`09fa34a`)
-- Add cinematic neon practical rig (`2c79167`)
-- Architect checklist W33: tech radar + audit report (`ba8b461`)
-- Architect checklist W33: CodeQL trial, tech radar, audit report (`2de12c2`)
-- **hero:** restore isolation branch to main tree (`8107864`)
-- **hero:** disable temporary export workflow (`f6e7d53`)
-- **hero:** stage source poster for isolated surgical edit (`e81948e`)
-- Repair the streaming-page registration duplicated by concurrent merges (`c22a555`)
-- Restore the navigation keyboard contract and fix the Cmd+K overlay collision (`645cd3d`)
-- Bring etsy-callback.html into the site-wide page contracts (`8b1d90b`)
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`8083a0c`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`13a6eed`)
+- refresh control-surface data feeds [skip ci] (`39db363`)
+- **minerals:** refresh validated public feeds [skip ci] (`93378e3`)
+- refresh control-surface data feeds [skip ci] (`e8b3890`)
+- refresh control-surface data feeds [skip ci] (`b702e5e`)
+- refresh control-surface data feeds [skip ci] (`87f0dc5`)
+- refresh control-surface data feeds [skip ci] (`85118e2`)
+- refresh control-surface data feeds [skip ci] (`33db228`)
+- **minerals:** refresh validated public feeds [skip ci] (`826d668`)
+- refresh control-surface data feeds [skip ci] (`a9f508d`)
+- refresh control-surface data feeds [skip ci] (`8fa4c9e`)
+- refresh control-surface data feeds [skip ci] (`9166e2c`)
+- refresh control-surface data feeds [skip ci] (`a850124`)
+- refresh control-surface data feeds [skip ci] (`68e980b`)
+- refresh control-surface data feeds [skip ci] (`d811c81`)
+- **minerals:** refresh validated public feeds [skip ci] (`3060056`)
+- refresh control-surface data feeds [skip ci] (`3448438`)
+- refresh control-surface data feeds [skip ci] (`87c5af8`)
+- refresh control-surface data feeds [skip ci] (`0acb408`)
+- refresh control-surface data feeds [skip ci] (`f470851`)
+- refresh control-surface data feeds [skip ci] (`9da30bd`)
+- refresh control-surface data feeds [skip ci] (`64edef0`)
+- **minerals:** refresh validated public feeds [skip ci] (`a1b1849`)
+- refresh control-surface data feeds [skip ci] (`8a27b44`)
+- refresh control-surface data feeds [skip ci] (`29295d9`)
+- refresh control-surface data feeds [skip ci] (`0b8a2d7`)
+- refresh control-surface data feeds [skip ci] (`4c79103`)
+- refresh control-surface data feeds [skip ci] (`ec82ae8`)
+- update generated outputs — 2026-08-16 07:27 UTC [skip ci] (`7923afe`)
 - refresh SEO dashboard feeds [skip ci] (`ba672ba`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`74e7516`)
 - refresh control-surface data feeds [skip ci] (`a56f67d`)
@@ -146,11 +127,6 @@
 - **minerals:** refresh validated public feeds [skip ci] (`9005623`)
 - refresh control-surface data feeds [skip ci] (`c8950c6`)
 
-## Build
-
-- **deps:** bump the pip group across 8 directories with 23 updates (`8f832f1`)
-- **deps:** bump the npm group across 6 directories with 12 updates (`606d125`)
-
 ## Other
 
 - add one-shot CI recovery orchestrator (`1004f29`)
@@ -162,4 +138,3 @@
 - isolate CircleCI production bridge prerequisites (`7ca3c38`)
 - probe CircleCI production credential availability (`838f85f`)
 - one-time CircleCI production release bridge (`ff01ec1`)
-- production neon practical sharpness and pulse pass (#1460) (`3269bcc`)

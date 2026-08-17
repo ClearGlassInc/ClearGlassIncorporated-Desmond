@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-08-16T07:27:17.379694+00:00",
+  "run_utc": "2026-08-17T07:48:43.453370+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 135,
+  "commit_count": 116,
   "sections": {
     "New Features": [
       {
@@ -21,96 +21,6 @@
         "subject": "publish multi-agent graph topology long read",
         "author": "Desmond Otieno",
         "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "d020b9a",
-        "type": "feat",
-        "scope": "data",
-        "subject": "add live data fabric diagnostics page",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "fb542cc",
-        "type": "feat",
-        "scope": "data",
-        "subject": "add browser data fabric runtime",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "4dcd133",
-        "type": "feat",
-        "scope": "data",
-        "subject": "add canonical data fabric catalog",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "78cb0ae",
-        "type": "feat",
-        "scope": null,
-        "subject": "launch Ontario Quick-Audit growth funnel",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "e3b7674",
-        "type": "feat",
-        "scope": "stripe",
-        "subject": "preflight the account against our own corporate record",
-        "author": "Claude",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "b5e3bf8",
-        "type": "feat",
-        "scope": "workspace",
-        "subject": "wire the pricing page to the API, and add a Stripe sync adapter",
-        "author": "Claude",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "203ee7a",
-        "type": "feat",
-        "scope": "workspace",
-        "subject": "server-priced per-seat subscription checkout",
-        "author": "Claude",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "963e867",
-        "type": "feat",
-        "scope": null,
-        "subject": "Workspace SEO cluster (4 pages) + fix internal-links gate already red on main (#1441)",
-        "author": "Desmond Otieno",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "416efbd",
-        "type": "feat",
-        "scope": null,
-        "subject": "Workspace SEO cluster, and fix the internal-links gate on main",
-        "author": "Claude",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "f49c1d4",
-        "type": "feat",
-        "scope": null,
-        "subject": "add streaming signal growth command center",
-        "author": "Desmond Otieno",
-        "date": "2026-08-13",
         "breaking": false
       }
     ],
@@ -213,69 +123,6 @@
         "author": "Desmond Otieno",
         "date": "2026-08-14",
         "breaking": false
-      },
-      {
-        "sha": "44bd2e9",
-        "type": "fix",
-        "scope": null,
-        "subject": "constrain Python CI test dependencies",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "577077c",
-        "type": "fix",
-        "scope": null,
-        "subject": "strengthen Artemis runtime type contracts",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "eb4c525",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "add billing-lock circuit breaker to auto-heal",
-        "author": "Desmond Otieno",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "9b7827b",
-        "type": "fix",
-        "scope": "ci",
-        "subject": "separate dry-run validation from deployment environment",
-        "author": "Desmond Otieno",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "1a8782e",
-        "type": "fix",
-        "scope": "a11y",
-        "subject": "add the space that makes the launcher label match its text",
-        "author": "Claude",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "906805e",
-        "type": "fix",
-        "scope": "a11y",
-        "subject": "repair two axe violations on the homepage",
-        "author": "Claude",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "c23656c",
-        "type": "fix",
-        "scope": "homepage",
-        "subject": "stop iOS Safari renderer crash",
-        "author": "Desmond Otieno",
-        "date": "2026-08-13",
-        "breaking": false
       }
     ],
     "Documentation": [
@@ -293,26 +140,6 @@
         "type": "docs",
         "scope": "artemis-fawl",
         "subject": "add canonical brand-clean build prompt",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "7be83ee",
-        "type": "docs",
-        "scope": null,
-        "subject": "align Python setup with CI",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      }
-    ],
-    "Tests": [
-      {
-        "sha": "08fceef",
-        "type": "test",
-        "scope": "data",
-        "subject": "validate every data asset and catalog boundary",
         "author": "Desmond Otieno",
         "date": "2026-08-14",
         "breaking": false
@@ -534,15 +361,6 @@
         "author": "Desmond Otieno",
         "date": "2026-08-14",
         "breaking": false
-      },
-      {
-        "sha": "dba2918",
-        "type": "ci",
-        "scope": "data",
-        "subject": "enforce data fabric integrity",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
       }
     ],
     "Maintenance": [
@@ -662,243 +480,279 @@
         "author": "Desmond Otieno",
         "date": "2026-08-14",
         "breaking": false
-      },
-      {
-        "sha": "ec9b736",
-        "type": "chore",
-        "scope": null,
-        "subject": "Integrate repository data into unified governed data fabric (#1461)",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "59993cb",
-        "type": "chore",
-        "scope": null,
-        "subject": "fix site release wiring for quick audit pages",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "3c96c61",
-        "type": "chore",
-        "scope": null,
-        "subject": "Sharpen homepage neon practical rig",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "51d1d8e",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add governed quantum-neural smart glass project",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "3082db1",
-        "type": "chore",
-        "scope": null,
-        "subject": "Refine homepage neon practical bloom",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "92993f3",
-        "type": "chore",
-        "scope": null,
-        "subject": "refresh generated sitemap metadata",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "b1bdbc6",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add docs/PHASE_3_PAID_DOMINATION.md",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "1f92766",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add assets/js/meta-pixel-consent.js",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "5416914",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add Phase 3 paid growth controls to test_content_agent.py",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "31ecc19",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add Phase 3 paid growth controls to content_seed.example.json",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "c9d38f8",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add Phase 3 paid growth controls to content_agent.py",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "e3aea72",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add manual content agent workflow",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "cd7ac73",
-        "type": "chore",
-        "scope": null,
-        "subject": "Test content allocation and evidence gates",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "d9b5d05",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add content agent seed example",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "0ddfa82",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add governed 50-30-20 content agent",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "352f59d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Harden CI checkout and refresh search assets",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "09fa34a",
-        "type": "chore",
-        "scope": null,
-        "subject": "Wire neon practical into homepage hero",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "2c79167",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add cinematic neon practical rig",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "ba8b461",
-        "type": "chore",
-        "scope": null,
-        "subject": "Architect checklist W33: tech radar + audit report",
-        "author": "Claude",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "2de12c2",
-        "type": "chore",
-        "scope": null,
-        "subject": "Architect checklist W33: CodeQL trial, tech radar, audit report",
-        "author": "Claude",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "8107864",
-        "type": "chore",
-        "scope": "hero",
-        "subject": "restore isolation branch to main tree",
-        "author": "Desmond Otieno",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "f6e7d53",
-        "type": "chore",
-        "scope": "hero",
-        "subject": "disable temporary export workflow",
-        "author": "Desmond Otieno",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "e81948e",
-        "type": "chore",
-        "scope": "hero",
-        "subject": "stage source poster for isolated surgical edit",
-        "author": "Desmond Otieno",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "c22a555",
-        "type": "chore",
-        "scope": null,
-        "subject": "Repair the streaming-page registration duplicated by concurrent merges",
-        "author": "Claude",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "645cd3d",
-        "type": "chore",
-        "scope": null,
-        "subject": "Restore the navigation keyboard contract and fix the Cmd+K overlay collision",
-        "author": "Claude",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "8b1d90b",
-        "type": "chore",
-        "scope": null,
-        "subject": "Bring etsy-callback.html into the site-wide page contracts",
-        "author": "Claude",
-        "date": "2026-08-13",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "8083a0c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "13a6eed",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "39db363",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "93378e3",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "e8b3890",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "b702e5e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "87f0dc5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "85118e2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "33db228",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "826d668",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "a9f508d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "8fa4c9e",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "9166e2c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "a850124",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "68e980b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "d811c81",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "3060056",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "3448438",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "87c5af8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "0acb408",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "f470851",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "9da30bd",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "64edef0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "a1b1849",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "8a27b44",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "29295d9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "0b8a2d7",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "4c79103",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "ec82ae8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
+      {
+        "sha": "7923afe",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-16 07:27 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-16",
+        "breaking": false
+      },
       {
         "sha": "ba672ba",
         "type": "bot",
@@ -1125,26 +979,6 @@
         "breaking": false
       }
     ],
-    "Build": [
-      {
-        "sha": "8f832f1",
-        "type": "build",
-        "scope": "deps",
-        "subject": "bump the pip group across 8 directories with 23 updates",
-        "author": "dependabot[bot]",
-        "date": "2026-08-13",
-        "breaking": false
-      },
-      {
-        "sha": "606d125",
-        "type": "build",
-        "scope": "deps",
-        "subject": "bump the npm group across 6 directories with 12 updates",
-        "author": "dependabot[bot]",
-        "date": "2026-08-13",
-        "breaking": false
-      }
-    ],
     "Other": [
       {
         "sha": "1004f29",
@@ -1225,15 +1059,6 @@
         "subject": "one-time CircleCI production release bridge",
         "author": "Desmond Otieno",
         "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "3269bcc",
-        "type": "vfx",
-        "scope": null,
-        "subject": "production neon practical sharpness and pulse pass (#1460)",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
         "breaking": false
       }
     ]

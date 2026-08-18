@@ -11,12 +11,10 @@
 # System: ARTEMIS | Organization: ClearGlass Inc. | Classification: Proprietary
 """ARTEMIS provenance bot.
 
-Generates a machine-readable provenance manifest for ARTEMIS artifacts:
-SHA-256 checksum, byte size, and last-commit reference for each tracked
-artifact, plus the repository HEAD commit at generation time. Every value is
-derived from the actual working tree and git history — nothing is fabricated.
-If git metadata is unavailable the commit fields are recorded as ``null``
-rather than invented.
+Generates a machine-readable provenance manifest for ARTEMIS artifacts.
+Every value is derived from the actual working tree and git history — nothing
+is fabricated. Missing metadata is recorded as UNKNOWN/null rather than
+silently promoted to fact.
 
 Output: ``operations/artemis/provenance_manifest.json``
 """
@@ -30,6 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "operations" / "artemis"
+PROCESSING_VERSION = "2026.08.17-high-assurance-v1"
 
 ARTIFACT_GLOBS = [
     "agents/artemis_command_system/*",
@@ -63,8 +62,18 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _license_status() -> str:
+    """Return an evidence-preserving license status; never infer a license."""
+    license_files = [ROOT / "LICENSE", ROOT / "LICENSE.md", ROOT / "LICENSE.txt"]
+    for candidate in license_files:
+        if candidate.is_file():
+            return "PRESENT_AT_REPOSITORY_ROOT"
+    return "UNKNOWN"
+
+
 def build_manifest() -> dict:
     entries = []
+    license_status = _license_status()
     for pattern in ARTIFACT_GLOBS:
         for path in sorted(ROOT.glob(pattern)):
             if not path.is_file():
@@ -73,13 +82,27 @@ def build_manifest() -> dict:
             entries.append(
                 {
                     "artifact": rel,
+                    "source": "repository_working_tree",
+                    "publisher": "ClearGlass Inc.",
+                    "license": license_status,
                     "sha256": _sha256(path),
                     "size_bytes": path.stat().st_size,
                     "last_commit": _git("log", "-1", "--format=%H", "--", rel),
                     "last_commit_date": _git("log", "-1", "--format=%cI", "--", rel),
+                    "processing_version": PROCESSING_VERSION,
+                    "generator": "bots/artemis_provenance_bot.py",
+                    "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+                    "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+                    "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+                    "limitations": [
+                        "Live-site state is not established by repository provenance alone.",
+                        "External analytics are not inferred from repository artifacts.",
+                        "License status is not inferred from copyright text alone.",
+                    ],
                 }
             )
     return {
+        "schema_version": "2.0.0",
         "system": "ARTEMIS",
         "organization": "ClearGlass Inc.",
         "original_author": "Desmond Otieno Odhiambo",
@@ -88,6 +111,7 @@ def build_manifest() -> dict:
         "generated_utc": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "repository_head": _git("rev-parse", "HEAD"),
         "branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
+        "processing_version": PROCESSING_VERSION,
         "artifact_count": len(entries),
         "artifacts": entries,
     }

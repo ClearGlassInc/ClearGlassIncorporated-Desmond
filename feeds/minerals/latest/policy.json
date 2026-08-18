@@ -1,10 +1,23 @@
 {
   "schema": "clearglass.minerals.policy/v1",
-  "status": "STALE",
-  "retrieved_at": "2026-08-15T12:58:46Z",
-  "source_updated_at": "2026-08-05T14:15:00Z",
+  "status": "DAILY",
+  "retrieved_at": "2026-08-18T13:07:14Z",
+  "source_updated_at": "2026-08-17T16:15:34Z",
   "source": "Natural Resources Canada / Government of Canada News",
   "records": [
+    {
+      "id": "https://www.canada.ca/en/natural-resources-canada/news/2026/08/prime-minister-carney-announces-the-largest-clean-energy-investment-in-north-american-history.html",
+      "title": "Prime Minister Carney announces the largest clean energy investment in North American history",
+      "published_at": "2026-08-17T16:15:34Z",
+      "updated_at": "2026-08-17T16:15:34Z",
+      "url": "https://www.canada.ca/en/natural-resources-canada/news/2026/08/prime-minister-carney-announces-the-largest-clean-energy-investment-in-north-american-history.html",
+      "source": "Natural Resources Canada / Government of Canada News",
+      "affected_minerals": [
+        "critical-minerals",
+        "minerals"
+      ],
+      "impact_category": "POLICY"
+    },
     {
       "id": "https://www.canada.ca/en/natural-resources-canada/news/2026/08/canada-invests-to-connect-quebec-critical-minerals-to-market.html",
       "title": "Canada invests to connect Quebec critical minerals to market",

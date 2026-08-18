@@ -30,6 +30,9 @@ if str(ROOT) not in sys.path:
 from tools import authority_network as core  # noqa: E402
 from tools.authority_network import *  # noqa: E402,F403
 
+_RELEASE_SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {
+    'blog/graph-topology-multi-agent-research-workflow.html': ('Graph Topology Beats One Giant Context', 'A practical planner-worker-verifier workflow for multi-agent research: isolated contexts, evidence boundaries, benchmark caveats, and copy-ready prompts.', 'blog'),
+}
 _RELEASE_SUPPLEMENTAL_PAGES: dict[str, tuple[str, str, str]] = {}
 # blog/graph-topology-multi-agent-research-workflow.html graduated to the legacy
 # graph in internal_links.py; removed from this staging area to avoid the

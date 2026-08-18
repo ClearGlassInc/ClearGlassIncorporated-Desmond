@@ -1,0 +1,211 @@
+═══════════════════════════════════════════════════════════════════════════════
+         CLEARGLASS SECURITY SOLUTIONS — END USER LICENSE AGREEMENT (EULA)
+                              Version 2.0 | Effective Date: 2025-01-01
+═══════════════════════════════════════════════════════════════════════════════
+
+PLEASE READ THIS AGREEMENT CAREFULLY BEFORE INSTALLING, COPYING, OR USING THE
+CLEARGLASS SOFTWARE. BY USING THE SOFTWARE YOU ACCEPT ALL TERMS BELOW.
+
+───────────────────────────────────────────────────────────────────────────────
+1. DEFINITIONS
+───────────────────────────────────────────────────────────────────────────────
+
+"Software"       means CLEARGLASS GUARDIAN, CLEARGLASS RECON, and all
+                 associated Python modules, scripts, data files, documentation,
+                 and updates provided by CLEARGLASS Security Solutions.
+
+"Licensor"       means Desmond, operating as CLEARGLASS Security Solutions.
+
+"Licensee"       means the individual or organization that downloads, installs,
+                 or uses the Software.
+
+"Authorized Systems" means computing infrastructure, networks, and devices that
+                 the Licensee owns, operates, or has written authorization to
+                 monitor from their owner or responsible party.
+
+───────────────────────────────────────────────────────────────────────────────
+2. GRANT OF LICENSE
+───────────────────────────────────────────────────────────────────────────────
+
+Subject to the terms of this Agreement, Licensor grants Licensee a limited,
+non-exclusive, non-transferable, revocable license to:
+
+  a) Install and use the Software on an unlimited number of machines owned or
+     controlled by the Licensee.
+
+  b) Modify the Software for Licensee's internal operational purposes.
+
+  c) Create derivative works solely for internal use; no redistribution of
+     derivative works is permitted without written consent from Licensor.
+
+───────────────────────────────────────────────────────────────────────────────
+3. AUTHORIZED USE — CRITICAL LEGAL REQUIREMENT
+───────────────────────────────────────────────────────────────────────────────
+
+THE SOFTWARE IS DESIGNED EXCLUSIVELY FOR USE ON AUTHORIZED SYSTEMS.
+
+3.1  The Licensee MUST have explicit legal authority to monitor any system,
+     network, device, or account before using the Software against it. This
+     includes, but is not limited to, written consent from system owners, network
+     administrators, or applicable organizational policies.
+
+3.2  Authorized use includes:
+     - Monitoring your own personal computers, servers, and network devices.
+     - Monitoring organizational IT infrastructure by authorized IT personnel.
+     - Security research performed within explicitly scoped, legally authorized
+       penetration testing or red-team engagements.
+     - Network health monitoring on networks you own or administer.
+
+3.3  PROHIBITED uses include, without limitation:
+     - Scanning, probing, or monitoring systems, networks, or devices you do
+       not own and for which you lack written authorization.
+     - Using the Software to gain unauthorized access to any system.
+     - Using the Software to intercept, capture, or exfiltrate data from
+       unauthorized systems.
+     - Circumventing authentication mechanisms on any system.
+     - Using market intelligence outputs to engage in market manipulation,
+       insider trading, or anti-competitive practices.
+
+3.4  The Computer Fraud and Abuse Act (CFAA, USA), Computer Misuse Act (UK),
+     Canadian Criminal Code Sections 342.1 and 430(1.1), and equivalent laws in
+     all jurisdictions make unauthorized computer access a criminal offense.
+     The Licensee accepts sole legal responsibility for all use of the Software.
+
+───────────────────────────────────────────────────────────────────────────────
+4. INTELLECTUAL PROPERTY
+───────────────────────────────────────────────────────────────────────────────
+
+4.1  All title, ownership rights, and intellectual property rights in and to the
+     Software remain the exclusive property of Licensor.
+
+4.2  Licensee may not: sell, sublicense, rent, lease, loan, or transfer the
+     Software or any portion thereof to any third party without prior written
+     consent from Licensor.
+
+4.3  The CLEARGLASS name, logo, and associated marks are trademarks of Licensor.
+     Licensee receives no trademark rights under this Agreement.
+
+───────────────────────────────────────────────────────────────────────────────
+5. DATA PRIVACY AND SECURITY
+───────────────────────────────────────────────────────────────────────────────
+
+5.1  The Software collects and stores operational data (system metrics, network
+     topology, audit logs) ONLY on the Licensee's local systems. No telemetry
+     data is transmitted to Licensor by default.
+
+5.2  The Licensee is responsible for protecting any sensitive data collected
+     by the Software in accordance with applicable privacy laws including PIPEDA
+     (Canada), GDPR (EU/UK), CCPA (California), and other applicable regulations.
+
+5.3  Market intelligence data displayed by CLEARGLASS RECON is for informational
+     purposes only. The Licensee is responsible for verifying data accuracy
+     before making business decisions.
+
+───────────────────────────────────────────────────────────────────────────────
+6. DISCLAIMER OF WARRANTIES
+───────────────────────────────────────────────────────────────────────────────
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. LICENSOR
+EXPRESSLY DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO:
+
+  - IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  - WARRANTIES THAT THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE
+  - WARRANTIES REGARDING THE ACCURACY OF MARKET INTELLIGENCE DATA
+  - WARRANTIES THAT SECURITY FINDINGS ARE COMPLETE OR ACCURATE
+
+THE LICENSEE ACKNOWLEDGES THAT NO SECURITY SOFTWARE GUARANTEES COMPLETE
+PROTECTION FROM ALL THREATS.
+
+───────────────────────────────────────────────────────────────────────────────
+7. LIMITATION OF LIABILITY
+───────────────────────────────────────────────────────────────────────────────
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW:
+
+7.1  LICENSOR SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+     EXEMPLARY, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM USE OF THE
+     SOFTWARE, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, OR BUSINESS
+     OPPORTUNITIES, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF
+     SUCH DAMAGES.
+
+7.2  LICENSOR'S TOTAL CUMULATIVE LIABILITY SHALL NOT EXCEED THE AMOUNT PAID
+     BY LICENSEE FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM.
+
+7.3  LICENSOR IS NOT LIABLE FOR ANY LEGAL CONSEQUENCES ARISING FROM LICENSEE'S
+     UNAUTHORIZED OR UNLAWFUL USE OF THE SOFTWARE.
+
+───────────────────────────────────────────────────────────────────────────────
+8. INDEMNIFICATION
+───────────────────────────────────────────────────────────────────────────────
+
+Licensee shall indemnify, defend, and hold harmless Licensor from and against
+any claims, damages, losses, liabilities, costs, and expenses (including
+reasonable attorneys' fees) arising out of or related to:
+
+  a) Licensee's use of the Software in violation of this Agreement.
+  b) Licensee's unauthorized use of the Software against third-party systems.
+  c) Licensee's violation of any applicable law in connection with the Software.
+  d) Any third-party claim arising from Licensee's use of the Software.
+
+───────────────────────────────────────────────────────────────────────────────
+9. TERMINATION
+───────────────────────────────────────────────────────────────────────────────
+
+9.1  This Agreement is effective until terminated. Licensor may terminate this
+     Agreement immediately upon written notice if Licensee breaches any provision.
+
+9.2  Upon termination, Licensee must destroy all copies of the Software.
+
+9.3  Sections 3, 4, 6, 7, 8, and 10 survive termination.
+
+───────────────────────────────────────────────────────────────────────────────
+10. GOVERNING LAW AND DISPUTE RESOLUTION
+───────────────────────────────────────────────────────────────────────────────
+
+10.1 This Agreement shall be governed by and construed under the laws of the
+     Province of Ontario, Canada, without regard to conflict-of-law provisions.
+
+10.2 Any dispute shall first be submitted to good-faith mediation for 30 days.
+     If unresolved, disputes shall be resolved by binding arbitration under the
+     rules of the ADR Institute of Canada, Toronto, Ontario.
+
+10.3 Each party waives any right to a jury trial.
+
+───────────────────────────────────────────────────────────────────────────────
+11. EXPORT CONTROLS
+───────────────────────────────────────────────────────────────────────────────
+
+The Software may be subject to Canadian export control laws and U.S. Export
+Administration Regulations. Licensee agrees not to export or re-export the
+Software in violation of any applicable laws or regulations.
+
+───────────────────────────────────────────────────────────────────────────────
+12. ENTIRE AGREEMENT
+───────────────────────────────────────────────────────────────────────────────
+
+This Agreement constitutes the entire agreement between the parties regarding
+the Software and supersedes all prior negotiations, representations, warranties,
+and understandings. This Agreement may not be amended except by a written
+instrument signed by both parties.
+
+───────────────────────────────────────────────────────────────────────────────
+13. SEVERABILITY
+───────────────────────────────────────────────────────────────────────────────
+
+If any provision of this Agreement is found to be unenforceable, that provision
+shall be modified to the minimum extent necessary to make it enforceable, and
+all remaining provisions shall continue in full force and effect.
+
+───────────────────────────────────────────────────────────────────────────────
+
+BY USING THE SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTOOD THIS
+AGREEMENT AND AGREE TO BE BOUND BY ITS TERMS.
+
+  Licensor: Desmond, CLEARGLASS Security Solutions
+  Contact:  [your contact email]
+  Version:  2.0 — January 2025
+
+═══════════════════════════════════════════════════════════════════════════════
+                  ⚠  FOR AUTHORIZED AND LAWFUL USE ONLY  ⚠
+═══════════════════════════════════════════════════════════════════════════════

@@ -52,9 +52,21 @@ def test_manifest_is_truthful_and_complete():
 
 
 def test_live_feed_snapshots_fail_closed_when_empty():
+    """A snapshot carrying records must declare a status that explains them."""
     healthy_with_records = {
         "LIVE", "NEAR LIVE", "DELAYED", "DAILY", "WEEKLY", "MONTHLY",
         "STATIC REFERENCE", "STALE", "DEGRADED",
+    }
+    for name in ("policy", "news"):
+        payload = load_json(f"feeds/minerals/latest/{name}.json")
+        records = payload["records"]
+        assert isinstance(records, list)
+        if records:
+            assert payload["status"] in healthy_with_records
+        else:
+            assert payload["status"] == "UNAVAILABLE"
+
+
 def test_live_feeds_fail_closed_when_empty_and_report_refreshes_truthfully():
     healthy_or_stale = {
         "LIVE", "NEAR LIVE", "DELAYED", "DAILY", "WEEKLY", "MONTHLY",
@@ -63,8 +75,6 @@ def test_live_feeds_fail_closed_when_empty_and_report_refreshes_truthfully():
     for name in ("policy", "news"):
         payload = load_json(f"feeds/minerals/latest/{name}.json")
         records = payload["records"]
-        if records:
-            assert payload["status"] in healthy_with_records
         assert isinstance(records, list)
         if records:
             assert payload["status"] in healthy_or_stale

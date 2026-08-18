@@ -20,7 +20,7 @@ The API is intentionally provider-agnostic. SMTP/IMAP credentials and transport 
   "read": false,
   "provenance": {
     "message_sha256": "64-hex-character digest",
-    "parser_schema_version": "1.0"
+    "parser_schema_version": "1.1"
   }
 }
 ```
@@ -35,6 +35,8 @@ The API is intentionally provider-agnostic. SMTP/IMAP credentials and transport 
 - Mutating endpoints must be idempotent where practical and must emit an audit event.
 - Rate limits apply separately to login, search, message fetch, attachment fetch, and outbound-send operations.
 - Outbound mail must be queued rather than sent directly inside an HTTP request.
+- Parser output must preserve a provenance digest and explicitly mark HTML/attachments as untrusted.
+- Resource limits must be enforced before downstream persistence or rendering.
 
 ## Suggested endpoints
 
@@ -49,5 +51,13 @@ The API is intentionally provider-agnostic. SMTP/IMAP credentials and transport 
 | POST | `/api/send` | Queue outbound mail |
 | GET | `/api/attachments/{id}` | Authorized attachment retrieval |
 | GET | `/api/audit/events` | Security/audit events for authorized operators |
+
+## Error contract
+
+Clients should receive stable, non-sensitive error categories rather than raw parser, database, filesystem, or SMTP exceptions. Recommended categories are `invalid_request`, `unauthorized`, `forbidden`, `not_found`, `rate_limited`, `policy_rejected`, `temporarily_unavailable`, and `internal_error`.
+
+## Versioning
+
+Changes that alter response semantics or remove fields require an explicit API versioning/migration decision. The parser schema version is independently recorded in message provenance so historical parsing decisions remain attributable.
 
 No endpoint in this contract creates a public mail account or changes DNS. Those operations belong to the infrastructure provisioning layer and require separate operational controls.

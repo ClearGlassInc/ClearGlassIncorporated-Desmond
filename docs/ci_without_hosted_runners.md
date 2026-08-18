@@ -57,35 +57,31 @@ on the already-merged commits is the real confirmation** — no new push is
 needed, and every "verified locally" claim in the recent PR history should be
 re-checked that way.
 
-### Option 2 — self-hosted runners (works for a spending limit, not for a lock)
+### Option 2 — self-hosted runners: **not appropriate for this repository**
 
-Self-hosted runners do not consume GitHub-hosted minutes, so they keep working
-when a *spending limit* or an exhausted included-minutes allowance is what
-blocks hosted jobs. They do **not** help if Actions has been disabled
-account-wide, which is what a billing lock can do.
+Self-hosted runners are the usual answer to exhausted GitHub-hosted minutes, and
+an earlier revision of this document recommended them. That recommendation was
+wrong here, and it is retracted.
 
-Which case applies here has not been confirmed from inside this repository —
-billing state is not visible to it. The distinction is cheap to settle: register
-one runner, point one workflow at it, and see whether a job starts.
+**This repository is public, allows forking, and already has forks.** A workflow
+triggered by a pull request from a fork runs that fork's code. On a self-hosted
+runner, that means an attacker opens a PR and executes arbitrary code on your
+machine — one that, by construction, holds a registration token for your
+organisation. GitHub's own guidance is not to use self-hosted runners with
+public repositories, and the risk does not depend on the billing outage: it
+would be just as true with CI healthy.
 
-```bash
-# on a machine you control, from Settings → Actions → Runners → New runner
-./config.sh --url https://github.com/ClearGlassInc/ClearGlassIncorporated-Desmond --token <token>
-./run.sh
-```
+`scripts/workflow_doctor.py` already enforces this. `fix_self_hosted()` rewrites
+any `runs-on: self-hosted` back to `ubuntu-latest`, and
+`tests/test_workflow_doctor.py` pins that behaviour so the guard cannot be
+quietly dropped. All 137 jobs specify `runs-on: ubuntu-latest`; that is a
+deliberate posture, not an oversight waiting to be optimised.
 
-Then change the job you are testing:
-
-```yaml
-jobs:
-  python-tests:
-    runs-on: self-hosted        # was: ubuntu-latest
-```
-
-All 137 jobs in this repository currently specify `runs-on: ubuntu-latest`. Move
-them deliberately and one at a time rather than in bulk — a self-hosted runner
-executes untrusted workflow code on your own hardware, so it wants a dedicated,
-disposable machine, not a workstation with credentials on it.
+If hosted minutes are ever the binding constraint rather than a billing lock,
+the safe orderings are: reduce workflow fan-out (this repository runs ~70
+workflows, many on schedules), raise the spending limit, or move CI to a
+provider that offers isolated ephemeral compute. Pointing this repository's jobs
+at a machine you own is not on that list while the repository is public.
 
 ## What not to do
 

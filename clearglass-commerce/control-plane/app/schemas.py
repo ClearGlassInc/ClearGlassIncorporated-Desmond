@@ -188,6 +188,24 @@ class ApprovalOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ApprovalExecutionOut(BaseModel):
+    """Outcome of carrying out an approved action.
+
+    ``executed`` is the field that matters and is deliberately not inferable from
+    the HTTP status: a 200 here can mean "already done" or "that action is
+    executed elsewhere", and an operator waiting on a refund needs to be able to
+    tell those apart from "the money moved".
+    """
+
+    approval_id: int
+    action: str
+    status: str
+    executed: bool
+    data: dict | None = None
+    skipped: str | None = None
+    delegated_to: str | None = None
+
+
 class DecisionRequest(BaseModel):
     # Optional human-readable label only. The decider recorded on the approval and in the
     # audit ledger is the authenticated admin credential, not this field — see

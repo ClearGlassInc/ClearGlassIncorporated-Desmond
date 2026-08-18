@@ -7,10 +7,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from .. import approval_executor, executors  # noqa: F401 - import registers the executors
 from ..audit import log_event
 from ..db import get_session
 from ..models import Approval
-from ..schemas import ApprovalOut, DecisionRequest
+from ..schemas import ApprovalExecutionOut, ApprovalOut, DecisionRequest
 from ..security import rate_limit, require_admin
 
 router = APIRouter(prefix="/approvals", tags=["approvals"])
@@ -97,3 +98,47 @@ def reject(
 ) -> Approval:
     """Reject a gated action; nothing is executed."""
     return _decide(session, approval_id, "rejected", req, principal)
+
+
+@router.get("/coverage")
+def coverage() -> dict:
+    """Which gated actions can actually be carried out once approved.
+
+    Worth an endpoint of its own because the failure it describes is invisible
+    from the queue: an ``uncovered`` action's approval looks exactly like a
+    covered one's, right up until nothing happens. Read this before promising a
+    customer that approving something will do it.
+    """
+    return approval_executor.coverage()
+
+
+@router.post(
+    "/{approval_id}/execute",
+    response_model=ApprovalExecutionOut,
+    dependencies=[Depends(_decision_throttle)],
+)
+def execute(
+    approval_id: int,
+    principal: str = Depends(require_admin),
+    session: Session = Depends(get_session),
+) -> ApprovalExecutionOut:
+    """Carry out an already-approved action.
+
+    Separate from ``/approve`` on purpose. Deciding and doing are different acts:
+    an approver may not be the operator who runs it, execution can fail and need
+    a retry that must not silently re-approve, and keeping them apart means the
+    ledger records who decided and who acted as two facts rather than one guess.
+
+    Safe to call twice — the approval is claimed atomically, so the second call
+    reports ``executed: false`` with a reason instead of acting again.
+    """
+    try:
+        result = approval_executor.execute_approval(session, approval_id, actor=principal)
+    except approval_executor.ApprovalNotFound as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except approval_executor.ApprovalExecutionError as exc:
+        # 409, not 500: the request is well-formed and the caller is authorised —
+        # the approval is simply not in a state that can be executed. A 500 would
+        # read as "retry me", which for a money-moving action is the wrong advice.
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    return ApprovalExecutionOut(**result)

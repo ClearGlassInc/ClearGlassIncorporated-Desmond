@@ -109,6 +109,11 @@ a human approves, calling it again claims that approval — exactly once — and
 confirms with Printful. So the same endpoint both proposes and executes,
 depending on whether a human has decided yet.
 
+This is the one action that does **not** go through the generic
+`POST /approvals/{id}/execute` dispatcher, because confirmation also has to take
+the shipment row in-flight atomically and reconcile a crashed attempt against the
+supplier. It is listed as `delegated` in `GET /approvals/coverage`, pointing here.
+
 ## Running it
 
 ```bash

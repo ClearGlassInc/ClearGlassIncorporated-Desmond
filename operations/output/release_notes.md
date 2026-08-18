@@ -1,11 +1,6 @@
-# Release Notes — 2026-08-17
+# Release Notes — 2026-08-18
 
-*116 commit(s) since repository start*
-
-## New Features
-
-- **osit:** add governed urban network intelligence core (`4c63ff4`)
-- **blog:** publish multi-agent graph topology long read (`b4ef82a`)
+*100 commit(s) since repository start*
 
 ## Bug Fixes
 
@@ -16,15 +11,6 @@
 - repair deterministic CI contracts [skip ci] (`89e4314`)
 - make CI recovery validation idempotent (`e091d80`)
 - remove duplicate PR automation condition (`4ce2754`)
-- complete CircleCI recovery and generated metadata (`1b69c73`)
-- complete CircleCI runtime recovery and OSIT validation (`175d992`)
-- **osit:** harden validation metrics and CI (`4533bfa`)
-- **osit:** append GeoPackage layers safely (`24c14de`)
-
-## Documentation
-
-- document secure CircleCI orchestration and rollback (`e67d8e3`)
-- **artemis-fawl:** add canonical brand-clean build prompt (`49c4d3a`)
 
 ## CI/CD
 
@@ -35,42 +21,38 @@
 - revalidate repaired control-plane routes (`4240a0a`)
 - verify repaired ClearGlass agent deployment (`e07fb1a`)
 - revalidate production routes after agent repair (`ea92916`)
-- require approval before production release (`b50a946`)
-- verify corrected replacement agent routes (`8554363`)
-- verify replacement agent production runtime (`7615397`)
-- split Fly credential and health probes (`491ea28`)
-- probe CircleCI production credential availability (`e01e198`)
-- test agents through real sandbox HTTP boundary (`70b78ab`)
-- allow signed release tags to reach production preflight (`5ba3ad3`)
-- capture immutable registry digest reliably (`725b6a6`)
-- replace pipeline with secure parameterized orchestration (`e007c23`)
-- add post-deploy evidence verifier (`0252a04`)
-- add audited Fly rollback helper (`6b3e4ef`)
-- add immutable Fly deployment helper (`e3a9034`)
-- add pinned Fly CLI installer (`c0c9ad2`)
-- add empty reviewed vulnerability allowlist (`86c786b`)
-- add dependency security gate (`40dc7c3`)
-- add secure pipeline preflight (`9a52d7e`)
-- activate full CircleCI recovery pipeline (`4ed9a1f`)
-
-## Maintenance
-
-- Refresh Pages cache policy deployment (`17ff926`)
-- Force fresh homepage contrast CSS (`b6f5e58`)
-- Reduce homepage white contrast (`b1d3541`)
-- Tone down Control Station contrast (`7add906`)
-- Add .circleci/config.yml (`14f9161`)
-- **osit:** harden lint configuration (`aae3093`)
-- Contain Actions deployment during runner billing lock (`3d43261`)
-- Serve mission-red Control Station styles fresh (`5fe91ff`)
-- Match Control Station to mission red homepage (`8022a9a`)
-- wire runtime status into governed data catalog (`4fa7a82`)
-- add public runtime status for Actions-independent operation (`7c1042f`)
-- document Actions-independent release and recovery path (`cd8c75c`)
-- restore ClearGlass Inc corporate README and document live platform (`b9f5128`)
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`52a936c`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`67145ad`)
+- refresh control-surface data feeds [skip ci] (`0dfd41a`)
+- **minerals:** refresh validated public feeds [skip ci] (`d64d88d`)
+- refresh control-surface data feeds [skip ci] (`9864277`)
+- refresh control-surface data feeds [skip ci] (`cb5ffac`)
+- refresh control-surface data feeds [skip ci] (`4be0ca9`)
+- refresh control-surface data feeds [skip ci] (`0362280`)
+- refresh control-surface data feeds [skip ci] (`69a0fbf`)
+- **minerals:** refresh validated public feeds [skip ci] (`147af09`)
+- refresh control-surface data feeds [skip ci] (`daf2ee1`)
+- refresh control-surface data feeds [skip ci] (`7e21a73`)
+- refresh control-surface data feeds [skip ci] (`9a46ab2`)
+- refresh control-surface data feeds [skip ci] (`6dac3a9`)
+- refresh control-surface data feeds [skip ci] (`3605cd5`)
+- refresh control-surface data feeds [skip ci] (`f1b74e8`)
+- **minerals:** refresh validated public feeds [skip ci] (`7e87661`)
+- refresh control-surface data feeds [skip ci] (`7453a1f`)
+- refresh control-surface data feeds [skip ci] (`2cf00de`)
+- refresh control-surface data feeds [skip ci] (`622f63c`)
+- refresh control-surface data feeds [skip ci] (`d7c95e4`)
+- refresh control-surface data feeds [skip ci] (`667f78d`)
+- refresh control-surface data feeds [skip ci] (`6b53a91`)
+- **minerals:** refresh validated public feeds [skip ci] (`db6fbaa`)
+- refresh control-surface data feeds [skip ci] (`8182edf`)
+- refresh control-surface data feeds [skip ci] (`a6227ac`)
+- refresh control-surface data feeds [skip ci] (`394a579`)
+- refresh control-surface data feeds [skip ci] (`fdbd2ff`)
+- update generated outputs — 2026-08-17 07:48 UTC [skip ci] (`0f27ad9`)
 - refresh SEO dashboard feeds [skip ci] (`8083a0c`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`13a6eed`)
 - refresh control-surface data feeds [skip ci] (`39db363`)
@@ -131,10 +113,3 @@
 
 - add one-shot CI recovery orchestrator (`1004f29`)
 - final acceptance verify after compatibility repair (`c22f796`)
-- final verify repaired production agent routes (`843b377`)
-- isolate production control-plane routes (`ee45b92`)
-- verify settled production runtime (`b68541e`)
-- restore CircleCI production runtime verification (`5d462df`)
-- isolate CircleCI production bridge prerequisites (`7ca3c38`)
-- probe CircleCI production credential availability (`838f85f`)
-- one-time CircleCI production release bridge (`ff01ec1`)

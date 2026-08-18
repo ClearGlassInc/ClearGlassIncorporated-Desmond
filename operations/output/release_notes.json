@@ -1,29 +1,9 @@
 {
-  "run_utc": "2026-08-17T07:48:43.453370+00:00",
+  "run_utc": "2026-08-18T07:33:53.891221+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 116,
+  "commit_count": 100,
   "sections": {
-    "New Features": [
-      {
-        "sha": "4c63ff4",
-        "type": "feat",
-        "scope": "osit",
-        "subject": "add governed urban network intelligence core",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "b4ef82a",
-        "type": "feat",
-        "scope": "blog",
-        "subject": "publish multi-agent graph topology long read",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      }
-    ],
     "Bug Fixes": [
       {
         "sha": "d7bfea9",
@@ -86,62 +66,6 @@
         "subject": "remove duplicate PR automation condition",
         "author": "Desmond Otieno",
         "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "1b69c73",
-        "type": "fix",
-        "scope": null,
-        "subject": "complete CircleCI recovery and generated metadata",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "175d992",
-        "type": "fix",
-        "scope": null,
-        "subject": "complete CircleCI runtime recovery and OSIT validation",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "4533bfa",
-        "type": "fix",
-        "scope": "osit",
-        "subject": "harden validation metrics and CI",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "24c14de",
-        "type": "fix",
-        "scope": "osit",
-        "subject": "append GeoPackage layers safely",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      }
-    ],
-    "Documentation": [
-      {
-        "sha": "e67d8e3",
-        "type": "docs",
-        "scope": null,
-        "subject": "document secure CircleCI orchestration and rollback",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "49c4d3a",
-        "type": "docs",
-        "scope": "artemis-fawl",
-        "subject": "add canonical brand-clean build prompt",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
         "breaking": false
       }
     ],
@@ -208,281 +132,270 @@
         "author": "Desmond Otieno",
         "date": "2026-08-15",
         "breaking": false
-      },
-      {
-        "sha": "b50a946",
-        "type": "ci",
-        "scope": null,
-        "subject": "require approval before production release",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "8554363",
-        "type": "ci",
-        "scope": null,
-        "subject": "verify corrected replacement agent routes",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "7615397",
-        "type": "ci",
-        "scope": null,
-        "subject": "verify replacement agent production runtime",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "491ea28",
-        "type": "ci",
-        "scope": null,
-        "subject": "split Fly credential and health probes",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "e01e198",
-        "type": "ci",
-        "scope": null,
-        "subject": "probe CircleCI production credential availability",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "70b78ab",
-        "type": "ci",
-        "scope": null,
-        "subject": "test agents through real sandbox HTTP boundary",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "5ba3ad3",
-        "type": "ci",
-        "scope": null,
-        "subject": "allow signed release tags to reach production preflight",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "725b6a6",
-        "type": "ci",
-        "scope": null,
-        "subject": "capture immutable registry digest reliably",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "e007c23",
-        "type": "ci",
-        "scope": null,
-        "subject": "replace pipeline with secure parameterized orchestration",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "0252a04",
-        "type": "ci",
-        "scope": null,
-        "subject": "add post-deploy evidence verifier",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "6b3e4ef",
-        "type": "ci",
-        "scope": null,
-        "subject": "add audited Fly rollback helper",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "e3a9034",
-        "type": "ci",
-        "scope": null,
-        "subject": "add immutable Fly deployment helper",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "c0c9ad2",
-        "type": "ci",
-        "scope": null,
-        "subject": "add pinned Fly CLI installer",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "86c786b",
-        "type": "ci",
-        "scope": null,
-        "subject": "add empty reviewed vulnerability allowlist",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "40dc7c3",
-        "type": "ci",
-        "scope": null,
-        "subject": "add dependency security gate",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "9a52d7e",
-        "type": "ci",
-        "scope": null,
-        "subject": "add secure pipeline preflight",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "4ed9a1f",
-        "type": "ci",
-        "scope": null,
-        "subject": "activate full CircleCI recovery pipeline",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      }
-    ],
-    "Maintenance": [
-      {
-        "sha": "17ff926",
-        "type": "chore",
-        "scope": null,
-        "subject": "Refresh Pages cache policy deployment",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "b6f5e58",
-        "type": "chore",
-        "scope": null,
-        "subject": "Force fresh homepage contrast CSS",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "b1d3541",
-        "type": "chore",
-        "scope": null,
-        "subject": "Reduce homepage white contrast",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "7add906",
-        "type": "chore",
-        "scope": null,
-        "subject": "Tone down Control Station contrast",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "14f9161",
-        "type": "chore",
-        "scope": null,
-        "subject": "Add .circleci/config.yml",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "aae3093",
-        "type": "chore",
-        "scope": "osit",
-        "subject": "harden lint configuration",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "3d43261",
-        "type": "chore",
-        "scope": null,
-        "subject": "Contain Actions deployment during runner billing lock",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "5fe91ff",
-        "type": "chore",
-        "scope": null,
-        "subject": "Serve mission-red Control Station styles fresh",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "8022a9a",
-        "type": "chore",
-        "scope": null,
-        "subject": "Match Control Station to mission red homepage",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "4fa7a82",
-        "type": "chore",
-        "scope": null,
-        "subject": "wire runtime status into governed data catalog",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "7c1042f",
-        "type": "chore",
-        "scope": null,
-        "subject": "add public runtime status for Actions-independent operation",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "cd8c75c",
-        "type": "chore",
-        "scope": null,
-        "subject": "document Actions-independent release and recovery path",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
-      },
-      {
-        "sha": "b9f5128",
-        "type": "chore",
-        "scope": null,
-        "subject": "restore ClearGlass Inc corporate README and document live platform",
-        "author": "Desmond Otieno",
-        "date": "2026-08-14",
-        "breaking": false
       }
     ],
     "Automation": [
+      {
+        "sha": "52a936c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "67145ad",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "0dfd41a",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "d64d88d",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "9864277",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "cb5ffac",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "4be0ca9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "0362280",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "69a0fbf",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "147af09",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-18",
+        "breaking": false
+      },
+      {
+        "sha": "daf2ee1",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "7e21a73",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "9a46ab2",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "6dac3a9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "3605cd5",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "f1b74e8",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "7e87661",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "7453a1f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "2cf00de",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "622f63c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "d7c95e4",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "667f78d",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "6b53a91",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "db6fbaa",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "8182edf",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "a6227ac",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "394a579",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "fdbd2ff",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
+      {
+        "sha": "0f27ad9",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-17 07:48 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-17",
+        "breaking": false
+      },
       {
         "sha": "8083a0c",
         "type": "bot",
@@ -994,69 +907,6 @@
         "type": "ops",
         "scope": null,
         "subject": "final acceptance verify after compatibility repair",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "843b377",
-        "type": "ops",
-        "scope": null,
-        "subject": "final verify repaired production agent routes",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "ee45b92",
-        "type": "ops",
-        "scope": null,
-        "subject": "isolate production control-plane routes",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "b68541e",
-        "type": "ops",
-        "scope": null,
-        "subject": "verify settled production runtime",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "5d462df",
-        "type": "ops",
-        "scope": null,
-        "subject": "restore CircleCI production runtime verification",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "7ca3c38",
-        "type": "ops",
-        "scope": null,
-        "subject": "isolate CircleCI production bridge prerequisites",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "838f85f",
-        "type": "ops",
-        "scope": null,
-        "subject": "probe CircleCI production credential availability",
-        "author": "Desmond Otieno",
-        "date": "2026-08-15",
-        "breaking": false
-      },
-      {
-        "sha": "ff01ec1",
-        "type": "ops",
-        "scope": null,
-        "subject": "one-time CircleCI production release bridge",
         "author": "Desmond Otieno",
         "date": "2026-08-15",
         "breaking": false

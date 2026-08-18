@@ -19,3 +19,7 @@ Live health endpoint after successful deployment:
 ```text
 https://clearglass-agent-service.fly.dev/health
 ```
+
+## Production release request
+
+Requested from the authenticated repository control plane on 2026-08-15 for the current `main` revision. This marker is intentionally idempotent: it changes no application code or secret material and exists only to invoke the governed production deployment workflow.

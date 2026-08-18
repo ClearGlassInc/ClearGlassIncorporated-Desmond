@@ -34,6 +34,8 @@ A concise, agent-readable map of the primary public ClearGlass Inc. surfaces. Th
 
 ## Research and analysis
 - [ClearGlass Intelligence](https://www.clearglassinc.com/blog/)
+- [Canada Strategic Position, 2026: DIMEFIL Command Briefing](https://www.clearglassinc.com/blog/canada-strategic-position-2026.html)
+- [Ontario Psy Op Dossier: CAF Influence & Information Operations During COVID-19](https://www.clearglassinc.com/blog/ontario-caf-covid-influence-operations-dossier.html)
 - [Graph Topology Beats One Giant Context](https://www.clearglassinc.com/blog/graph-topology-multi-agent-research-workflow.html)
 - [OSINT Workflow That Survives Contact With Reality](https://www.clearglassinc.com/blog/osint-workflow-that-survives-contact-with-reality.html)
 - [Autonomous Threat Modeling in 2026](https://www.clearglassinc.com/blog/autonomous-threat-modeling-2026.html)

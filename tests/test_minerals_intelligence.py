@@ -55,12 +55,19 @@ def test_live_feed_snapshots_fail_closed_when_empty():
     healthy_with_records = {
         "LIVE", "NEAR LIVE", "DELAYED", "DAILY", "WEEKLY", "MONTHLY",
         "STATIC REFERENCE", "STALE", "DEGRADED",
+def test_live_feeds_fail_closed_when_empty_and_report_refreshes_truthfully():
+    healthy_or_stale = {
+        "LIVE", "NEAR LIVE", "DELAYED", "DAILY", "WEEKLY", "MONTHLY",
+        "STALE", "DEGRADED", "OPERATIONAL", "HEALTHY",
     }
     for name in ("policy", "news"):
         payload = load_json(f"feeds/minerals/latest/{name}.json")
         records = payload["records"]
         if records:
             assert payload["status"] in healthy_with_records
+        assert isinstance(records, list)
+        if records:
+            assert payload["status"] in healthy_or_stale
             assert payload["retrieved_at"] is not None
         else:
             assert payload["status"] == "UNAVAILABLE"

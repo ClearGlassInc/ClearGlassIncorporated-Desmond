@@ -28,11 +28,11 @@ from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from . import printful
+from . import pricebook, printful
 from .audit import log_event
 from .config import Settings, get_settings
 from .governance import score_action
-from .models import Approval, Order, Shipment
+from .models import Approval, Order, OrderItem, Shipment
 from .service import run_governed_action
 
 #: Terminal-ish states that a re-run must not disturb.
@@ -119,6 +119,113 @@ def recipient_from_order(order: Order) -> dict[str, Any]:
         "zip": order.ship_to_zip,
         "email": order.ship_to_email,
     }
+
+
+def parse_sku_metadata(raw: str | None) -> list[tuple[str, int]]:
+    """Parse Stripe's ``skus`` metadata (``"sku-ax2,sku-bx1"``) into pairs.
+
+    Deliberately tolerant. Stripe caps a metadata value at 500 characters and
+    `create_checkout_session` truncates to fit, so the final entry of a long cart
+    can arrive cut in half. A fragment is dropped rather than guessed at — half a
+    SKU is not a product, and inventing the missing characters would ship the
+    wrong thing.
+    """
+    if not raw:
+        return []
+    pairs: list[tuple[str, int]] = []
+    for chunk in raw.split(","):
+        chunk = chunk.strip()
+        if not chunk or "x" not in chunk:
+            continue
+        sku, _, qty = chunk.rpartition("x")
+        # `rpartition` splits on the last "x", so a SKU containing one survives.
+        if not sku or not qty.isdigit():
+            continue
+        quantity = int(qty)
+        if quantity < 1:
+            continue
+        pairs.append((sku, quantity))
+    return pairs
+
+
+def record_order_items(session: Session, order: Order, skus_metadata: str | None) -> list[OrderItem]:
+    """Capture what was bought onto the order. Idempotent per (order, sku).
+
+    Prices, names and the supplier variant are copied from the price book *now*
+    rather than resolved at fulfillment time: the catalogue is editable, and an
+    order has to be fulfilled as it was sold.
+    """
+    existing = {
+        item.sku: item
+        for item in session.scalars(select(OrderItem).where(OrderItem.order_id == order.id)).all()
+    }
+    recorded: list[OrderItem] = []
+
+    for sku, quantity in parse_sku_metadata(skus_metadata):
+        if sku in existing:
+            recorded.append(existing[sku])
+            continue
+
+        # Not every SKU comes from the price book (the Side Store prices its own
+        # cart), so an unknown SKU is recorded as-sold rather than rejected —
+        # it simply carries no supplier variant and will not auto-route.
+        try:
+            offer = pricebook.get_offer(sku)
+        except pricebook.PricebookError:
+            offer = None
+
+        item = OrderItem(
+            order_id=order.id,
+            sku=sku,
+            name=offer.name if offer else None,
+            quantity=quantity,
+            unit_amount=offer.amount if offer else None,
+            currency=(offer.currency.upper() if offer else (order.currency or "CAD"))[:3],
+            requires_shipping=bool(offer.requires_shipping) if offer else False,
+            printful_sync_variant_id=offer.printful_sync_variant_id if offer else None,
+        )
+        session.add(item)
+        recorded.append(item)
+
+    session.flush()
+    return recorded
+
+
+def supplier_items_for_order(session: Session, order: Order) -> list[dict[str, Any]]:
+    """Supplier line items for the shippable part of an order.
+
+    Only lines that both require shipping and name a supplier variant are
+    returned. A shippable line with no variant is *not* silently skipped — it
+    yields an empty list for the whole order, so `book_supplier_draft` marks it
+    unfulfillable instead of shipping a partial parcel the customer did not buy.
+    """
+    items = session.scalars(select(OrderItem).where(OrderItem.order_id == order.id)).all()
+    shippable = [item for item in items if item.requires_shipping]
+    if not shippable:
+        return []
+    if any(item.printful_sync_variant_id is None for item in shippable):
+        return []
+
+    return [
+        {
+            "sync_variant_id": item.printful_sync_variant_id,
+            "quantity": item.quantity,
+            **(
+                {"retail_price": f"{item.unit_amount / 100:.2f}"}
+                if item.unit_amount is not None
+                else {}
+            ),
+        }
+        for item in shippable
+    ]
+
+
+def order_needs_shipping(session: Session, order: Order) -> bool:
+    """True when any line on the order is a physical good."""
+    return any(
+        item.requires_shipping
+        for item in session.scalars(select(OrderItem).where(OrderItem.order_id == order.id)).all()
+    )
 
 
 def _mark_unfulfillable(session: Session, order: Order, reason: str) -> dict[str, Any]:

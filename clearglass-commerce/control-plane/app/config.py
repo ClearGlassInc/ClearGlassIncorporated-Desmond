@@ -113,6 +113,12 @@ class Settings(BaseSettings):
     etsy_oauth_authorize_url: str = "https://www.etsy.com/oauth/connect"
     etsy_token_url: str = "https://api.etsy.com/v3/public/oauth/token"
 
+    # Countries physical orders may ship to. Stripe requires an explicit list for
+    # `shipping_address_collection`, and it doubles as a trade control: a
+    # destination not listed here cannot be sold to, which keeps customs and tax
+    # exposure to jurisdictions actually accounted for. Canada only by default.
+    shipping_allowed_countries: str = "CA"
+
     # ── Printful (print-on-demand fulfillment) ──────────────────────────────
     # Unset = mock mode: no supplier order is ever placed and no network call is
     # made, mirroring the no-Stripe-key behaviour of payments.

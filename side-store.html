@@ -1150,7 +1150,10 @@
   // Session, so the amount charged never depends on anything in this page or in
   // localStorage. Left empty — or unreachable — the buttons keep the existing
   // e-Transfer flow, so the store never becomes unusable because an API is down.
-  var API_BASE="";
+  // Commerce control-plane origin. Empty = no card path, and the cart falls
+  // back to Interac e-Transfer. Set window.CG_API_BASE (or deploy the API and
+  // hardcode it) to turn on Stripe checkout for the Side Store.
+  var API_BASE=(window.CG_API_BASE||"").replace(/\/+$/,"");
 
   function placeOrder(e){
     var p=price(cart);

@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 171 public pages are connected and 14 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 175 public pages are connected and 14 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -109,8 +109,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `sats-digital-twin.html` — SATS Digital Twin | storm-adaptive transit simulation with governed operations | Speed Vision AI | Government Solutions | Minerals Intelligence Platform | Book a security engagement / Check our procurement readiness |
 | `minerals-platform.html` — Minerals Intelligence Platform | source-transparent critical-minerals command center | SATS Digital Twin | Government Solutions | Government Solutions | Book a security engagement / Check our procurement readiness |
 | **Services & Engagements** | **Topic cluster** |  |  |  |  |
-| `offers/index.html` — Services & Engagements | every ClearGlass offer in one place | Growth Command Centre | Services & Engagements | ClearGlass Store | Book a security engagement / See pricing & plans |
-| `store.html` — ClearGlass Store | book a security engagement | Services & Engagements | Services & Engagements | Secure Systems Engineering Workshop | Book a security engagement / See pricing & plans |
+| `offers/index.html` — Services & Engagements | every ClearGlass offer in one place | Growth Command Centre | Services & Engagements | Cybersecurity Services Canada | Book a security engagement / See pricing & plans |
+| `revenue.html` — Cybersecurity Services Canada | the ClearGlass Canadian security services offer | Services & Engagements | Services & Engagements | ClearGlass Store | Book a security engagement / See pricing & plans |
+| `store.html` — ClearGlass Store | book a security engagement | Cybersecurity Services Canada | Services & Engagements | Secure Systems Engineering Workshop | Book a security engagement / See pricing & plans |
 | `products/advanced-secure-systems-engineering.html` — Secure Systems Engineering Workshop | enterprise workshop in defensive cyber, embedded platforms and zero trust | ClearGlass Store | Services & Engagements | Pricing & Engagements | Book a security engagement / See pricing & plans |
 | `pricing.html` — Pricing & Engagements | plans and engagement models | Secure Systems Engineering Workshop | Services & Engagements | Guardian Plans & Pricing | Book a security engagement / See pricing & plans |
 | `plans.html` — Guardian Plans & Pricing | per-seat subscription tiers for the Guardian console | Pricing & Engagements | Services & Engagements | ClearGlass Workspace | Book a security engagement / See pricing & plans |
@@ -153,8 +154,11 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `products/opal-koboi/revenue-engine.html` — Revenue Engine · Asset | product sheet | Guardian · Asset | Opal-Koboi | SMB Suite · Asset | Book a security engagement / See pricing & plans |
 | `products/opal-koboi/smb-suite.html` — SMB Suite · Asset | product sheet | Revenue Engine · Asset | Opal-Koboi | Opal-Koboi | Book a security engagement / See pricing & plans |
 | **ClearGlass Intelligence · Insights** | **Topic cluster** |  |  |  |  |
-| `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | Graph Topology Beats Giant Context | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
-| `blog/autonomous-threat-modeling-2026.html` — Autonomous Threat Modeling in 2026 | continuous architecture-grounded security for agentic and cyber-physical systems | ClearGlass Intelligence | ClearGlass Intelligence | AI Agent Governance | Book a security engagement / See pricing & plans |
+| `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | Graph Topology Beats Giant Context | ClearGlass Intelligence | 2027 Outlook | Book a security engagement / See pricing & plans |
+| `blog/2027-outlook-transition-risk-monitoring.html` — 2027 Outlook | transition, valuation and risk monitoring for the year ahead | ClearGlass Intelligence | ClearGlass Intelligence | Canada’s Strategic Position, 2026 | Book a security engagement / See pricing & plans |
+| `blog/canada-strategic-position-2026.html` — Canada’s Strategic Position, 2026 | a DIMEFIL command briefing on national posture | 2027 Outlook | ClearGlass Intelligence | Ontario Influence Operations Dossier | Book a security engagement / See pricing & plans |
+| `blog/ontario-caf-covid-influence-operations-dossier.html` — Ontario Influence Operations Dossier | a public-record assessment of CAF influence activity during COVID-19 | Canada’s Strategic Position, 2026 | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
+| `blog/autonomous-threat-modeling-2026.html` — Autonomous Threat Modeling in 2026 | continuous architecture-grounded security for agentic and cyber-physical systems | Ontario Influence Operations Dossier | ClearGlass Intelligence | AI Agent Governance | Book a security engagement / See pricing & plans |
 | `blog/ai-agent-governance-governed-autonomy.html` — AI Agent Governance | the governed-autonomy playbook | Autonomous Threat Modeling in 2026 | ClearGlass Intelligence | Agentic AI Operating Model | Book a security engagement / See pricing & plans |
 | `blog/agentic-ai-business-operating-model.html` — Agentic AI Operating Model | bounded delegation as a business operating model | AI Agent Governance | ClearGlass Intelligence | AI Agents as a Digital Workforce | Book a security engagement / See pricing & plans |
 | `blog/ai-agents-digital-workforce-small-business.html` — AI Agents as a Digital Workforce | governed digital workers for small businesses | Agentic AI Operating Model | ClearGlass Intelligence | The ClearGlass Platform Audit | Book a security engagement / See pricing & plans |

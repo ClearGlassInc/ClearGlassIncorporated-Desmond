@@ -1,97 +1,255 @@
 {
+  "schema_version": "2.0.0",
   "system": "ARTEMIS",
   "organization": "ClearGlass Inc.",
   "original_author": "Desmond Otieno Odhiambo",
   "classification": "CONFIDENTIAL",
   "bot": "artemis_provenance_bot",
-  "generated_utc": "2026-08-18T07:14:59+00:00",
-  "repository_head": "0dfd41adc6ab7be67919156253368e0874c7fe4f",
+  "generated_utc": "2026-08-18T15:34:29+00:00",
+  "repository_head": "456d9f3b5da3590d7f4082f94aff1ba30bae2faa",
   "branch": "main",
+  "processing_version": "2026.08.17-high-assurance-v1",
   "artifact_count": 12,
   "artifacts": [
     {
       "artifact": "agents/artemis_command_system/agent.json",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "7d22f85f03566f34678f6965bb311878dbf5293ed069ab2964ea22836239ad2a",
       "size_bytes": 3160,
       "last_commit": "bbfaea037a37ec7046f0ac4689b7e112a13b385e",
-      "last_commit_date": "2026-07-29T09:13:36Z"
+      "last_commit_date": "2026-07-29T09:13:36Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "agents/artemis_command_system/system_prompt.md",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "b67d5adeb56a9c62aa3e817463f52991dd82a0164f85482cca1a6a9d78b94a17",
       "size_bytes": 15249,
       "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "last_commit_date": "2026-07-18T12:08:41Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "agents/artemis_ip_guardian/agent.json",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "b4b8d328c004cfe9503f9f6311ea5885f626872c62ff22cd7765a29ba7c9fbb2",
       "size_bytes": 1870,
       "last_commit": "bbfaea037a37ec7046f0ac4689b7e112a13b385e",
-      "last_commit_date": "2026-07-29T09:13:36Z"
+      "last_commit_date": "2026-07-29T09:13:36Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "agents/artemis_ip_guardian/system_prompt.md",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "393bc8a5e33ac99c7542bb35b8997a28f9b1775ef562dfc33a30428da55fd98e",
       "size_bytes": 2418,
       "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "last_commit_date": "2026-07-18T12:08:41Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "bots/artemis_ip_guardian_bot.py",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "4083fafdf0dece95ad03884ebfc0c3d246f4c8253466c1838b5a034aabe65d77",
       "size_bytes": 7015,
       "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "last_commit_date": "2026-07-18T12:08:41Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "bots/artemis_provenance_bot.py",
-      "sha256": "9d2b6f449f7f1ceb2ec0c688c985f5f68503bc4c2095be09704ee5d9afb034c7",
-      "size_bytes": 3717,
-      "last_commit": "e29f3f32542627acf4fa968b361b73dcf80f3ada",
-      "last_commit_date": "2026-07-18T12:15:17Z"
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
+      "sha256": "efc2120d2bbd5b490102c6f316f9c3280d5f7859110c202d1a0f5cdb3bf57d16",
+      "size_bytes": 4916,
+      "last_commit": "4b6f775138afa4e663792da30227777dd0c798c2",
+      "last_commit_date": "2026-08-17T21:47:37-04:00",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": ".github/workflows/artemis-deploy.yml",
-      "sha256": "6eb6ec4cd0de4ecfc2b901ff4cf6cabbaa86a64395569c9d976d3e4f282da2d3",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
+      "sha256": "769a46e9509aa595aaed0176c20f59cb27c39a2617069bd50643817fed1292b0",
       "size_bytes": 5698,
-      "last_commit": "118765838ee64b482b2ba5d7f8bd1e61debb4303",
-      "last_commit_date": "2026-07-27T19:42:26-04:00"
+      "last_commit": "1f382a108d3953cfb0eff5594e09e90d02712491",
+      "last_commit_date": "2026-08-17T06:27:53Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "prompts/general_assistant_system_prompt.md",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "17230ce1641677f9c78fa8b0dbafb7a158f56e693dc1de88b7246dae5c468a36",
       "size_bytes": 3445,
       "last_commit": "e29f3f32542627acf4fa968b361b73dcf80f3ada",
-      "last_commit_date": "2026-07-18T12:15:17Z"
+      "last_commit_date": "2026-07-18T12:15:17Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "NOTICE",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "26b3df73785db77cf96e2753b2f5e6fdb84343d260723923d4b07ccdeda188b8",
       "size_bytes": 1332,
       "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "last_commit_date": "2026-07-18T12:08:41Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "TRADEMARKS.md",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "367d64f75f1dcc011ddb6be789d56fdb11e1076163e8d870e46c3c0818ff509b",
       "size_bytes": 1772,
       "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "last_commit_date": "2026-07-18T12:08:41Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "docs/PROVENANCE.md",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "81f5d22cafac11dca94fdc967b270ca8f7f27c60f9fdb42628469dbf835eaae8",
       "size_bytes": 2493,
       "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "last_commit_date": "2026-07-18T12:08:41Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     },
     {
       "artifact": "docs/IP-POLICY.md",
+      "source": "repository_working_tree",
+      "publisher": "ClearGlass Inc.",
+      "license": "PRESENT_AT_REPOSITORY_ROOT",
       "sha256": "319acd78439998c41506fcd4467cfc2cd070d1a885692d7d3475b2e9a73b0693",
       "size_bytes": 5038,
       "last_commit": "3284257e681b9b87746433967e6ed9cefd4a9d60",
-      "last_commit_date": "2026-07-18T12:08:41Z"
+      "last_commit_date": "2026-07-18T12:08:41Z",
+      "processing_version": "2026.08.17-high-assurance-v1",
+      "generator": "bots/artemis_provenance_bot.py",
+      "validation_status": "UNVALIDATED_UNTIL_CI_VERIFIES",
+      "security_status": "UNASSESSED_UNTIL_SECURITY_GATE",
+      "confidence": "VERIFIED_FACT_FOR_HASH_SIZE_GIT_METADATA",
+      "limitations": [
+        "Live-site state is not established by repository provenance alone.",
+        "External analytics are not inferred from repository artifacts.",
+        "License status is not inferred from copyright text alone."
+      ]
     }
   ]
 }

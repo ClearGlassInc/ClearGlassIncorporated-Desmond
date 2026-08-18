@@ -1,7 +1,23 @@
 # Stripe setup — connection state and what it takes to go live
 
-Status of the live Stripe account as verified against the Stripe API on **2026-08-05**.
-Re-run the checks below before trusting this page; it is a snapshot, not a live view.
+> **Status is unverified as of 2026-08-11.** The table in §1 was captured on
+> **2026-08-05** and has since been contradicted by the site itself: `store.html`
+> now carries five live Stripe Payment Links (`buy.stripe.com` / `book.stripe.com`)
+> and `data/store/catalog.json` reports `live_checkout_enabled: true`. Stripe does
+> not normally issue working Payment Links on an account that cannot charge, so
+> the snapshot below is probably stale — but nobody has re-run the checks.
+>
+> **Do not treat §1 as current.** Re-verify before relying on either claim:
+>
+> ```bash
+> curl -s https://api.stripe.com/v1/account -u "$STRIPE_SECRET_KEY:" \
+>   | python3 -c "import json,sys; a=json.load(sys.stdin); \
+> print({k: a.get(k) for k in ('id','charges_enabled','payouts_enabled','details_submitted')})"
+> ```
+>
+> If `charges_enabled` is true, update §1 and delete this banner. If it is false,
+> the Payment Links on the storefront are taking customers to a checkout that
+> cannot complete, which is worse than having no buttons at all.
 
 ## 1. Connection check (verified, not assumed)
 
@@ -19,7 +35,8 @@ Re-run the checks below before trusting this page; it is a snapshot, not a live 
 | Checkout Sessions ever created | 0 | `GET /v1/checkout/sessions` |
 | Balance | 0 CAD | `GET /v1/balance` |
 
-**Bottom line: the account cannot accept a single payment today.** Stripe reports
+**Bottom line as of the 2026-08-05 snapshot: the account could not accept a
+payment.** That may no longer hold — see the banner. Stripe reports
 `requirements.disabled_reason: "requirements.past_due"`. The code in this repo is not
 the blocker — the account was created (2025-07-16) and never activated.
 
@@ -150,6 +167,20 @@ Endpoint: `https://<control-plane-host>/webhooks/stripe`
 
 Handling is idempotent on redelivery: orders key on `orders.external_ref`, payouts on
 `stripe_payout_id`.
+
+Register the endpoint with the bundled script (dry run by default, idempotent,
+and it prints the signing secret Stripe only shows once):
+
+```bash
+export STRIPE_SECRET_KEY=sk_test_...
+python scripts/register_stripe_webhook.py --url https://<control-plane-host>/webhooks/stripe
+python scripts/register_stripe_webhook.py --url https://<control-plane-host>/webhooks/stripe --apply
+```
+
+**This is the single most valuable unclosed gap.** Payment Links charge the card
+whether or not an endpoint exists; without one the control plane never books the
+order, so there is no `orders` row, no audit event, and no fulfillment trigger —
+revenue arrives and nothing records it.
 
 Local testing:
 

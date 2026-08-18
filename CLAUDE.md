@@ -44,6 +44,22 @@ Every material change is written to an append‑only audit ledger (`events` tabl
 high/critical action execute without an approval — `daily_loop.py`'s governance
 self‑check (and `tests/test_governance.py`) will fail if you do, by design.
 
+Approving is not executing. `POST /approvals/{id}/approve` only records the
+decision; `POST /approvals/{id}/execute` carries it out, via the action→executor
+registry in `app/approval_executor.py` (dispatch, single-use claim) and
+`app/executors.py` (the actual work). Two rules there are load-bearing:
+
+- An approved row is claimed with a conditional `UPDATE ... WHERE status='approved'`
+  whose **rowcount is the proof**, committed before any side effect. One human
+  decision can never become two refunds.
+- An action with **no registered executor is refused and left `approved`** — never
+  marked executed. `GET /approvals/coverage` and the daily loop list what is
+  `executable`, `delegated` (claimed by a dedicated endpoint, e.g.
+  `printful_confirm_order`), and `uncovered`. Most gated actions are still
+  uncovered; that is reported, not hidden. Do **not** register a placeholder
+  executor to make the list look complete — telling an operator a refund was
+  issued when it wasn't is worse than the dead end.
+
 Operating rules also enforced in code/prompt: never fabricate inventory, reviews,
 sales, or urgency; never change live pricing/tax/payment/refund/fulfillment
 without approval; log every action.

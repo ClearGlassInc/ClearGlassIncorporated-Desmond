@@ -7,8 +7,9 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from .. import payments, pricebook
+from .. import fulfillment, payments, pricebook
 from ..audit import log_event
+from ..config import get_settings
 from ..db import get_session
 from ..fulfillment import apply_shipping_details
 from ..models import Order, Payout
@@ -113,12 +114,25 @@ def create_checkout(req: CheckoutRequest, session: Session = Depends(get_session
         session.commit()
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
+    # A physical good needs somewhere to go, and checkout is the only moment the
+    # customer can supply it. Asked for only when the cart actually contains one:
+    # demanding a shipping address for a 90-minute consultation is wrong, and
+    # Stripe surfaces it as a confusing extra step on a service purchase.
+    shipping_countries = None
+    if any(item.get("requires_shipping") for item in line_items):
+        shipping_countries = [
+            code.strip().upper()
+            for code in get_settings().shipping_allowed_countries.split(",")
+            if code.strip()
+        ]
+
     result = payments.create_checkout_session(
         line_items,
         customer_email=req.customer_email,
         checkout_mode=checkout_mode,
         client_reference_id=req.client_reference_id,
         idempotency_key=req.client_reference_id,
+        shipping_countries=shipping_countries,
     )
     log_event(
         session,
@@ -209,6 +223,9 @@ async def stripe_webhook(request: Request, session: Session = Depends(get_sessio
             # If it is not captured here it is gone, and a paid physical order has
             # nowhere to ship.
             shipping_source=obj,
+            # `skus` is a compact "sku-ax2,sku-bx1" record of the cart. It is the
+            # only description of *what* was bought that survives to this point.
+            skus_metadata=str((obj.get("metadata") or {}).get("skus") or ""),
         )
     elif etype == "invoice.paid":
         # Subscription renewals arrive as invoices, not checkout sessions. Without this
@@ -293,6 +310,7 @@ def _record_order(
     verified: bool,
     event: str,
     shipping_source: dict | None = None,
+    skus_metadata: str | None = None,
 ) -> None:
     """Book (or promote) an order idempotently, keyed on Stripe's own id.
 
@@ -325,6 +343,9 @@ def _record_order(
         if shipping_source is not None:
             apply_shipping_details(existing, shipping_source)
         session.flush()
+        # An async method settling is the first moment this order is genuinely
+        # shippable, so routing happens here rather than only on first booking.
+        _route_for_fulfillment(session, existing, status, skus_metadata)
         log_event(
             session,
             actor="stripe",
@@ -351,6 +372,7 @@ def _record_order(
         apply_shipping_details(order, shipping_source)
     session.add(order)
     session.flush()
+    _route_for_fulfillment(session, order, status, skus_metadata)
     log_event(
         session,
         actor="stripe",
@@ -430,3 +452,38 @@ def refund(req: RefundRequest, session: Session = Depends(get_session)) -> Actio
         payload=req.model_dump(),
         execute=None,
     )
+
+
+def _route_for_fulfillment(
+    session: Session,
+    order: Order,
+    status: str,
+    skus_metadata: str | None,
+) -> None:
+    """Record what was bought and, for physical goods, book a supplier draft.
+
+    Runs only once the money is actually ``paid`` — a pending or failed order
+    must not reach a supplier. Failures are swallowed *deliberately*: this is a
+    webhook, and Stripe retries a non-2xx. Letting a fulfillment problem fail the
+    response would make Stripe redeliver the payment event, and the far worse
+    outcome is a revenue record that never lands because the supplier was down.
+    The order is still marked unfulfillable and audited by the fulfillment layer.
+    """
+    if status != "paid":
+        return
+
+    try:
+        fulfillment.record_order_items(session, order, skus_metadata)
+        if not fulfillment.order_needs_shipping(session, order):
+            return  # services settle here: nothing to ship
+        items = fulfillment.supplier_items_for_order(session, order)
+        fulfillment.book_supplier_draft(session, order, items)
+    except Exception as exc:  # noqa: BLE001 - a webhook must still return 2xx
+        log_event(
+            session,
+            actor="fulfillment",
+            action="printful_draft_order",
+            target=str(order.id),
+            payload={"order_id": order.id, "reason": f"routing failed: {exc}"},
+            result="error",
+        )

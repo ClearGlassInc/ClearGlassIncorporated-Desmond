@@ -16,6 +16,8 @@ import pytest
 pytest.importorskip("fastapi")
 pytest.importorskip("sqlalchemy")
 
+from decimal import Decimal
+
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
@@ -444,3 +446,99 @@ def test_printful_webhook_rejects_a_wrong_or_unset_secret(harness) -> None:
     client = build()
     assert client.post("/fulfillment/webhooks/printful/", json=_shipment_notice()).status_code in (404, 405)
     assert client.post("/fulfillment/webhooks/printful/anything", json=_shipment_notice()).status_code == 404
+
+
+# --- approve → execute, over the wire --------------------------------------
+# The unit tests in tests/test_approval_executor.py pin the dispatcher's
+# behaviour. These pin the *wiring*: that the route exists, is admin-gated, and
+# that importing the router actually populates the executor registry — a gap
+# that would make every execution 409 in production while every unit test passed.
+
+
+def _decide(client, approval_id: int, decision: str = "approve"):
+    return client.post(
+        f"/approvals/{approval_id}/{decision}",
+        json={"note": "reviewed"},
+        headers={"Authorization": "Bearer top-secret"},
+    )
+
+
+def test_approved_refund_executes_over_the_api(harness) -> None:
+    build, TestingSession, monkeypatch = harness
+    monkeypatch.setenv("ADMIN_API_KEY", "top-secret")
+    client = build()
+
+    with TestingSession() as s:
+        order = Order(status="paid", total=Decimal("200.00"), currency="CAD", external_ref="cs_api")
+        s.add(order)
+        s.commit()
+        order_id = order.id
+        approval = Approval(
+            action="trigger_refund",
+            target=str(order_id),
+            payload={"order_id": order_id},
+            risk_score=95,
+            risk_tier="critical",
+        )
+        s.add(approval)
+        s.commit()
+        approval_id = approval.id
+
+    assert _decide(client, approval_id).status_code == 200
+
+    resp = client.post(
+        f"/approvals/{approval_id}/execute", headers={"Authorization": "Bearer top-secret"}
+    )
+    assert resp.status_code == 200, resp.text
+    assert resp.json()["executed"] is True
+
+    with TestingSession() as s:
+        assert s.get(Order, order_id).status == "refunded"
+        assert s.get(Approval, approval_id).status == "executed"
+
+    # Replay: the money must not move twice for one decision.
+    again = client.post(
+        f"/approvals/{approval_id}/execute", headers={"Authorization": "Bearer top-secret"}
+    )
+    assert again.status_code == 200
+    assert again.json()["executed"] is False
+
+
+def test_executing_an_uncovered_action_is_a_409_not_a_silent_ok(harness) -> None:
+    """update_pricing is gated with nothing behind the gate. Say so."""
+    build, TestingSession, monkeypatch = harness
+    monkeypatch.setenv("ADMIN_API_KEY", "top-secret")
+    client = build()
+    approval_id = _pending_approval(TestingSession)
+    assert _decide(client, approval_id).status_code == 200
+
+    resp = client.post(
+        f"/approvals/{approval_id}/execute", headers={"Authorization": "Bearer top-secret"}
+    )
+    assert resp.status_code == 409
+    assert "no executor" in resp.json()["detail"]
+
+    with TestingSession() as s:
+        assert s.get(Approval, approval_id).status == "approved"
+
+
+def test_execute_requires_an_admin_credential(harness) -> None:
+    build, TestingSession, monkeypatch = harness
+    monkeypatch.setenv("ADMIN_API_KEY", "top-secret")
+    client = build()
+    approval_id = _pending_approval(TestingSession)
+
+    assert client.post(f"/approvals/{approval_id}/execute").status_code == 401
+
+
+def test_coverage_reports_the_gap_rather_than_hiding_it(harness) -> None:
+    build, _, monkeypatch = harness
+    monkeypatch.setenv("ADMIN_API_KEY", "top-secret")
+    client = build()
+
+    resp = client.get("/approvals/coverage", headers={"Authorization": "Bearer top-secret"})
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "trigger_refund" in body["executable"]
+    assert "printful_confirm_order" in body["delegated"]
+    assert "update_pricing" in body["uncovered"]

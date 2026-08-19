@@ -104,7 +104,7 @@ sessions as ephemeral.
 cd clearglassinc_sdk
 pip install -e ".[dev,server]"
 ruff check .                       # lint
-python -m pytest -q                # 142 tests, no network needed
+python -m pytest -q                # 160 tests, no network needed
 python examples/advanced_agent.py  # exercises every advanced feature
 docker build -t clearglassinc-sdk:test .
 ```

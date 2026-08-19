@@ -226,11 +226,13 @@ the operational checklist are in [DEPLOY.md](DEPLOY.md).
 ## Testing
 
 ```bash
-pip install -e ".[dev,server]"
+pip install -e ".[dev,server,all]"
 pytest
 ```
 
-142 tests, all against offline doubles — no network access or API keys needed.
+160 tests, all offline — no network access or API keys needed. 18 of them
+exercise the OpenAI/Anthropic translation layer against the real SDKs (with
+dummy keys); they skip cleanly if you installed without the `all` extra.
 `Agent SDK CI` runs lint, the suite on Python 3.11 and 3.12, the examples, a
 container build, and a live `/health` probe on every PR.
 

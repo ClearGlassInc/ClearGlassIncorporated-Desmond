@@ -40,9 +40,10 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          # The dev extra pulls fastapi + httpx so the server and TestClient
-          # tests actually run instead of silently skipping.
-          pip install -e ".[dev,server]"
+          # dev/server pull fastapi + httpx so the server and TestClient tests
+          # run instead of silently skipping; `all` pulls the real openai and
+          # anthropic SDKs so the provider-adapter tests do the same.
+          pip install -e ".[dev,server,all]"
 
       - name: Lint
         run: ruff check .

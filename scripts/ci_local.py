@@ -29,6 +29,7 @@ stdlib only, so it runs before any dependency is installed.
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import os
 import shutil
 import subprocess
@@ -49,6 +50,7 @@ NEEDS_NODE = "node"
 NEEDS_NETWORK = "network"
 NEEDS_CHROME = "chrome"
 NEEDS_CLEAN_TREE = "clean-tree"
+NEEDS_COMMERCE_STACK = "commerce-stack"
 
 # Files whose committed contents the search-integrity gate compares against a
 # fresh generator run. Local edits to them make that comparison meaningless.
@@ -80,8 +82,15 @@ GATES: tuple[Gate, ...] = (
     Gate(
         key="python-tests",
         job="python-tests",
-        summary="the root pytest suite",
-        steps=((PY, "-m", "pytest", "tests/", "-q"),),
+        summary="the configured pytest suite (all four testpaths)",
+        # No path argument, exactly as ci.yml runs it. pyproject.toml's
+        # testpaths cover artemis/tests, tests, sentinel/tests and the commerce
+        # control-plane tests. This gate used to run `pytest tests/`, which
+        # collects 1339 of 2027 tests — it reported PASS while the commerce
+        # governance and route-auth suites, the ones CLAUDE.md calls
+        # load-bearing, had not been run at all.
+        steps=((PY, "-m", "pytest", "-q"),),
+        requires=frozenset({NEEDS_COMMERCE_STACK}),
     ),
     Gate(
         key="site-audit",
@@ -151,6 +160,16 @@ def dirty_generated_assets() -> list[str]:
     return [line[3:] for line in completed.stdout.splitlines() if line.strip()]
 
 
+def commerce_stack_available() -> bool:
+    """Whether the commerce control-plane tests can be collected at all.
+
+    Without these, pytest errors during collection of
+    clearglass-commerce/control-plane/tests — which reads as a defect in the
+    code rather than a missing dependency.
+    """
+    return all(importlib.util.find_spec(name) for name in ("fastapi", "sqlalchemy", "httpx"))
+
+
 def chrome_available() -> bool:
     if any(shutil.which(name) for name in ("google-chrome", "chromium", "chromium-browser")):
         return True
@@ -165,6 +184,11 @@ def missing_requirements(gate: Gate, *, fast: bool) -> list[str]:
         missing.append("npm not installed")
     if NEEDS_CHROME in gate.requires and not chrome_available():
         missing.append("no Chrome/Chromium found (set CHROME_PATH)")
+    if NEEDS_COMMERCE_STACK in gate.requires and not commerce_stack_available():
+        missing.append(
+            "commerce control-plane deps missing — "
+            "pip install -r clearglass-commerce/control-plane/requirements.txt"
+        )
     if NEEDS_CLEAN_TREE in gate.requires:
         # This gate asks whether the *committed* assets match a fresh generator
         # run. With local edits in flight the comparison answers a different

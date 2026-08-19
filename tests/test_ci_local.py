@@ -47,6 +47,44 @@ def test_no_gate_points_at_a_job_that_no_longer_exists() -> None:
     assert not orphans, f"gates referencing removed ci.yml jobs: {', '.join(orphans)}"
 
 
+def test_python_gate_runs_the_configured_suite_not_a_subset() -> None:
+    """A narrower local suite is a green summary that means less than CI's.
+
+    This gate ran `pytest tests/`, which collects 1339 of the 2027 tests the
+    configured suite collects — `artemis/tests`, `sentinel/tests` and the
+    commerce control-plane tests were absent, including the governance and
+    route-auth suites CLAUDE.md calls load-bearing. ci.yml passes no path and
+    lets pyproject.toml's testpaths decide; so must this.
+    """
+    gate = next(g for g in ci_local.GATES if g.key == "python-tests")
+    command = gate.steps[0]
+    assert command[-3:] == ("-m", "pytest", "-q"), command
+    assert "tests/" not in command, (
+        "passing a path narrows the suite below what ci.yml runs"
+    )
+
+    workflow = yaml.safe_load((ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8"))
+    run_steps = [
+        step.get("run", "") for step in workflow["jobs"]["python-tests"]["steps"]
+    ]
+    pytest_step = next(s for s in run_steps if "pytest" in s)
+    assert " tests/" not in pytest_step, (
+        "ci.yml narrowed its own suite; update this gate to match deliberately"
+    )
+
+
+def test_commerce_gate_is_skipped_when_its_dependencies_are_absent(monkeypatch) -> None:
+    """Missing deps make pytest error during collection, which reads as a bug."""
+    gate = next(g for g in ci_local.GATES if g.key == "python-tests")
+
+    monkeypatch.setattr(ci_local, "commerce_stack_available", lambda: False)
+    reasons = ci_local.missing_requirements(gate, fast=False)
+    assert any("control-plane/requirements.txt" in reason for reason in reasons), reasons
+
+    monkeypatch.setattr(ci_local, "commerce_stack_available", lambda: True)
+    assert not ci_local.missing_requirements(gate, fast=False)
+
+
 def test_gate_keys_are_unique() -> None:
     keys = [gate.key for gate in ci_local.GATES]
     assert len(keys) == len(set(keys))

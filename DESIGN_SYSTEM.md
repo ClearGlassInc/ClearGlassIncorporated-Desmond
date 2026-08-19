@@ -169,8 +169,13 @@ python3 -m ruff check .
 # Browser-level behaviour (Playwright + the pre-installed Chromium)
 npm i --no-save playwright
 node tests/browser/nav-contract.mjs products.html   # 21 assertions
-node tests/browser/a11y-contract.mjs pricing.html aegis.html sentinel.html
+node tests/browser/a11y-contract.mjs index.html pricing.html aegis.html sentinel.html
 ```
+
+`a11y-contract.mjs` checks the WCAG 2.4.1 contract — first Tab stop is a bypass
+link, it resolves a real target, and focusing it brings it on screen — not which
+script installed the link. `index.html` is in `EXEMPT` and authors its own
+`.skip-link`; it satisfies the contract and is checked alongside the rest.
 
 Browser tests must append `?skipboot=1` — the site's documented bypass for the
 first-visit boot loader. Without it the harness measures `/loader.html` instead

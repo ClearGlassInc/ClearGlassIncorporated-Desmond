@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 175 public pages are connected and 14 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 177 public pages are connected and 14 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -154,8 +154,10 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `products/opal-koboi/revenue-engine.html` — Revenue Engine · Asset | product sheet | Guardian · Asset | Opal-Koboi | SMB Suite · Asset | Book a security engagement / See pricing & plans |
 | `products/opal-koboi/smb-suite.html` — SMB Suite · Asset | product sheet | Revenue Engine · Asset | Opal-Koboi | Opal-Koboi | Book a security engagement / See pricing & plans |
 | **ClearGlass Intelligence · Insights** | **Topic cluster** |  |  |  |  |
-| `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | Graph Topology Beats Giant Context | ClearGlass Intelligence | 2027 Outlook | Book a security engagement / See pricing & plans |
-| `blog/2027-outlook-transition-risk-monitoring.html` — 2027 Outlook | transition, valuation and risk monitoring for the year ahead | ClearGlass Intelligence | ClearGlass Intelligence | Canada’s Strategic Position, 2026 | Book a security engagement / See pricing & plans |
+| `blog/index.html` — ClearGlass Intelligence | essays on governed AI, cyber defense and OSINT | Graph Topology Beats Giant Context | ClearGlass Intelligence | AetherSense Wi-Fi Sensing | Book a security engagement / See pricing & plans |
+| `blog/aethersense-wifi-csi-human-sensing.html` — AetherSense Wi-Fi Sensing | local-first human sensing without cameras | ClearGlass Intelligence | ClearGlass Intelligence | NATO SHAPE OSINT Case Study | Book a security engagement / See pricing & plans |
+| `blog/biwei-zhang-nato-shape-open-source-intelligence-dossier.html` — NATO SHAPE OSINT Case Study | a public-record open-source intelligence dossier | AetherSense Wi-Fi Sensing | ClearGlass Intelligence | 2027 Outlook | Book a security engagement / See pricing & plans |
+| `blog/2027-outlook-transition-risk-monitoring.html` — 2027 Outlook | transition, valuation and risk monitoring for the year ahead | NATO SHAPE OSINT Case Study | ClearGlass Intelligence | Canada’s Strategic Position, 2026 | Book a security engagement / See pricing & plans |
 | `blog/canada-strategic-position-2026.html` — Canada’s Strategic Position, 2026 | a DIMEFIL command briefing on national posture | 2027 Outlook | ClearGlass Intelligence | Ontario Influence Operations Dossier | Book a security engagement / See pricing & plans |
 | `blog/ontario-caf-covid-influence-operations-dossier.html` — Ontario Influence Operations Dossier | a public-record assessment of CAF influence activity during COVID-19 | Canada’s Strategic Position, 2026 | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
 | `blog/autonomous-threat-modeling-2026.html` — Autonomous Threat Modeling in 2026 | continuous architecture-grounded security for agentic and cyber-physical systems | Ontario Influence Operations Dossier | ClearGlass Intelligence | AI Agent Governance | Book a security engagement / See pricing & plans |

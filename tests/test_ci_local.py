@@ -62,11 +62,37 @@ def test_selectors_reject_unknown_gate_names() -> None:
         raise AssertionError("an unknown --only value must not be accepted silently")
 
 
-def test_fast_mode_skips_only_network_bound_gates() -> None:
+def test_fast_mode_skips_every_network_bound_gate() -> None:
     for gate in ci_local.GATES:
-        skipped = ci_local.missing_requirements(gate, fast=True)
-        wants_network = ci_local.NEEDS_NETWORK in gate.requires
-        assert bool(skipped) == wants_network or not wants_network
+        if ci_local.NEEDS_NETWORK in gate.requires:
+            assert ci_local.missing_requirements(gate, fast=True), gate.key
+
+
+def test_unavailable_gates_are_skipped_rather_than_failed(monkeypatch) -> None:
+    """A gate that cannot run must not be reported as a defect in the code.
+
+    Both of these were real false failures: lighthouse reported FAIL on a
+    machine with no browser, and search-integrity reported FAIL whenever the
+    developer had uncommitted work — which is exactly when they run it.
+    """
+    lighthouse = next(g for g in ci_local.GATES if g.key == "lighthouse")
+    monkeypatch.setattr(ci_local, "chrome_available", lambda: False)
+    reasons = ci_local.missing_requirements(lighthouse, fast=False)
+    assert any("Chrome" in reason for reason in reasons)
+
+    monkeypatch.setattr(ci_local, "chrome_available", lambda: True)
+    assert not [r for r in ci_local.missing_requirements(lighthouse, fast=False) if "Chrome" in r]
+
+
+def test_search_integrity_is_skipped_while_generated_assets_are_dirty(monkeypatch) -> None:
+    gate = next(g for g in ci_local.GATES if g.key == "search-integrity")
+
+    monkeypatch.setattr(ci_local, "dirty_generated_assets", lambda: ["sitemap.xml"])
+    reasons = ci_local.missing_requirements(gate, fast=False)
+    assert any("uncommitted" in reason and "sitemap.xml" in reason for reason in reasons)
+
+    monkeypatch.setattr(ci_local, "dirty_generated_assets", lambda: [])
+    assert not ci_local.missing_requirements(gate, fast=False)
 
 
 def test_runner_lists_its_gates_without_running_them() -> None:

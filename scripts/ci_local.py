@@ -29,6 +29,7 @@ stdlib only, so it runs before any dependency is installed.
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import subprocess
 import sys
@@ -42,8 +43,16 @@ PY = sys.executable or "python3"
 
 # Capability tags. A gate is skipped (not failed) when its requirement is
 # unavailable, and the summary says so rather than implying the gate passed.
+# Reporting FAIL for a gate that never ran is the same lie in the other
+# direction: it looks like a defect in the code under test.
 NEEDS_NODE = "node"
 NEEDS_NETWORK = "network"
+NEEDS_CHROME = "chrome"
+NEEDS_CLEAN_TREE = "clean-tree"
+
+# Files whose committed contents the search-integrity gate compares against a
+# fresh generator run. Local edits to them make that comparison meaningless.
+GENERATED_ASSETS = ("sitemap.xml", "feed.xml", "data/seo/page-intents.json")
 
 
 @dataclass(frozen=True)
@@ -92,6 +101,7 @@ GATES: tuple[Gate, ...] = (
             (PY, "tools/seo_audit.py"),
             (PY, "tools/internal_links.py", "--check"),
         ),
+        requires=frozenset({NEEDS_CLEAN_TREE}),
     ),
     Gate(
         key="workflow-doctor",
@@ -125,11 +135,27 @@ GATES: tuple[Gate, ...] = (
         job="lighthouse",
         summary="performance, accessibility and SEO budgets",
         steps=(("npx", "--yes", "@lhci/cli@0.15.1", "autorun", "--config=lighthouserc.json"),),
-        requires=frozenset({NEEDS_NODE, NEEDS_NETWORK}),
+        requires=frozenset({NEEDS_NODE, NEEDS_NETWORK, NEEDS_CHROME}),
     ),
 )
 
 FAST_SKIP = frozenset({NEEDS_NETWORK})
+
+
+def dirty_generated_assets() -> list[str]:
+    """Generated assets with uncommitted local edits."""
+    completed = subprocess.run(
+        ["git", "status", "--porcelain", "--", *GENERATED_ASSETS],
+        cwd=ROOT, capture_output=True, text=True, check=False,
+    )
+    return [line[3:] for line in completed.stdout.splitlines() if line.strip()]
+
+
+def chrome_available() -> bool:
+    if any(shutil.which(name) for name in ("google-chrome", "chromium", "chromium-browser")):
+        return True
+    # Lighthouse also accepts an explicit binary path.
+    return bool(os.environ.get("CHROME_PATH"))
 
 
 def missing_requirements(gate: Gate, *, fast: bool) -> list[str]:
@@ -137,6 +163,15 @@ def missing_requirements(gate: Gate, *, fast: bool) -> list[str]:
     missing: list[str] = []
     if NEEDS_NODE in gate.requires and shutil.which("npm") is None:
         missing.append("npm not installed")
+    if NEEDS_CHROME in gate.requires and not chrome_available():
+        missing.append("no Chrome/Chromium found (set CHROME_PATH)")
+    if NEEDS_CLEAN_TREE in gate.requires:
+        # This gate asks whether the *committed* assets match a fresh generator
+        # run. With local edits in flight the comparison answers a different
+        # question, and failing on it would just be reporting your own work.
+        dirty = dirty_generated_assets()
+        if dirty:
+            missing.append("uncommitted changes in " + ", ".join(dirty) + " — commit, then re-run")
     if fast and gate.requires & FAST_SKIP:
         missing.append("--fast")
     return missing

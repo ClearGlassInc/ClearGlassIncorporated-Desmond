@@ -1,8 +1,8 @@
 # SEO Optimization Report
 
-**Run:** 2026-08-18T07:33:53.955317+00:00
-**Average Score:** 91.7/100
-**Files Audited:** 95
+**Run:** 2026-08-19T07:34:30.579364+00:00
+**Average Score:** 91.6/100
+**Files Audited:** 96
 
 ## Page Scores
 
@@ -24,6 +24,7 @@
 | `flowsint.html` | 80/100 | 2 |
 | `minerals-platform.html` | 80/100 | 2 |
 | `postloop.html` | 80/100 | 2 |
+| `revenue.html` | 80/100 | 2 |
 | `air-systems-control.html` | 90/100 | 1 |
 | `artemis-percival.html` | 90/100 | 1 |
 | `automap.html` | 90/100 | 1 |
@@ -106,10 +107,10 @@
 
 ## Top Issues Across All Pages
 
-- 23x — Missing og:image
+- 24x — Missing og:image
 - 12x — Missing og:description
 - 11x — Missing og:title
-- 10x — Description length N chars (ideal N–N)
+- 11x — Description length N chars (ideal N–N)
 - 6x — Missing canonical link tag
 - 5x — Multiple <hN> tags (N)
 - 4x — Title length N chars (ideal N–N)

@@ -76,9 +76,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           # Keep CI on the reviewed test-tool versions in requirements.txt.
+          # -r, not -c: a constraints file only pins versions of packages that
+          # something else already pulls in, it never installs one. jsonschema
+          # is declared in requirements.txt and in no extra, so under -c it was
+          # never installed and the two control-surface feed *contract*
+          # validations in tests/test_control_surface_feeds.py skipped silently
+          # on every run. Same failure mode this repo already hit with httpx.
+          # The pins in the file still apply, so determinism is unchanged.
           # The configured suite also includes the commerce control-plane tests,
           # so install their declared runtime dependencies before collection.
-          python -m pip install -c requirements.txt -e ".[test]" "PyYAML==6.0.2"
+          python -m pip install -r requirements.txt -e ".[test]" "PyYAML==6.0.2"
           python -m pip install -r clearglass-commerce/control-plane/requirements.txt
           python -m pip check
       - name: Run configured Python test suite

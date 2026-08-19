@@ -98,7 +98,16 @@ NOINDEX_RE = re.compile(r'content=["\'][^"\']*noindex', re.I)
 # new top-level section is covered the day it lands — an allow-list of known
 # subdirectories silently skipped streaming-growth-command-center/ when it was
 # added, and the page shipped without tab icons, a logo, or a link-graph entry.
-SKIP_DIRS = {".git", "node_modules", "dist", "build", ".github", "coverage", "__pycache__"}
+SKIP_DIRS = {
+    ".git", "node_modules", "dist", "build", ".github", "coverage", "__pycache__",
+    # Next.js prerender output for the commerce storefront/admin. It is
+    # gitignored, so a clean checkout never sees it and CI stayed green — but
+    # any tree where `npm run build` has run grows 15 .html files that this gate
+    # then reports as unstyled routes. `scripts/ci_local.py` runs that build and
+    # `pytest tests/` in the same working tree, so the second local run failed
+    # on build artefacts rather than on the change under test.
+    ".next",
+}
 
 
 def pages() -> list[Path]:

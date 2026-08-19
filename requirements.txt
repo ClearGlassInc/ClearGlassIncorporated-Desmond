@@ -6,3 +6,4 @@ pytest-cov==7.1.0
 # Type stubs used during static analysis (optional, no runtime impact)
 # Add runtime dependencies here as the bot layer grows
 jsonschema>=4.26.0,<5  # control-surface feed contract validation
+Pillow>=11.0,<13       # tools/generate_favicons.py — 15 tests importorskip without it

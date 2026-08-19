@@ -115,6 +115,33 @@ def test_discovery_is_recursive_so_new_sections_are_covered():
     assert any(p.startswith("operations/") for p in found)
 
 
+def test_discovery_ignores_build_output_but_keeps_committed_subtrees():
+    """Build artefacts are not routes, and tracked subtrees are not artefacts.
+
+    Both halves are load-bearing. ``.next`` is gitignored, so a clean checkout
+    never sees it and this gate stayed green — but after ``npm run build`` the
+    storefront and admin prerender 15 ``.html`` files, and the gate reported them
+    as unstyled routes. ``scripts/ci_local.py`` runs that build and ``pytest
+    tests/`` in one working tree, so a second local run failed on artefacts
+    instead of on the change under test: a false FAIL, which is as damaging as a
+    false pass because it teaches people to ignore the gate.
+
+    The other half guards the over-correction. ``tools/internal_links.py`` also
+    excludes ``projects/``, but that subtree holds a *tracked* page; adopting its
+    exclusion set wholesale here would silently drop a real route from the gate.
+    """
+    assert ".next" in ds.SKIP_DIRS
+    assert "projects" not in ds.SKIP_DIRS
+
+    found = {ds.rel_path(p) for p in ds.pages()}
+    assert not [p for p in found if ".next" in Path(p).parts], (
+        "Next.js prerender output is being gated as if it were a site route"
+    )
+    assert "projects/nexus-gateway/web/index.html" in found, (
+        "a committed page dropped out of the adoption gate"
+    )
+
+
 def test_twitter_cards_are_never_invented():
     """A card must be derived from metadata the page already declares."""
     page_without_metadata = "<html><head><title></title></head><body></body></html>"

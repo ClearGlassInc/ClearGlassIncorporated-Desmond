@@ -29,6 +29,8 @@ stdlib only, so it runs before any dependency is installed.
 from __future__ import annotations
 
 import argparse
+import importlib.util
+import os
 import shutil
 import subprocess
 import sys
@@ -42,8 +44,17 @@ PY = sys.executable or "python3"
 
 # Capability tags. A gate is skipped (not failed) when its requirement is
 # unavailable, and the summary says so rather than implying the gate passed.
+# Reporting FAIL for a gate that never ran is the same lie in the other
+# direction: it looks like a defect in the code under test.
 NEEDS_NODE = "node"
 NEEDS_NETWORK = "network"
+NEEDS_CHROME = "chrome"
+NEEDS_CLEAN_TREE = "clean-tree"
+NEEDS_COMMERCE_STACK = "commerce-stack"
+
+# Files whose committed contents the search-integrity gate compares against a
+# fresh generator run. Local edits to them make that comparison meaningless.
+GENERATED_ASSETS = ("sitemap.xml", "feed.xml", "data/seo/page-intents.json")
 
 
 @dataclass(frozen=True)
@@ -71,8 +82,15 @@ GATES: tuple[Gate, ...] = (
     Gate(
         key="python-tests",
         job="python-tests",
-        summary="the root pytest suite",
-        steps=((PY, "-m", "pytest", "tests/", "-q"),),
+        summary="the configured pytest suite (all four testpaths)",
+        # No path argument, exactly as ci.yml runs it. pyproject.toml's
+        # testpaths cover artemis/tests, tests, sentinel/tests and the commerce
+        # control-plane tests. This gate used to run `pytest tests/`, which
+        # collects 1339 of 2027 tests — it reported PASS while the commerce
+        # governance and route-auth suites, the ones CLAUDE.md calls
+        # load-bearing, had not been run at all.
+        steps=((PY, "-m", "pytest", "-q"),),
+        requires=frozenset({NEEDS_COMMERCE_STACK}),
     ),
     Gate(
         key="site-audit",
@@ -92,6 +110,7 @@ GATES: tuple[Gate, ...] = (
             (PY, "tools/seo_audit.py"),
             (PY, "tools/internal_links.py", "--check"),
         ),
+        requires=frozenset({NEEDS_CLEAN_TREE}),
     ),
     Gate(
         key="workflow-doctor",
@@ -125,11 +144,37 @@ GATES: tuple[Gate, ...] = (
         job="lighthouse",
         summary="performance, accessibility and SEO budgets",
         steps=(("npx", "--yes", "@lhci/cli@0.15.1", "autorun", "--config=lighthouserc.json"),),
-        requires=frozenset({NEEDS_NODE, NEEDS_NETWORK}),
+        requires=frozenset({NEEDS_NODE, NEEDS_NETWORK, NEEDS_CHROME}),
     ),
 )
 
 FAST_SKIP = frozenset({NEEDS_NETWORK})
+
+
+def dirty_generated_assets() -> list[str]:
+    """Generated assets with uncommitted local edits."""
+    completed = subprocess.run(
+        ["git", "status", "--porcelain", "--", *GENERATED_ASSETS],
+        cwd=ROOT, capture_output=True, text=True, check=False,
+    )
+    return [line[3:] for line in completed.stdout.splitlines() if line.strip()]
+
+
+def commerce_stack_available() -> bool:
+    """Whether the commerce control-plane tests can be collected at all.
+
+    Without these, pytest errors during collection of
+    clearglass-commerce/control-plane/tests — which reads as a defect in the
+    code rather than a missing dependency.
+    """
+    return all(importlib.util.find_spec(name) for name in ("fastapi", "sqlalchemy", "httpx"))
+
+
+def chrome_available() -> bool:
+    if any(shutil.which(name) for name in ("google-chrome", "chromium", "chromium-browser")):
+        return True
+    # Lighthouse also accepts an explicit binary path.
+    return bool(os.environ.get("CHROME_PATH"))
 
 
 def missing_requirements(gate: Gate, *, fast: bool) -> list[str]:
@@ -137,6 +182,20 @@ def missing_requirements(gate: Gate, *, fast: bool) -> list[str]:
     missing: list[str] = []
     if NEEDS_NODE in gate.requires and shutil.which("npm") is None:
         missing.append("npm not installed")
+    if NEEDS_CHROME in gate.requires and not chrome_available():
+        missing.append("no Chrome/Chromium found (set CHROME_PATH)")
+    if NEEDS_COMMERCE_STACK in gate.requires and not commerce_stack_available():
+        missing.append(
+            "commerce control-plane deps missing — "
+            "pip install -r clearglass-commerce/control-plane/requirements.txt"
+        )
+    if NEEDS_CLEAN_TREE in gate.requires:
+        # This gate asks whether the *committed* assets match a fresh generator
+        # run. With local edits in flight the comparison answers a different
+        # question, and failing on it would just be reporting your own work.
+        dirty = dirty_generated_assets()
+        if dirty:
+            missing.append("uncommitted changes in " + ", ".join(dirty) + " — commit, then re-run")
     if fast and gate.requires & FAST_SKIP:
         missing.append("--fast")
     return missing

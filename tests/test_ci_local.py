@@ -47,6 +47,44 @@ def test_no_gate_points_at_a_job_that_no_longer_exists() -> None:
     assert not orphans, f"gates referencing removed ci.yml jobs: {', '.join(orphans)}"
 
 
+def test_python_gate_runs_the_configured_suite_not_a_subset() -> None:
+    """A narrower local suite is a green summary that means less than CI's.
+
+    This gate ran `pytest tests/`, which collects 1339 of the 2027 tests the
+    configured suite collects — `artemis/tests`, `sentinel/tests` and the
+    commerce control-plane tests were absent, including the governance and
+    route-auth suites CLAUDE.md calls load-bearing. ci.yml passes no path and
+    lets pyproject.toml's testpaths decide; so must this.
+    """
+    gate = next(g for g in ci_local.GATES if g.key == "python-tests")
+    command = gate.steps[0]
+    assert command[-3:] == ("-m", "pytest", "-q"), command
+    assert "tests/" not in command, (
+        "passing a path narrows the suite below what ci.yml runs"
+    )
+
+    workflow = yaml.safe_load((ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8"))
+    run_steps = [
+        step.get("run", "") for step in workflow["jobs"]["python-tests"]["steps"]
+    ]
+    pytest_step = next(s for s in run_steps if "pytest" in s)
+    assert " tests/" not in pytest_step, (
+        "ci.yml narrowed its own suite; update this gate to match deliberately"
+    )
+
+
+def test_commerce_gate_is_skipped_when_its_dependencies_are_absent(monkeypatch) -> None:
+    """Missing deps make pytest error during collection, which reads as a bug."""
+    gate = next(g for g in ci_local.GATES if g.key == "python-tests")
+
+    monkeypatch.setattr(ci_local, "commerce_stack_available", lambda: False)
+    reasons = ci_local.missing_requirements(gate, fast=False)
+    assert any("control-plane/requirements.txt" in reason for reason in reasons), reasons
+
+    monkeypatch.setattr(ci_local, "commerce_stack_available", lambda: True)
+    assert not ci_local.missing_requirements(gate, fast=False)
+
+
 def test_gate_keys_are_unique() -> None:
     keys = [gate.key for gate in ci_local.GATES]
     assert len(keys) == len(set(keys))
@@ -62,11 +100,37 @@ def test_selectors_reject_unknown_gate_names() -> None:
         raise AssertionError("an unknown --only value must not be accepted silently")
 
 
-def test_fast_mode_skips_only_network_bound_gates() -> None:
+def test_fast_mode_skips_every_network_bound_gate() -> None:
     for gate in ci_local.GATES:
-        skipped = ci_local.missing_requirements(gate, fast=True)
-        wants_network = ci_local.NEEDS_NETWORK in gate.requires
-        assert bool(skipped) == wants_network or not wants_network
+        if ci_local.NEEDS_NETWORK in gate.requires:
+            assert ci_local.missing_requirements(gate, fast=True), gate.key
+
+
+def test_unavailable_gates_are_skipped_rather_than_failed(monkeypatch) -> None:
+    """A gate that cannot run must not be reported as a defect in the code.
+
+    Both of these were real false failures: lighthouse reported FAIL on a
+    machine with no browser, and search-integrity reported FAIL whenever the
+    developer had uncommitted work — which is exactly when they run it.
+    """
+    lighthouse = next(g for g in ci_local.GATES if g.key == "lighthouse")
+    monkeypatch.setattr(ci_local, "chrome_available", lambda: False)
+    reasons = ci_local.missing_requirements(lighthouse, fast=False)
+    assert any("Chrome" in reason for reason in reasons)
+
+    monkeypatch.setattr(ci_local, "chrome_available", lambda: True)
+    assert not [r for r in ci_local.missing_requirements(lighthouse, fast=False) if "Chrome" in r]
+
+
+def test_search_integrity_is_skipped_while_generated_assets_are_dirty(monkeypatch) -> None:
+    gate = next(g for g in ci_local.GATES if g.key == "search-integrity")
+
+    monkeypatch.setattr(ci_local, "dirty_generated_assets", lambda: ["sitemap.xml"])
+    reasons = ci_local.missing_requirements(gate, fast=False)
+    assert any("uncommitted" in reason and "sitemap.xml" in reason for reason in reasons)
+
+    monkeypatch.setattr(ci_local, "dirty_generated_assets", lambda: [])
+    assert not ci_local.missing_requirements(gate, fast=False)
 
 
 def test_runner_lists_its_gates_without_running_them() -> None:

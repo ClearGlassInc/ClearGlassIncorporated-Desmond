@@ -102,12 +102,24 @@ sessions as ephemeral.
 
 ```bash
 cd clearglassinc_sdk
-pip install -e ".[dev,server]"
+./scripts/verify.sh                # everything below, across each installed Python
+```
+
+Or step by step:
+
+```bash
+pip install -e ".[dev,server,all]"
 ruff check .                       # lint
 python -m pytest -q                # 160 tests, no network needed
 python examples/advanced_agent.py  # exercises every advanced feature
 docker build -t clearglassinc-sdk:test .
 ```
+
+`scripts/verify.sh` is the fallback when GitHub Actions can't run a change (a
+runner outage or an Actions billing stop): it reproduces the CI job locally and
+exits non-zero on any failure. Without a Docker daemon it still validates the
+Dockerfile's substance — wheel build, offline install, and the image's
+`HEALTHCHECK` probe — leaving only the base-image layer unverified.
 
 The `Agent SDK CI` workflow (`.github/workflows/agent-sdk-ci.yml`) runs all of
 this on every PR touching `clearglassinc_sdk/**`, plus a container build and a

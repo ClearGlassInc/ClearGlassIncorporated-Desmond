@@ -170,7 +170,13 @@ python3 -m ruff check .
 npm i --no-save playwright
 node tests/browser/nav-contract.mjs products.html   # 21 assertions
 node tests/browser/a11y-contract.mjs index.html pricing.html aegis.html sentinel.html
+node tests/browser/page-errors.mjs $(ls *.html)          # uncaught runtime errors
 ```
+
+`page-errors.mjs` is the only check that evaluates a page's JavaScript rather
+than parsing its markup. A `SyntaxError` takes its whole `<script>` with it, so
+a page can validate as HTML, pass the link and metadata audits, and still have
+none of its behaviour — which is how three defects reached `main` unnoticed.
 
 `a11y-contract.mjs` checks the WCAG 2.4.1 contract — first Tab stop is a bypass
 link, it resolves a real target, and focusing it brings it on screen — not which

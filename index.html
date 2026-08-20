@@ -536,6 +536,126 @@ body.mobile-nav-open{overflow:hidden}
 </style>
 <link rel="stylesheet" href="/assets/css/future-buttons.css">
 <link rel="stylesheet" href="/assets/css/neon-practical.css">
+
+<link rel="preload" as="image" href="/assets/images/clear-signal-homepage-hero.jpg" fetchpriority="high">
+
+<style id="clear-signal-hero-v1">
+  /* Clear Signal: additive cinematic layer. Existing homepage structure remains intact. */
+  .clear-signal-hero {
+    position: relative;
+    /* The photo rides as a background, not an <img>: the committed asset is
+       a placeholder, and a missing background paints nothing while a missing
+       <img> shows a broken icon and its alt text. Drop a real JPEG at this
+       path and it appears here with no further change. */
+    background-image: url('/assets/images/clear-signal-homepage-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 300px;
+    z-index: 2;
+    width: min(1080px, 92vw);
+    margin: clamp(26px, 5vw, 56px) auto 0;
+    overflow: hidden;
+    border: 1px solid rgba(209,31,47,.24);
+    border-radius: 22px;
+    background: #070707;
+    box-shadow: 0 24px 70px rgba(0,0,0,.42), inset 0 1px rgba(255,255,255,.06);
+    isolation: isolate;
+  }
+  .clear-signal-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(7,7,7,.04) 0%, rgba(7,7,7,.12) 52%, rgba(7,7,7,.78) 100%),
+      linear-gradient(90deg, rgba(7,7,7,.32), transparent 45%, rgba(209,31,47,.12));
+    mix-blend-mode: normal;
+  }
+  .clear-signal-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    border: 1px solid rgba(255,255,255,.045);
+    border-radius: inherit;
+    box-shadow: inset 0 0 80px rgba(0,0,0,.34);
+  }
+  .clear-signal-hero img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    min-height: 300px;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(.18) contrast(1.08) brightness(.82);
+    transform: scale(1.012);
+    transition: transform 1.2s cubic-bezier(.2,.65,.2,1), filter .6s ease;
+  }
+  .clear-signal-hero:hover img {
+    transform: scale(1.035);
+    filter: grayscale(.08) contrast(1.1) brightness(.9);
+  }
+  .clear-signal-hero-copy {
+    position: absolute;
+    left: clamp(20px, 4vw, 48px);
+    right: clamp(20px, 4vw, 48px);
+    bottom: clamp(20px, 4vw, 40px);
+    z-index: 4;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    pointer-events: none;
+  }
+  .clear-signal-hero-kicker {
+    margin: 0 0 7px;
+    color: #d11f2f;
+    font: 700 9px/1.2 var(--mono, monospace);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+  }
+  .clear-signal-hero-title {
+    margin: 0;
+    color: #f7f7f7;
+    font: 600 clamp(24px, 4vw, 48px)/.98 var(--serif, Georgia, serif);
+    letter-spacing: -.025em;
+    text-shadow: 0 4px 24px rgba(0,0,0,.6);
+  }
+  .clear-signal-hero-title span { color: #d11f2f; }
+  .clear-signal-hero-meta {
+    color: rgba(244,244,245,.68);
+    font: 600 8px/1.5 var(--mono, monospace);
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .clear-signal-hero-signal {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 7px;
+    border-radius: 50%;
+    background: #d11f2f;
+    box-shadow: 0 0 10px rgba(209,31,47,.7);
+    animation: clearSignalPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes clearSignalPulse {
+    0%, 100% { opacity: .45; transform: scale(.9); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+  @media (max-width: 700px) {
+    .clear-signal-hero { width: min(94vw, 1080px); border-radius: 16px; }
+    .clear-signal-hero { min-height: 270px; }
+    .clear-signal-hero-copy { display: block; }
+    .clear-signal-hero-meta { margin-top: 10px; text-align: left; white-space: normal; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .clear-signal-hero img, .clear-signal-hero-signal { transition: none; animation: none; }
+  }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -644,6 +764,17 @@ body.mobile-nav-open{overflow:hidden}
 </div>
 <main id="main-content" tabindex="-1">
 <section class="hero" id="hero" data-cg-watermark="CLEARGLASSINC. · OFFICIAL EXPERIENCE · © 2026">
+<!-- Clear Signal cinematic brand film still — additive homepage layer; existing content preserved. -->
+<figure class="clear-signal-hero" data-clear-signal-hero="v1" aria-label="Clear Signal — ClearGlass Inc. cinematic security brand film">
+  <figcaption class="clear-signal-hero-copy">
+    <div>
+      <p class="clear-signal-hero-kicker"><span class="clear-signal-hero-signal" aria-hidden="true"></span>Clear Signal // Intelligence Layer</p>
+      <p class="clear-signal-hero-title">See clearly.<br><span>Operate securely.</span></p>
+    </div>
+    <p class="clear-signal-hero-meta">ClearGlass Inc. &nbsp;|&nbsp; Trust / Clarity / Resilience</p>
+  </figcaption>
+</figure>
+
   <div class="artemis-grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <div class="artemis-reticle artemis-reticle--west" aria-hidden="true"><i></i></div>
   <div class="artemis-reticle artemis-reticle--east" aria-hidden="true"><i></i></div>

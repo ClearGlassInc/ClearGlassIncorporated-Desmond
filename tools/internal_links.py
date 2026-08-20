@@ -44,6 +44,7 @@ END = "<!-- cg-related:end -->"
 EXCLUDED_PAGES: dict[str, tuple[str, str]] = {
     "404.html": ("Error recovery", "noindex redirect and route-recovery page"),
     "cg-loader.html": ("Application utility", "noindex branded loading surface"),
+    "checkout/index.html": ("Conversion completion", "payment hub — kept out of the discovery graph"),
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html": (
         "Site verification", "Google ownership verification artifact"
     ),
@@ -92,6 +93,7 @@ PAGES: dict[str, tuple[str, str]] = {
     # Intelligence & OSINT
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
     "flowsint.html": ("Flowsint", "OSINT investigation graph for domains, IPs and transforms"),
+    "helix.html": ("HELIX", "exposure lattice fused with synthetic-society propagation and rehearsal"),
     "Ontario-osint.html": ("Ontario OSINT Deck", "regional open-source intelligence control deck"),
     "clearglass.html": ("Network Flow Intelligence", "see network traffic as living structure"),
     "clearglass-nexus.html": ("ClearGlass NEXUS", "full-spectrum intelligence platform"),
@@ -257,7 +259,7 @@ CLUSTERS: dict[str, dict] = {
         "name": "Intelligence & OSINT",
         "pillar": "intelligence.html",
         "members": [
-            "flowsint.html", "clearglass-nexus.html", "Ontario-osint.html",
+            "flowsint.html", "helix.html", "clearglass-nexus.html", "Ontario-osint.html",
             "clearglass.html", "intelligence-command-surface.html",
             "intelligence-interface.html", "intelligence-platform.html",
             "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html",
@@ -495,7 +497,7 @@ PILLAR_MAX_MEMBERS = 10  # member links shown on a pillar page
 FIXED_VIEWPORT = {
     "sentinel.html", "clearglass.html", "air-control.html",
     "percival-os.html", "artemis-percival.html", "percival-build.html",
-    "clearsight.html",
+    "clearsight.html", "helix.html",
 }
 
 CSS = (

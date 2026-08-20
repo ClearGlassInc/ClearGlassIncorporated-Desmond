@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 141 public pages are connected and 11 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 142 public pages are connected and 12 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -34,8 +34,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `bluedesk-mobile.html` — BLUEDESK Mobile | the CISO risk console on a phone-first canvas | Environmental Cyber-Risk | Cyber Defense Console | Cyber Defense Console | Book a security engagement / Start with the $249 Security Quick-Audit |
 | **Intelligence & OSINT** | **Topic cluster** |  |  |  |  |
 | `intelligence.html` — Intelligence | the ClearGlass intelligence practice | Guardian Command Nexus Spec | Intelligence | Flowsint | Book a security engagement / See pricing & plans |
-| `flowsint.html` — Flowsint | OSINT investigation graph for domains, IPs and transforms | Intelligence | Intelligence | ClearGlass NEXUS | Book a security engagement / See pricing & plans |
-| `clearglass-nexus.html` — ClearGlass NEXUS | full-spectrum intelligence platform | Flowsint | Intelligence | Ontario OSINT Deck | Book a security engagement / See pricing & plans |
+| `flowsint.html` — Flowsint | OSINT investigation graph for domains, IPs and transforms | Intelligence | Intelligence | HELIX | Book a security engagement / See pricing & plans |
+| `helix.html` — HELIX | exposure lattice fused with synthetic-society propagation and rehearsal | Flowsint | Intelligence | ClearGlass NEXUS | Book a security engagement / See pricing & plans |
+| `clearglass-nexus.html` — ClearGlass NEXUS | full-spectrum intelligence platform | HELIX | Intelligence | Ontario OSINT Deck | Book a security engagement / See pricing & plans |
 | `Ontario-osint.html` — Ontario OSINT Deck | regional open-source intelligence control deck | ClearGlass NEXUS | Intelligence | Network Flow Intelligence | Book a security engagement / See pricing & plans |
 | `clearglass.html` — Network Flow Intelligence | see network traffic as living structure | Ontario OSINT Deck | Intelligence | Intelligence Command Surface | Book a security engagement / See pricing & plans |
 | `intelligence-command-surface.html` — Intelligence Command Surface | one unified operational picture | Network Flow Intelligence | Intelligence | Intelligence Interface 2027 | Book a security engagement / See pricing & plans |
@@ -184,6 +185,7 @@ These pages remain intact but are not eligible for generated journey updates. Ex
 |---|---|---|
 | `404.html` | Error recovery | noindex redirect and route-recovery page |
 | `cg-loader.html` | Application utility | noindex branded loading surface |
+| `checkout/index.html` | Conversion completion | payment hub — kept out of the discovery graph |
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | Site verification | Google ownership verification artifact |
 | `header-mockup-2040.html` | Design prototype | noindex, nofollow header study |
 | `loader.html` | Application utility | noindex branded loading surface |

@@ -14,4 +14,5 @@ __all__ = [
     "phoenix",
     "selfheal",
     "artemis_fawl",
+    "helix",
 ]

@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Browser Tab Icons: Edge, Chrome, Safari, iOS -->
+<link rel="icon" href="/assets/images/clearglass-holographic-seal.png" sizes="any">
+<link rel="icon" type="image/png" href="/assets/images/clearglass-holographic-seal.png">
+<link rel="alternate icon" href="/assets/images/clearglass-holographic-seal.png">
+<link rel="apple-touch-icon" href="/assets/images/clearglass-holographic-seal.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ffb6">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#04070f">
+<meta name="msapplication-TileColor" content="#04070f">
+<meta name="msapplication-TileImage" content="/icon-192.png">
+<meta name="msapplication-config" content="/browserconfig.xml">
+
+<meta charset="UTF-8">
+<script>
+/* cg-boot-loader: first-visit boot routing — plays /loader.html once per browser
+   session on every page except the homepage. Bypass with ?skipboot=1, or visit
+   /loader.html directly to replay. */
+(function(){
+  try {
+    var ua = navigator.userAgent || '';
+    if (/bot|crawl|spider|slurp|bingpreview|google|bing|duckduck|baidu|yandex|sogou|exabot|facebot|ia_archiver|lighthouse|gptbot|oai-searchbot|chatgpt|claudebot|claude-web|anthropic|perplexity|amazonbot|applebot|ccbot|cohere|google-extended/i.test(ua)) return;
+    if (/[?&]skipboot=1\b/.test(location.search)) return;
+    var path = location.pathname;
+    /* homepage renders with no loader */
+    if (path === '/' || path === '/index.html') return;
+    if (sessionStorage.getItem('cg.booted')) return;
+    sessionStorage.setItem('cg.booted', '1');
+    var here = path + location.search + location.hash;
+    location.replace('/loader.html?next=' + encodeURIComponent(here));
+  } catch (e) { /* storage unavailable — render normally */ }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>HELIX — Exposure Lattice &amp; Response Rehearsal | ClearGlass Inc</title>
+<meta name="description" content="HELIX fuses dark-web exposure link analysis with agent-based society simulation: leak and extortion signals are linked into a pivotable lattice, then propagated through a synthetic population so you see the blast radius — and the governed response — before the story breaks.">
+<link rel="canonical" href="https://www.clearglassinc.com/helix.html"/>
+<meta property="og:title" content="HELIX — Exposure Lattice &amp; Response Rehearsal | ClearGlass Inc"/>
+<meta property="og:description" content="Two intelligence surfaces in one canvas: the exposure link graph and the synthetic society it will spread through. Governed, calibrated, audit-chained."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.clearglassinc.com/helix.html"/>
+<meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#04070f; --bg-2:#070d1b; --panel:rgba(8,14,28,.86); --panel-2:rgba(11,18,36,.94);
+    --ink:#e9f1ff; --ink-2:#93a9cd; --ink-3:#5b7096;
+    --cyan:#22d3ee; --blue:#60a5fa; --violet:#a855f7; --green:#34d399;
+    --amber:#fbbf24; --rose:#fb7185; --alert:#ff3b57;
+    --hair:rgba(88,132,200,.20); --hair-2:rgba(88,132,200,.34);
+    --rail:52px; --report:344px; --tools:46px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);
+    font-family:'Urbanist',system-ui,-apple-system,sans-serif;color:var(--ink);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+  button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  ::-webkit-scrollbar{width:7px;height:7px}
+  ::-webkit-scrollbar-thumb{background:rgba(88,132,200,.28);border-radius:4px}
+  ::-webkit-scrollbar-track{background:transparent}
+
+  /* ---------- shell ---------------------------------------------------- */
+  #shell{display:grid;height:100vh;height:100dvh;
+    grid-template-rows:48px 1fr;
+    grid-template-columns:var(--rail) var(--report) 1fr var(--tools);
+    grid-template-areas:"top top top top" "rail report stage tools"}
+
+  /* ---------- top bar --------------------------------------------------- */
+  #top{grid-area:top;display:flex;align-items:center;gap:14px;padding:0 12px;
+    border-bottom:1px solid var(--hair);background:linear-gradient(180deg,#070e1e,#050a15);
+    position:relative;z-index:40}
+  #top .brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:.16em;
+    font-size:13px;padding-right:12px;border-right:1px solid var(--hair)}
+  #top .brand svg{filter:drop-shadow(0 0 8px rgba(34,211,238,.55))}
+  #searchwrap{flex:1;max-width:560px;display:flex;align-items:center;gap:8px;
+    background:rgba(4,9,20,.9);border:1px solid var(--hair);border-radius:8px;padding:0 6px 0 10px}
+  #searchwrap:focus-within{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.10)}
+  #q{flex:1;background:none;border:0;outline:0;color:var(--ink);font-size:12.5px;padding:7px 0;
+    font-family:'IBM Plex Mono',monospace}
+  #q::placeholder{color:var(--ink-3)}
+  .pill{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:5px;
+    border:1px solid var(--hair);color:var(--ink-2);white-space:nowrap}
+  .pill.live{color:#7de3a0;border-color:rgba(52,211,153,.42);background:rgba(52,211,153,.08)}
+  .pill.gov{color:var(--amber);border-color:rgba(251,191,36,.40);background:rgba(251,191,36,.07)}
+  #top .spacer{flex:1}
+  .tbtn{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+    padding:6px 11px;border:1px solid var(--hair);border-radius:7px;transition:.15s}
+  .tbtn:hover{color:#fff;border-color:var(--cyan);background:rgba(34,211,238,.08)}
+  .tbtn.on{color:#04070f;background:var(--cyan);border-color:var(--cyan);font-weight:700}
+
+  /* ---------- left module rail ------------------------------------------ */
+  #rail{grid-area:rail;border-right:1px solid var(--hair);background:#050a14;
+    display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:3px;overflow-y:auto}
+  .mod{width:36px;height:30px;display:grid;place-items:center;border-radius:6px;
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:.04em;
+    color:var(--ink-3);border:1px solid transparent;transition:.14s;flex:none}
+  .mod:hover{color:var(--ink);background:rgba(34,211,238,.08);border-color:var(--hair-2)}
+  .mod.on{color:#04070f;background:linear-gradient(180deg,#39e0f5,#22d3ee);font-weight:800;
+    box-shadow:0 0 14px rgba(34,211,238,.4)}
+  .mod.strandB.on{background:linear-gradient(180deg,#c084fc,#a855f7)}
+  #rail .sep{width:24px;height:1px;background:var(--hair);margin:5px 0;flex:none}
+
+  /* ---------- report panel ---------------------------------------------- */
+  #report{grid-area:report;border-right:1px solid var(--hair);background:var(--panel-2);
+    display:flex;flex-direction:column;min-height:0;position:relative}
+  #report .head{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--hair)}
+  #report .head b{font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  #report .head .beta{font-size:8.5px;color:var(--rose);border:1px solid rgba(251,113,133,.4);
+    padding:2px 5px;border-radius:4px;letter-spacing:.1em}
+  #collapse{margin-left:auto;color:var(--ink-3);font-size:15px;line-height:1;padding:2px 5px}
+  #collapse:hover{color:var(--cyan)}
+  #rbody{flex:1;overflow-y:auto;padding:14px 14px 26px}
+  #rbody h1{font-size:17.5px;line-height:1.28;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
+  #rbody .sub{font-size:10.5px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;
+    margin-bottom:14px}
+  #rbody h2{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);
+    margin:18px 0 8px;font-weight:700}
+  #rbody p{font-size:12.5px;line-height:1.62;color:#c3d4ef;margin:0 0 9px}
+  #rbody .k{color:#fff;font-weight:700}
+  .stat{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:baseline;
+    padding:6px 0;border-bottom:1px dashed rgba(88,132,200,.16);font-size:12px}
+  .stat .lbl{color:var(--ink-2)}
+  .stat .val{font-family:'IBM Plex Mono',monospace;font-weight:600;color:#fff}
+  ul.bul{list-style:none;margin:0;padding:0}
+  ul.bul li{position:relative;padding:5px 0 5px 15px;font-size:12px;line-height:1.5;color:#c3d4ef}
+  ul.bul li:before{content:'';position:absolute;left:2px;top:11px;width:5px;height:5px;border-radius:50%;
+    background:var(--cyan);box-shadow:0 0 7px rgba(34,211,238,.8)}
+  ul.bul li.bad:before{background:var(--alert);box-shadow:0 0 7px rgba(255,59,87,.8)}
+  ul.bul li b{color:#fff}
+  .meter{height:5px;border-radius:3px;background:rgba(88,132,200,.16);overflow:hidden;margin:5px 0 2px}
+  .meter i{display:block;height:100%;border-radius:3px;transition:width .35s ease}
+  .hypo{border:1px solid var(--hair);border-radius:8px;padding:8px 10px;margin-bottom:7px;
+    background:rgba(6,12,25,.7)}
+  .hypo .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11.5px}
+  .hypo .top b{color:#fff}
+  .hypo .top span{font-family:'IBM Plex Mono',monospace;color:var(--cyan);font-weight:600}
+  .hypo small{display:block;font-size:10.5px;color:var(--ink-2);line-height:1.5;margin-top:5px}
+  .gate{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;
+    padding:6px 8px;border-radius:7px;margin-bottom:5px;font-size:11.5px;
+    border:1px solid var(--hair);background:rgba(6,12,25,.6)}
+  .gate .risk{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-3);min-width:22px}
+  .gate .verdict{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;
+    padding:2px 6px;border-radius:4px;font-weight:700}
+  .v-AUTO{color:#7de3a0;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.4)}
+  .v-APPROVE{color:var(--amber);background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.42)}
+  .v-BLOCKED{color:#ff8194;background:rgba(255,59,87,.12);border:1px solid rgba(255,59,87,.45)}
+  .note{font-size:10.5px;line-height:1.55;color:var(--ink-3);border-left:2px solid var(--hair-2);
+    padding:2px 0 2px 9px;margin:10px 0 0}
+
+  /* ---------- stage ------------------------------------------------------ */
+  #stage{grid-area:stage;position:relative;overflow:hidden;background:
+    radial-gradient(circle at 22% 18%,rgba(34,211,238,.055),transparent 46%),
+    radial-gradient(circle at 78% 82%,rgba(168,85,247,.06),transparent 48%),
+    var(--bg)}
+  #cv{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+  #cv.drag{cursor:grabbing}
+
+  /* canvas tool column (left, floating) */
+  #ctools{position:absolute;left:10px;top:10px;display:flex;flex-direction:column;gap:3px;
+    background:var(--panel);border:1px solid var(--hair);border-radius:9px;padding:4px;
+    backdrop-filter:blur(9px);z-index:12}
+  .ct{width:30px;height:28px;display:grid;place-items:center;border-radius:6px;color:var(--ink-2);
+    transition:.14s;position:relative}
+  .ct:hover{background:rgba(34,211,238,.12);color:#fff}
+  .ct.on{background:rgba(34,211,238,.2);color:var(--cyan);box-shadow:inset 0 0 0 1px rgba(34,211,238,.4)}
+  .ct svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6;
+    stroke-linecap:round;stroke-linejoin:round}
+  .ct:after{content:attr(data-tip);position:absolute;left:calc(100% + 8px);top:50%;
+    transform:translateY(-50%);background:#0a1526;color:var(--ink);
+    border:1px solid var(--hair-2);border-radius:5px;padding:4px 8px;font-size:10px;
+    white-space:nowrap;opacity:0;pointer-events:none;transition:.14s;z-index:30}
+  .ct:hover:after{opacity:1}
+
+  /* right tool rail */
+  #tools{grid-area:tools;border-left:1px solid var(--hair);background:#050a14;
+    display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:3px}
+
+  /* canvas search (top-right of stage) */
+  #cvsearch{position:absolute;right:10px;top:10px;display:flex;align-items:center;gap:6px;
+    background:var(--panel);border:1px solid rgba(251,113,133,.34);border-radius:8px;
+    padding:0 8px;backdrop-filter:blur(9px);z-index:12}
+  #cvsearch input{background:none;border:0;outline:0;color:var(--ink);font-size:11px;width:150px;
+    padding:6px 0;font-family:'IBM Plex Mono',monospace}
+  #cvsearch input::placeholder{color:var(--ink-3)}
+  #cvsearch svg{width:13px;height:13px;stroke:var(--rose);fill:none;stroke-width:1.7}
+
+  /* cohort legend (society mode) */
+  /* right offset clears the canvas search box so chips never sit under it */
+  #legend{position:absolute;left:52px;top:10px;right:206px;display:none;flex-wrap:wrap;gap:5px;
+    z-index:11;pointer-events:auto}
+  #legend.show{display:flex}
+  .lg{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--ink-2);
+    background:var(--panel);border:1px solid var(--hair);border-radius:20px;padding:4px 11px 4px 8px;
+    backdrop-filter:blur(9px);transition:.14s}
+  .lg:hover{color:#fff;border-color:var(--hair-2)}
+  .lg.off{opacity:.34}
+  .lg i{width:8px;height:8px;border-radius:50%;flex:none;box-shadow:0 0 8px currentColor}
+
+  /* grouping control (bottom-centre, society mode) */
+  #grouping{position:absolute;left:50%;bottom:74px;transform:translateX(-50%);display:none;
+    align-items:center;gap:9px;background:var(--panel);border:1px solid var(--hair);
+    border-radius:9px;padding:6px 12px;backdrop-filter:blur(9px);font-size:11px;z-index:12}
+  #grouping.show{display:flex}
+  #grouping .div{width:1px;height:14px;background:var(--hair)}
+  #grouping select{background:rgba(4,9,20,.9);border:1px solid var(--hair);color:var(--ink);
+    font-family:inherit;font-size:11px;border-radius:5px;padding:3px 6px;outline:0}
+
+  /* persona card (society mode) */
+  #persona{position:absolute;display:none;width:290px;background:var(--panel-2);
+    border:1px solid var(--hair-2);border-radius:12px;padding:13px;z-index:20;
+    box-shadow:0 22px 60px rgba(0,0,0,.6);backdrop-filter:blur(14px)}
+  #persona.show{display:block}
+  #persona .ph{display:flex;gap:10px;align-items:center}
+  #persona .av{width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;
+    font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;color:#04070f}
+  #persona .pn{font-size:13.5px;font-weight:700;line-height:1.25}
+  #persona .pr{font-size:10.5px;color:var(--ink-2)}
+  #persona .pd{font-size:11.5px;color:#c3d4ef;line-height:1.55;margin:9px 0 8px}
+  #persona .chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+  .chip{font-size:9.5px;color:var(--ink-2);border:1px solid var(--hair);border-radius:20px;
+    padding:3px 8px;display:flex;align-items:center;gap:4px}
+  .chip.syn{color:var(--violet);border-color:rgba(168,85,247,.45);background:rgba(168,85,247,.09)}
+  #persona .go{width:100%;padding:8px;border-radius:7px;font-size:11.5px;font-weight:700;
+    letter-spacing:.05em;color:#180a04;background:linear-gradient(180deg,#ff9d6e,#f97449);
+    box-shadow:0 6px 18px rgba(249,116,73,.28)}
+  #persona .go:hover{filter:brightness(1.08)}
+  #persona .x{position:absolute;right:9px;top:8px;color:var(--ink-3);font-size:15px;line-height:1}
+  #persona .x:hover{color:#fff}
+  #rehearse{margin-top:9px;padding-top:9px;border-top:1px solid var(--hair);display:none}
+  #rehearse.show{display:block}
+  #rehearse .rl{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);
+    margin-bottom:6px}
+  #rehearse p{font-size:11px;line-height:1.55;color:#c3d4ef;margin:0 0 7px}
+
+  /* node inspector (lattice mode) */
+  #inspect{position:absolute;right:10px;bottom:74px;width:262px;background:var(--panel-2);
+    border:1px solid var(--hair-2);border-radius:11px;padding:12px;display:none;z-index:18;
+    box-shadow:0 20px 54px rgba(0,0,0,.55);backdrop-filter:blur(14px)}
+  #inspect.show{display:block}
+  #inspect .it{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);
+    margin-bottom:4px}
+  #inspect .il{font-size:13px;font-weight:700;line-height:1.3;margin-bottom:8px;word-break:break-word}
+  #inspect .x{position:absolute;right:9px;top:7px;color:var(--ink-3);font-size:15px;line-height:1}
+  #inspect .x:hover{color:#fff}
+
+  /* timeline / transport */
+  #transport{position:absolute;left:10px;right:10px;bottom:10px;height:54px;
+    background:var(--panel);border:1px solid var(--hair);border-radius:10px;
+    display:flex;align-items:center;gap:12px;padding:0 12px;backdrop-filter:blur(11px);z-index:12}
+  #play{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;
+    background:linear-gradient(180deg,#39e0f5,#22d3ee);color:#04070f}
+  #play:hover{filter:brightness(1.1)}
+  #play svg{width:13px;height:13px;fill:currentColor;stroke:none;margin-left:1px}
+  #tl{flex:1;position:relative;height:34px}
+  #tltrack{position:absolute;left:0;right:0;top:17px;height:2px;background:rgba(88,132,200,.2);
+    border-radius:2px}
+  #tlfill{position:absolute;left:0;top:17px;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--cyan),var(--violet));box-shadow:0 0 10px rgba(34,211,238,.5)}
+  .tick{position:absolute;top:11px;width:2px;height:14px;border-radius:2px;
+    background:rgba(88,132,200,.42);transform:translateX(-1px)}
+  .tick.hit{background:var(--cyan);box-shadow:0 0 9px rgba(34,211,238,.9);height:18px;top:9px}
+  .tick span{position:absolute;left:50%;transform:translateX(-50%);top:20px;font-size:8.5px;
+    letter-spacing:.06em;color:var(--ink-3);white-space:nowrap;font-family:'IBM Plex Mono',monospace}
+  .tick.hit span{color:var(--cyan)}
+  #curve{position:absolute;left:0;right:0;top:0;height:34px;pointer-events:none}
+  #tstat{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-2);text-align:right;
+    line-height:1.45;flex:none;min-width:132px}
+  #tstat b{color:#fff;display:block;font-size:15px;line-height:1.1}
+
+  /* status strip on stage */
+  #hud{position:absolute;left:52px;bottom:74px;display:flex;gap:6px;z-index:11;flex-wrap:wrap;
+    max-width:calc(100% - 300px)}
+  .hchip{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.05em;
+    background:var(--panel);border:1px solid var(--hair);border-radius:6px;padding:4px 9px;
+    color:var(--ink-2);backdrop-filter:blur(9px)}
+  .hchip b{color:#fff}
+  .hchip.warn{border-color:rgba(255,59,87,.4);color:#ff8194}
+  .hchip.ok{border-color:rgba(52,211,153,.4);color:#7de3a0}
+
+  /* ---------- responsive ------------------------------------------------- */
+  @media (max-width:1180px){
+    :root{--report:296px}
+  }
+  @media (max-width:900px){
+    #shell{grid-template-columns:var(--rail) 1fr var(--tools);
+      grid-template-areas:"top top top" "rail stage tools"}
+    #report{position:absolute;left:var(--rail);top:48px;bottom:0;width:300px;z-index:30;
+      display:none;border-right:1px solid var(--hair-2)}
+    #report.open{display:flex}
+    #hud{left:10px;max-width:calc(100% - 20px)}
+    #legend{left:10px}
+  }
+  @media (max-width:620px){
+    #searchwrap{max-width:none}
+    #top .pill:not(.live){display:none}
+    #tstat{min-width:0}
+    #tstat small{display:none}
+    #inspect{left:10px;right:10px;width:auto}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<div id="shell">
+
+  <!-- ══════════════════ TOP BAR ══════════════════ -->
+  <header id="top">
+    <div class="brand">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.7"
+           stroke-linecap="round" aria-hidden="true">
+        <path d="M7 3c0 5 10 5 10 9s-10 4-10 9"/><path d="M17 3c0 5-10 5-10 9s10 4 10 9"/>
+      </svg>
+      HELIX
+    </div>
+    <div id="searchwrap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5b7096" stroke-width="2"
+           aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" placeholder="filter the lattice — entity, source, venue, cohort…"
+             aria-label="Filter the lattice">
+      <span class="pill">⌘K</span>
+    </div>
+    <span class="pill live">● CASE OPEN</span>
+    <span class="pill gov">GOVERNED</span>
+    <div class="spacer"></div>
+    <button class="tbtn on" id="mLattice">Exposure lattice</button>
+    <button class="tbtn" id="mSociety">Society 3D</button>
+  </header>
+
+  <!-- ══════════════════ MODULE RAIL ══════════════════ -->
+  <nav id="rail" aria-label="HELIX modules">
+    <button class="mod on" data-mod="EX" title="Exposure signals">EX</button>
+    <button class="mod" data-mod="CR" title="Credential exposure">CR</button>
+    <button class="mod" data-mod="LK" title="Leak &amp; extortion index">LK</button>
+    <button class="mod" data-mod="XP" title="Cross-posting">XP</button>
+    <button class="mod" data-mod="IN" title="Infrastructure indicators">IN</button>
+    <button class="mod" data-mod="CM" title="Campaign clusters">CM</button>
+    <div class="sep"></div>
+    <button class="mod" data-mod="SC" title="KAIROS schema induction">SC</button>
+    <button class="mod" data-mod="HY" title="AIDA competing hypotheses">HY</button>
+    <button class="mod" data-mod="CA" title="Ground Truth calibration">CA</button>
+    <div class="sep"></div>
+    <button class="mod strandB" data-mod="SO" title="Synthetic society">SO</button>
+    <button class="mod strandB" data-mod="CO" title="Cohorts">CO</button>
+    <button class="mod strandB" data-mod="CH" title="Transmission channels">CH</button>
+    <button class="mod strandB" data-mod="PR" title="Propagation">PR</button>
+    <div class="sep"></div>
+    <button class="mod" data-mod="RS" title="Governed response">RS</button>
+    <button class="mod" data-mod="GV" title="Governance gate">GV</button>
+    <button class="mod" data-mod="AU" title="Audit chain">AU</button>
+  </nav>
+
+  <!-- ══════════════════ REPORT PANEL ══════════════════ -->
+  <aside id="report">
+    <div class="head">
+      <b>HELIX Assessment</b><span class="beta">LIVE</span>
+      <button id="collapse" title="Collapse panel" aria-label="Collapse panel">⇤</button>
+    </div>
+    <div id="rbody">
+      <h1 id="rTitle">Exposure &amp; Propagation Assessment</h1>
+      <div class="sub mono" id="rSub">clearglassinc.com · case CG-4471</div>
+
+      <h2>Overview</h2>
+      <p id="rOverview">The lattice holds <span class="k" id="oSignals">4</span> accepted exposure
+      signals across <span class="k" id="oClusters">6</span> linked clusters.
+      <span class="k" id="oQuar">3</span> inbound signals were quarantined before they could
+      influence any score.</p>
+
+      <div class="stat"><span class="lbl">Accepted signals</span><span class="val" id="sAcc">4</span></div>
+      <div class="stat"><span class="lbl">Quarantined (GARD)</span><span class="val" id="sQua">3</span></div>
+      <div class="stat"><span class="lbl">Campaign arc</span><span class="val" id="sArc">75%</span></div>
+      <div class="stat"><span class="lbl">Blast radius</span><span class="val" id="sBlast">—</span></div>
+      <div class="stat"><span class="lbl">Severity</span><span class="val" id="sSev">—</span></div>
+      <div class="stat"><span class="lbl">Forecast confidence</span><span class="val" id="sConf">—</span></div>
+
+      <div class="meter" aria-hidden="true"><i id="mSev" style="width:0%;background:linear-gradient(90deg,#22d3ee,#fbbf24,#ff3b57)"></i></div>
+      <p class="note" id="rSevWhy">Severity is recomputed from the simulated blast radius — press play
+      to propagate.</p>
+
+      <h2>Quarantined at intake</h2>
+      <ul class="bul" id="rQuar"></ul>
+
+      <h2>Campaign arc — KAIROS</h2>
+      <p id="rArc">—</p>
+
+      <h2>Competing hypotheses — AIDA</h2>
+      <div id="rHypo"></div>
+
+      <h2>Propagation — SocialSim</h2>
+      <p id="rProp">Run the propagation to see which cohorts learn of this, in what order, and how
+      much of the population ends up aware.</p>
+
+      <h2>Calibration — Ground Truth</h2>
+      <p id="rCal">—</p>
+
+      <h2>Governed response</h2>
+      <div id="rGates"></div>
+      <p class="note">High-risk response actions — public statements, mass outbound notice,
+      regulatory filings, takedown demands, law-enforcement referral — are never auto-executed.
+      They stay <b>BLOCKED</b> until a human approval record is approved, and every step is written
+      to the hash-chained audit ledger.</p>
+    </div>
+  </aside>
+
+  <!-- ══════════════════ STAGE ══════════════════ -->
+  <main id="stage">
+    <canvas id="cv"></canvas>
+
+    <!-- canvas tools (left column, as on the exposure canvas) -->
+    <div id="ctools">
+      <button class="ct" data-tip="Fit to view" id="tFit">
+        <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+      <button class="ct" data-tip="Zoom in" id="tIn">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M20 20l-3.5-3.5"/></svg></button>
+      <button class="ct" data-tip="Zoom out" id="tOut">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M20 20l-3.5-3.5"/></svg></button>
+      <button class="ct" data-tip="Re-centre" id="tCentre">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
+      <button class="ct on" data-tip="Force layout" id="tForce">
+        <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="8" r="2.4"/>
+          <circle cx="9" cy="18" r="2.4"/><path d="M7.7 7.4 16 8M7.3 8 8.6 15.7"/></svg></button>
+      <button class="ct" data-tip="Radial layout" id="tRadial">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="12" r="8"/>
+          <path d="M12 4v3M12 17v3M4 12h3M17 12h3"/></svg></button>
+      <button class="ct" data-tip="Cluster layout" id="tCluster">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.6"/>
+          <rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/>
+          <rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></button>
+      <button class="ct" data-tip="Toggle labels" id="tLabels">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h13"/></svg></button>
+    </div>
+
+    <!-- canvas search, mirroring the analyst canvas -->
+    <div id="cvsearch">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="cq" placeholder="Search on canvas" aria-label="Search on canvas">
+    </div>
+
+    <!-- cohort legend (society mode) -->
+    <div id="legend" role="group" aria-label="Cohort filter"></div>
+
+    <!-- grouping control (society mode) -->
+    <div id="grouping">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#93a9cd" stroke-width="1.7"
+           stroke-linecap="round" aria-hidden="true"><path d="M8 3v18M8 3 4 7M8 3l4 4M16 21V3M16 21l-4-4M16 21l4-4"/></svg>
+      <span class="div"></span>
+      <label for="groupBy" style="color:var(--ink-2)">Group by</label>
+      <select id="groupBy">
+        <option value="cohort">Cohort</option>
+        <option value="exposure">Exposure order</option>
+        <option value="reach">Simulated reach</option>
+      </select>
+    </div>
+
+    <!-- persona card (society mode) -->
+    <div id="persona" role="dialog" aria-label="Synthetic persona">
+      <button class="x" id="pClose" aria-label="Close">×</button>
+      <div class="ph">
+        <div class="av" id="pAv">SYN</div>
+        <div>
+          <div class="pn" id="pName">—</div>
+          <div class="pr" id="pRole">—</div>
+        </div>
+      </div>
+      <div class="pd" id="pDesc">—</div>
+      <div class="chips" id="pChips"></div>
+      <button class="go" id="pGo">Start Rehearsal</button>
+      <div id="rehearse">
+        <div class="rl mono">Simulated reaction</div>
+        <p id="rehearseTxt">—</p>
+      </div>
+    </div>
+
+    <!-- node inspector (lattice mode) -->
+    <div id="inspect" role="dialog" aria-label="Node detail">
+      <button class="x" id="iClose" aria-label="Close">×</button>
+      <div class="it mono" id="iType">—</div>
+      <div class="il" id="iLabel">—</div>
+      <div class="stat"><span class="lbl">Degree centrality</span><span class="val" id="iCent">—</span></div>
+      <div class="stat"><span class="lbl">Cluster</span><span class="val" id="iClu">—</span></div>
+      <div class="stat"><span class="lbl">Links</span><span class="val" id="iDeg">—</span></div>
+      <p class="note" id="iNote" style="margin-top:9px">—</p>
+    </div>
+
+    <!-- status chips -->
+    <div id="hud">
+      <div class="hchip">STRAND <b id="hStrand">A · EXPOSURE</b></div>
+      <div class="hchip">NODES <b id="hNodes">0</b></div>
+      <div class="hchip">EDGES <b id="hEdges">0</b></div>
+      <div class="hchip warn">QUARANTINED <b id="hQ">3</b></div>
+      <div class="hchip ok">AUDIT <b>CHAIN VERIFIED</b></div>
+    </div>
+
+    <!-- transport / timeline -->
+    <div id="transport">
+      <button id="play" aria-label="Run propagation">
+        <svg id="playIcon" viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>
+      </button>
+      <div id="tl">
+        <canvas id="curve"></canvas>
+        <div id="tlfill"></div>
+        <div id="tlholder"></div>
+      </div>
+      <div id="tstat" class="mono">
+        <b id="tBlast">0.0%</b>
+        <small>population aware · step <span id="tStep">0</span>/12</small>
+      </div>
+    </div>
+  </main>
+
+  <!-- ══════════════════ RIGHT TOOL RAIL ══════════════════ -->
+  <nav id="tools" aria-label="Canvas tools">
+    <button class="ct on" data-tip="Assessment report" id="rReport">
+      <svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/></svg></button>
+    <button class="ct" data-tip="Search" id="rSearch">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    <button class="ct" data-tip="Expand links" id="rExpand">
+      <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/>
+        <circle cx="18" cy="18" r="2.4"/><path d="M8.2 11 15.8 7M8.2 13l7.6 4"/></svg></button>
+    <button class="ct" data-tip="Society 3D" id="r3D">
+      <svg viewBox="0 0 24 24"><path d="M12 3 3.5 7.5v9L12 21l8.5-4.5v-9z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg></button>
+    <button class="ct" data-tip="Timeline" id="rTime">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg></button>
+    <button class="ct" data-tip="Pan" id="rPan">
+      <svg viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V13m0-1.5a1.5 1.5 0 0 1 3 0V16a5 5 0 0 1-5 5h-1.5a5 5 0 0 1-4.3-2.5L6 15.5a1.5 1.5 0 0 1 2.6-1.5L9 15"/></svg></button>
+    <button class="ct" data-tip="Run propagation" id="rPlay">
+      <svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg></button>
+    <button class="ct" data-tip="Reach map" id="rGeo">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17M12 3.5c-2.5 2.6-2.5 14.4 0 17"/></svg></button>
+    <button class="ct" data-tip="Re-layout" id="rLayout">
+      <svg viewBox="0 0 24 24"><path d="M4 7h6M4 12h11M4 17h8"/><path d="M17 5l3 3-3 3"/></svg></button>
+    <button class="ct" data-tip="Tag / classify" id="rTag">
+      <svg viewBox="0 0 24 24"><path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9z"/><circle cx="8" cy="8" r="1.4"/></svg></button>
+  </nav>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   HELIX — dual-strand exposure & response lattice (front-of-house).
+
+   This canvas is the operator surface for sentinel/sentinel/helix.py. Every
+   constant below — cohorts, transmission channels, campaign arcs, response
+   risk scores, governance bands — mirrors that module so the picture on screen
+   and the governed engine behind it never disagree.
+
+   Strand A: the exposure link lattice (leak/extortion/credential signals).
+   Strand B: the synthetic society the exposure propagates through.
+   The crossover: simulated blast radius re-ranks severity, which decides which
+   response actions unlock — and which stay blocked pending human approval.
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ---------- deterministic PRNG so every operator sees the same board ------- */
+function mulberry(seed){
+  return function(){
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+var rnd = mulberry(1729);
+
+/* ---------- Strand B: cohorts + channels (mirrors helix.py) ---------------- */
+var COHORTS = [
+  {key:'regulator',           label:'Regulator / supervisory body', size:40,    sus:.55, amp:1.30, dec:.92, c:'#a855f7'},
+  {key:'enterprise_customer', label:'Enterprise customers',         size:900,   sus:.62, amp:1.15, dec:.88, c:'#3b82f6'},
+  {key:'consumer',            label:'Consumer users',               size:48000, sus:.34, amp:0.75, dec:.78, c:'#14b8a6'},
+  {key:'press',               label:'Trade & national press',       size:120,   sus:.70, amp:1.80, dec:.90, c:'#f59e0b'},
+  {key:'security_research',   label:'Security research community',  size:2200,  sus:.80, amp:1.45, dec:.86, c:'#22d3ee'},
+  {key:'partner_supplier',    label:'Partners & suppliers',         size:260,   sus:.50, amp:0.95, dec:.87, c:'#fb7185'},
+  {key:'workforce',           label:'Internal workforce',           size:1400,  sus:.66, amp:0.60, dec:.90, c:'#34d399'},
+  {key:'investor',            label:'Investors & board',            size:55,    sus:.48, amp:1.10, dec:.93, c:'#fb923c'}
+];
+var CHANNELS = [
+  ['security_research','press',.75], ['press','consumer',.65], ['press','regulator',.60],
+  ['press','investor',.70], ['enterprise_customer','partner_supplier',.55],
+  ['enterprise_customer','regulator',.45], ['workforce','press',.30], ['press','workforce',.50],
+  ['partner_supplier','enterprise_customer',.50], ['regulator','investor',.40],
+  ['security_research','enterprise_customer',.40]
+];
+var COHORT = {}; COHORTS.forEach(function(c){ COHORT[c.key] = c; });
+var POP = COHORTS.reduce(function(a,c){ return a + c.size; }, 0);
+
+/* ---------- Strand A: the case (accepted + quarantined signals) ------------ */
+/* A deliberately MODERATE exposure. This is the case where the merge earns its
+   keep: on the raw signals alone it scores 72 — serious but not dramatic. It is
+   the simulated reach that carries it past 80, which is the threshold where
+   regulatory notification and a public statement enter the playbook at all. */
+var SIGNALS = [
+  {id:'SIG-01', kind:'leak_listing',        src:'vendor_exposure_feed', sev:44, venue:'index-a', corr:2, t:0,
+   note:'Victim entry published on a leak index'},
+  {id:'SIG-02', kind:'countdown',           src:'vendor_exposure_feed', sev:48, venue:'index-a', corr:2, t:1,
+   note:'72-hour deadline attached to the listing'},
+  {id:'SIG-04', kind:'credential_exposure', src:'internal_telemetry',   sev:41, venue:'',        corr:2, t:2,
+   note:'Credential reuse observed against our own SSO'},
+  {id:'SIG-03', kind:'sample_leak',         src:'cert_notification',    sev:52, venue:'index-a', corr:2, t:3,
+   note:'Proof-of-life sample archive posted'}
+];
+var QUARANTINED = [
+  {id:'SIG-90', why:'observation timestamp is in the future (clock attack or fabrication)'},
+  {id:'SIG-91', why:'prompt-injection marker in summary: “ignore previous”'},
+  {id:'SIG-92', why:'source “anonymous_tip” is not in the approved registry'}
+];
+var ARC = ['leak_listing','countdown','sample_leak','full_leak'];
+
+/* ---------- AIDA: competing hypotheses ------------------------------------ */
+var HYPOTHESES = [
+  {label:'confirmed_compromise', conf:.87,
+   why:'published sample material; 2 independent sources corroborate; our own telemetry observed it'},
+  {label:'supplier_spill_misattributed', conf:.09,
+   why:'no partner disclosure in the window — retained because the evidence does not exclude it'}
+];
+
+/* ---------- Governed response registry (mirrors helix.py) ----------------- */
+var RESPONSES = [
+  ['open_incident_record',      5,  'Open an internal incident record'],
+  ['notify_incident_channel',   12, 'Alert the internal incident channel'],
+  ['collect_more_telemetry',    18, 'Widen internal telemetry collection'],
+  ['draft_holding_statement',   30, 'Draft (not publish) a holding statement'],
+  ['force_credential_rotation', 55, 'Force credential rotation for the affected scope'],
+  ['notify_enterprise_customers',62,'Notify named enterprise customers'],
+  ['takedown_demand',           74, 'Issue a takedown demand to a hosting venue'],
+  ['regulatory_notification',   78, 'File a regulatory breach notification'],
+  ['law_enforcement_referral',  82, 'Refer the matter to law enforcement'],
+  ['publish_public_statement',  85, 'Publish a public statement'],
+  ['mass_customer_email',       88, 'Send mass outbound customer notice']
+];
+var AUTO_CEILING = 35, BLOCK_FLOOR = 70;
+function verdictFor(risk){ return risk >= BLOCK_FLOOR ? 'BLOCKED' : (risk > AUTO_CEILING ? 'APPROVE' : 'AUTO'); }
+
+/* ---------- persona vocabulary (synthetic, cohort-derived) ---------------- */
+var ROLES = ['operations lead','risk officer','procurement manager','duty editor',
+             'incident responder','account owner','policy analyst','board observer'];
+var POSTURES = ['cautious','sceptical','escalatory','cooperative','disengaged'];
+var CONCERNS = ['continuity of service','regulatory exposure','contractual liability',
+                'personal data','reputational spillover','disclosure timing'];
+
+/* ═══════════════════════ GRAPH CONSTRUCTION ═══════════════════════════════ */
+var TYPE_STYLE = {
+  organization:{c:'#ffffff', r:9,   glow:22},
+  campaign:    {c:'#a855f7', r:6.5, glow:16},
+  incident:    {c:'#22d3ee', r:4.4, glow:10},
+  artifact:    {c:'#60a5fa', r:2.6, glow:5},
+  source:      {c:'#34d399', r:5,   glow:12},
+  venue:       {c:'#fb7185', r:4.6, glow:11},
+  infra:       {c:'#fbbf24', r:3.4, glow:8},
+  cohort:      {c:'#a855f7', r:11,  glow:26},
+  member:      {c:'#60a5fa', r:2.1, glow:4}
+};
+
+var nodes = [], links = [], byId = {};
+function addNode(n){ n.deg = 0; nodes.push(n); byId[n.id] = n; return n; }
+function addLink(a, b, kind, w){
+  if(!byId[a] || !byId[b]) return;
+  links.push({a:a, b:b, kind:kind, w:w == null ? .5 : w});
+  byId[a].deg++; byId[b].deg++;
+}
+
+function buildLattice(){
+  nodes = []; links = []; byId = {};
+  rnd = mulberry(1729);
+
+  addNode({id:'org', type:'organization', label:'clearglassinc.com', strand:'A', cluster:0});
+
+  /* Campaign clusters — the radial bursts on the exposure canvas. Each is a
+     campaign hub with a fan of artifacts, exactly how a real leak index looks
+     when one actor cross-posts the same material many times. */
+  var campaigns = [
+    {id:'cmp-exfilsquad', label:'ExfilSquad — victim postings',      leaves:34, cluster:1},
+    {id:'cmp-ransom-a',   label:'Ransom index A — extortion arc',    leaves:22, cluster:2},
+    {id:'cmp-combolist',  label:'Credential combolists',             leaves:46, cluster:3},
+    {id:'cmp-crosspost',  label:'Cross-post mirror network',         leaves:18, cluster:4},
+    {id:'cmp-infra',      label:'Shared hosting infrastructure',     leaves:14, cluster:5},
+    {id:'cmp-forum',      label:'Forum resale listings',             leaves:26, cluster:6}
+  ];
+  campaigns.forEach(function(cm){
+    addNode({id:cm.id, type:'campaign', label:cm.label, strand:'A', cluster:cm.cluster});
+    addLink('org', cm.id, 'observed_in', .55);
+    for(var i = 0; i < cm.leaves; i++){
+      var id = cm.id + '-a' + i;
+      addNode({id:id, type:'artifact', strand:'A', cluster:cm.cluster,
+               label:cm.label.split(' —')[0] + ' artefact ' + (i + 1)});
+      addLink(cm.id, id, 'contains', .3 + rnd() * .3);
+      /* a few artefacts chain onward, giving the fan its ragged edge */
+      if(rnd() > .82 && i > 2){
+        var prev = cm.id + '-a' + Math.floor(rnd() * i);
+        addLink(id, prev, 'mirrors', .25);
+      }
+    }
+  });
+
+  /* The four accepted signals become incident nodes on the org hub. */
+  SIGNALS.forEach(function(s){
+    addNode({id:s.id, type:'incident', strand:'A', cluster:0, sig:s,
+             label:s.kind.replace(/_/g, ' ') + ' · ' + s.id});
+    addLink('org', s.id, 'exposed_by', Math.min(s.sev / 100, 1));
+  });
+
+  /* Approved sources and venues, linked to what they reported. */
+  var sources = ['internal_telemetry','vendor_exposure_feed','cert_notification',
+                 'breach_index_public','vulnerability_intel','partner_disclosure',
+                 'law_enforcement_notice'];
+  sources.forEach(function(s, i){
+    addNode({id:'src:' + s, type:'source', strand:'A', cluster:0, label:s.replace(/_/g, ' ')});
+    addLink('org', 'src:' + s, 'monitored_by', .35);
+    /* wire each source into a campaign so the sources sit between the bursts */
+    addLink('src:' + s, campaigns[i % campaigns.length].id, 'reports_on', .3);
+  });
+  SIGNALS.forEach(function(s){ addLink(s.id, 'src:' + s.src, 'reported_by', .6); });
+
+  ['index-a','index-b','forum-c','mirror-d','paste-e'].forEach(function(v, i){
+    addNode({id:'ven:' + v, type:'venue', strand:'A', cluster:0, label:'venue ' + v});
+    addLink('ven:' + v, campaigns[i % campaigns.length].id, 'hosts', .45);
+  });
+  SIGNALS.forEach(function(s){ if(s.venue) addLink(s.id, 'ven:' + s.venue, 'mirrored_at', .5); });
+
+  for(var k = 0; k < 12; k++){
+    addNode({id:'infra' + k, type:'infra', strand:'A', cluster:5, label:'infrastructure IOC ' + (k + 1)});
+    addLink('infra' + k, 'cmp-infra', 'resolves_to', .4);
+    if(k % 3 === 0) addLink('infra' + k, 'cmp-crosspost', 'shared_with', .25);
+  }
+
+  seedPositions();
+}
+
+function buildSociety(){
+  nodes = []; links = []; byId = {};
+  rnd = mulberry(4242);
+
+  /* Cohort hubs placed on a sphere; each carries a cloud of synthetic members
+     so density reads as population, exactly like the society view. */
+  COHORTS.forEach(function(co, i){
+    var phi = Math.acos(1 - 2 * (i + .5) / COHORTS.length);
+    var theta = Math.PI * (1 + Math.sqrt(5)) * (i + .5);
+    var R = 210;
+    addNode({
+      id:'co:' + co.key, type:'cohort', strand:'B', cohort:co.key, label:co.label,
+      x3:R * Math.sin(phi) * Math.cos(theta), y3:R * Math.cos(phi),
+      z3:R * Math.sin(phi) * Math.sin(theta), cluster:i
+    });
+    /* member cloud — scaled by log(size) so consumers don't swamp the view */
+    var count = Math.max(6, Math.min(34, Math.round(Math.log10(co.size) * 11)));
+    for(var m = 0; m < count; m++){
+      var h = byId['co:' + co.key];
+      var spread = 46 + rnd() * 54;
+      addNode({
+        id:'mb:' + co.key + ':' + m, type:'member', strand:'B', cohort:co.key, cluster:i,
+        label:'synthetic member', member:m,
+        x3:h.x3 + (rnd() - .5) * spread, y3:h.y3 + (rnd() - .5) * spread,
+        z3:h.z3 + (rnd() - .5) * spread
+      });
+      addLink('co:' + co.key, 'mb:' + co.key + ':' + m, 'member_of', .12);
+    }
+  });
+  CHANNELS.forEach(function(ch){ addLink('co:' + ch[0], 'co:' + ch[1], 'transmits', ch[2]); });
+}
+
+/* Give strand-A nodes a starting position clustered by their campaign, so the
+   force loop settles into distinct bursts rather than one blob. */
+function seedPositions(){
+  nodes.forEach(function(n){
+    var ang = (n.cluster / 7) * Math.PI * 2 + rnd() * .8;
+    var rad = n.type === 'organization' ? 0
+            : n.type === 'campaign' ? 210 + rnd() * 40
+            : 250 + rnd() * 190;
+    n.x = Math.cos(ang) * rad + (rnd() - .5) * 90;
+    n.y = Math.sin(ang) * rad + (rnd() - .5) * 90;
+    n.vx = 0; n.vy = 0;
+  });
+}
+
+/* ═══════════════════════ SIMULATION (SocialSim) ═══════════════════════════ */
+function propagate(seeds, steps){
+  var reach = {}, curve = [], i, s;
+  COHORTS.forEach(function(c){ reach[c.key] = 0; });
+  Object.keys(seeds).forEach(function(k){
+    if(reach[k] !== undefined) reach[k] = Math.min(Math.max(seeds[k], 0), 1);
+  });
+  function weighted(){
+    var t = 0; COHORTS.forEach(function(c){ t += reach[c.key] * c.size; }); return t / POP;
+  }
+  var frames = [{reach:Object.assign({}, reach), w:weighted()}];
+  curve.push(weighted());
+  for(s = 0; s < steps; s++){
+    var delta = {};
+    COHORTS.forEach(function(c){
+      var inbound = 0;
+      for(i = 0; i < CHANNELS.length; i++){
+        if(CHANNELS[i][1] === c.key) inbound += CHANNELS[i][2] * COHORT[CHANNELS[i][0]].amp * reach[CHANNELS[i][0]];
+      }
+      var pressure = c.sus * inbound * Math.pow(c.dec, s);
+      delta[c.key] = Math.max(0, (1 - reach[c.key]) * Math.min(pressure, 1));
+    });
+    COHORTS.forEach(function(c){ reach[c.key] = Math.min(1, reach[c.key] + delta[c.key]); });
+    curve.push(weighted());
+    frames.push({reach:Object.assign({}, reach), w:weighted()});
+  }
+  return {reach:reach, curve:curve, frames:frames, blast:curve[curve.length - 1]};
+}
+
+/* Which cohorts hear first, derived from what actually leaked (the crossover). */
+function seedsFromSignals(activeCount){
+  var kinds = {}, i;
+  for(i = 0; i < activeCount && i < SIGNALS.length; i++) kinds[SIGNALS[i].kind] = 1;
+  var s = {};
+  if(kinds.credential_exposure){ s.security_research = .30; s.workforce = .15; }
+  if(kinds.leak_listing || kinds.countdown){
+    s.security_research = Math.max(s.security_research || 0, .45); s.press = .20;
+  }
+  if(kinds.sample_leak || kinds.full_leak){
+    s.press = Math.max(s.press || 0, .50); s.enterprise_customer = .25; s.regulator = .20;
+  }
+  var arcHit = ARC.filter(function(k){ return kinds[k]; }).length / ARC.length;
+  if(arcHit >= .75) Object.keys(s).forEach(function(k){ s[k] = Math.min(1, s[k] * 1.25); });
+  return Object.keys(s).length ? s : {security_research:.05};
+}
+
+/* ═══════════════════════ STATE ════════════════════════════════════════════ */
+var mode = 'lattice';           // 'lattice' | 'society'
+var cam = {x:0, y:0, z:1};
+var rot = {x:-.28, y:.6};
+var showLabels = true;
+var layout = 'force';
+var hidden = {};                // cohort key -> hidden
+var selected = null;
+var filterText = '';
+var sim = null, step = 0, playing = false, playT = 0;
+var STEPS = 12;
+
+var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+var curveCv = document.getElementById('curve'), cctx = curveCv.getContext('2d');
+var DPR = Math.min(window.devicePixelRatio || 1, 2);
+var W = 0, H = 0;
+
+function resize(){
+  var r = cv.getBoundingClientRect();
+  W = r.width; H = r.height;
+  cv.width = W * DPR; cv.height = H * DPR;
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  var t = document.getElementById('tl').getBoundingClientRect();
+  curveCv.width = t.width * DPR; curveCv.height = 34 * DPR;
+  curveCv.style.width = t.width + 'px'; curveCv.style.height = '34px';
+  cctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  drawCurve();
+}
+window.addEventListener('resize', resize);
+
+/* ═══════════════════════ FORCE LAYOUT (strand A) ══════════════════════════ */
+function tickForce(){
+  if(mode !== 'lattice' || layout !== 'force') return;
+  var i, j, a, b, dx, dy, d, f;
+  /* repulsion — sampled rather than all-pairs so ~230 nodes stay at 60fps */
+  for(i = 0; i < nodes.length; i++){
+    a = nodes[i];
+    for(j = i + 1; j < nodes.length; j++){
+      b = nodes[j];
+      dx = b.x - a.x; dy = b.y - a.y;
+      d = dx * dx + dy * dy;
+      if(d > 90000 || d < .01) continue;
+      d = Math.sqrt(d);
+      f = (a.type === 'artifact' && b.type === 'artifact' ? 120 : 700) / (d * d);
+      a.vx -= dx / d * f; a.vy -= dy / d * f;
+      b.vx += dx / d * f; b.vy += dy / d * f;
+    }
+  }
+  /* springs */
+  for(i = 0; i < links.length; i++){
+    a = byId[links[i].a]; b = byId[links[i].b];
+    if(!a || !b) continue;
+    dx = b.x - a.x; dy = b.y - a.y;
+    d = Math.sqrt(dx * dx + dy * dy) || .01;
+    /* Per-kind rest lengths: artefacts hug their campaign hub (tight radial
+       fans), while the hubs themselves are pushed well clear of the org node
+       so the clusters separate instead of merging into one blob. */
+    var kind = links[i].kind;
+    var rest = kind === 'contains' ? 46 : kind === 'observed_in' ? 300 : 132;
+    f = (d - rest) * (kind === 'contains' ? .012 : .0055);
+    a.vx += dx / d * f; a.vy += dy / d * f;
+    b.vx -= dx / d * f; b.vy -= dy / d * f;
+  }
+  /* gravity toward origin + damping */
+  for(i = 0; i < nodes.length; i++){
+    a = nodes[i];
+    a.vx -= a.x * .00055; a.vy -= a.y * .00055;
+    a.vx *= .86; a.vy *= .86;
+    if(a.type === 'organization'){ a.x *= .82; a.y *= .82; a.vx = a.vy = 0; }
+    a.x += a.vx; a.y += a.vy;
+  }
+}
+
+function applyLayout(kind){
+  layout = kind;
+  document.getElementById('tForce').classList.toggle('on', kind === 'force');
+  document.getElementById('tRadial').classList.toggle('on', kind === 'radial');
+  document.getElementById('tCluster').classList.toggle('on', kind === 'cluster');
+  if(kind === 'radial'){
+    var groups = {};
+    nodes.forEach(function(n){ (groups[n.cluster] = groups[n.cluster] || []).push(n); });
+    Object.keys(groups).forEach(function(g, gi){
+      var list = groups[g];
+      var cx = Math.cos(gi / 7 * Math.PI * 2) * 330;
+      var cy = Math.sin(gi / 7 * Math.PI * 2) * 330;
+      list.forEach(function(n, i){
+        if(n.type === 'organization'){ n.x = 0; n.y = 0; return; }
+        var ang = i / list.length * Math.PI * 2;
+        var rad = n.type === 'campaign' ? 0 : 40 + (i % 5) * 22;
+        n.x = cx + Math.cos(ang) * rad; n.y = cy + Math.sin(ang) * rad;
+        n.vx = n.vy = 0;
+      });
+    });
+  } else if(kind === 'cluster'){
+    var cols = 4, cell = 260, gi2 = {};
+    nodes.forEach(function(n){ gi2[n.cluster] = 1; });
+    var keys = Object.keys(gi2);
+    var counters = {};
+    nodes.forEach(function(n){
+      var idx = keys.indexOf(String(n.cluster));
+      counters[n.cluster] = (counters[n.cluster] || 0);
+      var i = counters[n.cluster]++;
+      var ox = (idx % cols) * cell - cols * cell / 2 + cell / 2;
+      var oy = Math.floor(idx / cols) * cell - cell;
+      var per = 9;
+      n.x = ox + (i % per) * 20 - per * 10;
+      n.y = oy + Math.floor(i / per) * 18 - 40;
+      n.vx = n.vy = 0;
+    });
+  } else {
+    seedPositions();
+  }
+}
+
+/* ═══════════════════════ RENDER ═══════════════════════════════════════════ */
+function project(n){
+  /* rotate then project — a small hand-rolled 3D pipeline, no libraries */
+  var cy = Math.cos(rot.y), sy = Math.sin(rot.y);
+  var cx2 = Math.cos(rot.x), sx = Math.sin(rot.x);
+  var x = n.x3 * cy - n.z3 * sy;
+  var z = n.x3 * sy + n.z3 * cy;
+  var y = n.y3 * cx2 - z * sx;
+  z = n.y3 * sx + z * cx2;
+  var persp = 620 / (620 + z);
+  return {x:W / 2 + cam.x + x * persp * cam.z, y:H / 2 + cam.y + y * persp * cam.z,
+          s:persp, z:z};
+}
+
+function matches(n){
+  if(!filterText) return true;
+  return (n.label || '').toLowerCase().indexOf(filterText) >= 0 ||
+         (n.id || '').toLowerCase().indexOf(filterText) >= 0;
+}
+
+function draw(){
+  ctx.clearRect(0, 0, W, H);
+  if(mode === 'lattice') drawLattice(); else drawSociety();
+  document.getElementById('hNodes').textContent = nodes.length;
+  document.getElementById('hEdges').textContent = links.length;
+}
+
+function drawLattice(){
+  var i, a, b, n;
+  ctx.save();
+  ctx.translate(W / 2 + cam.x, H / 2 + cam.y);
+  ctx.scale(cam.z, cam.z);
+
+  /* edges */
+  ctx.lineWidth = .7;
+  for(i = 0; i < links.length; i++){
+    a = byId[links[i].a]; b = byId[links[i].b];
+    if(!a || !b) continue;
+    var lit = filterText && (matches(a) || matches(b));
+    ctx.strokeStyle = lit ? 'rgba(34,211,238,.55)'
+      : links[i].kind === 'mirrors' ? 'rgba(251,113,133,.16)' : 'rgba(96,140,210,.14)';
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  }
+
+  /* nodes */
+  for(i = 0; i < nodes.length; i++){
+    n = nodes[i];
+    var st = TYPE_STYLE[n.type] || TYPE_STYLE.artifact;
+    var on = matches(n);
+    var r = st.r * (n === selected ? 1.7 : 1);
+    ctx.globalAlpha = filterText ? (on ? 1 : .16) : 1;
+
+    if(st.glow > 6 || n === selected){
+      var g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, st.glow);
+      g.addColorStop(0, st.c + '55'); g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(n.x, n.y, st.glow, 0, 6.284); ctx.fill();
+    }
+    ctx.fillStyle = st.c;
+    ctx.beginPath();
+    if(n.type === 'venue' || n.type === 'source'){
+      ctx.rect(n.x - r, n.y - r, r * 2, r * 2);       /* squares read as documents */
+    } else {
+      ctx.arc(n.x, n.y, r, 0, 6.284);
+    }
+    ctx.fill();
+    if(n === selected){
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.arc(n.x, n.y, r + 5, 0, 6.284); ctx.stroke();
+    }
+
+    if(showLabels && (n.type === 'organization' || n.type === 'campaign' ||
+        n.type === 'incident' || n.type === 'source' || n === selected) && cam.z > .55){
+      ctx.globalAlpha = filterText && !on ? .14 : .82;
+      ctx.fillStyle = n.type === 'organization' ? '#fff' : '#9db4d8';
+      ctx.font = (n.type === 'organization' ? '700 12px ' : '500 9.5px ') + "'IBM Plex Mono',monospace";
+      ctx.textAlign = 'center';
+      ctx.fillText(n.label, n.x, n.y - (st.r + 7));
+    }
+  }
+  ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+function drawSociety(){
+  var order = nodes.slice().map(function(n){
+    var p = project(n); n._p = p; return n;
+  }).sort(function(a, b){ return b._p.z - a._p.z; });   /* painter's algorithm */
+
+  /* channels between cohort hubs */
+  for(var i = 0; i < links.length; i++){
+    var a = byId[links[i].a], b = byId[links[i].b];
+    if(!a || !b || !a._p || !b._p) continue;
+    if(hidden[a.cohort] || hidden[b.cohort]) continue;
+    var isChannel = links[i].kind === 'transmits';
+    ctx.strokeStyle = isChannel ? 'rgba(147,169,205,.26)' : 'rgba(96,140,210,.07)';
+    ctx.lineWidth = isChannel ? .9 : .5;
+    ctx.beginPath(); ctx.moveTo(a._p.x, a._p.y); ctx.lineTo(b._p.x, b._p.y); ctx.stroke();
+  }
+
+  /* nodes back-to-front */
+  order.forEach(function(n){
+    if(hidden[n.cohort]) return;
+    var co = COHORT[n.cohort];
+    var p = n._p;
+    var aware = sim ? sim.frames[Math.min(step, sim.frames.length - 1)].reach[n.cohort] : 0;
+    var isHub = n.type === 'cohort';
+    var base = isHub ? 7 + Math.log10(co.size) * 2.2 : 2.4;
+    var r = base * p.s * cam.z * (n === selected ? 1.6 : 1);
+    var on = matches(n);
+
+    /* awareness lights a node up — the propagation you can actually watch */
+    var litAlpha = .28 + aware * .72;
+    ctx.globalAlpha = (filterText && !on ? .1 : 1) * (isHub ? 1 : litAlpha);
+
+    if(isHub || aware > .35){
+      var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * (isHub ? 3.4 : 2.6));
+      g.addColorStop(0, co.c + (aware > .5 ? '77' : '44'));
+      g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r * (isHub ? 3.4 : 2.6), 0, 6.284); ctx.fill();
+    }
+    ctx.fillStyle = co.c;
+    ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(r, .8), 0, 6.284); ctx.fill();
+
+    if(n === selected){
+      ctx.globalAlpha = 1; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r + 6, 0, 6.284); ctx.stroke();
+    }
+    if(isHub && showLabels && cam.z > .5){
+      ctx.globalAlpha = .9;
+      ctx.fillStyle = '#c3d4ef';
+      ctx.font = "600 10px 'IBM Plex Mono',monospace";
+      ctx.textAlign = 'center';
+      ctx.fillText(co.label, p.x, p.y - r - 9);
+      if(sim){
+        ctx.fillStyle = co.c;
+        ctx.font = "700 9px 'IBM Plex Mono',monospace";
+        ctx.fillText(Math.round(aware * 100) + '% aware', p.x, p.y + r + 14);
+      }
+    }
+  });
+  ctx.globalAlpha = 1;
+
+  /* orbit hint */
+  ctx.fillStyle = 'rgba(91,112,150,.7)';
+  ctx.font = "9.5px 'IBM Plex Mono',monospace"; ctx.textAlign = 'center';
+  ctx.fillText('Drag to rotate · scroll to zoom · click a cohort for a synthetic persona',
+               W / 2, H - 74);
+}
+
+/* ═══════════════════════ CURVE (transport) ═══════════════════════════════ */
+function drawCurve(){
+  var w = curveCv.width / DPR, h = 34;
+  cctx.clearRect(0, 0, w, h);
+  if(!sim) return;
+  cctx.beginPath();
+  sim.curve.forEach(function(v, i){
+    var x = i / (sim.curve.length - 1) * w;
+    var y = h - 4 - v * (h - 12);
+    if(i === 0) cctx.moveTo(x, y); else cctx.lineTo(x, y);
+  });
+  cctx.strokeStyle = 'rgba(34,211,238,.5)'; cctx.lineWidth = 1.4; cctx.stroke();
+  cctx.lineTo(w, h); cctx.lineTo(0, h); cctx.closePath();
+  var g = cctx.createLinearGradient(0, 0, 0, h);
+  g.addColorStop(0, 'rgba(34,211,238,.20)'); g.addColorStop(1, 'transparent');
+  cctx.fillStyle = g; cctx.fill();
+}
+
+function buildTicks(){
+  var holder = document.getElementById('tlholder');
+  holder.innerHTML = '';
+  ARC.forEach(function(k, i){
+    var d = document.createElement('div');
+    d.className = 'tick';
+    d.style.left = (i / (ARC.length - 1) * 100) + '%';
+    d.innerHTML = '<span>' + k.replace(/_/g, ' ') + '</span>';
+    d.dataset.i = i;
+    holder.appendChild(d);
+  });
+}
+
+/* ═══════════════════════ ASSESSMENT PANEL ════════════════════════════════ */
+function severityFrom(blast, activeCount){
+  var base = 0, corr = 1, i;
+  for(i = 0; i < activeCount && i < SIGNALS.length; i++){
+    base = Math.max(base, SIGNALS[i].sev);
+    corr = Math.max(corr, SIGNALS[i].corr);
+  }
+  if(!base) return {score:0, why:'no accepted signals for this entity'};
+  var kinds = {};
+  for(i = 0; i < activeCount && i < SIGNALS.length; i++) kinds[SIGNALS[i].kind] = 1;
+  var arc = ARC.filter(function(k){ return kinds[k]; }).length / ARC.length;
+  var arcB = Math.round(arc * 20);
+  var blastB = Math.round(blast * 25);
+  var corrB = Math.min(10, (corr - 1) * 5);
+  var score = Math.max(0, Math.min(100, base + arcB + blastB + corrB));
+  var parts = ['base ' + base + ' from the most severe accepted signal'];
+  if(arcB) parts.push('+' + arcB + ' for the ransom_extortion arc at ' + Math.round(arc * 100) + '% completion');
+  if(blastB) parts.push('+' + blastB + ' for ' + (blast * 100).toFixed(1) + '% simulated blast radius');
+  if(corrB) parts.push('+' + corrB + ' for ' + corr + ' corroborating sources');
+  return {score:score, why:parts.join('; ') + ' = ' + score, arc:arc};
+}
+
+function renderPanel(){
+  /* All four accepted signals are known facts in the case file from the start.
+     The timeline is the PROPAGATION clock — what moves along it is who has
+     heard, not what we know. Severity therefore climbs monotonically with the
+     blast radius, which is the whole argument for fusing the two strands. */
+  var activeCount = SIGNALS.length;
+  var blast = sim ? sim.frames[Math.min(step, sim.frames.length - 1)].w : 0;
+  var sev = severityFrom(blast, activeCount);
+
+  document.getElementById('sAcc').textContent = activeCount;
+  document.getElementById('oSignals').textContent = activeCount;
+  document.getElementById('sBlast').textContent = sim ? (blast * 100).toFixed(1) + '%' : '—';
+  document.getElementById('sSev').textContent = sev.score;
+  document.getElementById('mSev').style.width = sev.score + '%';
+  document.getElementById('rSevWhy').textContent = sev.why + '.';
+  document.getElementById('sArc').textContent = Math.round((sev.arc || 0) * 100) + '%';
+  document.getElementById('tBlast').textContent = (blast * 100).toFixed(1) + '%';
+  document.getElementById('tStep').textContent = step;
+  document.getElementById('tlfill').style.width = (step / STEPS * 100) + '%';
+
+  /* Ground Truth: the simulator has been scored, so it may speak — but only up
+     to the band its calibration earned. */
+  var ceiling = 'HIGH', mae = 0.043;
+  var band = sev.score >= 85 ? 'HIGH' : sev.score >= 60 ? 'MEDIUM' : 'LOW';
+  var order = ['UNVERIFIED','LOW','MEDIUM','HIGH'];
+  var conf = order[Math.min(order.indexOf(band), order.indexOf(ceiling))];
+  document.getElementById('sConf').textContent = conf;
+  document.getElementById('rCal').textContent =
+    'Mean absolute error ' + mae.toFixed(3) + ' against held-out cohort observations from a prior ' +
+    'incident, so forecasts are capped at ' + ceiling + '. An unscored simulator would be capped at ' +
+    'UNVERIFIED — it does not get the benefit of the doubt.';
+
+  /* propagation narrative — who has heard, ranked by absolute audience */
+  if(sim){
+    var fr = sim.frames[Math.min(step, sim.frames.length - 1)].reach;
+    var ranked = COHORTS.slice().sort(function(a, b){
+      return fr[b.key] * b.size - fr[a.key] * a.size;
+    }).slice(0, 3);
+    document.getElementById('rProp').innerHTML =
+      'At step <span class="k">' + step + '</span> the exposure has reached <span class="k">' +
+      (blast * 100).toFixed(1) + '%</span> of the modelled population. Largest audiences: ' +
+      ranked.map(function(c){
+        return '<span class="k">' + c.label + '</span> ' + Math.round(fr[c.key] * 100) + '%';
+      }).join(', ') + '. Cohorts are statistical segments, not lists of people.';
+  }
+
+  /* campaign arc */
+  var kinds = {}; for(var i = 0; i < activeCount; i++) kinds[SIGNALS[i].kind] = 1;
+  var matched = ARC.filter(function(k){ return kinds[k]; });
+  var next = ARC.find(function(k){ return !kinds[k]; });
+  document.getElementById('rArc').innerHTML =
+    'Observed <span class="k">' + matched.length + '/' + ARC.length + '</span> steps of the ' +
+    '<span class="k">ransom_extortion</span> arc (' + matched.join(' → ').replace(/_/g, ' ') + '). ' +
+    (next ? 'Next expected step is <span class="k">' + next.replace(/_/g, ' ') + '</span>.'
+          : 'The arc is complete.');
+
+  /* governed responses — which unlock depends on the blast-driven severity */
+  var gates = RESPONSES.filter(function(r){
+    return r[1] <= 20 || sev.score >= 40 && r[1] <= 35 || sev.score >= 60 && r[1] <= 65 ||
+           sev.score >= 80;
+  });
+  document.getElementById('rGates').innerHTML = gates.map(function(r){
+    var v = verdictFor(r[1]);
+    return '<div class="gate"><span class="risk">' + r[1] + '</span><span>' + r[2] +
+           '</span><span class="verdict v-' + v + '">' + v + '</span></div>';
+  }).join('');
+}
+
+function renderStatic(){
+  document.getElementById('rQuar').innerHTML = QUARANTINED.map(function(q){
+    return '<li class="bad"><b>' + q.id + '</b> — ' + q.why + '</li>';
+  }).join('');
+  document.getElementById('rHypo').innerHTML = HYPOTHESES.map(function(h){
+    return '<div class="hypo"><div class="top"><b>' + h.label.replace(/_/g, ' ') + '</b><span>' +
+      Math.round(h.conf * 100) + '%</span></div><div class="meter"><i style="width:' +
+      (h.conf * 100) + '%;background:linear-gradient(90deg,#22d3ee,#a855f7)"></i></div>' +
+      '<small>' + h.why + '</small></div>';
+  }).join('') +
+  '<p class="note">Both are kept on the record. A single narrative is only reported when the ' +
+  'evidence decisively excludes the alternatives.</p>';
+  document.getElementById('hQ').textContent = QUARANTINED.length;
+  document.getElementById('sQua').textContent = QUARANTINED.length;
+  document.getElementById('oQuar').textContent = QUARANTINED.length;
+}
+
+function renderLegend(){
+  var el = document.getElementById('legend');
+  el.innerHTML = COHORTS.map(function(c){
+    return '<button class="lg' + (hidden[c.key] ? ' off' : '') + '" data-c="' + c.key + '">' +
+      '<i style="background:' + c.c + ';color:' + c.c + '"></i>' + c.label + '</button>';
+  }).join('');
+  Array.prototype.forEach.call(el.querySelectorAll('.lg'), function(b){
+    b.addEventListener('click', function(){
+      hidden[b.dataset.c] = !hidden[b.dataset.c];
+      b.classList.toggle('off');
+    });
+  });
+}
+
+/* ═══════════════════════ PERSONA CARD ════════════════════════════════════ */
+function showPersona(node, clientX, clientY){
+  var co = COHORT[node.cohort];
+  var seed = mulberry(node.id.split('').reduce(function(a, ch){ return a + ch.charCodeAt(0); }, 7));
+  var role = ROLES[Math.floor(seed() * ROLES.length)];
+  var posture = POSTURES[Math.floor(seed() * POSTURES.length)];
+  var concern = CONCERNS[Math.floor(seed() * CONCERNS.length)];
+  var idx = node.type === 'cohort' ? '01' : String((node.member || 0) + 1).padStart(2, '0');
+  var pid = 'syn-' + co.key + '-' + idx;
+  var aware = sim ? sim.frames[Math.min(step, sim.frames.length - 1)].reach[co.key] : 0;
+
+  document.getElementById('pAv').style.background = co.c;
+  document.getElementById('pName').textContent = pid;
+  document.getElementById('pRole').textContent = role + ' · ' + co.label;
+  document.getElementById('pDesc').textContent =
+    'A generated profile drawn from the ' + co.label.toLowerCase() + ' distribution. It stands in ' +
+    'for how that segment behaves — it is not a real person and carries no real-world identity.';
+  document.getElementById('pChips').innerHTML =
+    '<span class="chip syn">◇ synthetic</span>' +
+    '<span class="chip">' + posture + '</span>' +
+    '<span class="chip">' + concern + '</span>' +
+    '<span class="chip">cohort n=' + co.size.toLocaleString() + '</span>' +
+    '<span class="chip">' + Math.round(aware * 100) + '% aware</span>';
+  document.getElementById('rehearse').classList.remove('show');
+
+  var p = document.getElementById('persona');
+  p.classList.add('show');
+  var st = document.getElementById('stage').getBoundingClientRect();
+  var x = Math.min(Math.max(clientX - st.left - 145, 8), st.width - 300);
+  var y = Math.min(Math.max(clientY - st.top - 210, 8), st.height - 300);
+  p.style.left = x + 'px'; p.style.top = y + 'px';
+
+  document.getElementById('pGo').onclick = function(){
+    var r = document.getElementById('rehearse');
+    r.classList.add('show');
+    document.getElementById('rehearseTxt').textContent =
+      'A holding statement issued at step ' + step + ' reaches this cohort while it is ' +
+      Math.round(aware * 100) + '% aware. A ' + posture + ' profile weighing ' + concern +
+      ' responds best to a dated, specific disclosure; a vague one raises the amplification ' +
+      'factor for ' + co.label.toLowerCase() + ' from ' + co.amp.toFixed(2) + ' toward ' +
+      (co.amp * 1.3).toFixed(2) + '. Publishing that statement is a risk-85 action — it stays ' +
+      'BLOCKED until an approval record is approved.';
+  };
+}
+
+/* ═══════════════════════ INTERACTION ═════════════════════════════════════ */
+function nodeAt(mx, my){
+  var best = null, bestD = 24;
+  for(var i = 0; i < nodes.length; i++){
+    var n = nodes[i], px, py, rr;
+    if(mode === 'lattice'){
+      px = W / 2 + cam.x + n.x * cam.z; py = H / 2 + cam.y + n.y * cam.z;
+      rr = (TYPE_STYLE[n.type] || TYPE_STYLE.artifact).r * cam.z + 6;
+    } else {
+      if(hidden[n.cohort] || !n._p) continue;
+      px = n._p.x; py = n._p.y;
+      rr = (n.type === 'cohort' ? 16 : 5) * n._p.s * cam.z + 5;
+    }
+    var d = Math.hypot(mx - px, my - py);
+    if(d < rr && d < bestD){ bestD = d; best = n; }
+  }
+  return best;
+}
+
+var dragging = false, lastX = 0, lastY = 0, moved = 0;
+cv.addEventListener('pointerdown', function(e){
+  dragging = true; moved = 0; lastX = e.clientX; lastY = e.clientY;
+  cv.classList.add('drag'); cv.setPointerCapture(e.pointerId);
+});
+cv.addEventListener('pointermove', function(e){
+  if(!dragging) return;
+  var dx = e.clientX - lastX, dy = e.clientY - lastY;
+  moved += Math.abs(dx) + Math.abs(dy);
+  if(mode === 'society'){ rot.y += dx * .006; rot.x += dy * .006; }
+  else { cam.x += dx; cam.y += dy; }
+  lastX = e.clientX; lastY = e.clientY;
+});
+cv.addEventListener('pointerup', function(e){
+  dragging = false; cv.classList.remove('drag');
+  if(moved > 5) return;
+  var r = cv.getBoundingClientRect();
+  var n = nodeAt(e.clientX - r.left, e.clientY - r.top);
+  selected = n;
+  if(!n){
+    document.getElementById('persona').classList.remove('show');
+    document.getElementById('inspect').classList.remove('show');
+    return;
+  }
+  if(mode === 'society'){
+    document.getElementById('inspect').classList.remove('show');
+    showPersona(n, e.clientX, e.clientY);
+  } else {
+    document.getElementById('persona').classList.remove('show');
+    showInspect(n);
+  }
+});
+cv.addEventListener('wheel', function(e){
+  e.preventDefault();
+  cam.z = Math.min(3.2, Math.max(.24, cam.z * (e.deltaY > 0 ? .9 : 1.11)));
+}, {passive:false});
+
+function showInspect(n){
+  var box = document.getElementById('inspect');
+  box.classList.add('show');
+  document.getElementById('iType').textContent = n.type;
+  document.getElementById('iLabel').textContent = n.label;
+  var maxDeg = nodes.reduce(function(m, x){ return Math.max(m, x.deg); }, 1);
+  document.getElementById('iCent').textContent = (n.deg / maxDeg).toFixed(3);
+  document.getElementById('iClu').textContent = '#' + n.cluster;
+  document.getElementById('iDeg').textContent = n.deg;
+  document.getElementById('iNote').textContent = n.sig
+    ? n.sig.note + ' — reported by ' + n.sig.src.replace(/_/g, ' ') + ', severity ' + n.sig.sev +
+      ', ' + n.sig.corr + ' corroborating source(s).'
+    : n.type === 'organization'
+      ? 'The asset under assessment. Every accepted signal links back to this hub.'
+      : 'Pivot point in the exposure lattice. Degree centrality ranks how much of the case ' +
+        'routes through this node.';
+}
+
+/* ---------- transport ----------------------------------------------------- */
+function runSim(){
+  sim = propagate(seedsFromSignals(SIGNALS.length), STEPS);
+  drawCurve();
+}
+function setPlaying(on){
+  playing = on;
+  document.getElementById('playIcon').innerHTML = on
+    ? '<path d="M7 4h4v16H7zM13 4h4v16h-4z"/>'
+    : '<path d="M7 4v16l13-8z"/>';
+}
+document.getElementById('play').addEventListener('click', function(){
+  if(!sim) runSim();
+  if(step >= STEPS) step = 0;
+  setPlaying(!playing);
+});
+document.getElementById('rPlay').addEventListener('click', function(){
+  document.getElementById('play').click();
+});
+document.getElementById('tl').addEventListener('click', function(e){
+  if(!sim) runSim();
+  var r = this.getBoundingClientRect();
+  step = Math.round((e.clientX - r.left) / r.width * STEPS);
+  step = Math.min(STEPS, Math.max(0, step));
+  setPlaying(false);
+  renderPanel();
+  syncTicks();
+});
+function syncTicks(){
+  var frac = step / STEPS;
+  Array.prototype.forEach.call(document.querySelectorAll('.tick'), function(t){
+    t.classList.toggle('hit', (+t.dataset.i) / (ARC.length - 1) <= frac + .001);
+  });
+}
+
+/* ---------- mode switching ------------------------------------------------ */
+function setMode(m){
+  mode = m;
+  document.getElementById('mLattice').classList.toggle('on', m === 'lattice');
+  document.getElementById('mSociety').classList.toggle('on', m === 'society');
+  document.getElementById('r3D').classList.toggle('on', m === 'society');
+  document.getElementById('legend').classList.toggle('show', m === 'society');
+  document.getElementById('grouping').classList.toggle('show', m === 'society');
+  document.getElementById('persona').classList.remove('show');
+  document.getElementById('inspect').classList.remove('show');
+  document.getElementById('hStrand').textContent = m === 'society' ? 'B · SOCIETY' : 'A · EXPOSURE';
+  document.getElementById('rTitle').textContent = m === 'society'
+    ? 'Propagation & Response Rehearsal' : 'Exposure & Propagation Assessment';
+  selected = null; cam = {x:0, y:0, z:1};
+  if(m === 'society'){ buildSociety(); if(!sim) runSim(); } else { buildLattice(); }
+  renderPanel();
+}
+document.getElementById('mLattice').addEventListener('click', function(){ setMode('lattice'); });
+document.getElementById('mSociety').addEventListener('click', function(){ setMode('society'); });
+document.getElementById('r3D').addEventListener('click', function(){
+  setMode(mode === 'society' ? 'lattice' : 'society');
+});
+
+/* ---------- canvas tools -------------------------------------------------- */
+document.getElementById('tIn').addEventListener('click', function(){ cam.z = Math.min(3.2, cam.z * 1.25); });
+document.getElementById('tOut').addEventListener('click', function(){ cam.z = Math.max(.24, cam.z / 1.25); });
+document.getElementById('tCentre').addEventListener('click', function(){ cam.x = cam.y = 0; });
+document.getElementById('tFit').addEventListener('click', function(){
+  cam.x = cam.y = 0; cam.z = mode === 'lattice' ? .62 : .9;
+});
+document.getElementById('tForce').addEventListener('click', function(){ applyLayout('force'); });
+document.getElementById('tRadial').addEventListener('click', function(){ applyLayout('radial'); });
+document.getElementById('tCluster').addEventListener('click', function(){ applyLayout('cluster'); });
+document.getElementById('tLabels').addEventListener('click', function(){
+  showLabels = !showLabels; this.classList.toggle('on', showLabels);
+});
+document.getElementById('rLayout').addEventListener('click', function(){
+  applyLayout(layout === 'force' ? 'radial' : layout === 'radial' ? 'cluster' : 'force');
+});
+document.getElementById('rExpand').addEventListener('click', function(){
+  showLabels = true; cam.z = Math.min(3.2, cam.z * 1.3);
+});
+document.getElementById('rGeo').addEventListener('click', function(){ setMode('society'); });
+document.getElementById('rPan').addEventListener('click', function(){ cam.x = cam.y = 0; cam.z = 1; });
+document.getElementById('rTime').addEventListener('click', function(){
+  document.getElementById('transport').scrollIntoView({block:'nearest'});
+});
+document.getElementById('rTag').addEventListener('click', function(){
+  showLabels = !showLabels; document.getElementById('tLabels').classList.toggle('on', showLabels);
+});
+document.getElementById('rSearch').addEventListener('click', function(){ document.getElementById('cq').focus(); });
+document.getElementById('rReport').addEventListener('click', function(){
+  document.getElementById('report').classList.toggle('open');
+});
+document.getElementById('collapse').addEventListener('click', function(){
+  document.getElementById('report').classList.remove('open');
+});
+document.getElementById('pClose').addEventListener('click', function(){
+  document.getElementById('persona').classList.remove('show');
+});
+document.getElementById('iClose').addEventListener('click', function(){
+  document.getElementById('inspect').classList.remove('show');
+});
+document.getElementById('groupBy').addEventListener('change', function(){
+  /* regroup the society view along a different axis */
+  var by = this.value;
+  var hubs = nodes.filter(function(n){ return n.type === 'cohort'; });
+  hubs.forEach(function(h, i){
+    var co = COHORT[h.cohort];
+    var rank = by === 'reach' && sim ? sim.reach[co.key]
+             : by === 'exposure' ? (['security_research','press','regulator','enterprise_customer',
+                 'partner_supplier','workforce','consumer','investor'].indexOf(co.key) / 8)
+             : i / hubs.length;
+    var ang = rank * Math.PI * 2;
+    var R = 150 + rank * 150;
+    var target = {x:Math.cos(ang) * R, y:(rank - .5) * 260, z:Math.sin(ang) * R};
+    var dx = target.x - h.x3, dy = target.y - h.y3, dz = target.z - h.z3;
+    h.x3 = target.x; h.y3 = target.y; h.z3 = target.z;
+    nodes.forEach(function(m){
+      if(m.type === 'member' && m.cohort === h.cohort){ m.x3 += dx; m.y3 += dy; m.z3 += dz; }
+    });
+  });
+});
+
+/* ---------- search -------------------------------------------------------- */
+function onFilter(v){ filterText = (v || '').trim().toLowerCase(); }
+document.getElementById('q').addEventListener('input', function(){
+  onFilter(this.value); document.getElementById('cq').value = this.value;
+});
+document.getElementById('cq').addEventListener('input', function(){
+  onFilter(this.value); document.getElementById('q').value = this.value;
+});
+document.addEventListener('keydown', function(e){
+  if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
+    e.preventDefault(); document.getElementById('q').focus();
+  }
+  if(e.key === 'Escape'){
+    document.getElementById('persona').classList.remove('show');
+    document.getElementById('inspect').classList.remove('show');
+  }
+  if(e.key === ' ' && e.target.tagName !== 'INPUT'){
+    e.preventDefault(); document.getElementById('play').click();
+  }
+});
+
+/* ---------- module rail --------------------------------------------------- */
+var STRAND_B_MODS = {SO:1, CO:1, CH:1, PR:1};
+Array.prototype.forEach.call(document.querySelectorAll('.mod'), function(b){
+  b.addEventListener('click', function(){
+    Array.prototype.forEach.call(document.querySelectorAll('.mod'), function(x){
+      x.classList.remove('on');
+    });
+    b.classList.add('on');
+    var m = b.dataset.mod;
+    if(STRAND_B_MODS[m] && mode !== 'society') setMode('society');
+    if(!STRAND_B_MODS[m] && mode !== 'lattice' && m !== 'RS' && m !== 'GV' && m !== 'AU'){
+      setMode('lattice');
+    }
+    var map = {EX:'exposure', CR:'credential', LK:'leak', XP:'cross', IN:'infrastructure',
+               CM:'campaign', SO:'', CO:'cohort', CH:'', PR:'', SC:'', HY:'', CA:'',
+               RS:'', GV:'', AU:''};
+    var term = map[m] || '';
+    document.getElementById('q').value = term;
+    document.getElementById('cq').value = term;
+    onFilter(term);
+  });
+});
+
+/* ---------- main loop ----------------------------------------------------- */
+function loop(ts){
+  tickForce();
+  if(playing && sim){
+    playT += 1;
+    if(playT % 26 === 0){
+      step++;
+      if(step >= STEPS){ step = STEPS; setPlaying(false); }
+      renderPanel(); syncTicks();
+    }
+  }
+  if(mode === 'society') rot.y += dragging ? 0 : .0007;   /* slow idle orbit */
+  draw();
+  requestAnimationFrame(loop);
+}
+
+/* ---------- boot ---------------------------------------------------------- */
+buildLattice();
+renderStatic();
+renderLegend();
+buildTicks();
+runSim();
+resize();
+renderPanel();
+cam.z = .62;
+requestAnimationFrame(loop);
+
+})();
+</script>
+
+<script src="/assets/js/cg-design-system.js" defer></script>
+<!-- cg-related:start -->
+<aside id="cg-related" class="cgr-dock">
+  <style>#cg-related{margin:54px auto 0;max-width:1120px;padding:0 18px 38px;font-family:'Inter',system-ui,-apple-system,sans-serif;position:relative}#cg-related .cgr-box{position:relative;overflow:hidden;background:linear-gradient(rgba(34,211,238,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,255,.05) 1px,transparent 1px),radial-gradient(circle at 12% 0,rgba(34,211,238,.16),transparent 34%),radial-gradient(circle at 88% 100%,rgba(168,85,247,.16),transparent 36%),linear-gradient(165deg,rgba(5,12,28,.97),rgba(9,7,24,.97));background-size:32px 32px,32px 32px,auto,auto,auto;border:1px solid rgba(34,211,238,.34);border-radius:16px;padding:24px 26px;color:#d8e4ff;box-shadow:0 18px 54px rgba(0,0,0,.44),0 0 34px rgba(34,211,238,.12),inset 0 0 0 1px rgba(255,255,255,.035)}#cg-related .cgr-box:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(34,211,238,.18),transparent);transform:translateX(-120%) skewX(-18deg);animation:cgr-scan 8s ease-in-out infinite}#cg-related .cgr-box:after{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,#a855f7,transparent);box-shadow:0 0 18px rgba(34,211,238,.75)}#cg-related .cgr-crumb{position:relative;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8fb9ff;margin:0 0 12px}#cg-related .cgr-crumb a{color:#67e8f9;text-decoration:none;text-shadow:0 0 12px rgba(34,211,238,.35)}#cg-related .cgr-crumb a:hover{color:#fff;text-decoration:none}#cg-related h2{position:relative;margin:0 0 14px;font-size:15.5px;letter-spacing:.08em;text-transform:uppercase;color:#f3f7ff}#cg-related .cgr-route{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 16px}#cg-related .cgr-route a{display:flex;min-height:46px;align-items:center;padding:8px 10px;border-radius:10px;background:rgba(7,14,32,.52);border:1px solid rgba(124,150,255,.15);color:#cfe0ff;text-decoration:none;font-size:12px;line-height:1.35}#cg-related .cgr-route a:hover,#cg-related .cgr-route a:focus-visible{border-color:#22d3ee;color:#fff;box-shadow:0 0 18px rgba(34,211,238,.14)}#cg-related .cgr-route b{display:block;color:#67e8f9;font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2px}#cg-related ul{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:8px 18px}#cg-related li a{display:block;padding:9px 11px;border-radius:10px;font-size:13.5px;line-height:1.45;color:#cfe0ff;text-decoration:none;border:1px solid rgba(124,150,255,.08);background:rgba(7,14,32,.36);transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}#cg-related li a:hover,#cg-related li a:focus-visible{transform:translateY(-1px);background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.42);color:#fff;box-shadow:0 0 22px rgba(34,211,238,.14)}#cg-related li a b{color:#9bdcff;font-weight:700;text-shadow:0 0 12px rgba(34,211,238,.28)}#cg-related .cgr-cta{position:relative;margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(34,211,238,.18);font-size:13.5px;color:#a9b8df}#cg-related .cgr-cta a{color:#67e8f9;font-weight:700;text-decoration:none;border-bottom:1px solid rgba(34,211,238,.36)}#cg-related .cgr-cta a:hover{color:#fff;border-bottom-color:#fff}@media(max-width:620px){#cg-related .cgr-box{padding:21px 17px}#cg-related .cgr-route{grid-template-columns:1fr}#cg-related ul{grid-template-columns:1fr}}@keyframes cgr-scan{0%,58%{transform:translateX(-120%) skewX(-18deg);opacity:0}70%{opacity:1}100%{transform:translateX(220%) skewX(-18deg);opacity:0}}@media(prefers-reduced-motion:reduce){#cg-related .cgr-box:before{animation:none}}#cg-related.cgr-dock{position:fixed;left:14px;bottom:14px;margin:0;padding:0;max-width:none;z-index:2147483000}#cg-related.cgr-dock .cgr-tab{display:inline-block;cursor:pointer;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#dbe4ff;padding:8px 12px;border-radius:9px;border:1px solid rgba(124,150,255,.42);background:linear-gradient(180deg,rgba(18,20,42,.92),rgba(11,12,28,.92));box-shadow:0 6px 22px rgba(0,0,0,.4);backdrop-filter:blur(6px);user-select:none}#cg-related.cgr-dock .cgr-tab:hover{color:#fff;border-color:rgba(124,150,255,.85)}#cg-related.cgr-dock .cgr-box{display:none;position:absolute;bottom:calc(100% + 8px);left:0;width:min(400px,92vw);max-height:62vh;overflow-y:auto}#cg-related.cgr-dock:hover .cgr-box,#cg-related.cgr-dock:focus-within .cgr-box{display:block}#cg-related.cgr-dock ul{grid-template-columns:1fr}</style>
+  <nav class="cgr-box" aria-label="Related ClearGlass pages">
+    <p class="cgr-crumb"><a href="index.html">ClearGlass Inc.</a> › <a href="intelligence.html">Intelligence &amp; OSINT</a></p>
+    <h2>Continue exploring</h2>
+    <div class="cgr-route" aria-label="Journey navigation">
+      <a href="flowsint.html"><span><b>Previous</b>Flowsint</span></a>
+      <a href="intelligence.html"><span><b>Topic hub</b>Intelligence</span></a>
+      <a href="clearglass-nexus.html"><span><b>Next in journey</b>ClearGlass NEXUS</span></a>
+    </div>
+    <ul>
+      <li><a href="clearglass-nexus.html"><b>ClearGlass NEXUS</b> — full-spectrum intelligence platform</a></li>
+      <li><a href="Ontario-osint.html"><b>Ontario OSINT Deck</b> — regional open-source intelligence control deck</a></li>
+      <li><a href="clearglass.html"><b>Network Flow Intelligence</b> — see network traffic as living structure</a></li>
+      <li><a href="intelligence-command-surface.html"><b>Intelligence Command Surface</b> — one unified operational picture</a></li>
+    </ul>
+    <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
+  </nav>
+  <div class="cgr-tab" tabindex="0" role="button" aria-label="Show related ClearGlass pages">⌁ Explore ClearGlass</div>
+</aside>
+<!-- cg-related:end -->
+</body>
+</html>

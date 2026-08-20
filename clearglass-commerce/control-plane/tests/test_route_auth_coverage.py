@@ -21,6 +21,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import pytest
+
+pytest.importorskip("fastapi")
+pytest.importorskip("sqlalchemy")
+
 from fastapi.routing import APIRoute
 
 from app.main import create_app

@@ -10,6 +10,9 @@ from __future__ import annotations
 from decimal import Decimal
 
 import pytest
+
+pytest.importorskip("sqlalchemy")
+
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 

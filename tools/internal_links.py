@@ -51,6 +51,7 @@ NON_SITE_DIRS = frozenset({".git", "node_modules", ".next", "projects"})
 EXCLUDED_PAGES: dict[str, tuple[str, str]] = {
     "404.html": ("Error recovery", "noindex redirect and route-recovery page"),
     "cg-loader.html": ("Application utility", "noindex branded loading surface"),
+    "checkout/index.html": ("Conversion completion", "payment hub — kept out of the discovery graph"),
     "data-fabric.html": ("Diagnostic utility", "noindex governed data fabric diagnostic console"),
     "etsy-callback.html": ("Application utility", "noindex OAuth redirect target"),
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html": (
@@ -107,6 +108,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
     "minerals.html": ("Critical Minerals Intelligence", "public-data mineral supply-chain, policy, provenance and compliance intelligence"),
     "flowsint.html": ("Flowsint", "OSINT investigation graph for domains, IPs and transforms"),
+    "helix.html": ("HELIX", "exposure lattice fused with synthetic-society propagation and rehearsal"),
     "Ontario-osint.html": ("Ontario OSINT Deck", "regional open-source intelligence control deck"),
     "clearglass.html": ("Network Flow Intelligence", "see network traffic as living structure"),
     "clearglass-nexus.html": ("ClearGlass NEXUS", "full-spectrum intelligence platform"),
@@ -265,6 +267,175 @@ CTA_PRICING = ("pricing.html", "See pricing & plans")
 CTA_OFFERS = ("offers/index.html", "Browse services & engagements")
 
 CLUSTERS: dict[str, dict] = {
+    "security": {
+        "name": "Cyber Defense & Security Operations",
+        "pillar": "cyber-defense-console.html",
+        "members": [
+            "sentinel.html", "bluedesk.html", "guardian.html",
+            "artemis-blue-team.html", "stegoforge.html",
+            "attack-prompt-core.html", "environmental-cyber-risk.html",
+            "bluedesk-mobile.html",
+        ],
+        "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")],
+    },
+    "intelligence": {
+        "name": "Intelligence & OSINT",
+        "pillar": "intelligence.html",
+        "members": [
+            "flowsint.html", "helix.html", "clearglass-nexus.html", "Ontario-osint.html",
+            "clearglass.html", "intelligence-command-surface.html",
+            "intelligence-interface.html", "intelligence-platform.html",
+            "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html",
+            "docs/guardian_command_nexus_spec.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "artemis": {
+        "name": "Artemis Platform",
+        "pillar": "artemis-os.html",
+        "members": [
+            "artemis-iv.html", "artemis-ai-cyber-intelligence-platform.html",
+            "artemis-self-evolving-platform.html", "artemis-2040.html",
+            "artemis-fawl/index.html",
+            "air-control.html", "air-systems-control.html",
+        ],
+        "cta": [CTA_PRICING, CTA_STORE],
+    },
+    "command": {
+        "name": "Command & Autonomous Operations",
+        "pillar": "percival-os.html",
+        "members": [
+            "artemis-percival.html", "agentmesh.html", "ai-operator.html",
+            "advanced-features-tools-systems.html", "automap.html",
+            "conduit.html", "postloop.html", "command-console.html",
+            "control-surface.html", "systems.html", "saas-platform.html",
+            "CG-os.html", "percival-build.html", "clearsight.html",
+            "command-center.html",
+        ],
+        "cta": [CTA_OFFERS, CTA_PRICING],
+    },
+    "legal": {
+        "name": "Legal, Tax & Compliance",
+        "pillar": "legal/index.html",
+        "members": [
+            "aegis.html", "corporate-legal-advisor.html",
+            "banking-law-advisor.html", "tax.html",
+            "procurement-legal-tech.html", "legal/ai-liability.html",
+            "legal/legal-council.html", "legal/privacy.html",
+            "legal/terms.html", "legal/articles.html", "legal/bylaws.html",
+            "legal/nda.html", "legal/ip-assignment.html",
+            "legal/directors-resolution.html", "legal/banking-resolution.html",
+            "legal/share-subscription.html", "legal/content-policy.html",
+            "legal/accessibility.html",
+        ],
+        "cta": [CTA_STORE, CTA_OFFERS],
+    },
+    "healthcare": {
+        "name": "Healthcare Intelligence",
+        "pillar": "clearpulse.html",
+        "members": [
+            "clearpulse-architecture.html", "offers/phipa-readiness.html",
+            "offers/phipa-readiness-checklist.html",
+        ],
+        "cta": [("offers/phipa-readiness.html", "Get the free PHIPA readiness checklist"), CTA_STORE],
+    },
+    "government": {
+        "name": "Government & Procurement",
+        "pillar": "government.html",
+        "members": [
+            "operations/procurement-readiness.html",
+            "operations/federal-supplier-handoff.html",
+            "counter-uas-commercialization-os.html",
+            "traffic-enforcement.html",
+            "sats-digital-twin.html",
+        ],
+        "cta": [CTA_STORE, ("operations/procurement-readiness.html", "Check our procurement readiness")],
+    },
+    "services": {
+        "name": "Services & Engagements",
+        "pillar": "offers/index.html",
+        "members": [
+            "store.html", "pricing.html", "smb-cyber-trust-kit.html",
+            "smb.html", "offers/security-quick-audit.html",
+            "offers/autonomous-threat-modeling.html", "offers/hardening-sprint.html", "revenue-engine.html",
+            "side-store.html", "products.html",
+            "apps/command-center/index.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "design": {
+        "name": "Web Design & UI Engineering",
+        "pillar": "web-design.html",
+        "members": [
+            "ultra-glass.html", "clearglass-ultra.html", "futuristic.html",
+            "button-lab.html", "button-system.html", "hover-menu.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "opal": {
+        "name": "Opal-Koboi Automation",
+        "pillar": "opal/index.html",
+        "members": [
+            "products/opal-koboi/index.html",
+            "products/opal-koboi/artemis-iv-core.html",
+            "products/opal-koboi/artemis-vi.html",
+            "products/opal-koboi/guardian.html",
+            "products/opal-koboi/revenue-engine.html",
+            "products/opal-koboi/smb-suite.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "blog": {
+        "name": "ClearGlass Intelligence · Insights",
+        "pillar": "blog/index.html",
+        "members": [
+            "blog/autonomous-threat-modeling-2026.html",
+            "blog/ai-agent-governance-governed-autonomy.html",
+            "blog/clearglass-platform-audit-2026.html",
+            "blog/ai-agents-insider-threat.html",
+            "blog/cybersecurity-architecture-for-agentic-software.html",
+            "blog/zero-trust-is-outdated-adaptive-trust.html",
+            "blog/zero-trust-is-outdated.html",
+            "blog/clearglass-secure-deployment-agent.html",
+            "blog/clearglass-command-center-cyber-defense-console.html",
+            "blog/clearglass-agentops-microsoft-foundry-future-stack.html",
+            "blog/osint-workflow-that-survives-contact-with-reality.html",
+            "blog/ontario-accountability-sealed-evidence.html",
+            "blog/master-investigator-legal-tech-osint-government-accountability.html",
+            "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html",
+            "blog/post-quantum-security-advisor-clearglass-artemis.html",
+            "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html",
+            "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html",
+            "blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html",
+            "blog/resume-builder.html",
+            "blog/artemis-governed-ai-gtm-visual-growth-engine.html",
+            "blog/clearglassinc-0-to-1m-corporate-execution-plan.html",
+            "blog/ethical-sales-system-100k-revenue-prompt.html",
+            "blog/almach-scalp-engine.html",
+            "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html",
+            "blog/coffee-and-technology-digital-revolution.html",
+            "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
+            "blog/ai-generated-phishing-54-percent-click-rate.html",
+            "blog/telecommunications-legal-briefing-30-july-2026.html",
+            "blog/canada-digital-control-architecture-charter.html",
+            "blog/greenbelt-92-percent-access-beats-process.html",
+            "blog/clearglass-workplace-surveillance-intelligence-defense-system.html",
+            "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html",
+            "blog/network-orchestration-ai-automation-cybersecurity.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
+    "company": {
+        "name": "Company & Operations",
+        "pillar": "index.html",
+        "members": [
+            "investors/index.html", "authority-network.html", "operations/client-onboarding.html",
+            "operations/hubspot-handoff.html",
+            "operations/ontario-incorporation-handoff.html",
+            "operations/stripe-handoff.html",
+        ],
+        "cta": [CTA_STORE, CTA_PRICING],
+    },
     "security": {"name": "Cyber Defense & Security Operations", "pillar": "cyber-defense-console.html", "members": ["sentinel.html", "bluedesk.html", "guardian.html", "artemis-blue-team.html", "stegoforge.html", "attack-prompt-core.html", "environmental-cyber-risk.html", "content-shield.html", "bluedesk-mobile.html"], "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")]},
     "intelligence": {"name": "Intelligence & OSINT", "pillar": "intelligence.html", "members": ["flowsint.html", "clearglass-nexus.html", "Ontario-osint.html", "clearglass.html", "intelligence-command-surface.html", "intelligence-interface.html", "intelligence-platform.html", "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html", "docs/guardian_command_nexus_spec.html", "minerals.html"], "cta": [CTA_STORE, CTA_PRICING]},
     "artemis": {"name": "Artemis Platform", "pillar": "artemis-os.html", "members": ["artemis-iv.html", "artemis-ai-cyber-intelligence-platform.html", "artemis-self-evolving-platform.html", "artemis-2040.html", "quantum-neural-smart-glass.html", "artemis-fawl/index.html", "air-control.html", "air-systems-control.html"], "cta": [CTA_PRICING, CTA_STORE]},
@@ -350,6 +521,17 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/the-ledger-of-ashes-political-thriller.html": ["blog/index.html", "blog/ontario-accountability-sealed-evidence.html", "blog/master-investigator-legal-tech-osint-government-accountability.html"],
 }
 
+SIBLING_WINDOW = 4     # rotated sibling links per member page
+PILLAR_MAX_MEMBERS = 10  # member links shown on a pillar page
+
+# Full-viewport HUD pages whose body{overflow:hidden} would strand a normal
+# bottom block; these get a fixed corner chip that expands the same panel on
+# hover/focus (pure CSS), mirroring the site's existing nav.js edge-tab pattern.
+FIXED_VIEWPORT = {
+    "sentinel.html", "clearglass.html", "air-control.html",
+    "percival-os.html", "artemis-percival.html", "percival-build.html",
+    "clearsight.html", "helix.html",
+}
 SIBLING_WINDOW = 4
 PILLAR_MAX_MEMBERS = 10
 FIXED_VIEWPORT = {"sentinel.html", "clearglass.html", "air-control.html", "percival-os.html", "artemis-percival.html", "percival-build.html", "clearsight.html"}

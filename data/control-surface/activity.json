@@ -3,12 +3,61 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "05:47",
-    "timestamp": "2026-08-20T05:47:32Z"
+    "time": "07:07",
+    "timestamp": "2026-08-20T07:07:21Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #110",
+    "time": "07:07",
+    "timestamp": "2026-08-20T07:07:06Z"
+  },
+  {
+    "title": "Auto Heal",
+    "status": "warn",
+    "detail": "schedule on main \u00b7 run #321",
+    "time": "07:05",
+    "timestamp": "2026-08-20T07:05:35Z"
+  },
+  {
+    "title": "Minerals Data Sync",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #20",
+    "time": "07:05",
+    "timestamp": "2026-08-20T07:05:33Z"
+  },
+  {
+    "title": "Health Monitor",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #20",
+    "time": "06:46",
+    "timestamp": "2026-08-20T06:46:04Z"
+  },
+  {
+    "title": "Defender Watch",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #20",
+    "time": "06:38",
+    "timestamp": "2026-08-20T06:38:05Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #20",
+    "time": "06:22",
+    "timestamp": "2026-08-20T06:22:37Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #108",
+    "time": "05:47",
+    "timestamp": "2026-08-20T05:47:48Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #109",
     "time": "05:47",
     "timestamp": "2026-08-20T05:47:16Z"
@@ -40,54 +89,5 @@
     "detail": "workflow_dispatch on main \u00b7 run #106",
     "time": "04:00",
     "timestamp": "2026-08-20T04:00:01Z"
-  },
-  {
-    "title": "Control Surface Feeds",
-    "status": "ok",
-    "detail": "schedule on main \u00b7 run #107",
-    "time": "03:59",
-    "timestamp": "2026-08-20T03:59:29Z"
-  },
-  {
-    "title": "Auto Heal",
-    "status": "warn",
-    "detail": "workflow_run on main \u00b7 run #320",
-    "time": "03:30",
-    "timestamp": "2026-08-20T03:30:12Z"
-  },
-  {
-    "title": "Auto Heal",
-    "status": "warn",
-    "detail": "workflow_run on main \u00b7 run #319",
-    "time": "03:30",
-    "timestamp": "2026-08-20T03:30:00Z"
-  },
-  {
-    "title": "Auto Heal",
-    "status": "warn",
-    "detail": "workflow_run on main \u00b7 run #318",
-    "time": "03:29",
-    "timestamp": "2026-08-20T03:29:47Z"
-  },
-  {
-    "title": "Auto Heal",
-    "status": "warn",
-    "detail": "workflow_run on main \u00b7 run #317",
-    "time": "03:28",
-    "timestamp": "2026-08-20T03:28:59Z"
-  },
-  {
-    "title": "Auto Heal",
-    "status": "warn",
-    "detail": "workflow_run on main \u00b7 run #316",
-    "time": "03:28",
-    "timestamp": "2026-08-20T03:28:58Z"
-  },
-  {
-    "title": "Auto Heal",
-    "status": "warn",
-    "detail": "workflow_run on main \u00b7 run #315",
-    "time": "03:28",
-    "timestamp": "2026-08-20T03:28:58Z"
   }
 ]

@@ -10,6 +10,7 @@ the mapping between ci.yml's jobs and the runner's gates is asserted here.
 from __future__ import annotations
 
 import importlib.util
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -120,6 +121,44 @@ def test_unavailable_gates_are_skipped_rather_than_failed(monkeypatch) -> None:
 
     monkeypatch.setattr(ci_local, "chrome_available", lambda: True)
     assert not [r for r in ci_local.missing_requirements(lighthouse, fast=False) if "Chrome" in r]
+
+
+def test_present_but_unlaunchable_chrome_is_skipped_rather_than_failed(monkeypatch) -> None:
+    """Installed is not the same as launchable.
+
+    Chromium refuses to start as root unless --no-sandbox is passed, and
+    lighthouserc.json sets no chromeFlags. Hosted runners are non-root, so this
+    only bites in a root container — which is exactly where this script is used
+    when CI is unavailable. Reported as FAIL it reads as a blown performance
+    budget rather than a browser that never started.
+    """
+    lighthouse = next(g for g in ci_local.GATES if g.key == "lighthouse")
+    monkeypatch.setattr(ci_local, "chrome_available", lambda: True)
+
+    monkeypatch.setattr(ci_local, "lighthouse_chrome_flags", lambda: "")
+    monkeypatch.setattr(ci_local.os, "geteuid", lambda: 0, raising=False)
+    reasons = ci_local.missing_requirements(lighthouse, fast=False)
+    assert any("--no-sandbox" in reason for reason in reasons), reasons
+
+    # Either a non-root user or an explicit flag clears it.
+    monkeypatch.setattr(ci_local.os, "geteuid", lambda: 1000, raising=False)
+    assert not ci_local.missing_requirements(lighthouse, fast=False)
+
+    monkeypatch.setattr(ci_local.os, "geteuid", lambda: 0, raising=False)
+    monkeypatch.setattr(ci_local, "lighthouse_chrome_flags", lambda: "--no-sandbox")
+    assert not ci_local.missing_requirements(lighthouse, fast=False)
+
+
+def test_chrome_flags_are_read_from_the_real_lighthouse_config() -> None:
+    """The reason must track the shipped config, not a hardcoded assumption."""
+    flags = ci_local.lighthouse_chrome_flags()
+    assert isinstance(flags, str)
+    # Guard the claim the skip reason makes: if someone adds --no-sandbox to
+    # lighthouserc.json, the skip stops firing and this test documents why.
+    config = json.loads((ROOT / "lighthouserc.json").read_text(encoding="utf-8"))
+    declared = config["ci"]["collect"].get("settings", {}).get("chromeFlags", "")
+    expected = " ".join(declared) if isinstance(declared, list) else str(declared)
+    assert flags == expected
 
 
 def test_search_integrity_is_skipped_while_generated_assets_are_dirty(monkeypatch) -> None:

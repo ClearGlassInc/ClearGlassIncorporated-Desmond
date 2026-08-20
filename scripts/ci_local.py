@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import json
 import os
 import shutil
 import subprocess
@@ -177,13 +178,47 @@ def chrome_available() -> bool:
     return bool(os.environ.get("CHROME_PATH"))
 
 
+def lighthouse_chrome_flags() -> str:
+    """chromeFlags from lighthouserc.json, or "" when it sets none."""
+    try:
+        config = json.loads((ROOT / "lighthouserc.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return ""
+    settings = config.get("ci", {}).get("collect", {}).get("settings", {})
+    flags = settings.get("chromeFlags", "")
+    return " ".join(flags) if isinstance(flags, list) else str(flags)
+
+
+def chrome_blocked_reason() -> str:
+    """Why a present Chrome still will not start here, or "" when it will.
+
+    Being installed is not the same as being launchable. Chromium refuses to
+    run as root unless --no-sandbox is passed, and lighthouserc.json sets no
+    chromeFlags. Hosted runners are non-root so this never bites in CI — it
+    bites in a root container, which is exactly where this script gets used
+    when CI is unavailable. Without this check the gate reports FAIL, which
+    reads as a blown performance budget rather than a browser that never
+    started.
+    """
+    euid = getattr(os, "geteuid", lambda: -1)()
+    if euid == 0 and "--no-sandbox" not in lighthouse_chrome_flags():
+        return (
+            "Chromium will not start as root without --no-sandbox; run as a "
+            "non-root user, or add chromeFlags to lighthouserc.json"
+        )
+    return ""
+
+
 def missing_requirements(gate: Gate, *, fast: bool) -> list[str]:
     """Why this gate cannot run here, or an empty list when it can."""
     missing: list[str] = []
     if NEEDS_NODE in gate.requires and shutil.which("npm") is None:
         missing.append("npm not installed")
-    if NEEDS_CHROME in gate.requires and not chrome_available():
-        missing.append("no Chrome/Chromium found (set CHROME_PATH)")
+    if NEEDS_CHROME in gate.requires:
+        if not chrome_available():
+            missing.append("no Chrome/Chromium found (set CHROME_PATH)")
+        elif blocked := chrome_blocked_reason():
+            missing.append(blocked)
     if NEEDS_COMMERCE_STACK in gate.requires and not commerce_stack_available():
         missing.append(
             "commerce control-plane deps missing — "

@@ -3,12 +3,33 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "04:54",
-    "timestamp": "2026-08-20T04:54:53Z"
+    "time": "05:47",
+    "timestamp": "2026-08-20T05:47:32Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #109",
+    "time": "05:47",
+    "timestamp": "2026-08-20T05:47:16Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #107",
+    "time": "04:55",
+    "timestamp": "2026-08-20T04:55:03Z"
+  },
+  {
+    "title": "Multi-Repo Audit",
+    "status": "ok",
+    "detail": "schedule on main \u00b7 run #5",
+    "time": "04:54",
+    "timestamp": "2026-08-20T04:54:59Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #108",
     "time": "04:54",
     "timestamp": "2026-08-20T04:54:43Z"
@@ -68,26 +89,5 @@
     "detail": "workflow_run on main \u00b7 run #315",
     "time": "03:28",
     "timestamp": "2026-08-20T03:28:58Z"
-  },
-  {
-    "title": "High-Assurance Verification",
-    "status": "ok",
-    "detail": "pull_request on claude/book-blog-post-publish-e0nxfx \u00b7 run #6",
-    "time": "03:28",
-    "timestamp": "2026-08-20T03:28:39Z"
-  },
-  {
-    "title": "CI",
-    "status": "bad",
-    "detail": "pull_request on claude/book-blog-post-publish-e0nxfx \u00b7 run #169",
-    "time": "03:28",
-    "timestamp": "2026-08-20T03:28:39Z"
-  },
-  {
-    "title": "Site Reliability Audit",
-    "status": "ok",
-    "detail": "pull_request on claude/book-blog-post-publish-e0nxfx \u00b7 run #15",
-    "time": "03:28",
-    "timestamp": "2026-08-20T03:28:39Z"
   }
 ]

@@ -279,6 +279,7 @@ body{
 <script defer src="/assets/js/cg-design-system.js"></script>
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="brand-system.css">
+<link rel="stylesheet" href="/assets/css/future-buttons.css">
 </head>
 <body>
 
@@ -663,8 +664,13 @@ body{
   var ctx=canvas.getContext('2d'),W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2);
   var pts=[],N=0;
   function resize(){
-    W=canvas.clientWidth=window.innerWidth;
-    H=canvas.clientHeight=window.innerHeight;
+    // clientWidth/clientHeight are read-only, so assigning to them threw a
+    // TypeError under 'use strict' — resize() died on its first line, draw()
+    // never ran, and the resize listener below was never registered. The CSS
+    // already sizes #particles to the viewport (position:fixed;inset:0); only
+    // the backing store needs setting, which the next line does.
+    W=window.innerWidth;
+    H=window.innerHeight;
     canvas.width=W*dpr;canvas.height=H*dpr;
     ctx.setTransform(dpr,0,0,dpr,0,0);
     N=Math.max(28,Math.min(70,Math.floor(W*H/26000)));
@@ -724,6 +730,7 @@ body{
       <li><a href="artemis-ai-cyber-intelligence-platform.html"><b>AI Cyber Intelligence Platform</b> — Artemis applied to cyber intelligence</a></li>
       <li><a href="artemis-self-evolving-platform.html"><b>Self-Evolving Platform</b> — Artemis&#x27;s autonomous improvement loop</a></li>
       <li><a href="artemis-2040.html"><b>Artemis 2040</b> — long-horizon intelligence platform</a></li>
+      <li><a href="quantum-neural-smart-glass.html"><b>Quantum-Neural Smart Glass</b> — governed hybrid smart-glass research platform</a></li>
       <li><a href="artemis-fawl/index.html"><b>ARTEMIS // FAWL</b> — the governed, self-healing Artemis command platform</a></li>
       <li><a href="air-control.html"><b>ZEPHYR</b> — air systems control surface</a></li>
       <li><a href="air-systems-control.html"><b>Air Systems Control</b> — the Artemis airspace control surface</a></li>
@@ -735,5 +742,7 @@ body{
 </aside>
 <!-- cg-related:end -->
 <script defer src="nav.js"></script>
+<script defer src="/assets/js/future-buttons.js"></script>
+<script defer src="/cg-a11y.js"></script>
 </body>
 </html>

@@ -1,0 +1,88 @@
+{
+  "schema": "clearglass.commerce.workspace_plans/v1",
+  "note": "Per-seat subscription plans for ClearGlass Workspace. Server-side price authority: the browser names a plan SKU and a seat count, and only this file (and, in live mode, the Stripe Price it points at) decides the amount charged. `unit_amount` is the price for ONE seat for ONE billing period — for annual plans that is twelve months paid at once, so it is the monthly rate times twelve. Keep in step with the PLANS object in workspace.html; tests/test_workspace.py pins the two together.",
+  "currency": "cad",
+  "trial_days": 14,
+  "min_seats": 1,
+  "max_seats": 500,
+  "plans": [
+    {
+      "sku": "ws-essentials-monthly",
+      "tier": "essentials",
+      "name": "ClearGlass Workspace Essentials — monthly",
+      "description": "Business email on your own domain, encrypted file storage and sharing, shared calendars and contacts, browser documents, mobile access, spam filtering and account security. Billed monthly, per person.",
+      "interval": "month",
+      "monthly_rate": 720,
+      "unit_amount": 720,
+      "stripe_price_id": null,
+      "stripe_product_id": null,
+      "tax_behavior": "exclusive",
+      "active": true
+    },
+    {
+      "sku": "ws-essentials-annual",
+      "tier": "essentials",
+      "name": "ClearGlass Workspace Essentials — annual",
+      "description": "Business email on your own domain, encrypted file storage and sharing, shared calendars and contacts, browser documents, mobile access, spam filtering and account security. Billed yearly, per person.",
+      "interval": "year",
+      "monthly_rate": 600,
+      "unit_amount": 7200,
+      "stripe_price_id": null,
+      "stripe_product_id": null,
+      "tax_behavior": "exclusive",
+      "active": true
+    },
+    {
+      "sku": "ws-collaborate-monthly",
+      "tier": "collaborate",
+      "name": "ClearGlass Workspace Collaborate — monthly",
+      "description": "Everything in Essentials plus video meetings, team chat and channels, shared team drives and priority email support. Billed monthly, per person.",
+      "interval": "month",
+      "monthly_rate": 972,
+      "unit_amount": 972,
+      "stripe_price_id": null,
+      "stripe_product_id": null,
+      "tax_behavior": "exclusive",
+      "active": true
+    },
+    {
+      "sku": "ws-collaborate-annual",
+      "tier": "collaborate",
+      "name": "ClearGlass Workspace Collaborate — annual",
+      "description": "Everything in Essentials plus video meetings, team chat and channels, shared team drives and priority email support. Billed yearly, per person.",
+      "interval": "year",
+      "monthly_rate": 810,
+      "unit_amount": 9720,
+      "stripe_price_id": null,
+      "stripe_product_id": null,
+      "tax_behavior": "exclusive",
+      "active": true
+    },
+    {
+      "sku": "ws-complete-monthly",
+      "tier": "complete",
+      "name": "ClearGlass Workspace Complete — monthly",
+      "description": "Everything in Collaborate plus desktop apps with offline access, advanced retention and audit controls, guided onboarding and migration, and a named support contact. Billed monthly, per person.",
+      "interval": "month",
+      "monthly_rate": 2040,
+      "unit_amount": 2040,
+      "stripe_price_id": null,
+      "stripe_product_id": null,
+      "tax_behavior": "exclusive",
+      "active": true
+    },
+    {
+      "sku": "ws-complete-annual",
+      "tier": "complete",
+      "name": "ClearGlass Workspace Complete — annual",
+      "description": "Everything in Collaborate plus desktop apps with offline access, advanced retention and audit controls, guided onboarding and migration, and a named support contact. Billed yearly, per person.",
+      "interval": "year",
+      "monthly_rate": 1700,
+      "unit_amount": 20400,
+      "stripe_price_id": null,
+      "stripe_product_id": null,
+      "tax_behavior": "exclusive",
+      "active": true
+    }
+  ]
+}

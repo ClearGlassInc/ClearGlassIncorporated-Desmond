@@ -29,25 +29,64 @@ class InventoryCheckRequest(BaseModel):
 
 
 class CheckoutLineItem(BaseModel):
-    name: str
-    amount: int = Field(description="Unit price in the smallest currency unit (cents)", ge=0)
+    """What the customer wants, not what it costs.
+
+    Deliberately carries no price: amounts are resolved server-side from
+    :mod:`app.pricebook`. A line item that could name its own ``amount`` would let
+    the browser choose what to pay.
+    """
+
+    sku: str = Field(description="Price-book SKU being purchased")
     quantity: int = Field(default=1, ge=1)
-    currency: str = "cad"
 
 
 class CheckoutRequest(BaseModel):
-    items: list[CheckoutLineItem]
+    """A cart, and who to email. Deliberately not where to return to.
+
+    `success_url` and `cancel_url` used to be accepted here and passed straight to
+    Stripe. On a public, unauthenticated endpoint that is a brand-abuse vector: an
+    anonymous caller could mint a genuine `checkout.stripe.com` session under the
+    ClearGlass account that redirects the buyer to any domain once they have paid.
+    The return URLs now come only from CHECKOUT_SUCCESS_URL / CHECKOUT_CANCEL_URL.
+    """
+
+    items: list[CheckoutLineItem] = Field(min_length=1, max_length=20)
     customer_email: str | None = None
-    success_url: str | None = None
-    cancel_url: str | None = None
+    # Client-generated attempt id. Passed to Stripe as the idempotency key so a
+    # double-click or a retried request reuses the first session instead of opening
+    # a second one for the same cart.
+    client_reference_id: str | None = Field(default=None, max_length=200)
 
 
 class CheckoutSessionOut(BaseModel):
     id: str
     url: str
     mode: str               # live | mock
+    checkout_mode: str      # payment | subscription
     amount_total: int
     currency: str
+
+
+class BillingPortalRequest(BaseModel):
+    checkout_session_id: str = Field(min_length=8, max_length=255, pattern=r"^cs_[A-Za-z0-9_]+$")
+
+
+class BillingPortalOut(BaseModel):
+    url: str
+    mode: str
+
+
+class OfferOut(BaseModel):
+    """A purchasable offer as advertised to the storefront."""
+
+    sku: str
+    name: str
+    description: str
+    amount: int
+    currency: str
+    kind: str               # one_time | deposit | recurring
+    interval: str | None
+    max_quantity: int
 
 
 class PayoutBankInfoOut(BaseModel):
@@ -149,6 +188,24 @@ class ApprovalOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ApprovalExecutionOut(BaseModel):
+    """Outcome of carrying out an approved action.
+
+    ``executed`` is the field that matters and is deliberately not inferable from
+    the HTTP status: a 200 here can mean "already done" or "that action is
+    executed elsewhere", and an operator waiting on a refund needs to be able to
+    tell those apart from "the money moved".
+    """
+
+    approval_id: int
+    action: str
+    status: str
+    executed: bool
+    data: dict | None = None
+    skipped: str | None = None
+    delegated_to: str | None = None
+
+
 class DecisionRequest(BaseModel):
     # Optional human-readable label only. The decider recorded on the approval and in the
     # audit ledger is the authenticated admin credential, not this field — see
@@ -165,3 +222,112 @@ class MetricsOverview(BaseModel):
     refund_rate: float
     open_approvals: int
     window_days: int
+
+
+class SideStoreCartLine(BaseModel):
+    """A Side Store cart line: what, and how many. Never how much."""
+
+    id: str = Field(description="Catalogue item id, e.g. sku_001")
+    quantity: int = Field(default=1, ge=1)
+
+
+class SideStoreCartRequest(BaseModel):
+    """Same reasoning as CheckoutRequest: no caller-supplied return URLs."""
+
+    items: list[SideStoreCartLine] = Field(min_length=1, max_length=40)
+    customer_email: str | None = None
+    client_reference_id: str | None = Field(default=None, max_length=200)
+
+
+class SideStoreCatalogItemOut(BaseModel):
+    id: str
+    sku: str
+    name: str
+    category: str
+    description: str
+    amount: int
+
+
+class SideStoreQuoteOut(BaseModel):
+    """A priced cart. Every field is in the smallest currency unit (cents)."""
+
+    quantity: int
+    subtotal: int
+    discount_rate: str
+    discount: int
+    discounted_subtotal: int
+    shipping: int
+    free_shipping_applied: bool
+    tax: int
+    total: int
+    currency: str
+    #: Tax is quoted at the Ontario HST rate. The store ships Canada-wide and
+    #: Stripe Tax charges the destination's rate, so outside Ontario this is an
+    #: estimate and the final amount is computed at checkout.
+    tax_basis: str
+    tax_is_estimate: bool
+
+
+class WorkspacePlanOut(BaseModel):
+    """One subscription tier at one billing interval, at the price the server charges."""
+
+    sku: str
+    tier: str
+    name: str
+    description: str
+    interval: str
+    #: Cents per person per month — the figure the pricing page advertises.
+    monthly_rate: int
+    #: Cents per person per billing period — what Stripe actually charges. For an
+    #: annual plan this is twelve times ``monthly_rate``; conflating the two is the
+    #: easiest way to bill a customer twelve times what they agreed.
+    unit_amount: int
+    currency: str
+    tax_behavior: str
+    #: True once a real Stripe Price backs this plan. Until then live checkout
+    #: refuses rather than pricing a subscription from this repository.
+    purchasable_live: bool
+
+
+class WorkspaceSubscriptionRequest(BaseModel):
+    """Which plan, and for how many people. Deliberately not what it costs.
+
+    Carries no amount, rate, discount or currency, for the same reason
+    :class:`CheckoutLineItem` does not: those are resolved server-side from
+    ``app/data/workspace_plans.json``, and a field here that could name a price
+    would let the browser choose what to pay. ``tests/test_workspace.py`` asserts
+    this schema's shape so a price-shaped field cannot be reintroduced quietly.
+    """
+
+    plan_sku: str = Field(description="Workspace plan SKU being subscribed to")
+    seats: int = Field(ge=1, le=500, description="Number of people on the plan")
+    customer_email: str | None = None
+    #: Client-generated attempt id, passed to Stripe as the idempotency key so a
+    #: double-click reuses the first session instead of opening a second one.
+    client_reference_id: str | None = Field(default=None, max_length=200)
+
+
+class WorkspaceQuoteOut(BaseModel):
+    """A priced subscription. Every amount is in the smallest currency unit (cents)."""
+
+    sku: str
+    tier: str
+    name: str
+    interval: str
+    seats: int
+    monthly_rate: int
+    unit_amount: int
+    #: Cost per month for the whole team, at this seat count.
+    monthly_total: int
+    #: What Stripe charges each billing period — equal to ``monthly_total`` on a
+    #: monthly plan, and twelve times it on an annual one.
+    period_total: int
+    #: Cost across twelve months, so monthly and annual plans can be compared.
+    annual_total: int
+    currency: str
+    trial_days: int
+    tax_behavior: str
+    #: Amounts exclude GST/HST, which Stripe Tax computes at checkout from the
+    #: customer's billing address. False here means the totals above are pre-tax.
+    tax_included: bool
+    purchasable_live: bool

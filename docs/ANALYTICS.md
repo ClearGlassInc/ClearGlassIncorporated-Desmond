@@ -12,7 +12,9 @@ provider is set. This is deliberate: nothing phones home until you choose.
 
 ## Turn it on (about 2 minutes)
 
-Edit the `CONFIG` block at the top of [`analytics.js`](../analytics.js):
+Edit the public destination values in
+[`analytics-config.js`](../analytics-config.js). Never put a secret or private
+CRM credential in that file.
 
 ### Option A — Google Analytics 4 (free)
 1. Create a property at <https://analytics.google.com> → copy the **Measurement
@@ -22,19 +24,31 @@ Edit the `CONFIG` block at the top of [`analytics.js`](../analytics.js):
    provider: "ga4",
    measurementId: "G-XXXXXXXXXX",
    ```
-3. Commit. Analytics is live on the next deploy.
-   ⚠️ GA4 sets cookies — add a line to your privacy policy.
+3. Keep GA4 consent denied until your approved consent interface calls
+   `window.cgAnalyticsConsent(true)`; call `window.cgAnalyticsConsent(false)`
+   when consent is declined or withdrawn. The ClearGlass loader disables Google
+   Signals and ad-personalization signals by default.
+4. Commit, deploy, then use GA4 DebugView to verify `page_view`,
+   `begin_checkout`, `generate_lead`, `lead_received` and `checkout_return`.
 
 ### Option B — Plausible (paid, cookieless, simpler/privacy-first)
 1. Add `www.clearglassinc.com` at <https://plausible.io>.
 2. Set `provider: "plausible"` (the domain is already filled in).
-3. Commit. No cookie banner needed.
+3. Commit and verify the same event names in Plausible. Confirm the selected
+   account settings and applicable consent requirements before production use.
+
+### Option C — reviewed first-party endpoint
+
+Set `provider: "first-party"` and `endpoint: "/api/analytics"` only after that
+same-origin route exists and has documented retention, access and deletion
+controls. GitHub Pages does not provide this endpoint by itself.
 
 ## What you'll be able to see
 
-Visitors per day, where they came from (search, social, direct, referrals),
-which pages they land on, and how many reach `store.html` / `pricing.html`. That
-is the only honest way to answer "am I getting customers?" — by measuring it.
+Once a destination is enabled and verified: visitors per day, acquisition
+source, landing pages and the Quick-Audit funnel. A Stripe return-page event is
+not a purchase; revenue must come from the Stripe dashboard or a verified
+server-side webhook.
 
 ## What analytics does NOT do
 

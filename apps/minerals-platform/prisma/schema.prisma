@@ -1,0 +1,726 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum RecordStatus {
+  VERIFIED
+  DELAYED
+  ESTIMATED
+  ANALYST
+  DEMO
+  UNKNOWN
+}
+
+enum ProjectStage {
+  CONCEPT
+  EXPLORATION
+  DEVELOPMENT
+  CONSTRUCTION
+  OPERATING
+  CARE_MAINTENANCE
+  CLOSED
+  UNKNOWN
+}
+
+enum FacilityType {
+  PROCESSOR
+  REFINERY
+  SMELTER
+  CONCENTRATOR
+  MANUFACTURING
+  STORAGE
+  OTHER
+}
+
+enum LogisticsType {
+  PORT
+  RAIL_TERMINAL
+  AIRPORT
+  BORDER_CROSSING
+  WAREHOUSE
+  OTHER
+}
+
+enum RiskSeverity {
+  LOW
+  MODERATE
+  HIGH
+  CRITICAL
+  UNKNOWN
+}
+
+enum AlertStatus {
+  OPEN
+  ACKNOWLEDGED
+  ASSIGNED
+  RESOLVED
+  SUPPRESSED
+}
+
+enum UserRole {
+  VIEWER
+  ANALYST
+  SENIOR_ANALYST
+  DATA_STEWARD
+  ADMINISTRATOR
+  API_CLIENT
+}
+
+model Mineral {
+  id          String        @id @default(uuid()) @db.Uuid
+  slug        String        @unique
+  name        String
+  symbol      String?
+  group       String?
+  description String?
+  endUses     Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+  forms       MineralForm[]
+  projects    Project[]
+  mines       Mine[]
+  production  ProductionRecord[]
+  reserves    ReserveResourceEstimate[]
+  prices      PriceSeries[]
+  trades      TradeRecord[]
+
+  @@index([name])
+  @@index([group])
+}
+
+model MineralForm {
+  id          String   @id @default(uuid()) @db.Uuid
+  mineralId   String   @db.Uuid
+  name        String
+  grade       String?
+  formType    String?
+  unit        String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  mineral     Mineral  @relation(fields: [mineralId], references: [id], onDelete: Cascade)
+
+  @@unique([mineralId, name])
+}
+
+model Country {
+  id           String         @id @default(uuid()) @db.Uuid
+  iso2         String         @unique @db.VarChar(2)
+  iso3         String         @unique @db.VarChar(3)
+  name         String         @unique
+  region       String?
+  subregion    String?
+  sanctionsTag String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  jurisdictions Jurisdiction[]
+  projects     Project[]
+  mines        Mine[]
+  facilities   Facility[]
+  logistics    LogisticsNode[]
+  production   ProductionRecord[]
+  tradesOrigin TradeRecord[]  @relation("TradeOrigin")
+  tradesDest   TradeRecord[]  @relation("TradeDestination")
+}
+
+model Jurisdiction {
+  id        String   @id @default(uuid()) @db.Uuid
+  countryId String   @db.Uuid
+  name      String
+  code      String?
+  level     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  country   Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  projects  Project[]
+  mines     Mine[]
+
+  @@unique([countryId, name])
+}
+
+model Company {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  ticker      String?
+  exchange    String?
+  website     String?
+  countryCode String?
+  lei         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  operatedMines Mine[] @relation("MineOperator")
+  operatedProjects Project[] @relation("ProjectOperator")
+  operatedFacilities Facility[] @relation("FacilityOperator")
+  ownershipAsOwner OwnershipRelationship[] @relation("OwnerCompany")
+
+  @@index([name])
+  @@index([ticker])
+}
+
+model Deposit {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  depositType String?
+  geology     Json?
+  location    Unsupported("geography(Point,4326)")?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  projects    Project[]
+  mines       Mine[]
+}
+
+model Project {
+  id             String       @id @default(uuid()) @db.Uuid
+  name           String
+  aliases        String[]
+  externalIds    Json?
+  stage          ProjectStage @default(UNKNOWN)
+  countryId      String?      @db.Uuid
+  jurisdictionId String?      @db.Uuid
+  operatorId     String?      @db.Uuid
+  depositId      String?      @db.Uuid
+  mineralId      String?      @db.Uuid
+  location       Unsupported("geography(Point,4326)")?
+  latitude       Float?
+  longitude      Float?
+  capacityValue  Decimal?     @db.Decimal(20, 6)
+  capacityUnit   String?
+  permitStatus   String?
+  transportNotes String?
+  sourceStatus   RecordStatus @default(UNKNOWN)
+  confidence     Decimal?     @db.Decimal(5, 4)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+  country        Country?     @relation(fields: [countryId], references: [id])
+  jurisdiction   Jurisdiction? @relation(fields: [jurisdictionId], references: [id])
+  operator       Company?     @relation("ProjectOperator", fields: [operatorId], references: [id])
+  deposit        Deposit?     @relation(fields: [depositId], references: [id])
+  mineral        Mineral?     @relation(fields: [mineralId], references: [id])
+  ownership      OwnershipRelationship[]
+  risks          RiskAssessment[]
+
+  @@index([name])
+  @@index([stage])
+  @@index([countryId, mineralId])
+}
+
+model Mine {
+  id             String       @id @default(uuid()) @db.Uuid
+  name           String
+  aliases        String[]
+  externalIds    Json?
+  stage          ProjectStage @default(UNKNOWN)
+  countryId      String?      @db.Uuid
+  jurisdictionId String?      @db.Uuid
+  operatorId     String?      @db.Uuid
+  depositId      String?      @db.Uuid
+  mineralId      String?      @db.Uuid
+  location       Unsupported("geography(Point,4326)")?
+  latitude       Float?
+  longitude      Float?
+  mineLifeYears  Decimal?     @db.Decimal(10, 2)
+  processingMethod String?
+  permitStatus   String?
+  sourceStatus   RecordStatus @default(UNKNOWN)
+  confidence     Decimal?     @db.Decimal(5, 4)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+  country        Country?     @relation(fields: [countryId], references: [id])
+  jurisdiction   Jurisdiction? @relation(fields: [jurisdictionId], references: [id])
+  operator       Company?     @relation("MineOperator", fields: [operatorId], references: [id])
+  deposit        Deposit?     @relation(fields: [depositId], references: [id])
+  mineral        Mineral?     @relation(fields: [mineralId], references: [id])
+  ownership      OwnershipRelationship[]
+  production     ProductionRecord[]
+  reserves       ReserveResourceEstimate[]
+  risks          RiskAssessment[]
+
+  @@index([name])
+  @@index([stage])
+  @@index([countryId, mineralId])
+}
+
+model Facility {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String
+  type        FacilityType
+  countryId   String?      @db.Uuid
+  operatorId  String?      @db.Uuid
+  location    Unsupported("geography(Point,4326)")?
+  latitude    Float?
+  longitude   Float?
+  commodities Json?
+  capacity    Json?
+  sourceStatus RecordStatus @default(UNKNOWN)
+  confidence  Decimal?     @db.Decimal(5, 4)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deletedAt   DateTime?
+  country     Country?     @relation(fields: [countryId], references: [id])
+  operator    Company?     @relation("FacilityOperator", fields: [operatorId], references: [id])
+
+  @@index([type, countryId])
+}
+
+model OwnershipRelationship {
+  id             String   @id @default(uuid()) @db.Uuid
+  ownerCompanyId String   @db.Uuid
+  mineId         String?  @db.Uuid
+  projectId      String?  @db.Uuid
+  sharePercent   Decimal? @db.Decimal(8, 4)
+  relationship   String?
+  verified       Boolean  @default(false)
+  validFrom      DateTime?
+  validTo        DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  ownerCompany   Company  @relation("OwnerCompany", fields: [ownerCompanyId], references: [id])
+  mine           Mine?    @relation(fields: [mineId], references: [id])
+  project        Project? @relation(fields: [projectId], references: [id])
+
+  @@index([ownerCompanyId])
+}
+
+model ProductionRecord {
+  id         String       @id @default(uuid()) @db.Uuid
+  mineralId  String       @db.Uuid
+  mineId     String?      @db.Uuid
+  countryId  String?      @db.Uuid
+  periodStart DateTime
+  periodEnd   DateTime
+  value       Decimal      @db.Decimal(24, 8)
+  unit        String
+  status      RecordStatus @default(VERIFIED)
+  confidence  Decimal?     @db.Decimal(5, 4)
+  sourceId    String?      @db.Uuid
+  createdAt   DateTime     @default(now())
+  mineral     Mineral      @relation(fields: [mineralId], references: [id])
+  mine        Mine?        @relation(fields: [mineId], references: [id])
+  country     Country?     @relation(fields: [countryId], references: [id])
+  source      DataSource?  @relation(fields: [sourceId], references: [id])
+
+  @@index([mineralId, periodStart])
+}
+
+model ReserveResourceEstimate {
+  id           String       @id @default(uuid()) @db.Uuid
+  mineralId    String       @db.Uuid
+  mineId       String?      @db.Uuid
+  estimateType String
+  classification String?
+  asOf         DateTime
+  value        Decimal      @db.Decimal(24, 8)
+  unit         String
+  grade        Decimal?     @db.Decimal(16, 8)
+  gradeUnit    String?
+  status       RecordStatus @default(VERIFIED)
+  confidence   Decimal?     @db.Decimal(5, 4)
+  sourceId     String?      @db.Uuid
+  createdAt    DateTime     @default(now())
+  mineral      Mineral      @relation(fields: [mineralId], references: [id])
+  mine         Mine?        @relation(fields: [mineId], references: [id])
+  source       DataSource?  @relation(fields: [sourceId], references: [id])
+
+  @@index([mineralId, asOf])
+}
+
+model PriceSeries {
+  id          String       @id @default(uuid()) @db.Uuid
+  mineralId   String       @db.Uuid
+  benchmark   String
+  market      String?
+  timestamp   DateTime
+  value       Decimal      @db.Decimal(24, 8)
+  currency    String       @db.VarChar(3)
+  unit        String
+  status      RecordStatus @default(VERIFIED)
+  confidence  Decimal?     @db.Decimal(5, 4)
+  sourceId    String?      @db.Uuid
+  createdAt   DateTime     @default(now())
+  mineral     Mineral      @relation(fields: [mineralId], references: [id])
+  source      DataSource?  @relation(fields: [sourceId], references: [id])
+
+  @@index([mineralId, benchmark, timestamp])
+}
+
+model TradeRecord {
+  id              String       @id @default(uuid()) @db.Uuid
+  mineralId       String       @db.Uuid
+  originCountryId String       @db.Uuid
+  destinationCountryId String  @db.Uuid
+  periodStart     DateTime
+  periodEnd       DateTime
+  hsCode          String?
+  quantity        Decimal?     @db.Decimal(24, 8)
+  quantityUnit    String?
+  tradeValue      Decimal?     @db.Decimal(24, 2)
+  currency        String?      @db.VarChar(3)
+  unitPrice       Decimal?     @db.Decimal(24, 8)
+  status          RecordStatus @default(VERIFIED)
+  confidence      Decimal?     @db.Decimal(5, 4)
+  sourceId        String?      @db.Uuid
+  createdAt       DateTime     @default(now())
+  mineral         Mineral      @relation(fields: [mineralId], references: [id])
+  originCountry   Country      @relation("TradeOrigin", fields: [originCountryId], references: [id])
+  destinationCountry Country   @relation("TradeDestination", fields: [destinationCountryId], references: [id])
+  source          DataSource?  @relation(fields: [sourceId], references: [id])
+
+  @@index([mineralId, periodStart])
+  @@index([originCountryId, destinationCountryId])
+}
+
+model LogisticsNode {
+  id          String        @id @default(uuid()) @db.Uuid
+  name        String
+  type        LogisticsType
+  countryId   String?       @db.Uuid
+  location    Unsupported("geography(Point,4326)")?
+  latitude    Float?
+  longitude   Float?
+  attributes  Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  country     Country?      @relation(fields: [countryId], references: [id])
+  routesFrom  ShippingRoute[] @relation("RouteOrigin")
+  routesTo    ShippingRoute[] @relation("RouteDestination")
+
+  @@index([type, countryId])
+}
+
+model ShippingRoute {
+  id            String   @id @default(uuid()) @db.Uuid
+  originNodeId  String   @db.Uuid
+  destinationNodeId String @db.Uuid
+  mode          String
+  geometry      Unsupported("geography(LineString,4326)")?
+  verified      Boolean  @default(false)
+  attributes    Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  origin        LogisticsNode @relation("RouteOrigin", fields: [originNodeId], references: [id])
+  destination   LogisticsNode @relation("RouteDestination", fields: [destinationNodeId], references: [id])
+
+  @@index([originNodeId, destinationNodeId])
+}
+
+model RiskAssessment {
+  id          String       @id @default(uuid()) @db.Uuid
+  mineId      String?      @db.Uuid
+  projectId   String?      @db.Uuid
+  score       Decimal?     @db.Decimal(6, 2)
+  severity    RiskSeverity @default(UNKNOWN)
+  methodologyVersion String
+  observedAt  DateTime
+  confidence  Decimal?     @db.Decimal(5, 4)
+  analystOverride Boolean   @default(false)
+  overrideReason String?
+  createdById String?      @db.Uuid
+  createdAt   DateTime     @default(now())
+  mine        Mine?        @relation(fields: [mineId], references: [id])
+  project     Project?     @relation(fields: [projectId], references: [id])
+  factors     RiskFactor[]
+  createdBy   User?        @relation(fields: [createdById], references: [id])
+
+  @@index([observedAt, severity])
+}
+
+model RiskFactor {
+  id            String   @id @default(uuid()) @db.Uuid
+  assessmentId  String   @db.Uuid
+  key           String
+  score         Decimal? @db.Decimal(6, 2)
+  weight        Decimal  @db.Decimal(6, 4)
+  explanation   String?
+  evidence      Json?
+  createdAt     DateTime @default(now())
+  assessment    RiskAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@unique([assessmentId, key])
+}
+
+model Alert {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String?      @db.Uuid
+  type           String
+  severity       RiskSeverity
+  status         AlertStatus  @default(OPEN)
+  title          String
+  body           String?
+  dedupeKey      String?
+  entityType     String?
+  entityId       String?
+  threshold      Json?
+  assignedToId   String?      @db.Uuid
+  acknowledgedAt DateTime?
+  resolvedAt     DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  assignedTo     User?        @relation(fields: [assignedToId], references: [id])
+
+  @@index([organizationId, status, severity])
+  @@index([dedupeKey])
+}
+
+model Watchlist {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @db.Uuid
+  ownerId        String   @db.Uuid
+  name           String
+  description    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  owner          User     @relation(fields: [ownerId], references: [id])
+  items          WatchlistItem[]
+
+  @@unique([organizationId, name])
+}
+
+model WatchlistItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  watchlistId String   @db.Uuid
+  entityType  String
+  entityId    String
+  label       String?
+  createdAt   DateTime @default(now())
+  watchlist   Watchlist @relation(fields: [watchlistId], references: [id], onDelete: Cascade)
+
+  @@unique([watchlistId, entityType, entityId])
+}
+
+model Event {
+  id          String       @id @default(uuid()) @db.Uuid
+  type        String
+  title       String
+  summary     String?
+  occurredAt  DateTime
+  jurisdiction String?
+  entityType  String?
+  entityId    String?
+  status      RecordStatus @default(VERIFIED)
+  confidence  Decimal?     @db.Decimal(5, 4)
+  sourceId    String?      @db.Uuid
+  metadata    Json?
+  createdAt   DateTime     @default(now())
+  source      DataSource?  @relation(fields: [sourceId], references: [id])
+
+  @@index([occurredAt, type])
+}
+
+model SourceDocument {
+  id          String       @id @default(uuid()) @db.Uuid
+  sourceId    String?      @db.Uuid
+  title       String
+  url         String?
+  reference   String?
+  publishedAt DateTime?
+  collectedAt DateTime
+  contentHash String?
+  license     String?
+  status      RecordStatus @default(VERIFIED)
+  metadata    Json?
+  createdAt   DateTime     @default(now())
+  source      DataSource?  @relation(fields: [sourceId], references: [id])
+  provenance  ProvenanceRecord[]
+
+  @@index([publishedAt])
+  @@index([contentHash])
+}
+
+model DataSource {
+  id              String   @id @default(uuid()) @db.Uuid
+  key             String   @unique
+  provider        String
+  dataset         String
+  sourceUrl       String?
+  license         String?
+  restrictions    String?
+  geographicCoverage Json?
+  cadence         String?
+  ttlSeconds      Int?
+  enabled         Boolean  @default(true)
+  lastSuccessAt   DateTime?
+  lastAttemptAt   DateTime?
+  freshnessStatus String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  production      ProductionRecord[]
+  reserves        ReserveResourceEstimate[]
+  prices          PriceSeries[]
+  trades          TradeRecord[]
+  events          Event[]
+  documents       SourceDocument[]
+  ingestionRuns   IngestionRun[]
+  provenance      ProvenanceRecord[]
+}
+
+model IngestionRun {
+  id            String   @id @default(uuid()) @db.Uuid
+  sourceId      String   @db.Uuid
+  startedAt     DateTime @default(now())
+  finishedAt    DateTime?
+  status        String
+  recordsRead   Int      @default(0)
+  recordsWritten Int     @default(0)
+  recordsRejected Int    @default(0)
+  retryCount    Int      @default(0)
+  transformLog  Json?
+  error         String?
+  source        DataSource @relation(fields: [sourceId], references: [id])
+
+  @@index([sourceId, startedAt])
+}
+
+model ProvenanceRecord {
+  id             String       @id @default(uuid()) @db.Uuid
+  sourceId       String?      @db.Uuid
+  documentId     String?      @db.Uuid
+  entityType     String
+  entityId       String
+  field          String?
+  sourceReference String?
+  collectedAt    DateTime
+  transformedAt  DateTime?
+  confidence     Decimal?     @db.Decimal(5, 4)
+  calculationMethod String?
+  license        String?
+  analystReviewedAt DateTime?
+  analystReviewerId String?   @db.Uuid
+  status         RecordStatus @default(VERIFIED)
+  createdAt      DateTime     @default(now())
+  source         DataSource?  @relation(fields: [sourceId], references: [id])
+  document       SourceDocument? @relation(fields: [documentId], references: [id])
+  analystReviewer User?       @relation(fields: [analystReviewerId], references: [id])
+
+  @@index([entityType, entityId])
+}
+
+model AnalystAnnotation {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @db.Uuid
+  authorId       String   @db.Uuid
+  entityType     String
+  entityId       String
+  body           String
+  visibility     String   @default("organization")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  author         User @relation(fields: [authorId], references: [id])
+
+  @@index([entityType, entityId])
+}
+
+model SavedView {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @db.Uuid
+  ownerId        String   @db.Uuid
+  name           String
+  state          Json
+  isShared       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  owner          User @relation(fields: [ownerId], references: [id])
+
+  @@unique([organizationId, ownerId, name])
+}
+
+model Report {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @db.Uuid
+  authorId       String       @db.Uuid
+  title          String
+  status         String
+  body           Json
+  sourceSnapshot Json?
+  generatedByAi  Boolean      @default(false)
+  reviewedAt     DateTime?
+  publishedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  author         User         @relation(fields: [authorId], references: [id])
+
+  @@index([organizationId, createdAt])
+}
+
+model Organization {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  slug        String   @unique
+  settings    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  members     OrganizationMember[]
+  alerts      Alert[]
+  watchlists  Watchlist[]
+  annotations AnalystAnnotation[]
+  savedViews  SavedView[]
+  reports     Report[]
+}
+
+model User {
+  id          String   @id @default(uuid()) @db.Uuid
+  email       String   @unique
+  name        String?
+  subject     String?  @unique
+  disabled    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  memberships OrganizationMember[]
+  watchlists  Watchlist[]
+  assignedAlerts Alert[]
+  assessments RiskAssessment[]
+  provenanceReviews ProvenanceRecord[]
+  annotations AnalystAnnotation[]
+  savedViews  SavedView[]
+  reports     Report[]
+  auditLogs   AuditLog[]
+}
+
+model OrganizationMember {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @db.Uuid
+  userId         String   @db.Uuid
+  role           UserRole
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([userId, role])
+}
+
+model AuditLog {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String?  @db.Uuid
+  userId         String?  @db.Uuid
+  action         String
+  entityType     String?
+  entityId       String?
+  ipHash         String?
+  userAgent      String?
+  metadata       Json?
+  previousHash   String?
+  entryHash      String?
+  createdAt      DateTime @default(now())
+  user           User?    @relation(fields: [userId], references: [id])
+
+  @@index([organizationId, createdAt])
+  @@index([action, createdAt])
+}

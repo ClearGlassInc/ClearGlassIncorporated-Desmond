@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./mission-theme.css";
 import { SiteShell } from "../components/layout/SiteShell";
 
 export const metadata: Metadata = {

@@ -57,9 +57,11 @@ fly deploy
 ```bash
 BASE=https://<your-host>
 curl $BASE/health
-# customer purchase (mock unless a live Stripe key is set):
+# customer purchase (mock unless a live Stripe key is set). The request names a SKU and
+# a quantity only — the amount comes from app/data/pricebook.json server-side, so a
+# browser-supplied price cannot change what is charged:
 curl -X POST $BASE/checkout/session -H 'Content-Type: application/json' \
-  -d '{"items":[{"name":"Aurora Lamp","amount":4900,"quantity":1}],"customer_email":"a@b.com"}'
+  -d '{"items":[{"sku":"risk-audit-90","quantity":1}],"customer_email":"a@b.com"}'
 # a pricing change is gated — returns queued_for_approval, never executes inline.
 # Admin endpoints require the bearer token in production (see "Admin authentication"):
 curl -X POST $BASE/store/update-pricing -H 'Content-Type: application/json' \
@@ -83,6 +85,22 @@ require an `Authorization: Bearer <key>` credential set via **`ADMIN_API_KEY`**.
   (`/metrics`, `/events`, `/health`) stay open by design. `GET /health` reports
   `"admin_auth": "enabled" | "disabled"` so you can confirm posture after deploy.
 
+## Edge-to-origin authentication
+
+`EDGE_ORIGIN_AUTH_REQUIRED=true` makes every control-plane route require the
+edge-overwritten header named by `EDGE_ORIGIN_AUTH_HEADER_NAME`. Configure the
+current and previous rotation values in `EDGE_ORIGIN_AUTH_SECRETS`; never put
+either value in source, a browser bundle, or a client request. Enable this only
+after the proxied API hostname, edge transform, origin values, and direct-origin
+denial test are ready as one reviewed change.
+
+The platform health probe must also have a deliberate path. Render's default
+blueprint probes the origin at `/health` without the edge header, so enabling
+the check first would return `403` and can mark the service unhealthy. Route the
+probe through the authenticated edge, use a private platform health path, or
+document a narrowly public liveness exception before enabling origin auth. See
+`docs/edge-provider-setup.md` for the staged rotation and verification sequence.
+
 ## Abuse controls & recovery
 
 - **Rate limits** — checkout, the Stripe webhook, and approval decisions carry per-client-IP
@@ -97,9 +115,16 @@ require an `Authorization: Bearer <key>` credential set via **`ADMIN_API_KEY`**.
 ## Going from mock to real money
 
 The store runs in **mock mode** with no Stripe key (safe for demos). To take real payments:
+0. **Activate the Stripe account first.** Keys are useless while `charges_enabled` is
+   false — as of the last check this account has not completed onboarding and has no
+   bank account or webhook endpoint. See `STRIPE_SETUP.md` for the verified state, the
+   outstanding requirements, and the full go-live checklist.
 1. Add `STRIPE_SECRET_KEY` (live or test) → `/checkout/session` creates real Stripe Checkout URLs.
 2. Add `STRIPE_WEBHOOK_SECRET` → `/webhooks/stripe` verifies signatures and rejects forgeries.
-3. Refunds stay behind the approval gate; approve via `/approvals/{id}/approve` before any money moves.
+   Leaving it unset in production means a forged `checkout.session.completed` books a fake order.
+3. Register the webhook events listed in `STRIPE_SETUP.md` §5 — `invoice.paid` in particular,
+   or subscription renewals settle in Stripe and never reach the ledger.
+4. Refunds stay behind the approval gate; approve via `/approvals/{id}/approve` before any money moves.
 
 ## Morning sales-ops briefing (email)
 

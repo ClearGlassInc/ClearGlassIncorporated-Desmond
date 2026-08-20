@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+import sys
+from types import SimpleNamespace
 
 from app import payments
 
@@ -28,6 +30,83 @@ def test_mock_checkout_when_no_key(monkeypatch) -> None:
     assert session["mode"] == "mock"
     assert session["amount_total"] == 9800
     assert session["id"].startswith("cs_mock_")
+
+
+def test_mock_success_url_keeps_session_id_parseable(monkeypatch) -> None:
+    """The mock flag must extend the existing query string, not open a second one.
+
+    ``success_url`` already carries ``?session_id=…``; appending ``?mock=1`` made the
+    success page parse session_id as ``{CHECKOUT_SESSION_ID}?mock=1``.
+    """
+    monkeypatch.delenv("STRIPE_SECRET_KEY", raising=False)
+    monkeypatch.setenv("CHECKOUT_SUCCESS_URL", "http://localhost:3000/success")
+    session = payments.create_checkout_session(
+        [{"sku": "risk-audit-90", "name": "Audit", "amount": 29700, "quantity": 1, "currency": "cad"}],
+        customer_email="buyer@example.com",
+    )
+    url = session["url"]
+    assert url.count("?") == 1, url
+    assert url.endswith("&mock=1"), url
+
+    from urllib.parse import parse_qs, urlparse  # noqa: PLC0415 — assertion-local
+
+    params = parse_qs(urlparse(url).query)
+    assert params["session_id"] == ["{CHECKOUT_SESSION_ID}"]
+    assert params["mock"] == ["1"]
+
+
+def test_subscription_metadata_is_standardized_and_test_safe(monkeypatch) -> None:
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_example")
+    metadata = payments.subscription_metadata(
+        [{"sku": "guardian_pro_monthly", "interval": "month", "product": "guardian"}]
+    )
+    assert metadata["environment"] == "test"
+    assert metadata["business"] == "ClearGlassInc"
+    assert metadata["plan"] == "guardian_pro_monthly"
+    assert metadata["product"] == "guardian"
+    assert metadata["integration_version"] == "v1"
+
+
+def test_billing_portal_resolves_customer_from_checkout(monkeypatch) -> None:
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_example")
+    create_calls = []
+    fake_stripe = SimpleNamespace(
+        api_key=None,
+        checkout=SimpleNamespace(
+            Session=SimpleNamespace(
+                retrieve=lambda session_id: SimpleNamespace(
+                    id=session_id, mode="subscription", customer="cus_safe"
+                )
+            )
+        ),
+        billing_portal=SimpleNamespace(
+            Session=SimpleNamespace(
+                create=lambda **kwargs: create_calls.append(kwargs)
+                or SimpleNamespace(url="https://billing.stripe.com/session/test")
+            )
+        ),
+    )
+    monkeypatch.setitem(sys.modules, "stripe", fake_stripe)
+    result = payments.create_billing_portal_session("cs_test_safe", "https://example.com/account")
+    assert result == {"url": "https://billing.stripe.com/session/test", "mode": "live"}
+    assert create_calls == [{"customer": "cus_safe", "return_url": "https://example.com/account"}]
+
+
+def test_billing_portal_rejects_non_subscription_checkout(monkeypatch) -> None:
+    import pytest
+
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk_test_example")
+    fake_stripe = SimpleNamespace(
+        api_key=None,
+        checkout=SimpleNamespace(
+            Session=SimpleNamespace(
+                retrieve=lambda _session_id: SimpleNamespace(mode="payment", customer="cus_safe")
+            )
+        ),
+    )
+    monkeypatch.setitem(sys.modules, "stripe", fake_stripe)
+    with pytest.raises(ValueError, match="customer-backed subscription"):
+        payments.create_billing_portal_session("cs_test_payment")
 
 
 def test_webhook_signature_roundtrip(monkeypatch) -> None:

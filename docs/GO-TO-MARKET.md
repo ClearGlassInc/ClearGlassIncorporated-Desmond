@@ -21,7 +21,7 @@ bot.
 
 ### 1. Measure — turn analytics on (free, ~2 min)
 You currently cannot tell if anyone visits. Fix that first.
-→ Follow `docs/ANALYTICS.md` (GA4: paste one `G-XXXXXXXXXX` ID into `analytics.js`).
+→ Follow `docs/ANALYTICS.md` (GA4: add one verified `G-XXXXXXXXXX` ID to `analytics-config.js`).
 - [ ] Analytics enabled and showing visits
 
 ### 2. Be findable — confirm search indexing

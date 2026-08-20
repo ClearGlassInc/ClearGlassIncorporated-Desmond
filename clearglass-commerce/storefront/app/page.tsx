@@ -1,16 +1,16 @@
 // Public storefront home. In production this lists products from the control
 // plane; the scaffold renders the shared static catalog so it builds without a
 // live API and stays in sync with the checkout pricing.
-import { CATALOG, formatPrice } from "@/lib/catalog";
+import { CATALOG, formatOfferPrice } from "@/lib/catalog";
 import { AddToCart } from "@/lib/AddToCart";
 
 export default function Home() {
   return (
     <section>
-      <h1 style={{ fontSize: 34 }}>Shop the collection</h1>
+      <h1 style={{ fontSize: 34 }}>Security engagements</h1>
       <p style={{ color: "#9aa6c8" }}>
-        Storefront powered by the ClearGlass commerce control plane. Pricing and copy changes are
-        governed and audited.
+        Storefront powered by the ClearGlass commerce control plane. Prices are set server-side and
+        every pricing or copy change is governed and audited.
       </p>
       <div
         style={{
@@ -40,9 +40,10 @@ export default function Home() {
               <div style={{ color: "#9aa6c8", fontSize: 13, marginTop: 6, lineHeight: 1.5 }}>
                 {p.blurb}
               </div>
-              <div style={{ color: "#a78bfa", marginTop: 8 }}>
-                {formatPrice(p.amount, p.currency)}
-              </div>
+              <div style={{ color: "#a78bfa", marginTop: 8 }}>{formatOfferPrice(p)}</div>
+              {p.note && (
+                <div style={{ color: "#9aa6c8", fontSize: 12, marginTop: 4 }}>{p.note}</div>
+              )}
             </a>
             <AddToCart product={p} block />
           </div>

@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: minerals
+      POSTGRES_USER: minerals
+      POSTGRES_PASSWORD: minerals
+    ports:
+      - "5432:5432"
+    volumes:
+      - minerals_postgres:/var/lib/postgresql/data
+      - ./prisma/init.sql:/docker-entrypoint-initdb.d/010-postgis.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U minerals -d minerals"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - minerals_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  minerals_postgres:
+  minerals_redis:

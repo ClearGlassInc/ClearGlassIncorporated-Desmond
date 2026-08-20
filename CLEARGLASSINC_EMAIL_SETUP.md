@@ -6,7 +6,7 @@
 
 Owning `clearglassinc.com` is necessary, but it does not itself create a mailbox. The domain must be connected to a mail host, and the mail host must contain a licensed user whose primary address is `desmond@clearglassinc.com`.
 
-Email domain names and, in normal hosted-mail operation, mailbox addressing are case-insensitive. Configure and publish the canonical address in lowercase as `desmond@clearglassinc.com`; messages addressed as `Desmond@clearglassinc.com` should reach the same mailbox, while the lowercase form avoids inconsistent display, forms, and documentation.
+Email domain names and, in normal hosted-mail operation, mailbox addressing are case-insensitive. Configure and publish the canonical address in lowercase as `desmond@clearglassinc.com`; the lowercase form avoids inconsistent display, forms, and documentation.
 
 The recommended implementation is:
 
@@ -160,7 +160,7 @@ Then test messages in both directions with unrelated Microsoft, Google, and othe
 ### Outlook on the web
 
 1. Visit [outlook.office.com](https://outlook.office.com).
-2. Sign in with the full address, `Desmond@clearglassinc.com`.
+2. Sign in with the full address, `desmond@clearglassinc.com`.
 3. Complete MFA registration and verify the expected ClearGlassInc Artemis tenant/organization context before approving a prompt.
 4. Configure time zone, language, signature, and notification preferences. Do not create rules that automatically forward company mail to personal accounts.
 

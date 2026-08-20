@@ -20,13 +20,10 @@ export default function CartPage() {
     setLoading(true);
     setError(null);
     try {
+      // Send SKUs and quantities only — the control plane prices the cart, so the
+      // total charged never depends on what is sitting in localStorage.
       const session = await createCheckout(
-        lines.map((l) => ({
-          name: l.title,
-          amount: l.amount,
-          quantity: l.quantity,
-          currency: l.currency,
-        })),
+        lines.map((l) => ({ sku: l.slug, quantity: l.quantity })),
       );
       window.location.href = session.url;
     } catch (e) {

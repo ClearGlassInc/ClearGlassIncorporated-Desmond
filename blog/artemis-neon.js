@@ -67,6 +67,57 @@
     stageButtons.forEach((button, index) => button.addEventListener("click", () => setStage(index)));
   }
 
+  const simulator = document.querySelector("[data-mission-simulator]");
+  if (simulator) {
+    const steps = [...simulator.querySelectorAll("[data-sim-step]")];
+    const status = simulator.querySelector("[data-sim-status]");
+    const log = simulator.querySelector("[data-sim-log]");
+    const controls = Object.fromEntries(
+      [...simulator.querySelectorAll("[data-sim-action]")].map((button) => [button.dataset.simAction, button]),
+    );
+    const appendEvent = (message) => {
+      const item = document.createElement("li");
+      item.textContent = message;
+      log?.append(item);
+    };
+    const setCompleteThrough = (lastIndex) => steps.forEach((step, index) => {
+      step.classList.toggle("is-complete", index <= lastIndex);
+      step.classList.toggle("is-active", index === lastIndex);
+    });
+    controls.run?.addEventListener("click", () => {
+      simulator.dataset.state = "awaiting";
+      setCompleteThrough(3);
+      if (status) status.textContent = "Awaiting human decision";
+      appendEvent("Source validated; lineage hash attached.");
+      appendEvent("AIP draft cites 3 accessible ontology objects.");
+      appendEvent("Policy denied execution; approval package queued.");
+      controls.run.disabled = true;
+      controls.approve.disabled = false;
+      controls.reject.disabled = false;
+    });
+    const decide = (approved) => {
+      simulator.dataset.state = approved ? "approved" : "rejected";
+      setCompleteThrough(4);
+      if (status) status.textContent = approved ? "Draft approved · no execution" : "Rejected · eval candidate created";
+      appendEvent(approved
+        ? "Operator approved monitoring draft; decision sealed to audit."
+        : "Operator rejected attribution; correction converted to eval case.");
+      controls.approve.disabled = true;
+      controls.reject.disabled = true;
+    };
+    controls.approve?.addEventListener("click", () => decide(true));
+    controls.reject?.addEventListener("click", () => decide(false));
+    controls.reset?.addEventListener("click", () => {
+      simulator.dataset.state = "ready";
+      steps.forEach((step) => step.classList.remove("is-active", "is-complete"));
+      if (status) status.textContent = "Ready for synthetic event";
+      if (log) log.replaceChildren(Object.assign(document.createElement("li"), { textContent: "Simulator initialized. Awaiting operator." }));
+      controls.run.disabled = false;
+      controls.approve.disabled = true;
+      controls.reject.disabled = true;
+    });
+  }
+
   const progress = document.createElement("div");
   progress.className = "reading-progress";
   progress.setAttribute("aria-hidden", "true");

@@ -45,6 +45,37 @@ jobs:
     assert result.status == "broken and requiring immediate patching"
 
 
+def test_unpinned_external_reusable_workflow_fails_closed(tmp_path: Path) -> None:
+    result = workflow(
+        tmp_path,
+        """on: {workflow_dispatch: null}
+permissions: {contents: read}
+jobs:
+  delegated-check:
+    uses: example/repository/.github/workflows/check.yml@main
+""",
+    )
+    assert any("external reusable workflow" in error for error in result.errors)
+    assert result.status == "broken and requiring immediate patching"
+
+
+def test_sha_pinned_reusable_workflow_is_in_inventory(tmp_path: Path) -> None:
+    result = workflow(
+        tmp_path,
+        """on: {workflow_dispatch: null}
+permissions: {contents: read}
+jobs:
+  delegated-check:
+    uses: example/repository/.github/workflows/check.yml@1111111111111111111111111111111111111111
+""",
+    )
+    record = json_inventory(result)
+    assert result.status == "valid and ready"
+    assert record["actions"] == [
+        "example/repository/.github/workflows/check.yml@1111111111111111111111111111111111111111"
+    ]
+
+
 def test_deploy_without_environment_requires_governance(tmp_path: Path) -> None:
     result = workflow(
         tmp_path,

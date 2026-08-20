@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# scripts/ci/security-allowlist.yml
+#
+# Version-controlled exception policy for the `dependency_and_secret_scan` job.
+#
+# The scan BLOCKS any deploy on HIGH or CRITICAL findings. The ONLY way to let a
+# finding through is to record it here, in git, with a justification, an owner,
+# and an expiry date. Anything not listed here is enforced.
+#
+# Rules:
+#   * An entry is honored only until its `expires` date (UTC). Expired entries
+#     are ignored and the finding blocks again.
+#   * Every entry MUST have: id, justification, owner, added, expires.
+#   * Adding/changing this file is itself a reviewable, auditable change.
+#   * This file NEVER contains secrets — only vulnerability identifiers and
+#     detector rule names.
+# ---------------------------------------------------------------------------
+
+# Dependency-vulnerability advisory IDs (e.g. CVE / GHSA / PYSEC / npm) that are
+# temporarily accepted. Keep this list short and expiring.
+dependency_allowlist: []
+  # - id: "GHSA-xxxx-xxxx-xxxx"        # advisory id reported by pip-audit/npm audit
+  #   package: "REPLACE_ME"
+  #   justification: "No fixed version yet; not reachable from deployed code path."
+  #   owner: "REPLACE_ME (security-oncall)"
+  #   added: "2026-01-01"
+  #   expires: "2026-02-01"
+
+# Secret-scanner findings that are confirmed false positives (e.g. an example
+# token in documentation). Prefer fixing the file over allow-listing.
+secret_allowlist: []
+  # - rule: "generic-api-key"          # detector rule id (e.g. gitleaks rule)
+  #   path: "docs/example.md"
+  #   justification: "Illustrative placeholder token, not a live credential."
+  #   owner: "REPLACE_ME"
+  #   added: "2026-01-01"
+  #   expires: "2026-02-01"
+
+# Severities that block a deploy when found and NOT allow-listed above.
+block_on_severity:
+  - high
+  - critical

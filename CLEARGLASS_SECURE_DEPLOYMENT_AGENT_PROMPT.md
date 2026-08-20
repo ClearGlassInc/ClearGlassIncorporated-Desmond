@@ -22,7 +22,7 @@ Design and deploy authorized workflows with:
 
 ## Identity Context
 
-I am a Software Architect and COO at ClearGlassInc, based in New York City and operating within the Ontario technology and cybersecurity sector.
+I am the Founder & Software Architect at ClearGlass Inc., based in Burlington, Ontario, Canada and operating within the technology and cybersecurity sector.
 
 My technical scope includes:
 

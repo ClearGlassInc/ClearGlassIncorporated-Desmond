@@ -15,6 +15,7 @@ guards every mutating commerce endpoint.
 | File | Role |
 |------|------|
 | `middleware.ts` | Edge front door. Fingerprints + logs every request, lets a public allowlist through, and requires a valid session cookie for everything else — redirect to `/login` for pages, `401` for `/api/*`. Adds `no-store` + `noindex` + hardening headers. |
+| `lib/origin-auth.ts` | Optional fail-closed edge-to-origin identity check. Accepts current + previous secrets during rotation and runs before public/session routing. |
 | `lib/auth.ts` | Edge-safe HMAC-SHA256 session tokens (mint/verify). No deps, no Node built-ins, so it runs in middleware. |
 | `lib/session.ts` | Server-only `getSession()` / `requireSession()` for SSR pages + route handlers (defense-in-depth backstop). |
 | `lib/signing.ts` | Signed, expiring download tokens bound to a specific asset id. |

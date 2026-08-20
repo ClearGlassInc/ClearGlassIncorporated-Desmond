@@ -23,3 +23,24 @@ def test_neon_motion_and_interaction_remain_accessible() -> None:
     assert ".power-state:focus-visible" in css
     assert 'setAttribute("aria-pressed"' in javascript
     assert "Object.hasOwn(descriptions, state)" in javascript
+
+
+def test_governed_mission_simulator_preserves_human_boundary() -> None:
+    html = PAGE.read_text(encoding="utf-8")
+    javascript = (ROOT / "blog" / "artemis-neon.js").read_text(encoding="utf-8")
+
+    assert 'data-mission-simulator' in html
+    assert 'No live systems connected' in html
+    assert 'data-sim-action="approve" disabled' in html
+    assert 'data-sim-action="reject" disabled' in html
+    assert 'Policy denied execution; approval package queued.' in javascript
+    assert 'Draft approved · no execution' in javascript
+    assert 'correction converted to eval case' in javascript
+
+
+def test_governed_mission_simulator_is_responsive_and_motion_safe() -> None:
+    css = (ROOT / "blog" / "artemis-neon.css").read_text(encoding="utf-8")
+
+    assert '.mission-simulator__actions button:focus-visible' in css
+    assert '@media(max-width:760px)' in css
+    assert '@media(prefers-reduced-motion:reduce)' in css

@@ -1,361 +1,167 @@
-# ClearGlassInc Artemis
+# ClearGlass Inc.
 
-<div align="center">
+**Transparency is infrastructure.**
 
-![ClearGlassInc Artemis](assets/images/clearglass-logo.png)
+ClearGlass Inc. is an Ontario-focused cybersecurity, AI-governance, OSINT, automation, and intelligence-platform company. This repository is the primary engineering and web platform for ClearGlassInc.com, including the public website, product surfaces, research systems, operational data, automation, and platform architecture.
 
-## Governed intelligence infrastructure for decisions that cannot afford guesswork
+## Live Platform
 
-**Fuse operational data, deploy policy-constrained AI agents, and preserve human authority at every consequential action.**
+- Website: https://www.clearglassinc.com
+- Intelligence Platform: https://www.clearglassinc.com/intelligence-platform.html
+- Governed Data Fabric Diagnostics: https://www.clearglassinc.com/data-fabric.html
+- Ontario OSINT: https://www.clearglassinc.com/Ontario-osint.html
+- Products: https://www.clearglassinc.com/products.html
+- Store: https://www.clearglassinc.com/store.html
 
-[**Explore the live platform →**](https://www.clearglassinc.com/) · [**Review the Artemis architecture →**](docs/clearglassinc_artemis_self_evolving_platform.md) · [**Start a discussion →**](https://github.com/ClearGlassInc/ClearGlassInc.github.io/discussions)
+## Core Systems
 
-[![Website](https://img.shields.io/badge/Website-Live-00e5ff?style=for-the-badge)](https://www.clearglassinc.com/)
-[![License](https://img.shields.io/badge/License-See%20LICENSE-8b5cf6?style=for-the-badge)](LICENSE)
-[![Security](https://img.shields.io/badge/Security-Policy-39ff88?style=for-the-badge)](SECURITY.md)
-[![Contributions](https://img.shields.io/badge/Contributions-Welcome-f8fafc?style=for-the-badge)](CONTRIBUTING.md)
+- **ClearGlass Nexus** — central intelligence and orchestration layer
+- **Artemis** — AI/cyber intelligence product family
+- **Guardian / Sentinel** — defensive cybersecurity and monitoring surfaces
+- **Ontario OSINT** — public-source intelligence and regional analysis
+- **XENOLITH** — sovereign intelligence-lattice research platform
+- **ClearGlass Data Fabric** — governed same-origin repository data layer
+- **Growth / SEO / Commerce** — revenue, marketing, search, and product systems
 
-</div>
+## Governed Data Fabric
 
----
+Repository-backed operational data is cataloged through `data/catalog.json` and accessed through `assets/js/clearglass-data-fabric.js`.
 
-ClearGlassInc Artemis is an engineering monorepo and live product surface for secure automation, defensive intelligence, governed commerce, and high-assurance agent systems. It turns fragmented data and workflows into auditable decision support—without allowing model output to manufacture authority.
+The fabric provides:
 
-> [!IMPORTANT]
-> **See the system, then inspect the evidence.** Visit the [live ClearGlassInc experience](https://www.clearglassinc.com/), explore the implementation map below, and star the repository if governed agentic systems belong in your technical radar.
+- same-origin loading
+- parent-traversal blocking
+- JSON and CSV decoding
+- module and root-dataset discovery
+- browser health checks
+- restricted browser access for sensitive workflow boundaries such as `data/leads`
 
-## Why this matters
-
-Most AI demonstrations optimize for fluent output. Mission-critical systems must optimize for **traceable evidence, bounded authority, reversible deployment, and measurable operator trust**. Artemis treats AI output as untrusted until deterministic policy checks and, where required, explicit human approval make the next transition valid.
-
-### What makes Artemis different
-
-| Ordinary AI project | ClearGlassInc Artemis |
-| --- | --- |
-| Chat interface as the product | Ontology, policy, agents, approval, audit, and deployment as one system |
-| Model confidence as authority | Evidence lineage and deterministic authorization outside the model |
-| Autonomous action by default | Read-only analysis → draft → human approval → governed execution |
-| Architecture claims without boundaries | Implemented components are separated from clearly labeled target-state blueprints |
-| One-shot launch | Operational docs, tests, security gates, and an evolving product surface |
-
-## Platform highlights
-
-- **Governed agent workflows** — typed tools, risk-scored transitions, approval queues, and append-only material-action records.
-- **Full-stack intelligence design** — operator interfaces, Python services, ontology contracts, retrieval, event processing, and model routing.
-- **Palantir-aligned blueprint** — precise roles for Gotham, Foundry, AIP, and Apollo without implying unverified provisioning.
-- **Secure-by-construction controls** — need-to-know access, zero-trust boundaries, provenance, rollback, and policy-as-code.
-- **Production delivery surfaces** — GitHub Pages, containerized services, CI gates, health checks, and independently deployable applications.
-
-## Start here
-
-| Your goal | Best entry point |
-| --- | --- |
-| Experience the brand and products | [Visit clearglassinc.com](https://www.clearglassinc.com/) |
-| Understand the end-to-end platform | [Read the self-evolving Artemis blueprint](docs/clearglassinc_artemis_self_evolving_platform.md) |
-| Inspect Gotham / Foundry / AIP / Apollo alignment | [Read the Palantir AIP blueprint](docs/clearglassinc_artemis_palantir_aip_blueprint.md) |
-| Evaluate defensive agent governance | [Explore Sentinel](sentinel/README.md) |
-| Review governed commerce automation | [Explore ClearGlass Commerce](clearglass-commerce/README.md) |
-| Help shape the roadmap | [Open a feature request](https://github.com/ClearGlassInc/ClearGlassInc.github.io/issues/new?template=feature_request.md) |
-
----
-
-## Vision
-
-ClearGlassInc exists to build systems that increase autonomy, intelligence, operational efficiency, and ownership.
-
-The objective is not temporary trends.
-
-The objective is infrastructure.
-
-We engineer frameworks that merge:
-
-- Artificial Intelligence
-- Automation
-- Blockchain Systems
-- Digital Asset Infrastructure
-- High-performance Software
-- Strategic Information Systems
-- Licensing Models
-- Scalable Revenue Architecture
-
----
-
-## Core Philosophy
-
-- Forward is the only direction.
-- Precision over noise.
-- Systems over chaos.
-- Ownership over dependency.
-- Execution over theory.
-
-ClearGlassInc operates with a long-term mindset focused on resilient architecture and strategic technological positioning.
-
----
-
-# Primary Areas
-
-## AI Systems
-
-Development of intelligent automation systems using:
-
-- LLM integrations
-- Autonomous workflows
-- Multi-agent orchestration
-- Predictive analysis
-- Data intelligence pipelines
-
----
-
-## Cryptocurrency Infrastructure
-
-Research and deployment involving:
-
-- Trading systems
-- Blockchain integrations
-- Smart contracts
-- Wallet infrastructure
-- On-chain analytics
-- Tokenized ecosystems
-- Decentralized finance frameworks
-
----
-
-## Software Engineering
-
-Production-grade development focused on:
-
-- Backend systems
-- API architecture
-- Cloud deployment
-- Secure infrastructure
-- Performance optimization
-- Scalable distributed systems
-
----
-
-## Automation
-
-Automation frameworks designed to reduce friction and maximize leverage.
-
-Includes:
-
-- Business automation
-- AI-assisted execution
-- Infrastructure scripting
-- Workflow orchestration
-- Monitoring systems
-- Autonomous operational tooling
-
----
-
-# Technology Stack
-
-## Languages
-
-- Python
-- JavaScript
-- TypeScript
-- Solidity
-- Go
-- Bash
-
-## Infrastructure
-
-- Docker
-- Linux
-- GitHub Actions
-- Kubernetes
-- Cloudflare
-- PostgreSQL
-- Redis
-
-## AI / ML
-
-- OpenAI APIs
-- Local LLM deployment
-- Vector databases
-- Embedding pipelines
-- Retrieval systems
-
-## Blockchain
-
-- Ethereum
-- Solana
-- LayerZero
-- Smart contracts
-- Web3 integrations
-
----
-
-# Repository Structure
-
-This repository is a website and engineering monorepo. The active top-level entry points are:
-
-| Path | Purpose | Primary checks |
-| --- | --- | --- |
-| `index.html`, `*.html`, `assets/` | Static GitHub Pages website and product pages. | `python scripts/site_reliability_audit.py` |
-| `artemis/` | Installable Artemis Python package and environmental risk module. | `python -m pytest artemis/tests` |
-| `deployment/artemis/` | Containerized Artemis FastAPI model-service deployment. | `uvicorn deployment.artemis.app.main:app` / Docker build |
-| `bots/`, `scripts/`, `tests/` | Operational automation bots, repository audits, release/content tooling. | `python -m pytest tests` |
-| `sentinel/` | Sentinel defensive intelligence package and tests. | `python -m pytest sentinel/tests` |
-| `clearglass-commerce/` | Commerce control plane plus Storefront/Admin Next.js apps. | `pytest control-plane/tests`; `npm ci && npm run build` in each frontend |
-| `apps/autostore/` | Autostore control plane, cockpit UI, and Docker Compose deployment. | `docker compose`; `npm ci && npm run build` in `cockpit` |
-| `services/clearglass_agent_service/` | Render-deployed lawful risk-intelligence API service. | Docker build / `/health` |
-| `.github/workflows/` | CI/CD workflows for tests, audits, Pages, commerce, policy, security, and scheduled bots. | GitHub Actions |
-| `docs/`, top-level `*.md` | Long-form architecture, governance, and product documentation. | Markdown review |
-
-## Local static-site run
+Run the offline validator when a local checkout is available:
 
 ```bash
-python3 -m http.server 8000
-# open http://localhost:8000
+python3 scripts/validate_data_fabric.py
+node --check assets/js/clearglass-data-fabric.js
 ```
 
-## Python tooling
+## Actions-Independent Release Path
 
-The Python packages and bots target Python 3.11+ unless a package-specific README says otherwise. The root pytest configuration now includes the major Python test roots.
+GitHub Pages is configured from `main` and can publish through the repository's legacy Pages build path. The site also includes browser-based data-fabric diagnostics so the public runtime can be checked without depending on a GitHub-hosted Actions runner.
+
+See `docs/ACTIONS_BILLING_FALLBACK.md` for the operational fallback and recovery procedure.
+
+## Secure CircleCI Orchestration
+
+`.circleci/config.yml` is the guarded CircleCI 2.1 orchestration entry point for repository validation, GitHub-workflow validation, frontend/animation artifact builds, sandbox agent checks, and approved Fly.io releases of the ClearGlass agent service.
+
+### Workflows
+
+- **`validate`** is the default branch/pull-request path. It runs preflight, dependency verification, lint/type/test/build, dependency and secret scans, GitHub workflow validation, frontend/animation smoke tests, and sandbox agent contract tests. It performs no deployment or GitHub mutation.
+- **`staging_release`** exists only when the manually supplied pipeline parameter `deploy_staging=true`. Preflight additionally requires `run_validation=true`, `target_environment=staging`, `emergency_stop=false`, and a branch ref. All validation/security jobs must pass before the `staging-deploy` context is available to the deployment job.
+- **`production_release`** exists only when the manually supplied pipeline parameter `deploy_production=true`. Preflight additionally requires `run_validation=true`, `target_environment=production`, `emergency_stop=false`, and either the protected `main` branch or a trusted signed `v...` release tag. A CircleCI `hold_production` approval job must be approved before the `production-deploy` context can be used.
+
+Ordinary commits cannot deploy because all mutation parameters default to `false`. Invalid parameter combinations fail in `security_preflight` before a deploy context is attached.
+
+### Manual pipeline parameters
+
+| Parameter | Type | Default | Purpose |
+|---|---|---:|---|
+| `run_validation` | boolean | `true` | Run the validation chain. Required for either deployment. |
+| `run_github_automation_checks` | boolean | `false` | Add extended, read-only GitHub workflow checks. Never triggers or writes GitHub Actions. |
+| `run_agent_health_checks` | boolean | `false` | Add extended local/sandbox agent HTTP contract checks. |
+| `deploy_staging` | boolean | `false` | Request a staging release. Requires `target_environment=staging`. |
+| `deploy_production` | boolean | `false` | Request a production release. Requires `target_environment=production` and approval. |
+| `enable_agents` | boolean | `false` | Reserved for a separately reviewed activation adapter. Currently fails closed if set `true`. |
+| `deploy_animations` | boolean | `false` | Reserved for a separately reviewed frontend publication adapter. Currently fails closed if set `true`. |
+| `emergency_stop` | boolean | `false` | Global mutation stop. If `true`, every deployment/activation/publication request is rejected. |
+| `target_environment` | enum | `none` | One of `none`, `staging`, or `production`. |
+
+Trigger release pipelines from CircleCI's manual pipeline trigger surface and supply only the parameters needed for that release. Do not place secret values in pipeline parameters.
+
+### Required restricted contexts
+
+Create and restrict these CircleCI contexts before enabling release workflows:
+
+**`ci-readonly`**
+
+- Must not contain a GitHub write token, deploy token, or other repository-mutation credential.
+- For signed production tag verification, set `TRUSTED_RELEASE_SIGNER_FINGERPRINT` and `TRUSTED_RELEASE_SIGNER_PUBLIC_KEY_B64` to the reviewed release-signing public identity. These values are verification material, not private signing credentials.
+
+**`staging-deploy`**
+
+- `FLY_API_TOKEN` — staging-scoped Fly.io credential.
+- `FLYCTL_VERSION` — exact approved Fly CLI version; `latest` is rejected.
+- `STAGING_FLY_APP=REPLACE_ME` — dedicated staging Fly.io app. Do not point this at the production app.
+- `STAGING_HEALTH_URL` — optional explicit staging health endpoint; defaults to the selected Fly app `/health` endpoint.
+
+**`production-deploy`**
+
+- `FLY_API_TOKEN` — production-scoped Fly.io credential.
+- `FLYCTL_VERSION` — exact approved Fly CLI version; `latest` is rejected.
+- `PRODUCTION_FLY_APP` — optional; defaults to the repository's existing `clearglass-agent-service` app.
+- `PRODUCTION_HEALTH_URL` — optional explicit health endpoint.
+
+Restrict the staging and production contexts to the appropriate CircleCI security groups/project controls. Production credentials must never be copied into `ci-readonly`.
+
+### GitHub automation boundary
+
+CircleCI validates `.github/workflows/**`, YAML syntax, repository workflow governance, and immutable action pinning. It does **not** trigger, rerun, unblock, cancel, approve, or modify GitHub Actions and it does not auto-merge pull requests. Any future GitHub write integration requires a separately approved GitHub App/token scope, a new explicit pipeline parameter defaulting to `false`, and an independent review of the affected repository rules and environments.
+
+### Frontend animations and agents
+
+The frontend/animation job builds deterministic assets, syntax-checks browser JavaScript, runs a local static smoke test, and stores a commit-addressed archive plus SHA-256 evidence. It does not publish the site.
+
+`deploy_animations=true` is intentionally rejected until `REPLACE_ME_ANIMATION_DEPLOY_ADAPTER` is replaced with a reviewed deployment path that does not bypass GitHub Pages/repository protections.
+
+The agent job imports and tests the FastAPI service locally, verifies `/health`, OpenAPI schema availability, authenticated/unauthenticated permission boundaries, and extended sandbox behavior when requested. Autonomous activation is not performed.
+
+`enable_agents=true` is intentionally rejected until `REPLACE_ME_AGENT_ACTIVATION_ADAPTER` and an enforceable runtime rate-limit policy are implemented and reviewed.
+
+### Dependency and secret gates
+
+- Node uses `npm ci` with the committed `package-lock.json`.
+- The deployed agent service requires exact `==` pins in `services/clearglass_agent_service/requirements.txt`.
+- Root Python validation follows the repository's existing `requirements.txt` constraint plus `pyproject.toml` test-extra installation contract; the pipeline records SHA-256 hashes of dependency inputs for evidence.
+- `npm audit` high/critical findings and all `pip-audit` findings block deployment unless the exact advisory identifier is reviewed in `scripts/ci/security-allowlist.txt`.
+- Changed text/code files are scanned with `detect-secrets`; any candidate fails closed and must be investigated rather than silently suppressed in CI.
+
+### Immutable deployment and evidence
+
+Fly releases use a commit-addressed image tag (`sha-$CIRCLE_SHA1`) and resolve it to a registry digest before deployment. A previously created commit image is reused rather than overwritten. Before mutation, the pipeline records the currently deployed image so rollback is possible. Deployment evidence is stored under `deploy-evidence/` as CircleCI artifacts.
+
+Post-deploy verification requires:
+
+1. the running Fly image to resolve to the digest recorded by the pipeline;
+2. 20/20 successful `/health` requests (synthetic error-rate guardrail of 0%);
+3. the protected `/policy` endpoint to fail closed when called without credentials; and
+4. for production, the public ClearGlass homepage to return HTTP 200 and expected brand content.
+
+A deployment is not considered successful until these checks pass.
+
+### Rollback procedure
+
+**Staging:** deployment or post-deploy verification failure automatically redeploys the previously recorded immutable image and verifies `/health`. The rollback result is written to the deployment evidence.
+
+**Production:** post-deploy failure does not silently mutate production again. CircleCI records the exact rollback command and prior image in the production deployment artifacts. After incident review and approval, run the same release workspace with the `production-deploy` context and execute:
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
-python -m pip install -e .[test]
-python -m pip install -r requirements.txt
-python -m pytest -q
+bash scripts/ci/fly_rollback.sh production
 ```
 
-## Frontend tooling
+The script reads `deploy-evidence/production-previous-image.txt`, redeploys that exact image, verifies `/health`, and records the rollback result. Do not substitute an unreviewed tag or `latest` image.
 
-Each Next.js app is intentionally self-contained. Install dependencies in the app directory before building.
+No rollback procedure rotates secrets, changes repository permissions, alters organization settings, deletes data, or bypasses a protected environment.
 
-```bash
-cd clearglass-commerce/storefront && npm ci && npm run build
-cd ../admin && npm ci && npm run build
-cd ../../apps/autostore/cockpit && npm ci && npm run build
-```
+## Repository Safety
 
-## Continuous integration
+- No credentials or private API keys belong in source control.
+- Production secrets must remain in approved external secret stores or platform configuration.
+- Public OSINT and cybersecurity functions are defensive, lawful, and evidence-oriented.
+- Counter-UAS material in this repository is a component/research area; it is **not** the identity or primary purpose of this repository.
 
-Workflows in `.github/workflows/` cover the active CI/CD paths, including:
+## Company
 
-- `ci.yml` — Python tests, Ruff lint, site reliability audit, workflow doctor, and OSINT deck validation.
-- `pages.yml` — GitHub Pages deployment for the static site.
-- `commerce-frontend-ci.yml` and `commerce-deploy.yml` — commerce frontend validation and deployment.
-- `auto-store.yml` — Autostore validation/deployment path.
-- `security.yml`, `api-security-audit.yml`, `policy-gate.yml`, `release-supply-chain.yml`, and `ip-protection-scan.yml` — security, policy, and supply-chain checks.
-- Scheduled automation workflows such as `bot-orchestrator.yml`, `content-pipeline.yml`, `control-surface-feeds.yml`, `defender-watch.yml`, and `health-monitor.yml`.
+**ClearGlass Inc.**  
+Ontario, Canada  
+https://www.clearglassinc.com
 
-## Documentation
-
-The canonical index of long-form documentation lives in `docs/README.md`. Notable entry points:
-
-- Corporate and governance: `docs/clearglassinc_artemis_enterprise_corporate_layer.md`
-- Platform architecture: `docs/clearglassinc_artemis_palantir_aip_blueprint.md`
-- Self-evolving platform spec: `docs/clearglassinc_artemis_self_evolving_platform.md`
-- Secure deployment agent prompt: `CLEARGLASS_SECURE_DEPLOYMENT_AGENT_PROMPT.md`
-- Executive profile: `docs/desmond_otieno_odhiambo_executive_profile.md`
-
-Top-level `*.md` blueprints (e.g. `ARTEMIS_INTELLIGENCE_PLATFORM_BLUEPRINT.md`, `CLEARGLASSINC_ARTEMIS_PRODUCTION_ARCHITECTURE.md`) are historical snapshots kept for reference.
-
-## Security
-
-Report vulnerabilities privately to **clearglass369@gmail.com**. Scope, response SLAs, and safe-harbor terms are defined in `SECURITY.md`.
-
-## Leadership
-
-Founder & Chairman **Desmond Otieno Odhiambo**. See `docs/Desmond_Otieno_Odhiambo_executive_profile.md`.
-
-## Architecture Blueprints
-
-- [ClearGlassInc Artemis full-stack intelligence blueprint](CLEARGLASSINC_ARTEMIS_FULL_STACK_INTELLIGENCE_BLUEPRINT.md)
-- [ClearGlassInc Artemis local SEO and multi-channel growth intelligence plan](CLEARGLASSINC_ARTEMIS_LOCAL_SEO_GROWTH_PLAN.md)
-
-## ClearGlass Growth Entity
-
-Run the local manual-review growth command system with PowerShell 7:
-
-```powershell
-pwsh -ExecutionPolicy Bypass -File .\ClearGlass-GrowthEntity.ps1 -Mode Sample -OpenFolder
-pwsh -ExecutionPolicy Bypass -File .\ClearGlass-GrowthEntity.ps1 -Mode Full -OpenFolder
-```
-
-The script creates `ClearGlassGrowthEntity/` with configuration, content scoring exports,
-daily posting briefs, finance action files, and logs. It is intentionally a planning and
-compliance-review system only; do not store passwords, tokens, cookies, or API secrets in it,
-and do not use it for fake engagement, mass DMs, scraping, or platform-bypass behavior.
-
-## Threads Growth Command Center V3
-
-Run the Python-first, compliant Threads growth command center locally:
-
-```bash
-python -m bots.threads_growth_command_center --mode all --brand-name ClearGlassInc --root-path ./ThreadsGrowthCommandCenter_V3
-python -m bots.threads_growth_command_center --mode add-kpi --root-path ./ThreadsGrowthCommandCenter_V3 --followers 100 --posts 3 --replies 40 --likes 80 --reposts 10 --impressions 1000 --profile-visits 25 --notes "Manual daily closeout"
-```
-
-The system creates a 30-day content calendar, daily manual execution brief,
-copy-editing draft files, KPI tracker, engagement tracker, backups, and a
-self-contained HTML dashboard. It is intentionally a planning, drafting, and
-measurement system only: zero botting, zero scraping, no automated follows,
-likes, comments, reposts, DMs, or storage of platform cookies/session tokens.
-
----
-
-## Use cases
-
-- **Operational intelligence:** triage signals, correlate evidence, and prepare reviewable decision packages.
-- **High-assurance automation:** separate analysis, drafting, authorization, execution, and audit.
-- **Defensive monitoring:** operate bounded, fail-closed agents over approved data and tools.
-- **Governed commerce:** automate low-risk work while preserving approval for financial and material actions.
-- **Architecture research:** evaluate ontology, agent, policy, deployment, and self-improvement patterns without confusing target state with deployed fact.
-
-## Evidence, not invented social proof
-
-Evaluate ClearGlassInc Artemis through its public code, tests, threat models, release history, and live product surfaces. Testimonials, customer logos, performance claims, and adoption metrics should appear here only when they are attributable, permissioned, and verifiable.
-
-> [!NOTE]
-> Palantir-aligned documents describe an integration architecture. They do not, by themselves, prove that Gotham, Foundry, AIP, Apollo, coalition infrastructure, or production environments are provisioned.
-
-## Roadmap
-
-- Harden reproducible evaluation fixtures for governed agent transitions.
-- Expand ontology-driven examples with explicit confidence, temporal state, and lineage.
-- Improve operator-facing provenance and approval explanations.
-- Publish measurable performance and reliability evidence when reproducible data exists.
-- Continue accessibility, Pages reliability, security, and supply-chain improvements through existing review gates.
-
-Roadmap items are proposals, not promises or evidence of deployment. Track concrete work through [issues](https://github.com/ClearGlassInc/ClearGlassInc.github.io/issues) and [releases](https://github.com/ClearGlassInc/ClearGlassInc.github.io/releases).
-
-## Frequently asked questions
-
-### Is Artemis fully autonomous?
-
-No. Artemis is designed to automate bounded analysis and drafts while keeping deterministic policy and human authorization at consequential boundaries.
-
-### Is every architecture blueprint already deployed?
-
-No. Target-state documents are specifications. Source code, runtime checks, deployment records, and explicit status labels define what is implemented.
-
-### Is ClearGlassInc affiliated with Palantir?
-
-This repository does not claim an affiliation. Gotham, Foundry, AIP, and Apollo name the intended responsibilities in a Palantir-aligned integration design.
-
-### How can I contribute?
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md), follow the [Code of Conduct](CODE_OF_CONDUCT.md), and select a narrowly scoped issue. Include the checks you actually ran and preserve all governance boundaries.
-
-### How do I report a security issue?
-
-Follow [SECURITY.md](SECURITY.md) and use the private reporting route. Do not disclose vulnerability details in a public issue or Discussion.
-
-## Help advance governed agent engineering
-
-- **Star** the repository if you want to find the architecture again.
-- **Watch releases** if you want meaningful milestone notifications.
-- **Fork and remix** a trust-boundary diagram for your domain, then share the evidence and assumptions in Discussions.
-- **Challenge an invariant** with a reproducible failure case or focused issue.
-- **Share responsibly:** send another engineer the [governance architecture](docs/clearglassinc_artemis_self_evolving_platform.md), not an unsupported slogan.
-
-The complete, ethics-first launch sequence, channel copy, experiments, metrics, and automation boundaries live in the [GitHub Growth and Launch Playbook](docs/GITHUB_GROWTH_LAUNCH_PLAYBOOK.md).
-
-## License and contact
-
-See [LICENSE](LICENSE) for repository terms and check subtree-specific documentation before reuse. For product discovery, visit [www.clearglassinc.com](https://www.clearglassinc.com/). Use GitHub Discussions for public technical questions and [SECURITY.md](SECURITY.md) for vulnerabilities.
+© 2026 ClearGlass Inc. All rights reserved except where a file or third-party component states otherwise.

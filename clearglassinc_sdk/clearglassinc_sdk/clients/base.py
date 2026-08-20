@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from clearglassinc_sdk.memory import Message
+from clearglassinc_sdk.tracing import Usage
 
 
 @dataclass
@@ -29,6 +30,7 @@ class CompletionResult:
     content: str
     tool_calls: list[ToolCall] = field(default_factory=list)
     raw: Any = None
+    usage: Usage | None = None
 
     @property
     def has_tool_calls(self) -> bool:
@@ -42,6 +44,7 @@ class StreamChunk:
     delta: str
     done: bool = False
     tool_calls: list[ToolCall] = field(default_factory=list)
+    usage: Usage | None = None
 
 
 class LLMClient(ABC):

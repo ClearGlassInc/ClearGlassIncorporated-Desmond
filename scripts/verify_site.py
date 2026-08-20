@@ -8,6 +8,7 @@ import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
+from posixpath import normpath
 from urllib.parse import unquote, urlsplit
 
 EXCLUDED_DIRS = {".git", "node_modules", "vendor", ".venv", "venv"}
@@ -39,6 +40,14 @@ def ignored(path: Path) -> bool:
 
 
 def resolve_local(source: Path, raw: str, root: Path) -> Path | None:
+    """Resolve a browser-relative local URL into the repository tree.
+
+    URL resolution is root-clamped by the origin. For example, a root-level page
+    referencing ``../brand-system.css`` resolves in a browser to
+    ``/brand-system.css`` rather than to a filesystem path above the repository.
+    Using POSIX URL normalization here keeps the verifier aligned with browser
+    behavior and prevents false missing-target failures.
+    """
     if not raw or raw.startswith(("#", "mailto:", "tel:", "javascript:", "data:")):
         return None
     parsed = urlsplit(raw)
@@ -47,12 +56,16 @@ def resolve_local(source: Path, raw: str, root: Path) -> Path | None:
     target_text = unquote(parsed.path)
     if not target_text:
         return None
-    target = root / target_text.lstrip("/") if target_text.startswith("/") else source.parent / target_text
-    target = target.resolve()
-    try:
-        target.relative_to(root.resolve())
-    except ValueError:
-        return target
+
+    root = root.resolve()
+    if target_text.startswith("/"):
+        url_path = normpath(target_text)
+    else:
+        source_rel = source.resolve().relative_to(root)
+        source_dir = "/" + source_rel.parent.as_posix().strip("/")
+        url_path = normpath(f"{source_dir}/{target_text}")
+
+    target = root / url_path.lstrip("/")
     if target.is_dir():
         target = target / "index.html"
     return target

@@ -1,0 +1,45 @@
+/*
+ * Homepage neon overlay disabled.
+ * Keep the ClearGlass seal artwork and page structure intact while removing
+ * emissive rigs, ambient glow layers, neon rails, cursor glow, and animated
+ * optical spill from the homepage.
+ */
+
+.hero-seal[data-neon-practical] {
+  isolation: auto;
+  overflow: hidden;
+}
+
+.hero-seal[data-neon-practical]::before,
+.hero-seal[data-neon-practical]::after,
+.hero-seal[data-neon-practical] .hero-seal-media::after,
+.hero-neon-rig,
+.nav-neon-rail,
+.nav-inner-glow,
+.cursor-glow,
+.hero-prism,
+.hero-lines {
+  display: none !important;
+  content: none !important;
+  animation: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+.hero-seal-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.hero-seal[data-neon-practical] .hero-seal-media img {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  object-fit: cover;
+  filter: none;
+}

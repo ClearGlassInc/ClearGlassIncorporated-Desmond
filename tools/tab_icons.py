@@ -128,7 +128,7 @@ INERT_RE = re.compile(
 
 # Directories that never reach the static site: vendored code, and the two
 # Next.js apps, which declare their own icons through framework metadata.
-SKIP_DIRS = {".git", "node_modules", ".next", "dist", "build", "vendor"}
+SKIP_DIRS = {".git", "node_modules", ".next", "dist", "build", "vendor", "projects"}
 
 
 def iter_pages(root: pathlib.Path):

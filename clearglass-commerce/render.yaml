@@ -56,6 +56,11 @@ services:
         sync: false
       - key: STRIPE_PUBLISHABLE_KEY
         sync: false
+      # Stripe Tax. Keep false until Settings → Tax has an origin address, a
+      # registration and a default tax code; Stripe rejects session creation
+      # otherwise. See clearglass-commerce/STRIPE_SETUP.md.
+      - key: STRIPE_AUTOMATIC_TAX
+        value: "false"
       - key: CHECKOUT_SUCCESS_URL
         value: https://clearglass-commerce-storefront.onrender.com/success
       - key: CHECKOUT_CANCEL_URL

@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-08-05T09:35:26.417204+00:00",
+  "run_utc": "2026-08-19T07:34:31.296442+00:00",
   "site_url": "https://www.clearglassinc.com",
   "overall_healthy": false,
   "pages_checked": 6,
@@ -11,7 +11,7 @@
       "url": "https://www.clearglassinc.com/",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 186,
+      "response_ms": 162,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -21,7 +21,7 @@
       "url": "https://www.clearglassinc.com/artemis.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 87,
+      "response_ms": 92,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -31,7 +31,7 @@
       "url": "https://www.clearglassinc.com/artemis-iv.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 118,
+      "response_ms": 127,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -41,7 +41,7 @@
       "url": "https://www.clearglassinc.com/guardian.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 89,
+      "response_ms": 113,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -51,7 +51,7 @@
       "url": "https://www.clearglassinc.com/clearglass-nexus.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 159,
+      "response_ms": 112,
       "has_title": true,
       "missing_meta": [],
       "error": null
@@ -61,17 +61,22 @@
       "url": "https://www.clearglassinc.com/government.html",
       "status_code": 200,
       "reachable": true,
-      "response_ms": 104,
+      "response_ms": 99,
       "has_title": true,
       "missing_meta": [],
       "error": null
     }
   ],
   "local_issues": [
-    "Page missing ClearGlass logo: checkout/index.html"
+    "Page missing ClearGlass logo: blog/canada-strategic-position-2026.html",
+    "Page missing ClearGlass logo: blog/ontario-caf-covid-influence-operations-dossier.html",
+    "Page missing ClearGlass logo: revenue.html"
   ],
   "local_warnings": [
+    "HTML page not referenced in sitemap.xml: data-fabric.html",
     "HTML page not referenced in sitemap.xml: header-mockup-2040.html",
-    "HTML page not referenced in sitemap.xml: seo-dashboard.html"
+    "HTML page not referenced in sitemap.xml: revenue.html",
+    "HTML page not referenced in sitemap.xml: seo-dashboard.html",
+    "HTML page not referenced in sitemap.xml: threads.html"
   ]
 }

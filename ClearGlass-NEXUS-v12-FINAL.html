@@ -34,7 +34,7 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform | ClearGlass Inc.</title>
+<title>ClearGlass NEXUS v12 — DARPA Intelligence Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -1052,7 +1052,7 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.clearglassinc.com/ClearGlass-NEXUS-v12-FINAL.html">
   <meta name="description" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center ClearGlass Inc. builds intelligent automation, AI operations, and security.">
-  <link rel="canonical" href="https://www.clearglassinc.com/ClearGlass-NEXUS-v12-FINAL.html">
+  <link rel="canonical" href="https://www.clearglassinc.com/clearglass-nexus.html">
   <meta property="og:title" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform |">
   <meta property="og:description" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center ClearGlass Inc. builds intelligent automation, AI operations, and security.">
   <meta property="og:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png">
@@ -1061,6 +1061,11 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
 <script defer src="/assets/js/cg-design-system.js"></script>
   <script defer src="/asset-protection.js"></script>
   <link rel="stylesheet" href="brand-system.css">
+<link rel="stylesheet" href="/assets/css/future-buttons.css">
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform |"/>
+<meta name="twitter:description" content="ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center ClearGlass Inc. builds intelligent automation, AI operations, and security."/>
+<meta name="twitter:image" content="https://www.clearglassinc.com/assets/images/clearglass-logo.png"/>
 </head>
 <body>
   <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">ClearGlass NEXUS v12 — DARPA Intelligence Platform | Burlington Operations Center</h1>
@@ -1191,6 +1196,16 @@ body.threat-critical { animation:auroraCrit 1s ease-in-out infinite; }
   <div style="font-size:5.5px;color:var(--al);margin-bottom:3px;letter-spacing:.5px">CROSS-DOMAIN PEARSON CORRELATION MATRIX</div>
   <div id="corr-matrix" style="margin-bottom:4px"></div>
   <div id="memex-items" style="max-height:60px;overflow-y:auto;margin-top:4px"></div>
+</div>
+
+<!-- FORGE — AGENT SDK RUNTIME REGISTRY -->
+<div style="background:rgba(0,255,136,.02);border:1px solid rgba(0,255,136,.12);border-radius:3px;padding:8px;margin:4px 8px;" class="card">
+  <div style="font-size:6px;color:var(--gn);letter-spacing:1.5px;margin-bottom:4px">
+    ◈ FORGE — AGENT SDK RUNTIME REGISTRY <span class="dp-badge">FORGE</span>
+  </div>
+  <div id="forge-link" style="font-size:6px;color:var(--al);margin-bottom:4px"></div>
+  <div id="forge-content"></div>
+  <div id="forge-endpoints" style="margin-top:4px"></div>
 </div>
 
 <!-- NEXUS CLI -->
@@ -4716,7 +4731,42 @@ function cliExec(cmd) {
   const verb = parts[0];
   
   if(verb==='help'){
-    cliOut('COMMANDS: status | feeds | threat | cameras | refresh | clear | predict | darpa | cam [id] | set refresh [secs]','sys');
+    cliOut('COMMANDS: status | feeds | threat | cameras | refresh | clear | predict | darpa | sdk | cam [id] | set refresh [secs]','sys');
+    cliOut('SDK: sdk | sdk probe | sdk link <url> | sdk unlink','sys');
+  } else if(verb==='sdk'){
+    const F = window.FORGE;
+    if(!F){ cliOut('FORGE MODULE NOT LOADED','err'); return; }
+    const sub = parts[1];
+    if(sub==='link'&&parts[2]){
+      // parts[] is lowercased; re-read the raw input to preserve the URL case.
+      const raw = (CLI_HISTORY[0]||'').trim().split(/\s+/)[2] || parts[2];
+      F.setEndpoint(raw);
+      cliOut(`SDK ENDPOINT SET: ${raw} — probing…`,'ok');
+      F.probe().then(st=>{
+        st.state==='LINKED'
+          ? cliOut(`LINKED — v${st.health?.version||'?'} | provider: ${st.ready?.provider||'?'} | agents: ${(st.ready?.agents||[]).join(', ')||'none'}`,'ok')
+          : cliOut(`LINK FAILED — ${st.error||st.state}`,'err');
+      });
+    } else if(sub==='unlink'){
+      F.setEndpoint(null);
+      cliOut('SDK ENDPOINT CLEARED — registry mode (manifest only)','ok');
+    } else if(sub==='probe'){
+      if(!F.endpoint()){ cliOut("NO ENDPOINT CONFIGURED — 'sdk link <url>' first",'err'); return; }
+      cliOut(`PROBING ${F.endpoint()}…`,'sys');
+      F.probe().then(st=>{
+        st.state==='LINKED'
+          ? cliOut(`LINKED — v${st.health?.version||'?'} | status: ${st.ready?.status||'?'} | auth: ${st.ready?.authenticated?'ENFORCED':'OPEN'}`,'ok')
+          : cliOut(`UNREACHABLE — ${st.error||'probe failed'}`,'err');
+      });
+    } else {
+      const m=F.manifest, st=F.state();
+      cliOut(`CLEARGLASSINC AGENT SDK v${m.version} | ${m.modules.length} MODULES | ${m.tests} TESTS`,'ok');
+      cliOut(`MODULES: ${m.modules.map(x=>x.n).join(' · ')}`,'sys');
+      cliOut(`PROVIDERS: ${m.providers.join(' / ')} | ENDPOINTS: ${m.endpoints.join(' ')}`,'sys');
+      st.state==='LINKED'
+        ? cliOut(`LINK: ${st.url} | provider: ${st.ready?.provider||'?'} | agents: ${(st.ready?.agents||[]).join(', ')||'none'}`,'ok')
+        : cliOut(`LINK: ${st.state}${st.url?' ('+st.url+')':''} — manifest shown, no live telemetry`,'sys');
+    }
   } else if(verb==='status'){
     cliOut(`NEXUS v11 | THREAT: ${S.threat}/100 | FEEDS: ${Object.keys(_cache).length} CACHED | CAMS: ${S.camSt?.on||0}/45 LIVE`,'ok');
   } else if(verb==='feeds'){
@@ -4786,6 +4836,7 @@ function computeSlope(){
 //   GUARDIAN  — Multi-layer camera health heatgrid
 //   PRISM     — Color theme switcher (Amber/Green/Blue/Red)
 //   EXPORT    — SITREP export to clipboard / download
+//   FORGE     — ClearGlassInc Agent SDK runtime registry + live link probe
 // ═══════════════════════════════════════════════════════════════════════════
 'use strict';
 
@@ -5577,12 +5628,163 @@ window.bindTooltips = function() {
   });
 };
 
+// ── FORGE: ClearGlassInc Agent SDK runtime registry ───────────────────────
+// Surfaces the governed agent SDK that ships from this monorepo
+// (clearglassinc_sdk/). Two modes, and the panel always says which one:
+//
+//   REGISTRY  (default) — the SDK's static capability manifest. Facts about
+//                         the shipped package. No live telemetry is shown or
+//                         implied, because none is available.
+//   LINKED              — an SDK server endpoint is configured, so /health and
+//                         /ready are polled and real values are displayed.
+//
+// It never synthesises metrics for an unreachable service: an unconfigured or
+// failed link is reported as such. Same rule the commerce OS runs under —
+// a dead end beats an invented number.
+window.FORGE = (() => {
+  const LS_KEY = 'cg_sdk_endpoint';
+
+  // Static manifest — mirrors the shipped clearglassinc_sdk package.
+  const MANIFEST = {
+    version: '0.2.0',
+    modules: [
+      {n:'agent',      d:'instructions · tools · guardrails · memory'},
+      {n:'runner',     d:'tool-calling loop · sync/async/stream'},
+      {n:'tools',      d:'@tool → JSON-schema function calling'},
+      {n:'memory',     d:'short-term window + long-term store'},
+      {n:'guardrails', d:'input/output validation gates'},
+      {n:'tracing',    d:'span tree + token accounting'},
+      {n:'retry',      d:'backoff w/ jitter · error triage'},
+      {n:'structured', d:'schema-locked output + repair loop'},
+      {n:'sessions',   d:'durable conversation persistence'},
+      {n:'handoff',    d:'multi-agent delegation'},
+      {n:'server',     d:'FastAPI surface · fail-closed auth'},
+    ],
+    providers: ['openai', 'anthropic', 'fake'],
+    endpoints: ['/health','/ready','/run','/run/stream','/sessions','/traces'],
+    tests: 160,
+  };
+
+  let link = { state: 'UNCONFIGURED', url: null, health: null, ready: null, checkedAt: null, error: null };
+
+  const endpoint = () => {
+    try { return window.CG_SDK_ENDPOINT || localStorage.getItem(LS_KEY) || null; }
+    catch(e) { return window.CG_SDK_ENDPOINT || null; }
+  };
+
+  const setEndpoint = (url) => {
+    try {
+      if (url) localStorage.setItem(LS_KEY, url);
+      else localStorage.removeItem(LS_KEY);
+    } catch(e) {}
+    link = { state: url ? 'CONFIGURED' : 'UNCONFIGURED', url: url || null,
+             health: null, ready: null, checkedAt: null, error: null };
+    render();
+    return link.state;
+  };
+
+  // Probe the live SDK. Any failure is recorded as a failure — never masked.
+  const probe = async () => {
+    const base = endpoint();
+    if (!base) { link = {...link, state:'UNCONFIGURED', url:null}; render(); return link; }
+    link.url = base; link.state = 'PROBING'; render();
+    const hit = async (path) => {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), 4000);
+      try {
+        const r = await fetch(base.replace(/\/$/,'') + path, {signal: ctl.signal});
+        clearTimeout(t);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return await r.json();
+      } finally { clearTimeout(t); }
+    };
+    try {
+      const [h, rd] = await Promise.all([hit('/health'), hit('/ready')]);
+      link = { state:'LINKED', url:base, health:h, ready:rd, checkedAt:Date.now(), error:null };
+    } catch (e) {
+      link = { state:'UNREACHABLE', url:base, health:null, ready:null,
+               checkedAt:Date.now(), error:(e && e.message) || 'probe failed' };
+    }
+    render();
+    return link;
+  };
+
+  const linkLine = () => {
+    const stamp = link.checkedAt ? new Date(link.checkedAt).toISOString().slice(11,19)+'Z' : '--';
+    switch (link.state) {
+      case 'LINKED':
+        return `<span style="color:var(--gn)">● LINKED</span> ${link.url} · probed ${stamp}`;
+      case 'UNREACHABLE':
+        return `<span style="color:var(--rd)">● UNREACHABLE</span> ${link.url} — ${link.error} · ${stamp}`;
+      case 'PROBING':
+        return `<span style="color:var(--or)">● PROBING…</span> ${link.url}`;
+      case 'CONFIGURED':
+        return `<span style="color:var(--or)">● CONFIGURED</span> ${link.url} — run 'sdk probe'`;
+      default:
+        return `<span style="color:var(--al)">○ REGISTRY MODE</span> — no live endpoint · manifest only (sdk link &lt;url&gt;)`;
+    }
+  };
+
+  const render = () => {
+    const linkEl = document.getElementById('forge-link');
+    const el     = document.getElementById('forge-content');
+    const epEl   = document.getElementById('forge-endpoints');
+    if (linkEl) linkEl.innerHTML = linkLine();
+
+    if (el) {
+      const live = link.state === 'LINKED';
+      const ver  = live && link.health?.version ? link.health.version : MANIFEST.version;
+      const prov = live && link.ready?.provider ? link.ready.provider : null;
+      const agents = live && Array.isArray(link.ready?.agents) ? link.ready.agents : null;
+
+      el.innerHTML = `
+        <div style="font-size:7px;color:var(--wt3);margin-bottom:4px">
+          clearglassinc-sdk <span style="color:var(--gn)">v${ver}</span>
+          &nbsp;·&nbsp; ${MANIFEST.modules.length} modules
+          &nbsp;·&nbsp; <span style="color:var(--am)">${MANIFEST.tests}</span> tests
+          &nbsp;·&nbsp; providers: <span style="color:var(--bl)">${MANIFEST.providers.join(' / ')}</span>
+          ${prov ? `&nbsp;·&nbsp; active: <span style="color:var(--gn)">${prov}</span>` : ''}
+          ${agents ? `&nbsp;·&nbsp; agents: <span style="color:var(--gn)">${agents.join(', ')}</span>` : ''}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px">
+          ${MANIFEST.modules.map(m => `
+            <div style="font-size:6.5px;color:var(--wt4);padding:1px 0">
+              <span style="color:var(--gn)">▸</span>
+              <span style="color:var(--am)">${m.n}</span>
+              <span style="color:var(--al)">— ${m.d}</span>
+            </div>`).join('')}
+        </div>`;
+    }
+
+    if (epEl) {
+      epEl.innerHTML = `
+        <div style="font-size:5.5px;color:var(--al);letter-spacing:.5px;margin-bottom:2px">HTTP SURFACE</div>
+        <div style="font-size:6.5px;color:var(--wt4)">
+          ${MANIFEST.endpoints.map(p => `<span style="color:var(--bl);margin-right:7px">${p}</span>`).join('')}
+        </div>
+        <div style="font-size:6px;color:var(--al);margin-top:3px">
+          governance: mutating routes gated by bearer token · production without a key refuses to start
+        </div>`;
+    }
+  };
+
+  return {
+    manifest: MANIFEST,
+    state: () => ({...link}),
+    endpoint, setEndpoint, probe, render,
+    init() { link.state = endpoint() ? 'CONFIGURED' : 'UNCONFIGURED'; link.url = endpoint(); render(); },
+  };
+})();
+
 // ── INIT GLUE ─────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     try { startClock(); } catch(e){}
     try { bindTooltips(); } catch(e){}
     try { TIP.init(); } catch(e){}
+    try { FORGE.init(); } catch(e){}
+    // Auto-probe only when an endpoint was explicitly configured.
+    try { if (FORGE.endpoint()) FORGE.probe(); } catch(e){}
   }, 500);
   // Hook into existing refreshes: update sparklines and derived views
   const origComputeThreat = window.computeThreat;
@@ -5593,6 +5795,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try { updateKpGauge(); } catch(e){}
     try { markFeedSeen('update'); } catch(e){}
   }, 15000);
+  // Re-probe the SDK only while a link is actually configured.
+  setInterval(() => {
+    try { if (FORGE.endpoint()) FORGE.probe(); } catch(e){}
+  }, 60000);
 });
 
 </script>
@@ -5613,13 +5819,15 @@ document.addEventListener('DOMContentLoaded', () => {
       <li><a href="artemis.html"><b>NEXUS v12 · Ontario</b> — intelligence platform deployment profile</a></li>
       <li><a href="xenolith.html"><b>XENOLITH</b> — the sovereign intelligence lattice — governed multi-domain command substrate</a></li>
       <li><a href="docs/guardian_command_nexus_spec.html"><b>Guardian Command Nexus Spec</b> — the implementation specification for the Guardian command surface</a></li>
-      <li><a href="flowsint.html"><b>Flowsint</b> — OSINT investigation graph for domains, IPs and transforms</a></li>
+      <li><a href="minerals.html"><b>Critical Minerals Intelligence</b> — public-data mineral supply-chain, policy, provenance and compliance intelligence</a></li>
     </ul>
     <p class="cgr-cta">Next step: <a href="store.html">Book a security engagement</a> · <a href="pricing.html">See pricing &amp; plans</a></p>
   </nav>
 </aside>
 <!-- cg-related:end -->
 <script defer src="nav.js"></script>
+<script defer src="/assets/js/future-buttons.js"></script>
+<script defer src="/cg-a11y.js"></script>
 </body>
 </html>
 <!-- HELIX GEOSPATIAL — new panel -->

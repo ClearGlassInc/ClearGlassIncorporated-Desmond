@@ -7,10 +7,12 @@ dependency on any single provider's SDK.
 
 from __future__ import annotations
 
+from collections.abc import AsyncIterator, Iterator
 from typing import Any
 
-from clearglassinc_sdk.clients.base import CompletionResult, LLMClient, ToolCall
+from clearglassinc_sdk.clients.base import CompletionResult, LLMClient, StreamChunk, ToolCall
 from clearglassinc_sdk.memory import Message
+from clearglassinc_sdk.tracing import Usage
 
 _DEFAULT_MAX_TOKENS = 4096
 
@@ -23,6 +25,7 @@ class AnthropicClient(LLMClient):
         api_key: str | None = None,
         model: str = "claude-sonnet-5",
         max_tokens: int = _DEFAULT_MAX_TOKENS,
+        timeout: float = 60.0,
     ) -> None:
         try:
             import anthropic
@@ -32,8 +35,8 @@ class AnthropicClient(LLMClient):
                 "pip install clearglassinc-sdk[anthropic]"
             ) from exc
 
-        self._client = anthropic.Anthropic(api_key=api_key)
-        self._async_client = anthropic.AsyncAnthropic(api_key=api_key)
+        self._client = anthropic.Anthropic(api_key=api_key, timeout=timeout)
+        self._async_client = anthropic.AsyncAnthropic(api_key=api_key, timeout=timeout)
         self.default_model = model
         self.max_tokens = max_tokens
 
@@ -81,7 +84,20 @@ class AnthropicClient(LLMClient):
                 content += block.text
             elif block.type == "tool_use":
                 tool_calls.append(ToolCall(id=block.id, name=block.name, arguments=block.input))
-        return CompletionResult(content=content, tool_calls=tool_calls, raw=response)
+        return CompletionResult(
+            content=content,
+            tool_calls=tool_calls,
+            raw=response,
+            usage=self._parse_usage(getattr(response, "usage", None)),
+        )
+
+    def _parse_usage(self, usage: Any) -> Usage | None:
+        if usage is None:
+            return None
+        return Usage(
+            input_tokens=getattr(usage, "input_tokens", 0) or 0,
+            output_tokens=getattr(usage, "output_tokens", 0) or 0,
+        )
 
     def complete(
         self,
@@ -120,3 +136,53 @@ class AnthropicClient(LLMClient):
             temperature=temperature,
         )
         return self._parse_response(response)
+
+    def stream(
+        self,
+        messages: list[Message],
+        *,
+        system: str | None = None,
+        tools: list[dict[str, Any]] | None = None,
+        model: str | None = None,
+        temperature: float = 0.7,
+    ) -> Iterator[StreamChunk]:
+        """True token-by-token streaming via the Messages streaming helper."""
+        with self._client.messages.stream(
+            model=model or self.default_model,
+            max_tokens=self.max_tokens,
+            system=system or "",
+            messages=self._to_anthropic_messages(messages),
+            tools=self._to_anthropic_tools(tools) or [],
+            temperature=temperature,
+        ) as stream:
+            for text in stream.text_stream:
+                yield StreamChunk(delta=text)
+            final = stream.get_final_message()
+
+        parsed = self._parse_response(final)
+        yield StreamChunk(delta="", done=True, tool_calls=parsed.tool_calls, usage=parsed.usage)
+
+    async def astream(
+        self,
+        messages: list[Message],
+        *,
+        system: str | None = None,
+        tools: list[dict[str, Any]] | None = None,
+        model: str | None = None,
+        temperature: float = 0.7,
+    ) -> AsyncIterator[StreamChunk]:
+        """Async variant of `stream`."""
+        async with self._async_client.messages.stream(
+            model=model or self.default_model,
+            max_tokens=self.max_tokens,
+            system=system or "",
+            messages=self._to_anthropic_messages(messages),
+            tools=self._to_anthropic_tools(tools) or [],
+            temperature=temperature,
+        ) as stream:
+            async for text in stream.text_stream:
+                yield StreamChunk(delta=text)
+            final = await stream.get_final_message()
+
+        parsed = self._parse_response(final)
+        yield StreamChunk(delta="", done=True, tool_calls=parsed.tool_calls, usage=parsed.usage)

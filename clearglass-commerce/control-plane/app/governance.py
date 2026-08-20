@@ -32,10 +32,25 @@ ACTION_RISK: dict[str, int] = {
     # low — Etsy connection introspection is read-only (detect creds / read shop identity)
     "etsy_connection_check": 0,
     "etsy_verify_connection": 5,
+    # low — Printful reads: credential detection, store identity, catalogue and
+    # order/tracking lookups. None of these change anything at the supplier.
+    "printful_connection_check": 0,
+    "printful_verify_connection": 5,
+    "printful_catalog_snapshot": 10,
+    "printful_order_status": 10,
+    "printful_shipping_estimate": 15,
     # medium — content/catalog changes that are reversible but customer-visible
     "refresh_products": 35,
     "publish_content": 45,
     "update_catalog": 40,
+    # medium — importing the supplier catalogue writes our own database only.
+    "printful_import_catalog": 40,
+    # medium — a Printful DRAFT order costs nothing, prints nothing, and can be
+    # deleted. It auto-executes on purpose: it is booked when a customer has
+    # already paid, and gating it would strand a paid order behind a queue while
+    # the reversible half of the work waits on a human. Confirmation, which is
+    # what actually spends money, stays escalated below.
+    "printful_draft_order": 45,
     # high — financial / fulfillment / outbound, hard to reverse
     "update_pricing": 80,
     "inventory_reorder": 75,
@@ -46,6 +61,10 @@ ACTION_RISK: dict[str, int] = {
     "etsy_update_listing": 80,
     "etsy_sync_inventory": 72,
     "etsy_manage_order": 80,
+    # high — confirming a Printful order debits the wallet and starts production;
+    # cancelling one abandons a parcel a customer is waiting for.
+    "printful_confirm_order": 88,
+    "printful_cancel_order": 85,
     # critical — irreversible or platform-level exposure
     "update_payment_settings": 100,
     "update_tax_settings": 95,
@@ -66,6 +85,12 @@ ALWAYS_ESCALATE = {
     "etsy_update_listing",
     "etsy_sync_inventory",
     "etsy_manage_order",
+    # Printful order confirmation spends real money and starts an irreversible
+    # print run; cancellation strands a paid customer. Both need a human, even
+    # when `printful_auto_confirm` is set — that flag records intent, it does not
+    # open the gate.
+    "printful_confirm_order",
+    "printful_cancel_order",
 }
 
 

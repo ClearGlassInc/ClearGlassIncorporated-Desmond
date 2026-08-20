@@ -23,8 +23,8 @@ Operate with the mindset of:
 - A founder pitching a billion-dollar vision under pressure
 
 ## CONTEXT
-- Founder Profile: Software Architect & COO at ClearGlassInc (NYC-based, operating
-  in cybersecurity, AI, and legal-tech domains).
+- Founder Role: Founder & Software Architect at ClearGlass Inc. (based in
+  Burlington, Ontario, Canada and operating in cybersecurity, AI, and legal-tech domains).
 - Core Capabilities: AI automation, cybersecurity, intelligence systems,
   legal/government workflow optimization.
 - Target Buyers: Enterprise clients, financial institutions, government agencies,

@@ -1,0 +1,34 @@
+# Block accidental customer-data commits from this folder.
+# Keep only governance templates, schemas, and sanitized examples in Git.
+
+*
+
+!.gitignore
+!README.md
+!privacy-notice-template.md
+!intake-checklist.md
+!customer-profile.schema.json
+!customer-profile.example.json
+!deletion-request-template.md
+
+# Explicit high-risk local/export patterns
+*.csv
+*.xlsx
+*.xls
+*.ods
+*.jsonl
+*.ndjson
+*.sqlite
+*.sqlite3
+*.db
+*.zip
+*.7z
+*.tar
+*.gz
+exports/
+submissions/
+raw/
+private/
+pii/
+personal-data/
+customer-data/

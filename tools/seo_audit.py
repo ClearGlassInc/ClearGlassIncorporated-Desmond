@@ -42,7 +42,7 @@ OUT = ROOT / "data" / "seo" / "audit.json"
 # Directories that are not part of the indexable marketing site.
 SKIP_DIRS = {
     ".git", "node_modules", "clearglass-commerce", "apps", "tools",
-    "bots", ".github", "assets", "docs",
+    "bots", ".github", "assets", "docs", "projects",
 }
 
 
@@ -234,15 +234,48 @@ REQUIRED_FIELDS = {
 }
 
 
-def walk_nodes(node, out: list[dict]) -> None:
+# Properties whose values are *references* to outside things — a cited source,
+# a topic, a mentioned entity — rather than part of the entity this page is
+# publishing. Google's required-property rules apply to the page's own primary
+# entity, so a bibliographic `citation` naming a third-party article must not be
+# held to Article.headline (a citation carries `name`), nor its publisher to
+# Organization.url. Validating them produces noise that hides real defects.
+REFERENCE_KEYS = frozenset({
+    "citation", "about", "mentions", "sameAs", "subjectOf", "isBasedOn",
+    "isPartOf", "relatedLink", "significantLink",
+})
+
+
+def _canonical_rel(canonical: str) -> str:
+    """Normalise a canonical URL to a repo-relative page path."""
+    path = canonical.split("://", 1)[-1]
+    path = path[path.find("/"):] if "/" in path else "/"
+    return path.split("#", 1)[0].split("?", 1)[0].lstrip("/").rstrip("/")
+
+
+def _canonical_points_away(canonical: str | None, rel: str) -> bool:
+    """True when rel=canonical names a different page than `rel` itself."""
+    if not canonical:
+        return False
+    own = rel.removesuffix("index.html")
+    return _canonical_rel(canonical) not in {rel, own.rstrip("/")}
+
+
+def walk_nodes(node, out: list[dict], refs: set[int] | None = None,
+               _in_ref: bool = False) -> None:
+    """Collect every typed node. When `refs` is given, record the id() of nodes
+    reached through a REFERENCE_KEYS property so callers can skip validating
+    them."""
     if isinstance(node, dict):
         if "@type" in node:
             out.append(node)
-        for value in node.values():
-            walk_nodes(value, out)
+            if _in_ref and refs is not None:
+                refs.add(id(node))
+        for key, value in node.items():
+            walk_nodes(value, out, refs, _in_ref or key in REFERENCE_KEYS)
     elif isinstance(node, list):
         for item in node:
-            walk_nodes(item, out)
+            walk_nodes(item, out, refs, _in_ref)
 
 
 def audit_structured_data(parser: PageParser, rel: str, findings: list[dict]) -> list[str]:
@@ -257,13 +290,16 @@ def audit_structured_data(parser: PageParser, rel: str, findings: list[dict]) ->
             })
             continue
         nodes: list[dict] = []
-        walk_nodes(data, nodes)
+        refs: set[int] = set()
+        walk_nodes(data, nodes, refs)
         for node in nodes:
             raw_type = node.get("@type")
             for t in (raw_type if isinstance(raw_type, list) else [raw_type]):
                 if not isinstance(t, str):
                     continue
                 types.append(t)
+                if id(node) in refs:
+                    continue
                 for field in REQUIRED_FIELDS.get(t, []):
                     if field not in node:
                         findings.append({
@@ -293,6 +329,10 @@ def audit_page(path: Path, in_sitemap: set[str], disallow: list[str],
         "page": rel,
         "url": f"{SITE}/{'' if rel == 'index.html' else rel}",
         "indexable": not noindex and not blocked,
+        # A page whose rel=canonical names a *different* page has been
+        # deliberately consolidated into that page: it is not a discovery gap
+        # and not a competing duplicate, it is the documented fix for one.
+        "canonical_elsewhere": _canonical_points_away(parser.canonical, rel),
         "noindex": noindex,
         "in_sitemap": listed,
         "robots_blocked": blocked,
@@ -304,7 +344,10 @@ def audit_page(path: Path, in_sitemap: set[str], disallow: list[str],
         "h1_count": sum(1 for lvl, _ in parser.headings if lvl == 1),
         "schema_types": [],
         "internal_links": 0,
-        "images_missing_alt": sum(1 for i in parser.images if not (i["alt"] or "").strip()),
+        # An *absent* alt attribute is the defect. An explicitly empty alt=""
+        # is the correct WCAG markup for a decorative image (logos, seals,
+        # spacers) and must not be reported as missing.
+        "images_missing_alt": sum(1 for i in parser.images if i["alt"] is None),
         "bytes": len(raw.encode("utf-8")),
     }
 
@@ -331,7 +374,10 @@ def audit_page(path: Path, in_sitemap: set[str], disallow: list[str],
         # Utility pages are deliberately thin; stop before content scoring.
         return record
 
-    if not listed:
+    if not listed and record["indexable"] and not record["canonical_elsewhere"]:
+        # Only indexable pages belong in the sitemap. A noindex page, or one
+        # canonicalized into another page, that has been dropped from it is
+        # correctly configured, not a discovery gap.
         findings.append({
             "page": rel, "level": "warn", "check": "sitemap.missing",
             "message": "Indexable page is absent from sitemap.xml — search engines may not discover it.",
@@ -508,17 +554,27 @@ def audit_uniqueness(records: dict[str, dict], findings: list[dict]) -> None:
         for rel, record in records.items():
             if not record["indexable"] or rel in UTILITY_PAGES:
                 continue
+            if field != "canonical" and record.get("canonical_elsewhere"):
+                # Consolidated into another page — it no longer competes.
+                continue
             value = record.get(field)
             if value:
                 owners.setdefault(value.strip(), []).append(rel)
         for value, pages in owners.items():
-            if len(pages) > 1:
-                findings.append({
-                    "page": ", ".join(sorted(pages)),
-                    "level": "warn",
-                    "check": f"{field}.duplicate",
-                    "message": f"{len(pages)} indexable pages share the same {field}: '{value}'.",
-                })
+            if len(pages) < 2:
+                continue
+            if field == "canonical" and _canonical_rel(value) in set(pages):
+                # Deliberate consolidation: the pages sharing this canonical
+                # name one of their own group as the target. That is the
+                # documented fix for duplicate content, not a defect. A group
+                # pointing at a page outside itself still gets flagged.
+                continue
+            findings.append({
+                "page": ", ".join(sorted(pages)),
+                "level": "warn",
+                "check": f"{field}.duplicate",
+                "message": f"{len(pages)} indexable pages share the same {field}: '{value}'.",
+            })
 
 
 # ---------------------------------------------------------------------------

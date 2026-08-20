@@ -1,0 +1,159 @@
+/* ClearGlass Artemis Browser — mission red/black presentation layer.
+   Theme-only overrides. No layout, interaction, routing, or component behavior changes. */
+
+:root {
+  color-scheme: dark;
+  --bg: #050202;
+  --panel: rgba(21, 6, 7, .78);
+  --line: rgba(255, 42, 58, .28);
+  --text: #ffeef0;
+  --muted: #bda3a6;
+  --cyan: #ff2a3a;
+  --violet: #c81e28;
+  --green: #34d399;
+  --amber: #ffb347;
+}
+
+body {
+  background: radial-gradient(130% 100% at 50% -10%, #1a0608 0%, #0c0304 45%, #050202 100%);
+}
+
+.aurora {
+  background: conic-gradient(from 120deg, transparent, rgba(255, 42, 58, .92), transparent, rgba(122, 16, 24, .9), transparent);
+  opacity: .16;
+}
+
+h1 {
+  background: linear-gradient(90deg, #fff6f7 0%, #ff8c95 42%, #ff2a3a 72%, #c81e28 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.actions a {
+  color: #fff6f7;
+  background: linear-gradient(90deg, #7a1018, #ff2a3a);
+  box-shadow: 0 0 24px rgba(255, 42, 58, .16);
+}
+
+.actions .secondary {
+  color: var(--text);
+  background: rgba(30, 8, 10, .82);
+  border-color: var(--line);
+  box-shadow: none;
+}
+
+.metrics b,
+.card,
+.panel,
+.browser,
+.architecture {
+  background: linear-gradient(145deg, rgba(24, 7, 9, .88), rgba(10, 3, 4, .82));
+  border-color: var(--line);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .46), inset 0 1px 0 rgba(255, 182, 186, .05);
+}
+
+.tabs span {
+  border-color: var(--line);
+}
+
+.tabs .active {
+  box-shadow: 0 0 24px rgba(255, 42, 58, .28);
+}
+
+.glyph {
+  color: var(--cyan);
+  filter: drop-shadow(0 0 20px rgba(255, 42, 58, .42));
+}
+
+.capture .glyph {
+  color: var(--green);
+  filter: drop-shadow(0 0 26px rgba(52, 211, 153, .34));
+}
+
+.skip-link {
+  background: #ff2a3a;
+  color: #fff6f7;
+}
+
+.site-header {
+  background: rgba(5, 2, 3, .88);
+  border-bottom-color: rgba(255, 42, 58, .18);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .24);
+}
+
+.brand-mark {
+  border-color: rgba(255, 42, 58, .32);
+  background: linear-gradient(145deg, rgba(255, 42, 58, .20), rgba(122, 16, 24, .18));
+  color: #ff8c95;
+  box-shadow: inset 0 1px 0 rgba(255, 182, 186, .08), 0 0 20px rgba(255, 42, 58, .08);
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible,
+.section-nav a:hover,
+.section-nav a:focus-visible {
+  color: var(--text);
+  background: rgba(255, 42, 58, .10);
+}
+
+.breadcrumbs li + li::before {
+  color: rgba(189, 163, 166, .48);
+}
+
+.section-nav {
+  border-color: var(--line);
+  background: rgba(8, 2, 3, .90);
+  box-shadow: 0 12px 38px rgba(0, 0, 0, .24);
+}
+
+.system-section {
+  border-top-color: rgba(255, 42, 58, .16);
+}
+
+.system-grid article {
+  border-color: var(--line);
+  background: linear-gradient(145deg, rgba(24, 7, 9, .82), rgba(9, 3, 4, .78));
+  box-shadow: inset 0 1px 0 rgba(255, 182, 186, .05);
+}
+
+.related-links > div a {
+  border-color: var(--line);
+  background: linear-gradient(145deg, rgba(21, 6, 7, .84), rgba(8, 2, 3, .80));
+}
+
+.next-step {
+  border-color: rgba(255, 42, 58, .34);
+  background: linear-gradient(100deg, rgba(122, 16, 24, .20), rgba(255, 42, 58, .10), rgba(30, 6, 8, .76));
+  box-shadow: inset 0 1px 0 rgba(255, 182, 186, .05), 0 18px 54px rgba(0, 0, 0, .24);
+}
+
+.next-step > span {
+  color: #ff8c95;
+}
+
+.next-step a {
+  background: linear-gradient(90deg, #c81e28, #ff2a3a);
+  color: #fff6f7;
+  box-shadow: 0 0 20px rgba(255, 42, 58, .14);
+}
+
+.site-footer {
+  border-top-color: rgba(255, 42, 58, .18);
+}
+
+::selection {
+  background: rgba(255, 42, 58, .30);
+  color: #fff6f7;
+}
+
+:focus-visible {
+  outline-color: rgba(255, 42, 58, .78);
+}
+
+@media (max-width: 820px) {
+  .nav-links {
+    background: #0b0304;
+    border-color: rgba(255, 42, 58, .30);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .72);
+  }
+}

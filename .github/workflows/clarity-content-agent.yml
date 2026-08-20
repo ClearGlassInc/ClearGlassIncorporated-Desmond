@@ -1,0 +1,31 @@
+name: Clarity 50-30-20 Content Agent
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+      - name: Test content policy and allocation
+        run: python -m unittest -v test_content_agent.py
+      - name: Generate governed draft brief
+        run: python content_agent.py --seed content_seed.example.json --output content-brief.md --json-output content-brief.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: clarity-content-drafts
+          path: |
+            content-brief.md
+            content-brief.json
+          if-no-files-found: error
+          retention-days: 14

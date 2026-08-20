@@ -1,4 +1,11 @@
-# Cloudflare content protection
+# Cloudflare content protection (retired Terraform owner)
+
+> **STOP:** this directory is frozen and must not be planned or applied as an
+> independent stack. `infra/edge` is the sole target owner for zone-level edge
+> resources. `ownership_guard.tf` deliberately fails ordinary operations while
+> historical state is inventoried, snapshotted, detached, and imported through
+> the protected workflow. The files remain only as migration evidence and for
+> the Worker source that has not yet been consolidated.
 
 Edge protection for ClearGlass high-value content, layered **in front of** the
 origin controls already shipped in the admin app (server-side premium content,
@@ -22,15 +29,10 @@ Everything here is Terraform + one Worker, and **every enforcement rule ships in
 | `workers/asset-guard.js` | Edge signed-token verification + hotlink prevention (mirrors `admin/lib/signing.ts`) |
 | `terraform.tfvars.example` | Phase-1 (all-`log`) starting config |
 
-```bash
-cd clearglass-commerce/infra/cloudflare
-cp terraform.tfvars.example terraform.tfvars   # fill in ids
-export CLOUDFLARE_API_TOKEN=...                 # Zone WAF+Rulesets+Logs+Workers
-terraform init && terraform plan                # review before apply
-terraform apply
-# Edge asset guard:
-cd workers && wrangler secret put ASSET_SIGNING_SECRET && wrangler deploy
-```
+Do not bypass the guard for routine work. The only permitted temporary override
+is a reviewed migration or emergency rollback that names the state snapshot,
+change ticket, exact resources, operator, and recovery plan. Worker deployment
+is separately governed and is not authorized by this historical README.
 
 ## How the layers fit together
 
@@ -118,10 +120,9 @@ into a dashboard custom rule to prototype:
 | **3 — Block confirmed** | Promote confirmed-malicious tiers to `block`; rate limits → `managed_challenge`. Enable SBFM if plan supports. | Scraper volume down; clean legit traffic. |
 | **4 — Tighten** | Lower `*_rpm_per_ip`, shorten windows, move rate limits to `block`, raise OWASP paranoia. | Stable steady state. |
 
-**Rollback (any phase, seconds):** set the affected `action_*` back to `"log"`
-(or `enable_managed_waf = false`) and `terraform apply` — rules keep matching for
-evidence but stop acting. To fully disable, `terraform destroy` the specific
-ruleset resource. The Worker can be reverted with `wrangler rollback`.
+**Rollback:** use the authoritative `infra/edge` rollback workflow. Do not run a
+second apply from this directory and do not remove provider resources as a
+substitute for state migration.
 
 ## SEO / provenance
 

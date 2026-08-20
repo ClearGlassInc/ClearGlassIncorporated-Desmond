@@ -7,7 +7,7 @@ As your CEO and AI Strategy Architect, I'm deploying a comprehensive **Prompt-Pa
 **Core Assets:**
 - **Technical Stack:** C++, Python, Node.js, Swift, Next.js, GitHub Actions
 - **Domain Expertise:** Cybersecurity, AI agent orchestration, legal-tech/banking automation, OSINT
-- **Geographic Leverage:** NYC headquarters + Ontario tech corridor presence
+- **Geographic Leverage:** Burlington, Ontario base + Greater Toronto and Hamilton tech corridor presence
 - **Unique Value:** DARPA-level security + futuristic UI/UX + viral content automation
 
 **Critical Gap:** Your expertise is siloed. You're building advanced systems but not systematically amplifying their market impact across all four dimensions simultaneously.

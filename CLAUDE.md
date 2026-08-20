@@ -23,6 +23,7 @@ The flagship backend is the **Autonomous E‑Commerce Operator** in
 | `apps/autostore/` | Earlier/parallel control plane + cockpit. Appears superseded by `clearglass-commerce/` — confirm before extending it |
 | `agents/` | Per‑agent definitions (`agent.json`, `system_prompt.md`, tool schemas) |
 | `bots/` | Standalone Python automation bots invoked by workflows (e.g. `store_smoke_bot.py`) |
+| `deployment/` | Per-product deployment layers: n8n workflow exports, ledger SQL, runbooks (`cashpulse/`, `rfed/`) |
 | `data/` | Committed JSON feeds: `data/store/catalog.json`, `data/control-surface/*` |
 | `operations/` | Generated reports + handoff pages (priority matrix, SEO, health, defender) |
 | `sentinel/` | Named-agent index (PERCIVAL, SENTINEL, AEGIS, PFAS, Agent Mesh) — keyless, stdlib-only, fail-closed Python agents; see `sentinel/PERCIVAL_AGENTS.md`. Includes the real PERCIVAL governor/identity/capability/mission-memory stack plus target-state v9 distributed-architecture docs (nothing in those docs is provisioned — see their own status banners) |
@@ -43,6 +44,22 @@ Every material change is written to an append‑only audit ledger (`events` tabl
 high/critical action execute without an approval — `daily_loop.py`'s governance
 self‑check (and `tests/test_governance.py`) will fail if you do, by design.
 
+Approving is not executing. `POST /approvals/{id}/approve` only records the
+decision; `POST /approvals/{id}/execute` carries it out, via the action→executor
+registry in `app/approval_executor.py` (dispatch, single-use claim) and
+`app/executors.py` (the actual work). Two rules there are load-bearing:
+
+- An approved row is claimed with a conditional `UPDATE ... WHERE status='approved'`
+  whose **rowcount is the proof**, committed before any side effect. One human
+  decision can never become two refunds.
+- An action with **no registered executor is refused and left `approved`** — never
+  marked executed. `GET /approvals/coverage` and the daily loop list what is
+  `executable`, `delegated` (claimed by a dedicated endpoint, e.g.
+  `printful_confirm_order`), and `uncovered`. Most gated actions are still
+  uncovered; that is reported, not hidden. Do **not** register a placeholder
+  executor to make the list look complete — telling an operator a refund was
+  issued when it wasn't is worse than the dead end.
+
 Operating rules also enforced in code/prompt: never fabricate inventory, reviews,
 sales, or urgency; never change live pricing/tax/payment/refund/fulfillment
 without approval; log every action.
@@ -53,6 +70,14 @@ credential (`ADMIN_API_KEY`, see `app/security.py`). Unset = open dev/mock mode;
 `APP_ENV=production` with no key **fails closed at startup**. Customer checkout, the
 signature-verified Stripe webhook, and read-only telemetry stay open. Don't add a
 mutating admin route without gating it behind `require_admin`.
+
+Prices are resolved server-side. `POST /checkout/session` takes **SKUs and quantities
+only**; amounts come from the price book (`app/pricebook.py`, `app/data/pricebook.json`)
+and never from the request body, because a checkout line item's `amount` goes straight
+into Stripe's `unit_amount`. `tests/test_pricebook.py` enforces this, down to asserting
+the `CheckoutLineItem` OpenAPI schema has exactly `{sku, quantity}` — don't add a
+price-shaped field back to that contract. Stripe account/go-live state is documented in
+`clearglass-commerce/STRIPE_SETUP.md`.
 
 Abuse/resilience controls (also in `app/security.py`): checkout, the Stripe webhook,
 and approval decisions carry per-IP rate limits (`RATE_LIMIT_*_PER_MINUTE`), and the
@@ -101,7 +126,17 @@ are documented in `clearglass-commerce/DEPLOY.md` (Render blueprint recommended)
 - **Commerce Frontend CI** (`commerce-frontend-ci.yml`): `tsc --noEmit` +
   `next build` for storefront and admin.
 - **Commerce Daily Loop** (`commerce-daily-loop.yml`): storefront smoke test +
-  governance self‑check + executive report (scheduled 13:00 UTC).
+  governance self‑check + executive report + RFED governance self‑check
+  (scheduled 13:00 UTC).
+- **CI** (`ci.yml`): root `pytest tests/`, which covers the RFED core and the
+  Python↔n8n hash-parity gate.
+
+Two access-control gates are enforced by test rather than convention, because
+convention is what fails silently:
+`clearglass-commerce/control-plane/tests/test_route_auth_coverage.py` asserts
+every mutating route is behind `require_admin` or on a justified allow-list, and
+`tests/test_rfed_hash_parity.py` pins the two RFED implementations together. See
+`security/RMM_AUTH_BYPASS_HARDENING.md` for why.
 
 ## Internal linking system (static site)
 
@@ -114,11 +149,70 @@ live in `tools/internal_links.py` (stdlib only).
 - **Adding/renaming a page?** Add it to `PAGES` and a cluster in
   `tools/internal_links.py`, then run `python3 tools/internal_links.py`
   (idempotent; `--check` verifies freshness). Add the URL to `sitemap.xml`.
+  Then run `python3 tools/design_system.py` (below) — it wires the shared
+  design system, navigation, keyboard contract, and social card onto the page.
 - Don't hand-edit the generated blocks — regenerate them.
 - Full-viewport HUD pages (`body{overflow:hidden}`) are listed in
   `FIXED_VIEWPORT` and get a fixed corner chip instead of a footer block.
 - When many pages change, bump `VERSION` in `sw.js` so returning visitors'
   service-worker caches refresh.
+
+## The ClearGlass Interface System (static site)
+
+The homepage-derived visual language (`assets/css/cg-design-system.css`) only
+holds if every page actually *loads* it, so adoption is enforced rather than
+assumed. `tools/design_system.py` gates four contracts across all 143 routes:
+the design-system CSS, `nav.js`, `cg-a11y.js`, and a Twitter/X card.
+
+```bash
+python3 tools/design_system.py           # apply (idempotent)
+python3 tools/design_system.py --check   # exit 1 if any route is stale
+python3 tools/design_system.py --report  # regenerate DESIGN_SYSTEM_AUDIT.md
+```
+
+Two things to know before editing site chrome:
+
+- **There are two navigation systems.** `control-surface.js` sets
+  `window.__cgNavLoaded = true` to deliberately supersede `nav.js` on 35 pages.
+  Because of that, the keyboard contract (skip link, `aria-current`) lives in
+  `cg-a11y.js`, which runs under either one. Don't move it back into `nav.js`.
+- **Social metadata is derived, never invented** — from `og:*`, then
+  `<title>`/`description`. A page with nothing to borrow is reported, not
+  given filler text.
+
+Exemptions in `EXEMPT`/`NAV_EXEMPT` each need a stated reason; a test enforces
+it. Contracts are gated by `tests/test_design_system.py` (so `pytest tests/`
+fails the build on drift) and by Playwright suites in `tests/browser/` — those
+must load pages with `?skipboot=1` to bypass the first-visit boot loader.
+Full write-up, known gaps, and rollback: `DESIGN_SYSTEM.md`.
+
+## The RFED™ audit trail (agentic workflows)
+
+`bots/rfed_audit_bot.py` is the governed audit trail for agentic automation —
+the same safety model as the commerce OS, applied to actions a model influences.
+RFED = **R**ecorded **F**actual **E**vidence of **D**ecision: every action is
+recorded as Request → Facts → Evidence → Decision and sealed into a SHA-256 hash
+chain, so altering any past record breaks every link after it.
+
+```bash
+python -m bots.rfed_audit_bot --self-check          # governance invariants (stdlib only)
+python -m bots.rfed_audit_bot --verify ledger.jsonl # replay a ledger's hash chain
+python -m bots.rfed_audit_bot --summary ledger.jsonl
+```
+
+Same invariant as commerce: **read-only analysis → draft → human approval →
+execution.** Actions touching access, credentials, remote execution, or data
+export score 92–100 and always escalate; `modify_audit_log` is blocked outright;
+unknown actions fail closed at 85. Ungrounded output (no citations), low
+confidence, and injection markers in untrusted facts each hard-gate on their own.
+
+- The n8n layer (`deployment/rfed/workflow_rfed_audit_trail.json`) **mirrors** the
+  Python risk tables. Change one, change both, then run
+  `tests/test_rfed_hash_parity.py` — it asserts byte-identical canonical JSON and
+  identical chain hashes across the two implementations.
+- Approvals **append a new record**; they never mutate the original.
+- Bump `POLICY_VERSION` when the risk table or gating logic changes.
+- Spec: `docs/rfed_audit_trail_spec.md`. Deploy runbook: `deployment/rfed/README.md`.
 
 ## Conventions
 

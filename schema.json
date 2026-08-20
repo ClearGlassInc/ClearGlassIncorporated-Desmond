@@ -4,8 +4,11 @@
     {
       "@type": "Organization",
       "@id": "https://www.clearglassinc.com/#org",
-      "name": "ClearGlass Inc",
-      "url": "https://www.clearglassinc.com",
+      "name": "ClearGlass Inc.",
+      "legalName": "ClearGlass Inc.",
+      "url": "https://www.clearglassinc.com/",
+      "email": "desmond@clearglassinc.com",
+      "telephone": "+1-289-707-0269",
       "logo": "https://www.clearglassinc.com/assets/images/clearglass-logo.png",
       "foundingDate": "2024",
       "founder": {
@@ -13,10 +16,7 @@
       },
       "sameAs": [
         "https://github.com/ClearGlassInc",
-        "https://www.linkedin.com/company/clearglassinc",
-        "https://x.com/clearglassinc",
-        "https://www.facebook.com/clearglassinc",
-        "https://www.instagram.com/clearglassinc"
+        "https://www.linkedin.com/company/cleaglassinc"
       ],
       "address": {
         "@type": "PostalAddress",
@@ -37,7 +37,7 @@
         },
         {
           "@type": "ContactPoint",
-          "email": "desmondotieno@icloud.com",
+          "email": "desmond@clearglassinc.com",
           "contactType": "customer support",
           "areaServed": [
             "CA",
@@ -51,12 +51,12 @@
       "@type": "Person",
       "@id": "https://www.clearglassinc.com/#desmond",
       "name": "Desmond Otieno Odhiambo",
-      "jobTitle": "Founder & Chairman, Software Architect",
+      "jobTitle": "Founder & Software Architect",
       "worksFor": {
         "@id": "https://www.clearglassinc.com/#org"
       },
       "url": "https://www.clearglassinc.com/#founder",
-      "email": "mailto:desmondotieno@icloud.com",
+      "email": "mailto:desmond@clearglassinc.com",
       "knowsAbout": [
         "Cybersecurity",
         "AI Automation",
@@ -132,7 +132,7 @@
         "Investigative Automation",
         "Enterprise Workflow Automation"
       ],
-      "email": "desmondotieno@icloud.com",
+      "email": "desmond@clearglassinc.com",
       "currenciesAccepted": "CAD",
       "serviceArea": {
         "@type": "GeoCircle",
@@ -151,10 +151,7 @@
       },
       "sameAs": [
         "https://github.com/ClearGlassInc",
-        "https://www.linkedin.com/company/clearglassinc",
-        "https://x.com/clearglassinc",
-        "https://www.facebook.com/clearglassinc",
-        "https://www.instagram.com/clearglassinc"
+        "https://www.linkedin.com/company/cleaglassinc"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",

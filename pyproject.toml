@@ -57,6 +57,7 @@ omit = ["*/tests/*", "*/__init__.py"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+extend-exclude = ["vendor"]
 
 [tool.mypy]
 python_version = "3.11"

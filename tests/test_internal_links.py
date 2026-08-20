@@ -60,14 +60,17 @@ def test_flow_report_is_current() -> None:
     assert internal_links.REPORT_PATH.read_text(encoding="utf-8") == internal_links.build_report()
 
 
-def test_every_html_page_is_mapped_or_explicitly_excluded() -> None:
+def test_every_html_page_is_mapped_native_or_explicitly_excluded() -> None:
     discovered = {
         path.relative_to(ROOT).as_posix()
         for path in ROOT.rglob("*.html")
-        if ".git" not in path.parts and "node_modules" not in path.parts
+        if not internal_links.NON_SITE_DIRS & set(path.parts)
     }
     mapped = set(internal_links.PAGES)
+    native = set(internal_links.NATIVE_JOURNEY_PAGES)
     excluded = set(internal_links.EXCLUDED_PAGES)
 
     assert not mapped & excluded
-    assert discovered == mapped | excluded
+    assert not mapped & native
+    assert not native & excluded
+    assert discovered == mapped | native | excluded

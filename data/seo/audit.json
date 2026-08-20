@@ -1,25 +1,20 @@
 {
-  "generated": "2026-08-19T07:24:23+00:00",
+  "generated": "2026-08-20T07:26:29+00:00",
   "site": "https://www.clearglassinc.com",
-  "score": 96,
+  "score": 99,
   "totals": {
-    "pages": 189,
-    "indexable": 175,
-    "in_sitemap": 172,
+    "pages": 190,
+    "indexable": 176,
+    "in_sitemap": 176,
     "noindex": 13,
-    "with_schema": 80,
+    "with_schema": 81,
     "errors": 0,
-    "warnings": 25,
+    "warnings": 7,
     "info": 39
   },
   "by_check": {
     "heading.order": 39,
     "h1.multiple": 5,
-    "description.length": 4,
-    "schema.required": 4,
-    "orphan": 4,
-    "sitemap.missing": 3,
-    "title.length": 3,
     "weight": 2
   },
   "findings": [
@@ -28,72 +23,6 @@
       "level": "warn",
       "check": "weight",
       "message": "309 KB of HTML \u2014 heavy enough to hurt LCP on mobile."
-    },
-    {
-      "page": "blog/2027-outlook-transition-risk-monitoring.html",
-      "level": "warn",
-      "check": "sitemap.missing",
-      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
-    },
-    {
-      "page": "blog/2027-outlook-transition-risk-monitoring.html",
-      "level": "warn",
-      "check": "title.length",
-      "message": "Title is 75 chars; over ~62 it is truncated in results."
-    },
-    {
-      "page": "blog/2027-outlook-transition-risk-monitoring.html",
-      "level": "warn",
-      "check": "description.length",
-      "message": "Meta description is 189 chars; Google truncates near 165."
-    },
-    {
-      "page": "blog/2027-outlook-transition-risk-monitoring.html",
-      "level": "warn",
-      "check": "orphan",
-      "message": "No internal links point to this page \u2014 it receives no internal link equity."
-    },
-    {
-      "page": "blog/canada-strategic-position-2026.html",
-      "level": "warn",
-      "check": "sitemap.missing",
-      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
-    },
-    {
-      "page": "blog/canada-strategic-position-2026.html",
-      "level": "warn",
-      "check": "title.length",
-      "message": "Title is 70 chars; over ~62 it is truncated in results."
-    },
-    {
-      "page": "blog/canada-strategic-position-2026.html",
-      "level": "warn",
-      "check": "description.length",
-      "message": "Meta description is 207 chars; Google truncates near 165."
-    },
-    {
-      "page": "blog/canada-strategic-position-2026.html",
-      "level": "warn",
-      "check": "orphan",
-      "message": "No internal links point to this page \u2014 it receives no internal link equity."
-    },
-    {
-      "page": "blog/ontario-caf-covid-influence-operations-dossier.html",
-      "level": "warn",
-      "check": "title.length",
-      "message": "Title is 77 chars; over ~62 it is truncated in results."
-    },
-    {
-      "page": "blog/ontario-caf-covid-influence-operations-dossier.html",
-      "level": "warn",
-      "check": "description.length",
-      "message": "Meta description is 210 chars; Google truncates near 165."
-    },
-    {
-      "page": "blog/ontario-caf-covid-influence-operations-dossier.html",
-      "level": "warn",
-      "check": "orphan",
-      "message": "No internal links point to this page \u2014 it receives no internal link equity."
     },
     {
       "page": "bluedesk.html",
@@ -130,48 +59,6 @@
       "level": "warn",
       "check": "h1.multiple",
       "message": "Page has 2 <h1> elements \u2014 one primary heading is clearer."
-    },
-    {
-      "page": "revenue.html",
-      "level": "warn",
-      "check": "schema.required",
-      "message": "Organization is missing required property 'url'"
-    },
-    {
-      "page": "revenue.html",
-      "level": "warn",
-      "check": "schema.required",
-      "message": "Organization is missing required property 'url'"
-    },
-    {
-      "page": "revenue.html",
-      "level": "warn",
-      "check": "schema.required",
-      "message": "Organization is missing required property 'url'"
-    },
-    {
-      "page": "revenue.html",
-      "level": "warn",
-      "check": "schema.required",
-      "message": "Organization is missing required property 'url'"
-    },
-    {
-      "page": "revenue.html",
-      "level": "warn",
-      "check": "sitemap.missing",
-      "message": "Indexable page is absent from sitemap.xml \u2014 search engines may not discover it."
-    },
-    {
-      "page": "revenue.html",
-      "level": "warn",
-      "check": "description.length",
-      "message": "Meta description is 173 chars; Google truncates near 165."
-    },
-    {
-      "page": "revenue.html",
-      "level": "warn",
-      "check": "orphan",
-      "message": "No internal links point to this page \u2014 it receives no internal link equity."
     },
     {
       "page": "CG-os.html",
@@ -626,7 +513,7 @@
       "schema_types": [],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 12229,
+      "bytes": 12224,
       "inbound_links": 7
     },
     {
@@ -856,9 +743,9 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 205,
+      "internal_links": 210,
       "images_missing_alt": 0,
-      "bytes": 41018,
+      "bytes": 41497,
       "inbound_links": 11
     },
     {
@@ -910,12 +797,12 @@
       "indexable": true,
       "canonical_elsewhere": false,
       "noindex": false,
-      "in_sitemap": false,
+      "in_sitemap": true,
       "robots_blocked": null,
-      "title": "2027 Outlook: Transition, Valuation & Risk Monitoring | ClearGlass Insights",
-      "title_length": 75,
-      "description": "A ClearGlass evidence-led 2027 outlook: macro forecasts, AI investment, valuation sensitivity, rates, inflation, recession scenarios, the historic A/B/C cycle, and a monthly risk dashboard.",
-      "description_length": 189,
+      "title": "2027 Outlook: Transition, Valuation & Risk | ClearGlass",
+      "title_length": 55,
+      "description": "An evidence-led 2027 outlook: macro forecasts, AI investment, valuation sensitivity, rates, recession scenarios and a monthly risk dashboard.",
+      "description_length": 141,
       "canonical": "https://www.clearglassinc.com/blog/2027-outlook-transition-risk-monitoring.html",
       "h1_count": 1,
       "schema_types": [
@@ -923,10 +810,10 @@
         "Person",
         "Organization"
       ],
-      "internal_links": 1,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 24259,
-      "inbound_links": 0
+      "bytes": 30415,
+      "inbound_links": 7
     },
     {
       "page": "blog/agentic-ai-business-operating-model.html",
@@ -1191,7 +1078,7 @@
       ],
       "internal_links": 16,
       "images_missing_alt": 0,
-      "bytes": 45220,
+      "bytes": 45219,
       "inbound_links": 7
     },
     {
@@ -1225,12 +1112,12 @@
       "indexable": true,
       "canonical_elsewhere": false,
       "noindex": false,
-      "in_sitemap": false,
+      "in_sitemap": true,
       "robots_blocked": null,
-      "title": "Canada Strategic Position, 2026: DIMEFIL Command Briefing | ClearGlass",
-      "title_length": 70,
-      "description": "Evidence-driven strategic assessment of Canada in mid-2026: economic position, Arctic security, defense readiness, foreign interference, trade exposure, critical minerals, scenarios and a ten-year end state.",
-      "description_length": 207,
+      "title": "Canada Strategic Position 2026: DIMEFIL Briefing",
+      "title_length": 48,
+      "description": "An evidence-driven assessment of Canada in mid-2026: economy, Arctic security, defense readiness, foreign interference, critical minerals and scenarios.",
+      "description_length": 152,
       "canonical": "https://www.clearglassinc.com/blog/canada-strategic-position-2026.html",
       "h1_count": 1,
       "schema_types": [
@@ -1239,10 +1126,10 @@
         "Organization",
         "WebPage"
       ],
-      "internal_links": 4,
+      "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 32927,
-      "inbound_links": 0
+      "bytes": 39139,
+      "inbound_links": 7
     },
     {
       "page": "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html",
@@ -1694,7 +1581,7 @@
       ],
       "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 32948,
+      "bytes": 32983,
       "inbound_links": 9
     },
     {
@@ -1760,10 +1647,10 @@
         "ListItem",
         "ListItem"
       ],
-      "internal_links": 67,
+      "internal_links": 69,
       "images_missing_alt": 0,
-      "bytes": 133435,
-      "inbound_links": 200
+      "bytes": 135512,
+      "inbound_links": 212
     },
     {
       "page": "blog/master-investigator-legal-tech-osint-government-accountability.html",
@@ -1787,7 +1674,7 @@
       "internal_links": 16,
       "images_missing_alt": 0,
       "bytes": 26382,
-      "inbound_links": 8
+      "inbound_links": 9
     },
     {
       "page": "blog/network-orchestration-ai-automation-cybersecurity.html",
@@ -1842,7 +1729,7 @@
       "internal_links": 20,
       "images_missing_alt": 0,
       "bytes": 39564,
-      "inbound_links": 9
+      "inbound_links": 11
     },
     {
       "page": "blog/ontario-caf-covid-influence-operations-dossier.html",
@@ -1852,10 +1739,10 @@
       "noindex": false,
       "in_sitemap": true,
       "robots_blocked": null,
-      "title": "Ontario Psy Op Dossier: CAF Influence Operations During COVID-19 | ClearGlass",
-      "title_length": 77,
-      "description": "A verification-first public dossier on Canadian Armed Forces information and influence activities during COVID-19, with an Ontario focus on JTFC, social-media collection, Operation LASER and oversight findings.",
-      "description_length": 210,
+      "title": "Ontario Dossier: CAF Influence Operations in COVID-19",
+      "title_length": 53,
+      "description": "A verification-first dossier on Canadian Armed Forces information activities during COVID-19: JTFC, Operation LASER and the oversight findings.",
+      "description_length": 143,
       "canonical": "https://www.clearglassinc.com/blog/ontario-caf-covid-influence-operations-dossier.html",
       "h1_count": 1,
       "schema_types": [
@@ -1871,10 +1758,10 @@
         "Question",
         "Answer"
       ],
-      "internal_links": 4,
+      "internal_links": 15,
       "images_missing_alt": 0,
-      "bytes": 28272,
-      "inbound_links": 0
+      "bytes": 34454,
+      "inbound_links": 7
     },
     {
       "page": "blog/ontario-influence-environment-august-2026.html",
@@ -1927,7 +1814,7 @@
       "internal_links": 37,
       "images_missing_alt": 0,
       "bytes": 44257,
-      "inbound_links": 16
+      "inbound_links": 17
     },
     {
       "page": "blog/post-quantum-security-advisor-clearglass-artemis.html",
@@ -2056,7 +1943,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 18267,
+      "bytes": 18251,
       "inbound_links": 7
     },
     {
@@ -2086,6 +1973,45 @@
       "inbound_links": 8
     },
     {
+      "page": "blog/the-ledger-of-ashes-political-thriller.html",
+      "url": "https://www.clearglassinc.com/blog/the-ledger-of-ashes-political-thriller.html",
+      "indexable": true,
+      "canonical_elsewhere": false,
+      "noindex": false,
+      "in_sitemap": true,
+      "robots_blocked": null,
+      "title": "The Ledger of Ashes \u2014 A Political Conspiracy Thriller",
+      "title_length": 53,
+      "description": "A political thriller: a murdered foundation founder, a targeted CEO, a shadow network, and one handwritten ledger holding every name. Read the free preview.",
+      "description_length": 156,
+      "canonical": "https://www.clearglassinc.com/blog/the-ledger-of-ashes-political-thriller.html",
+      "h1_count": 1,
+      "schema_types": [
+        "BlogPosting",
+        "Person",
+        "Organization",
+        "Book",
+        "Person",
+        "Book",
+        "Book",
+        "Book",
+        "Person",
+        "Person",
+        "Person",
+        "Person",
+        "Person",
+        "Person",
+        "BreadcrumbList",
+        "ListItem",
+        "ListItem",
+        "ListItem"
+      ],
+      "internal_links": 20,
+      "images_missing_alt": 0,
+      "bytes": 31540,
+      "inbound_links": 9
+    },
+    {
       "page": "blog/us-army-hades-me-11b-osint-dossier.html",
       "url": "https://www.clearglassinc.com/blog/us-army-hades-me-11b-osint-dossier.html",
       "indexable": true,
@@ -2106,7 +2032,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 35750,
+      "bytes": 35708,
       "inbound_links": 8
     },
     {
@@ -2223,7 +2149,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 17934,
+      "bytes": 17862,
       "inbound_links": 7
     },
     {
@@ -2309,7 +2235,7 @@
       "internal_links": 14,
       "images_missing_alt": 0,
       "bytes": 17188,
-      "inbound_links": 8
+      "inbound_links": 7
     },
     {
       "page": "clearglass-nexus.html",
@@ -2738,7 +2664,7 @@
       ],
       "internal_links": 13,
       "images_missing_alt": 0,
-      "bytes": 20110,
+      "bytes": 20131,
       "inbound_links": 7
     },
     {
@@ -2906,7 +2832,7 @@
       "internal_links": 218,
       "images_missing_alt": 0,
       "bytes": 195325,
-      "inbound_links": 535
+      "inbound_links": 541
     },
     {
       "page": "intelligence-command-surface.html",
@@ -3467,8 +3393,8 @@
       "schema_types": [],
       "internal_links": 27,
       "images_missing_alt": 0,
-      "bytes": 41417,
-      "inbound_links": 116
+      "bytes": 41447,
+      "inbound_links": 118
     },
     {
       "page": "offers/phipa-readiness-checklist.html",
@@ -3909,7 +3835,7 @@
       "internal_links": 15,
       "images_missing_alt": 0,
       "bytes": 28726,
-      "inbound_links": 159
+      "inbound_links": 164
     },
     {
       "page": "procurement-legal-tech.html",
@@ -3948,9 +3874,9 @@
       "schema_types": [
         "CollectionPage"
       ],
-      "internal_links": 13,
+      "internal_links": 14,
       "images_missing_alt": 0,
-      "bytes": 15589,
+      "bytes": 15717,
       "inbound_links": 11
     },
     {
@@ -4139,12 +4065,12 @@
       "indexable": true,
       "canonical_elsewhere": false,
       "noindex": false,
-      "in_sitemap": false,
+      "in_sitemap": true,
       "robots_blocked": null,
       "title": "Cybersecurity Services Canada | ClearGlass Inc.",
       "title_length": 47,
-      "description": "ClearGlass Inc. cybersecurity, M365 hardening, PHIPA readiness and managed security monitoring for Canadian organizations. Fixed-fee engagements with secure Stripe checkout.",
-      "description_length": 173,
+      "description": "Cybersecurity, M365 hardening, PHIPA readiness and managed monitoring for Canadian organizations. Fixed-fee engagements with secure checkout.",
+      "description_length": 141,
       "canonical": "https://www.clearglassinc.com/revenue.html",
       "h1_count": 1,
       "schema_types": [
@@ -4164,10 +4090,10 @@
         "Organization",
         "Offer"
       ],
-      "internal_links": 1,
+      "internal_links": 12,
       "images_missing_alt": 0,
-      "bytes": 8073,
-      "inbound_links": 0
+      "bytes": 14379,
+      "inbound_links": 8
     },
     {
       "page": "saas-platform.html",
@@ -4476,8 +4402,8 @@
       ],
       "internal_links": 18,
       "images_missing_alt": 0,
-      "bytes": 27727,
-      "inbound_links": 185
+      "bytes": 27725,
+      "inbound_links": 191
     },
     {
       "page": "streaming-growth-command-center/index.html",

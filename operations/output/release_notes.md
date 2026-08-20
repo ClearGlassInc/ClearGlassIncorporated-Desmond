@@ -1,6 +1,6 @@
-# Release Notes — 2026-08-19
+# Release Notes — 2026-08-20
 
-*160 commit(s) since repository start*
+*161 commit(s) since repository start*
 
 ## New Features
 
@@ -85,6 +85,36 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`455c751`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`c84a5a9`)
+- refresh control-surface data feeds [skip ci] (`ed39fac`)
+- **minerals:** refresh validated public feeds [skip ci] (`510c1b6`)
+- refresh control-surface data feeds [skip ci] (`51e7620`)
+- refresh control-surface data feeds [skip ci] (`09f490b`)
+- refresh control-surface data feeds [skip ci] (`c104c19`)
+- refresh control-surface data feeds [skip ci] (`a2c1b13`)
+- refresh control-surface data feeds [skip ci] (`2830068`)
+- **minerals:** refresh validated public feeds [skip ci] (`9f6cf6d`)
+- refresh control-surface data feeds [skip ci] (`f8441d0`)
+- refresh control-surface data feeds [skip ci] (`c54f809`)
+- refresh control-surface data feeds [skip ci] (`181e32c`)
+- refresh control-surface data feeds [skip ci] (`207553f`)
+- refresh control-surface data feeds [skip ci] (`f8d2eff`)
+- refresh control-surface data feeds [skip ci] (`1911c35`)
+- **minerals:** refresh validated public feeds [skip ci] (`33db3cf`)
+- refresh control-surface data feeds [skip ci] (`9e6fe45`)
+- refresh control-surface data feeds [skip ci] (`3c65063`)
+- refresh control-surface data feeds [skip ci] (`81d2738`)
+- refresh control-surface data feeds [skip ci] (`4df3a73`)
+- refresh control-surface data feeds [skip ci] (`cb9e897`)
+- refresh control-surface data feeds [skip ci] (`5458fb0`)
+- **minerals:** refresh validated public feeds [skip ci] (`b3f8eab`)
+- refresh control-surface data feeds [skip ci] (`022d596`)
+- refresh control-surface data feeds [skip ci] (`ebee82f`)
+- refresh control-surface data feeds [skip ci] (`d20e119`)
+- refresh control-surface data feeds [skip ci] (`27751f9`)
+- refresh control-surface data feeds [skip ci] (`6141669`)
+- update generated outputs — 2026-08-19 07:34 UTC [skip ci] (`6897771`)
 - refresh SEO dashboard feeds [skip ci] (`bd66dab`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`c902554`)
 - refresh control-surface data feeds [skip ci] (`9d7b7c0`)
@@ -149,39 +179,10 @@
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`13a6eed`)
 - refresh control-surface data feeds [skip ci] (`39db363`)
 - **minerals:** refresh validated public feeds [skip ci] (`93378e3`)
-- refresh control-surface data feeds [skip ci] (`e8b3890`)
-- refresh control-surface data feeds [skip ci] (`b702e5e`)
-- refresh control-surface data feeds [skip ci] (`87f0dc5`)
-- refresh control-surface data feeds [skip ci] (`85118e2`)
-- refresh control-surface data feeds [skip ci] (`33db228`)
-- **minerals:** refresh validated public feeds [skip ci] (`826d668`)
-- refresh control-surface data feeds [skip ci] (`a9f508d`)
-- refresh control-surface data feeds [skip ci] (`8fa4c9e`)
-- refresh control-surface data feeds [skip ci] (`9166e2c`)
-- refresh control-surface data feeds [skip ci] (`a850124`)
-- refresh control-surface data feeds [skip ci] (`68e980b`)
-- refresh control-surface data feeds [skip ci] (`d811c81`)
-- **minerals:** refresh validated public feeds [skip ci] (`3060056`)
-- refresh control-surface data feeds [skip ci] (`3448438`)
-- refresh control-surface data feeds [skip ci] (`87c5af8`)
-- refresh control-surface data feeds [skip ci] (`0acb408`)
-- refresh control-surface data feeds [skip ci] (`f470851`)
-- refresh control-surface data feeds [skip ci] (`9da30bd`)
-- refresh control-surface data feeds [skip ci] (`64edef0`)
-- **minerals:** refresh validated public feeds [skip ci] (`a1b1849`)
-- refresh control-surface data feeds [skip ci] (`8a27b44`)
-- refresh control-surface data feeds [skip ci] (`29295d9`)
-- refresh control-surface data feeds [skip ci] (`0b8a2d7`)
-- refresh control-surface data feeds [skip ci] (`4c79103`)
-- refresh control-surface data feeds [skip ci] (`ec82ae8`)
-- update generated outputs — 2026-08-16 07:27 UTC [skip ci] (`7923afe`)
-- refresh SEO dashboard feeds [skip ci] (`ba672ba`)
-- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`74e7516`)
-- refresh control-surface data feeds [skip ci] (`a56f67d`)
-- **minerals:** refresh validated public feeds [skip ci] (`c4edf3e`)
-- refresh control-surface data feeds [skip ci] (`0e9b3eb`)
 
 ## Other
 
+- regenerate search assets with the committed generator (`7be686c`)
+- publish The Ledger of Ashes with full SEO markup (`eafacff`)
 - strengthen revenue landing page search and conversion signals (`9230267`)
 - trigger governed agent production release (`c66d46a`)

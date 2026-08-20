@@ -1,8 +1,8 @@
 {
-  "run_utc": "2026-08-19T07:34:30.503240+00:00",
+  "run_utc": "2026-08-20T07:37:03.106366+00:00",
   "from_tag": null,
   "to_ref": "HEAD",
-  "commit_count": 160,
+  "commit_count": 161,
   "sections": {
     "New Features": [
       {
@@ -585,6 +585,276 @@
     ],
     "Automation": [
       {
+        "sha": "455c751",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh SEO dashboard feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "c84a5a9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
+        "author": "artemis-bot",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "ed39fac",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "510c1b6",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "51e7620",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "09f490b",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "c104c19",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "a2c1b13",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "2830068",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "9f6cf6d",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "f8441d0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "c54f809",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "181e32c",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "207553f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "f8d2eff",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "1911c35",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "33db3cf",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "9e6fe45",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "3c65063",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "81d2738",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "4df3a73",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "cb9e897",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "5458fb0",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "b3f8eab",
+        "type": "bot",
+        "scope": "minerals",
+        "subject": "refresh validated public feeds [skip ci]",
+        "author": "clearglass-minerals-bot",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "022d596",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "ebee82f",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "d20e119",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "27751f9",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "6141669",
+        "type": "bot",
+        "scope": null,
+        "subject": "refresh control-surface data feeds [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
+        "sha": "6897771",
+        "type": "bot",
+        "scope": null,
+        "subject": "update generated outputs \u2014 2026-08-19 07:34 UTC [skip ci]",
+        "author": "github-actions[bot]",
+        "date": "2026-08-19",
+        "breaking": false
+      },
+      {
         "sha": "bd66dab",
         "type": "bot",
         "scope": null,
@@ -1159,288 +1429,27 @@
         "author": "clearglass-minerals-bot",
         "date": "2026-08-17",
         "breaking": false
-      },
-      {
-        "sha": "e8b3890",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-17",
-        "breaking": false
-      },
-      {
-        "sha": "b702e5e",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-17",
-        "breaking": false
-      },
-      {
-        "sha": "87f0dc5",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-17",
-        "breaking": false
-      },
-      {
-        "sha": "85118e2",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-17",
-        "breaking": false
-      },
-      {
-        "sha": "33db228",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-17",
-        "breaking": false
-      },
-      {
-        "sha": "826d668",
-        "type": "bot",
-        "scope": "minerals",
-        "subject": "refresh validated public feeds [skip ci]",
-        "author": "clearglass-minerals-bot",
-        "date": "2026-08-17",
-        "breaking": false
-      },
-      {
-        "sha": "a9f508d",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "8fa4c9e",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "9166e2c",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "a850124",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "68e980b",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "d811c81",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "3060056",
-        "type": "bot",
-        "scope": "minerals",
-        "subject": "refresh validated public feeds [skip ci]",
-        "author": "clearglass-minerals-bot",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "3448438",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "87c5af8",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "0acb408",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "f470851",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "9da30bd",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "64edef0",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "a1b1849",
-        "type": "bot",
-        "scope": "minerals",
-        "subject": "refresh validated public feeds [skip ci]",
-        "author": "clearglass-minerals-bot",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "8a27b44",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "29295d9",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "0b8a2d7",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "4c79103",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "ec82ae8",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "7923afe",
-        "type": "bot",
-        "scope": null,
-        "subject": "update generated outputs \u2014 2026-08-16 07:27 UTC [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "ba672ba",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh SEO dashboard feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "74e7516",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh ARTEMIS provenance + IP guardian reports [skip ci]",
-        "author": "artemis-bot",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "a56f67d",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "c4edf3e",
-        "type": "bot",
-        "scope": "minerals",
-        "subject": "refresh validated public feeds [skip ci]",
-        "author": "clearglass-minerals-bot",
-        "date": "2026-08-16",
-        "breaking": false
-      },
-      {
-        "sha": "0e9b3eb",
-        "type": "bot",
-        "scope": null,
-        "subject": "refresh control-surface data feeds [skip ci]",
-        "author": "github-actions[bot]",
-        "date": "2026-08-16",
-        "breaking": false
       }
     ],
     "Other": [
+      {
+        "sha": "7be686c",
+        "type": "blog",
+        "scope": null,
+        "subject": "regenerate search assets with the committed generator",
+        "author": "Claude",
+        "date": "2026-08-20",
+        "breaking": false
+      },
+      {
+        "sha": "eafacff",
+        "type": "blog",
+        "scope": null,
+        "subject": "publish The Ledger of Ashes with full SEO markup",
+        "author": "Claude",
+        "date": "2026-08-20",
+        "breaking": false
+      },
       {
         "sha": "9230267",
         "type": "seo",

@@ -1,8 +1,22 @@
 [
   {
-    "title": "Control Surface Feeds #123",
+    "title": "Control Surface Feeds #124",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "20:47",
+    "timestamp": "2026-08-20T20:47:51Z"
+  },
+  {
+    "title": "Deploy Pages #122",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:46",
+    "timestamp": "2026-08-20T19:46:59Z"
+  },
+  {
+    "title": "Control Surface Feeds #123",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "19:46",
     "timestamp": "2026-08-20T19:46:31Z"
   },
@@ -124,19 +138,5 @@
     "detail": "skipped \u00b7 workflow_run on main",
     "time": "15:47",
     "timestamp": "2026-08-20T15:47:52Z"
-  },
-  {
-    "title": "Auto Heal #344",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "15:47",
-    "timestamp": "2026-08-20T15:47:50Z"
-  },
-  {
-    "title": "Auto Heal #343",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "15:47",
-    "timestamp": "2026-08-20T15:47:45Z"
   }
 ]

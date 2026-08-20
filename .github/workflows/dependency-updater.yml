@@ -45,7 +45,7 @@ jobs:
       - name: Apply updates to requirements.txt
         if: steps.outdated.outputs.count != '0'
         run: |
-          pip install --upgrade pytest pytest-cov pytest-asyncio ruff pyyaml 2>/dev/null || true
+          pip install --upgrade pytest pytest-cov pytest-asyncio ruff pyyaml
           python3 - <<'PY'
           import subprocess, re
           from pathlib import Path

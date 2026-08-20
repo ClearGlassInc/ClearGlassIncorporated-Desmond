@@ -1,0 +1,32 @@
+services:
+  agent-api:
+    build: .
+    image: clearglassinc-sdk:latest
+    ports:
+      - "8000:8000"
+    environment:
+      # Defaults to the offline fake provider so `docker compose up` works
+      # with no credentials. Set these to go live.
+      CLEARGLASS_PROVIDER: ${CLEARGLASS_PROVIDER:-fake}
+      CLEARGLASS_MODEL: ${CLEARGLASS_MODEL:-}
+      CLEARGLASS_API_KEY: ${CLEARGLASS_API_KEY:-}
+      CLEARGLASS_ENV: ${CLEARGLASS_ENV:-development}
+      CLEARGLASS_AGENT_NAME: ${CLEARGLASS_AGENT_NAME:-ClearGlassInc Agent}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    volumes:
+      - agent-sessions:/data/sessions
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4).status==200 else 1)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  agent-sessions:

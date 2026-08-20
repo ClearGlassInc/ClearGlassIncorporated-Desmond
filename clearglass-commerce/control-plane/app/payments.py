@@ -230,6 +230,94 @@ def create_checkout_session(
     }
 
 
+#: Stripe accepts only these three values for a refund's ``reason``. Anything
+#: else is rejected outright, so an operator's free-text explanation goes to
+#: metadata instead of being smuggled into a field with a closed enum.
+STRIPE_REFUND_REASONS = frozenset({"duplicate", "fraudulent", "requested_by_customer"})
+
+
+def create_refund(
+    payment_reference: str,
+    *,
+    amount: int | None = None,
+    reason: str = "",
+    idempotency_key: str | None = None,
+    metadata: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Refund a payment. Returns a deterministic mock when no Stripe key is set.
+
+    ``payment_reference`` is whatever the order recorded: a Checkout Session id
+    (``cs_…``, what ``orders.external_ref`` holds), a PaymentIntent (``pi_…``) or a
+    Charge (``ch_…``). A session is resolved to its PaymentIntent first, because
+    Stripe will not refund a session directly and a caller should not have to know
+    that.
+
+    ``amount`` is in **minor units** and omitted for a full refund. It is never
+    taken from a browser — it arrives from an approval payload an operator
+    reviewed, and a value exceeding the charge is Stripe's to reject.
+
+    ``idempotency_key`` matters more here than anywhere else in this module: a
+    retried refund without one is a second refund. Callers should derive it from
+    something stable and single-use, such as the approval id.
+    """
+    reference = (payment_reference or "").strip()
+    if not reference:
+        raise ValueError("no payment reference on this order — nothing to refund")
+    if amount is not None and amount <= 0:
+        raise ValueError(f"refund amount must be a positive number of minor units, got {amount!r}")
+
+    if not is_live():
+        return {
+            "id": f"re_mock_{abs(hash((reference, amount))) % 10**10:010d}",
+            "mode": "mock",
+            "status": "succeeded",
+            "amount": amount,
+            "payment_reference": reference,
+        }
+
+    import stripe  # noqa: PLC0415 — lazy import; only needed in live mode
+
+    stripe.api_key = _secret_key()
+
+    params: dict[str, Any] = {}
+    if reference.startswith("cs_"):
+        session = stripe.checkout.Session.retrieve(reference)
+        payment_intent = getattr(session, "payment_intent", None)
+        if not payment_intent:
+            # An unpaid, expired, or subscription-mode session has no charge behind
+            # it. Refunding "nothing" would report success and move no money.
+            raise ValueError(
+                f"checkout session {reference} has no payment_intent — it was never charged"
+            )
+        params["payment_intent"] = payment_intent
+    elif reference.startswith("ch_"):
+        params["charge"] = reference
+    else:
+        params["payment_intent"] = reference
+
+    if amount is not None:
+        params["amount"] = int(amount)
+    if reason in STRIPE_REFUND_REASONS:
+        params["reason"] = reason
+    combined = dict(metadata or {})
+    if reason and reason not in STRIPE_REFUND_REASONS:
+        # Preserved verbatim, just not in the enum field.
+        combined["reason_note"] = str(reason)[:500]
+    if combined:
+        params["metadata"] = combined
+
+    options = {"idempotency_key": idempotency_key} if idempotency_key else {}
+    refund = stripe.Refund.create(**params, **options)
+    return {
+        "id": refund.id,
+        "mode": "live",
+        "status": getattr(refund, "status", None),
+        "amount": getattr(refund, "amount", None),
+        "currency": getattr(refund, "currency", None),
+        "payment_reference": reference,
+    }
+
+
 def create_billing_portal_session(checkout_session_id: str, return_url: str | None = None) -> dict[str, str]:
     """Open the hosted portal for the customer attached to a subscription Checkout session."""
     safe_return_url = return_url or os.environ.get(

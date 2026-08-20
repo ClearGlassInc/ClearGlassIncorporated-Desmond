@@ -19,9 +19,12 @@ jobs:
   integrate:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout exact commit
-        uses: actions/checkout@v4
+        # Credentials stay persisted on purpose: the final step pushes the
+        # additive hero commit back to main with the checkout token.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
 

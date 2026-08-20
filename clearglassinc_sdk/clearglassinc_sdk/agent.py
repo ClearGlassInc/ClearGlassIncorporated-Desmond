@@ -12,6 +12,8 @@ from typing import Any
 
 from clearglassinc_sdk.guardrails import Guardrail
 from clearglassinc_sdk.memory import Memory
+from clearglassinc_sdk.retry import RetryPolicy
+from clearglassinc_sdk.structured import OutputSchema
 from clearglassinc_sdk.tools import Tool
 
 
@@ -26,7 +28,15 @@ class Agent:
     model: str | None = None
     temperature: float = 0.7
     max_steps: int = 10
+    output_schema: OutputSchema | None = None
+    retry_policy: RetryPolicy = field(default_factory=RetryPolicy)
     metadata: dict[str, Any] = field(default_factory=dict)
+
+    def system_prompt(self) -> str:
+        """Instructions actually sent to the model, including any schema contract."""
+        if self.output_schema is None:
+            return self.instructions
+        return self.instructions + self.output_schema.prompt_instructions()
 
     def add_tool(self, tool: Tool) -> None:
         if any(existing.name == tool.name for existing in self.tools):

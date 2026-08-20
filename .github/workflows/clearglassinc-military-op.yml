@@ -76,7 +76,7 @@ jobs:
 
       - name: Lint (Safe Fix)
         if: ${{ needs.inspect.outputs.site_type == 'node' }}
-        run: npm run lint -- --fix || true
+        run: npm run lint -- --fix
 
       - name: Type Check
         if: ${{ needs.inspect.outputs.site_type == 'node' }}

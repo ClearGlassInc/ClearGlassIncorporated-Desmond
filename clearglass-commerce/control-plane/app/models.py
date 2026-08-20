@@ -94,6 +94,42 @@ class Order(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
 
 
+class OrderItem(Base):
+    """What was actually bought on an order.
+
+    Until this existed an order recorded a total and nothing else, so nothing
+    downstream could say *what* to print — which is why supplier routing could
+    not be wired to the payment webhook at all. One row per SKU, captured from
+    the checkout session's metadata when the order books.
+
+    ``printful_sync_variant_id`` is copied from the price book at capture time
+    rather than looked up later: the price book can be edited after the sale, and
+    an order must be fulfilled as the customer bought it, not as the catalogue
+    reads today.
+    """
+
+    __tablename__ = "order_items"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id", ondelete="CASCADE"), index=True)
+    sku: Mapped[str] = mapped_column(String(120))
+    name: Mapped[str | None] = mapped_column(String(240), nullable=True)
+    quantity: Mapped[int] = mapped_column(Integer, default=1)
+    # Unit price in minor units, as charged. Kept beside Order.total so a later
+    # price change cannot rewrite the history of what someone paid.
+    unit_amount: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    currency: Mapped[str] = mapped_column(String(3), default="CAD")
+    requires_shipping: Mapped[bool] = mapped_column(default=False)
+    printful_sync_variant_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+
+    __table_args__ = (
+        # Booking is idempotent on the order, and a redelivered payment webhook
+        # must not append a second copy of every line.
+        Index("idx_order_items_order_sku", "order_id", "sku", unique=True),
+    )
+
+
 class Shipment(Base):
     """A supplier's fulfillment of an order, and the tracking it produced.
 

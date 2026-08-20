@@ -1,7 +1,7 @@
 # Core trust loop is pure stdlib — no install needed to run the tests.
 # These are only for the optional FastAPI HTTP layer (sentinel/app.py) and tests.
 fastapi>=0.141.1
-uvicorn>=0.52.1
+uvicorn>=0.52.3
 pydantic>=2.13.4
 pytest>=9.1.1
 httpx>=0.28.1        # FastAPI TestClient

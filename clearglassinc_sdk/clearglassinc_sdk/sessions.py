@@ -90,7 +90,15 @@ class FileSessionStore:
         safe = "".join(char for char in session_id if char.isalnum() or char in "-_")
         if not safe:
             raise ValueError(f"session id {session_id!r} has no filesystem-safe characters")
-        return os.path.join(self.directory, f"{safe}.json")
+        root = os.path.realpath(self.directory)
+        path = os.path.realpath(os.path.join(root, f"{safe}.json"))
+        # The filter above already drops every separator and dot, so `safe` cannot
+        # describe a parent directory. Re-check the resolved path anyway: this is the
+        # boundary that must hold even if that filter is ever loosened, and it also
+        # refuses a session file symlinked out of the store.
+        if os.path.dirname(path) != root:
+            raise ValueError(f"session id {session_id!r} escapes the session directory")
+        return path
 
     def save(self, session_id: str, messages: list[Message]) -> None:
         path = self._path(session_id)

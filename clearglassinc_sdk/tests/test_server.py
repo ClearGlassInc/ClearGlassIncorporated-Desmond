@@ -9,14 +9,17 @@ import pytest
 fastapi = pytest.importorskip("fastapi")
 pytest.importorskip("httpx")
 
-from fastapi.testclient import TestClient
+# E402 is expected here: the importorskip calls above must run before these
+# imports, or a machine without FastAPI fails at import instead of skipping.
+# Same convention as tests/test_opal_security.py and test_generate_favicons.py.
+from fastapi.testclient import TestClient  # noqa: E402
 
-from clearglassinc_sdk.agent import Agent
-from clearglassinc_sdk.guardrails import RequiredKeywordsGuardrail
-from clearglassinc_sdk.server import create_app
-from clearglassinc_sdk.sessions import InMemorySessionStore
-from clearglassinc_sdk.testing import FakeLLMClient, text_response
-from clearglassinc_sdk.tracing import Usage
+from clearglassinc_sdk.agent import Agent  # noqa: E402
+from clearglassinc_sdk.guardrails import RequiredKeywordsGuardrail  # noqa: E402
+from clearglassinc_sdk.server import create_app  # noqa: E402
+from clearglassinc_sdk.sessions import InMemorySessionStore  # noqa: E402
+from clearglassinc_sdk.testing import FakeLLMClient, text_response  # noqa: E402
+from clearglassinc_sdk.tracing import Usage  # noqa: E402
 
 
 def build_client(monkeypatch, *, api_key=None, agents=None, responses=None, store=None):

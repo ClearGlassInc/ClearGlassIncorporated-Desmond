@@ -112,8 +112,19 @@ are documented in `clearglass-commerce/DEPLOY.md` (Render blueprint recommended)
 - **Commerce Daily Loop** (`commerce-daily-loop.yml`): storefront smoke test +
   governance self‑check + executive report + RFED governance self‑check
   (scheduled 13:00 UTC).
-- **CI** (`ci.yml`): root `pytest tests/`, which covers the RFED core and the
-  Python↔n8n hash-parity gate.
+- **CI** (`ci.yml`): root `pytest` with no path argument, so it runs all four
+  `testpaths` from `pyproject.toml` — `artemis/tests`, `tests`, `sentinel/tests`
+  **and** `clearglass-commerce/control-plane/tests` — covering the RFED core and
+  the Python↔n8n hash-parity gate. The root `[test]` extra does not install
+  `sqlalchemy` or `stripe`, so a commerce test that reaches the database stack at
+  import time aborts collection and takes the whole suite down with it. Guard
+  those imports with `pytest.importorskip`; `tests/test_root_collection_integrity.py`
+  enforces it by collecting that path with the commerce extras hidden.
+
+Runners are not always available (see `docs/ACTIONS_BILLING_FALLBACK.md`). When
+they are not, `python3 scripts/gate_preflight.py` runs every runner-independent
+gate locally and prints a verdict — use it before merging rather than assuming a
+never-started workflow is a passing one.
 
 Two access-control gates are enforced by test rather than convention, because
 convention is what fails silently:

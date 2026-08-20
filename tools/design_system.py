@@ -59,6 +59,7 @@ EXEMPT: dict[str, str] = {
     "threads.html": "noindex internal surface",
     "platform-command-center.html": "noindex private operations console",
     "mission-control.html": "noindex private operations console",
+    "data-fabric.html": "noindex read-only data-fabric diagnostics console",
     "sentinel/ARTEMIS_FAWL_COMMAND_SURFACE.html": "noindex private governance console",
     "sentinel/PHOENIX_DASHBOARD.html": "noindex private recovery console",
     "google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html": "Google ownership verification artifact",

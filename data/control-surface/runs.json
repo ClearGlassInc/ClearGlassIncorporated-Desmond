@@ -1,8 +1,29 @@
 [
   {
-    "title": "Control Surface Feeds #116",
+    "title": "Control Surface Feeds #117",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "14:00",
+    "timestamp": "2026-08-20T14:00:20Z"
+  },
+  {
+    "title": "Commerce Daily Loop #6",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "13:45",
+    "timestamp": "2026-08-20T13:45:10Z"
+  },
+  {
+    "title": "Deploy Pages #115",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "13:12",
+    "timestamp": "2026-08-20T13:12:30Z"
+  },
+  {
+    "title": "Control Surface Feeds #116",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "13:11",
     "timestamp": "2026-08-20T13:11:54Z"
   },
@@ -117,26 +138,5 @@
     "detail": "skipped \u00b7 workflow_run on main",
     "time": "11:42",
     "timestamp": "2026-08-20T11:42:16Z"
-  },
-  {
-    "title": "Auto Heal #336",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:13Z"
-  },
-  {
-    "title": "CI #174",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "Security #44",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
   }
 ]

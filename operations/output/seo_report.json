@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-08-18T07:33:53.955317+00:00",
-  "files_audited": 95,
-  "average_score": 91.7,
+  "run_utc": "2026-08-19T07:34:30.579364+00:00",
+  "files_audited": 96,
+  "average_score": 91.6,
   "pages": [
     {
       "file": "404.html",
@@ -1403,6 +1403,27 @@
       "issues": []
     },
     {
+      "file": "revenue.html",
+      "title": "Cybersecurity Services Canada | ClearGlass Inc.",
+      "title_length": 47,
+      "title_ok": true,
+      "description": "ClearGlass Inc. cybersecurity, M365 hardening, PHIPA readiness and managed security monitoring for Canadian organizations. Fixed-fee engagements with secure Stripe checkout.",
+      "description_length": 173,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": false,
+      "score": 80,
+      "issues": [
+        "Description length 173 chars (ideal 120\u2013160)",
+        "Missing og:image"
+      ]
+    },
+    {
       "file": "saas-platform.html",
       "title": "ClearGlass \u2022 Event Driven Control Surface",
       "title_length": 41,
@@ -1826,10 +1847,10 @@
     }
   ],
   "top_issues": [
-    "23x \u2014 Missing og:image",
+    "24x \u2014 Missing og:image",
     "12x \u2014 Missing og:description",
     "11x \u2014 Missing og:title",
-    "10x \u2014 Description length N chars (ideal N\u2013N)",
+    "11x \u2014 Description length N chars (ideal N\u2013N)",
     "6x \u2014 Missing canonical link tag",
     "5x \u2014 Multiple <hN> tags (N)",
     "4x \u2014 Title length N chars (ideal N\u2013N)",

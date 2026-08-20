@@ -1,8 +1,30 @@
 {
-  "run_utc": "2026-08-18T07:33:55.386724+00:00",
-  "total_alerts": 0,
+  "run_utc": "2026-08-19T07:34:31.318765+00:00",
+  "total_alerts": 3,
   "critical": 0,
-  "warnings": 0,
+  "warnings": 3,
   "github_issue_created": false,
-  "alerts": []
+  "alerts": [
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: blog/canada-strategic-position-2026.html",
+      "detail": "",
+      "detected_utc": "2026-08-19T07:34:31.316813+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: blog/ontario-caf-covid-influence-operations-dossier.html",
+      "detail": "",
+      "detected_utc": "2026-08-19T07:34:31.316823+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: revenue.html",
+      "detail": "",
+      "detected_utc": "2026-08-19T07:34:31.316827+00:00"
+    }
+  ]
 }

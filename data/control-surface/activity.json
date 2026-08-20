@@ -3,12 +3,33 @@
     "title": "Control Surface feeds refreshed",
     "status": "ok",
     "detail": "Data plane regenerated from live sources",
-    "time": "01:52",
-    "timestamp": "2026-08-20T01:52:55Z"
+    "time": "03:10",
+    "timestamp": "2026-08-20T03:10:57Z"
   },
   {
     "title": "Control Surface Feeds",
     "status": "warn",
+    "detail": "schedule on main \u00b7 run #106",
+    "time": "03:10",
+    "timestamp": "2026-08-20T03:10:46Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment",
+    "status": "bad",
+    "detail": "schedule on main \u00b7 run #43",
+    "time": "02:45",
+    "timestamp": "2026-08-20T02:45:37Z"
+  },
+  {
+    "title": "Deploy Pages",
+    "status": "ok",
+    "detail": "workflow_dispatch on main \u00b7 run #104",
+    "time": "01:53",
+    "timestamp": "2026-08-20T01:53:07Z"
+  },
+  {
+    "title": "Control Surface Feeds",
+    "status": "ok",
     "detail": "schedule on main \u00b7 run #105",
     "time": "01:52",
     "timestamp": "2026-08-20T01:52:38Z"
@@ -68,26 +89,5 @@
     "detail": "workflow_run on main \u00b7 run #310",
     "time": "01:20",
     "timestamp": "2026-08-20T01:20:25Z"
-  },
-  {
-    "title": "Auto Heal",
-    "status": "warn",
-    "detail": "workflow_run on main \u00b7 run #309",
-    "time": "01:20",
-    "timestamp": "2026-08-20T01:20:20Z"
-  },
-  {
-    "title": "Auto Heal",
-    "status": "warn",
-    "detail": "workflow_run on main \u00b7 run #308",
-    "time": "01:20",
-    "timestamp": "2026-08-20T01:20:13Z"
-  },
-  {
-    "title": "Auto-Store",
-    "status": "bad",
-    "detail": "push on main \u00b7 run #10",
-    "time": "01:20",
-    "timestamp": "2026-08-20T01:20:01Z"
   }
 ]

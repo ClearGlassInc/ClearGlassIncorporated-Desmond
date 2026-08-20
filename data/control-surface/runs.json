@@ -1,8 +1,92 @@
 [
   {
-    "title": "Control Surface Feeds #115",
+    "title": "Control Surface Feeds #116",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "13:11",
+    "timestamp": "2026-08-20T13:11:54Z"
+  },
+  {
+    "title": "Minerals Data Sync #21",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "13:10",
+    "timestamp": "2026-08-20T13:10:28Z"
+  },
+  {
+    "title": "Auto Heal #342",
+    "status": "warn",
+    "detail": "skipped \u00b7 schedule on main",
+    "time": "13:10",
+    "timestamp": "2026-08-20T13:10:15Z"
+  },
+  {
+    "title": "Organic Growth \u2014 Daily Content #6",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "13:02",
+    "timestamp": "2026-08-20T13:02:12Z"
+  },
+  {
+    "title": "Health Monitor #21",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "12:50",
+    "timestamp": "2026-08-20T12:50:11Z"
+  },
+  {
+    "title": "Defender Watch #21",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "12:38",
+    "timestamp": "2026-08-20T12:38:15Z"
+  },
+  {
+    "title": "Auto-Store #13",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "12:31",
+    "timestamp": "2026-08-20T12:31:22Z"
+  },
+  {
+    "title": "Daily Marketing Content Workflow #6",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "12:27",
+    "timestamp": "2026-08-20T12:27:50Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #21",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "12:21",
+    "timestamp": "2026-08-20T12:21:07Z"
+  },
+  {
+    "title": "Sales-Ops Briefing #6",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "11:46",
+    "timestamp": "2026-08-20T11:46:30Z"
+  },
+  {
+    "title": "Deploy Pages #114",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "11:44",
+    "timestamp": "2026-08-20T11:44:37Z"
+  },
+  {
+    "title": "Auto Heal #341",
+    "status": "warn",
+    "detail": "skipped \u00b7 workflow_run on main",
+    "time": "11:44",
+    "timestamp": "2026-08-20T11:44:26Z"
+  },
+  {
+    "title": "Control Surface Feeds #115",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "11:44",
     "timestamp": "2026-08-20T11:44:04Z"
   },
@@ -54,89 +138,5 @@
     "detail": "success \u00b7 push on main",
     "time": "11:42",
     "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "CodeQL #17",
-    "status": "warn",
-    "detail": "in_progress \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "PyPI Quota Check #5",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "Site Integrity Guard #43",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "Defensive Security Orchestrator #43",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "IP Protection Bot - Risk Assessment #48",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "Policy Gate #43",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "Agent SDK CI #4",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "11:42",
-    "timestamp": "2026-08-20T11:42:02Z"
-  },
-  {
-    "title": "Auto Heal #335",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "11:40",
-    "timestamp": "2026-08-20T11:40:38Z"
-  },
-  {
-    "title": "Auto Heal #334",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "11:40",
-    "timestamp": "2026-08-20T11:40:37Z"
-  },
-  {
-    "title": "Auto Heal #333",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "11:40",
-    "timestamp": "2026-08-20T11:40:32Z"
-  },
-  {
-    "title": "Policy Gate #42",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:40",
-    "timestamp": "2026-08-20T11:40:18Z"
-  },
-  {
-    "title": "Site Reliability Audit #17",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "11:40",
-    "timestamp": "2026-08-20T11:40:18Z"
   }
 ]

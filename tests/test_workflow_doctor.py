@@ -65,3 +65,43 @@ def test_unpinned_external_actions_checks_composite_steps(doctor, tmp_path):
 
     pinned = mutable.replace("@v6", "@a309ff8b426b58ec0e2a45f0f869d46889d02405")
     assert doctor.unpinned_external_actions(action_file, pinned) == []
+
+
+def test_self_hosted_runners_are_rewritten_to_hosted(doctor):
+    """A public, forkable repository must not run jobs on machines we own.
+
+    A pull request from a fork runs that fork's code. On a self-hosted runner
+    that is arbitrary code execution on the host, which also holds a runner
+    registration token. This repository is public with forking enabled, so the
+    doctor rewrites the label rather than trusting reviewers to catch it.
+    """
+    data = {
+        "jobs": {
+            "scalar": {"runs-on": "self-hosted"},
+            "labelled": {"runs-on": ["self-hosted", "linux", "x64"]},
+            "hosted": {"runs-on": "ubuntu-latest"},
+        }
+    }
+    changes = doctor.fix_self_hosted(data)
+
+    assert data["jobs"]["scalar"]["runs-on"] == "ubuntu-latest"
+    assert data["jobs"]["labelled"]["runs-on"] == "ubuntu-latest"
+    assert data["jobs"]["hosted"]["runs-on"] == "ubuntu-latest", "must not disturb hosted jobs"
+    assert len(changes) == 2
+
+
+def test_shipped_workflows_declare_no_self_hosted_runner(doctor):
+    """The policy above is only worth anything if the tree actually obeys it."""
+    import yaml
+
+    offenders: list[str] = []
+    for path in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for name, job in ((data or {}).get("jobs") or {}).items():
+            if not isinstance(job, dict):
+                continue
+            runs_on = job.get("runs-on")
+            labels = runs_on if isinstance(runs_on, list) else [runs_on]
+            if "self-hosted" in labels:
+                offenders.append(f"{path.name}:{name}")
+    assert not offenders, "self-hosted runners on a public repository: " + ", ".join(offenders)

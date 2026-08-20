@@ -19,3 +19,53 @@ services:
         value: "https://www.clearglassinc.com"
       - key: CLEARGLASS_AGENT_API_KEYS
         sync: false
+
+  # Commerce control plane. Until this is deployed, side-store.html has nowhere
+  # to send a card payment (CG_API_BASE stays empty and the cart falls back to
+  # Interac e-Transfer), and Stripe has no endpoint to deliver webhooks to — so
+  # Payment Link sales are charged but never recorded as orders.
+  - type: web
+    name: clearglass-commerce-api
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./clearglass-commerce/control-plane/Dockerfile
+    dockerContext: ./clearglass-commerce/control-plane
+    healthCheckPath: /ready
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      # Production fails closed at startup without this — see app/security.py.
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      # Unset means webhooks are accepted but unverified, so a forged event
+      # could book a fake paid order. Set it as soon as the endpoint exists.
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: CHECKOUT_SUCCESS_URL
+        value: "https://www.clearglassinc.com/checkout/success.html"
+      - key: CHECKOUT_CANCEL_URL
+        value: "https://www.clearglassinc.com/side-store.html"
+      - key: CORS_ALLOW_ORIGINS
+        value: "https://www.clearglassinc.com"
+      # Render terminates TLS one hop in front of the app; without this the
+      # rate limiters key every customer onto the proxy address and one abusive
+      # caller 429s the whole storefront.
+      - key: TRUSTED_PROXY_HOPS
+        value: "1"
+      - key: PRINTFUL_API_KEY
+        sync: false
+      - key: PRINTFUL_WEBHOOK_SECRET
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: clearglass-commerce-db
+          property: connectionString
+
+databases:
+  - name: clearglass-commerce-db
+    plan: basic-256mb
+    region: oregon

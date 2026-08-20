@@ -61,6 +61,21 @@ class Offer:
     stripe_price_id: str | None = None     # authoritative price in live mode
     stripe_product_id: str | None = None   # informational; for reconciliation
     active: bool = True
+    # Physical goods only. Drives `shipping_address_collection` at checkout: a
+    # service must NOT ask for a shipping address (nobody posts a 90-minute
+    # consultation), and a physical good that fails to ask has no destination
+    # once it is paid for. Defaults false so adding a shippable product is a
+    # deliberate act.
+    requires_shipping: bool = False
+    # The Printful sync-variant id this offer is fulfilled by. Without it the
+    # supplier has nothing to print, so `book_supplier_draft` refuses the order
+    # rather than guessing a variant.
+    printful_sync_variant_id: int | None = None
+
+    @property
+    def shippable(self) -> bool:
+        """True when this offer needs an address and a supplier to fulfil it."""
+        return self.requires_shipping
 
     @property
     def recurring(self) -> bool:
@@ -84,8 +99,21 @@ def _parse_offer(raw: dict[str, Any]) -> Offer:
     if amount <= 0:
         raise PricebookError(f"{sku}: amount must be a positive integer of cents")
 
+    requires_shipping = bool(raw.get("requires_shipping", False))
+    variant_raw = raw.get("printful_sync_variant_id")
+    variant_id = int(variant_raw) if variant_raw not in (None, "") else None
+    if requires_shipping and variant_id is None:
+        # Fail closed at load: a shippable offer with no supplier variant would
+        # take money at checkout and then strand the order as unfulfillable.
+        raise PricebookError(
+            f"{sku}: requires_shipping is set but printful_sync_variant_id is missing — "
+            "a physical offer needs a supplier variant to be fulfillable"
+        )
+
     return Offer(
         sku=sku,
+        requires_shipping=requires_shipping,
+        printful_sync_variant_id=variant_id,
         name=str(raw.get("name", sku)),
         description=str(raw.get("description", "")),
         amount=amount,
@@ -178,6 +206,8 @@ def resolve_line_items(requested: list[dict[str, Any]]) -> tuple[list[dict[str, 
                 "tax_behavior": offer.tax_behavior,
                 "interval": offer.interval,
                 "stripe_price_id": offer.stripe_price_id,
+                "requires_shipping": offer.requires_shipping,
+                "printful_sync_variant_id": offer.printful_sync_variant_id,
             }
         )
 

@@ -17,7 +17,6 @@ Usage:
 
 import asyncio
 import concurrent.futures
-import ipaddress
 import json
 import os
 import platform
@@ -27,10 +26,10 @@ import sys
 import time
 from collections import deque
 from dataclasses import dataclass, field, asdict
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 from statistics import mean, stdev
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 import threading
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -388,10 +387,14 @@ async def run_market_intelligence():
             print(c(f'Module error: {r}', 'red'))
             continue
         mod = r.get('module')
-        if mod == 'pricing':     STATE.market_pricing     = r
-        elif mod == 'competitors': STATE.market_competitors = r
-        elif mod == 'technology':  STATE.market_technology  = r
-        elif mod == 'regulatory':  STATE.market_regulatory  = r
+        if mod == 'pricing':
+            STATE.market_pricing = r
+        elif mod == 'competitors':
+            STATE.market_competitors = r
+        elif mod == 'technology':
+            STATE.market_technology = r
+        elif mod == 'regulatory':
+            STATE.market_regulatory = r
 
     STATE.last_market_scan = datetime.now().isoformat()
     STATE.market_scan_ms.append(elapsed_ms)
@@ -580,29 +583,34 @@ async def run_security_baseline():
     cm = check_map.get('cpu_memory', {})
     if cm:
         if cm['cpu'] > CONFIG['thresholds']['high_cpu']:
-            add_finding('WARNING', f"CPU at {cm['cpu']}%", 'Investigate high-CPU processes'); score -= 5
+            add_finding('WARNING', f"CPU at {cm['cpu']}%", 'Investigate high-CPU processes')
+            score -= 5
         if cm['memory'] > CONFIG['thresholds']['high_memory']:
-            add_finding('WARNING', f"Memory at {cm['memory']}%", 'Check for memory leaks'); score -= 5
+            add_finding('WARNING', f"Memory at {cm['memory']}%", 'Check for memory leaks')
+            score -= 5
         status(f"CPU: {cm['cpu']}%  |  Memory: {cm['memory']}%", cm['ok'])
 
     # Connections
     cn = check_map.get('connections', {})
     if cn:
         if cn['suspicious']:
-            add_finding('CRITICAL', f"{len(cn['suspicious'])} suspicious port connections", 'Review immediately'); score -= 15
+            add_finding('CRITICAL', f"{len(cn['suspicious'])} suspicious port connections", 'Review immediately')
+            score -= 15
         status(f"Connections: {cn['total']} active, {len(cn.get('suspicious', []))} suspicious", cn['ok'])
 
     # Processes
     pr = check_map.get('processes', {})
     if pr:
         if pr['suspicious']:
-            add_finding('CRITICAL', f"{len(pr['suspicious'])} known-malicious process names", 'Kill and investigate'); score -= 15
+            add_finding('CRITICAL', f"{len(pr['suspicious'])} known-malicious process names", 'Kill and investigate')
+            score -= 15
         status(f"Processes: {pr['total']} running, {len(pr.get('suspicious', []))} suspicious", pr['ok'])
 
     # Disk
     dk = check_map.get('disk', {})
     if dk and not dk['ok']:
-        add_finding('WARNING', 'Disk partition >90% full', 'Free disk space'); score -= 5
+        add_finding('WARNING', 'Disk partition >90% full', 'Free disk space')
+        score -= 5
         for p in dk.get('partitions', []):
             print(f"    {p['mount']}: {p['pct']}% used ({p['free_gb']} GB free)")
 

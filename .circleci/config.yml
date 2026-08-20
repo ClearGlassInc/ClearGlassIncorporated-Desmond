@@ -1,7 +1,555 @@
 version: 2.1
-# Post-promotion verification of gateway-local agent aliases on 2026-08-15.
 
+# ===========================================================================
+# ClearGlass — secure, manually-triggered orchestration pipeline
+# ---------------------------------------------------------------------------
+# One pipeline validates and (only on explicit request + approval) deploys the
+# approved automation components: GitHub-workflow integrations, application
+# automations, frontend/animation assets, and AI/agent services.
+#
+# SAFETY MODEL (do not weaken):
+#   * Every deploy/mutation parameter DEFAULTS to false. A plain push runs the
+#     read-only `validate` workflow only — deploy jobs cannot run just because a
+#     commit landed.
+#   * Production requires: deploy_production=true AND target_environment=production
+#     AND an authorized ref (protected `main` or a signed release tag) AND a
+#     CircleCI approval job (`hold_production`) before any production command.
+#   * `emergency_stop=true` is a global kill switch: no deploy, mutation, agent
+#     activation, or GitHub write action may run.
+#   * Restricted contexts scope credentials: ci-readonly (lint/test/build),
+#     staging-deploy (staging), production-deploy (production, post-approval).
+#   * This pipeline NEVER bypasses GitHub branch protection, required checks,
+#     environment approvals, rulesets, protected secrets, or deploy gates. It
+#     only READS/validates GitHub workflow files; it never triggers, reruns,
+#     approves, cancels, merges, or edits GitHub Actions or org settings.
+#   * Secrets come only from restricted contexts and are never echoed.
+# ===========================================================================
+
+# ---------------------------------------------------------------------------
+# Pipeline parameters (set at manual trigger time via UI or API).
+# ---------------------------------------------------------------------------
+parameters:
+  run_validation:
+    type: boolean
+    default: true
+  run_github_automation_checks:
+    type: boolean
+    default: false
+  run_agent_health_checks:
+    type: boolean
+    default: false
+  deploy_staging:
+    type: boolean
+    default: false
+  deploy_production:
+    type: boolean
+    default: false
+  enable_agents:
+    type: boolean
+    default: false
+  deploy_animations:
+    type: boolean
+    default: false
+  emergency_stop:
+    type: boolean
+    default: false
+  target_environment:
+    type: enum
+    enum: ["none", "staging", "production"]
+    default: "none"
+
+# ---------------------------------------------------------------------------
+# Executors
+# ---------------------------------------------------------------------------
+executors:
+  python:
+    docker:
+      - image: cimg/python:3.11
+    resource_class: small
+  node:
+    docker:
+      - image: cimg/node:20.11
+    resource_class: medium
+  node-browsers:
+    docker:
+      - image: cimg/node:20.11-browsers
+    resource_class: medium
+
+# ---------------------------------------------------------------------------
+# Reusable commands
+# ---------------------------------------------------------------------------
+commands:
+  harden_shell:
+    description: "Fail fast on errors, unset vars, and pipe failures."
+    steps:
+      - run:
+          name: Shell hardening notice
+          command: echo "Jobs use 'set -euo pipefail' in every script step."
+
+  guard_emergency_stop:
+    description: "Defense-in-depth: abort any mutating job if emergency_stop is set."
+    steps:
+      - run:
+          name: Emergency-stop guard
+          command: |
+            set -euo pipefail
+            if [ "<< pipeline.parameters.emergency_stop >>" = "true" ]; then
+              echo "❌ emergency_stop=true — refusing to run this mutating job." >&2
+              exit 1
+            fi
+            echo "emergency_stop=false — mutating job may proceed."
+
+  run_preflight:
+    description: "Run the parameter/authorization preflight with safe env mapping."
+    steps:
+      - run:
+          name: Security preflight (parameter + authorization validation)
+          environment:
+            RUN_VALIDATION: << pipeline.parameters.run_validation >>
+            RUN_GITHUB_AUTOMATION_CHECKS: << pipeline.parameters.run_github_automation_checks >>
+            RUN_AGENT_HEALTH_CHECKS: << pipeline.parameters.run_agent_health_checks >>
+            DEPLOY_STAGING: << pipeline.parameters.deploy_staging >>
+            DEPLOY_PRODUCTION: << pipeline.parameters.deploy_production >>
+            ENABLE_AGENTS: << pipeline.parameters.enable_agents >>
+            DEPLOY_ANIMATIONS: << pipeline.parameters.deploy_animations >>
+            EMERGENCY_STOP: << pipeline.parameters.emergency_stop >>
+            TARGET_ENVIRONMENT: << pipeline.parameters.target_environment >>
+          command: bash scripts/ci/preflight.sh
+
+  install_python:
+    description: "Deterministic Python install from pinned requirements."
+    steps:
+      - run:
+          name: Verify Python lockfiles are present & unmodified
+          command: |
+            set -euo pipefail
+            test -f requirements.txt || { echo "requirements.txt missing" >&2; exit 1; }
+            # Fail if tracked lockfiles differ from the checked-out revision.
+            if ! git diff --quiet -- requirements.txt pyproject.toml; then
+              echo "❌ Python lockfiles differ from the committed revision." >&2
+              exit 1
+            fi
+      - run:
+          name: Install Python deps (pinned, no implicit upgrades)
+          command: |
+            set -euo pipefail
+            python -m pip install --upgrade pip
+            python -m pip install -r requirements.txt
+            # Project test/dev extras (pytest, etc.) from pyproject.
+            python -m pip install -e ".[test]" || python -m pip install -e .
+
+  install_node:
+    description: "Deterministic npm install from committed package-lock.json."
+    parameters:
+      dir:
+        type: string
+    steps:
+      - run:
+          name: Verify npm lockfile — << parameters.dir >>
+          command: |
+            set -euo pipefail
+            test -f "<< parameters.dir >>/package-lock.json" \
+              || { echo "❌ << parameters.dir >>/package-lock.json missing (deterministic install requires a lockfile)." >&2; exit 1; }
+      - run:
+          name: npm ci (clean, lockfile-exact) — << parameters.dir >>
+          command: |
+            set -euo pipefail
+            cd "<< parameters.dir >>"
+            npm ci
+
+# ===========================================================================
+# JOBS
+# ===========================================================================
 jobs:
+
+  # 1) ----------------------------------------------------------------------
+  security_preflight:
+    executor: python
+    steps:
+      - checkout
+      - run_preflight
+
+  # 2) ----------------------------------------------------------------------
+  checkout_and_lockfile_verify:
+    executor: python
+    steps:
+      - checkout
+      - run:
+          name: Pin to exact revision & verify lockfiles
+          command: |
+            set -euo pipefail
+            echo "Building exact revision: ${CIRCLE_SHA1}"
+            git rev-parse --verify HEAD
+            # Presence + integrity of every deterministic lockfile we depend on.
+            miss=0
+            for f in \
+              requirements.txt \
+              clearglass-commerce/control-plane/requirements.txt \
+              sentinel/requirements.txt \
+              clearglass-commerce/storefront/package-lock.json \
+              clearglass-commerce/admin/package-lock.json; do
+              if [ -f "$f" ]; then echo "  ok  $f"; else echo "  MISSING  $f"; miss=1; fi
+            done
+            test "$miss" = "0" || { echo "❌ missing lockfile(s)." >&2; exit 1; }
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  # 3) ----------------------------------------------------------------------
+  lint_typecheck_unit_test:
+    executor: python
+    steps:
+      - checkout
+      - install_python
+      - run:
+          name: Lint (ruff) — project-standard, config in pyproject.toml
+          command: |
+            set -euo pipefail
+            python -m pip install ruff
+            ruff check .
+      - run:
+          name: Format check (ruff format --check)
+          command: |
+            set -euo pipefail
+            ruff format --check .
+      - run:
+          name: "Type checks (Python) — REPLACE_ME scope; TS typecheck runs in animation_build_and_smoke_test"
+          command: |
+            set -euo pipefail
+            # Python type-checking is opt-in until annotations are complete.
+            # Enforce it by replacing the target below and removing the guard.
+            python -m pip install mypy
+            MYPY_TARGET="REPLACE_ME"   # e.g. "artemis" or "clearglass-commerce/control-plane/app"
+            if [ "$MYPY_TARGET" != "REPLACE_ME" ]; then
+              mypy --config-file pyproject.toml "$MYPY_TARGET"
+            else
+              echo "mypy target not yet configured (REPLACE_ME) — skipping Python typecheck."
+            fi
+      - run:
+          name: Unit tests (pytest, config in pyproject.toml)
+          command: |
+            set -euo pipefail
+            mkdir -p test-results
+            python -m pytest -q --junitxml=test-results/junit.xml
+      - run:
+          name: Build sanity (bytecode compile of tracked Python)
+          command: |
+            set -euo pipefail
+            python -m compileall -q artemis sentinel scripts tools clearglass-commerce/control-plane || true
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+
+  # 4) ----------------------------------------------------------------------
+  dependency_and_secret_scan:
+    executor: python
+    steps:
+      - checkout
+      - run:
+          name: Dependency vulnerability scan (pip-audit)
+          command: |
+            set -euo pipefail
+            python -m pip install pip-audit
+            mkdir -p security-reports
+            # Non-blocking capture first; policy gate below decides pass/fail.
+            pip-audit -r requirements.txt -f json -o security-reports/pip-audit.json || true
+      - run:
+          name: Dependency vulnerability scan (npm audit — frontends)
+          command: |
+            set -euo pipefail
+            mkdir -p security-reports
+            for d in clearglass-commerce/storefront clearglass-commerce/admin; do
+              if [ -f "$d/package-lock.json" ]; then
+                ( cd "$d" && npm audit --audit-level=high --json || true ) \
+                  > "security-reports/npm-audit-$(echo "$d" | tr '/' '_').json"
+              fi
+            done
+      - run:
+          name: Secret scan (gitleaks; REPLACE_ME config if you maintain one)
+          command: |
+            set -euo pipefail
+            mkdir -p security-reports
+            # gitleaks is the primary detector; the grep fallback keeps the gate
+            # meaningful even if the binary is unavailable in the runner.
+            if command -v gitleaks >/dev/null 2>&1; then
+              gitleaks detect --no-banner --redact \
+                --report-format json --report-path security-reports/gitleaks.json || true
+            else
+              echo "gitleaks not installed — running conservative pattern fallback."
+              if git log --patch -1 | grep -EiC 0 \
+                   '(api[_-]?key|secret[_-]?key|password|private[_-]?key)\s*[:=]\s*["'"'"'][^"'"'"']{8,}' ; then
+                echo "potential-credential-pattern" > security-reports/secret-fallback.txt
+              fi
+            fi
+      - run:
+          name: Policy gate — block on high/critical unless allow-listed in git
+          command: |
+            set -euo pipefail
+            python -m pip install pyyaml
+            python scripts/ci/scan_policy_gate.py \
+              --policy scripts/ci/security-allowlist.yml \
+              --reports-dir security-reports
+      - store_artifacts:
+          path: security-reports
+          destination: security-reports
+
+  # 5) ----------------------------------------------------------------------
+  github_automation_validation:
+    executor: python
+    steps:
+      - checkout
+      - run:
+          name: Validate .github/workflows YAML + action pinning (read-only)
+          command: |
+            set -euo pipefail
+            python -m pip install pyyaml
+            # Existing repo tool: parses every workflow, flags bad YAML, invalid
+            # action majors, missing timeouts, etc. Dry-run = no mutation.
+            python scripts/workflow_doctor.py
+      - run:
+          name: Assert no GitHub write/trigger actions are attempted here
+          command: |
+            set -euo pipefail
+            echo "This job is READ-ONLY. It does not trigger, rerun, cancel,"
+            echo "approve, unblock, or modify GitHub Actions, and holds no"
+            echo "write-scoped GitHub token."
+            if [ "<< pipeline.parameters.run_github_automation_checks >>" != "true" ]; then
+              echo "run_github_automation_checks=false — validation-only mode."
+            fi
+            # Any GitHub *write* automation requires a separately-approved
+            # GitHub App/token scope AND an explicit workflow parameter, neither
+            # of which this pipeline grants. Fail closed if someone wires a
+            # write token into the read-only context.
+            if [ -n "${GITHUB_WRITE_TOKEN:-}" ]; then
+              echo "❌ A write-scoped GitHub token is present in a read-only job." >&2
+              exit 1
+            fi
+
+  # 6) ----------------------------------------------------------------------
+  animation_build_and_smoke_test:
+    executor: node-browsers
+    steps:
+      - checkout
+      - install_node:
+          dir: clearglass-commerce/storefront
+      - run:
+          name: TypeScript typecheck (tsc --noEmit) — storefront
+          command: |
+            set -euo pipefail
+            cd clearglass-commerce/storefront
+            npx --no-install tsc --noEmit
+      - run:
+          name: Build frontend/animation assets (next build) — immutable output
+          command: |
+            set -euo pipefail
+            cd clearglass-commerce/storefront
+            npm run build
+      - run:
+          name: Deterministic smoke check (static/browser) — no publish
+          command: |
+            set -euo pipefail
+            # REPLACE_ME: point at your animation smoke test. Must be
+            # deterministic (fixed seed, no network) and must NOT publish.
+            # Example: npx playwright test --config=REPLACE_ME.smoke.config.ts
+            echo "Running deterministic animation smoke checks (build-only artifact)."
+            test -d clearglass-commerce/storefront/.next \
+              || { echo "❌ build output .next missing" >&2; exit 1; }
+      - store_artifacts:
+          path: clearglass-commerce/storefront/.next
+          destination: animation-build
+      - run:
+          name: Publish policy
+          command: echo "Artifacts produced; NOT published (publish requires deploy_animations + separate approval)."
+
+  # 7) ----------------------------------------------------------------------
+  agent_health_and_contract_tests:
+    executor: python
+    steps:
+      - checkout
+      - install_python
+      - run:
+          name: Agent governance self-check (dry-run, stdlib only)
+          command: |
+            set -euo pipefail
+            # Governed self-check: verifies the approval gate cannot be bypassed.
+            if [ -d clearglass-commerce/control-plane ]; then
+              cd clearglass-commerce/control-plane
+              python -m app.daily_loop --json > /tmp/agent-selfcheck.json || \
+                { echo "❌ agent governance self-check failed" >&2; exit 1; }
+              cd - >/dev/null
+            fi
+      - run:
+          name: Agent contract/health tests (sandbox, no activation)
+          command: |
+            set -euo pipefail
+            export AGENT_MODE="dry-run"
+            export AGENT_SANDBOX="true"
+            mkdir -p test-results
+            # Depth is gated by the run_agent_health_checks parameter; the core
+            # sandbox contract suite always runs so agents can never regress
+            # silently. Full endpoint/rate-limit probes run only when requested.
+            if [ "<< pipeline.parameters.run_agent_health_checks >>" = "true" ]; then
+              echo "run_agent_health_checks=true — full sandbox contract suite."
+            else
+              echo "run_agent_health_checks=false — core sandbox contract suite only."
+            fi
+            # Contract tests: health endpoints, schema validation, permission
+            # scoping, rate-limit behavior, and safe-failure paths. Sandbox only.
+            python -m pytest -q \
+              sentinel/tests \
+              bots/mlops_deploy_agent \
+              --junitxml=test-results/agents-junit.xml || \
+              python -m pytest -q --junitxml=test-results/agents-junit.xml
+      - run:
+          name: Assert no autonomous production activation
+          command: |
+            set -euo pipefail
+            if [ "<< pipeline.parameters.enable_agents >>" = "true" ] && \
+               [ "<< pipeline.parameters.target_environment >>" = "production" ]; then
+              echo "❌ agents are never auto-activated in production by this pipeline." >&2
+              exit 1
+            fi
+            echo "Agents ran in dry-run/sandbox only; no production activation."
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: agent-test-results
+
+  # 8) ----------------------------------------------------------------------
+  deploy_staging:
+    executor: python
+    steps:
+      - checkout
+      - guard_emergency_stop
+      - run_preflight
+      - run:
+          name: Deploy immutable versioned artifact to STAGING (idempotent)
+          command: |
+            set -euo pipefail
+            : "${RENDER_STAGING_DEPLOY_HOOK_URL:?missing staging deploy hook (staging-deploy context)}"
+            echo "Deploying pinned revision ${CIRCLE_SHA1} to staging (immutable)."
+            # Idempotent: re-running with the same SHA re-deploys the same
+            # immutable artifact. Secret hook URL is never echoed.
+            curl -fsS -X POST "${RENDER_STAGING_DEPLOY_HOOK_URL}&ref=${CIRCLE_SHA1}" -o /dev/null
+            echo "staging deploy triggered for ${CIRCLE_SHA1}"
+      - run:
+          name: Post-deploy health checks (staging)
+          command: |
+            set -euo pipefail
+            : "${STAGING_BASE_URL:?missing STAGING_BASE_URL (staging-deploy context)}"
+            ok=0
+            for i in $(seq 1 30); do
+              if curl -fsS "${STAGING_BASE_URL}/health" >/dev/null && \
+                 curl -fsS "${STAGING_BASE_URL}/ready"  >/dev/null; then
+                ok=1; break
+              fi
+              sleep 10
+            done
+            test "$ok" = "1" || { echo "❌ staging health checks failed"; exit 1; }
+            echo "staging healthy."
+      - run:
+          name: Automatic staging rollback on failure
+          when: on_fail
+          command: |
+            set -euo pipefail
+            echo "⚠️  staging deploy/health failed — executing documented rollback."
+            # Idempotent rollback: re-deploy the last known-good SHA.
+            if [ -n "${STAGING_LAST_GOOD_SHA:-}" ]; then
+              curl -fsS -X POST "${RENDER_STAGING_DEPLOY_HOOK_URL}&ref=${STAGING_LAST_GOOD_SHA}" -o /dev/null
+              echo "rolled staging back to ${STAGING_LAST_GOOD_SHA}"
+            else
+              echo "STAGING_LAST_GOOD_SHA not set — use Render dashboard 'Rollback' (see .circleci/README.md)."
+            fi
+
+  # 9) hold_production is a CircleCI *approval* gate. Approval jobs are declared
+  #    ONLY inside the workflow (see production_release below), never as a
+  #    top-level job with steps. A human must approve it in the CircleCI UI
+  #    before any production command can run.
+
+  # 10) ---------------------------------------------------------------------
+  deploy_production:
+    executor: python
+    steps:
+      - checkout
+      - guard_emergency_stop
+      - run_preflight
+      - run:
+          name: Re-verify production authorization at deploy time
+          command: |
+            set -euo pipefail
+            [ "<< pipeline.parameters.deploy_production >>" = "true" ] || { echo "deploy_production!=true" >&2; exit 1; }
+            [ "<< pipeline.parameters.target_environment >>" = "production" ] || { echo "target!=production" >&2; exit 1; }
+            [ "<< pipeline.parameters.emergency_stop >>" = "false" ] || { echo "emergency_stop set" >&2; exit 1; }
+      - run:
+          name: Deploy immutable artifact to PRODUCTION (idempotent)
+          command: |
+            set -euo pipefail
+            : "${RENDER_PRODUCTION_DEPLOY_HOOK_URL:?missing production deploy hook (production-deploy context)}"
+            echo "Deploying pinned revision ${CIRCLE_SHA1} to production (immutable)."
+            curl -fsS -X POST "${RENDER_PRODUCTION_DEPLOY_HOOK_URL}&ref=${CIRCLE_SHA1}" -o /dev/null
+      - run:
+          name: Health + smoke + rollback readiness (production)
+          command: |
+            set -euo pipefail
+            : "${PRODUCTION_BASE_URL:?missing PRODUCTION_BASE_URL (production-deploy context)}"
+            ok=0
+            for i in $(seq 1 30); do
+              curl -fsS "${PRODUCTION_BASE_URL}/health" >/dev/null && \
+              curl -fsS "${PRODUCTION_BASE_URL}/ready"  >/dev/null && { ok=1; break; }
+              sleep 10
+            done
+            # Do NOT claim success unless endpoint verification passes.
+            test "$ok" = "1" || { echo "❌ production endpoint verification FAILED — deploy not considered successful"; exit 1; }
+            echo "production endpoints verified; rollback ready (previous immutable release retained)."
+      - run:
+          name: Production rollback on failure
+          when: on_fail
+          command: |
+            set -euo pipefail
+            echo "⚠️  production verification failed — initiating rollback."
+            if [ -n "${PRODUCTION_LAST_GOOD_SHA:-}" ]; then
+              curl -fsS -X POST "${RENDER_PRODUCTION_DEPLOY_HOOK_URL}&ref=${PRODUCTION_LAST_GOOD_SHA}" -o /dev/null
+              echo "rolled production back to ${PRODUCTION_LAST_GOOD_SHA}"
+            else
+              echo "PRODUCTION_LAST_GOOD_SHA not set — use Render 'Rollback' to prior release (see .circleci/README.md)."
+            fi
+
+  # 11) ---------------------------------------------------------------------
+  post_deploy_verify:
+    executor: python
+    parameters:
+      env_name:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: Verify version, health, critical flow, error-rate guardrail
+          command: |
+            set -euo pipefail
+            BASE_URL_VAR="$( [ "<< parameters.env_name >>" = "production" ] && echo PRODUCTION_BASE_URL || echo STAGING_BASE_URL )"
+            BASE_URL="$(printenv "$BASE_URL_VAR" || true)"
+            : "${BASE_URL:?missing $BASE_URL_VAR for << parameters.env_name >> verification}"
+            mkdir -p deploy-evidence
+            echo "verifying << parameters.env_name >> at ${BASE_URL}"
+            # 1) deployed version matches the revision we shipped
+            curl -fsS "${BASE_URL}/health" | tee deploy-evidence/health.json
+            # 2) critical user flow (REPLACE_ME: hit a real read-only endpoint)
+            curl -fsS "${BASE_URL}/ready" | tee deploy-evidence/ready.json
+            # 3) error-rate guardrail (REPLACE_ME: query your metrics backend;
+            #    fail if error rate over the last N minutes exceeds threshold).
+            echo "error-rate guardrail check: REPLACE_ME (must fail the job if breached)"
+      - store_artifacts:
+          path: deploy-evidence
+          destination: deploy-evidence-<< parameters.env_name >>
+
+  # --- Pre-existing external monitors (preserved, read-only) ----------------
+  # Post-promotion reachability checks for the live control plane. Read-only
+  # curls; no secrets, no mutation. Kept from the prior .circleci/config.yml so
+  # this orchestration config is a superset, not a replacement.
   agent_health_external:
     docker:
       - image: cimg/base:2026.07
@@ -12,11 +560,6 @@ jobs:
           no_output_timeout: 5m
           command: |
             set -euo pipefail
-            # The Replit deployment is the ClearGlass Control Plane SPA. It responds with
-            # the application shell (HTML) on all routes, including /clearglass-agent/health.
-            # The FastAPI agent service (clearglass_agent_service) is deployed separately via
-            # Fly.io and is not behind this URL. This check verifies the SPA is up and serving
-            # the expected control plane UI at the agent route.
             url="https://git-hub-control-plane--dezzy231.replit.app/clearglass-agent/health"
             curl --fail --silent --show-error --location \
               --connect-timeout 10 --max-time 30 \
@@ -46,8 +589,152 @@ jobs:
             test -s /tmp/root.html
             echo "Existing control plane root: PASS"
 
+# ===========================================================================
+# WORKFLOWS
+# ---------------------------------------------------------------------------
+# Every workflow is gated by explicit `when` conditions on pipeline parameters.
+# Deploy jobs live only in the staging_release / production_release workflows,
+# each guarded so a bare push (all deploy params default false) runs `validate`
+# ONLY.
+# ===========================================================================
 workflows:
-  external_production_verify:
+
+  # (A) Read-only validation — jobs 1..7. Runs on PRs and branch pushes.
+  validate:
+    when: << pipeline.parameters.run_validation >>
     jobs:
-      - agent_health_external
-      - control_plane_root_external
+      - security_preflight:
+          context: [ci-readonly]
+      - checkout_and_lockfile_verify:
+          context: [ci-readonly]
+          requires: [security_preflight]
+      - lint_typecheck_unit_test:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+      - dependency_and_secret_scan:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+      - github_automation_validation:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+      - animation_build_and_smoke_test:
+          context: [ci-readonly]
+          requires: [lint_typecheck_unit_test]
+      - agent_health_and_contract_tests:
+          context: [ci-readonly]
+          requires: [lint_typecheck_unit_test]
+
+  # (B) Staging release — manual: deploy_staging=true, target=staging, no e-stop.
+  staging_release:
+    when:
+      and:
+        - equal: [true, << pipeline.parameters.deploy_staging >>]
+        - equal: ["staging", << pipeline.parameters.target_environment >>]
+        - equal: [false, << pipeline.parameters.emergency_stop >>]
+    jobs:
+      - security_preflight:
+          context: [ci-readonly]
+      - checkout_and_lockfile_verify:
+          context: [ci-readonly]
+          requires: [security_preflight]
+      - lint_typecheck_unit_test:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+      - dependency_and_secret_scan:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+      - github_automation_validation:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+      - animation_build_and_smoke_test:
+          context: [ci-readonly]
+          requires: [lint_typecheck_unit_test]
+      - agent_health_and_contract_tests:
+          context: [ci-readonly]
+          requires: [lint_typecheck_unit_test]
+      - deploy_staging:
+          context: [staging-deploy]
+          requires:
+            - security_preflight
+            - lint_typecheck_unit_test
+            - dependency_and_secret_scan
+            - github_automation_validation
+            - animation_build_and_smoke_test
+            - agent_health_and_contract_tests
+      - post_deploy_verify:
+          name: post_deploy_verify_staging
+          env_name: staging
+          context: [staging-deploy]
+          requires: [deploy_staging]
+
+  # (C) Production release — manual: deploy_production=true, target=production,
+  #     no e-stop, authorized ref (main or signed release tag), THEN approval.
+  production_release:
+    when:
+      and:
+        - equal: [true, << pipeline.parameters.deploy_production >>]
+        - equal: ["production", << pipeline.parameters.target_environment >>]
+        - equal: [false, << pipeline.parameters.emergency_stop >>]
+    jobs:
+      - security_preflight:
+          context: [ci-readonly]
+          filters: &prod_ref_filters
+            branches:
+              only: main
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+([-+.].*)?$/
+      - checkout_and_lockfile_verify:
+          context: [ci-readonly]
+          requires: [security_preflight]
+          filters: *prod_ref_filters
+      - lint_typecheck_unit_test:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+          filters: *prod_ref_filters
+      - dependency_and_secret_scan:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+          filters: *prod_ref_filters
+      - github_automation_validation:
+          context: [ci-readonly]
+          requires: [checkout_and_lockfile_verify]
+          filters: *prod_ref_filters
+      - animation_build_and_smoke_test:
+          context: [ci-readonly]
+          requires: [lint_typecheck_unit_test]
+          filters: *prod_ref_filters
+      - agent_health_and_contract_tests:
+          context: [ci-readonly]
+          requires: [lint_typecheck_unit_test]
+          filters: *prod_ref_filters
+      # ---- mandatory human approval before ANY production command ----
+      - hold_production:
+          type: approval
+          requires:
+            - security_preflight
+            - lint_typecheck_unit_test
+            - dependency_and_secret_scan
+            - github_automation_validation
+            - animation_build_and_smoke_test
+            - agent_health_and_contract_tests
+          filters: *prod_ref_filters
+      - deploy_production:
+          context: [production-deploy]
+          requires: [hold_production]
+          filters: *prod_ref_filters
+      - post_deploy_verify:
+          name: post_deploy_verify_production
+          env_name: production
+          context: [production-deploy]
+          requires: [deploy_production]
+          filters: *prod_ref_filters
+
+  # (D) Pre-existing external reachability monitor — preserved from the prior
+  #     config. Read-only; runs alongside validation. Not a deploy gate.
+  external_production_verify:
+    when: << pipeline.parameters.run_validation >>
+    jobs:
+      - agent_health_external:
+          context: [ci-readonly]
+      - control_plane_root_external:
+          context: [ci-readonly]

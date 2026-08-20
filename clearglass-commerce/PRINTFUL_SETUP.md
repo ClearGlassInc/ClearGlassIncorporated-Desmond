@@ -59,11 +59,16 @@ hands-off confirmation; it does **not** open the gate, and
    `https://<control-plane-host>/fulfillment/webhooks/printful/<PRINTFUL_WEBHOOK_SECRET>`
    for the `package_shipped` event. Generate the secret yourself
    (`openssl rand -hex 32`) and set it as `PRINTFUL_WEBHOOK_SECRET`.
-6. **Activate Stripe.** Still the hard blocker — see `STRIPE_SETUP.md`. The
-   account cannot accept a payment today, so no order can reach fulfillment at
-   all until `charges_enabled: true`.
-There is no seventh step you can do from a dashboard: shipping-address collection
-is **code**, and it is not written yet — see below.
+6. **Confirm Stripe can charge.** See `STRIPE_SETUP.md` — its snapshot is stale
+   and needs re-verifying. No order reaches fulfillment until `charges_enabled`
+   is true, because nothing is ever paid for.
+7. **Register the Stripe webhook**, if it is not already:
+   `python scripts/register_stripe_webhook.py --url https://<host>/webhooks/stripe --apply`.
+   Payment Links charge the card regardless; without the endpoint no order is
+   ever recorded, so nothing reaches fulfillment even on a live account.
+
+Shipping-address collection is **code, and it is now written** — it turns on per
+offer via `requires_shipping`. See "What is wired now" below.
 
 ## Environment variables
 
@@ -74,6 +79,7 @@ is **code**, and it is not written yet — see below.
 | `PRINTFUL_STORE_ID` | multi-store accounts only | Sent as `X-PF-Store-Id` |
 | `PRINTFUL_AUTO_CONFIRM` | no (default off) | Records intent to auto-confirm. Does not bypass the approval gate |
 | `PRINTFUL_API_BASE` | no | Defaults to `https://api.printful.com` |
+| `SHIPPING_ALLOWED_COUNTRIES` | no (default `CA`) | Where physical goods may be sold and shipped |
 
 The webhook secret being unset is the safe direction: it rejects every call
 rather than accepting all of them. Failing open there would let anyone mark
@@ -103,45 +109,72 @@ a human approves, calling it again claims that approval — exactly once — and
 confirms with Printful. So the same endpoint both proposes and executes,
 depending on whether a human has decided yet.
 
+This is the one action that does **not** go through the generic
+`POST /approvals/{id}/execute` dispatcher, because confirmation also has to take
+the shipment row in-flight atomically and reconcile a crashed attempt against the
+supplier. It is listed as `delegated` in `GET /approvals/coverage`, pointing here.
+
 ## Running it
 
 ```bash
 cd clearglass-commerce/control-plane
-python -m pytest tests/test_printful.py tests/test_fulfillment.py -q   # 77 tests, offline
-psql "$DATABASE_URL" -f migrations/005_fulfillment.sql                 # shipping + shipments
+python -m pytest tests/test_printful.py tests/test_fulfillment.py \
+               tests/test_order_routing.py -q            # 88 tests, offline
+psql "$DATABASE_URL" -f migrations/005_fulfillment.sql   # shipping + shipments
+psql "$DATABASE_URL" -f migrations/006_order_items.sql   # what was bought
 ```
 
 The whole suite runs with no Printful credential and no network — every call goes
 through an injected requester. A green run is **not** evidence that live
 fulfillment works; only a real test order is.
 
-## What is not wired yet
+## What is wired now
+
+The chain from payment to parcel is connected:
+
+1. Checkout asks for a shipping address **only when the cart holds a physical
+   good** (`requires_shipping` on the offer). A service checkout is unchanged —
+   nobody posts a 90-minute consultation.
+2. The Stripe webhook records **what** was bought into `order_items`, reading the
+   compact `sku×qty` metadata the session carries. Price, name and supplier
+   variant are copied from the price book *at time of sale*, because the
+   catalogue is editable and an order must be fulfilled as it was sold.
+3. Physical orders are routed to Printful as a **draft**. Services stop at step 2.
+4. Confirmation still requires a human approval — see the lifecycle above.
+
+To make an offer sellable as a physical good, add both fields to its price-book
+entry:
+
+```json
+{
+  "sku": "clearglass-tee",
+  "requires_shipping": true,
+  "printful_sync_variant_id": 4012
+}
+```
+
+`requires_shipping` without a variant id **fails at load**, deliberately: the
+alternative is taking money at checkout and stranding the order as unfulfillable.
+
+`SHIPPING_ALLOWED_COUNTRIES` (default `CA`) bounds where physical goods can be
+sold. It is a trade control as much as a shipping one — a destination not listed
+cannot be checked out, which keeps customs and tax exposure to jurisdictions you
+have actually accounted for.
+
+## What is still not wired
 
 Being explicit, because a half-integration that looks complete is worse than one
 that doesn't:
 
-- **Shipping addresses are not collected at checkout.** `create_checkout_session`
-  in `app/payments.py` passes `billing_address_collection` but not
-  `shipping_address_collection`, so Stripe returns no destination and
-  `apply_shipping_details` has nothing to capture. Every physical order would
-  therefore land `unfulfillable` — correctly, but uselessly. This is not a
-  dashboard toggle: it is a per-session API parameter, and it cannot simply be
-  switched on for everything, because demanding a shipping address for a
-  90-minute consultation is wrong. Closing it needs a `requires_shipping` flag
-  per price-book offer plus an allowed-countries policy, which is the same
-  missing distinction as the next item.
-- **Automatic draft booking on payment is not connected.** `book_supplier_draft`
-  is written and tested, but the Stripe webhook does not call it, because an
-  order does not yet record *what was bought*. `Order` has a total and no line
-  items, and the price book maps a SKU to a Stripe Price with no Printful
-  `sync_variant_id`. Two things close this: an `order_items` table, and a
-  `printful_sync_variant_id` field per price-book offer. Until then, drafts are
-  booked by calling `book_supplier_draft` with explicit items.
-- **Shipping cost at checkout.** `printful.estimate_shipping` returns the
-  supplier's real rates and delivery windows, but checkout does not call it, so
-  shipping is not yet charged to the customer or shown before payment.
+- **Shipping cost is not charged.** `printful.estimate_shipping` returns the
+  supplier's real rates and delivery windows, and `create_checkout_session`
+  accepts a `shipping_amount`, but the price-book checkout does not call the
+  estimator — so shipping is currently absorbed, not billed. Wiring it means
+  deciding whether to quote live rates or a flat rate, which is a pricing call.
 - **Consumer-facing policies.** Canadian selling needs accurate delivery windows,
   a returns/refund policy, business identification, and GST/HST registration once
   you pass the small-supplier threshold. Printful ships from several countries,
   so customs and duty disclosure matter for cross-border orders. None of this is
-  written yet, and none of it should be guessed at.
+  written, and none of it should be guessed at.
+- **No Printful account exists yet.** Everything above runs in mock mode until
+  `PRINTFUL_API_KEY` is set, and no supplier order can be placed without it.

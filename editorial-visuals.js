@@ -1,5 +1,5 @@
 /* ClearGlass · governed editorial visuals
-   Contextually places reviewed concept artwork on four approved pages.
+   Contextually places reviewed concept artwork on approved pages.
    The module is additive, idempotent, dependency-free, and fail-quiet.
    Embedded artwork text is never promoted to machine-readable factual copy. */
 (function () {
@@ -102,15 +102,52 @@
       ".cgev__notice strong{color:var(--cgev-a);letter-spacing:.04em}",
       ".cgev__links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.cgev__links a{display:inline-flex;align-items:center;text-decoration:none;color:#eaf7ff;font-weight:700;font-size:.84rem;padding:10px 13px;border:1px solid rgba(130,200,255,.28);border-radius:999px;background:rgba(47,93,145,.13);transition:transform .18s,border-color .18s,box-shadow .18s}",
       ".cgev__links a:hover{transform:translateY(-1px);border-color:var(--cgev-a);box-shadow:0 0 22px rgba(80,205,255,.12)}.cgev__links a:focus-visible{outline:2px solid var(--cgev-a);outline-offset:3px}",
-      "@media(max-width:760px){.cgev__grid{grid-template-columns:1fr}.cgev__media{max-width:520px;margin-inline:auto}.cgev{width:min(94vw,1120px)}}",
-      "@media(prefers-reduced-motion:reduce){.cgev__links a{transition:none}}"
+      ".cg-holo-seal{--holo-blue:#27d9ff;--holo-cyan:#6ff7ff;--holo-violet:#9b7cff;position:relative;width:min(100%,520px);aspect-ratio:1/1;margin-inline:auto;display:grid;place-items:center;isolation:isolate;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(35,220,255,.11),rgba(24,12,65,.16) 38%,rgba(2,5,15,.82) 72%,#01030a 100%);border:1px solid rgba(171,239,255,.34);box-shadow:inset 0 0 80px rgba(77,210,255,.1),0 0 70px rgba(43,178,255,.14),0 0 110px rgba(132,89,255,.1)}",
+      ".cg-holo-seal:before{content:'';position:absolute;inset:5%;border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 24px,rgba(76,224,255,.055) 25px 26px),linear-gradient(rgba(74,215,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(74,215,255,.05) 1px,transparent 1px);background-size:auto,34px 34px,34px 34px;mask-image:radial-gradient(circle,#000 45%,transparent 86%);-webkit-mask-image:radial-gradient(circle,#000 45%,transparent 86%);pointer-events:none}",
+      ".cg-holo-seal:after{content:'';position:absolute;inset:11%;border-radius:50%;border:1px solid rgba(111,247,255,.28);box-shadow:0 0 25px rgba(39,217,255,.12),inset 0 0 25px rgba(155,124,255,.09);animation:cgHoloSpin 22s linear infinite;pointer-events:none}",
+      ".cg-holo-ring{position:absolute;border-radius:50%;pointer-events:none;box-sizing:border-box}.cg-holo-ring.r1{inset:7%;border:1px solid rgba(111,247,255,.45);box-shadow:0 0 18px rgba(39,217,255,.16)}.cg-holo-ring.r2{inset:14%;border:1px dashed rgba(155,124,255,.42);animation:cgHoloSpin 18s linear infinite reverse}.cg-holo-ring.r3{inset:22%;border:1px solid rgba(255,255,255,.18);box-shadow:0 0 20px rgba(155,124,255,.12)}",
+      ".cg-holo-logo{position:relative;z-index:4;width:48%;height:48%;object-fit:contain;filter:grayscale(1) brightness(1.75) contrast(1.12) drop-shadow(0 0 8px rgba(220,250,255,.75)) drop-shadow(0 0 24px rgba(39,217,255,.46)) drop-shadow(0 0 36px rgba(155,124,255,.28));opacity:.94;mix-blend-mode:screen}",
+      ".cg-holo-glass{position:absolute;z-index:5;inset:28%;border-radius:50%;background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.16),transparent 22%),radial-gradient(circle at 65% 75%,rgba(39,217,255,.08),transparent 38%);border:1px solid rgba(255,255,255,.16);box-shadow:inset 7px 8px 24px rgba(255,255,255,.08),inset -12px -16px 30px rgba(0,0,0,.2);pointer-events:none;mix-blend-mode:screen}",
+      ".cg-holo-scan{position:absolute;z-index:6;left:9%;right:9%;height:1px;background:linear-gradient(90deg,transparent,var(--holo-cyan),var(--holo-violet),transparent);box-shadow:0 0 12px var(--holo-blue);opacity:.58;animation:cgHoloScan 5s ease-in-out infinite;pointer-events:none}",
+      ".cg-holo-label{position:absolute;z-index:7;font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.22em;color:rgba(224,250,255,.68);text-transform:uppercase}.cg-holo-label.top{top:12%;left:50%;transform:translateX(-50%)}.cg-holo-label.bottom{bottom:12%;left:50%;transform:translateX(-50%)}.cg-holo-label.left{left:8%;top:50%;transform:translateY(-50%) rotate(-90deg)}.cg-holo-label.right{right:8%;top:50%;transform:translateY(-50%) rotate(90deg)}",
+      ".cg-holo-tick{position:absolute;z-index:7;width:10px;height:10px;border-top:1px solid var(--holo-cyan);border-left:1px solid var(--holo-cyan);opacity:.62}.cg-holo-tick.tl{top:19%;left:19%}.cg-holo-tick.tr{top:19%;right:19%;transform:rotate(90deg)}.cg-holo-tick.br{bottom:19%;right:19%;transform:rotate(180deg)}.cg-holo-tick.bl{bottom:19%;left:19%;transform:rotate(270deg)}",
+      "@keyframes cgHoloSpin{to{transform:rotate(360deg)}}@keyframes cgHoloScan{0%,100%{top:22%;opacity:.15}50%{top:78%;opacity:.72}}",
+      "@media(max-width:760px){.cgev__grid{grid-template-columns:1fr}.cgev__media{max-width:520px;margin-inline:auto}.cgev{width:min(94vw,1120px)}.cg-holo-seal{width:min(88vw,520px)}}",
+      "@media(prefers-reduced-motion:reduce){.cgev__links a{transition:none}.cg-holo-ring.r2,.cg-holo-seal:after,.cg-holo-scan{animation:none}.cg-holo-scan{top:50%;opacity:.45}}"
     ].join("");
     document.head.appendChild(style);
   }
 
+  function buildHolographicSeal() {
+    if (page !== "advanced-features-tools-systems.html") return;
+    if (document.getElementById("cg-holo-seal")) return;
+    var target = document.querySelector(".afx-term");
+    if (!target) return;
+
+    var seal = el("div", "cg-holo-seal");
+    seal.id = "cg-holo-seal";
+    seal.setAttribute("role", "img");
+    seal.setAttribute("aria-label", "ClearGlass holographic crystal seal with eagle emblem");
+    seal.innerHTML =
+      '<span class="cg-holo-ring r1" aria-hidden="true"></span>' +
+      '<span class="cg-holo-ring r2" aria-hidden="true"></span>' +
+      '<span class="cg-holo-ring r3" aria-hidden="true"></span>' +
+      '<span class="cg-holo-tick tl" aria-hidden="true"></span><span class="cg-holo-tick tr" aria-hidden="true"></span>' +
+      '<span class="cg-holo-tick br" aria-hidden="true"></span><span class="cg-holo-tick bl" aria-hidden="true"></span>' +
+      '<span class="cg-holo-label top">CLEARGLASS INTELLIGENCE</span>' +
+      '<span class="cg-holo-label bottom">TRANSPARENCY IS INFRASTRUCTURE</span>' +
+      '<span class="cg-holo-label left">PROVENANCE</span><span class="cg-holo-label right">GOVERNANCE</span>' +
+      '<img class="cg-holo-logo" src="/assets/clearglass-logo.png" alt="ClearGlass eagle emblem" width="1024" height="1024" decoding="async" fetchpriority="high">' +
+      '<span class="cg-holo-glass" aria-hidden="true"></span><span class="cg-holo-scan" aria-hidden="true"></span>';
+
+    target.replaceWith(seal);
+  }
+
   function build() {
-    if (document.getElementById("cg-editorial-visual")) return;
     addStyles();
+    buildHolographicSeal();
+    if (page === "advanced-features-tools-systems.html") return;
+    if (document.getElementById("cg-editorial-visual")) return;
 
     var section = el("section", "cgev");
     section.id = "cg-editorial-visual";

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "policy": "deny-by-default",
+  "findings": [],
+  "record_format": {
+    "id": "scanner-finding-id",
+    "severity": "medium|high|critical",
+    "reason": "documented business justification",
+    "expires_on": "YYYY-MM-DD",
+    "change_reference": "approved-change-id",
+    "owner": "team-or-role"
+  },
+  "rules": [
+    "High and critical findings block release unless a matching, unexpired record exists.",
+    "Expired records are invalid.",
+    "A pipeline parameter cannot create or modify an allow-list record.",
+    "No secret value or sensitive payload may be stored here."
+  ]
+}

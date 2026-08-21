@@ -52,7 +52,7 @@ def test_canonical_hash_is_stable_across_row_and_column_order() -> None:
 
 
 def test_metric_crs_falls_back_when_geometry_spans_multiple_utm_zones(monkeypatch) -> None:
-    nodes = gpd.GeoDataFrame(
+    nodes_gdf = gpd.GeoDataFrame(
         {"node": [0], "geometry": [LineString([(-80, 43), (-70, 43)]).centroid]},
         geometry="geometry",
         crs="EPSG:4326",
@@ -63,7 +63,7 @@ def test_metric_crs_falls_back_when_geometry_spans_multiple_utm_zones(monkeypatc
     monkeypatch.setattr(
         module.ox,
         "graph_to_gdfs",
-        lambda graph, nodes=True, edges=False: (nodes, None),
+        lambda graph, nodes=True, edges=False: (nodes_gdf, None),
     )
     crs = select_metric_crs(object())
     assert crs.to_dict().get("proj") == "aeqd"

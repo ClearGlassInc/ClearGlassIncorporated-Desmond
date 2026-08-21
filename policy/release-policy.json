@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "change_reference_regex": "^(CHG|RFC|INC|SEC)-[0-9]{4,}$",
+  "authorized_production_refs": ["main", "signed_release_tag"],
+  "signed_release_tag_regex": "^v[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$",
+  "requirements": {
+    "production": ["validation_passed", "artifact_integrity_passed", "change_reference", "circle_approval", "production_context", "post_deploy_verification"],
+    "production_rollback": ["verified_prior_release", "change_reference", "separate_circle_approval", "production_context", "post_rollback_verification"]
+  },
+  "oidc": {
+    "audience": "REPLACE_ME_OIDC_AUDIENCE",
+    "cloud_role": "REPLACE_ME_CLOUD_ROLE",
+    "trust_subject": "REPLACE_ME_OIDC_SUBJECT",
+    "allowed_ref": "REPLACE_ME_ALLOWED_REF"
+  }
+}

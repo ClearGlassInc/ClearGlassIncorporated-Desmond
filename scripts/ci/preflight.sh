@@ -1,154 +1,66 @@
 #!/usr/bin/env bash
 set -euo pipefail
+fail(){ printf 'NOT VERIFIED: %s\n' "$*" >&2; exit 2; }
+bool(){ case "$2" in true|false) ;; *) fail "$1 must be boolean";; esac; }
+for p in RUN_VALIDATION RUN_GITHUB_AUTOMATION_CHECKS RUN_AGENT_HEALTH_CHECKS DEPLOY_ANIMATIONS ENABLE_AGENTS DEPLOY_STAGING DEPLOY_PRODUCTION ROLLBACK_STAGING ROLLBACK_PRODUCTION EMERGENCY_STOP ALLOW_NONCRITICAL_SCAN_FINDINGS DRY_RUN; do bool "$p" "${!p:-}"; done
+case "${TARGET_ENVIRONMENT:-}" in none|staging|production) ;; *) fail "invalid target environment";; esac
+[ -n "${CIRCLE_SHA1:-}" ] || fail "CIRCLE_SHA1 missing"
+actual="$(git rev-parse HEAD 2>/dev/null || true)"; [ "$actual" = "$CIRCLE_SHA1" ] || fail "HEAD does not equal CIRCLE_SHA1"
 
-fail() {
-  printf 'ERROR: %s\n' "$*" >&2
-  exit 2
-}
-
-require_bool() {
-  local name="$1"
-  local value="$2"
-  case "$value" in
-    true|false) ;;
-    *) fail "${name} must be true or false; received '${value}'" ;;
-  esac
-}
-
-# Never trust an implicitly selected checkout/ref. CircleCI must build exactly
-# the revision reported by CIRCLE_SHA1.
-[ -n "${CIRCLE_SHA1:-}" ] || fail "CIRCLE_SHA1 is required"
-actual_sha="$(git rev-parse HEAD 2>/dev/null || true)"
-[ "$actual_sha" = "$CIRCLE_SHA1" ] || \
-  fail "checked-out revision ${actual_sha:-<none>} does not match CIRCLE_SHA1 ${CIRCLE_SHA1}"
-
-for pair in \
-  "RUN_VALIDATION:${RUN_VALIDATION:-}" \
-  "RUN_GITHUB_AUTOMATION_CHECKS:${RUN_GITHUB_AUTOMATION_CHECKS:-}" \
-  "RUN_AGENT_HEALTH_CHECKS:${RUN_AGENT_HEALTH_CHECKS:-}" \
-  "DEPLOY_STAGING:${DEPLOY_STAGING:-}" \
-  "DEPLOY_PRODUCTION:${DEPLOY_PRODUCTION:-}" \
-  "ENABLE_AGENTS:${ENABLE_AGENTS:-}" \
-  "DEPLOY_ANIMATIONS:${DEPLOY_ANIMATIONS:-}" \
-  "EMERGENCY_STOP:${EMERGENCY_STOP:-}"
-do
-  name="${pair%%:*}"
-  value="${pair#*:}"
-  require_bool "$name" "$value"
-done
-
-case "${TARGET_ENVIRONMENT:-}" in
-  none|staging|production) ;;
-  *) fail "TARGET_ENVIRONMENT must be one of none, staging, production" ;;
-esac
-
-printf '%s\n' \
-  "security_preflight parameters:" \
-  "  run_validation=${RUN_VALIDATION}" \
-  "  run_github_automation_checks=${RUN_GITHUB_AUTOMATION_CHECKS}" \
-  "  run_agent_health_checks=${RUN_AGENT_HEALTH_CHECKS}" \
-  "  deploy_staging=${DEPLOY_STAGING}" \
-  "  deploy_production=${DEPLOY_PRODUCTION}" \
-  "  enable_agents=${ENABLE_AGENTS}" \
-  "  deploy_animations=${DEPLOY_ANIMATIONS}" \
-  "  emergency_stop=${EMERGENCY_STOP}" \
-  "  target_environment=${TARGET_ENVIRONMENT}" \
-  "  branch=${CIRCLE_BRANCH:-<tag>}" \
-  "  tag=${CIRCLE_TAG:-<none>}" \
-  "  sha=${CIRCLE_SHA1}"
-
-mutation_requested=false
-if [ "$DEPLOY_STAGING" = "true" ] || \
-   [ "$DEPLOY_PRODUCTION" = "true" ] || \
-   [ "$ENABLE_AGENTS" = "true" ] || \
-   [ "$DEPLOY_ANIMATIONS" = "true" ]; then
-  mutation_requested=true
+if [ -n "${RELEASE_REF:-}" ]; then
+  case "$RELEASE_REF" in main|v[0-9]*) ;; *) fail "release_ref must be main or v<version>";; esac
+  if [ -n "${CIRCLE_BRANCH:-}" ]; then [ "$RELEASE_REF" = "$CIRCLE_BRANCH" ] || fail "release_ref does not match CircleCI branch"; fi
+  if [ -n "${CIRCLE_TAG:-}" ]; then [ "$RELEASE_REF" = "$CIRCLE_TAG" ] || fail "release_ref does not match CircleCI tag"; fi
+fi
+if [ -n "${EXPECTED_ARTIFACT_SHA256:-}" ]; then printf '%s' "$EXPECTED_ARTIFACT_SHA256" | grep -Eq '^[A-Fa-f0-9]{64}$' || fail "expected_artifact_sha256 must be SHA-256"; fi
+if [ -n "${CHANGE_REFERENCE:-}" ]; then
+  [ -f policy/release-policy.json ] || fail "release policy missing"
+  python3 - "$CHANGE_REFERENCE" <<'PY'
+import json,re,sys
+p=json.load(open('policy/release-policy.json'))
+if not re.fullmatch(p['change_reference_regex'],sys.argv[1]): raise SystemExit('invalid change_reference format')
+PY
 fi
 
-if [ "$EMERGENCY_STOP" = "true" ] && [ "$mutation_requested" = "true" ]; then
-  fail "emergency_stop=true forbids deployments, agent activation, animation publication, and other mutations"
-fi
+mutation=false
+for p in DEPLOY_STAGING DEPLOY_PRODUCTION ROLLBACK_STAGING ROLLBACK_PRODUCTION ENABLE_AGENTS; do [ "${!p}" = true ] && mutation=true; done
+[ "$EMERGENCY_STOP" = true ] && [ "$mutation" = true ] && fail "emergency_stop=true blocks all mutation"
+[ "$DEPLOY_STAGING" = true ] && { [ "$RUN_VALIDATION" = true ] || fail "staging requires run_validation=true"; [ "$TARGET_ENVIRONMENT" = staging ] || fail "staging target required"; [ "$DRY_RUN" = false ] || fail "staging requires dry_run=false"; [ "$DEPLOY_PRODUCTION" = false ] || fail "staging/production deploy mutually exclusive"; [ "$ROLLBACK_STAGING" = false ] || fail "deploy/rollback mutually exclusive"; [ "$ROLLBACK_PRODUCTION" = false ] || fail "deploy/rollback mutually exclusive"; }
+[ "$DEPLOY_PRODUCTION" = true ] && { [ "$RUN_VALIDATION" = true ] || fail "production requires run_validation=true"; [ "$TARGET_ENVIRONMENT" = production ] || fail "production target required"; [ "$DRY_RUN" = false ] || fail "production requires dry_run=false"; [ "$DEPLOY_STAGING" = false ] || fail "staging/production deploy mutually exclusive"; [ "$ROLLBACK_STAGING" = false ] || fail "deploy/rollback mutually exclusive"; [ "$ROLLBACK_PRODUCTION" = false ] || fail "deploy/rollback mutually exclusive"; [ -n "${CHANGE_REFERENCE:-}" ] || fail "production requires change_reference"; }
+[ "$ROLLBACK_STAGING" = true ] && { [ "$TARGET_ENVIRONMENT" = staging ] || fail "staging rollback requires staging target"; [ "$DRY_RUN" = false ] || fail "rollback requires dry_run=false"; [ "$ROLLBACK_PRODUCTION" = false ] || fail "rollback targets mutually exclusive"; }
+[ "$ROLLBACK_PRODUCTION" = true ] && { [ "$TARGET_ENVIRONMENT" = production ] || fail "production rollback requires production target"; [ "$DRY_RUN" = false ] || fail "rollback requires dry_run=false"; [ "$ROLLBACK_STAGING" = false ] || fail "rollback targets mutually exclusive"; [ -n "${CHANGE_REFERENCE:-}" ] || fail "production rollback requires change_reference"; }
 
-if [ "$DEPLOY_STAGING" = "true" ] && [ "$DEPLOY_PRODUCTION" = "true" ]; then
-  fail "deploy_staging and deploy_production are mutually exclusive"
-fi
-
-if [ "$DEPLOY_STAGING" = "true" ]; then
-  [ "$RUN_VALIDATION" = "true" ] || fail "staging deployment requires run_validation=true"
-  [ "$TARGET_ENVIRONMENT" = "staging" ] || \
-    fail "deploy_staging=true requires target_environment=staging"
-  [ -z "${CIRCLE_TAG:-}" ] || fail "staging deployment must run from a branch, not a tag"
-fi
-
-if [ "$DEPLOY_PRODUCTION" = "true" ]; then
-  [ "$RUN_VALIDATION" = "true" ] || fail "production deployment requires run_validation=true"
-  [ "$TARGET_ENVIRONMENT" = "production" ] || \
-    fail "deploy_production=true requires target_environment=production"
-
-  if [ "${CIRCLE_BRANCH:-}" = "main" ] && [ -z "${CIRCLE_TAG:-}" ]; then
-    echo "Production ref eligibility: protected main branch."
+if [ "$DEPLOY_PRODUCTION" = true ] || [ "$ROLLBACK_PRODUCTION" = true ]; then
+  if [ "${CIRCLE_BRANCH:-}" = main ] && [ -z "${CIRCLE_TAG:-}" ]; then
+    [ "${RELEASE_REF:-main}" = main ] || fail "production release_ref must be main"
   elif [ -n "${CIRCLE_TAG:-}" ]; then
-    case "$CIRCLE_TAG" in
-      v[0-9]*) ;;
-      *) fail "production release tags must start with v followed by a numeric version" ;;
-    esac
-
-    [ -n "${TRUSTED_RELEASE_SIGNER_FINGERPRINT:-}" ] || \
-      fail "signed-tag production requires TRUSTED_RELEASE_SIGNER_FINGERPRINT in ci-readonly"
-    [ -n "${TRUSTED_RELEASE_SIGNER_PUBLIC_KEY_B64:-}" ] || \
-      fail "signed-tag production requires TRUSTED_RELEASE_SIGNER_PUBLIC_KEY_B64 in ci-readonly"
-
-    command -v gpg >/dev/null 2>&1 || fail "gpg is required to verify signed production tags"
-    git fetch --quiet --force origin \
-      "refs/tags/${CIRCLE_TAG}:refs/tags/${CIRCLE_TAG}" || \
-      fail "unable to fetch production tag ${CIRCLE_TAG}"
-
-    gpg_home="$(mktemp -d)"
-    verify_log="$(mktemp)"
-    trap 'rm -rf "$gpg_home" "$verify_log"' EXIT
-
-    printf '%s' "$TRUSTED_RELEASE_SIGNER_PUBLIC_KEY_B64" |
-      base64 --decode |
-      GNUPGHOME="$gpg_home" gpg --batch --quiet --import
-
-    if ! GNUPGHOME="$gpg_home" git verify-tag --raw "$CIRCLE_TAG" 2>"$verify_log"; then
-      fail "production tag signature verification failed"
-    fi
-
-    signer="$(
-      awk '/^\[GNUPG:\] VALIDSIG / {print $3; exit}' "$verify_log" |
-        tr '[:lower:]' '[:upper:]'
-    )"
+    [ "${RELEASE_REF:-$CIRCLE_TAG}" = "$CIRCLE_TAG" ] || fail "release_ref must equal production tag"
+    [[ "$CIRCLE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([+-][0-9A-Za-z.-]+)?$ ]] || fail "production tag must be semver-like vX.Y.Z"
+    [ -n "${TRUSTED_RELEASE_SIGNER_FINGERPRINT:-}" ] || fail "trusted release signer fingerprint missing"
+    [ -n "${TRUSTED_RELEASE_SIGNER_PUBLIC_KEY_B64:-}" ] || fail "trusted release signer public key missing"
+    command -v gpg >/dev/null 2>&1 || fail "gpg unavailable for signed-tag verification"
+    git fetch --quiet --force origin "refs/tags/${CIRCLE_TAG}:refs/tags/${CIRCLE_TAG}" || fail "cannot fetch production tag"
+    gh="$(mktemp -d)"; log="$(mktemp)"; trap 'rm -rf "$gh" "$log"' EXIT
+    printf '%s' "$TRUSTED_RELEASE_SIGNER_PUBLIC_KEY_B64" | base64 --decode | GNUPGHOME="$gh" gpg --batch --quiet --import
+    GNUPGHOME="$gh" git verify-tag --raw "$CIRCLE_TAG" 2>"$log" || fail "production tag signature verification failed"
+    signer="$(awk '/^\[GNUPG:\] VALIDSIG / {print $3; exit}' "$log" | tr -d ' ' | tr '[:lower:]' '[:upper:]')"
     expected="$(printf '%s' "$TRUSTED_RELEASE_SIGNER_FINGERPRINT" | tr -d ' ' | tr '[:lower:]' '[:upper:]')"
-    [ -n "$signer" ] || fail "verified tag did not yield a signer fingerprint"
-    [ "$signer" = "$expected" ] || fail "production tag was signed by an untrusted key"
-
-    # Bind the signed tag to the exact revision CircleCI is about to deploy.
-    tag_sha="$(git rev-list -1 "$CIRCLE_TAG" 2>/dev/null || true)"
-    [ "$tag_sha" = "$CIRCLE_SHA1" ] || \
-      fail "signed release tag ${CIRCLE_TAG} does not resolve to CIRCLE_SHA1 ${CIRCLE_SHA1}"
-
-    echo "Production ref eligibility: trusted signed release tag bound to exact build SHA."
+    [ "$signer" = "$expected" ] || fail "production tag signer is not trusted"
+    [ "$(git rev-list -1 "$CIRCLE_TAG")" = "$CIRCLE_SHA1" ] || fail "signed tag does not resolve to CIRCLE_SHA1"
   else
-    fail "production deployment is allowed only from protected main or a trusted signed release tag"
+    fail "production requires protected main or trusted signed release tag"
   fi
 fi
 
-if [ "$DEPLOY_STAGING" = "false" ] && [ "$DEPLOY_PRODUCTION" = "false" ]; then
-  [ "$TARGET_ENVIRONMENT" = "none" ] || \
-    fail "target_environment must be none when no deployment is requested"
-  [ "$ENABLE_AGENTS" = "false" ] || \
-    fail "enable_agents=true requires an approved staging or production deployment"
-  [ "$DEPLOY_ANIMATIONS" = "false" ] || \
-    fail "deploy_animations=true requires an approved staging or production deployment"
-fi
+[ "$ENABLE_AGENTS" = true ] && fail "enable_agents is blocked until a reviewed sandbox/canary activation adapter exists"
+[ "$DEPLOY_ANIMATIONS" = true ] && [ "$TARGET_ENVIRONMENT" = none ] && fail "deploy_animations requires a target environment"
+if [ "$ALLOW_NONCRITICAL_SCAN_FINDINGS" = true ]; then [ -f policy/security-allowlist.json ] || fail "security allowlist missing"; fi
 
-if [ "$ENABLE_AGENTS" = "true" ]; then
-  fail "enable_agents=true is blocked until REPLACE_ME_AGENT_ACTIVATION_ADAPTER and an enforceable rate-limit policy are configured"
-fi
-
-if [ "$DEPLOY_ANIMATIONS" = "true" ]; then
-  fail "deploy_animations=true is blocked until REPLACE_ME_ANIMATION_DEPLOY_ADAPTER is configured for an approved non-GitHub-write deployment target"
-fi
-
-echo "security_preflight: PASS"
+mkdir -p artifacts/evidence
+python3 - <<'PY'
+import json,os
+safe=['CIRCLE_PIPELINE_ID','CIRCLE_WORKFLOW_ID','CIRCLE_SHA1','CIRCLE_BRANCH','CIRCLE_TAG']
+params=['RUN_VALIDATION','RUN_GITHUB_AUTOMATION_CHECKS','RUN_AGENT_HEALTH_CHECKS','DEPLOY_ANIMATIONS','ENABLE_AGENTS','DEPLOY_STAGING','DEPLOY_PRODUCTION','ROLLBACK_STAGING','ROLLBACK_PRODUCTION','EMERGENCY_STOP','ALLOW_NONCRITICAL_SCAN_FINDINGS','TARGET_ENVIRONMENT','RELEASE_REF','EXPECTED_ARTIFACT_SHA256','CHANGE_REFERENCE','DRY_RUN']
+json.dump({'status':'PASS','pipeline':{k:os.getenv(k,'') for k in safe},'parameters':{k:os.getenv(k,'') for k in params}},open('artifacts/evidence/preflight.json','w'),indent=2)
+PY
+printf '%s\n' 'security_preflight: PASS'

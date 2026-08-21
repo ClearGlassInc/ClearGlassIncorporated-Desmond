@@ -1,8 +1,22 @@
 [
   {
-    "title": "Control Surface Feeds #145",
+    "title": "Control Surface Feeds #146",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "20:42",
+    "timestamp": "2026-08-21T20:42:15Z"
+  },
+  {
+    "title": "Deploy Pages #144",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "19:38",
+    "timestamp": "2026-08-21T19:38:49Z"
+  },
+  {
+    "title": "Control Surface Feeds #145",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "19:38",
     "timestamp": "2026-08-21T19:38:29Z"
   },
@@ -124,19 +138,5 @@
     "detail": "skipped \u00b7 schedule on main",
     "time": "18:55",
     "timestamp": "2026-08-21T18:55:11Z"
-  },
-  {
-    "title": "Health Monitor #26",
-    "status": "bad",
-    "detail": "failure \u00b7 schedule on main",
-    "time": "18:36",
-    "timestamp": "2026-08-21T18:36:52Z"
-  },
-  {
-    "title": "Defender Watch #26",
-    "status": "bad",
-    "detail": "failure \u00b7 schedule on main",
-    "time": "18:30",
-    "timestamp": "2026-08-21T18:30:09Z"
   }
 ]

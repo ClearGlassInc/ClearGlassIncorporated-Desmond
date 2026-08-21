@@ -1,8 +1,29 @@
 [
   {
-    "title": "Control Surface Feeds #139",
+    "title": "Control Surface Feeds #140",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "14:54",
+    "timestamp": "2026-08-21T14:54:23Z"
+  },
+  {
+    "title": "Agent OS Self-Check #8",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "14:03",
+    "timestamp": "2026-08-21T14:03:32Z"
+  },
+  {
+    "title": "Deploy Pages #138",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "13:59",
+    "timestamp": "2026-08-21T13:59:25Z"
+  },
+  {
+    "title": "Control Surface Feeds #139",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "13:58",
     "timestamp": "2026-08-21T13:58:58Z"
   },
@@ -117,26 +138,5 @@
     "detail": "skipped \u00b7 workflow_run on main",
     "time": "12:18",
     "timestamp": "2026-08-21T12:18:06Z"
-  },
-  {
-    "title": "Deploy ClearGlass Agent Live #4",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "12:17",
-    "timestamp": "2026-08-21T12:17:53Z"
-  },
-  {
-    "title": "Site Integrity Guard #71",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "12:17",
-    "timestamp": "2026-08-21T12:17:53Z"
-  },
-  {
-    "title": "Artemis Function Agent CI #2",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "12:17",
-    "timestamp": "2026-08-21T12:17:53Z"
   }
 ]

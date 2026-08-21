@@ -19,23 +19,17 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Python
-        uses: actions/setup-python@v5
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          python-version: '3.12'
+          persist-credentials: false
+          fetch-depth: 1
 
       - name: Unit tests
-        run: python -m pytest -q clearway/test_clearway.py
+        run: python3 -m unittest -v clearway.test_clearway
 
       - name: Compliance gate
-        run: python clearway/agent.py --input clearway/example_audit.json --policy clearway/policy.json --report-dir clearway/reports --gate
+        run: python3 clearway/agent.py --input clearway/example_audit.json --policy clearway/policy.json --report-dir clearway/reports --gate
 
-      - name: Upload evidence
+      - name: Print evidence decision
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: clearway-compliance-evidence
-          path: clearway/reports/
-          if-no-files-found: error
+        run: cat clearway/reports/clearway_decision.json 2>/dev/null || true

@@ -1,8 +1,22 @@
 [
   {
-    "title": "Control Surface Feeds #148",
+    "title": "Control Surface Feeds #149",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "23:40",
+    "timestamp": "2026-08-21T23:40:18Z"
+  },
+  {
+    "title": "Deploy Pages #147",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "22:42",
+    "timestamp": "2026-08-21T22:42:54Z"
+  },
+  {
+    "title": "Control Surface Feeds #148",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "22:42",
     "timestamp": "2026-08-21T22:42:29Z"
   },
@@ -124,19 +138,5 @@
     "detail": "skipped \u00b7 workflow_run on main",
     "time": "22:20",
     "timestamp": "2026-08-21T22:20:21Z"
-  },
-  {
-    "title": "Auto Heal #550",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "22:20",
-    "timestamp": "2026-08-21T22:20:10Z"
-  },
-  {
-    "title": "ClearGlass GitHub Pages Check #16",
-    "status": "bad",
-    "detail": "failure \u00b7 push on main",
-    "time": "22:20",
-    "timestamp": "2026-08-21T22:20:04Z"
   }
 ]

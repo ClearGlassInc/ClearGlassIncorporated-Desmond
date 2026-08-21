@@ -15,6 +15,13 @@ require_bool() {
   esac
 }
 
+# Never trust an implicitly selected checkout/ref. CircleCI must build exactly
+# the revision reported by CIRCLE_SHA1.
+[ -n "${CIRCLE_SHA1:-}" ] || fail "CIRCLE_SHA1 is required"
+actual_sha="$(git rev-parse HEAD 2>/dev/null || true)"
+[ "$actual_sha" = "$CIRCLE_SHA1" ] || \
+  fail "checked-out revision ${actual_sha:-<none>} does not match CIRCLE_SHA1 ${CIRCLE_SHA1}"
+
 for pair in \
   "RUN_VALIDATION:${RUN_VALIDATION:-}" \
   "RUN_GITHUB_AUTOMATION_CHECKS:${RUN_GITHUB_AUTOMATION_CHECKS:-}" \
@@ -47,7 +54,8 @@ printf '%s\n' \
   "  emergency_stop=${EMERGENCY_STOP}" \
   "  target_environment=${TARGET_ENVIRONMENT}" \
   "  branch=${CIRCLE_BRANCH:-<tag>}" \
-  "  tag=${CIRCLE_TAG:-<none>}"
+  "  tag=${CIRCLE_TAG:-<none>}" \
+  "  sha=${CIRCLE_SHA1}"
 
 mutation_requested=false
 if [ "$DEPLOY_STAGING" = "true" ] || \
@@ -114,7 +122,13 @@ if [ "$DEPLOY_PRODUCTION" = "true" ]; then
     expected="$(printf '%s' "$TRUSTED_RELEASE_SIGNER_FINGERPRINT" | tr -d ' ' | tr '[:lower:]' '[:upper:]')"
     [ -n "$signer" ] || fail "verified tag did not yield a signer fingerprint"
     [ "$signer" = "$expected" ] || fail "production tag was signed by an untrusted key"
-    echo "Production ref eligibility: trusted signed release tag."
+
+    # Bind the signed tag to the exact revision CircleCI is about to deploy.
+    tag_sha="$(git rev-list -1 "$CIRCLE_TAG" 2>/dev/null || true)"
+    [ "$tag_sha" = "$CIRCLE_SHA1" ] || \
+      fail "signed release tag ${CIRCLE_TAG} does not resolve to CIRCLE_SHA1 ${CIRCLE_SHA1}"
+
+    echo "Production ref eligibility: trusted signed release tag bound to exact build SHA."
   else
     fail "production deployment is allowed only from protected main or a trusted signed release tag"
   fi

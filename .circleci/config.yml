@@ -80,9 +80,7 @@ jobs:
             if [ "<< pipeline.parameters.dry_run >>" = true ] && { [ "<< pipeline.parameters.deploy_staging >>" = true ] || [ "<< pipeline.parameters.deploy_production >>" = true ] || [ "<< pipeline.parameters.rollback_staging >>" = true ] || [ "<< pipeline.parameters.rollback_production >>" = true ]; }; then echo "dry_run=true forbids mutation" >&2; exit 2; fi
       - checkout
       - runtime_preflight
-      - store_artifacts:
-          path: artifacts/evidence
-          destination: evidence/security-preflight
+      - store_artifacts: {path: artifacts/evidence, destination: evidence/security-preflight}
 
   checkout_and_lockfile_verify:
     executor: node
@@ -191,8 +189,8 @@ jobs:
     steps:
       - checkout
       - attach_workspace: {at: .}
-      - run: {name: Verify staging release, command: "TARGET_ENVIRONMENT=staging bash scripts/ci/post-deploy-verify.sh"}
-      - store_artifacts: {path: artifacts/evidence, destination: evidence/staging-verify}
+      - run: {name: Verify staging release, command: "bash scripts/ci/post_deploy_verify.sh staging"}
+      - store_artifacts: {path: deploy-evidence, destination: evidence/staging-verify}
 
   staging_rollback:
     executor: base
@@ -200,8 +198,8 @@ jobs:
       - checkout
       - attach_workspace: {at: .}
       - run: {name: Staging deterministic rollback, command: "bash scripts/ci/rollback-staging.sh"}
-      - run: {name: Verify staging rollback, command: "TARGET_ENVIRONMENT=staging bash scripts/ci/post-deploy-verify.sh"}
-      - store_artifacts: {path: artifacts/evidence, destination: evidence/staging-rollback}
+      - run: {name: Verify staging rollback, command: "bash scripts/ci/post_deploy_verify.sh staging"}
+      - store_artifacts: {path: deploy-evidence, destination: evidence/staging-rollback}
 
   hold_production:
     type: approval
@@ -221,8 +219,8 @@ jobs:
     steps:
       - checkout
       - attach_workspace: {at: .}
-      - run: {name: Verify production release and guardrails, command: "TARGET_ENVIRONMENT=production bash scripts/ci/post-deploy-verify.sh"}
-      - store_artifacts: {path: artifacts/evidence, destination: evidence/production-verify}
+      - run: {name: Verify production release and guardrails, command: "bash scripts/ci/post_deploy_verify.sh production"}
+      - store_artifacts: {path: deploy-evidence, destination: evidence/production-verify}
 
   hold_production_rollback:
     type: approval
@@ -234,8 +232,8 @@ jobs:
       - attach_workspace: {at: .}
       - run: {name: Emergency stop guard, command: "[ \"<< pipeline.parameters.emergency_stop >>\" = false ]"}
       - run: {name: Deterministic production rollback, command: "bash scripts/ci/rollback-production.sh"}
-      - run: {name: Verify production rollback, command: "TARGET_ENVIRONMENT=production bash scripts/ci/post-deploy-verify.sh"}
-      - store_artifacts: {path: artifacts/evidence, destination: evidence/production-rollback}
+      - run: {name: Verify production rollback, command: "bash scripts/ci/post_deploy_verify.sh production"}
+      - store_artifacts: {path: deploy-evidence, destination: evidence/production-rollback}
 
   post_deploy_evidence_summary:
     executor: base
@@ -247,8 +245,8 @@ jobs:
           command: |
             set -euo pipefail
             mkdir -p artifacts/evidence
-            find artifacts/evidence -type f -print0 | sort -z | xargs -0 sha256sum > artifacts/evidence/SHA256SUMS
-            tar -czf artifacts/evidence-bundle.tgz artifacts/evidence
+            find artifacts/evidence deploy-evidence -type f -print0 2>/dev/null | sort -z | xargs -0 sha256sum > artifacts/evidence/SHA256SUMS
+            tar -czf artifacts/evidence-bundle.tgz artifacts/evidence deploy-evidence 2>/dev/null || tar -czf artifacts/evidence-bundle.tgz artifacts/evidence
       - store_artifacts: {path: artifacts/evidence-bundle.tgz, destination: evidence/evidence-bundle.tgz}
 
 workflows:
@@ -276,7 +274,7 @@ workflows:
       - agent_health_and_contract_tests: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.run_agent_health_checks, context: ci-readonly}
       - build_release_artifact: {requires: [dependency_secret_and_policy_scan, lint_typecheck_unit_test_build], context: ci-readonly}
       - staging_deploy: {requires: [build_release_artifact], context: staging-deploy}
-      - staging_post_deploy_verify: {requires: [staging_deploy]}
+      - staging_post_deploy_verify: {requires: [staging_deploy], context: staging-deploy}
       - staging_rollback: {requires: [{staging_post_deploy_verify: failed}], context: staging-deploy}
       - post_deploy_evidence_summary: {requires: [{staging_post_deploy_verify: [success, failed]}]}
 
@@ -293,7 +291,7 @@ workflows:
       - build_release_artifact: {requires: [dependency_secret_and_policy_scan, lint_typecheck_unit_test_build], context: ci-readonly}
       - hold_production: {requires: [build_release_artifact]}
       - production_deploy: {requires: [hold_production], context: production-deploy}
-      - production_post_deploy_verify: {requires: [production_deploy]}
+      - production_post_deploy_verify: {requires: [production_deploy], context: production-deploy}
       - post_deploy_evidence_summary: {requires: [{production_post_deploy_verify: [success, failed]}]}
 
   staging_rollback_release:

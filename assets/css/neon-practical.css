@@ -330,6 +330,34 @@
   }
 }
 
+/* Guardrail: the previous hero seal geometry is explicitly restored outside
+ * the mobile target so the refinement cannot shift desktop composition. */
+@media (min-width: 621px) {
+  .hero-seal[data-neon-practical] {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: clamp(-119px, calc(-4.64vw - 42px), -98px) auto 28px;
+    width: clamp(96px, 8vw, 132px);
+    height: auto;
+    aspect-ratio: 1;
+    transform: none;
+    z-index: 3;
+    border: 0;
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 1px rgba(182,236,255,.55),
+      0 0 0 6px rgba(101,77,255,.12),
+      0 12px 34px rgba(22,211,255,.34);
+    animation: heroSealFloat 7s ease-in-out infinite;
+  }
+
+  .hero-seal[data-neon-practical] .hero-seal-media img {
+    filter: saturate(1.12) contrast(1.06);
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-seal[data-neon-practical],
   .clear-signal-hero-title,

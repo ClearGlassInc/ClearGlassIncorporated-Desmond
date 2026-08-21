@@ -8,7 +8,7 @@ from typing import Annotated
 import structlog
 import typer
 
-from .acquisition import collect
+from .acquisition import collect, effective_osmnx_settings
 from .config import load_config
 from .metrics import centrality_table, topology_summary
 from .multimodal import normalized_multimodal_graph
@@ -21,6 +21,7 @@ from .visualization import (
     export_graphml,
     export_metric_table,
     write_executive_brief,
+    write_geojson,
     write_html_report,
 )
 
@@ -40,9 +41,9 @@ def _configure_logging() -> None:
 
 @app.command()
 def validate(config: ConfigPath = Path("config/analysis.yaml")) -> None:
-    """Validate deterministic configuration and non-place AOI geometry."""
+    """Validate configuration and non-place AOI geometry without acquiring networks."""
     cfg = load_config(config)
-    result = validate_aoi(cfg.area_of_interest, cfg.max_area_km2)
+    result = validate_aoi(cfg.area_of_interest, cfg.max_area_km2, cfg.repair_invalid_aoi)
     typer.echo(
         json.dumps(
             {
@@ -50,6 +51,7 @@ def validate(config: ConfigPath = Path("config/analysis.yaml")) -> None:
                 "valid": True,
                 "aoi_mode": cfg.area_of_interest.mode,
                 "area_km2": result.area_km2,
+                "repair_invalid_aoi": cfg.repair_invalid_aoi,
                 "notes": result.notes,
             },
             indent=2,
@@ -64,10 +66,8 @@ def run(config: ConfigPath = Path("config/analysis.yaml")) -> None:
     cfg = load_config(config)
     bundle = collect(cfg)
     output_root = cfg.output_dir
-    (output_root / "graphs").mkdir(parents=True, exist_ok=True)
-    (output_root / "tables").mkdir(parents=True, exist_ok=True)
-    (output_root / "reports").mkdir(parents=True, exist_ok=True)
-    (output_root / "provenance").mkdir(parents=True, exist_ok=True)
+    for directory in ("graphs", "tables", "reports", "provenance"):
+        (output_root / directory).mkdir(parents=True, exist_ok=True)
 
     prepared = {
         mode: prepare_graph(graph, mode, cfg.output_crs)
@@ -80,9 +80,24 @@ def run(config: ConfigPath = Path("config/analysis.yaml")) -> None:
     )
     gpkg_path = export_geopackage(prepared, output_root / "osit.gpkg")
 
-    metrics: dict[str, dict[str, object]] = {}
     artifacts = [register_artifact(path, "application/graphml+xml") for path in graphml_paths]
     artifacts.append(register_artifact(gpkg_path, "application/geopackage+sqlite3"))
+
+    if bundle.rail_features is not None:
+        rail_geojson = write_geojson(
+            bundle.rail_features,
+            output_root / "tables" / "transit_rail_features.geojson",
+        )
+        rail_parquet = output_root / "tables" / "transit_rail_features.parquet"
+        bundle.rail_features.to_parquet(rail_parquet, index=False)
+        artifacts.extend(
+            [
+                register_artifact(rail_geojson, "application/geo+json"),
+                register_artifact(rail_parquet, "application/vnd.apache.parquet"),
+            ]
+        )
+
+    metrics: dict[str, dict[str, object]] = {}
     for mode, graph in prepared.items():
         summary = topology_summary(graph)
         summary["quality"] = graph_quality(graph)
@@ -106,24 +121,31 @@ def run(config: ConfigPath = Path("config/analysis.yaml")) -> None:
         "area_of_interest": str(cfg.area_of_interest.value),
         "area_km2": bundle.area_km2,
         "analysis_date_utc": datetime.now(UTC).isoformat(),
+        "network_modes_requested": cfg.network_modes,
+        "network_modes_routable": list(prepared),
+        "transit_rail": (
+            {
+                "feature_count": len(bundle.rail_features),
+                "routability": "non_routable_feature_layer",
+            }
+            if bundle.rail_features is not None
+            else None
+        ),
         "network_metrics": metrics,
+        "osmnx": effective_osmnx_settings(),
         "classification_note": (
-            "All criticality language is graph-model qualified; "
-            "no operational targeting claim is made."
+            "All criticality language is graph-model qualified; no operational targeting claim is made."
         ),
     }
     summary_json = output_root / "tables" / "area_summary.json"
-    summary_json.write_text(json.dumps(summary_payload, indent=2, default=str), encoding="utf-8")
+    summary_json.write_text(
+        json.dumps(summary_payload, indent=2, sort_keys=True, default=str) + "\n",
+        encoding="utf-8",
+    )
     artifacts.append(register_artifact(summary_json, "application/json"))
 
-    brief = write_executive_brief(
-        summary_payload,
-        output_root / "reports" / "executive-brief.md",
-    )
-    report = write_html_report(
-        summary_payload,
-        output_root / "reports" / "report.html",
-    )
+    brief = write_executive_brief(summary_payload, output_root / "reports" / "executive-brief.md")
+    report = write_html_report(summary_payload, output_root / "reports" / "report.html")
     artifacts.extend(
         [
             register_artifact(brief, "text/markdown"),
@@ -131,32 +153,49 @@ def run(config: ConfigPath = Path("config/analysis.yaml")) -> None:
         ]
     )
 
+    sources = [*bundle.sources]
+    if bundle.rail_source is not None:
+        sources.append(bundle.rail_source)
+
     manifest = ProvenanceManifest(
         project_name=cfg.project_name,
-        sources=list(bundle.sources),
+        sources=sources,
         artifacts=artifacts,
         processing=[
-            {"step": "AOI validation", "max_area_km2": cfg.max_area_km2},
-            {"step": "OSM acquisition", "cache": str(cfg.cache_dir), "retry_limit": 3},
-            {"step": "graph projection", "output_crs": cfg.output_crs},
+            {
+                "step": "AOI validation",
+                "repair_invalid_aoi": cfg.repair_invalid_aoi,
+                "max_area_km2": cfg.max_area_km2,
+            },
+            {
+                "step": "OSM acquisition",
+                "cache": str(cfg.cache_dir),
+                "retry_limit": cfg.overpass_max_retries,
+                "effective_settings": effective_osmnx_settings(),
+                "network_mode_policy": "one acquisition per requested mode",
+                "transit_rail_policy": "separate feature-layer acquisition; not a routable street graph",
+            },
+            {
+                "step": "graph projection",
+                "output_crs": cfg.output_crs,
+                "metric_crs_policy": "single-zone UTM when suitable, otherwise local AEQD",
+            },
+            {
+                "step": "component preservation",
+                "retain_all_components": cfg.retain_all_components,
+                "largest_component_selection": "explicit analysis operation only",
+            },
             {"step": "centrality", "max_exact_nodes": cfg.max_centrality_nodes},
         ],
         limitations=[
             "OpenStreetMap completeness and currency vary.",
-            (
-                "Estimated speeds/travel times are model assumptions unless a public "
-                "operational source is supplied."
-            ),
-            (
-                "Topology flags are structural graph metrics, not real-world operational "
-                "criticality claims."
-            ),
+            "Place-name geocoding can resolve to a broad administrative boundary; review the resolved AOI before consequential use.",
+            "Estimated travel times are model assumptions unless authoritative operational speed/schedule data are supplied.",
+            "Rail is a feature layer only until GTFS/service data and station-link validation pass.",
+            "OSM tags do not establish legal access, safety, accessibility, or operational status unless corroborated by authoritative sources.",
         ],
     )
-    manifest_path = write_manifest(
-        manifest,
-        output_root / "provenance" / "manifest.json",
-    )
+    manifest_path = write_manifest(manifest, output_root / "provenance" / "manifest.json")
     log.info("osit_run_complete", outputs=str(output_root), manifest=str(manifest_path))
     typer.echo(f"OSIT complete: {output_root}")
 

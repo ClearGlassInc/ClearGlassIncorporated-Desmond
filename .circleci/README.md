@@ -74,13 +74,16 @@ because a commit landed.
 2. `security_preflight` re-checks the ref and parameter combination — including
    `git verify-tag` against `TRUSTED_RELEASE_SIGNER_FINGERPRINT` — and fails
    closed on anything unauthorized.
-3. Jobs 1–7 must all pass.
-4. **`hold_production`** appears in the CircleCI UI. A human clicks **Approve**.
+3. The checked-out `HEAD` must equal `CIRCLE_SHA1`, and a signed release tag
+   must resolve to that exact same SHA. A valid signature on a different commit
+   cannot authorize deployment.
+4. Jobs 1–7 must all pass.
+5. **`hold_production`** appears in the CircleCI UI. A human clicks **Approve**.
    Nothing production-facing runs before this.
-5. `deploy_production` re-verifies authorization, deploys the **immutable**
+6. `deploy_production` re-verifies authorization, deploys the **immutable**
    artifact pinned to the exact `CIRCLE_SHA1`, then runs health + smoke checks.
    Success is **not** claimed unless endpoint verification passes.
-6. `post_deploy_verify` records version/health/flow/error-rate evidence as
+7. `post_deploy_verify` records version/health/flow/error-rate evidence as
    artifacts.
 
 ### Restricted contexts (credential scoping)
@@ -158,3 +161,35 @@ context after each successful release so automatic rollback has a target.
 > Rollback does **not** delete data or rotate secrets. Database/schema changes
 > must ship behind backward-compatible migrations; a code rollback must remain
 > safe against the already-migrated schema.
+
+---
+
+## 5. Security invariants / fail-closed rules
+
+The pipeline is intentionally conservative. The following controls are treated
+as non-negotiable invariants:
+
+- **Exact revision binding:** preflight requires `CIRCLE_SHA1` and verifies the
+  checked-out `HEAD` is exactly that SHA before any release decision.
+- **Signed-release binding:** production tags are verified with GPG against the
+  trusted public key and fingerprint, then resolved to the exact `CIRCLE_SHA1`.
+- **No GitHub write path:** the GitHub validation job rejects a
+  `GITHUB_WRITE_TOKEN` if one is accidentally exposed in the read-only context.
+- **Human production approval:** the production context is unreachable until
+  the CircleCI approval job succeeds.
+- **Credential separation:** CI validation credentials are not reused as deploy
+  credentials; staging and production contexts are distinct.
+- **Global stop control:** `emergency_stop=true` blocks mutating workflows and
+  is checked again inside mutating jobs.
+- **Agent safety:** agent activation remains fail-closed until a concrete,
+  approved activation adapter and rate-limit policy are implemented.
+- **Animation safety:** animation publication remains fail-closed until a
+  concrete non-GitHub-write deployment adapter is implemented.
+- **No secret echoing:** deployment hooks and protected values are referenced
+  through environment variables and are never printed into job logs.
+- **No protection bypass:** this pipeline does not approve, merge, disable,
+  rerun, cancel, or otherwise alter GitHub Actions, branch protection, rulesets,
+  repository settings, or organization policy.
+
+These controls make the CircleCI layer an orchestration and assurance plane,
+not a privileged bypass around GitHub governance.

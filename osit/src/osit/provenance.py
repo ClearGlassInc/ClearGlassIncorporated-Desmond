@@ -75,12 +75,17 @@ def _canonical_value(value: Any) -> Any:
 
 
 def canonical_sha256(gdf: gpd.GeoDataFrame) -> str:
-    """Hash a stable, row-order/column-order-independent representation."""
+    """Hash WKB + canonical attributes + source index, independent of row/column order."""
     frame = gdf.copy()
     geometry_column = frame.geometry.name
     frame["_geometry_wkb_hex"] = frame.geometry.to_wkb(hex=True)
+    frame["_source_index"] = [
+        json.dumps(_canonical_value(index), sort_keys=True, separators=(",", ":"))
+        for index in frame.index
+    ]
     frame = frame.drop(columns=[geometry_column], errors="ignore")
     columns = sorted(frame.columns)
+
     records: list[str] = []
     for row in frame[columns].itertuples(index=False, name=None):
         canonical = {
@@ -88,6 +93,7 @@ def canonical_sha256(gdf: gpd.GeoDataFrame) -> str:
             for column, value in zip(columns, row, strict=True)
         }
         records.append(json.dumps(canonical, sort_keys=True, separators=(",", ":")))
+
     payload = "\n".join(sorted(records)) + ("\n" if records else "")
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 

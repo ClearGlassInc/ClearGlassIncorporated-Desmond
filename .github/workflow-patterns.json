@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "patterns": [],
+  "categories": [
+    "syntax-error",
+    "missing-secret",
+    "permission",
+    "approval-blocked",
+    "environment-gate",
+    "runner-admission",
+    "quota",
+    "rate-limit",
+    "dependency",
+    "network",
+    "configuration",
+    "runtime",
+    "policy"
+  ],
+  "rules": {
+    "fail_closed": true,
+    "never_store_secret_values": true,
+    "never_bypass_production_controls": true,
+    "never_mark_unverified_runs_success": true
+  }
+}

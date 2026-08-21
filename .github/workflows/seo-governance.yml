@@ -1,0 +1,35 @@
+name: SEO Governance
+
+on:
+  pull_request:
+    paths:
+      - 'services/**'
+      - 'methodology/**'
+      - 'config/seo/**'
+      - 'scripts/validate_seo_governance.py'
+      - 'robots.txt'
+      - 'sitemap-services.xml'
+      - '.github/workflows/seo-governance.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'services/**'
+      - 'methodology/**'
+      - 'config/seo/**'
+      - 'scripts/validate_seo_governance.py'
+      - 'robots.txt'
+      - 'sitemap-services.xml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate SEO governance
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Validate policy and canonical pages
+        run: python3 scripts/validate_seo_governance.py

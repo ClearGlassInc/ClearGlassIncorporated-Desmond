@@ -187,6 +187,9 @@
         '<a class="cg-assistant-action cg-capability-control" href="/blog/" data-action="action-2" data-cg-action="insights" aria-label="Open ClearGlass Insights">' +
           '<span class="cg-action-index" aria-hidden="true">02</span><span class="cg-action-copy"><strong>Insights</strong><small>ClearGlass Intelligence</small></span><span class="cg-action-arrow" aria-hidden="true">↗</span>' +
         '</a>' +
+        '<a class="cg-assistant-action cg-capability-control" href="/blog/the-ledger-of-ashes-political-thriller.html" data-action="action-3" data-cg-action="ledger-of-ashes" aria-label="Open The Ledger of Ashes, a political thriller">' +
+          '<span class="cg-action-index" aria-hidden="true">03</span><span class="cg-action-copy"><strong>The Ledger of Ashes</strong><small>Political thriller · Novel</small></span><span class="cg-action-arrow" aria-hidden="true">↗</span>' +
+        '</a>' +
       '</nav>' +
       '<div class="cg-assistant-scroll-row" role="group" aria-label="Page navigation">' +
         '<button type="button" id="cg-station-top" class="cg-assistant-scroll" aria-label="Back to top"><span aria-hidden="true">↑</span><strong>Top</strong></button>' +

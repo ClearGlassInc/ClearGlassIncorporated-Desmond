@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "CG-SEO-2026-01",
+  "status": "ACTIVE",
+  "purpose": "High-assurance, evidence-driven SEO governance for the public ClearGlass web estate.",
+  "assurance_note": "High-assurance/defense-in-depth engineering discipline; not a claim of NSA, DARPA, government certification, accreditation, or equivalence.",
+  "canonical_origin": "https://www.clearglassinc.com",
+  "primary_cta": "Request an assessment",
+  "search_console_status": "ACCESS_DENIED_REQUIRES_PROPERTY_OWNER_ACCESS",
+  "unverified_metrics": ["queries", "clicks", "impressions", "ctr", "average_position", "indexed_pages"],
+  "canonical_service_routes": [
+    "/services/ai-automation-services.html",
+    "/services/cybersecurity-consulting.html",
+    "/services/osint-automation.html",
+    "/services/ai-governance.html"
+  ],
+  "methodology_route": "/methodology/seo-evidence.html",
+  "required_controls": {
+    "canonical_url": true,
+    "unique_title": true,
+    "meta_description": true,
+    "organization_schema": true,
+    "breadcrumb_schema": true,
+    "service_schema_when_commercial": true,
+    "evidence_disclosure": true,
+    "claim_status": true,
+    "sitemap_membership": true,
+    "robots_reference": true,
+    "conversion_event_tracking": true,
+    "no_unsupported_certification_claims": true
+  },
+  "claim_classes": ["VERIFIED_FACT", "OBSERVATION", "DERIVED_METRIC", "INFERENCE", "UNVERIFIED", "UNKNOWN"],
+  "blocked_claim_patterns": [
+    "NSA-certified",
+    "NSA-grade certification",
+    "DARPA-certified",
+    "government-certified",
+    "production-proven",
+    "customer outcomes without evidence"
+  ],
+  "required_event_names": [
+    "cta_click",
+    "assessment_start",
+    "assessment_submit",
+    "briefing_request_start",
+    "briefing_request_submit",
+    "contact_form_start",
+    "contact_form_submit",
+    "asset_download",
+    "calendar_booking",
+    "security_inquiry",
+    "platform_briefing_request"
+  ]
+}

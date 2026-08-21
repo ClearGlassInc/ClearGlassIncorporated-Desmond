@@ -1,0 +1,45 @@
+{
+  "agent": "Clearway",
+  "version": "1.0.0",
+  "minimum_pass_score": 90,
+  "fail_closed": true,
+  "weights": {
+    "privacy": 0.2,
+    "security": 0.2,
+    "platform_policy": 0.15,
+    "gbp": 0.15,
+    "casl": 0.1,
+    "accessibility": 0.1,
+    "ai_governance": 0.1
+  },
+  "required_evidence_fields": [
+    "finding_id",
+    "timestamp",
+    "source",
+    "source_type",
+    "evidence_location",
+    "risk_level",
+    "confidence",
+    "verification_status"
+  ],
+  "allowed_verification_statuses": [
+    "VERIFIED",
+    "PARTIALLY VERIFIED",
+    "UNVERIFIED",
+    "FALSE POSITIVE"
+  ],
+  "allowed_risk_levels": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+  "deployment_gate": {
+    "required_security_review": "PASS",
+    "required_compliance_review": "PASS",
+    "required_evidence_complete": "YES",
+    "required_rollback_plan": "VERIFIED",
+    "block_unverified_high_risk": true,
+    "block_unacknowledged_executive_review": true
+  },
+  "external_impact": {
+    "enabled": false,
+    "human_authorization_required": true,
+    "allowed_mutations": []
+  }
+}

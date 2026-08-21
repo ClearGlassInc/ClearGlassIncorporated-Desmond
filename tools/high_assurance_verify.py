@@ -219,7 +219,9 @@ def check_provenance(findings: list[Finding]) -> None:
         if not isinstance(entry, dict):
             findings.append(Finding("provenance", "BLOCKING", "VERIFIED_FACT", str(manifest.relative_to(ROOT)), "Manifest contains a malformed artifact entry."))
             continue
-        artifact = entry.get("artifact")
+        # Both committed manifests name the file, under different keys:
+        # the ARTEMIS bot writes "artifact", tools/security_release_manifest.py writes "path".
+        artifact = entry.get("artifact") or entry.get("path")
         if not isinstance(artifact, str):
             findings.append(Finding("provenance", "BLOCKING", "VERIFIED_FACT", str(manifest.relative_to(ROOT)), "Artifact entry is missing a string artifact path."))
             continue

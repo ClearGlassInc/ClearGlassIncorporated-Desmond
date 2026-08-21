@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-08-19T07:34:31.319580+00:00",
+  "run_utc": "2026-08-21T07:39:19.823092+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
@@ -7,25 +7,31 @@
   "skipped": 0,
   "bots": [
     {
+      "bot_id": "growth",
+      "status": "ok",
+      "duration_s": 0.01,
+      "error": null
+    },
+    {
       "bot_id": "daily_priority",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "growth",
-      "status": "ok",
-      "duration_s": 0.02,
-      "error": null
-    },
-    {
       "bot_id": "marketing",
       "status": "ok",
-      "duration_s": 0.02,
+      "duration_s": 0.01,
       "error": null
     },
     {
       "bot_id": "lead_draft",
+      "status": "ok",
+      "duration_s": 0.03,
+      "error": null
+    },
+    {
+      "bot_id": "wealth_ladder",
       "status": "ok",
       "duration_s": 0.03,
       "error": null
@@ -37,12 +43,6 @@
       "error": null
     },
     {
-      "bot_id": "wealth_ladder",
-      "status": "ok",
-      "duration_s": 0.03,
-      "error": null
-    },
-    {
       "bot_id": "seo_optimizer",
       "status": "ok",
       "duration_s": 0.12,
@@ -51,7 +51,7 @@
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 0.83,
+      "duration_s": 1.56,
       "error": null
     },
     {

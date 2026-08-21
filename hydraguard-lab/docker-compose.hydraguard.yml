@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: hydraguard
+      POSTGRES_USER: hydraguard
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+    volumes: [hydraguard_pg:/var/lib/postgresql/data]
+    networks: [lab]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U hydraguard"], interval: 5s, timeout: 3s, retries: 10 }
+    restart: unless-stopped
+
+  redis:
+    image: redis:8-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    networks: [lab]
+    healthcheck: { test: ["CMD", "redis-cli", "ping"], interval: 5s, timeout: 3s, retries: 10 }
+
+  lab-ftp:
+    build: ./lab/ftp
+    expose: ["21"]
+    networks: [lab]
+    read_only: true
+    tmpfs: [/tmp, /run]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 128m
+    cpus: 0.50
+    healthcheck: { test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('127.0.0.1',21),1); s.close()"], interval: 10s, timeout: 3s, retries: 10 }
+
+  mock-auth:
+    build: ./lab/mock-auth
+    expose: ["8080"]
+    networks: [lab]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 64m
+    cpus: 0.25
+
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://hydraguard:${POSTGRES_PASSWORD}@postgres:5432/hydraguard
+      REDIS_URL: redis://redis:6379
+      SIMULATION_MODE: "true"
+      LAB_TARGETS: lab-ftp
+    ports: ["127.0.0.1:${APP_PORT:-3000}:3000"]
+    networks: [lab]
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      lab-ftp: { condition: service_healthy }
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    cpus: 1.0
+
+networks:
+  lab:
+    internal: true
+
+volumes:
+  hydraguard_pg:

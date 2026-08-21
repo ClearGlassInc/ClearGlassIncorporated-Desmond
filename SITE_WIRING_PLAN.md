@@ -16,7 +16,7 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 - **CTA bridge:** Each cluster ends in two relevant, non-coercive next steps such as offers, pricing, readiness, or booking.
 - **Responsive behavior:** Three route cards collapse to one column below 620px; related cards use an adaptive grid; motion is disabled when reduced motion is requested.
 - **SEO and accessibility:** Links are static HTML, labels are descriptive, navigation landmarks are named, focus states are visible, and all routes remain unchanged.
-- **Audit coverage:** 178 public pages are connected and 14 utility, completion, prototype, or private pages are explicitly excluded.
+- **Audit coverage:** 179 public pages are connected and 14 utility, completion, prototype, or private pages are explicitly excluded.
 
 ## Page-by-page flow map
 
@@ -159,8 +159,9 @@ The journey model is: **discover → orient in a topic hub → explore an adjace
 | `blog/biwei-zhang-nato-shape-open-source-intelligence-dossier.html` — NATO SHAPE OSINT Case Study | a public-record open-source intelligence dossier | AetherSense Wi-Fi Sensing | ClearGlass Intelligence | 2027 Outlook | Book a security engagement / See pricing & plans |
 | `blog/2027-outlook-transition-risk-monitoring.html` — 2027 Outlook | transition, valuation and risk monitoring for the year ahead | NATO SHAPE OSINT Case Study | ClearGlass Intelligence | Canada’s Strategic Position, 2026 | Book a security engagement / See pricing & plans |
 | `blog/canada-strategic-position-2026.html` — Canada’s Strategic Position, 2026 | a DIMEFIL command briefing on national posture | 2027 Outlook | ClearGlass Intelligence | Ontario Influence Operations Dossier | Book a security engagement / See pricing & plans |
-| `blog/ontario-caf-covid-influence-operations-dossier.html` — Ontario Influence Operations Dossier | a public-record assessment of CAF influence activity during COVID-19 | Canada’s Strategic Position, 2026 | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
-| `blog/autonomous-threat-modeling-2026.html` — Autonomous Threat Modeling in 2026 | continuous architecture-grounded security for agentic and cyber-physical systems | Ontario Influence Operations Dossier | ClearGlass Intelligence | AI Agent Governance | Book a security engagement / See pricing & plans |
+| `blog/ontario-caf-covid-influence-operations-dossier.html` — Ontario Influence Operations Dossier | a public-record assessment of CAF influence activity during COVID-19 | Canada’s Strategic Position, 2026 | ClearGlass Intelligence | Canada Strategic Assessment, 2026 | Book a security engagement / See pricing & plans |
+| `blog/canada-strategic-assessment-2026.html` — Canada Strategic Assessment, 2026 | DIMEFIL national strategy, Arctic security and defence readiness | Ontario Influence Operations Dossier | ClearGlass Intelligence | Autonomous Threat Modeling in 2026 | Book a security engagement / See pricing & plans |
+| `blog/autonomous-threat-modeling-2026.html` — Autonomous Threat Modeling in 2026 | continuous architecture-grounded security for agentic and cyber-physical systems | Canada Strategic Assessment, 2026 | ClearGlass Intelligence | AI Agent Governance | Book a security engagement / See pricing & plans |
 | `blog/ai-agent-governance-governed-autonomy.html` — AI Agent Governance | the governed-autonomy playbook | Autonomous Threat Modeling in 2026 | ClearGlass Intelligence | Agentic AI Operating Model | Book a security engagement / See pricing & plans |
 | `blog/agentic-ai-business-operating-model.html` — Agentic AI Operating Model | bounded delegation as a business operating model | AI Agent Governance | ClearGlass Intelligence | AI Agents as a Digital Workforce | Book a security engagement / See pricing & plans |
 | `blog/ai-agents-digital-workforce-small-business.html` — AI Agents as a Digital Workforce | governed digital workers for small businesses | Agentic AI Operating Model | ClearGlass Intelligence | The ClearGlass Platform Audit | Book a security engagement / See pricing & plans |

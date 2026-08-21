@@ -8,6 +8,22 @@ The service is limited to lawful public-source and authorized defensive enterpri
 
 ---
 
+## Hardened runtime
+
+The service now includes:
+
+- ClearGlass organization + API-key authentication with constant-time key comparison.
+- Fail-closed startup behavior when no API keys are configured.
+- Bounded in-process request-rate limiting; production deployments should additionally enforce gateway/WAF limits.
+- Request `Content-Length` guard with a configurable 256 KiB default maximum.
+- Optional `TrustedHostMiddleware` enforcement through `CLEARGLASS_ALLOWED_HOSTS`.
+- Strict security response headers and `Cache-Control: no-store`.
+- Non-root container execution with a dedicated UID.
+- Container healthcheck against `/health`.
+- Deterministic regression tests for authentication, security headers, private-target rejection, and rate limiting.
+
+The service does not claim government certification or equivalence. These are application hardening controls intended for high-assurance engineering.
+
 ## Files
 
 ```text
@@ -17,17 +33,16 @@ services/clearglass_agent_service/
   schemas.py
   security.py
   requirements.txt
+  test_service.py
   Dockerfile
 ```
-
----
 
 ## Environment
 
 Required:
 
 ```bash
-export CLEARGLASS_AGENT_API_KEYS="change-this-long-random-key"
+export CLEARGLASS_AGENT_API_KEYS="generate-a-long-random-secret-outside-source-control"
 ```
 
 Optional:
@@ -35,11 +50,23 @@ Optional:
 ```bash
 export CLEARGLASS_ALLOWED_ORGS="ClearGlassInc"
 export CLEARGLASS_ALLOWED_ORIGINS="https://www.clearglassinc.com"
-export CLEARGLASS_AGENT_VERSION="0.1.0"
+export CLEARGLASS_ALLOWED_HOSTS="agent.example.com"
+export CLEARGLASS_AGENT_VERSION="0.2.0"
+export CLEARGLASS_AGENT_RATE_LIMIT=60
+export CLEARGLASS_AGENT_RATE_WINDOW_SECONDS=60
+export CLEARGLASS_MAX_REQUEST_BYTES=262144
+export CLEARGLASS_DISABLE_DOCS=false
 export PORT=8080
 ```
 
----
+Never place real API keys in source control, documentation, CI parameters, images, or logs. Use an approved secret manager or protected deployment context.
+
+## Local validation
+
+```bash
+python -m pytest -q services/clearglass_agent_service/test_service.py
+python -m compileall -q services/clearglass_agent_service
+```
 
 ## Local Run
 
@@ -88,8 +115,6 @@ curl -X POST http://127.0.0.1:8080/v1/signal \
   }'
 ```
 
----
-
 ## Docker Run
 
 ```bash
@@ -99,38 +124,29 @@ docker run --rm -p 8080:8080 \
   clearglass-agent-service
 ```
 
----
-
 ## Deployment
 
-This is a containerized FastAPI service. Deploy it to any platform that accepts Docker containers:
+This is a containerized FastAPI service. Deploy it to an approved container platform such as Fly.io, AWS, Google Cloud, or Azure.
 
-- Render
-- Fly.io
-- Railway
-- DigitalOcean App Platform
-- AWS ECS / App Runner
-- Google Cloud Run
-- Azure Container Apps
+Production controls should include:
 
-Minimum production controls:
+- Secret-manager backed API credentials with rotation.
+- HTTPS/TLS termination and gateway/WAF rate limiting.
+- Restricted allowed origins and, where applicable, allowed hosts.
+- API gateway or SSO/JWT validation when integrating with broader enterprise identity.
+- Structured, redacted audit logging.
+- Persistent audit storage with retention policy.
+- External source connectors only after source terms and lawful basis are reviewed.
+- Immutable, digest-addressed deployment artifacts.
+- Independent health and authorization verification after deployment.
 
-- Rotate `CLEARGLASS_AGENT_API_KEYS`
-- Put the service behind HTTPS
-- Add gateway-level rate limiting
-- Restrict allowed origins
-- Use API gateway or SSO JWT validation
-- Add structured logs
-- Add persistent audit storage
-- Add external source connectors only after source terms and lawful basis are reviewed
-
----
+The repository's CircleCI release path remains the deployment authority. Normal commits do not deploy; production requires its existing protected approval gates.
 
 ## API Shape
 
 ### `GET /health`
 
-Unauthenticated service health.
+Unauthenticated service health. Security headers are still returned.
 
 ### `GET /policy`
 

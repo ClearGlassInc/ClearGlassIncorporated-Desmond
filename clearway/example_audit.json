@@ -1,0 +1,24 @@
+{
+  "evidence_register_complete": true,
+  "rollback_plan": "VERIFIED",
+  "executive_approval": true,
+  "next_review_date": "2026-09-21",
+  "domains": {
+    "privacy": {"status": "PASS", "findings": []},
+    "security": {"status": "PASS", "findings": []},
+    "platform_policy": {"status": "PASS", "findings": []},
+    "gbp": {"status": "PASS", "findings": []},
+    "casl": {"status": "PASS", "findings": []},
+    "accessibility": {"status": "PASS", "findings": []},
+    "ai_governance": {
+      "status": "PASS",
+      "findings": [],
+      "outputs": [
+        {
+          "classification": "VERIFIED FACT",
+          "provenance": "example_fixture: operator-supplied evidence record"
+        }
+      ]
+    }
+  }
+}

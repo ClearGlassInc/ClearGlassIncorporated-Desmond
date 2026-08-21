@@ -1,8 +1,113 @@
 [
   {
-    "title": "Control Surface Feeds #144",
+    "title": "Control Surface Feeds #145",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "19:38",
+    "timestamp": "2026-08-21T19:38:29Z"
+  },
+  {
+    "title": "Auto Heal #515",
+    "status": "warn",
+    "detail": "skipped \u00b7 workflow_run on main",
+    "time": "19:17",
+    "timestamp": "2026-08-21T19:17:31Z"
+  },
+  {
+    "title": "Auto Heal #514",
+    "status": "warn",
+    "detail": "skipped \u00b7 workflow_run on main",
+    "time": "19:16",
+    "timestamp": "2026-08-21T19:16:53Z"
+  },
+  {
+    "title": "Auto Heal #513",
+    "status": "warn",
+    "detail": "skipped \u00b7 workflow_run on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:24Z"
+  },
+  {
+    "title": "Auto Heal #512",
+    "status": "warn",
+    "detail": "skipped \u00b7 workflow_run on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:22Z"
+  },
+  {
+    "title": "Auto Heal #511",
+    "status": "warn",
+    "detail": "skipped \u00b7 workflow_run on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:16Z"
+  },
+  {
+    "title": "CodeQL #34",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:03Z"
+  },
+  {
+    "title": "Site Integrity Guard #72",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:03Z"
+  },
+  {
+    "title": "Security #73",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:03Z"
+  },
+  {
+    "title": "ClearGlass GitHub Pages Check #15",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:03Z"
+  },
+  {
+    "title": "CI #237",
+    "status": "bad",
+    "detail": "failure \u00b7 push on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:03Z"
+  },
+  {
+    "title": "Policy Gate #72",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:03Z"
+  },
+  {
+    "title": "IP Protection Bot - Risk Assessment #78",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:03Z"
+  },
+  {
+    "title": "Defensive Security Orchestrator #72",
+    "status": "ok",
+    "detail": "success \u00b7 push on main",
+    "time": "19:15",
+    "timestamp": "2026-08-21T19:15:03Z"
+  },
+  {
+    "title": "Deploy Pages #143",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "18:57",
+    "timestamp": "2026-08-21T18:57:39Z"
+  },
+  {
+    "title": "Control Surface Feeds #144",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "18:57",
     "timestamp": "2026-08-21T18:57:15Z"
   },
@@ -33,110 +138,5 @@
     "detail": "failure \u00b7 schedule on main",
     "time": "18:30",
     "timestamp": "2026-08-21T18:30:09Z"
-  },
-  {
-    "title": "4-D Dominance Pipeline #26",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "18:19",
-    "timestamp": "2026-08-21T18:19:27Z"
-  },
-  {
-    "title": "Deploy Pages #142",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "17:47",
-    "timestamp": "2026-08-21T17:47:05Z"
-  },
-  {
-    "title": "Control Surface Feeds #143",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "17:46",
-    "timestamp": "2026-08-21T17:46:31Z"
-  },
-  {
-    "title": "Deploy Pages #141",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "16:52",
-    "timestamp": "2026-08-21T16:52:16Z"
-  },
-  {
-    "title": "Control Surface Feeds #142",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "16:51",
-    "timestamp": "2026-08-21T16:51:53Z"
-  },
-  {
-    "title": "Deploy Pages #140",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "15:50",
-    "timestamp": "2026-08-21T15:50:12Z"
-  },
-  {
-    "title": "Control Surface Feeds #141",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "15:49",
-    "timestamp": "2026-08-21T15:49:48Z"
-  },
-  {
-    "title": "Deploy Pages #139",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "14:54",
-    "timestamp": "2026-08-21T14:54:54Z"
-  },
-  {
-    "title": "Control Surface Feeds #140",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:54",
-    "timestamp": "2026-08-21T14:54:23Z"
-  },
-  {
-    "title": "Agent OS Self-Check #8",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "14:03",
-    "timestamp": "2026-08-21T14:03:32Z"
-  },
-  {
-    "title": "Deploy Pages #138",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "13:59",
-    "timestamp": "2026-08-21T13:59:25Z"
-  },
-  {
-    "title": "Control Surface Feeds #139",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "13:58",
-    "timestamp": "2026-08-21T13:58:58Z"
-  },
-  {
-    "title": "Commerce Daily Loop #7",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "13:43",
-    "timestamp": "2026-08-21T13:43:36Z"
-  },
-  {
-    "title": "Deploy Pages #137",
-    "status": "ok",
-    "detail": "success \u00b7 workflow_dispatch on main",
-    "time": "13:12",
-    "timestamp": "2026-08-21T13:12:14Z"
-  },
-  {
-    "title": "Control Surface Feeds #138",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "13:11",
-    "timestamp": "2026-08-21T13:11:49Z"
   }
 ]

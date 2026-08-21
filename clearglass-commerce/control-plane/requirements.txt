@@ -1,8 +1,8 @@
 fastapi>=0.141.1
-uvicorn[standard]>=0.52.1
+uvicorn[standard]>=0.52.3
 pydantic>=2.13.4
 pydantic-settings>=2.15.0
-SQLAlchemy>=2.0.51
+SQLAlchemy>=2.0.52
 psycopg[binary]>=3.3.4
-stripe>=15.4.0   # only required for live payments; mock mode needs no key
+stripe>=15.5.0   # only required for live payments; mock mode needs no key
 httpx>=0.28.1    # required by fastapi.testclient.TestClient (webhook/payout integration tests)

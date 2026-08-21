@@ -81,7 +81,7 @@ NATIVE_JOURNEY_PAGES: frozenset[str] = frozenset()
 # --------------------------------------------------------------------------
 PAGES: dict[str, tuple[str, str]] = {
     "index.html": ("ClearGlass Inc.", "governed intelligent systems — home"),
-    "revenue.html": ("Cybersecurity Services Canada", "the ClearGlass Canadian security services offer"),
+    "revenue.html": ("Cybersecurity Services Canada", "the ClearGlass services and revenue overview"),
     "investors/index.html": ("Investor Data Room", "corporate documents and diligence materials"),
     "streaming-growth-command-center/index.html": ("Signal Engine", "authority-first live-stream acquisition system"),
     "operations/client-onboarding.html": ("Client Onboarding", "how engagements start at ClearGlass"),
@@ -107,6 +107,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "intelligence.html": ("Intelligence", "the ClearGlass intelligence practice"),
     "minerals.html": ("Critical Minerals Intelligence", "public-data mineral supply-chain, policy, provenance and compliance intelligence"),
     "flowsint.html": ("Flowsint", "OSINT investigation graph for domains, IPs and transforms"),
+    "helix.html": ("HELIX", "exposure lattice fused with synthetic-society propagation and rehearsal"),
     "Ontario-osint.html": ("Ontario OSINT Deck", "regional open-source intelligence control deck"),
     "clearglass.html": ("Network Flow Intelligence", "see network traffic as living structure"),
     "clearglass-nexus.html": ("ClearGlass NEXUS", "full-spectrum intelligence platform"),
@@ -140,6 +141,7 @@ PAGES: dict[str, tuple[str, str]] = {
     "command-center.html": ("Command Center", "executive security operations deck"),
     "mission-control.html": ("Mission Control", "operational engineering mission portfolio"),
     "percival-build.html": ("PERCIVAL BUILD", "spatial engineering workspace"),
+    "checkout/index.html": ("Secure Checkout", "purchase an audit or protection plan"),
     "clearsight.html": ("CLEARSIGHT", "edge-AI camera vision & object detection"),
     "legal/index.html": ("Legal Infrastructure", "the ClearGlass corporate legal stack"),
     "aegis.html": ("AEGIS", "legal process shield"),
@@ -176,7 +178,6 @@ PAGES: dict[str, tuple[str, str]] = {
     "store.html": ("ClearGlass Store", "book a security engagement"),
     "products/advanced-secure-systems-engineering.html": ("Secure Systems Engineering Workshop", "enterprise workshop in defensive cyber, embedded platforms and zero trust"),
     "seo-authority-hub.html": ("Cybersecurity & AI Automation in Burlington", "the local authority hub for ClearGlass services"),
-    "checkout/index.html": ("Secure Checkout", "purchase an audit or protection plan"),
     "pricing.html": ("Pricing & Engagements", "plans and engagement models"),
     "plans.html": ("Guardian Plans & Pricing", "per-seat subscription tiers for the Guardian console"),
     "workspace.html": ("ClearGlass Workspace", "business email, storage and collaboration plans per person"),
@@ -257,6 +258,9 @@ PAGES: dict[str, tuple[str, str]] = {
     "blog/canada-strategic-position-2026.html": ("Canada’s Strategic Position, 2026", "a DIMEFIL command briefing on national posture"),
     "blog/canada-strategic-assessment-2026.html": ("Canada Strategic Assessment, 2026", "DIMEFIL national strategy, Arctic security and defence readiness"),
     "blog/ontario-caf-covid-influence-operations-dossier.html": ("Ontario Influence Operations Dossier", "a public-record assessment of CAF influence activity during COVID-19"),
+    "blog/2027-outlook-transition-risk-monitoring.html": ("2027 Outlook", "transition, valuation and the monthly risk dashboard"),
+    "blog/canada-strategic-position-2026.html": ("Canada Strategic Position, 2026", "a DIMEFIL command briefing on the national position"),
+    "blog/ontario-caf-covid-influence-operations-dossier.html": ("Ontario Psy Op Dossier", "CAF influence and information operations during COVID-19"),
     "blog/graph-topology-multi-agent-research-workflow.html": ("Graph Topology Beats Giant Context", "planner-worker-verifier pattern for multi-agent research with context isolation"),
     "blog/the-ledger-of-ashes-political-thriller.html": ("The Ledger of Ashes", "a political conspiracy thriller about dark money and one handwritten ledger"),
 }
@@ -267,7 +271,7 @@ CTA_OFFERS = ("offers/index.html", "Browse services & engagements")
 
 CLUSTERS: dict[str, dict] = {
     "security": {"name": "Cyber Defense & Security Operations", "pillar": "cyber-defense-console.html", "members": ["sentinel.html", "bluedesk.html", "guardian.html", "artemis-blue-team.html", "stegoforge.html", "attack-prompt-core.html", "environmental-cyber-risk.html", "content-shield.html", "bluedesk-mobile.html"], "cta": [CTA_STORE, ("offers/security-quick-audit.html", "Start with the $249 Security Quick-Audit")]},
-    "intelligence": {"name": "Intelligence & OSINT", "pillar": "intelligence.html", "members": ["flowsint.html", "clearglass-nexus.html", "Ontario-osint.html", "clearglass.html", "intelligence-command-surface.html", "intelligence-interface.html", "intelligence-platform.html", "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html", "docs/guardian_command_nexus_spec.html", "minerals.html"], "cta": [CTA_STORE, CTA_PRICING]},
+    "intelligence": {"name": "Intelligence & OSINT", "pillar": "intelligence.html", "members": ["flowsint.html", "helix.html", "clearglass-nexus.html", "Ontario-osint.html", "clearglass.html", "intelligence-command-surface.html", "intelligence-interface.html", "intelligence-platform.html", "ClearGlass-NEXUS-v12-FINAL.html", "artemis.html", "xenolith.html", "docs/guardian_command_nexus_spec.html", "minerals.html"], "cta": [CTA_STORE, CTA_PRICING]},
     "artemis": {"name": "Artemis Platform", "pillar": "artemis-os.html", "members": ["artemis-iv.html", "artemis-ai-cyber-intelligence-platform.html", "artemis-self-evolving-platform.html", "artemis-2040.html", "quantum-neural-smart-glass.html", "artemis-fawl/index.html", "air-control.html", "air-systems-control.html"], "cta": [CTA_PRICING, CTA_STORE]},
     "command": {"name": "Command & Autonomous Operations", "pillar": "percival-os.html", "members": ["artemis-percival.html", "agentmesh.html", "ai-operator.html", "advanced-features-tools-systems.html", "automap.html", "conduit.html", "postloop.html", "command-console.html", "control-surface.html", "systems.html", "saas-platform.html", "CG-os.html", "percival-build.html", "clearsight.html", "command-center.html", "mission-control.html"], "cta": [CTA_OFFERS, CTA_PRICING]},
     "legal": {"name": "Legal, Tax & Compliance", "pillar": "legal/index.html", "members": ["aegis.html", "corporate-legal-advisor.html", "banking-law-advisor.html", "tax.html", "procurement-legal-tech.html", "legal/ai-liability.html", "legal/legal-council.html", "legal/privacy.html", "legal/terms.html", "legal/articles.html", "legal/bylaws.html", "legal/nda.html", "legal/ip-assignment.html", "legal/directors-resolution.html", "legal/banking-resolution.html", "legal/share-subscription.html", "legal/content-policy.html", "legal/accessibility.html"], "cta": [CTA_STORE, CTA_OFFERS]},
@@ -277,6 +281,7 @@ CLUSTERS: dict[str, dict] = {
     "design": {"name": "Web Design & UI Engineering", "pillar": "web-design.html", "members": ["ultra-glass.html", "clearglass-ultra.html", "futuristic.html", "button-lab.html", "button-system.html", "hover-menu.html"], "cta": [CTA_STORE, CTA_PRICING]},
     "opal": {"name": "Opal-Koboi Automation", "pillar": "opal/index.html", "members": ["products/opal-koboi/index.html", "products/opal-koboi/artemis-iv-core.html", "products/opal-koboi/artemis-vi.html", "products/opal-koboi/guardian.html", "products/opal-koboi/revenue-engine.html", "products/opal-koboi/smb-suite.html"], "cta": [CTA_STORE, CTA_PRICING]},
     "blog": {"name": "ClearGlass Intelligence · Insights", "pillar": "blog/index.html", "members": ["blog/aethersense-wifi-csi-human-sensing.html", "blog/biwei-zhang-nato-shape-open-source-intelligence-dossier.html", "blog/2027-outlook-transition-risk-monitoring.html", "blog/canada-strategic-position-2026.html", "blog/ontario-caf-covid-influence-operations-dossier.html", "blog/canada-strategic-assessment-2026.html", "blog/autonomous-threat-modeling-2026.html", "blog/ai-agent-governance-governed-autonomy.html", "blog/agentic-ai-business-operating-model.html", "blog/ai-agents-digital-workforce-small-business.html", "blog/clearglass-platform-audit-2026.html", "blog/ai-agents-insider-threat.html", "blog/ai-safety-black-box-activation-analysis-gavel.html", "blog/cybersecurity-architecture-for-agentic-software.html", "blog/zero-trust-is-outdated-adaptive-trust.html", "blog/rethinking-security-age-of-ai-cyber-stack.html", "blog/shadow-ai-enterprise-security-blind-spot.html", "blog/zero-trust-is-outdated.html", "blog/clearglass-secure-deployment-agent.html", "blog/clearglass-command-center-cyber-defense-console.html", "blog/clearglass-agentops-microsoft-foundry-future-stack.html", "blog/osint-workflow-that-survives-contact-with-reality.html", "blog/ontario-accountability-sealed-evidence.html", "blog/master-investigator-legal-tech-osint-government-accountability.html", "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html", "blog/post-quantum-security-advisor-clearglass-artemis.html", "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html", "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html", "blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html", "blog/resume-builder.html", "blog/artemis-governed-ai-gtm-visual-growth-engine.html", "blog/clearglassinc-0-to-1m-corporate-execution-plan.html", "blog/ethical-sales-system-100k-revenue-prompt.html", "blog/almach-scalp-engine.html", "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html", "blog/coffee-and-technology-digital-revolution.html", "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html", "blog/ai-generated-phishing-54-percent-click-rate.html", "blog/telecommunications-legal-briefing-30-july-2026.html", "blog/canada-digital-control-architecture-charter.html", "blog/greenbelt-92-percent-access-beats-process.html", "blog/clearglass-workplace-surveillance-intelligence-defense-system.html", "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html", "blog/network-orchestration-ai-automation-cybersecurity.html", "blog/ontario-influence-environment-august-2026.html", "blog/us-army-hades-me-11b-osint-dossier.html", "blog/shadow-ai-incident-response-logs-gone.html", "blog/blue-brain-project-digital-brain-simulation.html", "blog/graph-topology-multi-agent-research-workflow.html", "blog/the-ledger-of-ashes-political-thriller.html"], "cta": [CTA_STORE, CTA_PRICING]},
+    "blog": {"name": "ClearGlass Intelligence · Insights", "pillar": "blog/index.html", "members": ["blog/aethersense-wifi-csi-human-sensing.html", "blog/biwei-zhang-nato-shape-open-source-intelligence-dossier.html", "blog/2027-outlook-transition-risk-monitoring.html", "blog/canada-strategic-position-2026.html", "blog/ontario-caf-covid-influence-operations-dossier.html", "blog/autonomous-threat-modeling-2026.html", "blog/ai-agent-governance-governed-autonomy.html", "blog/agentic-ai-business-operating-model.html", "blog/ai-agents-digital-workforce-small-business.html", "blog/clearglass-platform-audit-2026.html", "blog/ai-agents-insider-threat.html", "blog/ai-safety-black-box-activation-analysis-gavel.html", "blog/cybersecurity-architecture-for-agentic-software.html", "blog/zero-trust-is-outdated-adaptive-trust.html", "blog/rethinking-security-age-of-ai-cyber-stack.html", "blog/shadow-ai-enterprise-security-blind-spot.html", "blog/zero-trust-is-outdated.html", "blog/clearglass-secure-deployment-agent.html", "blog/clearglass-command-center-cyber-defense-console.html", "blog/clearglass-agentops-microsoft-foundry-future-stack.html", "blog/osint-workflow-that-survives-contact-with-reality.html", "blog/ontario-accountability-sealed-evidence.html", "blog/master-investigator-legal-tech-osint-government-accountability.html", "blog/frontier-intelligence-briefing-quantum-gravity-asi-biosecurity.html", "blog/post-quantum-security-advisor-clearglass-artemis.html", "blog/clearglassinc-artemis-palantir-self-evolving-ai-intelligence-platform.html", "blog/clearglassinc-artemis-self-evolving-ai-intelligence-platform.html", "blog/clearglassinc-artemis-resume-builder-self-evolving-intelligence-platform.html", "blog/resume-builder.html", "blog/artemis-governed-ai-gtm-visual-growth-engine.html", "blog/clearglassinc-0-to-1m-corporate-execution-plan.html", "blog/ethical-sales-system-100k-revenue-prompt.html", "blog/almach-scalp-engine.html", "blog/digital-twin-simulation-tools-storm-adaptive-transit-2026.html", "blog/coffee-and-technology-digital-revolution.html", "blog/chatgpt-prompt-shortcuts-supercharge-ai-results.html", "blog/ai-generated-phishing-54-percent-click-rate.html", "blog/telecommunications-legal-briefing-30-july-2026.html", "blog/canada-digital-control-architecture-charter.html", "blog/greenbelt-92-percent-access-beats-process.html", "blog/clearglass-workplace-surveillance-intelligence-defense-system.html", "blog/clearglassinc-artemis-full-stack-ai-intelligence-platform-blueprint.html", "blog/network-orchestration-ai-automation-cybersecurity.html", "blog/ontario-influence-environment-august-2026.html", "blog/us-army-hades-me-11b-osint-dossier.html", "blog/shadow-ai-incident-response-logs-gone.html", "blog/blue-brain-project-digital-brain-simulation.html", "blog/graph-topology-multi-agent-research-workflow.html", "blog/the-ledger-of-ashes-political-thriller.html"], "cta": [CTA_STORE, CTA_PRICING]},
     "company": {"name": "Company & Operations", "pillar": "index.html", "members": ["investors/index.html", "authority-network.html", "operations/client-onboarding.html", "operations/hubspot-handoff.html", "operations/ontario-incorporation-handoff.html", "operations/stripe-handoff.html"], "cta": [CTA_STORE, CTA_PRICING]},
 }
 
@@ -351,6 +356,17 @@ EXTRA_LINKS: dict[str, list[str]] = {
     "blog/the-ledger-of-ashes-political-thriller.html": ["blog/index.html", "blog/ontario-accountability-sealed-evidence.html", "blog/master-investigator-legal-tech-osint-government-accountability.html"],
 }
 
+SIBLING_WINDOW = 4     # rotated sibling links per member page
+PILLAR_MAX_MEMBERS = 10  # member links shown on a pillar page
+
+# Full-viewport HUD pages whose body{overflow:hidden} would strand a normal
+# bottom block; these get a fixed corner chip that expands the same panel on
+# hover/focus (pure CSS), mirroring the site's existing nav.js edge-tab pattern.
+FIXED_VIEWPORT = {
+    "sentinel.html", "clearglass.html", "air-control.html",
+    "percival-os.html", "artemis-percival.html", "percival-build.html",
+    "clearsight.html", "helix.html",
+}
 SIBLING_WINDOW = 4
 PILLAR_MAX_MEMBERS = 10
 FIXED_VIEWPORT = {"sentinel.html", "clearglass.html", "air-control.html", "percival-os.html", "artemis-percival.html", "percival-build.html", "clearsight.html"}

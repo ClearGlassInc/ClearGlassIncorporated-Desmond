@@ -46,6 +46,9 @@ def test_request_schema_cannot_carry_a_price():
 
 def test_openapi_checkout_body_is_plan_and_seats_only():
     """Pin the published contract too — the schema is what integrators code against."""
+    pytest.importorskip("fastapi")
+    pytest.importorskip("sqlalchemy")
+
     from fastapi.testclient import TestClient
 
     from app.main import create_app
@@ -198,6 +201,9 @@ def _client():
     Side Store, rather than a Postgres the test environment does not have.
     """
     import os
+
+    pytest.importorskip("fastapi")
+    pytest.importorskip("sqlalchemy")
 
     from fastapi.testclient import TestClient
     from sqlalchemy import create_engine

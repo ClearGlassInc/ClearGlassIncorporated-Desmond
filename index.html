@@ -538,7 +538,125 @@ body.mobile-nav-open{overflow:hidden}
 <link rel="stylesheet" href="/assets/css/neon-practical.css">
 
 <link rel="preload" as="image" href="/assets/images/clear-signal-homepage-hero.jpg" fetchpriority="high">
-\n<style id="clear-signal-hero-v1">\n  /* Clear Signal: additive cinematic layer. Existing homepage structure remains intact. */\n  .clear-signal-hero {\n    position: relative;\n    z-index: 2;\n    width: min(1080px, 92vw);\n    margin: clamp(26px, 5vw, 56px) auto 0;\n    overflow: hidden;\n    border: 1px solid rgba(209,31,47,.24);\n    border-radius: 22px;\n    background: #070707;\n    box-shadow: 0 24px 70px rgba(0,0,0,.42), inset 0 1px rgba(255,255,255,.06);\n    isolation: isolate;\n  }\n  .clear-signal-hero::before {\n    content: "";\n    position: absolute;\n    inset: 0;\n    z-index: 2;\n    pointer-events: none;\n    background:\n      linear-gradient(180deg, rgba(7,7,7,.04) 0%, rgba(7,7,7,.12) 52%, rgba(7,7,7,.78) 100%),\n      linear-gradient(90deg, rgba(7,7,7,.32), transparent 45%, rgba(209,31,47,.12));\n    mix-blend-mode: normal;\n  }\n  .clear-signal-hero::after {\n    content: "";\n    position: absolute;\n    inset: 0;\n    z-index: 3;\n    pointer-events: none;\n    border: 1px solid rgba(255,255,255,.045);\n    border-radius: inherit;\n    box-shadow: inset 0 0 80px rgba(0,0,0,.34);\n  }\n  .clear-signal-hero img {\n    display: block;\n    width: 100%;\n    aspect-ratio: 16 / 7;\n    min-height: 300px;\n    object-fit: cover;\n    object-position: center;\n    filter: grayscale(.18) contrast(1.08) brightness(.82);\n    transform: scale(1.012);\n    transition: transform 1.2s cubic-bezier(.2,.65,.2,1), filter .6s ease;\n  }\n  .clear-signal-hero:hover img {\n    transform: scale(1.035);\n    filter: grayscale(.08) contrast(1.1) brightness(.9);\n  }\n  .clear-signal-hero-copy {\n    position: absolute;\n    left: clamp(20px, 4vw, 48px);\n    right: clamp(20px, 4vw, 48px);\n    bottom: clamp(20px, 4vw, 40px);\n    z-index: 4;\n    display: flex;\n    align-items: end;\n    justify-content: space-between;\n    gap: 24px;\n    pointer-events: none;\n  }\n  .clear-signal-hero-kicker {\n    margin: 0 0 7px;\n    color: #d11f2f;\n    font: 700 9px/1.2 var(--mono, monospace);\n    letter-spacing: .2em;\n    text-transform: uppercase;\n  }\n  .clear-signal-hero-title {\n    margin: 0;\n    color: #f7f7f7;\n    font: 600 clamp(24px, 4vw, 48px)/.98 var(--serif, Georgia, serif);\n    letter-spacing: -.025em;\n    text-shadow: 0 4px 24px rgba(0,0,0,.6);\n  }\n  .clear-signal-hero-title span { color: #d11f2f; }\n  .clear-signal-hero-meta {\n    color: rgba(244,244,245,.68);\n    font: 600 8px/1.5 var(--mono, monospace);\n    letter-spacing: .13em;\n    text-transform: uppercase;\n    text-align: right;\n    white-space: nowrap;\n  }\n  .clear-signal-hero-signal {\n    display: inline-block;\n    width: 6px;\n    height: 6px;\n    margin-right: 7px;\n    border-radius: 50%;\n    background: #d11f2f;\n    box-shadow: 0 0 10px rgba(209,31,47,.7);\n    animation: clearSignalPulse 2.4s ease-in-out infinite;\n  }\n  @keyframes clearSignalPulse {\n    0%, 100% { opacity: .45; transform: scale(.9); }\n    50% { opacity: 1; transform: scale(1.15); }\n  }\n  @media (max-width: 700px) {\n    .clear-signal-hero { width: min(94vw, 1080px); border-radius: 16px; }\n    .clear-signal-hero img { aspect-ratio: 4 / 3; min-height: 270px; }\n    .clear-signal-hero-copy { display: block; }\n    .clear-signal-hero-meta { margin-top: 10px; text-align: left; white-space: normal; }\n  }\n  @media (prefers-reduced-motion: reduce) {\n    .clear-signal-hero img, .clear-signal-hero-signal { transition: none; animation: none; }\n  }\n</style>\n</head>
+
+<style id="clear-signal-hero-v1">
+  /* Clear Signal: additive cinematic layer. Existing homepage structure remains intact. */
+  .clear-signal-hero {
+    position: relative;
+    /* The photo rides as a background, not an <img>: the committed asset is
+       a placeholder, and a missing background paints nothing while a missing
+       <img> shows a broken icon and its alt text. Drop a real JPEG at this
+       path and it appears here with no further change. */
+    background-image: url('/assets/images/clear-signal-homepage-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 300px;
+    z-index: 2;
+    width: min(1080px, 92vw);
+    margin: clamp(26px, 5vw, 56px) auto 0;
+    overflow: hidden;
+    border: 1px solid rgba(209,31,47,.24);
+    border-radius: 22px;
+    background: #070707;
+    box-shadow: 0 24px 70px rgba(0,0,0,.42), inset 0 1px rgba(255,255,255,.06);
+    isolation: isolate;
+  }
+  .clear-signal-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(7,7,7,.04) 0%, rgba(7,7,7,.12) 52%, rgba(7,7,7,.78) 100%),
+      linear-gradient(90deg, rgba(7,7,7,.32), transparent 45%, rgba(209,31,47,.12));
+    mix-blend-mode: normal;
+  }
+  .clear-signal-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    border: 1px solid rgba(255,255,255,.045);
+    border-radius: inherit;
+    box-shadow: inset 0 0 80px rgba(0,0,0,.34);
+  }
+  .clear-signal-hero img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    min-height: 300px;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(.18) contrast(1.08) brightness(.82);
+    transform: scale(1.012);
+    transition: transform 1.2s cubic-bezier(.2,.65,.2,1), filter .6s ease;
+  }
+  .clear-signal-hero:hover img {
+    transform: scale(1.035);
+    filter: grayscale(.08) contrast(1.1) brightness(.9);
+  }
+  .clear-signal-hero-copy {
+    position: absolute;
+    left: clamp(20px, 4vw, 48px);
+    right: clamp(20px, 4vw, 48px);
+    bottom: clamp(20px, 4vw, 40px);
+    z-index: 4;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    pointer-events: none;
+  }
+  .clear-signal-hero-kicker {
+    margin: 0 0 7px;
+    color: #d11f2f;
+    font: 700 9px/1.2 var(--mono, monospace);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+  }
+  .clear-signal-hero-title {
+    margin: 0;
+    color: #f7f7f7;
+    font: 600 clamp(24px, 4vw, 48px)/.98 var(--serif, Georgia, serif);
+    letter-spacing: -.025em;
+    text-shadow: 0 4px 24px rgba(0,0,0,.6);
+  }
+  .clear-signal-hero-title span { color: #d11f2f; }
+  .clear-signal-hero-meta {
+    color: rgba(244,244,245,.68);
+    font: 600 8px/1.5 var(--mono, monospace);
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .clear-signal-hero-signal {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 7px;
+    border-radius: 50%;
+    background: #d11f2f;
+    box-shadow: 0 0 10px rgba(209,31,47,.7);
+    animation: clearSignalPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes clearSignalPulse {
+    0%, 100% { opacity: .45; transform: scale(.9); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+  @media (max-width: 700px) {
+    .clear-signal-hero { width: min(94vw, 1080px); border-radius: 16px; }
+    .clear-signal-hero { min-height: 270px; }
+    .clear-signal-hero-copy { display: block; }
+    .clear-signal-hero-meta { margin-top: 10px; text-align: left; white-space: normal; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .clear-signal-hero img, .clear-signal-hero-signal { transition: none; animation: none; }
+  }
+</style>
+</head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <!-- Classification banner — UNCLASSIFIED demo instance -->
@@ -648,7 +766,6 @@ body.mobile-nav-open{overflow:hidden}
 <section class="hero" id="hero" data-cg-watermark="CLEARGLASSINC. · OFFICIAL EXPERIENCE · © 2026">
 <!-- Clear Signal cinematic brand film still — additive homepage layer; existing content preserved. -->
 <figure class="clear-signal-hero" data-clear-signal-hero="v1" aria-label="Clear Signal — ClearGlass Inc. cinematic security brand film">
-  <img src="/assets/images/clear-signal-homepage-hero.jpg" alt="ClearGlass Inc. security architects coordinating a protected city network through transparent intelligence systems" loading="eager" decoding="async" fetchpriority="high">
   <figcaption class="clear-signal-hero-copy">
     <div>
       <p class="clear-signal-hero-kicker"><span class="clear-signal-hero-signal" aria-hidden="true"></span>Clear Signal // Intelligence Layer</p>
@@ -951,6 +1068,7 @@ body.mobile-nav-open{overflow:hidden}
     <p class="cg-footnote rv">What happens next: a scoped reply, a written summary of what we heard, and a fixed-scope proposal before any work begins. No retainer is required to have the first conversation.</p>
   </div>
 </section>
+<section class="sect" id="ledger-of-ashes"><div class="container"><div class="sh sh-center rv"><div class="sh-tag" style="justify-content:center">FICTION &middot; POLITICAL THRILLER</div><h2>The Ledger of <strong>Ashes</strong></h2><p>They killed the founder. Now they&rsquo;re coming for the CEO &mdash; and they want you to watch.</p></div><div class="rv" style="max-width:760px;margin:0 auto clamp(36px,5vw,56px);text-align:center"><p>Eleanor Vance ran a $100&nbsp;million foundation that taught ordinary people how to hold power accountable. She was about to expose a secret that could bring down some of the most powerful people in America. She never heard the door open.</p><p>Three days later a black SUV with government plates is parked across from Julian Mercer&rsquo;s gym for the third time that week. Mercer inherited Eleanor&rsquo;s foundation. The people watching him are not planning to kill him quietly &mdash; they are planning a speech at Georgetown University, five hundred people in the audience, cameras rolling, and a twelve-man team moving into position.</p></div><div class="sh rv"><div class="sh-tag">THE THREE WHO REFUSE</div><h2>The Harrow Group assumed <strong>everyone would fall in line</strong></h2></div><div class="products-grid"><div class="product-card rv"><div class="pc-era">THE SOLDIER</div><h3>Major General David Reyes</h3><p class="pd">Thirty-two years in uniform. He has followed orders that made him question his soul. These are orders to turn an American campus into an execution ground &mdash; and he cannot carry them out.</p></div><div class="product-card rv"><div class="pc-era">THE ANALYST</div><h3>Marcus Webb</h3><p class="pd">A financial crimes analyst who follows money that does not want to be followed. He traces the naked short selling campaign built to bankrupt the foundation, and realises Eleanor Vance did not die at random. She died because she was getting close.</p></div><div class="product-card rv"><div class="pc-era">THE ASSISTANT</div><h3>Rachel Adler</h3><p class="pd">Three years as personal assistant to Alexander Kane, the architect of the network. She types his orders. She manages his schedule. She knows everything &mdash; and she has been waiting for the right moment.</p></div></div><div class="rv" style="max-width:760px;margin:clamp(36px,5vw,56px) auto 0;text-align:center"><h3>The ledger</h3><p>Kane does not trust computers. He keeps a handwritten, leather-bound ledger &mdash; every transaction, every bribe, every blackmail scheme, every order. It is his insurance policy: if he falls, the whole network falls with him. It sits in a biometric safe behind a fingerprint, a retinal scan and a voice print.</p><p>There is a manual override. A key. And Kane takes it off when he showers.</p><p><strong>Twenty-one days. Twelve men. One ledger.</strong></p></div><div class="rv" style="max-width:760px;margin:clamp(28px,4vw,40px) auto 0;text-align:center"><p>The Ledger of Ashes is built on real-world pressure points &mdash; dark money, naked short selling, institutional capture, and the weaponisation of public spectacle. It is a story about what happens when power concentrates in the hands of people who believe they know better than everyone else, and about three ordinary people who refuse to look away.</p><div class="cta-actions" style="margin-top:28px"><a href="#contact" class="btn btn-crystal">Request the free preview &rarr;</a><a href="#contact" class="btn btn-glass">Enquire about a copy &rarr;</a></div><p class="eyebrow" style="margin-top:26px">Early ARC readers</p><blockquote style="margin:10px auto 0;max-width:640px"><p>&ldquo;I couldn&rsquo;t put it down. The most chilling thriller I&rsquo;ve read this year.&rdquo;</p><p>&ldquo;Fans of Baldacci and Flynn will devour this. The public execution angle is terrifyingly plausible.&rdquo;</p><p>&ldquo;A page-turner with real stakes. The ledger scene alone is worth the price.&rdquo;</p></blockquote></div></div></section>
 <section class="cta-sect" id="contact"><div class="container"><h2 class="rv">Build the system before the complexity compounds.</h2><p class="rv">Contact Desmond Otieno Odhiambo, Founder &amp; Software Architect, for work that needs senior judgment and governed execution.</p><p class="rv"><strong>Burlington, Ontario, Canada</strong> · <a href="tel:+12897070269">+1 (289) 707-0269</a> · <a href="mailto:desmond@clearglassinc.com">desmond@clearglassinc.com</a></p><div class="cta-actions rv"><a href="mailto:desmond@clearglassinc.com" class="btn btn-crystal">Email Desmond →</a><a href="offers/index.html" class="btn btn-glass">Services &amp; Engagements →</a><a href="#services" class="btn btn-glass">Review Capabilities</a></div></div></section>
 <section class="signup-sect">
   <div class="container">

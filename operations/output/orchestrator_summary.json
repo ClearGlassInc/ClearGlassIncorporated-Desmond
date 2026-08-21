@@ -1,5 +1,5 @@
 {
-  "run_utc": "2026-08-20T07:37:03.757670+00:00",
+  "run_utc": "2026-08-21T07:39:19.823092+00:00",
   "dry_run": false,
   "total": 13,
   "ok": 13,
@@ -13,15 +13,15 @@
       "error": null
     },
     {
-      "bot_id": "marketing",
+      "bot_id": "daily_priority",
       "status": "ok",
       "duration_s": 0.01,
       "error": null
     },
     {
-      "bot_id": "daily_priority",
+      "bot_id": "marketing",
       "status": "ok",
-      "duration_s": 0.02,
+      "duration_s": 0.01,
       "error": null
     },
     {
@@ -51,7 +51,7 @@
     {
       "bot_id": "site_health",
       "status": "ok",
-      "duration_s": 0.66,
+      "duration_s": 1.56,
       "error": null
     },
     {

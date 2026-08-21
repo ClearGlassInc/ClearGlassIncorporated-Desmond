@@ -1,9 +1,15 @@
-# Release Notes — 2026-08-20
+# Release Notes — 2026-08-21
 
-*161 commit(s) since repository start*
+*187 commit(s) since repository start*
 
 ## New Features
 
+- **clearway:** add independent compliance audit agent and fail-closed gate (`5084cbd`)
+- **station:** add The Ledger of Ashes to the ClearGlass Station menu (`ff73f44`)
+- **blog:** add Canada strategic assessment 2026 briefing page (`4efb471`)
+- **blog:** publish AetherSense Wi-Fi CSI frontier intelligence brief (`d7a60dd`)
+- **blog:** add AetherSense frontier sensing brief to featured intelligence (`4f43723`)
+- **ci:** run the CI gates locally while hosted runners are unavailable (`fc2f88c`)
 - **mail:** harden MIME parser resource and preview controls (`3cdcec7`)
 - **mail:** define provenance-aware mail API contract (`2714483`)
 - **mail:** add bounded MIME parser with provenance (`fad9bd9`)
@@ -19,6 +25,17 @@
 
 ## Bug Fixes
 
+- **clearway:** harden CI workflow with immutable action pin and stdlib tests (`0c4840d`)
+- **seo:** regenerate sitemap lastmod from full git history (`46c6f0c`)
+- repair merge duplication and clear the last blocking CI gates (`ab3d45a`)
+- **ci_local:** a present browser that cannot start is a SKIP, not a FAIL (`0969798`)
+- **ci:** green main after the Agent SDK merges (`fc9edbc`)
+- **site:** repair three pages whose JavaScript never ran (`d66e01b`)
+- **ci:** install declared deps, and run the suite CI actually runs (`3b9b48d`)
+- **a11y,design-system:** stop two gates failing correct code (`1c5c29a`)
+- **ci:** register two new posts; stop ci_local reporting unrunnable gates as failures (`9df5356`)
+- **ci:** repair broken test collection, corrupt sitemap, and suite lint (`9fe4c91`)
+- **ci:** green main (round 4) — register four pages, refresh stale action pins (`339f168`)
 - **ci:** align agent_health_external check with actual Replit SPA deployment (`4b1bb25`)
 - **tests:** resolve 6 failing tests from stale CI adapter and disabled neon CSS (`0013657`)
 - **home:** remove neon overlay effects (`a0c8d3a`)
@@ -32,6 +49,7 @@
 
 ## Documentation
 
+- **ci:** retract the self-hosted runner recommendation, pin the guard (`81c029c`)
 - **mail:** document production boundary and validation (`12e1ca1`)
 - **mail:** align API contract with hardened parser (`874e3f7`)
 - **mail:** add production operations and rollback runbook (`b14dcc4`)
@@ -40,11 +58,14 @@
 
 ## Tests
 
+- **clearway:** remove pytest dependency from assurance gate (`f87e5f9`)
 - **mail:** extend parser security and regression coverage (`753a18a`)
 - **mail:** cover MIME parsing and security limits (`89e44be`)
 
 ## CI/CD
 
+- pin the SDK's ruff and register the new Canada assessment post (`425ecee`)
+- **circleci:** secure manual orchestration pipeline (validate + gated deploy) (`c35c1d7`)
 - **mail:** align parser validation with pinned repository test version (`bf7e994`)
 - **mail:** add pinned production validation workflow (`be33736`)
 - **security:** enforce high-assurance verification gate (`b23c74a`)
@@ -62,6 +83,19 @@
 
 ## Maintenance
 
+- Document Guardian DPPP protection layer (`180cef2`)
+- Add Guardian DPPP validation gate (`81fe361`)
+- Add Guardian DPPP machine policy (`9c5ee80`)
+- Add Guardian Digital Presence Protection Program (`cc5d884`)
+- Add FORGE module to NEXUS v12: Agent SDK runtime registry (`f6040db`)
+- Add scripts/verify.sh: run the CI job locally when Actions can't (`d6331fb`)
+- Add provider-adapter regression tests for the OpenAI and Anthropic clients (`190a5a5`)
+- Add advanced features and deployment surface to the Agent SDK (`b7a82dd`)
+- **seo:** refresh sitemap lastmod after the page-error repairs (`fba6c8d`)
+- Feature NATO SHAPE OSINT case study in the published intelligence index (`afe4825`)
+- Add verification-first NATO SHAPE open-source intelligence case study (`9651001`)
+- Build the other half of the approval gate (`5be9a3c`)
+- Connect the money path: order items, shipping collection, supplier routing (`517e393`)
 - Add files via upload (`eb26865`)
 - Index new 2027 outlook in ClearGlass Insights posts registry (`a73d5f9`)
 - Add ClearGlass 2027 evidence-led outlook with interactive valuation model and risk dashboard (`213688b`)
@@ -85,6 +119,35 @@
 
 ## Automation
 
+- refresh SEO dashboard feeds [skip ci] (`465f9aa`)
+- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`41fb4d6`)
+- refresh control-surface data feeds [skip ci] (`39ef90d`)
+- **minerals:** refresh validated public feeds [skip ci] (`db85653`)
+- refresh control-surface data feeds [skip ci] (`e1887f1`)
+- refresh control-surface data feeds [skip ci] (`63c9bca`)
+- refresh control-surface data feeds [skip ci] (`3e59628`)
+- refresh control-surface data feeds [skip ci] (`5cefd7c`)
+- **minerals:** refresh validated public feeds [skip ci] (`ce33ce9`)
+- refresh control-surface data feeds [skip ci] (`8e6df8a`)
+- refresh control-surface data feeds [skip ci] (`9663a6e`)
+- refresh control-surface data feeds [skip ci] (`d787111`)
+- refresh control-surface data feeds [skip ci] (`1033f84`)
+- refresh control-surface data feeds [skip ci] (`af252ab`)
+- refresh control-surface data feeds [skip ci] (`e71c31c`)
+- **minerals:** refresh validated public feeds [skip ci] (`c10e595`)
+- refresh control-surface data feeds [skip ci] (`3d1e9e2`)
+- refresh control-surface data feeds [skip ci] (`fdcc5b4`)
+- refresh control-surface data feeds [skip ci] (`5744756`)
+- refresh control-surface data feeds [skip ci] (`ffb0d30`)
+- refresh control-surface data feeds [skip ci] (`f8a5bb1`)
+- refresh control-surface data feeds [skip ci] (`64f25f0`)
+- **minerals:** refresh validated public feeds [skip ci] (`67e218a`)
+- refresh control-surface data feeds [skip ci] (`ba2c6c2`)
+- refresh control-surface data feeds [skip ci] (`1cef4c3`)
+- refresh control-surface data feeds [skip ci] (`aca9461`)
+- refresh control-surface data feeds [skip ci] (`1d0ded3`)
+- refresh control-surface data feeds [skip ci] (`39f1c6b`)
+- update generated outputs — 2026-08-20 07:37 UTC [skip ci] (`8761579`)
 - refresh SEO dashboard feeds [skip ci] (`455c751`)
 - refresh ARTEMIS provenance + IP guardian reports [skip ci] (`c84a5a9`)
 - refresh control-surface data feeds [skip ci] (`ed39fac`)
@@ -141,44 +204,10 @@
 - refresh control-surface data feeds [skip ci] (`e50b78b`)
 - **minerals:** refresh validated public feeds [skip ci] (`b7c376a`)
 - refresh control-surface data feeds [skip ci] (`ae61430`)
-- refresh control-surface data feeds [skip ci] (`d3e6938`)
-- refresh control-surface data feeds [skip ci] (`54e2ff5`)
-- refresh control-surface data feeds [skip ci] (`f979a5d`)
-- refresh control-surface data feeds [skip ci] (`d8ca07f`)
-- update generated outputs — 2026-08-18 07:33 UTC [skip ci] (`aa03e2f`)
-- refresh SEO dashboard feeds [skip ci] (`52a936c`)
-- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`67145ad`)
-- refresh control-surface data feeds [skip ci] (`0dfd41a`)
-- **minerals:** refresh validated public feeds [skip ci] (`d64d88d`)
-- refresh control-surface data feeds [skip ci] (`9864277`)
-- refresh control-surface data feeds [skip ci] (`cb5ffac`)
-- refresh control-surface data feeds [skip ci] (`4be0ca9`)
-- refresh control-surface data feeds [skip ci] (`0362280`)
-- refresh control-surface data feeds [skip ci] (`69a0fbf`)
-- **minerals:** refresh validated public feeds [skip ci] (`147af09`)
-- refresh control-surface data feeds [skip ci] (`daf2ee1`)
-- refresh control-surface data feeds [skip ci] (`7e21a73`)
-- refresh control-surface data feeds [skip ci] (`9a46ab2`)
-- refresh control-surface data feeds [skip ci] (`6dac3a9`)
-- refresh control-surface data feeds [skip ci] (`3605cd5`)
-- refresh control-surface data feeds [skip ci] (`f1b74e8`)
-- **minerals:** refresh validated public feeds [skip ci] (`7e87661`)
-- refresh control-surface data feeds [skip ci] (`7453a1f`)
-- refresh control-surface data feeds [skip ci] (`2cf00de`)
-- refresh control-surface data feeds [skip ci] (`622f63c`)
-- refresh control-surface data feeds [skip ci] (`d7c95e4`)
-- refresh control-surface data feeds [skip ci] (`667f78d`)
-- refresh control-surface data feeds [skip ci] (`6b53a91`)
-- **minerals:** refresh validated public feeds [skip ci] (`db6fbaa`)
-- refresh control-surface data feeds [skip ci] (`8182edf`)
-- refresh control-surface data feeds [skip ci] (`a6227ac`)
-- refresh control-surface data feeds [skip ci] (`394a579`)
-- refresh control-surface data feeds [skip ci] (`fdbd2ff`)
-- update generated outputs — 2026-08-17 07:48 UTC [skip ci] (`0f27ad9`)
-- refresh SEO dashboard feeds [skip ci] (`8083a0c`)
-- refresh ARTEMIS provenance + IP guardian reports [skip ci] (`13a6eed`)
-- refresh control-surface data feeds [skip ci] (`39db363`)
-- **minerals:** refresh validated public feeds [skip ci] (`93378e3`)
+
+## Security
+
+- prove the session store's path containment to CodeQL (`74fa8c5`)
 
 ## Other
 

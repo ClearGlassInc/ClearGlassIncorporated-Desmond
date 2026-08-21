@@ -1,8 +1,22 @@
 [
   {
-    "title": "Control Surface Feeds #142",
+    "title": "Control Surface Feeds #143",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "17:46",
+    "timestamp": "2026-08-21T17:46:31Z"
+  },
+  {
+    "title": "Deploy Pages #141",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "16:52",
+    "timestamp": "2026-08-21T16:52:16Z"
+  },
+  {
+    "title": "Control Surface Feeds #142",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "16:51",
     "timestamp": "2026-08-21T16:51:53Z"
   },
@@ -124,19 +138,5 @@
     "detail": "failure \u00b7 schedule on main",
     "time": "12:27",
     "timestamp": "2026-08-21T12:27:31Z"
-  },
-  {
-    "title": "4-D Dominance Pipeline #25",
-    "status": "ok",
-    "detail": "success \u00b7 schedule on main",
-    "time": "12:20",
-    "timestamp": "2026-08-21T12:20:28Z"
-  },
-  {
-    "title": "Auto Heal #508",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "12:20",
-    "timestamp": "2026-08-21T12:20:13Z"
   }
 ]

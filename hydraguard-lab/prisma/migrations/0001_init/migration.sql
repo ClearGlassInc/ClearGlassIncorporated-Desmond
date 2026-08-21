@@ -1,0 +1,12 @@
+CREATE TYPE "FindingSeverity" AS ENUM ('CRITICAL','HIGH','MEDIUM','LOW','INFO');
+CREATE TYPE "JobStatus" AS ENUM ('QUEUED','RUNNING','SUCCEEDED','FAILED','CANCELLED');
+CREATE TABLE "Engagement"("id" TEXT PRIMARY KEY,"target" TEXT NOT NULL,"approvedPorts" INTEGER[] NOT NULL,"ownerContact" TEXT NOT NULL,"purpose" TEXT NOT NULL,"startsAt" TIMESTAMP(3) NOT NULL,"expiresAt" TIMESTAMP(3) NOT NULL,"confirmed" BOOLEAN NOT NULL,"simulationMode" BOOLEAN NOT NULL DEFAULT true,"createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE "Audit"("id" TEXT PRIMARY KEY,"engagementId" TEXT NOT NULL REFERENCES "Engagement"("id") ON DELETE CASCADE,"target" TEXT NOT NULL,"port" INTEGER NOT NULL,"status" "JobStatus" NOT NULL DEFAULT 'QUEUED',"simulation" BOOLEAN NOT NULL DEFAULT true,"startedAt" TIMESTAMP(3),"finishedAt" TIMESTAMP(3),"createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE "Finding"("id" TEXT PRIMARY KEY,"auditId" TEXT NOT NULL REFERENCES "Audit"("id") ON DELETE CASCADE,"severity" "FindingSeverity" NOT NULL,"title" TEXT NOT NULL,"evidence" TEXT NOT NULL,"limitation" TEXT NOT NULL,"remediation" TEXT NOT NULL,"createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE "AuditEvent"("id" TEXT PRIMARY KEY,"actorId" TEXT,"action" TEXT NOT NULL,"target" TEXT,"result" TEXT NOT NULL,"metadata" JSONB NOT NULL,"previousHash" TEXT,"eventHash" TEXT NOT NULL,"createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE "AdminSession"("id" TEXT PRIMARY KEY,"adminId" TEXT NOT NULL,"tokenHash" TEXT NOT NULL UNIQUE,"expiresAt" TIMESTAMP(3) NOT NULL,"rotatedFrom" TEXT,"createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX "Engagement_expiresAt_idx" ON "Engagement"("expiresAt");
+CREATE INDEX "Audit_engagementId_createdAt_idx" ON "Audit"("engagementId","createdAt");
+CREATE INDEX "Finding_severity_createdAt_idx" ON "Finding"("severity","createdAt");
+CREATE INDEX "AuditEvent_createdAt_idx" ON "AuditEvent"("createdAt");
+CREATE INDEX "AdminSession_adminId_expiresAt_idx" ON "AdminSession"("adminId","expiresAt");

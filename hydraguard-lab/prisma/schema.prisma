@@ -1,0 +1,71 @@
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+generator client { provider = "prisma-client-js" }
+
+enum FindingSeverity { CRITICAL HIGH MEDIUM LOW INFO }
+enum JobStatus { QUEUED RUNNING SUCCEEDED FAILED CANCELLED }
+
+model Engagement {
+  id String @id @default(cuid())
+  target String
+  approvedPorts Int[]
+  ownerContact String
+  purpose String
+  startsAt DateTime
+  expiresAt DateTime
+  confirmed Boolean
+  simulationMode Boolean @default(true)
+  createdAt DateTime @default(now())
+  audits Audit[]
+  @@index([expiresAt])
+}
+
+model Audit {
+  id String @id @default(cuid())
+  engagementId String
+  engagement Engagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+  target String
+  port Int
+  status JobStatus @default(QUEUED)
+  simulation Boolean @default(true)
+  startedAt DateTime?
+  finishedAt DateTime?
+  findings Finding[]
+  createdAt DateTime @default(now())
+  @@index([engagementId, createdAt])
+}
+
+model Finding {
+  id String @id @default(cuid())
+  auditId String
+  audit Audit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  severity FindingSeverity
+  title String
+  evidence String
+  limitation String
+  remediation String
+  createdAt DateTime @default(now())
+  @@index([severity, createdAt])
+}
+
+model AuditEvent {
+  id String @id @default(cuid())
+  actorId String?
+  action String
+  target String?
+  result String
+  metadata Json
+  previousHash String?
+  eventHash String
+  createdAt DateTime @default(now())
+  @@index([createdAt])
+}
+
+model AdminSession {
+  id String @id @default(cuid())
+  adminId String
+  tokenHash String @unique
+  expiresAt DateTime
+  rotatedFrom String?
+  createdAt DateTime @default(now())
+  @@index([adminId, expiresAt])
+}

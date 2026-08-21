@@ -20,15 +20,9 @@ parameters:
   change_reference: {type: string, default: ""}
   dry_run: {type: boolean, default: true}
 executors:
-  base:
-    docker: [{image: cimg/base:2026.08}]
-    resource_class: medium
-  node:
-    docker: [{image: cimg/node:20.11}]
-    resource_class: medium
-  browser:
-    docker: [{image: cimg/node:20.11-browsers}]
-    resource_class: medium
+  base: {docker: [{image: cimg/base:2026.08}], resource_class: medium}
+  node: {docker: [{image: cimg/node:20.11}], resource_class: medium}
+  browser: {docker: [{image: cimg/node:20.11-browsers}], resource_class: medium}
 commands:
   preflight:
     steps:
@@ -177,7 +171,6 @@ jobs:
       - run: {name: Staging rollback, command: bash scripts/ci/rollback-staging.sh}
       - run: {name: Rollback verification, command: bash scripts/ci/post_deploy_verify.sh staging}
       - store_artifacts: {path: deploy-evidence, destination: evidence/staging-rollback}
-  hold_production: {type: approval}
   production_deploy:
     executor: base
     steps:
@@ -195,7 +188,6 @@ jobs:
       - attach_workspace: {at: .}
       - run: {name: Production verification, command: bash scripts/ci/post_deploy_verify.sh production}
       - store_artifacts: {path: deploy-evidence, destination: evidence/production-verify}
-  hold_production_rollback: {type: approval}
   production_rollback:
     executor: base
     steps:
@@ -255,7 +247,7 @@ workflows:
       - animation_build_and_smoke_test: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.deploy_animations, context: ci-readonly}
       - agent_health_and_contract_tests: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.run_agent_health_checks, context: ci-readonly}
       - build_release_artifact: {requires: [dependency_secret_and_policy_scan, lint_typecheck_unit_test_build, source_and_workflow_integrity, animation_build_and_smoke_test, agent_health_and_contract_tests], context: ci-readonly}
-      - hold_production: {requires: [build_release_artifact]}
+      - hold_production: {type: approval, requires: [build_release_artifact]}
       - production_deploy: {requires: [hold_production], context: production-deploy}
       - production_post_deploy_verify: {requires: [production_deploy], context: production-deploy}
       - post_deploy_evidence_summary: {requires: [{production_post_deploy_verify: [success, failed]}]}
@@ -271,6 +263,6 @@ workflows:
     jobs:
       - security_preflight
       - checkout_and_lockfile_verify: {requires: [security_preflight], context: ci-readonly}
-      - hold_production_rollback: {requires: [checkout_and_lockfile_verify]}
+      - hold_production_rollback: {type: approval, requires: [checkout_and_lockfile_verify]}
       - production_rollback: {requires: [hold_production_rollback], context: production-deploy}
       - post_deploy_evidence_summary: {requires: [production_rollback]}

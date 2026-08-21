@@ -18,10 +18,47 @@ ClearGlass Inc. is an Ontario-focused cybersecurity, AI-governance, OSINT, autom
 - **ClearGlass Nexus** — central intelligence and orchestration layer
 - **Artemis** — AI/cyber intelligence product family
 - **Guardian / Sentinel** — defensive cybersecurity and monitoring surfaces
+- **Guardian DPPP** — Digital Presence Protection Program for protecting public digital assets, brand integrity, reputation, visibility integrity, compliance controls, and defensible incident response
 - **Ontario OSINT** — public-source intelligence and regional analysis
 - **XENOLITH** — sovereign intelligence-lattice research platform
 - **ClearGlass Data Fabric** — governed same-origin repository data layer
 - **Growth / SEO / Commerce** — revenue, marketing, search, and product systems
+
+## Guardian Digital Presence Protection Program
+
+Guardian now includes a protection-first Digital Presence Protection Program governed by ARTEMIS and the AEGIS lifecycle:
+
+```text
+OBSERVE → DETECT → ANALYSE → VERIFY → RESPOND → AUDIT → IMPROVE
+```
+
+The program monitors authorized public-facing surfaces including websites, domains/subdomains, business listings, social profiles, search surfaces, directories, GitHub identities, public references, reviews, and public-source mentions.
+
+Protection priorities are:
+
+- Brand and impersonation protection
+- Reputation assurance
+- Digital-asset integrity
+- Geo-Grid Visibility Assurance rather than rank-only optimization
+- Compliance-control monitoring
+- Evidence provenance and auditability
+- Defensible incident coordination
+
+Implementation artifacts:
+
+- `docs/GUARDIAN_DPPP.md` — full operating and security control specification
+- `config/guardian/dppp.json` — machine-readable fail-closed policy contract
+- `scripts/validate_guardian_dppp.py` — dependency-free policy validator and SHA-256 evidence generator
+
+The validator must pass before the DPPP policy is considered structurally valid:
+
+```bash
+python3 scripts/validate_guardian_dppp.py
+```
+
+Guardian DPPP uses dual classification for findings: **severity** (`INFORMATIONAL` through `CRITICAL`) and **epistemic status** (`VERIFIED FACT`, `INFERENCE`, `ASSUMPTION`, `UNKNOWN`, `UNVERIFIED`). Significant findings require source identification, timestamps, evidence digesting, verification state, confidence, and provenance. Unsupported claims remain `UNVERIFIED`.
+
+External-impact actions remain human-authorized by policy. Missing authorization, integrity failures, expired authorization, schema failures, and emergency-stop conditions fail closed. The repository makes no claim of NSA certification or equivalence; “high-assurance” describes the intended engineering discipline rather than a government accreditation.
 
 ## Governed Data Fabric
 
@@ -58,8 +95,6 @@ See `docs/ACTIONS_BILLING_FALLBACK.md` for the operational fallback and recovery
 - **`validate`** is the default branch/pull-request path. It runs preflight, dependency verification, lint/type/test/build, dependency and secret scans, GitHub workflow validation, frontend/animation smoke tests, and sandbox agent contract tests. It performs no deployment or GitHub mutation.
 - **`staging_release`** exists only when the manually supplied pipeline parameter `deploy_staging=true`. Preflight additionally requires `run_validation=true`, `target_environment=staging`, `emergency_stop=false`, and a branch ref. All validation/security jobs must pass before the `staging-deploy` context is available to the deployment job.
 - **`production_release`** exists only when the manually supplied pipeline parameter `deploy_production=true`. Preflight additionally requires `run_validation=true`, `target_environment=production`, `emergency_stop=false`, and either the protected `main` branch or a trusted signed `v...` release tag. A CircleCI `hold_production` approval job must be approved before the `production-deploy` context can be used.
-
-Ordinary commits cannot deploy because all mutation parameters default to `false`. Invalid parameter combinations fail in `security_preflight` before a deploy context is attached.
 
 ### Manual pipeline parameters
 

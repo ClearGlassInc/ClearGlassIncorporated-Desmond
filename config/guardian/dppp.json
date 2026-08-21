@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "program": {
+    "id": "guardian-dppp",
+    "name": "ClearGlass Burlington Digital Presence Protection Program",
+    "version": "1.0.0",
+    "governance": ["ARTEMIS", "AEGIS"],
+    "mode": "PROTECTION",
+    "default_decision": "DENY"
+  },
+  "assurance": {
+    "posture": "high-assurance-defense-in-depth",
+    "claim_limit": "No NSA certification or equivalence is claimed",
+    "mutation_default": "DENY",
+    "external_action_default": "REVIEW",
+    "evidence_required_for_significant_findings": true,
+    "dual_classification_required": true
+  },
+  "epistemic_classes": [
+    "VERIFIED FACT",
+    "INFERENCE",
+    "ASSUMPTION",
+    "UNKNOWN",
+    "UNVERIFIED"
+  ],
+  "severity_classes": [
+    "INFORMATIONAL",
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+    "CRITICAL"
+  ],
+  "reputation_classes": [
+    "POSITIVE",
+    "NEUTRAL",
+    "CONCERN",
+    "RISK",
+    "CRITICAL",
+    "UNVERIFIED"
+  ],
+  "asset_types": [
+    "website",
+    "domain",
+    "subdomain",
+    "google_business_profile",
+    "linkedin",
+    "instagram",
+    "tiktok",
+    "github",
+    "directory",
+    "map_listing",
+    "public_reference"
+  ],
+  "agents": [
+    {
+      "id": "AssetRecon",
+      "capabilities": ["DISCOVER", "INVENTORY", "COMPARE"],
+      "default_mode": "READ_ONLY",
+      "outputs": ["digital_asset_inventory.json", "ownership_matrix.json"]
+    },
+    {
+      "id": "ThreatIntel",
+      "capabilities": ["OBSERVE", "CORRELATE", "CLASSIFY"],
+      "default_mode": "READ_ONLY",
+      "outputs": ["threat_events.json", "brand_abuse_findings.json"]
+    },
+    {
+      "id": "ReputationGuard",
+      "capabilities": ["OBSERVE", "CLASSIFY", "CORRELATE"],
+      "default_mode": "READ_ONLY",
+      "outputs": ["reputation_summary.json", "review_monitoring.json"]
+    },
+    {
+      "id": "IntegrityAuditor",
+      "capabilities": ["VERIFY", "COMPARE", "AUDIT"],
+      "default_mode": "READ_ONLY",
+      "outputs": ["integrity_audit.json"]
+    },
+    {
+      "id": "ComplianceGuard",
+      "capabilities": ["CHECK", "CLASSIFY", "AUDIT"],
+      "default_mode": "READ_ONLY",
+      "outputs": ["compliance_audit.json"]
+    },
+    {
+      "id": "ExposureRiskAnalyzer",
+      "capabilities": ["ANALYSE", "SCORE", "EXPLAIN"],
+      "default_mode": "READ_ONLY",
+      "outputs": ["exposure_risk_report.json"]
+    },
+    {
+      "id": "IncidentCoordinator",
+      "capabilities": ["DETECT", "VERIFY", "CLASSIFY", "COORDINATE", "AUDIT"],
+      "default_mode": "NO_EXTERNAL_MUTATION",
+      "outputs": ["incident_report.json", "response_log.json"]
+    }
+  ],
+  "verification_gate": {
+    "required_fields": [
+      "source_identifier",
+      "source_retention_or_reference",
+      "observed_at",
+      "evidence_digest_sha256",
+      "verification_status",
+      "severity",
+      "epistemic_status",
+      "confidence",
+      "collection_run_id"
+    ],
+    "minimum_for_executive_reporting": [
+      "VERIFIED FACT",
+      "INFERENCE",
+      "UNVERIFIED"
+    ],
+    "unsupported_claim_transition": "UNVERIFIED"
+  },
+  "risk_policy": {
+    "minimum_confidence": 0.0,
+    "maximum_confidence": 1.0,
+    "confidence_requires_rationale": true,
+    "opaque_scoring_forbidden": true,
+    "critical_requires_human_review": true,
+    "high_requires_evidence_bundle": true
+  },
+  "response_policy": {
+    "allowed_without_human": [
+      "CREATE_INTERNAL_ALERT",
+      "CREATE_INTERNAL_INCIDENT",
+      "CREATE_EVIDENCE_BUNDLE",
+      "NOTIFY_AUTHORIZED_PERSONNEL",
+      "QUARANTINE_INTERNAL_REPORT"
+    ],
+    "human_authorization_required": [
+      "EXTERNAL_TAKEDOWN",
+      "EXTERNAL_LISTING_MODIFICATION",
+      "ACCOUNT_OWNERSHIP_CHANGE",
+      "DNS_CHANGE",
+      "PRODUCTION_CREDENTIAL_ROTATION",
+      "PUBLIC_STATEMENT",
+      "EXTERNAL_CONTENT_DELETION",
+      "LEGAL_ESCALATION",
+      "LAW_ENFORCEMENT_CONTACT"
+    ]
+  },
+  "fail_closed": {
+    "missing_policy": "DENY",
+    "missing_authorization": "DENY",
+    "expired_authorization": "DENY",
+    "integrity_check_failure": "DENY",
+    "schema_validation_failure": "DENY",
+    "emergency_stop": "DENY",
+    "unverified_high_impact_action": "REVIEW"
+  },
+  "evidence": {
+    "digest_algorithm": "SHA-256",
+    "chain_integrity": true,
+    "append_oriented": true,
+    "required_metadata": [
+      "evidence_id",
+      "source_uri_or_identifier",
+      "retrieved_at",
+      "retriever",
+      "content_sha256",
+      "mime_type",
+      "collection_scope",
+      "parent_evidence_id",
+      "chain_hash",
+      "retention_class"
+    ],
+    "minimize_personal_data": true
+  },
+  "monitoring": {
+    "brand_integrity": {
+      "unauthorized_profiles_detected_target": 0,
+      "active_phishing_domains_target": 0,
+      "mtd_hours_target": 24,
+      "mtr_hours_target": 48
+    },
+    "visibility_assurance": {
+      "detect_ranking_anomalies": true,
+      "detect_listing_removals": true,
+      "detect_nap_drift": true,
+      "detect_duplicate_profiles": true,
+      "detect_structured_data_failures": true
+    },
+    "asset_integrity": {
+      "tls": true,
+      "dns": true,
+      "redirects": true,
+      "metadata": true,
+      "ownership": true,
+      "availability": true
+    }
+  },
+  "compliance_controls": {
+    "privacy": "CONFIGURE_AND_VERIFY",
+    "pipeda": "APPLICABILITY_REVIEW_REQUIRED",
+    "casl": "APPLICABILITY_REVIEW_REQUIRED",
+    "google_business_profile": "POLICY_REVIEW_REQUIRED",
+    "social_platforms": "POLICY_REVIEW_REQUIRED",
+    "accessibility": "VERIFY",
+    "privacy_notice": "VERIFY",
+    "consent_mechanisms": "VERIFY",
+    "retention": "VERIFY"
+  },
+  "reporting": {
+    "weekly": [
+      "asset_health",
+      "brand_mentions",
+      "review_activity",
+      "threat_findings",
+      "compliance_status",
+      "data_integrity_issues",
+      "incident_status",
+      "recommended_actions"
+    ],
+    "monthly": [
+      "risk_trend_analysis",
+      "exposure_surface_changes",
+      "compliance_findings",
+      "incident_summary",
+      "threat_landscape",
+      "protection_metrics",
+      "recommendations"
+    ]
+  },
+  "lifecycle": [
+    "DESIGNED",
+    "IMPLEMENTED",
+    "TESTED",
+    "VERIFIED",
+    "OPERATIONAL"
+  ],
+  "operationalization_rule": "Do not mark a control OPERATIONAL without executable testing and evidence-backed verification."
+}

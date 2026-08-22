@@ -1,8 +1,57 @@
 [
   {
-    "title": "Control Surface Feeds #154",
+    "title": "Control Surface Feeds #155",
     "status": "warn",
     "detail": "in_progress \u00b7 schedule on main",
+    "time": "07:00",
+    "timestamp": "2026-08-22T07:00:22Z"
+  },
+  {
+    "title": "Auto Heal #596",
+    "status": "warn",
+    "detail": "skipped \u00b7 schedule on main",
+    "time": "06:58",
+    "timestamp": "2026-08-22T06:58:34Z"
+  },
+  {
+    "title": "Minerals Data Sync #28",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:58",
+    "timestamp": "2026-08-22T06:58:31Z"
+  },
+  {
+    "title": "Health Monitor #28",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "06:40",
+    "timestamp": "2026-08-22T06:40:24Z"
+  },
+  {
+    "title": "Defender Watch #28",
+    "status": "bad",
+    "detail": "failure \u00b7 schedule on main",
+    "time": "06:32",
+    "timestamp": "2026-08-22T06:32:01Z"
+  },
+  {
+    "title": "4-D Dominance Pipeline #28",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
+    "time": "06:18",
+    "timestamp": "2026-08-22T06:18:24Z"
+  },
+  {
+    "title": "Deploy Pages #153",
+    "status": "ok",
+    "detail": "success \u00b7 workflow_dispatch on main",
+    "time": "05:43",
+    "timestamp": "2026-08-22T05:43:55Z"
+  },
+  {
+    "title": "Control Surface Feeds #154",
+    "status": "ok",
+    "detail": "success \u00b7 schedule on main",
     "time": "05:43",
     "timestamp": "2026-08-22T05:43:26Z"
   },
@@ -89,54 +138,5 @@
     "detail": "skipped \u00b7 schedule on main",
     "time": "01:49",
     "timestamp": "2026-08-22T01:49:16Z"
-  },
-  {
-    "title": "Health Monitor #27",
-    "status": "bad",
-    "detail": "failure \u00b7 schedule on main",
-    "time": "01:14",
-    "timestamp": "2026-08-22T01:14:20Z"
-  },
-  {
-    "title": "Defender Watch #27",
-    "status": "bad",
-    "detail": "failure \u00b7 schedule on main",
-    "time": "00:58",
-    "timestamp": "2026-08-22T00:58:59Z"
-  },
-  {
-    "title": "Auto Heal #594",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "00:53",
-    "timestamp": "2026-08-22T00:53:01Z"
-  },
-  {
-    "title": "Auto Heal #593",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "00:51",
-    "timestamp": "2026-08-22T00:51:25Z"
-  },
-  {
-    "title": "Auto Heal #592",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "00:51",
-    "timestamp": "2026-08-22T00:51:22Z"
-  },
-  {
-    "title": "Auto Heal #591",
-    "status": "warn",
-    "detail": "skipped \u00b7 workflow_run on main",
-    "time": "00:51",
-    "timestamp": "2026-08-22T00:51:22Z"
-  },
-  {
-    "title": "Advanced SEO Growth #19",
-    "status": "ok",
-    "detail": "success \u00b7 push on main",
-    "time": "00:51",
-    "timestamp": "2026-08-22T00:51:05Z"
   }
 ]

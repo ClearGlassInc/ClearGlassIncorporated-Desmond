@@ -1,19 +1,18 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_version": "1.0",
   "policy": "deny-by-default",
   "findings": [],
-  "record_format": {
-    "id": "scanner-finding-id",
-    "severity": "medium|high|critical",
-    "reason": "documented business justification",
-    "expires_on": "YYYY-MM-DD",
-    "change_reference": "approved-change-id",
-    "owner": "team-or-role"
+  "record_schema": {
+    "required": ["id", "severity", "reason", "expires_on", "change_reference", "owner"],
+    "properties": {
+      "id": {"type": "string"},
+      "severity": {"enum": ["medium", "high", "critical"]},
+      "reason": {"type": "string", "minLength": 1},
+      "expires_on": {"type": "string", "format": "date"},
+      "change_reference": {"type": "string", "pattern": "^(CHG|RFC|INC|SEC)-[0-9]{4,}$"},
+      "owner": {"type": "string", "minLength": 1}
+    }
   },
-  "rules": [
-    "High and critical findings block release unless a matching, unexpired record exists.",
-    "Expired records are invalid.",
-    "A pipeline parameter cannot create or modify an allow-list record.",
-    "No secret value or sensitive payload may be stored here."
-  ]
+  "rules": ["High and critical findings block release unless a matching unexpired record exists.","Expired records are invalid.","Pipeline parameters cannot create or modify allowlist records.","No secrets or sensitive payloads may be stored here."]
 }

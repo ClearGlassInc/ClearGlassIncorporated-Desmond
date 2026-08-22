@@ -1,27 +1,29 @@
 #!/usr/bin/env bash
 set -euo pipefail
 mkdir -p artifacts/evidence
-if ! find .github/workflows -type f -name '*.yml' -o -name '*.yaml' 2>/dev/null | grep -q .; then printf '%s\n' 'status=PASS' 'workflows=0' > artifacts/evidence/github-workflows.txt; exit 0; fi
-command -v python3 >/dev/null || { echo 'python3 required for YAML validation' >&2; exit 1; }
 python3 - <<'PY'
+import json,sys
 from pathlib import Path
 try:
  import yaml
-except Exception:
- print('PyYAML unavailable; install it in ci-readonly or use a repository-standard YAML validator', flush=True)
- raise SystemExit(1)
+except Exception as e:
+ print(f'PyYAML unavailable: {e}',file=sys.stderr); raise SystemExit(2)
 files=sorted(Path('.github/workflows').glob('*.y*ml'))
+findings=[]
 for p in files:
- data=yaml.safe_load(p.read_text())
- if not isinstance(data,dict): raise SystemExit(f'{p}: YAML root is not a mapping')
- jobs=data.get('jobs',{}) or {}
- for name,job in jobs.items():
-  if not isinstance(job,dict): continue
-  for step in job.get('steps',[]) or []:
-   if not isinstance(step,dict) or 'uses' not in step: continue
-   ref=str(step['uses']).split('@',1)[-1]
-   if ref in {'main','master','latest','v1','v2','v3','v4'} or len(ref)!=40:
-    raise SystemExit(f'{p}: unpinned action {step["uses"]}; require a full commit SHA')
-print(f'validated {len(files)} workflow files')
+ try:
+  data=yaml.safe_load(p.read_text(encoding='utf-8'))
+  if not isinstance(data,dict): findings.append({'file':str(p),'type':'invalid_yaml_root'})
+  else:
+   for job_name,job in (data.get('jobs') or {}).items():
+    for step in (job or {}).get('steps',[]) or []:
+     if isinstance(step,dict) and 'uses' in step:
+      use=str(step['uses']); ref=use.split('@',1)[1] if '@' in use else ''
+      if ref in {'main','master','latest','v1','v2','v3','v4'} or len(ref)!=40:
+       findings.append({'file':str(p),'job':job_name,'uses':use,'type':'unpinned_action'})
+ except Exception as e:
+  findings.append({'file':str(p),'type':'yaml_parse_error','error':str(e)})
+result={'schema_version':'1.0','status':'PASS' if not findings else 'FAIL','workflow_count':len(files),'findings':findings}
+json.dump(result,open('artifacts/evidence/workflow-integrity.json','w'),indent=2); print(json.dumps(result,indent=2))
+if findings: raise SystemExit(1)
 PY
-printf '%s\n' 'status=PASS' "workflow_count=$(find .github/workflows -type f \( -name '*.yml' -o -name '*.yaml' \) | wc -l | tr -d ' ')" > artifacts/evidence/github-workflows.txt

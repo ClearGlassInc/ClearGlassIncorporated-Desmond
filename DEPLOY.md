@@ -1,58 +1,55 @@
-# ClearGlass CircleCI Release Control Plane
+# ClearGlass CircleCI 2.1 Control Plane
 
 ## Architecture
 
-`.circleci/config.yml` defines five workflow classes: `validate`, `staging_release`, `production_release`, `staging_rollback_release`, and `production_rollback_release`.
+`.circleci/config.yml` is a parameterized control plane for validation, immutable packaging, restricted deployment, post-deploy verification, and rollback. Validation is read-only. Mutation requires an explicit pipeline parameter and restricted CircleCI context.
 
-`validate` is read-only and runs on normal branch/PR pipelines. Release workflows are selected only by explicit pipeline parameters. Privileged contexts are isolated: `ci-readonly`, `staging-deploy`, and `production-deploy`. Production context is never attached to validation jobs.
+## Contexts
 
-## Manual trigger matrix
+- `ci-readonly`: checkout, tests, policy checks, workflow integrity, artifact construction.
+- `staging-deploy`: staging deployment and rollback credentials only.
+- `production-deploy`: production deployment and rollback credentials only; never attach to validation jobs.
 
-| Operation | Required parameters |
+Create these contexts in CircleCI with least-privilege credentials. The repository cannot verify account-side context existence through GitHub alone.
+
+## Trigger matrix
+
+| Operation | Required controls |
 |---|---|
-| Validation | `run_validation=true`, `dry_run=true`, `target_environment=none` |
-| Animation validation | validation + `deploy_animations=true`; publication remains disabled |
-| Agent sandbox validation | validation + `run_agent_health_checks=true`; agent writes remain disabled |
-| Staging release | `deploy_staging=true`, `target_environment=staging`, `dry_run=false`, `emergency_stop=false`, `deploy_production=false`, rollback flags false |
-| Production release | `deploy_production=true`, `target_environment=production`, `dry_run=false`, `emergency_stop=false`, non-empty `change_reference`, authorized protected ref, CircleCI approval |
-| Staging rollback | `rollback_staging=true`, `target_environment=staging`, `dry_run=false`, `emergency_stop=false`, verified prior release |
-| Production rollback | `rollback_production=true`, `target_environment=production`, `dry_run=false`, `emergency_stop=false`, non-empty `change_reference`, verified prior release, separate approval |
+| Validation | `run_validation=true`, target `none`, no deploy/rollback flag |
+| Staging | `deploy_staging=true`, target `staging`, validation enabled, emergency stop false |
+| Production | `deploy_production=true`, target `production`, validation enabled, change reference, authorized ref, approval |
+| Staging rollback | `rollback_staging=true`, target `staging`, verified prior artifact, approval |
+| Production rollback | `rollback_production=true`, target `production`, verified prior artifact, change reference, separate approval |
 
-## Required configuration
+## Evidence and artifacts
 
-Create the CircleCI contexts exactly as follows:
+Release packaging creates `release-bundle.tar.gz`, `artifacts/release/artifact.sha256`, and `artifacts/release/manifest.json`. The manifest records Git SHA, CircleCI pipeline ID, UTC build timestamp, SHA-256 artifact digest, and deployment target. Deployment scripts verify the digest before invoking the provider adapter.
 
-- `ci-readonly`: verification-only credentials and release-signing verification material.
-- `staging-deploy`: staging-only deployment identity.
-- `production-deploy`: production-only deployment identity.
+## Deployment adapters
 
-Use OIDC for cloud authentication when the provider supports it. Configure the provider trust policy with:
+`REPLACE_ME_DEPLOY_COMMAND` and `REPLACE_ME_ROLLBACK_COMMAND` are intentional fail-closed placeholders. They must be supplied only through restricted CircleCI contexts after provider-specific review. A placeholder is never treated as successful deployment.
 
-- audience: `REPLACE_ME_OIDC_AUDIENCE`
-- role/service account: `REPLACE_ME_CLOUD_ROLE`
-- subject binding: `REPLACE_ME_OIDC_SUBJECT`
-- allowed branch/tag: `REPLACE_ME_ALLOWED_REF`
+## Verification
 
-No private credential is committed to this repository.
+`scripts/ci/post-deploy-verify.sh` requires an HTTPS URL, HTTP 200, and an explicit release marker. Evidence is written under `artifacts/evidence/`. No mutable response content is treated as a release identity unless the configured marker matches.
 
-## Provider-specific boundary
+## GitHub workflow integrity
 
-The repository currently exposes provider-specific deployment surfaces, but this control-plane branch does not assume a provider command when the exact production adapter cannot be established from the current source. Deployment adapters therefore fail closed on `REPLACE_ME_DEPLOY_COMMAND`, `REPLACE_ME_STAGING_URL`, `REPLACE_ME_PRODUCTION_URL`, or an unconfigured prior-release resolver. This is intentional and produces `NOT VERIFIED` rather than simulated success.
+`scripts/ci/validate-github-workflows.sh` parses `.github/workflows/*.yml` and `.yaml`, rejects floating action references such as `@main` or `@master`, and writes `artifacts/evidence/workflow-integrity.json`.
 
-## Evidence
+## Agent safety
 
-Every control-plane job writes machine-readable evidence under `artifacts/evidence/`. The release manifest contains Git SHA, ref, CircleCI pipeline/workflow IDs, UTC build timestamp, artifact SHA-256, lockfile digest, and deployment target. The final evidence bundle contains SHA-256 checksums for all evidence files.
+Agent contract tests always require `DRY_RUN=true`, `SANDBOX_MODE=true`, and `ENABLE_EXTERNAL_WRITES=false`. Startup and health checks are opt-in through restricted test configuration; no live external write is performed by validation.
 
 ## Rollback
 
-Staging rollback is eligible only after a failed staging post-deploy verification and only when `emergency_stop=false`. It must resolve the last verified immutable release; mutable branches/tags are not acceptable rollback targets.
-
-Production rollback is never automatically initiated by a failed production verification. It requires `hold_production_rollback`, the restricted `production-deploy` context, a verified prior release, and a separate change reference.
-
-## Emergency shutdown
-
-Trigger a manual pipeline with `emergency_stop=true`. This prevents new mutating CI actions. It does not revoke an already-issued cloud credential or stop an external deployment that is already running; use the deployment provider's incident procedure for those actions.
+Rollback consumes a last-verified immutable artifact, never a mutable branch. Production rollback requires a separate approval and change reference. Automatic production rollback is not enabled.
 
 ## Validation
 
-Before enabling a release context, validate the configuration with the CircleCI configuration validator and run a validation-only pipeline. Do not treat an unconfigured provider adapter as a successful deployment.
+Run `circleci config validate` with the CircleCI CLI. If the CLI is unavailable, record that limitation in CI evidence rather than claiming validation passed. Then trigger a validation-only pipeline with no deploy or rollback parameters.
+
+## Security boundary
+
+CircleCI does not bypass GitHub branch protection, repository rulesets, required status checks, environment approvals, protected secrets, or Cloudflare/Netlify deployment controls.

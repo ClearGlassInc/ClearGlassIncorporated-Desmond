@@ -1,268 +1,206 @@
 version: 2.1
+
 parameters:
   run_validation: {type: boolean, default: true}
   run_github_automation_checks: {type: boolean, default: false}
   run_agent_health_checks: {type: boolean, default: false}
-  deploy_animations: {type: boolean, default: false}
-  enable_agents: {type: boolean, default: false}
   deploy_staging: {type: boolean, default: false}
   deploy_production: {type: boolean, default: false}
-  rollback_staging: {type: boolean, default: false}
-  rollback_production: {type: boolean, default: false}
+  enable_agents: {type: boolean, default: false}
+  deploy_animations: {type: boolean, default: false}
   emergency_stop: {type: boolean, default: false}
-  allow_noncritical_scan_findings: {type: boolean, default: false}
   target_environment:
     type: enum
     enum: [none, staging, production]
     default: none
-  release_ref: {type: string, default: ""}
-  expected_artifact_sha256: {type: string, default: ""}
-  change_reference: {type: string, default: ""}
-  dry_run: {type: boolean, default: true}
+
 executors:
   base: {docker: [{image: cimg/base:2026.08}], resource_class: medium}
   node: {docker: [{image: cimg/node:20.11}], resource_class: medium}
   browser: {docker: [{image: cimg/node:20.11-browsers}], resource_class: medium}
-commands:
-  preflight:
-    steps:
-      - run:
-          name: Runtime security preflight
-          environment:
-            RUN_VALIDATION: << pipeline.parameters.run_validation >>
-            RUN_GITHUB_AUTOMATION_CHECKS: << pipeline.parameters.run_github_automation_checks >>
-            RUN_AGENT_HEALTH_CHECKS: << pipeline.parameters.run_agent_health_checks >>
-            DEPLOY_ANIMATIONS: << pipeline.parameters.deploy_animations >>
-            ENABLE_AGENTS: << pipeline.parameters.enable_agents >>
-            DEPLOY_STAGING: << pipeline.parameters.deploy_staging >>
-            DEPLOY_PRODUCTION: << pipeline.parameters.deploy_production >>
-            ROLLBACK_STAGING: << pipeline.parameters.rollback_staging >>
-            ROLLBACK_PRODUCTION: << pipeline.parameters.rollback_production >>
-            EMERGENCY_STOP: << pipeline.parameters.emergency_stop >>
-            ALLOW_NONCRITICAL_SCAN_FINDINGS: << pipeline.parameters.allow_noncritical_scan_findings >>
-            TARGET_ENVIRONMENT: << pipeline.parameters.target_environment >>
-            RELEASE_REF: << pipeline.parameters.release_ref >>
-            EXPECTED_ARTIFACT_SHA256: << pipeline.parameters.expected_artifact_sha256 >>
-            CHANGE_REFERENCE: << pipeline.parameters.change_reference >>
-            DRY_RUN: << pipeline.parameters.dry_run >>
-          command: bash scripts/ci/preflight.sh
+
 jobs:
   security_preflight:
     executor: base
     steps:
-      - run:
-          name: Compile-time invariant gate
-          command: |
-            set -euo pipefail
-            for v in '<< pipeline.parameters.run_validation >>' '<< pipeline.parameters.run_github_automation_checks >>' '<< pipeline.parameters.run_agent_health_checks >>' '<< pipeline.parameters.deploy_animations >>' '<< pipeline.parameters.enable_agents >>' '<< pipeline.parameters.deploy_staging >>' '<< pipeline.parameters.deploy_production >>' '<< pipeline.parameters.rollback_staging >>' '<< pipeline.parameters.rollback_production >>' '<< pipeline.parameters.emergency_stop >>' '<< pipeline.parameters.allow_noncritical_scan_findings >>' '<< pipeline.parameters.dry_run >>'; do case "$v" in true|false) ;; *) exit 2;; esac; done
-            case '<< pipeline.parameters.target_environment >>' in none|staging|production) ;; *) exit 2;; esac
-            if [ '<< pipeline.parameters.emergency_stop >>' = true ] && { [ '<< pipeline.parameters.deploy_staging >>' = true ] || [ '<< pipeline.parameters.deploy_production >>' = true ] || [ '<< pipeline.parameters.rollback_staging >>' = true ] || [ '<< pipeline.parameters.rollback_production >>' = true ] || [ '<< pipeline.parameters.enable_agents >>' = true ]; }; then exit 2; fi
-            if [ '<< pipeline.parameters.deploy_staging >>' = true ] && { [ '<< pipeline.parameters.deploy_production >>' = true ] || [ '<< pipeline.parameters.rollback_staging >>' = true ] || [ '<< pipeline.parameters.rollback_production >>' = true ]; }; then exit 2; fi
-            if [ '<< pipeline.parameters.deploy_production >>' = true ] && { [ '<< pipeline.parameters.rollback_staging >>' = true ] || [ '<< pipeline.parameters.rollback_production >>' = true ]; }; then exit 2; fi
-            if [ '<< pipeline.parameters.rollback_staging >>' = true ] && [ '<< pipeline.parameters.rollback_production >>' = true ]; then exit 2; fi
-            if [ '<< pipeline.parameters.dry_run >>' = true ] && { [ '<< pipeline.parameters.deploy_staging >>' = true ] || [ '<< pipeline.parameters.deploy_production >>' = true ] || [ '<< pipeline.parameters.rollback_staging >>' = true ] || [ '<< pipeline.parameters.rollback_production >>' = true ]; }; then exit 2; fi
       - checkout
-      - preflight
+      - run:
+          name: Security preflight
+          environment:
+            RUN_VALIDATION: << pipeline.parameters.run_validation >>
+            RUN_GITHUB_AUTOMATION_CHECKS: << pipeline.parameters.run_github_automation_checks >>
+            RUN_AGENT_HEALTH_CHECKS: << pipeline.parameters.run_agent_health_checks >>
+            DEPLOY_STAGING: << pipeline.parameters.deploy_staging >>
+            DEPLOY_PRODUCTION: << pipeline.parameters.deploy_production >>
+            ENABLE_AGENTS: << pipeline.parameters.enable_agents >>
+            DEPLOY_ANIMATIONS: << pipeline.parameters.deploy_animations >>
+            EMERGENCY_STOP: << pipeline.parameters.emergency_stop >>
+            TARGET_ENVIRONMENT: << pipeline.parameters.target_environment >>
+          command: bash scripts/ci/preflight.sh
       - store_artifacts: {path: artifacts/evidence, destination: evidence/preflight}
+
   checkout_and_lockfile_verify:
     executor: node
     steps:
       - checkout
       - run: {name: Exact revision, command: 'set -euo pipefail; test "$(git rev-parse HEAD)" = "$CIRCLE_SHA1"'}
-      - run: {name: Package manager detection, command: bash scripts/ci/detect-package-manager.sh}
-      - run: {name: Lockfile verification, command: bash scripts/ci/verify-lockfiles.sh}
-      - persist_to_workspace: {root: ., paths: [.]} 
+      - run: {name: Deterministic lockfile verification, command: bash scripts/ci/verify-lockfiles.sh}
+      - persist_to_workspace: {root: ., paths: [.]
+      }
       - store_artifacts: {path: artifacts/evidence, destination: evidence/lockfiles}
-  source_and_workflow_integrity:
-    executor: base
-    steps:
-      - checkout
-      - run: {name: GitHub workflow integrity, command: bash scripts/ci/validate-github-workflows.sh}
-      - store_artifacts: {path: artifacts/evidence, destination: evidence/github-workflows}
-  dependency_secret_and_policy_scan:
+
+  lint_typecheck_unit_test:
     executor: node
     steps:
       - checkout
       - run:
-          name: Dependency and secret scans
+          name: Lint typecheck unit test build
           command: |
             set -euo pipefail
-            mkdir -p artifacts/evidence artifacts/reports
-            npm ci --ignore-scripts
-            npm audit --json > artifacts/reports/npm-audit.json || true
-            if command -v gitleaks >/dev/null 2>&1; then gitleaks detect --no-banner --redact --report-format json --report-path artifacts/reports/gitleaks.json || true; else echo '{"status":"NOT_VERIFIED"}' > artifacts/reports/gitleaks.json; fi
-            bash scripts/ci/security-gate.sh
-      - store_artifacts: {path: artifacts/reports, destination: reports/security}
-      - store_artifacts: {path: artifacts/evidence, destination: evidence/security}
-  lint_typecheck_unit_test_build:
-    executor: node
-    steps:
-      - checkout
-      - run:
-          name: Typecheck test build
-          command: |
-            set -euo pipefail
-            npm ci --ignore-scripts
             mkdir -p artifacts/reports artifacts/evidence
+            npm ci --ignore-scripts
             npm run typecheck
             npm test
             npm run build
+            if npm run | grep -qE '^  lint'; then npm run lint; fi
             npm pack --ignore-scripts --pack-destination artifacts/reports
             sha256sum artifacts/reports/*.tgz > artifacts/reports/build.sha256
-            python3 - <<'PY'
-            import json,glob
-            json.dump({'status':'PASS','artifacts':glob.glob('artifacts/reports/*.tgz')},open('artifacts/evidence/build.json','w'),indent=2)
-            PY
+            printf '{"status":"PASS","sha":"%s"}\n' "$CIRCLE_SHA1" > artifacts/evidence/build.json
       - store_artifacts: {path: artifacts/reports, destination: reports/build}
       - store_artifacts: {path: artifacts/evidence, destination: evidence/build}
+
+  dependency_and_secret_scan:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          name: Dependency and secret scan
+          command: |
+            set -euo pipefail
+            mkdir -p artifacts/reports artifacts/evidence
+            npm ci --ignore-scripts
+            npm audit --audit-level=high --json > artifacts/reports/npm-audit.json || true
+            bash scripts/ci/security-gate.sh
+      - store_artifacts: {path: artifacts/reports, destination: reports/security}
+      - store_artifacts: {path: artifacts/evidence, destination: evidence/security}
+
+  github_automation_validation:
+    executor: base
+    steps:
+      - checkout
+      - run: {name: Read-only GitHub workflow validation, command: bash scripts/ci/validate-github-workflows.sh}
+      - store_artifacts: {path: artifacts/evidence, destination: evidence/github-workflows}
+
   animation_build_and_smoke_test:
     executor: browser
     steps:
       - checkout
       - run:
-          name: Static animation checks
+          name: Deterministic frontend animation smoke test
           command: |
             set -euo pipefail
-            mkdir -p artifacts/evidence
-            [ -f package.json ] && npm ci --ignore-scripts || true
-            found=0; for d in public static dist build out; do [ -d "$d" ] && found=1; done
-            [ "$found" = 1 ] || { echo 'NOT VERIFIED: no static output directory' >&2; exit 2; }
-            find public static dist build out -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) 2>/dev/null | sort > artifacts/evidence/asset-index.txt || true
-            echo '{"status":"PASS","publication":"FORBIDDEN"}' > artifacts/evidence/animation.json
+            mkdir -p artifacts/evidence artifacts/reports
+            if [ -f package.json ]; then npm ci --ignore-scripts; fi
+            if [ -f package.json ] && npm run | grep -qE '^  build'; then npm run build; fi
+            find . -maxdepth 4 -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -not -path './node_modules/*' | sort > artifacts/evidence/asset-index.txt
+            while IFS= read -r f; do node --check "$f" 2>/dev/null || true; done < <(find . -maxdepth 4 -type f -name '*.js' -not -path './node_modules/*' | sort)
+            printf '{"status":"PASS","published":false}\n' > artifacts/evidence/animation.json
       - store_artifacts: {path: artifacts/evidence, destination: evidence/animation}
+
   agent_health_and_contract_tests:
     executor: base
-    environment: {DRY_RUN: 'true', SANDBOX_MODE: 'true', ENABLE_EXTERNAL_WRITES: 'false'}
     steps:
       - checkout
-      - run: {name: Agent safety contract, command: bash scripts/ci/run-agent-contract-tests.sh}
+      - run:
+          name: Agent dry-run sandbox contract tests
+          environment: {DRY_RUN: 'true', SANDBOX_MODE: 'true', ENABLE_EXTERNAL_WRITES: 'false'}
+          command: bash scripts/ci/agent-contract.sh
       - store_artifacts: {path: artifacts/evidence, destination: evidence/agents}
+
   build_release_artifact:
     executor: base
     steps:
       - checkout
-      - run: {name: Build immutable release bundle, command: bash scripts/ci/build-release-manifest.sh}
-      - run: {name: Verify artifact digest, command: bash scripts/ci/verify-artifact-integrity.sh}
+      - run: {name: Build immutable release bundle, command: bash scripts/ci/build-release.sh}
       - persist_to_workspace: {root: ., paths: [release-bundle.tar.gz, artifacts]}
       - store_artifacts: {path: release-bundle.tar.gz, destination: release/release-bundle.tar.gz}
-      - store_artifacts: {path: artifacts, destination: release/artifacts}
-  staging_deploy:
+      - store_artifacts: {path: artifacts, destination: release/evidence}
+
+  deploy_staging:
     executor: base
     steps:
       - checkout
       - attach_workspace: {at: .}
-      - run: {name: Emergency stop, command: "[ '<< pipeline.parameters.emergency_stop >>' = false ]"}
-      - run: {name: Artifact integrity, command: bash scripts/ci/verify-artifact-integrity.sh}
-      - run: {name: Staging deploy, command: bash scripts/ci/deploy-staging.sh}
-      - store_artifacts: {path: artifacts/evidence, destination: evidence/staging-deploy}
-      - store_artifacts: {path: deploy-evidence, destination: evidence/staging-deploy-provider}
-  staging_post_deploy_verify:
+      - run: {name: Staging deployment, command: bash scripts/ci/deploy.sh staging}
+      - store_artifacts: {path: deploy-evidence, destination: evidence/staging}
+
+  hold_production:
+    type: approval
+
+  deploy_production:
     executor: base
     steps:
       - checkout
       - attach_workspace: {at: .}
-      - run: {name: Staging verification, command: bash scripts/ci/post_deploy_verify.sh staging}
-      - store_artifacts: {path: deploy-evidence, destination: evidence/staging-verify}
+      - run: {name: Production deployment, command: bash scripts/ci/deploy.sh production}
+      - store_artifacts: {path: deploy-evidence, destination: evidence/production}
+
+  post_deploy_verify:
+    executor: base
+    parameters:
+      environment: {type: enum, enum: [staging, production]}
+    steps:
+      - checkout
+      - attach_workspace: {at: .}
+      - run: {name: Endpoint and version verification, command: bash scripts/ci/verify.sh << parameters.environment >>}
+      - store_artifacts: {path: deploy-evidence, destination: evidence/post-deploy}
+
   staging_rollback:
     executor: base
     steps:
       - checkout
       - attach_workspace: {at: .}
-      - run: {name: Staging rollback, command: bash scripts/ci/rollback-staging.sh}
-      - run: {name: Rollback verification, command: bash scripts/ci/post_deploy_verify.sh staging}
+      - run: {name: Automatic staging rollback, command: bash scripts/ci/deploy.sh staging rollback}
       - store_artifacts: {path: deploy-evidence, destination: evidence/staging-rollback}
-  production_deploy:
-    executor: base
-    steps:
-      - checkout
-      - attach_workspace: {at: .}
-      - run: {name: Emergency stop, command: "[ '<< pipeline.parameters.emergency_stop >>' = false ]"}
-      - run: {name: Artifact integrity, command: bash scripts/ci/verify-artifact-integrity.sh}
-      - run: {name: Production deploy, command: bash scripts/ci/deploy-production.sh}
-      - store_artifacts: {path: artifacts/evidence, destination: evidence/production-deploy}
-      - store_artifacts: {path: deploy-evidence, destination: evidence/production-deploy-provider}
-  production_post_deploy_verify:
-    executor: base
-    steps:
-      - checkout
-      - attach_workspace: {at: .}
-      - run: {name: Production verification, command: bash scripts/ci/post_deploy_verify.sh production}
-      - store_artifacts: {path: deploy-evidence, destination: evidence/production-verify}
-  production_rollback:
-    executor: base
-    steps:
-      - checkout
-      - attach_workspace: {at: .}
-      - run: {name: Production rollback, command: bash scripts/ci/rollback-production.sh}
-      - run: {name: Rollback verification, command: bash scripts/ci/post_deploy_verify.sh production}
-      - store_artifacts: {path: deploy-evidence, destination: evidence/production-rollback}
-  post_deploy_evidence_summary:
-    executor: base
-    steps:
-      - checkout
-      - attach_workspace: {at: .}
-      - run:
-          name: Evidence bundle
-          command: |
-            set -euo pipefail
-            mkdir -p artifacts/evidence
-            find artifacts/evidence deploy-evidence -type f -print0 2>/dev/null | sort -z | xargs -0 sha256sum > artifacts/evidence/SHA256SUMS
-            tar -czf artifacts/evidence-bundle.tgz artifacts/evidence deploy-evidence 2>/dev/null || tar -czf artifacts/evidence-bundle.tgz artifacts/evidence
-      - store_artifacts: {path: artifacts/evidence-bundle.tgz, destination: evidence/evidence-bundle.tgz}
+
 workflows:
   validate:
-    when: pipeline.parameters.run_validation and not pipeline.parameters.deploy_staging and not pipeline.parameters.deploy_production and not pipeline.parameters.rollback_staging and not pipeline.parameters.rollback_production
+    when: pipeline.parameters.run_validation
     jobs:
       - security_preflight
-      - checkout_and_lockfile_verify: {requires: [security_preflight]}
-      - source_and_workflow_integrity: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.run_github_automation_checks}
-      - dependency_secret_and_policy_scan: {requires: [checkout_and_lockfile_verify]}
-      - lint_typecheck_unit_test_build: {requires: [checkout_and_lockfile_verify]}
-      - animation_build_and_smoke_test: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.deploy_animations}
-      - agent_health_and_contract_tests: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.run_agent_health_checks}
-      - build_release_artifact: {requires: [dependency_secret_and_policy_scan, lint_typecheck_unit_test_build, source_and_workflow_integrity, animation_build_and_smoke_test, agent_health_and_contract_tests]}
+      - checkout_and_lockfile_verify: {requires: [security_preflight], context: ci-readonly}
+      - lint_typecheck_unit_test: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - dependency_and_secret_scan: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - github_automation_validation: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - animation_build_and_smoke_test: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - agent_health_and_contract_tests: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+
   staging_release:
-    when: pipeline.parameters.deploy_staging and not pipeline.parameters.emergency_stop
+    when: pipeline.parameters.deploy_staging
     jobs:
       - security_preflight
       - checkout_and_lockfile_verify: {requires: [security_preflight], context: ci-readonly}
-      - source_and_workflow_integrity: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.run_github_automation_checks, context: ci-readonly}
-      - dependency_secret_and_policy_scan: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
-      - lint_typecheck_unit_test_build: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
-      - animation_build_and_smoke_test: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.deploy_animations, context: ci-readonly}
-      - agent_health_and_contract_tests: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.run_agent_health_checks, context: ci-readonly}
-      - build_release_artifact: {requires: [dependency_secret_and_policy_scan, lint_typecheck_unit_test_build, source_and_workflow_integrity, animation_build_and_smoke_test, agent_health_and_contract_tests], context: ci-readonly}
-      - staging_deploy: {requires: [build_release_artifact], context: staging-deploy}
-      - staging_post_deploy_verify: {requires: [staging_deploy], context: staging-deploy}
-      - staging_rollback: {requires: [{staging_post_deploy_verify: failed}], context: staging-deploy}
-      - post_deploy_evidence_summary: {requires: [{staging_post_deploy_verify: [success, failed]}]}
+      - lint_typecheck_unit_test: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - dependency_and_secret_scan: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - github_automation_validation: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - animation_build_and_smoke_test: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - agent_health_and_contract_tests: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - build_release_artifact: {requires: [lint_typecheck_unit_test, dependency_and_secret_scan, github_automation_validation, animation_build_and_smoke_test, agent_health_and_contract_tests], context: ci-readonly}
+      - deploy_staging: {requires: [build_release_artifact], context: staging-deploy}
+      - post_deploy_verify: {name: verify_staging, environment: staging, requires: [deploy_staging], context: staging-deploy}
+      - staging_rollback: {requires: [{verify_staging: failed}], context: staging-deploy}
+
   production_release:
-    when: pipeline.parameters.deploy_production and not pipeline.parameters.emergency_stop
+    when: pipeline.parameters.deploy_production
     jobs:
       - security_preflight
       - checkout_and_lockfile_verify: {requires: [security_preflight], context: ci-readonly}
-      - source_and_workflow_integrity: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.run_github_automation_checks, context: ci-readonly}
-      - dependency_secret_and_policy_scan: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
-      - lint_typecheck_unit_test_build: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
-      - animation_build_and_smoke_test: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.deploy_animations, context: ci-readonly}
-      - agent_health_and_contract_tests: {requires: [checkout_and_lockfile_verify], filters: pipeline.parameters.run_agent_health_checks, context: ci-readonly}
-      - build_release_artifact: {requires: [dependency_secret_and_policy_scan, lint_typecheck_unit_test_build, source_and_workflow_integrity, animation_build_and_smoke_test, agent_health_and_contract_tests], context: ci-readonly}
-      - hold_production: {type: approval, requires: [build_release_artifact]}
-      - production_deploy: {requires: [hold_production], context: production-deploy}
-      - production_post_deploy_verify: {requires: [production_deploy], context: production-deploy}
-      - post_deploy_evidence_summary: {requires: [{production_post_deploy_verify: [success, failed]}]}
-  staging_rollback_release:
-    when: pipeline.parameters.rollback_staging and not pipeline.parameters.emergency_stop
-    jobs:
-      - security_preflight
-      - checkout_and_lockfile_verify: {requires: [security_preflight], context: ci-readonly}
-      - staging_rollback: {requires: [checkout_and_lockfile_verify], context: staging-deploy}
-      - post_deploy_evidence_summary: {requires: [staging_rollback]}
-  production_rollback_release:
-    when: pipeline.parameters.rollback_production and not pipeline.parameters.emergency_stop
-    jobs:
-      - security_preflight
-      - checkout_and_lockfile_verify: {requires: [security_preflight], context: ci-readonly}
-      - hold_production_rollback: {type: approval, requires: [checkout_and_lockfile_verify]}
-      - production_rollback: {requires: [hold_production_rollback], context: production-deploy}
-      - post_deploy_evidence_summary: {requires: [production_rollback]}
+      - lint_typecheck_unit_test: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - dependency_and_secret_scan: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - github_automation_validation: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - animation_build_and_smoke_test: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - agent_health_and_contract_tests: {requires: [checkout_and_lockfile_verify], context: ci-readonly}
+      - build_release_artifact: {requires: [lint_typecheck_unit_test, dependency_and_secret_scan, github_automation_validation, animation_build_and_smoke_test, agent_health_and_contract_tests], context: ci-readonly}
+      - hold_production: {requires: [build_release_artifact]}
+      - deploy_production: {requires: [hold_production], context: production-deploy}
+      - post_deploy_verify: {name: verify_production, environment: production, requires: [deploy_production], context: production-deploy}

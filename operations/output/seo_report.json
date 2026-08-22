@@ -1,7 +1,7 @@
 {
-  "run_utc": "2026-08-21T07:39:18.352995+00:00",
-  "files_audited": 96,
-  "average_score": 91.7,
+  "run_utc": "2026-08-22T07:28:08.496120+00:00",
+  "files_audited": 98,
+  "average_score": 90.9,
   "pages": [
     {
       "file": "404.html",
@@ -411,6 +411,30 @@
       "og_image": true,
       "score": 100,
       "issues": []
+    },
+    {
+      "file": "blog.html",
+      "title": "ClearGlass Intelligence Blog | Apple's Latest Threat Notification Is a Wake-Up Call",
+      "title_length": 83,
+      "title_ok": false,
+      "description": "ClearGlass analysis of targeted mercenary spyware threats, device security, verification, and defensive intelligence practices.",
+      "description_length": 127,
+      "description_ok": true,
+      "canonical_present": false,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": false,
+      "og_description": false,
+      "og_image": false,
+      "score": 50,
+      "issues": [
+        "Title length 83 chars (ideal 30\u201360)",
+        "Missing canonical link tag",
+        "Missing og:title",
+        "Missing og:description",
+        "Missing og:image"
+      ]
     },
     {
       "file": "bluedesk-mobile.html",
@@ -998,6 +1022,27 @@
       ]
     },
     {
+      "file": "helix.html",
+      "title": "HELIX \u2014 Exposure Lattice &amp; Response Rehearsal | ClearGlass Inc",
+      "title_length": 66,
+      "title_ok": false,
+      "description": "HELIX fuses dark-web exposure link analysis with agent-based society simulation, so you see a leak",
+      "description_length": 98,
+      "description_ok": false,
+      "canonical_present": true,
+      "h1_count": 1,
+      "h1_ok": true,
+      "img_without_alt": 0,
+      "og_title": true,
+      "og_description": true,
+      "og_image": true,
+      "score": 80,
+      "issues": [
+        "Title length 66 chars (ideal 30\u201360)",
+        "Description length 98 chars (ideal 120\u2013160)"
+      ]
+    },
+    {
       "file": "hover-menu.html",
       "title": "ClearGlassInc \u00b7 Elegant Hover Menu",
       "title_length": 34,
@@ -1026,12 +1071,14 @@
       "canonical_present": true,
       "h1_count": 1,
       "h1_ok": true,
-      "img_without_alt": 0,
+      "img_without_alt": 2,
       "og_title": true,
       "og_description": true,
       "og_image": true,
-      "score": 100,
-      "issues": []
+      "score": 90,
+      "issues": [
+        "2 image(s) missing alt text"
+      ]
     },
     {
       "file": "intelligence-command-surface.html",
@@ -1353,14 +1400,15 @@
       "description_length": 146,
       "description_ok": true,
       "canonical_present": true,
-      "h1_count": 1,
-      "h1_ok": true,
+      "h1_count": 2,
+      "h1_ok": false,
       "img_without_alt": 0,
       "og_title": true,
       "og_description": true,
       "og_image": false,
-      "score": 90,
+      "score": 80,
       "issues": [
+        "Multiple <h1> tags (2)",
         "Missing og:image"
       ]
     },
@@ -1846,14 +1894,14 @@
     }
   ],
   "top_issues": [
-    "24x \u2014 Missing og:image",
-    "12x \u2014 Missing og:description",
-    "11x \u2014 Missing og:title",
-    "10x \u2014 Description length N chars (ideal N\u2013N)",
-    "6x \u2014 Missing canonical link tag",
-    "5x \u2014 Multiple <hN> tags (N)",
-    "4x \u2014 Title length N chars (ideal N\u2013N)",
-    "3x \u2014 N image(s) missing alt text",
+    "25x \u2014 Missing og:image",
+    "13x \u2014 Missing og:description",
+    "12x \u2014 Missing og:title",
+    "11x \u2014 Description length N chars (ideal N\u2013N)",
+    "7x \u2014 Missing canonical link tag",
+    "6x \u2014 Multiple <hN> tags (N)",
+    "6x \u2014 Title length N chars (ideal N\u2013N)",
+    "4x \u2014 N image(s) missing alt text",
     "1x \u2014 Missing <title>",
     "1x \u2014 Missing meta description"
   ]

@@ -1,8 +1,58 @@
 {
-  "run_utc": "2026-08-21T07:39:19.822467+00:00",
-  "total_alerts": 0,
+  "run_utc": "2026-08-22T07:28:08.931403+00:00",
+  "total_alerts": 7,
   "critical": 0,
-  "warnings": 0,
+  "warnings": 7,
   "github_issue_created": false,
-  "alerts": []
+  "alerts": [
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: blog/canada-strategic-position-2026-08-21.html",
+      "detail": "",
+      "detected_utc": "2026-08-22T07:28:08.930829+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: blog.html",
+      "detail": "",
+      "detected_utc": "2026-08-22T07:28:08.930838+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: methodology/seo-evidence.html",
+      "detail": "",
+      "detected_utc": "2026-08-22T07:28:08.930842+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: services/ai-automation-services.html",
+      "detail": "",
+      "detected_utc": "2026-08-22T07:28:08.930845+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: services/ai-governance.html",
+      "detail": "",
+      "detected_utc": "2026-08-22T07:28:08.930847+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: services/cybersecurity-consulting.html",
+      "detail": "",
+      "detected_utc": "2026-08-22T07:28:08.930849+00:00"
+    },
+    {
+      "severity": "warning",
+      "source": "site_health",
+      "message": "Page missing ClearGlass logo: services/osint-automation.html",
+      "detail": "",
+      "detected_utc": "2026-08-22T07:28:08.930851+00:00"
+    }
+  ]
 }

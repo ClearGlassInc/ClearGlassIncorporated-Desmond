@@ -1,5 +1,4 @@
 version: 2.1
-
 parameters:
   run_validation: {type: boolean, default: true}
   run_github_automation_checks: {type: boolean, default: false}
@@ -135,13 +134,20 @@ jobs:
 
   hold_production:
     type: approval
-
+  hold_staging_rollback:
+    type: approval
   hold_production_rollback:
     type: approval
 
 workflows:
   validation_only:
-    when: pipeline.parameters.run_validation
+    when:
+      and:
+        - << pipeline.parameters.run_validation >>
+        - {not: << pipeline.parameters.deploy_staging >>}
+        - {not: << pipeline.parameters.deploy_production >>}
+        - {not: << pipeline.parameters.rollback_staging >>}
+        - {not: << pipeline.parameters.rollback_production >>}
     jobs:
       - preflight
       - verify_lockfiles: {requires: [preflight], context: ci-readonly}
@@ -150,7 +156,7 @@ workflows:
       - agent_contract_tests: {requires: [verify_lockfiles], context: ci-readonly}
 
   staging_release:
-    when: pipeline.parameters.deploy_staging
+    when: << pipeline.parameters.deploy_staging >>
     jobs:
       - preflight
       - verify_lockfiles: {requires: [preflight], context: ci-readonly}
@@ -159,11 +165,11 @@ workflows:
       - agent_contract_tests: {requires: [verify_lockfiles], context: ci-readonly}
       - build_release: {requires: [test_build, validate_github_workflows, agent_contract_tests], context: ci-readonly}
       - deploy_staging: {requires: [build_release], context: staging-deploy}
-      - verify_staging: {name: verify_staging, requires: [deploy_staging], context: staging-deploy, environment: staging}
+      - verify_deployment: {name: verify_staging, environment: staging, requires: [deploy_staging], context: staging-deploy}
       - rollback_staging: {requires: [{verify_staging: failed}], context: staging-deploy}
 
   production_release:
-    when: pipeline.parameters.deploy_production
+    when: << pipeline.parameters.deploy_production >>
     jobs:
       - preflight
       - verify_lockfiles: {requires: [preflight], context: ci-readonly}
@@ -173,20 +179,20 @@ workflows:
       - build_release: {requires: [test_build, validate_github_workflows, agent_contract_tests], context: ci-readonly}
       - hold_production: {requires: [build_release]}
       - deploy_production: {requires: [hold_production], context: production-deploy}
-      - verify_production: {name: verify_production, requires: [deploy_production], context: production-deploy, environment: production}
+      - verify_deployment: {name: verify_production, environment: production, requires: [deploy_production], context: production-deploy}
 
   staging_rollback:
-    when: pipeline.parameters.rollback_staging
+    when: << pipeline.parameters.rollback_staging >>
     jobs:
       - preflight
       - hold_staging_rollback: {requires: [preflight]}
       - rollback_staging: {requires: [hold_staging_rollback], context: staging-deploy}
-      - verify_staging_rollback: {name: verify_staging_rollback, requires: [rollback_staging], context: staging-deploy, environment: staging}
+      - verify_deployment: {name: verify_staging_rollback, environment: staging, requires: [rollback_staging], context: staging-deploy}
 
   production_rollback:
-    when: pipeline.parameters.rollback_production
+    when: << pipeline.parameters.rollback_production >>
     jobs:
       - preflight
       - hold_production_rollback: {requires: [preflight]}
       - rollback_production: {requires: [hold_production_rollback], context: production-deploy}
-      - verify_production_rollback: {name: verify_production_rollback, requires: [rollback_production], context: production-deploy, environment: production}
+      - verify_deployment: {name: verify_production_rollback, environment: production, requires: [rollback_production], context: production-deploy}

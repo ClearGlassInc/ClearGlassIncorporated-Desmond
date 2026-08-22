@@ -1,13 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 mkdir -p artifacts/evidence
-count=0
-for f in package-lock.json pnpm-lock.yaml yarn.lock requirements.txt poetry.lock uv.lock; do
-  if [ -f "$f" ]; then echo "present: $f"; sha256sum "$f" >> artifacts/evidence/lockfile.sha256; count=$((count+1)); fi
-done
-[ "$count" -gt 0 ] || { echo 'NOT VERIFIED: no lockfile detected' >&2; exit 2; }
-if [ -f package-lock.json ]; then npm ci --dry-run --ignore-scripts >/dev/null; fi
-python3 - <<'PY'
-import json,glob
-json.dump({'status':'PASS','lockfiles':[x.strip() for x in open('artifacts/evidence/lockfile.sha256') if x.strip()]},open('artifacts/evidence/lockfiles.json','w'),indent=2)
-PY
+[ -f package-lock.json ] || { echo 'LOCKFILE FAILED: package-lock.json is required' >&2; exit 1; }
+node -e "const p=require('./package-lock.json'); if(p.lockfileVersion!==3) process.exit(1)" || { echo 'LOCKFILE FAILED: expected npm lockfileVersion 3' >&2; exit 1; }
+npm ci --ignore-scripts --dry-run >/dev/null
+printf '%s\n' 'package_manager=npm' 'install=npm_ci' 'lockfile=package-lock.json' 'status=PASS' > artifacts/evidence/lockfiles.txt

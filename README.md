@@ -119,52 +119,55 @@ Create and restrict these CircleCI contexts before enabling release workflows:
 **`ci-readonly`**
 
 - Must not contain a GitHub write token, deploy token, or other repository-mutation credential.
-- For signed production tag verification, set `TRUSTED_RELEASE_SIGNER_FINGERPRINT` to the reviewed release-signing public identity.
+- For signed production tag verification, set `TRUSTED_RELEASE_SIGNER_FINGERPRINT` and `TRUSTED_RELEASE_SIGNER_PUBLIC_KEY_B64` to the reviewed release-signing public identity. These values are verification material, not private signing credentials.
 
 **`staging-deploy`**
 
 - `FLY_API_TOKEN` — staging-scoped Fly.io credential.
 - `FLYCTL_VERSION` — exact approved Fly CLI version; `latest` is rejected.
 - `STAGING_FLY_APP=REPLACE_ME` — dedicated staging Fly.io app. Do not point this at the production app.
-- `STAGING_HEALTH_URL` — optional explicit staging health endpoint.
-- `FLY_IMAGE_REF` — commit-addressed or digest-pinned image reference.
+- `STAGING_HEALTH_URL` — optional explicit staging health endpoint; defaults to the selected Fly app `/health` endpoint.
 
 **`production-deploy`**
 
 - `FLY_API_TOKEN` — production-scoped Fly.io credential.
 - `FLYCTL_VERSION` — exact approved Fly CLI version; `latest` is rejected.
-- `PRODUCTION_FLY_APP` — optional; defaults to the existing `clearglass-agent-service` app.
+- `PRODUCTION_FLY_APP` — optional; defaults to the repository's existing `clearglass-agent-service` app.
 - `PRODUCTION_HEALTH_URL` — optional explicit health endpoint.
-- `FLY_IMAGE_REF` — immutable image reference.
 
 Restrict the staging and production contexts to the appropriate CircleCI security groups/project controls. Production credentials must never be copied into `ci-readonly`.
 
 ### GitHub automation boundary
 
-CircleCI validates `.github/workflows/**`, YAML syntax, and immutable action pinning. It does **not** trigger, rerun, unblock, cancel, approve, or modify GitHub Actions and it does not auto-merge pull requests. Any future GitHub write integration requires a separately approved GitHub App/token scope, a new explicit pipeline parameter defaulting to `false`, and independent review of repository rules and environments.
+CircleCI validates `.github/workflows/**`, YAML syntax, repository workflow governance, and immutable action pinning. It does **not** trigger, rerun, unblock, cancel, approve, or modify GitHub Actions and it does not auto-merge pull requests. Any future GitHub write integration requires a separately approved GitHub App/token scope, a new explicit pipeline parameter defaulting to `false`, and an independent review of the affected repository rules and environments.
 
 ### Frontend animations and agents
 
-The frontend/animation job builds deterministic assets and stores evidence; it does not publish by default. `deploy_animations=true` remains fail-closed until a reviewed publication adapter exists. Agent tests run only in dry-run/sandbox mode with external writes disabled. `enable_agents=true` remains fail-closed until a reviewed activation adapter and enforceable runtime rate-limit policy exist.
+The frontend/animation job builds deterministic assets, syntax-checks browser JavaScript, runs a local static smoke test, and stores a commit-addressed archive plus SHA-256 evidence. It does not publish the site.
+
+`deploy_animations=true` is intentionally rejected until a reviewed deployment path exists that does not bypass GitHub Pages/repository protections.
+
+The agent job runs only in dry-run/sandbox mode and does not activate autonomous agents. `enable_agents=true` is intentionally rejected until a separately reviewed activation adapter and enforceable runtime rate-limit policy are implemented.
 
 ### Dependency and secret gates
 
 - Node uses `npm ci` with the committed `package-lock.json`.
-- High/critical npm audit findings block the release path.
+- The deployed agent service requires exact `==` pins in `services/clearglass_agent_service/requirements.txt` when present.
+- High/critical npm audit findings block deployment.
 - Changed source files are scanned for common credential patterns and fail closed on candidates.
-- Secret and dependency findings are never silently suppressed.
+- Findings are not silently suppressed.
 
 ### Immutable deployment and evidence
 
-Fly releases use commit-addressed or digest-pinned image references. Before mutation, the pipeline records the currently deployed immutable image so rollback is possible. Deployment evidence is stored under `deploy-evidence/` as CircleCI artifacts.
+Fly releases use commit-addressed or digest-pinned image references. A previously deployed immutable image is recorded before mutation so rollback is possible. Deployment evidence is stored under `deploy-evidence/` as CircleCI artifacts.
 
-Post-deploy verification requires 20/20 successful health requests and records the deployment revision and endpoint evidence. A deployment is not considered successful until endpoint verification passes.
+Post-deploy verification requires 20/20 successful `/health` requests and records the deployment revision and endpoint evidence. A deployment is not considered successful until endpoint verification passes.
 
 ### Rollback procedure
 
-**Staging:** deployment or post-deploy verification failure automatically redeploys the previously recorded immutable image and verifies health. The rollback result is written to deployment evidence.
+**Staging:** deployment or post-deploy verification failure automatically redeploys the previously recorded immutable image and verifies `/health`. The rollback result is written to deployment evidence.
 
-**Production:** post-deploy failure does not silently mutate production again. CircleCI records the prior immutable image. After incident review and approval, run the production release with the `production-deploy` context and execute the reviewed rollback path. Never substitute an unreviewed tag or `latest` image.
+**Production:** post-deploy failure does not silently mutate production again. CircleCI records the exact prior immutable image. After incident review and approval, use the reviewed production rollback path with the `production-deploy` context. Never substitute an unreviewed tag or `latest` image.
 
 No rollback procedure rotates secrets, changes repository permissions, alters organization settings, deletes data, or bypasses a protected environment.
 

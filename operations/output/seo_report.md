@@ -1,14 +1,15 @@
 # SEO Optimization Report
 
-**Run:** 2026-08-21T07:39:18.352995+00:00
-**Average Score:** 91.7/100
-**Files Audited:** 96
+**Run:** 2026-08-22T07:28:08.496120+00:00
+**Average Score:** 90.9/100
+**Files Audited:** 98
 
 ## Page Scores
 
 | File | Score | Issues |
 |------|-------|--------|
 | `google23RWyXWkoxqgArev8achU8IfVxYC5EIUAYBsuTYKLFM.html` | 10/100 | 7 |
+| `blog.html` | 50/100 | 5 |
 | `data-fabric.html` | 50/100 | 5 |
 | `etsy-callback.html` | 50/100 | 5 |
 | `header-mockup-2040.html` | 50/100 | 5 |
@@ -22,8 +23,10 @@
 | `artemis-self-evolving-platform.html` | 80/100 | 2 |
 | `cyber-defense-console.html` | 80/100 | 2 |
 | `flowsint.html` | 80/100 | 2 |
+| `helix.html` | 80/100 | 2 |
 | `minerals-platform.html` | 80/100 | 2 |
 | `postloop.html` | 80/100 | 2 |
+| `products.html` | 80/100 | 2 |
 | `air-systems-control.html` | 90/100 | 1 |
 | `artemis-percival.html` | 90/100 | 1 |
 | `automap.html` | 90/100 | 1 |
@@ -31,9 +34,9 @@
 | `business-productivity-suite.html` | 90/100 | 1 |
 | `content-shield.html` | 90/100 | 1 |
 | `environmental-cyber-risk.html` | 90/100 | 1 |
+| `index.html` | 90/100 | 1 |
 | `minerals.html` | 90/100 | 1 |
 | `percival-os.html` | 90/100 | 1 |
-| `products.html` | 90/100 | 1 |
 | `quantum-neural-smart-glass.html` | 90/100 | 1 |
 | `revenue.html` | 90/100 | 1 |
 | `side-store.html` | 90/100 | 1 |
@@ -80,7 +83,6 @@
 | `government.html` | 100/100 | 0 |
 | `guardian.html` | 100/100 | 0 |
 | `hover-menu.html` | 100/100 | 0 |
-| `index.html` | 100/100 | 0 |
 | `intelligence-command-surface.html` | 100/100 | 0 |
 | `intelligence-interface.html` | 100/100 | 0 |
 | `intelligence.html` | 100/100 | 0 |
@@ -107,13 +109,13 @@
 
 ## Top Issues Across All Pages
 
-- 24x — Missing og:image
-- 12x — Missing og:description
-- 11x — Missing og:title
-- 10x — Description length N chars (ideal N–N)
-- 6x — Missing canonical link tag
-- 5x — Multiple <hN> tags (N)
-- 4x — Title length N chars (ideal N–N)
-- 3x — N image(s) missing alt text
+- 25x — Missing og:image
+- 13x — Missing og:description
+- 12x — Missing og:title
+- 11x — Description length N chars (ideal N–N)
+- 7x — Missing canonical link tag
+- 6x — Multiple <hN> tags (N)
+- 6x — Title length N chars (ideal N–N)
+- 4x — N image(s) missing alt text
 - 1x — Missing <title>
 - 1x — Missing meta description

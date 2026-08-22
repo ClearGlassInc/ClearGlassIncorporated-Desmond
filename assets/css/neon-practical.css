@@ -44,15 +44,14 @@
   filter: none;
 }
 
-/* Surgical mobile placement: put the existing seal in the upper circled
- * hero zone without changing document flow or affecting navigation. */
 @media (max-width: 620px) {
   .hero-seal[data-neon-practical] {
     position: absolute;
     top: clamp(175px, 27vh, 245px);
     left: 50%;
     margin: 0;
-    width: clamp(118px, 30vw, 150px);
+    width: clamp(156px, 39vw, 188px);
+    height: clamp(156px, 39vw, 188px);
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
     z-index: 5;
@@ -67,18 +66,18 @@
   }
 
   .clear-signal-hero-title {
-    font-size: clamp(32px, 8.8vw, 42px);
-    line-height: 0.96;
+    font-size: clamp(34px, 9.4vw, 46px);
+    line-height: 0.94;
+    letter-spacing: -.035em;
     text-shadow:
       0 4px 24px rgba(0, 0, 0, 0.62),
       0 0 10px rgba(247, 247, 247, 0.12);
-    animation: clearGlassSignalTextPulse 2.8s ease-in-out infinite;
+    animation: clearGlassSignalTextPulse 3.8s cubic-bezier(.42,0,.18,1) infinite;
   }
 
-  .clear-signal-hero-title span {
-    text-shadow:
-      0 0 8px rgba(209, 31, 47, 0.42),
-      0 0 18px rgba(209, 31, 47, 0.28);
+  .clear-signal-hero-title::before {
+    width: 86vw;
+    height: 28vw;
   }
 }
 
@@ -105,21 +104,20 @@
   0%, 100% {
     filter: brightness(1);
     text-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.62),
-      0 0 10px rgba(247, 247, 247, 0.12);
+      0 4px 24px rgba(0, 0, 0, .62),
+      0 0 12px rgba(247,247,247,.14);
   }
   50% {
-    filter: brightness(1.06);
+    filter: brightness(1.045);
     text-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.62),
-      0 0 12px rgba(247, 247, 247, 0.28),
-      0 0 26px rgba(127, 216, 255, 0.14),
-      0 0 34px rgba(194, 112, 255, 0.12);
+      0 4px 24px rgba(0, 0, 0, .62),
+      0 0 14px rgba(247,247,247,.25),
+      0 0 28px rgba(127,216,255,.16),
+      0 0 40px rgba(194,112,255,.14);
   }
 }
 
-/* Future-forward refinement: fuse the existing seal, wordmark, and hero copy
- * into one visual identity without changing markup, assets, or page flow. */
+/* Existing navigation mark: sharper, integrated, and still semantic image content. */
 .nav-mark {
   position: relative;
   width: clamp(52px, 5.6vw, 72px) !important;
@@ -127,9 +125,9 @@
   margin-left: 2px;
   overflow: visible !important;
   box-shadow:
-    0 0 0 5px rgba(155, 92, 255, 0.16),
-    0 0 22px rgba(127, 216, 255, 0.28),
-    0 0 34px rgba(185, 93, 255, 0.24),
+    0 0 0 5px rgba(155,92,255,.16),
+    0 0 22px rgba(127,216,255,.28),
+    0 0 34px rgba(185,93,255,.24),
     inset 0 0 12px rgba(255,255,255,.22) !important;
   animation: clearGlassNavSealPulse 3.8s ease-in-out infinite;
   z-index: 2;
@@ -150,254 +148,47 @@
     drop-shadow(0 0 10px rgba(194,112,255,.24)) !important;
 }
 
-.nav-brand {
-  gap: clamp(12px, 1.2vw, 20px) !important;
-}
-
+.nav-brand { gap: clamp(12px,1.2vw,20px) !important; }
 .nav-name {
   position: relative;
   z-index: 2;
-  text-shadow:
-    0 0 10px rgba(255,255,255,.14),
-    0 0 24px rgba(127,216,255,.10);
+  text-shadow: 0 0 10px rgba(255,255,255,.14), 0 0 24px rgba(127,216,255,.10);
 }
 
-.nav-name::before {
-  content: '';
-  position: absolute;
-  left: -18px;
-  top: 50%;
-  width: min(320px, 42vw);
-  height: 1px;
-  transform: translateY(-50%);
-  background: linear-gradient(90deg,
-    rgba(127,216,255,0),
-    rgba(127,216,255,.34) 35%,
-    rgba(194,112,255,.28) 72%,
-    rgba(194,112,255,0));
-  filter: blur(.2px);
-  opacity: .75;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.hero-seal[data-neon-practical] {
-  width: clamp(152px, 17vw, 204px);
-  height: clamp(152px, 17vw, 204px);
-  border-width: 1.5px;
-  border-color: rgba(206,247,255,.84);
-  box-shadow:
-    0 0 0 6px rgba(101,77,255,.12),
-    0 0 28px rgba(127,216,255,.46),
-    0 0 52px rgba(194,112,255,.32),
-    inset 0 0 34px rgba(127,216,255,.12);
-  animation: clearGlassHeroSealPulse 3.8s cubic-bezier(.42,0,.18,1) infinite;
-}
-
-.hero-seal[data-neon-practical] .hero-seal-media img {
-  filter:
-    contrast(1.18)
-    brightness(1.06)
-    saturate(1.10)
-    drop-shadow(0 0 4px rgba(183,240,255,.40))
-    drop-shadow(0 0 12px rgba(194,112,255,.22));
-  transform: translateZ(0) scale(1.012);
-  backface-visibility: hidden;
-}
-
-.clear-signal-hero-copy {
-  z-index: 6;
-}
-
-.clear-signal-hero-title {
-  position: relative;
-  font-size: clamp(30px, 4.8vw, 54px);
-  line-height: .94;
-  letter-spacing: -.032em;
-  text-shadow:
-    0 4px 24px rgba(0,0,0,.62),
-    0 0 12px rgba(247,247,247,.14);
-  animation: clearGlassSignalTextPulse 3.8s cubic-bezier(.42,0,.18,1) infinite;
-}
-
-.clear-signal-hero-title::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 45%;
-  width: min(360px, 68vw);
-  height: min(130px, 24vw);
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    rgba(127,216,255,.12) 0%,
-    rgba(194,112,255,.08) 32%,
-    rgba(194,112,255,0) 72%);
-  filter: blur(8px);
-  opacity: .82;
-  pointer-events: none;
-  z-index: -1;
-  animation: clearGlassWordAura 3.8s cubic-bezier(.42,0,.18,1) infinite;
-}
-
-.clear-signal-hero-title span {
-  text-shadow:
-    0 0 9px rgba(209,31,47,.46),
-    0 0 22px rgba(209,31,47,.22),
-    0 0 36px rgba(194,112,255,.12);
-}
-
-@keyframes clearGlassNavSealPulse {
-  0%, 100% { transform: translateZ(0) scale(1); }
-  50% { transform: translateZ(0) scale(1.035); }
-}
-
-@keyframes clearGlassHeroSealPulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 10px rgba(127,216,255,.42));
-    transform: translate(-50%, -50%) scale(1);
-    box-shadow:
-      0 0 0 6px rgba(101,77,255,.12),
-      0 0 28px rgba(127,216,255,.42),
-      0 0 52px rgba(194,112,255,.28),
-      inset 0 0 34px rgba(127,216,255,.10);
-  }
-  50% {
-    filter: drop-shadow(0 0 22px rgba(127,216,255,.78));
-    transform: translate(-50%, -50%) scale(1.045);
-    box-shadow:
-      0 0 0 9px rgba(101,77,255,.18),
-      0 0 42px rgba(127,216,255,.68),
-      0 0 76px rgba(194,112,255,.48),
-      inset 0 0 44px rgba(127,216,255,.15);
-  }
-}
-
-@keyframes clearGlassWordAura {
-  0%, 100% { opacity: .56; transform: translate(-50%, -50%) scale(.94); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
-}
-
-@keyframes clearGlassSignalTextPulse {
-  0%, 100% {
-    filter: brightness(1);
-    text-shadow:
-      0 4px 24px rgba(0, 0, 0, .62),
-      0 0 12px rgba(247,247,247,.14);
-  }
-  50% {
-    filter: brightness(1.045);
-    text-shadow:
-      0 4px 24px rgba(0, 0, 0, .62),
-      0 0 14px rgba(247,247,247,.25),
-      0 0 28px rgba(127,216,255,.16),
-      0 0 40px rgba(194,112,255,.14);
-  }
-}
-
-@media (max-width: 620px) {
-  .nav-mark {
-    width: 64px !important;
-    height: 64px !important;
-    margin-left: 0;
-  }
-
-  .nav-brand {
-    gap: 12px !important;
-  }
-
-  .nav-name::before {
-    width: 150px;
-    left: -10px;
-  }
-
-  .hero-seal[data-neon-practical] {
-    top: clamp(175px, 27vh, 245px);
-    left: 50%;
-    width: clamp(156px, 39vw, 188px);
-    height: clamp(156px, 39vw, 188px);
-  }
-
-  .clear-signal-hero-title {
-    font-size: clamp(34px, 9.4vw, 46px);
-    line-height: .94;
-    letter-spacing: -.035em;
-  }
-
-  .clear-signal-hero-title::before {
-    width: 86vw;
-    height: 28vw;
-  }
-}
-
-/* Guardrail: the previous hero seal geometry is explicitly restored outside
- * the mobile target so the refinement cannot shift desktop composition. */
-@media (min-width: 621px) {
-  .hero-seal[data-neon-practical] {
-    position: relative;
-    top: auto;
-    left: auto;
-    margin: clamp(-119px, calc(-4.64vw - 42px), -98px) auto 28px;
-    width: clamp(96px, 8vw, 132px);
-    height: auto;
-    aspect-ratio: 1;
-    transform: none;
-    z-index: 3;
-    border: 0;
-    border-radius: 50%;
-    box-shadow:
-      0 0 0 1px rgba(182,236,255,.55),
-      0 0 0 6px rgba(101,77,255,.12),
-      0 12px 34px rgba(22,211,255,.34);
-    animation: heroSealFloat 7s ease-in-out infinite;
-  }
-
-  .hero-seal[data-neon-practical] .hero-seal-media img {
-    filter: saturate(1.12) contrast(1.06);
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-seal[data-neon-practical],
-  .clear-signal-hero-title,
-  .nav-mark,
-  .clear-signal-hero-title::before {
-    animation: none !important;
-  }
-}
-
-/* Surgical hero-media cut: match the supplied 1172×579 reference framing
- * on desktop without changing the source video, poster, markup, or playback. */
+/* Reference-match hero framing: same 1172×579 visual proportion as the supplied image. */
 @media (min-width: 621px) {
   #hero .hero-video {
     aspect-ratio: 1172 / 579;
     height: auto !important;
+    width: min(1800px, calc(100% - clamp(34px,6vw,96px))) !important;
+    max-width: none !important;
     object-fit: cover;
     object-position: 50% 50%;
-    border-radius: 0 0 clamp(46px, 6vw, 72px) 0 !important;
+    border-radius: 0 0 clamp(46px,6vw,72px) 0 !important;
     overflow: hidden;
+    box-shadow: 0 36px 100px rgba(13,20,58,.26), inset 0 1px 0 rgba(255,255,255,.14) !important;
   }
 
-  /* Make the existing seal optically pass through the headline instead of
-   * adding another DOM image. Text remains real, selectable, and accessible. */
+  /* The seal visually traverses the wordmark path through the existing heading,
+     rather than being a second DOM logo. */
   #hero > .hero-seal + .hero-year + h1 {
     position: relative;
     isolation: isolate;
+    z-index: 6;
   }
 
   #hero > .hero-seal + .hero-year + h1::before {
     content: '';
     position: absolute;
     left: 50%;
-    top: 58%;
-    width: clamp(150px, 15vw, 230px);
+    top: 50%;
+    width: clamp(180px,18vw,260px);
     aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    background: url('../images/clearglass-holographic-seal.png') center / 140% no-repeat;
-    opacity: .16;
-    mix-blend-mode: multiply;
-    filter: contrast(1.18) saturate(1.12) drop-shadow(0 0 12px rgba(127,216,255,.34));
+    transform: translate(-50%,-50%);
+    background: url('../images/clearglass-holographic-seal.png') center / 132% no-repeat;
+    opacity: .22;
+    mix-blend-mode: screen;
+    filter: contrast(1.24) brightness(1.03) saturate(1.12) drop-shadow(0 0 10px rgba(127,216,255,.42));
     pointer-events: none;
     z-index: -1;
     animation: clearGlassHeadlineSealFlow 4.8s cubic-bezier(.42,0,.18,1) infinite;
@@ -407,38 +198,38 @@
     content: '';
     position: absolute;
     left: 50%;
-    top: 58%;
-    width: clamp(260px, 28vw, 430px);
-    height: 42%;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(127,216,255,.11), rgba(194,112,255,.06) 34%, transparent 72%);
-    filter: blur(14px);
-    opacity: .72;
+    top: 50%;
+    width: clamp(300px,32vw,480px);
+    height: 56%;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(circle,rgba(127,216,255,.12),rgba(194,112,255,.07) 34%,transparent 72%);
+    filter: blur(16px);
+    opacity: .82;
     pointer-events: none;
     z-index: -2;
     animation: clearGlassHeadlineAuraFlow 4.8s cubic-bezier(.42,0,.18,1) infinite;
   }
+
+  .clear-signal-hero-title { margin-inline: auto; }
+}
+
+@keyframes clearGlassNavSealPulse {
+  0%,100% { transform: translateZ(0) scale(1); }
+  50% { transform: translateZ(0) scale(1.035); }
 }
 
 @keyframes clearGlassHeadlineSealFlow {
-  0%, 100% { opacity: .12; transform: translate(-50%, -50%) scale(.96) rotate(-2deg); }
-  50% { opacity: .23; transform: translate(-50%, -50%) scale(1.04) rotate(2deg); }
+  0%,100% { opacity:.16; transform:translate(-50%,-50%) scale(.94) rotate(-2deg); }
+  50% { opacity:.28; transform:translate(-50%,-50%) scale(1.04) rotate(2deg); }
 }
 
 @keyframes clearGlassHeadlineAuraFlow {
-  0%, 100% { opacity: .48; transform: translate(-50%, -50%) scale(.94); }
-  50% { opacity: .88; transform: translate(-50%, -50%) scale(1.08); }
-}
-
-@media (max-width: 620px) {
-  #hero .hero-video {
-    object-position: 50% 50%;
-  }
+  0%,100% { opacity:.54; transform:translate(-50%,-50%) scale(.94); }
+  50% { opacity:.96; transform:translate(-50%,-50%) scale(1.08); }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-seal[data-neon-practical], .clear-signal-hero-title, .nav-mark,
   #hero > .hero-seal + .hero-year + h1::before,
-  #hero > .hero-seal + .hero-year + h1::after {
-    animation: none !important;
-  }
+  #hero > .hero-seal + .hero-year + h1::after { animation:none !important; }
 }

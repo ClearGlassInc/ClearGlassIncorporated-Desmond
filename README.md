@@ -145,44 +145,29 @@ CircleCI validates `.github/workflows/**`, YAML syntax, repository workflow gove
 
 The frontend/animation job builds deterministic assets, syntax-checks browser JavaScript, runs a local static smoke test, and stores a commit-addressed archive plus SHA-256 evidence. It does not publish the site.
 
-`deploy_animations=true` is intentionally rejected until `REPLACE_ME_ANIMATION_DEPLOY_ADAPTER` is replaced with a reviewed deployment path that does not bypass GitHub Pages/repository protections.
+`deploy_animations=true` is intentionally rejected until a reviewed deployment path exists that does not bypass GitHub Pages/repository protections.
 
-The agent job imports and tests the FastAPI service locally, verifies `/health`, OpenAPI schema availability, authenticated/unauthenticated permission boundaries, and extended sandbox behavior when requested. Autonomous activation is not performed.
-
-`enable_agents=true` is intentionally rejected until `REPLACE_ME_AGENT_ACTIVATION_ADAPTER` and an enforceable runtime rate-limit policy are implemented and reviewed.
+The agent job runs only in dry-run/sandbox mode and does not activate autonomous agents. `enable_agents=true` is intentionally rejected until a separately reviewed activation adapter and enforceable runtime rate-limit policy are implemented.
 
 ### Dependency and secret gates
 
 - Node uses `npm ci` with the committed `package-lock.json`.
-- The deployed agent service requires exact `==` pins in `services/clearglass_agent_service/requirements.txt`.
-- Root Python validation follows the repository's existing `requirements.txt` constraint plus `pyproject.toml` test-extra installation contract; the pipeline records SHA-256 hashes of dependency inputs for evidence.
-- `npm audit` high/critical findings and all `pip-audit` findings block deployment unless the exact advisory identifier is reviewed in `scripts/ci/security-allowlist.txt`.
-- Changed text/code files are scanned with `detect-secrets`; any candidate fails closed and must be investigated rather than silently suppressed in CI.
+- The deployed agent service requires exact `==` pins in `services/clearglass_agent_service/requirements.txt` when present.
+- High/critical npm audit findings block deployment.
+- Changed source files are scanned for common credential patterns and fail closed on candidates.
+- Findings are not silently suppressed.
 
 ### Immutable deployment and evidence
 
-Fly releases use a commit-addressed image tag (`sha-$CIRCLE_SHA1`) and resolve it to a registry digest before deployment. A previously created commit image is reused rather than overwritten. Before mutation, the pipeline records the currently deployed image so rollback is possible. Deployment evidence is stored under `deploy-evidence/` as CircleCI artifacts.
+Fly releases use commit-addressed or digest-pinned image references. A previously deployed immutable image is recorded before mutation so rollback is possible. Deployment evidence is stored under `deploy-evidence/` as CircleCI artifacts.
 
-Post-deploy verification requires:
-
-1. the running Fly image to resolve to the digest recorded by the pipeline;
-2. 20/20 successful `/health` requests (synthetic error-rate guardrail of 0%);
-3. the protected `/policy` endpoint to fail closed when called without credentials; and
-4. for production, the public ClearGlass homepage to return HTTP 200 and expected brand content.
-
-A deployment is not considered successful until these checks pass.
+Post-deploy verification requires 20/20 successful `/health` requests and records the deployment revision and endpoint evidence. A deployment is not considered successful until endpoint verification passes.
 
 ### Rollback procedure
 
-**Staging:** deployment or post-deploy verification failure automatically redeploys the previously recorded immutable image and verifies `/health`. The rollback result is written to the deployment evidence.
+**Staging:** deployment or post-deploy verification failure automatically redeploys the previously recorded immutable image and verifies `/health`. The rollback result is written to deployment evidence.
 
-**Production:** post-deploy failure does not silently mutate production again. CircleCI records the exact rollback command and prior image in the production deployment artifacts. After incident review and approval, run the same release workspace with the `production-deploy` context and execute:
-
-```bash
-bash scripts/ci/fly_rollback.sh production
-```
-
-The script reads `deploy-evidence/production-previous-image.txt`, redeploys that exact image, verifies `/health`, and records the rollback result. Do not substitute an unreviewed tag or `latest` image.
+**Production:** post-deploy failure does not silently mutate production again. CircleCI records the exact prior immutable image. After incident review and approval, use the reviewed production rollback path with the `production-deploy` context. Never substitute an unreviewed tag or `latest` image.
 
 No rollback procedure rotates secrets, changes repository permissions, alters organization settings, deletes data, or bypasses a protected environment.
 

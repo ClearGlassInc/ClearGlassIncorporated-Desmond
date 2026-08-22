@@ -1,187 +1,230 @@
-# ClearGlass Inc.
+# Counter-Drone System - Complete Package
 
-**Transparency is infrastructure.**
+## 📦 Package Contents
 
-ClearGlass Inc. is an Ontario-focused cybersecurity, AI-governance, OSINT, automation, and intelligence-platform company. This repository is the primary engineering and web platform for ClearGlassInc.com, including the public website, product surfaces, research systems, operational data, automation, and platform architecture.
+This complete package includes everything needed for the sale, deployment, and operation of a Counter-Drone Detection & Defeat System.
 
-## Live Platform
+### 🐍 Python Script
+**File:** `00_Counter_Drone_System.py`
 
-- Website: https://www.clearglassinc.com
-- Intelligence Platform: https://www.clearglassinc.com/intelligence-platform.html
-- Governed Data Fabric Diagnostics: https://www.clearglassinc.com/data-fabric.html
-- Ontario OSINT: https://www.clearglassinc.com/Ontario-osint.html
-- Products: https://www.clearglassinc.com/products.html
-- Store: https://www.clearglassinc.com/store.html
+A fully-functional Counter-Drone System management platform with:
+- Multi-sensor integration (EO, LWIR, MWIR, Radar, Acoustic, RF)
+- Real-time drone detection and tracking
+- Multiple defeat methods (RF Jamming, Kinetic, Directed Energy, Electronic Warfare)
+- Threat level assessment with auto-engagement
+- False positive mitigation algorithms
+- System health monitoring
+- Comprehensive reporting and data export
+- Two system categories: Lower-Cost ($50K-$150K) and High-Performance ($150K-$1M)
 
-## Core Systems
-
-- **ClearGlass Nexus** — central intelligence and orchestration layer
-- **Artemis** — AI/cyber intelligence product family
-- **Guardian / Sentinel** — defensive cybersecurity and monitoring surfaces
-- **Guardian DPPP** — Digital Presence Protection Program for protecting public digital assets, brand integrity, reputation, visibility integrity, compliance controls, and defensible incident response
-- **Ontario OSINT** — public-source intelligence and regional analysis
-- **XENOLITH** — sovereign intelligence-lattice research platform
-- **ClearGlass Data Fabric** — governed same-origin repository data layer
-- **Growth / SEO / Commerce** — revenue, marketing, search, and product systems
-
-## Guardian Digital Presence Protection Program
-
-Guardian now includes a protection-first Digital Presence Protection Program governed by ARTEMIS and the AEGIS lifecycle:
-
-```text
-OBSERVE → DETECT → ANALYSE → VERIFY → RESPOND → AUDIT → IMPROVE
-```
-
-The program monitors authorized public-facing surfaces including websites, domains/subdomains, business listings, social profiles, search surfaces, directories, GitHub identities, public references, reviews, and public-source mentions.
-
-Protection priorities are:
-
-- Brand and impersonation protection
-- Reputation assurance
-- Digital-asset integrity
-- Geo-Grid Visibility Assurance rather than rank-only optimization
-- Compliance-control monitoring
-- Evidence provenance and auditability
-- Defensible incident coordination
-
-Implementation artifacts:
-
-- `docs/GUARDIAN_DPPP.md` — full operating and security control specification
-- `config/guardian/dppp.json` — machine-readable fail-closed policy contract
-- `scripts/validate_guardian_dppp.py` — dependency-free policy validator and SHA-256 evidence generator
-
-The validator must pass before the DPPP policy is considered structurally valid:
-
+**Usage:**
 ```bash
-python3 scripts/validate_guardian_dppp.py
+# Run demonstration
+python 00_Counter_Drone_System.py --demo
+
+# Use in your own application
+from counter_drone_system import CounterDroneSystem, create_high_performance_system
+system = CounterDroneSystem(create_high_performance_system())
+system.activate_system()
 ```
 
-Guardian DPPP uses dual classification for findings: **severity** (`INFORMATIONAL` through `CRITICAL`) and **epistemic status** (`VERIFIED FACT`, `INFERENCE`, `ASSUMPTION`, `UNKNOWN`, `UNVERIFIED`). Significant findings require source identification, timestamps, evidence digesting, verification state, confidence, and provenance. Unsupported claims remain `UNVERIFIED`.
+**Features:**
+- Detection range: 800m (Lower-Cost) to 3000m (High-Performance)
+- False positive rate: 12.5% (Lower-Cost) to 3.2% (High-Performance)
+- Response time: 3.5s (Lower-Cost) to 0.8s (High-Performance)
+- Max tracking: 5 targets (Lower-Cost) to 50 targets (High-Performance)
+- Comprehensive data export to JSON
 
-External-impact actions remain human-authorized by policy. Missing authorization, integrity failures, expired authorization, schema failures, and emergency-stop conditions fail closed. The repository makes no claim of NSA certification or equivalence; “high-assurance” describes the intended engineering discipline rather than a government accreditation.
+---
 
-## Governed Data Fabric
+### 📄 Legal & Sales Documents
 
-Repository-backed operational data is cataloged through `data/catalog.json` and accessed through `assets/js/clearglass-data-fabric.js`.
+#### 1. **Sales Agreement** (`01_Sales_Agreement.docx`)
+Complete sales contract including:
+- Product specifications table
+- Payment schedule (30%-40%-30%)
+- Delivery and installation terms
+- Warranty coverage
+- Export compliance clause
+- Limitation of liability
+- Signature blocks
 
-The fabric provides:
+#### 2. **Purchase Order** (`02_Purchase_Order.docx`)
+Ready-to-use PO template with:
+- System configuration details
+- Itemized pricing table
+- Shipping instructions
+- Payment terms
+- Special instructions
 
-- same-origin loading
-- parent-traversal blocking
-- JSON and CSV decoding
-- module and root-dataset discovery
-- browser health checks
-- restricted browser access for sensitive workflow boundaries such as `data/leads`
+#### 3. **Non-Disclosure Agreement** (`03_Non_Disclosure_Agreement.docx`)
+Comprehensive NDA covering:
+- Technical specifications and algorithms
+- Confidential business information
+- Export control compliance
+- 5-year confidentiality term
+- Prohibited destinations clause
 
-Run the offline validator when a local checkout is available:
+#### 4. **Warranty Agreement** (`04_Warranty_Agreement.docx`)
+24-month warranty including:
+- Covered components (all sensors, mechanical, software)
+- Response time guarantees (2-8 hours based on severity)
+- Extended warranty options (Gold/Silver/Bronze)
+- Exclusions and limitations
+- Service contact information
 
-```bash
-python3 scripts/validate_data_fabric.py
-node --check assets/js/clearglass-data-fabric.js
-```
+#### 5. **Technical Specifications** (`05_Technical_Specifications.docx`)
+Complete technical datasheet:
+- System overview and categories
+- Detection capabilities comparison table
+- Sensor configurations (Lower-Cost vs High-Performance)
+- Defeat methods matrix
+- Environmental specifications
+- Power and physical specifications
+- Software and interface details
+- Compliance certifications (FCC, CE, ITAR, ISO 9001, MIL-STD-810G)
 
-## Actions-Independent Release Path
+#### 6. **Export Compliance Certificate** (`06_Export_Compliance_Certificate.docx`)
+Critical export control document:
+- ECCN classification (9A610)
+- USML Category XI designation
+- End user certification
+- Prohibited destinations list
+- Compliance officer contact info
+- Signature and seal sections
 
-GitHub Pages is configured from `main` and can publish through the repository's legacy Pages build path. The site also includes browser-based data-fabric diagnostics so the public runtime can be checked without depending on a GitHub-hosted Actions runner.
+#### 7. **Service Level Agreement** (`07_Service_Level_Agreement.docx`)
+Three-tier SLA (Gold/Silver/Bronze):
+- 24/7 vs business hours support
+- Response time commitments (2-8 hours)
+- Severity definitions (Critical/High/Medium/Low)
+- Uptime guarantees (99.9%/99.5%/99.0%)
+- Service credits for SLA breaches
+- Annual pricing (5%-15% of purchase price)
 
-See `docs/ACTIONS_BILLING_FALLBACK.md` for the operational fallback and recovery procedure.
+#### 8. **End User License Agreement** (`08_End_User_License_Agreement.docx`)
+Software licensing terms:
+- Grant of license (non-exclusive, non-transferable)
+- Usage restrictions
+- Intellectual property rights
+- Export compliance requirements
+- Warranty disclaimer
+- Limitation of liability
 
-## Secure CircleCI Orchestration
+#### 9. **Maintenance Contract** (`09_Maintenance_Contract.docx`)
+Preventive maintenance program:
+- Quarterly on-site inspections
+- Monthly remote diagnostics
+- Semi-annual comprehensive audits
+- Annual system overhaul
+- Emergency service (24/7 hotline, 4-hour response)
+- Parts coverage
+- Pricing: $7,500/year (Lower-Cost) to $18,000/year (High-Performance)
 
-`.circleci/config.yml` is the guarded CircleCI 2.1 orchestration entry point for repository validation, GitHub-workflow validation, frontend/animation artifact builds, sandbox agent checks, and approved Fly.io releases of the ClearGlass agent service.
+---
 
-### Workflows
+## 🎯 Quick Start Guide
 
-- **`validate`** is the default branch/pull-request path. It runs preflight, dependency verification, lint/type/test/build, dependency and secret scans, GitHub workflow validation, frontend/animation smoke tests, and sandbox agent contract tests. It performs no deployment or GitHub mutation.
-- **`staging_release`** exists only when the manually supplied pipeline parameter `deploy_staging=true`. Preflight additionally requires `run_validation=true`, `target_environment=staging`, `emergency_stop=false`, and a branch ref. All validation/security jobs must pass before the `staging-deploy` context is available to the deployment job.
-- **`production_release`** exists only when the manually supplied pipeline parameter `deploy_production=true`. Preflight additionally requires `run_validation=true`, `target_environment=production`, `emergency_stop=false`, and either the protected `main` branch or a trusted signed `v...` release tag. A CircleCI `hold_production` approval job must be approved before the `production-deploy` context can be used.
+### For Sales Teams:
+1. Start with `01_Sales_Agreement.docx` - customize for your customer
+2. Use `05_Technical_Specifications.docx` for technical discussions
+3. Have customer review `03_Non_Disclosure_Agreement.docx` before detailed specs
+4. Issue `02_Purchase_Order.docx` once deal is agreed
+5. Ensure `06_Export_Compliance_Certificate.docx` is completed for international sales
 
-### Manual pipeline parameters
+### For Deployment Teams:
+1. Reference `05_Technical_Specifications.docx` for installation requirements
+2. Review `04_Warranty_Agreement.docx` for coverage details
+3. Set up service under `07_Service_Level_Agreement.docx`
+4. Establish `09_Maintenance_Contract.docx` for ongoing support
 
-| Parameter | Type | Default | Purpose |
-|---|---|---:|---|
-| `run_validation` | boolean | `true` | Run the validation chain. Required for either deployment. |
-| `run_github_automation_checks` | boolean | `false` | Add extended, read-only GitHub workflow checks. Never triggers or writes GitHub Actions. |
-| `run_agent_health_checks` | boolean | `false` | Add extended local/sandbox agent HTTP contract checks. |
-| `deploy_staging` | boolean | `false` | Request a staging release. Requires `target_environment=staging`. |
-| `deploy_production` | boolean | `false` | Request a production release. Requires `target_environment=production` and approval. |
-| `enable_agents` | boolean | `false` | Reserved for a separately reviewed activation adapter. Currently fails closed if set `true`. |
-| `deploy_animations` | boolean | `false` | Reserved for a separately reviewed frontend publication adapter. Currently fails closed if set `true`. |
-| `emergency_stop` | boolean | `false` | Global mutation stop. If `true`, every deployment/activation/publication request is rejected. |
-| `target_environment` | enum | `none` | One of `none`, `staging`, or `production`. |
+### For Software Integration:
+1. Review `00_Counter_Drone_System.py` documentation
+2. Install dependencies: (none required - uses only Python standard library)
+3. Run demo: `python 00_Counter_Drone_System.py --demo`
+4. Integrate into your application using the provided classes
 
-Trigger release pipelines from CircleCI's manual pipeline trigger surface and supply only the parameters needed for that release. Do not place secret values in pipeline parameters.
+---
 
-### Required restricted contexts
+## 📊 System Categories
 
-Create and restrict these CircleCI contexts before enabling release workflows:
+### Lower-Cost System ($50K-$150K)
+- **Sensors:** EO Camera, Uncooled LWIR, RF Detector
+- **Range:** <1000m
+- **Defeat:** RF Jamming only
+- **Best For:** Small facilities, budget-conscious deployments
 
-**`ci-readonly`**
+### High-Performance System ($150K-$1M)
+- **Sensors:** EO Camera (4K), Cooled MWIR, Radar, Acoustic, RF Detector, Stabilized Gimbal
+- **Range:** Up to 3000m
+- **Defeat:** RF Jamming, Kinetic, Directed Energy, Electronic Warfare
+- **Best For:** Critical infrastructure, military installations, high-security facilities
 
-- Must not contain a GitHub write token, deploy token, or other repository-mutation credential.
-- For signed production tag verification, set `TRUSTED_RELEASE_SIGNER_FINGERPRINT` and `TRUSTED_RELEASE_SIGNER_PUBLIC_KEY_B64` to the reviewed release-signing public identity. These values are verification material, not private signing credentials.
+---
 
-**`staging-deploy`**
+## 🔐 Export Control Notice
 
-- `FLY_API_TOKEN` — staging-scoped Fly.io credential.
-- `FLYCTL_VERSION` — exact approved Fly CLI version; `latest` is rejected.
-- `STAGING_FLY_APP=REPLACE_ME` — dedicated staging Fly.io app. Do not point this at the production app.
-- `STAGING_HEALTH_URL` — optional explicit staging health endpoint; defaults to the selected Fly app `/health` endpoint.
+**CRITICAL:** This system is controlled under U.S. Export Administration Regulations (EAR) and/or International Traffic in Arms Regulations (ITAR).
 
-**`production-deploy`**
+- **ECCN:** 9A610 (Radar, Defensive Systems)
+- **USML:** Category XI (Military Electronics)
+- **License Required:** Yes, for most destinations
+- **Prohibited:** Cuba, Iran, North Korea, Syria, and other embargoed countries
 
-- `FLY_API_TOKEN` — production-scoped Fly.io credential.
-- `FLYCTL_VERSION` — exact approved Fly CLI version; `latest` is rejected.
-- `PRODUCTION_FLY_APP` — optional; defaults to the repository's existing `clearglass-agent-service` app.
-- `PRODUCTION_HEALTH_URL` — optional explicit health endpoint.
+Always complete the Export Compliance Certificate before international sales.
 
-Restrict the staging and production contexts to the appropriate CircleCI security groups/project controls. Production credentials must never be copied into `ci-readonly`.
+---
 
-### GitHub automation boundary
+## 📞 Support Contact Information
 
-CircleCI validates `.github/workflows/**`, YAML syntax, repository workflow governance, and immutable action pinning. It does **not** trigger, rerun, unblock, cancel, approve, or modify GitHub Actions and it does not auto-merge pull requests. Any future GitHub write integration requires a separately approved GitHub App/token scope, a new explicit pipeline parameter defaulting to `false`, and an independent review of the affected repository rules and environments.
+**Technical Support:** support@counter-drone-systems.com  
+**Sales:** sales@counter-drone-systems.com  
+**Phone:** 1-800-555-CDDS  
+**Emergency Hotline (Gold tier):** 1-800-555-EMERGENCY  
+**Compliance Officer:** compliance@counter-drone-systems.com
 
-### Frontend animations and agents
+---
 
-The frontend/animation job builds deterministic assets, syntax-checks browser JavaScript, runs a local static smoke test, and stores a commit-addressed archive plus SHA-256 evidence. It does not publish the site.
+## 📝 Customization Instructions
 
-`deploy_animations=true` is intentionally rejected until a reviewed deployment path exists that does not bypass GitHub Pages/repository protections.
+All documents are fully editable. To customize:
 
-The agent job runs only in dry-run/sandbox mode and does not activate autonomous agents. `enable_agents=true` is intentionally rejected until a separately reviewed activation adapter and enforceable runtime rate-limit policy are implemented.
+1. **Company Information:**
+   - Replace `[Company Name]` with your company name
+   - Update addresses, phone numbers, and emails
+   - Add your company logo if desired
 
-### Dependency and secret gates
+2. **Pricing:**
+   - Update dollar amounts in Sales Agreement and Purchase Order
+   - Adjust service tier pricing in SLA and Maintenance Contract
+   - Modify payment schedules as needed
 
-- Node uses `npm ci` with the committed `package-lock.json`.
-- The deployed agent service requires exact `==` pins in `services/clearglass_agent_service/requirements.txt` when present.
-- High/critical npm audit findings block deployment.
-- Changed source files are scanned for common credential patterns and fail closed on candidates.
-- Findings are not silently suppressed.
+3. **Technical Specs:**
+   - Update system capabilities based on your actual product
+   - Modify sensor configurations
+   - Adjust performance metrics
 
-### Immutable deployment and evidence
+4. **Legal Terms:**
+   - Review with legal counsel before use
+   - Adjust warranties and limitations based on local laws
+   - Update governing law clauses for your jurisdiction
 
-Fly releases use commit-addressed or digest-pinned image references. A previously deployed immutable image is recorded before mutation so rollback is possible. Deployment evidence is stored under `deploy-evidence/` as CircleCI artifacts.
+---
 
-Post-deploy verification requires 20/20 successful `/health` requests and records the deployment revision and endpoint evidence. A deployment is not considered successful until endpoint verification passes.
+## ⚠️ Legal Disclaimer
 
-### Rollback procedure
+These documents are provided as templates only. They should be reviewed and approved by qualified legal counsel before use in actual transactions. The provider makes no warranties regarding the legal adequacy or compliance of these documents for any specific jurisdiction or purpose.
 
-**Staging:** deployment or post-deploy verification failure automatically redeploys the previously recorded immutable image and verifies `/health`. The rollback result is written to deployment evidence.
+---
 
-**Production:** post-deploy failure does not silently mutate production again. CircleCI records the exact prior immutable image. After incident review and approval, use the reviewed production rollback path with the `production-deploy` context. Never substitute an unreviewed tag or `latest` image.
+## 📚 Document Version
 
-No rollback procedure rotates secrets, changes repository permissions, alters organization settings, deletes data, or bypasses a protected environment.
+All documents are Version 2.0, dated January 2025.
 
-## Repository Safety
+For updates or support, contact: documentation@counter-drone-systems.com
 
-- No credentials or private API keys belong in source control.
-- Production secrets must remain in approved external secret stores or platform configuration.
-- Public OSINT and cybersecurity functions are defensive, lawful, and evidence-oriented.
-- Counter-UAS material in this repository is a component/research area; it is **not** the identity or primary purpose of this repository.
+---
 
-## Company
-
-**ClearGlass Inc.**  
-Ontario, Canada  
-https://www.clearglassinc.com
-
-© 2026 ClearGlass Inc. All rights reserved except where a file or third-party component states otherwise.
+**Generated by:** AI Document Generation System  
+**Date:** January 29, 2026  
+**Package Version:** 1.0
